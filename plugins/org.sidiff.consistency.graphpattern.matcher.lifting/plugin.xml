@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.sidiff.consistency.graphpattern.matcher.factory">
+      <factory
+            class="org.sidiff.consistency.graphpattern.matcher.lifting.engine.exact.ExactLiftingEngineFactory"
+            description="A pattern matching engine for edit rule recognition rules."
+            id="org.sidiff.consistency.graphpattern.matcher.lifting.exact"
+            name="[Exact] Lifting Pattern Matching Engine">
+      </factory>
+   </extension>
+
+   <extension
+         point="org.sidiff.consistency.graphpattern.matcher.factory">
+      <factory
+            class="org.sidiff.consistency.graphpattern.matcher.lifting.engine.partial.PartialLiftingEngineFactory"
+            description="A pattern matching engine for edit rule recognition rules."
+            id="org.sidiff.consistency.graphpattern.matcher.lifting.partial"
+            name="[Partial] Lifting Pattern Matching Engine">
+      </factory>
+   </extension>
+
+</plugin>

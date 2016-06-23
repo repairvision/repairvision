@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+  <extension point="org.eclipse.sirius.componentization">
+    <component class="org.sidiff.consistency.graphpattern.design.Activator"
+               id="org.sidiff.consistency.graphpattern.design"
+	       name="graphpattern">
+    </component>
+  </extension>
+  <extension
+        point="org.eclipse.sirius.diagram.ui.styleConfigurationProvider">
+     <styleConfigurationProvider
+           providerClass="org.sidiff.consistency.graphpattern.design.provider.LabelIconProvider">
+     </styleConfigurationProvider>
+  </extension>
+</plugin>

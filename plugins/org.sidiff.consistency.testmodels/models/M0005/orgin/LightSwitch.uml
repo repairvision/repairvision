@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Package xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_5zk5UHrUEeSMe4ec-1yr9Q" name="LightSwitch">
+  <packageImport xmi:id="_5zk5UXrUEeSMe4ec-1yr9Q">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_5zk5UnrUEeSMe4ec-1yr9Q" name="Switch">
+    <ownedAttribute xmi:id="_5zk5U3rUEeSMe4ec-1yr9Q" name="light" visibility="private" type="_5zk5VnrUEeSMe4ec-1yr9Q" association="_5zk5X3rUEeSMe4ec-1yr9Q">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5zk5VXrUEeSMe4ec-1yr9Q"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5zk5VHrUEeSMe4ec-1yr9Q" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_5zk5VnrUEeSMe4ec-1yr9Q" name="Light">
+    <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_5zk5V3rUEeSMe4ec-1yr9Q" name="StateChart">
+      <region xmi:id="_5zk5WHrUEeSMe4ec-1yr9Q" name="Region1">
+        <transition xmi:id="_5zk5W3rUEeSMe4ec-1yr9Q" name="deactivate" source="_5zk5WXrUEeSMe4ec-1yr9Q" target="_5zk5WnrUEeSMe4ec-1yr9Q"/>
+        <transition xmi:id="_5zk5XHrUEeSMe4ec-1yr9Q" name="activate" source="_5zk5WnrUEeSMe4ec-1yr9Q" target="_5zk5WXrUEeSMe4ec-1yr9Q"/>
+        <subvertex xmi:type="uml:State" xmi:id="_5zk5WXrUEeSMe4ec-1yr9Q" name="On"/>
+        <subvertex xmi:type="uml:State" xmi:id="_5zk5WnrUEeSMe4ec-1yr9Q" name="Off"/>
+      </region>
+    </ownedBehavior>
+    <ownedOperation xmi:id="_5zk5XXrUEeSMe4ec-1yr9Q" name="activate"/>
+    <ownedOperation xmi:id="_5zk5XnrUEeSMe4ec-1yr9Q" name="deactivate"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_5zk5X3rUEeSMe4ec-1yr9Q" memberEnd="_5zk5U3rUEeSMe4ec-1yr9Q _5zk5YHrUEeSMe4ec-1yr9Q">
+    <ownedEnd xmi:id="_5zk5YHrUEeSMe4ec-1yr9Q" name="" visibility="private" type="_5zk5UnrUEeSMe4ec-1yr9Q" association="_5zk5X3rUEeSMe4ec-1yr9Q">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5zk5YnrUEeSMe4ec-1yr9Q"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5zk5YXrUEeSMe4ec-1yr9Q" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Collaboration" xmi:id="_5zk5Y3rUEeSMe4ec-1yr9Q" name="Collaboration1">
+    <ownedAttribute xmi:id="_5zk5dHrUEeSMe4ec-1yr9Q" name="switch" type="_5zk5UnrUEeSMe4ec-1yr9Q"/>
+    <ownedAttribute xmi:id="_5zk5dXrUEeSMe4ec-1yr9Q" name="light" type="_5zk5VnrUEeSMe4ec-1yr9Q"/>
+    <ownedBehavior xmi:type="uml:Interaction" xmi:id="_5zk5ZHrUEeSMe4ec-1yr9Q" name="Switch the light">
+      <ownedConnector xmi:id="_5zk5ZXrUEeSMe4ec-1yr9Q">
+        <end xmi:id="_5zk5ZnrUEeSMe4ec-1yr9Q" role="_5zk5dXrUEeSMe4ec-1yr9Q"/>
+        <end xmi:id="_5zk5Z3rUEeSMe4ec-1yr9Q" role="_5zk5dHrUEeSMe4ec-1yr9Q"/>
+      </ownedConnector>
+      <lifeline xmi:id="_5zk5aHrUEeSMe4ec-1yr9Q" name="switch" represents="_5zk5dHrUEeSMe4ec-1yr9Q" coveredBy="_5zk5anrUEeSMe4ec-1yr9Q _5zk5bnrUEeSMe4ec-1yr9Q"/>
+      <lifeline xmi:id="_5zk5aXrUEeSMe4ec-1yr9Q" name="light" represents="_5zk5dXrUEeSMe4ec-1yr9Q" coveredBy="_5zk5a3rUEeSMe4ec-1yr9Q _5zk5bHrUEeSMe4ec-1yr9Q _5zk5bXrUEeSMe4ec-1yr9Q _5zk5b3rUEeSMe4ec-1yr9Q _5zk5cHrUEeSMe4ec-1yr9Q _5zk5cXrUEeSMe4ec-1yr9Q"/>
+      <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_5zk5anrUEeSMe4ec-1yr9Q" covered="_5zk5aHrUEeSMe4ec-1yr9Q" message="_5zk5cnrUEeSMe4ec-1yr9Q" event="_5zk5fHrUEeSMe4ec-1yr9Q"/>
+      <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_5zk5a3rUEeSMe4ec-1yr9Q" covered="_5zk5aXrUEeSMe4ec-1yr9Q" message="_5zk5cnrUEeSMe4ec-1yr9Q" event="_5zk5fXrUEeSMe4ec-1yr9Q"/>
+      <fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="_5zk5bHrUEeSMe4ec-1yr9Q" covered="_5zk5aXrUEeSMe4ec-1yr9Q" finish="_5zk5bXrUEeSMe4ec-1yr9Q" start="_5zk5a3rUEeSMe4ec-1yr9Q"/>
+      <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_5zk5bXrUEeSMe4ec-1yr9Q" covered="_5zk5aXrUEeSMe4ec-1yr9Q" execution="_5zk5bHrUEeSMe4ec-1yr9Q" event="_5zk5eHrUEeSMe4ec-1yr9Q"/>
+      <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_5zk5bnrUEeSMe4ec-1yr9Q" covered="_5zk5aHrUEeSMe4ec-1yr9Q" message="_5zk5c3rUEeSMe4ec-1yr9Q" event="_5zk5fHrUEeSMe4ec-1yr9Q"/>
+      <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_5zk5b3rUEeSMe4ec-1yr9Q" covered="_5zk5aXrUEeSMe4ec-1yr9Q" message="_5zk5c3rUEeSMe4ec-1yr9Q" event="_5zk5fXrUEeSMe4ec-1yr9Q"/>
+      <fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="_5zk5cHrUEeSMe4ec-1yr9Q" covered="_5zk5aXrUEeSMe4ec-1yr9Q" finish="_5zk5cXrUEeSMe4ec-1yr9Q" start="_5zk5b3rUEeSMe4ec-1yr9Q"/>
+      <fragment xmi:type="uml:ExecutionOccurrenceSpecification" xmi:id="_5zk5cXrUEeSMe4ec-1yr9Q" covered="_5zk5aXrUEeSMe4ec-1yr9Q" execution="_5zk5cHrUEeSMe4ec-1yr9Q" event="_5zk5e3rUEeSMe4ec-1yr9Q"/>
+      <message xmi:id="_5zk5cnrUEeSMe4ec-1yr9Q" name="activate" connector="_5zk5ZXrUEeSMe4ec-1yr9Q" messageSort="asynchCall" receiveEvent="_5zk5a3rUEeSMe4ec-1yr9Q" sendEvent="_5zk5anrUEeSMe4ec-1yr9Q"/>
+      <message xmi:id="_5zk5c3rUEeSMe4ec-1yr9Q" name="deactivate" connector="_5zk5ZXrUEeSMe4ec-1yr9Q" messageSort="asynchCall" receiveEvent="_5zk5b3rUEeSMe4ec-1yr9Q" sendEvent="_5zk5bnrUEeSMe4ec-1yr9Q"/>
+    </ownedBehavior>
+  </packagedElement>
+  <profileApplication xmi:id="_5zk5fnrUEeSMe4ec-1yr9Q">
+    <eAnnotations xmi:id="_5zk5f3rUEeSMe4ec-1yr9Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w"/>
+    </eAnnotations>
+    <appliedProfile href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+  </profileApplication>
+  <packagedElement xmi:type="uml:SendOperationEvent" xmi:id="_5zk5dnrUEeSMe4ec-1yr9Q" name="SendOperationEvent1" operation="_5zk5XXrUEeSMe4ec-1yr9Q"/>
+  <packagedElement xmi:type="uml:ReceiveOperationEvent" xmi:id="_5zk5d3rUEeSMe4ec-1yr9Q" name="ReceiveOperationEvent1" operation="_5zk5XXrUEeSMe4ec-1yr9Q"/>
+  <packagedElement xmi:type="uml:ExecutionEvent" xmi:id="_5zk5eHrUEeSMe4ec-1yr9Q" name="ExecutionEvent1"/>
+  <packagedElement xmi:type="uml:SendOperationEvent" xmi:id="_5zk5eXrUEeSMe4ec-1yr9Q" name="SendOperationEvent2" operation="_5zk5XnrUEeSMe4ec-1yr9Q"/>
+  <packagedElement xmi:type="uml:ReceiveOperationEvent" xmi:id="_5zk5enrUEeSMe4ec-1yr9Q" name="ReceiveOperationEvent2" operation="_5zk5XnrUEeSMe4ec-1yr9Q"/>
+  <packagedElement xmi:type="uml:ExecutionEvent" xmi:id="_5zk5e3rUEeSMe4ec-1yr9Q" name="ExecutionEvent2"/>
+  <packagedElement xmi:type="uml:SendOperationEvent" xmi:id="_5zk5fHrUEeSMe4ec-1yr9Q" name="SendOperationEvent3"/>
+  <packagedElement xmi:type="uml:ReceiveOperationEvent" xmi:id="_5zk5fXrUEeSMe4ec-1yr9Q" name="ReceiveOperationEvent3"/>
+</uml:Package>

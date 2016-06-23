@@ -1,0 +1,46 @@
+7.3.46 Realization (from Dependencies)
+
+Description
+
+Realization is a specialized abstraction relationship between two sets of model elements, one representing a specification
+(the supplier) and the other represents an implementation of the latter (the client). Realization can be used to model
+stepwise refinement, optimizations, transformations, templates, model synthesis, framework composition, etc.
+Attributes
+
+Constraints
+
+No additional constraints
+
+Semantics
+
+A Realization signifies that the client set of elements are an implementation of the supplier set, which serves as the
+specification. The meaning of ‘implementation’ is not strictly defined, but rather implies a more refined or elaborate form
+in respect to a certain modeling context. It is possible to specify a mapping between the specification and implementation
+elements, although it is not necessarily computable.
+
+7.3.25 InterfaceRealization (from Interfaces)
+
+Description
+
+An InterfaceRealization is a specialized Realization relationship between a Classifier and an Interface. This relationship
+signifies that the realizing classifier conforms to the contract specified by the Interface.
+
+Constraints
+
+No additional constraints
+
+Semantics
+
+A classifier that implements an interface specifies instances that are conforming to the interface and to any of its
+ancestors. A classifier may implement a number of interfaces. The set of interfaces implemented by the classifier are its
+provided interfaces and signify the set of services the classifier offers to its clients. A classifier implementing an interface
+supports the set of features owned by the interface. In addition to supporting the features, a classifier must comply with
+the constraints owned by the interface.
+
+An interface realization relationship between a classifier and an interface implies that the classifier supports the set of
+features owned by the interface, and any of its parent interfaces. For behavioral features, the implementing classifier will
+have an operation or reception for every operation or reception, respectively, defined by the interface. For properties, the
+realizing classifier will provide functionality that maintains the state represented by the property. While such may be done
+by direct mapping to a property of the realizing classifier, it may also be supported by the state machine of the classifier
+or by a pair of operations that support the retrieval of the state information and an operation that changes the state
+information.

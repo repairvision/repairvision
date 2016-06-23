@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_4Qs2gGVHEeWRYu-5iSq5GQ" name="RestaurantModel">
+  <packagedElement xmi:type="uml:Model" xmi:id="_r_ZVkGVKEeWRYu-5iSq5GQ" name="Activity Diagram">
+    <packagedElement xmi:type="uml:Activity" xmi:id="_4Q5DwGVHEeWRYu-5iSq5GQ" name="Restaurant">
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_eSk1sGVJEeWRYu-5iSq5GQ" name="Guest" node="_3cHF8GVJEeWRYu-5iSq5GQ _JdBGoGVKEeWRYu-5iSq5GQ">
+        <edge xmi:type="uml:ControlFlow" xmi:id="_S_rIoGVKEeWRYu-5iSq5GQ" target="_-NsugGVJEeWRYu-5iSq5GQ" source="_3cHF8GVJEeWRYu-5iSq5GQ"/>
+        <node xmi:type="uml:OpaqueAction" xmi:id="_3cHF8GVJEeWRYu-5iSq5GQ" name="makeAnOrder" outgoing="_S_rIoGVKEeWRYu-5iSq5GQ"/>
+        <node xmi:type="uml:OpaqueAction" xmi:id="_JdBGoGVKEeWRYu-5iSq5GQ" name="eat" incoming="_UVYXUGVKEeWRYu-5iSq5GQ"/>
+      </ownedBehavior>
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_vRgcAGVJEeWRYu-5iSq5GQ" name="Waiters" node="_-NsugGVJEeWRYu-5iSq5GQ _Izx8YGVKEeWRYu-5iSq5GQ">
+        <edge xmi:type="uml:ControlFlow" xmi:id="_T2YuMGVKEeWRYu-5iSq5GQ" target="_Izx8YGVKEeWRYu-5iSq5GQ" source="_-NsugGVJEeWRYu-5iSq5GQ"/>
+        <edge xmi:type="uml:ControlFlow" xmi:id="_UVYXUGVKEeWRYu-5iSq5GQ" target="_JdBGoGVKEeWRYu-5iSq5GQ" source="_Izx8YGVKEeWRYu-5iSq5GQ"/>
+        <node xmi:type="uml:OpaqueAction" xmi:id="_-NsugGVJEeWRYu-5iSq5GQ" name="takeAnOrder" incoming="_S_rIoGVKEeWRYu-5iSq5GQ" outgoing="_T2YuMGVKEeWRYu-5iSq5GQ"/>
+        <node xmi:type="uml:OpaqueAction" xmi:id="_Izx8YGVKEeWRYu-5iSq5GQ" name="serve" incoming="_T2YuMGVKEeWRYu-5iSq5GQ" outgoing="_UVYXUGVKEeWRYu-5iSq5GQ"/>
+      </ownedBehavior>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Model" xmi:id="_zpEcsGVKEeWRYu-5iSq5GQ" name="Class Diagram">
+    <packagedElement xmi:type="uml:Class" xmi:id="_CLE08GVIEeWRYu-5iSq5GQ" name="Restaurant">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_YnU_kGVIEeWRYu-5iSq5GQ" name="waiters" type="_PiPDUGVIEeWRYu-5iSq5GQ" aggregation="composite" association="_YnO48GVIEeWRYu-5iSq5GQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_t5ShUGVIEeWRYu-5iSq5GQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_t5U9kGVIEeWRYu-5iSq5GQ" value="*"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_gz-Q4GVIEeWRYu-5iSq5GQ" name="guest" type="_JLSIUGVIEeWRYu-5iSq5GQ" aggregation="composite" association="_gz9CwGVIEeWRYu-5iSq5GQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_syvwAGVIEeWRYu-5iSq5GQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_syzaYGVIEeWRYu-5iSq5GQ" value="*"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_JLSIUGVIEeWRYu-5iSq5GQ" name="Guest">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_gz-38GVIEeWRYu-5iSq5GQ" name="restaurant" type="_CLE08GVIEeWRYu-5iSq5GQ" association="_gz9CwGVIEeWRYu-5iSq5GQ"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_3gAxcmXsEeWRYu-5iSq5GQ" name="waiters" type="_PiPDUGVIEeWRYu-5iSq5GQ" association="_3f-8QGXsEeWRYu-5iSq5GQ"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_77Ck0GVIEeWRYu-5iSq5GQ" name="makeAnOrder"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-6HlEGVIEeWRYu-5iSq5GQ" name="eat"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_PiPDUGVIEeWRYu-5iSq5GQ" name="Waiters">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_YnVmoGVIEeWRYu-5iSq5GQ" name="restaurant" type="_CLE08GVIEeWRYu-5iSq5GQ" association="_YnO48GVIEeWRYu-5iSq5GQ"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_3gEb0GXsEeWRYu-5iSq5GQ" name="guest" type="_JLSIUGVIEeWRYu-5iSq5GQ" association="_3f-8QGXsEeWRYu-5iSq5GQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_49hRQGXsEeWRYu-5iSq5GQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_49jGcGXsEeWRYu-5iSq5GQ" value="*"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_XRZ5AGVJEeWRYu-5iSq5GQ" name="takeAnOrder"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_YTx8AGVJEeWRYu-5iSq5GQ" name="serve"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_YnO48GVIEeWRYu-5iSq5GQ" memberEnd="_YnU_kGVIEeWRYu-5iSq5GQ _YnVmoGVIEeWRYu-5iSq5GQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_YnR8QGVIEeWRYu-5iSq5GQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_YnSjUGVIEeWRYu-5iSq5GQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_gz9CwGVIEeWRYu-5iSq5GQ" memberEnd="_gz-Q4GVIEeWRYu-5iSq5GQ _gz-38GVIEeWRYu-5iSq5GQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_gz9p0GVIEeWRYu-5iSq5GQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_gz9p0WVIEeWRYu-5iSq5GQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_3f-8QGXsEeWRYu-5iSq5GQ" memberEnd="_3gAxcmXsEeWRYu-5iSq5GQ _3gEb0GXsEeWRYu-5iSq5GQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3gAxcGXsEeWRYu-5iSq5GQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_3gAxcWXsEeWRYu-5iSq5GQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Model" xmi:id="_t0zs4GXrEeWRYu-5iSq5GQ" name="Object Diagram">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_o_cRsGXxEeWRYu-5iSq5GQ">
+      <body>Wrong Type&#xD;
+</body>
+    </ownedComment>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_309OEGXpEeWRYu-5iSq5GQ" name="BurgerQueen" classifier="_CLE08GVIEeWRYu-5iSq5GQ">
+      <slot xmi:type="uml:Slot" xmi:id="_iSq74GXqEeWRYu-5iSq5GQ" definingFeature="_gz-Q4GVIEeWRYu-5iSq5GQ">
+        <value xmi:type="uml:InstanceValue" xmi:id="_iSri8GXqEeWRYu-5iSq5GQ" name="InstanceValue1" type="_JLSIUGVIEeWRYu-5iSq5GQ" instance="_ZCUx4GXqEeWRYu-5iSq5GQ"/>
+      </slot>
+      <slot xmi:type="uml:Slot" xmi:id="_GwCbYWXsEeWRYu-5iSq5GQ" definingFeature="_YnU_kGVIEeWRYu-5iSq5GQ">
+        <value xmi:type="uml:InstanceValue" xmi:id="_GwDCcGXsEeWRYu-5iSq5GQ" name="InstanceValue1" type="_PiPDUGVIEeWRYu-5iSq5GQ" instance="_CZbngGXsEeWRYu-5iSq5GQ"/>
+      </slot>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_ZCUx4GXqEeWRYu-5iSq5GQ" name="Max" classifier="_JLSIUGVIEeWRYu-5iSq5GQ">
+      <slot xmi:type="uml:Slot" xmi:id="_iSri8WXqEeWRYu-5iSq5GQ" definingFeature="_gz-38GVIEeWRYu-5iSq5GQ">
+        <value xmi:type="uml:InstanceValue" xmi:id="_iSri8mXqEeWRYu-5iSq5GQ" name="InstanceValue1" type="_CLE08GVIEeWRYu-5iSq5GQ" instance="_309OEGXpEeWRYu-5iSq5GQ"/>
+      </slot>
+      <slot xmi:type="uml:Slot" xmi:id="_SsOEEWXtEeWRYu-5iSq5GQ" definingFeature="_3gAxcmXsEeWRYu-5iSq5GQ">
+        <value xmi:type="uml:InstanceValue" xmi:id="_SsOEEmXtEeWRYu-5iSq5GQ" name="InstanceValue1" type="_PiPDUGVIEeWRYu-5iSq5GQ" instance="_CZbngGXsEeWRYu-5iSq5GQ"/>
+      </slot>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_A7UDsGXsEeWRYu-5iSq5GQ" name="BurgerQueen_Max" classifier="_gz9CwGVIEeWRYu-5iSq5GQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_BnqMUGXsEeWRYu-5iSq5GQ" source="InstanceEnd" references="_ZCUx4GXqEeWRYu-5iSq5GQ _309OEGXpEeWRYu-5iSq5GQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_CZbngGXsEeWRYu-5iSq5GQ" name="First" classifier="_PiPDUGVIEeWRYu-5iSq5GQ">
+      <slot xmi:type="uml:Slot" xmi:id="_GwDCcWXsEeWRYu-5iSq5GQ" definingFeature="_YnVmoGVIEeWRYu-5iSq5GQ">
+        <value xmi:type="uml:InstanceValue" xmi:id="_GwDCcmXsEeWRYu-5iSq5GQ" name="InstanceValue1" type="_CLE08GVIEeWRYu-5iSq5GQ" instance="_309OEGXpEeWRYu-5iSq5GQ"/>
+      </slot>
+      <slot xmi:type="uml:Slot" xmi:id="_SsOEE2XtEeWRYu-5iSq5GQ" definingFeature="_3gEb0GXsEeWRYu-5iSq5GQ">
+        <value xmi:type="uml:InstanceValue" xmi:id="_SsOEFGXtEeWRYu-5iSq5GQ" name="InstanceValue1" type="_JLSIUGVIEeWRYu-5iSq5GQ" instance="_ZCUx4GXqEeWRYu-5iSq5GQ"/>
+      </slot>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_GaJq8GXsEeWRYu-5iSq5GQ" name="BurgerQueen_First" classifier="_YnO48GVIEeWRYu-5iSq5GQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_GwCbYGXsEeWRYu-5iSq5GQ" source="InstanceEnd" references="_CZbngGXsEeWRYu-5iSq5GQ _309OEGXpEeWRYu-5iSq5GQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_KX5S4GXsEeWRYu-5iSq5GQ" name="Second" classifier="_PiPDUGVIEeWRYu-5iSq5GQ">
+      <slot xmi:type="uml:Slot" xmi:id="_6Yf6ImXvEeWRYu-5iSq5GQ" definingFeature="_YnVmoGVIEeWRYu-5iSq5GQ">
+        <value xmi:type="uml:InstanceValue" xmi:id="_6Yf6I2XvEeWRYu-5iSq5GQ" name="InstanceValue1" type="_CLE08GVIEeWRYu-5iSq5GQ" instance="_xmmmsGXvEeWRYu-5iSq5GQ"/>
+      </slot>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_STs2YGXtEeWRYu-5iSq5GQ" name="Max_First" classifier="_3f-8QGXsEeWRYu-5iSq5GQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SsOEEGXtEeWRYu-5iSq5GQ" source="InstanceEnd" references="_CZbngGXsEeWRYu-5iSq5GQ _ZCUx4GXqEeWRYu-5iSq5GQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_VV4N8GXtEeWRYu-5iSq5GQ" name="Max_Second" classifier="_3f-8QGXsEeWRYu-5iSq5GQ"/>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_xmmmsGXvEeWRYu-5iSq5GQ" name="MrRonald" classifier="_CLE08GVIEeWRYu-5iSq5GQ">
+      <slot xmi:type="uml:Slot" xmi:id="_6Yf6IGXvEeWRYu-5iSq5GQ" definingFeature="_YnU_kGVIEeWRYu-5iSq5GQ">
+        <value xmi:type="uml:InstanceValue" xmi:id="_6Yf6IWXvEeWRYu-5iSq5GQ" name="InstanceValue1" type="_PiPDUGVIEeWRYu-5iSq5GQ" instance="_KX5S4GXsEeWRYu-5iSq5GQ"/>
+      </slot>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_57zXEGXvEeWRYu-5iSq5GQ" name="MrRonald_Second" classifier="_YnO48GVIEeWRYu-5iSq5GQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_6YfTEGXvEeWRYu-5iSq5GQ" source="InstanceEnd" references="_KX5S4GXsEeWRYu-5iSq5GQ _xmmmsGXvEeWRYu-5iSq5GQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_mLn7sGXwEeWRYu-5iSq5GQ" name="Alice" classifier="_JLSIUGVIEeWRYu-5iSq5GQ"/>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_8Ez1gGXwEeWRYu-5iSq5GQ" name="BurgerQueen_Alice" classifier="_YnO48GVIEeWRYu-5iSq5GQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Model" xmi:id="_h2iK8GYVEeWRYu-5iSq5GQ" name="UseCase Diagram">
+    <packagedElement xmi:type="uml:Actor" xmi:id="_h4SYEGYNEeWRYu-5iSq5GQ" name="Guest"/>
+    <packagedElement xmi:type="uml:Actor" xmi:id="_3N2ncGYNEeWRYu-5iSq5GQ" name="Waiters"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_AkK2kGYOEeWRYu-5iSq5GQ" name="Restaurant">
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_I2fSEGYOEeWRYu-5iSq5GQ" name="make an order"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_jTswsGYOEeWRYu-5iSq5GQ" name="eat a dish"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_ZkAYQGYOEeWRYu-5iSq5GQ" memberEnd="_ZkA_UWYOEeWRYu-5iSq5GQ _ZkBmYGYOEeWRYu-5iSq5GQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ZkAYQWYOEeWRYu-5iSq5GQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ZkA_UGYOEeWRYu-5iSq5GQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_ZkA_UWYOEeWRYu-5iSq5GQ" name="makeanorder" type="_I2fSEGYOEeWRYu-5iSq5GQ" association="_ZkAYQGYOEeWRYu-5iSq5GQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_hK_-0GYOEeWRYu-5iSq5GQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_hLAl4GYOEeWRYu-5iSq5GQ" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_ZkBmYGYOEeWRYu-5iSq5GQ" name="guest" type="_h4SYEGYNEeWRYu-5iSq5GQ" association="_ZkAYQGYOEeWRYu-5iSq5GQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_bxlDEGYOEeWRYu-5iSq5GQ" memberEnd="_bxmRMGYOEeWRYu-5iSq5GQ _bxmRMWYOEeWRYu-5iSq5GQ" navigableOwnedEnd="_bxmRMGYOEeWRYu-5iSq5GQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_bxlqIGYOEeWRYu-5iSq5GQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_bxlqIWYOEeWRYu-5iSq5GQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_bxmRMGYOEeWRYu-5iSq5GQ" name="waiters" type="_3N2ncGYNEeWRYu-5iSq5GQ" association="_bxlDEGYOEeWRYu-5iSq5GQ"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_bxmRMWYOEeWRYu-5iSq5GQ" name="makeanorder" type="_I2fSEGYOEeWRYu-5iSq5GQ" association="_bxlDEGYOEeWRYu-5iSq5GQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_xbFiIGYOEeWRYu-5iSq5GQ" memberEnd="_xbGJMWYOEeWRYu-5iSq5GQ _xbGJMmYOEeWRYu-5iSq5GQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_xbFiIWYOEeWRYu-5iSq5GQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_xbGJMGYOEeWRYu-5iSq5GQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_xbGJMWYOEeWRYu-5iSq5GQ" name="eat" type="_jTswsGYOEeWRYu-5iSq5GQ" association="_xbFiIGYOEeWRYu-5iSq5GQ"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_xbGJMmYOEeWRYu-5iSq5GQ" name="guest" type="_h4SYEGYNEeWRYu-5iSq5GQ" association="_xbFiIGYOEeWRYu-5iSq5GQ"/>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="SiDiff Tools"
+            id="org.sidiff.consistency.graphpattern.matcher.ui">
+      </category>
+      <view
+            name="Pattern Matching Engine"
+            icon="icons/view_icon.gif"
+            category="org.sidiff.consistency.graphpattern.matcher.ui"
+            class="org.sidiff.consistency.graphpattern.matcher.ui.views.PatternMatchingEngineView"
+            id="org.sidiff.consistency.graphpattern.matcher.ui.views.PatternMatchingEngineView">
+      </view>
+      <view
+            class="org.sidiff.consistency.graphpattern.matcher.ui.views.MatchViewer"
+            icon="icons/view_icon.gif"
+            id="org.sidiff.consistency.graphpattern.matcher.ui.views.MatchViewer"
+            name="Matching">
+      </view>
+   </extension>
+
+</plugin>

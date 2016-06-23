@@ -1,0 +1,38 @@
+# Alle Operationen eines Interfaces müssen in der realisierenden Klasse vorkommen!
+
+context:
+Realization
+
+inv:
+self.supplier.oclAsType(Interface).ownedOperation->forAll(op | self.client.oclAsType(Class).ownedOperation->exists(impl_op | impl_op.name = op.name))
+
+inv:
+self.supplier.oclAsType(Interface).ownedOperation->forAll(op | self.client.oclAsType(Class).ownedOperation->exists(name = op.name))
+
+# Alle Operationen eines Interfaces müssen in der implementierenden Klasse vorkommen!
+#
+# Workaround "->includes(true)" / ".name->oclIsInvalid()" da oclIsUndefined() ein Bag(Boolean) zurückliefert. 
+#            Autocompletion zeigt nur Boolean an. Auch im OCL-Standard wird ein einzelner Boolean zurückgegeben. 
+#            Eclipse OCL Bug!?  
+#
+
+context:
+Realization
+
+inv:
+self.client.getAppliedStereotype('StandardProfile::ImplementationClass').name->oclIsInvalid() 
+or 
+self.supplier.oclAsType(Interface).ownedOperation->forAll(op | self.client.oclAsType(Class).ownedOperation->exists(name = op.name))
+
+inv:
+self.client.getAppliedStereotype('StandardProfile::ImplementationClass').oclIsUndefined()->includes(true)
+or 
+self.supplier.oclAsType(Interface).ownedOperation->forAll(op | self.client.oclAsType(Class).ownedOperation->exists(name = op.name))
+
+# Alle Nachrichten müssen eine Operationssignatur haben:
+
+context:
+Message
+
+inv:
+self.receiveEvent.oclAsType(InteractionFragment).covered->forAll(represents.type.oclAsType(Class).ownedOperation->exists(name=self.name))

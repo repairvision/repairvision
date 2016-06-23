@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ITQugO-dEeWYZPWqYjTUfA">
+  <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_i2XZwO-dEeW8tK28P8Ma3g" name="complementRule-sendNewMessage">
+    <lhs xmi:id="_i3olEO-dEeW8tK28P8Ma3g" name="Lhs">
+      <nodes xmi:id="_-WLk4O-dEeW8tK28P8Ma3g" incoming="_8GpzYPLsEeW-MI8-O0a1Vg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes xmi:id="_t-OfAO-dEeW8tK28P8Ma3g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+        <attributes xmi:id="_jiBwcO-eEeW8tK28P8Ma3g" value="newMessage">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_pLrMQPHdEeW-MI8-O0a1Vg" incoming="_Qz9BgPLwEeW-MI8-O0a1Vg" outgoing="_8GpzYPLsEeW-MI8-O0a1Vg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <nodes xmi:id="_LN4J0PLwEeW-MI8-O0a1Vg" outgoing="_Qz9BgPLwEeW-MI8-O0a1Vg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <edges xmi:id="_8GpzYPLsEeW-MI8-O0a1Vg" source="_pLrMQPHdEeW-MI8-O0a1Vg" target="_-WLk4O-dEeW8tK28P8Ma3g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+      <edges xmi:id="_Qz9BgPLwEeW-MI8-O0a1Vg" source="_LN4J0PLwEeW-MI8-O0a1Vg" target="_pLrMQPHdEeW-MI8-O0a1Vg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_i3olEe-dEeW8tK28P8Ma3g" name="Rhs">
+      <nodes xmi:id="_MdEmMPCSEeW-MI8-O0a1Vg" incoming="_MaSY0O-eEeW8tK28P8Ma3g _2_EMgPCREeW-MI8-O0a1Vg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+        <attributes xmi:id="_MdEmMfCSEeW-MI8-O0a1Vg" value="newMessage">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_-WLk4e-dEeW8tK28P8Ma3g" incoming="_8GpzYfLsEeW-MI8-O0a1Vg" outgoing="_MaSY0O-eEeW8tK28P8Ma3g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes xmi:id="_MdFNQPCSEeW-MI8-O0a1Vg" outgoing="_2_EMgPCREeW-MI8-O0a1Vg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+        <attributes xmi:id="_MdFNQfCSEeW-MI8-O0a1Vg" value="newMessage">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_syoE0PHdEeW-MI8-O0a1Vg" incoming="_Qz9okPLwEeW-MI8-O0a1Vg" outgoing="_8GpzYfLsEeW-MI8-O0a1Vg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <nodes xmi:id="_LN4J0fLwEeW-MI8-O0a1Vg" outgoing="_Qz9okPLwEeW-MI8-O0a1Vg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <edges xmi:id="_MaSY0O-eEeW8tK28P8Ma3g" source="_-WLk4e-dEeW8tK28P8Ma3g" target="_MdEmMPCSEeW-MI8-O0a1Vg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+      </edges>
+      <edges xmi:id="_2_EMgPCREeW-MI8-O0a1Vg" source="_MdFNQPCSEeW-MI8-O0a1Vg" target="_MdEmMPCSEeW-MI8-O0a1Vg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/signature"/>
+      </edges>
+      <edges xmi:id="_8GpzYfLsEeW-MI8-O0a1Vg" source="_syoE0PHdEeW-MI8-O0a1Vg" target="_-WLk4e-dEeW8tK28P8Ma3g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+      <edges xmi:id="_Qz9okPLwEeW-MI8-O0a1Vg" source="_LN4J0fLwEeW-MI8-O0a1Vg" target="_syoE0PHdEeW-MI8-O0a1Vg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_-WLk4u-dEeW8tK28P8Ma3g" origin="_-WLk4O-dEeW8tK28P8Ma3g" image="_-WLk4e-dEeW8tK28P8Ma3g"/>
+    <mappings xmi:id="_MdFNQvCSEeW-MI8-O0a1Vg" origin="_t-OfAO-dEeW8tK28P8Ma3g" image="_MdFNQPCSEeW-MI8-O0a1Vg"/>
+    <mappings xmi:id="_syoE0fHdEeW-MI8-O0a1Vg" origin="_pLrMQPHdEeW-MI8-O0a1Vg" image="_syoE0PHdEeW-MI8-O0a1Vg"/>
+    <mappings xmi:id="_LN4J0vLwEeW-MI8-O0a1Vg" origin="_LN4J0PLwEeW-MI8-O0a1Vg" image="_LN4J0fLwEeW-MI8-O0a1Vg"/>
+  </units>
+</henshin:Module>

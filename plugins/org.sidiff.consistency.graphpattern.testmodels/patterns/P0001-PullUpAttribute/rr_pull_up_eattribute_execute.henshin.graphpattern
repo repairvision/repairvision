@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="ASCII"?>
+<graphpattern:GraphPattern xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:graphpattern="http://www.sidiff.org/consistency/graphpattern/1.0">
+  <nodes name="B.kernel_selectedEAttribute" incomings="//@nodes.7/@outgoings.0 //@nodes.6/@outgoings.0 //@nodes.2/@outgoings.1 //@nodes.12/@outgoings.1 //@nodes.13/@outgoings.0">
+    <outgoings target="//@nodes.7" opposite="//@nodes.7/@outgoings.0">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+    </outgoings>
+    <outgoings target="//@nodes.6" opposite="//@nodes.6/@outgoings.0">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+    </outgoings>
+    <outgoings target="//@nodes.2" opposite="//@nodes.2/@outgoings.1" crossReference="true">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedB"/>
+    </outgoings>
+    <outgoings target="//@nodes.12" opposite="//@nodes.12/@outgoings.1" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.13" opposite="//@nodes.13/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+    <attributes value="eAttributeName">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="A.kernel_selectedEAttribute" incomings="//@nodes.4/@outgoings.0 //@nodes.2/@outgoings.0 //@nodes.8/@outgoings.1 //@nodes.10/@outgoings.0">
+    <outgoings target="//@nodes.4" opposite="//@nodes.4/@outgoings.0">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+    </outgoings>
+    <outgoings target="//@nodes.2" opposite="//@nodes.2/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedA"/>
+    </outgoings>
+    <outgoings target="//@nodes.8" opposite="//@nodes.8/@outgoings.1" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.10" opposite="//@nodes.10/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.1/@outgoings.1 //@nodes.0/@outgoings.2">
+    <outgoings target="//@nodes.1" opposite="//@nodes.1/@outgoings.1">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedA"/>
+    </outgoings>
+    <outgoings target="//@nodes.0" opposite="//@nodes.0/@outgoings.2">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedB"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/matching/model#//Correspondence"/>
+  </nodes>
+  <nodes name="B.kernel_subClass" incomings="//@nodes.6/@outgoings.1 //@nodes.5/@outgoings.1">
+    <outgoings target="//@nodes.6" opposite="//@nodes.6/@outgoings.1">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+    </outgoings>
+    <outgoings target="//@nodes.5" opposite="//@nodes.5/@outgoings.1" crossReference="true">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedB"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+  </nodes>
+  <nodes name="A.kernel_subClass" incomings="//@nodes.1/@outgoings.0 //@nodes.5/@outgoings.0 //@nodes.8/@outgoings.0 //@nodes.10/@outgoings.1">
+    <outgoings target="//@nodes.1" opposite="//@nodes.1/@outgoings.0">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+    </outgoings>
+    <outgoings target="//@nodes.5" opposite="//@nodes.5/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedA"/>
+    </outgoings>
+    <outgoings target="//@nodes.8" opposite="//@nodes.8/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.10" opposite="//@nodes.10/@outgoings.1" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.4/@outgoings.1 //@nodes.3/@outgoings.1">
+    <outgoings target="//@nodes.4" opposite="//@nodes.4/@outgoings.1">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedA"/>
+    </outgoings>
+    <outgoings target="//@nodes.3" opposite="//@nodes.3/@outgoings.1">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedB"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/matching/model#//Correspondence"/>
+  </nodes>
+  <nodes name="B.kernel_superEClass" incomings="//@nodes.0/@outgoings.1 //@nodes.3/@outgoings.0 //@nodes.12/@outgoings.0 //@nodes.13/@outgoings.1 //@nodes.15/@outgoings.0">
+    <outgoings target="//@nodes.0" opposite="//@nodes.0/@outgoings.1">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+    </outgoings>
+    <outgoings target="//@nodes.3" opposite="//@nodes.3/@outgoings.0" crossReference="true">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+    </outgoings>
+    <outgoings target="//@nodes.12" opposite="//@nodes.12/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.13" opposite="//@nodes.13/@outgoings.1" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.15" opposite="//@nodes.15/@outgoings.0" crossReference="true">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+  </nodes>
+  <nodes name="B.kernel_dt" incomings="//@nodes.0/@outgoings.0 //@nodes.19/@outgoings.1">
+    <outgoings target="//@nodes.0" opposite="//@nodes.0/@outgoings.0" crossReference="true">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+    </outgoings>
+    <outgoings target="//@nodes.19" opposite="//@nodes.19/@outgoings.1" crossReference="true">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedB"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.4/@outgoings.2 //@nodes.1/@outgoings.2 //@nodes.9/@outgoings.0">
+    <outgoings target="//@nodes.4" opposite="//@nodes.4/@outgoings.2">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.1" opposite="//@nodes.1/@outgoings.2">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.9" opposite="//@nodes.9/@outgoings.0">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.8/@outgoings.2 //@nodes.12/@outgoings.2 //@nodes.22/@outgoings.2">
+    <outgoings target="//@nodes.8" opposite="//@nodes.8/@outgoings.2" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+    </outgoings>
+    <outgoings target="//@nodes.12" opposite="//@nodes.12/@outgoings.2" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <outgoings target="//@nodes.22" opposite="//@nodes.22/@outgoings.2" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <attributes value="&quot;eStructuralFeatures&quot;">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="" incomings="//@nodes.1/@outgoings.3 //@nodes.4/@outgoings.3 //@nodes.11/@outgoings.0">
+    <outgoings target="//@nodes.1" opposite="//@nodes.1/@outgoings.3">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.4" opposite="//@nodes.4/@outgoings.3">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.11" opposite="//@nodes.11/@outgoings.0">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.10/@outgoings.2 //@nodes.13/@outgoings.2 //@nodes.25/@outgoings.2">
+    <outgoings target="//@nodes.10" opposite="//@nodes.10/@outgoings.2" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+    </outgoings>
+    <outgoings target="//@nodes.13" opposite="//@nodes.13/@outgoings.2" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <outgoings target="//@nodes.25" opposite="//@nodes.25/@outgoings.2" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <attributes value="&quot;eContainingClass&quot;">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="" incomings="//@nodes.6/@outgoings.2 //@nodes.0/@outgoings.3 //@nodes.9/@outgoings.1">
+    <outgoings target="//@nodes.6" opposite="//@nodes.6/@outgoings.2">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.0" opposite="//@nodes.0/@outgoings.3">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.9" opposite="//@nodes.9/@outgoings.1">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.0/@outgoings.4 //@nodes.6/@outgoings.3 //@nodes.11/@outgoings.1">
+    <outgoings target="//@nodes.0" opposite="//@nodes.0/@outgoings.4">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.6" opposite="//@nodes.6/@outgoings.3">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.11" opposite="//@nodes.11/@outgoings.1">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+  </nodes>
+  <nodes name="">
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+  </nodes>
+  <nodes name="B.multi_multiObjEClass" incomings="//@nodes.6/@outgoings.4 //@nodes.17/@outgoings.1">
+    <outgoings target="//@nodes.6" opposite="//@nodes.6/@outgoings.4">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+    </outgoings>
+    <outgoings target="//@nodes.17" opposite="//@nodes.17/@outgoings.1" crossReference="true">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedB"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+  </nodes>
+  <nodes name="A.multi_multiObjEClass" incomings="//@nodes.21/@outgoings.0 //@nodes.17/@outgoings.0 //@nodes.22/@outgoings.0 //@nodes.25/@outgoings.1">
+    <outgoings target="//@nodes.21" opposite="//@nodes.21/@outgoings.0">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+    </outgoings>
+    <outgoings target="//@nodes.17" opposite="//@nodes.17/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedA"/>
+    </outgoings>
+    <outgoings target="//@nodes.22" opposite="//@nodes.22/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.25" opposite="//@nodes.25/@outgoings.1" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.16/@outgoings.1 //@nodes.15/@outgoings.1">
+    <outgoings target="//@nodes.16" opposite="//@nodes.16/@outgoings.1">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedA"/>
+    </outgoings>
+    <outgoings target="//@nodes.15" opposite="//@nodes.15/@outgoings.1">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedB"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/matching/model#//Correspondence"/>
+  </nodes>
+  <nodes name="A.kernel_dt" incomings="//@nodes.19/@outgoings.0 //@nodes.21/@outgoings.2 //@nodes.23/@outgoings.1">
+    <outgoings target="//@nodes.19" opposite="//@nodes.19/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedA"/>
+    </outgoings>
+    <outgoings target="//@nodes.21" opposite="//@nodes.21/@outgoings.2" crossReference="true">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+    </outgoings>
+    <outgoings target="//@nodes.23" opposite="//@nodes.23/@outgoings.1" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.18/@outgoings.0 //@nodes.7/@outgoings.1">
+    <outgoings target="//@nodes.18" opposite="//@nodes.18/@outgoings.0">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedA"/>
+    </outgoings>
+    <outgoings target="//@nodes.7" opposite="//@nodes.7/@outgoings.1">
+      <type href="http://www.sidiff.org/matching/model#//Correspondence/matchedB"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/matching/model#//Correspondence"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.21/@outgoings.1">
+    <outgoings target="//@nodes.21" opposite="//@nodes.21/@outgoings.1">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveObject/obj"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveObject"/>
+  </nodes>
+  <nodes name="A.multi_multiObjEAttribute" incomings="//@nodes.16/@outgoings.0 //@nodes.20/@outgoings.0 //@nodes.18/@outgoings.1 //@nodes.22/@outgoings.1 //@nodes.23/@outgoings.0 //@nodes.25/@outgoings.0">
+    <outgoings target="//@nodes.16" opposite="//@nodes.16/@outgoings.0">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+    </outgoings>
+    <outgoings target="//@nodes.20" opposite="//@nodes.20/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveObject/obj"/>
+    </outgoings>
+    <outgoings target="//@nodes.18" opposite="//@nodes.18/@outgoings.1">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+    </outgoings>
+    <outgoings target="//@nodes.22" opposite="//@nodes.22/@outgoings.1" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.23" opposite="//@nodes.23/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.25" opposite="//@nodes.25/@outgoings.0" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+    <attributes value="eAttributeName">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="" incomings="//@nodes.16/@outgoings.2 //@nodes.21/@outgoings.3 //@nodes.9/@outgoings.2">
+    <outgoings target="//@nodes.16" opposite="//@nodes.16/@outgoings.2">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.21" opposite="//@nodes.21/@outgoings.3">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.9" opposite="//@nodes.9/@outgoings.2">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.21/@outgoings.4 //@nodes.18/@outgoings.2 //@nodes.24/@outgoings.0">
+    <outgoings target="//@nodes.21" opposite="//@nodes.21/@outgoings.4">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.18" opposite="//@nodes.18/@outgoings.2">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.24" opposite="//@nodes.24/@outgoings.0">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.23/@outgoings.2">
+    <outgoings target="//@nodes.23" opposite="//@nodes.23/@outgoings.2" crossReference="true">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <attributes value="&quot;eType&quot;">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="" incomings="//@nodes.21/@outgoings.5 //@nodes.16/@outgoings.3 //@nodes.11/@outgoings.2">
+    <outgoings target="//@nodes.21" opposite="//@nodes.21/@outgoings.5">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.16" opposite="//@nodes.16/@outgoings.3">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.11" opposite="//@nodes.11/@outgoings.2">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//RemoveReference"/>
+  </nodes>
+</graphpattern:GraphPattern>

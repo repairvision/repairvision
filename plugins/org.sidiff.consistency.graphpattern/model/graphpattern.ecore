@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="graphpattern" nsURI="http://www.sidiff.org/consistency/graphpattern/1.0"
+    nsPrefix="graphpattern">
+  <eClassifiers xsi:type="ecore:EClass" name="GraphPattern" eSuperTypes="#//GraphPredicate">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//NodePattern" containment="true" eOpposite="#//NodePattern/graph"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" lowerBound="1"
+        eType="#//Pattern" eOpposite="#//Pattern/graphs"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="multi" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodePattern" eSuperTypes="#//GraphPredicate">
+    <eOperations name="getEdges" upperBound="-1" eType="#//EdgePattern">
+      <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </eOperations>
+    <eOperations name="getAttribute" eType="#//AttributePattern">
+      <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoings" upperBound="-1"
+        eType="#//EdgePattern" containment="true" eOpposite="#//EdgePattern/source"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//AttributePattern" containment="true" eOpposite="#//AttributePattern/node"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="evaluation" eType="#//Evaluation"
+        transient="true" containment="true" eOpposite="#//Evaluation/node"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graph" lowerBound="1" eType="#//GraphPattern"
+        eOpposite="#//GraphPattern/nodes"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incomings" upperBound="-1"
+        eType="#//EdgePattern" eOpposite="#//EdgePattern/target"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EdgePattern" eSuperTypes="#//GraphPredicate">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//NodePattern" eOpposite="#//NodePattern/incomings"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        eType="#//NodePattern" eOpposite="#//NodePattern/outgoings"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="opposite" eType="#//EdgePattern"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="crossReference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributePattern">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//NodePattern"
+        eOpposite="#//NodePattern/attributes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Evaluation">
+    <eOperations name="initialize"/>
+    <eOperations name="accept">
+      <eParameters name="visitor" eType="#//Visitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" lowerBound="1" eType="#//NodePattern"
+        transient="true" eOpposite="#//NodePattern/evaluation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="matches" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" volatile="true"
+        transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="store" lowerBound="1" eType="#//DataStore"
+        eOpposite="#//DataStore/evaluation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Visitor" abstract="true">
+    <eOperations name="visit">
+      <eParameters name="evaluation" eType="#//Evaluation"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="covisitors" upperBound="-1"
+        eType="#//Visitor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraints" upperBound="-1"
+        eType="#//Constraint"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mediator" lowerBound="1"
+        eType="#//Mediator" eOpposite="#//Mediator/visitors"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ECollection" instanceTypeName="java.util.Collection&lt;? extends org.eclipse.emf.ecore.EObject>"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EIterator" instanceTypeName="java.util.Iterator&lt;org.eclipse.emf.ecore.EObject>"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataStore" abstract="true">
+    <eOperations name="initialize"/>
+    <eOperations name="getMatchIterator" eType="#//EIterator"/>
+    <eOperations name="getMatchSize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="isEmptyMatch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="addMatch">
+      <eParameters name="localMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </eOperations>
+    <eOperations name="removeMatch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="localMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </eOperations>
+    <eOperations name="containsMatch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="localMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </eOperations>
+    <eOperations name="clearMatches"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="evaluation" lowerBound="1"
+        eType="#//Evaluation" eOpposite="#//Evaluation/store"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NavigableDataStore" abstract="true"
+      eSuperTypes="#//DataStore">
+    <eOperations name="getRemoteMatchIterator" eType="#//EIterator">
+      <eParameters name="localMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="edge" eType="#//EdgePattern"/>
+    </eOperations>
+    <eOperations name="getRemoteMatchSize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eParameters name="localMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="edge" eType="#//EdgePattern"/>
+    </eOperations>
+    <eOperations name="isEmptyRemoteMatch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="localMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="edge" eType="#//EdgePattern"/>
+    </eOperations>
+    <eOperations name="addRemoteMatch">
+      <eParameters name="localMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="remoteMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="edge" eType="#//EdgePattern"/>
+    </eOperations>
+    <eOperations name="removeRemoteMatch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="localMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="remoteMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="edge" eType="#//EdgePattern"/>
+    </eOperations>
+    <eOperations name="containsRemoteMatch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="localMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="remoteMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="edge" eType="#//EdgePattern"/>
+    </eOperations>
+    <eOperations name="cleanRemoteMatches">
+      <eParameters name="localMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="edge" eType="#//EdgePattern"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Constraint" abstract="true">
+    <eOperations name="check" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="node" eType="#//NodePattern"/>
+      <eParameters name="candidate" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnaryFormula" abstract="true" eSuperTypes="#//Formula">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="child" lowerBound="1" eType="#//Formula"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RuleBase">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="patterns" upperBound="-1"
+        eType="#//Pattern" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Formula" abstract="true" interface="true">
+    <eOperations name="getResult" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="getEmbedding" eType="#//Formula"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BinaryFormula" abstract="true" eSuperTypes="#//Formula">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" lowerBound="1" eType="#//Formula"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" lowerBound="1" eType="#//Formula"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="And" eSuperTypes="#//BinaryFormula">
+    <eAnnotations source="http://www.obeo.fr/dsl/dnc/archetype">
+      <details key="archetype" value="Role"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Or" eSuperTypes="#//BinaryFormula">
+    <eAnnotations source="http://www.obeo.fr/dsl/dnc/archetype">
+      <details key="archetype" value="Role"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Iff" eSuperTypes="#//BinaryFormula"/>
+  <eClassifiers xsi:type="ecore:EClass" name="If" eSuperTypes="#//BinaryFormula"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Not" eSuperTypes="#//UnaryFormula"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Quantifier" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Xor" eSuperTypes="#//BinaryFormula"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Pattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="formula" lowerBound="1"
+        eType="#//Formula" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graphs" upperBound="-1"
+        eType="#//GraphPattern" containment="true" eOpposite="#//GraphPattern/pattern"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//Parameter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphPredicate" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraints" upperBound="-1"
+        eType="#//GraphConstraint" eOpposite="#//GraphConstraint/graphPredicates"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="quantifier" eType="#//Quantifier"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Parameter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphMatch" abstract="true">
+    <eOperations name="getMatch" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
+      <eParameters name="node" eType="#//NodePattern"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graphPattern" unique="false"
+        lowerBound="1" eType="#//GraphPattern"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="matching" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" volatile="true"
+        transient="true" derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ForAll" eSuperTypes="#//Quantifier"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Exists" eSuperTypes="#//Quantifier">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="-1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NAryFormula" abstract="true" eSuperTypes="#//Formula">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="results" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="formulas" lowerBound="1"
+        upperBound="-1" eType="#//Formula" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AndGroup" eSuperTypes="#//NAryFormula"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OrGroup" eSuperTypes="#//NAryFormula"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphConstraint" eSuperTypes="#//Formula">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graphPredicates" lowerBound="1"
+        upperBound="-1" eType="#//GraphPredicate" eOpposite="#//GraphPredicate/constraints"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="XorGroup" eSuperTypes="#//NAryFormula"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IffGroup" eSuperTypes="#//NAryFormula"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Mediator" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="visitors" upperBound="-1"
+        eType="#//Visitor" eOpposite="#//Visitor/mediator"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EObjectList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="content" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Complement-Rule Calculation
+Bundle-SymbolicName: org.sidiff.consistency.repair.complement
+Bundle-Version: 0.0.1.qualifier
+Bundle-Activator: org.sidiff.consistency.complement.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.henshin.model,
+ org.sidiff.common.henshin,
+ org.eclipse.emf.henshin.interpreter
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: org.sidiff.consistency.complement.construction,
+ org.sidiff.consistency.complement.construction.match

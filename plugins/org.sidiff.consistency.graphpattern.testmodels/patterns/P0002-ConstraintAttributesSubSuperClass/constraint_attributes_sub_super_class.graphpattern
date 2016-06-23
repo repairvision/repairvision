@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphpattern:GraphPattern xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:graphpattern="http://www.sidiff.org/consistency/graphpattern/1.0">
+  <nodes name="" incomings="//@nodes.2/@outgoings.0 //@nodes.1/@outgoings.0">
+    <outgoings target="//@nodes.1" opposite="//@nodes.1/@outgoings.0" crossReference="true">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+    </outgoings>
+    <outgoings target="//@nodes.2" opposite="//@nodes.2/@outgoings.0">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+  </nodes>
+  <nodes name="context" incomings="//@nodes.0/@outgoings.0 //@nodes.3/@outgoings.0">
+    <outgoings target="//@nodes.0" opposite="//@nodes.0/@outgoings.0">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+    </outgoings>
+    <outgoings target="//@nodes.3" opposite="//@nodes.3/@outgoings.0">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.0/@outgoings.1">
+    <outgoings target="//@nodes.0" opposite="//@nodes.0/@outgoings.1">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+    <attributes value="attrName">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="" incomings="//@nodes.1/@outgoings.1">
+    <outgoings name="sub" target="//@nodes.1" opposite="//@nodes.1/@outgoings.1">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+    <attributes value="attrName">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+</graphpattern:GraphPattern>
