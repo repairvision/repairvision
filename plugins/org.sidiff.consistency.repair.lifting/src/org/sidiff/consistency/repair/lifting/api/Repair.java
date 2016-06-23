@@ -27,6 +27,18 @@ public class Repair {
 	private List<GraphElement> complementingChanges;
 	
 	/**
+	 * @param complementRule
+	 *            The container of the complement rule.
+	 * @param complementPreMatch
+	 *            The pre-match of the complement rule.
+	 */
+	public Repair(ComplementRule complementRule, ComplementMatch complementPreMatch) {
+		super();
+		this.complementRule = complementRule;
+		this.complementPreMatch = complementPreMatch;
+	}
+
+	/**
 	 * @return The corresponding partially executed edit-rule.
 	 */
 	public Rule getEditRule() {

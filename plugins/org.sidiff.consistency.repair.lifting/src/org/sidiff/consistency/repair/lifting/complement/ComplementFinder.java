@@ -14,8 +14,10 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.henshin.interpreter.EGraph;
+import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
@@ -45,6 +47,7 @@ import org.sidiff.difference.lifting.edit2recognition.traces.TransformationPatte
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
+import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 
 /**
@@ -67,7 +70,7 @@ public class ComplementFinder {
 	/**
 	 * The working graph, i.e. the actual version of the model.
 	 */
-	private EGraph graph;
+	private EGraph graphModelB;
 
 	/**
 	 * The resource set which contains model A / B and the difference.
@@ -80,15 +83,19 @@ public class ComplementFinder {
 	private PartialLiftingEngineFactory liftingEngineFactory = new PartialLiftingEngineFactory();
 
 	/**
-	 * @param graph
-	 *            The working graph, i.e. the actual version of the model.
-	 * @param modelDifference
-	 *            The resource set which contains model A / B and the difference.
+	 * @param modelAResource
+	 *            The historic model.
+	 * @param modelBResource
+	 *            The actual model.
+	 * @param difference
+	 *            The difference between model A and B.
 	 */
-	public ComplementFinder(EGraph graph, ResourceSet modelDifference) {
-		super();
-		this.graph = graph;
-		this.modelDifference = modelDifference;
+	public ComplementFinder(Resource modelAResource, Resource modelBResource, SymmetricDifference difference) {
+		assert (modelAResource.getResourceSet() == modelBResource.getResourceSet()) 
+		&& (modelBResource.getResourceSet() == difference.eResource().getResourceSet());
+		
+		this.graphModelB = new EGraphImpl(modelBResource);
+		this.modelDifference = difference.eResource().getResourceSet();
 		this.engine = new EngineImpl();
 	}
 
@@ -97,7 +104,7 @@ public class ComplementFinder {
 	 *            The partially executed edit-rule.
 	 * @return All complementing operations for the given edit-rule.
 	 */
-	public List<ComplementRule> searchComplementRule(Rule editRule) {
+	public List<ComplementRule> searchComplementRules(Rule editRule) {
 
 		//// Edit to Recognition ////
 		Edit2RecognitionRule edit2Recognition = new Edit2RecognitionRule(editRule);
@@ -121,7 +128,7 @@ public class ComplementFinder {
 
 		//// Complement Construction ////
 		ComplementConstructor complementConstructor = 
-				new ComplementConstructorCompleteContext(editRule, engine, graph);
+				new ComplementConstructorCompleteContext(editRule, engine, graphModelB);
 
 		List<ComplementRule> complements = new ArrayList<>(); 
 

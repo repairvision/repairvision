@@ -4,15 +4,17 @@ Bundle-Name: Lifting
 Bundle-SymbolicName: org.sidiff.consistency.repair.lifting;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.sidiff.difference.symmetric,
- org.sidiff.consistency.graphpattern.matcher,
+Require-Bundle: org.eclipse.emf.henshin.interpreter,
  org.sidiff.consistency.graphpattern,
- org.sidiff.difference.technical,
- org.eclipse.emf.henshin.interpreter,
- org.sidiff.consistency.repair.complement,
- org.sidiff.difference.lifting.edit2recognition,
+ org.sidiff.consistency.graphpattern.matcher,
  org.sidiff.consistency.graphpattern.henshin,
- org.sidiff.common.henshin
+ org.sidiff.consistency.repair.complement,
+ org.sidiff.common.henshin,
+ org.sidiff.matching.api,
+ org.sidiff.difference.technical,
+ org.sidiff.difference.technical.api,
+ org.sidiff.difference.symmetric,
+ org.sidiff.difference.lifting.edit2recognition
 Export-Package: org.sidiff.consistency.repair.lifting.engine,
  org.sidiff.consistency.repair.lifting.engine.partial,
  org.sidiff.consistency.repair.lifting.matching,
