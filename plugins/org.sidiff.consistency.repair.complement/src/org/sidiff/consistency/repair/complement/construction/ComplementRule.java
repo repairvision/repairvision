@@ -9,12 +9,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Engine;
 import org.eclipse.emf.henshin.interpreter.Match;
+import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
+import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.NestedCondition;
@@ -78,6 +81,33 @@ public class ComplementRule {
 		super();
 		this.sourceRule = sourceRule;
 		this.complementRule = complementRule;
+	}
+	
+	/**
+	 * @param complementPreMatch
+	 *            The concrete complement pre-match.
+	 * 
+	 * @return <code>true</code> if the rule was successfully applied;
+	 *         <code>false</code> otherwise.
+	 */
+	public boolean apply(ComplementMatch complementPreMatch) {
+		
+		if (complementPreMatch.getUnfulfilledACs().isEmpty()) {
+			Match preMatch = new MatchImpl(complementRule);
+			
+			for (Entry<Node, EObject> match : complementPreMatch.getNodeMatches().entrySet()) {
+				preMatch.setNodeTarget(match.getKey(), match.getValue());
+			}
+			
+			RuleApplication application = new RuleApplicationImpl(engine);
+			application.setRule(complementRule);
+			application.setEGraph(graph);
+			application.setCompleteMatch(preMatch);
+			
+			return application.execute(null);
+		}
+		
+		return false;
 	}
 	
 	//// Getter / Setter /////
@@ -238,6 +268,7 @@ public class ComplementRule {
 		return preMatch;
 	}
 	
+	// FIXME: Maybe we should check all ACs of the rule here and not only the latest unfulfilled!?
 	public void recheckAllApplicationConditions(ComplementMatch contextMatch) {
 		for (NestedCondition pac : contextMatch.getUnfulfilledACs()) {
 			recheckApplicationCondition(pac, contextMatch);
