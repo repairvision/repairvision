@@ -8,12 +8,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
 import org.sidiff.consistency.repair.lifting.complement.ComplementFinder;
@@ -42,25 +40,22 @@ public class RepairFacade {
 	 * @return All found repairs pre edit-rule.
 	 */
 	public static Map<Rule, List<Repair>> getRepairs(
-			URI modelA, URI modelB, Collection<Rule> editRules, DifferenceSettings settings) {
+			Resource modelA, Resource modelB, Collection<Rule> editRules, DifferenceSettings settings) {
 		
 		// Initialize:
-		Map<Rule, List<Repair>> repairs = new LinkedHashMap<>();
-		
-		Resource modelAResource = EMFStorage.eLoad(modelA).eResource();
-		Resource modelBResource = EMFStorage.eLoad(modelB).eResource();
 		
 		// Calculate difference:
 		SymmetricDifference difference = null;
 		
 		try {
-			difference = deriveTechnicalDifference(modelAResource, modelBResource, settings);
+			difference = deriveTechnicalDifference(modelA, modelB, settings);
 		} catch (InvalidModelException | NoCorrespondencesException e) {
 			e.printStackTrace();
 		}
 		
 		// Calculate repairs:
-		ComplementFinder complementFinder = new ComplementFinder(modelAResource, modelBResource, difference);
+		ComplementFinder complementFinder = new ComplementFinder(modelA, modelB, difference);
+		Map<Rule, List<Repair>> repairs = new LinkedHashMap<>();
 		
 		for (Rule editRule : editRules) {
 			List<Repair> repairsPerRule = new ArrayList<>();
