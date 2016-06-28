@@ -58,11 +58,20 @@ public abstract class ComplementConstructor {
 	private ComplementRule deriveComplementRule(Collection<EditRuleMatch> sourceRuleMatching) {
 
 		// Create copy of the source rule:
-		 Map<EObject, EObject> copyTrace = ComplementUtil.deepCopy(sourceRule);
-		 Rule complementRule = (Rule) copyTrace.get(sourceRule);
-		
+		Map<EObject, EObject> copyTrace = ComplementUtil.deepCopy(sourceRule);
+		Rule complementRule = (Rule) copyTrace.get(sourceRule);
+
 		// Initialize complement rule:
 		ComplementRule complement = new ComplementRule(sourceRule, complementRule);
+
+		// Save trace [Source -> Complement]:
+		for (Node sourceNode : sourceRule.getLhs().getNodes()) {
+			complement.addTrace(sourceNode, (Node) copyTrace.get(sourceNode));
+		}
+		
+		for (Node sourceNode : sourceRule.getRhs().getNodes()) {
+			complement.addTrace(sourceNode, (Node) copyTrace.get(sourceNode));
+		}
 		
 		// Substitute already executed edges:
 		for (EditRuleMatch sourceRuleMatch : sourceRuleMatching) {
@@ -102,16 +111,13 @@ public abstract class ComplementConstructor {
 					
 					// Remove node from source-rule:
 					EcoreUtil.remove(complementNode);
+					complement.removeTrace(sourceNode);
 				}
 				
 				// Create-Node:
 				else  if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
 					// Transform create-node to preserve-node:
 					complementNode.setAction(new Action(Type.PRESERVE));
-					complement.addTrace(sourceNode, complementNode);
-				} else {
-					// Unchanged node: (save trace)
-					complement.addTrace(sourceNode, complementNode);
 				}
 			}
 		}

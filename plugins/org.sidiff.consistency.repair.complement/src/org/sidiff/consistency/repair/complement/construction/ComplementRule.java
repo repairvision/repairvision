@@ -3,6 +3,7 @@ package org.sidiff.consistency.repair.complement.construction;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyPreserveNodes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.NestedCondition;
@@ -179,6 +181,15 @@ public class ComplementRule {
 		}
 	}
 	
+	public void removeTrace(Node sourceNode) {
+		
+		if (isRHSNode(sourceNode)) {
+			rhsTrace.remove(sourceNode);
+		} else {
+			lhsTrace.remove(sourceNode);
+		}
+	}
+	
 	public Node getTrace(Node sourceRule) {
 		Node lhsNodeTrace = lhsTrace.get(sourceRule);
 		
@@ -187,6 +198,25 @@ public class ComplementRule {
 		} else {
 			return lhsNodeTrace; 
 		}
+	}
+	
+	public Edge getTrace(Edge sourceRule) {
+		Node srcNodeTrace = null;
+		Node tgtNodeTrace = null;
+		
+		if (isRHSEdge(sourceRule)) {
+			srcNodeTrace = rhsTrace.get(sourceRule.getSource());
+			tgtNodeTrace = rhsTrace.get(sourceRule.getTarget());
+		} else {
+			srcNodeTrace = lhsTrace.get(sourceRule.getSource());
+			tgtNodeTrace = lhsTrace.get(sourceRule.getTarget());
+		}
+		
+		if ((srcNodeTrace != null) && (tgtNodeTrace != null)) {
+			return srcNodeTrace.getOutgoing(sourceRule.getType(), tgtNodeTrace);
+		}
+		
+		return null;
 	}
 	
 	//// Handle application conditions ////

@@ -45,6 +45,7 @@ import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeS
 import org.sidiff.consistency.repair.lifting.engine.partial.PartialLiftingEngineFactory;
 import org.sidiff.difference.lifting.edit2recognition.traces.TransformationPatterns;
 import org.sidiff.difference.symmetric.AddObject;
+import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
@@ -234,7 +235,7 @@ public class ComplementFinder {
 
 		for (NodePattern changeNode : changes.keySet()) {
 			if (changeNode.getType() == DIFFERENCE_MODEL.getAddReference()) {
-				RemoveReference change = (RemoveReference) changes.get(changeNode).getMatch();
+				AddReference change = (AddReference) changes.get(changeNode).getMatch();
 
 				if ((change != null) && (change.getType() == type)) {
 					NodePattern src = changeNode.getOutgoing(DIFFERENCE_MODEL.getAddReference_Src()).getTarget();

@@ -49,6 +49,10 @@ public class RepairFacade {
 		Resource modelA = differenceRSS.getResource(uriModelA, true);
 		Resource modelB = differenceRSS.getResource(uriModelB, true);
 		
+//		// TODO: Remove this....
+//		URI diffURI = URI.createFileURI("D:/Workspace/SiLift/org.sidiff.consistency.graphpattern.testmodels/models/M0001-PulUpAttribute/M0001A_x_M0001B_EMFCompare_technical.symmetric");
+//		SymmetricDifference difference = (SymmetricDifference)differenceRSS.getResource(diffURI, true).getContents().get(0);
+		
 		// Calculate difference:
 		SymmetricDifference difference = null;
 		
@@ -68,12 +72,15 @@ public class RepairFacade {
 		
 		for (Rule editRule : editRules) {
 			List<Repair> repairsPerRule = new ArrayList<>();
-			repairs.put(editRule, repairsPerRule);
 			
 			for(ComplementRule complement : complementFinder.searchComplementRules(editRule)) {
 				for (ComplementMatch preMatch : complement.getComplementPreMatches()) {
 					repairsPerRule.add(new Repair(complement, preMatch));
 				}
+			}
+			
+			if (!repairsPerRule.isEmpty()) {
+				repairs.put(editRule, repairsPerRule);
 			}
 		}
 		

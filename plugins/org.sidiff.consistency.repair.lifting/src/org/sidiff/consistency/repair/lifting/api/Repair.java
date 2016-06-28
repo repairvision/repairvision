@@ -56,22 +56,28 @@ public class Repair {
 			historicChanges = new ArrayList<>();
 			
 			for (Node deleteNode : getLHSMinusRHSNodes(getEditRule())) {
-				historicChanges.add(deleteNode);
+				if (!getComplementingChanges().contains(complementRule.getTrace(deleteNode))) {
+					historicChanges.add(deleteNode);
+				}
 			}
 			
 			for (Edge deleteEdge : getLHSMinusRHSEdges(getEditRule())) {
-				historicChanges.add(deleteEdge);
+				if (!getComplementingChanges().contains(complementRule.getTrace(deleteEdge))) {
+					historicChanges.add(deleteEdge);
+				}
 			}
 			
 			for (Node createNode : getRHSMinusLHSNodes(getEditRule())) {
-				historicChanges.add(createNode);
+				if (!getComplementingChanges().contains(complementRule.getTrace(createNode))) {
+					historicChanges.add(createNode);
+				}
 			}
 			
 			for (Edge createEdge : getRHSMinusLHSEdges(getEditRule())) {
-				historicChanges.add(createEdge);
+				if (!getComplementingChanges().contains(complementRule.getTrace(createEdge))) {
+					historicChanges.add(createEdge);
+				}
 			}
-			
-			historicChanges.removeAll(getComplementingChanges());
 		}
 		
 		return historicChanges;
