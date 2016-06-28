@@ -45,6 +45,7 @@ public abstract class ComplementConstructor {
 		
 		// Create the complements pre-match: 
 		List<ComplementMatch> preMatches = initializeComplementPrematch(complement, sourceRuleMatching);
+		complement.setComplementPreMatches(preMatches);
 		
 		// Get unfulfilled application conditions:
 		for (ComplementMatch preMatch : preMatches) {

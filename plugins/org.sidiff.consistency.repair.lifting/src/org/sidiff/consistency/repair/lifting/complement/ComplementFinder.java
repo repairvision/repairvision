@@ -133,9 +133,9 @@ public class ComplementFinder {
 		List<ComplementRule> complements = new ArrayList<>(); 
 
 		// Find partially executed edit-operations:
-		for (boolean matchFound = matchGenerator.findNextMatch(); matchFound; matchGenerator.findNextMatch()) {
+		for (boolean matchFound = matchGenerator.findNextMatch(); matchFound; matchFound = matchGenerator.findNextMatch()) {
 
-			// Create partial edit-rule match from recognition-rule match:
+			// Translate: Create partial edit-rule match from recognition-rule match:
 			Collection<EditRuleMatch> editRuleMatch = createEditRuleMatch(edit2Recognition, matchGenerator);
 
 			// Store new complement rule:
@@ -169,10 +169,10 @@ public class ComplementFinder {
 
 		// EO-Delete-Nodes:
 		for (Node eoHenshinNode : getLHSMinusRHSNodes(editRule)) {
-			NodePair rrHenshinNodeB = traceEdit2Recognition.get(editRule).getTraceB(eoHenshinNode);
-			NodePattern rrNodePatternB = traceHenshinToGraphPattern.get(rrHenshinNodeB.getLhsNode());
+			NodePair rrHenshinNodeA = traceEdit2Recognition.get(editRule).getTraceA(eoHenshinNode);
+			NodePattern rrNodePatternA = traceHenshinToGraphPattern.get(rrHenshinNodeA.getLhsNode());
 
-			EObject deleted = getDeletedObject(rrNodePatternB, matchGenerator.getVariableMatching());
+			EObject deleted = getDeletedObject(rrNodePatternA, matchGenerator.getVariableMatching());
 
 			if (deleted != null) {
 				editRuleMatch.add(createEditRuleNodeMatch(eoHenshinNode, deleted, Type.DELETE));
@@ -181,10 +181,10 @@ public class ComplementFinder {
 
 		// EO-Create-Nodes:
 		for (Node eoHenshinNode : getRHSMinusLHSNodes(editRule)) {
-			NodePair rrHenshinNodeA = traceEdit2Recognition.get(editRule).getTraceA(eoHenshinNode);
-			NodePattern rrNodePatternA = traceHenshinToGraphPattern.get(rrHenshinNodeA.getLhsNode());
+			NodePair rrHenshinNodeB = traceEdit2Recognition.get(editRule).getTraceB(eoHenshinNode);
+			NodePattern rrNodePatternB = traceHenshinToGraphPattern.get(rrHenshinNodeB.getLhsNode());
 
-			EObject created = getCreatedObject(rrNodePatternA, matchGenerator.getVariableMatching());
+			EObject created = getCreatedObject(rrNodePatternB, matchGenerator.getVariableMatching());
 
 			if (created != null) {
 				editRuleMatch.add(createEditRuleNodeMatch(eoHenshinNode, created, Type.CREATE));
@@ -193,14 +193,14 @@ public class ComplementFinder {
 
 		// EO-Delete-Edges:
 		for (Edge eoHenshinEdge : getLHSMinusRHSEdges(editRule)) {
-			NodePair src_rrHenshinNodeB = traceEdit2Recognition.get(editRule).getTraceB(eoHenshinEdge.getSource());
-			NodePair tgt_rrHenshinNodeB = traceEdit2Recognition.get(editRule).getTraceB(eoHenshinEdge.getTarget());
+			NodePair src_rrHenshinNodeA = traceEdit2Recognition.get(editRule).getTraceA(eoHenshinEdge.getSource());
+			NodePair tgt_rrHenshinNodeA = traceEdit2Recognition.get(editRule).getTraceA(eoHenshinEdge.getTarget());
 
-			NodePattern src_rrNodePatternB = traceHenshinToGraphPattern.get(src_rrHenshinNodeB.getLhsNode());
-			NodePattern tgt_rrNodePatternB = traceHenshinToGraphPattern.get(tgt_rrHenshinNodeB.getLhsNode());
+			NodePattern src_rrNodePatternA = traceHenshinToGraphPattern.get(src_rrHenshinNodeA.getLhsNode());
+			NodePattern tgt_rrNodePatternA = traceHenshinToGraphPattern.get(tgt_rrHenshinNodeA.getLhsNode());
 
 			EObject[] deleted = getRemovedReference(eoHenshinEdge.getType(),
-					src_rrNodePatternB, tgt_rrNodePatternB, matchGenerator.getVariableMatching());
+					src_rrNodePatternA, tgt_rrNodePatternA, matchGenerator.getVariableMatching());
 
 			if (deleted != null) {
 				editRuleMatch.add(new EditRuleEdgeDeleteMatch(eoHenshinEdge, deleted[0], deleted[1]));
@@ -209,14 +209,14 @@ public class ComplementFinder {
 
 		// EO-Create-Edges:
 		for (Edge eoHenshinEdge : getRHSMinusLHSEdges(editRule)) {
-			NodePair src_rrHenshinNodeA = traceEdit2Recognition.get(editRule).getTraceA(eoHenshinEdge.getSource());
-			NodePair tgt_rrHenshinNodeA = traceEdit2Recognition.get(editRule).getTraceA(eoHenshinEdge.getTarget());
+			NodePair src_rrHenshinNodeB = traceEdit2Recognition.get(editRule).getTraceB(eoHenshinEdge.getSource());
+			NodePair tgt_rrHenshinNodeB = traceEdit2Recognition.get(editRule).getTraceB(eoHenshinEdge.getTarget());
 
-			NodePattern src_rrNodePatternA = traceHenshinToGraphPattern.get(src_rrHenshinNodeA.getLhsNode());
-			NodePattern tgt_rrNodePatternA = traceHenshinToGraphPattern.get(tgt_rrHenshinNodeA.getLhsNode());
+			NodePattern src_rrNodePatternB = traceHenshinToGraphPattern.get(src_rrHenshinNodeB.getLhsNode());
+			NodePattern tgt_rrNodePatternB = traceHenshinToGraphPattern.get(tgt_rrHenshinNodeB.getLhsNode());
 
 			EObject[] created = getCreateReference(eoHenshinEdge.getType(),
-					src_rrNodePatternA, tgt_rrNodePatternA, matchGenerator.getVariableMatching());
+					src_rrNodePatternB, tgt_rrNodePatternB, matchGenerator.getVariableMatching());
 
 			if (created != null) {
 				editRuleMatch.add(new EditRuleEdgeCreateMatch(eoHenshinEdge, created[0], created[1]));
@@ -236,7 +236,7 @@ public class ComplementFinder {
 			if (changeNode.getType() == DIFFERENCE_MODEL.getAddReference()) {
 				RemoveReference change = (RemoveReference) changes.get(changeNode).getMatch();
 
-				if (change.getType() == type) {
+				if ((change != null) && (change.getType() == type)) {
 					NodePattern src = changeNode.getOutgoing(DIFFERENCE_MODEL.getAddReference_Src()).getTarget();
 					NodePattern tgt = changeNode.getOutgoing(DIFFERENCE_MODEL.getAddReference_Tgt()).getTarget();
 
@@ -262,7 +262,7 @@ public class ComplementFinder {
 			if (changeNode.getType() == DIFFERENCE_MODEL.getRemoveReference()) {
 				RemoveReference change = (RemoveReference) changes.get(changeNode).getMatch();
 
-				if (change.getType() == type) {
+				if ((change != null) && (change.getType() == type)) {
 					NodePattern src = changeNode.getOutgoing(DIFFERENCE_MODEL.getRemoveReference_Src()).getTarget();
 					NodePattern tgt = changeNode.getOutgoing(DIFFERENCE_MODEL.getRemoveReference_Tgt()).getTarget();
 

@@ -97,6 +97,7 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 		
 		// Check context rule (with restricted working graph):
 		List<ComplementMatch> complementPreMatches = new ArrayList<>();
+		complement.setComplementPreMatches(complementPreMatches);
 		Iterator<Match> matchFinder = engine.findMatches(contextRule, restrictedGraph, null).iterator();
 		
 		if (matchFinder.hasNext()) {

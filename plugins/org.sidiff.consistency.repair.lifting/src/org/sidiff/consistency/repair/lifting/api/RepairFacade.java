@@ -1,14 +1,16 @@
 package org.sidiff.consistency.repair.lifting.api;
 
 import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
@@ -40,9 +42,12 @@ public class RepairFacade {
 	 * @return All found repairs pre edit-rule.
 	 */
 	public static Map<Rule, List<Repair>> getRepairs(
-			Resource modelA, Resource modelB, Collection<Rule> editRules, DifferenceSettings settings) {
+			URI uriModelA, URI uriModelB, Collection<Rule> editRules, DifferenceSettings settings) {
 		
 		// Initialize:
+		ResourceSet differenceRSS = new ResourceSetImpl();
+		Resource modelA = differenceRSS.getResource(uriModelA, true);
+		Resource modelB = differenceRSS.getResource(uriModelB, true);
 		
 		// Calculate difference:
 		SymmetricDifference difference = null;
@@ -52,6 +57,10 @@ public class RepairFacade {
 		} catch (InvalidModelException | NoCorrespondencesException e) {
 			e.printStackTrace();
 		}
+		
+		// FIXME [WORKAROUND]: Support differences without resource...
+		Resource differenceResource = differenceRSS.createResource(URI.createURI("NA"));
+		differenceResource.getContents().add(difference);
 		
 		// Calculate repairs:
 		ComplementFinder complementFinder = new ComplementFinder(modelA, modelB, difference);

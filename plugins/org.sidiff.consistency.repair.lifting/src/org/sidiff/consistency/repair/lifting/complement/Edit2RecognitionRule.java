@@ -24,6 +24,7 @@ public class Edit2RecognitionRule {
 	private Map<Node, NodePattern> henshinToGraphPatternTrace;
 	
 	public Edit2RecognitionRule(Rule editRule) {
+		this.editRule = editRule;
 		
 		try {
 			// Transform edit- to recognition-rule:

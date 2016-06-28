@@ -22,9 +22,6 @@ public class ComplementUtil {
 		// Root:
 		copier.copy(original);
 		
-		// Content:
-		original.eAllContents().forEachRemaining(content -> copier.copy(content));
-	    
 		// References:
 		copier.copyReferences();
 	    

@@ -1,7 +1,6 @@
 package org.sidiff.consistency.repair.lifting.ui.views;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -79,6 +78,23 @@ public class RepairView extends ViewPart {
 
 		getSite().setSelectionProvider(viewer_repairs);
 
+		// Edit-Rules:
+		Composite composite_editrules = new Composite(sashForm, SWT.BORDER);
+		composite_editrules.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		new ModelDropWidget(composite_editrules) {
+
+			@Override
+			protected boolean removeModel(IResource selection) {
+				return viewerApp.removeEditRule(selection);
+			}
+
+			@Override
+			protected boolean addModel(IResource element) {
+				return viewerApp.addEditRule(element);
+			}
+		};
+		
 		// Model A:
 		Composite composite_modelA = new Composite(sashForm, SWT.BORDER);
 		composite_modelA.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -86,12 +102,12 @@ public class RepairView extends ViewPart {
 		new ModelDropWidget(composite_modelA) {
 
 			@Override
-			protected boolean removeModel(Resource selection) {
+			protected boolean removeModel(IResource selection) {
 				return viewerApp.removeModelA(selection);
 			}
 
 			@Override
-			protected Resource addModel(IResource element) {
+			protected boolean addModel(IResource element) {
 				clear();
 				return viewerApp.addModelA(element);
 			}
@@ -104,34 +120,17 @@ public class RepairView extends ViewPart {
 		new ModelDropWidget(composite_modelB) {
 
 			@Override
-			protected boolean removeModel(Resource selection) {
+			protected boolean removeModel(IResource selection) {
 				return viewerApp.removeModelB(selection);
 			}
 
 			@Override
-			protected Resource addModel(IResource element) {
+			protected boolean addModel(IResource element) {
 				clear();
 				return viewerApp.addModelB(element);
 			}
 		};
 
-		// Edit-Rules:
-		Composite composite_editrules = new Composite(sashForm, SWT.BORDER);
-		composite_editrules.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		new ModelDropWidget(composite_editrules) {
-
-			@Override
-			protected boolean removeModel(Resource selection) {
-				return viewerApp.removeEditRule(selection);
-			}
-
-			@Override
-			protected Resource addModel(IResource element) {
-				return viewerApp.addEditRule(element);
-			}
-		};
-		
 		// Setup Sash-Form:
 		sashForm.setWeights(new int[] {100, 10, 10, 10});
 
