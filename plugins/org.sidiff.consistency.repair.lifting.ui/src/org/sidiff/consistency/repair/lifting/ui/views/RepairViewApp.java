@@ -62,7 +62,9 @@ public class RepairViewApp {
 		URI uriModelA = ModelDropWidget.getURI(modelAFile);
 		URI uriModelB = ModelDropWidget.getURI(modelBFile);
 		Map<Rule, List<Repair>> repairs = RepairFacade.getRepairs(uriModelA, uriModelB, editRules, settings);
-		repairView.viewer_repairs.setInput(repairs.values());
+		
+		// Show repairs:
+		repairView.viewer_repairs.setInput(repairs);
 	}
 	
 	private IMatcher getMatcher() {

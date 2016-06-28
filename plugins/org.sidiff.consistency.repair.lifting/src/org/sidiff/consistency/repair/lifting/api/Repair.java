@@ -2,7 +2,9 @@ package org.sidiff.consistency.repair.lifting.api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
@@ -50,7 +52,7 @@ public class Repair {
 	 */
 	public List<GraphElement> getHistoricChanges() {
 		
-		if (historicChanges != null) {
+		if (historicChanges == null) {
 			historicChanges = new ArrayList<>();
 			
 			for (Node deleteNode : getLHSMinusRHSNodes(getEditRule())) {
@@ -80,7 +82,7 @@ public class Repair {
 	 */
 	public List<GraphElement> getComplementingChanges() {
 		
-		if (complementingChanges != null) {
+		if (complementingChanges == null) {
 			complementingChanges = new ArrayList<>();
 			
 			for (Node deleteNode : getLHSMinusRHSNodes(complementRule.getComplementRule())) {
@@ -101,6 +103,13 @@ public class Repair {
 		}
 		
 		return complementingChanges;
+	}
+	
+	/**
+	 * @return The pre-match of the complementing repair-rule.
+	 */
+	public Map<Node, EObject> getPreMatch() {
+		return complementPreMatch.getNodeMatches();
 	}
 	
 	/**

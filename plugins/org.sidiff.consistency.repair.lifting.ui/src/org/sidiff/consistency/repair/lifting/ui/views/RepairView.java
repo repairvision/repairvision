@@ -9,8 +9,8 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
@@ -26,6 +26,7 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
+import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.ui.Activator;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairLabelProvider;
@@ -44,8 +45,6 @@ public class RepairView extends ViewPart {
 	private DrillDownAdapter drillDownAdapter;
 
 	private Action calculateRepairs;
-
-	private Action doubleClickAction;
 
 	class NameSorter extends ViewerSorter {
 	}
@@ -224,9 +223,27 @@ public class RepairView extends ViewPart {
 	}
 
 	private void hookDoubleClickAction() {
-		viewer_repairs.addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
+		
+		// Expand / Collapse on double click:
+		viewer_repairs.addDoubleClickListener(event -> {
+			ISelection selection = event.getSelection();
+
+			if (selection instanceof IStructuredSelection) {
+				Object item = ((IStructuredSelection) selection).getFirstElement();
+
+				if (item == null) {
+					return;
+				}
+				
+				if (viewer_repairs.getExpandedState(item)) {
+					viewer_repairs.collapseToLevel(item, 1);
+				} else {
+					if (item instanceof Repair) {
+						viewer_repairs.expandToLevel(item, 2);
+					} else {
+						viewer_repairs.expandToLevel(item, 1);
+					}
+				}
 			}
 		});
 	}
