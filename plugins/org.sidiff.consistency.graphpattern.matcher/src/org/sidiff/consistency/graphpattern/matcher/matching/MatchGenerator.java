@@ -380,4 +380,22 @@ public class MatchGenerator {
 			throw new RuntimeException("This algorithm needs a navigable data store!");
 		}
 	}
+	
+	@Override
+	public String toString() {
+		StringBuffer print = new StringBuffer();
+		
+		for (NodePattern node : graphPattern) {
+			MatchSelection matchSelection = getNavigableDataStore(node.getEvaluation()).getMatchSelection();
+			print.append("  " + node + ": \n");
+			
+			matchSelection.getSelectedMatches().forEachRemaining(match -> {
+				if (match != null) {
+					print.append("    " + match + "\n");
+				}
+			});
+		}
+		
+		return super.toString() + ": \n\n" + print.toString();
+	}
 }
