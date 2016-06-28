@@ -66,7 +66,7 @@ public class RepairLabelProvider extends LabelProvider {
 			Repair repair = (Repair) element;
 			
 			return "Repair "
-					+ " [" + repair.getHistoricChanges().size() + "/" + 
+					+ "[" + repair.getHistoricChanges().size() + "/" + 
 					+ repair.getComplementingChanges().size() + "]";
 		}
 		
