@@ -1,5 +1,6 @@
 package org.sidiff.consistency.repair.complement.construction;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyParameter;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyPreserveNodes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getPreservedNodes;
 
@@ -17,6 +18,7 @@ import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.view.NodePair;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
@@ -70,6 +72,10 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 		
 		for (NodePair preserveNode : getPreservedNodes(complement.getComplementRule())) {
 			copyPreserveNodes(contextRule, preserveNode, true);
+		}
+		
+		for (Parameter parameter : complement.getComplementRule().getParameters()) {
+			copyParameter(contextRule, parameter);
 		}
 		
 		// Create restricted graph:
