@@ -7,6 +7,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -45,6 +46,8 @@ public class RepairView extends ViewPart {
 	private DrillDownAdapter drillDownAdapter;
 
 	private Action calculateRepairs;
+	
+	private Action applyRepairs;
 
 	class NameSorter extends ViewerSorter {
 	}
@@ -195,7 +198,7 @@ public class RepairView extends ViewPart {
 
 	private void fillContextMenu(IMenuManager manager) {
 		manager.add(new Separator());
-		manager.add(calculateRepairs);
+		manager.add(applyRepairs);
 		manager.add(new Separator());
 
 		drillDownAdapter.addNavigationActions(manager);
@@ -205,7 +208,9 @@ public class RepairView extends ViewPart {
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
+		manager.add(new Separator());
 		manager.add(calculateRepairs);
+		manager.add(applyRepairs);
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
 	}
@@ -221,6 +226,27 @@ public class RepairView extends ViewPart {
 		calculateRepairs.setText("Search Repairs");
 		calculateRepairs.setToolTipText("Search Repairs");
 		calculateRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/bulb.png"));
+		
+		// Apply repair:
+		applyRepairs = new Action() {
+			public void run() {
+				ISelection selection = viewer_repairs.getSelection();
+				
+				if (selection instanceof IStructuredSelection) {
+					Object selectedElement = ((IStructuredSelection)selection).getFirstElement();
+					
+					if (selectedElement instanceof Repair) {
+						viewerApp.applyRepairs((Repair) selectedElement);
+						return;
+					}
+				}
+				
+				showMessage("Please select a repair operation!");
+			}
+		};
+		applyRepairs.setText("Apply Repairs");
+		applyRepairs.setToolTipText("Apply Repairs");
+		applyRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/apply.png"));
 	}
 
 	private void hookDoubleClickAction() {
@@ -251,5 +277,12 @@ public class RepairView extends ViewPart {
 
 	public void setFocus() {
 		viewer_repairs.getControl().setFocus();
+	}
+	
+	private void showMessage(String message) {
+		MessageDialog.openInformation(
+			viewer_repairs.getControl().getShell(),
+			this.getTitle(),
+			message);
 	}
 }

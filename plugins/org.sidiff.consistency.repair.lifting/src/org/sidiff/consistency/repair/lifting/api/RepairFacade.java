@@ -41,7 +41,7 @@ public class RepairFacade {
 	 *            The settings for the difference calculation.
 	 * @return All found repairs pre edit-rule.
 	 */
-	public static Map<Rule, List<Repair>> getRepairs(
+	public static RepairJob getRepairs(
 			URI uriModelA, URI uriModelB, Collection<Rule> editRules, DifferenceSettings settings) {
 		
 		// Initialize:
@@ -84,6 +84,13 @@ public class RepairFacade {
 			}
 		}
 		
-		return repairs;
+		// Create repair job:
+		RepairJob repairJob = new RepairJob();
+		repairJob.setDifference(differenceResource);
+		repairJob.setModelA(modelA);
+		repairJob.setModelB(modelB);
+		repairJob.setRepairs(repairs);
+		
+		return repairJob;
 	}
 }

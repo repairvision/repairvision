@@ -1,7 +1,9 @@
 package org.sidiff.consistency.repair.complement.construction;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyParameter;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyPreserveNodes;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getPreservedEdges;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getPreservedNodes;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.henshin.view.EdgePair;
 import org.sidiff.common.henshin.view.NodePair;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
@@ -71,11 +74,29 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 		contextRule.setLhs(contextLHS);
 		contextRule.setRhs(contextRHS);
 		
-		Map<Node, Node> lhsTraceContextToComplement = new HashMap<>();
+		Map<Node, Node> traceContextToComplement = new HashMap<>();
+		Map<Node, Node> traceComplementToContext = new HashMap<>();
 		
 		for (NodePair preserveNodeComplement : getPreservedNodes(complement.getComplementRule())) {
 			NodePair preserveNodeContext = copyPreserveNodes(contextRule, preserveNodeComplement, true);
-			lhsTraceContextToComplement.put(preserveNodeContext.getLhsNode(), preserveNodeComplement.getLhsNode());
+			
+			traceComplementToContext.put(preserveNodeComplement.getLhsNode(), preserveNodeContext.getLhsNode());
+			traceComplementToContext.put( preserveNodeComplement.getRhsNode(), preserveNodeContext.getRhsNode());
+			
+			traceContextToComplement.put(preserveNodeContext.getLhsNode(), preserveNodeComplement.getLhsNode());
+			traceContextToComplement.put(preserveNodeContext.getRhsNode(), preserveNodeComplement.getRhsNode());
+		}
+		
+		for (EdgePair preserveEdgeComplement : getPreservedEdges(complement.getComplementRule())) {
+			copyEdge(
+					preserveEdgeComplement.getLhsEdge(), 
+					traceComplementToContext.get(preserveEdgeComplement.getLhsEdge().getSource()),
+					traceComplementToContext.get(preserveEdgeComplement.getLhsEdge().getTarget()));
+			
+			copyEdge(
+					preserveEdgeComplement.getRhsEdge(), 
+					traceComplementToContext.get(preserveEdgeComplement.getRhsEdge().getSource()),
+					traceComplementToContext.get(preserveEdgeComplement.getRhsEdge().getTarget()));
 		}
 		
 		for (Parameter parameter : complement.getComplementRule().getParameters()) {
@@ -118,7 +139,7 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 			complementPreMatches.add(nextComplementMatch);
 			
 			for (Node contextNode : contextLHS.getNodes()) {
-				nextComplementMatch.getNodeMatches().put(lhsTraceContextToComplement.get(contextNode), nextMatch.getNodeTarget(contextNode));
+				nextComplementMatch.getNodeMatches().put(traceContextToComplement.get(contextNode), nextMatch.getNodeTarget(contextNode));
 			}
 		}
 		

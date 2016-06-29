@@ -1,10 +1,9 @@
 package org.sidiff.consistency.repair.lifting.ui.views;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
@@ -22,6 +21,7 @@ import org.sidiff.common.henshin.HenshinUnitAnalysis;
 import org.sidiff.common.henshin.exceptions.NoMainUnitFoundException;
 import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.api.RepairFacade;
+import org.sidiff.consistency.repair.lifting.api.RepairJob;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.matcher.IMatcher;
 import org.sidiff.matcher.MatcherUtil;
@@ -37,6 +37,8 @@ public class RepairViewApp {
 	private Collection<IResource> editRuleFiles = new ArrayList<>();
 	
 	private String documentType;
+	
+	private RepairJob repairJob;
 	
 	public RepairViewApp(RepairView repairView) {
 		this.repairView = repairView;
@@ -61,10 +63,10 @@ public class RepairViewApp {
 		// Calculate repairs:
 		URI uriModelA = ModelDropWidget.getURI(modelAFile);
 		URI uriModelB = ModelDropWidget.getURI(modelBFile);
-		Map<Rule, List<Repair>> repairs = RepairFacade.getRepairs(uriModelA, uriModelB, editRules, settings);
+		repairJob = RepairFacade.getRepairs(uriModelA, uriModelB, editRules, settings);
 		
 		// Show repairs:
-		repairView.viewer_repairs.setInput(repairs);
+		repairView.viewer_repairs.setInput(repairJob.getRepairs());
 	}
 	
 	private IMatcher getMatcher() {
@@ -145,6 +147,19 @@ public class RepairViewApp {
 		} else {
 			repairView.viewer_matching.setInput(null);
 			documentType = null;
+		}
+	}
+
+	public void applyRepairs(Repair repair) {
+		
+		// Apply repair:
+		repair.apply();
+		
+		// Save model
+		try {
+			repairJob.getModelB().save(null);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

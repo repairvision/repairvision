@@ -142,7 +142,12 @@ public class ComplementFinder {
 			// Store new complement rule:
 			complements.add(complementConstructor.createComplementRule(editRuleMatch));
 		}
-
+		
+		//// Initialize the Complement Transformation Engine /////
+		for (ComplementRule complementRule : complements) {
+			complementRule.initialize(engine, graphModelB);
+		}
+		
 		return complements;
 	}
 

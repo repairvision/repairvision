@@ -6,6 +6,7 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,12 +14,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Engine;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
@@ -86,6 +89,17 @@ public class ComplementRule {
 	}
 	
 	/**
+	 * @param engine
+	 *            The (Henshin) engine which applies the rules.
+	 * @param graph
+	 *            The working graph, i.e. the actual version of the model.
+	 */
+	public void initialize(Engine engine, EGraph graph) {
+		this.engine = engine;
+		this.graph = graph;
+	}
+	
+	/**
 	 * @param complementPreMatch
 	 *            The concrete complement pre-match.
 	 * 
@@ -94,6 +108,26 @@ public class ComplementRule {
 	 */
 	public boolean apply(ComplementMatch complementPreMatch) {
 		
+		if ((engine == null) || (graph == null)) {
+			throw new RuntimeException("Initialize graph transformation engine!");
+		}
+		
+		// FIXME: Handle Attributes/Parameters:
+		List<Attribute> attributes = new ArrayList<>();
+		
+		for (Iterator<EObject> iterator = complementRule.eAllContents(); iterator.hasNext();) {
+			EObject ruleElement = iterator.next();
+			
+			if (ruleElement instanceof Attribute) {
+				attributes.add((Attribute) ruleElement);
+			}
+		}
+		
+		for (Attribute attribute : attributes) {
+			EcoreUtil.remove(attribute);
+		}
+		
+		// Apply complement rule:
 		if (complementPreMatch.getUnfulfilledACs().isEmpty()) {
 			Match preMatch = new MatchImpl(complementRule);
 			
