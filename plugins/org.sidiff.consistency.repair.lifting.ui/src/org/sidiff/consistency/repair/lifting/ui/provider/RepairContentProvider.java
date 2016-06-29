@@ -153,10 +153,21 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		
 		else if (graphElement instanceof Node) {
 			
-			// Get node context:
 //			List<Node> contextNodes = new ArrayList<>(); 
 			List<EObject> contextMatches = new ArrayList<>(); 
 			
+			// Get node match:
+			if (graphElement.getGraph().isRhs()) {
+				Node lhsNode = HenshinRuleAnalysisUtilEx.getLHS((Node) graphElement);
+				EObject match = preMatch.get(lhsNode);
+				
+				if (match != null) {
+//					contextNodes.add(lhsNode);
+					contextMatches.add(match);
+				}
+			}
+			
+			// Get node context:
 			for (Edge outgoing : ((Node) graphElement).getOutgoing()) {
 				Node contextNode = outgoing.getTarget();
 				
@@ -175,7 +186,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			}
 			
 			for (Edge incoming : ((Node) graphElement).getIncoming()) {
-				Node contextNode = incoming.getTarget();
+				Node contextNode = incoming.getSource();
 				
 				if (contextNode.getGraph().isRhs()) {
 					contextNode = HenshinRuleAnalysisUtilEx.getLHS(contextNode);
@@ -184,7 +195,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 				if (contextNode != null) {
 					EObject contextMatch = preMatch.get(contextNode);
 					
-					if (contextMatch != null) {
+					if ((contextMatch != null) && (!contextMatches.contains(contextMatch))) {
 //						contextNodes.add(contextNode);
 						contextMatches.add(contextMatch);
 					}
