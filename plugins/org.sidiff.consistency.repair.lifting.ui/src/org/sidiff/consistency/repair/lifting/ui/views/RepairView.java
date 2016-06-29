@@ -71,8 +71,9 @@ public class RepairView extends ViewPart {
 		viewer_repairs = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer_repairs.setContentProvider(new RepairContentProvider());
 		viewer_repairs.setLabelProvider(new RepairLabelProvider());
-		viewer_repairs.setSorter(new NameSorter());
 		viewer_repairs.setInput(getViewSite());
+//		viewer_repairs.setSorter(new NameSorter());
+		
 		drillDownAdapter = new DrillDownAdapter(viewer_repairs);
 
 		getSite().setSelectionProvider(viewer_repairs);

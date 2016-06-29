@@ -1,5 +1,6 @@
 package org.sidiff.consistency.repair.lifting.ui.provider;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
+import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.consistency.repair.lifting.api.Repair;
 
 public class RepairContentProvider implements IStructuredContentProvider, ITreeContentProvider  {
@@ -30,7 +32,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	
 	protected class Change {
 		GraphElement graphElement;
-		Node[] contextNodes;
+//		Node[] contextNodes;		// TODO: Do we need this?
 		EObject[] contextMatch;
 	}
 	
@@ -68,9 +70,10 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			historicChanges.content = new Object[historicSize];
 			
 			for (int i = 0; i < historicSize; i++) {
-				historicChanges.content[i] = toChange(
-						repair.getHistoricChanges().get(i),
-						repair.getPreMatch());
+				GraphElement historic = repair.getHistoricChanges().get(i);
+				GraphElement complement = repair.getTrace(historic);
+				
+				historicChanges.content[i] = toChange(complement, repair.getPreMatch());
 			}
 			
 			// Complementing changes:
@@ -108,30 +111,88 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		change.graphElement = graphElement;
 		
 		if (graphElement instanceof Edge) {
+			
+			// Get edge context: [0] Source, [1] Target
 			change.contextMatch = new EObject[2];
-			change.contextNodes = new Node[2];
+//			change.contextNodes = new Node[2];
 			
-			change.contextNodes[0] = ((Edge) graphElement).getSource();
-			change.contextMatch[1] = ((Edge) graphElement).getTarget();
+			Node srcNode = ((Edge) graphElement).getSource();
+			Node tgtNode = ((Edge) graphElement).getTarget();
 			
-			EObject srcMatch = preMatch.get(((Edge) graphElement).getSource());
-			EObject tgtMatch = preMatch.get(((Edge) graphElement).getTarget());
+			if (srcNode.getGraph().isRhs()) {
+				srcNode = HenshinRuleAnalysisUtilEx.getLHS(srcNode);
+			}
 			
-			if (srcMatch != null) {
-				change.contextMatch[0] = srcMatch;
+			if (tgtNode.getGraph().isRhs()) {
+				tgtNode = HenshinRuleAnalysisUtilEx.getLHS(tgtNode);
+			}
+			
+			
+			if (srcNode != null) {
+				EObject srcMatch = preMatch.get(srcNode);
+//				change.contextNodes[0] = srcNode;
+				
+				if (srcMatch != null) {
+					change.contextMatch[0] = srcMatch;
+				}
 			} else {
 				change.contextMatch[0] = NULL;
 			}
 
-			if (tgtMatch != null) {
-				change.contextMatch[1] = srcMatch;
+			if (tgtNode != null) {
+				EObject tgtMatch = preMatch.get(tgtNode);
+//				change.contextNodes[1] = tgtNode;
+				
+				if (tgtMatch != null) {
+					change.contextMatch[1] = tgtMatch;
+				}
 			} else {
 				change.contextMatch[1] = NULL;
 			}
 		}
 		
 		else if (graphElement instanceof Node) {
-			// TODO...
+			
+			// Get node context:
+//			List<Node> contextNodes = new ArrayList<>(); 
+			List<EObject> contextMatches = new ArrayList<>(); 
+			
+			for (Edge outgoing : ((Node) graphElement).getOutgoing()) {
+				Node contextNode = outgoing.getTarget();
+				
+				if (contextNode.getGraph().isRhs()) {
+					contextNode = HenshinRuleAnalysisUtilEx.getLHS(contextNode);
+				}
+				
+				if (contextNode != null) {
+					EObject contextMatch = preMatch.get(contextNode);
+					
+					if (contextMatch != null) {
+//						contextNodes.add(contextNode);
+						contextMatches.add(contextMatch);
+					}
+				}
+			}
+			
+			for (Edge incoming : ((Node) graphElement).getIncoming()) {
+				Node contextNode = incoming.getTarget();
+				
+				if (contextNode.getGraph().isRhs()) {
+					contextNode = HenshinRuleAnalysisUtilEx.getLHS(contextNode);
+				}
+				
+				if (contextNode != null) {
+					EObject contextMatch = preMatch.get(contextNode);
+					
+					if (contextMatch != null) {
+//						contextNodes.add(contextNode);
+						contextMatches.add(contextMatch);
+					}
+				}
+			}
+			
+//			change.contextNodes = contextNodes.toArray(new Node[0]);
+			change.contextMatch = contextMatches.toArray(new EObject[0]);
 		}
 		
 		return change;
@@ -173,6 +234,6 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			return ((Map<?, ?>) inputElement).keySet().toArray();
 		}
 		
-		return new Object[0];
+		return getChildren(inputElement);
 	}
 }

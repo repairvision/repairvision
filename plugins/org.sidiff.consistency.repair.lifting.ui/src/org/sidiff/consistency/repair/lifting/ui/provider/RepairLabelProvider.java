@@ -1,5 +1,9 @@
 package org.sidiff.consistency.repair.lifting.ui.provider;
 
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -21,6 +25,23 @@ public class RepairLabelProvider extends LabelProvider {
 	public static Image IMG_ADD = Activator.getImageDescriptor("icons/add_reference.png").createImage();
 	
 	public static Image IMG_REMOVE = Activator.getImageDescriptor("icons/remove_reference.png").createImage();
+	
+	protected AdapterFactoryLabelProvider emfLabelProvider;
+	
+	public RepairLabelProvider() {
+		
+		// EMF Adapter (Item-Provider) Registry:
+		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+
+		// Display model resources:
+		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+
+		// If the model is not in the registry then display it as in EMF-Reflective-Editor:
+		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+		
+		emfLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+	}
 	
 	@Override
 	public Image getImage(Object element) {
@@ -52,7 +73,7 @@ public class RepairLabelProvider extends LabelProvider {
 //		else if (element == RepairContentProvider.NULL) {
 //		}
 		
-		return super.getImage(element);
+		return emfLabelProvider.getImage(element);
 	}
 	
 	@Override
@@ -82,6 +103,6 @@ public class RepairLabelProvider extends LabelProvider {
 			return "N/A";
 		}
 		
-		return super.getText(element);
+		return emfLabelProvider.getText(element);
 	}
 }

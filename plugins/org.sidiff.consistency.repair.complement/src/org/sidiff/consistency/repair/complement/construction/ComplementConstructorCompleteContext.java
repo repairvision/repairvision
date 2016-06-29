@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
@@ -70,8 +71,11 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 		contextRule.setLhs(contextLHS);
 		contextRule.setRhs(contextRHS);
 		
-		for (NodePair preserveNode : getPreservedNodes(complement.getComplementRule())) {
-			copyPreserveNodes(contextRule, preserveNode, true);
+		Map<Node, Node> lhsTraceContextToComplement = new HashMap<>();
+		
+		for (NodePair preserveNodeComplement : getPreservedNodes(complement.getComplementRule())) {
+			NodePair preserveNodeContext = copyPreserveNodes(contextRule, preserveNodeComplement, true);
+			lhsTraceContextToComplement.put(preserveNodeContext.getLhsNode(), preserveNodeComplement.getLhsNode());
 		}
 		
 		for (Parameter parameter : complement.getComplementRule().getParameters()) {
@@ -102,7 +106,7 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 		}
 		
 		// Check context rule (with restricted working graph):
-		List<ComplementMatch> complementPreMatches = new ArrayList<>();
+		ArrayList<ComplementMatch> complementPreMatches = new ArrayList<>();
 		complement.setComplementPreMatches(complementPreMatches);
 		Iterator<Match> matchFinder = engine.findMatches(contextRule, restrictedGraph, null).iterator();
 		
@@ -114,10 +118,11 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 			complementPreMatches.add(nextComplementMatch);
 			
 			for (Node contextNode : contextLHS.getNodes()) {
-				nextComplementMatch.getNodeMatches().put(contextNode, nextMatch.getNodeTarget(contextNode));
+				nextComplementMatch.getNodeMatches().put(lhsTraceContextToComplement.get(contextNode), nextMatch.getNodeTarget(contextNode));
 			}
 		}
 		
+		complementPreMatches.trimToSize();
 		return complementPreMatches;
 	}
 

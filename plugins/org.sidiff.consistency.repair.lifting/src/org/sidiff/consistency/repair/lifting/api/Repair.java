@@ -24,8 +24,10 @@ public class Repair {
 	
 	private ComplementMatch complementPreMatch;
 	
+	// TODO: Move this to ComplementRule!
 	private List<GraphElement> historicChanges;
 	
+	// TODO: Move this to ComplementRule!
 	private List<GraphElement> complementingChanges;
 	
 	/**
@@ -45,6 +47,25 @@ public class Repair {
 	 */
 	public Rule getEditRule() {
 		return complementRule.getSourceRule();
+	}
+	
+	/**
+	 * @param editRuleGraphElement
+	 *            A node/edge of the edit rule.
+	 * @return The corresponding node/edge of the complement rule.
+	 */
+	@SuppressWarnings("unchecked")
+	public <G extends GraphElement> G getTrace(G editRuleGraphElement) {
+		
+		if (editRuleGraphElement instanceof Edge) {
+			return (G) complementRule.getTrace((Edge) editRuleGraphElement);
+		}
+		
+		else  if (editRuleGraphElement instanceof Node) {
+			return (G) complementRule.getTrace((Node) editRuleGraphElement);
+		}
+		
+		return null;
 	}
 	
 	/**
