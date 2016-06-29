@@ -136,11 +136,15 @@ public class ComplementFinder {
 		// Find partially executed edit-operations:
 		for (boolean matchFound = matchGenerator.findNextMatch(); matchFound; matchFound = matchGenerator.findNextMatch()) {
 
-			// Translate: Create partial edit-rule match from recognition-rule match:
-			Collection<EditRuleMatch> editRuleMatch = createEditRuleMatch(edit2Recognition, matchGenerator);
-
-			// Store new complement rule:
-			complements.add(complementConstructor.createComplementRule(editRuleMatch));
+			// TODO: Matching-Engine -> Only partial matches:
+			if (isPartialMatch(matchGenerator.getVariableMatching())) {
+				
+				// Translate: Create partial edit-rule match from recognition-rule match:
+				Collection<EditRuleMatch> editRuleMatch = createEditRuleMatch(edit2Recognition, matchGenerator);
+				
+				// Store new complement rule:
+				complements.add(complementConstructor.createComplementRule(editRuleMatch));
+			}
 		}
 		
 		//// Initialize the Complement Transformation Engine /////
@@ -149,6 +153,15 @@ public class ComplementFinder {
 		}
 		
 		return complements;
+	}
+	
+	private boolean isPartialMatch(Map<NodePattern, NodeMatching> matching) {
+		for (NodeMatching match : matching.values()) {
+			if (match.getMatch() == null) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private Collection<EditRuleMatch> createEditRuleMatch(
