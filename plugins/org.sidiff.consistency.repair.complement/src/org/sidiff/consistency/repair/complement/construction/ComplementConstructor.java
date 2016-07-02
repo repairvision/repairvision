@@ -38,10 +38,11 @@ public abstract class ComplementConstructor {
 	 *            A partial (edit-rule) matching of the partially executed source-rule.
 	 * @return The rule which complements the partial partially executed source-rule.
 	 */
-	public ComplementRule createComplementRule(Collection<EditRuleMatch> sourceRuleMatching) {
+	public ComplementRule createComplementRule(List<EditRuleMatch> sourceRuleMatching) {
 		
 		// Derive complement rule:
 		ComplementRule complement = deriveComplementRule(sourceRuleMatching); 
+		complement.setSourceMatch(sourceRuleMatching);
 		
 		// Create the complements pre-match: 
 		List<ComplementMatch> preMatches = initializeComplementPrematch(complement, sourceRuleMatching);

@@ -8,7 +8,6 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHS
 import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +49,7 @@ import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.matching.model.Correspondence;
 
 /**
  * Tries to find all complementing operation for a given edit-rule and a model difference. 
@@ -98,8 +98,23 @@ public class ComplementFinder {
 		this.graphModelB = new EGraphImpl(modelBResource);
 		this.modelDifference = difference.eResource().getResourceSet();
 		this.engine = new EngineImpl();
+		
+		this.difference = difference;
 	}
+	
+	SymmetricDifference difference;
 
+	static List<NodePattern> workingPattern;
+	static List<NodePattern> notWorkingPattern;
+	
+	static List<NodePattern> workingVariables;
+	static List<NodePattern> notWorkingVariables;
+	
+	static List<Correspondence> workingDiff;
+	static List<Correspondence> notWorkingdiff;
+	
+	int emptyCounter = 0;
+	
 	/**
 	 * @param editRule
 	 *            The partially executed edit-rule.
@@ -127,6 +142,9 @@ public class ComplementFinder {
 		MatchGenerator matchGenerator = new MatchGenerator(
 				recognitionRule.getNodes(), variableNodes, atomicPatternFactory, matchValidation);
 
+//		System.out.println("Pattern: " + recognitionRule.getNodes());
+//		System.out.println("Variable Nodes: " + variableNodes);
+		
 		//// Complement Construction ////
 		ComplementConstructor complementConstructor = 
 				new ComplementConstructorCompleteContext(editRule, engine, graphModelB);
@@ -135,17 +153,70 @@ public class ComplementFinder {
 
 		// Find partially executed edit-operations:
 		for (boolean matchFound = matchGenerator.findNextMatch(); matchFound; matchFound = matchGenerator.findNextMatch()) {
-
+			
 			// TODO: Matching-Engine -> Only partial matches:
 			if (isPartialMatch(matchGenerator.getVariableMatching())) {
 				
 				// Translate: Create partial edit-rule match from recognition-rule match:
-				Collection<EditRuleMatch> editRuleMatch = createEditRuleMatch(edit2Recognition, matchGenerator);
+				List<EditRuleMatch> editRuleMatch = createEditRuleMatch(edit2Recognition, matchGenerator);
 				
 				// Store new complement rule:
 				complements.add(complementConstructor.createComplementRule(editRuleMatch));
 			}
 		}
+		
+		// FIXME: TEST
+		if (complements.isEmpty()) {
+			System.out.println("ComplementFinder.searchComplementRules()");
+			if (emptyCounter < 100) {
+				++emptyCounter;
+				searchComplementRules(editRule);
+			}
+			notWorkingPattern = recognitionRule.getNodes();
+			notWorkingVariables = variableNodes;
+			notWorkingdiff = difference.getMatching().getCorrespondences();
+		} else {
+			workingPattern = recognitionRule.getNodes();
+			workingVariables = variableNodes;
+			workingDiff = difference.getMatching().getCorrespondences();
+		}
+		
+//		if ((workingDiff != null) && (notWorkingdiff != null)) {
+//			assert workingDiff.size() == notWorkingdiff.size();
+//			
+////			for (Correspondence cWorking : workingDiff) {
+////				for (Correspondence cNotWorking : notWorkingdiff) {
+////					if (cWorking.get)
+////				}
+////			}
+//			
+//			for (int i = 0; i < workingDiff.size(); i++) {
+//				if ((workingDiff.get(i).getMatchedA().getClass() != notWorkingdiff.get(i).getMatchedA().getClass())) {
+//					System.out.println("ComplementFinder.searchComplementRules()");
+//				}
+//			}
+//		}
+//		
+//		if ((notWorkingPattern != null) && (workingPattern != null)) {
+//			assert notWorkingPattern.size() == workingPattern.size();
+//			
+//			for (int i = 0; i < notWorkingPattern.size(); i++) {
+//				if ((notWorkingPattern.get(i).getType() != workingPattern.get(i).getType())) {
+//					System.out.println("ComplementFinder.searchComplementRules()");
+//				}
+//			}
+//		}
+//		
+//		if ((workingVariables != null) && (workingVariables != null)) {
+//			assert workingVariables.size() == workingVariables.size();
+//			
+//			for (int i = 0; i < workingVariables.size(); i++) {
+//				if (workingVariables.get(i).getType() != workingVariables.get(i).getType()) {
+//					System.out.println("ComplementFinder.searchComplementRules()");
+//				}
+//			}
+//		}
+		
 		
 		//// Initialize the Complement Transformation Engine /////
 		for (ComplementRule complementRule : complements) {
@@ -164,7 +235,7 @@ public class ComplementFinder {
 		return false;
 	}
 
-	private Collection<EditRuleMatch> createEditRuleMatch(
+	private List<EditRuleMatch> createEditRuleMatch(
 			Edit2RecognitionRule edit2Recognition, MatchGenerator matchGenerator) {
 
 		Rule editRule = edit2Recognition.getEditRule();
@@ -172,7 +243,7 @@ public class ComplementFinder {
 		Map<Node, NodePattern> traceHenshinToGraphPattern = edit2Recognition.getHenshinToGraphPatternTrace();
 		
 		// Create edit-operation match:
-		Collection<EditRuleMatch> editRuleMatch = new ArrayList<>();
+		List<EditRuleMatch> editRuleMatch = new ArrayList<>();
 
 		// EO-Preserve-Nodes:
 		for (Node eoHenshinNode : getLHSIntersectRHSNodes(editRule)) {

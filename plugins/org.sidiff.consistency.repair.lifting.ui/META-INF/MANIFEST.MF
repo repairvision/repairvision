@@ -6,12 +6,13 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.sidiff.consistency.repair.lifting.ui.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;bundle-version="3.10.1",
+ org.eclipse.emf.edit.ui,
  org.eclipse.emf.henshin.model,
+ org.sidiff.matcher,
  org.sidiff.matching.api,
  org.sidiff.difference.technical.api,
- org.sidiff.consistency.repair.lifting,
- org.eclipse.emf.edit.ui,
  org.sidiff.common.henshin,
- org.sidiff.matcher
+ org.sidiff.consistency.repair.lifting,
+ org.sidiff.consistency.repair.complement
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

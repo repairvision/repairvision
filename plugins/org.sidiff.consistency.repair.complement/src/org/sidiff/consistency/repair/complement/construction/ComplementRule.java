@@ -23,6 +23,7 @@ import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.NestedCondition;
@@ -31,6 +32,9 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.HenshinConditionAnalysis;
 import org.sidiff.common.henshin.view.NodePair;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
 import org.sidiff.consistency.repair.complement.util.ComplementUtil;
 
 /**
@@ -61,6 +65,11 @@ public class ComplementRule {
 	private Map<Node, Node> rhsTrace = new HashMap<>();
 	
 	//// Evaluation ////
+	
+	/**
+	 * The (partial) match of the source rule.
+	 */
+	private List<EditRuleMatch> sourceMatch;
 	
 	/**
 	 * All possible (full) pre-matches for the complement rule.
@@ -154,6 +163,39 @@ public class ComplementRule {
 
 	public void setSourceRule(Rule sourceRule) {
 		this.sourceRule = sourceRule;
+	}
+	
+	public List<EditRuleMatch> getSourceMatch() {
+		return sourceMatch;
+	}
+	
+	public EditRuleMatch getSourceMatch(GraphElement graphElement) {
+		
+		if (graphElement instanceof Node) {
+			for (EditRuleMatch editRuleMatch : sourceMatch) {
+				if (editRuleMatch instanceof EditRuleNodeMatch) {
+					if (((EditRuleNodeMatch) editRuleMatch).getNode() == graphElement) {
+						return editRuleMatch;
+					}
+				}
+			}
+		}
+		
+		else if (graphElement instanceof Edge) {
+			for (EditRuleMatch editRuleMatch : sourceMatch) {
+				if (editRuleMatch instanceof EditRuleEdgeMatch) {
+					if (((EditRuleEdgeMatch) editRuleMatch).getEdge() == graphElement) {
+						return editRuleMatch;
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+
+	public void setSourceMatch(List<EditRuleMatch> sourceMatch) {
+		this.sourceMatch = sourceMatch;
 	}
 
 	public Rule getComplementRule() {

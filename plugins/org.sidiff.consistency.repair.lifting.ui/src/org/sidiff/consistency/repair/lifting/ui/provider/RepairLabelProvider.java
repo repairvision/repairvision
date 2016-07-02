@@ -69,9 +69,6 @@ public class RepairLabelProvider extends LabelProvider {
 				return IMG_ADD;
 			}
 		}
-	
-//		else if (element == RepairContentProvider.NULL) {
-//		}
 		
 		return emfLabelProvider.getImage(element);
 	}
@@ -97,10 +94,6 @@ public class RepairLabelProvider extends LabelProvider {
 		
 		else if (element instanceof Change) {
 			return ((Change) element).graphElement.toString();
-		}
-		
-		else if (element == RepairContentProvider.NULL) {
-			return "N/A";
 		}
 		
 		return emfLabelProvider.getText(element);

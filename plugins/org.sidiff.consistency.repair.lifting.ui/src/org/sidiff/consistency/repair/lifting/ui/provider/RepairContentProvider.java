@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
@@ -15,12 +14,14 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeSingleMatch;
 import org.sidiff.consistency.repair.lifting.api.Repair;
 
 public class RepairContentProvider implements IStructuredContentProvider, ITreeContentProvider  {
 
-	protected static EObject NULL = EcoreFactory.eINSTANCE.createEObject();
-	
 	protected Map<Rule, List<Repair>> repairs;
 	
 	protected class Container {
@@ -32,8 +33,8 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	
 	protected class Change {
 		GraphElement graphElement;
-//		Node[] contextNodes;		// TODO: Do we need this?
-		EObject[] contextMatch;
+		Node[] nodes;
+		EObject[] matches;
 	}
 	
 	@Override
@@ -71,9 +72,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			
 			for (int i = 0; i < historicSize; i++) {
 				GraphElement historic = repair.getHistoricChanges().get(i);
-				GraphElement complement = repair.getTrace(historic);
-				
-				historicChanges.content[i] = toChange(complement, repair.getPreMatch());
+				historicChanges.content[i] = toHistoricChange(repair.getSourceMatch(historic));
 			}
 			
 			// Complementing changes:
@@ -87,9 +86,9 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			complementingChanges.content = new Object[complementingSize];
 			
 			for (int i = 0; i < complementingSize; i++) {
-				complementingChanges.content[i] = toChange(
+				complementingChanges.content[i] = toComplemetingChange(
 						repair.getComplementingChanges().get(i),
-						repair.getPreMatch());
+						repair.getRepairPreMatch());
 			}
 			
 			return new Object[] {historicChanges, complementingChanges};
@@ -100,111 +99,168 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		}
 		
 		else if (parentElement instanceof Change) {
-			return ((Change) parentElement).contextMatch;
+			return ((Change) parentElement).matches;
 		}
 		
 		return new Object[0];
 	}
 	
-	private Change toChange(GraphElement graphElement, Map<Node, EObject> preMatch) {
+	private Change toHistoricChange(EditRuleMatch editRuleMatch) {
 		Change change = new Change();
-		change.graphElement = graphElement;
+		
+		if (editRuleMatch instanceof EditRuleEdgeMatch) {
+			Edge edge = ((EditRuleEdgeMatch) editRuleMatch).getEdge();
+			change.graphElement = edge;
+			
+			change.nodes = new Node[2];
+			change.nodes[0] = edge.getSource();
+			change.nodes[1] = edge.getTarget();
+			
+			change.matches = new EObject[2];
+			change.matches[0] = ((EditRuleEdgeMatch) editRuleMatch).getSrcModelElement();
+			change.matches[1] = ((EditRuleEdgeMatch) editRuleMatch).getTgtModelElement();
+		}
+		
+		else if (editRuleMatch instanceof EditRuleNodeSingleMatch) {
+			change.graphElement = ((EditRuleNodeMatch) editRuleMatch).getNode();
+			
+			change.nodes = new Node[1];
+			change.nodes[0] = (Node) change.graphElement;
+			
+			change.matches = new EObject[1];
+			change.matches[0] = ((EditRuleNodeSingleMatch) editRuleMatch).getModelElement();
+		}
+		
+		return change;
+	}
+	
+	private Change toComplemetingChange(GraphElement graphElement, Map<Node, EObject> preMatch) {
 		
 		if (graphElement instanceof Edge) {
-			
-			// Get edge context: [0] Source, [1] Target
-			change.contextMatch = new EObject[2];
-//			change.contextNodes = new Node[2];
-			
-			Node srcNode = ((Edge) graphElement).getSource();
-			Node tgtNode = ((Edge) graphElement).getTarget();
-			
-			if (srcNode.getGraph().isRhs()) {
-				srcNode = HenshinRuleAnalysisUtilEx.getLHS(srcNode);
-			}
-			
-			if (tgtNode.getGraph().isRhs()) {
-				tgtNode = HenshinRuleAnalysisUtilEx.getLHS(tgtNode);
-			}
-			
-			
-			if (srcNode != null) {
-				EObject srcMatch = preMatch.get(srcNode);
-//				change.contextNodes[0] = srcNode;
-				
-				if (srcMatch != null) {
-					change.contextMatch[0] = srcMatch;
-				}
-			} else {
-				change.contextMatch[0] = NULL;
-			}
-
-			if (tgtNode != null) {
-				EObject tgtMatch = preMatch.get(tgtNode);
-//				change.contextNodes[1] = tgtNode;
-				
-				if (tgtMatch != null) {
-					change.contextMatch[1] = tgtMatch;
-				}
-			} else {
-				change.contextMatch[1] = NULL;
-			}
+			return toComplementingChange((Edge) graphElement, preMatch);
 		}
 		
 		else if (graphElement instanceof Node) {
-			
-//			List<Node> contextNodes = new ArrayList<>(); 
-			List<EObject> contextMatches = new ArrayList<>(); 
-			
-			// Get node match:
-			if (graphElement.getGraph().isRhs()) {
-				Node lhsNode = HenshinRuleAnalysisUtilEx.getLHS((Node) graphElement);
-				EObject match = preMatch.get(lhsNode);
-				
-				if (match != null) {
-//					contextNodes.add(lhsNode);
-					contextMatches.add(match);
-				}
-			}
-			
-			// Get node context:
-			for (Edge outgoing : ((Node) graphElement).getOutgoing()) {
-				Node contextNode = outgoing.getTarget();
-				
-				if (contextNode.getGraph().isRhs()) {
-					contextNode = HenshinRuleAnalysisUtilEx.getLHS(contextNode);
-				}
-				
-				if (contextNode != null) {
-					EObject contextMatch = preMatch.get(contextNode);
-					
-					if (contextMatch != null) {
-//						contextNodes.add(contextNode);
-						contextMatches.add(contextMatch);
-					}
-				}
-			}
-			
-			for (Edge incoming : ((Node) graphElement).getIncoming()) {
-				Node contextNode = incoming.getSource();
-				
-				if (contextNode.getGraph().isRhs()) {
-					contextNode = HenshinRuleAnalysisUtilEx.getLHS(contextNode);
-				}
-				
-				if (contextNode != null) {
-					EObject contextMatch = preMatch.get(contextNode);
-					
-					if ((contextMatch != null) && (!contextMatches.contains(contextMatch))) {
-//						contextNodes.add(contextNode);
-						contextMatches.add(contextMatch);
-					}
-				}
-			}
-			
-//			change.contextNodes = contextNodes.toArray(new Node[0]);
-			change.contextMatch = contextMatches.toArray(new EObject[0]);
+			return toComplementingChange((Node) graphElement, preMatch);
 		}
+		
+		return null;
+	}
+	
+	private Change toComplementingChange(Edge edge, Map<Node, EObject> preMatch) {
+		Change change = new Change();
+		change.graphElement = edge;
+		
+		// Get edge context:
+		EObject contextMatchSrc = null;
+		EObject contextMatchTgt = null;
+		
+		Node contextNodeSrc = edge.getSource();
+		Node contextNodeTgt = edge.getTarget();
+
+		if (contextNodeSrc.getGraph().isRhs()) {
+			contextNodeSrc = HenshinRuleAnalysisUtilEx.getLHS(contextNodeSrc);
+		}
+
+		if (contextNodeTgt.getGraph().isRhs()) {
+			contextNodeTgt = HenshinRuleAnalysisUtilEx.getLHS(contextNodeTgt);
+		}
+
+		// Get match:
+		if (contextNodeSrc != null) {
+			contextMatchSrc = preMatch.get(contextNodeSrc);
+		}
+		
+		if (contextNodeTgt != null) {
+			contextMatchTgt = preMatch.get(contextNodeTgt);
+		}
+		
+		// Create change: [0] Source, [1] Target
+		if ((contextMatchSrc != null) && (contextMatchTgt != null)) {
+			change.nodes = new Node[2];
+			change.matches = new EObject[2];
+			
+			change.nodes[0] = contextNodeSrc;
+			change.nodes[1] = contextNodeTgt;
+			
+			change.matches[0] = contextMatchSrc;
+			change.matches[1] = contextMatchTgt;
+		}
+		
+		else if (contextMatchSrc != null) {
+			change.nodes = new Node[1];
+			change.matches = new EObject[1];
+			
+			change.nodes[0] = contextNodeSrc;
+			change.matches[0] = contextMatchSrc;
+		}
+		
+		else if (contextMatchTgt != null) {
+			change.nodes = new Node[1];
+			change.matches = new EObject[1];
+			
+			change.nodes[0] = contextNodeTgt;
+			change.matches[0] = contextMatchTgt;
+		}
+		
+		return change;
+	}
+	
+	private Change toComplementingChange(Node node, Map<Node, EObject> preMatch) {
+		Change change = new Change();
+		change.graphElement = node;
+			
+		List<Node> contextNodes = new ArrayList<>();
+		List<EObject> contextMatches = new ArrayList<>(); 
+
+		// Get node match:
+		if (node.getGraph().isRhs()) {
+			Node lhsNode = HenshinRuleAnalysisUtilEx.getLHS(node);
+			EObject match = preMatch.get(lhsNode);
+
+			if (match != null) {
+				contextNodes.add(lhsNode);
+				contextMatches.add(match);
+			}
+		}
+
+		// Get node context:
+		for (Edge outgoing : node.getOutgoing()) {
+			Node contextNode = outgoing.getTarget();
+
+			if (contextNode.getGraph().isRhs()) {
+				contextNode = HenshinRuleAnalysisUtilEx.getLHS(contextNode);
+			}
+
+			if (contextNode != null) {
+				EObject contextMatch = preMatch.get(contextNode);
+
+				if (contextMatch != null) {
+					contextNodes.add(contextNode);
+					contextMatches.add(contextMatch);
+				}
+			}
+		}
+
+		for (Edge incoming : node.getIncoming()) {
+			Node contextNode = incoming.getSource();
+
+			if (contextNode.getGraph().isRhs()) {
+				contextNode = HenshinRuleAnalysisUtilEx.getLHS(contextNode);
+			}
+
+			if (contextNode != null) {
+				EObject contextMatch = preMatch.get(contextNode);
+
+				if ((contextMatch != null) && (!contextMatches.contains(contextMatch))) {
+					contextNodes.add(contextNode);
+					contextMatches.add(contextMatch);
+				}
+			}
+		}
+
+		change.nodes = contextNodes.toArray(new Node[0]);
+		change.matches = contextMatches.toArray(new EObject[0]);
 		
 		return change;
 	}

@@ -1,5 +1,10 @@
 package org.sidiff.consistency.repair.lifting.api;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSNodes;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +14,9 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 
 /**
  * Represents a single repair operation.
@@ -133,9 +138,20 @@ public class Repair {
 	}
 	
 	/**
+	 * @param graphElement
+	 *            A << delete / create >> edge or a node of the source rule.
+	 * @return The corresponding edit-rule match or <code>null</code> if the
+	 *         given node/edge is a change that need to be complemented.
+	 */
+	public EditRuleMatch getSourceMatch(GraphElement graphElement) {
+		assert (graphElement.getGraph().getRule() == complementRule.getSourceRule());
+		return complementRule.getSourceMatch(graphElement);
+	}
+	
+	/**
 	 * @return The pre-match of the complementing repair-rule.
 	 */
-	public Map<Node, EObject> getPreMatch() {
+	public Map<Node, EObject> getRepairPreMatch() {
 		return complementPreMatch.getNodeMatches();
 	}
 	

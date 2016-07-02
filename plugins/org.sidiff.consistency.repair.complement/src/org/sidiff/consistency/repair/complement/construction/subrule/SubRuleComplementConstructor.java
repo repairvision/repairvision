@@ -38,7 +38,7 @@ public class SubRuleComplementConstructor extends ComplementConstructorCompleteC
 		// Calculate rule embedding:
 		for (RuleEmbedding embedding : RuleEmbeddingCalculator.calculateRuleEmbedding(sourceRule, subRule)) {
 			// Convert sub-rule match to partial super-rule match:
-			Collection<EditRuleMatch> superRuleMatch = convertToPartialMatch(embedding, subRuleMatch);
+			List<EditRuleMatch> superRuleMatch = convertToPartialMatch(embedding, subRuleMatch);
 			
 			// Create the complement = super - sub:
 			complementRules.add(createComplementRule(superRuleMatch));
@@ -47,7 +47,7 @@ public class SubRuleComplementConstructor extends ComplementConstructorCompleteC
 		return complementRules;
 	}
 
-	private Collection<EditRuleMatch> convertToPartialMatch(
+	private List<EditRuleMatch> convertToPartialMatch(
 			RuleEmbedding embedding, Collection<EditRuleMatch> subEditRuleMatching) {
 
 		List<EditRuleMatch> superEditRuleMatch = new ArrayList<>();
