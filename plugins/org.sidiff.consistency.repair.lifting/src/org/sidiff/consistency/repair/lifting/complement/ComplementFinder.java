@@ -49,7 +49,6 @@ import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
-import org.sidiff.matching.model.Correspondence;
 
 /**
  * Tries to find all complementing operation for a given edit-rule and a model difference. 
@@ -98,22 +97,7 @@ public class ComplementFinder {
 		this.graphModelB = new EGraphImpl(modelBResource);
 		this.modelDifference = difference.eResource().getResourceSet();
 		this.engine = new EngineImpl();
-		
-		this.difference = difference;
 	}
-	
-	SymmetricDifference difference;
-
-	static List<NodePattern> workingPattern;
-	static List<NodePattern> notWorkingPattern;
-	
-	static List<NodePattern> workingVariables;
-	static List<NodePattern> notWorkingVariables;
-	
-	static List<Correspondence> workingDiff;
-	static List<Correspondence> notWorkingdiff;
-	
-	int emptyCounter = 0;
 	
 	/**
 	 * @param editRule
@@ -142,9 +126,6 @@ public class ComplementFinder {
 		MatchGenerator matchGenerator = new MatchGenerator(
 				recognitionRule.getNodes(), variableNodes, atomicPatternFactory, matchValidation);
 
-//		System.out.println("Pattern: " + recognitionRule.getNodes());
-//		System.out.println("Variable Nodes: " + variableNodes);
-		
 		//// Complement Construction ////
 		ComplementConstructor complementConstructor = 
 				new ComplementConstructorCompleteContext(editRule, engine, graphModelB);
@@ -164,60 +145,7 @@ public class ComplementFinder {
 				complements.add(complementConstructor.createComplementRule(editRuleMatch));
 			}
 		}
-		
-		// FIXME: TEST
-		if (complements.isEmpty()) {
-			System.out.println("ComplementFinder.searchComplementRules()");
-			if (emptyCounter < 100) {
-				++emptyCounter;
-				searchComplementRules(editRule);
-			}
-			notWorkingPattern = recognitionRule.getNodes();
-			notWorkingVariables = variableNodes;
-			notWorkingdiff = difference.getMatching().getCorrespondences();
-		} else {
-			workingPattern = recognitionRule.getNodes();
-			workingVariables = variableNodes;
-			workingDiff = difference.getMatching().getCorrespondences();
-		}
-		
-//		if ((workingDiff != null) && (notWorkingdiff != null)) {
-//			assert workingDiff.size() == notWorkingdiff.size();
-//			
-////			for (Correspondence cWorking : workingDiff) {
-////				for (Correspondence cNotWorking : notWorkingdiff) {
-////					if (cWorking.get)
-////				}
-////			}
-//			
-//			for (int i = 0; i < workingDiff.size(); i++) {
-//				if ((workingDiff.get(i).getMatchedA().getClass() != notWorkingdiff.get(i).getMatchedA().getClass())) {
-//					System.out.println("ComplementFinder.searchComplementRules()");
-//				}
-//			}
-//		}
-//		
-//		if ((notWorkingPattern != null) && (workingPattern != null)) {
-//			assert notWorkingPattern.size() == workingPattern.size();
-//			
-//			for (int i = 0; i < notWorkingPattern.size(); i++) {
-//				if ((notWorkingPattern.get(i).getType() != workingPattern.get(i).getType())) {
-//					System.out.println("ComplementFinder.searchComplementRules()");
-//				}
-//			}
-//		}
-//		
-//		if ((workingVariables != null) && (workingVariables != null)) {
-//			assert workingVariables.size() == workingVariables.size();
-//			
-//			for (int i = 0; i < workingVariables.size(); i++) {
-//				if (workingVariables.get(i).getType() != workingVariables.get(i).getType()) {
-//					System.out.println("ComplementFinder.searchComplementRules()");
-//				}
-//			}
-//		}
-		
-		
+
 		//// Initialize the Complement Transformation Engine /////
 		for (ComplementRule complementRule : complements) {
 			complementRule.initialize(engine, graphModelB);

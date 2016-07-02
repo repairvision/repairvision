@@ -66,13 +66,13 @@ public abstract class LiftingEngine extends AbstractPatternMatchingEngine {
 	}
 
 	@Override
-	public void stop() {
+	public void finish() {
 		
 		// Unmerge external resources into the difference:
 		mergeImports.unmerge();
 		
 		// Stop the engine:
-		super.stop();
+		super.finish();
 	}
 	
 	@Override

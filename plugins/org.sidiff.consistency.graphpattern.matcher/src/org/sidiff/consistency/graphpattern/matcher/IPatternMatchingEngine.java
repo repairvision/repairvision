@@ -24,7 +24,7 @@ public interface IPatternMatchingEngine {
 	
 	public void start();
 	
-	public void stop();
+	public void finish();
 	
 	public DataStore createDataStore();
 	

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -23,12 +22,8 @@ import org.sidiff.consistency.graphpattern.matcher.matching.selection.AtomicPatt
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.PathSelector;
 
-public abstract class AbstractPatternMatchingEngine implements Runnable, IPatternMatchingEngine {
+public abstract class AbstractPatternMatchingEngine implements IPatternMatchingEngine {
 
-	protected CountDownLatch synchronizationBarrier;
-	
-	protected Thread engineThread;
-	
 	protected GraphPattern graphpattern;
 	
 	protected ResourceSet targetModels;
@@ -99,24 +94,6 @@ public abstract class AbstractPatternMatchingEngine implements Runnable, IPatter
 	
 	@Override
 	public void start() {
-		synchronizationBarrier = new CountDownLatch(1);
-		
-		// Run as new thread:
-		engineThread = new Thread(this);
-		engineThread.start();
-		
-		synchronizationBarrier.countDown();
-	}
-	
-	@Override
-	public void stop() {
-		if (engineThread != null) {
-			engineThread.interrupt();
-		}
-	}
-	
-	@Override
-	public void run() {
 		long startTime = System.currentTimeMillis(); 
 				
 		// Start visiting at the variable nodes:
@@ -124,7 +101,11 @@ public abstract class AbstractPatternMatchingEngine implements Runnable, IPatter
 			node.getEvaluation().accept(createVisitor());
 		});
 		
-		System.out.println("Working-Graph Time: " + (System.currentTimeMillis() - startTime) / 1000.0 + "s");
+		System.out.println("Working-Graph Construction Time: " + (System.currentTimeMillis() - startTime) / 1000.0 + "s");
+	}
+	
+	@Override
+	public void finish() {
 	}
 	
 	protected void initializeEvaluation(NodePattern nodePattern) {
@@ -166,11 +147,18 @@ public abstract class AbstractPatternMatchingEngine implements Runnable, IPatter
 		this.targetModels = resourceSet;
 	}
 
-	public Thread getEngineThread() {
-		return engineThread;
-	}
-	
-	public CountDownLatch getSynchronizationBarrier() {
-		return synchronizationBarrier;
+	@Override
+	public String toString() {
+		StringBuffer print = new StringBuffer();
+		
+		for (NodePattern node : graphpattern.getNodes()) {
+			print.append(node + ":\n");
+			
+			node.getEvaluation().getStore().getMatchIterator().forEachRemaining(match -> {
+				print.append("  " + match + "\n");
+			});
+		}
+		
+		return print.toString();
 	}
 }

@@ -120,7 +120,7 @@ public class EngineManager {
 			}
 
 			// Start engine:
-			matchingEngine.start();
+			debuggableEngine.start(matchingEngine);
 		}
 	}
 	
@@ -133,7 +133,7 @@ public class EngineManager {
 			} else {
 				if (matchingEngine != null) {
 					// Normal engine:
-					matchingEngine.stop();
+					matchingEngine.finish();
 				}
 			}
 		} finally {

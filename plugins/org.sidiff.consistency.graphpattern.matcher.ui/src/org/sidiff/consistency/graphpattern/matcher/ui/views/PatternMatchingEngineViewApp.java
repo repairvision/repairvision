@@ -11,8 +11,6 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.IWorkbenchPart;
 import org.sidiff.consistency.graphpattern.GraphPattern;
-import org.sidiff.consistency.graphpattern.matcher.AbstractPatternMatchingEngine;
-import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngineFactory;
 import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger.Breakpoint;
 import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger.BreakpointListener;
@@ -134,22 +132,11 @@ public class PatternMatchingEngineViewApp implements BreakpointListener {
 
 			@Override
 			public void run() {
-				
-				try {
-					// Start the matching engine:
-					EngineManager.getInstance().startEngine(getSelectedPatternMatchingEngine());
-					
-					// FIXME[WORKAROUND]: Threading aus der Engine herausziehen...
-					IPatternMatchingEngine engine = EngineManager.getInstance().getMatchingEngine();
-					
-					if (engine instanceof AbstractPatternMatchingEngine) {
-						((AbstractPatternMatchingEngine) engine).getSynchronizationBarrier().await();
-					}
-					//------------------------------------------------------------
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				
+
+				// Start the matching engine:
+				EngineManager.getInstance().startEngine(getSelectedPatternMatchingEngine());
+
+				// Update the UI:
 				viewer_pattern.refresh();
 				viewer_pattern.expandAll();
 				SiriusUtil.refreshActiveEditor();

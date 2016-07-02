@@ -48,11 +48,7 @@ public class RepairFacade {
 		ResourceSet differenceRSS = new ResourceSetImpl();
 		Resource modelA = differenceRSS.getResource(uriModelA, true);
 		Resource modelB = differenceRSS.getResource(uriModelB, true);
-		
-//		// TODO: Remove this....
-//		URI diffURI = URI.createFileURI("D:/Workspace/SiLift/org.sidiff.consistency.graphpattern.testmodels/models/M0001-PulUpAttribute/M0001A_x_M0001B_EMFCompare_technical.symmetric");
-//		SymmetricDifference difference = (SymmetricDifference)differenceRSS.getResource(diffURI, true).getContents().get(0);
-		
+
 		// Calculate difference:
 		SymmetricDifference difference = null;
 		

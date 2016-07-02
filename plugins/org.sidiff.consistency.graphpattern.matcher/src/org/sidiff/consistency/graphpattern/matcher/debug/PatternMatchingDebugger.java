@@ -3,6 +3,7 @@ package org.sidiff.consistency.graphpattern.matcher.debug;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.NodePattern;
@@ -10,11 +11,15 @@ import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 
 public class PatternMatchingDebugger {
 
-	private IPatternMatchingEngine targetEngine;
+	protected CountDownLatch synchronizationBarrier;
 	
-	private List<Breakpoint> waitingBreakpoints = new ArrayList<>();
+	protected Thread engineThread;
 	
-	private List<BreakpointListener> breakpointListeners = new ArrayList<>();
+	protected IPatternMatchingEngine targetEngine;
+	
+	protected List<Breakpoint> waitingBreakpoints = new ArrayList<>();
+	
+	protected List<BreakpointListener> breakpointListeners = new ArrayList<>();
 	
 	public static class Breakpoint {
 		public Evaluation evaluation;
@@ -48,9 +53,36 @@ public class PatternMatchingDebugger {
 		}
 	}
 	
+	/**
+	 * Starts the given engine in a thread.
+	 * 
+	 * @param engine
+	 *            The engine which should be debugged.
+	 */
+	public void start(IPatternMatchingEngine engine) {
+		synchronizationBarrier = new CountDownLatch(1);
+		
+		// Run as new thread:
+		engineThread = new Thread(engine::start);
+		engineThread.start();
+		
+		synchronizationBarrier.countDown();
+	}
+	
 	public void stop() {
-		targetEngine.stop();
+		if (engineThread != null) {
+			engineThread.interrupt();
+		}
 		waitingBreakpoints.clear();
+		targetEngine.finish();
+	}
+	
+	public Thread getEngineThread() {
+		return engineThread;
+	}
+	
+	public CountDownLatch getSynchronizationBarrier() {
+		return synchronizationBarrier;
 	}
 	
 	public void addBreakpointListener(BreakpointListener breakpointListener) {
