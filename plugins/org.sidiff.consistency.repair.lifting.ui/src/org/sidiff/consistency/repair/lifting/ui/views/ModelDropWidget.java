@@ -1,5 +1,9 @@
 package org.sidiff.consistency.repair.lifting.ui.views;
 
+import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
@@ -53,8 +57,30 @@ public abstract class ModelDropWidget {
 
 					selection.iterator().forEachRemaining(element -> {
 						if (element instanceof IResource) {
-							if (addModel((IResource) element)) {
-								viewer_models.add(element);
+							addFile((IResource) element);
+						} else {
+							// Try to get resources by reflection API:
+							try {
+								Set<IResource> resources = new HashSet<>();
+								
+								for (Method method : element.getClass().getMethods()) {
+									if (method.getParameterCount() == 0) {
+										Class<?> returnType = method.getReturnType();
+										
+										if (IResource.class.isAssignableFrom(returnType)) {
+											resources.add((IResource) method.invoke(element));
+										}
+										
+										else if (IResource[].class.isAssignableFrom(returnType)) {
+											for (IResource resource : ((IResource[]) method.invoke(element))) {
+												resources.add(resource);
+											}
+										}
+									}
+								}
+								
+								addFiles(resources);
+							}catch (Exception e) {
 							}
 						}
 					});
@@ -72,12 +98,42 @@ public abstract class ModelDropWidget {
 				Object selection = ((StructuredSelection) viewer_models.getSelection()).getFirstElement();
 				
 				if (selection instanceof IResource) {
-					if (removeModel((IResource) selection)) {
-						viewer_models.remove(selection);
-					}
+					removeFile((IResource) selection);
+				} else {
+					// Normally we shouldn't get here...
+					viewer_models.remove(selection);
 				}
 			}
 		});
+	}
+	
+	private void addFiles(Set<IResource> resources) {
+		
+		// FIXME [WORKAROUND]: Papyrus container -> Support multiple files!
+		for (IResource resource : resources) {
+			if ((resource.getFileExtension() != null) && resource.getFileExtension().equalsIgnoreCase("uml")) {
+				addFile((IResource) resource);
+				return;
+			}
+		}
+		
+		for (IResource resource : resources) {
+			addFile((IResource) resource);
+		}
+	}
+	
+	private void addFile(IResource resource) {
+		if (resource.getType() == IResource.FILE) {
+			if (addModel(resource)) {
+				viewer_models.add(resource);
+			}
+		}
+	}
+	
+	private void removeFile(IResource resource) {
+		if (removeModel(resource)) {
+			viewer_models.remove(resource);
+		}
 	}
 	
 	public void clear() {
