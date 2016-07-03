@@ -263,13 +263,19 @@ public class RepairView extends ViewPart {
 				}
 				
 				if (viewer_repairs.getExpandedState(item)) {
-					viewer_repairs.collapseToLevel(item, 1);
+
+					// Collapse:
+					viewer_repairs.collapseToLevel(item, TreeViewer.ALL_LEVELS);
 				} else {
+					
+					// Expand:
 					if (item instanceof Repair) {
-						viewer_repairs.expandToLevel(item, 2);
+						viewer_repairs.expandToLevel(item, 3);
 					} else {
 						viewer_repairs.expandToLevel(item, 1);
 					}
+					
+					
 				}
 			}
 		});

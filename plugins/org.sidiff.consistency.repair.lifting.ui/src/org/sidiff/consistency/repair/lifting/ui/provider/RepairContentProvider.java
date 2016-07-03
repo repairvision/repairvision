@@ -24,14 +24,14 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 
 	protected Map<Rule, List<Repair>> repairs;
 	
-	protected class Container {
+	public class Container {
 		String label;
 		Image icon;
 		Object parent;
 		Object[] content;
 	}
 	
-	protected class Change {
+	public class Change {
 		GraphElement graphElement;
 		Node[] nodes;
 		EObject[] matches;
