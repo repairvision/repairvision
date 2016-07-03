@@ -134,7 +134,7 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 				//// New complete matching ////
 				
 				// Constraint by lookahead optimization...
-				// (do newMatches.clear(); otherwise)
+				// (Would need newMatches.clear(); otherwise)
 				assert (newMatches.isEmpty());
 
 				// Match the given path segment:
@@ -145,6 +145,7 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 					
 					for (Iterator<? extends EObject> itTarget = matchEdge(sourceMatch, pathSegment); itTarget.hasNext();) {
 						EObject targetMatch = itTarget.next();
+						boolean isNewTargetMatch = !targetDS.containsMatch(targetMatch);
 						
 						if (matchNode(pathSegment, 
 								sourceNode, sourceDS, sourceMatch, 
@@ -153,7 +154,7 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 							isEmptyPath = false;
 
 							// Store new matches (if next path segment was already visited):
-							if (isNextSegmentMatched && targetDS.containsMatch(targetMatch)) {
+							if (isNextSegmentMatched && isNewTargetMatch) {
 								newMatches.add(targetMatch);
 							}
 						}	

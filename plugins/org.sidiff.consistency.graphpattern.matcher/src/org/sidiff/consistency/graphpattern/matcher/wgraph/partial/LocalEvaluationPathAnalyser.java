@@ -1,5 +1,6 @@
 package org.sidiff.consistency.graphpattern.matcher.wgraph.partial;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -8,13 +9,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.consistency.graphpattern.impl.EdgePatternImpl;
+import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSSourceTargetPathIterator.DFSPath;
+import org.sidiff.difference.symmetric.SymmetricPackage;
 
 /**
  * Calculates the minimum of paths that spread from a variable node and have to
@@ -32,14 +37,11 @@ public abstract class LocalEvaluationPathAnalyser {
 	protected LinkedHashMap<NodePattern, Set<EdgePattern>> localEvaluations = new LinkedHashMap<>();
 	
 	/**
-	 * Variable-Node -> local evaluation (opposites as placeholder for the new cross-references)
+	 * All edges which need cross-references: existing edge -> opposite placeholder edge.
+	 * 
+	 * (NOTE: We can not create new edges during path iteration!)
 	 */
-	protected LinkedHashMap<NodePattern, Set<EdgePattern>> localEvaluationsNewCR = new LinkedHashMap<>();
-	
-	/**
-	 * All edges which need cross-references.
-	 */
-	protected Set<EdgePattern> newCrossReferences = new HashSet<>();
+	protected Map<EdgePattern, EdgePattern> newCrossReferences = new HashMap<>();
 	
 	/**
 	 * @param variableNodes
@@ -51,7 +53,6 @@ public abstract class LocalEvaluationPathAnalyser {
 		// Initialize result storage:
 		for (NodePattern variableNode : variableNodes) {
 			this.localEvaluations.put(variableNode, new HashSet<>());
-			this.localEvaluationsNewCR.put(variableNode, new HashSet<>());
 		}
 		
 		// Calculate necessary paths pairwise:
@@ -68,9 +69,60 @@ public abstract class LocalEvaluationPathAnalyser {
 		// Create all additional cross-references:
 		createAllNewCrossReferences();
 		
+		// TODO: TestUtil...!?
 //		System.out.println(this);
+//		assert validateEdges();
 	}
 	
+	@SuppressWarnings("unused")
+	private boolean validateEdges() {
+		NodePattern firstVNode = localEvaluations.keySet().iterator().hasNext() 
+				? localEvaluations.keySet().iterator().next() : null;
+		
+		if (firstVNode != null) {
+			Set<NodePattern> nodes = MatchingHelper.getClosure(firstVNode);
+			
+			for (NodePattern node : nodes) {
+				for (EdgePattern outgoing : node.getOutgoings()) {
+					boolean edgeFound = false;
+					
+					// TODO: Lifting customization...
+					if ((outgoing.getType() == SymmetricPackage.eINSTANCE.getAddReference_Type()) 
+							|| (outgoing.getType() == SymmetricPackage.eINSTANCE.getRemoveReference_Type())) {
+						return true;
+					}
+					
+					for (Set<EdgePattern> evaluation : localEvaluations.values()) {
+						if (evaluation.contains(outgoing)) {
+							edgeFound = true;
+							break;
+						}
+					}
+					
+					EdgePattern opposite = outgoing.getOpposite();
+					
+					if (!edgeFound && opposite != null) {
+						for (Set<EdgePattern> evaluation : localEvaluations.values()) {
+							if (evaluation.contains(opposite)) {
+								edgeFound = true;
+								break;
+							}
+						}
+					}
+					
+					if (!edgeFound) {
+						System.err.println("LocalEvaluationPathAnalyser.validateEdges()");
+						System.err.println("Missing Edge: " + outgoing);
+						System.err.println("Missing Edge: " + opposite);
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
+	}
+
 	private void calculateEvaluationPaths(NodePattern variableNodeA, NodePattern variableNodeB) {
 		
 		// Consider every path from node A to node B:
@@ -86,12 +138,7 @@ public abstract class LocalEvaluationPathAnalyser {
 				int edgeIndexFromB = path.getNewPathSize() - 1;
 				
 				EdgePattern nextEdgeFromA;
-				NodePattern nextEdgeFromA_source;
-				NodePattern nextEdgeFromA_target;
-				
 				EdgePattern nextEdgeFromB;
-				NodePattern nextEdgeFromB_source;
-				NodePattern nextEdgeFromB_target;
 
 				NodePattern nextPositionFromA;
 				NodePattern nextPositionFromB;
@@ -99,34 +146,31 @@ public abstract class LocalEvaluationPathAnalyser {
 				// Until paths meet each other: while (nextPositionFromA != nextPositionFromB)
 				do {
 					nextEdgeFromA = path.getNewPathSegment(edgeIndexFromA);
-					nextEdgeFromA_source = nextEdgeFromA.getSource();
-					nextEdgeFromA_target = nextEdgeFromA.getTarget();
-					
 					nextEdgeFromB = path.getNewPathSegment(edgeIndexFromB);
-					nextEdgeFromB_source = nextEdgeFromB.getSource();
-					nextEdgeFromB_target = nextEdgeFromB.getTarget();
 
-					nextPositionFromA = (nextEdgeFromA_source == lastPositionFromA) 
-							? nextEdgeFromA_target
+					nextPositionFromA = (nextEdgeFromA.getSource() == lastPositionFromA) 
+							? nextEdgeFromA.getTarget()
 							: lastPositionFromA;
 					
-					nextPositionFromB = (nextEdgeFromB_source == lastPositionFromB) 
-							? nextEdgeFromB_target
+					nextPositionFromB = (nextEdgeFromB.getSource() == lastPositionFromB) 
+							? nextEdgeFromB.getTarget()
 							: lastPositionFromB;
 
 					// Check opposite edges if necessary:
 					if (nextPositionFromA == lastPositionFromA) {
-						NodePattern opposite_target = getOpposite(nextEdgeFromA);
+						EdgePattern opposite_nextEdgeFromA = getOpposite(nextEdgeFromA);
 						
-						if (opposite_target != null) {
-							nextPositionFromA = opposite_target;
+						if (opposite_nextEdgeFromA != null) {
+							nextPositionFromA = opposite_nextEdgeFromA.getTarget();
+							nextEdgeFromA = opposite_nextEdgeFromA;
 						}
 					}
 					if (nextPositionFromB == lastPositionFromB) {
-						NodePattern opposite_target = getOpposite(nextEdgeFromB);
+						EdgePattern opposite_nextEdgeFromB = getOpposite(nextEdgeFromB);
 						
-						if (opposite_target != null) {
-							nextPositionFromB = opposite_target;
+						if (opposite_nextEdgeFromB != null) {
+							nextPositionFromB = opposite_nextEdgeFromB.getTarget();
+							nextEdgeFromB = opposite_nextEdgeFromB;
 						}
 					}
 
@@ -134,22 +178,18 @@ public abstract class LocalEvaluationPathAnalyser {
 					if ((nextPositionFromA == lastPositionFromA) && (nextPositionFromB == lastPositionFromB)) {
 						
 						// Reverse the edge which leads to the biggest move from node A or B:
-						int moveA = getMaxMove(path, nextEdgeFromA_source, edgeIndexFromA + 1, 1);
-						int moveB = getMaxMove(path, nextEdgeFromB_source, edgeIndexFromB - 1, -1);
+						int moveA = getMaxMove(path, nextEdgeFromA.getSource(), edgeIndexFromA + 1, 1);
+						int moveB = getMaxMove(path, nextEdgeFromB.getSource(), edgeIndexFromB - 1, -1);
 						
 						// Create the reversed edge and make the move:
 						if (moveA > moveB) {
 							// Reverse edge of node A:
-							nextPositionFromA = createCrossReferenceEdge(nextEdgeFromA);
-							
-							// Store result (placeholder):
-							localEvaluationsNewCR.get(variableNodeA).add(nextEdgeFromA);
+							nextEdgeFromA = createCrossReferenceEdge(nextEdgeFromA);
+							nextPositionFromA = nextEdgeFromA.getTarget();
 						} else {
 							// Reverse edge of node B:
-							nextPositionFromB = createCrossReferenceEdge(nextEdgeFromA);
-							
-							// Store result (placeholder):
-							localEvaluationsNewCR.get(variableNodeB).add(nextEdgeFromA);
+							nextEdgeFromB = createCrossReferenceEdge(nextEdgeFromA);
+							nextPositionFromB = nextEdgeFromB.getTarget();
 						}
 					} else {
 						
@@ -164,14 +204,14 @@ public abstract class LocalEvaluationPathAnalyser {
 								nextPositionFromA = lastPositionFromA;
 							}
 						}
-						
-						// Store results:
-						if (nextPositionFromA != lastPositionFromA) {
-							localEvaluations.get(variableNodeA).add(nextEdgeFromA);
-						}
-						if (nextPositionFromB != lastPositionFromB) {
-							localEvaluations.get(variableNodeB).add(nextEdgeFromB);
-						}
+					}
+					
+					// Store results:
+					if (nextPositionFromA != lastPositionFromA) {
+						localEvaluations.get(variableNodeA).add(nextEdgeFromA);
+					}
+					if (nextPositionFromB != lastPositionFromB) {
+						localEvaluations.get(variableNodeB).add(nextEdgeFromB);
 					}
 
 					// Prepare next move:
@@ -205,35 +245,109 @@ public abstract class LocalEvaluationPathAnalyser {
 		});
 	}
 	
-	private NodePattern getOpposite(EdgePattern edge) {
+	private EdgePattern getOpposite(EdgePattern edge) {
 		
 		if (edge.getOpposite() != null) {
-			return edge.getOpposite().getTarget();
+			return edge.getOpposite();
 		}
 		
-		if (newCrossReferences.contains(edge)) {
-			return edge.getSource();
+		if (newCrossReferences.containsKey(edge)) {
+			return newCrossReferences.get(edge);
 		}
 		
 		return null;
 	}
 	
-	private NodePattern createCrossReferenceEdge(EdgePattern edge) {
-		newCrossReferences.add(edge);
-		return edge.getSource();
+	private class PlaceholderEdgePattern extends EdgePatternImpl {
+		
+		protected NodePattern source;
+		
+		public PlaceholderEdgePattern(
+				EReference type, NodePattern source, NodePattern target, 
+				EdgePattern opposite, boolean isCrossReference) {
+			
+			this.type = type;
+			this.source = source;
+			this.target = target;
+			this.opposite = opposite;
+			this.crossReference = isCrossReference;
+		}
+		
+		@Override
+		public EReference getType() {
+			return type;
+		}
+		
+		@Override
+		public void setType(EReference newType) {
+			this.type = newType;
+		}
+
+		@Override
+		public NodePattern getSource() {
+			return source;
+		}
+		
+		@Override
+		public void setSource(NodePattern newSource) {
+			this.source = newSource;
+		}
+		
+		@Override
+		public NodePattern getTarget() {
+			return target;
+		}
+		
+		@Override
+		public void setTarget(NodePattern newTarget) {
+			this.target = newTarget;
+		}
+		
+		@Override
+		public EdgePattern getOpposite() {
+			return opposite;
+		}
+		
+		@Override
+		public void setOpposite(EdgePattern newOpposite) {
+			this.opposite = newOpposite;
+		}
+		
+		@Override
+		public boolean isCrossReference() {
+			return crossReference;
+		}
+		
+		@Override
+		public void setCrossReference(boolean newCrossReference) {
+			this.crossReference = newCrossReference;
+		}
+	}
+	
+	private EdgePattern createCrossReferenceEdge(EdgePattern edge) {
+		PlaceholderEdgePattern opposite = new PlaceholderEdgePattern(
+				edge.getType(), edge.getTarget(), edge.getSource(),edge, true);
+		newCrossReferences.put(edge, opposite);
+		return opposite;
 	}
 	
 	private void createAllNewCrossReferences() {
 		
-		for (EdgePattern edge : newCrossReferences) {
+		for (EdgePattern edge : newCrossReferences.keySet()) {
 			createCrossReferenceEdgeInModel(edge);
 		}
 		
-		for (Entry<NodePattern, Set<EdgePattern>> evaluation : localEvaluationsNewCR.entrySet()) {
-			for (EdgePattern edgePattern : evaluation.getValue()) {
-				// Add new created cross-reference to local evaluation:
-				assert ((edgePattern.getOpposite() != null) && (edgePattern.getOpposite().isCrossReference()));
-				localEvaluations.get(evaluation.getKey()).add(edgePattern.getOpposite());
+		for (Set<EdgePattern> localEvaluation : localEvaluations.values()) {
+			for (EdgePattern placeholderEdge : newCrossReferences.values()) {
+				if (localEvaluation.contains(placeholderEdge)) {
+					
+					// Remove placeholder from evaluation graph:
+					localEvaluation.remove(placeholderEdge);
+					
+					// Placeholder -> Opposite -> Real Opposite -> Opposite -> Real Cross-Reference:
+					EdgePattern crossReferenceInModel = placeholderEdge.getOpposite().getOpposite();
+					localEvaluation.add(crossReferenceInModel);
+				}
 			}
 		}
 	}

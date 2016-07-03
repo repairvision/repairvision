@@ -1,9 +1,9 @@
 package org.sidiff.consistency.repair.lifting.engine.partial;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -137,7 +137,7 @@ public class PartialLiftingEngine extends LiftingEngine {
 	}
 	
 	public Map<NodePattern, Collection<EObject>> calculateChangeNodes(SymmetricDifference difference) {
-		Map<NodePattern, Collection<EObject>> changeDomains = new HashMap<>();
+		Map<NodePattern, Collection<EObject>> changeDomains = new LinkedHashMap<>();
 		
 		// Collect the matchings of the change nodes:
 		for (NodePattern changeNode : getChangeNodePatterns()) {

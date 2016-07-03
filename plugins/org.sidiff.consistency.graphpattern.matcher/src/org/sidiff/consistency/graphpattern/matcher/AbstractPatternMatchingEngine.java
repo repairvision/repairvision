@@ -75,7 +75,7 @@ public abstract class AbstractPatternMatchingEngine implements IPatternMatchingE
 		return variableNodes;
 	}
 
-	private void internal_initialize(Map<NodePattern, Collection<EObject>> anchors) {
+	private void internal_initialize(Map<NodePattern, Collection<EObject>> variableNodes) {
 		
 		// Initialize the evaluation data of each node:
 		getAllNodePatterns().forEachRemaining(node -> {
@@ -83,13 +83,13 @@ public abstract class AbstractPatternMatchingEngine implements IPatternMatchingE
 		});
 		
 		// Initialize variable nodes:
-		anchors.entrySet().forEach(entry -> {
+		variableNodes.entrySet().forEach(entry -> {
 			Evaluation nodeEvaluation = entry.getKey().getEvaluation();
 			entry.getValue().forEach(match -> nodeEvaluation.getStore().addMatch(match));
 		});
 		
 		// Initial nodes:
-		this.variableNodes = new ArrayList<>(anchors.keySet());
+		this.variableNodes = new ArrayList<>(variableNodes.keySet());
 	}
 	
 	@Override

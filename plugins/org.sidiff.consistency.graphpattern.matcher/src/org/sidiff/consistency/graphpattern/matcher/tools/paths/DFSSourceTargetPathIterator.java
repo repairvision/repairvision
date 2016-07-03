@@ -18,8 +18,6 @@ import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSSourceTargetPa
  */
 public class DFSSourceTargetPathIterator implements Iterator<DFSPath> {
 
-	// TODO: Atomic-Patterns!?
-
 	protected DFSPath path;
 
 	public class DFSPath {

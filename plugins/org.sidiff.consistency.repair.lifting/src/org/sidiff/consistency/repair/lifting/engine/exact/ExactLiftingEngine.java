@@ -1,7 +1,7 @@
 package org.sidiff.consistency.repair.lifting.engine.exact;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
@@ -28,7 +28,7 @@ public class ExactLiftingEngine extends LiftingEngine {
 		super(graphPattern, targetModels, changeIndex, changeDomainMap);
 	}
 
-	public Map<NodePattern, Collection<EObject>> calculateAnchors(SymmetricDifference difference) {
+	public Map<NodePattern, Collection<EObject>> calculateChangeNodes(SymmetricDifference difference) {
 		
 		// Calculate the initial node:
 		NodePattern initialNode = null;
@@ -48,7 +48,7 @@ public class ExactLiftingEngine extends LiftingEngine {
 		EClass changeType = initialNode.getType();
 		EObject changeDomainType = RecognitionRuleUtil.getChangeType(initialNode);
 		
-		Map<NodePattern, Collection<EObject>> variableNodes = new HashMap<>();
+		Map<NodePattern, Collection<EObject>> variableNodes = new LinkedHashMap<>();
 		variableNodes.put(initialNode, changeDomainMap.getChangeDomain(changeType, changeDomainType));
 		
 		return variableNodes;

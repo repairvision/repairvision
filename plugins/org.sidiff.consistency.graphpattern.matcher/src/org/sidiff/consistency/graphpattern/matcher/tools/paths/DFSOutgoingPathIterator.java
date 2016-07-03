@@ -18,8 +18,6 @@ import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSOutgoingPathIt
  */
 public class DFSOutgoingPathIterator implements Iterator<DFSPath> {
 
-	// TODO: Atomic-Patterns!?
-
 	protected DFSPath path;
 
 	public class DFSPath {
@@ -38,12 +36,9 @@ public class DFSOutgoingPathIterator implements Iterator<DFSPath> {
 
 		protected NodePattern start;
 
-		protected NodePattern target;
-
-		public DFSPath(NodePattern start, NodePattern target) {
+		public DFSPath(NodePattern start) {
 			this.position = start;
 			this.start = start;
-			this.target = target;
 
 			this.basePosition = start;
 
@@ -92,21 +87,13 @@ public class DFSOutgoingPathIterator implements Iterator<DFSPath> {
 			return (getNewPathSize() == 0);
 		}
 
-		public NodePattern getPathTarget() {
-			return target;
-		}
-
 		public boolean contains(NodePattern node) {
 			return nodes.contains(node);
 		}
 	}
 
-	public DFSOutgoingPathIterator(NodePattern start, NodePattern target) {
-		this.path = new DFSPath(start, target);
-	}
-
 	public DFSOutgoingPathIterator(NodePattern start) {
-		this(start, null);
+		this.path = new DFSPath(start);
 	}
 
 	@Override
@@ -138,16 +125,12 @@ public class DFSOutgoingPathIterator implements Iterator<DFSPath> {
 						&& isValidNode(nextTarget)) {
 
 					path.segments.add(nextOutgoing);
-					isNewPath = true;
 
-					// Target reached?
-					if (nextTarget == path.target) {
-						break;
-					} else {
-						path.position = nextTarget;
-						path.nodes.add(nextTarget);
-						path.traceOutgoings.add(nextTarget.getOutgoings().iterator());
-					}
+					path.position = nextTarget;
+					path.nodes.add(nextTarget);
+					path.traceOutgoings.add(nextTarget.getOutgoings().iterator());
+
+					isNewPath = true;
 				}
 			} else {
 
@@ -208,9 +191,5 @@ public class DFSOutgoingPathIterator implements Iterator<DFSPath> {
 
 	public NodePattern getStart() {
 		return path.start;
-	}
-
-	public NodePattern getTarget() {
-		return path.target;
 	}
 }

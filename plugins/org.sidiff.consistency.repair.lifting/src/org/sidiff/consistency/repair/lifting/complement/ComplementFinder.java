@@ -8,6 +8,7 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHS
 import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -109,7 +110,8 @@ public class ComplementFinder {
 		//// Edit to Recognition ////
 		Edit2RecognitionRule edit2Recognition = new Edit2RecognitionRule(editRule);
 		GraphPattern recognitionRule = edit2Recognition.getRecognitionRule();
-
+		removeSymmetricDifferenceNode(recognitionRule);
+		
 		//// Lifting ////
 
 		// Create working graph:
@@ -143,6 +145,9 @@ public class ComplementFinder {
 				
 				// Store new complement rule:
 				complements.add(complementConstructor.createComplementRule(editRuleMatch));
+			} else {
+//				// TODO: DebugUtil...!?
+//				System.out.println("Full Match: " + matchGenerator);
 			}
 		}
 
@@ -154,6 +159,17 @@ public class ComplementFinder {
 		return complements;
 	}
 	
+	private void removeSymmetricDifferenceNode(GraphPattern recognitionRule) {
+		
+		for (Iterator<NodePattern> iterator = recognitionRule.getNodes().iterator(); iterator.hasNext();) {
+			NodePattern node = iterator.next();
+			
+			if (node.getType() == SymmetricPackage.eINSTANCE.getSymmetricDifference()) {
+				iterator.remove();
+			}
+		}
+	}
+
 	private boolean isPartialMatch(Map<NodePattern, NodeMatching> matching) {
 		for (NodeMatching match : matching.values()) {
 			if (match.getMatch() == null) {
