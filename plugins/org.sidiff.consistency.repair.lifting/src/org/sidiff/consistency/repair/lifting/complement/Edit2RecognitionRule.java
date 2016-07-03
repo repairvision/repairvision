@@ -1,7 +1,10 @@
 package org.sidiff.consistency.repair.lifting.complement;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
@@ -12,9 +15,42 @@ import org.sidiff.consistency.graphpattern.henshin.HenshinConverter;
 import org.sidiff.difference.lifting.edit2recognition.Edit2RecognitionTransformation;
 import org.sidiff.difference.lifting.edit2recognition.exceptions.EditToRecognitionException;
 import org.sidiff.difference.lifting.edit2recognition.traces.TransformationPatterns;
+import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.matching.model.MatchingModelPackage;
 
+/**
+ * Converts a Henshin edit-rule to a Graph-Pattern recognition-rule.
+ * 
+ * @author Manuel Ohrndorf
+ */
 public class Edit2RecognitionRule {
 
+	/**
+	 * Cross-Referenced edge types.
+	 */
+	public static final Set<EReference> crossReferencedTypes = new HashSet<>();
+
+	static {
+		crossReferencedTypes.add(MatchingModelPackage.eINSTANCE.getCorrespondence_MatchedA());
+		crossReferencedTypes.add(MatchingModelPackage.eINSTANCE.getCorrespondence_MatchedB());
+		
+		crossReferencedTypes.add(SymmetricPackage.eINSTANCE.getAddObject_Obj());
+		
+		crossReferencedTypes.add(SymmetricPackage.eINSTANCE.getAddReference_Src());
+		crossReferencedTypes.add(SymmetricPackage.eINSTANCE.getAddReference_Tgt());
+		crossReferencedTypes.add(SymmetricPackage.eINSTANCE.getAddReference_Type());
+		
+		crossReferencedTypes.add(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjA());
+		crossReferencedTypes.add(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjB());
+		crossReferencedTypes.add(SymmetricPackage.eINSTANCE.getAttributeValueChange_Type());
+		
+		crossReferencedTypes.add(SymmetricPackage.eINSTANCE.getRemoveObject_Obj());
+		
+		crossReferencedTypes.add(SymmetricPackage.eINSTANCE.getRemoveReference_Src());
+		crossReferencedTypes.add(SymmetricPackage.eINSTANCE.getRemoveReference_Tgt());
+		crossReferencedTypes.add(SymmetricPackage.eINSTANCE.getRemoveReference_Type());
+	}
+	
 	private Rule editRule;
 	
 	private GraphPattern recognitionRule;
@@ -34,7 +70,7 @@ public class Edit2RecognitionRule {
 			edit2RecognitionTrace = edit2Recognition.getPatterns();
 
 			// Convert to graph pattern:
-			HenshinConverter henshinConverter = new HenshinConverter(recognitionUnit);
+			HenshinConverter henshinConverter = new HenshinConverter(recognitionUnit, crossReferencedTypes);
 			recognitionRule = henshinConverter.getGraphPattern();
 			henshinToGraphPatternTrace = henshinConverter.getTrace();
 		} catch (NoMainUnitFoundException | EditToRecognitionException e) {

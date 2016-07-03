@@ -1,6 +1,7 @@
 package org.sidiff.consistency.graphpattern.henshin;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -18,6 +19,11 @@ import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.NodePattern;
 
+/**
+ * Converts a Henshin rule into a Graph-Pattern ({@link GraphPattern}).
+ * 
+ * @author Manuel Ohrndorf
+ */
 public class HenshinConverter {
 
 	private GraphpatternFactory GP_FACTORY = GraphpatternFactory.eINSTANCE;
@@ -25,14 +31,24 @@ public class HenshinConverter {
 	private Map<Node, NodePattern> trace;
 
 	private GraphPattern graphPattern;
+	
+	private Set<EReference> crossReferencedTypes = Collections.emptySet();
 
 	public HenshinConverter(Rule rule) {
-		graphPattern = GP_FACTORY.createGraphPattern();
-		trace = new HashMap<>();
+		this.graphPattern = GP_FACTORY.createGraphPattern();
+		this.trace = new HashMap<>();
 		
 		convertRule(rule);
 	}
 	
+	public HenshinConverter(Rule rule, Set<EReference> crossReferencedTypes) {
+		this.crossReferencedTypes = crossReferencedTypes;
+		this.graphPattern = GP_FACTORY.createGraphPattern();
+		this.trace = new HashMap<>();
+		
+		convertRule(rule);
+	}
+
 	private void convertNode(Node node) {
 		NodePattern nodePattern = GP_FACTORY.createNodePattern();
 		nodePattern.setName(node.getName());
@@ -61,7 +77,7 @@ public class HenshinConverter {
 			}
 
 			EdgePattern edgePattern;
-			EdgePattern oppositeEdgePattern;
+			EdgePattern oppositeEdgePattern = null;
 
 			// Outgoing edge pattern:
 			NodePattern sourceNodePattern = trace.get(edgeOut.getSource());
@@ -80,15 +96,8 @@ public class HenshinConverter {
 			// Opposite edge pattern:
 			EReference oppositeType = edgeOut.getType().getEOpposite();
 
-			if (oppositeType == null) {
-				// Create opposite cross-reference edge pattern:
-				oppositeEdgePattern = GP_FACTORY.createEdgePattern();
-				oppositeEdgePattern.setType(edgeOut.getType());
-				oppositeEdgePattern.setCrossReference(true);
+			if (oppositeType != null) {
 				
-				oppositeEdgePattern.setTarget(sourceNodePattern);
-				targetNodePattern.getOutgoings().add(oppositeEdgePattern);
-			} else {
 				// Create opposite edge pattern:
 				oppositeEdgePattern = GP_FACTORY.createEdgePattern();
 				oppositeEdgePattern.setType(oppositeType);
@@ -99,11 +108,25 @@ public class HenshinConverter {
 				// Remember this edge so we do not process it again as outgoing edge:
 				Edge oppositeEdge = getOpposite(edgeOut, node.getIncoming());
 				convertedOpposites.add(oppositeEdge);
-			}
+			} else {
+				
+				if (crossReferencedTypes.contains(edgeOut.getType())) {
+					
+					// Create opposite cross-reference edge pattern:
+					oppositeEdgePattern = GP_FACTORY.createEdgePattern();
+					oppositeEdgePattern.setType(edgeOut.getType());
+					oppositeEdgePattern.setCrossReference(true);
 
-			// Set Opposite of edges:
-			edgePattern.setOpposite(oppositeEdgePattern);
-			oppositeEdgePattern.setOpposite(edgePattern);
+					oppositeEdgePattern.setTarget(sourceNodePattern);
+					targetNodePattern.getOutgoings().add(oppositeEdgePattern);
+				}
+			}
+			
+			if (oppositeEdgePattern != null) {
+				// Set Opposite of edges:
+				edgePattern.setOpposite(oppositeEdgePattern);
+				oppositeEdgePattern.setOpposite(edgePattern);
+			}
 		}
 	}
 
