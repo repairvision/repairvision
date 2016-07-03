@@ -9,14 +9,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.impl.EdgePatternImpl;
 import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSSourceTargetPathIterator.DFSPath;
 import org.sidiff.difference.symmetric.SymmetricPackage;
@@ -258,72 +256,6 @@ public abstract class LocalEvaluationPathAnalyser {
 		return null;
 	}
 	
-	private class PlaceholderEdgePattern extends EdgePatternImpl {
-		
-		protected NodePattern source;
-		
-		public PlaceholderEdgePattern(
-				EReference type, NodePattern source, NodePattern target, 
-				EdgePattern opposite, boolean isCrossReference) {
-			
-			this.type = type;
-			this.source = source;
-			this.target = target;
-			this.opposite = opposite;
-			this.crossReference = isCrossReference;
-		}
-		
-		@Override
-		public EReference getType() {
-			return type;
-		}
-		
-		@Override
-		public void setType(EReference newType) {
-			this.type = newType;
-		}
-
-		@Override
-		public NodePattern getSource() {
-			return source;
-		}
-		
-		@Override
-		public void setSource(NodePattern newSource) {
-			this.source = newSource;
-		}
-		
-		@Override
-		public NodePattern getTarget() {
-			return target;
-		}
-		
-		@Override
-		public void setTarget(NodePattern newTarget) {
-			this.target = newTarget;
-		}
-		
-		@Override
-		public EdgePattern getOpposite() {
-			return opposite;
-		}
-		
-		@Override
-		public void setOpposite(EdgePattern newOpposite) {
-			this.opposite = newOpposite;
-		}
-		
-		@Override
-		public boolean isCrossReference() {
-			return crossReference;
-		}
-		
-		@Override
-		public void setCrossReference(boolean newCrossReference) {
-			this.crossReference = newCrossReference;
-		}
-	}
-	
 	private EdgePattern createCrossReferenceEdge(EdgePattern edge) {
 		PlaceholderEdgePattern opposite = new PlaceholderEdgePattern(
 				edge.getType(), edge.getTarget(), edge.getSource(),edge, true);
@@ -332,6 +264,9 @@ public abstract class LocalEvaluationPathAnalyser {
 	}
 	
 	private void createAllNewCrossReferences() {
+		if (newCrossReferences.isEmpty()) {
+			return;
+		}
 		
 		for (EdgePattern edge : newCrossReferences.keySet()) {
 			createCrossReferenceEdgeInModel(edge);
