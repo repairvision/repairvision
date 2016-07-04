@@ -30,7 +30,7 @@ public class PartialLiftingEngineFactory implements IPatternMatchingEngineFactor
 			
 			// Create the engine:
 			PartialLiftingEngine engine = new PartialLiftingEngine(
-					graphpattern, targetModels, changeIndex, changeDomainMap);
+					graphpattern.getNodes(), targetModels, changeIndex, changeDomainMap);
 			Map<NodePattern, Collection<EObject>> variableNodes = engine.calculateChangeNodes(difference);
 			engine.initialize(variableNodes);
 			

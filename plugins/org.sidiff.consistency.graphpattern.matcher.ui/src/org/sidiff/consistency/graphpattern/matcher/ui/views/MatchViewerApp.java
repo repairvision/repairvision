@@ -63,10 +63,10 @@ public class MatchViewerApp {
 
 	// TODO BEGIN
 	
-	private List<NodePattern> test_getVariableNodes(GraphPattern graph) {
+	private List<NodePattern> test_getVariableNodes(List<NodePattern> graph) {
 		List<NodePattern> seedingNodes = new ArrayList<NodePattern>();
 		
-		for (NodePattern node : graph.getNodes()) {
+		for (NodePattern node : graph) {
 			if (RecognitionRuleUtil.isChangeNode(node)) {
 				seedingNodes.add(node);
 			}
@@ -82,8 +82,8 @@ public class MatchViewerApp {
 
 		IPatternMatchingEngine engine = EngineManager.getInstance().getMatchingEngine();
 
-		IAtomicPatternFactory atomicPatternFactory = engine.createAtomicPatternFactory();
-		IMatchValidation matchValidation = engine.createMatchValidation();
+		IAtomicPatternFactory atomicPatternFactory = engine.getAtomicPatternFactory();
+		IMatchValidation matchValidation = engine.getMatchValidation();
 		
 		// TODO
 		List<NodePattern> variableNodes = test_getVariableNodes(engine.getGraphPattern());

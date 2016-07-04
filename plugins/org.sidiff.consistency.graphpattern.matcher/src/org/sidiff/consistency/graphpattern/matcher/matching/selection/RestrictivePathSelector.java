@@ -38,7 +38,8 @@ public class RestrictivePathSelector extends PathSelector {
 			sourceDS.getRemoteMatchIterator(lastMatch, edge).forEachRemaining(match -> {
 				
 				// Filter for selected matches:
-				if (targetSelection.isSelectedMatch(match) && !adjacentMatches.contains(match)) { // FIXME: Use a Set?
+				// TODO: Collect as Set -> toArray() for history? 
+				if (targetSelection.isSelectedMatch(match) && !adjacentMatches.contains(match)) {
 					adjacentMatches.add(match);
 				}
 			});

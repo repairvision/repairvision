@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.Evaluation;
+import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.data.NavigableMatchesDS;
 
@@ -235,6 +236,25 @@ public class MatchingHelper {
 			return (NavigableMatchesDS) ds;
 		} else {
 			throw new RuntimeException("This algorithm needs a navigable data store!");
+		}
+	}
+	
+	/**
+	 * @param graphPattern
+	 *            Graph-Pattern which needs clean up.
+	 */
+	public static void fixEdges(GraphPattern graphPattern) {
+		
+		for (NodePattern node : graphPattern.getNodes()) {
+			for (EdgePattern edgePattern : node.getOutgoings()) {
+				if (edgePattern.eIsProxy() || edgePattern.getTarget() == null) {
+					System.err.println("Invalid edge removed: " + edgePattern);
+					
+					node.eSetDeliver(false);
+					node.getOutgoings().remove(edgePattern);
+					node.eSetDeliver(true);
+				}
+			}
 		}
 	}
 }

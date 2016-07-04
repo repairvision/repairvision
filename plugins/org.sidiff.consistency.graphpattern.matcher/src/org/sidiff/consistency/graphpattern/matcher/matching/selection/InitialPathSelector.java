@@ -36,7 +36,8 @@ public class InitialPathSelector extends PathSelector {
 		
 		for (EObject lastMatch : history.getLastMatch()) {
 			sourceDS.getRemoteMatchIterator(lastMatch, edge).forEachRemaining(match -> {
-				if (!adjacentMatches.contains(match)) {	// TODO: Use a Set?
+				// TODO: Collect as Set -> toArray() for history? 
+				if (!adjacentMatches.contains(match)) {
 					adjacentMatches.add(match);
 				}
 			});

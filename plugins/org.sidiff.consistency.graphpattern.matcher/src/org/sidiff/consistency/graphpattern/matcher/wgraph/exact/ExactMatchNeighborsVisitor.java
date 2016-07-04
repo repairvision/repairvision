@@ -10,14 +10,15 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.AttributePattern;
 import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.impl.VisitorImpl;
+import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
+import org.sidiff.consistency.graphpattern.matcher.wgraph.IConstraintTester;
 
 /**
  * @author Manuel Ohrndorf
@@ -38,15 +39,21 @@ public class ExactMatchNeighborsVisitor extends VisitorImpl {
 	 * Calculated the targets of edges (including cross-references).
 	 */
 	private MatchingHelper matchingHelper;
+	
+	/**
+	 * Check types and other constraints.
+	 */
+	private IConstraintTester constraintTester;
 
 	/**
 	 * Initializes a new visitor.
 	 * 
-	 * @param matchingHelper
-	 *            The domain specific or generic matching helper.
+	 * @param engine
+	 *            The corresponding matching engine.
 	 */
-	public ExactMatchNeighborsVisitor(MatchingHelper matchingHelper) {
-		this.matchingHelper = matchingHelper;
+	public ExactMatchNeighborsVisitor(IPatternMatchingEngine engine) {
+		this.matchingHelper = engine.getMatchingHelper();
+		this.constraintTester = engine.getConstraintTester();
 	}
 
 	@Override
@@ -58,22 +65,6 @@ public class ExactMatchNeighborsVisitor extends VisitorImpl {
 			
 			// Process all local matches related to the neighbor matches:
 			List<EdgePattern> edges = getNextEdges(actualNode);
-			
-			// FIXME: Broken models:
-			List<EdgePattern> tmp_edges = new ArrayList<>();
-			
-			for (EdgePattern edgePattern : edges) {
-				if (edgePattern.eIsProxy() || edgePattern.getTarget() == null) {
-					actualNode.eSetDeliver(false);
-					actualNode.getOutgoings().remove(edgePattern);
-					actualNode.eSetDeliver(true);
-				} else {
-					tmp_edges.add(edgePattern);
-				}
-			}
-			edges = tmp_edges;
-			//---------------------------------------------------------------------
-			
 			Collection<? extends EObject> unmatchedLocal = startMatching(evaluation, edges);
 
 			// Remove wrong matches from the search space -> propagate unmatched:
@@ -224,7 +215,7 @@ public class ExactMatchNeighborsVisitor extends VisitorImpl {
 				remoteMatches = new ArrayList<>();  
 				
 				matchingHelper.getTargets(localMatch, sourceNode, edge).forEachRemaining(targetObject -> {
-					if (checkConstraints(neigboreNode, targetObject)) {
+					if (constraintTester.check(neigboreNode, targetObject)) {
 						remoteMatches.add(targetObject);
 					}
 				});
@@ -241,40 +232,6 @@ public class ExactMatchNeighborsVisitor extends VisitorImpl {
 		}
 		
 		return allRemoteMatches;
-	}
-	
-	/**
-	 * Check types and other constraints.
-	 * 
-	 * @param node
-	 *            The node pattern.
-	 * @param newObject
-	 *            The potential match.
-	 * @return <code>true</code> if all constraints are passed;
-	 *         <code>false</code> otherwise.
-	 */
-	private boolean checkConstraints(NodePattern node, EObject newObject) {
-		
-		// Check types!
-		if (!((newObject.eClass() == node.getType())
-				|| matchingHelper.getSubTypes(newObject.eClass()).contains(node.getType()))) {
-			return false;
-		}
-		
-		// Check constant attributes!
-		for (AttributePattern attribute : node.getAttributes()) {
-			// FIXME: Better attribute support...
-			if (attribute.getValue().startsWith("\"") && attribute.getValue().endsWith("\"")) {
-				Object instanceValue = newObject.eGet(attribute.getType());
-				String attributeValue = attribute.getValue().substring(1, attribute.getValue().length() - 1);
-				
-				if (!instanceValue.equals(attributeValue)) {
-					return false;
-				}
-			}
-		}
-		
-		return true;
 	}
 	
 	/**

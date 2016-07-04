@@ -121,8 +121,8 @@ public class ComplementFinder {
 		matchingEngine.start();
 
 		// Matching:
-		IAtomicPatternFactory atomicPatternFactory = matchingEngine.createAtomicPatternFactory();
-		IMatchValidation matchValidation = matchingEngine.createMatchValidation();
+		IAtomicPatternFactory atomicPatternFactory = matchingEngine.getAtomicPatternFactory();
+		IMatchValidation matchValidation = matchingEngine.getMatchValidation();
 		List<NodePattern> variableNodes = matchingEngine.getVariableNodes();
 
 		MatchGenerator matchGenerator = new MatchGenerator(

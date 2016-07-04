@@ -46,8 +46,7 @@ public class PatternMatchingDebugger {
 		this.targetEngine = targetEngine;
 		
 		// Install debuggable evaluation:
-		// FIXME: AbstractPatternMatchingEngine#getAllNodePatterns() -> Graph model function
-		for (NodePattern node : targetEngine.getGraphPattern().getNodes()) {
+		for (NodePattern node : targetEngine.getGraphPattern()) {
 			DebuggableEvaluation debuggableEvaluation = new DebuggableEvaluation(this);
 			debuggableEvaluation.install(node.getEvaluation());
 		}

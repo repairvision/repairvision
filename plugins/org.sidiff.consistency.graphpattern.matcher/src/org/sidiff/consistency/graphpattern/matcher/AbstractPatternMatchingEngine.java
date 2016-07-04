@@ -2,7 +2,6 @@ package org.sidiff.consistency.graphpattern.matcher;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +12,6 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.Evaluation;
-import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.matching.BasicMatchValidation;
@@ -21,17 +19,20 @@ import org.sidiff.consistency.graphpattern.matcher.matching.IMatchValidation;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.AtomicPattern;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.PathSelector;
+import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
+import org.sidiff.consistency.graphpattern.matcher.wgraph.BasicConstraintTester;
+import org.sidiff.consistency.graphpattern.matcher.wgraph.IConstraintTester;
 
 public abstract class AbstractPatternMatchingEngine implements IPatternMatchingEngine {
 
-	protected GraphPattern graphpattern;
+	protected List<NodePattern> graphPattern;
 	
 	protected ResourceSet targetModels;
 	
 	protected List<NodePattern> variableNodes;
 
-	public AbstractPatternMatchingEngine(GraphPattern graphPattern, ResourceSet targetModels) {
-		this.graphpattern = graphPattern;
+	public AbstractPatternMatchingEngine(List<NodePattern> graphPattern, ResourceSet targetModels) {
+		this.graphPattern = graphPattern;
 		this.targetModels = targetModels;
 	}
 	
@@ -39,7 +40,7 @@ public abstract class AbstractPatternMatchingEngine implements IPatternMatchingE
 	public void initialize(Map<NodePattern, Collection<EObject>> variableNodeDomains) {
 		
 		// Initialization as command -> support for graph patterns from editors:
-		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(graphpattern);
+		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(graphPattern.get(0));
 		
 		if (editingDomain == null) {
 			internal_initialize(variableNodeDomains);
@@ -61,13 +62,13 @@ public abstract class AbstractPatternMatchingEngine implements IPatternMatchingE
 	}
 	
 	@Override
-	public GraphPattern getGraphPattern() {
-		return graphpattern;
+	public List<NodePattern> getGraphPattern() {
+		return graphPattern;
 	}
 
 	@Override
-	public void setGraphPattern(GraphPattern graphPattern) {
-		this.graphpattern = graphPattern;
+	public void setGraphPattern(List<NodePattern> graphPattern) {
+		this.graphPattern = graphPattern;
 	}
 	
 	@Override
@@ -78,9 +79,9 @@ public abstract class AbstractPatternMatchingEngine implements IPatternMatchingE
 	private void internal_initialize(Map<NodePattern, Collection<EObject>> variableNodes) {
 		
 		// Initialize the evaluation data of each node:
-		getAllNodePatterns().forEachRemaining(node -> {
+		for (NodePattern node : graphPattern) {
 			initializeEvaluation(node);
-		});
+		}
 		
 		// Initialize variable nodes:
 		variableNodes.entrySet().forEach(entry -> {
@@ -118,13 +119,19 @@ public abstract class AbstractPatternMatchingEngine implements IPatternMatchingE
 		dataStore.initialize();
 		evaluation.initialize();
 	}
-
-	protected Iterator<NodePattern> getAllNodePatterns() {
-		return graphpattern.getNodes().iterator();
+	
+	@Override
+	public MatchingHelper getMatchingHelper() {
+		return new MatchingHelper(getCrossReferencer());
 	}
 	
 	@Override
-	public IAtomicPatternFactory createAtomicPatternFactory() {
+	public IConstraintTester getConstraintTester() {
+		return new BasicConstraintTester(getMatchingHelper());
+	}
+	
+	@Override
+	public IAtomicPatternFactory getAtomicPatternFactory() {
 		return new IAtomicPatternFactory() {
 			
 			@Override
@@ -135,7 +142,7 @@ public abstract class AbstractPatternMatchingEngine implements IPatternMatchingE
 	}
 	
 	@Override
-	public IMatchValidation createMatchValidation() {
+	public IMatchValidation getMatchValidation() {
 		return new BasicMatchValidation();
 	}
 
@@ -151,7 +158,7 @@ public abstract class AbstractPatternMatchingEngine implements IPatternMatchingE
 	public String toString() {
 		StringBuffer print = new StringBuffer();
 		
-		for (NodePattern node : graphpattern.getNodes()) {
+		for (NodePattern node : graphPattern) {
 			print.append(node + ":\n");
 			
 			node.getEvaluation().getStore().getMatchIterator().forEachRemaining(match -> {

@@ -6,19 +6,21 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.DataStore;
-import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.Visitor;
 import org.sidiff.consistency.graphpattern.matcher.matching.IMatchValidation;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
+import org.sidiff.consistency.graphpattern.matcher.tools.CrossReferencer;
+import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
+import org.sidiff.consistency.graphpattern.matcher.wgraph.IConstraintTester;
 
 public interface IPatternMatchingEngine {
 
-	public void initialize(Map<NodePattern, Collection<EObject>> seedSets);
+	public void initialize(Map<NodePattern, Collection<EObject>> variableNodeMatching);
 	
-	public GraphPattern getGraphPattern();
+	public List<NodePattern> getGraphPattern();
 	
-	public void setGraphPattern(GraphPattern graphPattern); 
+	public void setGraphPattern(List<NodePattern> graphPattern); 
 	
 	public List<NodePattern> getVariableNodes();
 	
@@ -30,8 +32,13 @@ public interface IPatternMatchingEngine {
 	
 	public Visitor createVisitor();
 	
-	public IAtomicPatternFactory createAtomicPatternFactory();
+	public MatchingHelper getMatchingHelper();
 	
-	public IMatchValidation createMatchValidation();
+	public CrossReferencer getCrossReferencer();
 	
+	public IConstraintTester getConstraintTester();
+	
+	public IAtomicPatternFactory getAtomicPatternFactory();
+	
+	public IMatchValidation getMatchValidation();
 }

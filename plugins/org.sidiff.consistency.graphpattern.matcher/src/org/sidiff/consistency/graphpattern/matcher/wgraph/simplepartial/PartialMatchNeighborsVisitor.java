@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.matcher.wgraph.partial;
+package org.sidiff.consistency.graphpattern.matcher.wgraph.simplepartial;
 
 import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
 
@@ -16,28 +16,32 @@ import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.impl.VisitorImpl;
+import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
+import org.sidiff.consistency.graphpattern.matcher.wgraph.BasicConstraintTester;
 
 public class PartialMatchNeighborsVisitor extends VisitorImpl {
 
+	private IPatternMatchingEngine engine;
+	
 	private MatchingHelper matchingHelper;
 	
-	private ConstraintTester constraintTester;
+	private BasicConstraintTester constraintTester;
 
 	private EdgePattern originEdge;
 	
 	private List<EObject> matches;
 	
-	public PartialMatchNeighborsVisitor(MatchingHelper matchingHelper) {
-		this.matchingHelper = matchingHelper;
+	public PartialMatchNeighborsVisitor(IPatternMatchingEngine engine) {
+		this.matchingHelper = engine.getMatchingHelper();
 	}
 	
-	public PartialMatchNeighborsVisitor(MatchingHelper matchingHelper, EdgePattern originEdge, List<EObject> matches) {
-		this.matchingHelper = matchingHelper;
+	public PartialMatchNeighborsVisitor(IPatternMatchingEngine engine, EdgePattern originEdge, List<EObject> matches) {
+		this.matchingHelper = engine.getMatchingHelper();
 		this.originEdge = originEdge;
 		this.matches = matches;
 		
-		this.constraintTester = new ConstraintTester(matchingHelper);
+		this.constraintTester = new BasicConstraintTester(matchingHelper);
 	}
 
 	@Override
@@ -111,7 +115,7 @@ public class PartialMatchNeighborsVisitor extends VisitorImpl {
 			
 			if (!neighborMatch.getValue().isEmpty()) {
 				PartialMatchNeighborsVisitor newMatcher = new PartialMatchNeighborsVisitor(
-						matchingHelper, neighborMatch.getKey(), neighborMatch.getValue());
+						engine, neighborMatch.getKey(), neighborMatch.getValue());
 				
 				NodePattern neighborNode = neighborMatch.getKey().getTarget();
 				neighborNode.getEvaluation().accept(newMatcher);	

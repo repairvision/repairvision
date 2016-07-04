@@ -16,9 +16,11 @@ import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.impl.VisitorImpl;
+import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSOutgoingPathIterator;
 import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSOutgoingPathIterator.DFSPath;
+import org.sidiff.consistency.graphpattern.matcher.wgraph.IConstraintTester;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 
 /**
@@ -32,7 +34,7 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 	
 	protected MatchingHelper matchingHelper;
 	
-	private ConstraintTester constraintTester;
+	private IConstraintTester constraintTester;
 	
 	protected List<NodePattern> variableNodes;
 	
@@ -46,14 +48,11 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 	
 	protected Set<EdgePattern> matched = new HashSet<>();
 	
-	public LocalEvaluationMatcher(MatchingHelper matchingHelper,
-			List<NodePattern> variableNodes, Map<NodePattern, Set<EdgePattern>> localEvaluations) {
-		
-		this.matchingHelper = matchingHelper;
-		this.variableNodes = variableNodes;
+	public LocalEvaluationMatcher(IPatternMatchingEngine engine, Map<NodePattern, Set<EdgePattern>> localEvaluations) {
+		this.matchingHelper = engine.getMatchingHelper();
+		this.constraintTester = engine.getConstraintTester();
+		this.variableNodes = engine.getVariableNodes();
 		this.localEvaluations = localEvaluations;
-		
-		this.constraintTester = new ConstraintTester(matchingHelper);
 	}
 
 	@Override

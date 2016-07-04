@@ -112,7 +112,7 @@ public class NavigableMatchesDS extends NavigableDataStoreImpl {
 			edgeFields = initializeEdgeMatch(localMatch);
 		}
 		
-//		// TODO: [TEST]: Print graph
+//		// TODO: [TEST-CODE]: Print graph:
 //		if (!getEvaluation().getNode().getType().equals(EcorePackage.eINSTANCE.getEReference())) {
 //			System.out.println("graph.addDirectedEdge(\""+ Integer.toHexString(localMatch.hashCode()) +"\", \""+ Integer.toHexString(remoteMatch.hashCode()) +"\");");
 //		}

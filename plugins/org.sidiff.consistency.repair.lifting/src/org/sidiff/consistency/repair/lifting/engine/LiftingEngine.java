@@ -6,14 +6,14 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.sidiff.common.emf.access.Scope;
-import org.sidiff.consistency.graphpattern.GraphPattern;
+import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.AbstractPatternMatchingEngine;
-import org.sidiff.consistency.graphpattern.matcher.matching.IMatchValidation;
+import org.sidiff.consistency.graphpattern.matcher.data.NavigableMatchesDS;
+import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
 import org.sidiff.consistency.graphpattern.matcher.tools.CrossReferencer;
-import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 import org.sidiff.consistency.repair.lifting.matching.LiftingCrossReferencer;
-import org.sidiff.consistency.repair.lifting.matching.LiftingMatchValidation;
+import org.sidiff.consistency.repair.lifting.matching.atomic.AtomicLiftingPatternFactory;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphIndex;
 import org.sidiff.consistency.repair.lifting.util.RecognitionRuleUtil;
@@ -21,16 +21,18 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.MergeImports;
 
 public abstract class LiftingEngine extends AbstractPatternMatchingEngine {
+	
+	protected MergeImports mergeImports;
 
 	protected LiftingGraphIndex changeIndex;
 	
 	protected LiftingGraphDomainMap changeDomainMap;
 	
-	protected MatchingHelper matchingHelper;
+	protected CrossReferencer crossReferencer;
 	
-	protected MergeImports mergeImports;
+	protected IAtomicPatternFactory atomicPatternFactory;
 	
-	public LiftingEngine(GraphPattern graphPattern, ResourceSet targetModels,
+	public LiftingEngine(List<NodePattern> graphPattern, ResourceSet targetModels,
 			LiftingGraphIndex changeIndex, LiftingGraphDomainMap changeDomainMap) {
 		super(graphPattern, targetModels);
 		
@@ -41,11 +43,11 @@ public abstract class LiftingEngine extends AbstractPatternMatchingEngine {
 	protected Collection<NodePattern> getChangeNodePatterns() {
 		List <NodePattern> changeNodes = new ArrayList<>();
 		
-		getAllNodePatterns().forEachRemaining(node -> {
+		for (NodePattern node : getGraphPattern()) {
 			if (RecognitionRuleUtil.isChangeNode(node)) {
 				changeNodes.add(node);
 			}
-		});
+		}
 		
 		return changeNodes;
 	}
@@ -59,8 +61,8 @@ public abstract class LiftingEngine extends AbstractPatternMatchingEngine {
 		mergeImports.merge();
 		
 		// Create matching helper:
-		CrossReferencer crossReferencer = new LiftingCrossReferencer(getResourceSet(), changeIndex, changeDomainMap);
-		this.matchingHelper = new MatchingHelper(crossReferencer);
+		crossReferencer = new LiftingCrossReferencer(getResourceSet(), changeIndex, changeDomainMap);
+		atomicPatternFactory = new AtomicLiftingPatternFactory();
 		
 		super.start();
 	}
@@ -76,8 +78,18 @@ public abstract class LiftingEngine extends AbstractPatternMatchingEngine {
 	}
 	
 	@Override
-	public IMatchValidation createMatchValidation() {
-		return new LiftingMatchValidation();
+	public DataStore createDataStore() {
+		return new NavigableMatchesDS();
+	}
+	
+	@Override
+	public CrossReferencer getCrossReferencer() {
+		return crossReferencer;
+	}
+	
+	@Override
+	public IAtomicPatternFactory getAtomicPatternFactory() {
+		return atomicPatternFactory;
 	}
 	
 	public LiftingGraphIndex getChangeIndex() {

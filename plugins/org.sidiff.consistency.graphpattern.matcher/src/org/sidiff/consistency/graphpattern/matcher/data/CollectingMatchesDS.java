@@ -13,7 +13,7 @@ public class CollectingMatchesDS extends DataStoreImpl {
 
 	@Override
 	public Iterator<EObject> getMatchIterator() {
-		return matches.iterator(); // TODO: Unmodifiable
+		return matches.iterator();
 	}
 	
 	@Override

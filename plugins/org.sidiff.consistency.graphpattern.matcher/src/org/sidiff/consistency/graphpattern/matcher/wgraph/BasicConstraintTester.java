@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.matcher.wgraph.partial;
+package org.sidiff.consistency.graphpattern.matcher.wgraph;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.AttributePattern;
@@ -8,13 +8,13 @@ import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 
 //TODO: Lifting customization...
-public class ConstraintTester {
+public class BasicConstraintTester implements IConstraintTester {
 
 	private MatchingHelper matchingHelper;
 	
 	private static final SymmetricPackage SYMMETRIC_PACKAGE = SymmetricPackage.eINSTANCE;
 	
-	public ConstraintTester(MatchingHelper matchingHelper) {
+	public BasicConstraintTester(MatchingHelper matchingHelper) {
 		this.matchingHelper = matchingHelper;
 	}
 	
@@ -39,9 +39,10 @@ public class ConstraintTester {
 			return false;
 		}
 		
-		// Check constant attributes!
+		// FIXME: Better attribute support...
 		for (AttributePattern attribute : node.getAttributes()) {
-			// FIXME: Better attribute support...
+			
+			// Check constant attributes!
 			if (attribute.getValue().startsWith("\"") && attribute.getValue().endsWith("\"")) {
 				Object instanceValue = object.eGet(attribute.getType());
 				String attributeValue = attribute.getValue().substring(1, attribute.getValue().length() - 1);
@@ -69,9 +70,8 @@ public class ConstraintTester {
 				NodePattern typeNode = MatchingHelper.getAdjacent(node, typeEdge);
 				EObject typeMatch = matchingHelper.getTargets(object, node, typeEdge).next();
 					
-				// Check constant attributes!
+				// Check type name:
 				for (AttributePattern attribute : typeNode.getAttributes()) {
-					// FIXME: Better attribute support...
 					if (attribute.getValue().startsWith("\"") && attribute.getValue().endsWith("\"")) {
 						Object instanceValue = typeMatch.eGet(attribute.getType());
 						String attributeValue = attribute.getValue().substring(1, attribute.getValue().length() - 1);

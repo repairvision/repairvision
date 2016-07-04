@@ -30,7 +30,7 @@ public class ExactLiftingEngineFactory implements IPatternMatchingEngineFactory 
 			
 			// Create the engine:
 			ExactLiftingEngine engine = new ExactLiftingEngine(
-					graphpattern, targetModels, changeIndex, changeDomainMap);
+					graphpattern.getNodes(), targetModels, changeIndex, changeDomainMap);
 			Map<NodePattern, Collection<EObject>> variableNodes = engine.calculateChangeNodes(difference);
 			engine.initialize(variableNodes);
 			

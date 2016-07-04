@@ -89,7 +89,7 @@ public class AtomicPattern {
 		return filteredAtomicMatches;
 	}
 	
-//	// TODO: Atomic-Pattern chache: Object + Node
+//	// TODO: Atomic-Pattern cache: Object + Node!?
 //	Map<EObject, List<EObject[]>> cache = new HashMap<>();
 //	
 //	private List<EObject[]> getAllAtomicMatches(
