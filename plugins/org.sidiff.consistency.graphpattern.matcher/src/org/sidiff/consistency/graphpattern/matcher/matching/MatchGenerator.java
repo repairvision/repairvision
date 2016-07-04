@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.sidiff.consistency.graphpattern.EObjectList;
 import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
@@ -34,7 +34,13 @@ public class MatchGenerator {
 	/**
 	 * Represents all empty matches.
 	 */
-	public static final EObject EMPTY_MATCH = EcoreFactory.eINSTANCE.createEObject();
+	public static final EObject EMPTY_MATCH = new EObjectImpl() {
+		
+		public String toString() {
+			return "empty match";
+		}
+		
+	};
 
 	/**
 	 * Represents all empty linked lists.
@@ -57,6 +63,11 @@ public class MatchGenerator {
 	private LinkedList<NodePattern> variableNodes = new LinkedList<>();
 	
 	/**
+	 * <code>true</code> only injective matchings (w.r.t. to variable nodes); <code>false</code> otherwise.
+	 */
+	protected boolean injectiveVariableNodes = true;
+	
+	/**
 	 * Calculates all matchable paths starting from an initial node. 
 	 */
 	private MatchSelector matchSelector;
@@ -72,7 +83,7 @@ public class MatchGenerator {
 	private IMatchValidation matchValidation;
 	
 	/**
-	 * All model elements (per node) that were already assigned.
+	 * All model elements (per node) that were already assigned (in previous matchings).
 	 */
 	private Map<NodePattern, Set<EObject>> assignments = new HashMap<>(); 
 	
@@ -107,7 +118,24 @@ public class MatchGenerator {
 		initializeVariableNodes();
 		initializeMatching();
 	}
-	
+
+	/**
+	 * @return <code>true</code> only injective matchings (w.r.t. to variable
+	 *         nodes); <code>false</code> otherwise.
+	 */
+	public boolean isInjectiveVariableNodes() {
+		return injectiveVariableNodes;
+	}
+
+	/**
+	 * @param injectiveVariableNodes
+	 *            <code>true</code> only injective matchings (w.r.t. to variable
+	 *            nodes); <code>false</code> otherwise.
+	 */
+	public void setInjectiveVariableNodes(boolean injectiveVariableNodes) {
+		this.injectiveVariableNodes = injectiveVariableNodes;
+	}
+
 	private void initializeVariableNodes() {
 
 		for (NodePattern variableNode : variableNodes) {
@@ -123,14 +151,14 @@ public class MatchGenerator {
 
 		// Initialize data store of all nodes:
 		for (NodePattern node : graphPattern) {
-			NavigableMatchesDS dataStore = getNavigableDataStore(node.getEvaluation());
+			NavigableMatchesDS dataStore = getDataStore(node.getEvaluation());
 			dataStore.getMatchSelection().clearSelection();
 		}
 	}
 	
 	private void initializeMatching() {
 		NodePattern firstNode = variableNodes.getFirst();
-		NavigableMatchesDS firstNodeDS = getNavigableDataStore(firstNode.getEvaluation());
+		NavigableMatchesDS firstNodeDS = getDataStore(firstNode.getEvaluation());
 
 		setNextInitialNode(variableNodes.getFirst(), firstNodeDS.getMatchIterator());
 	}
@@ -193,6 +221,10 @@ public class MatchGenerator {
 					
 					// Check new matching
 					if (matchValidation.isMatch(matching)) {
+						
+						// FIXME: DebugUtil!
+//						assert validateMatch();
+						
 						storeVariableAssignments();
 						return true;
 					}
@@ -210,7 +242,7 @@ public class MatchGenerator {
 		Collection<EObject> nextInitialMatch = new ArrayList<>();
 		
 		for (NodePattern remainingInitialNode : remainingInitialNodes) {
-			NavigableMatchesDS dataStore = getNavigableDataStore(remainingInitialNode.getEvaluation());
+			NavigableMatchesDS dataStore = getDataStore(remainingInitialNode.getEvaluation());
 			Set<EObject> matches = assignments.get(remainingInitialNode);
 			
 			if (matches.size() != dataStore.getMatchSize()) {
@@ -245,9 +277,10 @@ public class MatchGenerator {
 			nextMatch = matching.get(nextNode);
 			nextNodes.addFirst(nextNode);
 			
+			// TODO: Store if a matching is restricted or not!?
 			// Undo restrictions of this node from the complete graph:
 			for (NodePattern node : graphPattern) {
-				NavigableMatchesDS nodeDS = getNavigableDataStore(node.getEvaluation());
+				NavigableMatchesDS nodeDS = getDataStore(node.getEvaluation());
 				nodeDS.getMatchSelection().undoRestrictSelection(nextNode);
 			}
 			
@@ -280,12 +313,14 @@ public class MatchGenerator {
 			if (initialNode == variableNodes.getFirst()) {
 				matchSelector = new MatchSelector(
 						atomicPatternFactory, graphPattern, initialNode, initialMatch.getMatch());
+				additionalRestrictions(initialMatch); // (After initial selection was build)
 			} else {
+				additionalRestrictions(initialMatch);
 				matchSelector.selectMatch(initialNode, initialMatch.getMatch());
 			}
 			
 			// Check if match was valid (e.g. failed on atomic matching):
-			NavigableMatchesDS initialNodeDS = getNavigableDataStore(initialNode.getEvaluation());
+			NavigableMatchesDS initialNodeDS = getDataStore(initialNode.getEvaluation());
 			
 			if (initialNodeDS.getMatchSelection().isSelectedMatch(initialMatch.getMatch())) {
 				return true;
@@ -299,7 +334,7 @@ public class MatchGenerator {
 		
 		// Initialize and restrict all free nodes:
 		for (NodePattern freeNode : freeNodes) {
-			NavigableMatchesDS freeNodeDS = getNavigableDataStore(freeNode.getEvaluation());
+			NavigableMatchesDS freeNodeDS = getDataStore(freeNode.getEvaluation());
 			NodeMatching freeMatching = matching.get(freeNode);
 			
 			//// Find next potential (partial) matching ////
@@ -319,9 +354,24 @@ public class MatchGenerator {
 			EObject nextRestriction = freeMatching.getMatch();
 			
 			if (nextRestriction != null) {
+				additionalRestrictions(freeMatching);
 				matchSelector.selectMatch(freeNode, nextRestriction);
 			} else {
 				freeMatching.resetMatching();
+			}
+		}
+	}
+	
+	private void additionalRestrictions(NodeMatching nodeMatching) {
+		
+		// Variable node injectivity:
+		if (injectiveVariableNodes) {
+			for (NodeMatching otherNodeMatching : matching.values()) {
+				if (otherNodeMatching != nodeMatching) {
+					NavigableMatchesDS dataStore = getDataStore(otherNodeMatching.getNode().getEvaluation());
+					MatchSelection matchSelection = dataStore.getMatchSelection();
+					matchSelection.restrictSelection(nodeMatching.getNode(), nodeMatching.getMatch());
+				}
 			}
 		}
 	}
@@ -349,7 +399,7 @@ public class MatchGenerator {
 		
 		for (NodePattern node : graphPattern) {
 			EObjectList nodeMatching = GraphpatternFactory.eINSTANCE.createEObjectList();
-			MatchSelection matchSelection = getNavigableDataStore(node.getEvaluation()).getMatchSelection();
+			MatchSelection matchSelection = getDataStore(node.getEvaluation()).getMatchSelection();
 			
 			matchSelection.getSelectedMatches().forEachRemaining(match -> {
 				if (match != null) {
@@ -373,7 +423,7 @@ public class MatchGenerator {
 		return graphPatternMatching;
 	}
 	
-	private NavigableMatchesDS getNavigableDataStore(Evaluation evaluation) { // TODO: Adjust interface
+	private NavigableMatchesDS getDataStore(Evaluation evaluation) { // TODO: Adjust interface
 		if (evaluation.getStore() instanceof NavigableMatchesDS) {
 			return (NavigableMatchesDS) evaluation.getStore();
 		} else {
@@ -386,7 +436,7 @@ public class MatchGenerator {
 		StringBuffer print = new StringBuffer();
 		
 		for (NodePattern node : graphPattern) {
-			MatchSelection matchSelection = getNavigableDataStore(node.getEvaluation()).getMatchSelection();
+			MatchSelection matchSelection = getDataStore(node.getEvaluation()).getMatchSelection();
 			print.append("  " + node + ": \n");
 			
 			matchSelection.getSelectedMatches().forEachRemaining(match -> {
@@ -397,5 +447,52 @@ public class MatchGenerator {
 		}
 		
 		return super.toString() + ": \n\n" + print.toString();
+	}
+	
+	@SuppressWarnings("unused")
+	private boolean validateMatch() {
+		
+		// Check V-Node and Selection consistency:
+		for (NodeMatching match : matching.values()) {
+			MatchSelection matchSelection = getDataStore(match.getNode().getEvaluation()).getMatchSelection();
+			int count = 0;
+			
+			for (Iterator<EObject> iterator = 	matchSelection.getSelectedMatches(); iterator.hasNext();) {
+				EObject selection = iterator.next();
+				++count;
+				
+				if (match.getMatch() != selection) {
+					System.err.println("Inconsistent node-matching and selection!");
+					return false;
+				}
+			}
+			
+			if ((count == 0) && (match.getMatch() != null)) {
+				System.err.println("Inconsistent node-matching and selection!");
+				return false;
+			}
+			
+			if (count > 1) {
+				System.err.println("Ambiguous matching!");
+				return false;
+			}
+		}
+		
+		// Check V-Node injectivity:
+		if (injectiveVariableNodes) {
+			for (NodeMatching matchA : matching.values()) {
+				for (NodeMatching matchB : matching.values()) {
+					if (matchA != matchB) {
+						if ((matchA.getMatch() == matchB.getMatch()) 
+								&& (matchA.getMatch() != null) && (matchB.getMatch() != null)) {
+							System.err.println("Matching is not injective!");
+							return false;
+						}
+					}
+				}
+			}
+		}
+		
+		return true;
 	}
 }

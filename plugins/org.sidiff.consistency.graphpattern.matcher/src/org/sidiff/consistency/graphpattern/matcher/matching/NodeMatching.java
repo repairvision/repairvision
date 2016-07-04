@@ -8,9 +8,9 @@ import org.sidiff.consistency.graphpattern.NodePattern;
 
 public class NodeMatching {
 	
-	private NodePattern node;
+	protected NodePattern node;
 	
-	private EObject match = null;
+	protected EObject match = null;
 	
 	private Iterator<EObject> matchIterator = Collections.emptyIterator();
 
@@ -29,10 +29,6 @@ public class NodeMatching {
 
 	public EObject getMatch() {
 		return match;
-	}
-
-	protected void setMatch(EObject match) {
-		this.match = match;
 	}
 	
 	protected boolean hasNextMatch() {
@@ -60,6 +56,6 @@ public class NodeMatching {
 	
 	@Override
 	public String toString() {
-		return "\n" + node.toString() + "\n- Match: " + ((match != null) ? match.toString() : "null");
+		return "Node-Matching" + ": " + node.toString() + "\n    Match: " + (((match != null) ? match.toString() : "null") + "\n");
 	}
 }

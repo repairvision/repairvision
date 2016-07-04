@@ -3,14 +3,12 @@
 package org.sidiff.consistency.graphpattern.impl;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.sidiff.consistency.graphpattern.EObjectList;
 import org.sidiff.consistency.graphpattern.GraphpatternPackage;
@@ -58,19 +56,6 @@ public class EObjectListImpl extends MinimalEObjectImpl.Container implements EOb
 		return GraphpatternPackage.Literals.EOBJECT_LIST;
 	}
 	
-	// FIXME: By generation!?
-	private class NoneUniqueList extends EObjectResolvingEList {
-
-		public NoneUniqueList(Class dataClass, InternalEObject owner, int featureID) {
-			super(dataClass, owner, featureID);
-		}
-		
-		@Override
-		protected boolean isUnique() {
-			return false;
-		}
-	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -78,7 +63,7 @@ public class EObjectListImpl extends MinimalEObjectImpl.Container implements EOb
 	 */
 	public EList<EObject> getContent() {
 		if (content == null) {
-			content = new NoneUniqueList(EObject.class, this, GraphpatternPackage.EOBJECT_LIST__CONTENT);
+			content = new NoneUniqueList<EObject>(EObject.class, this, GraphpatternPackage.EOBJECT_LIST__CONTENT);
 		}
 		return content;
 	}
@@ -141,6 +126,38 @@ public class EObjectListImpl extends MinimalEObjectImpl.Container implements EOb
 				return content != null && !content.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		StringBuffer print = new StringBuffer();
+		print.append("List@" + Integer.toHexString(this.hashCode()) + "<EObject> (size: " + getContent().size() + "):\n");
+		
+		for (EObject content : getContent()) {
+			print.append("  " + content + "\n");
+		}
+		
+		return print.toString();
+	}
+	
+	// FIXME: By generation!?
+	private class NoneUniqueList<E> extends EObjectResolvingEList<E> {
+
+		private static final long serialVersionUID = 2212011175983499758L;
+
+		public NoneUniqueList(Class<?> dataClass, InternalEObject owner, int featureID) {
+			super(dataClass, owner, featureID);
+		}
+		
+		@Override
+		protected boolean isUnique() {
+			return false;
+		}
 	}
 
 } //EObjectListImpl

@@ -2,6 +2,7 @@ package org.sidiff.consistency.graphpattern.matcher.data.selection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -94,18 +95,29 @@ public class MatchSelection {
 		}
 		
 		// Save restriction history:
+		// TODO: Handle empty restrictions...!?
 		restrictionHistory.push(new Restriction(restrictionSource, restriction));
 	}
 	
-	public boolean undoRestrictSelection(NodePattern restrictionSource) {
+	public void restrictSelection(NodePattern restrictionSource, EObject selection) {
+		SelectionType selectionType = selectedMatches.get(selection);
+
+		// Further restriction necessary?
+		if ((selectionType != null) && SelectionType.isAccepted(selectionType)) {
+			selectedMatches.put(selection, SelectionType.RESTRICTED);
+			
+			// Save restriction history:
+			// TODO: Single object restrictions...
+			restrictionHistory.push(new Restriction(restrictionSource, Collections.singletonList(selection)));
+		}
+	}
+	
+	public void undoRestrictSelection(NodePattern restrictionSource) {
 		
 		// Revert the selection:
-		if (!restrictionHistory.isEmpty() && restrictionHistory.lastElement().getSource() == restrictionSource) {
+		while (!restrictionHistory.isEmpty() && (restrictionHistory.lastElement().getSource() == restrictionSource)) {
 			selectMatches(restrictionHistory.lastElement().getRestrictions());
 			restrictionHistory.pop();
-			return true;
 		}
-		
-		return false;
 	}
 }
