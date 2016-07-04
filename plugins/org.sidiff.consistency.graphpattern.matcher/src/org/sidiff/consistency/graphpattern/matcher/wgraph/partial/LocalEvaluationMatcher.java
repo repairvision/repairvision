@@ -1,5 +1,7 @@
 package org.sidiff.consistency.graphpattern.matcher.wgraph.partial;
 
+import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -213,14 +215,4 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 			return false;
 		}
 	}
-	
-	// TODO: DS
-	private NavigableDataStore getDataStore(Evaluation evaluation) {
-		if (evaluation.getStore() instanceof NavigableDataStore) {
-			return (NavigableDataStore) evaluation.getStore();
-		} else {
-			throw new RuntimeException("This algorithm needs a navigable data store!");
-		}
-	}
-
 }

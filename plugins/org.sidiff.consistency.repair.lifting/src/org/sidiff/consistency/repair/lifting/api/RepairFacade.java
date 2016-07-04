@@ -58,8 +58,8 @@ public class RepairFacade {
 			e.printStackTrace();
 		}
 		
-		// FIXME [WORKAROUND]: Support differences without resource...
-		Resource differenceResource = differenceRSS.createResource(URI.createURI("NA"));
+		// TODO: Support differences without resource...
+		Resource differenceResource = differenceRSS.createResource(URI.createURI(""));
 		differenceResource.getContents().add(difference);
 		
 		// Calculate repairs:

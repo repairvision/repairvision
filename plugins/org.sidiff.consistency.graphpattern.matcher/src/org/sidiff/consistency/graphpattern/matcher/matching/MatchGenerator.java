@@ -1,5 +1,7 @@
 package org.sidiff.consistency.graphpattern.matcher.matching;
 
+import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -16,7 +18,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.sidiff.consistency.graphpattern.EObjectList;
-import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.data.NavigableMatchesDS;
@@ -421,14 +422,6 @@ public class MatchGenerator {
 		}
 		
 		return graphPatternMatching;
-	}
-	
-	private NavigableMatchesDS getDataStore(Evaluation evaluation) { // TODO: Adjust interface
-		if (evaluation.getStore() instanceof NavigableMatchesDS) {
-			return (NavigableMatchesDS) evaluation.getStore();
-		} else {
-			throw new RuntimeException("This algorithm needs a navigable data store!");
-		}
 	}
 	
 	@Override

@@ -1,5 +1,7 @@
 package org.sidiff.consistency.graphpattern.matcher.wgraph.partial;
 
+import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -61,7 +63,7 @@ public class PartialMatchNeighborsVisitor extends VisitorImpl {
 		if (!edges.isEmpty()) {
 			
 			// Initialize:
-			NavigableDataStore ownStore = getNavigableDataStore(evaluation);
+			NavigableDataStore ownStore = getDataStore(evaluation);
 				
 			for (EdgePattern edge : edges) {
 				List<EObject> neighborMatches = allNeighborMatches.containsKey(edge) 
@@ -74,7 +76,7 @@ public class PartialMatchNeighborsVisitor extends VisitorImpl {
 				
 				localMatchIterator.forEachRemaining(localMatch -> {
 					NodePattern neighborNode = edge.getTarget();
-					NavigableDataStore neighborStore = getNavigableDataStore(neighborNode.getEvaluation());
+					NavigableDataStore neighborStore = getDataStore(neighborNode.getEvaluation());
 
 					matchingHelper.getTargets(localMatch, evaluation.getNode(), edge).forEachRemaining(targetObject -> {
 						
@@ -114,15 +116,6 @@ public class PartialMatchNeighborsVisitor extends VisitorImpl {
 				NodePattern neighborNode = neighborMatch.getKey().getTarget();
 				neighborNode.getEvaluation().accept(newMatcher);	
 			}
-		}
-	}
-
-	// TODO: DS
-	private NavigableDataStore getNavigableDataStore(Evaluation evaluation) {
-		if (evaluation.getStore() instanceof NavigableDataStore) {
-			return (NavigableDataStore) evaluation.getStore();
-		} else {
-			throw new RuntimeException("This algorithm needs a navigable data store!");
 		}
 	}
 }

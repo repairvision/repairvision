@@ -1,14 +1,14 @@
 package org.sidiff.consistency.graphpattern.matcher.matching.selection;
 
+import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.matcher.data.NavigableMatchesDS;
 import org.sidiff.consistency.graphpattern.matcher.data.selection.MatchSelection;
 
 public class MatchSelector {
@@ -25,7 +25,7 @@ public class MatchSelector {
 		this.atomicPatternFactory = atomicPatternFactory;
 				
 		for (NodePattern node : graphPattern) {
-			MatchSelection matchSelection = getNavigableDataStore(node.getEvaluation()).getMatchSelection();
+			MatchSelection matchSelection = getDataStore(node.getEvaluation()).getMatchSelection();
 			matchSelection.clearSelection();
 		}
 		
@@ -106,14 +106,6 @@ public class MatchSelector {
 //			if (pathStopped) {
 //				System.out.println("STOP!");
 //			}
-		}
-	}
-	
-	private NavigableMatchesDS getNavigableDataStore(Evaluation evaluation) { // TODO: Adjust interface
-		if (evaluation.getStore() instanceof NavigableMatchesDS) {
-			return (NavigableMatchesDS) evaluation.getStore();
-		} else {
-			throw new RuntimeException("This algorithm needs a navigable data store!");
 		}
 	}
 }

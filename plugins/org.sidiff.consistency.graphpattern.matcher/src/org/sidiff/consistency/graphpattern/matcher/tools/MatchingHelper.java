@@ -213,7 +213,7 @@ public class MatchingHelper {
 	 *            An node evaluation adapter.
 	 * @return The underlying navigable data store.
 	 */
-	// TODO: Only one interface:
+	// TODO: Only one interface!?
 	public static NavigableMatchesDS getDataStore(Evaluation evaluation) {
 		if (evaluation.getStore() instanceof NavigableMatchesDS) {
 			return (NavigableMatchesDS) evaluation.getStore();
@@ -227,9 +227,9 @@ public class MatchingHelper {
 	 *            An node pattern.
 	 * @return The underlying navigable data store.
 	 */
-	// TODO: Only one interface:
+	// TODO: Only one interface!?
 	public static NavigableMatchesDS getDataStore(NodePattern node) {
-		DataStore ds = node.getEvaluation().getStore();
+		DataStore ds = (node.getEvaluation() != null) ? node.getEvaluation().getStore() : null;
 		
 		if (ds instanceof NavigableMatchesDS) {
 			return (NavigableMatchesDS) ds;

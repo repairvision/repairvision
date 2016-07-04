@@ -1,5 +1,7 @@
 package org.sidiff.consistency.repair.lifting.engine.partial;
 
+import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,7 +14,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
@@ -124,15 +125,6 @@ public class PartialLiftingEngine extends LiftingEngine {
 					changeNodeDS.addRemoteMatch(changeMatch, typeMatch, typeEdge);
 				}
 			}
-		}
-	}
-	
-	// TODO: DS
-	private NavigableDataStore getDataStore(Evaluation evaluation) {
-		if (evaluation.getStore() instanceof NavigableDataStore) {
-			return (NavigableDataStore) evaluation.getStore();
-		} else {
-			throw new RuntimeException("This algorithm needs a navigable data store!");
 		}
 	}
 	

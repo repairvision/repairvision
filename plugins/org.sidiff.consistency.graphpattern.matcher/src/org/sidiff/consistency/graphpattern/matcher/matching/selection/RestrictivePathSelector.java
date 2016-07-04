@@ -1,12 +1,13 @@
 package org.sidiff.consistency.graphpattern.matcher.matching.selection;
 
+import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.data.NavigableMatchesDS;
 import org.sidiff.consistency.graphpattern.matcher.data.selection.MatchSelection;
@@ -29,8 +30,8 @@ public class RestrictivePathSelector extends PathSelector {
 
 	@Override
 	protected List<EObject> getPositionAdjacentMatches(EdgePattern edge, NodePattern target) {
-		NavigableMatchesDS sourceDS = getNavigableDataStore(history.getPosition().getEvaluation());
-		MatchSelection targetSelection = getNavigableDataStore(target.getEvaluation()).getMatchSelection();
+		NavigableMatchesDS sourceDS = getDataStore(history.getPosition().getEvaluation());
+		MatchSelection targetSelection = getDataStore(target.getEvaluation()).getMatchSelection();
 		List<EObject> adjacentMatches = new ArrayList<EObject>();
 		
 		for (EObject lastMatch : history.getLastMatch()) {
@@ -48,8 +49,8 @@ public class RestrictivePathSelector extends PathSelector {
 
 	@Override
 	protected List<EObject> getAdjacentMatches(EObject match, NodePattern source, EdgePattern edge, NodePattern target) {
-		NavigableMatchesDS sourceDS = getNavigableDataStore(source.getEvaluation());
-		MatchSelection targetSelection = getNavigableDataStore(target.getEvaluation()).getMatchSelection();
+		NavigableMatchesDS sourceDS = getDataStore(source.getEvaluation());
+		MatchSelection targetSelection = getDataStore(target.getEvaluation()).getMatchSelection();
 		List<EObject> adjacentMatches = new ArrayList<EObject>();
 		
 		sourceDS.getRemoteMatchIterator(match, edge).forEachRemaining(adjacentMatch -> {
@@ -65,13 +66,13 @@ public class RestrictivePathSelector extends PathSelector {
 
 	@Override
 	protected void selectMatches(NodePattern node, Collection<EObject> matches) {
-		MatchSelection matchSelection = getNavigableDataStore(node.getEvaluation()).getMatchSelection();
+		MatchSelection matchSelection = getDataStore(node.getEvaluation()).getMatchSelection();
 		matchSelection.markSelection(matches);
 	}
 	
 	@Override
 	protected void selectMatch(NodePattern node, EObject match) {
-		MatchSelection matchSelection = getNavigableDataStore(node.getEvaluation()).getMatchSelection();
+		MatchSelection matchSelection = getDataStore(node.getEvaluation()).getMatchSelection();
 		matchSelection.markSelection(match);
 	}
 	
@@ -79,16 +80,8 @@ public class RestrictivePathSelector extends PathSelector {
 		
 		// Restrict matching (for all nodes):
 		for (NodePattern node : nodes) {
-			MatchSelection matchSelection = getNavigableDataStore(node.getEvaluation()).getMatchSelection();
+			MatchSelection matchSelection = getDataStore(node.getEvaluation()).getMatchSelection();
 			matchSelection.restrictSelection(restrictionSource);
-		}
-	}
-
-	private static NavigableMatchesDS getNavigableDataStore(Evaluation evaluation) { // TODO: Adjust interface
-		if (evaluation.getStore() instanceof NavigableMatchesDS) {
-			return (NavigableMatchesDS) evaluation.getStore();
-		} else {
-			throw new RuntimeException("This algorithm needs a navigable data store!");
 		}
 	}
 }
