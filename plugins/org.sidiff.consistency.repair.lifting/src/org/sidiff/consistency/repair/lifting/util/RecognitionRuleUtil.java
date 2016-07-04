@@ -88,37 +88,37 @@ public class RecognitionRuleUtil {
 		
 		// AddObject:
 		if (node.getType() == SYMMETRIC_PACKAGE.getAddObject()) {
-			return node.getEdges(SYMMETRIC_PACKAGE.getAddObject_Obj()).get(0).getTarget().getType();
+			return node.getOutgoing(SYMMETRIC_PACKAGE.getAddObject_Obj()).getTarget().getType();
 		}
 
 		// RemoveObject:
 		else if (node.getType() == SYMMETRIC_PACKAGE.getRemoveObject()) {
-			return node.getEdges(SYMMETRIC_PACKAGE.getRemoveObject_Obj()).get(0).getTarget().getType();
+			return node.getOutgoing(SYMMETRIC_PACKAGE.getRemoveObject_Obj()).getTarget().getType();
 		}
 		
 		// AddReference:
 		else if (node.getType() == SYMMETRIC_PACKAGE.getAddReference()) {
-			NodePattern typeNode = node.getEdges(SYMMETRIC_PACKAGE.getAddReference_Type()).get(0).getTarget();
+			NodePattern typeNode = node.getOutgoing(SYMMETRIC_PACKAGE.getAddReference_Type()).getTarget();
 			String typeName = typeNode.getAttribute(E_NAMED_ELEMENT_NAME).getValue().replace('\"', ' ').trim();
-			NodePattern srcNode = node.getEdges(SYMMETRIC_PACKAGE.getAddReference_Src()).get(0).getTarget();
+			NodePattern srcNode = node.getOutgoing(SYMMETRIC_PACKAGE.getAddReference_Src()).getTarget();
 			
 			return (EReference) srcNode.getType().getEStructuralFeature(typeName);
 		}
 
 		// RemoveReference:
 		else if (node.getType() == SYMMETRIC_PACKAGE.getRemoveReference()) {
-			NodePattern typeNode = node.getEdges(SYMMETRIC_PACKAGE.getRemoveReference_Type()).get(0).getTarget();
+			NodePattern typeNode = node.getOutgoing(SYMMETRIC_PACKAGE.getRemoveReference_Type()).getTarget();
 			String typeName = typeNode.getAttribute(E_NAMED_ELEMENT_NAME).getValue().replace('\"', ' ').trim();
-			NodePattern srcNode = node.getEdges(SYMMETRIC_PACKAGE.getRemoveReference_Src()).get(0).getTarget();
+			NodePattern srcNode = node.getOutgoing(SYMMETRIC_PACKAGE.getRemoveReference_Src()).getTarget();
 
 			return (EReference) srcNode.getType().getEStructuralFeature(typeName);
 		}
 
 		// AttributeValueChange:
 		else if (node.getType() == SYMMETRIC_PACKAGE.getAttributeValueChange()) {
-			NodePattern typeNode = node.getEdges(SYMMETRIC_PACKAGE.getAttributeValueChange_Type()).get(0).getTarget();
+			NodePattern typeNode = node.getOutgoing(SYMMETRIC_PACKAGE.getAttributeValueChange_Type()).getTarget();
 			String typeName = typeNode.getAttribute(E_NAMED_ELEMENT_NAME).getValue().replace('\"', ' ').trim();
-			NodePattern aNode = node.getEdges(SYMMETRIC_PACKAGE.getAttributeValueChange_ObjA()).get(0).getTarget();
+			NodePattern aNode = node.getOutgoing(SYMMETRIC_PACKAGE.getAttributeValueChange_ObjA()).getTarget();
 			
 			return (EAttribute) aNode.getType().getEStructuralFeature(typeName);
 		}

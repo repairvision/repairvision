@@ -1,7 +1,5 @@
 package org.sidiff.consistency.graphpattern.matcher.wgraph.partial;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.AttributePattern;
 import org.sidiff.consistency.graphpattern.EdgePattern;
@@ -59,17 +57,17 @@ public class ConstraintTester {
 		if (isChangeNode(node)) {
 			
 			// AddReference
-			List<EdgePattern> typeEdge = node.getEdges(SymmetricPackage.eINSTANCE.getAddReference_Type());
+			EdgePattern typeEdge = node.getOutgoing(SymmetricPackage.eINSTANCE.getAddReference_Type());
 			
 			// RemoveReference
-			if (typeEdge.isEmpty()) {
-				typeEdge = node.getEdges(SymmetricPackage.eINSTANCE.getRemoveReference_Type());
+			if (typeEdge == null) {
+				typeEdge = node.getOutgoing(SymmetricPackage.eINSTANCE.getRemoveReference_Type());
 			}
 			
 			// Test AddReference / RemoveReference:
-			if (!typeEdge.isEmpty()) {
-				NodePattern typeNode = MatchingHelper.getAdjacent(node, typeEdge.get(0));
-				EObject typeMatch = matchingHelper.getTargets(object, node, typeEdge.get(0)).next();
+			if (typeEdge != null) {
+				NodePattern typeNode = MatchingHelper.getAdjacent(node, typeEdge);
+				EObject typeMatch = matchingHelper.getTargets(object, node, typeEdge).next();
 					
 				// Check constant attributes!
 				for (AttributePattern attribute : typeNode.getAttributes()) {
@@ -87,7 +85,7 @@ public class ConstraintTester {
 			
 			// AddObject
 			if (node.getType() == SymmetricPackage.eINSTANCE.getAddObject()) {
-				EdgePattern modelEdge = node.getEdges(SymmetricPackage.eINSTANCE.getAddObject_Obj()).get(0);
+				EdgePattern modelEdge = node.getOutgoing(SymmetricPackage.eINSTANCE.getAddObject_Obj());
 				NodePattern modelNode = MatchingHelper.getAdjacent(node, modelEdge);
 				EObject modelMatch = matchingHelper.getTargets(object, node, modelEdge).next();
 				
@@ -99,7 +97,7 @@ public class ConstraintTester {
 			
 			// RemoveObject
 			if (node.getType() == SymmetricPackage.eINSTANCE.getRemoveObject()) {
-				EdgePattern modelEdge = node.getEdges(SymmetricPackage.eINSTANCE.getRemoveObject_Obj()).get(0);
+				EdgePattern modelEdge = node.getOutgoing(SymmetricPackage.eINSTANCE.getRemoveObject_Obj());
 				NodePattern modelNode = MatchingHelper.getAdjacent(node, modelEdge);
 				EObject modelMatch = matchingHelper.getTargets(object, node, modelEdge).next();
 				

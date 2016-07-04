@@ -100,10 +100,6 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 				return createNavigableDataStoreAdapter();
 			}
 			@Override
-			public Adapter caseConstraint(Constraint object) {
-				return createConstraintAdapter();
-			}
-			@Override
 			public Adapter caseUnaryFormula(UnaryFormula object) {
 				return createUnaryFormulaAdapter();
 			}
@@ -194,10 +190,6 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseIffGroup(IffGroup object) {
 				return createIffGroupAdapter();
-			}
-			@Override
-			public Adapter caseMediator(Mediator object) {
-				return createMediatorAdapter();
 			}
 			@Override
 			public Adapter caseEObjectList(EObjectList object) {
@@ -332,20 +324,6 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNavigableDataStoreAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.Constraint <em>Constraint</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.Constraint
-	 * @generated
-	 */
-	public Adapter createConstraintAdapter() {
 		return null;
 	}
 
@@ -598,20 +576,6 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createIffGroupAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.Mediator <em>Mediator</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.Mediator
-	 * @generated
-	 */
-	public Adapter createMediatorAdapter() {
 		return null;
 	}
 

@@ -45,26 +45,6 @@ import org.sidiff.consistency.graphpattern.NodePattern;
  */
 public class NodePatternImpl extends GraphPredicateImpl implements NodePattern {
 	
-	// TODO -> Model
-	public EdgePattern getOutgoing(EReference type) {
-		for (EdgePattern edge : getOutgoings()) {
-			if (type == edge.getType()) {
-				return edge;
-			}
-		}
-		return null;
-	}
-	
-	// TODO -> Model
-	public EdgePattern getIncoming(EReference type) {
-		for (EdgePattern edge : getIncomings()) {
-			if (type == edge.getType()) {
-				return edge;
-			}
-		}
-		return null;
-	}
-	
 	/**
 	 * The cached value of the '{@link #getOutgoings() <em>Outgoings</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -144,6 +124,62 @@ public class NodePatternImpl extends GraphPredicateImpl implements NodePattern {
 			outgoings = new EObjectContainmentWithInverseEList<EdgePattern>(EdgePattern.class, this, GraphpatternPackage.NODE_PATTERN__OUTGOINGS, GraphpatternPackage.EDGE_PATTERN__SOURCE);
 		}
 		return outgoings;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EdgePattern getOutgoing(EReference type) {
+		for (EdgePattern edge : getOutgoings()) {
+			if (type == edge.getType()) {
+				return edge;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<EdgePattern> getOutgoings(EReference type) {
+		EList<EdgePattern> edges = new BasicEList<>();
+
+		for (EdgePattern edge : getOutgoings()) {
+			if (type == edge.getType()) {
+				edges.add(edge);
+			}
+		}
+
+		return edges;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EdgePattern getIncoming(EReference type) {
+		for (EdgePattern edge : getIncomings()) {
+			if (type == edge.getType()) {
+				return edge;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<EdgePattern> getIncomings(EReference type) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -290,23 +326,6 @@ public class NodePatternImpl extends GraphPredicateImpl implements NodePattern {
 			incomings = new EObjectWithInverseResolvingEList<EdgePattern>(EdgePattern.class, this, GraphpatternPackage.NODE_PATTERN__INCOMINGS, GraphpatternPackage.EDGE_PATTERN__TARGET);
 		}
 		return incomings;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public EList<EdgePattern> getEdges(EReference type) {
-		EList<EdgePattern> edges = new BasicEList<>();
-
-		for (EdgePattern edge : getOutgoings()) {
-			if (type == edge.getType()) {
-				edges.add(edge);
-			}
-		}
-
-		return edges;
 	}
 
 	/**
@@ -509,10 +528,16 @@ public class NodePatternImpl extends GraphPredicateImpl implements NodePattern {
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case GraphpatternPackage.NODE_PATTERN___GET_EDGES__EREFERENCE:
-				return getEdges((EReference)arguments.get(0));
 			case GraphpatternPackage.NODE_PATTERN___GET_ATTRIBUTE__EATTRIBUTE:
 				return getAttribute((EAttribute)arguments.get(0));
+			case GraphpatternPackage.NODE_PATTERN___GET_OUTGOING__EREFERENCE:
+				return getOutgoing((EReference)arguments.get(0));
+			case GraphpatternPackage.NODE_PATTERN___GET_OUTGOINGS__EREFERENCE:
+				return getOutgoings((EReference)arguments.get(0));
+			case GraphpatternPackage.NODE_PATTERN___GET_INCOMING__EREFERENCE:
+				return getIncoming((EReference)arguments.get(0));
+			case GraphpatternPackage.NODE_PATTERN___GET_INCOMINGS__EREFERENCE:
+				return getIncomings((EReference)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

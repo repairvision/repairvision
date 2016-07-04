@@ -118,12 +118,6 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GraphpatternPackage.CONSTRAINT: {
-				Constraint constraint = (Constraint)theEObject;
-				T result = caseConstraint(constraint);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case GraphpatternPackage.UNARY_FORMULA: {
 				UnaryFormula unaryFormula = (UnaryFormula)theEObject;
 				T result = caseUnaryFormula(unaryFormula);
@@ -288,12 +282,6 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GraphpatternPackage.MEDIATOR: {
-				Mediator mediator = (Mediator)theEObject;
-				T result = caseMediator(mediator);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case GraphpatternPackage.EOBJECT_LIST: {
 				EObjectList eObjectList = (EObjectList)theEObject;
 				T result = caseEObjectList(eObjectList);
@@ -421,21 +409,6 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNavigableDataStore(NavigableDataStore object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Constraint</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Constraint</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseConstraint(Constraint object) {
 		return null;
 	}
 
@@ -706,21 +679,6 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseIffGroup(IffGroup object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Mediator</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Mediator</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseMediator(Mediator object) {
 		return null;
 	}
 

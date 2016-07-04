@@ -165,12 +165,6 @@ public interface NodePattern extends GraphPredicate {
 	 * @generated
 	 */
 	EList<EdgePattern> getIncomings();
-
-	// TODO -> Model
-	EdgePattern getOutgoing(EReference type);
-	
-	// TODO -> Model
-	EdgePattern getIncoming(EReference type);
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -178,7 +172,23 @@ public interface NodePattern extends GraphPredicate {
 	 * @model
 	 * @generated
 	 */
-	EList<EdgePattern> getEdges(EReference type);
+	EList<EdgePattern> getOutgoings(EReference type);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EdgePattern getIncoming(EReference type);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<EdgePattern> getIncomings(EReference type);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -187,5 +197,13 @@ public interface NodePattern extends GraphPredicate {
 	 * @generated
 	 */
 	AttributePattern getAttribute(EAttribute type);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EdgePattern getOutgoing(EReference type);
 
 } // NodePattern

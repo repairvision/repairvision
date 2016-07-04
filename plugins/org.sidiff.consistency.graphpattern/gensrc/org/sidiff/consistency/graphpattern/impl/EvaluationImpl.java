@@ -4,11 +4,11 @@ package org.sidiff.consistency.graphpattern.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -109,18 +109,6 @@ public class EvaluationImpl extends MinimalEObjectImpl.Container implements Eval
 			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.EVALUATION__NODE, newNode, newNode));
 	}
 	
-	// TODO[TEST]: Show match:
-	EList<EObject> match; 
-	
-	public void testSetMatch(EObject match) {
-		if (match != null) {
-			this.match = ECollections.singletonEList(match);
-		} else {
-			this.match = null;
-		}
-	}
-	//-----------------------
-	
 	/**
 	 * <!-- begin-user-doc -->
 	 * Returns a fresh modifiable/unreflected list of the actually matched model elements.
@@ -129,14 +117,7 @@ public class EvaluationImpl extends MinimalEObjectImpl.Container implements Eval
 	 */
 	public EList<EObject> getMatches() {
 		EList<EObject> matches = new BasicEList<>();
-		
-		// TODO[TEST]: Show match:
-		if (match != null) {
-			return match;
-		}
-		//------------------------
-		
-		getStore().getMatchIterator().forEachRemaining(match -> matches.add(match));
+		getStore().getMatchIterator().forEachRemaining(matches::add);
 		return matches;
 	}
 
@@ -387,14 +368,36 @@ public class EvaluationImpl extends MinimalEObjectImpl.Container implements Eval
 				out.append("\n  Local-Match: " + localMatch);
 
 				if ((getStore() instanceof NavigableDataStore) && (getNode() != null)) {
-					NavigableDataStore naviDataStore = (NavigableDataStore) getStore();
+					NavigableDataStore dataStore = (NavigableDataStore) getStore();
 
-					for (EdgePattern ougoingEdge : getNode().getOutgoings()) { // TODO: Need all incident edges.
-						out.append("\n    Edge: " + ougoingEdge);
+					for (EdgePattern ougoingEdge : getNode().getOutgoings()) {
+						out.append("\n    Edge[IN]: " + ougoingEdge);
+						boolean empty = true;
 
-						naviDataStore.getRemoteMatchIterator(localMatch, ougoingEdge).forEachRemaining(remoteMatch -> {
+						for (Iterator<EObject> iterator = dataStore.getRemoteMatchIterator(localMatch, ougoingEdge); iterator.hasNext();) {
+							EObject remoteMatch = iterator.next();
 							out.append("\n      Remote-Match: " + remoteMatch);
-						});
+							empty = false;
+						}
+	
+						if (empty) {
+							out.append("\n      [No Remote-Match]");
+						}
+					}
+					
+					for (EdgePattern incomingEdge : getNode().getIncomings()) {
+						out.append("\n    Edge[OUT]: " + incomingEdge);
+						boolean empty = true;
+
+						for (Iterator<EObject> iterator = dataStore.getRemoteMatchIterator(localMatch, incomingEdge); iterator.hasNext();) {
+							EObject remoteMatch = iterator.next();
+							out.append("\n      Remote-Match: " + remoteMatch);
+							empty = false;
+						}
+	
+						if (empty) {
+							out.append("\n      [No Remote-Match]");
+						}
 					}
 				}
 			});			

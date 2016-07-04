@@ -18,7 +18,6 @@ import org.sidiff.consistency.graphpattern.And;
 import org.sidiff.consistency.graphpattern.AndGroup;
 import org.sidiff.consistency.graphpattern.AttributePattern;
 import org.sidiff.consistency.graphpattern.BinaryFormula;
-import org.sidiff.consistency.graphpattern.Constraint;
 import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.EObjectList;
 import org.sidiff.consistency.graphpattern.EdgePattern;
@@ -35,7 +34,6 @@ import org.sidiff.consistency.graphpattern.GraphpatternPackage;
 import org.sidiff.consistency.graphpattern.If;
 import org.sidiff.consistency.graphpattern.Iff;
 import org.sidiff.consistency.graphpattern.IffGroup;
-import org.sidiff.consistency.graphpattern.Mediator;
 import org.sidiff.consistency.graphpattern.NAryFormula;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
@@ -113,13 +111,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	private EClass navigableDataStoreEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass constraintEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -246,13 +237,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	private EClass iffGroupEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass mediatorEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -478,7 +462,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getNodePattern__GetEdges__EReference() {
+	public EOperation getNodePattern__GetAttribute__EAttribute() {
 		return nodePatternEClass.getEOperations().get(0);
 	}
 
@@ -487,8 +471,35 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getNodePattern__GetAttribute__EAttribute() {
+	public EOperation getNodePattern__GetOutgoing__EReference() {
 		return nodePatternEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getNodePattern__GetOutgoings__EReference() {
+		return nodePatternEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getNodePattern__GetIncoming__EReference() {
+		return nodePatternEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getNodePattern__GetIncomings__EReference() {
+		return nodePatternEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -642,33 +653,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 */
 	public EClass getVisitor() {
 		return visitorEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVisitor_Covisitors() {
-		return (EReference)visitorEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVisitor_Constraints() {
-		return (EReference)visitorEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVisitor_Mediator() {
-		return (EReference)visitorEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -840,24 +824,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 */
 	public EOperation getNavigableDataStore__CleanRemoteMatches__EObject_EdgePattern() {
 		return navigableDataStoreEClass.getEOperations().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getConstraint() {
-		return constraintEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getConstraint__Check__NodePattern_EObject() {
-		return constraintEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -1126,24 +1092,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getMediator() {
-		return mediatorEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getMediator_Visitors() {
-		return (EReference)mediatorEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getEObjectList() {
 		return eObjectListEClass;
 	}
@@ -1350,8 +1298,11 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEReference(nodePatternEClass, NODE_PATTERN__EVALUATION);
 		createEReference(nodePatternEClass, NODE_PATTERN__GRAPH);
 		createEReference(nodePatternEClass, NODE_PATTERN__INCOMINGS);
-		createEOperation(nodePatternEClass, NODE_PATTERN___GET_EDGES__EREFERENCE);
 		createEOperation(nodePatternEClass, NODE_PATTERN___GET_ATTRIBUTE__EATTRIBUTE);
+		createEOperation(nodePatternEClass, NODE_PATTERN___GET_OUTGOING__EREFERENCE);
+		createEOperation(nodePatternEClass, NODE_PATTERN___GET_OUTGOINGS__EREFERENCE);
+		createEOperation(nodePatternEClass, NODE_PATTERN___GET_INCOMING__EREFERENCE);
+		createEOperation(nodePatternEClass, NODE_PATTERN___GET_INCOMINGS__EREFERENCE);
 
 		edgePatternEClass = createEClass(EDGE_PATTERN);
 		createEReference(edgePatternEClass, EDGE_PATTERN__TARGET);
@@ -1373,9 +1324,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEOperation(evaluationEClass, EVALUATION___ACCEPT__VISITOR);
 
 		visitorEClass = createEClass(VISITOR);
-		createEReference(visitorEClass, VISITOR__COVISITORS);
-		createEReference(visitorEClass, VISITOR__CONSTRAINTS);
-		createEReference(visitorEClass, VISITOR__MEDIATOR);
 		createEOperation(visitorEClass, VISITOR___VISIT__EVALUATION);
 
 		dataStoreEClass = createEClass(DATA_STORE);
@@ -1397,9 +1345,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEOperation(navigableDataStoreEClass, NAVIGABLE_DATA_STORE___REMOVE_REMOTE_MATCH__EOBJECT_EOBJECT_EDGEPATTERN);
 		createEOperation(navigableDataStoreEClass, NAVIGABLE_DATA_STORE___CONTAINS_REMOTE_MATCH__EOBJECT_EOBJECT_EDGEPATTERN);
 		createEOperation(navigableDataStoreEClass, NAVIGABLE_DATA_STORE___CLEAN_REMOTE_MATCHES__EOBJECT_EDGEPATTERN);
-
-		constraintEClass = createEClass(CONSTRAINT);
-		createEOperation(constraintEClass, CONSTRAINT___CHECK__NODEPATTERN_EOBJECT);
 
 		unaryFormulaEClass = createEClass(UNARY_FORMULA);
 		createEReference(unaryFormulaEClass, UNARY_FORMULA__CHILD);
@@ -1467,9 +1412,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		xorGroupEClass = createEClass(XOR_GROUP);
 
 		iffGroupEClass = createEClass(IFF_GROUP);
-
-		mediatorEClass = createEClass(MEDIATOR);
-		createEReference(mediatorEClass, MEDIATOR__VISITORS);
 
 		eObjectListEClass = createEClass(EOBJECT_LIST);
 		createEReference(eObjectListEClass, EOBJECT_LIST__CONTENT);
@@ -1545,11 +1487,20 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		initEReference(getNodePattern_Graph(), this.getGraphPattern(), this.getGraphPattern_Nodes(), "graph", null, 1, 1, NodePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNodePattern_Incomings(), this.getEdgePattern(), this.getEdgePattern_Target(), "incomings", null, 0, -1, NodePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		EOperation op = initEOperation(getNodePattern__GetEdges__EReference(), this.getEdgePattern(), "getEdges", 0, -1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = initEOperation(getNodePattern__GetAttribute__EAttribute(), this.getAttributePattern(), "getAttribute", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEAttribute(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getNodePattern__GetOutgoing__EReference(), this.getEdgePattern(), "getOutgoing", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEReference(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getNodePattern__GetAttribute__EAttribute(), this.getAttributePattern(), "getAttribute", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEAttribute(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getNodePattern__GetOutgoings__EReference(), this.getEdgePattern(), "getOutgoings", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEReference(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getNodePattern__GetIncoming__EReference(), this.getEdgePattern(), "getIncoming", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEReference(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getNodePattern__GetIncomings__EReference(), this.getEdgePattern(), "getIncomings", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEReference(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(edgePatternEClass, EdgePattern.class, "EdgePattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEdgePattern_Target(), this.getNodePattern(), this.getNodePattern_Incomings(), "target", null, 1, 1, EdgePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1574,9 +1525,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		addEParameter(op, this.getVisitor(), "visitor", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(visitorEClass, Visitor.class, "Visitor", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getVisitor_Covisitors(), this.getVisitor(), null, "covisitors", null, 0, -1, Visitor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getVisitor_Constraints(), this.getConstraint(), null, "constraints", null, 0, -1, Visitor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getVisitor_Mediator(), this.getMediator(), this.getMediator_Visitors(), "mediator", null, 1, 1, Visitor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getVisitor__Visit__Evaluation(), null, "visit", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getEvaluation(), "evaluation", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1635,12 +1583,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		op = initEOperation(getNavigableDataStore__CleanRemoteMatches__EObject_EdgePattern(), null, "cleanRemoteMatches", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEObject(), "localMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getEdgePattern(), "edge", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(constraintEClass, Constraint.class, "Constraint", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		op = initEOperation(getConstraint__Check__NodePattern_EObject(), ecorePackage.getEBoolean(), "check", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getNodePattern(), "node", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "candidate", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(unaryFormulaEClass, UnaryFormula.class, "UnaryFormula", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUnaryFormula_Child(), this.getFormula(), null, "child", null, 1, 1, UnaryFormula.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1712,9 +1654,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		initEClass(xorGroupEClass, XorGroup.class, "XorGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(iffGroupEClass, IffGroup.class, "IffGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(mediatorEClass, Mediator.class, "Mediator", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getMediator_Visitors(), this.getVisitor(), this.getVisitor_Mediator(), "visitors", null, 0, -1, Mediator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(eObjectListEClass, EObjectList.class, "EObjectList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEObjectList_Content(), ecorePackage.getEObject(), null, "content", null, 0, -1, EObjectList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
