@@ -172,9 +172,9 @@ public abstract class PathSelector {
 	
 	protected abstract PathSelector createPathSelector();
 	
-	protected abstract List<EObject> getPositionAdjacentMatches(EdgePattern edge, NodePattern target);
+	protected abstract Collection<EObject> getPositionAdjacentMatches(EdgePattern edge, NodePattern target);
 
-	protected abstract List<EObject> getAdjacentMatches(EObject match, NodePattern source, EdgePattern edge, NodePattern target);
+	protected abstract Collection<EObject> getAdjacentMatches(EObject match, NodePattern source, EdgePattern edge, NodePattern target);
 	
 	protected abstract void selectMatches(NodePattern node, Collection<EObject> matches);
 	

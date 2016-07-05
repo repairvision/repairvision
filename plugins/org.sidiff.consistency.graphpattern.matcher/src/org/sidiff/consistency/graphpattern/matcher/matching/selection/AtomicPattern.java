@@ -3,6 +3,7 @@ package org.sidiff.consistency.graphpattern.matcher.matching.selection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -139,7 +140,7 @@ public class AtomicPattern {
 				assert (sourceMatch != null) : "Incomplete atomic match!";
 					
 				// Get adjacent matching:
-				List<EObject> targetMatches = pathSelector.getAdjacentMatches(sourceMatch,
+				Collection<EObject> targetMatches = pathSelector.getAdjacentMatches(sourceMatch,
 						evaluationStep.source, evaluationStep.edge, evaluationStep.target);
 
 				// New match(es)?
@@ -151,16 +152,19 @@ public class AtomicPattern {
 					--actualAtomicMatchesSize;
 					--i;
 				} else {
+					// Since !targetMatches.isEmpty() => iterator is hasNext()!
+					Iterator<EObject> targetMatchesIterator = targetMatches.iterator();
+					
 					// Extend match:
-					atomicMatch[targetIndex] = targetMatches.get(0);
+					atomicMatch[targetIndex] = targetMatchesIterator.next();
 
 					// Fork new matches:
 					atomicMatches.ensureCapacity(atomicMatches.size() + targetMatches.size() - 1);
 					
-					for (int j = 1; j < targetMatches.size(); j++) {
+					while (targetMatchesIterator.hasNext()) {
 						EObject[] forkedAtomicMatch = Arrays.copyOf(atomicMatch, atomicMatch.length);
-						forkedAtomicMatch[targetIndex] = targetMatches.get(j);
-
+						forkedAtomicMatch[targetIndex] = targetMatchesIterator.next();
+						
 						// (Ignored in this loop iteration.)
 						atomicMatches.add(forkedAtomicMatch);
 					}

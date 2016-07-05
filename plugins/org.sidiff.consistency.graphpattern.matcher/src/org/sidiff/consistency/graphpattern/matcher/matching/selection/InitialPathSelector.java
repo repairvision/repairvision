@@ -4,7 +4,9 @@ import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.g
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.EdgePattern;
@@ -29,14 +31,13 @@ public class InitialPathSelector extends PathSelector {
 	}
 
 	@Override
-	protected List<EObject> getPositionAdjacentMatches(EdgePattern edge, NodePattern target) {
+	protected Set<EObject> getPositionAdjacentMatches(EdgePattern edge, NodePattern target) {
 		
 		NavigableMatchesDS sourceDS = getDataStore(history.getPosition());
-		List<EObject> adjacentMatches = new ArrayList<EObject>();
+		Set<EObject> adjacentMatches = new HashSet<EObject>();
 		
 		for (EObject lastMatch : history.getLastMatch()) {
 			sourceDS.getRemoteMatchIterator(lastMatch, edge).forEachRemaining(match -> {
-				// TODO: Collect as Set -> toArray() for history? 
 				if (!adjacentMatches.contains(match)) {
 					adjacentMatches.add(match);
 				}
