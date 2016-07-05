@@ -11,18 +11,4 @@ import org.sidiff.consistency.repair.validation.terms.Term;
  */
 public abstract class Predicate extends Formula {
 
-	protected int arity;
-	
-	protected Term[] terms;
-	
-	protected Predicate(int arity, Term... terms) {
-		this.arity = arity;
-	}
-	
-	public Predicate(Term... terms) {
-		assert (terms.length == arity) 
-		: "Wrong count of parameters: (expected: " + arity + " actual: " + terms.length + ")";
-
-		this.terms = terms;
-	}
 }

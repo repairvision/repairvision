@@ -1,7 +1,5 @@
 package org.sidiff.consistency.repair.validation;
 
-import java.util.Collections;
-
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.repair.validation.formulas.Formula;
 import org.sidiff.consistency.repair.validation.terms.Variable;
@@ -18,7 +16,7 @@ public class ConsistencyRule extends NamedElement {
 	}
 	
 	public boolean evaluate(EObject contextElement) {
-		this.context.assign(Collections.singletonList(contextElement));
+		this.context.assign(contextElement);
 		return formula.evaluate();
 	}
 }

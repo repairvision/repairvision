@@ -4,12 +4,18 @@ import org.sidiff.consistency.repair.validation.terms.Term;
 
 public class Equality extends Predicate {
 
-	protected Equality(Term... terms) {
-		super(2, terms);
+	protected Term termA;
+	
+	protected Term termB;
+	
+	public Equality(Term termA, Term termB) {
+		super();
+		this.termA = termA;
+		this.termB = termB;
 	}
 
 	@Override
 	public boolean evaluate() {
-		return terms[0].getValue().equals(terms[1].getValue());
+		return termA.getValue().equals(termB.getValue());
 	}
 }
