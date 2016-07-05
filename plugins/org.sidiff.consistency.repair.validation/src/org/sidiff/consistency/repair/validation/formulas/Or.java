@@ -2,7 +2,7 @@ package org.sidiff.consistency.repair.validation.formulas;
 
 public class Or extends BinaryFormula {
 
-	protected Or(Formula left, Formula right) {
+	public Or(Formula left, Formula right) {
 		super(left, right);
 		this.name = "or";
 	}

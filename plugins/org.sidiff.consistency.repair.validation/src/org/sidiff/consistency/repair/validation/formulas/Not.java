@@ -2,7 +2,7 @@ package org.sidiff.consistency.repair.validation.formulas;
 
 public class Not extends UnaryFormula {
 
-	protected Not(Formula child) {
+	public Not(Formula child) {
 		super(child);
 		this.name = "not";
 	}

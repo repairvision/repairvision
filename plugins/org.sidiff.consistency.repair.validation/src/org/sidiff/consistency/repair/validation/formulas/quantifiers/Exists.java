@@ -18,7 +18,7 @@ public class Exists extends Quantifier {
 	@Override
 	public boolean evaluate() {
 		
-		for (Object nextObject : ((Iterable<?>) iteration.getValue())) {
+		for (Object nextObject : ((Iterable<?>) iteration.evaluate())) {
 			next.assign(nextObject);
 			
 			if (formula.evaluate())  {

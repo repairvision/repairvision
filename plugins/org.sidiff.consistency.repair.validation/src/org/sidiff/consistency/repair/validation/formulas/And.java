@@ -2,7 +2,7 @@ package org.sidiff.consistency.repair.validation.formulas;
 
 public class And extends BinaryFormula {
 
-	protected And(Formula left, Formula right) {
+	public And(Formula left, Formula right) {
 		super(left, right);
 		this.name = "and";
 	}

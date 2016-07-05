@@ -2,7 +2,7 @@ package org.sidiff.consistency.repair.validation.formulas;
 
 public class Iff extends BinaryFormula {
 
-	protected Iff(Formula left, Formula right) {
+	public Iff(Formula left, Formula right) {
 		super(left, right);
 		this.name = "equals";
 	}

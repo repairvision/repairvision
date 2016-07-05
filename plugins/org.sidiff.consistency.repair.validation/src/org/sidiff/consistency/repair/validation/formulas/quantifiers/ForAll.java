@@ -11,14 +11,14 @@ import org.sidiff.consistency.repair.validation.terms.Variable;
  */
 public class ForAll extends Quantifier {
 
-	protected ForAll(Variable next, Term iteration, Formula formula) {
+	public ForAll(Variable next, Term iteration, Formula formula) {
 		super(next, iteration, formula);
 	}
 
 	@Override
 	public boolean evaluate() {
 		
-		for (Object nextObject : ((Iterable<?>) iteration.getValue())) {
+		for (Object nextObject : ((Iterable<?>) iteration.evaluate())) {
 			next.assign(nextObject);
 			
 			if (!formula.evaluate())  {

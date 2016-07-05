@@ -16,6 +16,6 @@ public class Equality extends Predicate {
 
 	@Override
 	public boolean evaluate() {
-		return termA.getValue().equals(termB.getValue());
+		return termA.evaluate().equals(termB.evaluate());
 	}
 }

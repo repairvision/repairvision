@@ -2,7 +2,7 @@ package org.sidiff.consistency.repair.validation.formulas;
 
 public class Xor extends BinaryFormula {
 
-	protected Xor(Formula left, Formula right) {
+	public Xor(Formula left, Formula right) {
 		super(left, right);
 		this.name = "xor";
 	}
