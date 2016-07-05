@@ -19,9 +19,11 @@ import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.Visitor;
 import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSSourceTargetPathIterator;
 import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSSourceTargetPathIterator.DFSPath;
+import org.sidiff.consistency.graphpattern.matcher.wgraph.IConstraintTester;
 import org.sidiff.consistency.graphpattern.matcher.wgraph.partial.LocalEvaluationMatcher;
 import org.sidiff.consistency.graphpattern.matcher.wgraph.partial.LocalEvaluationPathAnalyser;
 import org.sidiff.consistency.repair.lifting.engine.LiftingEngine;
+import org.sidiff.consistency.repair.lifting.matching.LiftingConstraintTester;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphIndex;
 import org.sidiff.consistency.repair.lifting.util.RecognitionRuleUtil;
@@ -35,6 +37,8 @@ public class PartialLiftingEngine extends LiftingEngine {
 
 	private LocalEvaluationPathAnalyser localEvaluation;
 	
+	private IConstraintTester constraintTester;
+	
 	public PartialLiftingEngine(List<NodePattern> graphPattern, ResourceSet targetModels, 
 			LiftingGraphIndex changeIndex, LiftingGraphDomainMap changeDomainMap) {
 		super(graphPattern, targetModels, changeIndex, changeDomainMap);
@@ -44,43 +48,19 @@ public class PartialLiftingEngine extends LiftingEngine {
 	public void initialize(Map<NodePattern, Collection<EObject>> variableNodeDomains) {
 		super.initialize(variableNodeDomains);
 		
-		// Calculate local evaluation:
-		localEvaluation = new LocalEvaluationPathAnalyser(variableNodes) {
-			
-			@Override
-			public Iterator<DFSPath> getAllPaths(NodePattern nodeA, NodePattern nodeB) {
-				return new DFSSourceTargetPathIterator(nodeA, nodeB) {
-					
-					private Set<NodePattern> otherVariableNodes = new HashSet<>(variableNodes);
-					{
-						otherVariableNodes.remove(nodeA);
-						otherVariableNodes.remove(nodeB);
-					}
-					
-					@Override
-					protected boolean isValidOutgoingEdge(EdgePattern outgoing) {
-						
-						// Evaluate only local changes -> block paths at the type-node:
-						if ((outgoing.getType() == SymmetricPackage.eINSTANCE.getRemoveReference_Type())
-								|| (outgoing.getType() == SymmetricPackage.eINSTANCE.getAddReference_Type())
-								|| (outgoing.getType() == SymmetricPackage.eINSTANCE.getAttributeValueChange())) {
-							return false;
-						}
-						
-						return true;
-					}
-					
-					// TODO: Generic part!?
-					
-					@Override
-					protected boolean isValidNode(NodePattern node) {
-						return !otherVariableNodes.contains(node);
-					}
-				};
-			}
-		};
+		// Create constraint tester:
+		constraintTester = new LiftingConstraintTester(getMatchingHelper());
 		
-		// TODO: Better solution: Calculate type-nodes:
+		// Calculate local evaluation:
+		localEvaluation = createLocalEvaluationPathAnalyser();
+		
+		// Precalculate type nodes:
+		calculateTypeNodes(variableNodeDomains);
+	}
+	
+	private void calculateTypeNodes(Map<NodePattern, Collection<EObject>> variableNodeDomains) {
+		
+		// TODO: Other solution -> Pre-Match? Calculate type-nodes:
 		for (NodePattern changeNode : variableNodes) {
 			Iterator<EObject> matches = variableNodeDomains.get(changeNode).iterator();
 			NavigableDataStore changeNodeDS = getDataStore(changeNode.getEvaluation());
@@ -122,6 +102,45 @@ public class PartialLiftingEngine extends LiftingEngine {
 				}
 			}
 		}
+
+	}
+	
+	private LocalEvaluationPathAnalyser createLocalEvaluationPathAnalyser() {
+		
+		return new LocalEvaluationPathAnalyser(variableNodes) {
+			
+			@Override
+			public Iterator<DFSPath> getAllPaths(NodePattern nodeA, NodePattern nodeB) {
+				return new DFSSourceTargetPathIterator(nodeA, nodeB) {
+					
+					private Set<NodePattern> otherVariableNodes = new HashSet<>(variableNodes);
+					{
+						otherVariableNodes.remove(nodeA);
+						otherVariableNodes.remove(nodeB);
+					}
+					
+					@Override
+					protected boolean isValidOutgoingEdge(EdgePattern outgoing) {
+						
+						// Evaluate only local changes -> block paths at the type-node:
+						if ((outgoing.getType() == SymmetricPackage.eINSTANCE.getRemoveReference_Type())
+								|| (outgoing.getType() == SymmetricPackage.eINSTANCE.getAddReference_Type())
+								|| (outgoing.getType() == SymmetricPackage.eINSTANCE.getAttributeValueChange())) {
+							return false;
+						}
+						
+						return true;
+					}
+					
+					
+					@Override
+					// TODO: Generic part!?
+					protected boolean isValidNode(NodePattern node) {
+						return !otherVariableNodes.contains(node);
+					}
+				};
+			}
+		};
 	}
 	
 	public Map<NodePattern, Collection<EObject>> calculateChangeNodes(SymmetricDifference difference) {
@@ -142,5 +161,10 @@ public class PartialLiftingEngine extends LiftingEngine {
 	public Visitor createVisitor() {
 		return new LocalEvaluationMatcher(this, localEvaluation.getLocalEvaluations());
 //		return new PartialMatchNeighborsVisitor(matchingHelper);
+	}
+	
+	@Override
+	public IConstraintTester getConstraintTester() {
+		return constraintTester;
 	}
 }
