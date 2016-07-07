@@ -2,6 +2,7 @@ package org.sidiff.consistency.repair.validation.terms.functions;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.sidiff.consistency.repair.validation.fix.Alternative;
 import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
 import org.sidiff.consistency.repair.validation.fix.Repair;
 import org.sidiff.consistency.repair.validation.fix.Repair.RepairType;
@@ -34,14 +35,17 @@ public class Get extends Function {
 	}
 
 	@Override
-	public void repair(IRepairDecision parentRepairDecision, RepairType type) {
+	public void repair(IRepairDecision parent, RepairType type) {
 		
-		// TODO Alternativ?: ǫ := a.b | τ = <modify, a, b>
+		// TODO new Alternativ?
+		assert (parent instanceof Alternative);
+		
+		// ǫ := a.b | τ = <modify, a, b>
 		if (context instanceof Get) {
-			context.repair(parentRepairDecision, RepairType.MODIFY);
+			context.repair(parent, RepairType.MODIFY);
 		}
 		
 		Repair newRepair = new Repair(type, (EObject) context.getValue(), feature); 
-		parentRepairDecision.appendChildDecisions(newRepair);
+		parent.appendChildDecisions(newRepair);
 	}
 }

@@ -5,7 +5,6 @@ import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
 import org.sidiff.consistency.repair.validation.fix.Repair.RepairType;
 import org.sidiff.consistency.repair.validation.terms.Constant;
 import org.sidiff.consistency.repair.validation.terms.Term;
-import org.sidiff.consistency.repair.validation.terms.Variable;
 
 public class Equality extends Predicate {
 
@@ -41,24 +40,21 @@ public class Equality extends Predicate {
 	}
 
 	@Override
-	public void repair(IRepairDecision parentRepairDecision, boolean expected) {
+	public void repair(IRepairDecision parent, boolean expected) {
 		
-		if ((termA instanceof Variable) && (termB instanceof Constant)) {
-			((Variable) termA).repair(parentRepairDecision, RepairType.MODIFY);
+		if (termB instanceof Constant) {
+			termA.repair(parent, RepairType.MODIFY);
 		}
 		
-		else if ((termB instanceof Variable) && (termA instanceof Constant)) {
-			((Variable) termB).repair(parentRepairDecision, RepairType.MODIFY);
+		else if (termA instanceof Constant) {
+			termB.repair(parent, RepairType.MODIFY);
 		}
 		
 		else {
-			if ((termA instanceof Variable) && (termB instanceof Variable)) {
-				Alternative newRepairAlternative = new Alternative();
-				parentRepairDecision.appendChildDecisions(newRepairAlternative);
-				
-				((Variable) termA).repair(newRepairAlternative, RepairType.MODIFY);
-				((Variable) termB).repair(newRepairAlternative, RepairType.MODIFY);
-			}
+			Alternative newRepairAlternative = Alternative.nextAlternative(parent);
+
+			termA.repair(newRepairAlternative, RepairType.MODIFY);
+			termB.repair(newRepairAlternative, RepairType.MODIFY);
 		}
 	}
 }

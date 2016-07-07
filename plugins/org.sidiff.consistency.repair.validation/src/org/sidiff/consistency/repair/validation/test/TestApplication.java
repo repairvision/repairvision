@@ -8,6 +8,8 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.sidiff.consistency.repair.validation.ConsistencyRule;
+import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
+import org.sidiff.consistency.repair.validation.fix.NodeRepairDecision;
 import org.sidiff.consistency.repair.validation.formulas.And;
 import org.sidiff.consistency.repair.validation.formulas.Formula;
 import org.sidiff.consistency.repair.validation.formulas.predicates.Equality;
@@ -101,7 +103,10 @@ public class TestApplication implements IApplication {
 			}
 		});
 		
-		System.out.println("\nRepair-Tree: \n\n" + messageBasedOnOperation.repair());
+		IRepairDecision messageBasedOnOperationRepair = messageBasedOnOperation.repair();
+		NodeRepairDecision.cleanup(messageBasedOnOperationRepair);
+		
+		System.out.println("\nRepair-Tree: \n\n" + messageBasedOnOperationRepair);
 		
 		return IApplication.EXIT_OK;
 	}

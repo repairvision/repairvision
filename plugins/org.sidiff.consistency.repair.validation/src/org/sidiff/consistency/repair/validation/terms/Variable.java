@@ -30,12 +30,12 @@ public class Variable extends Term {
 	}
 
 	@Override
-	public void repair(IRepairDecision parentRepairDecision, RepairType type) {
+	public void repair(IRepairDecision parent, RepairType type) {
 		
 		// TODO: Concrete vs. abstract remove!?
 //		Repair newRepair = new Repair(type, (EObject) value, ((Get) binding).getFeature());
 //		parentRepairDecision.appendChildDecisions(newRepair);
 				
-		binding.repair(parentRepairDecision, type);
+		binding.repair(parent, type);
 	}
 }

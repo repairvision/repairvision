@@ -40,8 +40,7 @@ public class Exists extends Quantifier {
 
 	@Override
 	public void repair(IRepairDecision parent, boolean expected) {
-		Alternative alternativ = new Alternative();
-		parent.appendChildDecisions(alternativ);
+		Alternative alternativ = Alternative.nextAlternative(parent);
 		
 		// if σ = t
 		if (expected) {
@@ -64,8 +63,7 @@ public class Exists extends Quantifier {
 			iteration.repair(alternativ, RepairType.DELETE);
 			
 			// B: Make all valid elements (terms) of the set invalid!
-			Sequence sequence = new Sequence();
-			alternativ.appendChildDecisions(sequence);
+			Sequence sequence = Sequence.nextSequence(alternativ);
 			
 			for (Object nextObject : ((Iterable<?>) iteration.getValue())) {
 				bounded.assign(nextObject);

@@ -3,7 +3,7 @@ package org.sidiff.consistency.repair.validation.fix;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AbstractRepairDecision implements IRepairDecision {
+public class NodeRepairDecision implements IRepairDecision {
 	
 	protected List<IRepairDecision> repairs = new LinkedList<>();
 
@@ -11,6 +11,27 @@ public class AbstractRepairDecision implements IRepairDecision {
 	public void appendChildDecisions(IRepairDecision... repairs) {
 		for (IRepairDecision repair : repairs) {
 			this.repairs.add(repair);
+		}
+	}
+	
+	public static void cleanup(IRepairDecision root) {
+		for (IRepairDecision child : root.getChildDecisions()) {
+			cleanup(root, child);
+		}
+	}
+	
+	private static void cleanup(IRepairDecision parent, IRepairDecision child) {
+		
+		// Repair tree cosmetics:
+		if (child.getChildDecisions().size() == 1) {
+			for (IRepairDecision subchild : child.getChildDecisions()) {
+				parent.appendChildDecisions(subchild);
+			}
+			parent.removeChildDecision(child);
+		}
+		
+		for (IRepairDecision subchild : child.getChildDecisions()) {
+			cleanup(child, subchild);
 		}
 	}
 	
@@ -33,7 +54,7 @@ public class AbstractRepairDecision implements IRepairDecision {
 		
 		// Repairs:
 		for (IRepairDecision repair : repairs) {
-			if (!(repair instanceof AbstractRepairDecision)) {
+			if (!(repair instanceof NodeRepairDecision)) {
 				appendIndent(indent + 2, print);
 				print.append(repair + "\n");
 			}
@@ -41,8 +62,8 @@ public class AbstractRepairDecision implements IRepairDecision {
 		
 		// Container:
 		for (IRepairDecision repair : repairs) {
-			if (repair instanceof AbstractRepairDecision) {
-				print.append(((AbstractRepairDecision) repair).toString(indent + 2));
+			if (repair instanceof NodeRepairDecision) {
+				print.append(((NodeRepairDecision) repair).toString(indent + 2));
 			}
 		}
 		
@@ -64,15 +85,15 @@ public class AbstractRepairDecision implements IRepairDecision {
 		
 		// Repairs:
 		for (IRepairDecision repair : repairs) {
-			if (!(repair instanceof AbstractRepairDecision)) {
+			if (!(repair instanceof NodeRepairDecision)) {
 				print.append("  " + repair + "\n");
 			}
 		}
 		
 		// Container:
 		for (IRepairDecision repair : repairs) {
-			if (repair instanceof AbstractRepairDecision) {
-				print.append(((AbstractRepairDecision) repair).toString(2));
+			if (repair instanceof NodeRepairDecision) {
+				print.append(((NodeRepairDecision) repair).toString(2));
 			}
 		}
 		

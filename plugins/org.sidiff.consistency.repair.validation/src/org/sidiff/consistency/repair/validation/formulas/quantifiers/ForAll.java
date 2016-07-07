@@ -2,8 +2,8 @@ package org.sidiff.consistency.repair.validation.formulas.quantifiers;
 
 import org.sidiff.consistency.repair.validation.fix.Alternative;
 import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
-import org.sidiff.consistency.repair.validation.fix.Sequence;
 import org.sidiff.consistency.repair.validation.fix.Repair.RepairType;
+import org.sidiff.consistency.repair.validation.fix.Sequence;
 import org.sidiff.consistency.repair.validation.formulas.Formula;
 import org.sidiff.consistency.repair.validation.terms.Term;
 import org.sidiff.consistency.repair.validation.terms.Variable;
@@ -40,8 +40,7 @@ public class ForAll extends Quantifier {
 
 	@Override
 	public void repair(IRepairDecision parent, boolean expected) {
-		Alternative alternativ = new Alternative();
-		parent.appendChildDecisions(alternativ);
+		Alternative alternativ = Alternative.nextAlternative(parent);
 		
 		// if σ = t
 		if (expected) {
@@ -49,8 +48,7 @@ public class ForAll extends Quantifier {
 			iteration.repair(alternativ, RepairType.DELETE);
 			
 			// B: Make all invalid elements (terms) of the set valid!
-			Sequence sequence = new Sequence();
-			alternativ.appendChildDecisions(sequence);
+			Sequence sequence = Sequence.nextSequence(alternativ);
 			
 			for (Object nextObject : ((Iterable<?>) iteration.getValue())) {
 				bounded.assign(nextObject);

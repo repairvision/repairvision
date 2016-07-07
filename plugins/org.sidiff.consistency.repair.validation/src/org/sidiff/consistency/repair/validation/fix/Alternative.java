@@ -1,6 +1,18 @@
 package org.sidiff.consistency.repair.validation.fix;
 
-public class Alternative extends AbstractRepairDecision {
+public class Alternative extends NodeRepairDecision {
+	
+	public static Alternative nextAlternative(IRepairDecision parent) {
+		
+		// Repair tree cosmetics:
+		if (parent instanceof Alternative) {
+			return (Alternative) parent;
+		} else {
+			Alternative newAlternative = new Alternative();
+			parent.appendChildDecisions(newAlternative);
+			return newAlternative;
+		}
+	}
 	
 	@Override
 	public String containerToString() {

@@ -16,7 +16,7 @@ public class Constant extends Term {
 	}
 
 	@Override
-	public void repair(IRepairDecision parentRepairDecision, RepairType type) {
+	public void repair(IRepairDecision parent, RepairType type) {
 		// Nothing to do...
 	}
 }
