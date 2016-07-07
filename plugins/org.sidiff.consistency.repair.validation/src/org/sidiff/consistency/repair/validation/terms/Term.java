@@ -25,5 +25,5 @@ public abstract class Term extends NamedElement  {
 	 *            The modification kind.
 	 * 
 	 */
-	public abstract void generateRepairs(IRepairDecision parentRepairDecision, RepairType type);
+	public abstract void repair(IRepairDecision parentRepairDecision, RepairType type);
 }

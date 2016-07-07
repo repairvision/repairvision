@@ -41,14 +41,14 @@ public class Equality extends Predicate {
 	}
 
 	@Override
-	public void generateRepairs(IRepairDecision parentRepairDecision, boolean expected) {
+	public void repair(IRepairDecision parentRepairDecision, boolean expected) {
 		
 		if ((termA instanceof Variable) && (termB instanceof Constant)) {
-			((Variable) termA).generateRepairs(parentRepairDecision, RepairType.MODIFY);
+			((Variable) termA).repair(parentRepairDecision, RepairType.MODIFY);
 		}
 		
 		else if ((termB instanceof Variable) && (termA instanceof Constant)) {
-			((Variable) termB).generateRepairs(parentRepairDecision, RepairType.MODIFY);
+			((Variable) termB).repair(parentRepairDecision, RepairType.MODIFY);
 		}
 		
 		else {
@@ -56,8 +56,8 @@ public class Equality extends Predicate {
 				Alternative newRepairAlternative = new Alternative();
 				parentRepairDecision.appendChildDecisions(newRepairAlternative);
 				
-				((Variable) termA).generateRepairs(newRepairAlternative, RepairType.MODIFY);
-				((Variable) termB).generateRepairs(newRepairAlternative, RepairType.MODIFY);
+				((Variable) termA).repair(newRepairAlternative, RepairType.MODIFY);
+				((Variable) termB).repair(newRepairAlternative, RepairType.MODIFY);
 			}
 		}
 	}

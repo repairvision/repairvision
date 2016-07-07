@@ -53,7 +53,7 @@ public class ConsistencyRule extends NamedElement {
 
 	public IRepairDecision generateRepairs() {
 		IRepairDecision repairTreeRoot = new Sequence();
-		formula.generateRepairs(repairTreeRoot, true);
+		formula.repair(repairTreeRoot, true);
 		return repairTreeRoot;
 	}
 }

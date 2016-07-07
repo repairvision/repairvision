@@ -19,6 +19,14 @@ public class Get extends Function {
 		this.feature = feature;
 	}
 
+	public Term getContext() {
+		return context;
+	}
+
+	public EStructuralFeature getFeature() {
+		return feature;
+	}
+
 	@Override
 	public Object evaluate() {
 		value = ((EObject) context.evaluate()).eGet(feature);
@@ -26,7 +34,11 @@ public class Get extends Function {
 	}
 
 	@Override
-	public void generateRepairs(IRepairDecision parentRepairDecision, RepairType type) {
+	public void repair(IRepairDecision parentRepairDecision, RepairType type) {
+		
+		// TODO Alternativ?: ǫ := a.b | τ = <modify, a, b>
+		context.repair(parentRepairDecision, RepairType.MODIFY);
+		
 		Repair newRepair = new Repair(type, (EObject) context.getValue(), feature); 
 		parentRepairDecision.appendChildDecisions(newRepair);
 	}

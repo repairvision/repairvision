@@ -6,7 +6,7 @@ import org.sidiff.consistency.repair.validation.terms.Variable;
 
 public abstract class Quantifier extends Formula {
 
-	protected Variable next;
+	protected Variable bounded;
 	
 	protected Term iteration;
 	
@@ -14,17 +14,17 @@ public abstract class Quantifier extends Formula {
 
 	protected Quantifier(Variable next, Term iteration, Formula formula) {
 		super();
-		this.next = next;
+		this.bounded = next;
 		this.iteration = iteration;
 		this.formula = formula;
 	}
 
 	public Variable getNext() {
-		return next;
+		return bounded;
 	}
 
 	public void setNext(Variable next) {
-		this.next = next;
+		this.bounded = next;
 	}
 
 	public Term getIteration() {

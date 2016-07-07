@@ -5,11 +5,11 @@ import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
 
 public abstract class Formula extends NamedElement {
 
-	protected boolean result;
+	protected Boolean result;
 	
 	public abstract boolean evaluate();
 	
-	public boolean getResult() {
+	public Boolean getResult() {
 		return result;
 	}
 	
@@ -22,5 +22,5 @@ public abstract class Formula extends NamedElement {
 	 *            validation fragment.
 	 * 
 	 */
-	public abstract void generateRepairs(IRepairDecision parentRepairDecision, boolean expected);
+	public abstract void repair(IRepairDecision parentRepairDecision, boolean expected);
 }

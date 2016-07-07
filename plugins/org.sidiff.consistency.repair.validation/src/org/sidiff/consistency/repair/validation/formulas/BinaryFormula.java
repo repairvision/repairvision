@@ -1,5 +1,7 @@
 package org.sidiff.consistency.repair.validation.formulas;
 
+import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
+
 public abstract class BinaryFormula extends Formula {
 
 	protected Formula left;
@@ -26,5 +28,18 @@ public abstract class BinaryFormula extends Formula {
 
 	public void setRight(Formula right) {
 		this.right = right;
+	}
+	
+	@Override
+	public void repair(IRepairDecision parentRepairDecision, boolean expected) {
+		
+		// Ensure complete (unoptimized) evaluation:
+		if (left == null) {
+			left.evaluate();
+		}
+		
+		if (right == null) {
+			right.evaluate();
+		}
 	}
 }
