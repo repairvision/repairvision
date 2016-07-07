@@ -2,8 +2,8 @@ package org.sidiff.consistency.repair.validation;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.consistency.repair.validation.fix.Alternative;
 import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
-import org.sidiff.consistency.repair.validation.fix.Sequence;
 import org.sidiff.consistency.repair.validation.formulas.Formula;
 import org.sidiff.consistency.repair.validation.terms.Variable;
 
@@ -51,8 +51,8 @@ public class ConsistencyRule extends NamedElement {
 		this.formula = formula;
 	}
 
-	public IRepairDecision generateRepairs() {
-		IRepairDecision repairTreeRoot = new Sequence();
+	public IRepairDecision repair() {
+		IRepairDecision repairTreeRoot = new Alternative();
 		formula.repair(repairTreeRoot, true);
 		return repairTreeRoot;
 	}

@@ -23,4 +23,59 @@ public class AbstractRepairDecision implements IRepairDecision {
 	public List<IRepairDecision> getChildDecisions() {
 		return repairs;
 	}
+	
+	public String toString(int indent) {
+		StringBuffer print = new StringBuffer();
+		
+		// This Container:
+		appendIndent(indent, print);
+		print.append(containerToString() + "\n");
+		
+		// Repairs:
+		for (IRepairDecision repair : repairs) {
+			if (!(repair instanceof AbstractRepairDecision)) {
+				appendIndent(indent + 2, print);
+				print.append(repair + "\n");
+			}
+		}
+		
+		// Container:
+		for (IRepairDecision repair : repairs) {
+			if (repair instanceof AbstractRepairDecision) {
+				print.append(((AbstractRepairDecision) repair).toString(indent + 2));
+			}
+		}
+		
+		return print.toString();
+	}
+	
+	private void appendIndent(int indent, StringBuffer print) {
+		for (int i = 0; i < indent; i++) {
+			print.append(" ");
+		}
+	}
+	
+	public String containerToString() {
+		return super.toString();
+	}
+	
+	public String childrenToString() {
+		StringBuffer print = new StringBuffer();
+		
+		// Repairs:
+		for (IRepairDecision repair : repairs) {
+			if (!(repair instanceof AbstractRepairDecision)) {
+				print.append("  " + repair + "\n");
+			}
+		}
+		
+		// Container:
+		for (IRepairDecision repair : repairs) {
+			if (repair instanceof AbstractRepairDecision) {
+				print.append(((AbstractRepairDecision) repair).toString(2));
+			}
+		}
+		
+		return print.toString();
+	}
 }

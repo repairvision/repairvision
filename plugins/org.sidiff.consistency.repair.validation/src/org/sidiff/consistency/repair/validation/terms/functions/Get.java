@@ -37,7 +37,9 @@ public class Get extends Function {
 	public void repair(IRepairDecision parentRepairDecision, RepairType type) {
 		
 		// TODO Alternativ?: ǫ := a.b | τ = <modify, a, b>
-		context.repair(parentRepairDecision, RepairType.MODIFY);
+		if (context instanceof Get) {
+			context.repair(parentRepairDecision, RepairType.MODIFY);
+		}
 		
 		Repair newRepair = new Repair(type, (EObject) context.getValue(), feature); 
 		parentRepairDecision.appendChildDecisions(newRepair);

@@ -34,11 +34,11 @@ public abstract class BinaryFormula extends Formula {
 	public void repair(IRepairDecision parentRepairDecision, boolean expected) {
 		
 		// Ensure complete (unoptimized) evaluation:
-		if (left == null) {
+		if (left.getResult() == null) {
 			left.evaluate();
 		}
 		
-		if (right == null) {
+		if (right.getResult() == null) {
 			right.evaluate();
 		}
 	}

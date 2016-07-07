@@ -29,11 +29,13 @@ public class ForAll extends Quantifier {
 			bounded.assign(nextObject);
 			
 			if (!formula.evaluate())  {
-				return false;
+				result = false;
+				return result;
 			}
 		}
 		
-		return true;
+		result = true;
+		return result;
 	}
 
 	@Override

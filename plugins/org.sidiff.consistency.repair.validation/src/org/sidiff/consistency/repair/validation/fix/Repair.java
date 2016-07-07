@@ -38,4 +38,25 @@ public class Repair implements IRepairDecision {
 	public void appendChildDecisions(IRepairDecision... repairs) {
 		throw new UnsupportedOperationException("This is a leaf repair decision!");
 	}
+	
+	@Override
+	public String toString() {
+		EStructuralFeature nameFeature = context.eClass().getEStructuralFeature("name");
+		String contextObjName = "";
+		
+		if (nameFeature != null) {
+			Object nameFeatureValue = context.eGet(nameFeature);
+			
+			if (nameFeatureValue instanceof String) {
+				contextObjName = (String) nameFeatureValue;
+				contextObjName = "[" + contextObjName + "]";
+			}
+		}
+		
+		return "Repair@" + Integer.toHexString(hashCode()) 
+		+ ": <" 
+				+ type.toString().toLowerCase() 
+				+ ", "  + context.eClass().getName() + contextObjName
+				+ ", " + feature.getName() + ">";
+	}
 }

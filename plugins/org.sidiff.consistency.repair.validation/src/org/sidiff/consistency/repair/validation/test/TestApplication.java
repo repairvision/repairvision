@@ -30,7 +30,7 @@ public class TestApplication implements IApplication {
 		String inconsistent = "D:/Workspace/SiLift/org.sidiff.consistency.repair.validation/src/org/sidiff/consistency/repair/validation/test/M0005B.uml";
 		
 		ResourceSet rss = new ResourceSetImpl();
-		URI modeURI = URI.createFileURI(consistent);
+		URI modeURI = URI.createFileURI(inconsistent);
 		Resource modelResource = rss.getResource(modeURI, true);;
 		
 		// Create consistency rule:
@@ -100,6 +100,8 @@ public class TestApplication implements IApplication {
 				System.out.println("]: " + modelElement);
 			}
 		});
+		
+		System.out.println("\nRepair-Tree: \n\n" + messageBasedOnOperation.repair());
 		
 		return IApplication.EXIT_OK;
 	}

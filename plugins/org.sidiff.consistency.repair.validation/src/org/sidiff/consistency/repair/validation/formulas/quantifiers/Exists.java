@@ -29,11 +29,13 @@ public class Exists extends Quantifier {
 			bounded.assign(nextObject);
 			
 			if (formula.evaluate())  {
-				return true;
+				result = true;
+				return result;
 			}
 		}
 		
-		return false;
+		result = false;
+		return result;
 	}
 
 	@Override
