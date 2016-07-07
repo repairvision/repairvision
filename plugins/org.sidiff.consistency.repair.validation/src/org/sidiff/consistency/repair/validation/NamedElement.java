@@ -1,6 +1,6 @@
 package org.sidiff.consistency.repair.validation;
 
-public class NamedElement {
+public class NamedElement implements INamedElement {
 
 	protected String name;
 

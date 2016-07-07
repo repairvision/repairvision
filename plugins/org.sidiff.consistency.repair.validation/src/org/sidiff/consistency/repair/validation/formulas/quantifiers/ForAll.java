@@ -1,5 +1,6 @@
 package org.sidiff.consistency.repair.validation.formulas.quantifiers;
 
+import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
 import org.sidiff.consistency.repair.validation.formulas.Formula;
 import org.sidiff.consistency.repair.validation.terms.Term;
 import org.sidiff.consistency.repair.validation.terms.Variable;
@@ -13,6 +14,9 @@ public class ForAll extends Quantifier {
 
 	public ForAll(Variable next, Term iteration, Formula formula) {
 		super(next, iteration, formula);
+		
+		// Bind variable:
+		next.bind(iteration);
 	}
 
 	@Override
@@ -27,5 +31,23 @@ public class ForAll extends Quantifier {
 		}
 		
 		return true;
+	}
+
+	@Override
+	public void generateRepairs(IRepairDecision parentRepairDecision, boolean expected) {
+		
+		// if σ = t
+		if (expected) {
+			// A: Delete all invalid elements (terms) of the set!
+			// B: Make all invalid elements (terms) of the set valid!
+			
+		}
+		
+		// if σ = f
+		else {
+			// A: Add at least one invalid element (term) to the iterated set!
+			// B: Make at least one element (term) of set invalid!
+			
+		}
 	}
 }

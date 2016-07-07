@@ -41,7 +41,11 @@ public class TestApplication implements IApplication {
 		Variable a = new Variable("a");
 		Variable o = new Variable("o");
 		
-		Term m_receiveEvent_covered = new Get(new Get(m, 
+		Term c1_m_receiveEvent_covered = new Get(new Get(m, 
+				UML.getMessage_ReceiveEvent()), 
+				UML.getInteractionFragment_Covered());
+		
+		Term c2_m_receiveEvent_covered = new Get(new Get(m, 
 				UML.getMessage_ReceiveEvent()), 
 				UML.getInteractionFragment_Covered());
 		
@@ -71,15 +75,15 @@ public class TestApplication implements IApplication {
 		
 		Term o_name = new Get(o, 
 				UML.getNamedElement_Name());
-		
+
 		Formula checkAssoziation = 
-				new Exists(l1, m_receiveEvent_covered, 
+				new Exists(l1, c1_m_receiveEvent_covered, 
 				new Exists(l2, m_sendEvent_covered,
 				new Exists(a, l2_represents_type_ownedAttribute, 
 				new Equality(a_type, l1_represents_type))));
 		
 		Formula checkNames = 
-				new ForAll(l, m_receiveEvent_covered, 
+				new ForAll(l, c2_m_receiveEvent_covered, 
 				new Exists(o, l_represents_type_ownedOperation, 
 				new Equality(o_name, m_name)));
 		
