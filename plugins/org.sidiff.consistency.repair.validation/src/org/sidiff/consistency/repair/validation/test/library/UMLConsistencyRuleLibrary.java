@@ -1,6 +1,8 @@
 package org.sidiff.consistency.repair.validation.test.library;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.uml2.uml.UMLPackage;
@@ -33,6 +35,12 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 	public String getDocumentType() {
 		return documentType;
 	}
+	
+	@Override
+	public List<ConsistencyRule> getConsistencyRules() {
+		return new ArrayList<>(rules.values());
+	}
+
 
 	@Override
 	public ConsistencyRule getConsistencyRule(String name) {

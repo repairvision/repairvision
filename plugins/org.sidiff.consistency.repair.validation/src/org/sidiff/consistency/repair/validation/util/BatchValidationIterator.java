@@ -99,6 +99,14 @@ public class BatchValidationIterator implements Iterator<BatchValidationIterator
 	public void setShowNegativeResults(boolean showNegativeResults) {
 		this.showNegativeResults = showNegativeResults;
 	}
+	
+	public boolean isCleanupRepairTree() {
+		return cleanupRepairTree;
+	}
+
+	public void setCleanupRepairTree(boolean cleanupRepairTree) {
+		this.cleanupRepairTree = cleanupRepairTree;
+	}
 
 	@Override
 	public boolean hasNext() {

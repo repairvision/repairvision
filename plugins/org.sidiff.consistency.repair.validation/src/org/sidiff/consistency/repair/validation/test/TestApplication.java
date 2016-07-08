@@ -15,8 +15,6 @@ import org.sidiff.consistency.repair.validation.test.library.ConsistencyRuleLibr
 import org.sidiff.consistency.repair.validation.util.BatchValidationIterator;
 
 public class TestApplication implements IApplication {
-
-
 	
 	@SuppressWarnings("unused")
 	@Override
@@ -29,7 +27,7 @@ public class TestApplication implements IApplication {
 		String consistencyRule = "messageBasedOnOperation";
 		
 		ResourceSet rss = new ResourceSetImpl();
-		URI modeURI = URI.createFileURI(consistent);
+		URI modeURI = URI.createFileURI(inconsistent);
 		Resource modelResource = rss.getResource(modeURI, true);;
 		
 		// Load consistency rule:

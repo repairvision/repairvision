@@ -24,6 +24,18 @@ public class Repair implements IRepairDecision {
 		this.context = context;
 		this.feature = feature;
 	}
+	
+	public RepairType getType() {
+		return type;
+	}
+
+	public EObject getContext() {
+		return context;
+	}
+
+	public EStructuralFeature getFeature() {
+		return feature;
+	}
 
 	@Override
 	public List<IRepairDecision> getChildDecisions() {

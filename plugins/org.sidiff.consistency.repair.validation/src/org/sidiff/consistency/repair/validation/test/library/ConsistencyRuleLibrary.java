@@ -1,6 +1,7 @@
 package org.sidiff.consistency.repair.validation.test.library;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.sidiff.consistency.repair.validation.ConsistencyRule;
@@ -20,6 +21,8 @@ public abstract class ConsistencyRuleLibrary {
 	}
 	
 	public abstract String getDocumentType();
+	
+	public abstract List<ConsistencyRule> getConsistencyRules();
 	
 	public abstract ConsistencyRule getConsistencyRule(String name);
 }
