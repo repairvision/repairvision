@@ -14,27 +14,6 @@ public class NodeRepairDecision implements IRepairDecision {
 		}
 	}
 	
-	public static void cleanup(IRepairDecision root) {
-		for (IRepairDecision child : root.getChildDecisions()) {
-			cleanup(root, child);
-		}
-	}
-	
-	private static void cleanup(IRepairDecision parent, IRepairDecision child) {
-		
-		// Repair tree cosmetics:
-		if (child.getChildDecisions().size() == 1) {
-			for (IRepairDecision subchild : child.getChildDecisions()) {
-				parent.appendChildDecisions(subchild);
-			}
-			parent.removeChildDecision(child);
-		}
-		
-		for (IRepairDecision subchild : child.getChildDecisions()) {
-			cleanup(child, subchild);
-		}
-	}
-	
 	@Override
 	public void removeChildDecision(IRepairDecision repair) {
 		repairs.remove(repair);

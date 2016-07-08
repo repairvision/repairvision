@@ -14,6 +14,25 @@ public class Alternative extends NodeRepairDecision {
 		}
 	}
 	
+	public static void cleanup(IRepairDecision parent, Alternative alternative) {
+		
+		// Repair tree cosmetics:
+		if (parent != alternative) {
+			if (alternative.getChildDecisions().size() == 1) {
+				parent.removeChildDecision(alternative);
+				parent.appendChildDecisions(alternative.getChildDecisions().get(0));
+			}
+			
+			else if (parent instanceof Alternative) {
+				parent.removeChildDecision(alternative);
+				
+				for (IRepairDecision child : alternative.getChildDecisions()) {
+					parent.appendChildDecisions(child);
+				}
+			}
+		}
+	}
+	
 	@Override
 	public String containerToString() {
 		return "(*)Alternative@" + Integer.toHexString(hashCode()) + ":";

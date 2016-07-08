@@ -18,23 +18,23 @@ public class And extends BinaryFormula {
 	}
 
 	@Override
-	public void repair(IRepairDecision parentRepairDecision, boolean expected) {
-		super.repair(parentRepairDecision, expected);
+	public void repair(IRepairDecision parent, boolean expected) {
+		super.repair(parent, expected);
 		
 		// if σ = t, ςa = t, ςb = f : G(b, σ)
 		if (expected && left.getResult() && !right.getResult()) {
-			right.repair(parentRepairDecision, expected);
+			right.repair(parent, expected);
 		}
 
 		// if σ = t, ςa = f, ςb = t : G(a, σ)
 		else if (expected && !left.getResult() && right.getResult()) {
-			left.repair(parentRepairDecision, expected);
+			left.repair(parent, expected);
 		}
 		
 		// if σ = t, ςa = f, ςb = f : G(a, σ) + G(b, σ)
 		else if (expected && !left.getResult() && !right.getResult()) {
 			Sequence newRepairSequence = new Sequence();
-			parentRepairDecision.appendChildDecisions(newRepairSequence);
+			parent.appendChildDecisions(newRepairSequence);
 			left.repair(newRepairSequence, expected);
 			right.repair(newRepairSequence, expected);
 		}
@@ -42,7 +42,7 @@ public class And extends BinaryFormula {
 		// if σ = f, ςa = t, ςb = t : G(a, σ) • G(b, σ)
 		else if (!expected && left.getResult() && right.getResult()) {
 			Alternative newRepairAlternative = new Alternative();
-			parentRepairDecision.appendChildDecisions(newRepairAlternative);
+			parent.appendChildDecisions(newRepairAlternative);
 			left.repair(newRepairAlternative, expected);
 			right.repair(newRepairAlternative, expected);
 		}

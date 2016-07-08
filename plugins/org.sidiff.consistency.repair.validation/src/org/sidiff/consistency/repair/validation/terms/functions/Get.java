@@ -36,16 +36,14 @@ public class Get extends Function {
 
 	@Override
 	public void repair(IRepairDecision parent, RepairType type) {
-		
-		// TODO new Alternativ?
-		assert (parent instanceof Alternative);
+		 Alternative alternative = Alternative.nextAlternative(parent);
 		
 		// ǫ := a.b | τ = <modify, a, b>
 		if (context instanceof Get) {
-			context.repair(parent, RepairType.MODIFY);
+			context.repair(alternative, RepairType.MODIFY);
 		}
 		
 		Repair newRepair = new Repair(type, (EObject) context.getValue(), feature); 
-		parent.appendChildDecisions(newRepair);
+		alternative.appendChildDecisions(newRepair);
 	}
 }

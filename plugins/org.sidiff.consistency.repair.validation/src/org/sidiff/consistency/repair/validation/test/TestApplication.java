@@ -9,7 +9,6 @@ import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.sidiff.consistency.repair.validation.ConsistencyRule;
 import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
-import org.sidiff.consistency.repair.validation.fix.NodeRepairDecision;
 import org.sidiff.consistency.repair.validation.formulas.And;
 import org.sidiff.consistency.repair.validation.formulas.Formula;
 import org.sidiff.consistency.repair.validation.formulas.predicates.Equality;
@@ -18,6 +17,7 @@ import org.sidiff.consistency.repair.validation.formulas.quantifiers.ForAll;
 import org.sidiff.consistency.repair.validation.terms.Term;
 import org.sidiff.consistency.repair.validation.terms.Variable;
 import org.sidiff.consistency.repair.validation.terms.functions.Get;
+import org.sidiff.consistency.repair.validation.util.ValidationUtil;
 
 public class TestApplication implements IApplication {
 
@@ -104,7 +104,7 @@ public class TestApplication implements IApplication {
 		});
 		
 		IRepairDecision messageBasedOnOperationRepair = messageBasedOnOperation.repair();
-		NodeRepairDecision.cleanup(messageBasedOnOperationRepair);
+		ValidationUtil.cleanup(messageBasedOnOperationRepair);
 		
 		System.out.println("\nRepair-Tree: \n\n" + messageBasedOnOperationRepair);
 		
