@@ -9,11 +9,11 @@ import org.sidiff.consistency.repair.validation.terms.Variable;
 
 public class ConsistencyRule extends NamedElement {
 
-	protected EClass contextType;
+	private EClass contextType;
 	
-	protected Variable context;
+	private Variable context;
 	
-	protected Formula formula;
+	private Formula formula;
 	
 	public ConsistencyRule(EClass contextType, Variable context, Formula formula) {
 		super();
@@ -25,6 +25,10 @@ public class ConsistencyRule extends NamedElement {
 	public boolean evaluate(EObject contextElement) {
 		this.context.assign(contextElement);
 		return formula.evaluate();
+	}
+	
+	public boolean getResult() {
+		return formula.getResult();
 	}
 
 	public EClass getContextType() {

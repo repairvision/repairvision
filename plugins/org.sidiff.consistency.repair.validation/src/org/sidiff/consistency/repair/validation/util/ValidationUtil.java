@@ -19,6 +19,9 @@ public class ValidationUtil {
 	 *            The root node of the repair tree.
 	 */
 	public static IRepairDecision cleanup(IRepairDecision root) {
+		if (root == null) {
+			return null;
+		}
 		
 		// Clean up children:
 		cleanup(root, root.getChildDecisions());
