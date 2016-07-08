@@ -16,6 +16,7 @@ public class Get extends Function {
 	
 	public Get(Term context, EStructuralFeature feature) {
 		super();
+		this.name = "get";
 		this.context = context;
 		this.feature = feature;
 	}
@@ -30,7 +31,23 @@ public class Get extends Function {
 
 	@Override
 	public Object evaluate() {
-		value = ((EObject) context.evaluate()).eGet(feature);
+		context.evaluate();
+		
+//		// TODO: Support for multi-path evaluation!?
+//		if (context.getValue() instanceof List<?>) {
+//			List<Object> newValue = new ArrayList<Object>();
+//			
+//			for (Object object : (List<?>) context.getValue()) {
+//				newValue.add(((EObject) object).eGet(feature));
+//			}
+//			
+//			value = newValue.isEmpty() ? Collections.emptyList() : newValue;
+//		} else {
+			if (context.getValue() != null) {
+				value = ((EObject) context.getValue()).eGet(feature);
+			}
+//		}
+		
 		return value;
 	}
 
@@ -43,7 +60,10 @@ public class Get extends Function {
 			context.repair(alternative, RepairType.MODIFY);
 		}
 		
-		Repair newRepair = new Repair(type, (EObject) context.getValue(), feature); 
-		alternative.appendChildDecisions(newRepair);
+		// TODO: Did we have use for empty repairs ?
+		if (context.getValue() != null) {
+			Repair newRepair = new Repair(type, (EObject) context.getValue(), feature); 
+			alternative.appendChildDecisions(newRepair);
+		}
 	}
 }

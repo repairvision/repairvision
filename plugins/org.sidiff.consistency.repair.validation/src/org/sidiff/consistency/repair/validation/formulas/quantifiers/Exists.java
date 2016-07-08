@@ -21,19 +21,19 @@ public class Exists extends Quantifier {
 		// Bind variable:
 		next.bind(iteration);
 	}
-
+	
 	@Override
 	public boolean evaluate() {
-		
-		for (Object nextObject : ((Iterable<?>) iteration.evaluate())) {
+
+		for (Object nextObject : getIterable()) {
 			bounded.assign(nextObject);
-			
+
 			if (formula.evaluate())  {
 				result = true;
 				return result;
 			}
 		}
-		
+
 		result = false;
 		return result;
 	}
@@ -48,7 +48,7 @@ public class Exists extends Quantifier {
 			iteration.repair(alternativ, RepairType.ADD);
 			
 			// B: Make at least one element (term) of the set valid!
-			for (Object nextObject : ((Iterable<?>) iteration.getValue())) {
+			for (Object nextObject : getIterable()) {
 				bounded.assign(nextObject);
 				
 				if (!formula.evaluate())  {
@@ -65,7 +65,7 @@ public class Exists extends Quantifier {
 			// B: Make all valid elements (terms) of the set invalid!
 			Sequence sequence = Sequence.nextSequence(alternativ);
 			
-			for (Object nextObject : ((Iterable<?>) iteration.getValue())) {
+			for (Object nextObject : getIterable()) {
 				bounded.assign(nextObject);
 				
 				if (formula.evaluate())  {

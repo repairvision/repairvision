@@ -1,5 +1,7 @@
 package org.sidiff.consistency.repair.validation.formulas.quantifiers;
 
+import java.util.Collections;
+
 import org.sidiff.consistency.repair.validation.formulas.Formula;
 import org.sidiff.consistency.repair.validation.terms.Term;
 import org.sidiff.consistency.repair.validation.terms.Variable;
@@ -17,6 +19,16 @@ public abstract class Quantifier extends Formula {
 		this.bounded = next;
 		this.iteration = iteration;
 		this.formula = formula;
+	}
+	
+	protected Iterable<?> getIterable() {
+		iteration.evaluate();
+		
+		if ((iteration.getValue() != null) && (iteration.getValue() instanceof Iterable<?>)) {
+			return (Iterable<?>) iteration.getValue();
+		} else {
+			return Collections.emptyList();
+		}
 	}
 
 	public Variable getNext() {

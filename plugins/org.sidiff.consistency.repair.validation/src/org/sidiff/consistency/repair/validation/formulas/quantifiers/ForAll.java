@@ -24,10 +24,11 @@ public class ForAll extends Quantifier {
 
 	@Override
 	public boolean evaluate() {
-		
-		for (Object nextObject : ((Iterable<?>) iteration.evaluate())) {
+		iteration.evaluate();
+
+		for (Object nextObject : getIterable()) {
 			bounded.assign(nextObject);
-			
+
 			if (!formula.evaluate())  {
 				result = false;
 				return result;
@@ -50,7 +51,7 @@ public class ForAll extends Quantifier {
 			// B: Make all invalid elements (terms) of the set valid!
 			Sequence sequence = Sequence.nextSequence(alternativ);
 			
-			for (Object nextObject : ((Iterable<?>) iteration.getValue())) {
+			for (Object nextObject : getIterable()) {
 				bounded.assign(nextObject);
 				
 				if (!formula.evaluate())  {
@@ -68,7 +69,7 @@ public class ForAll extends Quantifier {
 			iteration.repair(alternativ, RepairType.ADD);
 			
 			// B: Make at least one element (term) of the set invalid!
-			for (Object nextObject : ((Iterable<?>) iteration.getValue())) {
+			for (Object nextObject : getIterable()) {
 				bounded.assign(nextObject);
 				
 				if (formula.evaluate())  {

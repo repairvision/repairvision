@@ -104,7 +104,7 @@ public class TestApplication implements IApplication {
 		});
 		
 		IRepairDecision messageBasedOnOperationRepair = messageBasedOnOperation.repair();
-		ValidationUtil.cleanup(messageBasedOnOperationRepair);
+		messageBasedOnOperationRepair = ValidationUtil.cleanup(messageBasedOnOperationRepair);
 		
 		System.out.println("\nRepair-Tree: \n\n" + messageBasedOnOperationRepair);
 		

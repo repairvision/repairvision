@@ -18,8 +18,17 @@ public class ValidationUtil {
 	 * @param root
 	 *            The root node of the repair tree.
 	 */
-	public static void cleanup(IRepairDecision root) {
+	public static IRepairDecision cleanup(IRepairDecision root) {
+		
+		// Clean up children:
 		cleanup(root, root.getChildDecisions());
+		
+		// Clean up root:
+		if (root.getChildDecisions().size() == 1) {
+			return root.getChildDecisions().get(0);
+		} else {
+			return root;
+		}
 	}
 	
 	private static void cleanup(IRepairDecision parent, List<IRepairDecision> children) {
@@ -60,9 +69,16 @@ public class ValidationUtil {
 			cleanup(parent, pullUpRepairs);
 		}
 		
+		for (IRepairDecision child : parent.getChildDecisions()) {
+			if (!(child instanceof Repair)) {
+				cleanup(child, child.getChildDecisions());
+			}
+		}
+		
 		// Pull up repairs:
 		for (IRepairDecision pullUpRepair : pullUpRepairs) {
 			parent.appendChildDecisions(pullUpRepair);
 		}
+		
 	}
 }

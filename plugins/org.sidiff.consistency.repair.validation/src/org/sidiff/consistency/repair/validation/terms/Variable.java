@@ -5,6 +5,7 @@ import org.sidiff.consistency.repair.validation.fix.Repair.RepairType;
 
 public class Variable extends Term {
 
+	// TODO: Do we need this!?
 	protected Term binding;
 	
 	public Variable(String name) {
