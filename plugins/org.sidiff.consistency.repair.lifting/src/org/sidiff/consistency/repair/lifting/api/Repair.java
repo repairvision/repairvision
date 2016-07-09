@@ -1,11 +1,5 @@
 package org.sidiff.consistency.repair.lifting.api;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSNodes;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,12 +23,6 @@ public class Repair {
 	
 	private ComplementMatch complementPreMatch;
 	
-	// TODO: Move this to ComplementRule!
-	private List<GraphElement> historicChanges;
-	
-	// TODO: Move this to ComplementRule!
-	private List<GraphElement> complementingChanges;
-	
 	/**
 	 * @param complementRule
 	 *            The container of the complement rule.
@@ -55,6 +43,20 @@ public class Repair {
 	}
 	
 	/**
+	 * @return All already applied changes of the corresponding edit-rule.
+	 */
+	public List<GraphElement> getHistoricChanges() {
+		return complementRule.getHistoricChanges();
+	}
+	
+	/**
+	 * @return All missing changes of the corresponding edit-rule.
+	 */
+	public List<GraphElement> getComplementingChanges() {
+		return complementRule.getComplementingChanges();
+	}
+	
+	/**
 	 * @param editRuleGraphElement
 	 *            A node/edge of the edit rule.
 	 * @return The corresponding node/edge of the complement rule.
@@ -71,70 +73,6 @@ public class Repair {
 		}
 		
 		return null;
-	}
-	
-	/**
-	 * @return All already applied changes of the corresponding edit-rule.
-	 */
-	public List<GraphElement> getHistoricChanges() {
-		
-		if (historicChanges == null) {
-			historicChanges = new ArrayList<>();
-			
-			for (Node deleteNode : getLHSMinusRHSNodes(getEditRule())) {
-				if (!getComplementingChanges().contains(complementRule.getTrace(deleteNode))) {
-					historicChanges.add(deleteNode);
-				}
-			}
-			
-			for (Edge deleteEdge : getLHSMinusRHSEdges(getEditRule())) {
-				if (!getComplementingChanges().contains(complementRule.getTrace(deleteEdge))) {
-					historicChanges.add(deleteEdge);
-				}
-			}
-			
-			for (Node createNode : getRHSMinusLHSNodes(getEditRule())) {
-				if (!getComplementingChanges().contains(complementRule.getTrace(createNode))) {
-					historicChanges.add(createNode);
-				}
-			}
-			
-			for (Edge createEdge : getRHSMinusLHSEdges(getEditRule())) {
-				if (!getComplementingChanges().contains(complementRule.getTrace(createEdge))) {
-					historicChanges.add(createEdge);
-				}
-			}
-		}
-		
-		return historicChanges;
-	}
-	
-	/**
-	 * @return All missing changes of the corresponding edit-rule.
-	 */
-	public List<GraphElement> getComplementingChanges() {
-		
-		if (complementingChanges == null) {
-			complementingChanges = new ArrayList<>();
-			
-			for (Node deleteNode : getLHSMinusRHSNodes(complementRule.getComplementRule())) {
-				complementingChanges.add(deleteNode);
-			}
-			
-			for (Edge deleteEdge : getLHSMinusRHSEdges(complementRule.getComplementRule())) {
-				complementingChanges.add(deleteEdge);
-			}
-			
-			for (Node createNode : getRHSMinusLHSNodes(complementRule.getComplementRule())) {
-				complementingChanges.add(createNode);
-			}
-			
-			for (Edge createEdge : getRHSMinusLHSEdges(complementRule.getComplementRule())) {
-				complementingChanges.add(createEdge);
-			}
-		}
-		
-		return complementingChanges;
 	}
 	
 	/**

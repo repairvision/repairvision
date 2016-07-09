@@ -1,11 +1,8 @@
 package org.sidiff.consistency.repair.complement.construction.match;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 
 /**
@@ -15,9 +12,9 @@ public class ComplementMatch {
 
 	private Map<Node, EObject> nodeMatches;
 	
-	private Set<NestedCondition> unfulfilledACs = new HashSet<>();
-	
-	private Set<NestedCondition> ignoredACs = new HashSet<>();
+//	private Set<NestedCondition> unfulfilledACs = new HashSet<>();
+//	
+//	private Set<NestedCondition> ignoredACs = new HashSet<>();
 
 	public ComplementMatch() {
 	}
@@ -34,19 +31,20 @@ public class ComplementMatch {
 		this.nodeMatches = nodeMatches;
 	}
 
-	public Set<NestedCondition> getUnfulfilledACs() {
-		return unfulfilledACs;
-	}
-
-	public void setUnfulfilledACs(Set<NestedCondition> unfulfilledACs) {
-		this.unfulfilledACs = unfulfilledACs;
-	}
-
-	public Set<NestedCondition> getIgnoredACs() {
-		return ignoredACs;
-	}
-
-	public void setIgnoredACs(Set<NestedCondition> ignoredACs) {
-		this.ignoredACs = ignoredACs;
-	}
+// TODO: ACs
+//	public Set<NestedCondition> getUnfulfilledACs() {
+//		return unfulfilledACs;
+//	}
+//
+//	public void setUnfulfilledACs(Set<NestedCondition> unfulfilledACs) {
+//		this.unfulfilledACs = unfulfilledACs;
+//	}
+//
+//	public Set<NestedCondition> getIgnoredACs() {
+//		return ignoredACs;
+//	}
+//
+//	public void setIgnoredACs(Set<NestedCondition> ignoredACs) {
+//		this.ignoredACs = ignoredACs;
+//	}
 }

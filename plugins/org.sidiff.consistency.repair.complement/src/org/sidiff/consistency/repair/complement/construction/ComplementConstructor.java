@@ -1,20 +1,16 @@
 package org.sidiff.consistency.repair.complement.construction;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
@@ -43,15 +39,12 @@ public abstract class ComplementConstructor {
 		// Derive complement rule:
 		ComplementRule complement = deriveComplementRule(sourceRuleMatching); 
 		complement.setSourceMatch(sourceRuleMatching);
-		
-		// Create the complements pre-match: 
-		List<ComplementMatch> preMatches = initializeComplementPrematch(complement, sourceRuleMatching);
-		complement.setComplementPreMatches(preMatches);
-		
-		// Get unfulfilled application conditions:
-		for (ComplementMatch preMatch : preMatches) {
-			initializeApplicationConditions(complement, preMatch);
-		}
+
+		// TODO: ACs
+//		// Get unfulfilled application conditions:
+//		for (ComplementMatch preMatch : preMatches) {
+//			initializeApplicationConditions(complement, preMatch);
+//		}
 		
 		return complement;
 	}
@@ -63,7 +56,7 @@ public abstract class ComplementConstructor {
 		Rule complementRule = (Rule) copyTrace.get(sourceRule);
 
 		// Initialize complement rule:
-		ComplementRule complement = new ComplementRule(sourceRule, complementRule);
+		ComplementRule complement = createComplementRule(sourceRule, complementRule);
 
 		// Save trace [Source -> Complement]:
 		for (Node sourceNode : sourceRule.getLhs().getNodes()) {
@@ -126,12 +119,12 @@ public abstract class ComplementConstructor {
 		return complement;
 	}
 
-	protected abstract List<ComplementMatch> initializeComplementPrematch(
-			ComplementRule complement, Collection<EditRuleMatch> sourceRuleMatching);
-		
-	private void initializeApplicationConditions(ComplementRule complement, ComplementMatch preMatch) {
-		Set<NestedCondition> unfulfilledACs = new HashSet<>(sourceRule.getLhs().getNestedConditions());
-		preMatch.setUnfulfilledACs(unfulfilledACs);
-		complement.recheckAllApplicationConditions(preMatch);
-	}
+	protected abstract ComplementRule createComplementRule(Rule sourceRule, Rule complementRule);
+	
+	// TODO: ACs
+//	private void initializeApplicationConditions(ComplementRule complement, ComplementMatch preMatch) {
+//		Set<NestedCondition> unfulfilledACs = new HashSet<>(sourceRule.getLhs().getNestedConditions());
+//		preMatch.setUnfulfilledACs(unfulfilledACs);
+//		complement.recheckAllApplicationConditions(preMatch);
+//	}
 }

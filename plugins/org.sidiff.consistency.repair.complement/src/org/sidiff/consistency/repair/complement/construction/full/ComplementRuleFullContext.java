@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.construction;
+package org.sidiff.consistency.repair.complement.construction.full;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyParameter;
@@ -7,7 +7,6 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getPreservedEd
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getPreservedNodes;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +24,7 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.view.EdgePair;
 import org.sidiff.common.henshin.view.NodePair;
+import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
@@ -37,35 +37,15 @@ import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeS
  * 
  * @author Manuel Ohrndorf
  */
-public class ComplementConstructorCompleteContext extends ComplementConstructor {
+public class ComplementRuleFullContext extends ComplementRule {
 
-	/**
-	 * The (Henshin) engine which applies the rules.
-	 */
-	private EngineImpl engine;
-	
-	/**
-	 * The working graph, i.e. the actual version of the model.
-	 */
-	private EGraph graph;
-	
-	/**
-	 * @param sourceRule
-	 *            The partially executed edit-rule.
-	 * @param engine
-	 *            The (Henshin) engine which applies the rules.
-	 * @param graph
-	 *            The working graph, i.e. the actual version of the model.
-	 */
-	public ComplementConstructorCompleteContext(Rule sourceRule, EngineImpl engine, EGraph graph) {
-		super(sourceRule);
-		this.engine = engine;
-		this.graph = graph;
+	public ComplementRuleFullContext(Rule sourceRule, Rule complementRule, EngineImpl engine, EGraph graph) {
+		super(sourceRule, complementRule);
+		initialize(engine, graph);
 	}
 
 	@Override
-	protected List<ComplementMatch> initializeComplementPrematch(
-			ComplementRule complement, Collection<EditRuleMatch> sourceRuleMatching) {
+	protected List<ComplementMatch> createComplementPrematches() {
 		
 		// Create rule which only contains the context nodes:
 		Rule contextRule = HenshinFactory.eINSTANCE.createRule();
@@ -77,7 +57,7 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 		Map<Node, Node> traceContextToComplement = new HashMap<>();
 		Map<Node, Node> traceComplementToContext = new HashMap<>();
 		
-		for (NodePair preserveNodeComplement : getPreservedNodes(complement.getComplementRule())) {
+		for (NodePair preserveNodeComplement : getPreservedNodes(complementRule)) {
 			NodePair preserveNodeContext = copyPreserveNodes(contextRule, preserveNodeComplement, true);
 			
 			traceComplementToContext.put(preserveNodeComplement.getLhsNode(), preserveNodeContext.getLhsNode());
@@ -87,7 +67,7 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 			traceContextToComplement.put(preserveNodeContext.getRhsNode(), preserveNodeComplement.getRhsNode());
 		}
 		
-		for (EdgePair preserveEdgeComplement : getPreservedEdges(complement.getComplementRule())) {
+		for (EdgePair preserveEdgeComplement : getPreservedEdges(complementRule)) {
 			copyEdge(
 					preserveEdgeComplement.getLhsEdge(), 
 					traceComplementToContext.get(preserveEdgeComplement.getLhsEdge().getSource()),
@@ -99,18 +79,18 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 					traceComplementToContext.get(preserveEdgeComplement.getRhsEdge().getTarget()));
 		}
 		
-		for (Parameter parameter : complement.getComplementRule().getParameters()) {
+		for (Parameter parameter : complementRule.getParameters()) {
 			copyParameter(contextRule, parameter);
 		}
 		
 		// Create restricted graph:
-		RestrictedEGraphImpl restrictedGraph = new RestrictedEGraphImpl(graph, engine, contextRule);
+		RestrictedEGraphImpl restrictedGraph = new RestrictedEGraphImpl(getGraph(), getEngine(), contextRule);
 		
-		for (EditRuleMatch sourceRuleMatch : sourceRuleMatching) {
+		for (EditRuleMatch sourceRuleMatch : getSourceMatch()) {
 			if (sourceRuleMatch instanceof EditRuleNodeMatch) {
 				if (sourceRuleMatch.getAction().equals(Type.PRESERVE)) {
 					Node sourceNode = ((EditRuleNodeMatch) sourceRuleMatch).getNode();
-					Node complementNode = complement.getTrace(sourceNode);
+					Node complementNode = getTrace(sourceNode);
 					EditRuleNodeMatch preMatch = (EditRuleNodeMatch) sourceRuleMatch;
 					
 					if (preMatch instanceof EditRuleNodeSingleMatch) {
@@ -128,8 +108,7 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 		
 		// Check context rule (with restricted working graph):
 		ArrayList<ComplementMatch> complementPreMatches = new ArrayList<>();
-		complement.setComplementPreMatches(complementPreMatches);
-		Iterator<Match> matchFinder = engine.findMatches(contextRule, restrictedGraph, null).iterator();
+		Iterator<Match> matchFinder = getEngine().findMatches(contextRule, restrictedGraph, null).iterator();
 		
 		if (matchFinder.hasNext()) {
 			Match nextMatch = matchFinder.next();
@@ -146,5 +125,4 @@ public class ComplementConstructorCompleteContext extends ComplementConstructor 
 		complementPreMatches.trimToSize();
 		return complementPreMatches;
 	}
-
 }

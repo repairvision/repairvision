@@ -34,8 +34,8 @@ import org.sidiff.consistency.graphpattern.matcher.matching.MatchGenerator;
 import org.sidiff.consistency.graphpattern.matcher.matching.NodeMatching;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
 import org.sidiff.consistency.repair.complement.construction.ComplementConstructor;
-import org.sidiff.consistency.repair.complement.construction.ComplementConstructorCompleteContext;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
+import org.sidiff.consistency.repair.complement.construction.full.ComplementConstructorFullContext;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeCreateMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeDeleteMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
@@ -130,7 +130,7 @@ public class ComplementFinder {
 
 		//// Complement Construction ////
 		ComplementConstructor complementConstructor = 
-				new ComplementConstructorCompleteContext(editRule, engine, graphModelB);
+				new ComplementConstructorFullContext(editRule, engine, graphModelB);
 
 		List<ComplementRule> complements = new ArrayList<>(); 
 

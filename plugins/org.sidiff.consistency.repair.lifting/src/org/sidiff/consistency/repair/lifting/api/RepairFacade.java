@@ -1,6 +1,8 @@
 package org.sidiff.consistency.repair.lifting.api;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChanges;
 import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -16,6 +18,7 @@ import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
+import org.sidiff.consistency.repair.lifting.complement.AbstractRepairFilter;
 import org.sidiff.consistency.repair.lifting.complement.ComplementFinder;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
@@ -39,7 +42,7 @@ public class RepairFacade {
 	 *            All edit-rules which are to be investigated for partial executions.
 	 * @param settings
 	 *            The settings for the difference calculation.
-	 * @return All found repairs pre edit-rule.
+	 * @return All found repairs.
 	 */
 	public static RepairJob getRepairs(
 			URI uriModelA, URI uriModelB, Collection<Rule> editRules, DifferenceSettings settings) {
@@ -62,21 +65,36 @@ public class RepairFacade {
 		Resource differenceResource = differenceRSS.createResource(URI.createURI(""));
 		differenceResource.getContents().add(difference);
 		
+		// Validate model and calculate abstract repairs:
+		AbstractRepairFilter repairFilter = new AbstractRepairFilter(modelB);
+		
 		// Calculate repairs:
 		ComplementFinder complementFinder = new ComplementFinder(modelA, modelB, difference);
 		Map<Rule, List<Repair>> repairs = new LinkedHashMap<>();
 		
 		for (Rule editRule : editRules) {
-			List<Repair> repairsPerRule = new ArrayList<>();
 			
-			for(ComplementRule complement : complementFinder.searchComplementRules(editRule)) {
-				for (ComplementMatch preMatch : complement.getComplementPreMatches()) {
-					repairsPerRule.add(new Repair(complement, preMatch));
+			// Filter edit-rules by abstract repairs:
+			if (repairFilter.filter(getChanges(editRule))) {
+				List<Repair> repairsPerRule = new ArrayList<>();
+				
+				for(ComplementRule complement : complementFinder.searchComplementRules(editRule)) {
+					
+					// Filter complements by abstract repairs:
+					if (repairFilter.filter(complement.getComplementingChanges())) {
+						for (ComplementMatch preMatch : complement.getComplementPreMatches()) {
+							
+							// Filter complement with pre-match by abstract repairs:
+							if (repairFilter.filter(complement.getComplementingChanges(), preMatch.getNodeMatches())) {
+								repairsPerRule.add(new Repair(complement, preMatch));
+							}
+						}
+					}
 				}
-			}
-			
-			if (!repairsPerRule.isEmpty()) {
-				repairs.put(editRule, repairsPerRule);
+				
+				if (!repairsPerRule.isEmpty()) {
+					repairs.put(editRule, repairsPerRule);
+				}
 			}
 		}
 		

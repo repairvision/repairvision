@@ -10,8 +10,8 @@ import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.repair.complement.construction.ComplementConstructorCompleteContext;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
+import org.sidiff.consistency.repair.complement.construction.full.ComplementConstructorFullContext;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeCreateMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeDeleteMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
@@ -26,7 +26,7 @@ import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeS
  * 
  * @author Manuel Ohrndorf
  */
-public class SubRuleComplementConstructor extends ComplementConstructorCompleteContext {
+public class SubRuleComplementConstructor extends ComplementConstructorFullContext {
 
 	public SubRuleComplementConstructor(Rule sourceRule, EngineImpl engine, EGraph graph) {
 		super(sourceRule, engine, graph);
