@@ -12,7 +12,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.consistency.repair.validation.ConsistencyRule;
 import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
-import org.sidiff.consistency.repair.validation.terms.Variable;
 
 public class BatchValidationIterator implements Iterator<BatchValidationIterator.Validation> {
 
@@ -32,12 +31,12 @@ public class BatchValidationIterator implements Iterator<BatchValidationIterator
 		private ConsistencyRule rule;
 		private boolean result;
 		private EClass contextType;
-		private Variable context;
+		private EObject context;
 		private IRepairDecision repair;
 		
 		public Validation(
 				ConsistencyRule rule, boolean result, 
-				EClass contextType, Variable context, 
+				EClass contextType, EObject context, 
 				IRepairDecision repair) {
 			
 			this.rule = rule;
@@ -59,7 +58,7 @@ public class BatchValidationIterator implements Iterator<BatchValidationIterator
 			return contextType;
 		}
 		
-		public Variable getContext() {
+		public EObject getContext() {
 			return context;
 		}
 		

@@ -52,8 +52,7 @@ public class Repair implements IRepairDecision {
 		throw new UnsupportedOperationException("This is a leaf repair decision!");
 	}
 	
-	@Override
-	public String toString() {
+	public String getRepairTripleLabel() {
 		
 		EClass eClass = (context != null) ? context.eClass() : null;
 		EStructuralFeature nameFeature = (eClass != null) ? eClass.getEStructuralFeature("name") : null;
@@ -70,10 +69,13 @@ public class Repair implements IRepairDecision {
 			}
 		}
 		
-		return "Repair@" + Integer.toHexString(hashCode()) 
-				+ ": <" 
-				+ type.toString().toLowerCase() 
+		return  type.toString().toLowerCase() 
 				+ ", "  + className + contextObjName
-				+ ", " + feature.getName() + ">";
+				+ ", " + feature.getName();
+	}
+	
+	@Override
+	public String toString() {
+		return "Repair@" + Integer.toHexString(hashCode()) + ": <" + getRepairTripleLabel() + ">";
 	}
 }

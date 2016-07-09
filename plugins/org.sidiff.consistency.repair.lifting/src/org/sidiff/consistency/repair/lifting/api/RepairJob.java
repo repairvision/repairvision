@@ -1,28 +1,24 @@
 package org.sidiff.consistency.repair.lifting.api;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.repair.validation.util.BatchValidationIterator.Validation;
 
 public class RepairJob {
 
 	protected Map<Rule, List<Repair>> repairs;
+	
+	protected Collection<Validation> validations;
 	
 	protected Resource modelA;
 	
 	protected Resource modelB;
 	
 	protected Resource difference;
-
-	public RepairJob(Map<Rule, List<Repair>> repairs, Resource modelA, Resource modelB, Resource difference) {
-		super();
-		this.repairs = repairs;
-		this.modelA = modelA;
-		this.modelB = modelB;
-		this.difference = difference;
-	}
 	
 	public RepairJob() {
 	}
@@ -33,6 +29,14 @@ public class RepairJob {
 
 	public void setRepairs(Map<Rule, List<Repair>> repairs) {
 		this.repairs = repairs;
+	}
+	
+	public Collection<Validation> getValidations() {
+		return validations;
+	}
+
+	public void setValidations(Collection<Validation> validations) {
+		this.validations = validations;
 	}
 
 	public Resource getModelA() {

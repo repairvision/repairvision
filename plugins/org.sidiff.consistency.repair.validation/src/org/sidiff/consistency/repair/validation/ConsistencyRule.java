@@ -39,12 +39,12 @@ public class ConsistencyRule extends NamedElement {
 		this.contextType = contextType;
 	}
 
-	public Variable getContext() {
-		return context;
+	public EObject getContext() {
+		return (EObject) context.getValue();
 	}
 
-	public void setContext(Variable context) {
-		this.context = context;
+	public void setContext(EObject contextElement) {
+		this.context.assign(contextElement);
 	}
 
 	public Formula getFormula() {

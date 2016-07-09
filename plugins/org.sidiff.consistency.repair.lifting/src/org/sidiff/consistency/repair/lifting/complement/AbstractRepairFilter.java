@@ -21,12 +21,15 @@ import org.sidiff.consistency.repair.validation.fix.Repair;
 import org.sidiff.consistency.repair.validation.fix.Repair.RepairType;
 import org.sidiff.consistency.repair.validation.test.library.ConsistencyRuleLibrary;
 import org.sidiff.consistency.repair.validation.util.BatchValidationIterator;
+import org.sidiff.consistency.repair.validation.util.BatchValidationIterator.Validation;
 
 public class AbstractRepairFilter {
 
 	private Map<EClass, Map<EObject, List<Repair>>> repairs = new HashMap<>();
+	
+	private List<Validation> validations = new ArrayList<>();
 
-	public AbstractRepairFilter(Resource model) {
+	public AbstractRepairFilter(Resource model, boolean storeValidation) {
 		ConsistencyRuleLibrary cruleLibrary = getConsistencyRuleLibrary(EMFModelAccess.getDocumentType(model));
 
 		BatchValidationIterator validationIterator = new BatchValidationIterator(model,
@@ -37,7 +40,15 @@ public class AbstractRepairFilter {
 		// Collect all abstract repair actions:
 		validationIterator.forEachRemaining(validation -> {
 			addRepair(validation.getRepair());
+			
+			if (storeValidation) {
+				validations.add(validation);
+			}
 		});
+	}
+	
+	public List<Validation> getValidations() {
+		return validations;
 	}
 
 	private void addRepair(IRepairDecision root) {

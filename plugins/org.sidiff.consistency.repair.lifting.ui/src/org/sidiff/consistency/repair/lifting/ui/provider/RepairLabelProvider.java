@@ -7,6 +7,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.sidiff.consistency.common.ui.NameUtil;
 import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.ui.Activator;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.Change;
@@ -77,7 +78,7 @@ public class RepairLabelProvider extends LabelProvider {
 	public String getText(Object element) {
 		
 		if (element instanceof Rule) {
-			return ((Rule) element).toString().replaceFirst("Rule ", "");
+			return NameUtil.beautifyName(((Rule) element).getName());
 		}
 		
 		else if (element instanceof Repair) {

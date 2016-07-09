@@ -67,6 +67,9 @@ public class RepairViewApp {
 		
 		// Show repairs:
 		repairView.viewer_repairs.setInput(repairJob.getRepairs());
+		
+		// Show validations:
+		repairView.viewer_validation.setInput(repairJob.getValidations());
 	}
 	
 	private IMatcher getMatcher() {

@@ -31,6 +31,8 @@ import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.ui.Activator;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairLabelProvider;
+import org.sidiff.consistency.repair.validation.ui.provider.RepairTreeContentProvider;
+import org.sidiff.consistency.repair.validation.ui.provider.RepairTreeLabelProvider;
 import org.sidiff.matcher.IMatcher;
 
 public class RepairView extends ViewPart {
@@ -40,6 +42,8 @@ public class RepairView extends ViewPart {
 	private RepairViewApp viewerApp;
 
 	protected TreeViewer viewer_repairs;
+	
+	protected TreeViewer viewer_validation;
 
 	protected ComboViewer viewer_matching;
 
@@ -74,12 +78,17 @@ public class RepairView extends ViewPart {
 		viewer_repairs = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer_repairs.setContentProvider(new RepairContentProvider());
 		viewer_repairs.setLabelProvider(new RepairLabelProvider());
-		viewer_repairs.setInput(getViewSite());
 //		viewer_repairs.setSorter(new NameSorter());
 		
 		drillDownAdapter = new DrillDownAdapter(viewer_repairs);
 
 		getSite().setSelectionProvider(viewer_repairs);
+		
+		// Validation-Viewer:
+		viewer_validation = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		viewer_validation.setContentProvider(new RepairTreeContentProvider());
+		viewer_validation.setLabelProvider(new RepairTreeLabelProvider());
+//		viewer_validation.setSorter(new NameSorter());
 
 		// Edit-Rules:
 		Composite composite_editrules = new Composite(sashForm, SWT.BORDER);
@@ -135,7 +144,7 @@ public class RepairView extends ViewPart {
 		};
 
 		// Setup Sash-Form:
-		sashForm.setWeights(new int[] {100, 10, 10, 10});
+		sashForm.setWeights(new int[] {100, 32, 10, 10, 10});
 
 		// Matching-Engine selection:
 		viewer_matching = new ComboViewer(composite, SWT.NONE);
@@ -146,6 +155,7 @@ public class RepairView extends ViewPart {
 			combo.setLayoutData(gd_combo);
 
 			// Provider:
+			viewer_matching.setSorter(new NameSorter());
 			viewer_matching.setContentProvider(ArrayContentProvider.getInstance());
 			viewer_matching.setLabelProvider(new LabelProvider() {
 				

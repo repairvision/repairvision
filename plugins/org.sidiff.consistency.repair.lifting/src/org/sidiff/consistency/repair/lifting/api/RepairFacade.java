@@ -66,7 +66,7 @@ public class RepairFacade {
 		differenceResource.getContents().add(difference);
 		
 		// Validate model and calculate abstract repairs:
-		AbstractRepairFilter repairFilter = new AbstractRepairFilter(modelB);
+		AbstractRepairFilter repairFilter = new AbstractRepairFilter(modelB, true);
 		
 		// Calculate repairs:
 		ComplementFinder complementFinder = new ComplementFinder(modelA, modelB, difference);
@@ -104,6 +104,7 @@ public class RepairFacade {
 		repairJob.setModelA(modelA);
 		repairJob.setModelB(modelB);
 		repairJob.setRepairs(repairs);
+		repairJob.setValidations(repairFilter.getValidations());
 		
 		return repairJob;
 	}
