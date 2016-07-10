@@ -95,8 +95,9 @@ public class MatchSelection {
 		}
 		
 		// Save restriction history:
-		// TODO: Handle empty restrictions...!?
-		restrictionHistory.push(new Restriction(restrictionSource, restriction));
+		if (!restriction.isEmpty()) {
+			restrictionHistory.push(new Restriction(restrictionSource, restriction));
+		}
 	}
 	
 	public void restrictSelection(NodePattern restrictionSource, EObject selection) {
@@ -107,7 +108,6 @@ public class MatchSelection {
 			selectedMatches.put(selection, SelectionType.RESTRICTED);
 			
 			// Save restriction history:
-			// TODO: Single object restrictions...
 			restrictionHistory.push(new Restriction(restrictionSource, Collections.singletonList(selection)));
 		}
 	}
