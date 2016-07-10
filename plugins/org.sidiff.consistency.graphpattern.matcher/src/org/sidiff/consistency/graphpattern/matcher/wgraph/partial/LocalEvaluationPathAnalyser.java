@@ -144,6 +144,7 @@ public class LocalEvaluationPathAnalyser {
 			}
 		}
 		
+		// This is just a warning...
 		return true;
 	}
 
