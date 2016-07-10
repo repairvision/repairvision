@@ -8,11 +8,9 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
@@ -20,11 +18,11 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 import org.sidiff.consistency.repair.lifting.api.Repair;
@@ -33,7 +31,6 @@ import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairLabelProvider;
 import org.sidiff.consistency.repair.validation.ui.provider.RepairTreeContentProvider;
 import org.sidiff.consistency.repair.validation.ui.provider.RepairTreeLabelProvider;
-import org.sidiff.matcher.IMatcher;
 
 public class RepairView extends ViewPart {
 
@@ -45,10 +42,10 @@ public class RepairView extends ViewPart {
 	
 	protected TreeViewer viewer_validation;
 
-	protected ComboViewer viewer_matching;
-
 	private DrillDownAdapter drillDownAdapter;
 
+	private Action openConfiguration;
+	
 	private Action calculateRepairs;
 	
 	private Action applyRepairs;
@@ -146,31 +143,6 @@ public class RepairView extends ViewPart {
 		// Setup Sash-Form:
 		sashForm.setWeights(new int[] {100, 32, 10, 10, 10});
 
-		// Matching-Engine selection:
-		viewer_matching = new ComboViewer(composite, SWT.NONE);
-		{
-			Combo combo = viewer_matching.getCombo();
-			GridData gd_combo = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-			gd_combo.verticalIndent = 3;
-			combo.setLayoutData(gd_combo);
-
-			// Provider:
-			viewer_matching.setSorter(new NameSorter());
-			viewer_matching.setContentProvider(ArrayContentProvider.getInstance());
-			viewer_matching.setLabelProvider(new LabelProvider() {
-				
-				@Override
-				public String getText(Object element) {
-					
-					if (element instanceof IMatcher) {
-						return ((IMatcher) element).getName();
-					}
-					
-					return super.getText(element);
-				}
-			});
-		}
-				
 		// Application logic:
 		viewerApp = new RepairViewApp(this);
 
@@ -222,11 +194,30 @@ public class RepairView extends ViewPart {
 		manager.add(calculateRepairs);
 		manager.add(applyRepairs);
 		manager.add(new Separator());
+		manager.add(openConfiguration);
+		manager.add(new Separator());
+		
 		drillDownAdapter.addNavigationActions(manager);
 	}
 
 	private void makeActions() {
 
+		// Open configuration:
+		openConfiguration = new Action() {
+			public void run() {
+				PreferenceDialog configurationPage = PreferencesUtil.createPreferenceDialogOn(
+						getViewSite().getShell(), RepairPreferencePage.ID, null, null);
+				
+				if (configurationPage != null) {
+					configurationPage.open();
+				}
+			}
+		};
+		openConfiguration.setText("Configuration");
+		openConfiguration.setToolTipText("Open Configuration");
+		openConfiguration.setImageDescriptor(Activator.getImageDescriptor("icons/configuration.png"));
+		
+		
 		// Calculate repairs:
 		calculateRepairs = new Action() {
 			public void run() {
@@ -284,8 +275,6 @@ public class RepairView extends ViewPart {
 					} else {
 						viewer_repairs.expandToLevel(item, 1);
 					}
-					
-					
 				}
 			}
 		});

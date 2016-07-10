@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.henshin.HenshinUnitAnalysis;
 import org.sidiff.common.henshin.exceptions.NoMainUnitFoundException;
@@ -48,7 +47,7 @@ public class RepairViewApp {
 		
 		// Matching-Settings:
 		DifferenceSettings settings = new DifferenceSettings(documentType) {};
-		settings.setMatcher(getMatcher());
+		settings.setMatcher(RepairPreferencePage.getSelectedMatcher());
 		
 		// Load edit-rules:
 		Collection<Rule> editRules = new ArrayList<>();
@@ -72,10 +71,6 @@ public class RepairViewApp {
 		repairView.viewer_validation.setInput(repairJob.getValidations());
 	}
 	
-	private IMatcher getMatcher() {
-		return (IMatcher) ((StructuredSelection) repairView.viewer_matching.getSelection()).getFirstElement();
-	}
-
 	public boolean removeModelA(IResource selection) {
 		modelAFile = null;
 		showAvailableMatchers();
@@ -146,9 +141,9 @@ public class RepairViewApp {
 			documentType = EMFModelAccess.getCharacteristicDocumentType(modelARes);
 			
 			Set<IMatcher> matchers = MatcherUtil.getAvailableMatchers(Arrays.asList(modelARes, modelBRes));
-			repairView.viewer_matching.setInput(matchers);
+			RepairPreferencePage.setAvailableMatcher(matchers);
 		} else {
-			repairView.viewer_matching.setInput(null);
+			RepairPreferencePage.setAvailableMatcher(null);
 			documentType = null;
 		}
 	}

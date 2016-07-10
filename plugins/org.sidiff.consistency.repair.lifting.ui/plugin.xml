@@ -17,16 +17,12 @@
       </view>
    </extension>
    <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="org.eclipse.jdt.ui.JavaPerspective">
-         <view
-               ratio="0.5"
-               relative="org.eclipse.ui.views.ProblemView"
-               relationship="right"
-               id="org.sidiff.consistency.repair.lifting.ui.views.RepairView">
-         </view>
-      </perspectiveExtension>
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.sidiff.consistency.repair.lifting.ui.views.RepairPreferencePage"
+            id="org.sidiff.consistency.repair.lifting.ui.mainpage"
+            name="Model Repairing">
+      </page>
    </extension>
 
 </plugin>
