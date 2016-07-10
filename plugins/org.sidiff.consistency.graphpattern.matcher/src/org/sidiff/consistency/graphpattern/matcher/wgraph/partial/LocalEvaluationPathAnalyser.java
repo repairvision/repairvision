@@ -17,8 +17,10 @@ import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
+import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSSourceTargetPathIterator;
 import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSSourceTargetPathIterator.DFSPath;
-import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.consistency.graphpattern.matcher.tools.paths.EmptyPathRestriction;
+import org.sidiff.consistency.graphpattern.matcher.tools.paths.IPathRestriction;
 
 /**
  * Calculates the minimum of paths that spread from a variable node and have to
@@ -28,7 +30,7 @@ import org.sidiff.difference.symmetric.SymmetricPackage;
  * 
  * @author Manuel Ohrndorf
  */
-public abstract class LocalEvaluationPathAnalyser {
+public class LocalEvaluationPathAnalyser {
 	
 	/**
 	 * Variable-Node -> local evaluation
@@ -36,18 +38,38 @@ public abstract class LocalEvaluationPathAnalyser {
 	protected LinkedHashMap<NodePattern, Set<EdgePattern>> localEvaluations = new LinkedHashMap<>();
 	
 	/**
+	 * Optional path restrictions.
+	 */
+	protected IPathRestriction pathRestriction;
+	
+	/**
 	 * All edges which need cross-references: existing edge -> opposite placeholder edge.
 	 * 
-	 * (NOTE: We can not create new edges during path iteration!)
+	 * (NOTE: We can not create new edges during path iteration (-> concurrent modification)!)
 	 */
 	protected Map<EdgePattern, EdgePattern> newCrossReferences = new HashMap<>();
 	
 	/**
 	 * @param variableNodes
 	 *            All variable nodes which will be evaluated pairwise.
-	 * @see LocalEvaluationPathAnalyser#getTargetPairs(NodePattern)
+	 * @param pathRestriction
+	 *            Optional path restrictions.
+	 */
+	public LocalEvaluationPathAnalyser(List<NodePattern> variableNodes, IPathRestriction pathRestriction) {
+		this.pathRestriction = pathRestriction;
+		calculateLocalEvaluations(variableNodes);
+	}
+	
+	/**
+	 * @param variableNodes
+	 *            All variable nodes which will be evaluated pairwise.
 	 */
 	public LocalEvaluationPathAnalyser(List<NodePattern> variableNodes) {
+		this.pathRestriction = new EmptyPathRestriction();
+		calculateLocalEvaluations(variableNodes);
+	}
+	
+	private void calculateLocalEvaluations(List<NodePattern> variableNodes) {
 		
 		// Initialize result storage:
 		for (NodePattern variableNode : variableNodes) {
@@ -69,7 +91,7 @@ public abstract class LocalEvaluationPathAnalyser {
 		createAllNewCrossReferences();
 		
 		// Validate result:
-		DebugUtil.check(this::validateEdges, this);
+		DebugUtil.check(this::validateEdges);
 	}
 	
 	/**
@@ -85,37 +107,38 @@ public abstract class LocalEvaluationPathAnalyser {
 			
 			for (NodePattern node : nodes) {
 				for (EdgePattern outgoing : node.getOutgoings()) {
-					boolean edgeFound = false;
-					
-					// TODO: Lifting customization...
-					if ((outgoing.getType() == SymmetricPackage.eINSTANCE.getAddReference_Type()) 
-							|| (outgoing.getType() == SymmetricPackage.eINSTANCE.getRemoveReference_Type())) {
-						return true;
-					}
-					
-					for (Set<EdgePattern> evaluation : localEvaluations.values()) {
-						if (evaluation.contains(outgoing)) {
-							edgeFound = true;
-							break;
-						}
-					}
-					
-					EdgePattern opposite = outgoing.getOpposite();
-					
-					if (!edgeFound && opposite != null) {
+					if (!pathRestriction.isRestrictedOutgoing(outgoing)) {
+						boolean edgeFound = false;
+						
 						for (Set<EdgePattern> evaluation : localEvaluations.values()) {
-							if (evaluation.contains(opposite)) {
+							if (evaluation.contains(outgoing)) {
 								edgeFound = true;
 								break;
 							}
 						}
-					}
-					
-					if (!edgeFound) {
-						System.err.println("LocalEvaluationPathAnalyser.validateEdges()");
-						System.err.println("Missing Edge: " + outgoing);
-						System.err.println("Missing Edge: " + opposite);
-						return false;
+						
+						EdgePattern opposite = outgoing.getOpposite();
+						
+						if (!edgeFound && opposite != null) {
+							for (Set<EdgePattern> evaluation : localEvaluations.values()) {
+								if (evaluation.contains(opposite)) {
+									edgeFound = true;
+									break;
+								}
+							}
+						}
+						
+						if (!edgeFound) {
+							System.err.println("[Warning] Validate local evaluation graphs: " + outgoing.getSource().getGraph().getName());
+							System.err.println("  Missing Edge: " + outgoing);
+							
+							if (opposite != null) {
+								System.err.println("  Missing Edge: " + opposite);
+							}
+							System.err.println("<< Please check if this is correct!"
+									+ " Edges might be missing because they are not on a path"
+									+ " between two variable nodes. >>");
+						}
 					}
 				}
 			}
@@ -177,6 +200,7 @@ public abstract class LocalEvaluationPathAnalyser {
 
 					// Has taken a (1 or 2) step(s) or stuck?
 					if ((nextPositionFromA == lastPositionFromA) && (nextPositionFromB == lastPositionFromB)) {
+						// Stuck...
 						
 						// Reverse the edge which leads to the biggest move from node A or B:
 						int moveA = getMaxMove(path, nextEdgeFromA.getSource(), edgeIndexFromA + 1, 1);
@@ -193,6 +217,7 @@ public abstract class LocalEvaluationPathAnalyser {
 							nextPositionFromB = nextEdgeFromB.getTarget();
 						}
 					} else {
+						// Moved...
 						
 						// Check if paths have crossed:
 						if ((nextPositionFromA == lastPositionFromB) && (nextPositionFromB == lastPositionFromA)) {
@@ -358,7 +383,47 @@ public abstract class LocalEvaluationPathAnalyser {
 	 *            The end node.
 	 * @return An iteration through all paths from node A to node B.
 	 */
-	public abstract Iterator<DFSPath> getAllPaths(NodePattern nodeA, NodePattern nodeB);
+	protected Iterator<DFSPath> getAllPaths(NodePattern nodeA, NodePattern nodeB) {
+		assert localEvaluations.containsKey(nodeA);
+		assert localEvaluations.containsKey(nodeB);
+		
+		return new DFSSourceTargetPathIterator(nodeA, nodeB) {
+			
+			private Set<NodePattern> otherVariableNodes = new HashSet<>(localEvaluations.keySet());
+			{
+				otherVariableNodes.remove(nodeA);
+				otherVariableNodes.remove(nodeB);
+			}
+			
+			@Override
+			protected boolean isValidIncomingEdge(EdgePattern incoming) {
+				
+				if (pathRestriction.isRestrictedIncoming(incoming))  {
+					return false;
+				}
+				
+				return true;
+			}
+			
+			@Override
+			protected boolean isValidOutgoingEdge(EdgePattern outgoing) {
+				
+				if (pathRestriction.isRestrictedOutgoing(outgoing))  {
+					return false;
+				}
+				
+				return true;
+			}
+			
+			
+			@Override
+			protected boolean isValidNode(NodePattern node) {
+				// No paths over other (not node A or node B) variable nodes (node C)!
+				// (Paths will be considered by the pairs: (nodeA, node C), (node B, node C))
+				return !otherVariableNodes.contains(node);
+			}
+		};
+	}
 
 	/**
 	 * @return All paths between variable node which have to be analyzed to

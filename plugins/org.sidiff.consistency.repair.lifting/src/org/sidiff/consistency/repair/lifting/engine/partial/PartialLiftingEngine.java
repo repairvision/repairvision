@@ -3,12 +3,10 @@ package org.sidiff.consistency.repair.lifting.engine.partial;
 import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -17,8 +15,7 @@ import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.Visitor;
-import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSSourceTargetPathIterator;
-import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSSourceTargetPathIterator.DFSPath;
+import org.sidiff.consistency.graphpattern.matcher.tools.paths.IPathRestriction;
 import org.sidiff.consistency.graphpattern.matcher.wgraph.IConstraintTester;
 import org.sidiff.consistency.graphpattern.matcher.wgraph.partial.LocalEvaluationMatcher;
 import org.sidiff.consistency.graphpattern.matcher.wgraph.partial.LocalEvaluationPathAnalyser;
@@ -35,6 +32,8 @@ import org.sidiff.difference.symmetric.SymmetricPackage;
 
 public class PartialLiftingEngine extends LiftingEngine {
 
+	private IPathRestriction pathRestriction;
+	
 	private LocalEvaluationPathAnalyser localEvaluation;
 	
 	private IConstraintTester constraintTester;
@@ -48,11 +47,14 @@ public class PartialLiftingEngine extends LiftingEngine {
 	public void initialize(Map<NodePattern, Collection<EObject>> variableNodeDomains) {
 		super.initialize(variableNodeDomains);
 		
-		// Create constraint tester:
-		constraintTester = new LiftingConstraintTester(getMatchingHelper());
+		// Create path restrictions:
+		pathRestriction = createPathRestriction();
 		
 		// Calculate local evaluation:
-		localEvaluation = createLocalEvaluationPathAnalyser();
+		localEvaluation =  new LocalEvaluationPathAnalyser(variableNodes, pathRestriction);
+		
+		// Create constraint tester:
+		constraintTester = new LiftingConstraintTester(getMatchingHelper());
 		
 		// Precalculate type nodes:
 		calculateTypeNodes(variableNodeDomains);
@@ -60,7 +62,7 @@ public class PartialLiftingEngine extends LiftingEngine {
 	
 	private void calculateTypeNodes(Map<NodePattern, Collection<EObject>> variableNodeDomains) {
 		
-		// TODO: Other solution -> Pre-Match? Calculate type-nodes:
+		// TODO: Calculate type-nodes: Other solution -> pre-match or type-nodes as variables (-> path target)?
 		for (NodePattern changeNode : variableNodes) {
 			Iterator<EObject> matches = variableNodeDomains.get(changeNode).iterator();
 			NavigableDataStore changeNodeDS = getDataStore(changeNode.getEvaluation());
@@ -105,40 +107,25 @@ public class PartialLiftingEngine extends LiftingEngine {
 
 	}
 	
-	private LocalEvaluationPathAnalyser createLocalEvaluationPathAnalyser() {
-		
-		return new LocalEvaluationPathAnalyser(variableNodes) {
+	private IPathRestriction createPathRestriction() {
+		return new IPathRestriction() {
 			
 			@Override
-			public Iterator<DFSPath> getAllPaths(NodePattern nodeA, NodePattern nodeB) {
-				return new DFSSourceTargetPathIterator(nodeA, nodeB) {
-					
-					private Set<NodePattern> otherVariableNodes = new HashSet<>(variableNodes);
-					{
-						otherVariableNodes.remove(nodeA);
-						otherVariableNodes.remove(nodeB);
-					}
-					
-					@Override
-					protected boolean isValidOutgoingEdge(EdgePattern outgoing) {
-						
-						// Evaluate only local changes -> block paths at the type-node:
-						if ((outgoing.getType() == SymmetricPackage.eINSTANCE.getRemoveReference_Type())
-								|| (outgoing.getType() == SymmetricPackage.eINSTANCE.getAddReference_Type())
-								|| (outgoing.getType() == SymmetricPackage.eINSTANCE.getAttributeValueChange())) {
-							return false;
-						}
-						
-						return true;
-					}
-					
-					
-					@Override
-					// TODO: Generic part!?
-					protected boolean isValidNode(NodePattern node) {
-						return !otherVariableNodes.contains(node);
-					}
-				};
+			public boolean isRestrictedOutgoing(EdgePattern edge) {
+				
+				// Evaluate only local changes -> block paths at the type-node:
+				if ((edge.getType() == SymmetricPackage.eINSTANCE.getRemoveReference_Type())
+						|| (edge.getType() == SymmetricPackage.eINSTANCE.getAddReference_Type())
+						|| (edge.getType() == SymmetricPackage.eINSTANCE.getAttributeValueChange())) {
+					return true;
+				}
+				
+				return false;
+			}
+			
+			@Override
+			public boolean isRestrictedIncoming(EdgePattern edge) {
+				return false;
 			}
 		};
 	}
@@ -159,7 +146,7 @@ public class PartialLiftingEngine extends LiftingEngine {
 
 	@Override
 	public Visitor createVisitor() {
-		return new LocalEvaluationMatcher(this, localEvaluation.getLocalEvaluations());
+		return new LocalEvaluationMatcher(this, localEvaluation.getLocalEvaluations(), pathRestriction);
 //		return new PartialMatchNeighborsVisitor(matchingHelper);
 	}
 	

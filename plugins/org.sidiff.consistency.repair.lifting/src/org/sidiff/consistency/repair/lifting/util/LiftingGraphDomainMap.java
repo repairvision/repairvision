@@ -448,7 +448,7 @@ public class LiftingGraphDomainMap {
 	 *            The super-type.
 	 * @return All sub-types of the given EClass.
 	 */
-	// TODO: Centralize
+	// TODO: Centralize...
 	private Set<EClass> getSubTypes(EClass type) {
 		return subTypes.get(type);
 	}
@@ -461,7 +461,7 @@ public class LiftingGraphDomainMap {
 	 *            The package containing the sub- and super-classes.
 	 * @return A map EClass -> Set of EClass sup-types.
 	 */
-	// TODO: Centralize
+	// TODO: Centralize...
 	protected IndexSet<EClass, Set<EClass>> getSubtypeIndex(Set<EPackage> ePackages) {
 
 		// Class (A) -> [Sub classes (X, Y, Z)]

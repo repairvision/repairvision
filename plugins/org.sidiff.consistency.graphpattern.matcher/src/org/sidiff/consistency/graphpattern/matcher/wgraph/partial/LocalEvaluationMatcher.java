@@ -20,8 +20,8 @@ import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSOutgoingPathIterator;
 import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSOutgoingPathIterator.DFSPath;
+import org.sidiff.consistency.graphpattern.matcher.tools.paths.IPathRestriction;
 import org.sidiff.consistency.graphpattern.matcher.wgraph.IConstraintTester;
-import org.sidiff.difference.symmetric.SymmetricPackage;
 
 /**
  * Approximates the local working graph for a given graph pattern.
@@ -46,9 +46,21 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 	
 	protected Set<EdgePattern> localEvaluation;
 	
+	protected IPathRestriction pathRestriction;
+	
 	protected Set<EdgePattern> matched = new HashSet<>();
 	
+	public LocalEvaluationMatcher(IPatternMatchingEngine engine, 
+			Map<NodePattern, Set<EdgePattern>> localEvaluations, IPathRestriction pathRestriction) {
+		init(engine, localEvaluations);
+		this.pathRestriction = pathRestriction;
+	}
+	
 	public LocalEvaluationMatcher(IPatternMatchingEngine engine, Map<NodePattern, Set<EdgePattern>> localEvaluations) {
+		init(engine, localEvaluations);
+	}
+	
+	private void init(IPatternMatchingEngine engine, Map<NodePattern, Set<EdgePattern>> localEvaluations) {
 		this.matchingHelper = engine.getMatchingHelper();
 		this.constraintTester = engine.getConstraintTester();
 		this.variableNodes = engine.getVariableNodes();
@@ -85,16 +97,18 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 			
 			@Override
 			protected boolean isValidIncomingEdge(EdgePattern incoming) {
+				
+				if (pathRestriction.isRestrictedIncoming(incoming))  {
+					return false;
+				}
+				
 				return localEvaluation.contains(incoming);
 			}
 			
 			@Override
 			protected boolean isValidOutgoingEdge(EdgePattern outgoing) {
 				
-				// TODO: Lifting customization...
-				if ((outgoing.getType() == SymmetricPackage.eINSTANCE.getRemoveReference_Type())
-						|| (outgoing.getType() == SymmetricPackage.eINSTANCE.getAddReference_Type())
-						|| (outgoing.getType() == SymmetricPackage.eINSTANCE.getAttributeValueChange())) {
+				if (pathRestriction.isRestrictedOutgoing(outgoing))  {
 					return false;
 				}
 				

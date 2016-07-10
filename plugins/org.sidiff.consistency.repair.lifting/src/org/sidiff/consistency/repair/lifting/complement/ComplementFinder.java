@@ -145,10 +145,11 @@ public class ComplementFinder {
 				
 				// Store new complement rule:
 				complements.add(complementConstructor.createComplementRule(editRuleMatch));
-			} else {
-//				// TODO: DebugUtil...!?
+			} 
+			
+//			else {
 //				System.out.println("Full Match: " + matchGenerator);
-			}
+//			}
 		}
 
 		//// Initialize the Complement Transformation Engine /////

@@ -44,6 +44,7 @@ public class HenshinConverter {
 	public HenshinConverter(Rule rule, Set<EReference> crossReferencedTypes) {
 		this.crossReferencedTypes = crossReferencedTypes;
 		this.graphPattern = GP_FACTORY.createGraphPattern();
+		this.graphPattern.setName(rule.getName());
 		this.trace = new HashMap<>();
 		
 		convertRule(rule);
