@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.graphpattern.EObjectList;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.NodePattern;
@@ -223,8 +224,8 @@ public class MatchGenerator {
 					// Check new matching
 					if (matchValidation.isMatch(matching)) {
 						
-						// FIXME: DebugUtil!
-//						assert validateMatch();
+						// Validate match:
+						DebugUtil.check(this::validateMatch, this);
 						
 						storeVariableAssignments();
 						return true;
@@ -442,7 +443,15 @@ public class MatchGenerator {
 		return super.toString() + ": \n\n" + print.toString();
 	}
 	
-	@SuppressWarnings("unused")
+	/**
+	 * <ul>
+	 * <li>Checks if the match is consistent with the {@link NodeMatching}s.</li>
+	 * <li>Checks if the match is injective (if required).</li>
+	 * </ul>
+	 * 
+	 * @return <code>true</code> if the match is valid; 
+	 *         <code>false</code> otherwise.
+	 */
 	private boolean validateMatch() {
 		
 		// Check V-Node and Selection consistency:

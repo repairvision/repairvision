@@ -12,6 +12,7 @@ import java.util.Set;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.NodePattern;
@@ -67,12 +68,14 @@ public abstract class LocalEvaluationPathAnalyser {
 		// Create all additional cross-references:
 		createAllNewCrossReferences();
 		
-		// TODO: TestUtil...!?
-//		System.out.println(this);
-//		assert validateEdges();
+		// Validate result:
+		DebugUtil.check(this::validateEdges, this);
 	}
 	
-	@SuppressWarnings("unused")
+	/**
+	 * @return <code>true</code> if all edges are contained in the evaluation;
+	 *         <code>false</code> otherwise.
+	 */
 	private boolean validateEdges() {
 		NodePattern firstVNode = localEvaluations.keySet().iterator().hasNext() 
 				? localEvaluations.keySet().iterator().next() : null;
