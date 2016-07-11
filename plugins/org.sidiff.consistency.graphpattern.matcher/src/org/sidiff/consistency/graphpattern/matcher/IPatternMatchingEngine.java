@@ -18,10 +18,9 @@ import org.sidiff.consistency.graphpattern.matcher.wgraph.IWorkingGraphConstruct
  * setup, working-graph construction, match generation and shutdown.
  * 
  * @param <R>
- *            The match type, i.e. some kind of matching container.
+ *            The match type, i.e. some kind of matching container ({@link IMatching}).
  *            
  * @author Manuel Ohrndorf
- * @param <O>
  */
 public interface IPatternMatchingEngine<R extends IMatching> extends IIncrementalAlgorithm<R> {
 
