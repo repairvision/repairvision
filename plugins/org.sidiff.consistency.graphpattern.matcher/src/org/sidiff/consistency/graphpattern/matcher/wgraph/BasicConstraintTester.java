@@ -5,6 +5,11 @@ import org.sidiff.consistency.graphpattern.AttributePattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 
+/**
+ * Basic implementation of a {@link IConstraintTester}.
+ * 
+ * @author Manuel Ohrndorf
+ */
 public class BasicConstraintTester implements IConstraintTester {
 
 	protected MatchingHelper matchingHelper;
@@ -13,6 +18,7 @@ public class BasicConstraintTester implements IConstraintTester {
 		this.matchingHelper = matchingHelper;
 	}
 	
+	@Override
 	public boolean check(NodePattern node, EObject object) {
 		
 		// Check types!

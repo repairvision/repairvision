@@ -16,7 +16,6 @@ import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.impl.VisitorImpl;
-import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 import org.sidiff.consistency.graphpattern.matcher.wgraph.IConstraintTester;
 
@@ -51,9 +50,9 @@ public class ExactMatchNeighborsVisitor extends VisitorImpl {
 	 * @param engine
 	 *            The corresponding matching engine.
 	 */
-	public ExactMatchNeighborsVisitor(IPatternMatchingEngine engine) {
-		this.matchingHelper = engine.getMatchingHelper();
-		this.constraintTester = engine.getConstraintTester();
+	public ExactMatchNeighborsVisitor(MatchingHelper matchingHelper, IConstraintTester constraintTester) {
+		this.matchingHelper = matchingHelper;
+		this.constraintTester = constraintTester;
 	}
 
 	@Override

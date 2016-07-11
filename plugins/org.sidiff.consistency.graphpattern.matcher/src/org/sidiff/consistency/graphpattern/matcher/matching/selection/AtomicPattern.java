@@ -9,6 +9,11 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.NodePattern;
 
+/**
+ * An atomic pattern is a part of the graph pattern which can only be matched in single piece.
+ * 
+ * @author Manuel Ohrndorf
+ */
 public class AtomicPattern {
 
 	protected List<NodePattern> nodes;

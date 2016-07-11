@@ -97,14 +97,14 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			}
 			
 			// Selection:
-			IMatcher selectedMatcher = getInitialMatcher();
+			matcher = getInitialMatcher();
 			
-			if (selectedMatcher != null) {
-				viewer_matching.setSelection(new StructuredSelection(selectedMatcher));
+			if (matcher != null) {
+				viewer_matching.setSelection(new StructuredSelection(matcher));
 			}
 			
 			// Matcher configuration:
-			appendMatcherSettings(grpMatching, selectedMatcher);
+			appendMatcherSettings(grpMatching);
 			
 			// Update selected matcher:
 			viewer_matching.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -114,7 +114,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 					matcher = getSelection();
 
 					// Matcher configuration:
-					appendMatcherSettings(grpMatching, getSelection());
+					appendMatcherSettings(grpMatching);
 				}
 
 				private IMatcher getSelection() {
@@ -132,32 +132,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		return container;
 	}
 	
-	private IMatcher getInitialMatcher() {
-		IMatcher selectedMatcher = null;
-		
-		if ((matcher != null) && (matchers != null) && (matchers.contains(matcher))) {
-			selectedMatcher = matcher;
-		} else {
-			if ((matchers != null) && (!matchers.isEmpty())) {
-				
-				if (matcher != null) {
-					selectedMatcher = getMatcherByName(matcher.getName());
-				}
-				
-				if (selectedMatcher == null) {
-					selectedMatcher = getMatcherByNameFragment("Generic");
-				}
-				
-				if (selectedMatcher == null) {
-					selectedMatcher = matchers.iterator().next();
-				}
-			}
-		}
-		
-		return selectedMatcher;
-	}
-	
-	private void appendMatcherSettings(Composite parent, IMatcher selectedMatcher) {
+	private void appendMatcherSettings(Composite parent) {
 		
 		if (config_container != null) {
 			config_container.dispose();
@@ -171,8 +146,8 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			config_container.setLayout(grid);
 		}
 		
-		if (selectedMatcher instanceof IConfigurable) {
-			final IConfigurable configurableMatcher = (IConfigurable) selectedMatcher;
+		if (matcher instanceof IConfigurable) {
+			final IConfigurable configurableMatcher = (IConfigurable) matcher;
 			
 			for (String option : configurableMatcher.getConfigurationOptions().keySet()) {
 
@@ -203,7 +178,32 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		parent.getParent().layout();
 	}
 	
-	private IMatcher getMatcherByName(String name) {
+	private static IMatcher getInitialMatcher() {
+		IMatcher selectedMatcher = null;
+		
+		if ((matcher != null) && (matchers != null) && (matchers.contains(matcher))) {
+			selectedMatcher = matcher;
+		} else {
+			if ((matchers != null) && (!matchers.isEmpty())) {
+				
+				if (matcher != null) {
+					selectedMatcher = getMatcherByName(matcher.getName());
+				}
+				
+				if (selectedMatcher == null) {
+					selectedMatcher = getMatcherByNameFragment("Generic");
+				}
+				
+				if (selectedMatcher == null) {
+					selectedMatcher = matchers.iterator().next();
+				}
+			}
+		}
+		
+		return selectedMatcher;
+	}
+	
+	private static IMatcher getMatcherByName(String name) {
 		for (IMatcher matcher : matchers) {
 			if (matcher.getName().equalsIgnoreCase(name)) {
 				return matcher;
@@ -212,7 +212,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		return null;
 	}
 	
-	private IMatcher getMatcherByNameFragment(String name) {
+	private static IMatcher getMatcherByNameFragment(String name) {
 		for (IMatcher matcher : matchers) {
 			if (matcher.getName().contains(name)) {
 				return matcher;
@@ -223,6 +223,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	
 	public static void setAvailableMatcher(Set<IMatcher> matchers) {
 		RepairPreferencePage.matchers = matchers;
+		matcher = getInitialMatcher();
 	}
 	
 	public static IMatcher getSelectedMatcher() {

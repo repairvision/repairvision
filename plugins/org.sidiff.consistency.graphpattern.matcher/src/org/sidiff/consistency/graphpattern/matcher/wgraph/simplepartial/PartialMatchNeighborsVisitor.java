@@ -16,14 +16,11 @@ import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.impl.VisitorImpl;
-import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 import org.sidiff.consistency.graphpattern.matcher.wgraph.BasicConstraintTester;
 
 public class PartialMatchNeighborsVisitor extends VisitorImpl {
 
-	private IPatternMatchingEngine engine;
-	
 	private MatchingHelper matchingHelper;
 	
 	private BasicConstraintTester constraintTester;
@@ -32,12 +29,12 @@ public class PartialMatchNeighborsVisitor extends VisitorImpl {
 	
 	private List<EObject> matches;
 	
-	public PartialMatchNeighborsVisitor(IPatternMatchingEngine engine) {
-		this.matchingHelper = engine.getMatchingHelper();
+	public PartialMatchNeighborsVisitor(MatchingHelper matchingHelper) {
+		this.matchingHelper = matchingHelper;
 	}
 	
-	public PartialMatchNeighborsVisitor(IPatternMatchingEngine engine, EdgePattern originEdge, List<EObject> matches) {
-		this.matchingHelper = engine.getMatchingHelper();
+	public PartialMatchNeighborsVisitor(MatchingHelper matchingHelper, EdgePattern originEdge, List<EObject> matches) {
+		this.matchingHelper = matchingHelper;
 		this.originEdge = originEdge;
 		this.matches = matches;
 		
@@ -115,7 +112,7 @@ public class PartialMatchNeighborsVisitor extends VisitorImpl {
 			
 			if (!neighborMatch.getValue().isEmpty()) {
 				PartialMatchNeighborsVisitor newMatcher = new PartialMatchNeighborsVisitor(
-						engine, neighborMatch.getKey(), neighborMatch.getValue());
+						matchingHelper, neighborMatch.getKey(), neighborMatch.getValue());
 				
 				NodePattern neighborNode = neighborMatch.getKey().getTarget();
 				neighborNode.getEvaluation().accept(newMatcher);	

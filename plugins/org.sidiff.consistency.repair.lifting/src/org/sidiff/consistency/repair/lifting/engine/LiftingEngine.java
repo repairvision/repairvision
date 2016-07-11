@@ -1,7 +1,5 @@
 package org.sidiff.consistency.repair.lifting.engine;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -10,17 +8,17 @@ import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.AbstractPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.data.NavigableMatchesDS;
-import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
-import org.sidiff.consistency.graphpattern.matcher.tools.CrossReferencer;
-import org.sidiff.consistency.repair.lifting.matching.LiftingCrossReferencer;
-import org.sidiff.consistency.repair.lifting.matching.atomic.AtomicLiftingPatternFactory;
+import org.sidiff.consistency.graphpattern.matcher.data.selection.SelectionMatching;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatchGenerator;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphIndex;
 import org.sidiff.consistency.repair.lifting.util.RecognitionRuleUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.MergeImports;
 
-public abstract class LiftingEngine extends AbstractPatternMatchingEngine {
+public abstract class LiftingEngine extends AbstractPatternMatchingEngine<SelectionMatching> {
+	
+	protected IMatchGenerator<SelectionMatching> matchGenerator;
 	
 	protected MergeImports mergeImports;
 
@@ -28,28 +26,14 @@ public abstract class LiftingEngine extends AbstractPatternMatchingEngine {
 	
 	protected LiftingGraphDomainMap changeDomainMap;
 	
-	protected CrossReferencer crossReferencer;
-	
-	protected IAtomicPatternFactory atomicPatternFactory;
-	
 	public LiftingEngine(List<NodePattern> graphPattern, ResourceSet targetModels,
 			LiftingGraphIndex changeIndex, LiftingGraphDomainMap changeDomainMap) {
-		super(graphPattern, targetModels);
+		super(targetModels);
 		
 		this.changeIndex = changeIndex;
 		this.changeDomainMap = changeDomainMap;
-	}
-	
-	protected Collection<NodePattern> getChangeNodePatterns() {
-		List <NodePattern> changeNodes = new ArrayList<>();
 		
-		for (NodePattern node : getGraphPattern()) {
-			if (RecognitionRuleUtil.isChangeNode(node)) {
-				changeNodes.add(node);
-			}
-		}
-		
-		return changeNodes;
+		this.matchGenerator = new LiftingMatchGenerator();
 	}
 	
 	@Override
@@ -59,10 +43,6 @@ public abstract class LiftingEngine extends AbstractPatternMatchingEngine {
 		// Merge external resources into the difference:
 		mergeImports = new MergeImports(difference, Scope.RESOURCE, true);
 		mergeImports.merge();
-		
-		// Create matching helper:
-		crossReferencer = new LiftingCrossReferencer(getResourceSet(), changeIndex, changeDomainMap);
-		atomicPatternFactory = new AtomicLiftingPatternFactory();
 		
 		super.start();
 	}
@@ -83,20 +63,7 @@ public abstract class LiftingEngine extends AbstractPatternMatchingEngine {
 	}
 	
 	@Override
-	public CrossReferencer getCrossReferencer() {
-		return crossReferencer;
-	}
-	
-	@Override
-	public IAtomicPatternFactory getAtomicPatternFactory() {
-		return atomicPatternFactory;
-	}
-	
-	public LiftingGraphIndex getChangeIndex() {
-		return changeIndex;
-	}
-	
-	public LiftingGraphDomainMap getChangeDomainMap() {
-		return changeDomainMap;
+	public IMatchGenerator<SelectionMatching> getMatchGenerator() {
+		return matchGenerator;
 	}
 }

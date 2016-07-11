@@ -15,7 +15,7 @@ public class PatternMatchingDebugger {
 	
 	protected Thread engineThread;
 	
-	protected IPatternMatchingEngine targetEngine;
+	protected IPatternMatchingEngine<?> targetEngine;
 	
 	protected List<Breakpoint> waitingBreakpoints = new ArrayList<>();
 	
@@ -42,7 +42,7 @@ public class PatternMatchingDebugger {
 		public void signalWait(Breakpoint breakpoint);
 	}
 	
-	public void install(IPatternMatchingEngine targetEngine) {
+	public void install(IPatternMatchingEngine<?> targetEngine) {
 		this.targetEngine = targetEngine;
 		
 		// Install debuggable evaluation:
@@ -58,7 +58,7 @@ public class PatternMatchingDebugger {
 	 * @param engine
 	 *            The engine which should be debugged.
 	 */
-	public void start(IPatternMatchingEngine engine) {
+	public void start(IPatternMatchingEngine<?> engine) {
 		synchronizationBarrier = new CountDownLatch(1);
 		
 		// Run as new thread:
@@ -138,7 +138,7 @@ public class PatternMatchingDebugger {
 		}
 	}
 
-	public IPatternMatchingEngine getTargetEngine() {
+	public IPatternMatchingEngine<?> getTargetEngine() {
 		return targetEngine;
 	}
 }

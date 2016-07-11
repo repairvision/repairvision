@@ -33,7 +33,6 @@ public abstract class PathSelector {
 		Collection<EObject> initialMatches = history.getLastMatch();
 		AtomicPattern atomicPattern = atomicPatternFactory.getAtomicPattern(this, getPosition());
 		
-		
 		if (atomicPattern != null) {
 			// Initial node is part of an atomic pattern:
 			return matchAtomicPattern(atomicPattern, position, initialMatches);

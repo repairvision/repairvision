@@ -23,7 +23,6 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -97,8 +96,6 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 	private Action actionStartEngine;
 	
 	private Action generateMatches;
-
-	private Action selectMatch;
 
 	private Action printInfoAction;
 	
@@ -336,8 +333,6 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 		manager.add(new Separator());
 		manager.add(generateMatches);
 		manager.add(new Separator());
-		manager.add(selectMatch);
-		manager.add(new Separator());
 		manager.add(printInfoAction);
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
@@ -389,17 +384,6 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 		generateMatches.setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, 
 				"icons/generate_matches.gif"));
 
-		// Select a match:
-		selectMatch = new Action() {
-			public void run() {
-				viewerApp.selectMatch((ITreeSelection) viewer_pattern.getSelection());
-			}
-		};
-		selectMatch.setText("Select Match");
-		selectMatch.setToolTipText("Select Match");
-		selectMatch.setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, 
-				"icons/select_match.gif"));
-		
 		// Print element on console:
 		printInfoAction = new Action() {
 			public void run() {

@@ -14,6 +14,7 @@ import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngineFactory;
 import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger;
 import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger.BreakpointListener;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
 import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
 
 public class EngineManager {
@@ -25,7 +26,7 @@ public class EngineManager {
 	 */
 	private PatternMatchingDebugger debuggableEngine;
 	
-	private IPatternMatchingEngine matchingEngine;
+	private IPatternMatchingEngine<? extends IMatching> matchingEngine;
 
 	private GraphPattern graphpattern;
 	
@@ -44,7 +45,7 @@ public class EngineManager {
 		return instance;
 	}
 	
-	public IPatternMatchingEngine getMatchingEngine() {
+	public IPatternMatchingEngine<? extends IMatching> getMatchingEngine() {
 		return matchingEngine;
 	}
 	

@@ -3,6 +3,12 @@ package org.sidiff.consistency.graphpattern.matcher;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.sidiff.consistency.graphpattern.GraphPattern;
 
+/**
+ * Creates a new matching engine. Used to register new engines to the extension
+ * point: <code>org.sidiff.consistency.graphpattern.matcher.factory</code>
+ * 
+ * @author Manuel Ohrndorf
+ */
 public interface IPatternMatchingEngineFactory {
 
 	/**
@@ -14,5 +20,5 @@ public interface IPatternMatchingEngineFactory {
 	 *            All target model resources.
 	 * @return The <strong>initialized</strong> pattern matching engine.
 	 */
-	IPatternMatchingEngine createPatternMatchingEngine(GraphPattern graphpattern, ResourceSet targetModels);
+	IPatternMatchingEngine<?> createPatternMatchingEngine(GraphPattern graphpattern, ResourceSet targetModels);
 }

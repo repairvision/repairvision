@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +15,6 @@ import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.impl.VisitorImpl;
-import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSOutgoingPathIterator;
 import org.sidiff.consistency.graphpattern.matcher.tools.paths.DFSOutgoingPathIterator.DFSPath;
@@ -34,9 +32,7 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 	
 	protected MatchingHelper matchingHelper;
 	
-	private IConstraintTester constraintTester;
-	
-	protected List<NodePattern> variableNodes;
+	protected IConstraintTester constraintTester;
 	
 	protected Map<NodePattern, Set<EdgePattern>> localEvaluations;
 	
@@ -50,20 +46,27 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 	
 	protected Set<EdgePattern> matched = new HashSet<>();
 	
-	public LocalEvaluationMatcher(IPatternMatchingEngine engine, 
+	public LocalEvaluationMatcher(
+			MatchingHelper matchingHelper, IConstraintTester constraintTester,  
 			Map<NodePattern, Set<EdgePattern>> localEvaluations, IPathRestriction pathRestriction) {
-		init(engine, localEvaluations);
+		
+		init(matchingHelper, constraintTester, localEvaluations);
 		this.pathRestriction = pathRestriction;
 	}
 	
-	public LocalEvaluationMatcher(IPatternMatchingEngine engine, Map<NodePattern, Set<EdgePattern>> localEvaluations) {
-		init(engine, localEvaluations);
+	public LocalEvaluationMatcher(
+			MatchingHelper matchingHelper, IConstraintTester constraintTester, 
+			Map<NodePattern, Set<EdgePattern>> localEvaluations) {
+		
+		init(matchingHelper, constraintTester, localEvaluations);
 	}
 	
-	private void init(IPatternMatchingEngine engine, Map<NodePattern, Set<EdgePattern>> localEvaluations) {
-		this.matchingHelper = engine.getMatchingHelper();
-		this.constraintTester = engine.getConstraintTester();
-		this.variableNodes = engine.getVariableNodes();
+	private void init(
+			MatchingHelper matchingHelper, IConstraintTester constraintTester, 
+			Map<NodePattern, Set<EdgePattern>> localEvaluations) {
+		
+		this.matchingHelper = matchingHelper;
+		this.constraintTester = constraintTester;
 		this.localEvaluations = localEvaluations;
 	}
 

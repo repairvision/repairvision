@@ -1,7 +1,7 @@
 package org.sidiff.consistency.graphpattern.matcher;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,34 +14,45 @@ import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.matcher.matching.BasicMatchValidation;
-import org.sidiff.consistency.graphpattern.matcher.matching.IMatchValidation;
-import org.sidiff.consistency.graphpattern.matcher.matching.selection.AtomicPattern;
-import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
-import org.sidiff.consistency.graphpattern.matcher.matching.selection.PathSelector;
-import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
-import org.sidiff.consistency.graphpattern.matcher.wgraph.BasicConstraintTester;
-import org.sidiff.consistency.graphpattern.matcher.wgraph.IConstraintTester;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatchGenerator;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
+import org.sidiff.consistency.graphpattern.matcher.wgraph.IWorkingGraphConstructor;
 
-public abstract class AbstractPatternMatchingEngine implements IPatternMatchingEngine {
+/**
+ * Basic implementation of a pattern matching engine ({@link IPatternMatchingEngine}).
+ * 
+ * @author Manuel Ohrndorf
+ */
+public abstract class AbstractPatternMatchingEngine<R extends IMatching> implements IPatternMatchingEngine<R> {
+
+	protected ResourceSet targetModels;
 
 	protected List<NodePattern> graphPattern;
-	
-	protected ResourceSet targetModels;
-	
+
 	protected List<NodePattern> variableNodes;
 
-	public AbstractPatternMatchingEngine(List<NodePattern> graphPattern, ResourceSet targetModels) {
-		this.graphPattern = graphPattern;
+	protected Map<NodePattern, Collection<EObject>> variableNodeDomains;
+
+	/**
+	 * @param targetModels
+	 *            The resource set that contains the model(s) which will be
+	 *            searched for matches of the corresponding graph pattern.
+	 */
+	public AbstractPatternMatchingEngine(ResourceSet targetModels) {
 		this.targetModels = targetModels;
 	}
-	
+
 	@Override
-	public void initialize(Map<NodePattern, Collection<EObject>> variableNodeDomains) {
-		
+	public void initialize(List<NodePattern> graphPattern, List<NodePattern> variableNodes,
+			Map<NodePattern, Collection<EObject>> variableNodeDomains) {
+
+		this.graphPattern = graphPattern;
+		this.variableNodes = variableNodes;
+		this.variableNodeDomains = variableNodeDomains;
+
 		// Initialization as command -> support for graph patterns from editors:
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(graphPattern.get(0));
-		
+
 		if (editingDomain == null) {
 			internal_initialize(variableNodeDomains);
 		} else {
@@ -57,115 +68,100 @@ public abstract class AbstractPatternMatchingEngine implements IPatternMatchingE
 					return false;
 				}
 
-			});		
+			});
 		}
 	}
+
+	private void internal_initialize(Map<NodePattern, Collection<EObject>> variableNodes) {
+
+		// Initialize the evaluation data of each node:
+		for (NodePattern node : graphPattern) {
+			initializeEvaluation(node);
+		}
+
+		// Initialize variable nodes:
+		variableNodes.entrySet().forEach(entry -> {
+			Evaluation nodeEvaluation = entry.getKey().getEvaluation();
+			entry.getValue().forEach(match -> nodeEvaluation.getStore().addMatch(match));
+		});
+	}
+
+	@Override
+	public void start() {
+
+		// Working-graph construction:
+		long startTime = System.currentTimeMillis();
+
+		IWorkingGraphConstructor wgraph = getWorkingGraphConstructor();
+		wgraph.initialize(graphPattern, variableNodes, variableNodeDomains);
+		wgraph.start();
+
+		System.out.println("Working-Graph Construction Time: " + (System.currentTimeMillis() - startTime) / 1000.0 + "s");
+
+		// Generate matches:
+		startTime = System.currentTimeMillis();
+
+		IMatchGenerator<R> matchGenerator = getMatchGenerator();
+		matchGenerator.initialize(graphPattern, variableNodes);
+		matchGenerator.start();
+
+		System.out.println("Working-Graph Construction Time: " + (System.currentTimeMillis() - startTime) / 1000.0 + "s");
+	}
 	
+	@Override
+	public Iterator<R> getResults() {
+		return getMatchGenerator().getResults();
+	}
+
+	@Override
+	public void finish() {
+		
+		// Clean up:
+		getWorkingGraphConstructor().finish();
+		getMatchGenerator().finish();
+	}
+
+	protected void initializeEvaluation(NodePattern nodePattern) {
+		Evaluation evaluation = GraphpatternFactory.eINSTANCE.createEvaluation();
+		DataStore dataStore = createDataStore();
+
+		evaluation.setStore(dataStore);
+		nodePattern.setEvaluation(evaluation);
+
+		dataStore.initialize();
+		evaluation.initialize();
+	}
+
 	@Override
 	public List<NodePattern> getGraphPattern() {
 		return graphPattern;
 	}
 
 	@Override
-	public void setGraphPattern(List<NodePattern> graphPattern) {
-		this.graphPattern = graphPattern;
-	}
-	
-	@Override
 	public List<NodePattern> getVariableNodes() {
 		return variableNodes;
 	}
 
-	private void internal_initialize(Map<NodePattern, Collection<EObject>> variableNodes) {
-		
-		// Initialize the evaluation data of each node:
-		for (NodePattern node : graphPattern) {
-			initializeEvaluation(node);
-		}
-		
-		// Initialize variable nodes:
-		variableNodes.entrySet().forEach(entry -> {
-			Evaluation nodeEvaluation = entry.getKey().getEvaluation();
-			entry.getValue().forEach(match -> nodeEvaluation.getStore().addMatch(match));
-		});
-		
-		// Initial nodes:
-		this.variableNodes = new ArrayList<>(variableNodes.keySet());
-	}
-	
-	@Override
-	public void start() {
-		long startTime = System.currentTimeMillis(); 
-				
-		// Start visiting at the variable nodes:
-		variableNodes.forEach(node -> {
-			node.getEvaluation().accept(createVisitor());
-		});
-		
-		System.out.println("Working-Graph Construction Time: " + (System.currentTimeMillis() - startTime) / 1000.0 + "s");
-	}
-	
-	@Override
-	public void finish() {
-	}
-	
-	protected void initializeEvaluation(NodePattern nodePattern) {
-		Evaluation evaluation = GraphpatternFactory.eINSTANCE.createEvaluation();
-		DataStore dataStore = createDataStore();
-		
-		evaluation.setStore(dataStore);
-		nodePattern.setEvaluation(evaluation);
-		
-		dataStore.initialize();
-		evaluation.initialize();
-	}
-	
-	@Override
-	public MatchingHelper getMatchingHelper() {
-		return new MatchingHelper(getCrossReferencer());
-	}
-	
-	@Override
-	public IConstraintTester getConstraintTester() {
-		return new BasicConstraintTester(getMatchingHelper());
-	}
-	
-	@Override
-	public IAtomicPatternFactory getAtomicPatternFactory() {
-		return new IAtomicPatternFactory() {
-			
-			@Override
-			public AtomicPattern getAtomicPattern(PathSelector path, NodePattern node) {
-				return null;
-			}
-		};
-	}
-	
-	@Override
-	public IMatchValidation getMatchValidation() {
-		return new BasicMatchValidation();
-	}
-
+	/**
+	 * @return The resource set that contains the model(s) which will be
+	 *         searched for matches of the corresponding graph pattern.
+	 */
 	public ResourceSet getResourceSet() {
 		return targetModels;
-	}
-	
-	public void setResourceSet(ResourceSet resourceSet) {
-		this.targetModels = resourceSet;
 	}
 
 	@Override
 	public String toString() {
 		StringBuffer print = new StringBuffer();
-		
+
 		for (NodePattern node : graphPattern) {
 			print.append(node + ":\n");
-			
+
 			node.getEvaluation().getStore().getMatchIterator().forEachRemaining(match -> {
 				print.append("  " + match + "\n");
 			});
 		}
-		
+
 		return print.toString();
 	}
 }

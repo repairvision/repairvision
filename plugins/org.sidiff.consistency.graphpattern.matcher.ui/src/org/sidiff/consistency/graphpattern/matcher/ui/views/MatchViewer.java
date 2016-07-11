@@ -12,9 +12,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -93,18 +91,6 @@ public class MatchViewer extends ViewPart {
 		{
 			viewer_matching.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
 			viewer_matching.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-			
-			viewer_matching.addSelectionChangedListener(new ISelectionChangedListener() {
-				
-				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					Object selection = ((IStructuredSelection) event.getSelection()).getFirstElement();
-					
-					if (selection instanceof EObjectList) {
-						viewerApp.setMatch((EObjectList) selection);
-					}
-				}
-			});
 		}
 
 		// Create the Drill Down Adapter:
@@ -209,11 +195,11 @@ public class MatchViewer extends ViewPart {
 		// Visualize match -> Diagram / Matching Engine Viewer
 		visualizeSelectMatch = new Action() {
 			public void run() {
-				ISelection selection = viewer_matching.getSelection();
-				Object selectedElement = ((IStructuredSelection)selection).getFirstElement();
+				Object selection = ((IStructuredSelection) viewer_matching.getSelection()).getFirstElement();
 				
-				// TODO
-//				viewerApp.visualizeMatch(selectedElement);
+				if (selection instanceof EObjectList) {
+					viewerApp.setMatch((EObjectList) selection);
+				}
 			}
 		};
 		visualizeSelectMatch.setText("Visualize Match");
@@ -235,7 +221,7 @@ public class MatchViewer extends ViewPart {
 					return;
 				}
 				if (viewer_matching.getExpandedState(item)) {
-					viewer_matching.collapseToLevel(item, 1);
+					viewer_matching.collapseToLevel(item, TreeViewer.ALL_LEVELS);
 				}
 				else {
 					viewer_matching.expandToLevel(item, 1);

@@ -1,48 +1,36 @@
-package org.sidiff.consistency.graphpattern.matcher.matching;
+package org.sidiff.consistency.graphpattern.matcher.matching.partial;
 
 import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.sidiff.consistency.common.debug.DebugUtil;
-import org.sidiff.consistency.graphpattern.EObjectList;
-import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.data.NavigableMatchesDS;
 import org.sidiff.consistency.graphpattern.matcher.data.selection.MatchSelection;
-import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
+import org.sidiff.consistency.graphpattern.matcher.data.selection.SelectionMatching;
+import org.sidiff.consistency.graphpattern.matcher.matching.AbstractMatchGenerator;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatchGenerator;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.MatchSelector;
 
 /**
- * Iterates through all possible (maximal) partial matches for a given graph.
+ * Concrete implementation of {@link IMatchGenerator}. Iterates through all
+ * possible (maximal) partial matches for a given graph.
  * 
  * @author Manuel Ohrndorf
  */
-public class MatchGenerator {
-	
-	/**
-	 * Represents all empty matches.
-	 */
-	public static final EObject EMPTY_MATCH = new EObjectImpl() {
-		
-		public String toString() {
-			return "empty match";
-		}
-		
-	};
+public abstract class PartialMatchGenerator extends AbstractMatchGenerator<SelectionMatching> {
 
 	/**
 	 * Represents all empty linked lists.
@@ -50,19 +38,11 @@ public class MatchGenerator {
 	private static LinkedList<NodePattern> EMPTY_NODE_LIST = new LinkedList<NodePattern>();  
 	
 	/**
-	 * All nodes which should be matched.
-	 */
-	protected List<NodePattern> graphPattern = new ArrayList<>();
-	
-	/**
-	 * All variable nodes and their corresponding matchings.
-	 */
-	private Map<NodePattern, NodeMatching> matching = new LinkedHashMap<>();
-	
-	/**
 	 * All nodes which are variables in the sense of the constraint solving problem of the graph.
+	 * 
+	 * (NOTE: Order will be modified.)
 	 */
-	private LinkedList<NodePattern> variableNodes = new LinkedList<>();
+	private LinkedList<NodePattern> variableNodeOrder = new LinkedList<>();
 	
 	/**
 	 * <code>true</code> only injective matchings (w.r.t. to variable nodes); <code>false</code> otherwise.
@@ -75,16 +55,6 @@ public class MatchGenerator {
 	private MatchSelector matchSelector;
 	
 	/**
-	 * Extends the path based selection by the matching of atomic patterns.
-	 */
-	private IAtomicPatternFactory atomicPatternFactory;
-	
-	/**
-	 * Validates or rejects the structurally constructed graph matches. 
-	 */
-	private IMatchValidation matchValidation;
-	
-	/**
 	 * All model elements (per node) that were already assigned (in previous matchings).
 	 */
 	private Map<NodePattern, Set<EObject>> assignments = new HashMap<>(); 
@@ -95,23 +65,24 @@ public class MatchGenerator {
 	private Set<NodePattern> remainingInitialNodes = new LinkedHashSet<>();
 	
 	/**
-	 * Initializes a new {@link MatchGenerator}.
-	 * 
-	 * @param graph
-	 *            A list a nodes which form a connected graph.
-	 * @param variableNodes
-	 *            All nodes which are variables in the sense of the 
-	 *            constraint solving problem of the graph.
-	 * @param matchValidation
-	 *            Validates or rejects the structurally constructed 
-	 *            graph matches.
+	 * The unique match iterator of this match generator.
 	 */
-	public MatchGenerator(Collection<NodePattern> graph, Collection<NodePattern> variableNodes, 
-			IAtomicPatternFactory atomicPatternFactory, IMatchValidation matchValidation) {
-		this.graphPattern.addAll(graph);
-		this.variableNodes.addAll(variableNodes);
-		this.atomicPatternFactory = atomicPatternFactory;
-		this.matchValidation = matchValidation;
+	private Iterator<SelectionMatching> matchIterator;
+	
+	/**
+	 * Initializes a new {@link PartialMatchGenerator}.
+	 */
+	public PartialMatchGenerator() {
+	}
+	
+	@Override
+	public void initialize(List<NodePattern> graphPattern, List<NodePattern> variableNodes) {
+		super.initialize(graphPattern, variableNodes);
+		this.variableNodeOrder.addAll(variableNodes); // (NOTE: Order will be modified.)
+	}
+	
+	@Override
+	public void start() {
 		
 		// Initialize the data stores of all nodes:
 		initializeDataStore();
@@ -119,6 +90,51 @@ public class MatchGenerator {
 		// Initialize variable node matching:
 		initializeVariableNodes();
 		initializeMatching();
+	}
+
+	@Override
+	public  Iterator<SelectionMatching> getResults() {
+		
+		if (matchIterator == null) {
+			matchIterator = new Iterator<SelectionMatching>() {
+
+				private SelectionMatching matching;
+				
+				private Boolean hasNext = null;
+				
+				@Override
+				public boolean hasNext() {
+					
+					if (hasNext == null) {
+						// Mark the last matching as deprecated:
+						if (matching != null) {
+							matching.setSelectionModified(true); 
+						}
+						
+						// FInd next match:
+						matching = new SelectionMatching();
+						hasNext = findNextMatch();
+					}
+					
+					return hasNext;
+				}
+
+				@Override
+				public SelectionMatching next() {
+					if (hasNext()) {
+						// Tell hasNext() that we need a new matching next time:
+						hasNext = null;
+						
+						// Return the actual matching:
+						return matching;
+					} else {
+						throw new NoSuchElementException();
+					}
+				}
+			};
+		}
+		
+		return matchIterator;
 	}
 
 	/**
@@ -140,7 +156,7 @@ public class MatchGenerator {
 
 	private void initializeVariableNodes() {
 
-		for (NodePattern variableNode : variableNodes) {
+		for (NodePattern variableNode : variableNodeOrder) {
 			NodeMatching match = new NodeMatching(variableNode);
 
 			matching.put(variableNode, match);
@@ -159,17 +175,17 @@ public class MatchGenerator {
 	}
 	
 	private void initializeMatching() {
-		NodePattern firstNode = variableNodes.getFirst();
+		NodePattern firstNode = variableNodeOrder.getFirst();
 		NavigableMatchesDS firstNodeDS = getDataStore(firstNode.getEvaluation());
 
-		setNextInitialNode(variableNodes.getFirst(), firstNodeDS.getMatchIterator());
+		setNextInitialNode(variableNodeOrder.getFirst(), firstNodeDS.getMatchIterator());
 	}
 	
 	private void setNextInitialNode(NodePattern initialNode, Iterator<EObject> matches) {
 		
-		if (variableNodes.getFirst() != initialNode) {
-			variableNodes.remove(initialNode);
-			variableNodes.addFirst(initialNode);
+		if (variableNodeOrder.getFirst() != initialNode) {
+			variableNodeOrder.remove(initialNode);
+			variableNodeOrder.addFirst(initialNode);
 		}
 		
 		// Initialize matching of the next initial node:
@@ -222,7 +238,7 @@ public class MatchGenerator {
 					restrictFreeNodes(nextNodes);
 					
 					// Check new matching
-					if (matchValidation.isMatch(matching)) {
+					if (getMatchValidation().isMatch(matching)) {
 						
 						// Validate match:
 						DebugUtil.check(this::validateMatch, this);
@@ -274,7 +290,7 @@ public class MatchGenerator {
 		// Remove restriction of all nodes, in the >tail< of list, which have no more matches:
 		LinkedList<NodePattern> nextNodes = new LinkedList<>();
 		
-		for (Iterator<NodePattern> iterator = variableNodes.descendingIterator(); iterator.hasNext();) {
+		for (Iterator<NodePattern> iterator = variableNodeOrder.descendingIterator(); iterator.hasNext();) {
 			nextNode = iterator.next();
 			nextMatch = matching.get(nextNode);
 			nextNodes.addFirst(nextNode);
@@ -312,9 +328,9 @@ public class MatchGenerator {
 			initialMatch.setNextMatch();
 		
 			// Initial match restriction:
-			if (initialNode == variableNodes.getFirst()) {
+			if (initialNode == variableNodeOrder.getFirst()) {
 				matchSelector = new MatchSelector(
-						atomicPatternFactory, graphPattern, initialNode, initialMatch.getMatch());
+						getAtomicPatternFactory(), graphPattern, initialNode, initialMatch.getMatch());
 				additionalRestrictions(initialMatch); // (After initial selection was build)
 			} else {
 				additionalRestrictions(initialMatch);
@@ -376,53 +392,6 @@ public class MatchGenerator {
 				}
 			}
 		}
-	}
-	
-	/**
-	 * @return All nodes which should be matched.
-	 */
-	public List<NodePattern> getNodes() {
-		return graphPattern;
-	}
-	
-	/**
-	 * @return The (unmodifiable) matching for each variable node. The matching
-	 *         will be updated each time {@link #findNextMatch()} is called.
-	 */
-	public Map<NodePattern, NodeMatching> getVariableMatching() {
-		return Collections.unmodifiableMap(matching);
-	}
-	
-	/**
-	 * @return A list matches for each node of the graph (index of {@link MatchGenerator#getNodes()}).
-	 */
-	public EObjectList getGraphPatternMatching() {
-		EObjectList graphPatternMatching = GraphpatternFactory.eINSTANCE.createEObjectList();
-		
-		for (NodePattern node : graphPattern) {
-			EObjectList nodeMatching = GraphpatternFactory.eINSTANCE.createEObjectList();
-			MatchSelection matchSelection = getDataStore(node.getEvaluation()).getMatchSelection();
-			
-			matchSelection.getSelectedMatches().forEachRemaining(match -> {
-				if (match != null) {
-					nodeMatching.getContent().add(match);
-				}
-			});
-			
-			if (nodeMatching.getContent().size() == 1) {
-				graphPatternMatching.getContent().add(nodeMatching.getContent().get(0));
-			}
-			
-			else if (nodeMatching.getContent().isEmpty()) {
-				graphPatternMatching.getContent().add(EMPTY_MATCH);
-			}
-			
-			else {
-				graphPatternMatching.getContent().add(nodeMatching);
-			}
-		}
-		
-		return graphPatternMatching;
 	}
 	
 	@Override

@@ -1,12 +1,13 @@
-package org.sidiff.consistency.graphpattern.matcher.matching;
+package org.sidiff.consistency.graphpattern.matcher.matching.partial;
 
 import java.util.Collections;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.consistency.graphpattern.matcher.matching.INodeMatching;
 
-public class NodeMatching {
+public class NodeMatching implements INodeMatching {
 	
 	protected NodePattern node;
 	

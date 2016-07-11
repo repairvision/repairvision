@@ -5,7 +5,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -156,7 +155,6 @@ public class PatternMatchingEngineViewApp implements BreakpointListener {
 	public void signalWait(Breakpoint breakpoint) {
 		
 		if (breakpoint instanceof Termination) {
-			// TODO: EngineManager.getInstance().getDebuggableEngine().stop();
 			WorkbenchUtil.showMessage("Engine terminated!");
 		} else {
 			// UI update:
@@ -172,25 +170,6 @@ public class PatternMatchingEngineViewApp implements BreakpointListener {
 				}
 		    });			
 		}
-	}
-	
-	// TODO
-	public void selectMatch(ITreeSelection selection) {
-		viewer_pattern.refresh();
-		viewer_pattern.expandAll();
-		SiriusUtil.refreshActiveEditor();
-		
-		
-//
-//			// TODO: List
-//			Object selectedMatch = selection.getFirstElement();
-//			Object selectedNode = selection.getPaths()[0].getParentPath().getParentPath().getLastSegment();
-//			
-//			if ((selectedMatch instanceof EObject) && (selectedNode instanceof NodePattern)) {
-//				MatchSelector matchSelector = new MatchSelector(
-//						(NodePattern) selectedNode, Collections.singleton((EObject) selectedMatch));
-//				viewer_pattern.refresh();
-//			}
 	}
 	
 	public void printSelection(ISelection selection) {

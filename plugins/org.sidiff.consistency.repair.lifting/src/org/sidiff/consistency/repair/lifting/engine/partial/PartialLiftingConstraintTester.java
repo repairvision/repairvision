@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.lifting.matching;
+package org.sidiff.consistency.repair.lifting.engine.partial;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.AttributePattern;
@@ -9,11 +9,11 @@ import org.sidiff.consistency.graphpattern.matcher.wgraph.BasicConstraintTester;
 import org.sidiff.consistency.repair.lifting.util.RecognitionRuleUtil;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 
-public class LiftingConstraintTester extends BasicConstraintTester {
+public class PartialLiftingConstraintTester extends BasicConstraintTester {
 
 	private static final SymmetricPackage DIFFERENCE_MODEL = SymmetricPackage.eINSTANCE;
 	
-	public LiftingConstraintTester(MatchingHelper matchingHelper) {
+	public PartialLiftingConstraintTester(MatchingHelper matchingHelper) {
 		super(matchingHelper);
 	}
 	

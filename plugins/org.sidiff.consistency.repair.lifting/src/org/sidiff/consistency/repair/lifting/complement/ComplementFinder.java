@@ -29,10 +29,9 @@ import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.data.selection.MatchSelection;
-import org.sidiff.consistency.graphpattern.matcher.matching.IMatchValidation;
-import org.sidiff.consistency.graphpattern.matcher.matching.MatchGenerator;
-import org.sidiff.consistency.graphpattern.matcher.matching.NodeMatching;
-import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
+import org.sidiff.consistency.graphpattern.matcher.data.selection.SelectionMatching;
+import org.sidiff.consistency.graphpattern.matcher.matching.partial.NodeMatching;
+import org.sidiff.consistency.graphpattern.matcher.matching.partial.PartialMatchGenerator;
 import org.sidiff.consistency.repair.complement.construction.ComplementConstructor;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.full.ComplementConstructorFullContext;
@@ -115,18 +114,12 @@ public class ComplementFinder {
 		//// Lifting ////
 
 		// Create working graph:
-		IPatternMatchingEngine matchingEngine = 
+		IPatternMatchingEngine<SelectionMatching> matchingEngine = 
 				liftingEngineFactory.createPatternMatchingEngine(recognitionRule, modelDifference);
-
 		matchingEngine.start();
 
-		// Matching:
-		IAtomicPatternFactory atomicPatternFactory = matchingEngine.getAtomicPatternFactory();
-		IMatchValidation matchValidation = matchingEngine.getMatchValidation();
-		List<NodePattern> variableNodes = matchingEngine.getVariableNodes();
-
-		MatchGenerator matchGenerator = new MatchGenerator(
-				recognitionRule.getNodes(), variableNodes, atomicPatternFactory, matchValidation);
+		// FIXME<-Interface: Matching:
+		PartialMatchGenerator matchGenerator = (PartialMatchGenerator) matchingEngine.getMatchGenerator();
 
 		//// Complement Construction ////
 		ComplementConstructor complementConstructor = 
@@ -151,6 +144,9 @@ public class ComplementFinder {
 //				System.out.println("Full Match: " + matchGenerator);
 //			}
 		}
+		
+		// Clean up matching engine:
+		matchingEngine.finish();
 
 		//// Initialize the Complement Transformation Engine /////
 		for (ComplementRule complementRule : complements) {
@@ -181,7 +177,7 @@ public class ComplementFinder {
 	}
 
 	private List<EditRuleMatch> createEditRuleMatch(
-			Edit2RecognitionRule edit2Recognition, MatchGenerator matchGenerator) {
+			Edit2RecognitionRule edit2Recognition, PartialMatchGenerator matchGenerator) {
 
 		Rule editRule = edit2Recognition.getEditRule();
 		Map<Unit, TransformationPatterns> traceEdit2Recognition = edit2Recognition.getEdit2RecognitionTrace();

@@ -7,38 +7,61 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.Visitor;
-import org.sidiff.consistency.graphpattern.matcher.matching.IMatchValidation;
-import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
-import org.sidiff.consistency.graphpattern.matcher.tools.CrossReferencer;
-import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
-import org.sidiff.consistency.graphpattern.matcher.wgraph.IConstraintTester;
+import org.sidiff.consistency.graphpattern.matcher.algorithms.IIncrementalAlgorithm;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatchGenerator;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
+import org.sidiff.consistency.graphpattern.matcher.wgraph.IWorkingGraphConstructor;
 
-public interface IPatternMatchingEngine {
+/**
+ * Basic interface of all pattern matching engines. This interface is used to
+ * control the lifecycle of the engine: Initialization, evaluation/data-store
+ * setup, working-graph construction, match generation and shutdown.
+ * 
+ * @param <R>
+ *            The match type, i.e. some kind of matching container.
+ *            
+ * @author Manuel Ohrndorf
+ * @param <O>
+ */
+public interface IPatternMatchingEngine<R extends IMatching> extends IIncrementalAlgorithm<R> {
 
-	public void initialize(Map<NodePattern, Collection<EObject>> variableNodeMatching);
-	
+	/**
+	 * @param graphPattern
+	 *            All nodes of the graph pattern that should be matched.
+	 * @param variableNodes
+	 *            The nodes which correspond to the matching formula:
+	 *            <code>match = v_1 x v_2 x ... x v_n</code>
+	 * @param variableNodeDomains
+	 *            The variable node domains.
+	 */
+	public void initialize(List<NodePattern> graphPattern, List<NodePattern> variableNodes,
+			Map<NodePattern, Collection<EObject>> variableNodeDomains);
+
+	/**
+	 * @return All nodes of the graph pattern that should be matched.
+	 */
 	public List<NodePattern> getGraphPattern();
-	
-	public void setGraphPattern(List<NodePattern> graphPattern); 
-	
+
+	/**
+	 * @return The nodes which correspond to the matching formula:
+	 *         <code>match = v_1 x v_2 x ... x v_n</code>
+	 */
 	public List<NodePattern> getVariableNodes();
-	
-	public void start();
-	
-	public void finish();
-	
+
+	/**
+	 * @return The storage for one node of the working graph.
+	 */
 	public DataStore createDataStore();
-	
-	public Visitor createVisitor();
-	
-	public MatchingHelper getMatchingHelper();
-	
-	public CrossReferencer getCrossReferencer();
-	
-	public IConstraintTester getConstraintTester();
-	
-	public IAtomicPatternFactory getAtomicPatternFactory();
-	
-	public IMatchValidation getMatchValidation();
+
+	/**
+	 * @return The algorithm ({@link IWorkingGraphConstructor}) that constructs
+	 *         the working graph.
+	 */
+	public IWorkingGraphConstructor getWorkingGraphConstructor();
+
+	/**
+	 * @return The algorithm which calculates all matches for the given graph
+	 *         pattern based on the calculated working graph.
+	 */
+	public IMatchGenerator<R> getMatchGenerator();
 }
