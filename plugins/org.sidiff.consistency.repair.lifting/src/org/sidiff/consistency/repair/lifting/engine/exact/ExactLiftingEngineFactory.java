@@ -41,7 +41,10 @@ public class ExactLiftingEngineFactory extends LiftingEngineFactory {
 					graphPatternNodes, targetModels, changeIndex, changeDomainMap);
 			Map<NodePattern, Collection<EObject>> changeNodeDomains = calculateChangeNodeDomains(
 					graphPatternNodes, changeDomainMap);
-			engine.initialize(graphPatternNodes, new ArrayList<>(changeNodeDomains.keySet()), changeNodeDomains);
+			engine.initialize(
+					graphPatternNodes, 
+					new ArrayList<>(getChangeNodePatterns(graphPatternNodes)), 
+					changeNodeDomains);
 			
 			return engine;
 		}
