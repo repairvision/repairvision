@@ -6,6 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -13,6 +17,7 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Display;
 import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.EObjectList;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
@@ -40,6 +45,16 @@ public class MatchViewerApp {
 	private TreeViewer viewer_matching;
 	
 	/**
+	 * The EMF-Model viewer showing the variable assignments.
+	 */
+	private TreeViewer viewer_variables;
+	
+	/**
+	 * All matched nodes of the graph pattern.
+	 */
+	private List<NodePattern> graphPattern;
+	
+	/**
 	 * All variable assignments.
 	 */
 	private List<EObjectList> variableAssignments;
@@ -49,53 +64,81 @@ public class MatchViewerApp {
 	 */
 	private List<EObjectList> allMatchings;
 
-	public MatchViewerApp(TreeViewer viewer_matching) {
+	public MatchViewerApp(TreeViewer viewer_matching, TreeViewer viewer_variables) {
 		this.viewer_matching = viewer_matching;
+		this.viewer_variables = viewer_variables;
 	}
 
 	public void generateMatches() {
-		variableAssignments = new ArrayList<>();
-		allMatchings = new ArrayList<>();
-		
-		IPatternMatchingEngine<? extends IMatching> engine = EngineManager.getInstance().getMatchingEngine();
-		IMatchGenerator<? extends IMatching> matchGenerator = engine.getMatchGenerator();
-		
-		int matchingCount = 0;
-		long timeStart = System.currentTimeMillis(); 
-		
-		for (Iterator<? extends IMatching> iterator = matchGenerator.getResults(); iterator.hasNext();) {
-			IMatching match = iterator.next();
-			
-			InfoConsole.printInfos(Collections.emptyList(), "Match Generation Time: " 
-					+ ((System.currentTimeMillis() - timeStart) / 1000.0) + "s");
-			
-			addVariableMatch(matchGenerator.getVariableMatching());
-			allMatchings.add(MatchingUtil.createMatching(matchGenerator, match));
-			
-			++matchingCount;
-		}
+		Job job = new Job("Generate the matchings") {
 
-		// Print infos:
-		for (EObjectList variableMatch : variableAssignments) {
-			InfoConsole.printInfos(variableMatch.getContent());
-		}
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				
+				// Calculate matchings:
+				IPatternMatchingEngine<? extends IMatching> engine = EngineManager.getInstance().getMatchingEngine();
+				IMatchGenerator<? extends IMatching> matchGenerator = engine.getMatchGenerator();
+				Iterator<? extends IMatching> matchIterator = matchGenerator.getResults();
+				
+				variableAssignments = new ArrayList<>();
+				allMatchings = new ArrayList<>();
+				graphPattern = matchGenerator.getGraphPattern();
+						
+				int matchingCount = 0;
+				
+				while (true) {
+					long timeStart = System.currentTimeMillis(); 
+					
+					if (matchIterator.hasNext()) {
+						IMatching match = matchIterator.next();
 
-		InfoConsole.printInfo(matchingCount + " matches found!");
+						long stopTime = System.currentTimeMillis();
+						
+						InfoConsole.printInfos(Collections.emptyList(), "Match Generation Time: " 
+								+ ((stopTime - timeStart) / 1000.0) + "s");
+						
+						addVariableMatch(matchGenerator.getVariableMatching());
+						allMatchings.add(MatchingUtil.createMatching(matchGenerator, match));
+						
+						++matchingCount;
+					} else {
+						break;
+					}
+				}
+				
+				// Clean up matching engine:
+				EngineManager.getInstance().stopEngine();
+				
+				// UI updates:				
+				Display.getDefault().syncExec(() -> {
+					
+					// Show matches to the UI:
+					EObjectList matchingList = GraphpatternFactory.eINSTANCE.createEObjectList();
+					matchingList.getContent().addAll(allMatchings);
+					
+					MatchViewerApp.this.viewer_matching.setInput(matchingList);
+					MatchViewerApp.this.viewer_matching.refresh();
+					
+					EObjectList assignmentList = GraphpatternFactory.eINSTANCE.createEObjectList();
+					assignmentList.getContent().addAll(variableAssignments);
+					
+					MatchViewerApp.this.viewer_variables.setInput(assignmentList);
+					MatchViewerApp.this.viewer_variables.refresh();
+				});
+				
+				// Print infos:
+				for (EObjectList variableMatch : variableAssignments) {
+					InfoConsole.printInfos(variableMatch.getContent());
+				}
+				
+				InfoConsole.printInfo(matchingCount + " matches found!");
+				
+				return Status.OK_STATUS;
+			}
+		};
 
-		// Show matches to the UI:
-		EObjectList matchingList = GraphpatternFactory.eINSTANCE.createEObjectList();
-		matchingList.getContent().addAll(variableAssignments);
-		matchingList.getContent().addAll(allMatchings);
-		
-		this.viewer_matching.setInput(matchingList);
-		this.viewer_matching.refresh();
-		
-		// Clean up matching engine:
-		if (EngineManager.getInstance().getDebuggableEngine() != null) {
-			EngineManager.getInstance().getDebuggableEngine().stop();
-		} else {
-			EngineManager.getInstance().getMatchingEngine().finish();
-		}
+		// Start the Job
+		job.schedule(); 
 	}
 	
 	private void addVariableMatch(Map<NodePattern, ? extends INodeMatching> matching) {
@@ -111,17 +154,14 @@ public class MatchViewerApp {
 	}
 
 	public void setMatch(EObjectList match) {
-		IPatternMatchingEngine<? extends IMatching> engine = EngineManager.getInstance().getMatchingEngine();
-		IMatchGenerator<? extends IMatching> matchGenerator = engine.getMatchGenerator();
-		List<NodePattern> graphpattern = matchGenerator.getGraphPattern();
 
-		for (NodePattern node : graphpattern) {
+		for (NodePattern node : graphPattern) {
 			TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(node);
 			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 
 				@Override
 				protected void doExecute() {
-					EObject matchEntry = match.getContent().get(graphpattern.indexOf(node));
+					EObject matchEntry = match.getContent().get(graphPattern.indexOf(node));
 					DataStore ds = new CollectingMatchesDS();
 					node.getEvaluation().setStore(ds);
 

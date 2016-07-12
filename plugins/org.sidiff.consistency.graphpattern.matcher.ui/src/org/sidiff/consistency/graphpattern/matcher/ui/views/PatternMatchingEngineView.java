@@ -55,7 +55,6 @@ import org.sidiff.consistency.graphpattern.matcher.extensions.MatchingEngineFact
 import org.sidiff.consistency.graphpattern.matcher.extensions.MatchingEngineFactoryLibrary;
 import org.sidiff.consistency.graphpattern.matcher.ui.Activator;
 import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
-import org.sidiff.consistency.graphpattern.matcher.ui.util.WorkbenchUtil;
 
 public class PatternMatchingEngineView extends ViewPart implements ISelectionListener {
 
@@ -94,8 +93,6 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 	private Action actionStartDebugger;
 	
 	private Action actionStartEngine;
-	
-	private Action generateMatches;
 
 	private Action printInfoAction;
 	
@@ -331,8 +328,6 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 		manager.add(actionStartDebugger);
 		manager.add(resumeBreakpoints);
 		manager.add(new Separator());
-		manager.add(generateMatches);
-		manager.add(new Separator());
 		manager.add(printInfoAction);
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
@@ -372,17 +367,6 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 		resumeBreakpoints.setToolTipText("Resume Pattern Matching Engine");
 		resumeBreakpoints.setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, 
 				"icons/stepover.gif"));
-
-		// Generate the matchings:
-		generateMatches = new Action() {
-			public void run() {
-				WorkbenchUtil.showView(MatchViewer.ID);
-			}
-		};
-		generateMatches.setText("Generate Matches");
-		generateMatches.setToolTipText("Generate Matches");
-		generateMatches.setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, 
-				"icons/generate_matches.gif"));
 
 		// Print element on console:
 		printInfoAction = new Action() {

@@ -23,12 +23,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 import org.sidiff.consistency.graphpattern.EObjectList;
 import org.sidiff.consistency.graphpattern.matcher.ui.Activator;
 import org.sidiff.consistency.graphpattern.matcher.ui.util.InfoConsole;
+import org.sidiff.consistency.graphpattern.matcher.ui.util.WorkbenchUtil;
 
 public class MatchViewer extends ViewPart {
 
@@ -38,9 +38,14 @@ public class MatchViewer extends ViewPart {
 	public static final String ID = "org.sidiff.consistency.graphpattern.matcher.ui.views.MatchViewer";
 
 	/**
-	 * The EMF-Model viewer showing the graph pattern.
+	 * The EMF-Model viewer showing the matches.
 	 */
 	private TreeViewer viewer_matching;
+	
+	/**
+	 * The EMF-Model viewer showing the variable assignments.
+	 */
+	private TreeViewer viewer_variables;
 
 	/**
 	 * Some application logic of the viewer.
@@ -52,13 +57,19 @@ public class MatchViewer extends ViewPart {
 	 */
 	private DrillDownAdapter drillDownAdapter;
 	
-	private Action generateMatches;
+//	private Action generateMatches;
 
 	private Action printInfoAction;
 	
 	private Action visualizeSelectMatch;
 
 	public MatchViewer() {
+	}
+	
+	public void generateMatches() {
+		if (viewerApp != null) {
+			viewerApp.generateMatches();
+		}
 	}
 
 	public void createPartControl(Composite parent) {
@@ -86,25 +97,30 @@ public class MatchViewer extends ViewPart {
 		SashForm sashForm = new SashForm(composite, SWT.VERTICAL);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		// Create the tree viewer:
-		viewer_matching = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		// Create the match viewer:
+		viewer_matching = new TreeViewer(sashForm, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		{
 			viewer_matching.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
 			viewer_matching.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+		}
+		
+		viewer_variables = new TreeViewer(sashForm, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		{
+			viewer_variables.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+			viewer_variables.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
 		}
 
 		// Create the Drill Down Adapter:
 		drillDownAdapter = new DrillDownAdapter(viewer_matching);
 
-		// Create the help context id for the viewer's control
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer_matching.getControl(), 
-				"org.sidiff.consistency.graphpattern.matcher.ui.viewer");
-		
 		// Register workbench selection provider:
 		getSite().setSelectionProvider(viewer_matching);
 
 		// Application logic:
-		viewerApp = new MatchViewerApp(viewer_matching);
+		viewerApp = new MatchViewerApp(viewer_matching, viewer_variables);
+		
+		// Setup sash form:
+		sashForm.setWeights(new int[] {1, 1});
 		
 		makeActions();
 		hookContextMenu();
@@ -149,35 +165,27 @@ public class MatchViewer extends ViewPart {
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(generateMatches);
+//		manager.add(generateMatches);
 		manager.add(new Separator());
+		manager.add(visualizeSelectMatch);
 		manager.add(printInfoAction);
 		manager.add(new Separator());
+		
 		drillDownAdapter.addNavigationActions(manager);
 	}
 
 	private void makeActions() {
 		
-		// Generate the matchings:
-		generateMatches = new Action() {
-			public void run() {
-//				Job job = new Job("Generate the matchings") {
-//
-//					@Override
-//					protected IStatus run(IProgressMonitor monitor) {
-						viewerApp.generateMatches();
-//						return Status.OK_STATUS;
-//					}
-//				};
-//
-//				// Start the Job
-//				job.schedule(); 
-			}
-		};
-		generateMatches.setText("Generate Matches");
-		generateMatches.setToolTipText("Generate Matches");
-		generateMatches.setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, 
-				"icons/generate_matches.gif"));
+//		// Generate the matchings:
+//		generateMatches = new Action() {
+//			public void run() {
+//				viewerApp.generateMatches();
+//			}
+//		};
+//		generateMatches.setText("Generate Matches");
+//		generateMatches.setToolTipText("Generate Matches");
+//		generateMatches.setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, 
+//				"icons/generate_matches.gif"));
 
 		// Print element on console:
 		printInfoAction = new Action() {
@@ -199,6 +207,8 @@ public class MatchViewer extends ViewPart {
 				
 				if (selection instanceof EObjectList) {
 					viewerApp.setMatch((EObjectList) selection);
+				} else {
+					WorkbenchUtil.showMessage("Please select a matching!");
 				}
 			}
 		};
@@ -212,6 +222,25 @@ public class MatchViewer extends ViewPart {
 
 		// Expand / Collapse on double click:
 		viewer_matching.addDoubleClickListener(event -> {
+			ISelection selection = event.getSelection();
+
+			if (selection instanceof IStructuredSelection) {
+				Object item = ((IStructuredSelection) selection).getFirstElement();
+
+				if (item == null) {
+					return;
+				}
+				if (viewer_matching.getExpandedState(item)) {
+					viewer_matching.collapseToLevel(item, TreeViewer.ALL_LEVELS);
+				}
+				else {
+					viewer_matching.expandToLevel(item, 1);
+				}
+			}
+		});
+		
+		// Expand / Collapse on double click:
+		viewer_variables.addDoubleClickListener(event -> {
 			ISelection selection = event.getSelection();
 
 			if (selection instanceof IStructuredSelection) {

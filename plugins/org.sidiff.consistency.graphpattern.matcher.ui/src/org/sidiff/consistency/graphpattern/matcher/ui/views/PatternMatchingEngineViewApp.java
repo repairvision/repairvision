@@ -1,6 +1,10 @@
 package org.sidiff.consistency.graphpattern.matcher.ui.views;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -8,6 +12,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngineFactory;
@@ -126,21 +132,49 @@ public class PatternMatchingEngineViewApp implements BreakpointListener {
 	}
 	
 	public void startPatternMatchingEngine() {
-		// UI update:
-		viewer_pattern.getTree().getDisplay().asyncExec(new Runnable() {
+		Job job = new Job("Search matchings") {
 
 			@Override
-			public void run() {
-
-				// Start the matching engine:
-				EngineManager.getInstance().startEngine(getSelectedPatternMatchingEngine());
-
-				// Update the UI:
-				viewer_pattern.refresh();
-				viewer_pattern.expandAll();
-				SiriusUtil.refreshActiveEditor();
+			protected IStatus run(IProgressMonitor monitor) {
+				
+				// Calculate the matching:
+				Display.getDefault().syncExec(() -> {
+					// Start the matching engine:
+					EngineManager.getInstance().startEngine(getSelectedPatternMatchingEngine());
+					
+					// Generate the matches:
+					generateMatcher();
+				});
+				
+				// UI update:
+				Display.getDefault().syncExec(() -> {
+					viewer_pattern.refresh();
+					viewer_pattern.expandAll();
+					SiriusUtil.refreshActiveEditor();
+				});	
+				
+				return Status.OK_STATUS;
 			}
-	    });			
+		};
+		
+		// Start the Job
+		job.schedule(); 
+	}
+	
+	private void generateMatcher() {
+		
+		// Show the matching view:
+		Display.getDefault().syncExec(() -> {
+			WorkbenchUtil.showView(MatchViewer.ID);
+		});
+		
+		// Start calculation:
+		IViewPart matchViewer = WorkbenchUtil.getView(MatchViewer.ID);
+		
+		if (matchViewer instanceof MatchViewer) {
+			((MatchViewer) matchViewer).generateMatches();
+		}
+		
 	}
 
 	public void startPatternMatchingDebugger() {

@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
@@ -31,8 +32,12 @@ public class InfoConsole {
 	public static void printInfos(Collection<? extends Object> elements) {
 		printInfos(elements, "");
 	}
-
+	
 	public static void printInfos(Collection<? extends Object> elements, String emptyMessage) {
+		Display.getDefault().syncExec(() -> internal_printInfos(elements, emptyMessage));
+	}
+
+	private static void internal_printInfos(Collection<? extends Object> elements, String emptyMessage) {
 
 		// Setup console:
 		WorkbenchUtil.showView("org.eclipse.ui.console.ConsoleView");

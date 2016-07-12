@@ -20,39 +20,39 @@ import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
 public class EngineManager {
 
 	private static EngineManager instance;
-	
+
 	/**
 	 * Pattern matching engine.
 	 */
 	private PatternMatchingDebugger debuggableEngine;
-	
+
 	private IPatternMatchingEngine<? extends IMatching> matchingEngine;
 
 	private GraphPattern graphpattern;
-	
+
 	private ResourceSet targetModels;
-	
+
 	public EngineManager() {
 		targetModels = new ResourceSetImpl();
 	}
-	
+
 	public static EngineManager getInstance() {
-		
+
 		if (instance == null) {
 			instance = new EngineManager();
 		}
-		
+
 		return instance;
 	}
-	
+
 	public IPatternMatchingEngine<? extends IMatching> getMatchingEngine() {
 		return matchingEngine;
 	}
-	
+
 	public PatternMatchingDebugger getDebuggableEngine() {
 		return debuggableEngine;
 	}
-	
+
 	public Resource loadModel(IResource workbenchResource) {
 
 		String projectName = workbenchResource.getProject().getName();
@@ -64,57 +64,63 @@ public class EngineManager {
 
 		return modelRes;
 	}
-	
+
 	public void removeModel(Resource modelResource) {
 		targetModels.getResources().remove(modelResource);
 	}
-	
+
 	public void clearModels() {
 		targetModels = new ResourceSetImpl();
 	}
-	
+
 	public List<Resource> getModels() {
 		return targetModels.getResources();
 	}
-	
+
 	public ResourceSet getModelResourceSet() {
 		return targetModels;
 	}
-	
+
 	public void setGraphpattern(GraphPattern graphpattern) {
 		this.graphpattern = graphpattern;
 	}
-	
+
 	public GraphPattern getGraphPattern() {
 		return graphpattern;
 	}
-	
+
 	public void startEngine(IPatternMatchingEngineFactory targetEngine) {
-		
+		if (targetEngine == null) {
+			return;
+		}
+
 		// Stop old engine:
 		stopEngine();
-		
+
 		// Start new engine:
 		this.matchingEngine = targetEngine.createPatternMatchingEngine(graphpattern, targetModels);
 		this.matchingEngine.start();
 	}
-	
+
 	public void startDebugger(IPatternMatchingEngineFactory targetEngine, BreakpointListener... breakpointListeners) {
+		if (targetEngine == null) {
+			return;
+		}
 		
 		// Stop old engine:
 		stopEngine();
-		
+
 		// New engine:
 		this.matchingEngine = targetEngine.createPatternMatchingEngine(graphpattern, targetModels);
 
 		if (targetEngine != null) {
-			
+
 			// Install debuggable matching engine:
 			SiriusUtil.edit(graphpattern, () -> {
 				debuggableEngine = new PatternMatchingDebugger();
 				debuggableEngine.install(matchingEngine);
 			});
-			
+
 			// Breakpoint events:
 			for (BreakpointListener breakpointListener : breakpointListeners) {
 				debuggableEngine.addBreakpointListener(breakpointListener);
@@ -124,9 +130,9 @@ public class EngineManager {
 			debuggableEngine.start(matchingEngine);
 		}
 	}
-	
+
 	public void stopEngine() {
-		
+
 		try {
 			if (debuggableEngine != null) {
 				// Debuggable engine:
@@ -138,15 +144,15 @@ public class EngineManager {
 				}
 			}
 		} finally {
-			
+
 			// Reset Engine-Manager:
 			debuggableEngine = null;
 			matchingEngine = null;
-			
+
 			// FIXME[WORKAROUND]: Undeletable repair-operations!?
 			ResourceSet oldRSS = targetModels;
 			targetModels = new ResourceSetImpl();
-			
+
 			for (Resource oldRes : oldRSS.getResources()) {
 				try {
 					Resource newRes = targetModels.createResource(oldRes.getURI());
@@ -155,12 +161,12 @@ public class EngineManager {
 					e.printStackTrace();
 				}
 			}
-			
+
 			System.gc();
 			//---------------------------------------------------
 		}
 	}
-	
+
 	public void removeEvaluations() {
 		SiriusUtil.edit(graphpattern, () -> {
 			for (NodePattern node : EngineManager.getInstance().getGraphPattern().getNodes()) {
@@ -168,9 +174,9 @@ public class EngineManager {
 			}
 		});
 	}
-	
+
 	public void resumeAllBreakpoints() {
-		
+
 		if (debuggableEngine != null) {
 			debuggableEngine.resumeAllBreakpoints();
 		}
