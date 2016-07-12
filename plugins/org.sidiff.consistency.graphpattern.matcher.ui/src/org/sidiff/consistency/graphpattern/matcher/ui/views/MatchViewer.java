@@ -249,11 +249,11 @@ public class MatchViewer extends ViewPart {
 				if (item == null) {
 					return;
 				}
-				if (viewer_matching.getExpandedState(item)) {
-					viewer_matching.collapseToLevel(item, TreeViewer.ALL_LEVELS);
+				if (viewer_variables.getExpandedState(item)) {
+					viewer_variables.collapseToLevel(item, TreeViewer.ALL_LEVELS);
 				}
 				else {
-					viewer_matching.expandToLevel(item, 1);
+					viewer_variables.expandToLevel(item, 1);
 				}
 			}
 		});
