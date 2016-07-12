@@ -62,7 +62,7 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "org.sidiff.consistency.graphpattern.matcher.ui.views.PatternMatchingEngineView";
-
+	
 	/**
 	 * The EMF-Model viewer showing the graph pattern.
 	 */
@@ -148,11 +148,13 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 				FileTransfer.getInstance() };
 
 		// List of target models:
-		viewer_models = new TableViewer(sashForm, SWT.H_SCROLL | SWT.V_SCROLL);
+		// TODO: Replace this with the ModelDropWidget!
+		viewer_models = new TableViewer(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		{
 			viewer_models.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
 			viewer_models.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
 			viewer_models.setSorter(new NameSorter());
+			viewer_models.add(PatternMatchingEngineViewApp.MSG_MODEL_DROP_INFO);
 		}
 
 		viewer_models.addDropSupport(dndOperations, transfers, new ViewerDropAdapter(viewer_models) {
@@ -330,6 +332,7 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 		manager.add(new Separator());
 		manager.add(printInfoAction);
 		manager.add(new Separator());
+		
 		drillDownAdapter.addNavigationActions(manager);
 	}
 

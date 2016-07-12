@@ -1,6 +1,5 @@
 package org.sidiff.consistency.repair.lifting.ui.views;
 
-import java.util.Collections;
 import java.util.Set;
 
 import org.eclipse.jface.preference.PreferencePage;
@@ -31,9 +30,13 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 
 	public static final String ID = "org.sidiff.consistency.repair.lifting.ui.mainpage";
 	
-	protected static Set<IMatcher> matchers = Collections.emptySet();
+	protected static final String SETUP_MATCHERS_MESSAGE = "Please first add the models!";
+	
+	protected static final String EMPTY_MATCHERS_MESSAGE = "No matchers available for the given model type.";
 	
 	// TODO: IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+	protected static Set<IMatcher> matchers;
+	
 	private static IMatcher matcher;
 	
 	//// UI ////
@@ -74,7 +77,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		{
 			Combo combo_matching = viewer_matching.getCombo();
 			combo_matching.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
+			
 			// Provider:
 			viewer_matching.setSorter(new ViewerSorter());
 			viewer_matching.setContentProvider(ArrayContentProvider.getInstance());
@@ -94,6 +97,16 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			// Input:
 			if (viewer_matching.getInput() != matchers) {
 				viewer_matching.setInput(matchers);
+			}
+			
+			if (matchers == null) {
+				viewer_matching.add(SETUP_MATCHERS_MESSAGE);
+				viewer_matching.setSelection(new StructuredSelection(SETUP_MATCHERS_MESSAGE));
+			}
+			
+			if ((matchers != null) && (matchers.isEmpty())) {
+				viewer_matching.add(EMPTY_MATCHERS_MESSAGE);
+				viewer_matching.setSelection(new StructuredSelection(EMPTY_MATCHERS_MESSAGE));
 			}
 			
 			// Selection:

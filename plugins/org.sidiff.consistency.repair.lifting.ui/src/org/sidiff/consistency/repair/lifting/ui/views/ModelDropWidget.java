@@ -25,13 +25,17 @@ public abstract class ModelDropWidget {
 
 	protected TableViewer viewer_models;
 	
-	public ModelDropWidget(Composite parent) {
+	protected String dropMessage = "Please drop the model(s) here!";
+	
+	public ModelDropWidget(Composite parent, String dropMessage) {
+		this.dropMessage = dropMessage;
 		
 		// Initialize:
 		viewer_models = new TableViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		{
 			viewer_models.setContentProvider(new ArrayContentProvider());
 			viewer_models.setLabelProvider(new StorageLabelProvider());
+			viewer_models.add(dropMessage);
 		}
 		
 		// Drag and Drop support:
@@ -126,6 +130,7 @@ public abstract class ModelDropWidget {
 		if (resource.getType() == IResource.FILE) {
 			if (addModel(resource)) {
 				viewer_models.add(resource);
+				viewer_models.remove(dropMessage);
 			}
 		}
 	}
@@ -134,10 +139,15 @@ public abstract class ModelDropWidget {
 		if (removeModel(resource)) {
 			viewer_models.remove(resource);
 		}
+		
+		if (viewer_models.getInput() == null) {
+			viewer_models.add(dropMessage);
+		}
 	}
 	
 	public void clear() {
 		viewer_models.setInput(null);
+		viewer_models.add(dropMessage);
 	}
 
 	protected abstract boolean addModel(IResource element);

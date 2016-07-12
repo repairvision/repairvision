@@ -31,7 +31,7 @@ public class PatternMatchingEngineViewApp implements BreakpointListener {
 	/**
 	 * Model DnD-List message.
 	 */
-	private static final String MSG_MODEL_DROP_INFO = "Please drop the target model(s) here!";
+	protected static final String MSG_MODEL_DROP_INFO = "Please drop the target model(s) here!";
 	
 	/**
 	 * Empty selection console message.

@@ -91,7 +91,7 @@ public class RepairView extends ViewPart {
 		Composite composite_editrules = new Composite(sashForm, SWT.BORDER);
 		composite_editrules.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		new ModelDropWidget(composite_editrules) {
+		new ModelDropWidget(composite_editrules, "Please drop the edit-rule(s) here!") {
 
 			@Override
 			protected boolean removeModel(IResource selection) {
@@ -108,7 +108,7 @@ public class RepairView extends ViewPart {
 		Composite composite_modelA = new Composite(sashForm, SWT.BORDER);
 		composite_modelA.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		new ModelDropWidget(composite_modelA) {
+		new ModelDropWidget(composite_modelA, "Please drop the previous model version here!") {
 
 			@Override
 			protected boolean removeModel(IResource selection) {
@@ -126,7 +126,7 @@ public class RepairView extends ViewPart {
 		Composite composite_modelB = new Composite(sashForm, SWT.BORDER);
 		composite_modelB.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		new ModelDropWidget(composite_modelB) {
+		new ModelDropWidget(composite_modelB, "Please drop the actual model version here!") {
 
 			@Override
 			protected boolean removeModel(IResource selection) {
