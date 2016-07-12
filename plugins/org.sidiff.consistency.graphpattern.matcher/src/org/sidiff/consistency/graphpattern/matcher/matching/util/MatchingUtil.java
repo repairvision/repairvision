@@ -33,11 +33,12 @@ public class MatchingUtil {
 	 */
 	public static EObjectList createMatching(IMatchGenerator<? extends IMatching> matchGenerator, IMatching matching) {
 		EObjectList graphPatternMatching = GraphpatternFactory.eINSTANCE.createEObjectList();
-		graphPatternMatching.setLabel("Matching");
-
+		int count = 0;
+		
 		for (NodePattern node : matchGenerator.getGraphPattern()) {
 			EObjectList nodeMatching = GraphpatternFactory.eINSTANCE.createEObjectList();
 			nodeMatching.setLabel("Node Matching");
+			++count;
 
 			matching.getMatch(node).forEachRemaining(match -> {
 				if (match != null) {
@@ -51,6 +52,7 @@ public class MatchingUtil {
 
 			else if (nodeMatching.getContent().isEmpty()) {
 				graphPatternMatching.getContent().add(EMPTY_MATCH);
+				--count;
 			}
 
 			else {
@@ -58,6 +60,7 @@ public class MatchingUtil {
 			}
 		}
 
+		graphPatternMatching.setLabel("Matching [" + count + "/" + matchGenerator.getGraphPattern().size() + "]");
 		return graphPatternMatching;
 	}
 }

@@ -145,14 +145,16 @@ public class MatchViewerApp {
 	
 	private void addVariableMatch(Map<NodePattern, ? extends INodeMatching> matching) {
 		EObjectList assignment = GraphpatternFactory.eINSTANCE.createEObjectList();
-		assignment.setLabel("Variable Assignment");
+		int count = 0;
 		
 		for (INodeMatching match : matching.values()) {
 			if (match.getMatch() != null) {
 				assignment.getContent().add(match.getMatch());
+				++count;
 			}
 		}
 		
+		assignment.setLabel("Variable Assignment [" + count + "/" + matching.size() + "]");
 		variableAssignments.add(assignment);
 	}
 
