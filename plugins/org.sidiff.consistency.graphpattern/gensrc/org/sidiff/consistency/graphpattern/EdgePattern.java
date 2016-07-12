@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model
  * @generated
  */
-public interface EdgePattern extends GraphPredicate {
+public interface EdgePattern extends GraphPatternElement {
 	/**
 	 * Returns the value of the '<em><b>Target</b></em>' reference.
 	 * It is bidirectional and its opposite is '{@link org.sidiff.consistency.graphpattern.NodePattern#getIncomings <em>Incomings</em>}'.

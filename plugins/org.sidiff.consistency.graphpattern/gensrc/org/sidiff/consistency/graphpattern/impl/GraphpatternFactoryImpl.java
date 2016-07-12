@@ -73,11 +73,7 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 			case GraphpatternPackage.PARAMETER: return createParameter();
 			case GraphpatternPackage.FOR_ALL: return createForAll();
 			case GraphpatternPackage.EXISTS: return createExists();
-			case GraphpatternPackage.AND_GROUP: return createAndGroup();
-			case GraphpatternPackage.OR_GROUP: return createOrGroup();
-			case GraphpatternPackage.GRAPH_CONSTRAINT: return createGraphConstraint();
-			case GraphpatternPackage.XOR_GROUP: return createXorGroup();
-			case GraphpatternPackage.IFF_GROUP: return createIffGroup();
+			case GraphpatternPackage.GRAPH_FORMULA: return createGraphFormula();
 			case GraphpatternPackage.EOBJECT_LIST: return createEObjectList();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -245,49 +241,9 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AndGroup createAndGroup() {
-		AndGroupImpl andGroup = new AndGroupImpl();
-		return andGroup;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public OrGroup createOrGroup() {
-		OrGroupImpl orGroup = new OrGroupImpl();
-		return orGroup;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public GraphConstraint createGraphConstraint() {
-		GraphConstraintImpl graphConstraint = new GraphConstraintImpl();
-		return graphConstraint;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public XorGroup createXorGroup() {
-		XorGroupImpl xorGroup = new XorGroupImpl();
-		return xorGroup;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public IffGroup createIffGroup() {
-		IffGroupImpl iffGroup = new IffGroupImpl();
-		return iffGroup;
+	public GraphFormula createGraphFormula() {
+		GraphFormulaImpl graphFormula = new GraphFormulaImpl();
+		return graphFormula;
 	}
 
 	/**

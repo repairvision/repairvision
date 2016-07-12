@@ -32,7 +32,7 @@ import org.sidiff.consistency.graphpattern.NodePattern;
  *
  * @generated
  */
-public class EdgePatternImpl extends GraphPredicateImpl implements EdgePattern {
+public class EdgePatternImpl extends GraphPatternElementImpl implements EdgePattern {
 	/**
 	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
 	 * <!-- begin-user-doc -->

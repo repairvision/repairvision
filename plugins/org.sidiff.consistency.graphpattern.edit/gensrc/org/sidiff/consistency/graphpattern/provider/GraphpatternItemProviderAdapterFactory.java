@@ -373,118 +373,26 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.AndGroup} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.GraphFormula} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected AndGroupItemProvider andGroupItemProvider;
+	protected GraphFormulaItemProvider graphFormulaItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.AndGroup}.
+	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.GraphFormula}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createAndGroupAdapter() {
-		if (andGroupItemProvider == null) {
-			andGroupItemProvider = new AndGroupItemProvider(this);
+	public Adapter createGraphFormulaAdapter() {
+		if (graphFormulaItemProvider == null) {
+			graphFormulaItemProvider = new GraphFormulaItemProvider(this);
 		}
 
-		return andGroupItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.OrGroup} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected OrGroupItemProvider orGroupItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.OrGroup}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createOrGroupAdapter() {
-		if (orGroupItemProvider == null) {
-			orGroupItemProvider = new OrGroupItemProvider(this);
-		}
-
-		return orGroupItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.GraphConstraint} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected GraphConstraintItemProvider graphConstraintItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.GraphConstraint}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createGraphConstraintAdapter() {
-		if (graphConstraintItemProvider == null) {
-			graphConstraintItemProvider = new GraphConstraintItemProvider(this);
-		}
-
-		return graphConstraintItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.XorGroup} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected XorGroupItemProvider xorGroupItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.XorGroup}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createXorGroupAdapter() {
-		if (xorGroupItemProvider == null) {
-			xorGroupItemProvider = new XorGroupItemProvider(this);
-		}
-
-		return xorGroupItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.IffGroup} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected IffGroupItemProvider iffGroupItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.IffGroup}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createIffGroupAdapter() {
-		if (iffGroupItemProvider == null) {
-			iffGroupItemProvider = new IffGroupItemProvider(this);
-		}
-
-		return iffGroupItemProvider;
+		return graphFormulaItemProvider;
 	}
 
 	/**
@@ -694,11 +602,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 		if (parameterItemProvider != null) parameterItemProvider.dispose();
 		if (forAllItemProvider != null) forAllItemProvider.dispose();
 		if (existsItemProvider != null) existsItemProvider.dispose();
-		if (andGroupItemProvider != null) andGroupItemProvider.dispose();
-		if (orGroupItemProvider != null) orGroupItemProvider.dispose();
-		if (graphConstraintItemProvider != null) graphConstraintItemProvider.dispose();
-		if (xorGroupItemProvider != null) xorGroupItemProvider.dispose();
-		if (iffGroupItemProvider != null) iffGroupItemProvider.dispose();
+		if (graphFormulaItemProvider != null) graphFormulaItemProvider.dispose();
 		if (eObjectListItemProvider != null) eObjectListItemProvider.dispose();
 	}
 

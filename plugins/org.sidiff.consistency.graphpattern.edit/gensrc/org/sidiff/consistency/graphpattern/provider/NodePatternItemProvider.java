@@ -28,7 +28,7 @@ import org.sidiff.consistency.graphpattern.edit.util.LabelServices;
  * @generated
  */
 public class NodePatternItemProvider 
-	extends GraphPredicateItemProvider {
+	extends GraphPatternElementItemProvider {
 	
 	/**
 	 * @generated NOT

@@ -18,20 +18,17 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.sidiff.consistency.graphpattern.GraphPredicate;
 import org.sidiff.consistency.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.GraphPredicate} object.
+ * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.GraphFormula} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class GraphPredicateItemProvider 
+public class GraphFormulaItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -45,7 +42,7 @@ public class GraphPredicateItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphPredicateItemProvider(AdapterFactory adapterFactory) {
+	public GraphFormulaItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,49 +57,25 @@ public class GraphPredicateItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
-			addConstraintsPropertyDescriptor(object);
-			addQuantifierPropertyDescriptor(object);
+			addPredicatesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This adds a property descriptor for the Predicates feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addPredicatesPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_GraphPredicate_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPredicate_name_feature", "_UI_GraphPredicate_type"),
-				 GraphpatternPackage.Literals.GRAPH_PREDICATE__NAME,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Constraints feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addConstraintsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_GraphPredicate_constraints_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPredicate_constraints_feature", "_UI_GraphPredicate_type"),
-				 GraphpatternPackage.Literals.GRAPH_PREDICATE__CONSTRAINTS,
+				 getString("_UI_GraphFormula_predicates_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_GraphFormula_predicates_feature", "_UI_GraphFormula_type"),
+				 GraphpatternPackage.Literals.GRAPH_FORMULA__PREDICATES,
 				 true,
 				 false,
 				 true,
@@ -112,25 +85,14 @@ public class GraphPredicateItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Quantifier feature.
+	 * This returns GraphFormula.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addQuantifierPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_GraphPredicate_quantifier_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPredicate_quantifier_feature", "_UI_GraphPredicate_type"),
-				 GraphpatternPackage.Literals.GRAPH_PREDICATE__QUANTIFIER,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/GraphFormula"));
 	}
 
 	/**
@@ -141,10 +103,7 @@ public class GraphPredicateItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((GraphPredicate)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_GraphPredicate_type") :
-			getString("_UI_GraphPredicate_type") + " " + label;
+		return getString("_UI_GraphFormula_type");
 	}
 	
 
@@ -158,12 +117,6 @@ public class GraphPredicateItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
-
-		switch (notification.getFeatureID(GraphPredicate.class)) {
-			case GraphpatternPackage.GRAPH_PREDICATE__NAME:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
 		super.notifyChanged(notification);
 	}
 

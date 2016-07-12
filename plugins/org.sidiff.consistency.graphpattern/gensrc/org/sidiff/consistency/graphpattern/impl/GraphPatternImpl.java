@@ -34,7 +34,7 @@ import org.sidiff.consistency.graphpattern.Pattern;
  *
  * @generated
  */
-public class GraphPatternImpl extends GraphPredicateImpl implements GraphPattern {
+public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPattern {
 	/**
 	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

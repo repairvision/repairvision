@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.consistency.graphpattern.EObjectList#getContent <em>Content</em>}</li>
+ *   <li>{@link org.sidiff.consistency.graphpattern.EObjectList#getLabel <em>Label</em>}</li>
  * </ul>
  *
  * @see org.sidiff.consistency.graphpattern.GraphpatternPackage#getEObjectList()
@@ -37,5 +38,32 @@ public interface EObjectList extends EObject {
 	 * @generated
 	 */
 	EList<EObject> getContent();
+
+	/**
+	 * Returns the value of the '<em><b>Label</b></em>' attribute.
+	 * The default value is <code>""</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Label</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Label</em>' attribute.
+	 * @see #setLabel(String)
+	 * @see org.sidiff.consistency.graphpattern.GraphpatternPackage#getEObjectList_Label()
+	 * @model default=""
+	 * @generated
+	 */
+	String getLabel();
+
+	/**
+	 * Sets the value of the '{@link org.sidiff.consistency.graphpattern.EObjectList#getLabel <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Label</em>' attribute.
+	 * @see #getLabel()
+	 * @generated
+	 */
+	void setLabel(String value);
 
 } // EObjectList

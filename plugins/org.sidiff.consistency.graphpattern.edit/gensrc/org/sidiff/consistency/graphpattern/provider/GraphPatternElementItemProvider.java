@@ -11,7 +11,6 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -19,17 +18,20 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import org.sidiff.consistency.graphpattern.GraphPatternElement;
 import org.sidiff.consistency.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.GraphMatch} object.
+ * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.GraphPatternElement} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class GraphMatchItemProvider 
+public class GraphPatternElementItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -43,7 +45,7 @@ public class GraphMatchItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphMatchItemProvider(AdapterFactory adapterFactory) {
+	public GraphPatternElementItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -58,26 +60,49 @@ public class GraphMatchItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addGraphPatternPropertyDescriptor(object);
-			addMatchingPropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
+			addFormulasPropertyDescriptor(object);
+			addQuantifierPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Graph Pattern feature.
+	 * This adds a property descriptor for the Name feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addGraphPatternPropertyDescriptor(Object object) {
+	protected void addNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_GraphMatch_graphPattern_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GraphMatch_graphPattern_feature", "_UI_GraphMatch_type"),
-				 GraphpatternPackage.Literals.GRAPH_MATCH__GRAPH_PATTERN,
+				 getString("_UI_GraphPatternElement_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPatternElement_name_feature", "_UI_GraphPatternElement_type"),
+				 GraphpatternPackage.Literals.GRAPH_PATTERN_ELEMENT__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Formulas feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addFormulasPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_GraphPatternElement_formulas_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPatternElement_formulas_feature", "_UI_GraphPatternElement_type"),
+				 GraphpatternPackage.Literals.GRAPH_PATTERN_ELEMENT__FORMULAS,
 				 true,
 				 false,
 				 true,
@@ -87,66 +112,25 @@ public class GraphMatchItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Matching feature.
+	 * This adds a property descriptor for the Quantifier feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addMatchingPropertyDescriptor(Object object) {
+	protected void addQuantifierPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_GraphMatch_matching_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GraphMatch_matching_feature", "_UI_GraphMatch_type"),
-				 GraphpatternPackage.Literals.GRAPH_MATCH__MATCHING,
+				 getString("_UI_GraphPatternElement_quantifier_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPatternElement_quantifier_feature", "_UI_GraphPatternElement_type"),
+				 GraphpatternPackage.Literals.GRAPH_PATTERN_ELEMENT__QUANTIFIER,
 				 true,
 				 false,
 				 true,
 				 null,
 				 null,
 				 null));
-	}
-
-	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(GraphpatternPackage.Literals.GRAPH_MATCH__MATCHING);
-		}
-		return childrenFeatures;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
-	}
-
-	/**
-	 * This returns GraphMatch.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/GraphMatch"));
 	}
 
 	/**
@@ -157,7 +141,10 @@ public class GraphMatchItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_GraphMatch_type");
+		String label = ((GraphPatternElement)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_GraphPatternElement_type") :
+			getString("_UI_GraphPatternElement_type") + " " + label;
 	}
 	
 
@@ -171,6 +158,12 @@ public class GraphMatchItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(GraphPatternElement.class)) {
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__NAME:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 

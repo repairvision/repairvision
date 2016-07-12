@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 
 import org.sidiff.consistency.graphpattern.And;
-import org.sidiff.consistency.graphpattern.AndGroup;
 import org.sidiff.consistency.graphpattern.AttributePattern;
 import org.sidiff.consistency.graphpattern.BinaryFormula;
 import org.sidiff.consistency.graphpattern.DataStore;
@@ -25,21 +24,17 @@ import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.Exists;
 import org.sidiff.consistency.graphpattern.ForAll;
 import org.sidiff.consistency.graphpattern.Formula;
-import org.sidiff.consistency.graphpattern.GraphConstraint;
-import org.sidiff.consistency.graphpattern.GraphMatch;
+import org.sidiff.consistency.graphpattern.GraphFormula;
 import org.sidiff.consistency.graphpattern.GraphPattern;
-import org.sidiff.consistency.graphpattern.GraphPredicate;
+import org.sidiff.consistency.graphpattern.GraphPatternElement;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.GraphpatternPackage;
 import org.sidiff.consistency.graphpattern.If;
 import org.sidiff.consistency.graphpattern.Iff;
-import org.sidiff.consistency.graphpattern.IffGroup;
-import org.sidiff.consistency.graphpattern.NAryFormula;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.Not;
 import org.sidiff.consistency.graphpattern.Or;
-import org.sidiff.consistency.graphpattern.OrGroup;
 import org.sidiff.consistency.graphpattern.Parameter;
 import org.sidiff.consistency.graphpattern.Pattern;
 import org.sidiff.consistency.graphpattern.Quantifier;
@@ -47,7 +42,6 @@ import org.sidiff.consistency.graphpattern.RuleBase;
 import org.sidiff.consistency.graphpattern.UnaryFormula;
 import org.sidiff.consistency.graphpattern.Visitor;
 import org.sidiff.consistency.graphpattern.Xor;
-import org.sidiff.consistency.graphpattern.XorGroup;
 
 /**
  * <!-- begin-user-doc -->
@@ -201,42 +195,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass nAryFormulaEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass andGroupEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass orGroupEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass graphConstraintEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass xorGroupEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass iffGroupEClass = null;
+	private EClass graphFormulaEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -264,7 +223,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass graphPredicateEClass = null;
+	private EClass graphPatternElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -272,13 +231,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	private EClass parameterEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass graphMatchEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1011,8 +963,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getNAryFormula() {
-		return nAryFormulaEClass;
+	public EClass getGraphFormula() {
+		return graphFormulaEClass;
 	}
 
 	/**
@@ -1020,71 +972,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getNAryFormula_Results() {
-		return (EAttribute)nAryFormulaEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNAryFormula_Formulas() {
-		return (EReference)nAryFormulaEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getAndGroup() {
-		return andGroupEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getOrGroup() {
-		return orGroupEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getGraphConstraint() {
-		return graphConstraintEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphConstraint_GraphPredicates() {
-		return (EReference)graphConstraintEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getXorGroup() {
-		return xorGroupEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getIffGroup() {
-		return iffGroupEClass;
+	public EReference getGraphFormula_Predicates() {
+		return (EReference)graphFormulaEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1103,6 +992,15 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 */
 	public EReference getEObjectList_Content() {
 		return (EReference)eObjectListEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEObjectList_Label() {
+		return (EAttribute)eObjectListEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1155,8 +1053,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getGraphPredicate() {
-		return graphPredicateEClass;
+	public EClass getGraphPatternElement() {
+		return graphPatternElementEClass;
 	}
 
 	/**
@@ -1164,8 +1062,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGraphPredicate_Name() {
-		return (EAttribute)graphPredicateEClass.getEStructuralFeatures().get(0);
+	public EAttribute getGraphPatternElement_Name() {
+		return (EAttribute)graphPatternElementEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1173,8 +1071,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGraphPredicate_Constraints() {
-		return (EReference)graphPredicateEClass.getEStructuralFeatures().get(1);
+	public EReference getGraphPatternElement_Formulas() {
+		return (EReference)graphPatternElementEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1182,8 +1080,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGraphPredicate_Quantifier() {
-		return (EReference)graphPredicateEClass.getEStructuralFeatures().get(2);
+	public EReference getGraphPatternElement_Quantifier() {
+		return (EReference)graphPatternElementEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1202,42 +1100,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 */
 	public EAttribute getParameter_Name() {
 		return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getGraphMatch() {
-		return graphMatchEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphMatch_GraphPattern() {
-		return (EReference)graphMatchEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphMatch_Matching() {
-		return (EReference)graphMatchEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getGraphMatch__GetMatch__NodePattern() {
-		return graphMatchEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -1379,18 +1241,13 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEReference(patternEClass, PATTERN__GRAPHS);
 		createEReference(patternEClass, PATTERN__PARAMETERS);
 
-		graphPredicateEClass = createEClass(GRAPH_PREDICATE);
-		createEAttribute(graphPredicateEClass, GRAPH_PREDICATE__NAME);
-		createEReference(graphPredicateEClass, GRAPH_PREDICATE__CONSTRAINTS);
-		createEReference(graphPredicateEClass, GRAPH_PREDICATE__QUANTIFIER);
+		graphPatternElementEClass = createEClass(GRAPH_PATTERN_ELEMENT);
+		createEAttribute(graphPatternElementEClass, GRAPH_PATTERN_ELEMENT__NAME);
+		createEReference(graphPatternElementEClass, GRAPH_PATTERN_ELEMENT__FORMULAS);
+		createEReference(graphPatternElementEClass, GRAPH_PATTERN_ELEMENT__QUANTIFIER);
 
 		parameterEClass = createEClass(PARAMETER);
 		createEAttribute(parameterEClass, PARAMETER__NAME);
-
-		graphMatchEClass = createEClass(GRAPH_MATCH);
-		createEReference(graphMatchEClass, GRAPH_MATCH__GRAPH_PATTERN);
-		createEReference(graphMatchEClass, GRAPH_MATCH__MATCHING);
-		createEOperation(graphMatchEClass, GRAPH_MATCH___GET_MATCH__NODEPATTERN);
 
 		forAllEClass = createEClass(FOR_ALL);
 
@@ -1398,23 +1255,12 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEAttribute(existsEClass, EXISTS__LOWER_BOUND);
 		createEAttribute(existsEClass, EXISTS__UPPER_BOUND);
 
-		nAryFormulaEClass = createEClass(NARY_FORMULA);
-		createEAttribute(nAryFormulaEClass, NARY_FORMULA__RESULTS);
-		createEReference(nAryFormulaEClass, NARY_FORMULA__FORMULAS);
-
-		andGroupEClass = createEClass(AND_GROUP);
-
-		orGroupEClass = createEClass(OR_GROUP);
-
-		graphConstraintEClass = createEClass(GRAPH_CONSTRAINT);
-		createEReference(graphConstraintEClass, GRAPH_CONSTRAINT__GRAPH_PREDICATES);
-
-		xorGroupEClass = createEClass(XOR_GROUP);
-
-		iffGroupEClass = createEClass(IFF_GROUP);
+		graphFormulaEClass = createEClass(GRAPH_FORMULA);
+		createEReference(graphFormulaEClass, GRAPH_FORMULA__PREDICATES);
 
 		eObjectListEClass = createEClass(EOBJECT_LIST);
 		createEReference(eObjectListEClass, EOBJECT_LIST__CONTENT);
+		createEAttribute(eObjectListEClass, EOBJECT_LIST__LABEL);
 
 		// Create data types
 		eCollectionEDataType = createEDataType(ECOLLECTION);
@@ -1452,9 +1298,9 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		graphPatternEClass.getESuperTypes().add(this.getGraphPredicate());
-		nodePatternEClass.getESuperTypes().add(this.getGraphPredicate());
-		edgePatternEClass.getESuperTypes().add(this.getGraphPredicate());
+		graphPatternEClass.getESuperTypes().add(this.getGraphPatternElement());
+		nodePatternEClass.getESuperTypes().add(this.getGraphPatternElement());
+		edgePatternEClass.getESuperTypes().add(this.getGraphPatternElement());
 		navigableDataStoreEClass.getESuperTypes().add(this.getDataStore());
 		unaryFormulaEClass.getESuperTypes().add(this.getFormula());
 		binaryFormulaEClass.getESuperTypes().add(this.getFormula());
@@ -1466,12 +1312,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		xorEClass.getESuperTypes().add(this.getBinaryFormula());
 		forAllEClass.getESuperTypes().add(this.getQuantifier());
 		existsEClass.getESuperTypes().add(this.getQuantifier());
-		nAryFormulaEClass.getESuperTypes().add(this.getFormula());
-		andGroupEClass.getESuperTypes().add(this.getNAryFormula());
-		orGroupEClass.getESuperTypes().add(this.getNAryFormula());
-		graphConstraintEClass.getESuperTypes().add(this.getFormula());
-		xorGroupEClass.getESuperTypes().add(this.getNAryFormula());
-		iffGroupEClass.getESuperTypes().add(this.getNAryFormula());
+		graphFormulaEClass.getESuperTypes().add(this.getFormula());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(graphPatternEClass, GraphPattern.class, "GraphPattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1619,20 +1460,13 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		initEReference(getPattern_Graphs(), this.getGraphPattern(), this.getGraphPattern_Pattern(), "graphs", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPattern_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(graphPredicateEClass, GraphPredicate.class, "GraphPredicate", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getGraphPredicate_Name(), ecorePackage.getEString(), "name", null, 0, 1, GraphPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getGraphPredicate_Constraints(), this.getGraphConstraint(), this.getGraphConstraint_GraphPredicates(), "constraints", null, 0, -1, GraphPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getGraphPredicate_Quantifier(), this.getQuantifier(), null, "quantifier", null, 0, 1, GraphPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(graphPatternElementEClass, GraphPatternElement.class, "GraphPatternElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getGraphPatternElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, GraphPatternElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGraphPatternElement_Formulas(), this.getGraphFormula(), this.getGraphFormula_Predicates(), "formulas", null, 0, -1, GraphPatternElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGraphPatternElement_Quantifier(), this.getQuantifier(), null, "quantifier", null, 0, 1, GraphPatternElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(graphMatchEClass, GraphMatch.class, "GraphMatch", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGraphMatch_GraphPattern(), this.getGraphPattern(), null, "graphPattern", null, 1, 1, GraphMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getGraphMatch_Matching(), ecorePackage.getEObject(), null, "matching", null, 0, -1, GraphMatch.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-
-		op = initEOperation(getGraphMatch__GetMatch__NodePattern(), ecorePackage.getEObject(), "getMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getNodePattern(), "node", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(forAllEClass, ForAll.class, "ForAll", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1640,23 +1474,12 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		initEAttribute(getExists_LowerBound(), ecorePackage.getEInt(), "lowerBound", "1", 0, 1, Exists.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getExists_UpperBound(), ecorePackage.getEInt(), "upperBound", "-1", 0, 1, Exists.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(nAryFormulaEClass, NAryFormula.class, "NAryFormula", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getNAryFormula_Results(), ecorePackage.getEBoolean(), "results", null, 0, -1, NAryFormula.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNAryFormula_Formulas(), this.getFormula(), null, "formulas", null, 1, -1, NAryFormula.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(andGroupEClass, AndGroup.class, "AndGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(orGroupEClass, OrGroup.class, "OrGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(graphConstraintEClass, GraphConstraint.class, "GraphConstraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGraphConstraint_GraphPredicates(), this.getGraphPredicate(), this.getGraphPredicate_Constraints(), "graphPredicates", null, 1, -1, GraphConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(xorGroupEClass, XorGroup.class, "XorGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(iffGroupEClass, IffGroup.class, "IffGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(graphFormulaEClass, GraphFormula.class, "GraphFormula", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getGraphFormula_Predicates(), this.getGraphPatternElement(), this.getGraphPatternElement_Formulas(), "predicates", null, 1, -1, GraphFormula.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(eObjectListEClass, EObjectList.class, "EObjectList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEObjectList_Content(), ecorePackage.getEObject(), null, "content", null, 0, -1, EObjectList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEObjectList_Label(), ecorePackage.getEString(), "label", "", 0, 1, EObjectList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(eCollectionEDataType, Collection.class, "ECollection", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Collection<? extends org.eclipse.emf.ecore.EObject>");

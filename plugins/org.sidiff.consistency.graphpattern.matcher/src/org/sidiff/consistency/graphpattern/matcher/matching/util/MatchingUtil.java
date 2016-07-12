@@ -33,9 +33,11 @@ public class MatchingUtil {
 	 */
 	public static EObjectList createMatching(IMatchGenerator<? extends IMatching> matchGenerator, IMatching matching) {
 		EObjectList graphPatternMatching = GraphpatternFactory.eINSTANCE.createEObjectList();
+		graphPatternMatching.setLabel("Matching");
 
 		for (NodePattern node : matchGenerator.getGraphPattern()) {
 			EObjectList nodeMatching = GraphpatternFactory.eINSTANCE.createEObjectList();
+			nodeMatching.setLabel("Node Matching");
 
 			matching.getMatch(node).forEachRemaining(match -> {
 				if (match != null) {

@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model
  * @generated
  */
-public interface NodePattern extends GraphPredicate {
+public interface NodePattern extends GraphPatternElement {
 	/**
 	 * Returns the value of the '<em><b>Outgoings</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.consistency.graphpattern.EdgePattern}.

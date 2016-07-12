@@ -33,7 +33,7 @@ import org.sidiff.consistency.graphpattern.edit.util.LabelServices;
  * @generated
  */
 public class EdgePatternItemProvider 
-	extends GraphPredicateItemProvider {
+	extends GraphPatternElementItemProvider {
 	
 	/**
 	 * @generated NOT

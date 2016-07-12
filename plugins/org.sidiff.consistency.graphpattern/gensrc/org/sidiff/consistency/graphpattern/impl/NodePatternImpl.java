@@ -43,7 +43,7 @@ import org.sidiff.consistency.graphpattern.NodePattern;
  *
  * @generated
  */
-public class NodePatternImpl extends GraphPredicateImpl implements NodePattern {
+public class NodePatternImpl extends GraphPatternElementImpl implements NodePattern {
 	
 	/**
 	 * The cached value of the '{@link #getOutgoings() <em>Outgoings</em>}' containment reference list.

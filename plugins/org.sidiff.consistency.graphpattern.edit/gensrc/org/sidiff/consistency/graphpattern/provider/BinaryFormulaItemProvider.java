@@ -171,27 +171,7 @@ public class BinaryFormulaItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(GraphpatternPackage.Literals.BINARY_FORMULA__LEFT,
-				 GraphpatternFactory.eINSTANCE.createAndGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.BINARY_FORMULA__LEFT,
-				 GraphpatternFactory.eINSTANCE.createOrGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.BINARY_FORMULA__LEFT,
-				 GraphpatternFactory.eINSTANCE.createGraphConstraint()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.BINARY_FORMULA__LEFT,
-				 GraphpatternFactory.eINSTANCE.createXorGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.BINARY_FORMULA__LEFT,
-				 GraphpatternFactory.eINSTANCE.createIffGroup()));
+				 GraphpatternFactory.eINSTANCE.createGraphFormula()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -226,27 +206,7 @@ public class BinaryFormulaItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(GraphpatternPackage.Literals.BINARY_FORMULA__RIGHT,
-				 GraphpatternFactory.eINSTANCE.createAndGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.BINARY_FORMULA__RIGHT,
-				 GraphpatternFactory.eINSTANCE.createOrGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.BINARY_FORMULA__RIGHT,
-				 GraphpatternFactory.eINSTANCE.createGraphConstraint()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.BINARY_FORMULA__RIGHT,
-				 GraphpatternFactory.eINSTANCE.createXorGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.BINARY_FORMULA__RIGHT,
-				 GraphpatternFactory.eINSTANCE.createIffGroup()));
+				 GraphpatternFactory.eINSTANCE.createGraphFormula()));
 	}
 
 	/**

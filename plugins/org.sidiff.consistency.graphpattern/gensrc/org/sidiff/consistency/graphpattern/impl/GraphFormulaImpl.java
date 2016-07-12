@@ -7,61 +7,52 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.sidiff.consistency.graphpattern.Formula;
+import org.sidiff.consistency.graphpattern.GraphFormula;
+import org.sidiff.consistency.graphpattern.GraphPatternElement;
 import org.sidiff.consistency.graphpattern.GraphpatternPackage;
-import org.sidiff.consistency.graphpattern.NAryFormula;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>NAry Formula</b></em>'.
+ * An implementation of the model object '<em><b>Graph Formula</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.consistency.graphpattern.impl.NAryFormulaImpl#getResults <em>Results</em>}</li>
- *   <li>{@link org.sidiff.consistency.graphpattern.impl.NAryFormulaImpl#getFormulas <em>Formulas</em>}</li>
+ *   <li>{@link org.sidiff.consistency.graphpattern.impl.GraphFormulaImpl#getPredicates <em>Predicates</em>}</li>
  * </ul>
  *
  * @generated
  */
-public abstract class NAryFormulaImpl extends MinimalEObjectImpl.Container implements NAryFormula {
+public class GraphFormulaImpl extends MinimalEObjectImpl.Container implements GraphFormula {
 	/**
-	 * The cached value of the '{@link #getResults() <em>Results</em>}' attribute list.
+	 * The cached value of the '{@link #getPredicates() <em>Predicates</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getResults()
+	 * @see #getPredicates()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Boolean> results;
-
-	/**
-	 * The cached value of the '{@link #getFormulas() <em>Formulas</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getFormulas()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Formula> formulas;
+	protected EList<GraphPatternElement> predicates;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected NAryFormulaImpl() {
+	protected GraphFormulaImpl() {
 		super();
 	}
 
@@ -72,7 +63,7 @@ public abstract class NAryFormulaImpl extends MinimalEObjectImpl.Container imple
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return GraphpatternPackage.Literals.NARY_FORMULA;
+		return GraphpatternPackage.Literals.GRAPH_FORMULA;
 	}
 
 	/**
@@ -80,23 +71,11 @@ public abstract class NAryFormulaImpl extends MinimalEObjectImpl.Container imple
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Boolean> getResults() {
-		if (results == null) {
-			results = new EDataTypeUniqueEList<Boolean>(Boolean.class, this, GraphpatternPackage.NARY_FORMULA__RESULTS);
+	public EList<GraphPatternElement> getPredicates() {
+		if (predicates == null) {
+			predicates = new EObjectWithInverseResolvingEList.ManyInverse<GraphPatternElement>(GraphPatternElement.class, this, GraphpatternPackage.GRAPH_FORMULA__PREDICATES, GraphpatternPackage.GRAPH_PATTERN_ELEMENT__FORMULAS);
 		}
-		return results;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Formula> getFormulas() {
-		if (formulas == null) {
-			formulas = new EObjectContainmentEList<Formula>(Formula.class, this, GraphpatternPackage.NARY_FORMULA__FORMULAS);
-		}
-		return formulas;
+		return predicates;
 	}
 
 	/**
@@ -126,11 +105,26 @@ public abstract class NAryFormulaImpl extends MinimalEObjectImpl.Container imple
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case GraphpatternPackage.GRAPH_FORMULA__PREDICATES:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getPredicates()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case GraphpatternPackage.NARY_FORMULA__FORMULAS:
-				return ((InternalEList<?>)getFormulas()).basicRemove(otherEnd, msgs);
+			case GraphpatternPackage.GRAPH_FORMULA__PREDICATES:
+				return ((InternalEList<?>)getPredicates()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -143,10 +137,8 @@ public abstract class NAryFormulaImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GraphpatternPackage.NARY_FORMULA__RESULTS:
-				return getResults();
-			case GraphpatternPackage.NARY_FORMULA__FORMULAS:
-				return getFormulas();
+			case GraphpatternPackage.GRAPH_FORMULA__PREDICATES:
+				return getPredicates();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -160,13 +152,9 @@ public abstract class NAryFormulaImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GraphpatternPackage.NARY_FORMULA__RESULTS:
-				getResults().clear();
-				getResults().addAll((Collection<? extends Boolean>)newValue);
-				return;
-			case GraphpatternPackage.NARY_FORMULA__FORMULAS:
-				getFormulas().clear();
-				getFormulas().addAll((Collection<? extends Formula>)newValue);
+			case GraphpatternPackage.GRAPH_FORMULA__PREDICATES:
+				getPredicates().clear();
+				getPredicates().addAll((Collection<? extends GraphPatternElement>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -180,11 +168,8 @@ public abstract class NAryFormulaImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.NARY_FORMULA__RESULTS:
-				getResults().clear();
-				return;
-			case GraphpatternPackage.NARY_FORMULA__FORMULAS:
-				getFormulas().clear();
+			case GraphpatternPackage.GRAPH_FORMULA__PREDICATES:
+				getPredicates().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -198,10 +183,8 @@ public abstract class NAryFormulaImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.NARY_FORMULA__RESULTS:
-				return results != null && !results.isEmpty();
-			case GraphpatternPackage.NARY_FORMULA__FORMULAS:
-				return formulas != null && !formulas.isEmpty();
+			case GraphpatternPackage.GRAPH_FORMULA__PREDICATES:
+				return predicates != null && !predicates.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -214,28 +197,12 @@ public abstract class NAryFormulaImpl extends MinimalEObjectImpl.Container imple
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case GraphpatternPackage.NARY_FORMULA___GET_RESULT:
+			case GraphpatternPackage.GRAPH_FORMULA___GET_RESULT:
 				return getResult();
-			case GraphpatternPackage.NARY_FORMULA___GET_EMBEDDING:
+			case GraphpatternPackage.GRAPH_FORMULA___GET_EMBEDDING:
 				return getEmbedding();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (results: ");
-		result.append(results);
-		result.append(')');
-		return result.toString();
-	}
-
-} //NAryFormulaImpl
+} //GraphFormulaImpl

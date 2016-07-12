@@ -114,12 +114,14 @@ public class MatchViewerApp {
 					
 					// Show matches to the UI:
 					EObjectList matchingList = GraphpatternFactory.eINSTANCE.createEObjectList();
+					matchingList.setLabel("Matchings");
 					matchingList.getContent().addAll(allMatchings);
 					
 					MatchViewerApp.this.viewer_matching.setInput(matchingList);
 					MatchViewerApp.this.viewer_matching.refresh();
 					
 					EObjectList assignmentList = GraphpatternFactory.eINSTANCE.createEObjectList();
+					assignmentList.setLabel("Variable Assignments");
 					assignmentList.getContent().addAll(variableAssignments);
 					
 					MatchViewerApp.this.viewer_variables.setInput(assignmentList);
@@ -143,6 +145,7 @@ public class MatchViewerApp {
 	
 	private void addVariableMatch(Map<NodePattern, ? extends INodeMatching> matching) {
 		EObjectList assignment = GraphpatternFactory.eINSTANCE.createEObjectList();
+		assignment.setLabel("Variable Assignment");
 		
 		for (INodeMatching match : matching.values()) {
 			if (match.getMatch() != null) {
@@ -180,7 +183,6 @@ public class MatchViewerApp {
 				public boolean canUndo() {
 					return false;
 				}
-
 			});
 		}
 		SiriusUtil.refreshActiveEditor();

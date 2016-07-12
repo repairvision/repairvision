@@ -3,39 +3,42 @@
 package org.sidiff.consistency.graphpattern.impl;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.sidiff.consistency.graphpattern.GraphConstraint;
-import org.sidiff.consistency.graphpattern.GraphPredicate;
+
+import org.sidiff.consistency.graphpattern.GraphFormula;
+import org.sidiff.consistency.graphpattern.GraphPatternElement;
 import org.sidiff.consistency.graphpattern.GraphpatternPackage;
 import org.sidiff.consistency.graphpattern.Quantifier;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Graph Predicate</b></em>'.
+ * An implementation of the model object '<em><b>Graph Pattern Element</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.consistency.graphpattern.impl.GraphPredicateImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.sidiff.consistency.graphpattern.impl.GraphPredicateImpl#getConstraints <em>Constraints</em>}</li>
- *   <li>{@link org.sidiff.consistency.graphpattern.impl.GraphPredicateImpl#getQuantifier <em>Quantifier</em>}</li>
+ *   <li>{@link org.sidiff.consistency.graphpattern.impl.GraphPatternElementImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.consistency.graphpattern.impl.GraphPatternElementImpl#getFormulas <em>Formulas</em>}</li>
+ *   <li>{@link org.sidiff.consistency.graphpattern.impl.GraphPatternElementImpl#getQuantifier <em>Quantifier</em>}</li>
  * </ul>
  *
  * @generated
  */
-public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container implements GraphPredicate {
+public abstract class GraphPatternElementImpl extends MinimalEObjectImpl.Container implements GraphPatternElement {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -57,14 +60,14 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getConstraints() <em>Constraints</em>}' reference list.
+	 * The cached value of the '{@link #getFormulas() <em>Formulas</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getConstraints()
+	 * @see #getFormulas()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<GraphConstraint> constraints;
+	protected EList<GraphFormula> formulas;
 
 	/**
 	 * The cached value of the '{@link #getQuantifier() <em>Quantifier</em>}' reference.
@@ -81,7 +84,7 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GraphPredicateImpl() {
+	protected GraphPatternElementImpl() {
 		super();
 	}
 
@@ -92,7 +95,7 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return GraphpatternPackage.Literals.GRAPH_PREDICATE;
+		return GraphpatternPackage.Literals.GRAPH_PATTERN_ELEMENT;
 	}
 
 	/**
@@ -113,7 +116,7 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.GRAPH_PREDICATE__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.GRAPH_PATTERN_ELEMENT__NAME, oldName, name));
 	}
 
 	/**
@@ -121,11 +124,11 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<GraphConstraint> getConstraints() {
-		if (constraints == null) {
-			constraints = new EObjectWithInverseResolvingEList.ManyInverse<GraphConstraint>(GraphConstraint.class, this, GraphpatternPackage.GRAPH_PREDICATE__CONSTRAINTS, GraphpatternPackage.GRAPH_CONSTRAINT__GRAPH_PREDICATES);
+	public EList<GraphFormula> getFormulas() {
+		if (formulas == null) {
+			formulas = new EObjectWithInverseResolvingEList.ManyInverse<GraphFormula>(GraphFormula.class, this, GraphpatternPackage.GRAPH_PATTERN_ELEMENT__FORMULAS, GraphpatternPackage.GRAPH_FORMULA__PREDICATES);
 		}
-		return constraints;
+		return formulas;
 	}
 
 	/**
@@ -139,7 +142,7 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 			quantifier = (Quantifier)eResolveProxy(oldQuantifier);
 			if (quantifier != oldQuantifier) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphpatternPackage.GRAPH_PREDICATE__QUANTIFIER, oldQuantifier, quantifier));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphpatternPackage.GRAPH_PATTERN_ELEMENT__QUANTIFIER, oldQuantifier, quantifier));
 			}
 		}
 		return quantifier;
@@ -163,7 +166,7 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 		Quantifier oldQuantifier = quantifier;
 		quantifier = newQuantifier;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.GRAPH_PREDICATE__QUANTIFIER, oldQuantifier, quantifier));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.GRAPH_PATTERN_ELEMENT__QUANTIFIER, oldQuantifier, quantifier));
 	}
 
 	/**
@@ -175,8 +178,8 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_PREDICATE__CONSTRAINTS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getConstraints()).basicAdd(otherEnd, msgs);
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__FORMULAS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getFormulas()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -189,8 +192,8 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_PREDICATE__CONSTRAINTS:
-				return ((InternalEList<?>)getConstraints()).basicRemove(otherEnd, msgs);
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__FORMULAS:
+				return ((InternalEList<?>)getFormulas()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -203,11 +206,11 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_PREDICATE__NAME:
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__NAME:
 				return getName();
-			case GraphpatternPackage.GRAPH_PREDICATE__CONSTRAINTS:
-				return getConstraints();
-			case GraphpatternPackage.GRAPH_PREDICATE__QUANTIFIER:
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__FORMULAS:
+				return getFormulas();
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__QUANTIFIER:
 				if (resolve) return getQuantifier();
 				return basicGetQuantifier();
 		}
@@ -223,14 +226,14 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_PREDICATE__NAME:
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__NAME:
 				setName((String)newValue);
 				return;
-			case GraphpatternPackage.GRAPH_PREDICATE__CONSTRAINTS:
-				getConstraints().clear();
-				getConstraints().addAll((Collection<? extends GraphConstraint>)newValue);
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__FORMULAS:
+				getFormulas().clear();
+				getFormulas().addAll((Collection<? extends GraphFormula>)newValue);
 				return;
-			case GraphpatternPackage.GRAPH_PREDICATE__QUANTIFIER:
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__QUANTIFIER:
 				setQuantifier((Quantifier)newValue);
 				return;
 		}
@@ -245,13 +248,13 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_PREDICATE__NAME:
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case GraphpatternPackage.GRAPH_PREDICATE__CONSTRAINTS:
-				getConstraints().clear();
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__FORMULAS:
+				getFormulas().clear();
 				return;
-			case GraphpatternPackage.GRAPH_PREDICATE__QUANTIFIER:
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__QUANTIFIER:
 				setQuantifier((Quantifier)null);
 				return;
 		}
@@ -266,11 +269,11 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_PREDICATE__NAME:
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case GraphpatternPackage.GRAPH_PREDICATE__CONSTRAINTS:
-				return constraints != null && !constraints.isEmpty();
-			case GraphpatternPackage.GRAPH_PREDICATE__QUANTIFIER:
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__FORMULAS:
+				return formulas != null && !formulas.isEmpty();
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__QUANTIFIER:
 				return quantifier != null;
 		}
 		return super.eIsSet(featureID);
@@ -292,4 +295,4 @@ public abstract class GraphPredicateImpl extends MinimalEObjectImpl.Container im
 		return result.toString();
 	}
 
-} //GraphPredicateImpl
+} //GraphPatternElementImpl

@@ -59,6 +59,61 @@ public interface GraphpatternPackage extends EPackage {
 	GraphpatternPackage eINSTANCE = org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl.init();
 
 	/**
+	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.GraphPatternElementImpl <em>Graph Pattern Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.consistency.graphpattern.impl.GraphPatternElementImpl
+	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getGraphPatternElement()
+	 * @generated
+	 */
+	int GRAPH_PATTERN_ELEMENT = 20;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PATTERN_ELEMENT__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Formulas</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PATTERN_ELEMENT__FORMULAS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Quantifier</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PATTERN_ELEMENT__QUANTIFIER = 2;
+
+	/**
+	 * The number of structural features of the '<em>Graph Pattern Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PATTERN_ELEMENT_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Graph Pattern Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PATTERN_ELEMENT_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.GraphPatternImpl <em>Graph Pattern</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -246,7 +301,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getForAll()
 	 * @generated
 	 */
-	int FOR_ALL = 23;
+	int FOR_ALL = 22;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.ExistsImpl <em>Exists</em>}' class.
@@ -256,7 +311,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getExists()
 	 * @generated
 	 */
-	int EXISTS = 24;
+	int EXISTS = 23;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.XorImpl <em>Xor</em>}' class.
@@ -279,16 +334,6 @@ public interface GraphpatternPackage extends EPackage {
 	int PATTERN = 19;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.GraphPredicateImpl <em>Graph Predicate</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.consistency.graphpattern.impl.GraphPredicateImpl
-	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getGraphPredicate()
-	 * @generated
-	 */
-	int GRAPH_PREDICATE = 20;
-
-	/**
 	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.ParameterImpl <em>Parameter</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -305,61 +350,16 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PREDICATE__NAME = 0;
+	int GRAPH_PATTERN__NAME = GRAPH_PATTERN_ELEMENT__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Constraints</b></em>' reference list.
+	 * The feature id for the '<em><b>Formulas</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PREDICATE__CONSTRAINTS = 1;
-
-	/**
-	 * The feature id for the '<em><b>Quantifier</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_PREDICATE__QUANTIFIER = 2;
-
-	/**
-	 * The number of structural features of the '<em>Graph Predicate</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_PREDICATE_FEATURE_COUNT = 3;
-
-	/**
-	 * The number of operations of the '<em>Graph Predicate</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_PREDICATE_OPERATION_COUNT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_PATTERN__NAME = GRAPH_PREDICATE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Constraints</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_PATTERN__CONSTRAINTS = GRAPH_PREDICATE__CONSTRAINTS;
+	int GRAPH_PATTERN__FORMULAS = GRAPH_PATTERN_ELEMENT__FORMULAS;
 
 	/**
 	 * The feature id for the '<em><b>Quantifier</b></em>' reference.
@@ -368,7 +368,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN__QUANTIFIER = GRAPH_PREDICATE__QUANTIFIER;
+	int GRAPH_PATTERN__QUANTIFIER = GRAPH_PATTERN_ELEMENT__QUANTIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
@@ -377,7 +377,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN__NODES = GRAPH_PREDICATE_FEATURE_COUNT + 0;
+	int GRAPH_PATTERN__NODES = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Pattern</b></em>' container reference.
@@ -386,7 +386,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN__PATTERN = GRAPH_PREDICATE_FEATURE_COUNT + 1;
+	int GRAPH_PATTERN__PATTERN = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Multi</b></em>' attribute.
@@ -395,7 +395,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN__MULTI = GRAPH_PREDICATE_FEATURE_COUNT + 2;
+	int GRAPH_PATTERN__MULTI = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Graph Pattern</em>' class.
@@ -404,7 +404,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN_FEATURE_COUNT = GRAPH_PREDICATE_FEATURE_COUNT + 3;
+	int GRAPH_PATTERN_FEATURE_COUNT = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Graph Pattern</em>' class.
@@ -413,7 +413,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN_OPERATION_COUNT = GRAPH_PREDICATE_OPERATION_COUNT + 0;
+	int GRAPH_PATTERN_OPERATION_COUNT = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -422,16 +422,16 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__NAME = GRAPH_PREDICATE__NAME;
+	int NODE_PATTERN__NAME = GRAPH_PATTERN_ELEMENT__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Constraints</b></em>' reference list.
+	 * The feature id for the '<em><b>Formulas</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__CONSTRAINTS = GRAPH_PREDICATE__CONSTRAINTS;
+	int NODE_PATTERN__FORMULAS = GRAPH_PATTERN_ELEMENT__FORMULAS;
 
 	/**
 	 * The feature id for the '<em><b>Quantifier</b></em>' reference.
@@ -440,7 +440,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__QUANTIFIER = GRAPH_PREDICATE__QUANTIFIER;
+	int NODE_PATTERN__QUANTIFIER = GRAPH_PATTERN_ELEMENT__QUANTIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Outgoings</b></em>' containment reference list.
@@ -449,7 +449,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__OUTGOINGS = GRAPH_PREDICATE_FEATURE_COUNT + 0;
+	int NODE_PATTERN__OUTGOINGS = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
@@ -458,7 +458,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__TYPE = GRAPH_PREDICATE_FEATURE_COUNT + 1;
+	int NODE_PATTERN__TYPE = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -467,7 +467,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__ATTRIBUTES = GRAPH_PREDICATE_FEATURE_COUNT + 2;
+	int NODE_PATTERN__ATTRIBUTES = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Evaluation</b></em>' containment reference.
@@ -476,7 +476,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__EVALUATION = GRAPH_PREDICATE_FEATURE_COUNT + 3;
+	int NODE_PATTERN__EVALUATION = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' container reference.
@@ -485,7 +485,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__GRAPH = GRAPH_PREDICATE_FEATURE_COUNT + 4;
+	int NODE_PATTERN__GRAPH = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Incomings</b></em>' reference list.
@@ -494,7 +494,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__INCOMINGS = GRAPH_PREDICATE_FEATURE_COUNT + 5;
+	int NODE_PATTERN__INCOMINGS = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Node Pattern</em>' class.
@@ -503,7 +503,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_FEATURE_COUNT = GRAPH_PREDICATE_FEATURE_COUNT + 6;
+	int NODE_PATTERN_FEATURE_COUNT = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Get Attribute</em>' operation.
@@ -512,7 +512,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_ATTRIBUTE__EATTRIBUTE = GRAPH_PREDICATE_OPERATION_COUNT + 0;
+	int NODE_PATTERN___GET_ATTRIBUTE__EATTRIBUTE = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Get Outgoing</em>' operation.
@@ -521,7 +521,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_OUTGOING__EREFERENCE = GRAPH_PREDICATE_OPERATION_COUNT + 1;
+	int NODE_PATTERN___GET_OUTGOING__EREFERENCE = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Outgoings</em>' operation.
@@ -530,7 +530,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_OUTGOINGS__EREFERENCE = GRAPH_PREDICATE_OPERATION_COUNT + 2;
+	int NODE_PATTERN___GET_OUTGOINGS__EREFERENCE = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Incoming</em>' operation.
@@ -539,7 +539,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_INCOMING__EREFERENCE = GRAPH_PREDICATE_OPERATION_COUNT + 3;
+	int NODE_PATTERN___GET_INCOMING__EREFERENCE = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Incomings</em>' operation.
@@ -548,7 +548,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_INCOMINGS__EREFERENCE = GRAPH_PREDICATE_OPERATION_COUNT + 4;
+	int NODE_PATTERN___GET_INCOMINGS__EREFERENCE = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Node Pattern</em>' class.
@@ -557,7 +557,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_OPERATION_COUNT = GRAPH_PREDICATE_OPERATION_COUNT + 5;
+	int NODE_PATTERN_OPERATION_COUNT = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -566,16 +566,16 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN__NAME = GRAPH_PREDICATE__NAME;
+	int EDGE_PATTERN__NAME = GRAPH_PATTERN_ELEMENT__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Constraints</b></em>' reference list.
+	 * The feature id for the '<em><b>Formulas</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN__CONSTRAINTS = GRAPH_PREDICATE__CONSTRAINTS;
+	int EDGE_PATTERN__FORMULAS = GRAPH_PATTERN_ELEMENT__FORMULAS;
 
 	/**
 	 * The feature id for the '<em><b>Quantifier</b></em>' reference.
@@ -584,7 +584,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN__QUANTIFIER = GRAPH_PREDICATE__QUANTIFIER;
+	int EDGE_PATTERN__QUANTIFIER = GRAPH_PATTERN_ELEMENT__QUANTIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
@@ -593,7 +593,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN__TARGET = GRAPH_PREDICATE_FEATURE_COUNT + 0;
+	int EDGE_PATTERN__TARGET = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' container reference.
@@ -602,7 +602,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN__SOURCE = GRAPH_PREDICATE_FEATURE_COUNT + 1;
+	int EDGE_PATTERN__SOURCE = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Opposite</b></em>' reference.
@@ -611,7 +611,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN__OPPOSITE = GRAPH_PREDICATE_FEATURE_COUNT + 2;
+	int EDGE_PATTERN__OPPOSITE = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
@@ -620,7 +620,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN__TYPE = GRAPH_PREDICATE_FEATURE_COUNT + 3;
+	int EDGE_PATTERN__TYPE = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Cross Reference</b></em>' attribute.
@@ -629,7 +629,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN__CROSS_REFERENCE = GRAPH_PREDICATE_FEATURE_COUNT + 4;
+	int EDGE_PATTERN__CROSS_REFERENCE = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Edge Pattern</em>' class.
@@ -638,7 +638,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN_FEATURE_COUNT = GRAPH_PREDICATE_FEATURE_COUNT + 5;
+	int EDGE_PATTERN_FEATURE_COUNT = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Edge Pattern</em>' class.
@@ -647,7 +647,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN_OPERATION_COUNT = GRAPH_PREDICATE_OPERATION_COUNT + 0;
+	int EDGE_PATTERN_OPERATION_COUNT = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1613,61 +1613,6 @@ public interface GraphpatternPackage extends EPackage {
 	int PARAMETER_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.GraphMatchImpl <em>Graph Match</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.consistency.graphpattern.impl.GraphMatchImpl
-	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getGraphMatch()
-	 * @generated
-	 */
-	int GRAPH_MATCH = 22;
-
-	/**
-	 * The feature id for the '<em><b>Graph Pattern</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_MATCH__GRAPH_PATTERN = 0;
-
-	/**
-	 * The feature id for the '<em><b>Matching</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_MATCH__MATCHING = 1;
-
-	/**
-	 * The number of structural features of the '<em>Graph Match</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_MATCH_FEATURE_COUNT = 2;
-
-	/**
-	 * The operation id for the '<em>Get Match</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_MATCH___GET_MATCH__NODEPATTERN = 0;
-
-	/**
-	 * The number of operations of the '<em>Graph Match</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_MATCH_OPERATION_COUNT = 1;
-
-	/**
 	 * The number of structural features of the '<em>For All</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1722,41 +1667,32 @@ public interface GraphpatternPackage extends EPackage {
 	int EXISTS_OPERATION_COUNT = QUANTIFIER_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.NAryFormulaImpl <em>NAry Formula</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.GraphFormulaImpl <em>Graph Formula</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.consistency.graphpattern.impl.NAryFormulaImpl
-	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getNAryFormula()
+	 * @see org.sidiff.consistency.graphpattern.impl.GraphFormulaImpl
+	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getGraphFormula()
 	 * @generated
 	 */
-	int NARY_FORMULA = 25;
+	int GRAPH_FORMULA = 24;
 
 	/**
-	 * The feature id for the '<em><b>Results</b></em>' attribute list.
+	 * The feature id for the '<em><b>Predicates</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NARY_FORMULA__RESULTS = FORMULA_FEATURE_COUNT + 0;
+	int GRAPH_FORMULA__PREDICATES = FORMULA_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Formulas</b></em>' containment reference list.
+	 * The number of structural features of the '<em>Graph Formula</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NARY_FORMULA__FORMULAS = FORMULA_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>NAry Formula</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NARY_FORMULA_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 2;
+	int GRAPH_FORMULA_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Result</em>' operation.
@@ -1765,7 +1701,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NARY_FORMULA___GET_RESULT = FORMULA___GET_RESULT;
+	int GRAPH_FORMULA___GET_RESULT = FORMULA___GET_RESULT;
 
 	/**
 	 * The operation id for the '<em>Get Embedding</em>' operation.
@@ -1774,327 +1710,16 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NARY_FORMULA___GET_EMBEDDING = FORMULA___GET_EMBEDDING;
+	int GRAPH_FORMULA___GET_EMBEDDING = FORMULA___GET_EMBEDDING;
 
 	/**
-	 * The number of operations of the '<em>NAry Formula</em>' class.
+	 * The number of operations of the '<em>Graph Formula</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NARY_FORMULA_OPERATION_COUNT = FORMULA_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.AndGroupImpl <em>And Group</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.consistency.graphpattern.impl.AndGroupImpl
-	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getAndGroup()
-	 * @generated
-	 */
-	int AND_GROUP = 26;
-
-	/**
-	 * The feature id for the '<em><b>Results</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AND_GROUP__RESULTS = NARY_FORMULA__RESULTS;
-
-	/**
-	 * The feature id for the '<em><b>Formulas</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AND_GROUP__FORMULAS = NARY_FORMULA__FORMULAS;
-
-	/**
-	 * The number of structural features of the '<em>And Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AND_GROUP_FEATURE_COUNT = NARY_FORMULA_FEATURE_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Get Result</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AND_GROUP___GET_RESULT = NARY_FORMULA___GET_RESULT;
-
-	/**
-	 * The operation id for the '<em>Get Embedding</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AND_GROUP___GET_EMBEDDING = NARY_FORMULA___GET_EMBEDDING;
-
-	/**
-	 * The number of operations of the '<em>And Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AND_GROUP_OPERATION_COUNT = NARY_FORMULA_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.OrGroupImpl <em>Or Group</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.consistency.graphpattern.impl.OrGroupImpl
-	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getOrGroup()
-	 * @generated
-	 */
-	int OR_GROUP = 27;
-
-	/**
-	 * The feature id for the '<em><b>Results</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OR_GROUP__RESULTS = NARY_FORMULA__RESULTS;
-
-	/**
-	 * The feature id for the '<em><b>Formulas</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OR_GROUP__FORMULAS = NARY_FORMULA__FORMULAS;
-
-	/**
-	 * The number of structural features of the '<em>Or Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OR_GROUP_FEATURE_COUNT = NARY_FORMULA_FEATURE_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Get Result</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OR_GROUP___GET_RESULT = NARY_FORMULA___GET_RESULT;
-
-	/**
-	 * The operation id for the '<em>Get Embedding</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OR_GROUP___GET_EMBEDDING = NARY_FORMULA___GET_EMBEDDING;
-
-	/**
-	 * The number of operations of the '<em>Or Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OR_GROUP_OPERATION_COUNT = NARY_FORMULA_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.GraphConstraintImpl <em>Graph Constraint</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.consistency.graphpattern.impl.GraphConstraintImpl
-	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getGraphConstraint()
-	 * @generated
-	 */
-	int GRAPH_CONSTRAINT = 28;
-
-	/**
-	 * The feature id for the '<em><b>Graph Predicates</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONSTRAINT__GRAPH_PREDICATES = FORMULA_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Graph Constraint</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONSTRAINT_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>Get Result</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONSTRAINT___GET_RESULT = FORMULA___GET_RESULT;
-
-	/**
-	 * The operation id for the '<em>Get Embedding</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONSTRAINT___GET_EMBEDDING = FORMULA___GET_EMBEDDING;
-
-	/**
-	 * The number of operations of the '<em>Graph Constraint</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONSTRAINT_OPERATION_COUNT = FORMULA_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.XorGroupImpl <em>Xor Group</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.consistency.graphpattern.impl.XorGroupImpl
-	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getXorGroup()
-	 * @generated
-	 */
-	int XOR_GROUP = 29;
-
-	/**
-	 * The feature id for the '<em><b>Results</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int XOR_GROUP__RESULTS = NARY_FORMULA__RESULTS;
-
-	/**
-	 * The feature id for the '<em><b>Formulas</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int XOR_GROUP__FORMULAS = NARY_FORMULA__FORMULAS;
-
-	/**
-	 * The number of structural features of the '<em>Xor Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int XOR_GROUP_FEATURE_COUNT = NARY_FORMULA_FEATURE_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Get Result</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int XOR_GROUP___GET_RESULT = NARY_FORMULA___GET_RESULT;
-
-	/**
-	 * The operation id for the '<em>Get Embedding</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int XOR_GROUP___GET_EMBEDDING = NARY_FORMULA___GET_EMBEDDING;
-
-	/**
-	 * The number of operations of the '<em>Xor Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int XOR_GROUP_OPERATION_COUNT = NARY_FORMULA_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.IffGroupImpl <em>Iff Group</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.consistency.graphpattern.impl.IffGroupImpl
-	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getIffGroup()
-	 * @generated
-	 */
-	int IFF_GROUP = 30;
-
-	/**
-	 * The feature id for the '<em><b>Results</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IFF_GROUP__RESULTS = NARY_FORMULA__RESULTS;
-
-	/**
-	 * The feature id for the '<em><b>Formulas</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IFF_GROUP__FORMULAS = NARY_FORMULA__FORMULAS;
-
-	/**
-	 * The number of structural features of the '<em>Iff Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IFF_GROUP_FEATURE_COUNT = NARY_FORMULA_FEATURE_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Get Result</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IFF_GROUP___GET_RESULT = NARY_FORMULA___GET_RESULT;
-
-	/**
-	 * The operation id for the '<em>Get Embedding</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IFF_GROUP___GET_EMBEDDING = NARY_FORMULA___GET_EMBEDDING;
-
-	/**
-	 * The number of operations of the '<em>Iff Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IFF_GROUP_OPERATION_COUNT = NARY_FORMULA_OPERATION_COUNT + 0;
+	int GRAPH_FORMULA_OPERATION_COUNT = FORMULA_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.consistency.graphpattern.impl.EObjectListImpl <em>EObject List</em>}' class.
@@ -2104,7 +1729,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getEObjectList()
 	 * @generated
 	 */
-	int EOBJECT_LIST = 31;
+	int EOBJECT_LIST = 25;
 
 	/**
 	 * The feature id for the '<em><b>Content</b></em>' reference list.
@@ -2116,13 +1741,22 @@ public interface GraphpatternPackage extends EPackage {
 	int EOBJECT_LIST__CONTENT = 0;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EOBJECT_LIST__LABEL = 1;
+
+	/**
 	 * The number of structural features of the '<em>EObject List</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EOBJECT_LIST_FEATURE_COUNT = 1;
+	int EOBJECT_LIST_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>EObject List</em>' class.
@@ -2141,7 +1775,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getECollection()
 	 * @generated
 	 */
-	int ECOLLECTION = 32;
+	int ECOLLECTION = 26;
 
 	/**
 	 * The meta object id for the '<em>EIterator</em>' data type.
@@ -2151,7 +1785,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getEIterator()
 	 * @generated
 	 */
-	int EITERATOR = 33;
+	int EITERATOR = 27;
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.GraphPattern <em>Graph Pattern</em>}'.
@@ -2901,97 +2535,25 @@ public interface GraphpatternPackage extends EPackage {
 	EAttribute getExists_UpperBound();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.NAryFormula <em>NAry Formula</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.GraphFormula <em>Graph Formula</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>NAry Formula</em>'.
-	 * @see org.sidiff.consistency.graphpattern.NAryFormula
+	 * @return the meta object for class '<em>Graph Formula</em>'.
+	 * @see org.sidiff.consistency.graphpattern.GraphFormula
 	 * @generated
 	 */
-	EClass getNAryFormula();
+	EClass getGraphFormula();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.sidiff.consistency.graphpattern.NAryFormula#getResults <em>Results</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.consistency.graphpattern.GraphFormula#getPredicates <em>Predicates</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Results</em>'.
-	 * @see org.sidiff.consistency.graphpattern.NAryFormula#getResults()
-	 * @see #getNAryFormula()
+	 * @return the meta object for the reference list '<em>Predicates</em>'.
+	 * @see org.sidiff.consistency.graphpattern.GraphFormula#getPredicates()
+	 * @see #getGraphFormula()
 	 * @generated
 	 */
-	EAttribute getNAryFormula_Results();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.consistency.graphpattern.NAryFormula#getFormulas <em>Formulas</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Formulas</em>'.
-	 * @see org.sidiff.consistency.graphpattern.NAryFormula#getFormulas()
-	 * @see #getNAryFormula()
-	 * @generated
-	 */
-	EReference getNAryFormula_Formulas();
-
-	/**
-	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.AndGroup <em>And Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>And Group</em>'.
-	 * @see org.sidiff.consistency.graphpattern.AndGroup
-	 * @generated
-	 */
-	EClass getAndGroup();
-
-	/**
-	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.OrGroup <em>Or Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Or Group</em>'.
-	 * @see org.sidiff.consistency.graphpattern.OrGroup
-	 * @generated
-	 */
-	EClass getOrGroup();
-
-	/**
-	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.GraphConstraint <em>Graph Constraint</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Graph Constraint</em>'.
-	 * @see org.sidiff.consistency.graphpattern.GraphConstraint
-	 * @generated
-	 */
-	EClass getGraphConstraint();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.consistency.graphpattern.GraphConstraint#getGraphPredicates <em>Graph Predicates</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Graph Predicates</em>'.
-	 * @see org.sidiff.consistency.graphpattern.GraphConstraint#getGraphPredicates()
-	 * @see #getGraphConstraint()
-	 * @generated
-	 */
-	EReference getGraphConstraint_GraphPredicates();
-
-	/**
-	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.XorGroup <em>Xor Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Xor Group</em>'.
-	 * @see org.sidiff.consistency.graphpattern.XorGroup
-	 * @generated
-	 */
-	EClass getXorGroup();
-
-	/**
-	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.IffGroup <em>Iff Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Iff Group</em>'.
-	 * @see org.sidiff.consistency.graphpattern.IffGroup
-	 * @generated
-	 */
-	EClass getIffGroup();
+	EReference getGraphFormula_Predicates();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.EObjectList <em>EObject List</em>}'.
@@ -3013,6 +2575,17 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getEObjectList_Content();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.consistency.graphpattern.EObjectList#getLabel <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Label</em>'.
+	 * @see org.sidiff.consistency.graphpattern.EObjectList#getLabel()
+	 * @see #getEObjectList()
+	 * @generated
+	 */
+	EAttribute getEObjectList_Label();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.Xor <em>Xor</em>}'.
@@ -3068,47 +2641,47 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getPattern_Parameters();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.GraphPredicate <em>Graph Predicate</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.GraphPatternElement <em>Graph Pattern Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Graph Predicate</em>'.
-	 * @see org.sidiff.consistency.graphpattern.GraphPredicate
+	 * @return the meta object for class '<em>Graph Pattern Element</em>'.
+	 * @see org.sidiff.consistency.graphpattern.GraphPatternElement
 	 * @generated
 	 */
-	EClass getGraphPredicate();
+	EClass getGraphPatternElement();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.consistency.graphpattern.GraphPredicate#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.consistency.graphpattern.GraphPatternElement#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.sidiff.consistency.graphpattern.GraphPredicate#getName()
-	 * @see #getGraphPredicate()
+	 * @see org.sidiff.consistency.graphpattern.GraphPatternElement#getName()
+	 * @see #getGraphPatternElement()
 	 * @generated
 	 */
-	EAttribute getGraphPredicate_Name();
+	EAttribute getGraphPatternElement_Name();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.consistency.graphpattern.GraphPredicate#getConstraints <em>Constraints</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.consistency.graphpattern.GraphPatternElement#getFormulas <em>Formulas</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Constraints</em>'.
-	 * @see org.sidiff.consistency.graphpattern.GraphPredicate#getConstraints()
-	 * @see #getGraphPredicate()
+	 * @return the meta object for the reference list '<em>Formulas</em>'.
+	 * @see org.sidiff.consistency.graphpattern.GraphPatternElement#getFormulas()
+	 * @see #getGraphPatternElement()
 	 * @generated
 	 */
-	EReference getGraphPredicate_Constraints();
+	EReference getGraphPatternElement_Formulas();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.consistency.graphpattern.GraphPredicate#getQuantifier <em>Quantifier</em>}'.
+	 * Returns the meta object for the reference '{@link org.sidiff.consistency.graphpattern.GraphPatternElement#getQuantifier <em>Quantifier</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Quantifier</em>'.
-	 * @see org.sidiff.consistency.graphpattern.GraphPredicate#getQuantifier()
-	 * @see #getGraphPredicate()
+	 * @see org.sidiff.consistency.graphpattern.GraphPatternElement#getQuantifier()
+	 * @see #getGraphPatternElement()
 	 * @generated
 	 */
-	EReference getGraphPredicate_Quantifier();
+	EReference getGraphPatternElement_Quantifier();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.Parameter <em>Parameter</em>}'.
@@ -3130,48 +2703,6 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getParameter_Name();
-
-	/**
-	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.GraphMatch <em>Graph Match</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Graph Match</em>'.
-	 * @see org.sidiff.consistency.graphpattern.GraphMatch
-	 * @generated
-	 */
-	EClass getGraphMatch();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.consistency.graphpattern.GraphMatch#getGraphPattern <em>Graph Pattern</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Graph Pattern</em>'.
-	 * @see org.sidiff.consistency.graphpattern.GraphMatch#getGraphPattern()
-	 * @see #getGraphMatch()
-	 * @generated
-	 */
-	EReference getGraphMatch_GraphPattern();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.consistency.graphpattern.GraphMatch#getMatching <em>Matching</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Matching</em>'.
-	 * @see org.sidiff.consistency.graphpattern.GraphMatch#getMatching()
-	 * @see #getGraphMatch()
-	 * @generated
-	 */
-	EReference getGraphMatch_Matching();
-
-	/**
-	 * Returns the meta object for the '{@link org.sidiff.consistency.graphpattern.GraphMatch#getMatch(org.sidiff.consistency.graphpattern.NodePattern) <em>Get Match</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Match</em>' operation.
-	 * @see org.sidiff.consistency.graphpattern.GraphMatch#getMatch(org.sidiff.consistency.graphpattern.NodePattern)
-	 * @generated
-	 */
-	EOperation getGraphMatch__GetMatch__NodePattern();
 
 	/**
 	 * Returns the meta object for data type '{@link java.util.Collection <em>ECollection</em>}'.
@@ -3835,88 +3366,22 @@ public interface GraphpatternPackage extends EPackage {
 		EAttribute EXISTS__UPPER_BOUND = eINSTANCE.getExists_UpperBound();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.NAryFormulaImpl <em>NAry Formula</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.GraphFormulaImpl <em>Graph Formula</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.consistency.graphpattern.impl.NAryFormulaImpl
-		 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getNAryFormula()
+		 * @see org.sidiff.consistency.graphpattern.impl.GraphFormulaImpl
+		 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getGraphFormula()
 		 * @generated
 		 */
-		EClass NARY_FORMULA = eINSTANCE.getNAryFormula();
+		EClass GRAPH_FORMULA = eINSTANCE.getGraphFormula();
 
 		/**
-		 * The meta object literal for the '<em><b>Results</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Predicates</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute NARY_FORMULA__RESULTS = eINSTANCE.getNAryFormula_Results();
-
-		/**
-		 * The meta object literal for the '<em><b>Formulas</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference NARY_FORMULA__FORMULAS = eINSTANCE.getNAryFormula_Formulas();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.AndGroupImpl <em>And Group</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.consistency.graphpattern.impl.AndGroupImpl
-		 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getAndGroup()
-		 * @generated
-		 */
-		EClass AND_GROUP = eINSTANCE.getAndGroup();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.OrGroupImpl <em>Or Group</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.consistency.graphpattern.impl.OrGroupImpl
-		 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getOrGroup()
-		 * @generated
-		 */
-		EClass OR_GROUP = eINSTANCE.getOrGroup();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.GraphConstraintImpl <em>Graph Constraint</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.consistency.graphpattern.impl.GraphConstraintImpl
-		 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getGraphConstraint()
-		 * @generated
-		 */
-		EClass GRAPH_CONSTRAINT = eINSTANCE.getGraphConstraint();
-
-		/**
-		 * The meta object literal for the '<em><b>Graph Predicates</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference GRAPH_CONSTRAINT__GRAPH_PREDICATES = eINSTANCE.getGraphConstraint_GraphPredicates();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.XorGroupImpl <em>Xor Group</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.consistency.graphpattern.impl.XorGroupImpl
-		 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getXorGroup()
-		 * @generated
-		 */
-		EClass XOR_GROUP = eINSTANCE.getXorGroup();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.IffGroupImpl <em>Iff Group</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.consistency.graphpattern.impl.IffGroupImpl
-		 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getIffGroup()
-		 * @generated
-		 */
-		EClass IFF_GROUP = eINSTANCE.getIffGroup();
+		EReference GRAPH_FORMULA__PREDICATES = eINSTANCE.getGraphFormula_Predicates();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.EObjectListImpl <em>EObject List</em>}' class.
@@ -3935,6 +3400,14 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EReference EOBJECT_LIST__CONTENT = eINSTANCE.getEObjectList_Content();
+
+		/**
+		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EOBJECT_LIST__LABEL = eINSTANCE.getEObjectList_Label();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.XorImpl <em>Xor</em>}' class.
@@ -3981,14 +3454,14 @@ public interface GraphpatternPackage extends EPackage {
 		EReference PATTERN__PARAMETERS = eINSTANCE.getPattern_Parameters();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.GraphPredicateImpl <em>Graph Predicate</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.GraphPatternElementImpl <em>Graph Pattern Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.consistency.graphpattern.impl.GraphPredicateImpl
-		 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getGraphPredicate()
+		 * @see org.sidiff.consistency.graphpattern.impl.GraphPatternElementImpl
+		 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getGraphPatternElement()
 		 * @generated
 		 */
-		EClass GRAPH_PREDICATE = eINSTANCE.getGraphPredicate();
+		EClass GRAPH_PATTERN_ELEMENT = eINSTANCE.getGraphPatternElement();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -3996,15 +3469,15 @@ public interface GraphpatternPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute GRAPH_PREDICATE__NAME = eINSTANCE.getGraphPredicate_Name();
+		EAttribute GRAPH_PATTERN_ELEMENT__NAME = eINSTANCE.getGraphPatternElement_Name();
 
 		/**
-		 * The meta object literal for the '<em><b>Constraints</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Formulas</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GRAPH_PREDICATE__CONSTRAINTS = eINSTANCE.getGraphPredicate_Constraints();
+		EReference GRAPH_PATTERN_ELEMENT__FORMULAS = eINSTANCE.getGraphPatternElement_Formulas();
 
 		/**
 		 * The meta object literal for the '<em><b>Quantifier</b></em>' reference feature.
@@ -4012,7 +3485,7 @@ public interface GraphpatternPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GRAPH_PREDICATE__QUANTIFIER = eINSTANCE.getGraphPredicate_Quantifier();
+		EReference GRAPH_PATTERN_ELEMENT__QUANTIFIER = eINSTANCE.getGraphPatternElement_Quantifier();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -4031,40 +3504,6 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETER__NAME = eINSTANCE.getParameter_Name();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.GraphMatchImpl <em>Graph Match</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.consistency.graphpattern.impl.GraphMatchImpl
-		 * @see org.sidiff.consistency.graphpattern.impl.GraphpatternPackageImpl#getGraphMatch()
-		 * @generated
-		 */
-		EClass GRAPH_MATCH = eINSTANCE.getGraphMatch();
-
-		/**
-		 * The meta object literal for the '<em><b>Graph Pattern</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference GRAPH_MATCH__GRAPH_PATTERN = eINSTANCE.getGraphMatch_GraphPattern();
-
-		/**
-		 * The meta object literal for the '<em><b>Matching</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference GRAPH_MATCH__MATCHING = eINSTANCE.getGraphMatch_Matching();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Match</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation GRAPH_MATCH___GET_MATCH__NODEPATTERN = eINSTANCE.getGraphMatch__GetMatch__NodePattern();
 
 		/**
 		 * The meta object literal for the '<em>ECollection</em>' data type.

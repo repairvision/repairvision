@@ -185,27 +185,7 @@ public class PatternItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createAndGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createOrGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createGraphConstraint()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createXorGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createIffGroup()));
+				 GraphpatternFactory.eINSTANCE.createGraphFormula()));
 
 		newChildDescriptors.add
 			(createChildParameter

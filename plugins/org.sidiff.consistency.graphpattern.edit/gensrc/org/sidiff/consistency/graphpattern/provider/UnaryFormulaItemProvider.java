@@ -169,27 +169,7 @@ public class UnaryFormulaItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(GraphpatternPackage.Literals.UNARY_FORMULA__CHILD,
-				 GraphpatternFactory.eINSTANCE.createAndGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.UNARY_FORMULA__CHILD,
-				 GraphpatternFactory.eINSTANCE.createOrGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.UNARY_FORMULA__CHILD,
-				 GraphpatternFactory.eINSTANCE.createGraphConstraint()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.UNARY_FORMULA__CHILD,
-				 GraphpatternFactory.eINSTANCE.createXorGroup()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.UNARY_FORMULA__CHILD,
-				 GraphpatternFactory.eINSTANCE.createIffGroup()));
+				 GraphpatternFactory.eINSTANCE.createGraphFormula()));
 	}
 
 	/**

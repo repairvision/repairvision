@@ -139,49 +139,13 @@ public interface GraphpatternFactory extends EFactory {
 	Exists createExists();
 
 	/**
-	 * Returns a new object of class '<em>And Group</em>'.
+	 * Returns a new object of class '<em>Graph Formula</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>And Group</em>'.
+	 * @return a new object of class '<em>Graph Formula</em>'.
 	 * @generated
 	 */
-	AndGroup createAndGroup();
-
-	/**
-	 * Returns a new object of class '<em>Or Group</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Or Group</em>'.
-	 * @generated
-	 */
-	OrGroup createOrGroup();
-
-	/**
-	 * Returns a new object of class '<em>Graph Constraint</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Graph Constraint</em>'.
-	 * @generated
-	 */
-	GraphConstraint createGraphConstraint();
-
-	/**
-	 * Returns a new object of class '<em>Xor Group</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Xor Group</em>'.
-	 * @generated
-	 */
-	XorGroup createXorGroup();
-
-	/**
-	 * Returns a new object of class '<em>Iff Group</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Iff Group</em>'.
-	 * @generated
-	 */
-	IffGroup createIffGroup();
+	GraphFormula createGraphFormula();
 
 	/**
 	 * Returns a new object of class '<em>EObject List</em>'.

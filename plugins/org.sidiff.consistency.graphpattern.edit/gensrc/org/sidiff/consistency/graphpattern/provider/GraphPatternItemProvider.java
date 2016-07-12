@@ -25,7 +25,7 @@ import org.sidiff.consistency.graphpattern.GraphpatternPackage;
  * @generated
  */
 public class GraphPatternItemProvider 
-	extends GraphPredicateItemProvider {
+	extends GraphPatternElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->

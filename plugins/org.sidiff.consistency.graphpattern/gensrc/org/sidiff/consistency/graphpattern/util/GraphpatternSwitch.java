@@ -69,21 +69,21 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 			case GraphpatternPackage.GRAPH_PATTERN: {
 				GraphPattern graphPattern = (GraphPattern)theEObject;
 				T result = caseGraphPattern(graphPattern);
-				if (result == null) result = caseGraphPredicate(graphPattern);
+				if (result == null) result = caseGraphPatternElement(graphPattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphpatternPackage.NODE_PATTERN: {
 				NodePattern nodePattern = (NodePattern)theEObject;
 				T result = caseNodePattern(nodePattern);
-				if (result == null) result = caseGraphPredicate(nodePattern);
+				if (result == null) result = caseGraphPatternElement(nodePattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphpatternPackage.EDGE_PATTERN: {
 				EdgePattern edgePattern = (EdgePattern)theEObject;
 				T result = caseEdgePattern(edgePattern);
-				if (result == null) result = caseGraphPredicate(edgePattern);
+				if (result == null) result = caseGraphPatternElement(edgePattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -204,21 +204,15 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GraphpatternPackage.GRAPH_PREDICATE: {
-				GraphPredicate graphPredicate = (GraphPredicate)theEObject;
-				T result = caseGraphPredicate(graphPredicate);
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT: {
+				GraphPatternElement graphPatternElement = (GraphPatternElement)theEObject;
+				T result = caseGraphPatternElement(graphPatternElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphpatternPackage.PARAMETER: {
 				Parameter parameter = (Parameter)theEObject;
 				T result = caseParameter(parameter);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.GRAPH_MATCH: {
-				GraphMatch graphMatch = (GraphMatch)theEObject;
-				T result = caseGraphMatch(graphMatch);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -236,49 +230,10 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GraphpatternPackage.NARY_FORMULA: {
-				NAryFormula nAryFormula = (NAryFormula)theEObject;
-				T result = caseNAryFormula(nAryFormula);
-				if (result == null) result = caseFormula(nAryFormula);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.AND_GROUP: {
-				AndGroup andGroup = (AndGroup)theEObject;
-				T result = caseAndGroup(andGroup);
-				if (result == null) result = caseNAryFormula(andGroup);
-				if (result == null) result = caseFormula(andGroup);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.OR_GROUP: {
-				OrGroup orGroup = (OrGroup)theEObject;
-				T result = caseOrGroup(orGroup);
-				if (result == null) result = caseNAryFormula(orGroup);
-				if (result == null) result = caseFormula(orGroup);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.GRAPH_CONSTRAINT: {
-				GraphConstraint graphConstraint = (GraphConstraint)theEObject;
-				T result = caseGraphConstraint(graphConstraint);
-				if (result == null) result = caseFormula(graphConstraint);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.XOR_GROUP: {
-				XorGroup xorGroup = (XorGroup)theEObject;
-				T result = caseXorGroup(xorGroup);
-				if (result == null) result = caseNAryFormula(xorGroup);
-				if (result == null) result = caseFormula(xorGroup);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.IFF_GROUP: {
-				IffGroup iffGroup = (IffGroup)theEObject;
-				T result = caseIffGroup(iffGroup);
-				if (result == null) result = caseNAryFormula(iffGroup);
-				if (result == null) result = caseFormula(iffGroup);
+			case GraphpatternPackage.GRAPH_FORMULA: {
+				GraphFormula graphFormula = (GraphFormula)theEObject;
+				T result = caseGraphFormula(graphFormula);
+				if (result == null) result = caseFormula(graphFormula);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -593,92 +548,17 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>NAry Formula</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Graph Formula</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>NAry Formula</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Graph Formula</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseNAryFormula(NAryFormula object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>And Group</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>And Group</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseAndGroup(AndGroup object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Or Group</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Or Group</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseOrGroup(OrGroup object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Graph Constraint</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Graph Constraint</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseGraphConstraint(GraphConstraint object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Xor Group</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Xor Group</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseXorGroup(XorGroup object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Iff Group</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Iff Group</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseIffGroup(IffGroup object) {
+	public T caseGraphFormula(GraphFormula object) {
 		return null;
 	}
 
@@ -728,17 +608,17 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Graph Predicate</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Graph Pattern Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Graph Predicate</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Graph Pattern Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseGraphPredicate(GraphPredicate object) {
+	public T caseGraphPatternElement(GraphPatternElement object) {
 		return null;
 	}
 
@@ -754,21 +634,6 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseParameter(Parameter object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Graph Match</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Graph Match</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseGraphMatch(GraphMatch object) {
 		return null;
 	}
 

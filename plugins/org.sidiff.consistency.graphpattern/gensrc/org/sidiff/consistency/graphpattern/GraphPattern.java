@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface GraphPattern extends GraphPredicate {
+public interface GraphPattern extends GraphPatternElement {
 	/**
 	 * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.consistency.graphpattern.NodePattern}.
