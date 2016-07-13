@@ -6,16 +6,12 @@ import java.util.Collection;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.api.RepairFacade;
 import org.sidiff.consistency.repair.lifting.api.RepairJob;
 import org.sidiff.consistency.repair.lifting.ui.views.ModelDropWidget;
-import org.sidiff.consistency.repair.lifting.ui.views.RepairPreferencePage;
 import org.sidiff.consistency.repair.lifting.ui.views.RepairViewBasicApp;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 
@@ -39,18 +35,10 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 	public void calculateRepairs() {
 		
 		// Matching-Settings:
-		DifferenceSettings settings = new DifferenceSettings(documentType) {};
-		settings.setMatcher(RepairPreferencePage.getSelectedMatcher());
+		DifferenceSettings settings = getMatchingSettings();
 		
 		// Load edit-rules:
-		Collection<Rule> editRules = new ArrayList<>();
-		ResourceSet editRulesRSS = new ResourceSetImpl();
-		
-		for (IResource editRuleFile : editRuleFiles) {
-			URI uriEditRule = ModelDropWidget.getURI(editRuleFile);
-			Resource editRuleRes = editRulesRSS.getResource(uriEditRule, true);
-			editRules.add(getEditRule(editRuleRes));
-		}
+		Collection<Rule> editRules = loadEditRules(editRuleFiles);
 		
 		// Calculate repairs:
 		URI uriModelA = ModelDropWidget.getURI(modelAFile);
