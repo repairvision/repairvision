@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CPO based Repairs
+Bundle-SymbolicName: org.sidiff.consistency.repair.lifting.cpo
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.sidiff.consistency.repair.lifting,
+ org.sidiff.difference.technical.api,
+ org.eclipse.emf.ecore,
+ org.sidiff.difference.symmetric,
+ org.sidiff.common.emf,
+ org.sidiff.consistency.repair.complement,
+ org.eclipse.emf.henshin.model;bundle-version="1.2.0",
+ org.sidiff.difference.lifting.api,
+ org.sidiff.matching.api;bundle-version="1.0.0",
+ org.sidiff.matcher,
+ org.sidiff.difference.rulebase.view,
+ org.sidiff.editrule.consistency.validation,
+ org.eclipse.jface,
+ org.eclipse.equinox.registry,
+ org.eclipse.ui.workbench,
+ org.sidiff.common.henshin,
+ org.sidiff.difference.lifting.edit2recognition,
+ org.sidiff.difference.lifting.recognitionengine,
+ org.eclipse.emf.henshin.interpreter
+Export-Package: org.sidiff.consistency.repair.lifting.cpo
