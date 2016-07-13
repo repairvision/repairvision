@@ -1,6 +1,5 @@
 package org.sidiff.consistency.repair.lifting.ui.views;
 
-import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -10,7 +9,9 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
@@ -29,19 +30,22 @@ import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.ui.Activator;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairLabelProvider;
-import org.sidiff.consistency.repair.validation.ui.provider.RepairTreeContentProvider;
-import org.sidiff.consistency.repair.validation.ui.provider.RepairTreeLabelProvider;
+import org.sidiff.consistency.repair.lifting.ui.views.RepairDectectionEngineProvider.RepairDectection;
+import org.sidiff.consistency.repair.lifting.ui.views.cpo.CPORepairView;
+import org.sidiff.consistency.repair.lifting.ui.views.cpo.RepairViewCPOApp;
+import org.sidiff.consistency.repair.lifting.ui.views.partial.PartialEORepairView;
+import org.sidiff.consistency.repair.lifting.ui.views.partial.RepairViewPartialEOApp;
 
 public class RepairView extends ViewPart {
 
 	public static final String ID = "org.sidiff.consistency.repair.lifting.ui.views.RepairView";
 
-	private RepairViewApp viewerApp;
-
-	protected TreeViewer viewer_repairs;
+	private RepairViewBasicApp viewerApp;
 	
-	protected TreeViewer viewer_validation;
-
+	private RepairDectectionEngineProvider repairEgineProvider;
+	
+	private TreeViewer viewer_repairs;
+	
 	private DrillDownAdapter drillDownAdapter;
 
 	private Action openConfiguration;
@@ -57,18 +61,28 @@ public class RepairView extends ViewPart {
 	}
 
 	public void createPartControl(Composite parent) {
+
+		// Create controls:
+		internal_createPartControl(parent);
+		
+		// Setup actions:
+		makeActions();
+		contributeToActionBars();
+	}
+	
+	private void internal_createPartControl(Composite parent) {
 		parent.setLayout(new FillLayout(SWT.VERTICAL));
 
-		Composite composite = new Composite(parent, SWT.NONE);
+		Composite container = new Composite(parent, SWT.NONE);
 		GridLayout gl_composite = new GridLayout(1, false);
 		gl_composite.verticalSpacing = 0;
 		gl_composite.marginWidth = 0;
 		gl_composite.marginHeight = 0;
 		gl_composite.horizontalSpacing = 0;
-		composite.setLayout(gl_composite);
+		container.setLayout(gl_composite);
 
 		// Sash-Form:
-		SashForm sashForm = new SashForm(composite, SWT.VERTICAL);
+		SashForm sashForm = new SashForm(container, SWT.VERTICAL);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		// Repair-Viewer:
@@ -81,76 +95,42 @@ public class RepairView extends ViewPart {
 
 		getSite().setSelectionProvider(viewer_repairs);
 		
-		// Validation-Viewer:
-		viewer_validation = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer_validation.setContentProvider(new RepairTreeContentProvider());
-		viewer_validation.setLabelProvider(new RepairTreeLabelProvider());
-//		viewer_validation.setSorter(new NameSorter());
-
-		// Edit-Rules:
-		Composite composite_editrules = new Composite(sashForm, SWT.BORDER);
-		composite_editrules.setLayout(new FillLayout(SWT.HORIZONTAL));
+		// Setup repair engine:
+		repairEgineProvider = RepairPreferencePage.getRepairDectectionProvider();
+		repairEgineProvider.addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				container.dispose();
+				internal_createPartControl(parent);
+				parent.layout();
+				
+				repairEgineProvider.removeSelectionChangedListener(this);
+			}
+		});
 		
-		new ModelDropWidget(composite_editrules, "Please drop the edit-rule(s) here!") {
-
-			@Override
-			protected boolean removeModel(IResource selection) {
-				return viewerApp.removeEditRule(selection);
-			}
-
-			@Override
-			protected boolean addModel(IResource element) {
-				return viewerApp.addEditRule(element);
-			}
-		};
+		// Add repair engine:
+		setupRepairEngine(sashForm);
 		
-		// Model A:
-		Composite composite_modelA = new Composite(sashForm, SWT.BORDER);
-		composite_modelA.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		new ModelDropWidget(composite_modelA, "Please drop the previous model version here!") {
-
-			@Override
-			protected boolean removeModel(IResource selection) {
-				return viewerApp.removeModelA(selection);
-			}
-
-			@Override
-			protected boolean addModel(IResource element) {
-				clear();
-				return viewerApp.addModelA(element);
-			}
-		};
-
-		// Model B:
-		Composite composite_modelB = new Composite(sashForm, SWT.BORDER);
-		composite_modelB.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		new ModelDropWidget(composite_modelB, "Please drop the actual model version here!") {
-
-			@Override
-			protected boolean removeModel(IResource selection) {
-				return viewerApp.removeModelB(selection);
-			}
-
-			@Override
-			protected boolean addModel(IResource element) {
-				clear();
-				return viewerApp.addModelB(element);
-			}
-		};
-
-		// Setup Sash-Form:
-		sashForm.setWeights(new int[] {100, 32, 10, 10, 10});
-
-		// Application logic:
-		viewerApp = new RepairViewApp(this);
-
-		// Actions:
-		makeActions();
+		// Setup actions:
 		hookContextMenu();
 		hookDoubleClickAction();
-		contributeToActionBars();
+	}
+	
+	private void setupRepairEngine(SashForm sashForm) {
+		
+		if (repairEgineProvider.getSelectedEngine().equals(RepairDectection.PartialEditOperationBasedEngine)) {
+			RepairViewPartialEOApp partialEOApp = new RepairViewPartialEOApp(viewer_repairs);
+			TreeViewer viewer_validation = PartialEORepairView.createInputPartControl(sashForm, partialEOApp);
+			partialEOApp.setValidationViewer(viewer_validation);
+			this.viewerApp = partialEOApp;
+		}
+		
+		else if (repairEgineProvider.getSelectedEngine().equals(RepairDectection.ConsistencyPreservingEditOperationBasedEngine)) {
+			RepairViewCPOApp cpoApp = new RepairViewCPOApp(viewer_repairs);
+			CPORepairView.createInputPartControl(sashForm, cpoApp);
+			this.viewerApp = cpoApp;
+		}
 	}
 
 	private void hookContextMenu() {
@@ -237,7 +217,7 @@ public class RepairView extends ViewPart {
 					Object selectedElement = ((IStructuredSelection)selection).getFirstElement();
 					
 					if (selectedElement instanceof Repair) {
-						viewerApp.applyRepairs((Repair) selectedElement);
+						viewerApp.applyRepair((Repair) selectedElement);
 						return;
 					}
 				}
@@ -245,8 +225,8 @@ public class RepairView extends ViewPart {
 				showMessage("Please select a repair operation!");
 			}
 		};
-		applyRepairs.setText("Apply Repairs");
-		applyRepairs.setToolTipText("Apply Repairs");
+		applyRepairs.setText("Apply Repair");
+		applyRepairs.setToolTipText("Apply Repair");
 		applyRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/apply.png"));
 	}
 

@@ -24,6 +24,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.sidiff.configuration.IConfigurable;
 import org.sidiff.consistency.common.ui.NameUtil;
+import org.sidiff.consistency.repair.lifting.ui.views.RepairDectectionEngineProvider.RepairDectection;
 import org.sidiff.matcher.IMatcher;
 
 public class RepairPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
@@ -35,15 +36,19 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	protected static final String EMPTY_MATCHERS_MESSAGE = "No matchers available for the given model type.";
 	
 	// TODO: IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-	protected static Set<IMatcher> matchers;
+	protected static Set<IMatcher> availableMatchers;
 	
-	private static IMatcher matcher;
+	private static IMatcher matchingEngine;
+	
+	private static RepairDectectionEngineProvider repairEngine = new RepairDectectionEngineProvider();
 	
 	//// UI ////
 	
 	private ComboViewer viewer_matching;
 	
 	private Composite config_container;
+	
+	private ComboViewer viewer_repair;
 	
 	/**
 	 * Create the preference page.
@@ -67,14 +72,14 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout(1, false));
 		
-		Group grpMatching = new Group(container, SWT.NONE);
-		grpMatching.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-		grpMatching.setText("Matching");
-		grpMatching.setLayout(new GridLayout(1, false));
-		
 		// Matching-Engine selection:
-		viewer_matching = new ComboViewer(grpMatching, SWT.NONE);
+		Group grpMatching = new Group(container, SWT.NONE);
 		{
+			grpMatching.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+			grpMatching.setText("Matching");
+			grpMatching.setLayout(new GridLayout(1, false));
+			
+			viewer_matching = new ComboViewer(grpMatching, SWT.NONE);
 			Combo combo_matching = viewer_matching.getCombo();
 			combo_matching.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			
@@ -95,25 +100,25 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			});
 			
 			// Input:
-			if (viewer_matching.getInput() != matchers) {
-				viewer_matching.setInput(matchers);
+			if (viewer_matching.getInput() != availableMatchers) {
+				viewer_matching.setInput(availableMatchers);
 			}
 			
-			if (matchers == null) {
+			if (availableMatchers == null) {
 				viewer_matching.add(SETUP_MATCHERS_MESSAGE);
 				viewer_matching.setSelection(new StructuredSelection(SETUP_MATCHERS_MESSAGE));
 			}
 			
-			if ((matchers != null) && (matchers.isEmpty())) {
+			if ((availableMatchers != null) && (availableMatchers.isEmpty())) {
 				viewer_matching.add(EMPTY_MATCHERS_MESSAGE);
 				viewer_matching.setSelection(new StructuredSelection(EMPTY_MATCHERS_MESSAGE));
 			}
 			
 			// Selection:
-			matcher = getInitialMatcher();
+			matchingEngine = getInitialMatcher();
 			
-			if (matcher != null) {
-				viewer_matching.setSelection(new StructuredSelection(matcher));
+			if (matchingEngine != null) {
+				viewer_matching.setSelection(new StructuredSelection(matchingEngine));
 			}
 			
 			// Matcher configuration:
@@ -124,7 +129,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					matcher = getSelection();
+					matchingEngine = getSelection();
 
 					// Matcher configuration:
 					appendMatcherSettings(grpMatching);
@@ -133,6 +138,44 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 				private IMatcher getSelection() {
 					return (IMatcher) ((StructuredSelection) viewer_matching.getSelection()).getFirstElement();
 				}
+			});
+		}
+		
+		// Repair detection:
+		Group grpRepairDetection = new Group(container, SWT.NONE);
+		{
+			grpRepairDetection.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+			grpRepairDetection.setText("Repair Detection");
+			grpRepairDetection.setLayout(new GridLayout(1, false));
+			
+			viewer_repair = new ComboViewer(grpRepairDetection, SWT.NONE);
+			Combo combo = viewer_repair.getCombo();
+			combo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+			combo.setBounds(0, 0, 91, 23);
+			
+			// Provider:
+			viewer_repair.setSorter(new ViewerSorter());
+			viewer_repair.setContentProvider(ArrayContentProvider.getInstance());
+			viewer_repair.setLabelProvider(new LabelProvider() {
+				
+				@Override
+				public String getText(Object element) {
+					
+					if (element instanceof RepairDectection) {
+						return NameUtil.beautifyName(((RepairDectection) element).toString());
+					}
+					
+					return super.getText(element);
+				}
+			});
+			
+			// Set input:
+			viewer_repair.setInput(RepairDectection.values());
+			
+			// Set selection:
+			viewer_repair.setSelection(repairEngine.getSelection());
+			viewer_repair.addSelectionChangedListener(event -> {
+				repairEngine.setSelection(event.getSelection());
 			});
 		}
 		
@@ -159,8 +202,8 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			config_container.setLayout(grid);
 		}
 		
-		if (matcher instanceof IConfigurable) {
-			final IConfigurable configurableMatcher = (IConfigurable) matcher;
+		if (matchingEngine instanceof IConfigurable) {
+			final IConfigurable configurableMatcher = (IConfigurable) matchingEngine;
 			
 			for (String option : configurableMatcher.getConfigurationOptions().keySet()) {
 
@@ -194,13 +237,13 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	private static IMatcher getInitialMatcher() {
 		IMatcher selectedMatcher = null;
 		
-		if ((matcher != null) && (matchers != null) && (matchers.contains(matcher))) {
-			selectedMatcher = matcher;
+		if ((matchingEngine != null) && (availableMatchers != null) && (availableMatchers.contains(matchingEngine))) {
+			selectedMatcher = matchingEngine;
 		} else {
-			if ((matchers != null) && (!matchers.isEmpty())) {
+			if ((availableMatchers != null) && (!availableMatchers.isEmpty())) {
 				
-				if (matcher != null) {
-					selectedMatcher = getMatcherByName(matcher.getName());
+				if (matchingEngine != null) {
+					selectedMatcher = getMatcherByName(matchingEngine.getName());
 				}
 				
 				if (selectedMatcher == null) {
@@ -208,7 +251,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 				}
 				
 				if (selectedMatcher == null) {
-					selectedMatcher = matchers.iterator().next();
+					selectedMatcher = availableMatchers.iterator().next();
 				}
 			}
 		}
@@ -217,7 +260,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	}
 	
 	private static IMatcher getMatcherByName(String name) {
-		for (IMatcher matcher : matchers) {
+		for (IMatcher matcher : availableMatchers) {
 			if (matcher.getName().equalsIgnoreCase(name)) {
 				return matcher;
 			}
@@ -226,7 +269,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	}
 	
 	private static IMatcher getMatcherByNameFragment(String name) {
-		for (IMatcher matcher : matchers) {
+		for (IMatcher matcher : availableMatchers) {
 			if (matcher.getName().contains(name)) {
 				return matcher;
 			}
@@ -235,11 +278,15 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	}
 	
 	public static void setAvailableMatcher(Set<IMatcher> matchers) {
-		RepairPreferencePage.matchers = matchers;
-		matcher = getInitialMatcher();
+		RepairPreferencePage.availableMatchers = matchers;
+		matchingEngine = getInitialMatcher();
 	}
 	
 	public static IMatcher getSelectedMatcher() {
-		return matcher;
+		return matchingEngine;
+	}
+	
+	public static RepairDectectionEngineProvider getRepairDectectionProvider() {
+		return repairEngine;
 	}
 }
