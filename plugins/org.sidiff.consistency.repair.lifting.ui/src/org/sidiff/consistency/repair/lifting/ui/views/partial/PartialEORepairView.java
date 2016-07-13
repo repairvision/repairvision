@@ -1,6 +1,8 @@
 package org.sidiff.consistency.repair.lifting.ui.views.partial;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -20,6 +22,23 @@ public class PartialEORepairView {
 		viewer_validation.setContentProvider(new RepairTreeContentProvider());
 		viewer_validation.setLabelProvider(new RepairTreeLabelProvider());
 //		viewer_validation.setSorter(new NameSorter());
+		viewer_validation.addDoubleClickListener(event -> {
+			ISelection selection = event.getSelection();
+
+			if (selection instanceof IStructuredSelection) {
+				Object item = ((IStructuredSelection) selection).getFirstElement();
+
+				if (item == null) {
+					return;
+				}
+				if (viewer_validation.getExpandedState(item)) {
+					viewer_validation.collapseToLevel(item, 1);
+				}
+				else {
+					viewer_validation.expandToLevel(item, 1);
+				}
+			}
+		});
 
 		// Edit-Rules:
 		Composite composite_editrules = new Composite(sashForm, SWT.BORDER);
