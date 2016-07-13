@@ -118,7 +118,8 @@ public class ComplementFinder {
 				liftingEngineFactory.createPatternMatchingEngine(recognitionRule, modelDifference);
 		matchingEngine.start();
 
-		// FIXME<-Interface: Matching:
+		// TODO: Use IMatchGenerator interface: 
+		//Matching:
 		PartialMatchGenerator matchGenerator = (PartialMatchGenerator) matchingEngine.getMatchGenerator();
 
 		//// Complement Construction ////

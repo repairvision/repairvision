@@ -34,9 +34,9 @@ public class RepairFacade {
 	 * Search for partially executed edit-operation which might cause an
 	 * inconsistency. A repair complements such a partial edit-operation.
 	 * 
-	 * @param modelA
+	 * @param uriModelA
 	 *            The historic model.
-	 * @param modelB
+	 * @param uriModelB
 	 *            The actual model.
 	 * @param editRules
 	 *            All edit-rules which are to be investigated for partial executions.
