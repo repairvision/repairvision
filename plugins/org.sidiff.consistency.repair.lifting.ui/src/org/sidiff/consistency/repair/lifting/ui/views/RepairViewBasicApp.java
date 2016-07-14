@@ -125,6 +125,7 @@ public abstract class RepairViewBasicApp {
 		if (documentType != null) {
 			DifferenceSettings settings = new DifferenceSettings(documentType) {};
 			settings.setMatcher(RepairPreferencePage.getSelectedMatcher());
+			return settings;
 		}
 		
 		return null;
