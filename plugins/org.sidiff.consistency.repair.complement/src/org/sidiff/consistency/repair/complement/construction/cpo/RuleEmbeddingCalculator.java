@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.construction.subrule;
+package org.sidiff.consistency.repair.complement.construction.cpo;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;

@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.construction.subrule;
+package org.sidiff.consistency.repair.complement.construction.cpo;
 
 import java.util.HashMap;
 import java.util.Map;

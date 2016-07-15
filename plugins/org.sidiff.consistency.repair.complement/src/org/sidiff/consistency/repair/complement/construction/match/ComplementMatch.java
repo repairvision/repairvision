@@ -8,6 +8,7 @@ import org.eclipse.emf.henshin.model.Node;
 /**
  * A pre-match for a complement rule.
  */
+// TODO: Make this extends the Henshin MatchImpl!?
 public class ComplementMatch {
 
 	private Map<Node, EObject> nodeMatches;

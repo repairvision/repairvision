@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.construction.full;
+package org.sidiff.consistency.repair.complement.construction.context;
 
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
@@ -12,7 +12,7 @@ import org.sidiff.consistency.repair.complement.construction.ComplementRule;
  * 
  * @author Manuel Ohrndorf
  */
-public class ComplementConstructorFullContext extends ComplementConstructor {
+public class ContextComplementConstructor extends ComplementConstructor {
 
 	/**
 	 * The (Henshin) engine which applies the rules.
@@ -32,7 +32,7 @@ public class ComplementConstructorFullContext extends ComplementConstructor {
 	 * @param graph
 	 *            The working graph, i.e. the actual version of the model.
 	 */
-	public ComplementConstructorFullContext(Rule sourceRule, EngineImpl engine, EGraph graph) {
+	public ContextComplementConstructor(Rule sourceRule, EngineImpl engine, EGraph graph) {
 		super(sourceRule);
 		this.engine = engine;
 		this.graph = graph;
@@ -40,6 +40,6 @@ public class ComplementConstructorFullContext extends ComplementConstructor {
 
 	@Override
 	protected ComplementRule createComplementRule(Rule sourceRule, Rule complementRule) {
-		return new ComplementRuleFullContext(sourceRule, complementRule, engine, graph);
+		return new ContextComplementRule(sourceRule, complementRule, engine, graph);
 	}
 }

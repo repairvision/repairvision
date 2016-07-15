@@ -12,6 +12,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.henshin.interpreter.EGraph;
+import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
@@ -104,6 +107,12 @@ public class CPORepairFacade {
 		Resource differenceResource = differenceRSS.createResource(URI.createURI(""));
 		differenceResource.getContents().add(difference);
 		
+		// Repair application:
+		EngineImpl henshinEngine = new EngineImpl();
+		
+		// FIXME: Use the graph of the recognition engine or with merged imports!
+		EGraph modelBGraph = new EGraphImpl(modelB);
+		
 		// Calculate repairs:
 		ComplementFinder complementFinder = new ComplementFinder(
 				subEditRuleBase, recognitionEngine, cpEditRules, difference);
@@ -116,6 +125,7 @@ public class CPORepairFacade {
 				for (ComplementMatch preMatch : complement.getComplementPreMatches()) {
 					repairsPerRule.add(new Repair(complement, preMatch));
 				}
+				complement.initialize(henshinEngine, modelBGraph);
 			}
 
 			if (!repairsPerRule.isEmpty()) {

@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.construction.full;
+package org.sidiff.consistency.repair.complement.construction.context;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyParameter;
@@ -37,15 +37,15 @@ import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeS
  * 
  * @author Manuel Ohrndorf
  */
-public class ComplementRuleFullContext extends ComplementRule {
+public class ContextComplementRule extends ComplementRule {
 
-	public ComplementRuleFullContext(Rule sourceRule, Rule complementRule, EngineImpl engine, EGraph graph) {
+	public ContextComplementRule(Rule sourceRule, Rule complementRule, EngineImpl engine, EGraph graph) {
 		super(sourceRule, complementRule);
 		initialize(engine, graph);
 	}
 
 	@Override
-	protected List<ComplementMatch> createComplementPrematches() {
+	protected List<ComplementMatch> createComplementPrematches(List<EditRuleMatch> partialSourceMatch) {
 		
 		// Create rule which only contains the context nodes:
 		Rule contextRule = HenshinFactory.eINSTANCE.createRule();
@@ -86,7 +86,7 @@ public class ComplementRuleFullContext extends ComplementRule {
 		// Create restricted graph:
 		RestrictedEGraphImpl restrictedGraph = new RestrictedEGraphImpl(getGraph(), getEngine(), contextRule);
 		
-		for (EditRuleMatch sourceRuleMatch : getSourceMatch()) {
+		for (EditRuleMatch sourceRuleMatch : partialSourceMatch) {
 			if (sourceRuleMatch instanceof EditRuleNodeMatch) {
 				if (sourceRuleMatch.getAction().equals(Type.PRESERVE)) {
 					Node sourceNode = ((EditRuleNodeMatch) sourceRuleMatch).getNode();

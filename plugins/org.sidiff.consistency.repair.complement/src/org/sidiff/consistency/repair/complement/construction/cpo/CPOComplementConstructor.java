@@ -1,17 +1,15 @@
-package org.sidiff.consistency.repair.complement.construction.subrule;
+package org.sidiff.consistency.repair.complement.construction.cpo;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.interpreter.EGraph;
-import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.repair.complement.construction.ComplementConstructor;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
-import org.sidiff.consistency.repair.complement.construction.full.ComplementConstructorFullContext;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeCreateMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeDeleteMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
@@ -26,16 +24,16 @@ import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeS
  * 
  * @author Manuel Ohrndorf
  */
-public class SubRuleComplementConstructor extends ComplementConstructorFullContext {
+public class CPOComplementConstructor extends ComplementConstructor {
 
-	public SubRuleComplementConstructor(Rule sourceRule, EngineImpl engine, EGraph graph) {
-		super(sourceRule, engine, graph);
+	public CPOComplementConstructor(Rule sourceRule) {
+		super(sourceRule);
 	}
 
 	public Collection<ComplementRule> createComplementRule(Rule subRule, Collection<EditRuleMatch> subRuleMatch) {
 		Collection<ComplementRule> complementRules = new ArrayList<>();
 		
-		// Calculate rule embedding:
+		// TODO[Precalculate]: Calculate rule embedding:
 		for (RuleEmbedding embedding : RuleEmbeddingCalculator.calculateRuleEmbedding(sourceRule, subRule)) {
 			// Convert sub-rule match to partial super-rule match:
 			List<EditRuleMatch> superRuleMatch = convertToPartialMatch(embedding, subRuleMatch);
@@ -102,5 +100,10 @@ public class SubRuleComplementConstructor extends ComplementConstructorFullConte
 		}
 		
 		return superEditRuleMatch;
+	}
+
+	@Override
+	protected ComplementRule createComplementRule(Rule sourceRule, Rule complementRule) {
+		return new CPOComplementRule(sourceRule, complementRule);
 	}
 }

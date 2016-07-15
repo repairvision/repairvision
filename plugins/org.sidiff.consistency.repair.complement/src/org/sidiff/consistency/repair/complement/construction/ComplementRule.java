@@ -222,10 +222,6 @@ public abstract class ComplementRule {
 		this.sourceRule = sourceRule;
 	}
 	
-	public List<EditRuleMatch> getSourceMatch() {
-		return sourceMatch;
-	}
-	
 	public EditRuleMatch getSourceMatch(GraphElement graphElement) {
 		
 		if (graphElement instanceof Node) {
@@ -251,7 +247,7 @@ public abstract class ComplementRule {
 		return null;
 	}
 
-	public void setSourceMatch(List<EditRuleMatch> sourceMatch) {
+	protected void setSourceMatch(List<EditRuleMatch> sourceMatch) {
 		this.sourceMatch = sourceMatch;
 	}
 
@@ -266,12 +262,12 @@ public abstract class ComplementRule {
 	/**
 	 * Calculates the complement pre-match (called lazy).
 	 */
-	protected abstract List<ComplementMatch> createComplementPrematches();
+	protected abstract List<ComplementMatch> createComplementPrematches(List<EditRuleMatch> partialSourceMatch);
 	
 	public List<ComplementMatch> getComplementPreMatches() {
 		
 		if (complementPreMatches == null) {
-			complementPreMatches = createComplementPrematches();
+			complementPreMatches = createComplementPrematches(sourceMatch);
 		}
 		
 		return complementPreMatches;

@@ -18,21 +18,18 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
-import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
+import org.sidiff.consistency.repair.complement.construction.cpo.CPOComplementConstructor;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeCreateMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeDeleteMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeSingleMatch;
-import org.sidiff.consistency.repair.complement.construction.subrule.SubRuleComplementConstructor;
 import org.sidiff.difference.lifting.recognitionengine.ruleapplication.RecognitionEngine;
 import org.sidiff.difference.rulebase.RecognitionRule;
 import org.sidiff.difference.rulebase.Trace;
@@ -53,10 +50,6 @@ public class ComplementFinder {
 	private SymmetricDifference difference;
 	
 	private Map<Rule, Collection<ComplementRule>> complements = new HashMap<>();
-	
-	private EngineImpl engine;
-	
-	private EGraph graph;
 
 	public ComplementFinder(
 			ILiftingRuleBase subEditRuleBase, 
@@ -68,10 +61,6 @@ public class ComplementFinder {
 		this.recognitionEngine = recognitionEngine;
 		this.sourceEditRules = sourceEditRules;
 		this.difference = difference;
-		
-		// TODO: Use the graph from the recognition engine!?
-		this.engine = new EngineImpl();
-		this.graph = new EGraphImpl(difference.getModelB());
 		
 		calculateComplementRules();
 	}
@@ -94,10 +83,9 @@ public class ComplementFinder {
 			// Translate recognition to edit rule matching:
 			List<EditRuleMatch> subEOMatch = createEditRuleMatch(subEditRule, subEOUnit, subRRMatch);
 			
-			// TODO[Precalculate]:Find corresponding source rule:
+			// TODO[Precalculate]: Find corresponding source rule:
 			for (Rule sourceEditRule : sourceEditRules) {
-				SubRuleComplementConstructor complementConstructor = 
-						new SubRuleComplementConstructor(sourceEditRule, engine, graph);
+				CPOComplementConstructor complementConstructor = new CPOComplementConstructor(sourceEditRule);
 
 				Collection<ComplementRule> newSourceComplements = complementConstructor
 						.createComplementRule(subEOUnit, subEOMatch);
