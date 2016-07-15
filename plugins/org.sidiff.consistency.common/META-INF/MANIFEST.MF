@@ -5,7 +5,11 @@ Bundle-SymbolicName: org.sidiff.consistency.common
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.emf.ecore.xmi,
- org.eclipse.core.runtime;bundle-version="3.11.1"
+ org.eclipse.core.runtime;bundle-version="3.11.1",
+ org.eclipse.ui.console,
+ org.eclipse.ui.workbench,
+ org.eclipse.swt,
+ org.eclipse.jface;bundle-version="3.11.1"
 Export-Package: org.sidiff.consistency.common.debug,
  org.sidiff.consistency.common.storage,
  org.sidiff.consistency.common.ui
