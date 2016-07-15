@@ -90,7 +90,7 @@ public class RuleEmbedding {
 	public Node getSuperRuleNode(Node subRuleNode) {
 		Node superRuleNode = lhsNodeEmbedding.get(subRuleNode);
 		
-		if (subRuleNode == null) {
+		if (superRuleNode == null) {
 			superRuleNode =  rhsNodeEmbedding.get(subRuleNode);
 		}
 		
@@ -100,7 +100,7 @@ public class RuleEmbedding {
 	public Edge getSuperRuleEdge(Edge subRuleEdge) {
 		Edge superRuleEdge = lhsEdgeEmbedding.get(subRuleEdge);
 		
-		if (subRuleEdge == null) {
+		if (superRuleEdge == null) {
 			superRuleEdge =  rhsEdgeEmbedding.get(subRuleEdge);
 		}
 		

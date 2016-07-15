@@ -81,6 +81,8 @@ public class SubRuleComplementConstructor extends ComplementConstructorFullConte
 				Edge subRuleEdge = ((EditRuleEdgeMatch) subEditRuleMatch).getEdge();
 				Edge superRuleEdge = embedding.getSuperRuleEdge(subRuleEdge);
 				
+				assert (superRuleEdge != null);
+				
 				EObject srcMatch = ((EditRuleEdgeMatch) subEditRuleMatch).getSrcModelElement();
 				EObject tgtMatch = ((EditRuleEdgeMatch) subEditRuleMatch).getTgtModelElement();
 				
