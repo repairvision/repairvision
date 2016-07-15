@@ -15,6 +15,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
+import org.sidiff.consistency.common.ui.InfoConsole;
+import org.sidiff.consistency.common.ui.WorkbenchUtil;
 import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngineFactory;
 import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger.Breakpoint;
@@ -22,9 +24,7 @@ import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger
 import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger.Termination;
 import org.sidiff.consistency.graphpattern.matcher.extensions.MatchingEngineFactoryEntry;
 import org.sidiff.consistency.graphpattern.matcher.ui.session.EngineManager;
-import org.sidiff.consistency.graphpattern.matcher.ui.util.InfoConsole;
 import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
-import org.sidiff.consistency.graphpattern.matcher.ui.util.WorkbenchUtil;
 
 public class PatternMatchingEngineViewApp implements BreakpointListener {
 

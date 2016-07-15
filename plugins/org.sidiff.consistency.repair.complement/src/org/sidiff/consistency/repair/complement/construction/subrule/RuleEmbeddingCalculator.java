@@ -1,6 +1,10 @@
 package org.sidiff.consistency.repair.complement.construction.subrule;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,17 +32,21 @@ import org.sidiff.consistency.repair.complement.util.ComplementUtil;
  * @author Manuel Ohrndorf
  */
 public class RuleEmbeddingCalculator {
+	
+	private enum Side {
+		LHS, RHS
+	}
 
 	public static List<RuleEmbedding> calculateRuleEmbedding(Rule superRule, Rule subRule) {
 		List<RuleEmbedding> embeddings = new ArrayList<>();
 		
 		// Calculate LHS-Embeddings:
-		List<Map<Node, Node>> lhsEmbeddings = calculateGraphNodeEmbedding(superRule.getLhs(), subRule.getLhs());
+		List<Map<Node, Node>> lhsEmbeddings = calculateGraphNodeEmbedding(superRule, subRule, Side.LHS);
 
 		// Calculate RHS-Embeddings:
 		for (Map<Node, Node> lhsEmbedding : lhsEmbeddings) {
 			List<Map<Node, Node>> rhsEmbeddings = calculateGraphNodeEmbedding(
-					superRule.getRhs(), subRule.getRhs(), lhsEmbedding);
+					superRule, subRule, Side.RHS, lhsEmbedding);
 			
 			// Fork embedding of each LHS for each matched RHS: 
 			for (Map<Node, Node> rhsEmbedding : rhsEmbeddings) {
@@ -87,14 +95,15 @@ public class RuleEmbeddingCalculator {
 	}
 	
 	/**
+	 * @param side 
 	 * @param superGraph
 	 *            The greater super-graph.
 	 * @param subGraph
 	 *            The smaller sub-graph which will be matched against the super-graph.
 	 * @return Match: Sub-Graph -> Super-Graph
 	 */
-	public static List<Map<Node, Node>> calculateGraphNodeEmbedding(Graph superGraph, Graph subGraph) {
-		return calculateGraphNodeEmbedding(superGraph, subGraph, Collections.emptyMap());
+	public static List<Map<Node, Node>> calculateGraphNodeEmbedding(Rule superRule, Rule subRule, Side side) {
+		return calculateGraphNodeEmbedding(superRule, subRule, side, Collections.emptyMap());
 	}
 
 	/**
@@ -107,33 +116,84 @@ public class RuleEmbeddingCalculator {
 	 * @return Match: sub-graph -> super-graph
 	 */
 	public static List<Map<Node, Node>> calculateGraphNodeEmbedding(
-			Graph superGraph, Graph subGraph, Map<Node, Node> preMatch) {
+			Rule superRule, Rule subRule, Side side, Map<Node, Node> preMatch) {
 		
 		// Match the sub-graph in the dummy working graph that is isomorph to the super-graph: 
-		HenshinEGraph superObjectGraph = new HenshinEGraph(superGraph);
+		HenshinEGraph superObjectGraph = null;
+		
+		if (side.equals(Side.LHS)) {
+			superObjectGraph = new HenshinEGraph(superRule.getLhs());
+		} else {
+			superObjectGraph = new HenshinEGraph(superRule.getRhs());
+		}
 		
 		// Interpret the sub-graph as << preserve >> only rule:
-		Rule subMatchingRule = HenshinFactory.eINSTANCE.createRule();
-		Map<EObject, EObject> rhsSubGraph = ComplementUtil.deepCopy(subGraph);
+		Map<EObject, EObject> subMatchingRuleCopy = ComplementUtil.deepCopy(subRule);
+		Map<EObject, EObject> subGraphCopy = null;
 		
-		for (Entry<EObject, EObject> copyTrace : rhsSubGraph.entrySet()) {
+		Rule subMatchingRule = (Rule) subMatchingRuleCopy.get(subRule);
+		subMatchingRule.setName(subMatchingRule.getName() + "_copy");
+		
+		if (side.equals(Side.LHS)) {
+			subGraphCopy = ComplementUtil.deepCopy(subMatchingRule.getLhs());
+			subMatchingRule.setRhs((Graph) subGraphCopy.get(subMatchingRule.getLhs()));
+		} else {
+			subGraphCopy = ComplementUtil.deepCopy(subMatchingRule.getRhs());
+			subMatchingRule.setLhs((Graph) subGraphCopy.get(subMatchingRule.getRhs()));
+		}
+		
+		// Calculate mappings:
+		subMatchingRule.getMappings().clear();
+		
+		for (Entry<EObject, EObject> copyTrace : subGraphCopy.entrySet()) {
 			if (copyTrace.getKey() instanceof Node) {
 				Mapping lhsToRhs = HenshinFactory.eINSTANCE.createMapping();
-				lhsToRhs.setOrigin((Node) copyTrace.getKey());
-				lhsToRhs.setImage((Node) copyTrace.getValue());
+				
+				if (side.equals(Side.LHS)) {
+					lhsToRhs.setOrigin((Node) copyTrace.getKey());
+					lhsToRhs.setImage((Node) copyTrace.getValue());
+				} else {
+					lhsToRhs.setOrigin((Node) copyTrace.getValue());
+					lhsToRhs.setImage((Node) copyTrace.getKey());
+				}
+
 				subMatchingRule.getMappings().add(lhsToRhs);
 			}
 		}
 		
 		// Calculate the pre-match:
 		Match objectPreMatch = new MatchImpl(subMatchingRule); 
-		
+	
 		for (Entry<Node, Node> nodeMatch : preMatch.entrySet()) {
 			Node subGraphNode = nodeMatch.getKey();
 			Node superGraphNode = nodeMatch.getValue();
 			
-			EObject superGraphNodeObject = superObjectGraph.getNode2ObjectMap().get(superGraphNode);
-			objectPreMatch.setNodeTarget(subGraphNode, superGraphNodeObject);
+			// Get the copied node:
+			if (side.equals(Side.LHS)) {
+				if (subGraphNode.getGraph().isRhs()) {
+					subGraphNode = getLHS(subGraphNode);
+				}
+				if (superGraphNode.getGraph().isRhs()) {
+					superGraphNode = getLHS(superGraphNode);
+				}
+				
+				subGraphNode = (Node) subMatchingRuleCopy.get(subGraphNode);
+			} else {
+				if (subGraphNode.getGraph().isLhs()) {
+					subGraphNode = getRHS(subGraphNode);
+				}
+				if (superGraphNode.getGraph().isLhs()) {
+					superGraphNode = getRHS(superGraphNode);
+				}
+				
+				subGraphNode = (Node) subGraphCopy.get(subMatchingRuleCopy.get(subGraphNode));
+			}
+			
+			// Translate to object pre-match:
+			if ((subGraphNode != null) && (superGraphNode != null)) {
+				EObject superGraphNodeObject = superObjectGraph.getNode2ObjectMap().get(superGraphNode);
+				objectPreMatch.setNodeTarget(subGraphNode, superGraphNodeObject);
+			}
 		}
 		
 		// Setup matching engine:
@@ -148,11 +208,32 @@ public class RuleEmbeddingCalculator {
 			
 			Map<Node, Node> graphEmbedding = new HashMap<>();
 			graphEmbeddings.add(graphEmbedding);
-
-			for (Node subGraphNode : subGraph.getNodes()) {
-				EObject superGraphNodeDummy = match.getNodeTarget(subGraphNode);
-				Node superGraphNode = superObjectGraph.getObject2NodeMap().get(superGraphNodeDummy);
+			
+			// Embedding for LHS or RHS:
+			Collection<Node> searchedNodes = null;
+			
+			if (side.equals(Side.LHS)) {
+				searchedNodes = subRule.getLhs().getNodes();
+			} else {
+				searchedNodes = subRule.getRhs().getNodes();
+			}
+			
+			// Create embedding:
+			for (Node subGraphNode : searchedNodes) {
 				
+				// Get the copied node:
+				Node subMatchingNode = null; 
+				
+				if (side.equals(Side.LHS)) {
+					subMatchingNode = (Node) subMatchingRuleCopy.get(subGraphNode);
+				} else {
+					subMatchingNode = (Node) subGraphCopy.get(subMatchingRuleCopy.get(subGraphNode));
+				}
+				
+				assert (subMatchingNode != null);
+				
+				EObject superGraphNodeDummy = match.getNodeTarget(subMatchingNode);
+				Node superGraphNode = superObjectGraph.getObject2NodeMap().get(superGraphNodeDummy);
 				graphEmbedding.put(subGraphNode, superGraphNode);
 			}
 		}

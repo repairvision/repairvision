@@ -51,9 +51,9 @@ public class ComplementFinder {
 	
 	private Map<Rule, Collection<ComplementRule>> complements = new HashMap<>();
 	
-	private EngineImpl engine; // TODO
+	private EngineImpl engine;
 	
-	private EGraph graph; // TODO
+	private EGraph graph;
 
 	public ComplementFinder(
 			ILiftingRuleBase subEditRuleBase, 
@@ -99,7 +99,7 @@ public class ComplementFinder {
 				Collection<ComplementRule> newSourceComplements = complementConstructor
 						.createComplementRule(subEOUnit, subEOMatch);
 
-				if ((newSourceComplements != null) && (newSourceComplements.isEmpty())) {
+				if ((newSourceComplements != null) && (!newSourceComplements.isEmpty())) {
 					Collection<ComplementRule> sourceComplements = complements.get(sourceEditRule);
 
 					if (sourceComplements == null) {

@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
+import org.sidiff.consistency.common.ui.InfoConsole;
 import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.EObjectList;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
@@ -29,7 +30,6 @@ import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
 import org.sidiff.consistency.graphpattern.matcher.matching.INodeMatching;
 import org.sidiff.consistency.graphpattern.matcher.matching.util.MatchingUtil;
 import org.sidiff.consistency.graphpattern.matcher.ui.session.EngineManager;
-import org.sidiff.consistency.graphpattern.matcher.ui.util.InfoConsole;
 import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
 
 public class MatchViewerApp {

@@ -25,10 +25,10 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
+import org.sidiff.consistency.common.ui.InfoConsole;
+import org.sidiff.consistency.common.ui.WorkbenchUtil;
 import org.sidiff.consistency.graphpattern.EObjectList;
 import org.sidiff.consistency.graphpattern.matcher.ui.Activator;
-import org.sidiff.consistency.graphpattern.matcher.ui.util.InfoConsole;
-import org.sidiff.consistency.graphpattern.matcher.ui.util.WorkbenchUtil;
 
 public class MatchViewer extends ViewPart {
 

@@ -1,7 +1,5 @@
 package org.sidiff.consistency.repair.lifting.cpo;
 
-import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -28,12 +26,10 @@ import org.sidiff.consistency.repair.lifting.api.RepairJob;
 import org.sidiff.consistency.repair.lifting.cpo.complement.ComplementFinder;
 import org.sidiff.difference.lifting.api.LiftingFacade;
 import org.sidiff.difference.lifting.api.settings.LiftingSettings;
-import org.sidiff.difference.lifting.edit2recognition.Edit2RecognitionTransformation;
 import org.sidiff.difference.lifting.recognitionengine.ruleapplication.RecognitionEngine;
-import org.sidiff.difference.rulebase.LiftingRulebaseFactory;
-import org.sidiff.difference.rulebase.RecognitionRule;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.rulebase.view.LiftingRuleBase;
+import org.sidiff.difference.rulebase.wrapper.EditWrapper2RecognitionWrapper;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.rulebase.EditRule;
@@ -91,13 +87,12 @@ public class CPORepairFacade {
 		RecognitionEngine recognitionEngine = null;
 		
 		try {
-			// Technical difference:
-			difference = deriveTechnicalDifference(modelA, modelB, settings);
-			
-			// Lifting:
+			// Calculate lifted difference:
 			LiftingSettings liftingSettings = new LiftingSettings(documentType);
+			liftingSettings.setMatcher(settings.getMatcher());
 			liftingSettings.setRuleBases(ruleBases);
-			CPOLiftingFacade.liftTechnicalDifference(modelA, modelB, liftingSettings);
+			liftingSettings.setCalculateEditRuleMatch(false);
+			difference = CPOLiftingFacade.liftTechnicalDifference(modelA, modelB, liftingSettings);
 			
 			// Save used recognition engine:
 			recognitionEngine = CPOLiftingFacade.getRecognitionEngine();
@@ -155,13 +150,8 @@ public class CPORepairFacade {
 
 			// Transform edit- to recognition-rule:
 			try {
-				Edit2RecognitionTransformation edit2Recognition = 
-						new Edit2RecognitionTransformation(subEditRule.getModule());
-				Rule recognitionUnit = (Rule) edit2Recognition.getRecognitionMainUnit();
-
-				RecognitionRule recognitionRule = LiftingRulebaseFactory.eINSTANCE.createRecognitionRule();
-				recognitionRule.setRecognitionMainUnit(recognitionUnit);
-				recognitionRule.setRuleBaseItem(rulebaseItem);
+				EditWrapper2RecognitionWrapper edit2Recognition = new EditWrapper2RecognitionWrapper();
+				edit2Recognition.transform(rulebaseItem);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
