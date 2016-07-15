@@ -1,5 +1,7 @@
 package org.sidiff.consistency.repair.lifting.cpo.complement;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionEdge;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -118,21 +121,22 @@ public class ComplementFinder {
 		
 		// Create edit-operation match:
 		List<EditRuleMatch> editRuleMatch = new ArrayList<>();
-
+		Set<Node> donePreserveNodes = new HashSet<>();
+		
+		Map<Node, Node> eo2rrTrace = getEdit2RecognitionTrace(editRule);
+		
 		for (Trace trace : editRule.getEditRuleAttachment(RecognitionRule.class).getTracesA()) {
 			Node editRuleNode = trace.getEditRuleTrace();
 			
 			// EO-Delete-Nodes:
 			if (isDeletionNode(editRuleNode)) {
-				editRuleMatch.add(new EditRuleNodeSingleMatch(
-						editRuleNode, Type.DELETE, rrMatch.getNodeTarget(editRuleNode)));
-				
-				// EO-Delete-Edges:
-				for (Edge outgoing : editRuleNode.getOutgoing()) {
-					editRuleMatch.add(new EditRuleEdgeDeleteMatch(outgoing, 
-							rrMatch.getNodeTarget(editRuleNode),
-							rrMatch.getNodeTarget(outgoing.getTarget())));
-				}
+				createDeleteNodeMatch(editRuleMatch, editRuleNode, rrMatch, eo2rrTrace);
+			}
+			
+			// EO-Preserve-Nodes:
+			else if (isPreservedNode(editRuleNode)) {
+				createPreserveNodeMatch(editRuleMatch, editRuleNode, rrMatch, eo2rrTrace);
+				donePreserveNodes.add(editRuleNode);
 			}
 		}
 		
@@ -141,42 +145,88 @@ public class ComplementFinder {
 			
 			// EO-Create-Nodes:
 			if (isCreationNode(editRuleNode)) {
-				editRuleMatch.add(new EditRuleNodeSingleMatch(
-						editRuleNode, Type.CREATE, rrMatch.getNodeTarget(editRuleNode)));
-				
-				// EO-Create-Edges:
-				for (Edge outgoing : editRuleNode.getOutgoing()) {
-					editRuleMatch.add(new EditRuleEdgeCreateMatch(outgoing, 
-							rrMatch.getNodeTarget(editRuleNode),
-							rrMatch.getNodeTarget(outgoing.getTarget())));
-				}
+				createCreateNodeMatch(editRuleMatch, editRuleNode, rrMatch, eo2rrTrace);
 			}
 			
 			// EO-Preserve-Nodes:
-			else if (isPreservedNode(editRuleNode)) {
-				editRuleMatch.add(new EditRuleNodeSingleMatch(
-						editRuleNode, Type.PRESERVE, rrMatch.getNodeTarget(editRuleNode)));
-				
-				for (Edge outgoing : editRuleNode.getOutgoing()) {
-					
-					// EO-Delete-Edges:
-					if (isDeletionEdge(outgoing)) {
-						editRuleMatch.add(new EditRuleEdgeDeleteMatch(outgoing, 
-								rrMatch.getNodeTarget(editRuleNode),
-								rrMatch.getNodeTarget(outgoing.getTarget())));
-					}
-					
-					// EO-Create-Edges:
-					else if (isCreationEdge(outgoing)) {
-						editRuleMatch.add(new EditRuleEdgeCreateMatch(outgoing, 
-								rrMatch.getNodeTarget(editRuleNode),
-								rrMatch.getNodeTarget(outgoing.getTarget())));
-					}
-				}
+			else if (!donePreserveNodes.contains(editRuleNode) && isPreservedNode(editRuleNode)) {
+				createPreserveNodeMatch(editRuleMatch, editRuleNode, rrMatch, eo2rrTrace);
 			}
 		}
 		
 		return editRuleMatch;
+	}
+	
+	private Map<Node, Node> getEdit2RecognitionTrace(EditRule editRule) {
+		Map<Node, Node> trace = new HashMap<>();
+		
+		for (Trace traceA : editRule.getEditRuleAttachment(RecognitionRule.class).getTracesA()) {
+			trace.put(traceA.getEditRuleTrace(), traceA.getRecognitionRuleTrace());
+		}
+		
+		for (Trace traceB : editRule.getEditRuleAttachment(RecognitionRule.class).getTracesB()) {
+			trace.put(traceB.getEditRuleTrace(), traceB.getRecognitionRuleTrace());
+		}
+		
+		return trace;
+	}
+	
+	private void createDeleteNodeMatch(
+			List<EditRuleMatch> eoMatch, Node eoNode, 
+			Match rrMatch, Map<Node, Node> eo2rrTrace) {
+		
+		eoMatch.add(new EditRuleNodeSingleMatch(
+				eoNode, Type.DELETE, rrMatch.getNodeTarget(eo2rrTrace.get(eoNode))));
+		
+		// EO-Delete-Edges:
+		for (Edge outgoing : eoNode.getOutgoing()) {
+			eoMatch.add(new EditRuleEdgeDeleteMatch(outgoing, 
+					rrMatch.getNodeTarget(eo2rrTrace.get(outgoing.getSource())),
+					rrMatch.getNodeTarget(eo2rrTrace.get(outgoing.getTarget()))));
+		}
+	}
+	
+	private void createCreateNodeMatch(
+			List<EditRuleMatch> eoMatch, Node eoNode, 
+			Match rrMatch, Map<Node, Node> eo2rrTrace) {
+		
+		eoMatch.add(new EditRuleNodeSingleMatch(
+				eoNode, Type.CREATE, rrMatch.getNodeTarget(eo2rrTrace.get(eoNode))));
+		
+		// EO-Create-Edges:
+		for (Edge outgoing : eoNode.getOutgoing()) {
+			eoMatch.add(new EditRuleEdgeCreateMatch(outgoing, 
+					rrMatch.getNodeTarget(eo2rrTrace.get(outgoing.getSource())),
+					rrMatch.getNodeTarget(eo2rrTrace.get(outgoing.getTarget()))));
+		}
+	}
+	
+	private void createPreserveNodeMatch(
+			List<EditRuleMatch> eoMatch, Node eoNode, 
+			Match rrMatch, Map<Node, Node> eo2rrTrace) {
+		
+		// NOTE: The trace of a preserve node is (normally) be saved as LHS node trace.
+		
+		eoMatch.add(new EditRuleNodeSingleMatch(
+				eoNode, Type.PRESERVE, rrMatch.getNodeTarget(eo2rrTrace.get(getLHS(eoNode)))));
+		
+		for (Edge outgoingLHS : getLHS(eoNode).getOutgoing()) {
+			// EO-Delete-Edges:
+			if (isDeletionEdge(outgoingLHS)) {
+				eoMatch.add(new EditRuleEdgeDeleteMatch(outgoingLHS, 
+						rrMatch.getNodeTarget(eo2rrTrace.get(outgoingLHS.getSource())),
+						rrMatch.getNodeTarget(eo2rrTrace.get(outgoingLHS.getTarget()))));
+			}
+		}
+		
+		for (Edge outgoingRHS : getRHS(eoNode).getOutgoing()) {
+			// EO-Create-Edges:
+			if (isCreationEdge(outgoingRHS)) {
+				eoMatch.add(new EditRuleEdgeCreateMatch(outgoingRHS, 
+						rrMatch.getNodeTarget(eo2rrTrace.get(getLHS(eoNode))),
+						rrMatch.getNodeTarget(eo2rrTrace.get(getLHS(outgoingRHS.getTarget())))));
+			}
+		}
 	}
 	
 	/**
