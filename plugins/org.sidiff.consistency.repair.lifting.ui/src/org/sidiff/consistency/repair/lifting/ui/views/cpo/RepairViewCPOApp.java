@@ -38,15 +38,18 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 		Collection<Rule> cpEditRules = loadEditRules(cpEditRuleFiles);
 		
 		// Calculate repairs:
-		URI uriModelA = ModelDropWidget.getURI(modelAFile);
-		URI uriModelB = ModelDropWidget.getURI(modelBFile);
-		repairJob = CPORepairFacade.getRepairs(
-				uriModelA, uriModelB, 
-				subEditRules, cpEditRules, 
-				documentType, settings);
-		
-		// Show repairs:
-		viewer_repairs.setInput(repairJob.getRepairs());
+		if (!subEditRules.isEmpty() && !cpEditRules.isEmpty()) {
+			URI uriModelA = ModelDropWidget.getURI(modelAFile);
+			URI uriModelB = ModelDropWidget.getURI(modelBFile);
+			
+			repairJob = CPORepairFacade.getRepairs(
+					uriModelA, uriModelB, 
+					subEditRules, cpEditRules, 
+					documentType, settings);
+			
+			// Show repairs:
+			viewer_repairs.setInput(repairJob.getRepairs());
+		}
 	}
 
 	@Override

@@ -10,18 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.henshin.HenshinModuleAnalysis;
@@ -42,8 +36,6 @@ import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.rulebase.view.LiftingRuleBase;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.editrule.consistency.validation.EditRuleValidation;
-import org.sidiff.editrule.consistency.validation.EditRuleValidator;
 import org.sidiff.editrule.rulebase.EditRule;
 import org.sidiff.editrule.rulebase.RuleBase;
 import org.sidiff.editrule.rulebase.RuleBaseItem;
@@ -155,38 +147,23 @@ public class CPORepairFacade {
 		rulebaseView.init(rulebase);
 		
 		for (Rule subEditRule : editRules) {
-			List<EditRuleValidation> validation = EditRuleValidator.calculateEditRuleValidations(subEditRule.getModule());
-			
-			MultiStatus info = new MultiStatus("", 1, "Validation Failed", null);
-			
-			for (EditRuleValidation editRuleValidation : validation) {
-				info.add(new Status(IStatus.ERROR, "", 1, editRuleValidation.infoMessage, null));
-			}
-			
-			ErrorDialog.openError(
-					Display.getDefault().getActiveShell(), 
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(), 
-					null, info);
 
-			if (validation.isEmpty()) {
-				
-				// Add edit rule:
-				EditRule editRuleWrapper = createEditRule(subEditRule.getModule());
-				RuleBaseItem rulebaseItem = createItem(editRuleWrapper);
-				rulebase.getItems().add(rulebaseItem);
+			// Add edit rule:
+			EditRule editRuleWrapper = createEditRule(subEditRule.getModule());
+			RuleBaseItem rulebaseItem = createItem(editRuleWrapper);
+			rulebase.getItems().add(rulebaseItem);
 
-				// Transform edit- to recognition-rule:
-				try {
-					Edit2RecognitionTransformation edit2Recognition = 
-							new Edit2RecognitionTransformation(subEditRule.getModule());
-					Rule recognitionUnit = (Rule) edit2Recognition.getRecognitionMainUnit();
-					
-					RecognitionRule recognitionRule = LiftingRulebaseFactory.eINSTANCE.createRecognitionRule();
-					recognitionRule.setRecognitionMainUnit(recognitionUnit);
-					recognitionRule.setRuleBaseItem(rulebaseItem);
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
+			// Transform edit- to recognition-rule:
+			try {
+				Edit2RecognitionTransformation edit2Recognition = 
+						new Edit2RecognitionTransformation(subEditRule.getModule());
+				Rule recognitionUnit = (Rule) edit2Recognition.getRecognitionMainUnit();
+
+				RecognitionRule recognitionRule = LiftingRulebaseFactory.eINSTANCE.createRecognitionRule();
+				recognitionRule.setRecognitionMainUnit(recognitionUnit);
+				recognitionRule.setRuleBaseItem(rulebaseItem);
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
 		}
 		
