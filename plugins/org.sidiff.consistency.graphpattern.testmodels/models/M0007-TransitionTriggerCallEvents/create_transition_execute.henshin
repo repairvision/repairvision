@@ -4,12 +4,15 @@
   <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
     <parameters name="transition_target"/>
     <parameters name="transition_source"/>
+    <parameters name="newTransition"/>
     <parameterMappings source="//@units.0/@parameters.0" target="//@units.1/@parameters.0"/>
     <parameterMappings source="//@units.0/@parameters.1" target="//@units.1/@parameters.1"/>
+    <parameterMappings source="//@units.1/@parameters.2" target="//@units.0/@parameters.2"/>
   </units>
   <units xsi:type="henshin:Rule" name="createTransition">
     <parameters name="transition_target"/>
     <parameters name="transition_source"/>
+    <parameters name="newTransition"/>
     <lhs name="Lhs">
       <nodes name="transition_container" incoming="//@units.1/@lhs/@edges.2 //@units.1/@lhs/@edges.3" outgoing="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
