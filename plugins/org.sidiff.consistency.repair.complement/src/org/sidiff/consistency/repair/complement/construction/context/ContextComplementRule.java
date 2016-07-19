@@ -3,6 +3,7 @@ package org.sidiff.consistency.repair.complement.construction.context;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyParameter;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyPreserveNodes;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getPreservedEdges;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getPreservedNodes;
 
@@ -16,7 +17,6 @@ import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RestrictedEGraphImpl;
-import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Node;
@@ -88,19 +88,23 @@ public class ContextComplementRule extends ComplementRule {
 		
 		for (EditRuleMatch sourceRuleMatch : partialSourceMatch) {
 			if (sourceRuleMatch instanceof EditRuleNodeMatch) {
-				if (sourceRuleMatch.getAction().equals(Type.PRESERVE)) {
-					Node sourceNode = ((EditRuleNodeMatch) sourceRuleMatch).getNode();
-					Node complementNode = getTrace(sourceNode);
-					EditRuleNodeMatch preMatch = (EditRuleNodeMatch) sourceRuleMatch;
-					
+				Node sourceNode = ((EditRuleNodeMatch) sourceRuleMatch).getNode();
+				Node complementNode = getLHS(getTrace(sourceNode));
+				EditRuleNodeMatch preMatch = (EditRuleNodeMatch) sourceRuleMatch;
+
+				if (complementNode != null) {
 					if (preMatch instanceof EditRuleNodeSingleMatch) {
 						EditRuleNodeSingleMatch singlePreMatch = (EditRuleNodeSingleMatch) preMatch;
-						restrictedGraph.setDomainRestriction(complementNode, singlePreMatch.getModelElement());
+						restrictedGraph.setDomainRestriction(
+								traceComplementToContext.get(complementNode),
+								singlePreMatch.getModelElement());
 					}
 					
 					else if (preMatch instanceof EditRuleNodeMultiMatch) {
 						EditRuleNodeMultiMatch multiPreMatch = (EditRuleNodeMultiMatch) preMatch;
-						restrictedGraph.setDomainRestriction(complementNode, multiPreMatch.getModelElements());
+						restrictedGraph.setDomainRestriction(
+								traceComplementToContext.get(complementNode),
+								multiPreMatch.getModelElements());
 					}
 				}
 			}
@@ -110,7 +114,7 @@ public class ContextComplementRule extends ComplementRule {
 		ArrayList<ComplementMatch> complementPreMatches = new ArrayList<>();
 		Iterator<Match> matchFinder = getEngine().findMatches(contextRule, restrictedGraph, null).iterator();
 		
-		if (matchFinder.hasNext()) {
+		while (matchFinder.hasNext()) {
 			Match nextMatch = matchFinder.next();
 			
 			// Create complement pre-match:

@@ -13,6 +13,7 @@ import org.sidiff.consistency.repair.lifting.api.RepairFacade;
 import org.sidiff.consistency.repair.lifting.api.RepairJob;
 import org.sidiff.consistency.repair.lifting.ui.views.ModelDropWidget;
 import org.sidiff.consistency.repair.lifting.ui.views.RepairViewBasicApp;
+import org.sidiff.consistency.repair.validation.util.BatchValidationIterator.Validation;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 
 public class RepairViewPartialEOApp extends RepairViewBasicApp {
@@ -47,6 +48,11 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 		
 		// Show repairs:
 		viewer_repairs.setInput(repairJob.getRepairs());
+		
+		// Clean up repair-trees:
+		for (Validation validation : repairJob.getValidations()) {
+			validation.cleanUpRepairTree();
+		}
 		
 		// Show validations:
 		viewer_validation.setInput(repairJob.getValidations());

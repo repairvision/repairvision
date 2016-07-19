@@ -2,6 +2,7 @@ package org.sidiff.consistency.repair.lifting.cpo;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -91,7 +92,7 @@ public class CPORepairFacade {
 		
 		try {
 			// Calculate lifted difference:
-			LiftingSettings liftingSettings = new LiftingSettings(documentType);
+			LiftingSettings liftingSettings = new LiftingSettings(Collections.singleton(documentType));
 			liftingSettings.setMatcher(settings.getMatcher());
 			liftingSettings.setRuleBases(ruleBases);
 			liftingSettings.setCalculateEditRuleMatch(false);

@@ -9,7 +9,9 @@ import org.eclipse.uml2.uml.UMLPackage;
 import org.sidiff.consistency.repair.validation.ConsistencyRule;
 import org.sidiff.consistency.repair.validation.formulas.And;
 import org.sidiff.consistency.repair.validation.formulas.Formula;
+import org.sidiff.consistency.repair.validation.formulas.Not;
 import org.sidiff.consistency.repair.validation.formulas.predicates.Equality;
+import org.sidiff.consistency.repair.validation.formulas.predicates.IsEmpty;
 import org.sidiff.consistency.repair.validation.formulas.quantifiers.Exists;
 import org.sidiff.consistency.repair.validation.formulas.quantifiers.ForAll;
 import org.sidiff.consistency.repair.validation.terms.Term;
@@ -26,6 +28,7 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 	
 	static {
 		addConsistencyRule(createMessageBasedOnOperationRule());
+		addConsistencyRule(createTransitionWithoutTriggerRule());
 	}
 	
 	public static void addConsistencyRule(ConsistencyRule rule) {
@@ -111,5 +114,24 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 		messageBasedOnOperation.setName("messageBasedOnOperation");
 		
 		return messageBasedOnOperation;
+	}
+	
+	public static ConsistencyRule createTransitionWithoutTriggerRule() {
+		
+		// Create consistency rule:
+		Variable transition = new Variable("transition");
+		Variable trigger = new Variable("trigger");
+		
+		Formula validation = new Exists(
+				trigger, 
+				new Get(transition, UML.getTransition_Trigger()),
+				new Not(new IsEmpty(transition))); 
+		
+		ConsistencyRule transitionWithoutTrigger = new ConsistencyRule(
+				UML.getTransition(), transition, validation);
+		
+		transitionWithoutTrigger.setName("transitionWithoutTrigger");
+		
+		return transitionWithoutTrigger;
 	}
 }

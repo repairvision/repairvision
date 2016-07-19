@@ -65,10 +65,33 @@ public class BatchValidationIterator implements Iterator<BatchValidationIterator
 		public IRepairDecision getRepair() {
 			return repair;
 		}
+		
+		public void cleanUpRepairTree() {
+			repair = ValidationUtil.cleanup(repair);
+		}
 	}
 	
 	public BatchValidationIterator(Resource modelResource, List<ConsistencyRule> consistencyRules) {
 		this.modelIterator = modelResource.getAllContents();
+		
+		init(consistencyRules);
+	}
+
+	public BatchValidationIterator(
+			Resource modelResource, List<ConsistencyRule> consistencyRules,
+			boolean showPositiveResults, 
+			boolean showNegativeResults,
+			boolean cleanupRepairTree) {
+		
+		this.modelIterator = modelResource.getAllContents();
+		this.showPositiveResults = showPositiveResults;
+		this.showNegativeResults = showNegativeResults;
+		this.cleanupRepairTree = cleanupRepairTree;
+		
+		init(consistencyRules);
+	}
+
+	private void init(List<ConsistencyRule> consistencyRules) {
 		
 		for (ConsistencyRule consistencyRule : consistencyRules) {
 			
@@ -78,7 +101,7 @@ public class BatchValidationIterator implements Iterator<BatchValidationIterator
 			
 			rules.get(consistencyRule.getContextType()).add(consistencyRule);
 		}
-
+		
 		// Initialize iteration:
 		findNext();
 	}
@@ -86,25 +109,13 @@ public class BatchValidationIterator implements Iterator<BatchValidationIterator
 	public boolean isShowPositiveResults() {
 		return showPositiveResults;
 	}
-
-	public void setShowPositiveResults(boolean showPositiveResults) {
-		this.showPositiveResults = showPositiveResults;
-	}
-
+	
 	public boolean isShowNegativeResults() {
 		return showNegativeResults;
-	}
-
-	public void setShowNegativeResults(boolean showNegativeResults) {
-		this.showNegativeResults = showNegativeResults;
 	}
 	
 	public boolean isCleanupRepairTree() {
 		return cleanupRepairTree;
-	}
-
-	public void setCleanupRepairTree(boolean cleanupRepairTree) {
-		this.cleanupRepairTree = cleanupRepairTree;
 	}
 
 	@Override

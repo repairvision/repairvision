@@ -1,0 +1,31 @@
+diff --git a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DomainSlot.java b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DomainSlot.java
+index e2c5b20..a9c8e4e 100644
+--- a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DomainSlot.java
++++ b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DomainSlot.java
+@@ -20,6 +20,7 @@
+ import org.eclipse.emf.ecore.EObject;
+ import org.eclipse.emf.henshin.interpreter.EGraph;
+ import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
++import org.eclipse.emf.henshin.interpreter.impl.RestrictedEGraphImpl;
+ import org.eclipse.emf.henshin.interpreter.matching.conditions.ConditionHandler;
+ 
+ public class DomainSlot {
+@@ -151,6 +152,18 @@
+ 			// If temporaryDomain is not null, there are BinaryConstraints restricting this slot's domain.
+ 			if (temporaryDomain != null) {
+ 				domain = new ArrayList<EObject>(temporaryDomain);
++				
++				// RestrictedEGraphImpl: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
++				// FIXME: We should check if this isn't an general Henshin bug because otherwise 
++				// Henshin could return matches with nodes outside of the working graph!
++				if (graph instanceof RestrictedEGraphImpl) {
++					List<EObject> restrictedDomain = ((RestrictedEGraphImpl) graph).getDomain(
++							variable.typeConstraint.type, 
++							variable.typeConstraint.strictTyping,
++							variable);
++					domain.retainAll(restrictedDomain);
++				}
++				// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ 			}
+ 			
+ 			// Set the domain:

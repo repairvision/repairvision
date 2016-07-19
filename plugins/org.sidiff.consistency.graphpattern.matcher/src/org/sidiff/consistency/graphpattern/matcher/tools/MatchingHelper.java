@@ -2,17 +2,15 @@ package org.sidiff.consistency.graphpattern.matcher.tools;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.Evaluation;
@@ -22,7 +20,7 @@ import org.sidiff.consistency.graphpattern.matcher.data.NavigableMatchesDS;
 
 public class MatchingHelper {
 
-	private Map<EClass, Set<EClass>> subTypes = new HashMap<>();
+//	private Map<EClass, Set<EClass>> subTypes = new HashMap<>();
 	
 	private CrossReferencer crossReferencer;
 	
@@ -91,50 +89,63 @@ public class MatchingHelper {
 	}
 	
 	/**
-	 * @param superType
-	 *            A meta-class of the domain model.
-	 * @return All corresponding sub-types (i.e. sub-meta-classes).
+	 * Is class A assignable to class B (B = A).
+	 * 
+	 * @param a
+	 *            From class A.
+	 * @param b
+	 *            To class B.
+	 * @return <code>true</code> if A is assignable to B; <code>false</code> otherwise.
 	 */
-	public Set<EClass> getSubTypes(EClass superType) {
-		Set<EClass> subTypes = this.subTypes.get(superType);
-		
-		if (subTypes == null) {
-			createSubtypeIndex(superType.getEPackage());
-			subTypes = this.subTypes.get(superType);
-		}
-		
-		return subTypes;
+	public static boolean isAssignableTo(EClass a, EClass b) {
+		return a.getEAllSuperTypes().contains(b) || a.equals(b) || b.equals(EcorePackage.eINSTANCE.getEObject());
 	}
 	
-	private void createSubtypeIndex(EPackage ePackage) {
-
-		// Iterate over all classes in the package
-		for (Iterator<EObject> i = ePackage.eAllContents(); i.hasNext();) {
-			EObject obj = i.next();
-
-			if (obj instanceof EClass) {
-				// Next class (A)
-				EClass eSubClass = (EClass) obj;
-
-				if (subTypes.get(eSubClass) == null) {
-					subTypes.put(eSubClass, new HashSet<EClass>());
-				}
-
-				// Lookup the super types (X,Y,Z) of class (A) and add
-				// class (A) as sub type to the classes (X, Y, Z)
-				for (EClass eSuperClass : eSubClass.getEAllSuperTypes()) {
-					Set<EClass> allSubTypes = subTypes.get(eSuperClass);
-
-					if (allSubTypes == null) {
-						allSubTypes = new HashSet<EClass>();
-						subTypes.put(eSuperClass, allSubTypes);
-					}
-
-					allSubTypes.add(eSubClass);
-				}
-			}
-		}
-	}
+//	/**
+//	 * @param superType
+//	 *            A meta-class of the domain model.
+//	 * @return All corresponding sub-types (i.e. sub-meta-classes).
+//	 */
+//	public Set<EClass> getSubTypes(EClass superType) {
+//		Set<EClass> subTypes = this.subTypes.get(superType);
+//		
+//		if (subTypes == null) {
+//			createSubtypeIndex(superType.getEPackage());
+//			subTypes = this.subTypes.get(superType);
+//		}
+//		
+//		return subTypes;
+//	}
+//	
+//	private void createSubtypeIndex(EPackage ePackage) {
+//
+//		// Iterate over all classes in the package
+//		for (Iterator<EObject> i = ePackage.eAllContents(); i.hasNext();) {
+//			EObject obj = i.next();
+//
+//			if (obj instanceof EClass) {
+//				// Next class (A)
+//				EClass eSubClass = (EClass) obj;
+//
+//				if (!subTypes.containsKey(eSubClass)) {
+//					subTypes.put(eSubClass, new HashSet<EClass>(0));
+//				}
+//
+//				// Lookup the super types (X,Y,Z) of class (A) and add
+//				// class (A) as sub type to the classes (X, Y, Z)
+//				for (EClass eSuperClass : eSubClass.getEAllSuperTypes()) {
+//					Set<EClass> allSubTypes = subTypes.get(eSuperClass);
+//
+//					if (allSubTypes == null) {
+//						allSubTypes = new HashSet<EClass>(0);
+//						subTypes.put(eSuperClass, allSubTypes);
+//					}
+//
+//					allSubTypes.add(eSubClass);
+//				}
+//			}
+//		}
+//	}
 	
 	/**
 	 * Returns all incident edges of the given node. While opposite edges are

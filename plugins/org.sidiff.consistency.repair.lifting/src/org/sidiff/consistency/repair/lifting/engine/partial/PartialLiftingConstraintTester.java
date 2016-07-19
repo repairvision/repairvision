@@ -1,5 +1,7 @@
 package org.sidiff.consistency.repair.lifting.engine.partial;
 
+import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.isAssignableTo;
+
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.AttributePattern;
 import org.sidiff.consistency.graphpattern.EdgePattern;
@@ -59,8 +61,7 @@ public class PartialLiftingConstraintTester extends BasicConstraintTester {
 				NodePattern modelNode = MatchingHelper.getAdjacent(node, modelEdge);
 				EObject modelMatch = matchingHelper.getTargets(object, node, modelEdge).next();
 				
-				if (!((modelMatch.eClass() == modelNode.getType())
-						|| matchingHelper.getSubTypes(modelMatch.eClass()).contains(modelNode.getType()))) {
+				if (!isAssignableTo(modelMatch.eClass(), modelNode.getType())) {
 					return false;
 				}
 			}
@@ -71,8 +72,7 @@ public class PartialLiftingConstraintTester extends BasicConstraintTester {
 				NodePattern modelNode = MatchingHelper.getAdjacent(node, modelEdge);
 				EObject modelMatch = matchingHelper.getTargets(object, node, modelEdge).next();
 				
-				if (!((modelMatch.eClass() == modelNode.getType())
-						|| matchingHelper.getSubTypes(modelMatch.eClass()).contains(modelNode.getType()))) {
+				if (!isAssignableTo(modelMatch.eClass(), modelNode.getType())) {
 					return false;
 				}
 			}

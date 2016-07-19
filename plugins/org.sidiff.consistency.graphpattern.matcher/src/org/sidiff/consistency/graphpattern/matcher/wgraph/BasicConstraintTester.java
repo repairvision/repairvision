@@ -1,5 +1,7 @@
 package org.sidiff.consistency.graphpattern.matcher.wgraph;
 
+import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.isAssignableTo;
+
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.AttributePattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
@@ -22,8 +24,7 @@ public class BasicConstraintTester implements IConstraintTester {
 	public boolean check(NodePattern node, EObject object) {
 		
 		// Check types!
-		if (!((object.eClass() == node.getType())
-				|| matchingHelper.getSubTypes(object.eClass()).contains(node.getType()))) {
+		if (!isAssignableTo(object.eClass(), node.getType())) {
 			return false;
 		}
 		

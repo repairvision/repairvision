@@ -22,5 +22,5 @@ public abstract class Formula extends NamedElement {
 	 *            validation fragment.
 	 * 
 	 */
-	public abstract void repair(IRepairDecision parentRepairDecision, boolean expected);
+	public abstract void repair(IRepairDecision parent, boolean expected);
 }

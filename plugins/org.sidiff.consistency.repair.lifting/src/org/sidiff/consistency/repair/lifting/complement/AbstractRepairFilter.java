@@ -1,5 +1,6 @@
 package org.sidiff.consistency.repair.lifting.complement;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 import static org.sidiff.consistency.repair.validation.test.library.ConsistencyRuleLibrary.getConsistencyRuleLibrary;
 
 import java.util.ArrayList;
@@ -33,16 +34,16 @@ public class AbstractRepairFilter {
 		ConsistencyRuleLibrary cruleLibrary = getConsistencyRuleLibrary(EMFModelAccess.getDocumentType(model));
 
 		BatchValidationIterator validationIterator = new BatchValidationIterator(model,
-				cruleLibrary.getConsistencyRules());
-		validationIterator.setShowPositiveResults(false);
-		validationIterator.setCleanupRepairTree(false);
+				cruleLibrary.getConsistencyRules(), false, true, false);
 
 		// Collect all abstract repair actions:
 		validationIterator.forEachRemaining(validation -> {
-			addRepair(validation.getRepair());
-			
-			if (storeValidation) {
-				validations.add(validation);
+			if (!validation.getResult()) {
+				addRepair(validation.getRepair());
+				
+				if (storeValidation) {
+					validations.add(validation);
+				}
 			}
 		});
 	}
@@ -51,31 +52,30 @@ public class AbstractRepairFilter {
 		return validations;
 	}
 
-	private void addRepair(IRepairDecision root) {
+	private void addRepair(IRepairDecision repairDecision) {
+		if (repairDecision instanceof Repair) {
+			EObject context = ((Repair) repairDecision).getContext();
 
-		for (IRepairDecision child : root.getChildDecisions()) {
-			if (child instanceof Repair) {
-				EObject context = ((Repair) child).getContext();
-				
-				// Per meta-class:
-				Map<EObject, List<Repair>> repairsPerMetaClass = repairs.get(context.eClass());
+			// Per meta-class:
+			Map<EObject, List<Repair>> repairsPerMetaClass = repairs.get(context.eClass());
 
-				if (repairsPerMetaClass == null) {
-					repairsPerMetaClass = new HashMap<>();
-					repairs.put(context.eClass(), repairsPerMetaClass);
-				}
+			if (repairsPerMetaClass == null) {
+				repairsPerMetaClass = new HashMap<>();
+				repairs.put(context.eClass(), repairsPerMetaClass);
+			}
 
-				// Per repair:
-				List<Repair> repairsPerObject = repairsPerMetaClass.get(context);
-				
-				if (repairsPerObject == null) {
-					repairsPerObject = new ArrayList<>(5);
-					repairsPerMetaClass.put(context, repairsPerObject);
-				}
-				
-				repairsPerObject.add((Repair) child);
-			} else {
-				addRepair(child);
+			// Per repair:
+			List<Repair> repairsPerObject = repairsPerMetaClass.get(context);
+
+			if (repairsPerObject == null) {
+				repairsPerObject = new ArrayList<>(5);
+				repairsPerMetaClass.put(context, repairsPerObject);
+			}
+
+			repairsPerObject.add((Repair) repairDecision);
+		} else {
+			for (IRepairDecision childDecision : repairDecision.getChildDecisions()) {
+				addRepair(childDecision);
 			}
 		}
 	}
@@ -167,7 +167,15 @@ public class AbstractRepairFilter {
 
 			// Abstract repairs only consider edges:
 			if (change instanceof Edge) {
-				Node contextNode = ((Edge) change).getSource();
+				
+				// Get the context node of the edge:
+				Node contextNode = getLHS(((Edge) change).getSource());
+				
+				if (contextNode == null) {
+					contextNode = getLHS(((Edge) change).getTarget());
+				}
+				
+				// Get the context object of the edge:
 				EObject contextObject = prematch.get(contextNode);
 				
 				if (contextObject != null) {
