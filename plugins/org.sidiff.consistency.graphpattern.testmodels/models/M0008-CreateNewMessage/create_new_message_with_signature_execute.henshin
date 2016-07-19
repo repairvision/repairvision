@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="CreateNewMessageWithSignature" description="Creates a new message with a corresponding operation.">
+  <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
+  <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
+    <parameters name="messageRecv"/>
+    <parameters name="messageSend"/>
+    <parameters name="message"/>
+    <parameters name="op"/>
+    <parameters name="opName"/>
+    <parameters name="lifeline_send"/>
+    <parameters name="lifeline_recv"/>
+    <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.0"/>
+    <parameterMappings source="//@units.1/@parameters.1" target="//@units.0/@parameters.1"/>
+    <parameterMappings source="//@units.1/@parameters.2" target="//@units.0/@parameters.2"/>
+    <parameterMappings source="//@units.1/@parameters.3" target="//@units.0/@parameters.3"/>
+    <parameterMappings source="//@units.0/@parameters.4" target="//@units.1/@parameters.4"/>
+    <parameterMappings source="//@units.0/@parameters.5" target="//@units.1/@parameters.5"/>
+    <parameterMappings source="//@units.0/@parameters.6" target="//@units.1/@parameters.6"/>
+  </units>
+  <units xsi:type="henshin:Rule" name="createNewMessageWithSignature">
+    <parameters name="messageRecv"/>
+    <parameters name="messageSend"/>
+    <parameters name="message"/>
+    <parameters name="op"/>
+    <parameters name="opName"/>
+    <parameters name="lifeline_send"/>
+    <parameters name="lifeline_recv"/>
+    <lhs name="Lhs">
+      <nodes name="type" incoming="//@units.1/@lhs/@edges.4">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes name="interaction" incoming="//@units.1/@lhs/@edges.2" outgoing="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
+      </nodes>
+      <nodes name="lifeline_recv" incoming="//@units.1/@lhs/@edges.0" outgoing="//@units.1/@lhs/@edges.2 //@units.1/@lhs/@edges.3">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes name="lifeline_send" incoming="//@units.1/@lhs/@edges.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes name="represents" incoming="//@units.1/@lhs/@edges.3" outgoing="//@units.1/@lhs/@edges.4">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <edges source="//@units.1/@lhs/@nodes.1" target="//@units.1/@lhs/@nodes.2">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/lifeline"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.1" target="//@units.1/@lhs/@nodes.3">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/lifeline"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/interaction"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.4">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.4" target="//@units.1/@lhs/@nodes.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+    </lhs>
+    <rhs name="Rhs">
+      <nodes name="type" incoming="//@units.1/@rhs/@edges.15 //@units.1/@rhs/@edges.21" outgoing="//@units.1/@rhs/@edges.16">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes name="interaction" incoming="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.7 //@units.1/@rhs/@edges.10 //@units.1/@rhs/@edges.19" outgoing="//@units.1/@rhs/@edges.3 //@units.1/@rhs/@edges.8 //@units.1/@rhs/@edges.11 //@units.1/@rhs/@edges.17 //@units.1/@rhs/@edges.18">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
+      </nodes>
+      <nodes name="lifeline_recv" incoming="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.17" outgoing="//@units.1/@rhs/@edges.1 //@units.1/@rhs/@edges.19 //@units.1/@rhs/@edges.20">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes name="lifeline_send" incoming="//@units.1/@rhs/@edges.5 //@units.1/@rhs/@edges.18" outgoing="//@units.1/@rhs/@edges.6">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes name="represents" incoming="//@units.1/@rhs/@edges.20" outgoing="//@units.1/@rhs/@edges.21">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <nodes name="messageRecv" incoming="//@units.1/@rhs/@edges.1 //@units.1/@rhs/@edges.3 //@units.1/@rhs/@edges.12" outgoing="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.4">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+      </nodes>
+      <nodes name="messageSend" incoming="//@units.1/@rhs/@edges.6 //@units.1/@rhs/@edges.8 //@units.1/@rhs/@edges.13" outgoing="//@units.1/@rhs/@edges.5 //@units.1/@rhs/@edges.7 //@units.1/@rhs/@edges.9">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+      </nodes>
+      <nodes name="message" incoming="//@units.1/@rhs/@edges.4 //@units.1/@rhs/@edges.9 //@units.1/@rhs/@edges.11" outgoing="//@units.1/@rhs/@edges.10 //@units.1/@rhs/@edges.12 //@units.1/@rhs/@edges.13 //@units.1/@rhs/@edges.14">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+        <attributes value="opName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes name="op" incoming="//@units.1/@rhs/@edges.14 //@units.1/@rhs/@edges.16" outgoing="//@units.1/@rhs/@edges.15">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+        <attributes value="opName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges source="//@units.1/@rhs/@nodes.5" target="//@units.1/@rhs/@nodes.2">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.2" target="//@units.1/@rhs/@nodes.5">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/coveredBy"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.5" target="//@units.1/@rhs/@nodes.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/enclosingInteraction"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.1" target="//@units.1/@rhs/@nodes.5">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/fragment"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.5" target="//@units.1/@rhs/@nodes.7">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageEnd/message"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.6" target="//@units.1/@rhs/@nodes.3">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.3" target="//@units.1/@rhs/@nodes.6">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/coveredBy"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.6" target="//@units.1/@rhs/@nodes.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/enclosingInteraction"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.1" target="//@units.1/@rhs/@nodes.6">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/fragment"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.6" target="//@units.1/@rhs/@nodes.7">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageEnd/message"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.7" target="//@units.1/@rhs/@nodes.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/interaction"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.1" target="//@units.1/@rhs/@nodes.7">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/message"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.7" target="//@units.1/@rhs/@nodes.5">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/receiveEvent"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.7" target="//@units.1/@rhs/@nodes.6">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/sendEvent"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.7" target="//@units.1/@rhs/@nodes.8">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/signature"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.8" target="//@units.1/@rhs/@nodes.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.0" target="//@units.1/@rhs/@nodes.8">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.1" target="//@units.1/@rhs/@nodes.2">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/lifeline"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.1" target="//@units.1/@rhs/@nodes.3">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/lifeline"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.2" target="//@units.1/@rhs/@nodes.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/interaction"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.2" target="//@units.1/@rhs/@nodes.4">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.4" target="//@units.1/@rhs/@nodes.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+    </rhs>
+    <mappings origin="//@units.1/@lhs/@nodes.0" image="//@units.1/@rhs/@nodes.0"/>
+    <mappings origin="//@units.1/@lhs/@nodes.1" image="//@units.1/@rhs/@nodes.1"/>
+    <mappings origin="//@units.1/@lhs/@nodes.2" image="//@units.1/@rhs/@nodes.2"/>
+    <mappings origin="//@units.1/@lhs/@nodes.3" image="//@units.1/@rhs/@nodes.3"/>
+    <mappings origin="//@units.1/@lhs/@nodes.4" image="//@units.1/@rhs/@nodes.4"/>
+  </units>
+</henshin:Module>
