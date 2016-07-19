@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_nKMPEE0WEeax3NU5ETsuqQ" name="CreateOperationTriggeredTransition" description="Creates a new transition that is triggered by an operation call.">
+  <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_nKM2IE0WEeax3NU5ETsuqQ" name="mainUnit" subUnits="_nKM2K00WEeax3NU5ETsuqQ">
+    <parameters xmi:id="_nKM2IU0WEeax3NU5ETsuqQ" name="Trigger_by_CallEvent_op"/>
+    <parameters xmi:id="_nKM2Ik0WEeax3NU5ETsuqQ" name="CallEvent_op"/>
+    <parameters xmi:id="_nKM2I00WEeax3NU5ETsuqQ" name="transition_target"/>
+    <parameters xmi:id="_nKM2JE0WEeax3NU5ETsuqQ" name="CallEvent_container"/>
+    <parameters xmi:id="_nKM2JU0WEeax3NU5ETsuqQ" name="transition_source"/>
+    <parameters xmi:id="_nKYcUU0WEeax3NU5ETsuqQ" name="newTransition"/>
+    <parameterMappings xmi:id="_nKM2Jk0WEeax3NU5ETsuqQ" source="_nKM2LE0WEeax3NU5ETsuqQ" target="_nKM2IU0WEeax3NU5ETsuqQ"/>
+    <parameterMappings xmi:id="_nKM2J00WEeax3NU5ETsuqQ" source="_nKNdME0WEeax3NU5ETsuqQ" target="_nKM2Ik0WEeax3NU5ETsuqQ"/>
+    <parameterMappings xmi:id="_nKM2KE0WEeax3NU5ETsuqQ" source="_nKM2I00WEeax3NU5ETsuqQ" target="_nKNdMU0WEeax3NU5ETsuqQ"/>
+    <parameterMappings xmi:id="_nKM2KU0WEeax3NU5ETsuqQ" source="_nKM2JE0WEeax3NU5ETsuqQ" target="_nKNdMk0WEeax3NU5ETsuqQ"/>
+    <parameterMappings xmi:id="_nKM2Kk0WEeax3NU5ETsuqQ" source="_nKM2JU0WEeax3NU5ETsuqQ" target="_nKNdM00WEeax3NU5ETsuqQ"/>
+    <parameterMappings xmi:id="_nKYcUk0WEeax3NU5ETsuqQ" source="_nKYcUE0WEeax3NU5ETsuqQ" target="_nKYcUU0WEeax3NU5ETsuqQ"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_nKM2K00WEeax3NU5ETsuqQ" name="createOperationTriggeredTransition">
+    <parameters xmi:id="_nKM2LE0WEeax3NU5ETsuqQ" name="Trigger_by_CallEvent_op"/>
+    <parameters xmi:id="_nKNdME0WEeax3NU5ETsuqQ" name="CallEvent_op"/>
+    <parameters xmi:id="_nKNdMU0WEeax3NU5ETsuqQ" name="transition_target"/>
+    <parameters xmi:id="_nKNdMk0WEeax3NU5ETsuqQ" name="CallEvent_container"/>
+    <parameters xmi:id="_nKNdM00WEeax3NU5ETsuqQ" name="transition_source"/>
+    <parameters xmi:id="_nKYcUE0WEeax3NU5ETsuqQ" name="newTransition"/>
+    <parameters xmi:id="_yDPioE0eEea0mZ8cqCX8XQ" name="transitionName"/>
+    <lhs xmi:id="_nKNdNE0WEeax3NU5ETsuqQ" name="Lhs">
+      <nodes xmi:id="_nKNdNU0WEeax3NU5ETsuqQ" name="op">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+        <attributes xmi:id="_nKNdNk0WEeax3NU5ETsuqQ" value="transitionName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_nKNdN00WEeax3NU5ETsuqQ" name="CallEvent_container">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
+      </nodes>
+      <nodes xmi:id="_nKNdOE0WEeax3NU5ETsuqQ" name="transition_container" incoming="_nKOEQ00WEeax3NU5ETsuqQ _nKOERE0WEeax3NU5ETsuqQ" outgoing="_nKOEQU0WEeax3NU5ETsuqQ _nKOEQk0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+      </nodes>
+      <nodes xmi:id="_nKNdOU0WEeax3NU5ETsuqQ" name="transition_source" incoming="_nKOEQU0WEeax3NU5ETsuqQ" outgoing="_nKOEQ00WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
+      </nodes>
+      <nodes xmi:id="_nKOEQE0WEeax3NU5ETsuqQ" name="transition_target" incoming="_nKOEQk0WEeax3NU5ETsuqQ" outgoing="_nKOERE0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
+      </nodes>
+      <edges xmi:id="_nKOEQU0WEeax3NU5ETsuqQ" source="_nKNdOE0WEeax3NU5ETsuqQ" target="_nKNdOU0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/subvertex"/>
+      </edges>
+      <edges xmi:id="_nKOEQk0WEeax3NU5ETsuqQ" source="_nKNdOE0WEeax3NU5ETsuqQ" target="_nKOEQE0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/subvertex"/>
+      </edges>
+      <edges xmi:id="_nKOEQ00WEeax3NU5ETsuqQ" source="_nKNdOU0WEeax3NU5ETsuqQ" target="_nKNdOE0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex/container"/>
+      </edges>
+      <edges xmi:id="_nKOERE0WEeax3NU5ETsuqQ" source="_nKOEQE0WEeax3NU5ETsuqQ" target="_nKNdOE0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex/container"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_nKOERU0WEeax3NU5ETsuqQ" name="Rhs">
+      <nodes xmi:id="_nKOERk0WEeax3NU5ETsuqQ" name="op" incoming="_nKOrWE0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+        <attributes xmi:id="_nKOER00WEeax3NU5ETsuqQ" value="transitionName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_nKOESE0WEeax3NU5ETsuqQ" name="CallEvent_container" outgoing="_nKOrWU0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
+      </nodes>
+      <nodes xmi:id="_nKOESU0WEeax3NU5ETsuqQ" name="transition_container" incoming="_nKPSYU0WEeax3NU5ETsuqQ _nKPSYk0WEeax3NU5ETsuqQ _nKPSZk0WEeax3NU5ETsuqQ" outgoing="_nKOrW00WEeax3NU5ETsuqQ _nKPSYE0WEeax3NU5ETsuqQ _nKPSY00WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+      </nodes>
+      <nodes xmi:id="_nKOESk0WEeax3NU5ETsuqQ" name="transition_source" incoming="_nKOrW00WEeax3NU5ETsuqQ _nKPSZE0WEeax3NU5ETsuqQ" outgoing="_nKPSYU0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
+      </nodes>
+      <nodes xmi:id="_nKOrUE0WEeax3NU5ETsuqQ" name="transition_target" incoming="_nKPSYE0WEeax3NU5ETsuqQ _nKPSZU0WEeax3NU5ETsuqQ" outgoing="_nKPSYk0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
+      </nodes>
+      <nodes xmi:id="_nKOrUU0WEeax3NU5ETsuqQ" name="newTransition" incoming="_nKPSY00WEeax3NU5ETsuqQ" outgoing="_nKPSZE0WEeax3NU5ETsuqQ _nKPSZU0WEeax3NU5ETsuqQ _nKPSZk0WEeax3NU5ETsuqQ _nKOrWk0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+        <attributes xmi:id="_nKOrUk0WEeax3NU5ETsuqQ" value="transitionName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_nKOrU00WEeax3NU5ETsuqQ" name="Trigger_by_CallEvent_op" incoming="_nKOrWk0WEeax3NU5ETsuqQ" outgoing="_nKOrV00WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger"/>
+        <attributes xmi:id="_nKOrVE0WEeax3NU5ETsuqQ" value="&quot;Trigger_by_CallEvent_&quot; + transitionName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_nKOrVU0WEeax3NU5ETsuqQ" name="CallEvent_op" incoming="_nKOrV00WEeax3NU5ETsuqQ _nKOrWU0WEeax3NU5ETsuqQ" outgoing="_nKOrWE0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//CallEvent"/>
+        <attributes xmi:id="_nKOrVk0WEeax3NU5ETsuqQ" value="&quot;CallEvent_&quot; + transitionName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_nKOrV00WEeax3NU5ETsuqQ" source="_nKOrU00WEeax3NU5ETsuqQ" target="_nKOrVU0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger/event"/>
+      </edges>
+      <edges xmi:id="_nKOrWE0WEeax3NU5ETsuqQ" source="_nKOrVU0WEeax3NU5ETsuqQ" target="_nKOERk0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//CallEvent/operation"/>
+      </edges>
+      <edges xmi:id="_nKOrWU0WEeax3NU5ETsuqQ" source="_nKOESE0WEeax3NU5ETsuqQ" target="_nKOrVU0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+      </edges>
+      <edges xmi:id="_nKOrWk0WEeax3NU5ETsuqQ" source="_nKOrUU0WEeax3NU5ETsuqQ" target="_nKOrU00WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
+      </edges>
+      <edges xmi:id="_nKOrW00WEeax3NU5ETsuqQ" source="_nKOESU0WEeax3NU5ETsuqQ" target="_nKOESk0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/subvertex"/>
+      </edges>
+      <edges xmi:id="_nKPSYE0WEeax3NU5ETsuqQ" source="_nKOESU0WEeax3NU5ETsuqQ" target="_nKOrUE0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/subvertex"/>
+      </edges>
+      <edges xmi:id="_nKPSYU0WEeax3NU5ETsuqQ" source="_nKOESk0WEeax3NU5ETsuqQ" target="_nKOESU0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex/container"/>
+      </edges>
+      <edges xmi:id="_nKPSYk0WEeax3NU5ETsuqQ" source="_nKOrUE0WEeax3NU5ETsuqQ" target="_nKOESU0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex/container"/>
+      </edges>
+      <edges xmi:id="_nKPSY00WEeax3NU5ETsuqQ" source="_nKOESU0WEeax3NU5ETsuqQ" target="_nKOrUU0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/transition"/>
+      </edges>
+      <edges xmi:id="_nKPSZE0WEeax3NU5ETsuqQ" source="_nKOrUU0WEeax3NU5ETsuqQ" target="_nKOESk0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+      </edges>
+      <edges xmi:id="_nKPSZU0WEeax3NU5ETsuqQ" source="_nKOrUU0WEeax3NU5ETsuqQ" target="_nKOrUE0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+      </edges>
+      <edges xmi:id="_nKPSZk0WEeax3NU5ETsuqQ" source="_nKOrUU0WEeax3NU5ETsuqQ" target="_nKOESU0WEeax3NU5ETsuqQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/container"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_nKPSZ00WEeax3NU5ETsuqQ" origin="_nKNdNU0WEeax3NU5ETsuqQ" image="_nKOERk0WEeax3NU5ETsuqQ"/>
+    <mappings xmi:id="_nKPSaE0WEeax3NU5ETsuqQ" origin="_nKNdN00WEeax3NU5ETsuqQ" image="_nKOESE0WEeax3NU5ETsuqQ"/>
+    <mappings xmi:id="_nKPSaU0WEeax3NU5ETsuqQ" origin="_nKNdOE0WEeax3NU5ETsuqQ" image="_nKOESU0WEeax3NU5ETsuqQ"/>
+    <mappings xmi:id="_nKPSak0WEeax3NU5ETsuqQ" origin="_nKNdOU0WEeax3NU5ETsuqQ" image="_nKOESk0WEeax3NU5ETsuqQ"/>
+    <mappings xmi:id="_nKPSa00WEeax3NU5ETsuqQ" origin="_nKOEQE0WEeax3NU5ETsuqQ" image="_nKOrUE0WEeax3NU5ETsuqQ"/>
+  </units>
+</henshin:Module>
