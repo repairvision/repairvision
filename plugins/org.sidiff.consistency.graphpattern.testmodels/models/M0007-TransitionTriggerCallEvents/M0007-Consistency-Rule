@@ -1,0 +1,18 @@
+	public static ConsistencyRule createTransitionWithoutTriggerRule() {
+		
+		// Create consistency rule:
+		Variable transition = new Variable("transition");
+		Variable trigger = new Variable("trigger");
+		
+		Formula validation = new Exists(
+				trigger, 
+				new Get(transition, UML.getTransition_Trigger()),
+				new Not(new IsEmpty(transition))); 
+		
+		ConsistencyRule transitionWithoutTrigger = new ConsistencyRule(
+				UML.getTransition(), transition, validation);
+		
+		transitionWithoutTrigger.setName("transitionWithoutTrigger");
+		
+		return transitionWithoutTrigger;
+	}
