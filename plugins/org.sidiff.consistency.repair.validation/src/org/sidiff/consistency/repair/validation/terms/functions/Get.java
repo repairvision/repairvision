@@ -33,20 +33,29 @@ public class Get extends Function {
 	public Object evaluate() {
 		context.evaluate();
 		
-//		// TODO: Support for multi-path evaluation!?
 //		if (context.getValue() instanceof List<?>) {
+//		
+//			// TODO: Support for multi-path evaluation!? -> Repair!? -> ForAll!?
 //			List<Object> newValue = new ArrayList<Object>();
 //			
 //			for (Object object : (List<?>) context.getValue()) {
-//				newValue.add(((EObject) object).eGet(feature));
+//				if (feature.isMany()) {
+//					for (Object subValue : (List<?>) ((EObject) object).eGet(feature)) {
+//						newValue.add(subValue);
+//					}
+//				} else {
+//					newValue.add(((EObject) object).eGet(feature));
+//				}
 //			}
 //			
 //			value = newValue.isEmpty() ? Collections.emptyList() : newValue;
 //		} else {
+			
+			// Simple path:
 			if (context.getValue() != null) {
 				value = ((EObject) context.getValue()).eGet(feature);
 			}
-//		}
+//	}
 		
 		return value;
 	}

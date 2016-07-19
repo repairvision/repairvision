@@ -29,6 +29,7 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 	static {
 		addConsistencyRule(createMessageBasedOnOperationRule());
 		addConsistencyRule(createTransitionWithoutTriggerRule());
+		addConsistencyRule(createUnimplementedRealizationRule());
 	}
 	
 	public static void addConsistencyRule(ConsistencyRule rule) {
@@ -133,5 +134,40 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 		transitionWithoutTrigger.setName("transitionWithoutTrigger");
 		
 		return transitionWithoutTrigger;
+	}
+
+	/**
+	 * OCL:
+	 * 
+	 * context Realization inv: 
+	 *   self.supplier.ownedOperation -> forAll (op_interface |
+	 *   self.client.ownedOperation -> exists (op_class | op_interface.name = op_class.name))
+	 * 
+	 * @return The FOL consistency-rule.
+	 */
+	public static ConsistencyRule createUnimplementedRealizationRule() {
+		
+		// Create consistency rule:
+		Variable realization = new Variable("realization");
+		Variable op_interface = new Variable("op_interface");
+		Variable op_class = new Variable("op_class");
+		Variable supplier = new Variable("supplier");
+		Variable client = new Variable("client");
+		
+		Formula validation = 
+				new ForAll(supplier, new Get(realization, UML.getDependency_Supplier()),
+						new ForAll(op_interface, new Get(supplier, UML.getInterface_OwnedOperation()),
+								new ForAll(client, new Get(realization, UML.getDependency_Client()),
+										new Exists(op_class, new Get(client, UML.getClass_OwnedOperation()),
+												new Equality(
+														new Get(op_interface, UML.getNamedElement_Name()), 
+														new Get(op_class, UML.getNamedElement_Name())))))); 
+		
+		ConsistencyRule unimplementedRealization = new ConsistencyRule(
+				UML.getRealization(), realization, validation);
+		
+		unimplementedRealization.setName("unimplementedRealization");
+		
+		return unimplementedRealization;
 	}
 }
