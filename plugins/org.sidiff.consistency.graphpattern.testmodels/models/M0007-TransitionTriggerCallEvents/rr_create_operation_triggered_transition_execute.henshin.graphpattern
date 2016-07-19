@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="ASCII"?>
+<graphpattern:GraphPattern xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:graphpattern="http://www.sidiff.org/consistency/graphpattern/1.0">
+  <nodes name="B.op" incomings="//@nodes.10/@outgoings.0 //@nodes.13/@outgoings.1">
+    <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+    <attributes value="transitionName">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="B.CallEvent_container" incomings="//@nodes.15/@outgoings.0">
+    <outgoings target="//@nodes.10">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
+  </nodes>
+  <nodes name="B.transition_container" incomings="//@nodes.3/@outgoings.0 //@nodes.4/@outgoings.0 //@nodes.6/@outgoings.0 //@nodes.19/@outgoings.0 //@nodes.25/@outgoings.1">
+    <outgoings target="//@nodes.3" opposite="//@nodes.3/@outgoings.0">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/subvertex"/>
+    </outgoings>
+    <outgoings target="//@nodes.4" opposite="//@nodes.4/@outgoings.0">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/subvertex"/>
+    </outgoings>
+    <outgoings target="//@nodes.6" opposite="//@nodes.6/@outgoings.0">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/transition"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+  </nodes>
+  <nodes name="B.transition_source" incomings="//@nodes.2/@outgoings.0 //@nodes.6/@outgoings.2 //@nodes.21/@outgoings.1">
+    <outgoings target="//@nodes.2" opposite="//@nodes.2/@outgoings.0">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex/container"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
+  </nodes>
+  <nodes name="B.transition_target" incomings="//@nodes.2/@outgoings.1 //@nodes.6/@outgoings.3 //@nodes.23/@outgoings.1">
+    <outgoings target="//@nodes.2" opposite="//@nodes.2/@outgoings.1">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex/container"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
+  </nodes>
+  <nodes name="">
+    <outgoings target="//@nodes.6">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject/obj"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject"/>
+  </nodes>
+  <nodes name="B.newTransition" incomings="//@nodes.2/@outgoings.2 //@nodes.5/@outgoings.0 //@nodes.17/@outgoings.0 //@nodes.19/@outgoings.1 //@nodes.21/@outgoings.0 //@nodes.23/@outgoings.0 //@nodes.25/@outgoings.0">
+    <outgoings target="//@nodes.2" opposite="//@nodes.2/@outgoings.2">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/container"/>
+    </outgoings>
+    <outgoings target="//@nodes.8">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
+    </outgoings>
+    <outgoings target="//@nodes.3">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+    </outgoings>
+    <outgoings target="//@nodes.4">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+    <attributes value="transitionName">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="">
+    <outgoings target="//@nodes.8">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject/obj"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject"/>
+  </nodes>
+  <nodes name="B.Trigger_by_CallEvent_op" incomings="//@nodes.6/@outgoings.1 //@nodes.7/@outgoings.0 //@nodes.11/@outgoings.0 //@nodes.17/@outgoings.1">
+    <outgoings target="//@nodes.10">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger/event"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger"/>
+  </nodes>
+  <nodes name="">
+    <outgoings target="//@nodes.10">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject/obj"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddObject"/>
+  </nodes>
+  <nodes name="B.CallEvent_op" incomings="//@nodes.1/@outgoings.0 //@nodes.8/@outgoings.0 //@nodes.9/@outgoings.0 //@nodes.11/@outgoings.1 //@nodes.13/@outgoings.0 //@nodes.15/@outgoings.1">
+    <outgoings target="//@nodes.0">
+      <type href="http://www.eclipse.org/uml2/5.0.0/UML#//CallEvent/operation"/>
+    </outgoings>
+    <type href="http://www.eclipse.org/uml2/5.0.0/UML#//CallEvent"/>
+  </nodes>
+  <nodes name="">
+    <outgoings target="//@nodes.8">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.10">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.12">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.11/@outgoings.2">
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <attributes value="&quot;event&quot;">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="">
+    <outgoings target="//@nodes.10">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.0">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.14">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.13/@outgoings.2">
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <attributes value="&quot;operation&quot;">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="">
+    <outgoings target="//@nodes.1">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.10">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.16">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.15/@outgoings.2">
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <attributes value="&quot;packagedElement&quot;">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="">
+    <outgoings target="//@nodes.6">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.8">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.18">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.17/@outgoings.2">
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <attributes value="&quot;trigger&quot;">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="">
+    <outgoings target="//@nodes.2">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.6">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.20">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.19/@outgoings.2">
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <attributes value="&quot;transition&quot;">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="">
+    <outgoings target="//@nodes.6">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.3">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.22">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.21/@outgoings.2">
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <attributes value="&quot;source&quot;">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="">
+    <outgoings target="//@nodes.6">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.4">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.24">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.23/@outgoings.2">
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <attributes value="&quot;target&quot;">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="">
+    <outgoings target="//@nodes.6">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/src"/>
+    </outgoings>
+    <outgoings target="//@nodes.2">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/tgt"/>
+    </outgoings>
+    <outgoings target="//@nodes.26">
+      <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference/type"/>
+    </outgoings>
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//AddReference"/>
+  </nodes>
+  <nodes name="" incomings="//@nodes.25/@outgoings.2">
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <attributes value="&quot;container&quot;">
+      <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+    </attributes>
+  </nodes>
+  <nodes name="">
+    <type href="http://www.sidiff.org/difference/symmetric/1.0#//SymmetricDifference"/>
+  </nodes>
+</graphpattern:GraphPattern>
