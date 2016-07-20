@@ -88,7 +88,8 @@ public class AbstractRepairFilter {
 			
 			if (repairsPerObject != null) {
 				for (Repair repair : repairsPerObject) {
-					if (repair.getType().equals(type) && (repair.getFeature().equals(feature))) {
+					if ((repair.getType().equals(RepairType.MODIFY) || repair.getType().equals(type)) 
+							&& (repair.getFeature().equals(feature))) {
 						return true;
 					}
 				}
@@ -104,7 +105,8 @@ public class AbstractRepairFilter {
 		if (repairsPerMetaClass != null) {
 			for (List<Repair> repairsPerObject : repairsPerMetaClass.values()) {
 				for (Repair repair : repairsPerObject) {
-					if (repair.getType().equals(type) && (repair.getFeature().equals(feature))) {
+					if ((repair.getType().equals(RepairType.MODIFY) || repair.getType().equals(type))
+							&& (repair.getFeature().equals(feature))) {
 						return true;
 					}
 				}
