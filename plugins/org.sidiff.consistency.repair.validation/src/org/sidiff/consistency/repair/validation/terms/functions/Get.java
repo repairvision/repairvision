@@ -53,7 +53,10 @@ public class Get extends Function {
 			
 			// Simple path:
 			if (context.getValue() != null) {
-				value = ((EObject) context.getValue()).eGet(feature);
+				// TODO: Better way to ignore unsupported types!?
+				if (((EObject) context.getValue()).eClass().getEAllStructuralFeatures().contains(feature)) {
+					value = ((EObject) context.getValue()).eGet(feature);
+				}
 			}
 //	}
 		
