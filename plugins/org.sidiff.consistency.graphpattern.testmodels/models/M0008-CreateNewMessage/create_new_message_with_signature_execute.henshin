@@ -29,13 +29,13 @@
       <nodes name="type" incoming="//@units.1/@lhs/@edges.4">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes name="interaction" incoming="//@units.1/@lhs/@edges.2" outgoing="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.1">
+      <nodes name="interaction" incoming="//@units.1/@lhs/@edges.2 //@units.1/@lhs/@edges.5" outgoing="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
       </nodes>
       <nodes name="lifeline_recv" incoming="//@units.1/@lhs/@edges.0" outgoing="//@units.1/@lhs/@edges.2 //@units.1/@lhs/@edges.3">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
       </nodes>
-      <nodes name="lifeline_send" incoming="//@units.1/@lhs/@edges.1">
+      <nodes name="lifeline_send" incoming="//@units.1/@lhs/@edges.1" outgoing="//@units.1/@lhs/@edges.5">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
       </nodes>
       <nodes name="represents" incoming="//@units.1/@lhs/@edges.3" outgoing="//@units.1/@lhs/@edges.4">
@@ -56,18 +56,21 @@
       <edges source="//@units.1/@lhs/@nodes.4" target="//@units.1/@lhs/@nodes.0">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
       </edges>
+      <edges source="//@units.1/@lhs/@nodes.3" target="//@units.1/@lhs/@nodes.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/interaction"/>
+      </edges>
     </lhs>
     <rhs name="Rhs">
       <nodes name="type" incoming="//@units.1/@rhs/@edges.15 //@units.1/@rhs/@edges.21" outgoing="//@units.1/@rhs/@edges.16">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes name="interaction" incoming="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.7 //@units.1/@rhs/@edges.10 //@units.1/@rhs/@edges.19" outgoing="//@units.1/@rhs/@edges.3 //@units.1/@rhs/@edges.8 //@units.1/@rhs/@edges.11 //@units.1/@rhs/@edges.17 //@units.1/@rhs/@edges.18">
+      <nodes name="interaction" incoming="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.7 //@units.1/@rhs/@edges.10 //@units.1/@rhs/@edges.19 //@units.1/@rhs/@edges.22" outgoing="//@units.1/@rhs/@edges.3 //@units.1/@rhs/@edges.8 //@units.1/@rhs/@edges.11 //@units.1/@rhs/@edges.17 //@units.1/@rhs/@edges.18">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
       </nodes>
       <nodes name="lifeline_recv" incoming="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.17" outgoing="//@units.1/@rhs/@edges.1 //@units.1/@rhs/@edges.19 //@units.1/@rhs/@edges.20">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
       </nodes>
-      <nodes name="lifeline_send" incoming="//@units.1/@rhs/@edges.5 //@units.1/@rhs/@edges.18" outgoing="//@units.1/@rhs/@edges.6">
+      <nodes name="lifeline_send" incoming="//@units.1/@rhs/@edges.5 //@units.1/@rhs/@edges.18" outgoing="//@units.1/@rhs/@edges.6 //@units.1/@rhs/@edges.22">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
       </nodes>
       <nodes name="represents" incoming="//@units.1/@rhs/@edges.20" outgoing="//@units.1/@rhs/@edges.21">
@@ -156,6 +159,9 @@
       </edges>
       <edges source="//@units.1/@rhs/@nodes.4" target="//@units.1/@rhs/@nodes.0">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.3" target="//@units.1/@rhs/@nodes.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/interaction"/>
       </edges>
     </rhs>
     <mappings origin="//@units.1/@lhs/@nodes.0" image="//@units.1/@rhs/@nodes.0"/>
