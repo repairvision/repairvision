@@ -174,12 +174,18 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public EList<EdgePattern> getIncomings(EReference type) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		EList<EdgePattern> edges = new BasicEList<>();
+
+		for (EdgePattern edge : getIncomings()) {
+			if (type == edge.getType()) {
+				edges.add(edge);
+			}
+		}
+
+		return edges;
 	}
 
 	/**

@@ -32,6 +32,16 @@ public class NodeMatching implements INodeMatching {
 		return match;
 	}
 	
+	protected void setMatch(EObject match) {
+		assert !isBound();
+		this.match = match;
+		matchIterator = Collections.emptyIterator();
+	}
+	
+	protected boolean isBound() {
+		return (match != null);
+	}
+	
 	protected boolean hasNextMatch() {
 		return matchIterator.hasNext();
 	}

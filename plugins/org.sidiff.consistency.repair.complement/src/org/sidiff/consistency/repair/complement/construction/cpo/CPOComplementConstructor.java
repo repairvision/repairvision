@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.interpreter.EGraph;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -26,8 +28,28 @@ import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeS
  */
 public class CPOComplementConstructor extends ComplementConstructor {
 
-	public CPOComplementConstructor(Rule sourceRule) {
+	/**
+	 * The (Henshin) engine which applies the rules.
+	 */
+	private EngineImpl engine;
+	
+	/**
+	 * The working graph, i.e. the actual version of the model.
+	 */
+	private EGraph graph;
+	
+	/**
+	 * @param sourceRule
+	 *            The partially executed edit-rule.
+	 * @param engine
+	 *            The (Henshin) engine which applies the rules.
+	 * @param graph
+	 *            The working graph, i.e. the actual version of the model.
+	 */
+	public CPOComplementConstructor(Rule sourceRule, EngineImpl engine, EGraph graph) {
 		super(sourceRule);
+		this.engine = engine;
+		this.graph = graph;
 	}
 
 	public Collection<ComplementRule> createComplementRule(Rule subRule, Collection<EditRuleMatch> subRuleMatch) {
@@ -104,6 +126,6 @@ public class CPOComplementConstructor extends ComplementConstructor {
 
 	@Override
 	protected ComplementRule createComplementRule(Rule sourceRule, Rule complementRule) {
-		return new CPOComplementRule(sourceRule, complementRule);
+		return new CPOComplementRule(sourceRule, complementRule, engine, graph);
 	}
 }

@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Display;
 import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.api.RepairFacade;
 import org.sidiff.consistency.repair.lifting.api.RepairJob;
@@ -35,27 +40,42 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 	@Override
 	public void calculateRepairs() {
 		
-		// Matching-Settings:
-		DifferenceSettings settings = getMatchingSettings();
+		Job repairCalculation = new Job("Calculate Repairs") {
+			
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				
+				// Matching-Settings:
+				DifferenceSettings settings = getMatchingSettings();
+				
+				// Load edit-rules:
+				Collection<Rule> editRules = loadEditRules(editRuleFiles);
+				
+				// Calculate repairs:
+				URI uriModelA = ModelDropWidget.getURI(modelAFile);
+				URI uriModelB = ModelDropWidget.getURI(modelBFile);
+				repairJob = RepairFacade.getRepairs(uriModelA, uriModelB, editRules, settings);
+				
+				// Update UI:
+				Display.getDefault().syncExec(() -> {
+					
+					// Show repairs:
+					viewer_repairs.setInput(repairJob.getRepairs());
+					
+					// Clean up repair-trees:
+					for (Validation validation : repairJob.getValidations()) {
+						validation.cleanUpRepairTree();
+					}
+					
+					// Show validations:
+					viewer_validation.setInput(repairJob.getValidations());
+				});
+				
+				return Status.OK_STATUS;
+			}
+		};
 		
-		// Load edit-rules:
-		Collection<Rule> editRules = loadEditRules(editRuleFiles);
-		
-		// Calculate repairs:
-		URI uriModelA = ModelDropWidget.getURI(modelAFile);
-		URI uriModelB = ModelDropWidget.getURI(modelBFile);
-		repairJob = RepairFacade.getRepairs(uriModelA, uriModelB, editRules, settings);
-		
-		// Show repairs:
-		viewer_repairs.setInput(repairJob.getRepairs());
-		
-		// Clean up repair-trees:
-		for (Validation validation : repairJob.getValidations()) {
-			validation.cleanUpRepairTree();
-		}
-		
-		// Show validations:
-		viewer_validation.setInput(repairJob.getValidations());
+		repairCalculation.schedule();
 	}
 	
 	@Override

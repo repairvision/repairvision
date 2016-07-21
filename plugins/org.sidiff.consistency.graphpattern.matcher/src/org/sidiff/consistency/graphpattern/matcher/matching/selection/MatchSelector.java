@@ -2,14 +2,17 @@ package org.sidiff.consistency.graphpattern.matcher.matching.selection;
 
 import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.data.selection.MatchSelection;
+import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 
 public class MatchSelector {
 
@@ -69,6 +72,10 @@ public class MatchSelector {
 		selectMatch(selectedNode, Collections.singletonList(selectedMatch));
 	}
 	
+	// MatchSelector.DEBUG = false
+	// MatchSelector.DEBUG = true
+//	private static boolean DEBUG = false;
+	
 	private void selectPaths() {
 		
 		// Move all path selectors until there are no moves possible (DFS):
@@ -76,7 +83,9 @@ public class MatchSelector {
 			LinkedList<PathSelector> lastMoves = pathSelectors.getLast();
 			PathSelector lastMove = lastMoves.getLast();
 			
-//			System.out.println(lastMove.getPosition());
+//			if (DEBUG) {
+//				System.out.println("Position: " + removeBundleNames(lastMove.getPosition()));
+//			}
 			
 			if (lastMoves.size() == 1) {
 				// Update the move stack:
@@ -86,26 +95,55 @@ public class MatchSelector {
 				lastMoves.removeLast();
 			}
 
-//			boolean pathStopped = true;
+			// TODO: DEBUG-CODE
+//			boolean endOfPath = true;
 //			EdgePattern lastEdge = null;
 			
 			// Create new Path-Selector for each moved edge:
 			for (EdgePattern nextEdge : lastMove.getNextEdges()) {
 				
+//				if (DEBUG) {
+//					System.out.println("    Match adjacent: " + removeBundleNames(nextEdge));
+//				}
+				
 				LinkedList<PathSelector> nextMoves = lastMove.move(nextEdge);
 				
 				if (!nextMoves.isEmpty()) {
 //					lastEdge = nextEdge;
-//					pathStopped = false;
+//					endOfPath = false;
 					pathSelectors.add(nextMoves);
 				}
 			}
 			
-//			System.out.println(lastEdge);
-//			
-//			if (pathStopped) {
-//				System.out.println("STOP!");
+//			if (DEBUG) {
+//				if (endOfPath) {
+//					System.out.println(">END OF PATH<");
+//				} else {
+//					System.out.println("  Move: " + removeBundleNames(lastEdge));
+//				}
 //			}
 		}
+	}
+	
+	private String removeBundleNames(Object obj) {
+		String name = obj.toString().replaceFirst("org\\.sidiff\\.consistency\\.graphpattern\\.impl\\.", "");
+		name = name.replaceFirst("org\\.eclipse\\.uml2\\.uml\\.internal\\.impl\\.", "");
+		return name;
+	}
+	
+	@SuppressWarnings("unused")
+	private Collection<EObject> getSelection(NodePattern node) {
+		List<EObject> selection = new ArrayList<>();
+		MatchingHelper.getDataStore(node).getMatchSelection().getSelectedMatches()
+		.forEachRemaining(selection::add);
+		return selection;
+	}
+	
+	@SuppressWarnings("unused")
+	private String printSelection(NodePattern node) {
+		StringBuffer selectionPrint = new StringBuffer();
+		MatchingHelper.getDataStore(node).getMatchSelection().getSelectedMatches()
+		.forEachRemaining(selection -> {selectionPrint.append(removeBundleNames(selection) + "\n");});
+		return selectionPrint.toString();
 	}
 }

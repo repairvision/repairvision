@@ -1,13 +1,12 @@
 package org.sidiff.consistency.repair.lifting.complement;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSIntersectRHSNodes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSNodes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes;
-import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.getDataStore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,6 @@ import org.sidiff.common.henshin.view.NodePair;
 import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
-import org.sidiff.consistency.graphpattern.matcher.data.selection.MatchSelection;
 import org.sidiff.consistency.graphpattern.matcher.data.selection.SelectionMatching;
 import org.sidiff.consistency.graphpattern.matcher.matching.partial.NodeMatching;
 import org.sidiff.consistency.graphpattern.matcher.matching.partial.PartialMatchGenerator;
@@ -39,7 +37,6 @@ import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeC
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeDeleteMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMultiMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeSingleMatch;
 import org.sidiff.consistency.repair.lifting.engine.partial.PartialLiftingEngineFactory;
 import org.sidiff.difference.lifting.edit2recognition.traces.TransformationPatterns;
@@ -76,6 +73,11 @@ public class ComplementFinder {
 	 * The resource set which contains model A / B and the difference.
 	 */
 	private ResourceSet modelDifference;
+	
+	/**
+	 * The difference between model A and B.
+	 */
+	private SymmetricDifference difference;
 
 	/**
 	 * Creates the matching engine.
@@ -94,6 +96,7 @@ public class ComplementFinder {
 		assert (modelAResource.getResourceSet() == modelBResource.getResourceSet()) 
 		&& (modelBResource.getResourceSet() == difference.eResource().getResourceSet());
 		
+		this.difference = difference;
 		this.graphModelB = new EGraphImpl(modelBResource);
 		this.modelDifference = difference.eResource().getResourceSet();
 		this.engine = new EngineImpl();
@@ -138,7 +141,9 @@ public class ComplementFinder {
 				List<EditRuleMatch> editRuleMatch = createEditRuleMatch(edit2Recognition, matchGenerator);
 				
 				// Store new complement rule:
-				complements.add(complementConstructor.createComplementRule(editRuleMatch));
+				if (!editRuleMatch.isEmpty()) {
+					complements.add(complementConstructor.createComplementRule(editRuleMatch));
+				}
 			} 
 			
 //			else {
@@ -178,7 +183,8 @@ public class ComplementFinder {
 	}
 
 	private List<EditRuleMatch> createEditRuleMatch(
-			Edit2RecognitionRule edit2Recognition, PartialMatchGenerator matchGenerator) {
+			Edit2RecognitionRule edit2Recognition, 
+			PartialMatchGenerator matchGenerator) {
 
 		Rule editRule = edit2Recognition.getEditRule();
 		Map<Unit, TransformationPatterns> traceEdit2Recognition = edit2Recognition.getEdit2RecognitionTrace();
@@ -187,17 +193,42 @@ public class ComplementFinder {
 		// Create edit-operation match:
 		List<EditRuleMatch> editRuleMatch = new ArrayList<>();
 
-		// EO-Preserve-Nodes:
-		for (Node eoHenshinNode : getLHSIntersectRHSNodes(editRule)) {
-			NodePair rrHenshinNodeB = traceEdit2Recognition.get(editRule).getTraceB(eoHenshinNode);
-			NodePattern rrNodePatternB = traceHenshinToGraphPattern.get(rrHenshinNodeB.getLhsNode());
-
-			List<EObject> match = getMatch(rrNodePatternB);
-
-			if (!match.isEmpty()) {
-				editRuleMatch.add(createEditRuleNodeMatch(eoHenshinNode, match, Type.PRESERVE));
-			}
-		}
+//		// TODO: EO-Preserve-Nodes:
+//		for (Node eoHenshinNode : getLHSIntersectRHSNodes(editRule)) {
+//			CorrespondencePattern correspondencePattern = traceEdit2Recognition.get(editRule)
+//					.getCorrespondecePattern(eoHenshinNode);
+//			
+//			if (correspondencePattern.getNodeB() != null) {
+//				NodePair rrHenshinNodeB = correspondencePattern.getNodeB();
+//				NodePattern rrNodePatternB = traceHenshinToGraphPattern.get(rrHenshinNodeB.getLhsNode());
+//
+//				List<EObject> match = getMatch(rrNodePatternB);
+//
+//				if (!match.isEmpty()) {
+//					editRuleMatch.add(createEditRuleNodeMatch(eoHenshinNode, match, Type.PRESERVE));
+//				}
+//			} else {
+//				NodePair rrHenshinNodeA = correspondencePattern.getNodeA();
+//				NodePattern rrNodePatternA = traceHenshinToGraphPattern.get(rrHenshinNodeA.getLhsNode());
+//
+//				List<EObject> matchA = getMatch(rrNodePatternA);
+//				List<EObject> matchB = getMatch(rrNodePatternA);
+//
+//				for (EObject modelAObj : matchA) {
+//					EObject modelBObj = difference.getCorrespondingObjectInB(modelAObj);
+//
+//					if (modelBObj != null) {
+//						matchB.add(modelBObj);
+//					}
+//				}
+//				
+//				if (!matchB.isEmpty()) {
+//					editRuleMatch.add(createEditRuleNodeMatch(eoHenshinNode, matchB, Type.PRESERVE));
+//				} else {
+//					// TODO: The context might have been deleted in model B!
+//				}
+//			}
+//		}
 
 		// EO-Delete-Nodes:
 		for (Node eoHenshinNode : getLHSMinusRHSNodes(editRule)) {
@@ -235,7 +266,15 @@ public class ComplementFinder {
 					src_rrNodePatternA, tgt_rrNodePatternA, matchGenerator.getVariableMatching());
 
 			if (deleted != null) {
-				editRuleMatch.add(new EditRuleEdgeDeleteMatch(eoHenshinEdge, deleted[0], deleted[1]));
+				EObject modelBSrcObj = difference.getCorrespondingObjectInB(deleted[0]);
+				EObject modelBTgtObj = difference.getCorrespondingObjectInB(deleted[1]);
+				
+				if ((modelBSrcObj != null) && (modelBTgtObj != null)) {
+					editRuleMatch.add(new EditRuleEdgeDeleteMatch(eoHenshinEdge, modelBSrcObj, modelBTgtObj));
+				} else {
+					// TODO: The context might have been deleted in model B!
+					return Collections.emptyList();
+				}
 			}
 		}
 
@@ -250,6 +289,8 @@ public class ComplementFinder {
 			EObject[] created = getCreateReference(eoHenshinEdge.getType(),
 					src_rrNodePatternB, tgt_rrNodePatternB, matchGenerator.getVariableMatching());
 
+			
+			
 			if (created != null) {
 				editRuleMatch.add(new EditRuleEdgeCreateMatch(eoHenshinEdge, created[0], created[1]));
 			}
@@ -332,24 +373,24 @@ public class ComplementFinder {
 		}
 	}
 
-	private List<EObject> getMatch(NodePattern node) {
-		MatchSelection selection = getDataStore(node).getMatchSelection();
-		return selection.getMatch();
-	}
+//	private List<EObject> getMatch(NodePattern node) {
+//		MatchSelection selection = getDataStore(node).getMatchSelection();
+//		return selection.getMatch();
+//	}
 
 	private EditRuleNodeMatch createEditRuleNodeMatch(Node node, EObject match, Type type) {
 		return new EditRuleNodeSingleMatch(node, type, match);
 	}
 
-	private EditRuleNodeMatch createEditRuleNodeMatch(Node node, List<EObject> match, Type type) {
-		EditRuleNodeMatch nodeMatch;
-
-		if (match.size() == 1) {
-			nodeMatch = new EditRuleNodeSingleMatch(node, type, match.get(0));
-		} else {
-			nodeMatch = new EditRuleNodeMultiMatch(node, type, match);
-		}
-
-		return nodeMatch;
-	}
+//	private EditRuleNodeMatch createEditRuleNodeMatch(Node node, List<EObject> match, Type type) {
+//		EditRuleNodeMatch nodeMatch;
+//
+//		if (match.size() == 1) {
+//			nodeMatch = new EditRuleNodeSingleMatch(node, type, match.get(0));
+//		} else {
+//			nodeMatch = new EditRuleNodeMultiMatch(node, type, match);
+//		}
+//
+//		return nodeMatch;
+//	}
 }

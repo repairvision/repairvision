@@ -96,7 +96,7 @@ public class AtomicPattern {
 	}
 	
 //	// TODO: Atomic-Pattern cache: Object + Node!?
-//	Map<EObject, List<EObject[]>> cache = new HashMap<>();
+//	static Map<EObject, List<EObject[]>> cache = new HashMap<>();
 //	
 //	private List<EObject[]> getAllAtomicMatches(
 //			PathSelector pathSelector, NodePattern initialNode, Collection<EObject> matches) {

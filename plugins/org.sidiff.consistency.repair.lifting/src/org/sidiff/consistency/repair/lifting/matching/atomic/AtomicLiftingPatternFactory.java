@@ -8,6 +8,9 @@ import org.sidiff.consistency.graphpattern.matcher.matching.selection.PathSelect
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.matching.model.MatchingModelPackage;
 
+// TODO: AtomicPattern: Add/RemoveObject with containment references!?
+// TODO: AtomicPattern: Add/RemoveReference and EOpposites
+
 public class AtomicLiftingPatternFactory implements IAtomicPatternFactory {
 
 	private static MatchingModelPackage MATCHING_MODEL = MatchingModelPackage.eINSTANCE;

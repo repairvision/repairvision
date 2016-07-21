@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Display;
 import org.sidiff.consistency.common.ui.WorkbenchUtil;
 import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.api.RepairJob;
@@ -32,33 +37,47 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 	@Override
 	public void calculateRepairs() {
 		
-		// Matching-Settings:
-		DifferenceSettings settings = getMatchingSettings();
-		
-		// Load edit-rules:
-		Collection<Rule> subEditRules = loadEditRules(subEditRuleFiles);
-		Collection<Rule> cpEditRules = loadEditRules(cpEditRuleFiles);
-		
-		// Calculate repairs:
-		if (!subEditRules.isEmpty() && !cpEditRules.isEmpty()) {
-			URI uriModelA = ModelDropWidget.getURI(modelAFile);
-			URI uriModelB = ModelDropWidget.getURI(modelBFile);
+		Job repairCalculation = new Job("Calculate Repairs") {
 			
-			repairJob = CPORepairFacade.getRepairs(
-					uriModelA, uriModelB, 
-					subEditRules, cpEditRules, 
-					documentType, settings);
-			
-			// Analyze results:
-			SymmetricDifference difference =(SymmetricDifference) repairJob.getDifference().getContents().get(0);
-			
-			if (difference.getChangeSets().isEmpty()) {
-				WorkbenchUtil.showMessage("No partially executed edit-operations found!");
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				
+				// Matching-Settings:
+				DifferenceSettings settings = getMatchingSettings();
+				
+				// Load edit-rules:
+				Collection<Rule> subEditRules = loadEditRules(subEditRuleFiles);
+				Collection<Rule> cpEditRules = loadEditRules(cpEditRuleFiles);
+				
+				// Calculate repairs:
+				if (!subEditRules.isEmpty() && !cpEditRules.isEmpty()) {
+					URI uriModelA = ModelDropWidget.getURI(modelAFile);
+					URI uriModelB = ModelDropWidget.getURI(modelBFile);
+					
+					repairJob = CPORepairFacade.getRepairs(
+							uriModelA, uriModelB, 
+							subEditRules, cpEditRules, 
+							documentType, settings);
+					
+					// Update UI:
+					Display.getDefault().syncExec(() -> {
+						// Analyze results:
+						SymmetricDifference difference =(SymmetricDifference) repairJob.getDifference().getContents().get(0);
+						
+						if (difference.getChangeSets().isEmpty()) {
+							WorkbenchUtil.showMessage("No partially executed edit-operations found!");
+						}
+						
+						// Show repairs:
+						viewer_repairs.setInput(repairJob.getRepairs());
+					});
+				}
+				
+				return Status.OK_STATUS;
 			}
-			
-			// Show repairs:
-			viewer_repairs.setInput(repairJob.getRepairs());
-		}
+		};
+		
+		repairCalculation.schedule();
 	}
 
 	@Override

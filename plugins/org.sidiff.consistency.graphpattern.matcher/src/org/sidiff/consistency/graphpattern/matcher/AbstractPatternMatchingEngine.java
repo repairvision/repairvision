@@ -99,13 +99,9 @@ public abstract class AbstractPatternMatchingEngine<R extends IMatching> impleme
 		System.out.println("Working-Graph Construction Time: " + (System.currentTimeMillis() - startTime) / 1000.0 + "s");
 
 		// Generate matches:
-		startTime = System.currentTimeMillis();
-
 		IMatchGenerator<R> matchGenerator = getMatchGenerator();
 		matchGenerator.initialize(graphPattern, variableNodes);
 		matchGenerator.start();
-
-		System.out.println("Working-Graph Construction Time: " + (System.currentTimeMillis() - startTime) / 1000.0 + "s");
 	}
 	
 	@Override

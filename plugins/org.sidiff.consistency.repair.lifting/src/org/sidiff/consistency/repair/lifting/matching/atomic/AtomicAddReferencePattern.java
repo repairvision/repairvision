@@ -20,10 +20,10 @@ public class AtomicAddReferencePattern extends AtomicPattern {
 		Path path = pathSelector.getPath();
 		
 		// Pattern definition:
-		nodes = new ArrayList<>(8);
+		nodes = new ArrayList<>();
 		nodes.add(addReferenceNode);
 		
-		evaluation = new ArrayList<>(7);
+		evaluation = new ArrayList<>();
 		borderNodes = new ArrayList<>(4);
 		
 		NodePattern modelSrcNodeB = null;
@@ -37,6 +37,8 @@ public class AtomicAddReferencePattern extends AtomicPattern {
 		NodePattern modelTgtNodeA = null;
 		
 		// Find nodes:
+//		EReference type = null;
+		
 		for (EdgePattern outgoing : addReferenceNode.getOutgoings()) {
 			if (outgoing.getType() == DIFFERENCE_MODEL.getAddReference_Src()) {
 				modelSrcNodeB = outgoing.getTarget();
@@ -61,8 +63,50 @@ public class AtomicAddReferencePattern extends AtomicPattern {
 				
 				nodes.add(typeNode);
 				evaluation.add(new Move(addReferenceNode, outgoing , typeNode));
+				
+//				// Get type:
+//				DataStore typeDS = typeNode.getEvaluation().getStore();
+//				
+//				if (typeDS.getMatchSize() == 1) {
+//					type = (EReference) typeDS.getMatchIterator().next();
+//				}
 			}
 		}
+		
+//		// Find opposite:
+//		// TODO: Add EOpposite to SymmetricModel!
+//		if ((type != null) && (type.getEOpposite() != null)) {
+//			for (EdgePattern oppositeTgtEdge : modelSrcNodeB.getIncomings(DIFFERENCE_MODEL.getAddReference_Tgt())) {
+//				NodePattern oppositeChangeNode = oppositeTgtEdge.getSource();
+//				EdgePattern oppositeTypeEdge = oppositeChangeNode.getOutgoing(DIFFERENCE_MODEL.getAddReference_Type());
+//				NodePattern oppositeTypeNode = oppositeTypeEdge.getTarget();
+//				
+//				// Get type:
+//				DataStore oppositeTypeDS = oppositeTypeNode.getEvaluation().getStore();
+//				
+//				if (oppositeTypeDS.getMatchSize() == 1) {
+//					EReference oppositeType = (EReference) oppositeTypeDS.getMatchIterator().next();
+//					
+//					if (oppositeType == type.getEOpposite()) {
+//						NodePattern oppositeSrcNode = oppositeChangeNode.getOutgoing(
+//								DIFFERENCE_MODEL.getAddReference_Src()).getTarget();
+//						
+//						if (oppositeSrcNode == modelTgtNodeB) {
+//							
+//							// Opposite found:
+//							nodes.add(oppositeChangeNode);
+//							evaluation.add(new Move(modelSrcNodeB, oppositeTgtEdge, oppositeChangeNode));
+//							
+//							// Add type node:
+//							nodes.add(oppositeTypeNode);
+//							evaluation.add(new Move(oppositeChangeNode, oppositeTypeEdge, oppositeTypeNode));
+//							
+//							break;
+//						}
+//					}
+//				}
+//			}
+//		}
 		
 		// -src-> ModelB <-matchedB- Correspondence -matchedA-> ModelA 
 		for (EdgePattern incoming : modelSrcNodeB.getIncomings()) {

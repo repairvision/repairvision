@@ -137,10 +137,12 @@ public abstract class RepairViewBasicApp {
 					info.add(new Status(IStatus.ERROR, Activator.ID, 1, editRuleValidation.infoMessage, null));
 				}
 				
-				ErrorDialog.openError(
-						Display.getDefault().getActiveShell(), 
-						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(), 
-						null, info);
+				Display.getDefault().asyncExec(() -> {
+					ErrorDialog.openError(
+							Display.getDefault().getActiveShell(), 
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(), 
+							null, info);
+				});
 			}
 		}
 		

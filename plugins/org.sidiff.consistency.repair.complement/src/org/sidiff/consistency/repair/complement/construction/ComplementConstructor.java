@@ -115,6 +115,8 @@ public abstract class ComplementConstructor {
 				}
 			}
 		}
+		
+		// TODO: The context might have been deleted in model B!
 
 		return complement;
 	}
