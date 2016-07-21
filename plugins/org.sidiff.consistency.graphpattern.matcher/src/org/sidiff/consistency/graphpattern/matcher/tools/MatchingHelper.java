@@ -73,9 +73,9 @@ public class MatchingHelper {
 			List<EObject> targets;
 			
 			if (type.isMany()) {
-				targets = ( List<EObject>) object.eGet(type);
+				targets = ( List<EObject>) object.eGet(type, true);
 			} else {
-				EObject value = (EObject) object.eGet(type);
+				EObject value = (EObject) object.eGet(type, true);
 				
 				if (value != null) {
 					targets = Collections.singletonList(value);
