@@ -5,9 +5,11 @@
     <parameters name="transition_target"/>
     <parameters name="transition_source"/>
     <parameters name="newTransition"/>
+    <parameters name="transitionName"/>
     <parameterMappings source="//@units.0/@parameters.0" target="//@units.1/@parameters.0"/>
     <parameterMappings source="//@units.0/@parameters.1" target="//@units.1/@parameters.1"/>
     <parameterMappings source="//@units.1/@parameters.2" target="//@units.0/@parameters.2"/>
+    <parameterMappings source="//@units.0/@parameters.3" target="//@units.1/@parameters.3"/>
   </units>
   <units xsi:type="henshin:Rule" name="createTransition">
     <parameters name="transition_target"/>
