@@ -111,7 +111,7 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 							matching.setSelectionModified(true); 
 						}
 						
-						// FInd next match:
+						// Find next match:
 						matching = new SelectionMatching();
 						hasNext = findNextMatch();
 					}
