@@ -30,6 +30,7 @@ import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.ui.Activator;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairLabelProvider;
+import org.sidiff.consistency.repair.lifting.ui.ranking.HistoricComplementingRatioRepairRanking;
 import org.sidiff.consistency.repair.lifting.ui.views.RepairDectectionEngineProvider.RepairDectection;
 import org.sidiff.consistency.repair.lifting.ui.views.cpo.CPORepairView;
 import org.sidiff.consistency.repair.lifting.ui.views.cpo.RepairViewCPOApp;
@@ -89,7 +90,7 @@ public class RepairView extends ViewPart {
 		viewer_repairs = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer_repairs.setContentProvider(new RepairContentProvider());
 		viewer_repairs.setLabelProvider(new RepairLabelProvider());
-//		viewer_repairs.setSorter(new NameSorter());
+		viewer_repairs.setSorter(new HistoricComplementingRatioRepairRanking());
 		
 		drillDownAdapter = new DrillDownAdapter(viewer_repairs);
 
