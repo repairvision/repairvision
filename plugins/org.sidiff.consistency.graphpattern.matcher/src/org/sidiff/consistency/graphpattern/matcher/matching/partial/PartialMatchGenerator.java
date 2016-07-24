@@ -209,7 +209,7 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 	 *         otherwise. The matching can be read from {@link #getMatching()}.
 	 */
 	public boolean findNextMatch() {
-		long startTime = System.currentTimeMillis();
+ 		long startTime = System.currentTimeMillis();
 
 		// Search for the next valid match:
 		while (!findNextAssignemt()) {
@@ -250,14 +250,16 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 //					}
 					
 					// Check new matching
-					if (getMatchValidation().isMatch(matching)) {
-						
-						// Validate match:
-						DebugUtil.check(this::validateMatch, this);
-						
-						storeVariableAssignments();
-						return true;
-					}
+//					if (!isEmptyMatch()) {
+						if (getMatchValidation().isMatch(matching)) {
+
+							// Validate match:
+							DebugUtil.check(this::validateMatch, this);
+
+							storeVariableAssignments();
+							return true;
+						}
+//					}
 				}
 			} else {
 				// No more matches possible!
@@ -451,6 +453,9 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 //				if (freeMatching.getMatch() != null) {
 
 				ensureInjectivity(freeMatching);
+				
+				// TODO: if (!isFlatMatching())
+				
 				matchSelector.selectMatch(freeNode, nextRestriction);
 
 				// Check if match was valid (e.g. failed on atomic matching):

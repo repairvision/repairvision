@@ -2,13 +2,14 @@ package org.sidiff.consistency.graphpattern.matcher.matching.selection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
 
 public abstract class PathSelector {
 	
@@ -35,7 +36,7 @@ public abstract class PathSelector {
 		
 		if (atomicPattern != null) {
 			// Initial node is part of an atomic pattern:
-			return matchAtomicPattern(atomicPattern, position, initialMatches);
+			return new LinkedList<>(matchAtomicPattern(atomicPattern, position, initialMatches));
 		} else {
 			// Initial node is a simple node:
 			selectMatches(position, initialMatches);
@@ -47,55 +48,77 @@ public abstract class PathSelector {
 		}
 	}
 	
-	public LinkedList<PathSelector> move(EdgePattern edge) {
-		NodePattern source = getPosition();
-		NodePattern target = MatchingHelper.getAdjacent(source, edge);
+	public LinkedList<PathSelector> move() {
+		LinkedList<PathSelector> nextPathSelectors = new LinkedList<>();
+		NodePattern position = getPosition();
 		
-		// Intersecting edges are filtered by getNextEdges()!
-		assert (!history.contains(target)) : "Path would intersect itself!";
+		// Calculate the next paths (from the target node):
+		for (NodePattern adjacent : position.getAdjacent()) {
+			
+			// Check if the paths would intersect itself:
+			if (!history.contains(adjacent)) {
+				
+				// Match all parallel edges:
+				// TODO: Do this in getPositionAdjacentMatches in one step!
+				Set<EObject> matches = new HashSet<>();
+				
+				for (EdgePattern incident : position.getIncident(adjacent)) {
+					
+					// Filter opposite incoming edges:
+					if (!((incident.getTarget() == position) && (incident.getOpposite() != null))) {
+					
+						//// Calculate the target match ////
+						matches.addAll(getPositionAdjacentMatches(incident, adjacent));
+					}
+				}
+				
+				// Was a move possible?
+				if (!matches.isEmpty()) {
+					
+					// Match atomic patterns;
+					// NOTE: matchAtomicPatterns() does the selection for the new matches,
+					// but only if the atomic pattern can be matched completely.
+					List<PathSelector> atomicSelections = matchAtomicPatterns(adjacent, matches);
+					
+					// Add selectors for the next paths:
+					if (atomicSelections != null) {
+						nextPathSelectors.addAll(atomicSelections);
+					} else {
+						
+						// Add reachable matches to target node selection:
+						selectMatches(adjacent, matches);
+						
+						PathSelector nextPathSelector = this.fork();
+						nextPathSelector.history.append(adjacent, matches);
+						
+						nextPathSelectors.add(nextPathSelector);
+					}
+				}
+			}
+		}
 		
-		// Get all matches (over the given edge) which are adjacent to last matches:
-		return nextMatch(edge, target);
+		// FIXME: Merge duplicated path selectors on the same node!?
+		return nextPathSelectors;
 	}
 	
-	private LinkedList<PathSelector> nextMatch(EdgePattern edge, NodePattern target) {
-		
-		// Calculate the target match:
-		Collection<EObject> matches = getPositionAdjacentMatches(edge, target);
-		
-		// Was a move possible?
-		if (matches.isEmpty()) {
-			return EMPTY_PATHSELECTOR_LIST;
-		}
+	public List<PathSelector> matchAtomicPatterns(NodePattern initialNode, Collection<EObject> matches) {	
 		
 		// Get the atomic pattern for the target node:
-		AtomicPattern atomicPattern = atomicPatternFactory.getAtomicPattern(this, target);
+		AtomicPattern atomicPattern = atomicPatternFactory.getAtomicPattern(this, initialNode);
 		
+		// Match Atomic Patter:
 		if (atomicPattern != null) {
-			//// Match Atomic Patter ////
-			return matchAtomicPattern(atomicPattern, target, matches);
+			return matchAtomicPattern(atomicPattern, initialNode, matches);
 		} else {
-			//// Simple Move ////
-			
-			// Add reachable matches to target node selection:
-			selectMatches(target, matches);
-			
-			// Create a selector for the next path:
-			PathSelector nextPathSelector = this.fork();
-			nextPathSelector.history.append(target, matches);
-			
-			LinkedList<PathSelector> nextPathSelectorSingleton = new LinkedList<>();
-			nextPathSelectorSingleton.add(nextPathSelector);
-			
-			return nextPathSelectorSingleton;
+			return null;
 		}
 	}
 	
-	public LinkedList<PathSelector> matchAtomicPattern(AtomicPattern atomicPattern,
+	public List<PathSelector> matchAtomicPattern(AtomicPattern atomicPattern,
 			NodePattern initialNode , Collection<EObject> matches) {
 		
 		//// Atomic Pattern Move ////
-		LinkedList<PathSelector> nextPathSelectors = new LinkedList<>();
+		List<PathSelector> nextPathSelectors = new ArrayList<>();
 
 		// Calculate the atomic match:
 		Collection<EObject[]> atomicMatches = atomicPattern.getAtomicMatch(this, initialNode, matches);
@@ -147,22 +170,6 @@ public abstract class PathSelector {
 		return history;
 	}
 	
-	public List<EdgePattern> getNextEdges() {
-		List<EdgePattern> nextEdges = new ArrayList<>();
-		
-		// Calculate the next paths (from the target node):
-		for (EdgePattern incident : MatchingHelper.getIncidents(getPosition())) {
-			NodePattern adjacent = MatchingHelper.getAdjacent(getPosition(), incident);
-			
-			// Check if the paths would intersect itself:
-			if (!history.contains(adjacent)) {
-				nextEdges.add(incident);
-			}
-		}
-		
-		return nextEdges;
-	}
-
 	public PathSelector fork() {
 		PathSelector clonedPathSelector = createPathSelector();
 		clonedPathSelector.history = history.fork();

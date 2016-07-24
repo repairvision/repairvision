@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.data.selection.MatchSelection;
 import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
@@ -74,19 +73,20 @@ public class MatchSelector {
 	
 	// MatchSelector.DEBUG = false
 	// MatchSelector.DEBUG = true
-//	private static boolean DEBUG = false;
+	private static boolean DEBUG = false;
 	
 	private void selectPaths() {
-		
+
 		// Move all path selectors until there are no moves possible (DFS):
+		// TODO: Let a selector itself store the last selector...!?
 		while (!pathSelectors.isEmpty()) {
 			LinkedList<PathSelector> lastMoves = pathSelectors.getLast();
 			PathSelector lastMove = lastMoves.getLast();
 			
-//			if (DEBUG) {
-//				System.out.println("Position: " + removeBundleNames(lastMove.getPosition()));
-//			}
-			
+			if (DEBUG) {
+				System.out.println("Position: " + removeBundleNames(lastMove.getPosition()));
+			}
+				
 			if (lastMoves.size() == 1) {
 				// Update the move stack:
 				pathSelectors.removeLast();
@@ -94,34 +94,19 @@ public class MatchSelector {
 				// Remove the last move because it was completely processed:
 				lastMoves.removeLast();
 			}
-
-			// TODO: DEBUG-CODE
-//			boolean endOfPath = true;
-//			EdgePattern lastEdge = null;
 			
 			// Create new Path-Selector for each moved edge:
-			for (EdgePattern nextEdge : lastMove.getNextEdges()) {
-				
-//				if (DEBUG) {
-//					System.out.println("    Match adjacent: " + removeBundleNames(nextEdge));
-//				}
-				
-				LinkedList<PathSelector> nextMoves = lastMove.move(nextEdge);
-				
-				if (!nextMoves.isEmpty()) {
-//					lastEdge = nextEdge;
-//					endOfPath = false;
-					pathSelectors.add(nextMoves);
-				}
+			LinkedList<PathSelector> nextPaths = lastMove.move();
+			
+			if (!nextPaths.isEmpty()) {
+				pathSelectors.add(nextPaths);
 			}
 			
-//			if (DEBUG) {
-//				if (endOfPath) {
-//					System.out.println(">END OF PATH<");
-//				} else {
-//					System.out.println("  Move: " + removeBundleNames(lastEdge));
-//				}
-//			}
+			if (DEBUG) {
+				if (nextPaths.isEmpty()) {
+					System.out.println(">END OF PATH<");
+				}
+			}
 		}
 	}
 	

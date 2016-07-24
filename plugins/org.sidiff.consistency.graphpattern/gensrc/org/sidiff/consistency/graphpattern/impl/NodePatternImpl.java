@@ -4,6 +4,8 @@ package org.sidiff.consistency.graphpattern.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -44,6 +46,20 @@ import org.sidiff.consistency.graphpattern.NodePattern;
  * @generated
  */
 public class NodePatternImpl extends GraphPatternElementImpl implements NodePattern {
+	
+	/**
+	 * All incident edges per adjacent node.
+	 * 
+	 * @generated NOT
+	 */
+	protected Map<NodePattern, EList<EdgePattern>> incidents;
+	
+	/**
+	 * All adjacent nodes.
+	 * 
+	 * @generated NOT
+	 */
+	protected EList<NodePattern> adjacent; 
 	
 	/**
 	 * The cached value of the '{@link #getOutgoings() <em>Outgoings</em>}' containment reference list.
@@ -186,6 +202,60 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 		}
 
 		return edges;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<EdgePattern> getIncident() {
+		EList<EdgePattern> edges = new BasicEList<>(getOutgoings().size() + getIncomings().size());
+		edges.addAll(getOutgoings());
+		edges.addAll(getIncomings());
+		return edges;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<EdgePattern> getIncident(NodePattern adjacent) {
+		
+		if (incidents == null) {
+			incidents = new LinkedHashMap<>();
+			
+			for (EdgePattern outgoing : getOutgoings()) {
+				EList<EdgePattern> incident = incidents.getOrDefault(outgoing.getTarget(), new BasicEList<>());
+				incidents.put(outgoing.getTarget(), incident);
+				incident.add(outgoing);
+			}
+			
+			for (EdgePattern incoming : getIncomings()) {
+				EList<EdgePattern> incident = incidents.getOrDefault(incoming.getSource(), new BasicEList<>());
+				incidents.put(incoming.getSource(), incident);
+				incident.add(incoming);
+			}
+		}
+		
+		return incidents.get(adjacent);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<NodePattern> getAdjacent() {
+		
+		if (adjacent == null) {
+			// FIXME: This seems to present a non deterministic order -> better fix this!?
+			getIncident(null); // Make sure "incidents" is initialized...
+			adjacent = new BasicEList<NodePattern>(incidents.keySet());
+		}
+		
+		return adjacent;
 	}
 
 	/**
@@ -544,6 +614,12 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 				return getIncoming((EReference)arguments.get(0));
 			case GraphpatternPackage.NODE_PATTERN___GET_INCOMINGS__EREFERENCE:
 				return getIncomings((EReference)arguments.get(0));
+			case GraphpatternPackage.NODE_PATTERN___GET_INCIDENT:
+				return getIncident();
+			case GraphpatternPackage.NODE_PATTERN___GET_INCIDENT__NODEPATTERN:
+				return getIncident((NodePattern)arguments.get(0));
+			case GraphpatternPackage.NODE_PATTERN___GET_ADJACENT:
+				return getAdjacent();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

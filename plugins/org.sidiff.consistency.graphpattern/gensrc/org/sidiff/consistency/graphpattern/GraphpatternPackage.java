@@ -551,13 +551,40 @@ public interface GraphpatternPackage extends EPackage {
 	int NODE_PATTERN___GET_INCOMINGS__EREFERENCE = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 4;
 
 	/**
+	 * The operation id for the '<em>Get Incident</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_PATTERN___GET_INCIDENT = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 5;
+
+	/**
+	 * The operation id for the '<em>Get Incident</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_PATTERN___GET_INCIDENT__NODEPATTERN = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 6;
+
+	/**
+	 * The operation id for the '<em>Get Adjacent</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_PATTERN___GET_ADJACENT = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 7;
+
+	/**
 	 * The number of operations of the '<em>Node Pattern</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_OPERATION_COUNT = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 5;
+	int NODE_PATTERN_OPERATION_COUNT = GRAPH_PATTERN_ELEMENT_OPERATION_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1957,6 +1984,36 @@ public interface GraphpatternPackage extends EPackage {
 	EOperation getNodePattern__GetIncomings__EReference();
 
 	/**
+	 * Returns the meta object for the '{@link org.sidiff.consistency.graphpattern.NodePattern#getIncident() <em>Get Incident</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Incident</em>' operation.
+	 * @see org.sidiff.consistency.graphpattern.NodePattern#getIncident()
+	 * @generated
+	 */
+	EOperation getNodePattern__GetIncident();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.consistency.graphpattern.NodePattern#getIncident(org.sidiff.consistency.graphpattern.NodePattern) <em>Get Incident</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Incident</em>' operation.
+	 * @see org.sidiff.consistency.graphpattern.NodePattern#getIncident(org.sidiff.consistency.graphpattern.NodePattern)
+	 * @generated
+	 */
+	EOperation getNodePattern__GetIncident__NodePattern();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.consistency.graphpattern.NodePattern#getAdjacent() <em>Get Adjacent</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Adjacent</em>' operation.
+	 * @see org.sidiff.consistency.graphpattern.NodePattern#getAdjacent()
+	 * @generated
+	 */
+	EOperation getNodePattern__GetAdjacent();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.consistency.graphpattern.EdgePattern <em>Edge Pattern</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2880,6 +2937,30 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation NODE_PATTERN___GET_INCOMINGS__EREFERENCE = eINSTANCE.getNodePattern__GetIncomings__EReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Incident</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation NODE_PATTERN___GET_INCIDENT = eINSTANCE.getNodePattern__GetIncident();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Incident</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation NODE_PATTERN___GET_INCIDENT__NODEPATTERN = eINSTANCE.getNodePattern__GetIncident__NodePattern();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Adjacent</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation NODE_PATTERN___GET_ADJACENT = eINSTANCE.getNodePattern__GetAdjacent();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.consistency.graphpattern.impl.EdgePatternImpl <em>Edge Pattern</em>}' class.

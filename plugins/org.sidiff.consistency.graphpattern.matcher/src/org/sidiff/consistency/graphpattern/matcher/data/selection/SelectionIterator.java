@@ -48,6 +48,7 @@ public class SelectionIterator implements Iterator<EObject> {
 
 			if (SelectionType.isAccepted(tmp_next.getValue())) {
 				next = tmp_next;
+				break;
 			}
 		}
 	}
