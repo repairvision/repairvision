@@ -230,6 +230,7 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 			
 			// Undo last matching (backtracking):
 			LinkedList<NodePattern> nextNodes = getNextMatchableNodes();
+			unambiguousMatches.clear();
 			
 			// Check if there are more matches possible?
 			if (!nextNodes.isEmpty()) {
@@ -239,21 +240,16 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 				
 				// Calculate next matching:
 				if (initializeNextMatching(initialNode)) {
-					
-//					// FIXME: Check if we have a distinct matching:
-//					if (isUnambiguousMatch()) {
-//						// Take the matching as it is:
-//						synchronizeMatchingWithSelection();
-//					} else {
-						// Select a specific assignment:
-						restrictFreeNodes(nextNodes);
-//					}
+
+					// Select a specific assignment:
+					restrictFreeNodes(nextNodes);
 					
 					// Check new matching
 //					if (!isEmptyMatch()) {
 						if (getMatchValidation().isMatch(matching)) {
 
 							// Validate match:
+							// FIXME: Check for example M0008
 							DebugUtil.check(this::validateMatch, this);
 
 							storeVariableAssignments();
@@ -281,43 +277,6 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 //		}
 //		
 //		return true;
-//	}
-//	
-//	private boolean isUnambiguousMatch() {
-//		
-//		// FIXME: Split none injective matches!
-//		for (NodePattern node : graphPattern) {
-//			MatchSelection matchSelection = getDataStore(node.getEvaluation()).getMatchSelection();
-//			int count = 0;
-//			
-//			// TODO: Store size of selection:
-//			for (Iterator<EObject> iterator = matchSelection.getSelectedMatches(); iterator.hasNext();) {
-//				iterator.next();
-//				++count;
-//				
-//				if (count > 1) {
-//					return false;
-//				}
-//			}
-//		}
-//		
-//		return true;
-//	}
-//	
-//	private void synchronizeMatchingWithSelection() {
-//		
-//		for (NodePattern variable : variableNodes) {
-//			NodeMatching nodeMatching = matching.get(variable);
-//			MatchSelection matchSelection = getDataStore(variable.getEvaluation()).getMatchSelection();
-//
-//			if (!nodeMatching.isBound()) {
-//				if (matchSelection.getSelectedMatches().hasNext()) {
-//					nodeMatching.setMatch(matchSelection.getSelectedMatches().next());
-//				}
-//			}
-//		}
-//		
-//		// storeVariableAssignments();
 //	}
 
 	/**
@@ -454,10 +413,10 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 
 				ensureInjectivity(freeMatching);
 				
-				// TODO: if (!isFlatMatching())
+				if (!isUnambiguousMatch()) {
+					matchSelector.selectMatch(freeNode, nextRestriction);
+				}
 				
-				matchSelector.selectMatch(freeNode, nextRestriction);
-
 				// Check if match was valid (e.g. failed on atomic matching):
 				if (freeNodeDS.getMatchSelection().isSelectedMatch(nextRestriction)) {
 					assignmentFound = true;
@@ -487,6 +446,38 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 			}
 		}
 	}
+	
+	// TODO: Move this functionality to DataStore!
+	private Set<NodePattern> unambiguousMatches = new HashSet<>();
+	
+	private boolean isUnambiguousMatch() {
+		
+		if (graphPattern.size() == unambiguousMatches.size()) {
+			return true;
+		}
+		
+		for (NodePattern node : graphPattern) {
+			if (!unambiguousMatches.contains(node)) {
+				MatchSelection matchSelection = getDataStore(node.getEvaluation()).getMatchSelection();
+				int count = 0;
+				
+				// TODO: Store size of selection:
+				for (Iterator<EObject> iterator = matchSelection.getSelectedMatches(); iterator.hasNext();) {
+					iterator.next();
+					++count;
+					
+					if (count > 1) {
+						return false;
+					}
+				}
+				
+				unambiguousMatches.add(node);
+			}
+		}
+		
+		return true;
+	}
+
 		
 	@Override
 	public String toString() {
