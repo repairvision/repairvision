@@ -227,15 +227,25 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 			incidents = new LinkedHashMap<>();
 			
 			for (EdgePattern outgoing : getOutgoings()) {
-				EList<EdgePattern> incident = incidents.getOrDefault(outgoing.getTarget(), new BasicEList<>());
-				incidents.put(outgoing.getTarget(), incident);
+				NodePattern target = outgoing.getTarget();
+				
+				EList<EdgePattern> incident = incidents.getOrDefault(target, new BasicEList<>());
 				incident.add(outgoing);
+				
+				if (!incidents.containsKey(target)) {
+					incidents.put(target, incident);
+				}
 			}
 			
 			for (EdgePattern incoming : getIncomings()) {
-				EList<EdgePattern> incident = incidents.getOrDefault(incoming.getSource(), new BasicEList<>());
-				incidents.put(incoming.getSource(), incident);
+				NodePattern source = incoming.getSource();
+				
+				EList<EdgePattern> incident = incidents.getOrDefault(source, new BasicEList<>());
 				incident.add(incoming);
+				
+				if (!incidents.containsKey(source)) {
+					incidents.put(source, incident);
+				}
 			}
 		}
 		
@@ -250,9 +260,16 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 	public EList<NodePattern> getAdjacent() {
 		
 		if (adjacent == null) {
-			// FIXME: This seems to present a non deterministic order -> better fix this!?
-			getIncident(null); // Make sure "incidents" is initialized...
-			adjacent = new BasicEList<NodePattern>(incidents.keySet());
+			
+			// Make sure "incidents" is initialized...
+			getIncident(null);
+			
+			// Convert adjacent nodes to EList:
+			adjacent = new BasicEList<NodePattern>(incidents.size());
+			
+			incidents.entrySet().forEach(entry -> {
+				adjacent.add(entry.getKey());
+			});
 		}
 		
 		return adjacent;

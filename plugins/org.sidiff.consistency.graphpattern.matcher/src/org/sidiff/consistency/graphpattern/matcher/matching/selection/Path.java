@@ -63,13 +63,48 @@ public class Path {
 		return position.match;
 	}
 	
-	public void append(NodePattern segment, Collection<EObject> match) {
-		PathSegment next = new PathSegment();
-		next.previous = position;
-		next.node = segment;
-		next.match = match;
+	/**
+	 * Append the given path segment and the match at the end of the path.
+	 * 
+	 * @param segment
+	 *            The new path segment.
+	 * @param match
+	 *            The match of the new segment.
+	 */
+	public void append(NodePattern segment, Collection<EObject> match) { // FIXME: Set for merge!
+
+		if (segment == position.node) {
+			// Merge path end:
+			assert (position.match != null);
+			position.match.addAll(match);
+		} else {
+			// New path end:
+			PathSegment next = new PathSegment();
+			next.previous = position;
+			next.node = segment;
+			next.match = match;
+			
+			position = next;
+		}
+	}
+	
+	/**
+	 * Inserts the given path segment and the match 
+	 * before the actual position of this path.
+	 * 
+	 * @param segment
+	 *            The new path segment.
+	 * @param match
+	 *            The match of the new segment.
+	 */
+	public void insert(NodePattern segment, Collection<EObject> match) {
+		PathSegment insertion = new PathSegment();
+		insertion.node = segment;
+		insertion.match = match;
 		
-		position = next;
+		// Relink:
+		insertion.previous = position.previous;
+		position.previous = insertion;
 	}
 	
 	public Collection<EObject> getMatch(NodePattern segment) {

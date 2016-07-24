@@ -2,6 +2,8 @@ package org.sidiff.consistency.repair.lifting.matching.atomic;
 
 import java.util.ArrayList;
 
+import org.eclipse.emf.ecore.EReference;
+import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.AtomicPattern;
@@ -37,7 +39,7 @@ public class AtomicRemoveReferencePattern extends AtomicPattern {
 		NodePattern modelTgtNodeB = null;
 		
 		// Find nodes:
-//		EReference type = null;
+		EReference type = null;
 		
 		for (EdgePattern outgoing : removeReferenceNode.getOutgoings()) {
 			if (outgoing.getType() == DIFFERENCE_MODEL.getRemoveReference_Src()) {
@@ -64,49 +66,49 @@ public class AtomicRemoveReferencePattern extends AtomicPattern {
 				nodes.add(typeNode);
 				evaluation.add(new Move(removeReferenceNode, outgoing , typeNode));
 				
-//				// Get type:
-//				DataStore typeDS = typeNode.getEvaluation().getStore();
-//				
-//				if (typeDS.getMatchSize() == 1) {
-//					type = (EReference) typeDS.getMatchIterator().next();
-//				}
+				// Get type:
+				DataStore typeDS = typeNode.getEvaluation().getStore();
+				
+				if (typeDS.getMatchSize() == 1) {
+					type = (EReference) typeDS.getMatchIterator().next();
+				}
 			}
 		}
 		
-//		// Find opposite:
-//		// TODO: Add EOpposite to SymmetricModel!
-//		if ((type != null) && (type.getEOpposite() != null)) {
-//			for (EdgePattern oppositeTgtEdge : modelSrcNodeA.getIncomings(DIFFERENCE_MODEL.getRemoveReference_Tgt())) {
-//				NodePattern oppositeChangeNode = oppositeTgtEdge.getSource();
-//				EdgePattern oppositeTypeEdge = oppositeChangeNode.getOutgoing(DIFFERENCE_MODEL.getRemoveReference_Type());
-//				NodePattern oppositeTypeNode = oppositeTypeEdge.getTarget();
-//				
-//				// Get type:
-//				DataStore oppositeTypeDS = oppositeTypeNode.getEvaluation().getStore();
-//				
-//				if (oppositeTypeDS.getMatchSize() == 1) {
-//					EReference oppositeType = (EReference) oppositeTypeDS.getMatchIterator().next();
-//					
-//					if (oppositeType == type.getEOpposite()) {
-//						NodePattern oppositeSrcNode = oppositeChangeNode.getOutgoing(
-//								DIFFERENCE_MODEL.getRemoveReference_Src()).getTarget();
-//						
-//						if (oppositeSrcNode == modelTgtNodeA) {
-//							
-//							// Opposite found:
-//							nodes.add(oppositeChangeNode);
-//							evaluation.add(new Move(modelSrcNodeA, oppositeTgtEdge, oppositeChangeNode));
-//							
-//							// Add type node:
-//							nodes.add(oppositeTypeNode);
-//							evaluation.add(new Move(oppositeChangeNode, oppositeTypeEdge, oppositeTypeNode));
-//							
-//							break;
-//						}
-//					}
-//				}
-//			}
-//		}
+		// Find opposite:
+		// TODO: Add EOpposite to SymmetricModel!
+		if ((type != null) && (type.getEOpposite() != null)) {
+			for (EdgePattern oppositeTgtEdge : modelSrcNodeA.getIncomings(DIFFERENCE_MODEL.getRemoveReference_Tgt())) {
+				NodePattern oppositeChangeNode = oppositeTgtEdge.getSource();
+				EdgePattern oppositeTypeEdge = oppositeChangeNode.getOutgoing(DIFFERENCE_MODEL.getRemoveReference_Type());
+				NodePattern oppositeTypeNode = oppositeTypeEdge.getTarget();
+				
+				// Get type:
+				DataStore oppositeTypeDS = oppositeTypeNode.getEvaluation().getStore();
+				
+				if (oppositeTypeDS.getMatchSize() == 1) {
+					EReference oppositeType = (EReference) oppositeTypeDS.getMatchIterator().next();
+					
+					if (oppositeType == type.getEOpposite()) {
+						NodePattern oppositeSrcNode = oppositeChangeNode.getOutgoing(
+								DIFFERENCE_MODEL.getRemoveReference_Src()).getTarget();
+						
+						if (oppositeSrcNode == modelTgtNodeA) {
+							
+							// Opposite found:
+							nodes.add(oppositeChangeNode);
+							evaluation.add(new Move(modelSrcNodeA, oppositeTgtEdge, oppositeChangeNode));
+							
+							// Add type node:
+							nodes.add(oppositeTypeNode);
+							evaluation.add(new Move(oppositeChangeNode, oppositeTypeEdge, oppositeTypeNode));
+							
+							break;
+						}
+					}
+				}
+			}
+		}
 		
 		// -src-> ModelA <-matchedA- Correspondence -matchedB-> ModelB 
 		for (EdgePattern incoming : modelSrcNodeA.getIncomings()) {

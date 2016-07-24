@@ -17,7 +17,7 @@ public abstract class PathSelector {
 	
 	protected IAtomicPatternFactory atomicPatternFactory;
 	
-	protected Path history = new Path();
+	protected Path history;
 	
 	protected PathSelector(IAtomicPatternFactory atomicPatternFactory) {
 		this.atomicPatternFactory = atomicPatternFactory;
@@ -26,7 +26,7 @@ public abstract class PathSelector {
 	public PathSelector(IAtomicPatternFactory atomicPatternFactory, 
 			NodePattern initialPosition, Collection<EObject> initialMatches) {
 		this(atomicPatternFactory);
-		history.append(initialPosition, initialMatches);
+		history = new Path(initialPosition, initialMatches);
 	}
 	
 	public LinkedList<PathSelector> start() {
@@ -35,8 +35,13 @@ public abstract class PathSelector {
 		AtomicPattern atomicPattern = atomicPatternFactory.getAtomicPattern(this, getPosition());
 		
 		if (atomicPattern != null) {
+			// NOTE: Only one Path-Selector per adjacent node:
+			List<NodePattern> adjacentNodes = position.getAdjacent();
+			PathSelector[] adjacentSelectors = new PathSelector[adjacentNodes.size()];
+			
 			// Initial node is part of an atomic pattern:
-			return new LinkedList<>(matchAtomicPattern(atomicPattern, position, initialMatches));
+			return new LinkedList<PathSelector>(matchAtomicPattern(
+					atomicPattern, position, initialMatches, adjacentNodes, adjacentSelectors));
 		} else {
 			// Initial node is a simple node:
 			selectMatches(position, initialMatches);
@@ -52,8 +57,14 @@ public abstract class PathSelector {
 		LinkedList<PathSelector> nextPathSelectors = new LinkedList<>();
 		NodePattern position = getPosition();
 		
+		// NOTE: Only one Path-Selector per adjacent node:
+		// TODO: Use a Map to store adjacent selectors?
+		List<NodePattern> adjacentNodes = position.getAdjacent();
+		PathSelector[] adjacentSelectors = new PathSelector[adjacentNodes.size()];
+		
 		// Calculate the next paths (from the target node):
-		for (NodePattern adjacent : position.getAdjacent()) {
+		for (int i = 0; i < adjacentNodes.size(); i++) {
+			NodePattern adjacent = adjacentNodes.get(i);
 			
 			// Check if the paths would intersect itself:
 			if (!history.contains(adjacent)) {
@@ -75,47 +86,61 @@ public abstract class PathSelector {
 				// Was a move possible?
 				if (!matches.isEmpty()) {
 					
+					// Fork new path:
+					PathSelector nextPathSelector = this.fork();
+					adjacentSelectors[i] = nextPathSelector;
+					
 					// Match atomic patterns;
 					// NOTE: matchAtomicPatterns() does the selection for the new matches,
 					// but only if the atomic pattern can be matched completely.
-					List<PathSelector> atomicSelections = matchAtomicPatterns(adjacent, matches);
+					List<PathSelector> atomicSelections = matchAtomicPatterns(
+							adjacent, matches, adjacentNodes, adjacentSelectors);
 					
 					// Add selectors for the next paths:
 					if (atomicSelections != null) {
-						nextPathSelectors.addAll(atomicSelections);
+						
+						// Update path iteration:
+						for (PathSelector atomicSelection : atomicSelections) {
+							if (!nextPathSelectors.contains(atomicSelection)) {
+								nextPathSelectors.add(atomicSelection);
+							}
+						}
 					} else {
 						
 						// Add reachable matches to target node selection:
 						selectMatches(adjacent, matches);
 						
-						PathSelector nextPathSelector = this.fork();
+						// Update Path-Selector history:
 						nextPathSelector.history.append(adjacent, matches);
 						
+						// Update path iteration:
 						nextPathSelectors.add(nextPathSelector);
 					}
 				}
 			}
 		}
 		
-		// FIXME: Merge duplicated path selectors on the same node!?
 		return nextPathSelectors;
 	}
 	
-	public List<PathSelector> matchAtomicPatterns(NodePattern initialNode, Collection<EObject> matches) {	
+	public List<PathSelector> matchAtomicPatterns(
+			NodePattern initialNode, Collection<EObject> matches, 
+			List<NodePattern> adjacentNodes, PathSelector[] adjacentSelectors) {	
 		
 		// Get the atomic pattern for the target node:
 		AtomicPattern atomicPattern = atomicPatternFactory.getAtomicPattern(this, initialNode);
 		
 		// Match Atomic Patter:
 		if (atomicPattern != null) {
-			return matchAtomicPattern(atomicPattern, initialNode, matches);
+			return matchAtomicPattern(atomicPattern, initialNode, matches, adjacentNodes, adjacentSelectors);
 		} else {
 			return null;
 		}
 	}
 	
 	public List<PathSelector> matchAtomicPattern(AtomicPattern atomicPattern,
-			NodePattern initialNode , Collection<EObject> matches) {
+			NodePattern initialNode , Collection<EObject> matches, 
+			List<NodePattern> adjacentNodes, PathSelector[] adjacentSelectors) {
 		
 		//// Atomic Pattern Move ////
 		List<PathSelector> nextPathSelectors = new ArrayList<>();
@@ -141,20 +166,38 @@ public abstract class PathSelector {
 			// Create new path selectors for each border node of the atomic pattern:
 			for (NodePattern borderNode : atomicPattern.getBorderNodes()) {
 				if (!history.contains(borderNode)) {
-					PathSelector nextPathSelector = this.fork();
+					
+					// Get next Path-Selector for this border node:
+					PathSelector nextPathSelector = null;
+					int adjacentNodeIndex = adjacentNodes.indexOf(borderNode);
+
+					if (adjacentNodeIndex != -1) {
+						// Path-Selector is adjacent to initial node:
+						if (adjacentSelectors[adjacentNodeIndex] != null) {
+							nextPathSelector = adjacentSelectors[adjacentNodeIndex];
+						} else {
+							nextPathSelector = this.fork();
+							adjacentSelectors[adjacentNodeIndex] = nextPathSelector;
+						}
+					} else {
+						// New path selector (none adjacent to initial node):
+						nextPathSelector = this.fork();
+					}
+					
+//					PathSelector nextPathSelector = this.fork();
 					nextPathSelectors.add(nextPathSelector);
+					
+					// Set/Merge border node as last position of this path selector:
+					nextPathSelector.history.append(borderNode, atomicNodeMaches.get(atomicNodes.indexOf(borderNode)));
 
 					// Update path history:
 					for (int i = 0; i < atomicNodes.size(); i++) {
 						NodePattern atomicNode = atomicNodes.get(i);
 						
 						if (atomicNode != borderNode) {
-							nextPathSelector.history.append(atomicNode, atomicNodeMaches.get(i));
+							nextPathSelector.history.insert(atomicNode, atomicNodeMaches.get(i));
 						}
 					}
-
-					// Set border node as last position of this path selector:
-					nextPathSelector.history.append(borderNode, atomicNodeMaches.get(atomicNodes.indexOf(borderNode)));
 				}
 			}
 		}
