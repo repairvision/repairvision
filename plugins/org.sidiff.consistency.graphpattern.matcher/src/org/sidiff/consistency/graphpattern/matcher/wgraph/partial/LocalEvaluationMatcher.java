@@ -141,6 +141,8 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 					}
 				}
 				newMatches = targetMatches;
+			} else {
+				break;
 			}
 		}
 	}
