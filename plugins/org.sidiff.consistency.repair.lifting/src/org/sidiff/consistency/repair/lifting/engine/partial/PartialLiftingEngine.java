@@ -12,7 +12,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.matcher.wgraph.IWorkingGraphConstructor;
 import org.sidiff.consistency.repair.lifting.engine.LiftingEngine;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphIndex;
@@ -22,10 +21,14 @@ import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 
 public class PartialLiftingEngine extends LiftingEngine {
-
+	
+	protected PartialWorkingGraphConstructor workingGraphConstructor;
+	
 	public PartialLiftingEngine(List<NodePattern> graphPattern, ResourceSet targetModels, 
 			LiftingGraphIndex changeIndex, LiftingGraphDomainMap changeDomainMap) {
 		super(graphPattern, targetModels, changeIndex, changeDomainMap);
+		
+		this.workingGraphConstructor = new PartialWorkingGraphConstructor(targetModels, changeIndex, changeDomainMap);
 	}
 	
 	@Override
@@ -85,7 +88,7 @@ public class PartialLiftingEngine extends LiftingEngine {
 	}
 	
 	@Override
-	public IWorkingGraphConstructor getWorkingGraphConstructor() {
-		return new PartialWorkingGraphConstructor(targetModels, changeIndex, changeDomainMap);
+	public PartialWorkingGraphConstructor getWorkingGraphConstructor() {
+		return workingGraphConstructor;
 	}
 }

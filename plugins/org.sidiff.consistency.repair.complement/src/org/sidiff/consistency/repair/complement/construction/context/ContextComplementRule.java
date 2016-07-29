@@ -29,6 +29,7 @@ import org.sidiff.common.henshin.view.EdgePair;
 import org.sidiff.common.henshin.view.NodePair;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeDeleteMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
@@ -43,7 +44,10 @@ import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeS
  */
 public class ContextComplementRule extends ComplementRule {
 
-	public ContextComplementRule(Rule sourceRule, Rule complementRule, EngineImpl engine, EGraph graph) {
+	public ContextComplementRule(
+			Rule sourceRule, Rule complementRule, 
+			EngineImpl engine, EGraph graph) {
+		
 		super(sourceRule, complementRule);
 		initialize(engine, graph);
 	}
@@ -57,8 +61,7 @@ public class ContextComplementRule extends ComplementRule {
 		for (EditRuleMatch sourceRuleMatch : partialSourceMatch) {
 
 			if (sourceRuleMatch instanceof EditRuleEdgeMatch) {
-				if (sourceRuleMatch.getAction().equals(Type.DELETE) 
-						|| sourceRuleMatch.getAction().equals(Type.CREATE)) {
+				if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
 
 					addPreMatch(complementPreMatche,
 							((EditRuleEdgeMatch) sourceRuleMatch).getEdge().getSource(),
@@ -67,11 +70,27 @@ public class ContextComplementRule extends ComplementRule {
 							((EditRuleEdgeMatch) sourceRuleMatch).getEdge().getTarget(),
 							((EditRuleEdgeMatch) sourceRuleMatch).getTgtModelElement());
 				}
+				
+				else if (sourceRuleMatch.getAction().equals(Type.DELETE)) {
+
+					EObject src = ((EditRuleEdgeDeleteMatch) sourceRuleMatch).getSrcModelBElement();
+					
+					if (src != null) {
+						addPreMatch(complementPreMatche,
+								((EditRuleEdgeDeleteMatch) sourceRuleMatch).getEdge().getSource(), src);
+					}
+					
+					EObject tgt = ((EditRuleEdgeDeleteMatch) sourceRuleMatch).getTgtModelBElement();
+					
+					if (tgt != null) {
+						addPreMatch(complementPreMatche,
+								((EditRuleEdgeDeleteMatch) sourceRuleMatch).getEdge().getTarget(), tgt);
+					}
+				}
 			}
 
 			else if (sourceRuleMatch instanceof EditRuleNodeSingleMatch) {
-				if (sourceRuleMatch.getAction().equals(Type.DELETE) 
-						|| sourceRuleMatch.getAction().equals(Type.CREATE)) {
+				if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
 
 					addPreMatch(complementPreMatche,
 							((EditRuleNodeSingleMatch) sourceRuleMatch).getNode(),
@@ -79,7 +98,7 @@ public class ContextComplementRule extends ComplementRule {
 				}
 			}
 
-			// Ignore EditRuleNodeMulitMatches...
+			// Ignore EditRuleNodeMulitMatches... only unique context!
 		}
 		
 		// Check context rule (with restricted working graph):

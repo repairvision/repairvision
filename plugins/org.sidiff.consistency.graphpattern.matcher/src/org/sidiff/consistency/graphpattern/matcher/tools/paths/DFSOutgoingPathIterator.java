@@ -90,6 +90,21 @@ public class DFSOutgoingPathIterator implements Iterator<DFSPath> {
 		public boolean contains(NodePattern node) {
 			return nodes.contains(node);
 		}
+		
+		@Override
+		public String toString() {
+			StringBuffer print = new StringBuffer(); 
+			
+			for (EdgePattern edge : segments) {
+				print.append("[" + edge.getSource().getName());
+				print.append(":" + edge.getSource().getType().getName() + "]");
+				print.append(" - " + edge.getType().getName() + " -> ");
+				print.append("[" + edge.getTarget().getName());
+				print.append(":" + edge.getTarget().getType().getName() + "]\n");
+			}
+			
+			return print.toString();
+		}
 	}
 
 	public DFSOutgoingPathIterator(NodePattern start) {

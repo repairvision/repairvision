@@ -9,7 +9,6 @@ import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.AbstractPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.data.NavigableMatchesDS;
 import org.sidiff.consistency.graphpattern.matcher.data.selection.SelectionMatching;
-import org.sidiff.consistency.graphpattern.matcher.matching.IMatchGenerator;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphIndex;
 import org.sidiff.consistency.repair.lifting.util.RecognitionRuleUtil;
@@ -18,7 +17,7 @@ import org.sidiff.difference.technical.MergeImports;
 
 public abstract class LiftingEngine extends AbstractPatternMatchingEngine<SelectionMatching> {
 	
-	protected IMatchGenerator<SelectionMatching> matchGenerator;
+	protected LiftingMatchGenerator matchGenerator;
 	
 	protected MergeImports mergeImports;
 
@@ -63,7 +62,7 @@ public abstract class LiftingEngine extends AbstractPatternMatchingEngine<Select
 	}
 	
 	@Override
-	public IMatchGenerator<SelectionMatching> getMatchGenerator() {
+	public LiftingMatchGenerator getMatchGenerator() {
 		return matchGenerator;
 	}
 }

@@ -11,8 +11,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
-import org.sidiff.consistency.graphpattern.matcher.data.selection.SelectionMatching;
 import org.sidiff.consistency.repair.lifting.engine.LiftingEngineFactory;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.consistency.repair.lifting.util.LiftingGraphIndex;
@@ -22,8 +20,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 public class PartialLiftingEngineFactory extends LiftingEngineFactory {
 
 	@Override
-	public IPatternMatchingEngine<SelectionMatching> createPatternMatchingEngine(
-			GraphPattern graphPattern, ResourceSet targetModels) {
+	public PartialLiftingEngine createPatternMatchingEngine(GraphPattern graphPattern, ResourceSet targetModels) {
 		
 		// Get target difference model:
 		SymmetricDifference difference = RecognitionRuleUtil.getSymmetricDifference(targetModels);

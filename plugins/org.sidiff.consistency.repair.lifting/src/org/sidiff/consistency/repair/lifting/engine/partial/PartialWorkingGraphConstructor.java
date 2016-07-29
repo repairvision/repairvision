@@ -3,6 +3,7 @@ package org.sidiff.consistency.repair.lifting.engine.partial;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -89,7 +90,7 @@ public class PartialWorkingGraphConstructor extends LiftingWorkingGraphConstruct
 		return constraintTester;
 	}
 	
-	public IPathRestriction getPathRestriction() {
-		return pathRestriction;
+	public Map<NodePattern, Set<EdgePattern>> getLocalEvaluation() {
+		return localEvaluation.getLocalEvaluations();
 	}
 }

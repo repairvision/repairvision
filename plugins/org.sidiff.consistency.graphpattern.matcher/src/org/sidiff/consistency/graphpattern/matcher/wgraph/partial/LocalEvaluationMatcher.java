@@ -43,7 +43,6 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 	
 	protected IPathRestriction pathRestriction;
 	
-	
 	public LocalEvaluationMatcher(
 			MatchingHelper matchingHelper, IConstraintTester constraintTester,  
 			Map<NodePattern, Set<EdgePattern>> localEvaluations, IPathRestriction pathRestriction) {
@@ -131,7 +130,7 @@ public class LocalEvaluationMatcher extends VisitorImpl  {
 					for (Iterator<? extends EObject> itTarget = matchEdge(sourceMatch, pathSegment); itTarget.hasNext();) {
 						EObject targetMatch = itTarget.next();
 
-						// NOTE: We need add the match to the node even if
+						// NOTE: We need to add the match to the node even if
 						// it is already present, due to the edge matchings.
 						if (matchNode(pathSegment, 
 								sourceNode, sourceDS, sourceMatch, 

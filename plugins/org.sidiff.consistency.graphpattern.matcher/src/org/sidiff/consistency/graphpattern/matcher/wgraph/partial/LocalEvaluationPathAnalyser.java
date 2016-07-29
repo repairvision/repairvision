@@ -272,6 +272,7 @@ public class LocalEvaluationPathAnalyser {
 		});
 	}
 	
+	// TODO: Add/Use opposites that not in the pattern!
 	private EdgePattern getOpposite(EdgePattern edge) {
 		
 		if (edge.getOpposite() != null) {
@@ -433,6 +434,31 @@ public class LocalEvaluationPathAnalyser {
 	public Map<NodePattern, Set<EdgePattern>> getLocalEvaluations() {
 		return localEvaluations;
 	}
+	
+//	/**
+//	 * @param localEvaluation
+//	 *            The local evaluation graph per variable node.
+//	 * @param variableAssignment
+//	 *            A (partial) variable node assignment.
+//	 * @return The sum of all local graphs that are part of the partial assignment.
+//	 */
+//	public static Set<NodePattern> getEvaluated(
+//			Map<NodePattern, Set<EdgePattern>> localEvaluation, 
+//			Map<NodePattern, NodeMatching> variableAssignment) {
+//		
+//		Set<NodePattern> evaluation = new HashSet<>();
+//		
+//		for (NodeMatching assignment : variableAssignment.values()) {
+//			if (assignment.getMatch() != null) {
+//				for (EdgePattern localEvaluated : localEvaluation.get(assignment.getNode())) {
+//					evaluation.add(localEvaluated.getSource());
+//					evaluation.add(localEvaluated.getTarget());
+//				}
+//			}
+//		}
+//		
+//		return evaluation;
+//	}
 	
 	@Override
 	public String toString() {
