@@ -31,6 +31,11 @@ public class GraphServices {
 		}
 	}
 
+	/**
+	 * @param graphPattern
+	 *            A graph pattern.
+	 * @return All edges of the graph pattern that will be shown as navigable edges.
+	 */
 	public List<EdgePattern> getNavigableEdgeCandidates(GraphPattern graphPattern) {
 		List<EdgePattern> edges = new ArrayList<>();
 		Set<EdgePattern> opposite = new HashSet<>();
@@ -55,6 +60,11 @@ public class GraphServices {
 		return edges;
 	}
 	
+	/**
+	 * @param graphPattern
+	 *            A graph pattern.
+	 * @return All edges of the graph pattern that will be shown as none navigable edges.
+	 */
 	public List<EdgePattern> getNonNavigableEdgeCandidates(GraphPattern graphPattern) {
 		List<EdgePattern> edges = new ArrayList<>();
 		
@@ -79,7 +89,11 @@ public class GraphServices {
 		return edges;
 	}
 	
-	
+	/**
+	 * @param graphPattern
+	 *            A graph pattern.
+	 * @return All edges of the graph pattern that will be shown as navigable edges with cross-references.
+	 */
 	public List<EdgePattern> getNonNavigableWithCrossReferenceEdgeCandidates(GraphPattern graphPattern) {
 		List<EdgePattern> edges = new ArrayList<>();
 		
