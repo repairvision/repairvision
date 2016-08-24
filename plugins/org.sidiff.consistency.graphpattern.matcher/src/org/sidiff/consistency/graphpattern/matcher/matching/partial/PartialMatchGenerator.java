@@ -330,6 +330,14 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 			for (NodePattern node : graphPattern) {
 				NavigableMatchesDS nodeDS = getDataStore(node.getEvaluation());
 				nodeDS.getMatchSelection().undoRestrictSelection(nextNode);
+				
+				// FIXME: (?) Hier werden ggf. auch Objekte für V-Knoten freigegeben,
+				// welche (in der Reihenfolge) oberhalb des aktuell betrachteten
+				// V-Knoten liegen! => Objekte merken die innerhalb der initialen
+				// Selektion noch nie in einem Match verwendet wurden. Momentan 
+				// würde sonst ausgehend von diesen Objekten eine neue initiale
+				// Suche gestartet. Führt zum gleichen Ergebnis ist aber 
+				// (vermutlich?) aufwendiger.
 			}
 			
 			if (!nextMatch.hasNextMatch()) {
