@@ -31,7 +31,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 
 	public static final String ID = "org.sidiff.consistency.repair.lifting.ui.mainpage";
 	
-	protected static final String SETUP_MATCHERS_MESSAGE = "Please first add the models!";
+	protected static final String SETUP_MATCHERS_MESSAGE = "Please add some models!";
 	
 	protected static final String EMPTY_MATCHERS_MESSAGE = "No matchers available for the given model type.";
 	

@@ -30,7 +30,8 @@ import org.sidiff.consistency.repair.lifting.api.RepairJob;
 import org.sidiff.consistency.repair.lifting.cpo.complement.ComplementFinder;
 import org.sidiff.difference.lifting.api.LiftingFacade;
 import org.sidiff.difference.lifting.api.settings.LiftingSettings;
-import org.sidiff.difference.lifting.recognitionengine.ruleapplication.RecognitionEngine;
+import org.sidiff.difference.lifting.api.util.PipelineUtils;
+import org.sidiff.difference.lifting.recognitionengine.IRecognitionEngine;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.rulebase.view.LiftingRuleBase;
 import org.sidiff.difference.rulebase.wrapper.EditWrapper2RecognitionWrapper;
@@ -47,12 +48,6 @@ import org.sidiff.editrule.rulebase.RulebaseFactory;
  * @author Manuel Ohrndorf
  */
 public class CPORepairFacade {
-
-	private static class CPOLiftingFacade extends  LiftingFacade {
-		public static RecognitionEngine getRecognitionEngine() {
-			return recognitionEngine;
-		}
-	}
 	
 	/**
 	 * Search for partially executed edit-operation which might cause an
@@ -80,30 +75,36 @@ public class CPORepairFacade {
 		ResourceSet differenceRSS = new ResourceSetImpl();
 		Resource modelA = differenceRSS.getResource(uriModelA, true);
 		Resource modelB = differenceRSS.getResource(uriModelB, true);
-
-		// Create a (temporary) sub-edit-rule rulebase:
+		
+		// Create a (temporary) edit-rule rulebase:
 		Set<ILiftingRuleBase> ruleBases = new HashSet<>();
-		ILiftingRuleBase subEditRuleBase = createRuleBase(subEditRules); 
-		ruleBases.add(subEditRuleBase);
+		List<Rule> rules = new ArrayList<Rule>(subEditRules.size() + cpEditRules.size());
+		rules.addAll(subEditRules);
+		rules.addAll(cpEditRules);
+		ILiftingRuleBase rulebase = createRuleBase(rules); 
+		ruleBases.add(rulebase);
 		
 		// Calculate difference:
 		SymmetricDifference difference = null;
-		RecognitionEngine recognitionEngine = null;
+		IRecognitionEngine recognitionEngine = null;
 		
 		try {
 			// Calculate lifted difference:
 			LiftingSettings liftingSettings = new LiftingSettings(Collections.singleton(documentType));
 			liftingSettings.setMatcher(settings.getMatcher());
+			liftingSettings.setTechBuilder(PipelineUtils.getDefaultTechnicalDifferenceBuilder(documentType));
 			liftingSettings.setRuleBases(ruleBases);
 			liftingSettings.setCalculateEditRuleMatch(false);
-			difference = CPOLiftingFacade.liftTechnicalDifference(modelA, modelB, liftingSettings);
+			difference = LiftingFacade.liftTechnicalDifference(modelA, modelB, liftingSettings);
 			
 			// Save used recognition engine:
-			recognitionEngine = CPOLiftingFacade.getRecognitionEngine();
+			recognitionEngine = liftingSettings.getRecognitionEngine();
 		} catch (InvalidModelException | NoCorrespondencesException e) {
 			e.printStackTrace();
 		}
 		
+		// TODO: if (difference.getChangeSets().size() > 0) 
+			
 		// TODO: Support differences without resource...
 		Resource differenceResource = differenceRSS.createResource(URI.createURI(""));
 		differenceResource.getContents().add(difference);
@@ -116,17 +117,19 @@ public class CPORepairFacade {
 		
 		// Calculate repairs:
 		ComplementFinder complementFinder = new ComplementFinder(
-				subEditRuleBase, recognitionEngine, cpEditRules, difference);
+				recognitionEngine, rulebase, subEditRules, cpEditRules, difference);
 		Map<Rule, List<Repair>> repairs = new LinkedHashMap<>();
 		
 		for (Rule cpEditRule : complementFinder.getSourceRules()) {
 			List<Repair> repairsPerRule = new ArrayList<>();
 
 			for(ComplementRule complement : complementFinder.getComplementRules(cpEditRule)) {
-				for (ComplementMatch preMatch : complement.getComplementPreMatches()) {
-					repairsPerRule.add(new Repair(complement, preMatch));
+				if (complement.getComplementingChanges().size() > 0) {
+					for (ComplementMatch preMatch : complement.getComplementPreMatches()) {
+						repairsPerRule.add(new Repair(complement, preMatch));
+					}
+					complement.initialize(henshinEngine, modelBGraph);
 				}
-				complement.initialize(henshinEngine, modelBGraph);
 			}
 
 			if (!repairsPerRule.isEmpty()) {

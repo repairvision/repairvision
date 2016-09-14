@@ -83,7 +83,7 @@ public abstract class RepairViewBasicApp {
 			Resource modelARes = differenceRSS.getResource(ModelDropWidget.getURI(modelAFile), true);
 			Resource modelBRes = differenceRSS.getResource(ModelDropWidget.getURI(modelBFile), true);
 			
-			documentType = EMFModelAccess.getCharacteristicDocumentType(modelARes);
+			documentType = EMFModelAccess.getDocumentType(modelARes);
 			
 			Set<IMatcher> matchers = MatcherUtil.getAvailableMatchers(Arrays.asList(modelARes, modelBRes));
 			RepairPreferencePage.setAvailableMatcher(matchers);

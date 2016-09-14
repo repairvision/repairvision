@@ -12,8 +12,14 @@ import org.eclipse.core.runtime.Platform;
  */
 public class DebugUtil {
 
+	/**
+	 * This flag determines whether the validations have to be performed or not.
+	 */
 	private static final String PROPERTY_PERFORM_VALIDATIONS = "performValidations";
 
+	/**
+	 * Indicates whether the debugging mode is active.
+	 */
 	private static Boolean isActive = false;
 
 	static {

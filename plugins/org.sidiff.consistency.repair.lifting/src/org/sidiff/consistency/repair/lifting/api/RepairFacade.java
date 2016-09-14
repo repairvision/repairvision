@@ -79,14 +79,16 @@ public class RepairFacade {
 				List<Repair> repairsPerRule = new ArrayList<>();
 				
 				for(ComplementRule complement : complementFinder.searchComplementRules(editRule)) {
-					
-					// Filter complements by abstract repairs:
-					if (repairFilter.filter(complement.getComplementingChanges())) {
-						for (ComplementMatch preMatch : complement.getComplementPreMatches()) {
-							
-							// Filter complement with pre-match by abstract repairs:
-							if (repairFilter.filter(complement.getComplementingChanges(), preMatch.getNodeMatches())) {
-								repairsPerRule.add(new Repair(complement, preMatch));
+					if (complement.getComplementingChanges().size() > 0) {
+						
+						// Filter complements by abstract repairs:
+						if (repairFilter.filter(complement.getComplementingChanges())) {
+							for (ComplementMatch preMatch : complement.getComplementPreMatches()) {
+								
+								// Filter complement with pre-match by abstract repairs:
+								if (repairFilter.filter(complement.getComplementingChanges(), preMatch.getNodeMatches())) {
+									repairsPerRule.add(new Repair(complement, preMatch));
+								}
 							}
 						}
 					}

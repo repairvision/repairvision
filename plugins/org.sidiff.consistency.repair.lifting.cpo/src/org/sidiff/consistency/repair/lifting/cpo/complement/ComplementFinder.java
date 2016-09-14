@@ -33,7 +33,7 @@ import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeC
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeDeleteMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeSingleMatch;
-import org.sidiff.difference.lifting.recognitionengine.ruleapplication.RecognitionEngine;
+import org.sidiff.difference.lifting.recognitionengine.IRecognitionEngine;
 import org.sidiff.difference.rulebase.RecognitionRule;
 import org.sidiff.difference.rulebase.Trace;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
@@ -54,9 +54,11 @@ public class ComplementFinder {
 	 */
 	private EGraph graphModelB;
 
-	private ILiftingRuleBase subEditRuleBase;
+	private IRecognitionEngine recognitionEngine;
 	
-	private RecognitionEngine recognitionEngine;
+	private ILiftingRuleBase rulebase;
+	
+	private Collection<Rule> subEditRules;
 	
 	private Collection<Rule> sourceEditRules;
 	
@@ -65,13 +67,15 @@ public class ComplementFinder {
 	private Map<Rule, Collection<ComplementRule>> complements = new HashMap<>();
 
 	public ComplementFinder(
-			ILiftingRuleBase subEditRuleBase, 
-			RecognitionEngine recognitionEngine,
+			IRecognitionEngine recognitionEngine,
+			ILiftingRuleBase rulebase,
+			Collection<Rule> subEditRules, 
 			Collection<Rule> sourceEditRules,
 			SymmetricDifference difference) {
 		
-		this.subEditRuleBase = subEditRuleBase;
 		this.recognitionEngine = recognitionEngine;
+		this.rulebase = rulebase;
+		this.subEditRules = subEditRules;
 		this.sourceEditRules = sourceEditRules;
 		this.difference = difference;
 		
@@ -89,6 +93,7 @@ public class ComplementFinder {
 		Map<Rule, EditRule> recognition2editRules = getRecognition2EditRules();
 		
 		for (SemanticChangeSet scs : difference.getChangeSets()) {
+			
 			RuleApplication subRRApplication = recognitionMatches.get(scs);
 			Rule subRRUnit = subRRApplication.getRule();
 			Match subRRMatch = subRRApplication.getCompleteMatch();
@@ -96,26 +101,30 @@ public class ComplementFinder {
 			EditRule subEditRule = recognition2editRules.get(subRRUnit);
 			Rule subEOUnit = (Rule) subEditRule.getExecuteMainUnit().getSubUnits(false).get(0);
 			
-			// Translate recognition to edit rule matching:
-			List<EditRuleMatch> subEOMatch = createEditRuleMatch(subEditRule, subEOUnit, subRRMatch);
-			
-			// TODO[Precalculate]: Find corresponding source rule:
-			for (Rule sourceEditRule : sourceEditRules) {
-				CPOComplementConstructor complementConstructor = new CPOComplementConstructor(
-						sourceEditRule, engine, graphModelB);
+			// Is sub-rule (source-rule otherwise)
+			if (subEditRules.contains(subEOUnit)) {
+				
+				// Translate recognition to edit rule matching:
+				List<EditRuleMatch> subEOMatch = createEditRuleMatch(subEditRule, subEOUnit, subRRMatch);
+				
+				// TODO[Precalculate]: Find corresponding source rule:
+				for (Rule sourceEditRule : sourceEditRules) {
+					CPOComplementConstructor complementConstructor = new CPOComplementConstructor(
+							sourceEditRule, engine, graphModelB);
 
-				Collection<ComplementRule> newSourceComplements = complementConstructor
-						.createComplementRule(subEOUnit, subEOMatch);
+					Collection<ComplementRule> newSourceComplements = complementConstructor
+							.createComplementRule(subEOUnit, subEOMatch);
 
-				if ((newSourceComplements != null) && (!newSourceComplements.isEmpty())) {
-					Collection<ComplementRule> sourceComplements = complements.get(sourceEditRule);
+					if ((newSourceComplements != null) && (!newSourceComplements.isEmpty())) {
+						Collection<ComplementRule> sourceComplements = complements.get(sourceEditRule);
 
-					if (sourceComplements == null) {
-						sourceComplements = new ArrayList<>();
+						if (sourceComplements == null) {
+							sourceComplements = new ArrayList<>();
+						}
+
+						sourceComplements.addAll(newSourceComplements);
+						complements.put(sourceEditRule, sourceComplements);
 					}
-
-					sourceComplements.addAll(newSourceComplements);
-					complements.put(sourceEditRule, sourceComplements);
 				}
 			}
 		}
@@ -298,7 +307,7 @@ public class ComplementFinder {
 	private Map<Rule, EditRule> getRecognition2EditRules() {
 		Map<Rule, EditRule> editRules = new HashMap<>();
 		
-		for (RuleBaseItem item : subEditRuleBase.getRuleBase().getItems()) {
+		for (RuleBaseItem item : rulebase.getRuleBase().getItems()) {
 			editRules.put((Rule) item.getEditRuleAttachment(
 					RecognitionRule.class).getRecognitionMainUnit(),
 					item.getEditRule());
