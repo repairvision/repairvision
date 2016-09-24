@@ -185,7 +185,7 @@ public class LiftingGraphDomainMap {
 				attributeValueChange.getModifiable(type).add((AttributeValueChange) change);
 				
 				// Record meta-model type nodes:
-				typeNodes.add(((AddReference) change).getType());
+				typeNodes.add(((AttributeValueChange) change).getType());
 			}
 		}
 
