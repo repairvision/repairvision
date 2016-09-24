@@ -5,23 +5,20 @@
     <parameters name="messageRecv"/>
     <parameters name="messageSend"/>
     <parameters name="message"/>
-    <parameters name="op"/>
     <parameters name="opName"/>
     <parameters name="lifeline_send"/>
     <parameters name="lifeline_recv"/>
     <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.0"/>
     <parameterMappings source="//@units.1/@parameters.1" target="//@units.0/@parameters.1"/>
     <parameterMappings source="//@units.1/@parameters.2" target="//@units.0/@parameters.2"/>
-    <parameterMappings source="//@units.1/@parameters.3" target="//@units.0/@parameters.3"/>
+    <parameterMappings source="//@units.0/@parameters.3" target="//@units.1/@parameters.3"/>
     <parameterMappings source="//@units.0/@parameters.4" target="//@units.1/@parameters.4"/>
     <parameterMappings source="//@units.0/@parameters.5" target="//@units.1/@parameters.5"/>
-    <parameterMappings source="//@units.0/@parameters.6" target="//@units.1/@parameters.6"/>
   </units>
   <units xsi:type="henshin:Rule" name="createNewMessage">
     <parameters name="messageRecv"/>
     <parameters name="messageSend"/>
     <parameters name="message"/>
-    <parameters name="op"/>
     <parameters name="opName"/>
     <parameters name="lifeline_send"/>
     <parameters name="lifeline_recv"/>
