@@ -81,7 +81,7 @@ public class CPORepairFacade {
 		List<Rule> rules = new ArrayList<Rule>(subEditRules.size() + cpEditRules.size());
 		rules.addAll(subEditRules);
 		rules.addAll(cpEditRules);
-		ILiftingRuleBase rulebase = createRuleBase(rules); 
+		ILiftingRuleBase rulebase = createRuleBase(rules, "CPOs And Sub-Rules"); 
 		ruleBases.add(rulebase);
 		
 		// Calculate difference:
@@ -148,11 +148,11 @@ public class CPORepairFacade {
 		return repairJob;
 	}
 	
-	private static LiftingRuleBase createRuleBase(Collection<Rule> editRules) {
+	private static LiftingRuleBase createRuleBase(Collection<Rule> editRules, String name) {
 		LiftingRuleBase rulebaseView = new LiftingRuleBase();
 		
 		RuleBase rulebase = RulebaseFactory.eINSTANCE.createRuleBase();
-		rulebase.setName("Sub-Edit-Rules");
+		rulebase.setName(name);
 		rulebaseView.init(rulebase);
 		
 		for (Rule subEditRule : editRules) {
