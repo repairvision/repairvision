@@ -120,15 +120,14 @@ public class RepairView extends ViewPart {
 	
 	private void setupRepairEngine(SashForm sashForm) {
 		
-//		if (repairEgineProvider.getSelectedEngine().equals(RepairDectection.)) {
-//			RepairViewPartialEOApp partialEOApp = new RepairViewPartialEOApp(viewer_repairs);
-//			TreeViewer viewer_validation = PartialEORepairView.createInputPartControl(sashForm, partialEOApp);
-//			partialEOApp.setValidationViewer(viewer_validation);
-//			this.viewerApp = partialEOApp;
-//		}
-//		
-//		else 
-		if (repairEgineProvider.getSelectedEngine().equals(RepairDectection.ConsistencyPreservingEditOperationBasedEngine)) {
+		if (repairEgineProvider.getSelectedEngine().equals(RepairDectection.PartialEditOperationBasedEngine)) {
+			RepairViewPartialEOApp partialEOApp = new RepairViewPartialEOApp(viewer_repairs);
+			TreeViewer viewer_validation = PartialEORepairView.createInputPartControl(sashForm, partialEOApp);
+			partialEOApp.setValidationViewer(viewer_validation);
+			this.viewerApp = partialEOApp;
+		}
+		
+		else if (repairEgineProvider.getSelectedEngine().equals(RepairDectection.ConsistencyPreservingEditOperationBasedEngine)) {
 			RepairViewCPOApp cpoApp = new RepairViewCPOApp(viewer_repairs);
 			CPORepairView.createInputPartControl(sashForm, cpoApp);
 			this.viewerApp = cpoApp;

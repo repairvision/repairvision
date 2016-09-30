@@ -18,7 +18,7 @@ public class RepairDectectionEngineProvider implements ISelectionProvider {
 	
 	public enum RepairDectection {
 		ConsistencyPreservingEditOperationBasedEngine,
-//		PartialEditOperationBasedEngine
+		PartialEditOperationBasedEngine
 	}
 
 	@Override
