@@ -4,22 +4,16 @@ Bundle-Name: Repair UI
 Bundle-SymbolicName: org.sidiff.consistency.repair.lifting.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.sidiff.consistency.repair.lifting.ui.Activator
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.core.resources;bundle-version="3.10.1",
+Require-Bundle: org.eclipse.core.resources,
+ org.eclipse.core.runtime,
  org.eclipse.emf.edit.ui,
- org.eclipse.emf.henshin.model,
- org.sidiff.matcher,
- org.sidiff.matching.api,
- org.sidiff.difference.technical.api,
- org.sidiff.common.henshin,
- org.sidiff.consistency.repair.lifting,
- org.sidiff.consistency.repair.complement,
- org.sidiff.consistency.repair.validation.ui,
- org.sidiff.consistency.repair.validation;bundle-version="1.0.0",
  org.sidiff.consistency.common,
- org.sidiff.configuration,
+ org.sidiff.consistency.repair.complement,
+ org.sidiff.consistency.repair.lifting,
  org.sidiff.consistency.repair.lifting.cpo,
- org.sidiff.editrule.consistency.validation,
- org.sidiff.difference.symmetric
+ org.sidiff.consistency.repair.validation,
+ org.sidiff.consistency.repair.validation.ui,
+ org.sidiff.difference.technical.api,
+ org.sidiff.editrule.consistency.validation
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

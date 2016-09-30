@@ -4,12 +4,12 @@ Bundle-Name: Matcher
 Bundle-SymbolicName: org.sidiff.consistency.graphpattern.matcher;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.sidiff.consistency.graphpattern,
- org.sidiff.difference.symmetric,
- org.eclipse.equinox.registry,
- org.eclipse.core.runtime;bundle-version="3.11.1",
+Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.transaction,
- org.sidiff.consistency.common
+ org.eclipse.equinox.registry,
+ org.sidiff.consistency.common,
+ org.sidiff.consistency.graphpattern,
+ org.sidiff.difference.symmetric
 Export-Package: org.sidiff.consistency.graphpattern.matcher,
  org.sidiff.consistency.graphpattern.matcher.algorithms,
  org.sidiff.consistency.graphpattern.matcher.data,

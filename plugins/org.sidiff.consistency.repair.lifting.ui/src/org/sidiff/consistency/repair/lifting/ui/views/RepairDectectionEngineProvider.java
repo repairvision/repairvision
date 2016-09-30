@@ -12,13 +12,13 @@ import org.eclipse.jface.viewers.StructuredSelection;
 //TODO[Repair Engines]: Add extension point:
 public class RepairDectectionEngineProvider implements ISelectionProvider {
 
-	private static RepairDectection repairDectectionEngine = RepairDectection.PartialEditOperationBasedEngine;
+	private static RepairDectection repairDectectionEngine = RepairDectection.ConsistencyPreservingEditOperationBasedEngine;
 	
 	private static List<ISelectionChangedListener> listeners = new LinkedList<>();
 	
 	public enum RepairDectection {
 		ConsistencyPreservingEditOperationBasedEngine,
-		PartialEditOperationBasedEngine
+//		PartialEditOperationBasedEngine
 	}
 
 	@Override

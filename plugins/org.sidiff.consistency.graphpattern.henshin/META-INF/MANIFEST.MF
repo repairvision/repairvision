@@ -4,12 +4,9 @@ Bundle-Name: Graph Pattern - Converter - Henshin
 Bundle-SymbolicName: org.sidiff.consistency.graphpattern.henshin;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.core.expressions,
- org.eclipse.core.resources;bundle-version="3.10.1",
- org.eclipse.ui,
+Require-Bundle: org.eclipse.core.resources,
  org.eclipse.emf.henshin.model,
- org.sidiff.consistency.graphpattern,
- org.eclipse.core.commands,
- org.eclipse.jface,
- org.eclipse.equinox.registry
+ org.eclipse.equinox.registry,
+ org.eclipse.ui,
+ org.sidiff.consistency.graphpattern
 Export-Package: org.sidiff.consistency.graphpattern.henshin
