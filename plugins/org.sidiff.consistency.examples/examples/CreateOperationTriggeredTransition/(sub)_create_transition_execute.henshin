@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="CreateTransition" description="Creates a new transition.">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="(Sub)CreateTransition" description="Creates a new transition.">
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
     <parameters name="transition_target"/>
@@ -11,7 +11,7 @@
     <parameterMappings source="//@units.1/@parameters.2" target="//@units.0/@parameters.2"/>
     <parameterMappings source="//@units.0/@parameters.3" target="//@units.1/@parameters.3"/>
   </units>
-  <units xsi:type="henshin:Rule" name="createTransition">
+  <units xsi:type="henshin:Rule" name="(Sub)CreateTransition">
     <parameters name="transition_target"/>
     <parameters name="transition_source"/>
     <parameters name="newTransition"/>
