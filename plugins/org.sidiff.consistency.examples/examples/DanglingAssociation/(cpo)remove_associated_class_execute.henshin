@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="(CPO)RemoveAssociatedClass" description="Removes a class and its association.">
+  <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
+  <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
+    <parameters name="ClassB"/>
+    <parameterMappings source="//@units.0/@parameters.0" target="//@units.1/@parameters.0"/>
+  </units>
+  <units xsi:type="henshin:Rule" name="(CPO)RemoveAssociatedClass">
+    <parameters name="ClassB"/>
+    <lhs name="Lhs">
+      <nodes name="ClassA" incoming="//@units.1/@lhs/@edges.1 //@units.1/@lhs/@edges.8 //@units.1/@lhs/@edges.12" outgoing="//@units.1/@lhs/@edges.11">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes name="RootElement" outgoing="//@units.1/@lhs/@edges.9 //@units.1/@lhs/@edges.10 //@units.1/@lhs/@edges.12">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+      </nodes>
+      <nodes name="b" incoming="//@units.1/@lhs/@edges.3 //@units.1/@lhs/@edges.11" outgoing="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.1 //@units.1/@lhs/@edges.2">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <nodes name="ClassB" incoming="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.10">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes name="association" incoming="//@units.1/@lhs/@edges.2 //@units.1/@lhs/@edges.5 //@units.1/@lhs/@edges.7 //@units.1/@lhs/@edges.9" outgoing="//@units.1/@lhs/@edges.3 //@units.1/@lhs/@edges.4 //@units.1/@lhs/@edges.6">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Association"/>
+      </nodes>
+      <nodes name="a" incoming="//@units.1/@lhs/@edges.4 //@units.1/@lhs/@edges.6" outgoing="//@units.1/@lhs/@edges.5 //@units.1/@lhs/@edges.7 //@units.1/@lhs/@edges.8">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.3">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property/class"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.4">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property/association"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.4" target="//@units.1/@lhs/@nodes.2">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Association/memberEnd"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.4" target="//@units.1/@lhs/@nodes.5">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Association/memberEnd"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.5" target="//@units.1/@lhs/@nodes.4">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property/association"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.4" target="//@units.1/@lhs/@nodes.5">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Association/ownedEnd"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.5" target="//@units.1/@lhs/@nodes.4">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property/owningAssociation"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.5" target="//@units.1/@lhs/@nodes.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.1" target="//@units.1/@lhs/@nodes.4">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.1" target="//@units.1/@lhs/@nodes.3">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.0" target="//@units.1/@lhs/@nodes.2">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuredClassifier/ownedAttribute"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.1" target="//@units.1/@lhs/@nodes.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+      </edges>
+    </lhs>
+    <rhs name="Rhs">
+      <nodes name="ClassA" incoming="//@units.1/@rhs/@edges.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes name="RootElement" outgoing="//@units.1/@rhs/@edges.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+      </nodes>
+      <edges source="//@units.1/@rhs/@nodes.1" target="//@units.1/@rhs/@nodes.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+      </edges>
+    </rhs>
+    <mappings origin="//@units.1/@lhs/@nodes.0" image="//@units.1/@rhs/@nodes.0"/>
+    <mappings origin="//@units.1/@lhs/@nodes.1" image="//@units.1/@rhs/@nodes.1"/>
+  </units>
+</henshin:Module>
