@@ -1,83 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="(CPO)RemoveAssociatedClass" description="Removes a class and its association.">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_IU1xMIjPEea8n7iE_hZmKQ" name="(CPO)RemoveAssociatedClass" description="Removes a class and its association.">
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
-  <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
-    <parameters name="ClassB"/>
-    <parameterMappings source="//@units.0/@parameters.0" target="//@units.1/@parameters.0"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_IU4NcIjPEea8n7iE_hZmKQ" name="mainUnit" subUnits="_IU730IjPEea8n7iE_hZmKQ">
+    <parameters xmi:id="_IU5bkIjPEea8n7iE_hZmKQ" name="ClassB"/>
+    <parameterMappings xmi:id="_IU7QwIjPEea8n7iE_hZmKQ" source="_IU5bkIjPEea8n7iE_hZmKQ" target="_IU8e4IjPEea8n7iE_hZmKQ"/>
   </units>
-  <units xsi:type="henshin:Rule" name="(CPO)RemoveAssociatedClass">
-    <parameters name="ClassB"/>
-    <lhs name="Lhs">
-      <nodes name="ClassA" incoming="//@units.1/@lhs/@edges.1 //@units.1/@lhs/@edges.8 //@units.1/@lhs/@edges.12" outgoing="//@units.1/@lhs/@edges.11">
+  <units xsi:type="henshin:Rule" xmi:id="_IU730IjPEea8n7iE_hZmKQ" name="(CPO)RemoveAssociatedClass" checkDangling="false">
+    <parameters xmi:id="_IU8e4IjPEea8n7iE_hZmKQ" name="ClassB"/>
+    <lhs xmi:id="_IU-UEIjPEea8n7iE_hZmKQ" name="Lhs">
+      <nodes xmi:id="_IU_iMIjPEea8n7iE_hZmKQ" name="ClassA" incoming="_IVEasIjPEea8n7iE_hZmKQ _IVIFEIjPEea8n7iE_hZmKQ _IVJ6QYjPEea8n7iE_hZmKQ" outgoing="_IVJ6QIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes name="RootElement" outgoing="//@units.1/@lhs/@edges.9 //@units.1/@lhs/@edges.10 //@units.1/@lhs/@edges.12">
+      <nodes xmi:id="_IVAwUIjPEea8n7iE_hZmKQ" name="RootElement" outgoing="_IVIFEYjPEea8n7iE_hZmKQ _IVJTMIjPEea8n7iE_hZmKQ _IVJ6QYjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
       </nodes>
-      <nodes name="b" incoming="//@units.1/@lhs/@edges.3 //@units.1/@lhs/@edges.11" outgoing="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.1 //@units.1/@lhs/@edges.2">
+      <nodes xmi:id="_IVBXYIjPEea8n7iE_hZmKQ" name="b" incoming="_IVFBwYjPEea8n7iE_hZmKQ _IVJ6QIjPEea8n7iE_hZmKQ" outgoing="_IVDzoIjPEea8n7iE_hZmKQ _IVEasIjPEea8n7iE_hZmKQ _IVFBwIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
       </nodes>
-      <nodes name="ClassB" incoming="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.10">
+      <nodes xmi:id="_IVB-cIjPEea8n7iE_hZmKQ" name="ClassB" incoming="_IVDzoIjPEea8n7iE_hZmKQ _IVJTMIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes name="association" incoming="//@units.1/@lhs/@edges.2 //@units.1/@lhs/@edges.5 //@units.1/@lhs/@edges.7 //@units.1/@lhs/@edges.9" outgoing="//@units.1/@lhs/@edges.3 //@units.1/@lhs/@edges.4 //@units.1/@lhs/@edges.6">
+      <nodes xmi:id="_IVClgIjPEea8n7iE_hZmKQ" name="association" incoming="_IVFBwIjPEea8n7iE_hZmKQ _IVGP4IjPEea8n7iE_hZmKQ _IVHeAIjPEea8n7iE_hZmKQ _IVIFEYjPEea8n7iE_hZmKQ" outgoing="_IVFBwYjPEea8n7iE_hZmKQ _IVFo0IjPEea8n7iE_hZmKQ _IVG28IjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Association"/>
       </nodes>
-      <nodes name="a" incoming="//@units.1/@lhs/@edges.4 //@units.1/@lhs/@edges.6" outgoing="//@units.1/@lhs/@edges.5 //@units.1/@lhs/@edges.7 //@units.1/@lhs/@edges.8">
+      <nodes xmi:id="_IVDMkIjPEea8n7iE_hZmKQ" name="a" incoming="_IVFo0IjPEea8n7iE_hZmKQ _IVG28IjPEea8n7iE_hZmKQ" outgoing="_IVGP4IjPEea8n7iE_hZmKQ _IVHeAIjPEea8n7iE_hZmKQ _IVIFEIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
       </nodes>
-      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.3">
+      <edges xmi:id="_IVDzoIjPEea8n7iE_hZmKQ" source="_IVBXYIjPEea8n7iE_hZmKQ" target="_IVB-cIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.0">
+      <edges xmi:id="_IVEasIjPEea8n7iE_hZmKQ" source="_IVBXYIjPEea8n7iE_hZmKQ" target="_IU_iMIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property/class"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.4">
+      <edges xmi:id="_IVFBwIjPEea8n7iE_hZmKQ" source="_IVBXYIjPEea8n7iE_hZmKQ" target="_IVClgIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property/association"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.4" target="//@units.1/@lhs/@nodes.2">
+      <edges xmi:id="_IVFBwYjPEea8n7iE_hZmKQ" source="_IVClgIjPEea8n7iE_hZmKQ" target="_IVBXYIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Association/memberEnd"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.4" target="//@units.1/@lhs/@nodes.5">
+      <edges xmi:id="_IVFo0IjPEea8n7iE_hZmKQ" source="_IVClgIjPEea8n7iE_hZmKQ" target="_IVDMkIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Association/memberEnd"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.5" target="//@units.1/@lhs/@nodes.4">
+      <edges xmi:id="_IVGP4IjPEea8n7iE_hZmKQ" source="_IVDMkIjPEea8n7iE_hZmKQ" target="_IVClgIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property/association"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.4" target="//@units.1/@lhs/@nodes.5">
+      <edges xmi:id="_IVG28IjPEea8n7iE_hZmKQ" source="_IVClgIjPEea8n7iE_hZmKQ" target="_IVDMkIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Association/ownedEnd"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.5" target="//@units.1/@lhs/@nodes.4">
+      <edges xmi:id="_IVHeAIjPEea8n7iE_hZmKQ" source="_IVDMkIjPEea8n7iE_hZmKQ" target="_IVClgIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property/owningAssociation"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.5" target="//@units.1/@lhs/@nodes.0">
+      <edges xmi:id="_IVIFEIjPEea8n7iE_hZmKQ" source="_IVDMkIjPEea8n7iE_hZmKQ" target="_IU_iMIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.1" target="//@units.1/@lhs/@nodes.4">
+      <edges xmi:id="_IVIFEYjPEea8n7iE_hZmKQ" source="_IVAwUIjPEea8n7iE_hZmKQ" target="_IVClgIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.1" target="//@units.1/@lhs/@nodes.3">
+      <edges xmi:id="_IVJTMIjPEea8n7iE_hZmKQ" source="_IVAwUIjPEea8n7iE_hZmKQ" target="_IVB-cIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.0" target="//@units.1/@lhs/@nodes.2">
+      <edges xmi:id="_IVJ6QIjPEea8n7iE_hZmKQ" source="_IU_iMIjPEea8n7iE_hZmKQ" target="_IVBXYIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuredClassifier/ownedAttribute"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.1" target="//@units.1/@lhs/@nodes.0">
+      <edges xmi:id="_IVJ6QYjPEea8n7iE_hZmKQ" source="_IVAwUIjPEea8n7iE_hZmKQ" target="_IU_iMIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
       </edges>
     </lhs>
-    <rhs name="Rhs">
-      <nodes name="ClassA" incoming="//@units.1/@rhs/@edges.0">
+    <rhs xmi:id="_IVKhUIjPEea8n7iE_hZmKQ" name="Rhs">
+      <nodes xmi:id="_IVKhUYjPEea8n7iE_hZmKQ" name="ClassA" incoming="_IVLvcIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes name="RootElement" outgoing="//@units.1/@rhs/@edges.0">
+      <nodes xmi:id="_IVLIYIjPEea8n7iE_hZmKQ" name="RootElement" outgoing="_IVLvcIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
       </nodes>
-      <edges source="//@units.1/@rhs/@nodes.1" target="//@units.1/@rhs/@nodes.0">
+      <edges xmi:id="_IVLvcIjPEea8n7iE_hZmKQ" source="_IVLIYIjPEea8n7iE_hZmKQ" target="_IVKhUYjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
       </edges>
     </rhs>
-    <mappings origin="//@units.1/@lhs/@nodes.0" image="//@units.1/@rhs/@nodes.0"/>
-    <mappings origin="//@units.1/@lhs/@nodes.1" image="//@units.1/@rhs/@nodes.1"/>
+    <mappings xmi:id="_IVOywIjPEea8n7iE_hZmKQ" origin="_IU_iMIjPEea8n7iE_hZmKQ" image="_IVKhUYjPEea8n7iE_hZmKQ"/>
+    <mappings xmi:id="_IVPZ0IjPEea8n7iE_hZmKQ" origin="_IVAwUIjPEea8n7iE_hZmKQ" image="_IVLIYIjPEea8n7iE_hZmKQ"/>
   </units>
 </henshin:Module>
