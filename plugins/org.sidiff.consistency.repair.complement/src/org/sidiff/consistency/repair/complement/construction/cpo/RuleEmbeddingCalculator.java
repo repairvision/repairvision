@@ -92,6 +92,7 @@ public class RuleEmbeddingCalculator {
 			if (!filterLHSEmbedding(lhsEmbedding)) {
 				
 				// FIXME: What if RHS falls apart into sub-graphs?
+				// Could result in duplicates if the RHS parts are identical!?
 				Set<GraphElement> rhsMinimalSubGraph = getRHSMinimalSubGraph(subRule);
 				
 				if (!rhsMinimalSubGraph.isEmpty()) {
