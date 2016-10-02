@@ -5,26 +5,28 @@ import java.util.concurrent.Callable;
 import org.eclipse.core.runtime.Platform;
 
 /**
- * To activate the embedded validations add "-performValidations" to the program
- * arguments and "-ea" to the VM arguments of the run configuration.
+ * To activate the embedded validations add "-enableDebugUtil" to the program
+ * arguments and "-ea" to the VM arguments of the run configuration. ('ea'
+ * activates the debugging and plausibility tests, 'enableDebugUtil' also
+ * enables console output)
  * 
  * @author Manuel Ohrndorf
  */
 public class DebugUtil {
 
 	/**
-	 * This flag determines whether the validations have to be performed or not.
+	 * This flag determines whether the debugging mode should be activated.
 	 */
-	private static final String PROPERTY_PERFORM_VALIDATIONS = "performValidations";
+	private static final String PROPERTY_ENABLE_DEBUG_UTIL = "enableDebugUtil";
 
 	/**
 	 * Indicates whether the debugging mode is active.
 	 */
-	private static Boolean isActive = false;
+	public static boolean isActive = false;
 
 	static {
 		String[] args = Platform.getCommandLineArgs();
-		String validationArg = "-" + PROPERTY_PERFORM_VALIDATIONS;
+		String validationArg = "-" + PROPERTY_ENABLE_DEBUG_UTIL;
 		
 		for (String arg : args) {
 			if (arg.equals(validationArg)) {

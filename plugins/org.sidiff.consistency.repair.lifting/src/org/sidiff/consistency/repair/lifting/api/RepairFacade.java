@@ -83,7 +83,7 @@ public class RepairFacade {
 						
 						// Filter complements by abstract repairs:
 						if (repairFilter.filter(complement.getComplementingChanges())) {
-							for (ComplementMatch preMatch : complement.getComplementPreMatches()) {
+							for (ComplementMatch preMatch : complement.getComplementMatches()) {
 								
 								// Filter complement with pre-match by abstract repairs:
 								if (repairFilter.filter(complement.getComplementingChanges(), preMatch.getNodeMatches())) {

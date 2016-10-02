@@ -125,7 +125,7 @@ public class CPORepairFacade {
 
 			for(ComplementRule complement : complementFinder.getComplementRules(cpEditRule)) {
 				if (complement.getComplementingChanges().size() > 0) {
-					for (ComplementMatch preMatch : complement.getComplementPreMatches()) {
+					for (ComplementMatch preMatch : complement.getComplementMatches()) {
 						repairsPerRule.add(new Repair(complement, preMatch));
 					}
 					complement.initialize(henshinEngine, modelBGraph);

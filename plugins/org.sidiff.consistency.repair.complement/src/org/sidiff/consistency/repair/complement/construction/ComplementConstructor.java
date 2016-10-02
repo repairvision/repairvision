@@ -1,12 +1,15 @@
 package org.sidiff.consistency.repair.complement.construction;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationEdge;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationNode;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionEdge;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionNode;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
@@ -32,19 +35,24 @@ public abstract class ComplementConstructor {
 	/**
 	 * @param sourceRuleMatching
 	 *            A partial (edit-rule) matching of the partially executed source-rule.
-	 * @return The rule which complements the partial partially executed source-rule.
+	 * @return The rule which complements the partial partially executed
+	 *         source-rule or <code>null</code> if the complement-rule could not
+	 *         be constructed (e.g. dangling edges).
 	 */
 	public ComplementRule createComplementRule(List<EditRuleMatch> sourceRuleMatching) {
-		
+
 		// Derive complement rule:
 		ComplementRule complement = deriveComplementRule(sourceRuleMatching); 
-		complement.setSourceMatch(sourceRuleMatching);
+		
+		if (complement != null) {
+			complement.setSourceMatch(sourceRuleMatching);
 
-		// TODO: ACs
-//		// Get unfulfilled application conditions:
-//		for (ComplementMatch preMatch : preMatches) {
-//			initializeApplicationConditions(complement, preMatch);
-//		}
+			// TODO: ACs
+//			// Get unfulfilled application conditions:
+//			for (ComplementMatch preMatch : preMatches) {
+//				initializeApplicationConditions(complement, preMatch);
+//			}
+		}
 		
 		return complement;
 	}
@@ -67,7 +75,7 @@ public abstract class ComplementConstructor {
 			complement.addTrace(sourceNode, (Node) copyTrace.get(sourceNode));
 		}
 		
-		// Substitute already executed edges:
+		// Substitute already executed edges << delete >> edges:
 		for (EditRuleMatch sourceRuleMatch : sourceRuleMatching) {
 			if (sourceRuleMatch instanceof EditRuleEdgeMatch) {
 				Edge sourceEdge = ((EditRuleEdgeMatch) sourceRuleMatch).getEdge();
@@ -75,14 +83,10 @@ public abstract class ComplementConstructor {
 				
 				// Delete-Edge:
 				if (sourceRuleMatch.getAction().equals(Type.DELETE)) {
+					assert isDeletionEdge(complementEdge);
+					
 					// Remove edge from source-rule:
-					EcoreUtil.remove(complementEdge);
-				}
-				
-				// Create-Edge:
-				else if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
-					// Transform create-edge to preserve-edge:
-					complementEdge.setAction(new Action(Type.PRESERVE));
+					ComplementUtil.deleteEdge(complementEdge);
 				}
 			}
 		}
@@ -95,32 +99,50 @@ public abstract class ComplementConstructor {
 				
 				// Delete-Node:
 				if (sourceRuleMatch.getAction().equals(Type.DELETE)) {
-					// Remove dangling remove edges:
-					for (Edge incoming : complementNode.getIncoming()) {
-						EcoreUtil.remove(incoming);
-					}
-					for (Edge outgoing : complementNode.getOutgoing()) {
-						EcoreUtil.remove(outgoing);
+					assert isDeletionNode(complementNode);
+					
+					// Check dangling constraint:
+					if (!complementNode.getIncoming().isEmpty() || !complementNode.getOutgoing().isEmpty()) {
+						return null;
 					}
 					
 					// Remove node from source-rule:
-					EcoreUtil.remove(complementNode);
+					ComplementUtil.deleteNode(complementNode);
 					complement.removeTrace(sourceNode);
 				}
 				
 				// Create-Node:
-				else  if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
+				else if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
+					assert isCreationNode(complementNode);
+					
 					// Transform create-node to preserve-node:
-					complementNode.setAction(new Action(Type.PRESERVE));
+					ComplementUtil.makePreserve(complementNode);
 				}
 			}
 		}
 		
-		// TODO: The context might have been deleted in model B!
+		// Substitute already executed edges << create >> edges:
+		for (EditRuleMatch sourceRuleMatch : sourceRuleMatching) {
+			if (sourceRuleMatch instanceof EditRuleEdgeMatch) {
+				Edge sourceEdge = ((EditRuleEdgeMatch) sourceRuleMatch).getEdge();
+				Edge complementEdge = (Edge) copyTrace.get(sourceEdge);
+				
+				// Create-Edge:
+				if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
+					assert isCreationEdge(complementEdge);
+					
+					// NOTE: << create >> target/source nodes are implicitly set to << preserve >> 
+					// FIXME: How to handle << create >> target/source nodes!?
+					
+					// Transform create-edge to preserve-edge:
+					ComplementUtil.makePreserve(complementEdge);
+				}
+			}
+		}
 
 		return complement;
 	}
-
+	
 	protected abstract ComplementRule createComplementRule(Rule sourceRule, Rule complementRule);
 	
 	// TODO: ACs

@@ -11,6 +11,7 @@ import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
+import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
@@ -26,7 +27,7 @@ public class CPOComplementRule extends ComplementRule  {
 	}
 
 	@Override
-	protected List<ComplementMatch> createComplementPrematches(List<EditRuleMatch> partialSourceMatch) {
+	protected List<ComplementMatch> createComplementMatches(List<EditRuleMatch> partialSourceMatch) {
 		
 		// Create complement pre-match by partial source-rule match:
 		Match complementPreMatche = new MatchImpl(complementRule);
@@ -35,17 +36,19 @@ public class CPOComplementRule extends ComplementRule  {
 			
 			// NOTE: The matching unambiguously in CPO approach (regarding EditRuleNodeMultiMatch):
 			if (sourceMatch instanceof EditRuleNodeSingleMatch) {
-				EditRuleNodeSingleMatch nodeMatch = (EditRuleNodeSingleMatch) sourceMatch;
-				Node complementNode = getLHS(getTrace(nodeMatch.getNode()));
-				
-				if (complementNode != null) {
-					complementPreMatche.setNodeTarget(complementNode, nodeMatch.getModelElement());
+				if (!sourceMatch.getAction().equals(Type.DELETE)) {
+					EditRuleNodeSingleMatch nodeMatch = (EditRuleNodeSingleMatch) sourceMatch;
+					Node complementNode = getLHS(getTrace(nodeMatch.getNode()));
+					
+					if (complementNode != null) {
+						complementPreMatche.setNodeTarget(complementNode, nodeMatch.getModelElement());
+					}
 				}
 			}
 		}
 		
 		// Check context rule (with restricted working graph):
-		ArrayList<ComplementMatch> complementPreMatches = new ArrayList<>();
+		ArrayList<ComplementMatch> complementMatches = new ArrayList<>();
 		Iterator<Match> matchFinder = getEngine().findMatches(complementRule, getGraph(), complementPreMatche).iterator();
 		
 		while (matchFinder.hasNext()) {
@@ -53,14 +56,14 @@ public class CPOComplementRule extends ComplementRule  {
 			
 			// Create complement pre-match:
 			ComplementMatch nextComplementMatch = new ComplementMatch(new HashMap<>());
-			complementPreMatches.add(nextComplementMatch);
+			complementMatches.add(nextComplementMatch);
 			
 			for (Node complementNode : complementRule.getLhs().getNodes()) {
 				nextComplementMatch.getNodeMatches().put(complementNode, nextMatch.getNodeTarget(complementNode));
 			}
 		}
 		
-		complementPreMatches.trimToSize();
-		return complementPreMatches;
+		complementMatches.trimToSize();
+		return complementMatches;
 	}
 }

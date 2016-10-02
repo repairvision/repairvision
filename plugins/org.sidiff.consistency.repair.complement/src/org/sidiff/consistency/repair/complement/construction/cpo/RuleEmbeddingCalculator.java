@@ -2,15 +2,21 @@ package org.sidiff.consistency.repair.complement.construction.cpo;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionNode;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isPreservedNode;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
@@ -24,6 +30,7 @@ import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
@@ -48,17 +55,17 @@ public class RuleEmbeddingCalculator {
 	public static List<RuleEmbedding> calculateRuleEmbedding(Rule superRule, Rule subRule) {
 		List<RuleEmbedding> embeddings = new ArrayList<>();
 		
-		// FIXME: Support abstract node types in sub-rules!
 		for (Iterator<EObject> iterator = superRule.eAllContents(); iterator.hasNext();) {
 			EObject element = iterator.next();
 
+			// FIXME: Support abstract node types in sub-rules!
 			if (element instanceof Node) {
 				if (((Node) element).getType().isAbstract()) {
 					MultiStatus info = new MultiStatus(Activator.PLUGIN_ID, 1,
-							"Super-Edit-Rules with abstract node types are not suppored yet!", null);
+							"Edit-Rules with abstract node types are not suppored yet!", null);
 
 					info.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, 1, 
-							"Super-Edit-Rule:\n\n" 
+							"Edit-Rule:\n\n" 
 									+ element + "\n\n"
 									+ EcoreUtil.getURI(element),
 									null));
@@ -81,28 +88,102 @@ public class RuleEmbeddingCalculator {
 
 		// Calculate RHS-Embeddings:
 		for (Map<Node, Node> lhsEmbedding : lhsEmbeddings) {
-			List<Map<Node, Node>> rhsEmbeddings = calculateGraphNodeEmbedding(
-					superRule, subRule, Side.RHS, lhsEmbedding);
 			
-			// Fork embedding of each LHS for each matched RHS: 
-			for (Map<Node, Node> rhsEmbedding : rhsEmbeddings) {
+			if (!filterLHSEmbedding(lhsEmbedding)) {
 				
-				// Create rule-embedding:
-				RuleEmbedding ruleEmbedding = new RuleEmbedding(superRule, subRule);
-				embeddings.add(ruleEmbedding);
+				// FIXME: What if RHS falls apart into sub-graphs?
+				Set<GraphElement> rhsMinimalSubGraph = getRHSMinimalSubGraph(subRule);
 				
-				ruleEmbedding.setLhsNodeEmbedding(lhsEmbedding);
-				ruleEmbedding.setRhsNodeEmbedding(rhsEmbedding);
-				
-				// Calculate edge-embedding:
-				ruleEmbedding.setLhsEdgeEmbedding(
-						calculateGraphEdgeEmbedding(superRule.getLhs(), subRule.getLhs(), lhsEmbedding));
-				ruleEmbedding.setRhsEdgeEmbedding(
-						calculateGraphEdgeEmbedding(superRule.getRhs(), subRule.getRhs(), rhsEmbedding));
+				if (!rhsMinimalSubGraph.isEmpty()) {
+					
+					// Calculate RHS embedding:
+					List<Map<Node, Node>> rhsEmbeddings = calculateGraphNodeEmbedding(
+							superRule, subRule, Side.RHS, lhsEmbedding, rhsMinimalSubGraph);
+					
+					// Fork embedding of each LHS for each matched RHS:
+					for (Map<Node, Node> rhsEmbedding : rhsEmbeddings) {
+						
+						// Create rule-embedding:
+						RuleEmbedding ruleEmbedding = new RuleEmbedding(superRule, subRule);
+						embeddings.add(ruleEmbedding);
+						
+						// Node-embedding:
+						ruleEmbedding.setLhsNodeEmbedding(lhsEmbedding);
+						ruleEmbedding.setRhsNodeEmbedding(rhsEmbedding);
+						
+						// Calculate edge-embedding:
+						ruleEmbedding.setLhsEdgeEmbedding(
+								calculateGraphEdgeEmbedding(superRule.getLhs(), subRule.getLhs(), lhsEmbedding));
+						ruleEmbedding.setRhsEdgeEmbedding(
+								calculateGraphEdgeEmbedding(superRule.getRhs(), subRule.getRhs(), rhsEmbedding));
+					}
+				} else {
+					
+					// Create single rule-embedding:
+					RuleEmbedding ruleEmbedding = new RuleEmbedding(superRule, subRule);
+					embeddings.add(ruleEmbedding);
+					
+					// Node-embedding:
+					ruleEmbedding.setLhsNodeEmbedding(lhsEmbedding);
+					
+					// Calculate edge-embedding:
+					ruleEmbedding.setLhsEdgeEmbedding(
+							calculateGraphEdgeEmbedding(superRule.getLhs(), subRule.getLhs(), lhsEmbedding));
+				}
 			}
 		}
 		
 		return embeddings;
+	}
+	
+	/**
+	 * @param subRule
+	 *            The sub-rule.
+	 * @return All graph elements of the RHS which are << create >> parts and
+	 *         the minimal necessary << preserve >> context.
+	 */
+	private static Set<GraphElement> getRHSMinimalSubGraph(Rule subRule) {
+		Set<GraphElement> rhsSubGraph = new HashSet<>();
+		
+		// Create nodes:
+		rhsSubGraph.addAll(getRHSMinusLHSNodes(subRule));
+		
+		// Create edges:
+		List<Edge> createEdges = getRHSMinusLHSEdges(subRule);
+		rhsSubGraph.addAll(createEdges);
+		
+		// Context nodes:
+		for (Edge createEdge : createEdges) {
+			if (!rhsSubGraph.contains(createEdge.getSource())) {
+				rhsSubGraph.add(createEdge.getSource());
+			}
+			if (!rhsSubGraph.contains(createEdge.getTarget())) {
+				rhsSubGraph.add(createEdge.getTarget());
+			}
+		}
+		
+		return rhsSubGraph;
+	}
+	
+	/**
+	 * @param lhsEmbedding
+	 *            The LHS embedding sub-rule -> source-rule.
+	 * @return <code>true</code> if the rule should be filtered;
+	 *         <code>false</code> otherwise.
+	 */
+	private static boolean filterLHSEmbedding(Map<Node, Node> lhsEmbedding) {
+
+		for (Node subNode : lhsEmbedding.keySet()) {
+			
+			// Filter <<delete>> Sub-Rule -> << preserve >> Source-Rule:
+			if (isDeletionNode(subNode)) {
+				if (isPreservedNode(lhsEmbedding.get(subNode))) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	private static Map<Edge, Edge> calculateGraphEdgeEmbedding(
@@ -139,20 +220,26 @@ public class RuleEmbeddingCalculator {
 	 * @return Match: Sub-Graph -> Super-Graph
 	 */
 	public static List<Map<Node, Node>> calculateGraphNodeEmbedding(Rule superRule, Rule subRule, Side side) {
-		return calculateGraphNodeEmbedding(superRule, subRule, side, Collections.emptyMap());
+		return calculateGraphNodeEmbedding(superRule, subRule, side, Collections.emptyMap(), null);
 	}
 
 	/**
-	 * @param superGraph
-	 *            The greater super-graph.
-	 * @param subGraph
-	 *            The smaller sub-graph which will be matched against the super-graph.
+	 * @param superRule
+	 *            The greater super-rule.
+	 * @param subRule
+	 *            The smaller sub-rule which will be matched against the
+	 *            super-rule.
+	 * @param side
+	 *            The considered site of the rules to match.
 	 * @param preMatch
 	 *            A pre-match: sub-graph -> super-graph
+	 * @param elementsToMatch
+	 *            A sub-graph of the considered graph side or <code>null</code>.
 	 * @return Match: sub-graph -> super-graph
 	 */
 	public static List<Map<Node, Node>> calculateGraphNodeEmbedding(
-			Rule superRule, Rule subRule, Side side, Map<Node, Node> preMatch) {
+			Rule superRule, Rule subRule, Side side, 
+			Map<Node, Node> preMatch, Set<GraphElement> elementsToMatch) {
 		
 		// Match the sub-graph in the dummy working graph that is isomorph to the super-graph: 
 		HenshinEGraph superObjectGraph = null;
@@ -170,12 +257,40 @@ public class RuleEmbeddingCalculator {
 		Rule subMatchingRule = (Rule) subMatchingRuleCopy.get(subRule);
 		subMatchingRule.setName(subMatchingRule.getName() + "_copy");
 		
+		Graph subMatchingGraph = subMatchingRule.getLhs();
+		Graph subGraph = subRule.getLhs();
+		
+		if (side.equals(Side.RHS)) {
+			subMatchingGraph = subMatchingRule.getRhs();
+			subGraph = subRule.getRhs();
+		} 
+		
+		// Filter sub-graph for relevant elements:
+		if (elementsToMatch != null) {
+			for (Edge subEdge : subGraph.getEdges()) {
+				if (!elementsToMatch.contains(subEdge)) {
+					Edge subMatchingEdge = (Edge) subMatchingRuleCopy.get(subEdge);
+					assert (subMatchingEdge != null);
+					ComplementUtil.deleteEdge(subMatchingEdge);
+				}
+			}
+			
+			for (Node subNode : subGraph.getNodes()) {
+				if (!elementsToMatch.contains(subNode)) {
+					Node subMatchingNode = (Node) subMatchingRuleCopy.get(subNode);
+					assert (subNode != null);
+					ComplementUtil.deleteNode(subMatchingNode);
+				}
+			}
+		}
+		
+		// Copy graph to make the graph sides equal:
+		subGraphCopy = ComplementUtil.deepCopy(subMatchingGraph);
+		
 		if (side.equals(Side.LHS)) {
-			subGraphCopy = ComplementUtil.deepCopy(subMatchingRule.getLhs());
-			subMatchingRule.setRhs((Graph) subGraphCopy.get(subMatchingRule.getLhs()));
+			subMatchingRule.setRhs((Graph) subGraphCopy.get(subMatchingGraph));
 		} else {
-			subGraphCopy = ComplementUtil.deepCopy(subMatchingRule.getRhs());
-			subMatchingRule.setLhs((Graph) subGraphCopy.get(subMatchingRule.getRhs()));
+			subMatchingRule.setLhs((Graph) subGraphCopy.get(subMatchingGraph));
 		}
 		
 		// Calculate mappings:
@@ -256,21 +371,23 @@ public class RuleEmbeddingCalculator {
 			
 			// Create embedding:
 			for (Node subGraphNode : searchedNodes) {
-				
-				// Get the copied node:
-				Node subMatchingNode = null; 
-				
-				if (side.equals(Side.LHS)) {
-					subMatchingNode = (Node) subMatchingRuleCopy.get(subGraphNode);
-				} else {
-					subMatchingNode = (Node) subGraphCopy.get(subMatchingRuleCopy.get(subGraphNode));
+				if ((elementsToMatch == null) || (elementsToMatch.contains(subGraphNode))) {
+					
+					// Get the copied node:
+					Node subMatchingNode = null; 
+					
+					if (side.equals(Side.LHS)) {
+						subMatchingNode = (Node) subMatchingRuleCopy.get(subGraphNode);
+					} else {
+						subMatchingNode = (Node) subGraphCopy.get(subMatchingRuleCopy.get(subGraphNode));
+					}
+					
+					assert (subMatchingNode != null);
+					
+					EObject superGraphNodeDummy = match.getNodeTarget(subMatchingNode);
+					Node superGraphNode = superObjectGraph.getObject2NodeMap().get(superGraphNodeDummy);
+					graphEmbedding.put(subGraphNode, superGraphNode);
 				}
-				
-				assert (subMatchingNode != null);
-				
-				EObject superGraphNodeDummy = match.getNodeTarget(subMatchingNode);
-				Node superGraphNode = superObjectGraph.getObject2NodeMap().get(superGraphNodeDummy);
-				graphEmbedding.put(subGraphNode, superGraphNode);
 			}
 		}
 		

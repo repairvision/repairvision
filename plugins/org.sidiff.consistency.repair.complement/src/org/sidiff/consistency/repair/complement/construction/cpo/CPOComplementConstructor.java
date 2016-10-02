@@ -10,6 +10,9 @@ import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.logging.LogEvent;
+import org.sidiff.common.logging.LogUtil;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.repair.complement.construction.ComplementConstructor;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeCreateMatch;
@@ -19,6 +22,7 @@ import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMultiMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeSingleMatch;
+import org.sidiff.consistency.repair.complement.util.ComplementUtil;
 
 /**
  * Convert sub-rule match to partial super-rule match and constructs the
@@ -55,13 +59,30 @@ public class CPOComplementConstructor extends ComplementConstructor {
 	public Collection<ComplementRule> createComplementRule(Rule subRule, Collection<EditRuleMatch> subRuleMatch) {
 		Collection<ComplementRule> complementRules = new ArrayList<>();
 		
+		if (DebugUtil.isActive) {
+			LogUtil.log(LogEvent.NOTICE, "------------------------------------------------------------");
+			LogUtil.log(LogEvent.NOTICE, "------------------ CREATE COMPLEMENT RULE ------------------");
+			LogUtil.log(LogEvent.NOTICE, "------------------------------------------------------------");
+			
+			LogUtil.log(LogEvent.NOTICE, "\nSub-Rule-Match: \n\n" + ComplementUtil.printEditRuleMatch(subRuleMatch));
+		}
+		
 		// TODO[Precalculate]: Calculate rule embedding:
 		for (RuleEmbedding embedding : RuleEmbeddingCalculator.calculateRuleEmbedding(sourceRule, subRule)) {
+			
 			// Convert sub-rule match to partial super-rule match:
 			List<EditRuleMatch> superRuleMatch = convertToPartialMatch(embedding, subRuleMatch);
 			
+			if (DebugUtil.isActive) {
+				LogUtil.log(LogEvent.NOTICE, "\nCPO-Match (partial): \n\n" + ComplementUtil.printEditRuleMatch(superRuleMatch));
+			}
+			
 			// Create the complement = super - sub:
-			complementRules.add(createComplementRule(superRuleMatch));
+			ComplementRule complementRule = createComplementRule(superRuleMatch);
+			
+			if (complementRule != null) {
+				complementRules.add(complementRule);
+			}
 		}
 		
 		return complementRules;

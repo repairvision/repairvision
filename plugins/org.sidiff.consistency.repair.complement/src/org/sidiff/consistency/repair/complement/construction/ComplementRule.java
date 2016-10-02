@@ -10,14 +10,19 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHS
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
@@ -28,6 +33,8 @@ import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
+import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
@@ -82,7 +89,7 @@ public abstract class ComplementRule {
 	/**
 	 * All possible (full) pre-matches for the complement rule.
 	 */
-	private List<ComplementMatch> complementPreMatches;
+	private List<ComplementMatch> complementMatches;
 	
 //	/**
 //	 * Rules which check a single application condition of the complement rule.
@@ -103,6 +110,34 @@ public abstract class ComplementRule {
 		super();
 		this.sourceRule = sourceRule;
 		this.complementRule = complementRule;
+	}
+	
+	/**
+	 * Saves the complement-rule in the same path as the source-rule + '_complement'.
+	 */
+	public void saveComplementRule() {
+		String sourceRuleURI = EcoreUtil.getURI(sourceRule).trimFragment().trimFileExtension().toString();
+		URI complementURI = URI.createURI(sourceRuleURI + "_complement").appendFileExtension("henshin");
+		saveComplementRule(complementURI);
+	}
+	
+	/**
+	 * @param uri
+	 *            Saves the complement-rule under the given path.
+	 */
+	public void saveComplementRule(URI uri) {
+		Resource complementResource = new ResourceSetImpl().createResource(uri);
+		
+		Module complementModule = HenshinFactory.eINSTANCE.createModule();
+		complementModule.setName(sourceRule.getModule().getName());
+		complementModule.getUnits().add(complementRule);
+		complementResource.getContents().add(complementModule);
+		
+		try {
+			complementResource.save(Collections.EMPTY_MAP);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -258,23 +293,24 @@ public abstract class ComplementRule {
 	public void setComplementRule(Rule complementRule) {
 		this.complementRule = complementRule;
 	}
-	
+
 	/**
-	 * Calculates the complement pre-match (called lazy).
+	 * Calculates all possible complement match (called lazy), i.e. the
+	 * parameter values for the complementing changes.
 	 */
-	protected abstract List<ComplementMatch> createComplementPrematches(List<EditRuleMatch> partialSourceMatch);
-	
-	public List<ComplementMatch> getComplementPreMatches() {
-		
-		if (complementPreMatches == null) {
-			complementPreMatches = createComplementPrematches(sourceMatch);
+	protected abstract List<ComplementMatch> createComplementMatches(List<EditRuleMatch> partialSourceMatch);
+
+	/**
+	 * @return all possible complement match (called lazy), i.e. the parameter
+	 *         values for the complementing changes.
+	 */
+	public List<ComplementMatch> getComplementMatches() {
+
+		if (complementMatches == null) {
+			complementMatches = createComplementMatches(sourceMatch);
 		}
 		
-		return complementPreMatches;
-	}
-
-	public void setComplementPreMatches(List<ComplementMatch> complementPreMatches) {
-		this.complementPreMatches = complementPreMatches;
+		return complementMatches;
 	}
 	
 	public EngineImpl getEngine() {

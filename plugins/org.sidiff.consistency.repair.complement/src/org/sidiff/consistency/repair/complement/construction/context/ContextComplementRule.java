@@ -52,10 +52,10 @@ public class ContextComplementRule extends ComplementRule {
 		initialize(engine, graph);
 	}
 
-	protected List<ComplementMatch> createComplementPrematches(List<EditRuleMatch> partialSourceMatch) {
+	protected List<ComplementMatch> createComplementMatches(List<EditRuleMatch> partialSourceMatch) {
 		
 		// Create complement pre-match by partial source-rule match:
-		Match complementPreMatche = new MatchImpl(complementRule);
+		Match complementMatche = new MatchImpl(complementRule);
 
 		// Get change context as pre-match:
 		for (EditRuleMatch sourceRuleMatch : partialSourceMatch) {
@@ -63,10 +63,10 @@ public class ContextComplementRule extends ComplementRule {
 			if (sourceRuleMatch instanceof EditRuleEdgeMatch) {
 				if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
 
-					addPreMatch(complementPreMatche,
+					addMatch(complementMatche,
 							((EditRuleEdgeMatch) sourceRuleMatch).getEdge().getSource(),
 							((EditRuleEdgeMatch) sourceRuleMatch).getSrcModelElement());
-					addPreMatch(complementPreMatche,
+					addMatch(complementMatche,
 							((EditRuleEdgeMatch) sourceRuleMatch).getEdge().getTarget(),
 							((EditRuleEdgeMatch) sourceRuleMatch).getTgtModelElement());
 				}
@@ -76,14 +76,14 @@ public class ContextComplementRule extends ComplementRule {
 					EObject src = ((EditRuleEdgeDeleteMatch) sourceRuleMatch).getSrcModelBElement();
 					
 					if (src != null) {
-						addPreMatch(complementPreMatche,
+						addMatch(complementMatche,
 								((EditRuleEdgeDeleteMatch) sourceRuleMatch).getEdge().getSource(), src);
 					}
 					
 					EObject tgt = ((EditRuleEdgeDeleteMatch) sourceRuleMatch).getTgtModelBElement();
 					
 					if (tgt != null) {
-						addPreMatch(complementPreMatche,
+						addMatch(complementMatche,
 								((EditRuleEdgeDeleteMatch) sourceRuleMatch).getEdge().getTarget(), tgt);
 					}
 				}
@@ -92,7 +92,7 @@ public class ContextComplementRule extends ComplementRule {
 			else if (sourceRuleMatch instanceof EditRuleNodeSingleMatch) {
 				if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
 
-					addPreMatch(complementPreMatche,
+					addMatch(complementMatche,
 							((EditRuleNodeSingleMatch) sourceRuleMatch).getNode(),
 							((EditRuleNodeSingleMatch) sourceRuleMatch).getModelElement());
 				}
@@ -103,7 +103,7 @@ public class ContextComplementRule extends ComplementRule {
 		
 		// Check context rule (with restricted working graph):
 		ArrayList<ComplementMatch> complementPreMatches = new ArrayList<>();
-		Iterator<Match> matchFinder = getEngine().findMatches(complementRule, getGraph(), complementPreMatche).iterator();
+		Iterator<Match> matchFinder = getEngine().findMatches(complementRule, getGraph(), complementMatche).iterator();
 		
 		while (matchFinder.hasNext()) {
 			Match nextMatch = matchFinder.next();
@@ -121,7 +121,7 @@ public class ContextComplementRule extends ComplementRule {
 		return complementPreMatches;
 	}
 	
-	private void addPreMatch(Match complementPreMatches, Node sourceNode, EObject match) {
+	private void addMatch(Match complementPreMatches, Node sourceNode, EObject match) {
 		Node complementNode = getLHS(getTrace(sourceNode));
 		
 		if (complementNode != null) {

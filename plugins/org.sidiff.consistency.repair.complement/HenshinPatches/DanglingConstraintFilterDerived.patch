@@ -1,0 +1,27 @@
+diff --git a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java
+index 5e1c1f5..fcd9a63 100644
+--- a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java
++++ b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java
+@@ -75,13 +75,15 @@
+ 
+ 		if (incomingEdgeCount != null) {
+ 			for (EReference ref: actualIncomingEdges.keySet()) {
+-				if (incomingEdgeCount.containsKey(ref)) {
+-					expectedCount = incomingEdgeCount.get(ref);
+-				} else {
+-					expectedCount = 0;
+-				}
+-				if (actualIncomingEdges.get(ref) > expectedCount) {
+-					return false;
++				if (!ref.isDerived()) {
++					if (incomingEdgeCount.containsKey(ref)) {
++						expectedCount = incomingEdgeCount.get(ref);
++					} else {
++						expectedCount = 0;
++					}
++					if (actualIncomingEdges.get(ref) > expectedCount) {
++						return false;
++					}
+ 				}
+ 			}
+ 		} else {

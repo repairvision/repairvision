@@ -1,0 +1,104 @@
+diff --git a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/conditions/ApplicationCondition.java b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/conditions/ApplicationCondition.java
+index ca9dc8c..b9833d7 100644
+--- a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/conditions/ApplicationCondition.java
++++ b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/conditions/ApplicationCondition.java
+@@ -13,6 +13,7 @@
+ import java.util.Map;
+ 
+ import org.eclipse.emf.henshin.interpreter.EGraph;
++import org.eclipse.emf.henshin.interpreter.matching.constraints.AttributeConstraint;
+ import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainSlot;
+ import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
+ 
+@@ -87,13 +88,34 @@
+ 		boolean valid = false;
+ 		while (!valid) {
+ 			valid = slot.instantiate(variable, domainMap, graph);
++			
+ 			if (valid) {
++				
++				System.out.println("-------------------------------------------------------------------------------------");
++				System.out.println("Variable-Type: " + variable.typeConstraint.type);
++				for (AttributeConstraint attr : variable.attributeConstraints) {
++					System.out.println("  Attribte: " + attr.attribute);
++					System.out.println("  Value: " + attr.value);
++				}
++				System.out.println("=> Match: " + slot.getValue());
++				System.out.println("-------------------------------------------------------------------------------------");
++				
+ 				valid = findMatch(index + 1);  // recursion
+ 			}
+ 			if (!valid) {
+ 				slot.unlock(variable);
+ 				if (!slot.instantiationPossible()) {
+ 					slot.clear(variable);
++					
++					System.out.println("-------------------------------------------------------------------------------------");
++					System.out.println("Variable-Type: " + variable.typeConstraint.type);
++					for (AttributeConstraint attr : variable.attributeConstraints) {
++						System.out.println("  Attribte: " + attr.attribute);
++						System.out.println("  Value: " + attr.value);
++					}
++					System.out.println("=> Match-Failed!");
++					System.out.println("-------------------------------------------------------------------------------------");
++					
+ 					return false;
+ 				}
+ 			}
+diff --git a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/AttributeConstraint.java b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/AttributeConstraint.java
+index 3b0b6a5..f7d0398 100644
+--- a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/AttributeConstraint.java
++++ b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/AttributeConstraint.java
+@@ -21,13 +21,13 @@
+ public class AttributeConstraint implements UnaryConstraint {
+ 
+ 	// Target attribute:
+-	final EAttribute attribute;
++	public final EAttribute attribute;
+ 
+ 	// Value (either constant or a parameter name):
+-	final Object value;
++	public final Object value;
+ 
+ 	// Constant attribute value or parameter name?
+-	final boolean isConstantValue;
++	public final boolean isConstantValue;
+ 
+ 	/**
+ 	 * Default constructor.
+diff --git a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java
+index fcd9a63..00ca5f4 100644
+--- a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java
++++ b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java
+@@ -17,8 +17,10 @@
+ 
+ import org.eclipse.emf.ecore.EObject;
+ import org.eclipse.emf.ecore.EReference;
++import org.eclipse.emf.ecore.EStructuralFeature;
+ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+ import org.eclipse.emf.ecore.EcorePackage;
++import org.eclipse.emf.ecore.util.EcoreUtil;
+ import org.eclipse.emf.henshin.interpreter.EGraph;
+ 
+ /**
+@@ -82,6 +84,20 @@
+ 						expectedCount = 0;
+ 					}
+ 					if (actualIncomingEdges.get(ref) > expectedCount) {
++						
++						Iterator<EStructuralFeature.Setting> it = new EcoreUtil.FilteredSettingsIterator(
++								graph.getCrossReferenceAdapter().getInverseReferences(sourceValue, true), ref, null);
++
++						while (it.hasNext()) {
++							Setting setting = (Setting) it.next();
++							System.out.println("-------------------------------------------------------------------------------------");
++							System.out.println("=> Match-Failed!");
++							System.out.println(sourceValue);
++							System.out.println(setting.getEStructuralFeature());
++							System.out.println(setting.getEObject());
++							System.out.println("-------------------------------------------------------------------------------------");
++						}
++						
+ 						return false;
+ 					}
+ 				}

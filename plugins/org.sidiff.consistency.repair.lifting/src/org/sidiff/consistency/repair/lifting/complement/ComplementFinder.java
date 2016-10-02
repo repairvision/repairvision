@@ -140,7 +140,11 @@ public class ComplementFinder {
 				
 				// Store new complement rule:
 				if (!editRuleMatch.isEmpty()) {
-					complements.add(complementConstructor.createComplementRule(editRuleMatch));
+					ComplementRule complementRule = complementConstructor.createComplementRule(editRuleMatch);
+					
+					if (complementRule != null) {
+						complements.add(complementRule);
+					}
 				}
 			} 
 			

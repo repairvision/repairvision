@@ -4,11 +4,12 @@ Bundle-Name: Consistency Common
 Bundle-SymbolicName: org.sidiff.consistency.common
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.emf.ecore.xmi,
- org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.jface,
  org.eclipse.ui.console,
  org.eclipse.ui.workbench,
- org.eclipse.jface
+ org.sidiff.common;visibility:=reexport
 Export-Package: org.sidiff.consistency.common.debug,
  org.sidiff.consistency.common.storage,
  org.sidiff.consistency.common.ui

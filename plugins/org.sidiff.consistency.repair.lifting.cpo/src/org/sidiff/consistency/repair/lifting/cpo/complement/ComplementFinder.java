@@ -217,12 +217,9 @@ public class ComplementFinder {
 		EObject srcMatchB = difference.getCorrespondingObjectInB(srcMatchA);
 		EObject tgtMatchB = difference.getCorrespondingObjectInB(tgtMatchA);
 
-		if ((srcMatchA != null) && (tgtMatchB != null)) {
-			return new EditRuleEdgeDeleteMatch(eoEdge, srcMatchB, tgtMatchB);
-		} else {
-			// TODO: The context might have been deleted in model B!
-			return null;
-		}
+		// NOTE: The context might have been deleted in model B!
+		// srcMatchB == null and/or tgtMatchB == null
+		return new EditRuleEdgeDeleteMatch(eoEdge, srcMatchB, tgtMatchB);
 	}
 	
 	private void createCreateNodeMatch(
