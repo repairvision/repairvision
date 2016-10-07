@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Qs1WMD45Eea0SJ9KOfvj5Q" name="RootElement">
+  <packagedElement xmi:type="uml:Class" xmi:id="_Td6WsD45Eea0SJ9KOfvj5Q" name="User">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_aJalYD45Eea0SJ9KOfvj5Q" name="open" type="_UYE44D45Eea0SJ9KOfvj5Q" association="_aJTQoD45Eea0SJ9KOfvj5Q">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wVkZIG76EeaFS7AoaFq5FQ"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wVnccG76EeaFS7AoaFq5FQ" value="4"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_UYE44D45Eea0SJ9KOfvj5Q" name="Stream" visibility="public">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_zMzU4T46Eea0SJ9KOfvj5Q" name="vod" type="_xm-mkD46Eea0SJ9KOfvj5Q" association="_zMyGwD46Eea0SJ9KOfvj5Q">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nk3_kG76EeaFS7AoaFq5FQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nk8RAG76EeaFS7AoaFq5FQ" value="1"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_aZ4aYG75EeaFS7AoaFq5FQ" name="play"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_cEh-UG75EeaFS7AoaFq5FQ" name="pause"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_8Z4m8G73EeaFS7AoaFq5FQ" name="stop"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_2uuY8D45Eea0SJ9KOfvj5Q" name="disconnect"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_aJTQoD45Eea0SJ9KOfvj5Q" memberEnd="_aJalYD45Eea0SJ9KOfvj5Q _aJbMcD45Eea0SJ9KOfvj5Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aJXiED45Eea0SJ9KOfvj5Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_aJYJID45Eea0SJ9KOfvj5Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_aJbMcD45Eea0SJ9KOfvj5Q" name="user" type="_Td6WsD45Eea0SJ9KOfvj5Q" association="_aJTQoD45Eea0SJ9KOfvj5Q">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_s4XScG76EeaFS7AoaFq5FQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_s4cyAG76EeaFS7AoaFq5FQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_6m9OwD45Eea0SJ9KOfvj5Q" name="Interaction1">
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_-OadoD45Eea0SJ9KOfvj5Q" name="a" represents="_L-uL0j46Eea0SJ9KOfvj5Q" coveredBy="_Z07GoD46Eea0SJ9KOfvj5Q"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_UCRLgD46Eea0SJ9KOfvj5Q" name="open" represents="_aJalYD45Eea0SJ9KOfvj5Q"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_S5FgcD47Eea0SJ9KOfvj5Q" name="vod" represents="_zMzU4T46Eea0SJ9KOfvj5Q" coveredBy="_Z07GoT46Eea0SJ9KOfvj5Q"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_Z07GoD46Eea0SJ9KOfvj5Q" name="disconnectSend" covered="_-OadoD45Eea0SJ9KOfvj5Q" message="_Z02OID46Eea0SJ9KOfvj5Q"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_Z07GoT46Eea0SJ9KOfvj5Q" name="disconnectRecv" covered="_S5FgcD47Eea0SJ9KOfvj5Q" message="_Z02OID46Eea0SJ9KOfvj5Q"/>
+    <message xmi:type="uml:Message" xmi:id="_Z02OID46Eea0SJ9KOfvj5Q" name="disconnect" messageSort="asynchCall" receiveEvent="_Z07GoT46Eea0SJ9KOfvj5Q" sendEvent="_Z07GoD46Eea0SJ9KOfvj5Q" signature="_2uuY8D45Eea0SJ9KOfvj5Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_KFpxYD46Eea0SJ9KOfvj5Q" name="Application">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_L-uL0j46Eea0SJ9KOfvj5Q" name="user" type="_Td6WsD45Eea0SJ9KOfvj5Q" association="_L-tkwD46Eea0SJ9KOfvj5Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_L-tkwD46Eea0SJ9KOfvj5Q" memberEnd="_L-uL0j46Eea0SJ9KOfvj5Q _L-uy4D46Eea0SJ9KOfvj5Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_L-uL0D46Eea0SJ9KOfvj5Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_L-uL0T46Eea0SJ9KOfvj5Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_L-uy4D46Eea0SJ9KOfvj5Q" name="application" type="_KFpxYD46Eea0SJ9KOfvj5Q" association="_L-tkwD46Eea0SJ9KOfvj5Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_xm-mkD46Eea0SJ9KOfvj5Q" name="Server">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_c1Ji8G75EeaFS7AoaFq5FQ" name="connect"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_zMyGwD46Eea0SJ9KOfvj5Q" memberEnd="_zMzU4T46Eea0SJ9KOfvj5Q _zMz78D46Eea0SJ9KOfvj5Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_zMyt0D46Eea0SJ9KOfvj5Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zMzU4D46Eea0SJ9KOfvj5Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_zMz78D46Eea0SJ9KOfvj5Q" name="user" type="_UYE44D45Eea0SJ9KOfvj5Q" association="_zMyGwD46Eea0SJ9KOfvj5Q">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_rAl4gG76EeaFS7AoaFq5FQ"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_rAoUwG76EeaFS7AoaFq5FQ" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Model>

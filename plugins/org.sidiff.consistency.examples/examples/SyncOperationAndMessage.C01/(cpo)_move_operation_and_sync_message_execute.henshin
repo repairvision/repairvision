@@ -64,6 +64,28 @@
       <edges xmi:id="_j_ZSME8zEeavIPMQP6bXyg" source="_701PwD48Eea0SJ9KOfvj5Q" target="_Rk-iUD49Eea0SJ9KOfvj5Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
       </edges>
+      <formula xsi:type="henshin:Not">
+        <child xsi:type="henshin:NestedCondition">
+          <conclusion>
+            <nodes name="newClass" incoming="//@units.0/@lhs/@formula/@child/@conclusion/@edges.1" outgoing="//@units.0/@lhs/@formula/@child/@conclusion/@edges.0">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+            </nodes>
+            <nodes incoming="//@units.0/@lhs/@formula/@child/@conclusion/@edges.0" outgoing="//@units.0/@lhs/@formula/@child/@conclusion/@edges.1">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+              <attributes value="opName">
+                <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+              </attributes>
+            </nodes>
+            <edges source="//@units.0/@lhs/@formula/@child/@conclusion/@nodes.0" target="//@units.0/@lhs/@formula/@child/@conclusion/@nodes.1">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+            </edges>
+            <edges source="//@units.0/@lhs/@formula/@child/@conclusion/@nodes.1" target="//@units.0/@lhs/@formula/@child/@conclusion/@nodes.0">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
+            </edges>
+          </conclusion>
+          <mappings origin="_Q7rtsD49Eea0SJ9KOfvj5Q" image="//@units.0/@lhs/@formula/@child/@conclusion/@nodes.0"/>
+        </child>
+      </formula>
     </lhs>
     <rhs xmi:id="_jKc2ID47Eea0SJ9KOfvj5Q" name="Rhs">
       <nodes xmi:id="_ppKmAT47Eea0SJ9KOfvj5Q" name="message" outgoing="_t9or4T47Eea0SJ9KOfvj5Q">
