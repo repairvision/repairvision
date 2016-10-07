@@ -114,9 +114,9 @@ public class RuleEmbeddingCalculator {
 						
 						// Calculate edge-embedding:
 						ruleEmbedding.setLhsEdgeEmbedding(
-								calculateGraphEdgeEmbedding(superRule.getLhs(), subRule.getLhs(), lhsEmbedding));
+								calculateGraphEdgeEmbedding(superRule.getLhs(), subRule.getLhs(), lhsEmbedding, null));
 						ruleEmbedding.setRhsEdgeEmbedding(
-								calculateGraphEdgeEmbedding(superRule.getRhs(), subRule.getRhs(), rhsEmbedding));
+								calculateGraphEdgeEmbedding(superRule.getRhs(), subRule.getRhs(), rhsEmbedding, rhsMinimalSubGraph));
 					}
 				} else {
 					
@@ -129,7 +129,7 @@ public class RuleEmbeddingCalculator {
 					
 					// Calculate edge-embedding:
 					ruleEmbedding.setLhsEdgeEmbedding(
-							calculateGraphEdgeEmbedding(superRule.getLhs(), subRule.getLhs(), lhsEmbedding));
+							calculateGraphEdgeEmbedding(superRule.getLhs(), subRule.getLhs(), lhsEmbedding, null));
 				}
 			}
 		}
@@ -188,7 +188,8 @@ public class RuleEmbeddingCalculator {
 	}
 	
 	private static Map<Edge, Edge> calculateGraphEdgeEmbedding(
-			Graph superGraph, Graph subGraph, Map<Node, Node> embedding) {
+			Graph superGraph, Graph subGraph, 
+			Map<Node, Node> embedding, Set<GraphElement> elementsToMatch) {
 		
 		Map<Edge, Edge> edgeEmbedings = new HashMap<>();
 		
@@ -197,15 +198,19 @@ public class RuleEmbeddingCalculator {
 			Node superGraphSrcNode = nodeEmbedding.getValue();
 			
 			for (Edge subGraphEdge : subGraphSrcNode.getOutgoing()) {
-				Node subGraphTgtNode = subGraphEdge.getTarget();
-				Node superGraphTgtNode = embedding.get(subGraphTgtNode);
 				
-				Edge superGraphEdge = superGraphSrcNode.getOutgoing(
-						subGraphEdge.getType(), superGraphTgtNode);
-				
-				assert (superGraphEdge != null) : "Missing edge embedding: " + subGraphEdge;
-				
-				edgeEmbedings.put(subGraphEdge, superGraphEdge);
+				// Filter edges:
+				if ((elementsToMatch == null) || elementsToMatch.contains(subGraphEdge)) {
+					Node subGraphTgtNode = subGraphEdge.getTarget();
+					Node superGraphTgtNode = embedding.get(subGraphTgtNode);
+					
+					Edge superGraphEdge = superGraphSrcNode.getOutgoing(
+							subGraphEdge.getType(), superGraphTgtNode);
+					
+					assert (superGraphEdge != null) : "Missing edge embedding: " + subGraphEdge;
+					
+					edgeEmbedings.put(subGraphEdge, superGraphEdge);
+				}
 			}
 		}
 		
