@@ -14,6 +14,9 @@ import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.logging.LogEvent;
+import org.sidiff.common.logging.LogUtil;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
@@ -103,6 +106,11 @@ public abstract class ComplementConstructor {
 					
 					// Check dangling constraint:
 					if (!complementNode.getIncoming().isEmpty() || !complementNode.getOutgoing().isEmpty()) {
+						
+						if (DebugUtil.isActive) {
+							LogUtil.log(LogEvent.NOTICE, "Dangling Edges: " + complementNode + "\n  (" + sourceRule + ")");
+						}
+						
 						return null;
 					}
 					
