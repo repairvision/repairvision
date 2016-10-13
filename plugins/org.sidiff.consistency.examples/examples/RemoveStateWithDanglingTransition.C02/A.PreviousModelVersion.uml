@@ -10,8 +10,8 @@
       <transition xmi:type="uml:Transition" xmi:id="_qYTbwJzzEeSLVIm6HyKbyA" name="lock" source="_ixHA4JzzEeSLVIm6HyKbyA" target="_mSdnwJzzEeSLVIm6HyKbyA"/>
       <transition xmi:type="uml:Transition" xmi:id="_z66acJzzEeSLVIm6HyKbyA" name="wash" source="_mSdnwJzzEeSLVIm6HyKbyA" target="_u_zLUJzzEeSLVIm6HyKbyA"/>
       <transition xmi:type="uml:Transition" xmi:id="_BrywYJz0EeSLVIm6HyKbyA" name="unlock" source="_u_zLUJzzEeSLVIm6HyKbyA" target="__K454JzzEeSLVIm6HyKbyA"/>
-      <transition xmi:type="uml:Transition" xmi:id="_FdNzkJz0EeSLVIm6HyKbyA" name="beep" source="__K454JzzEeSLVIm6HyKbyA"/>
-      <transition xmi:type="uml:Transition" xmi:id="_I3oE8Jz0EeSLVIm6HyKbyA" name="finish" source="__K454JzzEeSLVIm6HyKbyA" target="_HFmGoJz0EeSLVIm6HyKbyA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_FdNzkJz0EeSLVIm6HyKbyA" name="beep" source="__K454JzzEeSLVIm6HyKbyA" target="_CyM-0Jz0EeSLVIm6HyKbyA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_I3oE8Jz0EeSLVIm6HyKbyA" name="finish" source="_CyM-0Jz0EeSLVIm6HyKbyA" target="_HFmGoJz0EeSLVIm6HyKbyA"/>
       <transition xmi:type="uml:Transition" xmi:id="_Jko78Jz0EeSLVIm6HyKbyA" name="toHeavy" source="_ixHA4JzzEeSLVIm6HyKbyA" target="_HFmGoJz0EeSLVIm6HyKbyA"/>
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_SSSeAJzzEeSLVIm6HyKbyA" name="startState"/>
       <subvertex xmi:type="uml:State" xmi:id="_UqwxQJzzEeSLVIm6HyKbyA" name="Weighing"/>
@@ -19,6 +19,7 @@
       <subvertex xmi:type="uml:State" xmi:id="_mSdnwJzzEeSLVIm6HyKbyA" name="Locking"/>
       <subvertex xmi:type="uml:State" xmi:id="_u_zLUJzzEeSLVIm6HyKbyA" name="Washing"/>
       <subvertex xmi:type="uml:State" xmi:id="__K454JzzEeSLVIm6HyKbyA" name="Unlocking"/>
+      <subvertex xmi:type="uml:State" xmi:id="_CyM-0Jz0EeSLVIm6HyKbyA" name="Beep"/>
       <subvertex xmi:type="uml:FinalState" xmi:id="_HFmGoJz0EeSLVIm6HyKbyA" name="finalState"/>
     </region>
   </packagedElement>
