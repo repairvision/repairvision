@@ -18,11 +18,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.interpreter.Engine;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
@@ -35,10 +31,6 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
-import org.sidiff.consistency.repair.complement.Activator;
 import org.sidiff.consistency.repair.complement.util.ComplementUtil;
 
 /**
@@ -55,33 +47,33 @@ public class RuleEmbeddingCalculator {
 	public static List<RuleEmbedding> calculateRuleEmbedding(Rule superRule, Rule subRule) {
 		List<RuleEmbedding> embeddings = new ArrayList<>();
 		
-		for (Iterator<EObject> iterator = superRule.eAllContents(); iterator.hasNext();) {
-			EObject element = iterator.next();
-
-			// FIXME: Support abstract node types in sub-rules!
-			if (element instanceof Node) {
-				if (((Node) element).getType().isAbstract()) {
-					MultiStatus info = new MultiStatus(Activator.PLUGIN_ID, 1,
-							"Edit-Rules with abstract node types are not suppored yet!", null);
-
-					info.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, 1, 
-							"Edit-Rule:\n\n" 
-									+ element + "\n\n"
-									+ EcoreUtil.getURI(element),
-									null));
-
-					Display.getDefault().asyncExec(() -> {
-						ErrorDialog.openError(
-								Display.getDefault().getActiveShell(), 
-								PlatformUI.getWorkbench().getActiveWorkbenchWindow().
-								getActivePage().getActivePart().getTitle(), 
-								null, info);
-					});
-
-					return Collections.emptyList();
-				}
-			}
-		}
+//		for (Iterator<EObject> iterator = superRule.eAllContents(); iterator.hasNext();) {
+//			EObject element = iterator.next();
+//
+//			// FIXME: Support abstract node types in sub-rules!
+//			if (element instanceof Node) {
+//				if (((Node) element).getType().isAbstract()) {
+//					MultiStatus info = new MultiStatus(Activator.PLUGIN_ID, 1,
+//							"Edit-Rules with abstract node types are not suppored yet!", null);
+//
+//					info.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, 1, 
+//							"Edit-Rule:\n\n" 
+//									+ element + "\n\n"
+//									+ EcoreUtil.getURI(element),
+//									null));
+//
+//					Display.getDefault().asyncExec(() -> {
+//						ErrorDialog.openError(
+//								Display.getDefault().getActiveShell(), 
+//								PlatformUI.getWorkbench().getActiveWorkbenchWindow().
+//								getActivePage().getActivePart().getTitle(), 
+//								null, info);
+//					});
+//
+//					return Collections.emptyList();
+//				}
+//			}
+//		}
 		
 		// Calculate LHS-Embeddings:
 		List<Map<Node, Node>> lhsEmbeddings = calculateGraphNodeEmbedding(superRule, subRule, Side.LHS);
