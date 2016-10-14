@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="(CPO)CreateNewTransition" description="Creates a new Transition">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BpyoMJIUEeasYouVvYLw7Q" name="(CPO)CreateNewTransition" description="Creates a new Transition">
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
-  <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
-    <parameters name="newTransition"/>
-    <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.0"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_BpyoMZIUEeasYouVvYLw7Q" name="mainUnit" subUnits="_Bpz2UZIUEeasYouVvYLw7Q">
+    <parameters xmi:id="_BpyoMpIUEeasYouVvYLw7Q" name="newTransition"/>
+    <parameterMappings xmi:id="_Bpz2UJIUEeasYouVvYLw7Q" source="_Bpz2UpIUEeasYouVvYLw7Q" target="_BpyoMpIUEeasYouVvYLw7Q"/>
   </units>
-  <units xsi:type="henshin:Rule" name="(CPO)CreateNewTransition">
-    <parameters name="newTransition"/>
-    <lhs name="Lhs">
-      <nodes name="src" incoming="//@units.1/@lhs/@edges.1" outgoing="//@units.1/@lhs/@edges.0">
+  <units xsi:type="henshin:Rule" xmi:id="_Bpz2UZIUEeasYouVvYLw7Q" name="(CPO)CreateNewTransition">
+    <parameters xmi:id="_Bpz2UpIUEeasYouVvYLw7Q" name="newTransition"/>
+    <lhs xmi:id="_Bpz2U5IUEeasYouVvYLw7Q" name="Lhs">
+      <nodes xmi:id="_Bpz2VJIUEeasYouVvYLw7Q" name="src" incoming="_Bp0dYZIUEeasYouVvYLw7Q" outgoing="_Bp0dYJIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
       </nodes>
-      <nodes name="Region" incoming="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.2" outgoing="//@units.1/@lhs/@edges.1 //@units.1/@lhs/@edges.3">
+      <nodes xmi:id="_Bpz2VZIUEeasYouVvYLw7Q" name="Region" incoming="_Bp0dYJIUEeasYouVvYLw7Q _Bp0dYpIUEeasYouVvYLw7Q" outgoing="_Bp0dYZIUEeasYouVvYLw7Q _Bp0dY5IUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
       </nodes>
-      <nodes name="tgt" incoming="//@units.1/@lhs/@edges.3" outgoing="//@units.1/@lhs/@edges.2">
+      <nodes xmi:id="_Bpz2VpIUEeasYouVvYLw7Q" name="tgt" incoming="_Bp0dY5IUEeasYouVvYLw7Q" outgoing="_Bp0dYpIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
       </nodes>
-      <edges source="//@units.1/@lhs/@nodes.0" target="//@units.1/@lhs/@nodes.1">
+      <edges xmi:id="_Bp0dYJIUEeasYouVvYLw7Q" source="_Bpz2VJIUEeasYouVvYLw7Q" target="_Bpz2VZIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex/container"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.1" target="//@units.1/@lhs/@nodes.0">
+      <edges xmi:id="_Bp0dYZIUEeasYouVvYLw7Q" source="_Bpz2VZIUEeasYouVvYLw7Q" target="_Bpz2VJIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/subvertex"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.1">
+      <edges xmi:id="_Bp0dYpIUEeasYouVvYLw7Q" source="_Bpz2VpIUEeasYouVvYLw7Q" target="_Bpz2VZIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex/container"/>
       </edges>
-      <edges source="//@units.1/@lhs/@nodes.1" target="//@units.1/@lhs/@nodes.2">
+      <edges xmi:id="_Bp0dY5IUEeasYouVvYLw7Q" source="_Bpz2VZIUEeasYouVvYLw7Q" target="_Bpz2VpIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/subvertex"/>
       </edges>
     </lhs>
-    <rhs name="Rhs">
-      <nodes name="src" incoming="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.4" outgoing="//@units.1/@rhs/@edges.3">
+    <rhs xmi:id="_Bp0dZJIUEeasYouVvYLw7Q" name="Rhs">
+      <nodes xmi:id="_Bp0dZZIUEeasYouVvYLw7Q" name="src" incoming="_Bp1EcJIUEeasYouVvYLw7Q _Bp1EdJIUEeasYouVvYLw7Q" outgoing="_Bp1Ec5IUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
       </nodes>
-      <nodes name="Region" incoming="//@units.1/@rhs/@edges.1 //@units.1/@rhs/@edges.3 //@units.1/@rhs/@edges.6" outgoing="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.4 //@units.1/@rhs/@edges.7">
+      <nodes xmi:id="_Bp0dZpIUEeasYouVvYLw7Q" name="Region" incoming="_Bp1EcZIUEeasYouVvYLw7Q _Bp1Ec5IUEeasYouVvYLw7Q _Bp1EdpIUEeasYouVvYLw7Q" outgoing="_Bp1EcpIUEeasYouVvYLw7Q _Bp1EdJIUEeasYouVvYLw7Q _Bp1rgJIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
       </nodes>
-      <nodes name="newTransition" incoming="//@units.1/@rhs/@edges.2" outgoing="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.1 //@units.1/@rhs/@edges.5">
+      <nodes xmi:id="_Bp0dZ5IUEeasYouVvYLw7Q" name="newTransition" incoming="_Bp1EcpIUEeasYouVvYLw7Q" outgoing="_Bp1EcJIUEeasYouVvYLw7Q _Bp1EcZIUEeasYouVvYLw7Q _Bp1EdZIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
       </nodes>
-      <nodes name="tgt" incoming="//@units.1/@rhs/@edges.5 //@units.1/@rhs/@edges.7" outgoing="//@units.1/@rhs/@edges.6">
+      <nodes xmi:id="_Bp0daJIUEeasYouVvYLw7Q" name="tgt" incoming="_Bp1EdZIUEeasYouVvYLw7Q _Bp1rgJIUEeasYouVvYLw7Q" outgoing="_Bp1EdpIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
       </nodes>
-      <edges source="//@units.1/@rhs/@nodes.2" target="//@units.1/@rhs/@nodes.0">
+      <edges xmi:id="_Bp1EcJIUEeasYouVvYLw7Q" source="_Bp0dZ5IUEeasYouVvYLw7Q" target="_Bp0dZZIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
       </edges>
-      <edges source="//@units.1/@rhs/@nodes.2" target="//@units.1/@rhs/@nodes.1">
+      <edges xmi:id="_Bp1EcZIUEeasYouVvYLw7Q" source="_Bp0dZ5IUEeasYouVvYLw7Q" target="_Bp0dZpIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/container"/>
       </edges>
-      <edges source="//@units.1/@rhs/@nodes.1" target="//@units.1/@rhs/@nodes.2">
+      <edges xmi:id="_Bp1EcpIUEeasYouVvYLw7Q" source="_Bp0dZpIUEeasYouVvYLw7Q" target="_Bp0dZ5IUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/transition"/>
       </edges>
-      <edges source="//@units.1/@rhs/@nodes.0" target="//@units.1/@rhs/@nodes.1">
+      <edges xmi:id="_Bp1Ec5IUEeasYouVvYLw7Q" source="_Bp0dZZIUEeasYouVvYLw7Q" target="_Bp0dZpIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex/container"/>
       </edges>
-      <edges source="//@units.1/@rhs/@nodes.1" target="//@units.1/@rhs/@nodes.0">
+      <edges xmi:id="_Bp1EdJIUEeasYouVvYLw7Q" source="_Bp0dZpIUEeasYouVvYLw7Q" target="_Bp0dZZIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/subvertex"/>
       </edges>
-      <edges source="//@units.1/@rhs/@nodes.2" target="//@units.1/@rhs/@nodes.3">
+      <edges xmi:id="_Bp1EdZIUEeasYouVvYLw7Q" source="_Bp0dZ5IUEeasYouVvYLw7Q" target="_Bp0daJIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
       </edges>
-      <edges source="//@units.1/@rhs/@nodes.3" target="//@units.1/@rhs/@nodes.1">
+      <edges xmi:id="_Bp1EdpIUEeasYouVvYLw7Q" source="_Bp0daJIUEeasYouVvYLw7Q" target="_Bp0dZpIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex/container"/>
       </edges>
-      <edges source="//@units.1/@rhs/@nodes.1" target="//@units.1/@rhs/@nodes.3">
+      <edges xmi:id="_Bp1rgJIUEeasYouVvYLw7Q" source="_Bp0dZpIUEeasYouVvYLw7Q" target="_Bp0daJIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/subvertex"/>
       </edges>
     </rhs>
-    <mappings origin="//@units.1/@lhs/@nodes.0" image="//@units.1/@rhs/@nodes.0"/>
-    <mappings origin="//@units.1/@lhs/@nodes.1" image="//@units.1/@rhs/@nodes.1"/>
-    <mappings origin="//@units.1/@lhs/@nodes.2" image="//@units.1/@rhs/@nodes.3"/>
+    <mappings xmi:id="_Bp1rgZIUEeasYouVvYLw7Q" origin="_Bpz2VJIUEeasYouVvYLw7Q" image="_Bp0dZZIUEeasYouVvYLw7Q"/>
+    <mappings xmi:id="_Bp1rgpIUEeasYouVvYLw7Q" origin="_Bpz2VZIUEeasYouVvYLw7Q" image="_Bp0dZpIUEeasYouVvYLw7Q"/>
+    <mappings xmi:id="_Bp1rg5IUEeasYouVvYLw7Q" origin="_Bpz2VpIUEeasYouVvYLw7Q" image="_Bp0daJIUEeasYouVvYLw7Q"/>
   </units>
 </henshin:Module>
