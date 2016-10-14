@@ -140,7 +140,7 @@ public abstract class ModelDropWidget {
 			viewer_models.remove(resource);
 		}
 		
-		if (viewer_models.getInput() == null) {
+		if (viewer_models.getTable().getItemCount() == 0) {
 			viewer_models.add(dropMessage);
 		}
 	}
