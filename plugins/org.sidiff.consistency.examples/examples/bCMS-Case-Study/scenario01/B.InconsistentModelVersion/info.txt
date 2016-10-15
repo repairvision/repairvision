@@ -8,6 +8,7 @@ Dangling transition: Missing source or target of the transition.
 
 Created:
 --------
+
 - Transition: BCMS::SM-FSC System::Region1::Authorising::Region1::createdDanglingTransition01
 - Transition: BCMS::SM-FSC System::Region1::Dispatching::Region2::createdDanglingTransition02
 
@@ -22,3 +23,17 @@ Deleted:
 - State: BCMS::SM-PScoordinator::Region1::Closing::Region2::S.8.2.1
 	- Outgoing: BCMS::SM-PScoordinator::Region1::Closing::Region2::S.8.2.1-receiveCloseCrisisFS(Trigger)->S.8.2.2
 	- Incoming (from Initial State): Qualified Name	BCMS::SM-PScoordinator::Region1::Closing::Region2::initial-->S.8.2.1
+	
+------------------------------------------------------------------------------------------------------------------------
+
+Message without signature: A message always needs a corresponding operation (with same name) in the receiver class.
+
+Created:
+--------
+
+- Message: BCMS::Scenario5::newMessageWithoutSignature01
+	- MessageOccurrenceSpecification: BCMS::Scenario5::newMessageWithoutSignature01Recv
+	- MessageOccurrenceSpecification: BCMS::Scenario5::newMessageWithoutSignature01Send
+- Message: 
+
+NOTE: Container of MessageOccurrenceSpecification -> ... -> InteractionOperand 
