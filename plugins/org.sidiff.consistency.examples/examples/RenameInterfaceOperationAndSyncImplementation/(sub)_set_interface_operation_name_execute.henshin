@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="(Sub)SetInterfaceOperationName" description="Set a new name to an interface operation.">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
+  <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
+    <parameters name="newName"/>
+    <parameterMappings source="//@units.0/@parameters.0" target="//@units.1/@parameters.0"/>
+  </units>
+  <units xsi:type="henshin:Rule" name="(Sub)SetInterfaceOperationName">
+    <parameters name="newName"/>
+    <lhs name="Lhs">
+      <nodes name="CreditCardPayment" incoming="//@units.1/@lhs/@edges.1 //@units.1/@lhs/@edges.2" outgoing="//@units.1/@lhs/@edges.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
+      </nodes>
+      <nodes name="setCard1" incoming="//@units.1/@lhs/@edges.0" outgoing="//@units.1/@lhs/@edges.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+      </nodes>
+      <nodes name="#7" outgoing="//@units.1/@lhs/@edges.2">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Realization"/>
+      </nodes>
+      <edges source="//@units.1/@lhs/@nodes.0" target="//@units.1/@lhs/@nodes.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface/ownedOperation"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.1" target="//@units.1/@lhs/@nodes.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/interface"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Dependency/supplier"/>
+      </edges>
+    </lhs>
+    <rhs name="Rhs">
+      <nodes name="CreditCardPayment" incoming="//@units.1/@rhs/@edges.1 //@units.1/@rhs/@edges.2" outgoing="//@units.1/@rhs/@edges.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
+      </nodes>
+      <nodes name="setCard1" incoming="//@units.1/@rhs/@edges.0" outgoing="//@units.1/@rhs/@edges.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+        <attributes value="newName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes name="#7" outgoing="//@units.1/@rhs/@edges.2">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Realization"/>
+      </nodes>
+      <edges source="//@units.1/@rhs/@nodes.0" target="//@units.1/@rhs/@nodes.1">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface/ownedOperation"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.1" target="//@units.1/@rhs/@nodes.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/interface"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.2" target="//@units.1/@rhs/@nodes.0">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Dependency/supplier"/>
+      </edges>
+    </rhs>
+    <mappings origin="//@units.1/@lhs/@nodes.0" image="//@units.1/@rhs/@nodes.0"/>
+    <mappings origin="//@units.1/@lhs/@nodes.1" image="//@units.1/@rhs/@nodes.1"/>
+    <mappings origin="//@units.1/@lhs/@nodes.2" image="//@units.1/@rhs/@nodes.2"/>
+  </units>
+</henshin:Module>
