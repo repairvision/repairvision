@@ -1605,11 +1605,11 @@ Comment:.&#xD;
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_6eODwKGcEeWOH5kx_G3ggA" name="fireTrucksRoute"/>
             <trigger xmi:type="uml:Trigger" xmi:id="_xuukEKGcEeWOH5kx_G3ggA" name="proposeFireTrucksRoute(Trigger)" event="_FtooIJm-EeW-E4TEPaxzcQ"/>
           </transition>
-          <transition xmi:type="uml:Transition" xmi:id="_1MnuGmndEeWZOoTCcU_ksg" name="S.3.2.1.2-disagreementFSC(Trigger)/receiveFScoordinatorRouteDisagreement->S.3.2.1.3" visibility="public" source="_1MnuIGndEeWZOoTCcU_ksg" target="_1MnuIWndEeWZOoTCcU_ksg">
+          <transition xmi:type="uml:Transition" xmi:id="_1MnuGmndEeWZOoTCcU_ksg" name="S.3.2.1.2-disagreementFSC(Trigger)/receiveFScoordinatorRouteDisagreement->S.3.2.1.3" visibility="public" source="_1MnuIGndEeWZOoTCcU_ksg">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_IIYGoKGdEeWOH5kx_G3ggA" name="receiveFScoordinatorRouteDisagreement"/>
             <trigger xmi:type="uml:Trigger" xmi:id="_GFJDkKGdEeWOH5kx_G3ggA" name="disagreementFSC(Trigger)" event="_F1HDgKGdEeWOH5kx_G3ggA"/>
           </transition>
-          <transition xmi:type="uml:Transition" xmi:id="_1MnuG2ndEeWZOoTCcU_ksg" name="S.3.2.1.3-proposeFireTrucksRoute(Trigger)/fireTrucksRoute->S.3.2.1.2" visibility="public" source="_1MnuIWndEeWZOoTCcU_ksg" target="_1MnuIGndEeWZOoTCcU_ksg">
+          <transition xmi:type="uml:Transition" xmi:id="_1MnuG2ndEeWZOoTCcU_ksg" name="S.3.2.1.3-proposeFireTrucksRoute(Trigger)/fireTrucksRoute->S.3.2.1.2" visibility="public" target="_1MnuIGndEeWZOoTCcU_ksg">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_T7sjsKGdEeWOH5kx_G3ggA" name="fireTrucksRoute"/>
             <trigger xmi:type="uml:Trigger" xmi:id="_RNoa8KGdEeWOH5kx_G3ggA" name="proposeFireTrucksRoute(Trigger)" event="_FtooIJm-EeW-E4TEPaxzcQ"/>
           </transition>
@@ -1617,14 +1617,13 @@ Comment:.&#xD;
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_DQHsUKGfEeWOH5kx_G3ggA" name="receiveFScoordinatorRouteAgreement"/>
             <trigger xmi:type="uml:Trigger" xmi:id="_BE0SYKGfEeWOH5kx_G3ggA" name="agreementFSC(Trigger)" event="_A4QdEKGfEeWOH5kx_G3ggA"/>
           </transition>
-          <transition xmi:type="uml:Transition" xmi:id="_1MnuHWndEeWZOoTCcU_ksg" name="S.3.2.1.3-uncoordinatedRoute(Trigger)/uncoordinatedRoute->Idle" visibility="public" source="_1MnuIWndEeWZOoTCcU_ksg" target="_1MnuM2ndEeWZOoTCcU_ksg">
+          <transition xmi:type="uml:Transition" xmi:id="_1MnuHWndEeWZOoTCcU_ksg" name="S.3.2.1.3-uncoordinatedRoute(Trigger)/uncoordinatedRoute->Idle" visibility="public" target="_1MnuM2ndEeWZOoTCcU_ksg">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_c_mJ8KGZEeWOH5kx_G3ggA" name="uncoordinatedRoute"/>
             <trigger xmi:type="uml:Trigger" xmi:id="_Y0td4KGZEeWOH5kx_G3ggA" name="uncoordinatedRoute(Trigger)" event="_sDC8cJnBEeW-E4TEPaxzcQ"/>
           </transition>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_1MnuHmndEeWZOoTCcU_ksg" name="initial" visibility="public"/>
           <subvertex xmi:type="uml:State" xmi:id="_1MnuH2ndEeWZOoTCcU_ksg" name="S.3.2.1.1" visibility="public"/>
           <subvertex xmi:type="uml:State" xmi:id="_1MnuIGndEeWZOoTCcU_ksg" name="S.3.2.1.2" visibility="public"/>
-          <subvertex xmi:type="uml:State" xmi:id="_1MnuIWndEeWZOoTCcU_ksg" name="S.3.2.1.3" visibility="public"/>
         </region>
       </subvertex>
       <subvertex xmi:type="uml:State" xmi:id="_1MnuBmndEeWZOoTCcU_ksg" name="StatingNumberOfVehicles" visibility="public">
@@ -2896,15 +2895,14 @@ in&#xD;
           <subvertex xmi:type="uml:State" xmi:id="_1MnGpWndEeWZOoTCcU_ksg" name="S.8.1.2" visibility="public"/>
         </region>
         <region xmi:type="uml:Region" xmi:id="_1MnGpmndEeWZOoTCcU_ksg" name="Region2" visibility="public">
-          <transition xmi:type="uml:Transition" xmi:id="_1MnGp2ndEeWZOoTCcU_ksg" name="initial-->S.8.2.1" visibility="public" source="_1MnGqWndEeWZOoTCcU_ksg" target="_1MnGqmndEeWZOoTCcU_ksg"/>
-          <transition xmi:type="uml:Transition" xmi:id="_1MnGqGndEeWZOoTCcU_ksg" name="S.8.2.1-receiveCloseCrisisFS(Trigger)->S.8.2.2" visibility="public" source="_1MnGqmndEeWZOoTCcU_ksg" target="_1MnGq2ndEeWZOoTCcU_ksg">
+          <transition xmi:type="uml:Transition" xmi:id="_1MnGp2ndEeWZOoTCcU_ksg" name="initial-->S.8.2.1" visibility="public" source="_1MnGqWndEeWZOoTCcU_ksg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_1MnGqGndEeWZOoTCcU_ksg" name="S.8.2.1-receiveCloseCrisisFS(Trigger)->S.8.2.2" visibility="public" target="_1MnGq2ndEeWZOoTCcU_ksg">
             <trigger xmi:type="uml:Trigger" xmi:id="_h9WrgJqVEeWL16I25ZOVVw" name="receiveCloseCrisisFS(Trigger)" event="_h0cnIJqVEeWL16I25ZOVVw"/>
           </transition>
           <transition xmi:type="uml:Transition" xmi:id="_1MnGl2ndEeWZOoTCcU_ksg" name="S.8.2.2-/closeCrisisPScoordinator->Idle" visibility="public" source="_1MnGq2ndEeWZOoTCcU_ksg" target="_1MnG-WndEeWZOoTCcU_ksg">
             <effect xmi:type="uml:OpaqueBehavior" xmi:id="_BxdF8KJPEeWaBP5WLLtcqg" name="closeCrisisPScoordinator"/>
           </transition>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_1MnGqWndEeWZOoTCcU_ksg" name="initial" visibility="public"/>
-          <subvertex xmi:type="uml:State" xmi:id="_1MnGqmndEeWZOoTCcU_ksg" name="S.8.2.1" visibility="public"/>
           <subvertex xmi:type="uml:State" xmi:id="_1MnGq2ndEeWZOoTCcU_ksg" name="S.8.2.2" visibility="public"/>
         </region>
       </subvertex>
