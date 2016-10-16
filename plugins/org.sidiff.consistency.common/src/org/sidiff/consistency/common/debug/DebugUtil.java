@@ -23,6 +23,9 @@ public class DebugUtil {
 	 * Indicates whether the debugging mode is active.
 	 */
 	public static boolean isActive = false;
+	
+	// TODO: config flag
+	public static boolean statistic = true;
 
 	static {
 		String[] args = Platform.getCommandLineArgs();
