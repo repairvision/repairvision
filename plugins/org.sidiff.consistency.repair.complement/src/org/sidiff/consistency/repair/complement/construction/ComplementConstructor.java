@@ -123,10 +123,16 @@ public abstract class ComplementConstructor {
 				
 				// Create-Node:
 				else if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
-					assert isCreationNode(complementNode);
+					// FIXME: Should we support this case: node is already << preserve >> in CPO ?
+//					assert isCreationNode(complementNode);
 					
-					// Transform create-node to preserve-node:
-					ComplementUtil.makePreserve(complementNode);
+					if (isCreationNode(complementNode)) {
+						
+						// Transform create-node to preserve-node:
+						ComplementUtil.makePreserve(complementNode);
+					} else {
+						return null;
+					}
 				}
 			}
 		}
