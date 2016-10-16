@@ -23,7 +23,9 @@ Deleted:
 - State: BCMS::SM-PScoordinator::Region1::Closing::Region2::S.8.2.1
 	- Outgoing: BCMS::SM-PScoordinator::Region1::Closing::Region2::S.8.2.1-receiveCloseCrisisFS(Trigger)->S.8.2.2
 	- Incoming (from Initial State): Qualified Name	BCMS::SM-PScoordinator::Region1::Closing::Region2::initial-->S.8.2.1
-	
+
+NOTE: If an object, e.g. a Transition, has contained objects, we need CPO variants or check dangling = false!
+
 ------------------------------------------------------------------------------------------------------------------------
 
 Message without signature: A message always needs a corresponding operation (with same name) in the receiver class.
