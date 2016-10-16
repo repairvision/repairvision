@@ -7,14 +7,17 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
 import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.repair.complement.construction.ComplementConstructor;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleAttributeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeCreateMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeDeleteMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
@@ -115,6 +118,19 @@ public class CPOComplementConstructor extends ComplementConstructor {
 							superRuleNode, subEditRuleMatch.getAction(), matches);
 					superEditRuleMatch.add(superEditRuleNodeMatch);
 				}
+			}
+			
+			// Attribute-Matches:
+			if (subEditRuleMatch instanceof EditRuleAttributeMatch) {
+				Attribute subRuleAttribute = ((EditRuleAttributeMatch) subEditRuleMatch).getAttribute();
+				Object value = ((EditRuleAttributeMatch) subEditRuleMatch).getValue();
+				Node subRuleNode = getLHS(subRuleAttribute.getNode());
+				
+				Attribute superRuleAttribute = getRHS(embedding.getSuperRuleNode(subRuleNode))
+						.getAttribute(subRuleAttribute.getType());
+				
+				EditRuleAttributeMatch superEditRuleAttributeMatch = new EditRuleAttributeMatch(superRuleAttribute, value);
+				superEditRuleMatch.add(superEditRuleAttributeMatch);
 			}
 			
 			// Edge-Matches:

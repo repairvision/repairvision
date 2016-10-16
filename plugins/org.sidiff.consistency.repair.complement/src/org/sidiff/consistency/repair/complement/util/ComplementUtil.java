@@ -1,5 +1,6 @@
 package org.sidiff.consistency.repair.complement.util;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyAttribute;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRemoteNode;
@@ -19,6 +20,7 @@ import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleAttributeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
@@ -97,6 +99,21 @@ public class ComplementUtil {
 		edge.getSource().getOutgoing().remove(edge);
 		edge.getTarget().getIncoming().remove(edge);
 	}
+	
+	/**
+	 * @param attribute
+	 *            The attribute that becomes a << preserve >> attribute.
+	 */
+	public static void makePreserve(Attribute attribute) {
+		Node node = attribute.getNode();
+		Rule rule = node.getGraph().getRule();
+		MappingList mappings = rule.getMappings();
+		
+		Node remoteNode = getRemoteNode(mappings, node);
+		assert (remoteNode != null);
+		
+		copyAttribute(remoteNode, attribute);
+	}
 
 	/**
 	 * @param edge
@@ -171,6 +188,11 @@ public class ComplementUtil {
 
 				print.append(", SRC: " + ((EditRuleEdgeMatch) editRuleMatch).getSrcModelElement());
 				print.append(", TGT: " + ((EditRuleEdgeMatch) editRuleMatch).getTgtModelElement());
+			}
+			
+			else if (editRuleMatch instanceof EditRuleAttributeMatch) {
+				print.append(", " + ((EditRuleAttributeMatch) editRuleMatch).getAttribute());
+				print.append(", VALUE: " + ((EditRuleAttributeMatch) editRuleMatch).getValue());
 			}
 
 			print.append("\n");

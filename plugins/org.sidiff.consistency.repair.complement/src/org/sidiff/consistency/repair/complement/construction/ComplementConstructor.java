@@ -11,12 +11,14 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
 import org.sidiff.consistency.common.debug.DebugUtil;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleAttributeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
@@ -145,6 +147,18 @@ public abstract class ComplementConstructor {
 					// Transform create-edge to preserve-edge:
 					ComplementUtil.makePreserve(complementEdge);
 				}
+			}
+		}
+		
+		// Substitute already executed edges << create >> attributes:
+		for (EditRuleMatch sourceRuleMatch : sourceRuleMatching) {
+			if (sourceRuleMatch instanceof EditRuleAttributeMatch) {
+				Attribute sourceAttribute = ((EditRuleAttributeMatch) sourceRuleMatch).getAttribute();
+				Attribute complementAttribute = (Attribute) copyTrace.get(sourceAttribute);
+				
+				// Transform create-attribute to preserve-attribute:
+				// FIXME: The attributes should also be passed as a parameter.
+				ComplementUtil.makePreserve(complementAttribute);
 			}
 		}
 

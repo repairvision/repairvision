@@ -6,6 +6,13 @@ public abstract class EditRuleMatch {
 
 	protected Type action;
 
+	public EditRuleMatch() {
+	}
+	
+	public EditRuleMatch(Type action) {
+		this.action = action;
+	}
+
 	public Type getAction() {
 		return action;
 	}
