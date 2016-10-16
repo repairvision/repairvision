@@ -19,7 +19,6 @@ import org.sidiff.consistency.repair.lifting.api.RepairJob;
 import org.sidiff.consistency.repair.lifting.cpo.CPORepairFacade;
 import org.sidiff.consistency.repair.lifting.ui.views.ModelDropWidget;
 import org.sidiff.consistency.repair.lifting.ui.views.RepairViewBasicApp;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 
 public class RepairViewCPOApp extends RepairViewBasicApp {
@@ -61,15 +60,14 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 					
 					// Update UI:
 					Display.getDefault().syncExec(() -> {
-						// Analyze results:
-						SymmetricDifference difference =(SymmetricDifference) repairJob.getDifference().getContents().get(0);
-						
-						if (difference.getChangeSets().isEmpty()) {
-							WorkbenchUtil.showMessage("No partially executed edit-operations found!");
-						}
-						
+
 						// Show repairs:
-						viewer_repairs.setInput(repairJob.getRepairs());
+						if (repairJob.getRepairs().isEmpty()) {
+							WorkbenchUtil.showMessage("No repairs found!");
+							viewer_repairs.setInput(null);
+						} else {
+							viewer_repairs.setInput(repairJob.getRepairs());
+						}
 					});
 				}
 				

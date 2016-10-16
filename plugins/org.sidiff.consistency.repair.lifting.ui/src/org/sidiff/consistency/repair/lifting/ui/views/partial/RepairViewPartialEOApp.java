@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
+import org.sidiff.consistency.common.ui.WorkbenchUtil;
 import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.api.RepairFacade;
 import org.sidiff.consistency.repair.lifting.api.RepairJob;
@@ -59,6 +60,14 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
 					
+					// Show repairs:
+					if (repairJob.getRepairs().isEmpty()) {
+						WorkbenchUtil.showMessage("No repairs found!");
+						viewer_repairs.setInput(null);
+					} else {
+						viewer_repairs.setInput(repairJob.getRepairs());
+					}
+
 					// Show repairs:
 					viewer_repairs.setInput(repairJob.getRepairs());
 					

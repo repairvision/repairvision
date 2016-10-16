@@ -12,23 +12,6 @@ public class CPORepairView {
 
 	public static void createInputPartControl(SashForm sashForm, RepairViewCPOApp app) {
 		
-		// Sub-Edit-Rules:
-		Composite composite_subeditrules = new Composite(sashForm, SWT.BORDER);
-		composite_subeditrules.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		new ModelDropWidget(composite_subeditrules, "Please drop the sub-edit-rule(s) here!") {
-
-			@Override
-			protected boolean removeModel(IResource selection) {
-				return app.removeSubEditRule(selection);
-			}
-
-			@Override
-			protected boolean addModel(IResource element) {
-				return app.addSubEditRule(element);
-			}
-		};
-		
 		// Consistency-Preserving-Edit-Rules:
 		Composite composite_supereditrules = new Composite(sashForm, SWT.BORDER);
 		composite_supereditrules.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -43,6 +26,23 @@ public class CPORepairView {
 			@Override
 			protected boolean addModel(IResource element) {
 				return app.addCPEditRule(element);
+			}
+		};
+		
+		// Sub-Edit-Rules:
+		Composite composite_subeditrules = new Composite(sashForm, SWT.BORDER);
+		composite_subeditrules.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		new ModelDropWidget(composite_subeditrules, "Please drop the sub-edit-rule(s) here!") {
+
+			@Override
+			protected boolean removeModel(IResource selection) {
+				return app.removeSubEditRule(selection);
+			}
+
+			@Override
+			protected boolean addModel(IResource element) {
+				return app.addSubEditRule(element);
 			}
 		};
 		
