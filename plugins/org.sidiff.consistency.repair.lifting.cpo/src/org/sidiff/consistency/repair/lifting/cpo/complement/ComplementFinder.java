@@ -40,7 +40,7 @@ public class ComplementFinder {
 
 	private IRecognitionEngine recognitionEngine;
 	
-	private ILiftingRuleBase rulebase;
+	private ILiftingRuleBase subRulebase;
 	
 	private Collection<Rule> subEditRules;
 	
@@ -52,13 +52,13 @@ public class ComplementFinder {
 
 	public ComplementFinder(
 			IRecognitionEngine recognitionEngine,
-			ILiftingRuleBase rulebase,
+			ILiftingRuleBase subRulebase,
 			Collection<Rule> subEditRules, 
 			Collection<Rule> sourceEditRules,
 			SymmetricDifference difference) {
 		
 		this.recognitionEngine = recognitionEngine;
-		this.rulebase = rulebase;
+		this.subRulebase = subRulebase;
 		this.subEditRules = subEditRules;
 		this.sourceEditRules = sourceEditRules;
 		this.difference = difference;
@@ -89,11 +89,13 @@ public class ComplementFinder {
 			Rule subEOUnit = (Rule) subEditRule.getExecuteMainUnit().getSubUnits(false).get(0);
 			
 			// Is sub-rule (source-rule otherwise)
+			// TODO: change if to an assertion
 			if (subEditRules.contains(subEOUnit)) {
 				
 				// Translate recognition to edit rule matching:
 				List<EditRuleMatch> subEOMatch = matchConverter.createEditRuleMatch(subEditRule, subEOUnit, subRRMatch);
 				
+				// FIXME: Filter sub-rules that are embedded in sub-rules!
 				// TODO[Precalculate]: Find corresponding source rule:
 				for (Rule sourceEditRule : sourceEditRules) {
 					CPOComplementConstructor complementConstructor = new CPOComplementConstructor(
@@ -123,7 +125,7 @@ public class ComplementFinder {
 	private Map<Rule, EditRule> getRecognition2EditRules() {
 		Map<Rule, EditRule> editRules = new HashMap<>();
 		
-		for (RuleBaseItem item : rulebase.getRuleBase().getItems()) {
+		for (RuleBaseItem item : subRulebase.getRuleBase().getItems()) {
 			editRules.put((Rule) item.getEditRuleAttachment(
 					RecognitionRule.class).getRecognitionMainUnit(),
 					item.getEditRule());

@@ -31,11 +31,14 @@ import org.sidiff.consistency.repair.lifting.api.RepairJob;
 import org.sidiff.consistency.repair.lifting.cpo.complement.ComplementFinder;
 import org.sidiff.difference.lifting.api.LiftingFacade;
 import org.sidiff.difference.lifting.api.settings.LiftingSettings;
+import org.sidiff.difference.lifting.api.settings.LiftingSettings.RecognitionEngineMode;
 import org.sidiff.difference.lifting.api.util.PipelineUtils;
 import org.sidiff.difference.lifting.recognitionengine.IRecognitionEngine;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.rulebase.view.LiftingRuleBase;
 import org.sidiff.difference.rulebase.wrapper.EditWrapper2RecognitionWrapper;
+import org.sidiff.difference.symmetric.Change;
+import org.sidiff.difference.symmetric.SemanticChangeSet;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.rulebase.EditRule;
@@ -83,29 +86,55 @@ public class CPORepairFacade {
 			System.out.println("Loading Models: " + (System.currentTimeMillis() - startLoadModels) + "ms");
 		}
 		
-		// Create a (temporary) edit-rule rulebase:
-		Set<ILiftingRuleBase> ruleBases = new HashSet<>();
-		List<Rule> rules = new ArrayList<Rule>(subEditRules.size() + cpEditRules.size());
-		rules.addAll(subEditRules);
-		rules.addAll(cpEditRules);
-		ILiftingRuleBase rulebase = createRuleBase(rules, "CPOs And Sub-Rules"); 
-		ruleBases.add(rulebase);
-		
 		// Calculate difference:
 		SymmetricDifference difference = null;
 		IRecognitionEngine recognitionEngine = null;
+		ILiftingRuleBase rulebases_sub = null;
 		
 		try {
-			// Calculate lifted difference:
+			
+			// Create a (temporary) CPO rulebase:
+			ILiftingRuleBase rulebase_cpo = createRuleBase(cpEditRules, "CPOs"); 
+			Set<ILiftingRuleBase> rulebases_cpos = new HashSet<>();
+			rulebases_cpos.add(rulebase_cpo);
+			
+			// Create a (temporary) Sub-EO rulebase:
+			rulebases_sub = createRuleBase(subEditRules, "Sub-Rules"); 
+			Set<ILiftingRuleBase> rulebases_subs = new HashSet<>();
+			rulebases_subs.add(rulebases_sub);
+			
+			// Common-Lifting settings:
 			LiftingSettings liftingSettings = new LiftingSettings(Collections.singleton(documentType));
 			liftingSettings.setMatcher(settings.getMatcher());
 			liftingSettings.setTechBuilder(PipelineUtils.getDefaultTechnicalDifferenceBuilder(documentType));
-			liftingSettings.setRuleBases(ruleBases);
 			liftingSettings.setCalculateEditRuleMatch(false);
-			difference = LiftingFacade.liftTechnicalDifference(modelA, modelB, liftingSettings);
+			
+			// Create technical difference:
+			difference = LiftingFacade.deriveTechnicalDifference(modelA, modelB, settings);
+			
+			// CPO-Lifting:
+			liftingSettings.setRuleBases(rulebases_cpos);
+			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING); // no post-processing
+			difference = LiftingFacade.liftTechnicalDifference(difference, liftingSettings);
+			
+			// Remove CPO change sets:
+			// TODO: Parallelize this...
+			for (SemanticChangeSet changeSet : difference.getChangeSets()) {
+				for (Change change : changeSet.getChanges()) {
+					difference.getChanges().remove(change);
+				}
+			}
+			difference.getChangeSets().clear();
+			
+			// Sub-EO-Lifting (on reduced difference):
+			liftingSettings.setRuleBases(rulebases_subs);
+			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING); // no post-processing
+			liftingSettings.setRecognitionEngine(null); // TODO[Optimization]: Reuse of CPO recognition engine possible!? 
+			difference = LiftingFacade.liftTechnicalDifference(difference, liftingSettings);
 			
 			// Save used recognition engine:
 			recognitionEngine = liftingSettings.getRecognitionEngine();
+			
 		} catch (InvalidModelException | NoCorrespondencesException e) {
 			e.printStackTrace();
 		}
@@ -124,7 +153,7 @@ public class CPORepairFacade {
 		
 		// Calculate repairs:
 		ComplementFinder complementFinder = new ComplementFinder(
-				recognitionEngine, rulebase, subEditRules, cpEditRules, difference);
+				recognitionEngine, rulebases_sub, subEditRules, cpEditRules, difference);
 		Map<Rule, List<Repair>> repairs = new LinkedHashMap<>();
 		
 		for (Rule cpEditRule : complementFinder.getSourceRules()) {
