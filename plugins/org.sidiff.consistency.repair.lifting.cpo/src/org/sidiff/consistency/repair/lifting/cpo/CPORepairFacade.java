@@ -23,6 +23,7 @@ import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.henshin.HenshinModuleAnalysis;
 import org.sidiff.common.henshin.HenshinUnitAnalysis;
 import org.sidiff.common.henshin.exceptions.NoMainUnitFoundException;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
 import org.sidiff.consistency.repair.lifting.api.Repair;
@@ -71,10 +72,16 @@ public class CPORepairFacade {
 			Collection<Rule> subEditRules, Collection<Rule> cpEditRules, 
 			String documentType, DifferenceSettings settings) {
 		
+		Long startLoadModels = System.currentTimeMillis();
+		
 		// Initialize:
 		ResourceSet differenceRSS = new ResourceSetImpl();
 		Resource modelA = differenceRSS.getResource(uriModelA, true);
 		Resource modelB = differenceRSS.getResource(uriModelB, true);
+		
+		if (DebugUtil.statistic) {
+			System.out.println("Loading Models: " + (System.currentTimeMillis() - startLoadModels) + "ms");
+		}
 		
 		// Create a (temporary) edit-rule rulebase:
 		Set<ILiftingRuleBase> ruleBases = new HashSet<>();
