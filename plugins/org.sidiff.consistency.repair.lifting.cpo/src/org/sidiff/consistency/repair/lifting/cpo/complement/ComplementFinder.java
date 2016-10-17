@@ -12,9 +12,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.cpo.CPOComplementConstructor;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
@@ -55,7 +55,8 @@ public class ComplementFinder {
 			ILiftingRuleBase subRulebase,
 			Collection<Rule> subEditRules, 
 			Collection<Rule> sourceEditRules,
-			SymmetricDifference difference) {
+			SymmetricDifference difference,
+			EGraph graphModelB) {
 		
 		this.recognitionEngine = recognitionEngine;
 		this.subRulebase = subRulebase;
@@ -63,7 +64,7 @@ public class ComplementFinder {
 		this.sourceEditRules = sourceEditRules;
 		this.difference = difference;
 		
-		this.graphModelB = new EGraphImpl(difference.getModelB());
+		this.graphModelB = graphModelB;
 		this.engine = new EngineImpl();
 		
 		calculateComplementRules();
@@ -81,6 +82,8 @@ public class ComplementFinder {
 		
 		for (SemanticChangeSet scs : difference.getChangeSets()) {
 			
+			long calculatingComplement = System.currentTimeMillis();
+			
 			RuleApplication subRRApplication = recognitionMatches.get(scs);
 			Rule subRRUnit = subRRApplication.getRule();
 			Match subRRMatch = subRRApplication.getCompleteMatch();
@@ -91,6 +94,7 @@ public class ComplementFinder {
 			// Is sub-rule (source-rule otherwise)
 			// TODO: change if to an assertion
 			if (subEditRules.contains(subEOUnit)) {
+				
 				
 				// Translate recognition to edit rule matching:
 				List<EditRuleMatch> subEOMatch = matchConverter.createEditRuleMatch(subEditRule, subEOUnit, subRRMatch);
@@ -115,6 +119,12 @@ public class ComplementFinder {
 						complements.put(sourceEditRule, sourceComplements);
 					}
 				}
+			}
+			
+			if (DebugUtil.statistic) {
+				System.out.println("--------------------------------------");
+				System.out.println("Complements for Sub-EO (" + subEOUnit.getName() + "):" + (System.currentTimeMillis() - calculatingComplement) + "ms");
+				System.out.println("--------------------------------------");
 			}
 		}
 	}

@@ -31,6 +31,7 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.repair.complement.util.ComplementUtil;
 
 /**
@@ -74,6 +75,8 @@ public class RuleEmbeddingCalculator {
 //				}
 //			}
 //		}
+		
+		long embeddingTime = System.currentTimeMillis();
 		
 		// Calculate LHS-Embeddings:
 		List<Map<Node, Node>> lhsEmbeddings = calculateGraphNodeEmbedding(superRule, subRule, Side.LHS);
@@ -124,6 +127,12 @@ public class RuleEmbeddingCalculator {
 							calculateGraphEdgeEmbedding(superRule.getLhs(), subRule.getLhs(), lhsEmbedding, null));
 				}
 			}
+		}
+		
+		if (DebugUtil.statistic) {
+			System.out.println("Embedding: " + (System.currentTimeMillis() - embeddingTime) + "ms");
+//			System.out.println("  - CPO: " + superRule.getName());
+//			System.out.println("  - Sub-EO: " + subRule.getName());
 		}
 		
 		return embeddings;

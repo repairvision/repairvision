@@ -46,8 +46,14 @@ public abstract class ComplementConstructor {
 	 */
 	public ComplementRule createComplementRule(List<EditRuleMatch> sourceRuleMatching) {
 
+		long deriveComplements = System.currentTimeMillis();
+		
 		// Derive complement rule:
 		ComplementRule complement = deriveComplementRule(sourceRuleMatching); 
+		
+		if (DebugUtil.statistic) {
+			System.out.println("########## Derive Complement: " + (System.currentTimeMillis() - deriveComplements) + "ms");
+		}
 		
 		if (complement != null) {
 			complement.setSourceMatch(sourceRuleMatching);

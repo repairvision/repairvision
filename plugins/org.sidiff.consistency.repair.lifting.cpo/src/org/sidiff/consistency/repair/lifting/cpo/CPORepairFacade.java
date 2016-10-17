@@ -4,23 +4,26 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.interpreter.EGraph;
-import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.henshin.HenshinModuleAnalysis;
+import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.common.henshin.HenshinUnitAnalysis;
 import org.sidiff.common.henshin.exceptions.NoMainUnitFoundException;
 import org.sidiff.consistency.common.debug.DebugUtil;
@@ -34,12 +37,15 @@ import org.sidiff.difference.lifting.api.settings.LiftingSettings;
 import org.sidiff.difference.lifting.api.settings.LiftingSettings.RecognitionEngineMode;
 import org.sidiff.difference.lifting.api.util.PipelineUtils;
 import org.sidiff.difference.lifting.recognitionengine.IRecognitionEngine;
+import org.sidiff.difference.lifting.recognitionengine.impl.RecognitionEngine;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.rulebase.view.LiftingRuleBase;
 import org.sidiff.difference.rulebase.wrapper.EditWrapper2RecognitionWrapper;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
 import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.difference.symmetric.util.DifferenceAnalysis;
+import org.sidiff.difference.symmetric.util.DifferenceAnalysisUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.rulebase.EditRule;
 import org.sidiff.editrule.rulebase.RuleBase;
@@ -52,6 +58,8 @@ import org.sidiff.editrule.rulebase.RulebaseFactory;
  * @author Manuel Ohrndorf
  */
 public class CPORepairFacade {
+	
+	public static long liftingSetup;
 	
 	/**
 	 * Search for partially executed edit-operation which might cause an
@@ -75,7 +83,8 @@ public class CPORepairFacade {
 			Collection<Rule> subEditRules, Collection<Rule> cpEditRules, 
 			String documentType, DifferenceSettings settings) {
 		
-		Long startLoadModels = System.currentTimeMillis();
+		long repairJobTime = System.currentTimeMillis();
+		long startLoadModels = System.currentTimeMillis();
 		
 		// Initialize:
 		ResourceSet differenceRSS = new ResourceSetImpl();
@@ -83,7 +92,7 @@ public class CPORepairFacade {
 		Resource modelB = differenceRSS.getResource(uriModelB, true);
 		
 		if (DebugUtil.statistic) {
-			System.out.println("Loading Models: " + (System.currentTimeMillis() - startLoadModels) + "ms");
+			System.out.println("#DONE# Loading Models: " + (System.currentTimeMillis() - startLoadModels) + "ms");
 		}
 		
 		// Calculate difference:
@@ -110,9 +119,17 @@ public class CPORepairFacade {
 			liftingSettings.setCalculateEditRuleMatch(false);
 			
 			// Create technical difference:
+			long calculateDifference = System.currentTimeMillis();
+			
 			difference = LiftingFacade.deriveTechnicalDifference(modelA, modelB, settings);
 			
+			if (DebugUtil.statistic) {
+				System.out.println("#DONE# Calculate Difference: " + (System.currentTimeMillis() - calculateDifference) + "ms");
+			}
+			
 			// CPO-Lifting:
+			long cpoLifting = System.currentTimeMillis();
+			
 			liftingSettings.setRuleBases(rulebases_cpos);
 			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING); // no post-processing
 			difference = LiftingFacade.liftTechnicalDifference(difference, liftingSettings);
@@ -126,11 +143,25 @@ public class CPORepairFacade {
 			}
 			difference.getChangeSets().clear();
 			
+			if (DebugUtil.statistic) {
+				System.out.println("#DONE# Searching CPOs: " + (System.currentTimeMillis() - cpoLifting) + "ms");
+			}
+			
 			// Sub-EO-Lifting (on reduced difference):
+			long subLifting = System.currentTimeMillis();
+			
 			liftingSettings.setRuleBases(rulebases_subs);
 			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING); // no post-processing
-			liftingSettings.setRecognitionEngine(null); // TODO[Optimization]: Reuse of CPO recognition engine possible!? 
+
+			// TODO[Optimization]: Reuse of CPO recognition engine possible!?
+			//                     At least modelA an B graph! 
+			liftingSettings.setRecognitionEngine(null);
+			
 			difference = LiftingFacade.liftTechnicalDifference(difference, liftingSettings);
+			
+			if (DebugUtil.statistic) {
+				System.out.println("#DONE# Searching Sub-EOs: " + (System.currentTimeMillis() - subLifting) + "ms");
+			}
 			
 			// Save used recognition engine:
 			recognitionEngine = liftingSettings.getRecognitionEngine();
@@ -149,12 +180,23 @@ public class CPORepairFacade {
 		EngineImpl henshinEngine = new EngineImpl();
 		
 		// FIXME: Use the graph of the recognition engine or with merged imports!
-		EGraph modelBGraph = new EGraphImpl(modelB);
+//		EGraph modelBGraph = new EGraphImpl(modelB);
+		EGraph modelBGraph = ((RecognitionEngine)recognitionEngine).getGraphFactory().getModelBGraph();
 		
 		// Calculate repairs:
+		long calculateComplements = System.currentTimeMillis();
+		
 		ComplementFinder complementFinder = new ComplementFinder(
-				recognitionEngine, rulebases_sub, subEditRules, cpEditRules, difference);
+				recognitionEngine, rulebases_sub, subEditRules, cpEditRules, 
+				difference, modelBGraph);
+		
 		Map<Rule, List<Repair>> repairs = new LinkedHashMap<>();
+		
+		if (DebugUtil.statistic) {
+			System.out.println("#DONE# Complement Calculation: " + (System.currentTimeMillis() - calculateComplements) + "ms");
+		}
+		
+		long calculateRepairs = System.currentTimeMillis();
 		
 		for (Rule cpEditRule : complementFinder.getSourceRules()) {
 			List<Repair> repairsPerRule = new ArrayList<>();
@@ -181,7 +223,123 @@ public class CPORepairFacade {
 		repairJob.setRepairs(repairs);
 		// repairJob.setValidations(); // TODO: Add a common interface...
 
+		if (DebugUtil.statistic) {
+			System.out.println("#DONE# Calculate Repairs: " + (System.currentTimeMillis() - calculateRepairs) + "ms");
+			System.out.println("#DONE# Full Repair Job: " + (System.currentTimeMillis() - repairJobTime) + "ms");
+			
+			analyzeSetup(subEditRules, cpEditRules, difference);
+		}
+		
 		return repairJob;
+	}
+	
+	private static void analyzeSetup(
+			Collection<Rule> subEditRules, Collection<Rule> cpEditRules,
+			SymmetricDifference difference) {
+		
+		analyzeDifference(difference);
+		
+		System.out.println("---------------- Rules ---------------- ");
+		System.out.println("Count of preserve, delete and create nodes/edges (integrated).");
+		
+		System.out.println("---------------- CPO ---------------- ");
+		int fullNodeCount_cpo = 0;
+		int fullEdgeCount_cpo = 0;
+		
+		for (Rule cpo : cpEditRules) {
+			int nodes = getNodeCount(cpo);
+			int edges = getEdgeCount(cpo);
+			
+			fullNodeCount_cpo += nodes;
+			fullEdgeCount_cpo += edges;
+			
+			System.out.println(cpo.getName());
+			System.out.println("  - Nodes: " + nodes);
+			System.out.println("  - Edges: " + edges);
+		}
+		
+		System.out.println("################## SUM ##################");
+		System.out.println("Rules: " + cpEditRules.size());
+		System.out.println("All Nodes: " + fullNodeCount_cpo);
+		System.out.println("avg. Nodes: " + ((double) fullNodeCount_cpo / (double) cpEditRules.size()));
+		System.out.println("All Edges: " + fullEdgeCount_cpo);
+		System.out.println("avg. Edges: " + ((double) fullEdgeCount_cpo / (double) cpEditRules.size()));
+		
+		System.out.println("---------------- Sub-EO ---------------- ");
+		int fullNodeCount_sub = 0;
+		int fullEdgeCount_sub = 0;
+		
+		for (Rule sub : subEditRules) {
+			int nodes = getNodeCount(sub);
+			int edges = getEdgeCount(sub);
+			
+			fullNodeCount_sub += nodes;
+			fullEdgeCount_sub += edges;
+			
+			System.out.println(sub.getName());
+			System.out.println("  - Nodes: " + nodes);
+			System.out.println("  - Edges: " + edges);
+		}
+		
+		System.out.println("################## SUM ##################");
+		System.out.println("Rules: " + subEditRules.size());
+		System.out.println("All Nodes: " + fullNodeCount_sub);
+		System.out.println("avg. Nodes: " + ((double) fullNodeCount_sub / (double) subEditRules.size()));
+		System.out.println("All Edges: " + fullEdgeCount_sub);
+		System.out.println("avg. Edges: " + ((double) fullEdgeCount_sub / (double) subEditRules.size()));
+	}
+	
+	private static int getNodeCount(Rule rule) {
+		return HenshinRuleAnalysisUtilEx.getLHSIntersectRHSNodes(rule).size()
+				+ HenshinRuleAnalysisUtilEx.getLHSMinusRHSNodes(rule).size()
+				+ HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes(rule).size();
+	}
+	
+	private static int getEdgeCount(Rule rule) {
+		return HenshinRuleAnalysisUtilEx.getLHSIntersectRHSEdges(rule).size()
+				+ HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges(rule).size()
+				+ HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges(rule).size();
+	}
+	
+	/**
+	 * Analyze the difference.
+	 * 
+	 * @param difference
+	 *            The Symmetric-Difference.
+	 */
+	private static void analyzeDifference(SymmetricDifference difference) {
+		
+		// Analyze models:
+		System.out.println("---------------- Models ---------------- ");
+		
+		System.out.println("Model A: " + difference.getModelA().getURI().lastSegment());
+		System.out.println("Model B: " + difference.getModelB().getURI().lastSegment());
+		
+		System.out.println("Objects Model A: " + getModelObjectCount(difference.getModelA().getAllContents()));
+		System.out.println("References Model A: " + getModelReferenceCount(difference.getModelA().getAllContents()));
+		
+		System.out.println("Objects Model B: " + getModelObjectCount(difference.getModelB().getAllContents()));
+		System.out.println("References Model B: " + getModelReferenceCount(difference.getModelB().getAllContents()));
+		
+		// Analyze difference:
+		DifferenceAnalysis analysis = new DifferenceAnalysis(difference);
+		
+		System.out.println("---------------- Technical Difference ---------------- ");
+		System.out.println("Add Objects: " + analysis.getAddObjectCount());
+		System.out.println("Remove Objects: " + analysis.getRemoveObjectCount());
+		System.out.println("Add References: " + analysis.getAddReferenceCount());
+		System.out.println("Remove References: " + analysis.getRemoveReferenceCount());
+		System.out.println("Attribute Value Changes: " + analysis.getAttributeValueChangeCount());
+		System.out.println("Correspondences: " + analysis.getCorrespondenceCount());
+		System.out.println("Change Sets (Sub-EO): " + difference.getChangeSets().size());
+		
+		int allChanges = difference.getChanges().size();
+		int uncoveredChanges = DifferenceAnalysisUtil.getRemainingChanges(difference).size();
+		int coveredChanges = allChanges - uncoveredChanges;
+		
+		System.out.println("All Changes: " + allChanges);
+		System.out.println("Changes in Change Sets: " + uncoveredChanges);
+		System.out.println("Changes without Change Sets: " + coveredChanges);
 	}
 	
 	private static LiftingRuleBase createRuleBase(Collection<Rule> editRules, String name) {
@@ -208,6 +366,50 @@ public class CPORepairFacade {
 		}
 		
 		return rulebaseView;
+	}
+	
+	/**
+	 * Counts all object of a model.
+	 * 
+	 * @param it
+	 *            An iterator to iterate over all elements of the model.
+	 * @return The counted object of the model.
+	 */
+	public static int getModelObjectCount(Iterator<EObject> it) {
+		int counter = 0;
+		
+		while (it.hasNext()) {
+			it.next();
+			counter++;
+		}
+		return counter;
+	}
+	
+	/**
+	 * Counts all references of a model.
+	 * 
+	 * @param it
+	 *            An iterator to iterate over all elements of the model.
+	 * @return The counted references of the model.
+	 */
+	public static int getModelReferenceCount(Iterator<EObject> it) {
+		int counter = 0;
+		
+		while(it.hasNext()) {
+			EObject obj = it.next();
+			
+			for (EReference ref : obj.eClass().getEAllReferences()) {
+				if (obj.eGet(ref) != null) {
+					if (ref.isMany()) {
+						Collection<?> multiRef = (Collection<?>) obj.eGet(ref);
+						counter += multiRef.size();
+					} else {
+						counter++;
+					}	
+				}
+			}
+		}
+		return counter;
 	}
 	
 	/**

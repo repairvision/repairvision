@@ -14,6 +14,7 @@ import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
@@ -28,6 +29,8 @@ public class CPOComplementRule extends ComplementRule  {
 
 	@Override
 	protected List<ComplementMatch> createComplementMatches(List<EditRuleMatch> partialSourceMatch) {
+		
+		long parameterMatching = System.currentTimeMillis();
 		
 		// Create complement pre-match by partial source-rule match:
 		Match complementPreMatche = new MatchImpl(complementRule);
@@ -61,6 +64,10 @@ public class CPOComplementRule extends ComplementRule  {
 			for (Node complementNode : complementRule.getLhs().getNodes()) {
 				nextComplementMatch.getNodeMatches().put(complementNode, nextMatch.getNodeTarget(complementNode));
 			}
+		}
+		
+		if (DebugUtil.statistic) {
+			System.out.println("Parameter Matching (" + complementRule.getName() + "): " + (System.currentTimeMillis() - parameterMatching) + "ms");
 		}
 		
 		complementMatches.trimToSize();
