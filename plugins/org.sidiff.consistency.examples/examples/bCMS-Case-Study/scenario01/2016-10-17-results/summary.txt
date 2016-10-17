@@ -1,0 +1,52 @@
+Summary:
+
+Inconsistencies:
+
+- Message without signature: A message always needs a corresponding operation (with same name) in the receiver class.
+- Unimplemented operation: A class that implements an interface needs all operations of this interface.
+- Dangling transition: Missing source or target of the transition.
+
+Rules: CPO = EO (+) RO
+
+Count: 7 EOs (avg. 4 nodes, 6 edges), 9 CPOs (avg. 6 nodes, 10 edges)
+
+- Create an interface operation (+)  and the operations of the implementing classes.
+
+- Create a message (+) and a new corresponding operation in the receiver class.
+
+- Create a transition (+) between existing states.
+- Create a transition (+) with a new source/target state.
+- Remove a state (+) and its incident transitions.
+- Remove a state (+) and reconnect the transitions (outgoing/incoming) to (previously)  adjacent states.
+
+Models:
+
+    V0: Objects 2946, References 24648
+
+    Changes:
+        Add Objects: 10
+            - some dangling transitions
+            - some messages without signature
+            - add some interface operations => missing implementation
+        Remove Objects: 2
+            -some states => dangling transitions
+        Add References: 38
+        Remove References: 9
+
+Run-time:
+
+    - loading the models (V1,V2): ~200ms
+    - calculating the difference: ~1500ms
+    - recognizing Edit-Rules (CPO + EO):  ~250ms
+        - most of the time ~200ms is needed for the setup, e.g. creating the working graph and indices
+        - most rules can be evaluated in about 1ms, max. 10ms
+    - complement calculation: ~500ms
+        - most of the time (almost 99%) is needed for the embedding (each matched EO to all CPOs) calculation
+            - one embedding is calculated in 5-10ms
+            - future version: store the embedding (or at least the rule pairs) in a database
+        - the complement construction itself takes only less then 1ms for one rule
+    - Parameter matching: ~10ms -> 20 Matches/Repairs
+        - the rules are restricted, e.g. consider only states in the local Region for a dangling transitions
+        - run-time will depend on the complexity and the amount of possible parameters
+        - future version: We should only check if at least one match exists (fast) and calculate all possible parameters on demand
+    - Full run-time varies 1800 - 3000ms (e.g. cold start, emf framework loadings, ...?)
