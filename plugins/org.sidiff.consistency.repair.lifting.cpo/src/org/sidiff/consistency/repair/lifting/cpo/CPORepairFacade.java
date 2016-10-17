@@ -134,6 +134,10 @@ public class CPORepairFacade {
 			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING); // no post-processing
 			difference = LiftingFacade.liftTechnicalDifference(difference, liftingSettings);
 			
+			if (DebugUtil.statistic) {
+				System.out.println("------ Change Sets (CPO): " + difference.getChangeSets().size());
+			}
+			
 			// Remove CPO change sets:
 			// TODO: Parallelize this...
 			for (SemanticChangeSet changeSet : difference.getChangeSets()) {
@@ -160,6 +164,7 @@ public class CPORepairFacade {
 			difference = LiftingFacade.liftTechnicalDifference(difference, liftingSettings);
 			
 			if (DebugUtil.statistic) {
+				System.out.println("------ Change Sets (Sub-EOs): " + difference.getChangeSets().size());
 				System.out.println("#DONE# Searching Sub-EOs: " + (System.currentTimeMillis() - subLifting) + "ms");
 			}
 			
