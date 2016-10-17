@@ -1,0 +1,55 @@
+sipl\casestudies\bCMS\org.sidiff.deltamodeling.casestudy.bCMS.models\core_model_v2
+
+notation, uml [2016-04-25]: commit 9d4a4797272e2e2e1b5a061db1c6c9e748560e66
+
+------------------------------------------------------------------------------------------------------------------------
+
+Dangling transition: Missing source or target of the transition.
+
+Created:
+--------
+
+- Transition: BCMS::SM-FSC System::Region1::Authorising::Region1::createdDanglingTransition01
+- Transition: BCMS::SM-FSC System::Region1::Dispatching::Region2::createdDanglingTransition02
+
+Deleted:
+--------
+
+- State: BCMS::SM-PSCSystem::Region1::NegotiatingRoutePlan::Region1::S.3.2.1.3
+	- Outgoing: Qualified Name	BCMS::SM-PSCSystem::Region1::NegotiatingRoutePlan::Region1::S.3.2.1.3-proposeFireTrucksRoute(Trigger)/fireTrucksRoute->S.3.2.1.2
+	- Incoming: Qualified Name	BCMS::SM-PSCSystem::Region1::NegotiatingRoutePlan::Region1::S.3.2.1.2-disagreementFSC(Trigger)/receiveFScoordinatorRouteDisagreement->S.3.2.1.3
+	- Outgoing (other Region): BCMS::SM-PSCSystem::Region1::NegotiatingRoutePlan::Region1::S.3.2.1.3-uncoordinatedRoute(Trigger)/uncoordinatedRoute->Idle
+
+- State: BCMS::SM-PScoordinator::Region1::Closing::Region2::S.8.2.1
+	- Outgoing: BCMS::SM-PScoordinator::Region1::Closing::Region2::S.8.2.1-receiveCloseCrisisFS(Trigger)->S.8.2.2
+	- Incoming (from Initial State): Qualified Name	BCMS::SM-PScoordinator::Region1::Closing::Region2::initial-->S.8.2.1
+
+NOTE: If an object, e.g. a Transition, has contained objects, we need CPO variants or check dangling = false!
+
+------------------------------------------------------------------------------------------------------------------------
+
+Message without signature: A message always needs a corresponding operation (with same name) in the receiver class.
+
+Created:
+--------
+
+- Message: BCMS::Scenario5::newMessageWithoutSignature01
+	- MessageOccurrenceSpecification: BCMS::Scenario5::newMessageWithoutSignature01Recv
+	- MessageOccurrenceSpecification: BCMS::Scenario5::newMessageWithoutSignature01Send
+- Message: BCMS::Scenario1-2::newMessageWithoutSignature02
+	- MessageOccurrenceSpecification: BCMS::Scenario1-2::newMessageWithoutSignature02Recv
+	- MessageOccurrenceSpecification: BCMS::Scenario1-2::newMessageWithoutSignature02Send
+
+NOTE: Different containers of MessageOccurrenceSpecification, e.g. -> ... -> InteractionOperand 
+
+------------------------------------------------------------------------------------------------------------------------
+
+Unimplemented operation: A class that implements an interface needs all operations of this interface.
+
+Interface: BCMS::Domain Model::FScoordinator
+
+Created:
+--------
+
+- Operation: BCMS::Domain Model::FScoordinator::connect
+- Operation: BCMS::Domain Model::FScoordinator::disconnect
