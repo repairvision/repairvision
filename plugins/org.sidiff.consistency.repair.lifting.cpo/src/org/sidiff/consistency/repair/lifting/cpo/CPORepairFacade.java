@@ -136,6 +136,7 @@ public class CPORepairFacade {
 			
 			if (DebugUtil.statistic) {
 				System.out.println("------ Change Sets (CPO): " + difference.getChangeSets().size());
+//				analyzeDifference(difference);
 			}
 			
 			// Remove CPO change sets:
@@ -155,7 +156,8 @@ public class CPORepairFacade {
 			long subLifting = System.currentTimeMillis();
 			
 			liftingSettings.setRuleBases(rulebases_subs);
-			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING); // no post-processing
+			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING_AND_POST_PROCESSING); 
+			// FIXME: post-processing per CPO!?
 
 			// TODO[Optimization]: Reuse of CPO recognition engine possible!?
 			//                     At least modelA an B graph! 
@@ -184,7 +186,7 @@ public class CPORepairFacade {
 		// Repair application:
 		EngineImpl henshinEngine = new EngineImpl();
 		
-		// FIXME: Use the graph of the recognition engine or with merged imports!
+		// Use the graph of the recognition engine or with merged imports!
 //		EGraph modelBGraph = new EGraphImpl(modelB);
 		EGraph modelBGraph = ((RecognitionEngine)recognitionEngine).getGraphFactory().getModelBGraph();
 		
@@ -242,6 +244,7 @@ public class CPORepairFacade {
 			Collection<Rule> subEditRules, Collection<Rule> cpEditRules,
 			SymmetricDifference difference) {
 		
+		System.out.println("---------------- Difference after CPO changes were removed ---------------- ");
 		analyzeDifference(difference);
 		
 		System.out.println("---------------- Rules ---------------- ");
