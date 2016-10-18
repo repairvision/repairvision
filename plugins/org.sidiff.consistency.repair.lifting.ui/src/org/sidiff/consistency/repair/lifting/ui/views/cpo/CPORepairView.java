@@ -5,18 +5,25 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.sidiff.consistency.repair.lifting.ui.views.IInputControl;
 import org.sidiff.consistency.repair.lifting.ui.views.ModelDropWidget;
 import org.sidiff.consistency.repair.lifting.ui.views.RepairViewBasicInput;
 
-public class CPORepairView {
+public class CPORepairView implements IInputControl {
 
-	public static void createInputPartControl(SashForm sashForm, RepairViewCPOApp app) {
+	private ModelDropWidget cpEditRules;
+	
+	private ModelDropWidget subEditRules;
+	
+	private RepairViewBasicInput models;
+	
+	public void createInputPartControl(SashForm sashForm, RepairViewCPOApp app) {
 		
 		// Consistency-Preserving-Edit-Rules:
 		Composite composite_supereditrules = new Composite(sashForm, SWT.BORDER);
 		composite_supereditrules.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		new ModelDropWidget(composite_supereditrules, "Please drop the consistency-preserving-edit-rule(s) here!") {
+		cpEditRules = new ModelDropWidget(composite_supereditrules, "Please drop the consistency-preserving-edit-rule(s) here!") {
 
 			@Override
 			protected IResource removeModel(IResource selection) {
@@ -33,7 +40,7 @@ public class CPORepairView {
 		Composite composite_subeditrules = new Composite(sashForm, SWT.BORDER);
 		composite_subeditrules.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		new ModelDropWidget(composite_subeditrules, "Please drop the sub-edit-rule(s) here!") {
+		subEditRules = new ModelDropWidget(composite_subeditrules, "Please drop the sub-edit-rule(s) here!") {
 
 			@Override
 			protected IResource removeModel(IResource selection) {
@@ -47,9 +54,17 @@ public class CPORepairView {
 		};
 		
 		// Create the model input:
-		RepairViewBasicInput.createInputPartControl(sashForm, app);
+		models = new RepairViewBasicInput();
+		models.createInputPartControl(sashForm, app);
 
 		// Setup Sash-Form:
 		sashForm.setWeights(new int[] {100, 10, 10, 10, 10});
+	}
+
+	@Override
+	public void clear() {
+		cpEditRules.clear();
+		subEditRules.clear();
+		models.clear();
 	} 
 }

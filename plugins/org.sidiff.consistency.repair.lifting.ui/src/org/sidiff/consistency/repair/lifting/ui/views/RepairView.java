@@ -47,6 +47,8 @@ public class RepairView extends ViewPart {
 	
 	private TreeViewer viewer_repairs;
 	
+	private IInputControl input;
+	
 	private DrillDownAdapter drillDownAdapter;
 
 	private Action openConfiguration;
@@ -54,6 +56,8 @@ public class RepairView extends ViewPart {
 	private Action calculateRepairs;
 	
 	private Action applyRepairs;
+	
+	private Action clearSetup;
 
 	class NameSorter extends ViewerSorter {
 	}
@@ -122,15 +126,21 @@ public class RepairView extends ViewPart {
 		
 		if (repairEgineProvider.getSelectedEngine().equals(RepairDectection.PartialEditOperationBasedEngine)) {
 			RepairViewPartialEOApp partialEOApp = new RepairViewPartialEOApp(viewer_repairs);
-			TreeViewer viewer_validation = PartialEORepairView.createInputPartControl(sashForm, partialEOApp);
+			PartialEORepairView input = new PartialEORepairView();
+			
+			TreeViewer viewer_validation = input.createInputPartControl(sashForm, partialEOApp);
 			partialEOApp.setValidationViewer(viewer_validation);
 			this.viewerApp = partialEOApp;
+			this.input = input;
 		}
 		
 		else if (repairEgineProvider.getSelectedEngine().equals(RepairDectection.ConsistencyPreservingEditOperationBasedEngine)) {
 			RepairViewCPOApp cpoApp = new RepairViewCPOApp(viewer_repairs);
-			CPORepairView.createInputPartControl(sashForm, cpoApp);
+			CPORepairView input = new CPORepairView();
+			
+			input.createInputPartControl(sashForm, cpoApp);
 			this.viewerApp = cpoApp;
+			this.input = input;
 		}
 	}
 
@@ -175,6 +185,7 @@ public class RepairView extends ViewPart {
 		manager.add(calculateRepairs);
 		manager.add(applyRepairs);
 		manager.add(new Separator());
+		manager.add(clearSetup);
 		manager.add(openConfiguration);
 		manager.add(new Separator());
 		
@@ -229,6 +240,17 @@ public class RepairView extends ViewPart {
 		applyRepairs.setText("Apply Repair");
 		applyRepairs.setToolTipText("Apply Repair");
 		applyRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/apply.png"));
+		
+		// Clear setup:
+		clearSetup = new Action() {
+			public void run() {
+				viewerApp.clear();
+				clear();
+			}
+		};
+		clearSetup.setText("Clear");
+		clearSetup.setToolTipText("Clear");
+		clearSetup.setImageDescriptor(Activator.getImageDescriptor("icons/clear.png"));
 	}
 
 	private void hookDoubleClickAction() {
@@ -270,5 +292,10 @@ public class RepairView extends ViewPart {
 			viewer_repairs.getControl().getShell(),
 			this.getTitle(),
 			message);
+	}
+	
+	public void clear() {
+		viewer_repairs.setInput(null);
+		input.clear();
 	}
 }

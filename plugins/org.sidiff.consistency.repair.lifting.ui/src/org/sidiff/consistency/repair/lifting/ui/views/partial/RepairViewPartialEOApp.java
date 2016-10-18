@@ -129,4 +129,11 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 
 		return null;
 	}
+	
+	@Override
+	public void clear() {
+		super.clear();
+		editRuleFiles.clear();
+		repairJob = null;
+	}
 }

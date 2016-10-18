@@ -5,15 +5,19 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
-public class RepairViewBasicInput {
+public class RepairViewBasicInput implements IInputControl {
 
-	public static void createInputPartControl(Composite parent, RepairViewBasicApp app) {
+	private ModelDropWidget modelA;
+	
+	private ModelDropWidget modelB;
+	
+	public void createInputPartControl(Composite parent, RepairViewBasicApp app) {
 		
 		// Model A:
 		Composite composite_modelA = new Composite(parent, SWT.BORDER);
 		composite_modelA.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		new ModelDropWidget(composite_modelA, "Please drop the previous model version here!") {
+		modelA = new ModelDropWidget(composite_modelA, "Please drop the previous model version here!") {
 
 			@Override
 			protected IResource removeModel(IResource selection) {
@@ -22,8 +26,7 @@ public class RepairViewBasicInput {
 
 			@Override
 			protected IResource addModel(IResource element) {
-				clear();
-				app.removeModelA(app.modelAFile);
+				removeModel(app.modelAFile);
 				return app.addModelA(element);
 			}
 		};
@@ -32,7 +35,7 @@ public class RepairViewBasicInput {
 		Composite composite_modelB = new Composite(parent, SWT.BORDER);
 		composite_modelB.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		new ModelDropWidget(composite_modelB, "Please drop the actual model version here!") {
+		modelB = new ModelDropWidget(composite_modelB, "Please drop the actual model version here!") {
 
 			@Override
 			protected IResource removeModel(IResource selection) {
@@ -41,10 +44,15 @@ public class RepairViewBasicInput {
 
 			@Override
 			protected IResource addModel(IResource element) {
-				clear();
-				app.removeModelA(app.modelBFile);
+				removeModel(app.modelBFile);
 				return app.addModelB(element);
 			}
 		};
+	}
+
+	@Override
+	public void clear() {
+		modelA.clear();
+		modelB.clear();
 	}
 }

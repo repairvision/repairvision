@@ -160,4 +160,10 @@ public abstract class RepairViewBasicApp {
 		
 		return null;
 	}
+
+	public void clear() {
+		removeModelA(modelAFile);
+		removeModelB(modelBFile);
+		documentType = null;
+	}
 }

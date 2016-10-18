@@ -146,4 +146,12 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 
 		return null;
 	}
+	
+	@Override
+	public void clear() {
+		super.clear();
+		subEditRuleFiles.clear();
+		cpEditRuleFiles.clear();
+		repairJob = null;
+	}
 }
