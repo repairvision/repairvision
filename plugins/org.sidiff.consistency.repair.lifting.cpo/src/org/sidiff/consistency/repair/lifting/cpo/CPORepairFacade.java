@@ -131,7 +131,7 @@ public class CPORepairFacade {
 			long cpoLifting = System.currentTimeMillis();
 			
 			liftingSettings.setRuleBases(rulebases_cpos);
-			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING); // no post-processing
+			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING_AND_POST_PROCESSING); // no post-processing
 			difference = LiftingFacade.liftTechnicalDifference(difference, liftingSettings);
 			
 			if (DebugUtil.statistic) {
@@ -346,8 +346,8 @@ public class CPORepairFacade {
 		int coveredChanges = allChanges - uncoveredChanges;
 		
 		System.out.println("All Changes: " + allChanges);
-		System.out.println("Changes in Change Sets: " + uncoveredChanges);
-		System.out.println("Changes without Change Sets: " + coveredChanges);
+		System.out.println("Changes in Change Sets: " + coveredChanges);
+		System.out.println("Changes without Change Sets: " + uncoveredChanges);
 	}
 	
 	private static LiftingRuleBase createRuleBase(Collection<Rule> editRules, String name) {
