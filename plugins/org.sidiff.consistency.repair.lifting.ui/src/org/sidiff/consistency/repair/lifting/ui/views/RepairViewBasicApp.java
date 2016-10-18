@@ -51,28 +51,28 @@ public abstract class RepairViewBasicApp {
 	
 	public abstract void applyRepair(Repair repair);
 	
-	public boolean removeModelA(IResource selection) {
+	public IResource removeModelA(IResource selection) {
 		modelAFile = null;
 		showAvailableMatchers();
-		return true;
+		return selection;
 	}
 
-	public boolean addModelA(IResource element) {
+	public IResource addModelA(IResource element) {
 		modelAFile = element;
 		showAvailableMatchers();
-		return true;
+		return element;
 	}
 
-	public boolean removeModelB(IResource selection) {
+	public IResource removeModelB(IResource selection) {
 		modelBFile = null;
 		showAvailableMatchers();
-		return true;
+		return selection;
 	}
 
-	public boolean addModelB(IResource element) {
+	public IResource addModelB(IResource element) {
 		modelBFile = element;
 		showAvailableMatchers();
-		return true;
+		return element;
 	}
 	
 	private void showAvailableMatchers() {

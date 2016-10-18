@@ -153,6 +153,9 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			combo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 			combo.setBounds(0, 0, 91, 23);
 			
+			// TODO:
+			combo.setEnabled(false);
+			
 			// Provider:
 			viewer_repair.setSorter(new ViewerSorter());
 			viewer_repair.setContentProvider(ArrayContentProvider.getInstance());

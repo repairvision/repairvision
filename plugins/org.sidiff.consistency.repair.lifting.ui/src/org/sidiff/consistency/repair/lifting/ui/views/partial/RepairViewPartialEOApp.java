@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
@@ -101,17 +104,29 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 		}
 	}
 
-	public boolean removeEditRule(IResource selection) {
+	public IResource removeEditRule(IResource selection) {
 		editRuleFiles.remove(selection);
-		return true;
+		return selection;
 	}
 
-	public boolean addEditRule(IResource element) {
-		if (element.getFileExtension().equalsIgnoreCase("henshin")) {
-			editRuleFiles.add(element);
-			return true;
-		} else {
-			return false;
+	public IResource addEditRule(IResource element) {
+		
+		if ((element != null) && !editRuleFiles.contains(element)) {
+			
+			if (element.getFileExtension().equalsIgnoreCase("henshin")) {
+				editRuleFiles.add(element);
+				return element;
+			} 
+			
+			else if (element.getFileExtension().equalsIgnoreCase("henshin_diagram")) {
+				int extension = element.getLocationURI().getPath().lastIndexOf(".");
+				IPath rulePath = Path.fromOSString(element.getLocationURI().getPath().substring(0, extension) + ".henshin");
+				
+				IResource rule = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(rulePath);
+				return addEditRule(rule);
+			}
 		}
+
+		return null;
 	}
 }

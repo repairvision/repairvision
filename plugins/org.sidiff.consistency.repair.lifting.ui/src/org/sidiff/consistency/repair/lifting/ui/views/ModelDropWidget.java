@@ -128,15 +128,19 @@ public abstract class ModelDropWidget {
 	
 	private void addFile(IResource resource) {
 		if (resource.getType() == IResource.FILE) {
-			if (addModel(resource)) {
-				viewer_models.add(resource);
+			IResource added = addModel(resource);
+			
+			if (added != null) {
+				viewer_models.add(added);
 				viewer_models.remove(dropMessage);
 			}
 		}
 	}
 	
 	private void removeFile(IResource resource) {
-		if (removeModel(resource)) {
+		IResource removed = removeModel(resource);
+		
+		if (removed != null) {
 			viewer_models.remove(resource);
 		}
 		
@@ -150,9 +154,9 @@ public abstract class ModelDropWidget {
 		viewer_models.add(dropMessage);
 	}
 
-	protected abstract boolean addModel(IResource element);
+	protected abstract IResource addModel(IResource element);
 
-	protected abstract boolean removeModel(IResource selection);
+	protected abstract IResource removeModel(IResource selection);
 	
 	public static URI getURI(IResource workbenchResource) {
 

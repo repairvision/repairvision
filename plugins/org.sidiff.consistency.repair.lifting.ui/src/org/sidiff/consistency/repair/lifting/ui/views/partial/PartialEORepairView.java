@@ -47,12 +47,12 @@ public class PartialEORepairView {
 		new ModelDropWidget(composite_editrules, "Please drop the edit-rule(s) here!") {
 
 			@Override
-			protected boolean removeModel(IResource selection) {
+			protected IResource removeModel(IResource selection) {
 				return app.removeEditRule(selection);
 			}
 
 			@Override
-			protected boolean addModel(IResource element) {
+			protected IResource addModel(IResource element) {
 				return app.addEditRule(element);
 			}
 		};

@@ -16,13 +16,14 @@ public class RepairViewBasicInput {
 		new ModelDropWidget(composite_modelA, "Please drop the previous model version here!") {
 
 			@Override
-			protected boolean removeModel(IResource selection) {
+			protected IResource removeModel(IResource selection) {
 				return app.removeModelA(selection);
 			}
 
 			@Override
-			protected boolean addModel(IResource element) {
+			protected IResource addModel(IResource element) {
 				clear();
+				app.removeModelA(app.modelAFile);
 				return app.addModelA(element);
 			}
 		};
@@ -34,13 +35,14 @@ public class RepairViewBasicInput {
 		new ModelDropWidget(composite_modelB, "Please drop the actual model version here!") {
 
 			@Override
-			protected boolean removeModel(IResource selection) {
+			protected IResource removeModel(IResource selection) {
 				return app.removeModelB(selection);
 			}
 
 			@Override
-			protected boolean addModel(IResource element) {
+			protected IResource addModel(IResource element) {
 				clear();
+				app.removeModelA(app.modelBFile);
 				return app.addModelB(element);
 			}
 		};

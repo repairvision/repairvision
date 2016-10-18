@@ -19,12 +19,12 @@ public class CPORepairView {
 		new ModelDropWidget(composite_supereditrules, "Please drop the consistency-preserving-edit-rule(s) here!") {
 
 			@Override
-			protected boolean removeModel(IResource selection) {
+			protected IResource removeModel(IResource selection) {
 				return app.removeCPEditRule(selection);
 			}
 
 			@Override
-			protected boolean addModel(IResource element) {
+			protected IResource addModel(IResource element) {
 				return app.addCPEditRule(element);
 			}
 		};
@@ -36,12 +36,12 @@ public class CPORepairView {
 		new ModelDropWidget(composite_subeditrules, "Please drop the sub-edit-rule(s) here!") {
 
 			@Override
-			protected boolean removeModel(IResource selection) {
+			protected IResource removeModel(IResource selection) {
 				return app.removeSubEditRule(selection);
 			}
 
 			@Override
-			protected boolean addModel(IResource element) {
+			protected IResource addModel(IResource element) {
 				return app.addSubEditRule(element);
 			}
 		};
