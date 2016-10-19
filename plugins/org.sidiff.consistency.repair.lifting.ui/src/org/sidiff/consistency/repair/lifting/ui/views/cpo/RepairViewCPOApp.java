@@ -137,7 +137,7 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 	@Override
 	public RuleApplication undoLastRepair() {
 		
-		if (repairCalculation == null) {
+		if (repairJob == null) {
 			WorkbenchUtil.showMessage("Please start the repair calculation!");
 			return null;
 		}
@@ -207,6 +207,10 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 		super.clear();
 		subEditRuleFiles.clear();
 		cpEditRuleFiles.clear();
+		repairCalculation = null;
 		repairJob = null;
+		settings = null;
+		subEditRules = null;
+		cpEditRules = null; 
 	}
 }

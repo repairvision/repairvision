@@ -27,6 +27,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
+import org.sidiff.consistency.common.ui.NameUtil;
 import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.ui.Activator;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider;
@@ -263,7 +264,7 @@ public class RepairView extends ViewPart {
 					// Recalculate repairs:
 					viewerApp.recalculateRepairs();
 					
-					showMessage("Repair ("+ lastRepair.getRule().getName() +") successfully undone!");
+					showMessage("Repair ("+ NameUtil.beautifyName(lastRepair.getRule().getName()) +") successfully undone!");
 				} else {
 					showMessage("Repair could not be undone!");
 				}

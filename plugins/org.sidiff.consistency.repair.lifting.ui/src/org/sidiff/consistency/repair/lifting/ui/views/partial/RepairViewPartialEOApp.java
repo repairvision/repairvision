@@ -151,7 +151,7 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 	@Override
 	public RuleApplication undoLastRepair() {
 		
-		if (repairCalculation == null) {
+		if (repairJob == null) {
 			WorkbenchUtil.showMessage("Please start the repair calculation!");
 			return null;
 		}
@@ -194,6 +194,9 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 	public void clear() {
 		super.clear();
 		editRuleFiles.clear();
+		repairCalculation = null;
 		repairJob = null;
+		settings = null;
+		editRules = null;
 	}
 }
