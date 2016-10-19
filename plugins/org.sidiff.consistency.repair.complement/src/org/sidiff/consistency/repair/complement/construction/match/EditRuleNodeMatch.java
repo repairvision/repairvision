@@ -7,10 +7,9 @@ public abstract class EditRuleNodeMatch extends EditRuleMatch {
 
 	private Node node;
 	
-	public EditRuleNodeMatch(Node node, Type action) {
-		super();
+	public EditRuleNodeMatch(Type action, Node node) {
+		super(action);
 		this.node = node;
-		this.action = action;
 	}
 
 	public Node getNode() {

@@ -30,10 +30,8 @@ import org.sidiff.consistency.graphpattern.matcher.matching.partial.PartialMatch
 import org.sidiff.consistency.repair.complement.construction.ComplementConstructor;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.context.ContextComplementConstructor;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeCreateMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeDeleteMatch;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeSingleMatch;
 import org.sidiff.consistency.repair.lifting.engine.partial.PartialLiftingEngine;
 import org.sidiff.consistency.repair.lifting.engine.partial.PartialLiftingEngineFactory;
@@ -250,7 +248,9 @@ public class ComplementFinder {
 			EObject deleted = getDeletedObject(rrNodePatternA, variableMatching);
 
 			if (deleted != null) {
-				editRuleMatch.add(createEditRuleNodeMatch(eoHenshinNode, deleted, Type.DELETE));
+				EditRuleNodeSingleMatch deleteMatch = new EditRuleNodeSingleMatch(Type.DELETE, eoHenshinNode);
+				deleteMatch.setModelBElement(deleted);
+				editRuleMatch.add(deleteMatch);
 			}
 		}
 
@@ -262,7 +262,9 @@ public class ComplementFinder {
 			EObject created = getCreatedObject(rrNodePatternB, variableMatching);
 
 			if (created != null) {
-				editRuleMatch.add(createEditRuleNodeMatch(eoHenshinNode, created, Type.CREATE));
+				EditRuleNodeSingleMatch createMatch = new EditRuleNodeSingleMatch(Type.CREATE, eoHenshinNode);
+				createMatch.setModelBElement(created);
+				editRuleMatch.add(createMatch);
 			}
 		}
 
@@ -278,7 +280,9 @@ public class ComplementFinder {
 					src_rrNodePatternA, tgt_rrNodePatternA, variableMatching);
 
 			if (deleted != null) {
-				EditRuleEdgeDeleteMatch deleteMatch = new EditRuleEdgeDeleteMatch(eoHenshinEdge, deleted[0], deleted[1]);
+				EditRuleEdgeMatch deleteMatch = new EditRuleEdgeMatch(Type.DELETE, eoHenshinEdge);
+				deleteMatch.setSrcModelAElement(deleted[0]);
+				deleteMatch.setTgtModelAElement(deleted[1]);
 				editRuleMatch.add(deleteMatch);
 				
 				// Transfer context to model B if possible:
@@ -300,7 +304,15 @@ public class ComplementFinder {
 					src_rrNodePatternB, tgt_rrNodePatternB, variableMatching);
 			
 			if (created != null) {
-				editRuleMatch.add(new EditRuleEdgeCreateMatch(eoHenshinEdge, created[0], created[1]));
+				EditRuleEdgeMatch createMatch = new EditRuleEdgeMatch(Type.CREATE, eoHenshinEdge);
+				createMatch.setSrcModelBElement(created[0]);
+				createMatch.setTgtModelBElement(created[1]);
+				editRuleMatch.add(createMatch);
+				
+				// Transfer context to model A if possible:
+				// NOTE: The context might have been first created in model B!
+				createMatch.setSrcModelAElement(difference.getCorrespondingObjectInA(created[0]));
+				createMatch.setTgtModelAElement(difference.getCorrespondingObjectInA(created[1]));
 			}
 		}
 		
@@ -379,15 +391,6 @@ public class ComplementFinder {
 		} else {
 			return null;
 		}
-	}
-
-//	private List<EObject> getMatch(NodePattern node) {
-//		MatchSelection selection = MatchingHelper.getDataStore(node).getMatchSelection();
-//		return selection.getMatch();
-//	}
-
-	private EditRuleNodeMatch createEditRuleNodeMatch(Node node, EObject match, Type type) {
-		return new EditRuleNodeSingleMatch(node, type, match);
 	}
 
 //	private EditRuleNodeMatch createEditRuleNodeMatch(Node node, List<EObject> match, Type type) {

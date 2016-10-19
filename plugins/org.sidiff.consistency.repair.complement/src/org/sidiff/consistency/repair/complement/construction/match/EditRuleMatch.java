@@ -5,9 +5,6 @@ import org.eclipse.emf.henshin.model.Action.Type;
 public abstract class EditRuleMatch {
 
 	protected Type action;
-
-	public EditRuleMatch() {
-	}
 	
 	public EditRuleMatch(Type action) {
 		this.action = action;

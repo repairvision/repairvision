@@ -9,6 +9,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -97,19 +98,12 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		
 		// e.g. Complementing/Historic container:
 		else if (parentElement instanceof Container) {
+			// Return e.g. changes as children:
 			return ((Container) parentElement).content;
 		}
 		
 		else if (parentElement instanceof Change) {
 			Change change = ((Change) parentElement);
-			
-			// FIXME[WORKAROUND]: Fix incomplete matches!
-			for (Object match : change.matches) {
-				if (match == null) {
-					return new Object[0];
-				}
-			}
-			
 			return change.matches;
 		}
 		
@@ -127,10 +121,38 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			change.nodes[0] = edge.getSource();
 			change.nodes[1] = edge.getTarget();
 			
-			// FIXME: We need the model A matches for delete edges here!
-			change.matches = new EObject[2];
-			change.matches[0] = ((EditRuleEdgeMatch) editRuleMatch).getSrcModelElement();
-			change.matches[1] = ((EditRuleEdgeMatch) editRuleMatch).getTgtModelElement();
+			EObject srcMatch = null;
+			EObject tgtMatch = null;
+			
+			if (((EditRuleEdgeMatch) editRuleMatch).getAction().equals(Type.DELETE)) {
+				srcMatch = ((EditRuleEdgeMatch) editRuleMatch).getSrcModelAElement();
+				tgtMatch = ((EditRuleEdgeMatch) editRuleMatch).getTgtModelAElement();
+			} else {
+				assert ((EditRuleEdgeMatch) editRuleMatch).getAction().equals(Type.CREATE);
+				
+				srcMatch = ((EditRuleEdgeMatch) editRuleMatch).getSrcModelBElement();
+				tgtMatch = ((EditRuleEdgeMatch) editRuleMatch).getTgtModelBElement();
+			}
+			
+			if ((srcMatch != null) && (tgtMatch != null)) {
+				change.matches = new EObject[2];
+				change.matches[0] = srcMatch;
+				change.matches[1] = tgtMatch;
+			} else {
+				
+				if ((srcMatch != null) || (tgtMatch != null)) {
+					change.matches = new EObject[1];
+					
+					if (srcMatch != null) {
+						change.matches[0] = srcMatch;
+					} 
+					if (tgtMatch != null) {
+						change.matches[0] = tgtMatch;
+					}
+				} else {
+					change.matches = new EObject[0];
+				}
+			}
 		}
 		
 		else if (editRuleMatch instanceof EditRuleNodeSingleMatch) {
@@ -140,7 +162,14 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			change.nodes[0] = (Node) change.graphElement;
 			
 			change.matches = new EObject[1];
-			change.matches[0] = ((EditRuleNodeSingleMatch) editRuleMatch).getModelElement();
+			
+			if (((EditRuleNodeSingleMatch) editRuleMatch).getAction().equals(Type.DELETE)) {
+				change.matches[0] = ((EditRuleNodeSingleMatch) editRuleMatch).getModelAElement();
+			} else {
+				assert ((EditRuleNodeSingleMatch) editRuleMatch).getAction().equals(Type.CREATE);
+				
+				change.matches[0] = ((EditRuleNodeSingleMatch) editRuleMatch).getModelBElement();
+			}
 		}
 		
 		return change;

@@ -1,5 +1,8 @@
 package org.sidiff.consistency.repair.complement.construction.cpo;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -11,15 +14,12 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
 import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.repair.complement.construction.ComplementConstructor;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleAttributeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeCreateMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeDeleteMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
@@ -104,18 +104,24 @@ public class CPOComplementConstructor extends ComplementConstructor {
 				Node superRuleNode = embedding.getSuperRuleNode(subRuleNode);
 				
 				if (subEditRuleMatch instanceof EditRuleNodeSingleMatch) {
-					EObject match = ((EditRuleNodeSingleMatch) subEditRuleMatch).getModelElement();
+					EObject matchA = ((EditRuleNodeSingleMatch) subEditRuleMatch).getModelAElement();
+					EObject matchB = ((EditRuleNodeSingleMatch) subEditRuleMatch).getModelBElement();
 					
-					EditRuleNodeMatch superEditRuleNodeMatch = new  EditRuleNodeSingleMatch(
-							superRuleNode, subEditRuleMatch.getAction(), match);
+					EditRuleNodeSingleMatch superEditRuleNodeMatch = new  EditRuleNodeSingleMatch(
+							subEditRuleMatch.getAction(), superRuleNode);
+					superEditRuleNodeMatch.setModelAElement(matchA);
+					superEditRuleNodeMatch.setModelBElement(matchB);
 					superEditRuleMatch.add(superEditRuleNodeMatch);
 				}
 				
-				else  if (subEditRuleMatch instanceof EditRuleNodeMultiMatch) {
-					Collection<EObject> matches = ((EditRuleNodeMultiMatch) subEditRuleMatch).getModelElements();
+				else if (subEditRuleMatch instanceof EditRuleNodeMultiMatch) {
+					Collection<EObject> matchesA = ((EditRuleNodeMultiMatch) subEditRuleMatch).getModelAElements();
+					Collection<EObject> matchesB = ((EditRuleNodeMultiMatch) subEditRuleMatch).getModelBElements();
 
-					EditRuleNodeMatch superEditRuleNodeMatch = new  EditRuleNodeMultiMatch(
-							superRuleNode, subEditRuleMatch.getAction(), matches);
+					EditRuleNodeMultiMatch superEditRuleNodeMatch = new  EditRuleNodeMultiMatch(
+							subEditRuleMatch.getAction(), superRuleNode);
+					superEditRuleNodeMatch.setModelAElements(matchesA);
+					superEditRuleNodeMatch.setModelBElements(matchesB);
 					superEditRuleMatch.add(superEditRuleNodeMatch);
 				}
 			}
@@ -140,18 +146,18 @@ public class CPOComplementConstructor extends ComplementConstructor {
 				
 				assert (superRuleEdge != null);
 				
-				EObject srcMatch = ((EditRuleEdgeMatch) subEditRuleMatch).getSrcModelElement();
-				EObject tgtMatch = ((EditRuleEdgeMatch) subEditRuleMatch).getTgtModelElement();
+				EObject srcMatchA = ((EditRuleEdgeMatch) subEditRuleMatch).getSrcModelAElement();
+				EObject tgtMatchA = ((EditRuleEdgeMatch) subEditRuleMatch).getTgtModelAElement();
 				
-				EditRuleEdgeMatch superEditRuleNodeMatch = null;
+				EObject srcMatchB = ((EditRuleEdgeMatch) subEditRuleMatch).getSrcModelBElement();
+				EObject tgtMatchB = ((EditRuleEdgeMatch) subEditRuleMatch).getTgtModelBElement();
 				
-				if (subEditRuleMatch instanceof EditRuleEdgeDeleteMatch) {
-					superEditRuleNodeMatch = new  EditRuleEdgeDeleteMatch(superRuleEdge, srcMatch, tgtMatch);
-				}
-				
-				else if (subEditRuleMatch instanceof EditRuleEdgeCreateMatch) {
-					superEditRuleNodeMatch = new  EditRuleEdgeCreateMatch(superRuleEdge, srcMatch, tgtMatch);
-				}
+				EditRuleEdgeMatch superEditRuleNodeMatch = new EditRuleEdgeMatch(
+						((EditRuleEdgeMatch) subEditRuleMatch).getAction(), superRuleEdge);
+				superEditRuleNodeMatch.setSrcModelAElement(srcMatchA);
+				superEditRuleNodeMatch.setTgtModelAElement(tgtMatchA);
+				superEditRuleNodeMatch.setSrcModelBElement(srcMatchB);
+				superEditRuleNodeMatch.setTgtModelBElement(tgtMatchB);
 				
 				assert (superEditRuleNodeMatch != null);
 				superEditRuleMatch.add(superEditRuleNodeMatch);

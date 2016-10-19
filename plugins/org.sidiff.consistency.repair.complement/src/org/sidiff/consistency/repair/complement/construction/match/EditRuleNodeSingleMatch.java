@@ -6,18 +6,27 @@ import org.eclipse.emf.henshin.model.Node;
 
 public class EditRuleNodeSingleMatch extends EditRuleNodeMatch {
 
-	private EObject modelElement;
+	private EObject modelAElement;
+	
+	private EObject modelBElement;
 
-	public EditRuleNodeSingleMatch(Node node, Type action, EObject modelElement) {
-		super(node, action);
-		this.modelElement = modelElement;
+	public EditRuleNodeSingleMatch(Type action, Node node) {
+		super(action, node);
+	}
+	
+	public EObject getModelAElement() {
+		return modelAElement;
 	}
 
-	public EObject getModelElement() {
-		return modelElement;
+	public void setModelAElement(EObject modelAElement) {
+		this.modelAElement = modelAElement;
 	}
 
-	public void setModelElement(EObject modelElement) {
-		this.modelElement = modelElement;
+	public EObject getModelBElement() {
+		return modelBElement;
+	}
+
+	public void setModelBElement(EObject modelBElement) {
+		this.modelBElement = modelBElement;
 	}
 }

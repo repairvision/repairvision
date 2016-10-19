@@ -43,7 +43,7 @@ public class CPOComplementRule extends ComplementRule  {
 					Node complementNode = getLHS(getTrace(nodeMatch.getNode()));
 					
 					if (complementNode != null) {
-						complementPreMatche.setNodeTarget(complementNode, nodeMatch.getModelElement());
+						complementPreMatche.setNodeTarget(complementNode, nodeMatch.getModelBElement());
 					}
 				}
 			}

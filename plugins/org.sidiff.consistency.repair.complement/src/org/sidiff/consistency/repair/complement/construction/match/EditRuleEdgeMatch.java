@@ -4,20 +4,21 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
 
-public abstract class EditRuleEdgeMatch extends EditRuleMatch {
+public class EditRuleEdgeMatch extends EditRuleMatch {
 
 	private Edge edge;
 	
-	private EObject srcModelElement;
+	private EObject srcModelAElement;
 	
-	private EObject tgtModelElement;
+	private EObject tgtModelAElement;
+	
+	private EObject srcModelBElement;
+	
+	private EObject tgtModelBElement;
 
-	public EditRuleEdgeMatch(Edge edge, Type action, EObject srcModelElement, EObject tgtModelElement) {
-		super();
+	public EditRuleEdgeMatch(Type action, Edge edge) {
+		super(action);
 		this.edge = edge;
-		this.action = action;
-		this.srcModelElement = srcModelElement;
-		this.tgtModelElement = tgtModelElement;
 	}
 
 	public Edge getEdge() {
@@ -28,27 +29,35 @@ public abstract class EditRuleEdgeMatch extends EditRuleMatch {
 		this.edge = edge;
 	}
 
-	public Type getAction() {
-		return action;
+	public EObject getSrcModelAElement() {
+		return srcModelAElement;
 	}
 
-	public void setAction(Type action) {
-		this.action = action;
+	public void setSrcModelAElement(EObject srcModelAElement) {
+		this.srcModelAElement = srcModelAElement;
 	}
 
-	public EObject getSrcModelElement() {
-		return srcModelElement;
+	public EObject getTgtModelAElement() {
+		return tgtModelAElement;
 	}
 
-	public void setSrcModelElement(EObject srcModelElement) {
-		this.srcModelElement = srcModelElement;
+	public void setTgtModelAElement(EObject tgtModelAElement) {
+		this.tgtModelAElement = tgtModelAElement;
 	}
 
-	public EObject getTgtModelElement() {
-		return tgtModelElement;
+	public EObject getSrcModelBElement() {
+		return srcModelBElement;
 	}
 
-	public void setTgtModelElement(EObject tgtModelElement) {
-		this.tgtModelElement = tgtModelElement;
+	public void setSrcModelBElement(EObject srcModelBElement) {
+		this.srcModelBElement = srcModelBElement;
+	}
+
+	public EObject getTgtModelBElement() {
+		return tgtModelBElement;
+	}
+
+	public void setTgtModelBElement(EObject tgtModelBElement) {
+		this.tgtModelBElement = tgtModelBElement;
 	}
 }

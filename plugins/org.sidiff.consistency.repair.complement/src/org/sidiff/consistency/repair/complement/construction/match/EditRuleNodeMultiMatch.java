@@ -8,18 +8,27 @@ import org.eclipse.emf.henshin.model.Node;
 
 public class EditRuleNodeMultiMatch extends EditRuleNodeMatch {
 
-	private Collection<EObject> modelElements;
+	private Collection<EObject> modelAElements;
+	
+	private Collection<EObject> modelBElements;
 
-	public EditRuleNodeMultiMatch(Node node, Type action, Collection<EObject> modelElements) {
-		super(node, action);
-		this.modelElements = modelElements;
+	public EditRuleNodeMultiMatch(Type action, Node node) {
+		super(action, node);
 	}
 
-	public Collection<EObject> getModelElements() {
-		return modelElements;
+	public Collection<EObject> getModelAElements() {
+		return modelAElements;
 	}
 
-	public void setModelElements(Collection<EObject> modelElements) {
-		this.modelElements = modelElements;
+	public void setModelAElements(Collection<EObject> modelAElements) {
+		this.modelAElements = modelAElements;
+	}
+
+	public Collection<EObject> getModelBElements() {
+		return modelBElements;
+	}
+
+	public void setModelBElements(Collection<EObject> modelBElements) {
+		this.modelBElements = modelBElements;
 	}
 }

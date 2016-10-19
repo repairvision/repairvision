@@ -225,13 +225,13 @@ public class ComplementUtil {
 				print.append(", " + ((EditRuleNodeMatch) editRuleMatch).getNode());
 
 				if (editRuleMatch instanceof EditRuleNodeSingleMatch) {
-					print.append(", " + ((EditRuleNodeSingleMatch) editRuleMatch).getModelElement());
+					print.append(", " + ((EditRuleNodeSingleMatch) editRuleMatch).getModelBElement());
 				}
 
 				else if (editRuleMatch instanceof EditRuleNodeMultiMatch) {
 					print.append(", {");
 
-					for (EObject modelElement : ((EditRuleNodeMultiMatch) editRuleMatch).getModelElements()) {
+					for (EObject modelElement : ((EditRuleNodeMultiMatch) editRuleMatch).getModelBElements()) {
 						print.append(", " + modelElement);
 					}
 
@@ -242,8 +242,8 @@ public class ComplementUtil {
 			else if (editRuleMatch instanceof EditRuleEdgeMatch) {
 				print.append(", " + ((EditRuleEdgeMatch) editRuleMatch).getEdge());
 
-				print.append(", SRC: " + ((EditRuleEdgeMatch) editRuleMatch).getSrcModelElement());
-				print.append(", TGT: " + ((EditRuleEdgeMatch) editRuleMatch).getTgtModelElement());
+				print.append(", SRC: " + ((EditRuleEdgeMatch) editRuleMatch).getSrcModelBElement());
+				print.append(", TGT: " + ((EditRuleEdgeMatch) editRuleMatch).getTgtModelBElement());
 			}
 			
 			else if (editRuleMatch instanceof EditRuleAttributeMatch) {

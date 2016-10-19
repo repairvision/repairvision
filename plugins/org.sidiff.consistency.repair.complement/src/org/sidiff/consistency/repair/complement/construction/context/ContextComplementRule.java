@@ -16,7 +16,6 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeDeleteMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeSingleMatch;
@@ -50,26 +49,26 @@ public class ContextComplementRule extends ComplementRule {
 
 					addMatch(complementMatche,
 							((EditRuleEdgeMatch) sourceRuleMatch).getEdge().getSource(),
-							((EditRuleEdgeMatch) sourceRuleMatch).getSrcModelElement());
+							((EditRuleEdgeMatch) sourceRuleMatch).getSrcModelBElement());
 					addMatch(complementMatche,
 							((EditRuleEdgeMatch) sourceRuleMatch).getEdge().getTarget(),
-							((EditRuleEdgeMatch) sourceRuleMatch).getTgtModelElement());
+							((EditRuleEdgeMatch) sourceRuleMatch).getTgtModelBElement());
 				}
 				
 				else if (sourceRuleMatch.getAction().equals(Type.DELETE)) {
 
-					EObject src = ((EditRuleEdgeDeleteMatch) sourceRuleMatch).getSrcModelBElement();
+					EObject src = ((EditRuleEdgeMatch) sourceRuleMatch).getSrcModelBElement();
 					
 					if (src != null) {
 						addMatch(complementMatche,
-								((EditRuleEdgeDeleteMatch) sourceRuleMatch).getEdge().getSource(), src);
+								((EditRuleEdgeMatch) sourceRuleMatch).getEdge().getSource(), src);
 					}
 					
-					EObject tgt = ((EditRuleEdgeDeleteMatch) sourceRuleMatch).getTgtModelBElement();
+					EObject tgt = ((EditRuleEdgeMatch) sourceRuleMatch).getTgtModelBElement();
 					
 					if (tgt != null) {
 						addMatch(complementMatche,
-								((EditRuleEdgeDeleteMatch) sourceRuleMatch).getEdge().getTarget(), tgt);
+								((EditRuleEdgeMatch) sourceRuleMatch).getEdge().getTarget(), tgt);
 					}
 				}
 			}
@@ -79,11 +78,11 @@ public class ContextComplementRule extends ComplementRule {
 
 					addMatch(complementMatche,
 							((EditRuleNodeSingleMatch) sourceRuleMatch).getNode(),
-							((EditRuleNodeSingleMatch) sourceRuleMatch).getModelElement());
+							((EditRuleNodeSingleMatch) sourceRuleMatch).getModelBElement());
 				}
 			}
 
-			// Ignore EditRuleNodeMulitMatches... only unique context!
+			// NOTE: Ignore EditRuleNodeMulitMatches... only unique context!
 		}
 		
 		// Check context rule (with restricted working graph):
