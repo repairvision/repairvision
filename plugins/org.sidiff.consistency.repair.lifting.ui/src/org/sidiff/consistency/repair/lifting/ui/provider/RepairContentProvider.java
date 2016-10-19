@@ -1,15 +1,20 @@
 package org.sidiff.consistency.repair.lifting.ui.provider;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -26,11 +31,17 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 
 	protected Map<Rule, List<Repair>> repairs;
 	
+	// TODO: Add specific classes.
 	public class Container {
 		String label;
 		Image icon;
 		Object parent;
 		Object[] content;
+	}
+	
+	public class ContextContainer {
+		EObject conext;
+		List<Repair> repairs;
 	}
 	
 	public class Change {
@@ -56,7 +67,56 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	public Object[] getChildren(Object parentElement) {
 		
 		if (parentElement instanceof Rule) {
-			return repairs.get(parentElement).toArray();
+			
+			// Rule-Context -> Repairs:
+			Map<EObject, List<Repair>> repairsByContext = new LinkedHashMap<>();
+			
+			for (Repair repair : repairs.get(parentElement)) {
+				Parameter context = repair.getRepairPreMatch().getMatch().getRule().getParameter("context");
+				Object value = repair.getRepairPreMatch().getMatch().getParameterValue(context);
+				
+				if (value instanceof EObject) {
+					// Add repair to the context value:
+					List<Repair> repairs  = repairsByContext.getOrDefault(value, new LinkedList<Repair>());
+					repairs.add(repair);
+					repairsByContext.put((EObject) value, repairs);
+				} else {
+					// Uncategorized repair without context:
+					List<Repair> repairs  = repairsByContext.getOrDefault(null, new LinkedList<Repair>());
+					repairs.add(repair);
+					repairsByContext.put(null, repairs);
+				}
+				
+			}
+			
+			// Rule content:
+			List<Repair> repairsWithoutContext = repairsByContext.getOrDefault(null, Collections.emptyList());
+			repairsByContext.remove(null);
+			
+			Object[] ruleContent = new Object[repairsByContext.size() + repairsWithoutContext.size()]; 
+			
+			for (int i = 0; i < repairsWithoutContext.size(); i++) {
+				Repair repair = repairsWithoutContext.get(i);
+				ruleContent[i + repairsByContext.size()] = repair;
+			}
+			
+			// Create context containers:
+			int i = 0;
+			
+			for (Entry<EObject, List<Repair>> contextEntry : repairsByContext.entrySet()) {
+				ContextContainer contextContainer = new ContextContainer();
+				contextContainer.conext = contextEntry.getKey();
+				contextContainer.repairs = contextEntry.getValue();
+				
+				ruleContent[i] = contextContainer;
+				++i;
+			}
+			
+			return ruleContent;
+		}
+		
+		else if (parentElement instanceof ContextContainer) {
+			return ((ContextContainer) parentElement).repairs.toArray();
 		}
 		
 		else if (parentElement instanceof Repair) {
@@ -173,6 +233,41 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		}
 		
 		return change;
+	}
+	
+	@Override
+	public Object getParent(Object element) {
+		return null;
+	}
+
+	@Override
+	public boolean hasChildren(Object element) {
+		
+		// Repair-Rule:
+		if (element instanceof Rule ||
+				element instanceof Repair ||
+				element instanceof Container ||
+				element instanceof ContextContainer) {
+			return true;
+		}
+		
+		// Single change:
+		if (element instanceof Change) {
+			return (((Change) element).matches.length > 0);
+		}
+		
+		return false;
+	}
+
+	@Override
+	public Object[] getElements(Object inputElement) {
+		
+		// Repair-Rules:
+		if (inputElement instanceof Map<?, ?>) {
+			return ((Map<?, ?>) inputElement).keySet().toArray();
+		}
+		
+		return getChildren(inputElement);
 	}
 	
 	private Change toComplemetingChange(GraphElement graphElement, ComplementMatch preMatch) {
@@ -304,44 +399,5 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		change.matches = contextMatches.toArray(new EObject[0]);
 		
 		return change;
-	}
-
-	@Override
-	public Object getParent(Object element) {
-		
-		if (element instanceof Repair) {
-			((Repair) element).getEditRule();
-		}
-		
-		else if (element instanceof Container) {
-			return ((Container) element).parent;
-		}
-		
-		return null;
-	}
-
-	@Override
-	public boolean hasChildren(Object element) {
-		
-		// Repair-Rule:
-		if (element instanceof Rule ||
-				element instanceof Repair ||
-				element instanceof Container ||
-				element instanceof Change) {
-			return true;
-		}
-		
-		return false;
-	}
-
-	@Override
-	public Object[] getElements(Object inputElement) {
-		
-		// Repair-Rules:
-		if (inputElement instanceof Map<?, ?>) {
-			return ((Map<?, ?>) inputElement).keySet().toArray();
-		}
-		
-		return getChildren(inputElement);
 	}
 }

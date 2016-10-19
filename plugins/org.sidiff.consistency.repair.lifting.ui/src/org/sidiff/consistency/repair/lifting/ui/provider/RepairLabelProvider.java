@@ -12,6 +12,7 @@ import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.ui.Activator;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.Change;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.Container;
+import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.ContextContainer;
 
 public class RepairLabelProvider extends LabelProvider {
 
@@ -51,6 +52,10 @@ public class RepairLabelProvider extends LabelProvider {
 			return IMG_MODULE;
 		}
 		
+		else if (element instanceof ContextContainer) {
+			return emfLabelProvider.getImage(((ContextContainer) element).conext);
+		}
+		
 		if (element instanceof Repair) {
 			return IMG_REPAIR_RULE;
 		}
@@ -79,6 +84,10 @@ public class RepairLabelProvider extends LabelProvider {
 		
 		if (element instanceof Rule) {
 			return NameUtil.beautifyName(((Rule) element).getName());
+		}
+		
+		else if (element instanceof ContextContainer) {
+			return "Repair Context: " + emfLabelProvider.getText(((ContextContainer) element).conext);
 		}
 		
 		else if (element instanceof Repair) {

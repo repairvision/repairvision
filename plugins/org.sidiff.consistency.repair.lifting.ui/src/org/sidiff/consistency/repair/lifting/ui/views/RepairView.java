@@ -30,6 +30,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.sidiff.consistency.common.ui.NameUtil;
 import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.ui.Activator;
+import org.sidiff.consistency.repair.lifting.ui.decoration.RepairSelectionController;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairLabelProvider;
 import org.sidiff.consistency.repair.lifting.ui.ranking.HistoricComplementingRatioRepairRanking;
@@ -99,6 +100,8 @@ public class RepairView extends ViewPart {
 		viewer_repairs.setContentProvider(new RepairContentProvider());
 		viewer_repairs.setLabelProvider(new RepairLabelProvider());
 		viewer_repairs.setSorter(new HistoricComplementingRatioRepairRanking());
+		
+		viewer_repairs.addSelectionChangedListener(RepairSelectionController.getInstance());
 		
 		drillDownAdapter = new DrillDownAdapter(viewer_repairs);
 
