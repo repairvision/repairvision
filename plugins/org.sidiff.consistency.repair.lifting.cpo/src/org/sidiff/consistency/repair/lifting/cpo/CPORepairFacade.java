@@ -83,16 +83,56 @@ public class CPORepairFacade {
 			Collection<Rule> subEditRules, Collection<Rule> cpEditRules, 
 			String documentType, DifferenceSettings settings) {
 		
-		long repairJobTime = System.currentTimeMillis();
+		// Load models:
 		long startLoadModels = System.currentTimeMillis();
 		
-		// Initialize:
 		ResourceSet differenceRSS = new ResourceSetImpl();
 		Resource modelA = differenceRSS.getResource(uriModelA, true);
 		Resource modelB = differenceRSS.getResource(uriModelB, true);
 		
 		if (DebugUtil.statistic) {
 			System.out.println("#DONE# Loading Models: " + (System.currentTimeMillis() - startLoadModels) + "ms");
+		}
+		
+		return getRepairs(modelA, modelB, subEditRules, cpEditRules, documentType, settings);
+	}
+	
+	/**
+	 * Search for partially executed edit-operation which might cause an
+	 * inconsistency. A repair complements such a partial edit-operation.
+	 * 
+	 * @param modelA
+	 *            The historic model.
+	 * @param modelB
+	 *            The actual model.
+	 * @param subEditRules
+	 *            All edit-rules which are to be investigated for partial executions.
+	 * @param cpEditRules
+	 *            All consistency-preserving edit-operations.
+	 * @param documentType
+	 * @param settings
+	 *            The settings for the difference calculation.
+	 * @return All found repairs.
+	 */
+	public static RepairJob getRepairs(
+			Resource modelA, Resource modelB, 
+			Collection<Rule> subEditRules, Collection<Rule> cpEditRules, 
+			String documentType, DifferenceSettings settings) {
+		
+		long repairJobTime = System.currentTimeMillis();
+		
+		// Initialize:
+		assert (modelA.getResourceSet() == modelB.getResourceSet());
+		ResourceSet differenceRSS = modelA.getResourceSet(); 
+		
+		// TODO: Create fresh resource set!?
+		// [Workaround] (Cleanup) Remove old difference:
+		for (Iterator<Resource> it = differenceRSS.getResources().iterator(); it.hasNext();) {
+			Resource res = it.next();
+			
+			if (res instanceof SymmetricDifference) {
+				it.remove();
+			}
 		}
 		
 		// Calculate difference:
@@ -131,7 +171,7 @@ public class CPORepairFacade {
 			long cpoLifting = System.currentTimeMillis();
 			
 			liftingSettings.setRuleBases(rulebases_cpos);
-			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING_AND_POST_PROCESSING); // no post-processing
+			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING); // no post-processing
 			difference = LiftingFacade.liftTechnicalDifference(difference, liftingSettings);
 			
 			if (DebugUtil.statistic) {
@@ -147,6 +187,7 @@ public class CPORepairFacade {
 				}
 			}
 			difference.getChangeSets().clear();
+			difference.getUnusedChangeSets().clear();
 			
 			if (DebugUtil.statistic) {
 				System.out.println("#DONE# Searching CPOs: " + (System.currentTimeMillis() - cpoLifting) + "ms");

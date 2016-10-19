@@ -1,5 +1,6 @@
 package org.sidiff.consistency.repair.lifting.ui.views;
 
+import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -56,6 +57,8 @@ public class RepairView extends ViewPart {
 	private Action calculateRepairs;
 	
 	private Action applyRepairs;
+	
+	private Action undoRepairs;
 	
 	private Action clearSetup;
 
@@ -184,6 +187,7 @@ public class RepairView extends ViewPart {
 		manager.add(new Separator());
 		manager.add(calculateRepairs);
 		manager.add(applyRepairs);
+		manager.add(undoRepairs);
 		manager.add(new Separator());
 		manager.add(clearSetup);
 		manager.add(openConfiguration);
@@ -229,7 +233,15 @@ public class RepairView extends ViewPart {
 					Object selectedElement = ((IStructuredSelection)selection).getFirstElement();
 					
 					if (selectedElement instanceof Repair) {
-						viewerApp.applyRepair((Repair) selectedElement);
+						if (viewerApp.applyRepair((Repair) selectedElement)) {
+							// TODO: Ask the user what to do!
+							// Recalculate repairs:
+							viewerApp.recalculateRepairs();
+							
+							showMessage("Repair successfully applied!");
+						} else {
+							showMessage("Repair could not be applied!");
+						}
 						return;
 					}
 				}
@@ -240,6 +252,26 @@ public class RepairView extends ViewPart {
 		applyRepairs.setText("Apply Repair");
 		applyRepairs.setToolTipText("Apply Repair");
 		applyRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/apply.png"));
+		
+		// Undo repair:
+		undoRepairs = new Action() {
+			public void run() {
+				RuleApplication lastRepair = viewerApp.undoLastRepair();
+				
+				if (lastRepair != null) {
+					// TODO: Ask the user what to do!
+					// Recalculate repairs:
+					viewerApp.recalculateRepairs();
+					
+					showMessage("Repair ("+ lastRepair.getRule().getName() +") successfully undone!");
+				} else {
+					showMessage("Repair could not be undone!");
+				}
+			}
+		};
+		undoRepairs.setText("Undo Repair");
+		undoRepairs.setToolTipText("Undo Repair");
+		undoRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/undo.png"));
 		
 		// Clear setup:
 		clearSetup = new Action() {

@@ -206,7 +206,7 @@ public abstract class ComplementRule {
 	 * @return <code>true</code> if the rule was successfully applied;
 	 *         <code>false</code> otherwise.
 	 */
-	public boolean apply(ComplementMatch complementPreMatch) {
+	public RuleApplication apply(ComplementMatch complementPreMatch) {
 		
 		if ((engine == null) || (graph == null)) {
 			throw new RuntimeException("Initialize graph transformation engine!");
@@ -241,7 +241,11 @@ public abstract class ComplementRule {
 			application.setEGraph(graph);
 			application.setCompleteMatch(preMatch);
 			
-			return application.execute(null);
+			if (application.execute(null)) {
+				return application;
+			} else {
+				return null;
+			}
 //		}
 //		
 //		return false;

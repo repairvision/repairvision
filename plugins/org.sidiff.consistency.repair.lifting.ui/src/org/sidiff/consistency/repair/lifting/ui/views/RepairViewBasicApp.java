@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
@@ -49,7 +50,11 @@ public abstract class RepairViewBasicApp {
 	
 	public abstract void calculateRepairs();
 	
-	public abstract void applyRepair(Repair repair);
+	public abstract void recalculateRepairs();
+	
+	public abstract boolean applyRepair(Repair repair);
+	
+	public abstract RuleApplication undoLastRepair();
 	
 	public IResource removeModelA(IResource selection) {
 		modelAFile = null;

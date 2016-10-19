@@ -25,7 +25,7 @@ public class DebugUtil {
 	public static boolean isActive = false;
 	
 	// TODO: config flag
-	public static boolean statistic = true;
+	public static boolean statistic = false;
 
 	static {
 		String[] args = Platform.getCommandLineArgs();

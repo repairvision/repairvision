@@ -1,14 +1,19 @@
 package org.sidiff.consistency.repair.lifting.api;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.repair.validation.util.BatchValidationIterator.Validation;
 
 public class RepairJob {
+	
+	protected Stack<RuleApplication> repairStack = new Stack<>();
 
 	protected Map<Rule, List<Repair>> repairs;
 	
@@ -21,6 +26,49 @@ public class RepairJob {
 	protected Resource difference;
 	
 	public RepairJob() {
+	}
+	
+	public void copyHistory(RepairJob repairJob) {
+		this.repairStack = repairJob.repairStack;
+	}
+	
+	public RuleApplication applyRepair(Repair repair) {
+		
+		// Apply repair:
+		RuleApplication repairApplication = repair.apply();
+		repairStack.push(repairApplication);
+		
+		// Save model
+		if (repairApplication != null) {
+			try {
+				getModelB().save(null);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return repairApplication;
+	}
+	
+	public RuleApplication undoLastRepair() {
+		
+		// Undo repair:
+		if (!repairStack.isEmpty()) {
+			RuleApplication lastRepair = repairStack.pop();
+			
+			// Save model
+			if (lastRepair.undo(null)) {
+				try {
+					getModelB().save(null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return lastRepair;
+		} else {
+			return null;
+		}
 	}
 
 	public Map<Rule, List<Repair>> getRepairs() {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
@@ -94,10 +95,9 @@ public class Repair {
 	}
 	
 	/**
-	 * @return <code>true</code> if the repair was successfully applied;
-	 *         <code>false</code> otherwise.
+	 * @return The successfully applied repair application or <code>null</code>.
 	 */
-	public boolean apply() {
+	public RuleApplication apply() {
 		return complementRule.apply(complementPreMatch);
 	}
 }

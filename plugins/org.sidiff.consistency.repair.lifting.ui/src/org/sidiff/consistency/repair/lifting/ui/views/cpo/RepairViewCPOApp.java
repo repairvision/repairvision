@@ -1,6 +1,5 @@
 package org.sidiff.consistency.repair.lifting.ui.views.cpo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,6 +12,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
@@ -30,7 +30,15 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 
 	private Collection<IResource> cpEditRuleFiles = new ArrayList<>();
 	
+	private Job repairCalculation;
+	
 	private RepairJob repairJob;
+	
+	private DifferenceSettings settings;
+	
+	private Collection<Rule> subEditRules;
+	
+	private Collection<Rule> cpEditRules;
 	
 	public RepairViewCPOApp(TreeViewer viewer_repairs) {
 		super(viewer_repairs);
@@ -39,17 +47,17 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 	@Override
 	public void calculateRepairs() {
 		
-		Job repairCalculation = new Job("Calculate Repairs") {
+		repairCalculation = new Job("Calculate Repairs") {
 			
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				
 				// Matching-Settings:
-				DifferenceSettings settings = getMatchingSettings();
+				settings = getMatchingSettings();
 				
 				// Load edit-rules:
-				Collection<Rule> subEditRules = loadEditRules(subEditRuleFiles);
-				Collection<Rule> cpEditRules = loadEditRules(cpEditRuleFiles);
+				subEditRules = loadEditRules(subEditRuleFiles);
+				cpEditRules = loadEditRules(cpEditRuleFiles);
 				
 				// Calculate repairs:
 				if (!subEditRules.isEmpty() && !cpEditRules.isEmpty()) {
@@ -80,19 +88,66 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 		
 		repairCalculation.schedule();
 	}
+	
+	@Override
+	public void recalculateRepairs() {
+		
+		repairCalculation = new Job("Recalculate Repairs") {
+			
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				
+				// Calculate repairs:
+				if (!subEditRules.isEmpty() && !cpEditRules.isEmpty()) {
+					RepairJob lastRepairJob = repairJob;
+					
+					repairJob = CPORepairFacade.getRepairs(
+							repairJob.getModelA(), repairJob.getModelB(), 
+							subEditRules, cpEditRules, 
+							documentType, settings);
+					
+					// Copy undo history:
+					repairJob.copyHistory(lastRepairJob);
+					
+					// Update UI:
+					Display.getDefault().syncExec(() -> {
+
+						// Show repairs:
+						if (repairJob.getRepairs().isEmpty()) {
+							WorkbenchUtil.showMessage("No further repairs found!");
+							viewer_repairs.setInput(null);
+						} else {
+							viewer_repairs.setInput(repairJob.getRepairs());
+						}
+					});
+				}
+				
+				return Status.OK_STATUS;
+			}
+		};
+		
+		repairCalculation.schedule();
+	}
 
 	@Override
-	public void applyRepair(Repair repair) {
+	public boolean applyRepair(Repair repair) {
+		return (repairJob.applyRepair(repair) != null);
+	}
+	
+	@Override
+	public RuleApplication undoLastRepair() {
 		
-		// Apply repair:
-		repair.apply();
-		
-		// Save model
-		try {
-			repairJob.getModelB().save(null);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (repairCalculation == null) {
+			WorkbenchUtil.showMessage("Please start the repair calculation!");
+			return null;
 		}
+		
+		if (repairCalculation.getState() == Job.RUNNING) {
+			WorkbenchUtil.showMessage("Please wait for the repair calculation!");
+			return null;
+		}
+		
+		return repairJob.undoLastRepair();
 	}
 
 	public IResource removeSubEditRule(IResource selection) {

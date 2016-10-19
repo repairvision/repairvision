@@ -1,6 +1,5 @@
 package org.sidiff.consistency.repair.lifting.ui.views.partial;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,6 +12,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
@@ -31,7 +31,13 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 	
 	private Collection<IResource> editRuleFiles = new ArrayList<>();
 	
+	private Job repairCalculation;
+	
 	private RepairJob repairJob;
+	
+	private DifferenceSettings settings;
+	
+	private Collection<Rule> editRules;
 	
 	public RepairViewPartialEOApp(TreeViewer viewer_repairs) {
 		super(viewer_repairs);
@@ -44,16 +50,16 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 	@Override
 	public void calculateRepairs() {
 		
-		Job repairCalculation = new Job("Calculate Repairs") {
+		repairCalculation = new Job("Calculate Repairs") {
 			
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				
 				// Matching-Settings:
-				DifferenceSettings settings = getMatchingSettings();
+				settings = getMatchingSettings();
 				
 				// Load edit-rules:
-				Collection<Rule> editRules = loadEditRules(editRuleFiles);
+				editRules = loadEditRules(editRuleFiles);
 				
 				// Calculate repairs:
 				URI uriModelA = ModelDropWidget.getURI(modelAFile);
@@ -91,17 +97,71 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 	}
 	
 	@Override
-	public void applyRepair(Repair repair) {
+	public void recalculateRepairs() {
 		
-		// Apply repair:
-		repair.apply();
+		repairCalculation = new Job("Recalculate Repairs") {
+			
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				RepairJob lastRepairJob = repairJob;
+				
+				// Calculate repairs:
+				repairJob = RepairFacade.getRepairs(
+						repairJob.getModelA(), repairJob.getModelB(),
+						editRules, settings);
+				
+				// Copy undo history:
+				repairJob.copyHistory(lastRepairJob);
+				
+				// Update UI:
+				Display.getDefault().syncExec(() -> {
+					
+					// Show repairs:
+					if (repairJob.getRepairs().isEmpty()) {
+						WorkbenchUtil.showMessage("No repairs found!");
+						viewer_repairs.setInput(null);
+					} else {
+						viewer_repairs.setInput(repairJob.getRepairs());
+					}
+
+					// Show repairs:
+					viewer_repairs.setInput(repairJob.getRepairs());
+					
+					// Clean up repair-trees:
+					for (Validation validation : repairJob.getValidations()) {
+						validation.cleanUpRepairTree();
+					}
+					
+					// Show validations:
+					viewer_validation.setInput(repairJob.getValidations());
+				});
+				
+				return Status.OK_STATUS;
+			}
+		};
 		
-		// Save model
-		try {
-			repairJob.getModelB().save(null);
-		} catch (IOException e) {
-			e.printStackTrace();
+		repairCalculation.schedule();
+	}
+	
+	@Override
+	public boolean applyRepair(Repair repair) {
+		return (repairJob.applyRepair(repair) != null);
+	}
+	
+	@Override
+	public RuleApplication undoLastRepair() {
+		
+		if (repairCalculation == null) {
+			WorkbenchUtil.showMessage("Please start the repair calculation!");
+			return null;
 		}
+		
+		if (repairCalculation.getState() == Job.RUNNING) {
+			WorkbenchUtil.showMessage("Please wait for the repair calculation!");
+			return null;
+		}
+		
+		return repairJob.undoLastRepair();
 	}
 
 	public IResource removeEditRule(IResource selection) {

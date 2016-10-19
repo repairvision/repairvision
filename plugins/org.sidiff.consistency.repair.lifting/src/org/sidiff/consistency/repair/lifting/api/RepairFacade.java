@@ -5,6 +5,7 @@ import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deri
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ import org.sidiff.difference.technical.api.settings.DifferenceSettings;
  */
 public class RepairFacade {
 
+	
 	/**
 	 * Search for partially executed edit-operation which might cause an
 	 * inconsistency. A repair complements such a partial edit-operation.
@@ -51,7 +53,41 @@ public class RepairFacade {
 		ResourceSet differenceRSS = new ResourceSetImpl();
 		Resource modelA = differenceRSS.getResource(uriModelA, true);
 		Resource modelB = differenceRSS.getResource(uriModelB, true);
-
+	
+		return getRepairs(modelA, modelB, editRules, settings);
+	}
+	
+	/**
+	 * Search for partially executed edit-operation which might cause an
+	 * inconsistency. A repair complements such a partial edit-operation.
+	 * 
+	 * @param modelA
+	 *            The historic model.
+	 * @param modelB
+	 *            The actual model.
+	 * @param editRules
+	 *            All edit-rules which are to be investigated for partial executions.
+	 * @param settings
+	 *            The settings for the difference calculation.
+	 * @return All found repairs.
+	 */
+	public static RepairJob getRepairs(
+			Resource modelA, Resource modelB, Collection<Rule> editRules, DifferenceSettings settings) {
+		
+		// Initialize:
+		assert (modelA.getResourceSet() == modelB.getResourceSet());
+		ResourceSet differenceRSS = modelA.getResourceSet(); 
+		
+		// TODO: Create fresh resource set!?
+		// [Workaround] (Cleanup) Remove old difference:
+		for (Iterator<Resource> it = differenceRSS.getResources().iterator(); it.hasNext();) {
+			Resource res = it.next();
+			
+			if (res instanceof SymmetricDifference) {
+				it.remove();
+			}
+		}
+		
 		// Calculate difference:
 		SymmetricDifference difference = null;
 		
