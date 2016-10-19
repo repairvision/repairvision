@@ -6,12 +6,15 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRemoteNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
@@ -19,6 +22,7 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleAttributeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
@@ -29,6 +33,58 @@ import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeS
 
 public class ComplementUtil {
 
+	
+	/**
+	 * Derives the parameter for a rule by a given match.
+	 * 
+	 * @param rule
+	 *            The with the parameters.
+	 * @param match
+	 *            The (partial) matching.
+	 * @return The parameter values associated to {@link Rule#getParameters()}.
+	 *         Unknown values will be set to null.
+	 */
+	public static List<Object> getParameters(Rule rule, Match match) {
+		
+		// Read attribute values:
+		List<Attribute> attributes = new ArrayList<>();
+		List<Object> values = new ArrayList<>();
+		
+		for (Node lhsNode : rule.getLhs().getNodes()) {
+			for (Attribute attr : lhsNode.getAttributes()) {
+				attributes.add(attr);
+				EObject nodeMatch = match.getNodeTarget(attr.getNode());
+				
+				if (nodeMatch != null) {
+					values.add(nodeMatch.eGet(attr.getType()));
+				} else {
+					values.add(null);
+				}
+			}
+		}
+		
+		// Derive parameters:
+		List<Object> input = new ArrayList<>();
+		
+		for (Parameter param : rule.getParameters()) {
+			for (int i = 0; i < attributes.size(); i++) {
+				Attribute attr = attributes.get(i);
+				
+				if (attr.getValue().equals(param.getName())) {
+					Object value = values.get(i);
+					
+					if (value != null) {
+						input.add(value);
+						continue;
+					}
+				}
+			}
+			input.add(null);
+		}
+		
+		return values;
+	}
+	
 	/**
 	 * Creates a deep copy (i.e. full tree content) of the given object.
 	 * 

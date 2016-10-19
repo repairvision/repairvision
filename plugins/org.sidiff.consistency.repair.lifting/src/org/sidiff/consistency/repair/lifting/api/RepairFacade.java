@@ -122,7 +122,7 @@ public class RepairFacade {
 							for (ComplementMatch preMatch : complement.getComplementMatches()) {
 								
 								// Filter complement with pre-match by abstract repairs:
-								if (repairFilter.filter(complement.getComplementingChanges(), preMatch.getNodeMatches())) {
+								if (repairFilter.filter(complement.getComplementingChanges(), preMatch)) {
 									repairsPerRule.add(new Repair(complement, preMatch));
 								}
 							}

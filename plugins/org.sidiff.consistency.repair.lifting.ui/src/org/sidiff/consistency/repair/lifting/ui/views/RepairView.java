@@ -299,18 +299,21 @@ public class RepairView extends ViewPart {
 					return;
 				}
 				
-				if (viewer_repairs.getExpandedState(item)) {
+				try {
+					if (viewer_repairs.getExpandedState(item)) {
 
-					// Collapse:
-					viewer_repairs.collapseToLevel(item, TreeViewer.ALL_LEVELS);
-				} else {
-					
-					// Expand:
-					if (item instanceof Repair) {
-						viewer_repairs.expandToLevel(item, 3);
+						// Collapse:
+						viewer_repairs.collapseToLevel(item, TreeViewer.ALL_LEVELS);
 					} else {
-						viewer_repairs.expandToLevel(item, 1);
+						
+						// Expand:
+						if (item instanceof Repair) {
+							viewer_repairs.expandToLevel(item, 3);
+						} else {
+							viewer_repairs.expandToLevel(item, 1);
+						}
 					}
+				} catch (Exception e) {
 				}
 			}
 		});

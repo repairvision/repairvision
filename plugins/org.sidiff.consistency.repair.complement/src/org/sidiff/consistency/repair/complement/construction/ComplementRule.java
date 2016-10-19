@@ -14,23 +14,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.interpreter.EGraph;
-import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
-import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
-import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.HenshinFactory;
@@ -212,43 +206,17 @@ public abstract class ComplementRule {
 			throw new RuntimeException("Initialize graph transformation engine!");
 		}
 		
-		// FIXME: Handle Attributes/Parameters:
-		List<Attribute> attributes = new ArrayList<>();
-		
-		for (Iterator<EObject> iterator = complementRule.eAllContents(); iterator.hasNext();) {
-			EObject ruleElement = iterator.next();
-			
-			if (ruleElement instanceof Attribute) {
-				attributes.add((Attribute) ruleElement);
-			}
-		}
-		
-		for (Attribute attribute : attributes) {
-			EcoreUtil.remove(attribute);
-		}
-		
 		// Apply complement rule:
-		// TODO: ACs
-//		if (complementPreMatch.getUnfulfilledACs().isEmpty()) {
-			Match preMatch = new MatchImpl(complementRule);
-			
-			for (Entry<Node, EObject> match : complementPreMatch.getNodeMatches().entrySet()) {
-				preMatch.setNodeTarget(match.getKey(), match.getValue());
-			}
-			
-			RuleApplication application = new RuleApplicationImpl(engine);
-			application.setRule(complementRule);
-			application.setEGraph(graph);
-			application.setCompleteMatch(preMatch);
-			
-			if (application.execute(null)) {
-				return application;
-			} else {
-				return null;
-			}
-//		}
-//		
-//		return false;
+		RuleApplication application = new RuleApplicationImpl(engine);
+		application.setRule(complementRule);
+		application.setEGraph(graph);
+		application.setCompleteMatch(complementPreMatch.getMatch());
+
+		if (application.execute(null)) {
+			return application;
+		} else {
+			return null;
+		}
 	}
 	
 	//// Getter / Setter /////

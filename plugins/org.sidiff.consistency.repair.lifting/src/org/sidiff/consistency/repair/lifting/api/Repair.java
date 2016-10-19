@@ -1,9 +1,7 @@
 package org.sidiff.consistency.repair.lifting.api;
 
 import java.util.List;
-import java.util.Map;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
@@ -90,8 +88,8 @@ public class Repair {
 	/**
 	 * @return The pre-match of the complementing repair-rule.
 	 */
-	public Map<Node, EObject> getRepairPreMatch() {
-		return complementPreMatch.getNodeMatches();
+	public ComplementMatch getRepairPreMatch() {
+		return complementPreMatch;
 	}
 	
 	/**

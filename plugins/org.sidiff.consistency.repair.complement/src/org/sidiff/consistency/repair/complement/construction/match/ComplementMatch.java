@@ -1,51 +1,24 @@
 package org.sidiff.consistency.repair.complement.construction.match;
 
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.interpreter.Match;
 
 /**
  * A pre-match for a complement rule.
  */
-// TODO: Make this extends the Henshin MatchImpl!?
 public class ComplementMatch {
 
-	private Map<Node, EObject> nodeMatches;
-	
-//	private Set<NestedCondition> unfulfilledACs = new HashSet<>();
-//	
-//	private Set<NestedCondition> ignoredACs = new HashSet<>();
+	private Match preMatch;
 
-	public ComplementMatch() {
-	}
-	
-	public ComplementMatch(Map<Node, EObject> nodeMatches) {
-		this.nodeMatches = nodeMatches;
+	public ComplementMatch(Match preMatch) {
+		super();
+		this.preMatch = preMatch;
 	}
 
-	public Map<Node, EObject> getNodeMatches() {
-		return nodeMatches;
+	public Match getMatch() {
+		return preMatch;
 	}
 
-	public void setNodeMatches(Map<Node, EObject> nodeMatches) {
-		this.nodeMatches = nodeMatches;
+	public void setPreMatch(Match preMatch) {
+		this.preMatch = preMatch;
 	}
-
-// TODO: ACs
-//	public Set<NestedCondition> getUnfulfilledACs() {
-//		return unfulfilledACs;
-//	}
-//
-//	public void setUnfulfilledACs(Set<NestedCondition> unfulfilledACs) {
-//		this.unfulfilledACs = unfulfilledACs;
-//	}
-//
-//	public Set<NestedCondition> getIgnoredACs() {
-//		return ignoredACs;
-//	}
-//
-//	public void setIgnoredACs(Set<NestedCondition> ignoredACs) {
-//		this.ignoredACs = ignoredACs;
-//	}
 }

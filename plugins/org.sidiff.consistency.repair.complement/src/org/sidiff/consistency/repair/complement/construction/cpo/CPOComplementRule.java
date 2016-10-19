@@ -3,7 +3,6 @@ package org.sidiff.consistency.repair.complement.construction.cpo;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -58,12 +57,8 @@ public class CPOComplementRule extends ComplementRule  {
 			Match nextMatch = matchFinder.next();
 			
 			// Create complement pre-match:
-			ComplementMatch nextComplementMatch = new ComplementMatch(new HashMap<>());
+			ComplementMatch nextComplementMatch = new ComplementMatch(nextMatch);
 			complementMatches.add(nextComplementMatch);
-			
-			for (Node complementNode : complementRule.getLhs().getNodes()) {
-				nextComplementMatch.getNodeMatches().put(complementNode, nextMatch.getNodeTarget(complementNode));
-			}
 		}
 		
 		if (DebugUtil.statistic) {

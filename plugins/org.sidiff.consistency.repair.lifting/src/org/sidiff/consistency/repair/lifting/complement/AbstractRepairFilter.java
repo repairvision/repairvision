@@ -17,6 +17,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.emf.access.EMFModelAccess;
+import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
 import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
 import org.sidiff.consistency.repair.validation.fix.Repair;
 import org.sidiff.consistency.repair.validation.fix.Repair.RepairType;
@@ -163,7 +164,7 @@ public class AbstractRepairFilter {
 	 * @return <code>true</code> if the complement rule is a potential repair;
 	 *         <code>false</code> otherwise.
 	 */
-	public boolean filter(Collection<GraphElement> changes, Map<Node, EObject> prematch) {
+	public boolean filter(Collection<GraphElement> changes, ComplementMatch prematch) {
 
 		for (GraphElement change : changes) {
 
@@ -178,7 +179,7 @@ public class AbstractRepairFilter {
 				}
 				
 				// Get the context object of the edge:
-				EObject contextObject = prematch.get(contextNode);
+				EObject contextObject = prematch.getMatch().getNodeTarget(contextNode);
 				
 				if (contextObject != null) {
 					

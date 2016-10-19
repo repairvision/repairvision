@@ -14,6 +14,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
+import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
@@ -94,12 +95,22 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			return new Object[] {historicChanges, complementingChanges};
 		}
 		
+		// e.g. Complementing/Historic container:
 		else if (parentElement instanceof Container) {
 			return ((Container) parentElement).content;
 		}
 		
 		else if (parentElement instanceof Change) {
-			return ((Change) parentElement).matches;
+			Change change = ((Change) parentElement);
+			
+			// FIXME[WORKAROUND]: Fix incomplete matches!
+			for (Object match : change.matches) {
+				if (match == null) {
+					return new Object[0];
+				}
+			}
+			
+			return change.matches;
 		}
 		
 		return new Object[0];
@@ -116,6 +127,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			change.nodes[0] = edge.getSource();
 			change.nodes[1] = edge.getTarget();
 			
+			// FIXME: We need the model A matches for delete edges here!
 			change.matches = new EObject[2];
 			change.matches[0] = ((EditRuleEdgeMatch) editRuleMatch).getSrcModelElement();
 			change.matches[1] = ((EditRuleEdgeMatch) editRuleMatch).getTgtModelElement();
@@ -134,7 +146,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		return change;
 	}
 	
-	private Change toComplemetingChange(GraphElement graphElement, Map<Node, EObject> preMatch) {
+	private Change toComplemetingChange(GraphElement graphElement, ComplementMatch preMatch) {
 		
 		if (graphElement instanceof Edge) {
 			return toComplementingChange((Edge) graphElement, preMatch);
@@ -147,7 +159,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		return null;
 	}
 	
-	private Change toComplementingChange(Edge edge, Map<Node, EObject> preMatch) {
+	private Change toComplementingChange(Edge edge, ComplementMatch preMatch) {
 		Change change = new Change();
 		change.graphElement = edge;
 		
@@ -168,11 +180,11 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 
 		// Get match:
 		if (contextNodeSrc != null) {
-			contextMatchSrc = preMatch.get(contextNodeSrc);
+			contextMatchSrc = preMatch.getMatch().getNodeTarget(contextNodeSrc);
 		}
 		
 		if (contextNodeTgt != null) {
-			contextMatchTgt = preMatch.get(contextNodeTgt);
+			contextMatchTgt = preMatch.getMatch().getNodeTarget(contextNodeTgt);
 		}
 		
 		// Create change: [0] Source, [1] Target
@@ -206,7 +218,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		return change;
 	}
 	
-	private Change toComplementingChange(Node node, Map<Node, EObject> preMatch) {
+	private Change toComplementingChange(Node node, ComplementMatch preMatch) {
 		Change change = new Change();
 		change.graphElement = node;
 			
@@ -216,7 +228,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		// Get node match:
 		if (node.getGraph().isRhs()) {
 			Node lhsNode = HenshinRuleAnalysisUtilEx.getLHS(node);
-			EObject match = preMatch.get(lhsNode);
+			EObject match = preMatch.getMatch().getNodeTarget(lhsNode);
 
 			if (match != null) {
 				contextNodes.add(lhsNode);
@@ -233,7 +245,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			}
 
 			if (contextNode != null) {
-				EObject contextMatch = preMatch.get(contextNode);
+				EObject contextMatch = preMatch.getMatch().getNodeTarget(contextNode);
 
 				if (contextMatch != null) {
 					contextNodes.add(contextNode);
@@ -250,7 +262,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			}
 
 			if (contextNode != null) {
-				EObject contextMatch = preMatch.get(contextNode);
+				EObject contextMatch = preMatch.getMatch().getNodeTarget(contextNode);
 
 				if ((contextMatch != null) && (!contextMatches.contains(contextMatch))) {
 					contextNodes.add(contextNode);
