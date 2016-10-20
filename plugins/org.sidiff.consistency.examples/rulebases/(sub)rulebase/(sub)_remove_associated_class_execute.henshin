@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_RdfqwIf-Eeal3p2bO67nKg" name="(Sub)RemoveAssociatedClass" description="Removes a class.">
+  <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Rdg44If-Eeal3p2bO67nKg" name="mainUnit" subUnits="_RdkjQIf-Eeal3p2bO67nKg">
+    <parameters xmi:id="_RdiuEIf-Eeal3p2bO67nKg" name="ClassB"/>
+    <parameters name="context"/>
+    <parameterMappings xmi:id="_Rdj8MIf-Eeal3p2bO67nKg" source="_RdiuEIf-Eeal3p2bO67nKg" target="_RdkjQYf-Eeal3p2bO67nKg"/>
+    <parameterMappings source="//@units.0/@parameters.1" target="//@units.1/@parameters.1"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_RdkjQIf-Eeal3p2bO67nKg" name="(Sub)RemoveAssociatedClass" checkDangling="false">
+    <parameters xmi:id="_RdkjQYf-Eeal3p2bO67nKg" name="ClassB"/>
+    <parameters name="context"/>
+    <lhs xmi:id="_RdmYcIf-Eeal3p2bO67nKg" name="Lhs">
+      <nodes xmi:id="_Rdm_gIf-Eeal3p2bO67nKg" name="context" outgoing="_RdoNoYf-Eeal3p2bO67nKg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+      </nodes>
+      <nodes xmi:id="_RdoNoIf-Eeal3p2bO67nKg" name="ClassB" incoming="_RdoNoYf-Eeal3p2bO67nKg _U3oCwIgTEeal3p2bO67nKg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes xmi:id="_UI2RMIgTEeal3p2bO67nKg" name="b" outgoing="_U3oCwIgTEeal3p2bO67nKg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <edges xmi:id="_RdoNoYf-Eeal3p2bO67nKg" source="_Rdm_gIf-Eeal3p2bO67nKg" target="_RdoNoIf-Eeal3p2bO67nKg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+      </edges>
+      <edges xmi:id="_U3oCwIgTEeal3p2bO67nKg" source="_UI2RMIgTEeal3p2bO67nKg" target="_RdoNoIf-Eeal3p2bO67nKg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_RdpbwIf-Eeal3p2bO67nKg" name="Rhs">
+      <nodes xmi:id="_RdpbwYf-Eeal3p2bO67nKg" name="context">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+      </nodes>
+      <nodes xmi:id="_UI24QIgTEeal3p2bO67nKg" name="b">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_RdsfEIf-Eeal3p2bO67nKg" origin="_Rdm_gIf-Eeal3p2bO67nKg" image="_RdpbwYf-Eeal3p2bO67nKg"/>
+    <mappings xmi:id="_UI24QYgTEeal3p2bO67nKg" origin="_UI2RMIgTEeal3p2bO67nKg" image="_UI24QIgTEeal3p2bO67nKg"/>
+  </units>
+</henshin:Module>

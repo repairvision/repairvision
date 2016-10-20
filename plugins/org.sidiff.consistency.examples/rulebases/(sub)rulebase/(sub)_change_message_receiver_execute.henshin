@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_il_eMD47Eea0SJ9KOfvj5Q" name="(Sub)ChangeMessageReceiver" description="Chages the target of the Message to a Lifeline another Class.">
+  <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_jKB_YD47Eea0SJ9KOfvj5Q" name="(Sub)ChangeMessageReceiver">
+    <parameters name="context"/>
+    <parameters name="newLifeline"/>
+    <lhs xmi:id="_jKcPED47Eea0SJ9KOfvj5Q" name="Lhs">
+      <nodes xmi:id="_rXjacD47Eea0SJ9KOfvj5Q" name="context" incoming="_j_YrIE8zEeavIPMQP6bXyg" outgoing="_zJNY4D47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+      </nodes>
+      <nodes xmi:id="_wswkkD47Eea0SJ9KOfvj5Q" name="newLifeline">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_xlOdoD47Eea0SJ9KOfvj5Q" name="oldLifeline" incoming="_zJNY4D47Eea0SJ9KOfvj5Q" outgoing="_j_YrIE8zEeavIPMQP6bXyg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <edges xmi:id="_zJNY4D47Eea0SJ9KOfvj5Q" source="_rXjacD47Eea0SJ9KOfvj5Q" target="_xlOdoD47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+      </edges>
+      <edges xmi:id="_j_YrIE8zEeavIPMQP6bXyg" source="_xlOdoD47Eea0SJ9KOfvj5Q" target="_rXjacD47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/coveredBy"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_jKc2ID47Eea0SJ9KOfvj5Q" name="Rhs">
+      <nodes xmi:id="_rXjacT47Eea0SJ9KOfvj5Q" name="context" incoming="_j_eKsU8zEeavIPMQP6bXyg" outgoing="_ypPfYD47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+      </nodes>
+      <nodes xmi:id="_wswkkT47Eea0SJ9KOfvj5Q" name="newLifeline" incoming="_ypPfYD47Eea0SJ9KOfvj5Q" outgoing="_j_eKsU8zEeavIPMQP6bXyg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_xlOdoT47Eea0SJ9KOfvj5Q" name="oldLifeline">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <edges xmi:id="_ypPfYD47Eea0SJ9KOfvj5Q" source="_rXjacT47Eea0SJ9KOfvj5Q" target="_wswkkT47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+      </edges>
+      <edges xmi:id="_j_eKsU8zEeavIPMQP6bXyg" source="_wswkkT47Eea0SJ9KOfvj5Q" target="_rXjacT47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/coveredBy"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_rXjacj47Eea0SJ9KOfvj5Q" origin="_rXjacD47Eea0SJ9KOfvj5Q" image="_rXjacT47Eea0SJ9KOfvj5Q"/>
+    <mappings xmi:id="_wswkkj47Eea0SJ9KOfvj5Q" origin="_wswkkD47Eea0SJ9KOfvj5Q" image="_wswkkT47Eea0SJ9KOfvj5Q"/>
+    <mappings xmi:id="_xlOdoj47Eea0SJ9KOfvj5Q" origin="_xlOdoD47Eea0SJ9KOfvj5Q" image="_xlOdoT47Eea0SJ9KOfvj5Q"/>
+  </units>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_sg4IED49Eea0SJ9KOfvj5Q" name="mainUnit" subUnits="_jKB_YD47Eea0SJ9KOfvj5Q">
+    <parameters name="context"/>
+    <parameters name="newLifeline"/>
+    <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.0"/>
+    <parameterMappings source="//@units.1/@parameters.1" target="//@units.0/@parameters.1"/>
+  </units>
+</henshin:Module>
