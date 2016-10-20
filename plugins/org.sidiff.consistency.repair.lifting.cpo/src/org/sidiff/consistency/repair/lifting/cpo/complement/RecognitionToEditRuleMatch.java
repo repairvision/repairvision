@@ -215,7 +215,7 @@ public class RecognitionToEditRuleMatch {
 			// Create-Attribute:
 			for (Attribute attribute : getChangingAttributes(getLHS(eoNode), getRHS(eoNode))) {
 				Object value = matchB.eGet(attribute.getType());
-				eoMatch.add(new EditRuleAttributeMatch(attribute, value));
+				eoMatch.add(new EditRuleAttributeMatch(attribute, matchB, value));
 			}
 		}
 		
