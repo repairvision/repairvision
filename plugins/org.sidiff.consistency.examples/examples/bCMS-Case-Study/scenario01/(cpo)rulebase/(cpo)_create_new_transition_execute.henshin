@@ -4,17 +4,26 @@
   <units xsi:type="henshin:SequentialUnit" xmi:id="_BpyoMZIUEeasYouVvYLw7Q" name="mainUnit" subUnits="_Bpz2UZIUEeasYouVvYLw7Q">
     <parameters xmi:id="_BpyoMpIUEeasYouVvYLw7Q" name="newTransition"/>
     <parameters name="New_Trigger"/>
+    <parameters name="context"/>
+    <parameters name="src"/>
+    <parameters name="tgt"/>
     <parameterMappings xmi:id="_Bpz2UJIUEeasYouVvYLw7Q" source="_Bpz2UpIUEeasYouVvYLw7Q" target="_BpyoMpIUEeasYouVvYLw7Q"/>
     <parameterMappings source="//@units.1/@parameters.1" target="//@units.0/@parameters.1"/>
+    <parameterMappings source="//@units.0/@parameters.2" target="//@units.1/@parameters.2"/>
+    <parameterMappings source="//@units.0/@parameters.3" target="//@units.1/@parameters.3"/>
+    <parameterMappings source="//@units.0/@parameters.4" target="//@units.1/@parameters.4"/>
   </units>
   <units xsi:type="henshin:Rule" xmi:id="_Bpz2UZIUEeasYouVvYLw7Q" name="(CPO)CreateNewTransition">
     <parameters xmi:id="_Bpz2UpIUEeasYouVvYLw7Q" name="newTransition"/>
     <parameters name="New_Trigger"/>
+    <parameters name="context"/>
+    <parameters name="src"/>
+    <parameters name="tgt"/>
     <lhs xmi:id="_Bpz2U5IUEeasYouVvYLw7Q" name="Lhs">
       <nodes xmi:id="_Bpz2VJIUEeasYouVvYLw7Q" name="src" incoming="_Bp0dYZIUEeasYouVvYLw7Q" outgoing="_Bp0dYJIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
       </nodes>
-      <nodes xmi:id="_Bpz2VZIUEeasYouVvYLw7Q" name="Region" incoming="_Bp0dYJIUEeasYouVvYLw7Q _Bp0dYpIUEeasYouVvYLw7Q" outgoing="_Bp0dYZIUEeasYouVvYLw7Q _Bp0dY5IUEeasYouVvYLw7Q">
+      <nodes xmi:id="_Bpz2VZIUEeasYouVvYLw7Q" name="context" incoming="_Bp0dYJIUEeasYouVvYLw7Q _Bp0dYpIUEeasYouVvYLw7Q" outgoing="_Bp0dYZIUEeasYouVvYLw7Q _Bp0dY5IUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
       </nodes>
       <nodes xmi:id="_Bpz2VpIUEeasYouVvYLw7Q" name="tgt" incoming="_Bp0dY5IUEeasYouVvYLw7Q" outgoing="_Bp0dYpIUEeasYouVvYLw7Q">
@@ -37,7 +46,7 @@
       <nodes xmi:id="_Bp0dZZIUEeasYouVvYLw7Q" name="src" incoming="_Bp1EcJIUEeasYouVvYLw7Q _Bp1EdJIUEeasYouVvYLw7Q" outgoing="_Bp1Ec5IUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
       </nodes>
-      <nodes xmi:id="_Bp0dZpIUEeasYouVvYLw7Q" name="Region" incoming="_Bp1EcZIUEeasYouVvYLw7Q _Bp1Ec5IUEeasYouVvYLw7Q _Bp1EdpIUEeasYouVvYLw7Q" outgoing="_Bp1EcpIUEeasYouVvYLw7Q _Bp1EdJIUEeasYouVvYLw7Q _Bp1rgJIUEeasYouVvYLw7Q">
+      <nodes xmi:id="_Bp0dZpIUEeasYouVvYLw7Q" name="context" incoming="_Bp1EcZIUEeasYouVvYLw7Q _Bp1Ec5IUEeasYouVvYLw7Q _Bp1EdpIUEeasYouVvYLw7Q" outgoing="_Bp1EcpIUEeasYouVvYLw7Q _Bp1EdJIUEeasYouVvYLw7Q _Bp1rgJIUEeasYouVvYLw7Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
       </nodes>
       <nodes xmi:id="_Bp0dZ5IUEeasYouVvYLw7Q" name="newTransition" incoming="_Bp1EcpIUEeasYouVvYLw7Q" outgoing="_Bp1EcJIUEeasYouVvYLw7Q _Bp1EcZIUEeasYouVvYLw7Q _Bp1EdZIUEeasYouVvYLw7Q //@units.1/@rhs/@edges.8">

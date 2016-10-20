@@ -3,15 +3,21 @@
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
     <parameters name="newTransition"/>
+    <parameters name="context"/>
+    <parameters name="src"/>
     <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.0"/>
+    <parameterMappings source="//@units.0/@parameters.1" target="//@units.1/@parameters.1"/>
+    <parameterMappings source="//@units.0/@parameters.2" target="//@units.1/@parameters.2"/>
   </units>
   <units xsi:type="henshin:Rule" name="(Sub)CreateDanglingTransition">
     <parameters name="newTransition"/>
+    <parameters name="context"/>
+    <parameters name="src"/>
     <lhs name="Lhs">
       <nodes name="src" incoming="//@units.1/@lhs/@edges.1" outgoing="//@units.1/@lhs/@edges.0">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
       </nodes>
-      <nodes name="Region" incoming="//@units.1/@lhs/@edges.0" outgoing="//@units.1/@lhs/@edges.1">
+      <nodes name="context" incoming="//@units.1/@lhs/@edges.0" outgoing="//@units.1/@lhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
       </nodes>
       <edges source="//@units.1/@lhs/@nodes.0" target="//@units.1/@lhs/@nodes.1">
@@ -25,7 +31,7 @@
       <nodes name="src" incoming="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.4" outgoing="//@units.1/@rhs/@edges.3">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Vertex"/>
       </nodes>
-      <nodes name="Region" incoming="//@units.1/@rhs/@edges.1 //@units.1/@rhs/@edges.3" outgoing="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.4">
+      <nodes name="context" incoming="//@units.1/@rhs/@edges.1 //@units.1/@rhs/@edges.3" outgoing="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.4">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
       </nodes>
       <nodes name="newTransition" incoming="//@units.1/@rhs/@edges.2" outgoing="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.1">

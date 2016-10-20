@@ -4,7 +4,7 @@
   <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
     <parameters name="operation_implementation"/>
     <parameters name="operation_definition"/>
-    <parameters name="definition"/>
+    <parameters name="context"/>
     <parameters name="operationName"/>
     <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.0"/>
     <parameterMappings source="//@units.1/@parameters.1" target="//@units.0/@parameters.1"/>
@@ -14,13 +14,13 @@
   <units xsi:type="henshin:Rule" name="(CPO)CreateInterfaceOperationAndSyncImplementation">
     <parameters name="operation_implementation"/>
     <parameters name="operation_definition"/>
-    <parameters name="definition"/>
+    <parameters name="context"/>
     <parameters name="operationName"/>
     <lhs name="Lhs">
       <nodes name="implementation" incoming="//@units.1/@lhs/@edges.0">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes name="definition" incoming="//@units.1/@lhs/@edges.1">
+      <nodes name="context" incoming="//@units.1/@lhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
       </nodes>
       <nodes name="interface_realization" outgoing="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.1">
@@ -37,7 +37,7 @@
       <nodes name="implementation" incoming="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.4" outgoing="//@units.1/@rhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes name="definition" incoming="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.5" outgoing="//@units.1/@rhs/@edges.3">
+      <nodes name="context" incoming="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.5" outgoing="//@units.1/@rhs/@edges.3">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
       </nodes>
       <nodes name="interface_realization" outgoing="//@units.1/@rhs/@edges.4 //@units.1/@rhs/@edges.5">

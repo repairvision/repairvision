@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_u2W1QJGNEeakiZR9jOA4Yw" name="(CPO)RemoveStateAndReconnectOutgoingTransition" description="Remove a state and reconnect the transitions outgoing to (previously)  adjacent states.">
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_u2afoJGNEeakiZR9jOA4Yw" name="mainUnit" subUnits="_u2c74JGNEeakiZR9jOA4Yw"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_u2afoJGNEeakiZR9jOA4Yw" name="mainUnit" subUnits="_u2c74JGNEeakiZR9jOA4Yw">
+    <parameters name="context"/>
+    <parameters name="rmState"/>
+    <parameters name="target"/>
+    <parameterMappings source="//@units.0/@parameters.0" target="//@units.1/@parameters.0"/>
+    <parameterMappings source="//@units.0/@parameters.1" target="//@units.1/@parameters.1"/>
+    <parameterMappings source="//@units.0/@parameters.2" target="//@units.1/@parameters.2"/>
+  </units>
   <units xsi:type="henshin:Rule" xmi:id="_u2c74JGNEeakiZR9jOA4Yw" name="(CPO)RemoveStateAndReconnectOutgoingTransition">
+    <parameters name="context"/>
+    <parameters name="rmState"/>
+    <parameters name="target"/>
     <lhs xmi:id="_u2eKAJGNEeakiZR9jOA4Yw" name="Lhs">
-      <nodes xmi:id="_u2jCgJGNEeakiZR9jOA4Yw" name="region" incoming="_u2ms4JGNEeakiZR9jOA4Yw _u2takJGNEeakiZR9jOA4Yw //@units.1/@lhs/@edges.6" outgoing="_u2nT8JGNEeakiZR9jOA4Yw _u2szgJGNEeakiZR9jOA4Yw //@units.1/@lhs/@edges.5">
+      <nodes xmi:id="_u2jCgJGNEeakiZR9jOA4Yw" name="context" incoming="_u2ms4JGNEeakiZR9jOA4Yw _u2takJGNEeakiZR9jOA4Yw //@units.1/@lhs/@edges.6" outgoing="_u2nT8JGNEeakiZR9jOA4Yw _u2szgJGNEeakiZR9jOA4Yw //@units.1/@lhs/@edges.5">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
       </nodes>
       <nodes xmi:id="_u2kQoJGNEeakiZR9jOA4Yw" name="target" incoming="_u2szgJGNEeakiZR9jOA4Yw" outgoing="_u2takJGNEeakiZR9jOA4Yw">
@@ -39,7 +49,7 @@
       </edges>
     </lhs>
     <rhs xmi:id="_u2uBoJGNEeakiZR9jOA4Yw" name="Rhs">
-      <nodes xmi:id="_u2v20JGNEeakiZR9jOA4Yw" name="region" incoming="_u20IQJGNEeakiZR9jOA4Yw //@units.1/@rhs/@edges.4" outgoing="_u2zhMJGNEeakiZR9jOA4Yw //@units.1/@rhs/@edges.3">
+      <nodes xmi:id="_u2v20JGNEeakiZR9jOA4Yw" name="context" incoming="_u20IQJGNEeakiZR9jOA4Yw //@units.1/@rhs/@edges.4" outgoing="_u2zhMJGNEeakiZR9jOA4Yw //@units.1/@rhs/@edges.3">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
       </nodes>
       <nodes xmi:id="_u2v20ZGNEeakiZR9jOA4Yw" name="target" incoming="_u2zhMJGNEeakiZR9jOA4Yw _9RoEYJIvEea9vr1zYVDwVw" outgoing="_u20IQJGNEeakiZR9jOA4Yw">
