@@ -37,7 +37,6 @@ import org.sidiff.difference.lifting.api.settings.LiftingSettings;
 import org.sidiff.difference.lifting.api.settings.LiftingSettings.RecognitionEngineMode;
 import org.sidiff.difference.lifting.api.util.PipelineUtils;
 import org.sidiff.difference.lifting.recognitionengine.IRecognitionEngine;
-import org.sidiff.difference.lifting.recognitionengine.impl.RecognitionEngine;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.rulebase.view.LiftingRuleBase;
 import org.sidiff.difference.rulebase.wrapper.EditWrapper2RecognitionWrapper;
@@ -228,8 +227,7 @@ public class CPORepairFacade {
 		EngineImpl henshinEngine = new EngineImpl();
 		
 		// Use the graph of the recognition engine or with merged imports!
-//		EGraph modelBGraph = new EGraphImpl(modelB);
-		EGraph modelBGraph = ((RecognitionEngine)recognitionEngine).getGraphFactory().getModelBGraph();
+		EGraph modelBGraph = recognitionEngine.getGraphModelB();
 		
 		// Calculate repairs:
 		long calculateComplements = System.currentTimeMillis();
