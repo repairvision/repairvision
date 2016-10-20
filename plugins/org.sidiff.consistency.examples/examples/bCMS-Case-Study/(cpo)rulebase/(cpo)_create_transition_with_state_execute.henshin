@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="(CPO)CreateNewTransitionWithState" description="Creates a new Transition with a target State">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="(CPO)CreateTransitionWithState" description="Creates a new Transition with a target State">
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
     <parameters name="newTransition"/>
@@ -13,7 +13,7 @@
     <parameterMappings source="//@units.0/@parameters.3" target="//@units.1/@parameters.3"/>
     <parameterMappings source="//@units.0/@parameters.4" target="//@units.1/@parameters.4"/>
   </units>
-  <units xsi:type="henshin:Rule" name="(CPO)CreateNewTransitionWithState">
+  <units xsi:type="henshin:Rule" name="(CPO)CreateTransitionWithState">
     <parameters name="newTransition"/>
     <parameters name="tgt"/>
     <parameters name="New_Trigger"/>
