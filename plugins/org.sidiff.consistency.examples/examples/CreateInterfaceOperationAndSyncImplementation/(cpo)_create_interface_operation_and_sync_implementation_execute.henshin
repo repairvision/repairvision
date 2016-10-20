@@ -4,7 +4,7 @@
   <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
     <parameters name="operation_implementation"/>
     <parameters name="operation_definition"/>
-    <parameters name="definition"/>
+    <parameters name="context"/>
     <parameters name="operationName"/>
     <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.0"/>
     <parameterMappings source="//@units.1/@parameters.1" target="//@units.0/@parameters.1"/>
@@ -14,13 +14,13 @@
   <units xsi:type="henshin:Rule" name="(CPO)CreateInterfaceOperationAndSyncImplementation">
     <parameters name="operation_implementation"/>
     <parameters name="operation_definition"/>
-    <parameters name="definition"/>
+    <parameters name="context"/>
     <parameters name="operationName"/>
     <lhs name="Lhs">
       <nodes name="implementation" incoming="//@units.1/@lhs/@edges.0">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes name="definition" incoming="//@units.1/@lhs/@edges.1">
+      <nodes name="context" incoming="//@units.1/@lhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
       </nodes>
       <nodes name="interface_realization" outgoing="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.1">
@@ -32,12 +32,50 @@
       <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Dependency/supplier"/>
       </edges>
+      <formula xsi:type="henshin:Not">
+        <child xsi:type="henshin:NestedCondition">
+          <conclusion>
+            <nodes name="implementation" incoming="//@units.1/@lhs/@formula/@child/@conclusion/@edges.3" outgoing="//@units.1/@lhs/@formula/@child/@conclusion/@edges.2">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+            </nodes>
+            <nodes name="context" incoming="//@units.1/@lhs/@formula/@child/@conclusion/@edges.1" outgoing="//@units.1/@lhs/@formula/@child/@conclusion/@edges.0">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
+            </nodes>
+            <nodes incoming="//@units.1/@lhs/@formula/@child/@conclusion/@edges.0" outgoing="//@units.1/@lhs/@formula/@child/@conclusion/@edges.1">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+              <attributes value="operationName">
+                <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+              </attributes>
+            </nodes>
+            <nodes incoming="//@units.1/@lhs/@formula/@child/@conclusion/@edges.2" outgoing="//@units.1/@lhs/@formula/@child/@conclusion/@edges.3">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+              <attributes value="operationName">
+                <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+              </attributes>
+            </nodes>
+            <edges source="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.1" target="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.2">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface/ownedOperation"/>
+            </edges>
+            <edges source="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.2" target="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.1">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/interface"/>
+            </edges>
+            <edges source="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.0" target="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.3">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+            </edges>
+            <edges source="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.3" target="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.0">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
+            </edges>
+          </conclusion>
+          <mappings origin="//@units.1/@lhs/@nodes.0" image="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.0"/>
+          <mappings origin="//@units.1/@lhs/@nodes.1" image="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.1"/>
+        </child>
+      </formula>
     </lhs>
     <rhs name="Rhs">
       <nodes name="implementation" incoming="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.4" outgoing="//@units.1/@rhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes name="definition" incoming="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.5" outgoing="//@units.1/@rhs/@edges.3">
+      <nodes name="context" incoming="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.5" outgoing="//@units.1/@rhs/@edges.3">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
       </nodes>
       <nodes name="interface_realization" outgoing="//@units.1/@rhs/@edges.4 //@units.1/@rhs/@edges.5">

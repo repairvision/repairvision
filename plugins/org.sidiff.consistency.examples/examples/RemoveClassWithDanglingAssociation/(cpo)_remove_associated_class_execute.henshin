@@ -3,15 +3,18 @@
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <units xsi:type="henshin:SequentialUnit" xmi:id="_IU4NcIjPEea8n7iE_hZmKQ" name="mainUnit" subUnits="_IU730IjPEea8n7iE_hZmKQ">
     <parameters xmi:id="_IU5bkIjPEea8n7iE_hZmKQ" name="ClassB"/>
+    <parameters name="context"/>
     <parameterMappings xmi:id="_IU7QwIjPEea8n7iE_hZmKQ" source="_IU5bkIjPEea8n7iE_hZmKQ" target="_IU8e4IjPEea8n7iE_hZmKQ"/>
+    <parameterMappings source="//@units.0/@parameters.1" target="//@units.1/@parameters.1"/>
   </units>
   <units xsi:type="henshin:Rule" xmi:id="_IU730IjPEea8n7iE_hZmKQ" name="(CPO)RemoveAssociatedClass" checkDangling="false">
     <parameters xmi:id="_IU8e4IjPEea8n7iE_hZmKQ" name="ClassB"/>
+    <parameters name="context"/>
     <lhs xmi:id="_IU-UEIjPEea8n7iE_hZmKQ" name="Lhs">
       <nodes xmi:id="_IU_iMIjPEea8n7iE_hZmKQ" name="ClassA" incoming="_IVEasIjPEea8n7iE_hZmKQ _IVIFEIjPEea8n7iE_hZmKQ _IVJ6QYjPEea8n7iE_hZmKQ" outgoing="_IVJ6QIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes xmi:id="_IVAwUIjPEea8n7iE_hZmKQ" name="RootElement" outgoing="_IVIFEYjPEea8n7iE_hZmKQ _IVJTMIjPEea8n7iE_hZmKQ _IVJ6QYjPEea8n7iE_hZmKQ">
+      <nodes xmi:id="_IVAwUIjPEea8n7iE_hZmKQ" name="context" outgoing="_IVIFEYjPEea8n7iE_hZmKQ _IVJTMIjPEea8n7iE_hZmKQ _IVJ6QYjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
       </nodes>
       <nodes xmi:id="_IVBXYIjPEea8n7iE_hZmKQ" name="b" incoming="_IVFBwYjPEea8n7iE_hZmKQ _IVJ6QIjPEea8n7iE_hZmKQ" outgoing="_IVDzoIjPEea8n7iE_hZmKQ _IVEasIjPEea8n7iE_hZmKQ _IVFBwIjPEea8n7iE_hZmKQ">
@@ -70,7 +73,7 @@
       <nodes xmi:id="_IVKhUYjPEea8n7iE_hZmKQ" name="ClassA" incoming="_IVLvcIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes xmi:id="_IVLIYIjPEea8n7iE_hZmKQ" name="RootElement" outgoing="_IVLvcIjPEea8n7iE_hZmKQ">
+      <nodes xmi:id="_IVLIYIjPEea8n7iE_hZmKQ" name="context" outgoing="_IVLvcIjPEea8n7iE_hZmKQ">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
       </nodes>
       <edges xmi:id="_IVLvcIjPEea8n7iE_hZmKQ" source="_IVLIYIjPEea8n7iE_hZmKQ" target="_IVKhUYjPEea8n7iE_hZmKQ">

@@ -3,17 +3,19 @@
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <units xsi:type="henshin:Rule" xmi:id="_jKB_YD47Eea0SJ9KOfvj5Q" name="(Sub)MoveOperation">
     <parameters xmi:id="_vFCt8D49Eea0SJ9KOfvj5Q" name="opName" description=""/>
+    <parameters name="context"/>
+    <parameters name="newClass"/>
     <lhs xmi:id="_jKcPED47Eea0SJ9KOfvj5Q" name="Lhs">
-      <nodes xmi:id="_701PwD48Eea0SJ9KOfvj5Q" incoming="_ZH46ID49Eea0SJ9KOfvj5Q" outgoing="//@units.0/@lhs/@edges.1">
+      <nodes xmi:id="_701PwD48Eea0SJ9KOfvj5Q" name="context" incoming="_ZH46ID49Eea0SJ9KOfvj5Q" outgoing="//@units.0/@lhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
         <attributes xmi:id="_o3Y44D49Eea0SJ9KOfvj5Q" value="opName">
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_Q7rtsD49Eea0SJ9KOfvj5Q">
+      <nodes xmi:id="_Q7rtsD49Eea0SJ9KOfvj5Q" name="newClass">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes xmi:id="_Rk-iUD49Eea0SJ9KOfvj5Q" incoming="//@units.0/@lhs/@edges.1" outgoing="_ZH46ID49Eea0SJ9KOfvj5Q">
+      <nodes xmi:id="_Rk-iUD49Eea0SJ9KOfvj5Q" name="oldClass" incoming="//@units.0/@lhs/@edges.1" outgoing="_ZH46ID49Eea0SJ9KOfvj5Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
       <edges xmi:id="_ZH46ID49Eea0SJ9KOfvj5Q" source="_Rk-iUD49Eea0SJ9KOfvj5Q" target="_701PwD48Eea0SJ9KOfvj5Q">
@@ -24,16 +26,16 @@
       </edges>
     </lhs>
     <rhs xmi:id="_jKc2ID47Eea0SJ9KOfvj5Q" name="Rhs">
-      <nodes xmi:id="_701PwT48Eea0SJ9KOfvj5Q" incoming="_ZkFG4D49Eea0SJ9KOfvj5Q" outgoing="//@units.0/@rhs/@edges.1">
+      <nodes xmi:id="_701PwT48Eea0SJ9KOfvj5Q" name="context" incoming="_ZkFG4D49Eea0SJ9KOfvj5Q" outgoing="//@units.0/@rhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
         <attributes xmi:id="_o3Zf8D49Eea0SJ9KOfvj5Q" value="opName">
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_Q7rtsT49Eea0SJ9KOfvj5Q" incoming="//@units.0/@rhs/@edges.1" outgoing="_ZkFG4D49Eea0SJ9KOfvj5Q">
+      <nodes xmi:id="_Q7rtsT49Eea0SJ9KOfvj5Q" name="newClass" incoming="//@units.0/@rhs/@edges.1" outgoing="_ZkFG4D49Eea0SJ9KOfvj5Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes xmi:id="_Rk_JYD49Eea0SJ9KOfvj5Q">
+      <nodes xmi:id="_Rk_JYD49Eea0SJ9KOfvj5Q" name="oldClass">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
       <edges xmi:id="_ZkFG4D49Eea0SJ9KOfvj5Q" source="_Q7rtsT49Eea0SJ9KOfvj5Q" target="_701PwT48Eea0SJ9KOfvj5Q">
@@ -47,5 +49,10 @@
     <mappings xmi:id="_Q7rtsj49Eea0SJ9KOfvj5Q" origin="_Q7rtsD49Eea0SJ9KOfvj5Q" image="_Q7rtsT49Eea0SJ9KOfvj5Q"/>
     <mappings xmi:id="_Rk_JYT49Eea0SJ9KOfvj5Q" origin="_Rk-iUD49Eea0SJ9KOfvj5Q" image="_Rk_JYD49Eea0SJ9KOfvj5Q"/>
   </units>
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_sg4IED49Eea0SJ9KOfvj5Q" name="mainUnit" subUnits="_jKB_YD47Eea0SJ9KOfvj5Q"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_sg4IED49Eea0SJ9KOfvj5Q" name="mainUnit" subUnits="_jKB_YD47Eea0SJ9KOfvj5Q">
+    <parameters name="context"/>
+    <parameters name="newClass"/>
+    <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.1"/>
+    <parameterMappings source="//@units.1/@parameters.1" target="//@units.0/@parameters.2"/>
+  </units>
 </henshin:Module>

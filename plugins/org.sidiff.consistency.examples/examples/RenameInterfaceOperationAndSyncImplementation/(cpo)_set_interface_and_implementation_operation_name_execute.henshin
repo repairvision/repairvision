@@ -4,24 +4,30 @@
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
     <parameters name="newName"/>
+    <parameters name="context"/>
+    <parameters name="op"/>
     <parameterMappings source="//@units.0/@parameters.0" target="//@units.1/@parameters.0"/>
+    <parameterMappings source="//@units.0/@parameters.1" target="//@units.1/@parameters.1"/>
+    <parameterMappings source="//@units.0/@parameters.2" target="//@units.1/@parameters.2"/>
   </units>
   <units xsi:type="henshin:Rule" name="(CPO)SetInterfaceAndImplementationOperationName">
     <parameters name="newName"/>
+    <parameters name="context"/>
+    <parameters name="op"/>
     <lhs name="Lhs">
-      <nodes name="ExpressOrder" incoming="//@units.1/@lhs/@edges.2 //@units.1/@lhs/@edges.4" outgoing="//@units.1/@lhs/@edges.0">
+      <nodes name="impl" incoming="//@units.1/@lhs/@edges.2 //@units.1/@lhs/@edges.4" outgoing="//@units.1/@lhs/@edges.0">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes name="CreditCardPayment" incoming="//@units.1/@lhs/@edges.3 //@units.1/@lhs/@edges.5" outgoing="//@units.1/@lhs/@edges.1">
+      <nodes name="context" incoming="//@units.1/@lhs/@edges.3 //@units.1/@lhs/@edges.5" outgoing="//@units.1/@lhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
       </nodes>
-      <nodes name="setCard" incoming="//@units.1/@lhs/@edges.0" outgoing="//@units.1/@lhs/@edges.2">
+      <nodes name="implOp" incoming="//@units.1/@lhs/@edges.0" outgoing="//@units.1/@lhs/@edges.2">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
       </nodes>
-      <nodes name="setCard1" incoming="//@units.1/@lhs/@edges.1" outgoing="//@units.1/@lhs/@edges.3">
+      <nodes name="op" incoming="//@units.1/@lhs/@edges.1" outgoing="//@units.1/@lhs/@edges.3">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
       </nodes>
-      <nodes name="#7" outgoing="//@units.1/@lhs/@edges.4 //@units.1/@lhs/@edges.5">
+      <nodes name="realization" outgoing="//@units.1/@lhs/@edges.4 //@units.1/@lhs/@edges.5">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Realization"/>
       </nodes>
       <edges source="//@units.1/@lhs/@nodes.0" target="//@units.1/@lhs/@nodes.2">
@@ -44,25 +50,25 @@
       </edges>
     </lhs>
     <rhs name="Rhs">
-      <nodes name="ExpressOrder" incoming="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.4" outgoing="//@units.1/@rhs/@edges.0">
+      <nodes name="impl" incoming="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.4" outgoing="//@units.1/@rhs/@edges.0">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes name="CreditCardPayment" incoming="//@units.1/@rhs/@edges.3 //@units.1/@rhs/@edges.5" outgoing="//@units.1/@rhs/@edges.1">
+      <nodes name="context" incoming="//@units.1/@rhs/@edges.3 //@units.1/@rhs/@edges.5" outgoing="//@units.1/@rhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
       </nodes>
-      <nodes name="setCard" incoming="//@units.1/@rhs/@edges.0" outgoing="//@units.1/@rhs/@edges.2">
+      <nodes name="implOp" incoming="//@units.1/@rhs/@edges.0" outgoing="//@units.1/@rhs/@edges.2">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
         <attributes value="newName">
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
         </attributes>
       </nodes>
-      <nodes name="setCard1" incoming="//@units.1/@rhs/@edges.1" outgoing="//@units.1/@rhs/@edges.3">
+      <nodes name="op" incoming="//@units.1/@rhs/@edges.1" outgoing="//@units.1/@rhs/@edges.3">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
         <attributes value="newName">
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
         </attributes>
       </nodes>
-      <nodes name="#7" outgoing="//@units.1/@rhs/@edges.4 //@units.1/@rhs/@edges.5">
+      <nodes name="realization" outgoing="//@units.1/@rhs/@edges.4 //@units.1/@rhs/@edges.5">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Realization"/>
       </nodes>
       <edges source="//@units.1/@rhs/@nodes.0" target="//@units.1/@rhs/@nodes.2">

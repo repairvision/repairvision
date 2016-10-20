@@ -3,8 +3,11 @@
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <units xsi:type="henshin:Rule" xmi:id="_jKB_YD47Eea0SJ9KOfvj5Q" name="(CPO)MoveOperationAndSyncMessage">
     <parameters xmi:id="_vFCt8D49Eea0SJ9KOfvj5Q" name="opName" description=""/>
+    <parameters name="context"/>
+    <parameters name="messageTarget"/>
+    <parameters name="newClass"/>
     <lhs xmi:id="_jKcPED47Eea0SJ9KOfvj5Q" name="Lhs">
-      <nodes xmi:id="_ppKmAD47Eea0SJ9KOfvj5Q" name="message" outgoing="_t9or4D47Eea0SJ9KOfvj5Q">
+      <nodes xmi:id="_ppKmAD47Eea0SJ9KOfvj5Q" name="context" outgoing="_t9or4D47Eea0SJ9KOfvj5Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
         <attributes xmi:id="_nfPaMD49Eea0SJ9KOfvj5Q" value="opName">
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -88,7 +91,7 @@
       </formula>
     </lhs>
     <rhs xmi:id="_jKc2ID47Eea0SJ9KOfvj5Q" name="Rhs">
-      <nodes xmi:id="_ppKmAT47Eea0SJ9KOfvj5Q" name="message" outgoing="_t9or4T47Eea0SJ9KOfvj5Q">
+      <nodes xmi:id="_ppKmAT47Eea0SJ9KOfvj5Q" name="context" outgoing="_t9or4T47Eea0SJ9KOfvj5Q">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
         <attributes xmi:id="_nfSdgD49Eea0SJ9KOfvj5Q" value="opName">
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -159,5 +162,12 @@
     <mappings xmi:id="_Q7rtsj49Eea0SJ9KOfvj5Q" origin="_Q7rtsD49Eea0SJ9KOfvj5Q" image="_Q7rtsT49Eea0SJ9KOfvj5Q"/>
     <mappings xmi:id="_Rk_JYT49Eea0SJ9KOfvj5Q" origin="_Rk-iUD49Eea0SJ9KOfvj5Q" image="_Rk_JYD49Eea0SJ9KOfvj5Q"/>
   </units>
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_sg4IED49Eea0SJ9KOfvj5Q" name="mainUnit" subUnits="_jKB_YD47Eea0SJ9KOfvj5Q"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_sg4IED49Eea0SJ9KOfvj5Q" name="mainUnit" subUnits="_jKB_YD47Eea0SJ9KOfvj5Q">
+    <parameters name="context"/>
+    <parameters name="messageTarget"/>
+    <parameters name="newClass"/>
+    <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.1"/>
+    <parameterMappings source="//@units.1/@parameters.1" target="//@units.0/@parameters.2"/>
+    <parameterMappings source="//@units.1/@parameters.2" target="//@units.0/@parameters.3"/>
+  </units>
 </henshin:Module>

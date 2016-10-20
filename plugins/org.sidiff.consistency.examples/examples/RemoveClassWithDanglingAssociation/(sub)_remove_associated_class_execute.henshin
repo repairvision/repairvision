@@ -3,12 +3,15 @@
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <units xsi:type="henshin:SequentialUnit" xmi:id="_Rdg44If-Eeal3p2bO67nKg" name="mainUnit" subUnits="_RdkjQIf-Eeal3p2bO67nKg">
     <parameters xmi:id="_RdiuEIf-Eeal3p2bO67nKg" name="ClassB"/>
+    <parameters name="context"/>
     <parameterMappings xmi:id="_Rdj8MIf-Eeal3p2bO67nKg" source="_RdiuEIf-Eeal3p2bO67nKg" target="_RdkjQYf-Eeal3p2bO67nKg"/>
+    <parameterMappings source="//@units.0/@parameters.1" target="//@units.1/@parameters.1"/>
   </units>
   <units xsi:type="henshin:Rule" xmi:id="_RdkjQIf-Eeal3p2bO67nKg" name="(Sub)RemoveAssociatedClass" checkDangling="false">
     <parameters xmi:id="_RdkjQYf-Eeal3p2bO67nKg" name="ClassB"/>
+    <parameters name="context"/>
     <lhs xmi:id="_RdmYcIf-Eeal3p2bO67nKg" name="Lhs">
-      <nodes xmi:id="_Rdm_gIf-Eeal3p2bO67nKg" name="RootElement" outgoing="_RdoNoYf-Eeal3p2bO67nKg">
+      <nodes xmi:id="_Rdm_gIf-Eeal3p2bO67nKg" name="context" outgoing="_RdoNoYf-Eeal3p2bO67nKg">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
       </nodes>
       <nodes xmi:id="_RdoNoIf-Eeal3p2bO67nKg" name="ClassB" incoming="_RdoNoYf-Eeal3p2bO67nKg _U3oCwIgTEeal3p2bO67nKg">
@@ -25,7 +28,7 @@
       </edges>
     </lhs>
     <rhs xmi:id="_RdpbwIf-Eeal3p2bO67nKg" name="Rhs">
-      <nodes xmi:id="_RdpbwYf-Eeal3p2bO67nKg" name="RootElement">
+      <nodes xmi:id="_RdpbwYf-Eeal3p2bO67nKg" name="context">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
       </nodes>
       <nodes xmi:id="_UI24QIgTEeal3p2bO67nKg" name="b">

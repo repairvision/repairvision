@@ -62,6 +62,28 @@
       <edges source="//@units.1/@lhs/@nodes.3" target="//@units.1/@lhs/@nodes.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/interaction"/>
       </edges>
+      <formula xsi:type="henshin:Not">
+        <child xsi:type="henshin:NestedCondition">
+          <conclusion>
+            <nodes name="type" incoming="//@units.1/@lhs/@formula/@child/@conclusion/@edges.1" outgoing="//@units.1/@lhs/@formula/@child/@conclusion/@edges.0">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+            </nodes>
+            <nodes incoming="//@units.1/@lhs/@formula/@child/@conclusion/@edges.0" outgoing="//@units.1/@lhs/@formula/@child/@conclusion/@edges.1">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+              <attributes value="opName">
+                <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+              </attributes>
+            </nodes>
+            <edges source="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.0" target="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.1">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+            </edges>
+            <edges source="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.1" target="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.0">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
+            </edges>
+          </conclusion>
+          <mappings origin="//@units.1/@lhs/@nodes.0" image="//@units.1/@lhs/@formula/@child/@conclusion/@nodes.0"/>
+        </child>
+      </formula>
     </lhs>
     <rhs name="Rhs">
       <nodes name="type" incoming="//@units.1/@rhs/@edges.15 //@units.1/@rhs/@edges.21" outgoing="//@units.1/@rhs/@edges.16">

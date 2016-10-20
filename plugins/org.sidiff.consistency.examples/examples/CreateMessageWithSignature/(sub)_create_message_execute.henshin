@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="(Sub)CreateNewMessage" description="Creates a new message.">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="(Sub)CreateMessage" description="Creates a new message.">
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
     <parameters name="messageRecv"/>
@@ -8,22 +8,25 @@
     <parameters name="opName"/>
     <parameters name="lifeline_send"/>
     <parameters name="lifeline_recv"/>
+    <parameters name="context"/>
     <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.0"/>
     <parameterMappings source="//@units.1/@parameters.1" target="//@units.0/@parameters.1"/>
     <parameterMappings source="//@units.1/@parameters.2" target="//@units.0/@parameters.2"/>
     <parameterMappings source="//@units.0/@parameters.3" target="//@units.1/@parameters.3"/>
     <parameterMappings source="//@units.0/@parameters.4" target="//@units.1/@parameters.4"/>
     <parameterMappings source="//@units.0/@parameters.5" target="//@units.1/@parameters.5"/>
+    <parameterMappings source="//@units.0/@parameters.6" target="//@units.1/@parameters.6"/>
   </units>
-  <units xsi:type="henshin:Rule" name="(Sub)CreateNewMessage">
+  <units xsi:type="henshin:Rule" name="(Sub)CreateMessage">
     <parameters name="messageRecv"/>
     <parameters name="messageSend"/>
     <parameters name="message"/>
     <parameters name="opName"/>
     <parameters name="lifeline_send"/>
     <parameters name="lifeline_recv"/>
+    <parameters name="context"/>
     <lhs name="Lhs">
-      <nodes name="interaction" incoming="//@units.1/@lhs/@edges.2" outgoing="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.1">
+      <nodes name="context" incoming="//@units.1/@lhs/@edges.2" outgoing="//@units.1/@lhs/@edges.0 //@units.1/@lhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
       </nodes>
       <nodes name="lifeline_recv" incoming="//@units.1/@lhs/@edges.0" outgoing="//@units.1/@lhs/@edges.2">
@@ -43,7 +46,7 @@
       </edges>
     </lhs>
     <rhs name="Rhs">
-      <nodes name="interaction" incoming="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.7 //@units.1/@rhs/@edges.10 //@units.1/@rhs/@edges.16" outgoing="//@units.1/@rhs/@edges.3 //@units.1/@rhs/@edges.8 //@units.1/@rhs/@edges.11 //@units.1/@rhs/@edges.14 //@units.1/@rhs/@edges.15">
+      <nodes name="context" incoming="//@units.1/@rhs/@edges.2 //@units.1/@rhs/@edges.7 //@units.1/@rhs/@edges.10 //@units.1/@rhs/@edges.16" outgoing="//@units.1/@rhs/@edges.3 //@units.1/@rhs/@edges.8 //@units.1/@rhs/@edges.11 //@units.1/@rhs/@edges.14 //@units.1/@rhs/@edges.15">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
       </nodes>
       <nodes name="lifeline_recv" incoming="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.14" outgoing="//@units.1/@rhs/@edges.1 //@units.1/@rhs/@edges.16">

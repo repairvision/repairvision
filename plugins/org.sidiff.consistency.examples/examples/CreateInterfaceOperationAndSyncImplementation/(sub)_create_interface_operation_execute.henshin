@@ -3,7 +3,7 @@
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
     <parameters name="operation_definition"/>
-    <parameters name="definition"/>
+    <parameters name="context"/>
     <parameters name="operationName"/>
     <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.0"/>
     <parameterMappings source="//@units.0/@parameters.1" target="//@units.1/@parameters.1"/>
@@ -11,15 +11,15 @@
   </units>
   <units xsi:type="henshin:Rule" name="(Sub)CreateInterfaceOperation">
     <parameters name="operation_definition"/>
-    <parameters name="definition"/>
+    <parameters name="context"/>
     <parameters name="operationName"/>
     <lhs name="Lhs">
-      <nodes name="definition">
+      <nodes name="context">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
       </nodes>
     </lhs>
     <rhs name="Rhs">
-      <nodes name="definition" incoming="//@units.1/@rhs/@edges.0" outgoing="//@units.1/@rhs/@edges.1">
+      <nodes name="context" incoming="//@units.1/@rhs/@edges.0" outgoing="//@units.1/@rhs/@edges.1">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
       </nodes>
       <nodes name="operation_definition" incoming="//@units.1/@rhs/@edges.1" outgoing="//@units.1/@rhs/@edges.0">

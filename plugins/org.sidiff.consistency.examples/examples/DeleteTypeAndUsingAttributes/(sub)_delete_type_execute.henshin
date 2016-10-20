@@ -2,10 +2,14 @@
 <henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_L4fqYJFwEeaO1JlMsqX4BA" name="(Sub)DeleteType" description="Removes a Type (e.g. a Class)">
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_L4fqYZFwEeaO1JlMsqX4BA" name="mainUnit" subUnits="_L4fqYpFwEeaO1JlMsqX4BA"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_L4fqYZFwEeaO1JlMsqX4BA" name="mainUnit" subUnits="_L4fqYpFwEeaO1JlMsqX4BA">
+    <parameters name="context"/>
+    <parameterMappings source="//@units.0/@parameters.0" target="//@units.1/@parameters.0"/>
+  </units>
   <units xsi:type="henshin:Rule" xmi:id="_L4fqYpFwEeaO1JlMsqX4BA" name="(Sub)DeleteType">
+    <parameters name="context"/>
     <lhs xmi:id="_L4fqY5FwEeaO1JlMsqX4BA" name="Lhs">
-      <nodes xmi:id="_L4fqo5FwEeaO1JlMsqX4BA" name="Package" outgoing="_L4fqu5FwEeaO1JlMsqX4BA">
+      <nodes xmi:id="_L4fqo5FwEeaO1JlMsqX4BA" name="context" outgoing="_L4fqu5FwEeaO1JlMsqX4BA">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
       </nodes>
       <nodes xmi:id="_L4fqr5FwEeaO1JlMsqX4BA" name="Type" incoming="_L4fqu5FwEeaO1JlMsqX4BA //@units.1/@lhs/@edges.1">
@@ -22,7 +26,7 @@
       </edges>
     </lhs>
     <rhs xmi:id="_L4gSC5FwEeaO1JlMsqX4BA" name="Rhs">
-      <nodes xmi:id="_L4gSS5FwEeaO1JlMsqX4BA" name="Package">
+      <nodes xmi:id="_L4gSS5FwEeaO1JlMsqX4BA" name="context">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
       </nodes>
       <nodes name="attribute">
