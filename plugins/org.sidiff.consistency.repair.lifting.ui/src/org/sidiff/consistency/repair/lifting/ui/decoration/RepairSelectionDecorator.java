@@ -79,7 +79,7 @@ public class RepairSelectionDecorator extends AbstractDecorator {
 		if (gep != null) {
 			DiagramEventBroker.getInstance(gep.getEditingDomain()).removeNotificationListener(gep.getNotationView(),
 					NotationPackage.eINSTANCE.getDescriptionStyle_Description(), notificationListener);
-			controller.unregisterDecorator(this);
+			controller.unregisterDecorator(this, getDecoratorTarget());
 		}
 	}
 
