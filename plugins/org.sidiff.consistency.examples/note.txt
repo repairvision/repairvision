@@ -1,5 +1,15 @@
 Clone Papyrus-Project:
+----------------------
+
 1. Commit Papyrus-Project
 2. Rename Papyrus-Project (in Project Explorer)
 3. Commit renamed Papyrus-Project without deleting the old project
 4. Revert the old Papyrus-Project
+
+CPO Notes:
+----------
+
+- (cpo)_create_new_initial_transition_execute
+	- needed to filter initial transitions without a trigger
+- (cpo)_replace_state_with_incoming_transition_execute
+	- with different new source/target states => combinatorial problem
