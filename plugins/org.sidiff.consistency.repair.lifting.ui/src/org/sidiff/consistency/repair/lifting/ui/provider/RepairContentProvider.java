@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
@@ -21,6 +22,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleAttributeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
@@ -48,6 +50,10 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		GraphElement graphElement;
 		Node[] nodes;
 		EObject[] matches;
+	}
+	
+	public class AttributeChange extends Change {
+		Object value;
 	}
 	
 	@Override
@@ -86,7 +92,6 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 					repairs.add(repair);
 					repairsByContext.put(null, repairs);
 				}
-				
 			}
 			
 			// Rule content:
@@ -164,10 +169,53 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		
 		else if (parentElement instanceof Change) {
 			Change change = ((Change) parentElement);
-			return change.matches;
+			
+			if (change instanceof AttributeChange) {
+				return new Object[] {((AttributeChange) change).matches[0] , ((AttributeChange) change).value};
+			} else {
+				return change.matches;
+			}
 		}
 		
 		return new Object[0];
+	}
+	
+	@Override
+	public Object getParent(Object element) {
+		return null;
+	}
+
+	@Override
+	public boolean hasChildren(Object element) {
+		
+		// Repair-Rule:
+		if (element instanceof Rule ||
+				element instanceof Repair ||
+				element instanceof Container ||
+				element instanceof ContextContainer ||
+				element instanceof AttributeChange) {
+			return true;
+		}
+		
+		// Single change:
+		if (element instanceof Change) {
+			if (((Change) element).matches != null) {
+				return (((Change) element).matches.length > 0);
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	public Object[] getElements(Object inputElement) {
+		
+		// Repair-Rules:
+		if (inputElement instanceof Map<?, ?>) {
+			return ((Map<?, ?>) inputElement).keySet().toArray();
+		}
+		
+		return getChildren(inputElement);
 	}
 	
 	private Change toHistoricChange(EditRuleMatch editRuleMatch) {
@@ -232,42 +280,18 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			}
 		}
 		
+		else if (editRuleMatch instanceof EditRuleAttributeMatch) {
+			AttributeChange attChange = new AttributeChange();
+			Attribute attr = ((EditRuleAttributeMatch) editRuleMatch).getAttribute();
+			
+			attChange.graphElement = attr;
+			attChange.value = ((EditRuleAttributeMatch) editRuleMatch).getValue();
+			attChange.matches = new EObject[] {((EditRuleAttributeMatch) editRuleMatch).getObject()};
+			
+			return attChange;
+		}
+		
 		return change;
-	}
-	
-	@Override
-	public Object getParent(Object element) {
-		return null;
-	}
-
-	@Override
-	public boolean hasChildren(Object element) {
-		
-		// Repair-Rule:
-		if (element instanceof Rule ||
-				element instanceof Repair ||
-				element instanceof Container ||
-				element instanceof ContextContainer) {
-			return true;
-		}
-		
-		// Single change:
-		if (element instanceof Change) {
-			return (((Change) element).matches.length > 0);
-		}
-		
-		return false;
-	}
-
-	@Override
-	public Object[] getElements(Object inputElement) {
-		
-		// Repair-Rules:
-		if (inputElement instanceof Map<?, ?>) {
-			return ((Map<?, ?>) inputElement).keySet().toArray();
-		}
-		
-		return getChildren(inputElement);
 	}
 	
 	private Change toComplemetingChange(GraphElement graphElement, ComplementMatch preMatch) {
@@ -278,6 +302,10 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		
 		else if (graphElement instanceof Node) {
 			return toComplementingChange((Node) graphElement, preMatch);
+		}
+		
+		else  if (graphElement instanceof Attribute) {
+			return toComplementingChange((Attribute) graphElement, preMatch);
 		}
 		
 		return null;
@@ -397,6 +425,19 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 
 		change.nodes = contextNodes.toArray(new Node[0]);
 		change.matches = contextMatches.toArray(new EObject[0]);
+		
+		return change;
+	}
+	
+	private Change toComplementingChange(Attribute attribute, ComplementMatch preMatch) {
+		AttributeChange change = new AttributeChange();
+		change.graphElement = attribute;
+		
+		
+		Parameter parameter = preMatch.getMatch().getRule().getParameter(attribute.getValue());
+		change.matches = new EObject[] {preMatch.getMatch().getNodeTarget(
+				HenshinRuleAnalysisUtilEx.getLHS(attribute.getNode()))};
+		change.value = preMatch.getMatch().getParameterValue(parameter);
 		
 		return change;
 	}

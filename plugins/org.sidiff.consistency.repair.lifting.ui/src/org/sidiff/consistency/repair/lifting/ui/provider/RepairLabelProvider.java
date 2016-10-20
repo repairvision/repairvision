@@ -4,12 +4,14 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.NameUtil;
 import org.sidiff.consistency.repair.lifting.api.Repair;
 import org.sidiff.consistency.repair.lifting.ui.Activator;
+import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.AttributeChange;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.Change;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.Container;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.ContextContainer;
@@ -100,6 +102,11 @@ public class RepairLabelProvider extends LabelProvider {
 		
 		else if (element instanceof Container) {
 			return ((Container) element).label;
+		}
+		
+		else if (element instanceof AttributeChange) {
+			Attribute attr = ((Attribute) ((AttributeChange) element).graphElement);
+			return "Set Attribute (type: " + attr.getType().getName() + ")";
 		}
 		
 		else if (element instanceof Change) {

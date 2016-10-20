@@ -129,13 +129,15 @@ public class CPOComplementConstructor extends ComplementConstructor {
 			// Attribute-Matches:
 			if (subEditRuleMatch instanceof EditRuleAttributeMatch) {
 				Attribute subRuleAttribute = ((EditRuleAttributeMatch) subEditRuleMatch).getAttribute();
+				EObject object = ((EditRuleAttributeMatch) subEditRuleMatch).getObject();
 				Object value = ((EditRuleAttributeMatch) subEditRuleMatch).getValue();
 				Node subRuleNode = getLHS(subRuleAttribute.getNode());
 				
 				Attribute superRuleAttribute = getRHS(embedding.getSuperRuleNode(subRuleNode))
 						.getAttribute(subRuleAttribute.getType());
 				
-				EditRuleAttributeMatch superEditRuleAttributeMatch = new EditRuleAttributeMatch(superRuleAttribute, value);
+				EditRuleAttributeMatch superEditRuleAttributeMatch = new EditRuleAttributeMatch(
+						superRuleAttribute, object, value);
 				superEditRuleMatch.add(superEditRuleAttributeMatch);
 			}
 			

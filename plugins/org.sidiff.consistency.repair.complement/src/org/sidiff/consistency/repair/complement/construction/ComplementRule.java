@@ -1,9 +1,11 @@
 package org.sidiff.consistency.repair.complement.construction;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChanges;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChangingAttributes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSNodes;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getPreservedNodes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes;
@@ -25,13 +27,16 @@ import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.henshin.view.NodePair;
 import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
+import org.sidiff.consistency.repair.complement.construction.match.EditRuleAttributeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
 import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
@@ -176,6 +181,14 @@ public abstract class ComplementRule {
 					historicChanges.add(createEdge);
 				}
 			}
+			
+			for (NodePair preserveNode : getPreservedNodes(sourceRule)) {
+				for (Attribute changingAttr : getChangingAttributes(preserveNode.getLhsNode(), preserveNode.getRhsNode())) {
+					if (!getComplementingChanges().contains(getTrace(changingAttr))) {
+						historicChanges.add(changingAttr);
+					}
+				}
+			}
 		}
 		
 		return historicChanges;
@@ -245,6 +258,16 @@ public abstract class ComplementRule {
 			for (EditRuleMatch editRuleMatch : sourceMatch) {
 				if (editRuleMatch instanceof EditRuleEdgeMatch) {
 					if (((EditRuleEdgeMatch) editRuleMatch).getEdge() == graphElement) {
+						return editRuleMatch;
+					}
+				}
+			}
+		}
+		
+		else if (graphElement instanceof Attribute) {
+			for (EditRuleMatch editRuleMatch : sourceMatch) {
+				if (editRuleMatch instanceof EditRuleAttributeMatch) {
+					if (((EditRuleAttributeMatch) editRuleMatch).getAttribute() == graphElement) {
 						return editRuleMatch;
 					}
 				}
@@ -345,6 +368,16 @@ public abstract class ComplementRule {
 		} else {
 			return lhsNodeTrace; 
 		}
+	}
+	
+	public Attribute getTrace(Attribute sourceAttribute) {
+		Node complementNode = getTrace(sourceAttribute.getNode());
+		
+		if (complementNode != null) {
+			return complementNode.getAttribute(sourceAttribute.getType());
+		}
+		
+		return null;
 	}
 	
 	public Edge getTrace(Edge sourceRule) {

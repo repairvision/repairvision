@@ -1,5 +1,6 @@
 package org.sidiff.consistency.repair.complement.construction.match;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Attribute;
 
@@ -7,10 +8,13 @@ public class EditRuleAttributeMatch extends EditRuleMatch {
 
 	private Attribute attribute;
 	
+	private EObject object;
+	
 	private Object value;
 
-	public EditRuleAttributeMatch(Attribute attribute, Object value) {
+	public EditRuleAttributeMatch(Attribute attribute, EObject object, Object value) {
 		super(Type.CREATE);
+		this.object = object;
 		this.attribute = attribute;
 		this.value = value;
 		
@@ -22,6 +26,14 @@ public class EditRuleAttributeMatch extends EditRuleMatch {
 
 	public void setAttribute(Attribute attribute) {
 		this.attribute = attribute;
+	}
+
+	public EObject getObject() {
+		return object;
+	}
+
+	public void setObject(EObject object) {
+		this.object = object;
 	}
 
 	public Object getValue() {
