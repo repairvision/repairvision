@@ -40,7 +40,7 @@ public class WrapperLabelProvider implements ILabelProvider, IColorProvider {
 	@Override
 	public Color getForeground(Object element) {
 		if (treeDecorations.contains(element)) {
-			return new Color(null, 255, 0, 0);
+			return new Color(null, 232, 72, 72);
 		}
 		return null;
 	}

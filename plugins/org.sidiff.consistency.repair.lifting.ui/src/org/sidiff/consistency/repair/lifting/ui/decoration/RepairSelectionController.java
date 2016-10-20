@@ -99,7 +99,6 @@ public class RepairSelectionController implements ISelectionListener, ISelection
 		decorators.add(decorator);
 	}
 	
-	
 	public List<EObject> getSelected() {
 		return selected;
 	}
@@ -210,14 +209,14 @@ public class RepairSelectionController implements ISelectionListener, ISelection
 		List<TreeEditorSelection> editors = new ArrayList<>();
 
 		// Search all opened editors in the workbench:
-		for (IEditorReference editorReference : PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().getEditorReferences()) {
+		for (IEditorReference editorReference : PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+				.getEditorReferences()) {
 			IEditorPart editor = editorReference.getEditor(false);
 
 			if (editor instanceof IViewerProvider) {
 
 				try {
-					if (editor != null 
+					if (editor != null
 							&& (editor instanceof IEditingDomainProvider 
 									|| editor instanceof IDiagramWorkbenchPart
 									|| editor.getClass().getMethod("getEditingDomain", (Class<?>[]) null) != null)) {
@@ -268,9 +267,9 @@ public class RepairSelectionController implements ISelectionListener, ISelection
 			}
 		}
 
-	return editors;
-}
-	
+		return editors;
+	}
+
 	private static class TreeEditorSelection {
 		public IViewerProvider editor;
 		public List<EObject> selection;
