@@ -196,14 +196,25 @@ public class CPORepairFacade {
 			long subLifting = System.currentTimeMillis();
 			
 			liftingSettings.setRuleBases(rulebases_subs);
-			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING_AND_POST_PROCESSING); 
-			// FIXME: post-processing per CPO!?
-
+			liftingSettings.setRecognitionEngineMode(RecognitionEngineMode.LIFTING); // no post-processing
+			
 			// TODO[Optimization]: Reuse of CPO recognition engine possible!?
 			//                     At least modelA an B graph! 
 			liftingSettings.setRecognitionEngine(null);
 			
 			difference = LiftingFacade.liftTechnicalDifference(difference, liftingSettings);
+			
+			// FIXME: post-processing per CPO!?
+			// Remove properly nested EOs (keep overlapping):
+			DifferenceAnalysisUtil.analyzeDifferenceStructure(difference);
+			Set<SemanticChangeSet> nestedCS = new HashSet<SemanticChangeSet>();
+
+			for (SemanticChangeSet cs : difference.getChangeSets()) {
+				nestedCS.addAll(cs.getSubsets());
+			}
+
+			// Remove all nested:
+			difference.getChangeSets().removeAll(nestedCS);
 			
 			if (DebugUtil.statistic) {
 				System.out.println("------ Change Sets (Sub-EOs): " + difference.getChangeSets().size());
