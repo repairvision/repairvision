@@ -1,5 +1,8 @@
 package org.sidiff.consistency.repair.lifting.ui.views;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
@@ -230,14 +233,21 @@ public class RepairView extends ViewPart {
 		
 		// Apply repair:
 		applyRepairs = new Action() {
+			@SuppressWarnings("unchecked")
 			public void run() {
 				ISelection selection = viewer_repairs.getSelection();
 				
 				if (selection instanceof IStructuredSelection) {
-					Object selectedElement = ((IStructuredSelection)selection).getFirstElement();
+					List<Repair> selectedRepairs = new ArrayList<>();
 					
-					if (selectedElement instanceof Repair) {
-						if (viewerApp.applyRepair((Repair) selectedElement)) {
+					((IStructuredSelection)selection).iterator().forEachRemaining(o -> {
+						if (o instanceof Repair) {
+							selectedRepairs.add((Repair) o);
+						}
+					});
+					
+					if (!selectedRepairs.isEmpty()) {
+						if (viewerApp.applyRepairs(selectedRepairs)) {
 							// TODO: Ask the user what to do!
 							// Recalculate repairs:
 							viewerApp.recalculateRepairs();
@@ -260,14 +270,21 @@ public class RepairView extends ViewPart {
 		// Undo repair:
 		undoRepairs = new Action() {
 			public void run() {
-				RuleApplication lastRepair = viewerApp.undoLastRepair();
+				List<RuleApplication> lastRepairs = viewerApp.undoLastRepairs();
 				
-				if (lastRepair != null) {
+				if (lastRepairs != null) {
 					// TODO: Ask the user what to do!
 					// Recalculate repairs:
 					viewerApp.recalculateRepairs();
 					
-					showMessage("Repair ("+ NameUtil.beautifyName(lastRepair.getRule().getName()) +") successfully undone!");
+					// Show user message:
+					String rules = "";
+					
+					for (RuleApplication lastRepair : lastRepairs) {
+						rules += NameUtil.beautifyName(lastRepair.getRule().getName());
+					}
+					
+					showMessage("Repair ("+ rules +") successfully undone!");
 				} else {
 					showMessage("Repair could not be undone!");
 				}

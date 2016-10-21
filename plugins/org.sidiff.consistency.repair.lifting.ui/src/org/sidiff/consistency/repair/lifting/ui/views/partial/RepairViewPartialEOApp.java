@@ -2,6 +2,7 @@ package org.sidiff.consistency.repair.lifting.ui.views.partial;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -144,12 +145,12 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 	}
 	
 	@Override
-	public boolean applyRepair(Repair repair) {
-		return (repairJob.applyRepair(repair) != null);
+	public boolean applyRepairs(List<Repair> repair) {
+		return (repairJob.applyRepairs(repair) != null);
 	}
 	
 	@Override
-	public RuleApplication undoLastRepair() {
+	public List<RuleApplication> undoLastRepairs() {
 		
 		if (repairJob == null) {
 			WorkbenchUtil.showMessage("Please start the repair calculation!");
@@ -161,7 +162,7 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 			return null;
 		}
 		
-		return repairJob.undoLastRepair();
+		return repairJob.undoLastRepairs();
 	}
 
 	public IResource removeEditRule(IResource selection) {

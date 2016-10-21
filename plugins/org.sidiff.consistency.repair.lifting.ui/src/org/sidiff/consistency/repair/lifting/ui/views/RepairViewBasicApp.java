@@ -52,9 +52,9 @@ public abstract class RepairViewBasicApp {
 	
 	public abstract void recalculateRepairs();
 	
-	public abstract boolean applyRepair(Repair repair);
+	public abstract boolean applyRepairs(List<Repair> repair);
 	
-	public abstract RuleApplication undoLastRepair();
+	public abstract List<RuleApplication> undoLastRepairs();
 	
 	public IResource removeModelA(IResource selection) {
 		modelAFile = null;

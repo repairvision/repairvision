@@ -2,6 +2,7 @@ package org.sidiff.consistency.repair.lifting.api;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -13,7 +14,7 @@ import org.sidiff.consistency.repair.validation.util.BatchValidationIterator.Val
 
 public class RepairJob {
 	
-	protected Stack<RuleApplication> repairStack = new Stack<>();
+	protected Stack<List<RuleApplication>> repairStack = new Stack<>();
 
 	protected Map<Rule, List<Repair>> repairs;
 	
@@ -32,40 +33,50 @@ public class RepairJob {
 		this.repairStack = repairJob.repairStack;
 	}
 	
-	public RuleApplication applyRepair(Repair repair) {
+	public List<RuleApplication> applyRepairs(List<Repair> repairs) {
+		List<RuleApplication> appliedRepairs = new LinkedList<>();
 		
 		// Apply repair:
-		RuleApplication repairApplication = repair.apply();
-		repairStack.push(repairApplication);
-		
-		// Save model
-		if (repairApplication != null) {
-			try {
-				getModelB().save(null);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return repairApplication;
-	}
-	
-	public RuleApplication undoLastRepair() {
-		
-		// Undo repair:
-		if (!repairStack.isEmpty()) {
-			RuleApplication lastRepair = repairStack.pop();
+		for (Repair repair : repairs) {
+			RuleApplication repairApplication = repair.apply();
+			appliedRepairs.add(repairApplication);
 			
 			// Save model
-			if (lastRepair.undo(null)) {
+			if (repairApplication != null) {
 				try {
 					getModelB().save(null);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
+		}
+		
+		if (!appliedRepairs.isEmpty()) {
+			repairStack.push(appliedRepairs);
+			return appliedRepairs;
+		} else {
+			return null;
+		}
+	}
+	
+	public List<RuleApplication> undoLastRepairs() {
+		
+		// Undo repair:
+		if (!repairStack.isEmpty()) {
+			List<RuleApplication> lastRepairs = repairStack.pop();
 			
-			return lastRepair;
+			// Save model
+			for (RuleApplication ruleApplication : lastRepairs) {
+				if (ruleApplication.undo(null)) {
+					try {
+						getModelB().save(null);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			return lastRepairs;
 		} else {
 			return null;
 		}
