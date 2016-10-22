@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_EBjOoH0TEeWKFJpz_W_loA">
+  <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_EaiWYH0TEeWKFJpz_W_loA" name="validateInitialState">
+    <parameters xmi:id="_Ss3FIH0WEeWKFJpz_W_loA" name="context"/>
+    <lhs xmi:id="_EanO4H0TEeWKFJpz_W_loA" name="Lhs">
+      <nodes xmi:id="_63_XMH0UEeWKFJpz_W_loA" name="context">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Pseudostate"/>
+        <attributes xmi:id="_9yO6wH0UEeWKFJpz_W_loA" value="initial">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Pseudostate/kind"/>
+        </attributes>
+      </nodes>
+      <formula xsi:type="henshin:Not" xmi:id="_Ie-KQH0VEeWKFJpz_W_loA">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_Ie-KQX0VEeWKFJpz_W_loA">
+          <conclusion xmi:id="_Ie-KQn0VEeWKFJpz_W_loA">
+            <nodes xmi:id="_zoybAH0TEeWKFJpz_W_loA" outgoing="_A8LuQH0VEeWKFJpz_W_loA">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+            </nodes>
+            <nodes xmi:id="_Ie-KRX0VEeWKFJpz_W_loA" incoming="_A8LuQH0VEeWKFJpz_W_loA">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Pseudostate"/>
+              <attributes xmi:id="_Ie-KRn0VEeWKFJpz_W_loA" value="initial">
+                <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Pseudostate/kind"/>
+              </attributes>
+            </nodes>
+            <edges xmi:id="_A8LuQH0VEeWKFJpz_W_loA" source="_zoybAH0TEeWKFJpz_W_loA" target="_Ie-KRX0VEeWKFJpz_W_loA">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+            </edges>
+          </conclusion>
+          <mappings xmi:id="_Ie-KR30VEeWKFJpz_W_loA" origin="_63_XMH0UEeWKFJpz_W_loA" image="_Ie-KRX0VEeWKFJpz_W_loA"/>
+        </child>
+      </formula>
+    </lhs>
+    <rhs xmi:id="_EanO4X0TEeWKFJpz_W_loA" name="Rhs">
+      <nodes xmi:id="_64BMYH0UEeWKFJpz_W_loA" name="context">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Pseudostate"/>
+        <attributes xmi:id="_9yO6wX0UEeWKFJpz_W_loA" value="initial">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Pseudostate/kind"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_64BMYX0UEeWKFJpz_W_loA" origin="_63_XMH0UEeWKFJpz_W_loA" image="_64BMYH0UEeWKFJpz_W_loA"/>
+  </units>
+</henshin:Module>
