@@ -35,21 +35,21 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	
 	// TODO: Add specific classes.
 	public class Container {
-		String label;
-		Image icon;
-		Object parent;
-		Object[] content;
+		public String label;
+		public Image icon;
+		public Object parent;
+		public Object[] content;
 	}
 	
 	public class ContextContainer {
-		EObject conext;
-		List<Repair> repairs;
+		public EObject conext;
+		public List<Repair> repairs;
 	}
 	
 	public class Change {
-		GraphElement graphElement;
-		Node[] nodes;
-		EObject[] matches;
+		public GraphElement graphElement;
+		public Node[] nodes;
+		public EObject[] matches;
 	}
 	
 	public class AttributeChange extends Change {

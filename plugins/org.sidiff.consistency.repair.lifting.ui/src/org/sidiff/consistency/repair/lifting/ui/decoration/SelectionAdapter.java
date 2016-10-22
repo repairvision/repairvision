@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.sidiff.consistency.repair.lifting.api.Repair;
+import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.Change;
 
 public class SelectionAdapter {
 
@@ -21,6 +22,11 @@ public class SelectionAdapter {
 			else if (selectedElement instanceof Repair) {
 				return Collections.unmodifiableList(((Repair) selectedElement)
 						.getRepairPreMatch().getMatch().getNodeTargets());
+			}
+			
+			else if (selectedElement instanceof Change) {
+				// FIXME: Needs a XMI-ID copy for the complement-rule!
+				return Collections.singletonList(((Change) selectedElement).graphElement);
 			}
 		}
 		
