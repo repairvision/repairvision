@@ -378,14 +378,12 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		List<EObject> contextMatches = new ArrayList<>(); 
 
 		// Get node match:
-		if (node.getGraph().isRhs()) {
-			Node lhsNode = HenshinRuleAnalysisUtilEx.getLHS(node);
-			EObject match = preMatch.getMatch().getNodeTarget(lhsNode);
+		Node lhsNode = HenshinRuleAnalysisUtilEx.getLHS(node);
+		EObject match = preMatch.getMatch().getNodeTarget(lhsNode);
 
-			if (match != null) {
-				contextNodes.add(lhsNode);
-				contextMatches.add(match);
-			}
+		if (match != null) {
+			contextNodes.add(lhsNode);
+			contextMatches.add(match);
 		}
 
 		// Get node context:
