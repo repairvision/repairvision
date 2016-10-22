@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_L4fqYJFwEeaO1JlMsqX4BA" name="(CPO)ChangeAttributeDataType" description="Changes the type of an attribute.">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_L4fqYJFwEeaO1JlMsqX4BA" name="(CPO)ChangeElementClassType" description="Changes the type of an typed element.">
   <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
   <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
   <units xsi:type="henshin:SequentialUnit" xmi:id="_L4fqYZFwEeaO1JlMsqX4BA" name="mainUnit" subUnits="_L4fqYpFwEeaO1JlMsqX4BA">
@@ -10,7 +10,7 @@
     <parameterMappings source="//@units.0/@parameters.1" target="//@units.1/@parameters.1"/>
     <parameterMappings source="//@units.1/@parameters.2" target="//@units.0/@parameters.2"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_L4fqYpFwEeaO1JlMsqX4BA" name="(CPO)ChangeAttributeDataType">
+  <units xsi:type="henshin:Rule" xmi:id="_L4fqYpFwEeaO1JlMsqX4BA" name="(CPO)ChangeElementClassType">
     <parameters name="attribute"/>
     <parameters name="context"/>
     <parameters name="newType"/>
@@ -36,7 +36,7 @@
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
       </nodes>
       <nodes name="newType" incoming="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.1">
-        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//DataType"/>
       </nodes>
       <nodes name="attribute" outgoing="//@units.1/@rhs/@edges.0">
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement"/>
