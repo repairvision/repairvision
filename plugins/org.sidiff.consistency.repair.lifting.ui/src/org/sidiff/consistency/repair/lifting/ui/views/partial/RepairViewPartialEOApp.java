@@ -18,12 +18,13 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.consistency.common.ui.WorkbenchUtil;
-import org.sidiff.consistency.repair.lifting.api.Repair;
-import org.sidiff.consistency.repair.lifting.api.RepairFacade;
-import org.sidiff.consistency.repair.lifting.api.RepairJob;
+import org.sidiff.consistency.repair.api.IRepair;
+import org.sidiff.consistency.repair.api.peo.PEORepairFacade;
+import org.sidiff.consistency.repair.api.peo.PEORepairJob;
+import org.sidiff.consistency.repair.api.peo.PEORepairSettings;
 import org.sidiff.consistency.repair.lifting.ui.views.ModelDropWidget;
 import org.sidiff.consistency.repair.lifting.ui.views.RepairViewBasicApp;
-import org.sidiff.consistency.repair.validation.util.BatchValidationIterator.Validation;
+import org.sidiff.consistency.repair.validation.util.Validation;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 
 public class RepairViewPartialEOApp extends RepairViewBasicApp {
@@ -34,7 +35,7 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 	
 	private Job repairCalculation;
 	
-	private RepairJob repairJob;
+	private PEORepairJob repairJob;
 	
 	private DifferenceSettings settings;
 	
@@ -65,7 +66,9 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 				// Calculate repairs:
 				URI uriModelA = ModelDropWidget.getURI(modelAFile);
 				URI uriModelB = ModelDropWidget.getURI(modelBFile);
-				repairJob = RepairFacade.getRepairs(uriModelA, uriModelB, editRules, settings);
+				repairJob = new PEORepairFacade().getRepairs(
+						uriModelA, uriModelB,
+						new PEORepairSettings(editRules, settings));
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
@@ -104,12 +107,12 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 			
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				RepairJob lastRepairJob = repairJob;
+				PEORepairJob lastRepairJob = repairJob;
 				
 				// Calculate repairs:
-				repairJob = RepairFacade.getRepairs(
+				repairJob = new PEORepairFacade().getRepairs(
 						repairJob.getModelA(), repairJob.getModelB(),
-						editRules, settings);
+						new PEORepairSettings(editRules, settings));
 				
 				// Copy undo history:
 				repairJob.copyHistory(lastRepairJob);
@@ -145,7 +148,7 @@ public class RepairViewPartialEOApp extends RepairViewBasicApp {
 	}
 	
 	@Override
-	public boolean applyRepairs(List<Repair> repair) {
+	public boolean applyRepairs(List<IRepair> repair) {
 		return (repairJob.applyRepairs(repair) != null);
 	}
 	

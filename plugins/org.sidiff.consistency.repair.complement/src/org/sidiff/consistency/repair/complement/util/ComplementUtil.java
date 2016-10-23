@@ -24,12 +24,12 @@ import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleAttributeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMultiMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeSingleMatch;
+import org.sidiff.consistency.repair.api.matching.EOAttributeMatch;
+import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
+import org.sidiff.consistency.repair.api.matching.EOMatch;
+import org.sidiff.consistency.repair.api.matching.EONodeMatch;
+import org.sidiff.consistency.repair.api.matching.EONodeMultiMatch;
+import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
 
 public class ComplementUtil {
 
@@ -214,24 +214,24 @@ public class ComplementUtil {
 	 *            A list of matches.
 	 * @return A readable string of the matching.
 	 */
-	public static String printEditRuleMatch(Collection<EditRuleMatch> match) {
+	public static String printEditRuleMatch(Collection<EOMatch> match) {
 		StringBuffer print = new StringBuffer();
 
-		for (EditRuleMatch editRuleMatch : match) {
+		for (EOMatch editRuleMatch : match) {
 			print.append("Match <");
 			print.append(editRuleMatch.getAction().toString());
 
-			if (editRuleMatch instanceof EditRuleNodeMatch) {
-				print.append(", " + ((EditRuleNodeMatch) editRuleMatch).getNode());
+			if (editRuleMatch instanceof EONodeMatch) {
+				print.append(", " + ((EONodeMatch) editRuleMatch).getNode());
 
-				if (editRuleMatch instanceof EditRuleNodeSingleMatch) {
-					print.append(", " + ((EditRuleNodeSingleMatch) editRuleMatch).getModelBElement());
+				if (editRuleMatch instanceof EONodeSingleMatch) {
+					print.append(", " + ((EONodeSingleMatch) editRuleMatch).getModelBElement());
 				}
 
-				else if (editRuleMatch instanceof EditRuleNodeMultiMatch) {
+				else if (editRuleMatch instanceof EONodeMultiMatch) {
 					print.append(", {");
 
-					for (EObject modelElement : ((EditRuleNodeMultiMatch) editRuleMatch).getModelBElements()) {
+					for (EObject modelElement : ((EONodeMultiMatch) editRuleMatch).getModelBElements()) {
 						print.append(", " + modelElement);
 					}
 
@@ -239,16 +239,16 @@ public class ComplementUtil {
 				}
 			}
 
-			else if (editRuleMatch instanceof EditRuleEdgeMatch) {
-				print.append(", " + ((EditRuleEdgeMatch) editRuleMatch).getEdge());
+			else if (editRuleMatch instanceof EOEdgeMatch) {
+				print.append(", " + ((EOEdgeMatch) editRuleMatch).getEdge());
 
-				print.append(", SRC: " + ((EditRuleEdgeMatch) editRuleMatch).getSrcModelBElement());
-				print.append(", TGT: " + ((EditRuleEdgeMatch) editRuleMatch).getTgtModelBElement());
+				print.append(", SRC: " + ((EOEdgeMatch) editRuleMatch).getSrcModelBElement());
+				print.append(", TGT: " + ((EOEdgeMatch) editRuleMatch).getTgtModelBElement());
 			}
 			
-			else if (editRuleMatch instanceof EditRuleAttributeMatch) {
-				print.append(", " + ((EditRuleAttributeMatch) editRuleMatch).getAttribute());
-				print.append(", VALUE: " + ((EditRuleAttributeMatch) editRuleMatch).getValue());
+			else if (editRuleMatch instanceof EOAttributeMatch) {
+				print.append(", " + ((EOAttributeMatch) editRuleMatch).getAttribute());
+				print.append(", VALUE: " + ((EOAttributeMatch) editRuleMatch).getValue());
 			}
 
 			print.append("\n");

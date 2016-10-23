@@ -7,10 +7,10 @@ Bundle-Activator: org.sidiff.consistency.repair.complement.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.sidiff.common.henshin,
- org.sidiff.consistency.common
+ org.sidiff.consistency.common,
+ org.sidiff.consistency.repair.api
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.sidiff.consistency.repair.complement.construction,
- org.sidiff.consistency.repair.complement.construction.context,
- org.sidiff.consistency.repair.complement.construction.cpo,
- org.sidiff.consistency.repair.complement.construction.match
+ org.sidiff.consistency.repair.complement.repair,
+ org.sidiff.consistency.repair.complement.util

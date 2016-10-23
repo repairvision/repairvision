@@ -18,10 +18,10 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
 import org.sidiff.consistency.common.debug.DebugUtil;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleAttributeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
+import org.sidiff.consistency.repair.api.matching.EOAttributeMatch;
+import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
+import org.sidiff.consistency.repair.api.matching.EOMatch;
+import org.sidiff.consistency.repair.api.matching.EONodeMatch;
 import org.sidiff.consistency.repair.complement.util.ComplementUtil;
 
 /**
@@ -44,7 +44,7 @@ public abstract class ComplementConstructor {
 	 *         source-rule or <code>null</code> if the complement-rule could not
 	 *         be constructed (e.g. dangling edges).
 	 */
-	public ComplementRule createComplementRule(List<EditRuleMatch> sourceRuleMatching) {
+	public ComplementRule createComplementRule(List<EOMatch> sourceRuleMatching) {
 
 		long deriveComplements = System.currentTimeMillis();
 		
@@ -68,7 +68,7 @@ public abstract class ComplementConstructor {
 		return complement;
 	}
 	
-	private ComplementRule deriveComplementRule(Collection<EditRuleMatch> sourceRuleMatching) {
+	private ComplementRule deriveComplementRule(Collection<EOMatch> sourceRuleMatching) {
 
 		// Create copy of the source rule:
 		Map<EObject, EObject> copyTrace = ComplementUtil.deepCopy(sourceRule);
@@ -87,9 +87,9 @@ public abstract class ComplementConstructor {
 		}
 		
 		// Substitute already executed edges << delete >> edges:
-		for (EditRuleMatch sourceRuleMatch : sourceRuleMatching) {
-			if (sourceRuleMatch instanceof EditRuleEdgeMatch) {
-				Edge sourceEdge = ((EditRuleEdgeMatch) sourceRuleMatch).getEdge();
+		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
+			if (sourceRuleMatch instanceof EOEdgeMatch) {
+				Edge sourceEdge = ((EOEdgeMatch) sourceRuleMatch).getEdge();
 				Edge complementEdge = (Edge) copyTrace.get(sourceEdge);
 				
 				// Delete-Edge:
@@ -103,9 +103,9 @@ public abstract class ComplementConstructor {
 		}
 		
 		// Substitute already executed nodes:
-		for (EditRuleMatch sourceRuleMatch : sourceRuleMatching) {
-			if (sourceRuleMatch instanceof EditRuleNodeMatch) {
-				Node sourceNode = ((EditRuleNodeMatch) sourceRuleMatch).getNode();
+		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
+			if (sourceRuleMatch instanceof EONodeMatch) {
+				Node sourceNode = ((EONodeMatch) sourceRuleMatch).getNode();
 				Node complementNode = (Node) copyTrace.get(sourceNode);
 				
 				// Delete-Node:
@@ -144,9 +144,9 @@ public abstract class ComplementConstructor {
 		}
 		
 		// Substitute already executed edges << create >> edges:
-		for (EditRuleMatch sourceRuleMatch : sourceRuleMatching) {
-			if (sourceRuleMatch instanceof EditRuleEdgeMatch) {
-				Edge sourceEdge = ((EditRuleEdgeMatch) sourceRuleMatch).getEdge();
+		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
+			if (sourceRuleMatch instanceof EOEdgeMatch) {
+				Edge sourceEdge = ((EOEdgeMatch) sourceRuleMatch).getEdge();
 				Edge complementEdge = (Edge) copyTrace.get(sourceEdge);
 				
 				// Create-Edge:
@@ -163,9 +163,9 @@ public abstract class ComplementConstructor {
 		}
 		
 		// Substitute already executed edges << create >> attributes:
-		for (EditRuleMatch sourceRuleMatch : sourceRuleMatching) {
-			if (sourceRuleMatch instanceof EditRuleAttributeMatch) {
-				Attribute sourceAttribute = ((EditRuleAttributeMatch) sourceRuleMatch).getAttribute();
+		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
+			if (sourceRuleMatch instanceof EOAttributeMatch) {
+				Attribute sourceAttribute = ((EOAttributeMatch) sourceRuleMatch).getAttribute();
 				Attribute complementAttribute = (Attribute) copyTrace.get(sourceAttribute);
 				
 				// Transform create-attribute to preserve-attribute:

@@ -12,7 +12,7 @@ import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
 import org.sidiff.consistency.repair.validation.fix.Repair;
 import org.sidiff.consistency.repair.validation.fix.Sequence;
 import org.sidiff.consistency.repair.validation.ui.Activator;
-import org.sidiff.consistency.repair.validation.util.BatchValidationIterator.Validation;
+import org.sidiff.consistency.repair.validation.util.Validation;
 
 public class RepairTreeLabelProvider extends LabelProvider {
 

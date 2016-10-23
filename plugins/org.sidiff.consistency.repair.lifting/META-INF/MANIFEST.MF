@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Lifting
-Bundle-SymbolicName: org.sidiff.consistency.repair.lifting;singleton:=true
+Bundle-SymbolicName: org.sidiff.consistency.repair.api.peo;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.sidiff.common.henshin,
@@ -12,9 +12,11 @@ Require-Bundle: org.sidiff.common.henshin,
  org.sidiff.consistency.repair.complement,
  org.sidiff.consistency.repair.validation,
  org.sidiff.difference.lifting.edit2recognition,
- org.sidiff.difference.technical.api
-Export-Package: org.sidiff.consistency.repair.lifting.api,
- org.sidiff.consistency.repair.lifting.engine,
- org.sidiff.consistency.repair.lifting.engine.partial,
- org.sidiff.consistency.repair.lifting.matching,
- org.sidiff.consistency.repair.lifting.util
+ org.sidiff.difference.technical.api,
+ org.sidiff.consistency.repair.api,
+ org.sidiff.consistency.repair.complement.peo
+Export-Package: org.sidiff.consistency.repair.api.peo,
+ org.sidiff.consistency.repair.api.peo.engine,
+ org.sidiff.consistency.repair.api.peo.engine.partial,
+ org.sidiff.consistency.repair.api.peo.matching,
+ org.sidiff.consistency.repair.api.peo.util

@@ -6,7 +6,7 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
-import org.sidiff.consistency.repair.validation.util.BatchValidationIterator.Validation;
+import org.sidiff.consistency.repair.validation.util.Validation;
 
 public class RepairTreeContentProvider implements IStructuredContentProvider, ITreeContentProvider {
 

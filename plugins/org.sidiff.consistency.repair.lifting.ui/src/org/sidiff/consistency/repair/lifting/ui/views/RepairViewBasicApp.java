@@ -26,7 +26,7 @@ import org.eclipse.ui.PlatformUI;
 import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.henshin.HenshinUnitAnalysis;
 import org.sidiff.common.henshin.exceptions.NoMainUnitFoundException;
-import org.sidiff.consistency.repair.lifting.api.Repair;
+import org.sidiff.consistency.repair.api.IRepair;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.consistency.validation.Activator;
 import org.sidiff.editrule.consistency.validation.EditRuleValidation;
@@ -52,7 +52,7 @@ public abstract class RepairViewBasicApp {
 	
 	public abstract void recalculateRepairs();
 	
-	public abstract boolean applyRepairs(List<Repair> repair);
+	public abstract boolean applyRepairs(List<IRepair> repair);
 	
 	public abstract List<RuleApplication> undoLastRepairs();
 	

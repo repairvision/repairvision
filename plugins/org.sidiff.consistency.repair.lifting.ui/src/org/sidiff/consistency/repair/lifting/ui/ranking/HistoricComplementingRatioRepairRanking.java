@@ -2,7 +2,7 @@ package org.sidiff.consistency.repair.lifting.ui.ranking;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
-import org.sidiff.consistency.repair.lifting.api.Repair;
+import org.sidiff.consistency.repair.api.IRepair;
 
 public class HistoricComplementingRatioRepairRanking extends ViewerSorter  {
 
@@ -10,9 +10,9 @@ public class HistoricComplementingRatioRepairRanking extends ViewerSorter  {
 	public int compare(Viewer viewer, Object e1, Object e2) {
 		
 		// Show the element with the greater ratio on top of the viewer:
-		if ((e1 instanceof Repair) && (e2 instanceof Repair)) {
-			double ratio1 = (double) ((Repair) e1).getHistoricChanges().size() / ((Repair) e1).getComplementingChanges().size();
-			double ratio2 = (double) ((Repair) e2).getHistoricChanges().size() / ((Repair) e2).getComplementingChanges().size();
+		if ((e1 instanceof IRepair) && (e2 instanceof IRepair)) {
+			double ratio1 = (double) ((IRepair) e1).getHistoricChanges().size() / ((IRepair) e1).getComplementingChanges().size();
+			double ratio2 = (double) ((IRepair) e2).getHistoricChanges().size() / ((IRepair) e2).getComplementingChanges().size();
 			double diff = (ratio1 - ratio2);
 			
 			if (diff != 0) {

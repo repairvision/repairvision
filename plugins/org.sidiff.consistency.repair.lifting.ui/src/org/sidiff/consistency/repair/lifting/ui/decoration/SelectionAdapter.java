@@ -6,7 +6,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.sidiff.consistency.repair.lifting.api.Repair;
+import org.sidiff.consistency.repair.api.IRepair;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.Change;
 
 public class SelectionAdapter {
@@ -19,8 +19,8 @@ public class SelectionAdapter {
 				return Collections.singletonList(((EObject) selectedElement));
 			}
 			
-			else if (selectedElement instanceof Repair) {
-				return Collections.unmodifiableList(((Repair) selectedElement)
+			else if (selectedElement instanceof IRepair) {
+				return Collections.unmodifiableList(((IRepair) selectedElement)
 						.getRepairPreMatch().getMatch().getNodeTargets());
 			}
 			

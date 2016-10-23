@@ -18,9 +18,10 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.consistency.common.ui.WorkbenchUtil;
-import org.sidiff.consistency.repair.lifting.api.Repair;
-import org.sidiff.consistency.repair.lifting.api.RepairJob;
-import org.sidiff.consistency.repair.lifting.cpo.CPORepairFacade;
+import org.sidiff.consistency.repair.api.IRepair;
+import org.sidiff.consistency.repair.api.cpo.CPORepairFacade;
+import org.sidiff.consistency.repair.api.cpo.CPORepairJob;
+import org.sidiff.consistency.repair.api.cpo.CPORepairSettings;
 import org.sidiff.consistency.repair.lifting.ui.views.ModelDropWidget;
 import org.sidiff.consistency.repair.lifting.ui.views.RepairViewBasicApp;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
@@ -33,7 +34,7 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 	
 	private Job repairCalculation;
 	
-	private RepairJob repairJob;
+	private CPORepairJob repairJob;
 	
 	private DifferenceSettings settings;
 	
@@ -65,10 +66,9 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 					URI uriModelA = ModelDropWidget.getURI(modelAFile);
 					URI uriModelB = ModelDropWidget.getURI(modelBFile);
 					
-					repairJob = CPORepairFacade.getRepairs(
+					repairJob = new CPORepairFacade().getRepairs(
 							uriModelA, uriModelB, 
-							subEditRules, cpEditRules, 
-							documentType, settings);
+							new CPORepairSettings(subEditRules, cpEditRules, documentType, settings));
 					
 					// Update UI:
 					Display.getDefault().syncExec(() -> {
@@ -100,12 +100,11 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 				
 				// Calculate repairs:
 				if (!subEditRules.isEmpty() && !cpEditRules.isEmpty()) {
-					RepairJob lastRepairJob = repairJob;
+					CPORepairJob lastRepairJob = repairJob;
 					
-					repairJob = CPORepairFacade.getRepairs(
-							repairJob.getModelA(), repairJob.getModelB(), 
-							subEditRules, cpEditRules, 
-							documentType, settings);
+					repairJob = new CPORepairFacade().getRepairs(
+							repairJob.getModelA(), repairJob.getModelB(),
+							new CPORepairSettings(subEditRules, cpEditRules, documentType, settings));
 					
 					// Copy undo history:
 					repairJob.copyHistory(lastRepairJob);
@@ -131,7 +130,7 @@ public class RepairViewCPOApp extends RepairViewBasicApp {
 	}
 
 	@Override
-	public boolean applyRepairs(List<Repair> repair) {
+	public boolean applyRepairs(List<IRepair> repair) {
 		return (repairJob.applyRepairs(repair) != null);
 	}
 	

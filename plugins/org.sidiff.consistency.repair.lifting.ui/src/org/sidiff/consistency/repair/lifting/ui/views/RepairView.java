@@ -31,7 +31,7 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 import org.sidiff.consistency.common.ui.NameUtil;
-import org.sidiff.consistency.repair.lifting.api.Repair;
+import org.sidiff.consistency.repair.api.IRepair;
 import org.sidiff.consistency.repair.lifting.ui.Activator;
 import org.sidiff.consistency.repair.lifting.ui.decoration.RepairSelectionController;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider;
@@ -238,11 +238,11 @@ public class RepairView extends ViewPart {
 				ISelection selection = viewer_repairs.getSelection();
 				
 				if (selection instanceof IStructuredSelection) {
-					List<Repair> selectedRepairs = new ArrayList<>();
+					List<IRepair> selectedRepairs = new ArrayList<>();
 					
 					((IStructuredSelection)selection).iterator().forEachRemaining(o -> {
-						if (o instanceof Repair) {
-							selectedRepairs.add((Repair) o);
+						if (o instanceof IRepair) {
+							selectedRepairs.add((IRepair) o);
 						}
 					});
 					
@@ -327,7 +327,7 @@ public class RepairView extends ViewPart {
 					} else {
 						
 						// Expand:
-						if (item instanceof Repair) {
+						if (item instanceof IRepair) {
 							viewer_repairs.expandToLevel(item, 3);
 						} else {
 							viewer_repairs.expandToLevel(item, 1);

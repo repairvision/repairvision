@@ -21,17 +21,17 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
-import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleAttributeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeSingleMatch;
-import org.sidiff.consistency.repair.lifting.api.Repair;
+import org.sidiff.consistency.repair.api.IRepair;
+import org.sidiff.consistency.repair.api.matching.EOAttributeMatch;
+import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
+import org.sidiff.consistency.repair.api.matching.EOMatch;
+import org.sidiff.consistency.repair.api.matching.EONodeMatch;
+import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
+import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
 
 public class RepairContentProvider implements IStructuredContentProvider, ITreeContentProvider  {
 
-	protected Map<Rule, List<Repair>> repairs;
+	protected Map<Rule, List<IRepair>> repairs;
 	
 	// TODO: Add specific classes.
 	public class Container {
@@ -43,7 +43,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	
 	public class ContextContainer {
 		public EObject conext;
-		public List<Repair> repairs;
+		public List<IRepair> repairs;
 	}
 	
 	public class Change {
@@ -65,7 +65,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		
 		if (newInput instanceof Map<?, ?>) {
-			repairs = (Map<Rule, List<Repair>>) newInput;
+			repairs = (Map<Rule, List<IRepair>>) newInput;
 		}
 	}
 
@@ -75,40 +75,40 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		if (parentElement instanceof Rule) {
 			
 			// Rule-Context -> Repairs:
-			Map<EObject, List<Repair>> repairsByContext = new LinkedHashMap<>();
+			Map<EObject, List<IRepair>> repairsByContext = new LinkedHashMap<>();
 			
-			for (Repair repair : repairs.get(parentElement)) {
+			for (IRepair repair : repairs.get(parentElement)) {
 				Parameter context = repair.getRepairPreMatch().getMatch().getRule().getParameter("context");
 				Object value = repair.getRepairPreMatch().getMatch().getParameterValue(context);
 				
 				if (value instanceof EObject) {
 					// Add repair to the context value:
-					List<Repair> repairs  = repairsByContext.getOrDefault(value, new LinkedList<Repair>());
+					List<IRepair> repairs  = repairsByContext.getOrDefault(value, new LinkedList<IRepair>());
 					repairs.add(repair);
 					repairsByContext.put((EObject) value, repairs);
 				} else {
 					// Uncategorized repair without context:
-					List<Repair> repairs  = repairsByContext.getOrDefault(null, new LinkedList<Repair>());
+					List<IRepair> repairs  = repairsByContext.getOrDefault(null, new LinkedList<IRepair>());
 					repairs.add(repair);
 					repairsByContext.put(null, repairs);
 				}
 			}
 			
 			// Rule content:
-			List<Repair> repairsWithoutContext = repairsByContext.getOrDefault(null, Collections.emptyList());
+			List<IRepair> repairsWithoutContext = repairsByContext.getOrDefault(null, Collections.emptyList());
 			repairsByContext.remove(null);
 			
 			Object[] ruleContent = new Object[repairsByContext.size() + repairsWithoutContext.size()]; 
 			
 			for (int i = 0; i < repairsWithoutContext.size(); i++) {
-				Repair repair = repairsWithoutContext.get(i);
+				IRepair repair = repairsWithoutContext.get(i);
 				ruleContent[i + repairsByContext.size()] = repair;
 			}
 			
 			// Create context containers:
 			int i = 0;
 			
-			for (Entry<EObject, List<Repair>> contextEntry : repairsByContext.entrySet()) {
+			for (Entry<EObject, List<IRepair>> contextEntry : repairsByContext.entrySet()) {
 				ContextContainer contextContainer = new ContextContainer();
 				contextContainer.conext = contextEntry.getKey();
 				contextContainer.repairs = contextEntry.getValue();
@@ -124,8 +124,8 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			return ((ContextContainer) parentElement).repairs.toArray();
 		}
 		
-		else if (parentElement instanceof Repair) {
-			Repair repair = (Repair) parentElement;
+		else if (parentElement instanceof IRepair) {
+			IRepair repair = (IRepair) parentElement;
 			
 			// Historic changes:
 			int historicSize = repair.getHistoricChanges().size();
@@ -190,7 +190,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		
 		// Repair-Rule:
 		if (element instanceof Rule ||
-				element instanceof Repair ||
+				element instanceof IRepair ||
 				element instanceof Container ||
 				element instanceof ContextContainer ||
 				element instanceof AttributeChange) {
@@ -218,11 +218,11 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		return getChildren(inputElement);
 	}
 	
-	private Change toHistoricChange(EditRuleMatch editRuleMatch) {
+	private Change toHistoricChange(EOMatch editRuleMatch) {
 		Change change = new Change();
 		
-		if (editRuleMatch instanceof EditRuleEdgeMatch) {
-			Edge edge = ((EditRuleEdgeMatch) editRuleMatch).getEdge();
+		if (editRuleMatch instanceof EOEdgeMatch) {
+			Edge edge = ((EOEdgeMatch) editRuleMatch).getEdge();
 			change.graphElement = edge;
 			
 			change.nodes = new Node[2];
@@ -232,14 +232,14 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			EObject srcMatch = null;
 			EObject tgtMatch = null;
 			
-			if (((EditRuleEdgeMatch) editRuleMatch).getAction().equals(Type.DELETE)) {
-				srcMatch = ((EditRuleEdgeMatch) editRuleMatch).getSrcModelAElement();
-				tgtMatch = ((EditRuleEdgeMatch) editRuleMatch).getTgtModelAElement();
+			if (((EOEdgeMatch) editRuleMatch).getAction().equals(Type.DELETE)) {
+				srcMatch = ((EOEdgeMatch) editRuleMatch).getSrcModelAElement();
+				tgtMatch = ((EOEdgeMatch) editRuleMatch).getTgtModelAElement();
 			} else {
-				assert ((EditRuleEdgeMatch) editRuleMatch).getAction().equals(Type.CREATE);
+				assert ((EOEdgeMatch) editRuleMatch).getAction().equals(Type.CREATE);
 				
-				srcMatch = ((EditRuleEdgeMatch) editRuleMatch).getSrcModelBElement();
-				tgtMatch = ((EditRuleEdgeMatch) editRuleMatch).getTgtModelBElement();
+				srcMatch = ((EOEdgeMatch) editRuleMatch).getSrcModelBElement();
+				tgtMatch = ((EOEdgeMatch) editRuleMatch).getTgtModelBElement();
 			}
 			
 			if ((srcMatch != null) && (tgtMatch != null)) {
@@ -263,30 +263,30 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			}
 		}
 		
-		else if (editRuleMatch instanceof EditRuleNodeSingleMatch) {
-			change.graphElement = ((EditRuleNodeMatch) editRuleMatch).getNode();
+		else if (editRuleMatch instanceof EONodeSingleMatch) {
+			change.graphElement = ((EONodeMatch) editRuleMatch).getNode();
 			
 			change.nodes = new Node[1];
 			change.nodes[0] = (Node) change.graphElement;
 			
 			change.matches = new EObject[1];
 			
-			if (((EditRuleNodeSingleMatch) editRuleMatch).getAction().equals(Type.DELETE)) {
-				change.matches[0] = ((EditRuleNodeSingleMatch) editRuleMatch).getModelAElement();
+			if (((EONodeSingleMatch) editRuleMatch).getAction().equals(Type.DELETE)) {
+				change.matches[0] = ((EONodeSingleMatch) editRuleMatch).getModelAElement();
 			} else {
-				assert ((EditRuleNodeSingleMatch) editRuleMatch).getAction().equals(Type.CREATE);
+				assert ((EONodeSingleMatch) editRuleMatch).getAction().equals(Type.CREATE);
 				
-				change.matches[0] = ((EditRuleNodeSingleMatch) editRuleMatch).getModelBElement();
+				change.matches[0] = ((EONodeSingleMatch) editRuleMatch).getModelBElement();
 			}
 		}
 		
-		else if (editRuleMatch instanceof EditRuleAttributeMatch) {
+		else if (editRuleMatch instanceof EOAttributeMatch) {
 			AttributeChange attChange = new AttributeChange();
-			Attribute attr = ((EditRuleAttributeMatch) editRuleMatch).getAttribute();
+			Attribute attr = ((EOAttributeMatch) editRuleMatch).getAttribute();
 			
 			attChange.graphElement = attr;
-			attChange.value = ((EditRuleAttributeMatch) editRuleMatch).getValue();
-			attChange.matches = new EObject[] {((EditRuleAttributeMatch) editRuleMatch).getObject()};
+			attChange.value = ((EOAttributeMatch) editRuleMatch).getValue();
+			attChange.matches = new EObject[] {((EOAttributeMatch) editRuleMatch).getObject()};
 			
 			return attChange;
 		}
@@ -294,7 +294,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		return change;
 	}
 	
-	private Change toComplemetingChange(GraphElement graphElement, ComplementMatch preMatch) {
+	private Change toComplemetingChange(GraphElement graphElement, EditOperationMatching preMatch) {
 		
 		if (graphElement instanceof Edge) {
 			return toComplementingChange((Edge) graphElement, preMatch);
@@ -311,7 +311,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		return null;
 	}
 	
-	private Change toComplementingChange(Edge edge, ComplementMatch preMatch) {
+	private Change toComplementingChange(Edge edge, EditOperationMatching preMatch) {
 		Change change = new Change();
 		change.graphElement = edge;
 		
@@ -370,7 +370,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		return change;
 	}
 	
-	private Change toComplementingChange(Node node, ComplementMatch preMatch) {
+	private Change toComplementingChange(Node node, EditOperationMatching preMatch) {
 		Change change = new Change();
 		change.graphElement = node;
 			
@@ -427,7 +427,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		return change;
 	}
 	
-	private Change toComplementingChange(Attribute attribute, ComplementMatch preMatch) {
+	private Change toComplementingChange(Attribute attribute, EditOperationMatching preMatch) {
 		AttributeChange change = new AttributeChange();
 		change.graphElement = attribute;
 		

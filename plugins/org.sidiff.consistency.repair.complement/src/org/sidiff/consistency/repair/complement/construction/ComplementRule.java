@@ -35,11 +35,11 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.view.NodePair;
-import org.sidiff.consistency.repair.complement.construction.match.ComplementMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleAttributeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleEdgeMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleMatch;
-import org.sidiff.consistency.repair.complement.construction.match.EditRuleNodeMatch;
+import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
+import org.sidiff.consistency.repair.api.matching.EOAttributeMatch;
+import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
+import org.sidiff.consistency.repair.api.matching.EOMatch;
+import org.sidiff.consistency.repair.api.matching.EONodeMatch;
 
 /**
  * Wraps a complement rule for a given partially executed source rule.
@@ -83,12 +83,12 @@ public abstract class ComplementRule {
 	/**
 	 * The (partial) match of the source rule.
 	 */
-	private List<EditRuleMatch> sourceMatch;
+	private List<EOMatch> sourceMatch;
 	
 	/**
 	 * All possible (full) pre-matches for the complement rule.
 	 */
-	private List<ComplementMatch> complementMatches;
+	private List<EditOperationMatching> complementMatches;
 	
 //	/**
 //	 * Rules which check a single application condition of the complement rule.
@@ -213,7 +213,7 @@ public abstract class ComplementRule {
 	 * @return <code>true</code> if the rule was successfully applied;
 	 *         <code>false</code> otherwise.
 	 */
-	public RuleApplication apply(ComplementMatch complementPreMatch) {
+	public RuleApplication apply(EditOperationMatching complementPreMatch) {
 		
 		if ((engine == null) || (graph == null)) {
 			throw new RuntimeException("Initialize graph transformation engine!");
@@ -242,12 +242,12 @@ public abstract class ComplementRule {
 		this.sourceRule = sourceRule;
 	}
 	
-	public EditRuleMatch getSourceMatch(GraphElement graphElement) {
+	public EOMatch getSourceMatch(GraphElement graphElement) {
 		
 		if (graphElement instanceof Node) {
-			for (EditRuleMatch editRuleMatch : sourceMatch) {
-				if (editRuleMatch instanceof EditRuleNodeMatch) {
-					if (((EditRuleNodeMatch) editRuleMatch).getNode() == graphElement) {
+			for (EOMatch editRuleMatch : sourceMatch) {
+				if (editRuleMatch instanceof EONodeMatch) {
+					if (((EONodeMatch) editRuleMatch).getNode() == graphElement) {
 						return editRuleMatch;
 					}
 				}
@@ -255,9 +255,9 @@ public abstract class ComplementRule {
 		}
 		
 		else if (graphElement instanceof Edge) {
-			for (EditRuleMatch editRuleMatch : sourceMatch) {
-				if (editRuleMatch instanceof EditRuleEdgeMatch) {
-					if (((EditRuleEdgeMatch) editRuleMatch).getEdge() == graphElement) {
+			for (EOMatch editRuleMatch : sourceMatch) {
+				if (editRuleMatch instanceof EOEdgeMatch) {
+					if (((EOEdgeMatch) editRuleMatch).getEdge() == graphElement) {
 						return editRuleMatch;
 					}
 				}
@@ -265,9 +265,9 @@ public abstract class ComplementRule {
 		}
 		
 		else if (graphElement instanceof Attribute) {
-			for (EditRuleMatch editRuleMatch : sourceMatch) {
-				if (editRuleMatch instanceof EditRuleAttributeMatch) {
-					if (((EditRuleAttributeMatch) editRuleMatch).getAttribute() == graphElement) {
+			for (EOMatch editRuleMatch : sourceMatch) {
+				if (editRuleMatch instanceof EOAttributeMatch) {
+					if (((EOAttributeMatch) editRuleMatch).getAttribute() == graphElement) {
 						return editRuleMatch;
 					}
 				}
@@ -277,7 +277,7 @@ public abstract class ComplementRule {
 		return null;
 	}
 
-	protected void setSourceMatch(List<EditRuleMatch> sourceMatch) {
+	protected void setSourceMatch(List<EOMatch> sourceMatch) {
 		this.sourceMatch = sourceMatch;
 	}
 
@@ -293,13 +293,13 @@ public abstract class ComplementRule {
 	 * Calculates all possible complement match (called lazy), i.e. the
 	 * parameter values for the complementing changes.
 	 */
-	protected abstract List<ComplementMatch> createComplementMatches(List<EditRuleMatch> partialSourceMatch);
+	protected abstract List<EditOperationMatching> createComplementMatches(List<EOMatch> partialSourceMatch);
 
 	/**
 	 * @return all possible complement match (called lazy), i.e. the parameter
 	 *         values for the complementing changes.
 	 */
-	public List<ComplementMatch> getComplementMatches() {
+	public List<EditOperationMatching> getComplementMatches() {
 
 		if (complementMatches == null) {
 			complementMatches = createComplementMatches(sourceMatch);

@@ -9,7 +9,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.NameUtil;
-import org.sidiff.consistency.repair.lifting.api.Repair;
+import org.sidiff.consistency.repair.api.IRepair;
 import org.sidiff.consistency.repair.lifting.ui.Activator;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.AttributeChange;
 import org.sidiff.consistency.repair.lifting.ui.provider.RepairContentProvider.Change;
@@ -58,7 +58,7 @@ public class RepairLabelProvider extends LabelProvider {
 			return emfLabelProvider.getImage(((ContextContainer) element).conext);
 		}
 		
-		if (element instanceof Repair) {
+		if (element instanceof IRepair) {
 			return IMG_REPAIR_RULE;
 		}
 		
@@ -92,8 +92,8 @@ public class RepairLabelProvider extends LabelProvider {
 			return "Repair Context: " + emfLabelProvider.getText(((ContextContainer) element).conext);
 		}
 		
-		else if (element instanceof Repair) {
-			Repair repair = (Repair) element;
+		else if (element instanceof IRepair) {
+			IRepair repair = (IRepair) element;
 			
 			return "Repair "
 					+ "[" + repair.getHistoricChanges().size() + "/" + 
