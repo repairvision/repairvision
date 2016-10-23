@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CPO Complement
+Bundle-SymbolicName: org.sidiff.consistency.repair.complement.cpo
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.sidiff.consistency.repair.complement.cpo.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.sidiff.consistency.repair.complement,
+ org.eclipse.emf.henshin.interpreter,
+ org.sidiff.consistency.common,
+ org.sidiff.consistency.repair.api,
+ org.sidiff.common.henshin;bundle-version="1.0.0",
+ org.sidiff.difference.rulebase,
+ org.sidiff.difference.symmetric,
+ org.sidiff.difference.rulebase.view
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: org.sidiff.consistency.repair.complement.cpo.matching
