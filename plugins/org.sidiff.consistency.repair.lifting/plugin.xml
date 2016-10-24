@@ -21,5 +21,13 @@
             name="[Partial] Lifting Pattern Matching Engine">
       </factory>
    </extension>
+   <extension
+         point="org.sidiff.consistency.repair.api.engine">
+      <engine
+            facade="org.sidiff.consistency.repair.api.peo.PEORepairFacade"
+            id="org.sidiff.consistency.repair.api.peo.engine.partial"
+            name="Partial CPO Engine">
+      </engine>
+   </extension>
 
 </plugin>

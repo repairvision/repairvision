@@ -17,7 +17,6 @@ import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.repair.api.IRepair;
 import org.sidiff.consistency.repair.api.IRepairFacade;
 import org.sidiff.consistency.repair.api.cpo.lifting.BasicCPOLifting;
-import org.sidiff.consistency.repair.api.cpo.lifting.FragmentedCPOLifting;
 import org.sidiff.consistency.repair.api.cpo.util.StatisticUtil;
 import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
@@ -33,6 +32,12 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
  * @author Manuel Ohrndorf
  */
 public class CPORepairFacade implements IRepairFacade<CPORepairJob, CPORepairSettings> {
+	
+	private BasicCPOLifting lifting;
+	
+	public CPORepairFacade(BasicCPOLifting lifting) {
+		this.lifting = lifting;
+	}
 	
 	@Override
 	public CPORepairJob getRepairs(URI uriModelA, URI uriModelB, CPORepairSettings settings) {
@@ -71,7 +76,6 @@ public class CPORepairFacade implements IRepairFacade<CPORepairJob, CPORepairSet
 		}
 		
 		// Calculate difference:
-		BasicCPOLifting lifting = new FragmentedCPOLifting();
 		lifting.findSubEditRules(modelA, modelB, settings);
 		
 		SymmetricDifference difference = lifting.getDifference();

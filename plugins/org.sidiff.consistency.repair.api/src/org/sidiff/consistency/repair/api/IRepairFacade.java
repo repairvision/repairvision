@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.resource.Resource;
  *            The kind of {@link IRepairSettings}.
  */
 public interface IRepairFacade<J extends RepairJob<?>, S extends IRepairSettings> {
-
+	
 	/**
 	 * Search for partially executed edit-operation which might cause an
 	 * inconsistency. A repair complements such a partial edit-operation.
