@@ -1,0 +1,70 @@
+graph M001 {
+
+	compound=true;
+
+	subgraph cluster0 {
+		node [style=filled, shape=circle, color=white, height=0.02, width=0.01, margin=0.0];
+
+		style=filled;
+		color=lightgrey;
+
+		fontcolor=white;
+		fontname=bold;
+		fontsize=10;
+
+		label="	X";
+
+		a;
+	}
+
+	subgraph cluster1 {
+		node [style=filled, shape=circle, color=white, height=0.02, width=0.01, margin=0.0];
+
+		style=filled;
+		color=lightgrey;
+
+		fontcolor=white;
+		fontname=bold;
+		fontsize=10;
+
+		label="Y";
+
+		c;
+	}
+
+	subgraph cluster2 {
+		node [style=filled, shape=circle, color=white, height=0.02, width=0.01, margin=0.0];
+
+		style=filled;
+		color=lightgrey;
+
+		fontcolor=white;
+		fontname=bold;
+		fontsize=10;
+
+		label="	Z";
+
+		b;
+	}
+
+	subgraph cluster3 {
+		node [style=filled, shape=circle, color=white, height=0.02, width=0.01, margin=0.0];
+
+		style=filled;
+		color=lightgrey;
+
+		fontcolor=white;
+		fontname=bold;
+		fontsize=10;
+
+		label="X";
+
+		cluster3 [style=invis, label="", height=0.02, width=0.01];
+	}
+
+	a -- c [ltail=cluster0, lhead=cluster1, penwidth=2, color=black];
+	b -- cluster3 [ltail=cluster2, lhead=cluster3, penwidth=2, color=black];
+	a -- b;
+	b -- c;
+}
+
