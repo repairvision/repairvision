@@ -30,7 +30,7 @@ public class WriteVisualization {
 			patternCluster.put(patternNode, patternClusterName);
 			
 			viz.append("	subgraph " + patternClusterName + " {\n");
-			viz.append("		node [style=filled, shape=circle, color=white, height=0.02, width=0.01, margin=0.0];\n");
+			viz.append("		node [style=filled, shape=circle, color=white, height=0.3, width=0.3, margin=0.0];\n");
 			viz.append("\n");
 			viz.append("		style=filled;\n");
 			viz.append("		color=lightgrey;\n");
@@ -62,7 +62,7 @@ public class WriteVisualization {
 			// create invisible pseudo anchor node:
 			if (anchorNodeName == null) {
 				anchorNodeName = patternClusterName;
-				viz.append("		" + anchorNodeName + " [style=invis, label=\"\", height=0.02, width=0.01];\n");
+				viz.append("		" + anchorNodeName + " [style=invis, label=\"\", height=0.3, width=0.3];\n");
 			}
 			
 			patternNodeAnchor.put(patternNode, anchorNodeName);
