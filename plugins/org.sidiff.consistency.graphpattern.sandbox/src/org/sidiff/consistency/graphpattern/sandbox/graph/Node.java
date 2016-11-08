@@ -53,4 +53,8 @@ public class Node {
 		this.label = label;
 	}
 	
+	@Override
+	public String toString() {
+		return name + ((label != null) ? ":" + label : ""); 
+	}
 }
