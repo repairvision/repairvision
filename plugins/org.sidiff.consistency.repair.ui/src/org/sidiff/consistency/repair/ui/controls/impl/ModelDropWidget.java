@@ -129,6 +129,12 @@ public abstract class ModelDropWidget {
 	
 	private void addFile(IResource resource) {
 		if (resource.getType() == IResource.FILE) {
+			
+			// FIXME [WORKAROUND]: Papyrus container -> Support multiple files!
+			if (resource.getFileExtension().equals("di") || resource.getFileExtension().equals("notation")) {
+				return;
+			}
+			
 			IResource added = addModel(resource);
 			
 			if (added != null) {
