@@ -85,6 +85,7 @@ public abstract class ModelDropWidget {
 								
 								addFiles(resources);
 							}catch (Exception e) {
+								e.printStackTrace();
 							}
 						}
 					});
