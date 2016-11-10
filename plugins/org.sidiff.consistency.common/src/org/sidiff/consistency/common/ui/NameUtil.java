@@ -47,9 +47,7 @@ public class NameUtil {
 		name = name.replace('_', ' ');
 
 		// Remove camel-case
-		String regex = "([a-z])([A-Z]+)";
-		String replacement = "$1 $2";
-		name = name.replaceAll(regex, replacement);
+		name = removeCamelCase(name);
 
 		// Make first letters upper-case
 		name = capitalizeFirstLetter(name);
@@ -58,6 +56,12 @@ public class NameUtil {
 		name = translate(name);
 
 		return name;
+	}
+	
+	public static String removeCamelCase(String name) {
+		String regex = "([a-z \\)])([A-Z \\(]+)";
+		String replacement = "$1 $2";
+		return  name.replaceAll(regex, replacement);
 	}
 
 	private static String capitalizeFirstLetter(String input) {
