@@ -1,6 +1,7 @@
 package org.sidiff.consistency.graphpattern.sandbox.graph;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Match {
@@ -17,5 +18,17 @@ public class Match {
 
 	public void setMatch(List<Node> match) {
 		this.match = match;
+	}
+	
+	public static Match getMaxMatch(Collection<Match> matchings) {
+		Match maxMatch = new Match();
+		
+		for (Match match : matchings) {
+			if (match.getMatch().size() > maxMatch.getMatch().size()) {
+				maxMatch = match;
+			}
+		}
+		
+		return maxMatch;
 	}
 }

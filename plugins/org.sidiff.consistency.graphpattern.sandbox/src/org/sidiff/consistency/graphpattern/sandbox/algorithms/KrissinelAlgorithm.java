@@ -11,6 +11,8 @@ import org.sidiff.consistency.graphpattern.sandbox.graph.Node;
 
 public class KrissinelAlgorithm implements IMatchingEngine {
 
+	private Example example;
+	
 	private List<Match> matchings = new ArrayList<Match>();
 	
 	/**
@@ -42,12 +44,14 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 	
 	private class VMM {
 		// TODO: W.size() => size per slot
-		Node[][] M = new Node[V.size()][W.size()];
-		int[] L = new int[V.size()];
+		Node[][] M = new Node[example.getPatternGraph().size()][example.getWorkingGraph().size()];
+		int[] L = new int[example.getPatternGraph().size()];
 	}
 	
 	@Override
 	public List<Match> getMatches(Example example) {
+		this.example = example;
+		
 		this.V = new LinkedList<>(example.getPatternGraph());
 		this.W = new LinkedList<>(example.getWorkingGraph());
 		VMM D = new VMM();
@@ -65,8 +69,8 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 			
 			for (Node wj : W) {
 				if (nodeCompare(wj, vi)) {
-					k = k + 1;
 					D.M[i][k] = wj;
+					k = k + 1;
 				}
 			}
 			
@@ -77,7 +81,7 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 	private void backtrack(VMM D) {
 		
 		if (extendable(D)) {
-			Node vi = pickVertex();
+			Node vi = pickVertex(D);
 			Node[] Z = getMappableVertices(vi, D);
 			
 			for (Node wj : Z) {
@@ -123,16 +127,24 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 		}
 	}
 	
-	// TODO: ...
-	private Node pickVertex() {
+	private Node pickVertex(VMM D) {
+		
+		// Pick the vertex with the minimal number of candidates:
+		Node vimin = null;
+		int Li = Integer.MAX_VALUE;
 		
 		for (Node vi : V) {
 			if (!X.contains(vi)) {
-				return vi;
+				int Lj = D.L[vi.getIndex()];
+				
+				if ((Lj > 0) && (Lj < Li)) {
+					vimin = vi;
+					Li = Lj;
+				}
 			}
 		}
 		
-		return null;
+		return vimin;
 	}
 	
 	private Node[] getMappableVertices(Node vi, VMM D) {
@@ -162,8 +174,8 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 					Node DMij = D.M[i][j];
 					
 					if (edgeCompare(vi, xq, DMij, yq)) {
-						l = l + 1;
 						T[i][l] = DMij;
+						l = l + 1; 
 					}
 				}
 				N[i] = l;
@@ -174,7 +186,7 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 	}
 
 	private boolean nodeCompare(Node xi, Node yi) {
-		return (yi.getLabel() == xi);
+		return (xi.getLabel() == yi);
 	}
 	
 	private boolean edgeCompare(Node xi, Node xj, Node yi, Node yj) {
