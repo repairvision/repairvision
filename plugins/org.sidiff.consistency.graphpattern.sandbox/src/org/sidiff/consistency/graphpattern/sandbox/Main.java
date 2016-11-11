@@ -17,16 +17,19 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		// Load example:
 		Example example = ReadGraphs.readExample(base + name + ".graph");
 		
+		// Calculate matching:
 		long start = System.currentTimeMillis();
 		
 		IMatchingEngine engine = new KrissinelBasicAlgorithm();
 		List<Match> matchings = engine.getMatches(example);
 		
-		System.out.println("Matching Time: " +  ((double) (System.currentTimeMillis() - start)) / 1000 + "s");
+		System.out.println("Matching Time: " + ((double) (System.currentTimeMillis() - start)) / 1000 + "s");
 		System.out.println("Matches Found: " + matchings.size());
 		
+		// Visualize:
 		String viz = WriteVisualization.writeVisualization(name, example, new Match());
 		String path = base + name + ".graph.dot";
 		WriteVisualization.saveVisualization(viz, path);

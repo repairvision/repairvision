@@ -11,6 +11,7 @@ public class Example {
 
 	public void addPatternGraphNode(Node node) {
 		patternGraph.add(node);
+		node.setIndex(patternGraph.size() - 1);
 	}
 	
 	public Node getPatternGraphNode(String name) {
@@ -24,6 +25,7 @@ public class Example {
 	
 	public void addWorkingGraphNode(Node node) {
 		workingGraph.add(node);
+		node.setIndex(workingGraph.size() - 1);
 	}
 	
 	public Node getWorklingGraphNode(String name) {
@@ -39,15 +41,7 @@ public class Example {
 		return patternGraph;
 	}
 
-	public void setPatternGraph(List<Node> pattern) {
-		this.patternGraph = pattern;
-	}
-
 	public List<Node> getWorkingGraph() {
 		return workingGraph;
-	}
-
-	public void setWorkingGraph(List<Node> workingGraph) {
-		this.workingGraph = workingGraph;
 	}
 }

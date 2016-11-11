@@ -10,6 +10,8 @@ public class Node {
 	private Node label;
 	
 	private List<Node> adjacent = new ArrayList<>();
+	
+	private int index = -1;
 
 	public Node(String name) {
 		super();
@@ -27,6 +29,10 @@ public class Node {
 			adjacent.add(node);
 			node.addAdjacent(this);
 		}
+	}
+	
+	public boolean isAdjacent(Node node) {
+		return adjacent.contains(node);
 	}
 
 	public String getName() {
@@ -53,6 +59,14 @@ public class Node {
 		this.label = label;
 	}
 	
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
 	@Override
 	public String toString() {
 		return name + ((label != null) ? ":" + label : ""); 
