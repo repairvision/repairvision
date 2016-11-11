@@ -57,6 +57,7 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 		VMM D = new VMM();
 		
 		initialize(D);
+		System.out.println(printVMM(D));
 		backtrack(D);
 		
 		return matchings;
@@ -88,7 +89,7 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 				X.addLast(vi);
 				Y.addLast(wj);
 				
-				VMM D1  = refine(D);
+				VMM D1 = refine(D);
 				backtrack(D1);
 				
 				X.removeLast();
@@ -149,7 +150,7 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 	
 	private Node[] getMappableVertices(Node vi, VMM D) {
 		int i = vi.getIndex();
-		return Arrays.copyOf(D.M[i], D.L[i] + 1);
+		return Arrays.copyOf(D.M[i], D.L[i]);
 	}
 	
 	private VMM refine(VMM D) {
@@ -168,17 +169,27 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 			
 			// All nodes that have not yet been assigned:
 			if (!X.contains(vi)) {
-				int l = 0;
 				
-				for (int j = 0; j < D.L[i]; j++) {
-					Node DMij = D.M[i][j];
+				// Filer only nodes (vi) that are adjacent to the last assigned node (xq):
+				if (vi.isAdjacent(xq)) {
+					int l = 0;
 					
-					if (edgeCompare(vi, xq, DMij, yq)) {
-						T[i][l] = DMij;
-						l = l + 1; 
+					for (int j = 0; j < D.L[i]; j++) {
+						Node wj = D.M[i][j];
+						
+						if (edgeCompare(vi, xq, wj, yq)) {
+							T[i][l] = wj;
+							l = l + 1; 
+						}
 					}
+					
+					N[i] = l;
+				} else {
+					
+					// Copy old matrix:
+					N[i] = D.L[i];
+					T[i] = D.M[i];
 				}
-				N[i] = l;
 			}
 		}
 		
@@ -198,5 +209,47 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 		Match newMatch = new Match();
 		newMatch.setMatch(new ArrayList<>(Y));
 		matchings.add(newMatch);
+	}
+	
+	public String printVMM(VMM D) {
+		StringBuffer print = new StringBuffer();
+		
+		for (int i = 0; i < D.L.length; ++i) {
+			
+			// Pattern-Node:
+			print.append(example.getPatternGraph().get(i));
+			
+			for (int j = (3 - (example.getPatternGraph().get(i) + "").length()); j > 0; --j) {
+				print.append(" ");
+			}
+			
+			print.append(" | ");
+			
+			// Size:
+			print.append(D.L[i]);
+			
+			for (int j = (3 - (D.L[i] + "").length()); j > 0; --j) {
+				print.append(" ");
+			}
+			
+			print.append(" | ");
+
+			// Matrix:
+			Node[] mappable = D.M[i];
+			
+			for (Node node : mappable) {
+				if (node != null) {
+					print.append(node + " ");
+					
+					for (int j = (7 - node.toString().length()); j > 0; --j) {
+						print.append(" ");
+					}
+				}
+			}
+			
+			print.append("\n");
+		}
+		
+		return print.toString();
 	}
 }
