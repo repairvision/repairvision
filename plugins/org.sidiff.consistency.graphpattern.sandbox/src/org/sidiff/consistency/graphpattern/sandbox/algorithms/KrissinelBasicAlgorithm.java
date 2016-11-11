@@ -55,11 +55,8 @@ public class KrissinelBasicAlgorithm implements IMatchingEngine {
 				
 				backtrack();
 				
-				X.remove(vi);
-				Y.remove(wj);
-				
-//				X.removeLast();
-//				Y.removeLast();
+				X.removeLast();
+				Y.removeLast();
 			}
 			
 			V.remove(vi);
