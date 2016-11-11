@@ -1,5 +1,9 @@
 package org.sidiff.consistency.graphpattern.sandbox.io;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -110,5 +114,14 @@ public class WriteVisualization {
 		viz.append("}\n");
 		
 		return viz.toString();
+	}
+	
+	public static void saveVisualization(String visualization, String path) {
+		try {
+			File file = new File(path);
+			Files.write(file.toPath(), Collections.singleton(visualization));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

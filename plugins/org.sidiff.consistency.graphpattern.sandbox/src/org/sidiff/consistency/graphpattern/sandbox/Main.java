@@ -1,9 +1,5 @@
 package org.sidiff.consistency.graphpattern.sandbox;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Collections;
 import java.util.List;
 
 import org.sidiff.consistency.graphpattern.sandbox.algorithms.IMatchingEngine;
@@ -22,7 +18,6 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Example example = ReadGraphs.readExample(base + name + ".graph");
-		String viz = WriteVisualization.writeVisualization(name, example, new Match());
 		
 		long start = System.currentTimeMillis();
 		
@@ -32,14 +27,12 @@ public class Main {
 		System.out.println("Matching Time: " +  ((double) (System.currentTimeMillis() - start)) / 1000 + "s");
 		System.out.println("Matches Found: " + matchings.size());
 		
-		try {
-			File file = new File(base + name + ".graph.dot");
-			Files.write(file.toPath(), Collections.singleton(viz));
-			System.out.println("Visualization: " + file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		String viz = WriteVisualization.writeVisualization(name, example, new Match());
+		String path = base + name + ".graph.dot";
+		WriteVisualization.saveVisualization(viz, path);
+
+		System.out.println("Visualization: " + path);
+
 	}
 
 }
