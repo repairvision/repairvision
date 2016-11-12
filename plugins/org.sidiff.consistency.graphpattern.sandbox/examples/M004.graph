@@ -1,0 +1,29 @@
+pattern graph:
+
+V1-N1
+N1-N2
+N2-V2
+N1-V4
+V4-N3
+N1-N3
+N3-V3
+V2-V3
+
+working graph:
+
+w1:V1-w2:N1
+w2:N1-w3:N2
+w3:N2-w4:V2
+
+w5:N1-w3:N2
+w5:N1-w6:N2
+w6:N2-w7:V2
+
+w5:N1-w8:V4
+w5:N1-w9:N3
+w2:N1-w9:N3
+
+w9:N3-w10:V3
+w7:V2-w10:V3
+
+
