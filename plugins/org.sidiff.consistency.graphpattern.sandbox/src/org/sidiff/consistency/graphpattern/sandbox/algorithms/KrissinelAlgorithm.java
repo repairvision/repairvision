@@ -16,7 +16,7 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 	private List<Match> matchings = new ArrayList<Match>();
 	
 	/**
-	 * G1: Pattern
+	 * G1: (partial) Pattern
 	 */
 	private LinkedList<Node> V;
 	
@@ -217,21 +217,29 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 		for (int i = 0; i < D.L.length; ++i) {
 			
 			// Pattern-Node:
-			print.append(example.getPatternGraph().get(i));
+			Node vi = example.getPatternGraph().get(i);
 			
-			for (int j = (3 - (example.getPatternGraph().get(i) + "").length()); j > 0; --j) {
-				print.append(" ");
+			print.append(vi);
+			appendFill(print, vi + "", 3);
+			print.append(" | ");
+			
+			// Match:
+			String yiName = ""; 
+			
+			for (Node yi : Y) {
+				if (yi.getLabel() == vi) {
+					yiName = yi.getName();
+					break;
+				}
 			}
 			
+			print.append(yiName);
+			appendFill(print, yiName, 3);
 			print.append(" | ");
 			
 			// Size:
 			print.append(D.L[i]);
-			
-			for (int j = (3 - (D.L[i] + "").length()); j > 0; --j) {
-				print.append(" ");
-			}
-			
+			appendFill(print, D.L[i] + "", 3);
 			print.append(" | ");
 
 			// Matrix:
@@ -240,10 +248,7 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 			for (Node node : mappable) {
 				if (node != null) {
 					print.append(node + " ");
-					
-					for (int j = (7 - node.toString().length()); j > 0; --j) {
-						print.append(" ");
-					}
+					appendFill(print, node.toString(), 7);
 				}
 			}
 			
@@ -251,5 +256,11 @@ public class KrissinelAlgorithm implements IMatchingEngine {
 		}
 		
 		return print.toString();
+	}
+	
+	private void appendFill(StringBuffer print, String s, int length) {
+		for (int j = (length - s.length()); j > 0; --j) {
+			print.append(" ");
+		}
 	}
 }
