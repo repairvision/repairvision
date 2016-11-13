@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sidiff.consistency.graphpattern.sandbox.algorithms.IMatchingEngine;
-import org.sidiff.consistency.graphpattern.sandbox.algorithms.KrissinelAlgorithm2;
+import org.sidiff.consistency.graphpattern.sandbox.algorithms.MCCSKrissinelAlgorithm;
 import org.sidiff.consistency.graphpattern.sandbox.algorithms.SubdivisionGraph;
 import org.sidiff.consistency.graphpattern.sandbox.graph.Example;
 import org.sidiff.consistency.graphpattern.sandbox.graph.Match;
@@ -30,7 +30,7 @@ public class Main {
 		// Calculate matching:
 		long start = System.currentTimeMillis();
 
-		IMatchingEngine engine = new KrissinelAlgorithm2();
+		IMatchingEngine engine = new MCCSKrissinelAlgorithm();
 		List<Match> matchings = engine.getMatches(subdivisionGraph.getSubdivisionExample());
 
 		System.out.println("Matching Time: " + ((double) (System.currentTimeMillis() - start)) / 1000 + "s");
