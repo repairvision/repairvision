@@ -11,6 +11,8 @@ import org.sidiff.consistency.graphpattern.sandbox.graph.Node;
 
 public class KrissinelAlgorithm2 implements IMatchingEngine {
 
+	private static boolean DEBUG = false;
+	
 	private Example example;
 
 	private List<Match> matchings = new ArrayList<Match>();
@@ -47,6 +49,29 @@ public class KrissinelAlgorithm2 implements IMatchingEngine {
 		// TODO: W.size() => size per slot
 		Node[][] M = new Node[example.getPatternGraph().size()][example.getWorkingGraph().size()];
 		int[] L = new int[example.getPatternGraph().size()];
+		
+		public void trim() {
+			for (int i = 0; i < M.length; ++i) {
+				M[i] = Arrays.copyOf(M[i], L[i]);
+			}
+		}
+		
+		public boolean validateSize() {
+			for (int i = 0; i < M.length; ++i) {
+				int size = 0;
+
+				for (int j = 0; j < M[i].length; ++j) {
+					if (M[i][j] != null) {
+						++size;
+					}
+				}
+
+				if (size != L[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 
 	@Override
@@ -58,7 +83,9 @@ public class KrissinelAlgorithm2 implements IMatchingEngine {
 		VMM D = new VMM();
 
 		initialize(D);
+		D.trim();
 		System.out.println(printVMM(D));
+		
 		backtrack(D);
 
 		return matchings;
@@ -100,17 +127,6 @@ public class KrissinelAlgorithm2 implements IMatchingEngine {
 					Y.removeLast();
 					newMatch = false;
 				}
-
-//				for (int a = 0; a < vi.getAdjacent().size(); ++a) {
-//					Node viadj = vi.getAdjacent().remove(a);
-//					int ar = viadj.getAdjacent().indexOf(vi);
-//					viadj.getAdjacent().remove(ar);
-//
-//					backtrack(D);
-//
-//					vi.getAdjacent().add(a, viadj);
-//					viadj.getAdjacent().add(ar, vi);
-//				}
 
 				 V.remove(vi);
 				
@@ -246,21 +262,12 @@ public class KrissinelAlgorithm2 implements IMatchingEngine {
 		D.L[i] = 0;
 		D.M[i] = new Node[0];
 
-		////////////////////// TEST //////////////////////
-		for (int v = 0; v < D.M.length; ++v) {
-			int q = 0;
-
-			for (int w = 0; w < D.M[v].length; ++w) {
-				if (D.M[v][w] != null) {
-					++q;
-				}
-			}
-
-			if (q != D.L[v]) {
-				System.err.println("FAILED!");
+		// TEST:
+		if (DEBUG) {
+			if (!D.validateSize()) {
+				System.err.println("Matrix Size Invalid!");
 			}
 		}
-		//////////////////////////////////////////////////
 
 		return D;
 	}
@@ -309,21 +316,12 @@ public class KrissinelAlgorithm2 implements IMatchingEngine {
 			}
 		}
 
-		////////////////////// TEST //////////////////////
-		for (int v = 0; v < D1.M.length; ++v) {
-			int q = 0;
-
-			for (int w = 0; w < D1.M[v].length; ++w) {
-				if (D1.M[v][w] != null) {
-					++q;
-				}
-			}
-
-			if (q != D1.L[v]) {
-				System.err.println("FAILED!");
+		// TEST:
+		if (DEBUG) {
+			if (!D.validateSize()) {
+				System.err.println("Matrix Size Invalid!");
 			}
 		}
-		//////////////////////////////////////////////////
 
 		return D1;
 	}
@@ -352,7 +350,7 @@ public class KrissinelAlgorithm2 implements IMatchingEngine {
 			Node vi = example.getPatternGraph().get(i);
 
 			print.append(vi);
-			appendFill(print, vi + "", 3);
+			appendFill(print, vi + "", 5);
 			print.append(" | ");
 
 			// Match:
@@ -366,7 +364,7 @@ public class KrissinelAlgorithm2 implements IMatchingEngine {
 			}
 
 			print.append(yiName);
-			appendFill(print, yiName, 3);
+			appendFill(print, yiName, 5);
 			print.append(" | ");
 
 			// Size:
@@ -380,7 +378,7 @@ public class KrissinelAlgorithm2 implements IMatchingEngine {
 			for (Node node : mappable) {
 				if (node != null) {
 					print.append(node + " ");
-					appendFill(print, node.toString(), 7);
+					appendFill(print, node.toString(), 10);
 				}
 			}
 

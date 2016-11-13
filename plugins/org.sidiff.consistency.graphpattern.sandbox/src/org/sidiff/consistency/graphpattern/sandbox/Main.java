@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.sidiff.consistency.graphpattern.sandbox.algorithms.IMatchingEngine;
 import org.sidiff.consistency.graphpattern.sandbox.algorithms.KrissinelAlgorithm2;
+import org.sidiff.consistency.graphpattern.sandbox.algorithms.SubdivisionGraph;
 import org.sidiff.consistency.graphpattern.sandbox.graph.Example;
 import org.sidiff.consistency.graphpattern.sandbox.graph.Match;
 import org.sidiff.consistency.graphpattern.sandbox.graph.Node;
@@ -22,22 +23,26 @@ public class Main {
 
 		// Load example:
 		Example example = ReadGraphs.readExample(base + name + ".graph");
+		
+		// To subdivision graph:
+		SubdivisionGraph subdivisionGraph = new SubdivisionGraph(example);
 
 		// Calculate matching:
 		long start = System.currentTimeMillis();
 
 		IMatchingEngine engine = new KrissinelAlgorithm2();
-		List<Match> matchings = engine.getMatches(example);
+		List<Match> matchings = engine.getMatches(subdivisionGraph.getSubdivisionExample());
 
 		System.out.println("Matching Time: " + ((double) (System.currentTimeMillis() - start)) / 1000 + "s");
 		System.out.println("Matches Found: " + matchings.size());
 
 		// Visualize:
-		String viz = WriteVisualization.writeVisualization(name, example, Match.getMaxMatch(matchings));
+		String viz = WriteVisualization.writeVisualization(name, subdivisionGraph.getExample(), Match.getMaxMatch(matchings));
 		String path = base + name + ".graph.dot";
 		WriteVisualization.saveVisualization(viz, path);
 
 		// All matches:
+		matchings = subdivisionGraph.translate(matchings);
 		List<Match> postprocessedMatches = new ArrayList<>(matchings.size());
 		
 		for (int i = 0; i < matchings.size(); i++) {
