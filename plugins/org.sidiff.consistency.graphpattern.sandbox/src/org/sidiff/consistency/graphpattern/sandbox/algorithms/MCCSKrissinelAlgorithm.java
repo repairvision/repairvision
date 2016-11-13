@@ -9,6 +9,7 @@ import org.sidiff.consistency.graphpattern.sandbox.graph.Example;
 import org.sidiff.consistency.graphpattern.sandbox.graph.Match;
 import org.sidiff.consistency.graphpattern.sandbox.graph.Node;
 
+// TODO: subdivision graph -> atomic matching of edge nodes!
 public class MCCSKrissinelAlgorithm implements IMatchingEngine {
 
 	private static boolean DEBUG = false;
@@ -217,25 +218,9 @@ public class MCCSKrissinelAlgorithm implements IMatchingEngine {
 		// Update all nodes that are adjacent to vi:
 		for (Node wi : D.M[i]) {
 			if (wi != null) {
-				
+
 				// wi adjacent to all remaining vi?
-				boolean induced = true;
-
-				// FIXME: Should always be fulfilled due to refine(D)!?
-				for (Node adjacent : vi.getAdjacent()) {
-					if (V.contains(adjacent)) {
-						induced = false;
-
-						for (Node wiAdj : wi.getAdjacent()) {
-							if (wiAdj.getLabel() == adjacent) {
-								induced = true;
-								break;
-							}
-						}
-					}
-				}
-				
-				if (induced) {
+				if (isInduced(vi, wi)) {	// FIXME: Test necessary?
 					for (Node adjacent : vi.getAdjacent()) {
 						if (V.contains(adjacent)) {
 							int q = 0;
@@ -270,6 +255,26 @@ public class MCCSKrissinelAlgorithm implements IMatchingEngine {
 		}
 
 		return D;
+	}
+	
+	private boolean isInduced(Node vi, Node wi) {
+		for (Node adjacent : vi.getAdjacent()) {
+			if (V.contains(adjacent)) {
+				boolean induced = false;
+
+				for (Node wiAdj : wi.getAdjacent()) {
+					if (wiAdj.getLabel() == adjacent) {
+						induced = true;
+						break;
+					}
+				}
+				
+				if (!induced) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	private VMM refine(VMM D) {

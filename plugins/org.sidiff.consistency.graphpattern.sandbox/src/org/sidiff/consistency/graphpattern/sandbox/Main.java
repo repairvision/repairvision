@@ -17,7 +17,7 @@ public class Main {
 
 	private static String base = "D:\\Workspace\\SiLift\\org.sidiff.consistency.graphpattern.sandbox\\examples\\";
 
-	private static String name = "M004";
+	private static String name = "M003";
 	
 	private static IMatchingEngine engine = new MCCSKrissinelAlgorithm();
 
