@@ -39,6 +39,8 @@ public class MCCSKrissinelAlgorithm implements IMatchingEngine {
 	private LinkedList<Node> Y = new LinkedList<>();
 
 	// FIXME: Filter sub matchings...
+	// Knoten entfernen -> Einträge in der Matrix lassen
+	// -> Expandable True -> Pick Node False
 	private boolean newMatch = false; 
 
 	/**
