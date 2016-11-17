@@ -1,8 +1,9 @@
 package org.sidiff.consistency.repair.complement.cpo.construction;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,9 +15,9 @@ import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.debug.DebugUtil;
-import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
 import org.sidiff.consistency.repair.api.matching.EOMatch;
 import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
+import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 
 public class CPOComplementRule extends ComplementRule  {
@@ -38,34 +39,48 @@ public class CPOComplementRule extends ComplementRule  {
 			
 			// NOTE: The matching unambiguously in CPO approach (regarding EditRuleNodeMultiMatch):
 			if (sourceMatch instanceof EONodeSingleMatch) {
+				
+				// Collect all << create >> and << preserve >> node matches:
 				if (!sourceMatch.getAction().equals(Type.DELETE)) {
 					EONodeSingleMatch nodeMatch = (EONodeSingleMatch) sourceMatch;
 					Node complementNode = getLHS(getTrace(nodeMatch.getNode()));
 					
 					if (complementNode != null) {
 						complementPreMatche.setNodeTarget(complementNode, nodeMatch.getModelBElement());
+						
+//						if (isPreservedNode(complementNode) && (nodeMatch.getModelBElement() == null)) {
+//							return Collections.emptyList();
+//						}
 					}
 				}
 			}
 		}
 		
-		// Check context rule (with restricted working graph):
-		ArrayList<EditOperationMatching> complementMatches = new ArrayList<>();
-		Iterator<Match> matchFinder = getEngine().findMatches(complementRule, getGraph(), complementPreMatche).iterator();
+		// FIXME !?
+//		assert (complementPreMatche.getNodeTargets().size() != 0);
 		
-		while (matchFinder.hasNext()) {
-			Match nextMatch = matchFinder.next();
+		if (complementPreMatche.getNodeTargets().size() != 0) {
 			
-			// Create complement pre-match:
-			EditOperationMatching nextComplementMatch = new EditOperationMatching(nextMatch);
-			complementMatches.add(nextComplementMatch);
+			// Check context rule (with restricted working graph):
+			ArrayList<EditOperationMatching> complementMatches = new ArrayList<>();
+			Iterator<Match> matchFinder = getEngine().findMatches(complementRule, getGraph(), complementPreMatche).iterator();
+			
+			while (matchFinder.hasNext()) {
+				Match nextMatch = matchFinder.next();
+				
+				// Create complement pre-match:
+				EditOperationMatching nextComplementMatch = new EditOperationMatching(nextMatch);
+				complementMatches.add(nextComplementMatch);
+			}
+			
+			if (DebugUtil.statistic) {
+				System.out.println("Parameter Matching (" + complementRule.getName() + "): " + (System.currentTimeMillis() - parameterMatching) + "ms");
+			}
+			
+			complementMatches.trimToSize();
+			return complementMatches;
 		}
 		
-		if (DebugUtil.statistic) {
-			System.out.println("Parameter Matching (" + complementRule.getName() + "): " + (System.currentTimeMillis() - parameterMatching) + "ms");
-		}
-		
-		complementMatches.trimToSize();
-		return complementMatches;
+		return Collections.emptyList();
 	}
 }

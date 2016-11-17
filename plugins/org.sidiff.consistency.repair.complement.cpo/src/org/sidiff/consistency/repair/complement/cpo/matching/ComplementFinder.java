@@ -18,6 +18,7 @@ import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.repair.api.matching.EOMatch;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.cpo.construction.CPOComplementConstructor;
+import org.sidiff.consistency.repair.complement.cpo.embedding.EmbeddingRulebase;
 import org.sidiff.difference.rulebase.RecognitionRule;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
@@ -41,7 +42,7 @@ public class ComplementFinder {
 	
 	private Collection<Rule> subEditRules;
 	
-	private Collection<Rule> sourceEditRules;
+	private EmbeddingRulebase embeddings;
 	
 	private SymmetricDifference difference;
 	
@@ -53,14 +54,14 @@ public class ComplementFinder {
 			Set<RuleApplication> rrApplications,
 			ILiftingRuleBase subRulebase,
 			Collection<Rule> subEditRules, 
-			Collection<Rule> sourceEditRules,
+			EmbeddingRulebase embeddings,
 			SymmetricDifference difference,
 			EGraph graphModelB) {
 		
 		this.rrApplications = rrApplications;
 		this.subRulebase = subRulebase;
 		this.subEditRules = subEditRules;
-		this.sourceEditRules = sourceEditRules;
+		this.embeddings = embeddings;
 		this.difference = difference;
 		
 		this.graphModelB = graphModelB;
@@ -89,33 +90,28 @@ public class ComplementFinder {
 			EditRule subEditRule = recognition2editRules.get(subRRUnit);
 			Rule subEOUnit = (Rule) subEditRule.getExecuteMainUnit().getSubUnits(false).get(0);
 			
-			// Is sub-rule (source-rule otherwise)
-			// TODO: change if to an assertion
-			if (subEditRules.contains(subEOUnit)) {
+			assert subEditRules.contains(subEOUnit);
 				
-				
-				// Translate recognition to edit rule matching:
-				List<EOMatch> subEOMatch = matchConverter.createEditRuleMatch(subEditRule, subEOUnit, subRRMatch);
-				
-				// FIXME: Filter sub-rules that are embedded in sub-rules!
-				// TODO[Precalculate]: Find corresponding source rule:
-				for (Rule sourceEditRule : sourceEditRules) {
-					CPOComplementConstructor complementConstructor = new CPOComplementConstructor(
-							sourceEditRule, engine, graphModelB);
+			// Translate recognition to edit rule matching:
+			List<EOMatch> subEOMatch = matchConverter.createEditRuleMatch(subEditRule, subEOUnit, subRRMatch);
 
-					Collection<ComplementRule> newSourceComplements = complementConstructor
-							.createComplementRule(subEOUnit, subEOMatch);
+			// Calculate complements for corresponding source rule:
+			for (Rule sourceEditRule : embeddings.getSuperRules(subEOUnit)) {
+				CPOComplementConstructor complementConstructor = new CPOComplementConstructor(
+						sourceEditRule, embeddings, engine, graphModelB);
 
-					if ((newSourceComplements != null) && (!newSourceComplements.isEmpty())) {
-						Collection<ComplementRule> sourceComplements = complements.get(sourceEditRule);
+				Collection<ComplementRule> newSourceComplements = complementConstructor
+						.createComplementRule(subEOUnit, subEOMatch);
 
-						if (sourceComplements == null) {
-							sourceComplements = new ArrayList<>();
-						}
+				if ((newSourceComplements != null) && (!newSourceComplements.isEmpty())) {
+					Collection<ComplementRule> sourceComplements = complements.get(sourceEditRule);
 
-						sourceComplements.addAll(newSourceComplements);
-						complements.put(sourceEditRule, sourceComplements);
+					if (sourceComplements == null) {
+						sourceComplements = new ArrayList<>();
 					}
+
+					sourceComplements.addAll(newSourceComplements);
+					complements.put(sourceEditRule, sourceComplements);
 				}
 			}
 			

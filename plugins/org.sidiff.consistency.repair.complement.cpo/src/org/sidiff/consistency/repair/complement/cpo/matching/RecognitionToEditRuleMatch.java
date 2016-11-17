@@ -114,10 +114,7 @@ public class RecognitionToEditRuleMatch {
 		// EO-Delete-Edges:
 		for (Edge outgoing : eoNode.getOutgoing()) {
 			EOEdgeMatch eoEdgeMatch = createDeleteEdgeMatch(rrMatch, outgoing, eo2rrTraceA);
-			
-			if (eoEdgeMatch != null) {
-				eoMatch.add(eoEdgeMatch);
-			}
+			eoMatch.add(eoEdgeMatch);
 		}
 	}
 	
@@ -151,10 +148,7 @@ public class RecognitionToEditRuleMatch {
 		// EO-Create-Edges:
 		for (Edge outgoing : eoNode.getOutgoing()) {
 			EOEdgeMatch eoEdgeMatch = createCreateEdgeMatch(rrMatch, outgoing, eo2rrTraceB);
-			
-			if (eoEdgeMatch != null) {
-				eoMatch.add(eoEdgeMatch);
-			}
+			eoMatch.add(eoEdgeMatch);
 		}
 	}
 	
@@ -191,6 +185,7 @@ public class RecognitionToEditRuleMatch {
 			Match rrMatch, Map<Node, Node> eo2rrTraceA, Map<Node, Node> eo2rrTraceB) {
 		
 		// NOTE: The trace of a preserve node is (normally) be saved as LHS node trace.
+		// NOTE: The object might have been deleted in model B!
 		
 		EObject matchB = null;
 		EObject matchA = null;
@@ -203,20 +198,16 @@ public class RecognitionToEditRuleMatch {
 			matchB = difference.getCorrespondingObjectInB(matchA);
 		}
 		
-		// NOTE: The object might have been deleted in model B!
-		if (matchB != null) {
-			
-			// Matching in model B found:
-			EONodeSingleMatch preserveMatch = new EONodeSingleMatch(Type.PRESERVE, eoNode); 
-			preserveMatch.setModelAElement(matchA);
-			preserveMatch.setModelBElement(matchB);
-			eoMatch.add(preserveMatch);
-			
-			// Create-Attribute:
-			for (Attribute attribute : getChangingAttributes(getLHS(eoNode), getRHS(eoNode))) {
-				Object value = matchB.eGet(attribute.getType());
-				eoMatch.add(new EOAttributeMatch(attribute, matchB, value));
-			}
+		// Matching in model B found:
+		EONodeSingleMatch preserveMatch = new EONodeSingleMatch(Type.PRESERVE, eoNode); 
+		preserveMatch.setModelAElement(matchA);
+		preserveMatch.setModelBElement(matchB);
+		eoMatch.add(preserveMatch);
+
+		// Create-Attribute:
+		for (Attribute attribute : getChangingAttributes(getLHS(eoNode), getRHS(eoNode))) {
+			Object value = matchB.eGet(attribute.getType());
+			eoMatch.add(new EOAttributeMatch(attribute, matchB, value));
 		}
 		
 		// EO-Delete-Edges:

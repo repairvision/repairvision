@@ -25,8 +25,8 @@ import org.sidiff.consistency.repair.api.matching.EONodeMultiMatch;
 import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
 import org.sidiff.consistency.repair.complement.construction.ComplementConstructor;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
+import org.sidiff.consistency.repair.complement.cpo.embedding.EmbeddingRulebase;
 import org.sidiff.consistency.repair.complement.cpo.embedding.RuleEmbedding;
-import org.sidiff.consistency.repair.complement.cpo.embedding.RuleEmbeddingCalculator;
 import org.sidiff.consistency.repair.complement.util.ComplementUtil;
 
 /**
@@ -37,6 +37,11 @@ import org.sidiff.consistency.repair.complement.util.ComplementUtil;
  */
 public class CPOComplementConstructor extends ComplementConstructor {
 
+	/**
+	 * The rulebase that stores all embeddings from sub-rules to CPOs.
+	 */
+	private EmbeddingRulebase embeddings;
+	
 	/**
 	 * The (Henshin) engine which applies the rules.
 	 */
@@ -50,13 +55,16 @@ public class CPOComplementConstructor extends ComplementConstructor {
 	/**
 	 * @param sourceRule
 	 *            The partially executed edit-rule.
+	 * @param embeddings
+	 *            The rulebase that stores all embeddings from sub-rules to CPOs.
 	 * @param engine
 	 *            The (Henshin) engine which applies the rules.
 	 * @param graph
 	 *            The working graph, i.e. the actual version of the model.
 	 */
-	public CPOComplementConstructor(Rule sourceRule, EngineImpl engine, EGraph graph) {
+	public CPOComplementConstructor(Rule sourceRule, EmbeddingRulebase embeddings, EngineImpl engine, EGraph graph) {
 		super(sourceRule);
+		this.embeddings = embeddings;
 		this.engine = engine;
 		this.graph = graph;
 	}
@@ -72,8 +80,8 @@ public class CPOComplementConstructor extends ComplementConstructor {
 			LogUtil.log(LogEvent.NOTICE, "\nSub-Rule-Match: \n\n" + ComplementUtil.printEditRuleMatch(subRuleMatch));
 		}
 
-		// TODO[Precalculate]: Calculate rule embedding:
-		for (RuleEmbedding embedding : RuleEmbeddingCalculator.calculateRuleEmbedding(sourceRule, subRule)) {
+		// Calculate complement for embedding:
+		for (RuleEmbedding embedding : embeddings.getEmbeddings(sourceRule, subRule)) {
 
 			// Convert sub-rule match to partial super-rule match:
 			List<EOMatch> superRuleMatch = convertToPartialMatch(embedding, subRuleMatch);
