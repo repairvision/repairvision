@@ -181,7 +181,6 @@ public abstract class ComplementConstructor {
 			}
 		}
 		
-		// FIXME: CPO related problem/code!?
 		// Check for << preserve >> nodes matched in A / not matched in B:
 		// NOTE: Sub: Remove Transition Target - Source: Remove-Transition vs. Remove-Transition-Loop
 		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
