@@ -27,8 +27,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
@@ -96,7 +96,7 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 
 	private Action printInfoAction;
 	
-	private class NameSorter extends ViewerSorter {
+	private class NameSorter extends ViewerComparator {
 	}
 
 	public PatternMatchingEngineView() {
@@ -130,7 +130,7 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 		{
 			viewer_pattern.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
 			viewer_pattern.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-			viewer_pattern.setSorter(new NameSorter());
+			viewer_pattern.setComparator(new NameSorter());
 		}
 
 		// Create the Drill Down Adapter:
@@ -153,7 +153,7 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 		{
 			viewer_models.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
 			viewer_models.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-			viewer_models.setSorter(new NameSorter());
+			viewer_models.setComparator(new NameSorter());
 			viewer_models.add(PatternMatchingEngineViewApp.MSG_MODEL_DROP_INFO);
 		}
 
