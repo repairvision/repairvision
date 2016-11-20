@@ -112,7 +112,7 @@ public class StatisticUtil {
 		System.out.println("Remove References: " + analysis.getRemoveReferenceCount());
 		System.out.println("Attribute Value Changes: " + analysis.getAttributeValueChangeCount());
 		System.out.println("Correspondences: " + analysis.getCorrespondenceCount());
-		System.out.println("Change Sets (Sub-EO): " + difference.getChangeSets().size());
+		System.out.println("Change Sets: " + difference.getChangeSets().size());
 		
 		int allChanges = difference.getChanges().size();
 		int uncoveredChanges = DifferenceAnalysisUtil.getRemainingChanges(difference).size();

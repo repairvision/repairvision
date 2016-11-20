@@ -61,7 +61,7 @@ public class CompleteCPOLifting extends BasicCPOLifting {
 			
 			if (DebugUtil.statistic) {
 				System.out.println("------ Change Sets (CPO): " + difference.getChangeSets().size());
-//				analyzeDifference(difference);
+//				StatisticUtil.analyzeDifference(difference);
 			}
 			
 			// Remove CPO change sets:

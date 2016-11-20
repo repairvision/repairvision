@@ -1,6 +1,6 @@
 package org.sidiff.consistency.repair.api.cpo;
 
-import org.sidiff.consistency.repair.api.cpo.lifting.FragmentedCPOLifting;
+import org.sidiff.consistency.repair.api.cpo.lifting.CompleteCPOLifting;
 
 /**
  * API for the repair engine functions.
@@ -10,6 +10,6 @@ import org.sidiff.consistency.repair.api.cpo.lifting.FragmentedCPOLifting;
 public class CPORepairFacadeComplete extends CPORepairFacade  {
 
 	public CPORepairFacadeComplete() {
-		super(new FragmentedCPOLifting());
+		super(new CompleteCPOLifting());
 	}
 }
