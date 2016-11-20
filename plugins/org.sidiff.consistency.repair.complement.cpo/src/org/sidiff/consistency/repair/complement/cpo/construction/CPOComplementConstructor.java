@@ -77,6 +77,7 @@ public class CPOComplementConstructor extends ComplementConstructor {
 			LogUtil.log(LogEvent.NOTICE, "------------------ CREATE COMPLEMENT RULE ------------------");
 			LogUtil.log(LogEvent.NOTICE, "------------------------------------------------------------");
 
+			LogUtil.log(LogEvent.NOTICE, "\nSub-Rule: " + subRule.getName());
 			LogUtil.log(LogEvent.NOTICE, "\nSub-Rule-Match: \n\n" + ComplementUtil.printEditRuleMatch(subRuleMatch));
 		}
 
@@ -87,6 +88,7 @@ public class CPOComplementConstructor extends ComplementConstructor {
 			List<EOMatch> superRuleMatch = convertToPartialMatch(embedding, subRuleMatch);
 
 			if (DebugUtil.isActive) {
+				LogUtil.log(LogEvent.NOTICE, "\nSource-Rule: " + sourceRule.getName());
 				LogUtil.log(LogEvent.NOTICE,
 						"\nCPO-Match (partial): \n\n" + ComplementUtil.printEditRuleMatch(superRuleMatch));
 			}
