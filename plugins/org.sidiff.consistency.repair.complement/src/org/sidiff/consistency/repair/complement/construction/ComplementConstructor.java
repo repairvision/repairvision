@@ -185,30 +185,29 @@ public abstract class ComplementConstructor {
 		// Check for << preserve >> nodes matched in A / not matched in B:
 		// NOTE: Sub: Remove Transition Target - Source: Remove-Transition vs. Remove-Transition-Loop
 		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
-			if (sourceRuleMatch instanceof EONodeSingleMatch) {
-				
-				// No matching in model B?
-				if ((((EONodeSingleMatch) sourceRuleMatch).getModelBElement() == null)
-						|| (((EONodeMultiMatch) sourceRuleMatch).getModelBElements().isEmpty())) {
+			
+			
+			// No matching in model B?
+			if (((sourceRuleMatch instanceof EONodeSingleMatch) && (((EONodeSingleMatch) sourceRuleMatch).getModelBElement() == null))
+				|| ((sourceRuleMatch instanceof EONodeMultiMatch) && (((EONodeMultiMatch) sourceRuleMatch).getModelBElements().isEmpty()))) {
 					
-					Node sourceNode = ((EONodeMatch) sourceRuleMatch).getNode();
-					Node complementNode = (Node) copyTrace.get(sourceNode);
-					
-					// Delete-Node:
-					if (sourceRuleMatch.getAction().equals(Type.PRESERVE)) {
-						assert isPreservedNode(complementNode);
-						
-						// << delete or create >> edge or attribute change => complementing changes on a deleted node!
-						// << preserve >> edge => unfulfilled PAC!
-						if (!complementNode.getOutgoing().isEmpty() || !complementNode.getIncoming().isEmpty()
-								|| !getChangingAttributes(getLHS(complementNode), getRHS(complementNode)).isEmpty()) {
-							return null;
-						} else {
-							// Remove deleted context node:
-							ComplementUtil.deletePreserveNode(complementNode);
-							complement.removeTrace(getLHS(sourceNode));
-							complement.removeTrace(getRHS(sourceNode));
-						}
+				Node sourceNode = ((EONodeMatch) sourceRuleMatch).getNode();
+				Node complementNode = (Node) copyTrace.get(sourceNode);
+
+				// Delete-Node:
+				if (sourceRuleMatch.getAction().equals(Type.PRESERVE)) {
+					assert isPreservedNode(complementNode);
+
+					// << delete or create >> edge or attribute change => complementing changes on a deleted node!
+					// << preserve >> edge => unfulfilled PAC!
+					if (!complementNode.getOutgoing().isEmpty() || !complementNode.getIncoming().isEmpty()
+							|| !getChangingAttributes(getLHS(complementNode), getRHS(complementNode)).isEmpty()) {
+						return null;
+					} else {
+						// Remove deleted context node:
+						ComplementUtil.deletePreserveNode(complementNode);
+						complement.removeTrace(getLHS(sourceNode));
+						complement.removeTrace(getRHS(sourceNode));
 					}
 				}
 			}
