@@ -27,6 +27,7 @@ import org.sidiff.consistency.repair.api.matching.EOAttributeMatch;
 import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
 import org.sidiff.consistency.repair.api.matching.EOMatch;
 import org.sidiff.consistency.repair.api.matching.EONodeMatch;
+import org.sidiff.consistency.repair.api.matching.EONodeMultiMatch;
 import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
 import org.sidiff.consistency.repair.complement.util.ComplementUtil;
 
@@ -185,7 +186,11 @@ public abstract class ComplementConstructor {
 		// NOTE: Sub: Remove Transition Target - Source: Remove-Transition vs. Remove-Transition-Loop
 		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
 			if (sourceRuleMatch instanceof EONodeSingleMatch) {
-				if (((EONodeSingleMatch) sourceRuleMatch).getModelBElement() == null) {
+				
+				// No matching in model B?
+				if ((((EONodeSingleMatch) sourceRuleMatch).getModelBElement() == null)
+						|| (((EONodeMultiMatch) sourceRuleMatch).getModelBElements().isEmpty())) {
+					
 					Node sourceNode = ((EONodeMatch) sourceRuleMatch).getNode();
 					Node complementNode = (Node) copyTrace.get(sourceNode);
 					
