@@ -1,9 +1,14 @@
 package org.sidiff.consistency.repair.complement.construction;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChangingAttributes;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRemoteAttribute;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionNode;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isPreservedNode;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,6 +27,7 @@ import org.sidiff.consistency.repair.api.matching.EOAttributeMatch;
 import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
 import org.sidiff.consistency.repair.api.matching.EOMatch;
 import org.sidiff.consistency.repair.api.matching.EONodeMatch;
+import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
 import org.sidiff.consistency.repair.complement.util.ComplementUtil;
 
 /**
@@ -42,7 +48,7 @@ public abstract class ComplementConstructor {
 	 *            A partial (edit-rule) matching of the partially executed source-rule.
 	 * @return The rule which complements the partial partially executed
 	 *         source-rule or <code>null</code> if the complement-rule could not
-	 *         be constructed (e.g. dangling edges).
+	 *         be constructed (e.g. dangling edges, no remaining changes).
 	 */
 	public ComplementRule createComplementRule(List<EOMatch> sourceRuleMatching) {
 
@@ -173,8 +179,92 @@ public abstract class ComplementConstructor {
 				ComplementUtil.makePreserve(complementAttribute);
 			}
 		}
+		
+		// FIXME: CPO related problem/code!?
+		// Check for << preserve >> nodes matched in A / not matched in B:
+		// NOTE: Sub: Remove Transition Target - Source: Remove-Transition vs. Remove-Transition-Loop
+		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
+			if (sourceRuleMatch instanceof EONodeSingleMatch) {
+				if (((EONodeSingleMatch) sourceRuleMatch).getModelBElement() == null) {
+					Node sourceNode = ((EONodeMatch) sourceRuleMatch).getNode();
+					Node complementNode = (Node) copyTrace.get(sourceNode);
+					
+					// Delete-Node:
+					if (sourceRuleMatch.getAction().equals(Type.PRESERVE)) {
+						assert isPreservedNode(complementNode);
+						
+						// << delete or create >> edge or attribute change => complementing changes on a deleted node!
+						// << preserve >> edge => unfulfilled PAC!
+						if (!complementNode.getOutgoing().isEmpty() || !complementNode.getIncoming().isEmpty()
+								|| !getChangingAttributes(getLHS(complementNode), getRHS(complementNode)).isEmpty()) {
+							return null;
+						} else {
+							// Remove deleted context node:
+							ComplementUtil.deletePreserveNode(complementNode);
+							complement.removeTrace(getLHS(sourceNode));
+							complement.removeTrace(getRHS(sourceNode));
+						}
+					}
+				}
+			}
+		}
+		
+		//  No remaining changes -> empty complement rule!
+		if (!hasChange(complementRule)) {
+			return null;
+		}
 
 		return complement;
+	}
+	
+	private boolean hasChange(Rule rule) {
+		
+		// Has delete nodes:
+		if (rule.getLhs().getNodes().size() != rule.getMappings().size()) {
+			return true;
+		}
+		
+		// Has create nodes:
+		if (rule.getRhs().getNodes().size() != rule.getMappings().size()) {
+			return true;
+		}
+		
+		// Has delete or create edges:
+		// NOTE: Does not hold for e.g. move = delete + add
+		if (rule.getLhs().getEdges().size() != rule.getRhs().getEdges().size()) {
+			return true;
+		}
+		
+		// Has attribute value changes:
+		for (Node node : rule.getRhs().getNodes()) {
+			for (Attribute attribute : node.getAttributes()) {
+				Attribute remoteAttribute = getRemoteAttribute(attribute);
+				
+				if (remoteAttribute == null) {
+					return true;
+				} else {
+					if (!remoteAttribute.getValue().equals(attribute.getValue())) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		// Has delete edges:
+		for (Edge edge : rule.getLhs().getEdges()) {
+			if (isDeletionEdge(edge)) {
+				return true;
+			}
+		}
+		
+		// Has create edges:
+		for (Edge edge : rule.getRhs().getEdges()) {
+			if (isCreationEdge(edge)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	protected abstract ComplementRule createComplementRule(Rule sourceRule, Rule complementRule);

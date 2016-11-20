@@ -1,6 +1,6 @@
 package org.sidiff.consistency.repair.complement.util;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyAttribute;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRemoteNode;
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -104,7 +105,24 @@ public class ComplementUtil {
 		copier.copyReferences();
 
 		return copier;
-
+	}
+	
+	/**
+	 * @param copy
+	 *            The copied object.
+	 * @param copyTrace
+	 *            The copy trace: Original -> Copy
+	 * @return The original object.
+	 */
+	public static EObject getReverseTrace(EObject copy, Map<EObject, EObject> copyTrace) {
+		
+		for (Entry<EObject, EObject> trace : copyTrace.entrySet()) {
+			if (trace.getValue() == copy) {
+				return trace.getKey();
+			}
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -136,6 +154,45 @@ public class ComplementUtil {
 	 */
 	public static void deleteNode(Node node) {
 		EcoreUtil.remove(node);
+	}
+
+	/**
+	 * @param mapping
+	 *            The mapped << preserve >> node.
+	 */
+	public static void deletePreserveNode(Mapping mapping) {
+		EcoreUtil.remove(mapping);
+		EcoreUtil.remove(mapping.getImage());
+		EcoreUtil.remove(mapping.getOrigin());
+	}
+	
+	/**
+	 * Deletes a << preserve >> node -> LHS + RHS + Mapping.
+	 * 
+	 * @param node
+	 *            The node which will be deleted from its graph.
+	 * @return The RHS node if the given node was the LHS node; the LHS node otherwise.
+	 */
+	public static Node deletePreserveNode(Node node) {
+		Node lhsNode;
+		Node rhsNode;
+		Node remoteNode;
+		
+		if (isRHSNode(node)) {
+			rhsNode = node;
+			lhsNode = getLHS(rhsNode);
+			remoteNode = lhsNode;
+		} else {
+			lhsNode = node;
+			rhsNode = getRHS(lhsNode);
+			remoteNode = rhsNode;
+		}
+		
+		EcoreUtil.remove(node.getGraph().getRule().getMappings().get(lhsNode, rhsNode));
+		EcoreUtil.remove(lhsNode);
+		EcoreUtil.remove(rhsNode);
+		
+		return remoteNode;
 	}
 	
 	/**

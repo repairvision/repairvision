@@ -326,32 +326,35 @@ public abstract class ComplementRule {
 	
 	//// Trace ////
 	
-	public void addTrace(Node sourceRule, Node complementRule) {
+	public void addTrace(Node sourceNode, Node complementNode) {
+		assert (sourceNode.getGraph().getRule() == sourceRule);
+		assert (complementNode.getGraph().getRule() == complementRule);
 		
-		if (isRHSNode(sourceRule)) {
+		if (isRHSNode(sourceNode)) {
 			// RHS-Node
-			rhsTrace.put(sourceRule, complementRule);
+			rhsTrace.put(sourceNode, complementNode);
 			
 			// Lookup LHS-Node:
-			Node lhsNode = getLHS(sourceRule);
+			Node lhsNode = getLHS(sourceNode);
 			
 			if (lhsNode == null) {
-				lhsTrace.put(sourceRule, complementRule);
+				lhsTrace.put(sourceNode, complementNode);
 			}
 		} else {
 			// LHS/Forbid/Require-Node
-			lhsTrace.put(sourceRule, complementRule);
+			lhsTrace.put(sourceNode, complementNode);
 			
 			// Lookup RHS-Node:
-			Node rhsNode = getRHS(sourceRule);
+			Node rhsNode = getRHS(sourceNode);
 			
 			if (rhsNode == null) {
-				rhsTrace.put(sourceRule, complementRule);
+				rhsTrace.put(sourceNode, complementNode);
 			}
 		}
 	}
 	
 	public void removeTrace(Node sourceNode) {
+		assert (sourceNode.getGraph().getRule() == sourceRule);
 		
 		if (isRHSNode(sourceNode)) {
 			rhsTrace.remove(sourceNode);
@@ -360,17 +363,19 @@ public abstract class ComplementRule {
 		}
 	}
 	
-	public Node getTrace(Node sourceRule) {
-		Node lhsNodeTrace = lhsTrace.get(sourceRule);
+	public Node getTrace(Node sourceNode) {
+		assert ((sourceNode == null) ||(sourceNode.getGraph().getRule() == sourceRule));
+		Node lhsNodeTrace = lhsTrace.get(sourceNode);
 		
 		if (lhsNodeTrace == null) {
-			return rhsTrace.get(sourceRule);
+			return rhsTrace.get(sourceNode);
 		} else {
 			return lhsNodeTrace; 
 		}
 	}
 	
 	public Attribute getTrace(Attribute sourceAttribute) {
+		assert ((sourceAttribute == null) ||(sourceAttribute.getGraph().getRule() == sourceRule));
 		Node complementNode = getTrace(sourceAttribute.getNode());
 		
 		if (complementNode != null) {
@@ -380,20 +385,22 @@ public abstract class ComplementRule {
 		return null;
 	}
 	
-	public Edge getTrace(Edge sourceRule) {
+	public Edge getTrace(Edge sourceEdge) {
+		assert ((sourceEdge == null) ||(sourceEdge.getGraph().getRule() == sourceRule));
+		
 		Node srcNodeTrace = null;
 		Node tgtNodeTrace = null;
 		
-		if (isRHSEdge(sourceRule)) {
-			srcNodeTrace = rhsTrace.get(sourceRule.getSource());
-			tgtNodeTrace = rhsTrace.get(sourceRule.getTarget());
+		if (isRHSEdge(sourceEdge)) {
+			srcNodeTrace = rhsTrace.get(sourceEdge.getSource());
+			tgtNodeTrace = rhsTrace.get(sourceEdge.getTarget());
 		} else {
-			srcNodeTrace = lhsTrace.get(sourceRule.getSource());
-			tgtNodeTrace = lhsTrace.get(sourceRule.getTarget());
+			srcNodeTrace = lhsTrace.get(sourceEdge.getSource());
+			tgtNodeTrace = lhsTrace.get(sourceEdge.getTarget());
 		}
 		
 		if ((srcNodeTrace != null) && (tgtNodeTrace != null)) {
-			return srcNodeTrace.getOutgoing(sourceRule.getType(), tgtNodeTrace);
+			return srcNodeTrace.getOutgoing(sourceEdge.getType(), tgtNodeTrace);
 		}
 		
 		return null;
