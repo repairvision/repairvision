@@ -13,7 +13,10 @@ import org.sidiff.consistency.repair.ui.presentation.extension.RepairPresentatio
 
 public class RepairDectectionEngineProvider implements ISelectionProvider {
 	
-	public static String DEFAULT = "org.sidiff.consistency.repair.ui.cpo.presentation.fragmented.ruleselection";
+//	public static String DEFAULT = "org.sidiff.consistency.repair.ui.peo.presentation.ruleselection";
+	public static String DEFAULT = "org.sidiff.consistency.repair.ui.cpo.presentation.complete.ruleselection";
+//	public static String DEFAULT = "org.sidiff.consistency.repair.ui.cpo.presentation.fragmented.ruleselection";
+	
 	
 	private static List<ISelectionChangedListener> listeners = new LinkedList<>();
 	

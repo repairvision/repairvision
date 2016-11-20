@@ -1,10 +1,10 @@
 package org.sidiff.consistency.repair.ui.views.rankings;
 
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.sidiff.consistency.repair.api.IRepair;
 
-public class HistoricComplementingRatioRepairRanking extends ViewerSorter  {
+public class HistoricComplementingRatioRepairRanking extends ViewerComparator  {
 
 	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {

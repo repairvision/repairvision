@@ -17,7 +17,6 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
@@ -68,9 +67,6 @@ public class RepairView extends ViewPart implements IResultChangedListener<Repai
 	
 	private Action clearSetup;
 
-	class NameSorter extends ViewerSorter {
-	}
-
 	public RepairView() {
 	}
 	
@@ -105,7 +101,7 @@ public class RepairView extends ViewPart implements IResultChangedListener<Repai
 		viewer_repairs = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer_repairs.setContentProvider(new RepairContentProvider());
 		viewer_repairs.setLabelProvider(new RepairLabelProvider());
-		viewer_repairs.setSorter(new HistoricComplementingRatioRepairRanking());
+		viewer_repairs.setComparator(new HistoricComplementingRatioRepairRanking());
 		
 		viewer_repairs.addSelectionChangedListener(RepairSelectionController.getInstance());
 		

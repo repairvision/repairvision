@@ -9,7 +9,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -87,7 +87,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			combo_matching.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			
 			// Provider:
-			viewer_matching.setSorter(new ViewerSorter());
+			viewer_matching.setComparator(new ViewerComparator());
 			viewer_matching.setContentProvider(ArrayContentProvider.getInstance());
 			viewer_matching.setLabelProvider(new LabelProvider() {
 				
@@ -159,7 +159,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			combo.setBounds(0, 0, 91, 23);
 			
 			// Provider:
-			viewer_repair.setSorter(new ViewerSorter());
+			viewer_repair.setComparator(new ViewerComparator());
 			viewer_repair.setContentProvider(ArrayContentProvider.getInstance());
 			viewer_repair.setLabelProvider(new LabelProvider() {
 				
