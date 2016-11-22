@@ -4,9 +4,11 @@ import static org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper.g
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,6 +24,7 @@ import org.sidiff.consistency.graphpattern.matcher.data.selection.MatchSelection
 import org.sidiff.consistency.graphpattern.matcher.data.selection.SelectionMatching;
 import org.sidiff.consistency.graphpattern.matcher.matching.AbstractMatchGenerator;
 import org.sidiff.consistency.graphpattern.matcher.matching.IMatchGenerator;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.MatchSelector;
 
 /**
@@ -30,12 +33,17 @@ import org.sidiff.consistency.graphpattern.matcher.matching.selection.MatchSelec
  * 
  * @author Manuel Ohrndorf
  */
-public abstract class PartialMatchGenerator extends AbstractMatchGenerator<SelectionMatching> {
+public abstract class PartialMatchGeneratorFP extends AbstractMatchGenerator<IMatching> {
 
 	/**
 	 * Represents all empty linked lists.
 	 */
-	private static LinkedList<NodePattern> EMPTY_NODE_LIST = new LinkedList<NodePattern>();  
+	private static LinkedList<NodePattern> EMPTY_NODE_LIST = new LinkedList<NodePattern>();
+	
+	/**
+	 * All variable nodes and their corresponding matchings.
+	 */
+	protected Map<NodePattern, NodeMatching> matching = new LinkedHashMap<>();
 	
 	/**
 	 * All nodes which are variables in the sense of the constraint solving problem of the graph.
@@ -67,12 +75,12 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 	/**
 	 * The unique match iterator of this match generator.
 	 */
-	private Iterator<SelectionMatching> matchIterator;
+	private Iterator<IMatching> matchIterator;
 	
 	/**
-	 * Initializes a new {@link PartialMatchGenerator}.
+	 * Initializes a new {@link PartialMatchGeneratorFP}.
 	 */
-	public PartialMatchGenerator() {
+	public PartialMatchGeneratorFP() {
 	}
 	
 	@Override
@@ -93,10 +101,10 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 	}
 
 	@Override
-	public  Iterator<SelectionMatching> getResults() {
+	public  Iterator<IMatching> getResults() {
 		
 		if (matchIterator == null) {
-			matchIterator = new Iterator<SelectionMatching>() {
+			matchIterator = new Iterator<IMatching>() {
 
 				private SelectionMatching matching;
 				
@@ -112,7 +120,13 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 						}
 						
 						// Find next match:
-						matching = new SelectionMatching();
+						matching = new SelectionMatching() {
+
+							@Override
+							public Collection<NodePattern> getNodes() {
+								return getGraphPattern();
+							}
+						};
 						hasNext = findNextMatch();
 					}
 					
@@ -120,7 +134,7 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 				}
 
 				@Override
-				public SelectionMatching next() {
+				public IMatching next() {
 					if (hasNext()) {
 						// Tell hasNext() that we need a new matching next time:
 						hasNext = null;
@@ -135,6 +149,14 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
 		}
 		
 		return matchIterator;
+	}
+	
+	/**
+	 * @return The (unmodifiable) matching for each variable node. The matching
+	 *         will be updated each time {@link #findNextMatch()} is called.
+	 */
+	public Map<NodePattern, NodeMatching> getVariableMatching() {
+		return Collections.unmodifiableMap(matching);
 	}
 
 	/**
@@ -212,15 +234,29 @@ public abstract class PartialMatchGenerator extends AbstractMatchGenerator<Selec
  		long startTime = System.currentTimeMillis();
 
 		// Search for the next valid match:
-		while (!findNextAssignemt()) {
-			if (!nextAssignmentOrder()) {
-				return false;
-			}
-		}
+ 		boolean isPartial = false;
+ 		
+ 		while (!isPartial) {
+ 	 		while (!findNextAssignemt()) {
+ 	 			if (!nextAssignmentOrder()) {
+ 	 				return false;
+ 	 			}
+ 	 		}
+ 	 		isPartial = isPartialMatch();
+ 		}
 		
 		System.out.println("Matching Time: " + (System.currentTimeMillis() - startTime) / 1000.0 + "s");
 		
 		return true;
+	}
+	
+	private boolean isPartialMatch() {
+		for (NodeMatching match : matching.values()) {
+			if (match.getMatch() == null) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private boolean findNextAssignemt() {

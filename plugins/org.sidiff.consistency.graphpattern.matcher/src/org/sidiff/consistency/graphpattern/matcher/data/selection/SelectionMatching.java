@@ -13,7 +13,7 @@ import org.sidiff.consistency.graphpattern.matcher.tools.MatchingHelper;
  * 
  * @author Manuel Ohrndorf
  */
-public class SelectionMatching implements IMatching {
+public abstract class SelectionMatching implements IMatching {
 
 	protected boolean selectionModified = false;
 	
@@ -21,6 +21,21 @@ public class SelectionMatching implements IMatching {
 	public Iterator<EObject> getMatch(NodePattern node) {
 		if (!selectionModified) {
 			return MatchingHelper.getDataStore(node).getMatchSelection().getSelectedMatches();
+		} else {
+			throw new ConcurrentModificationException();
+		}
+	}
+	
+	@Override
+	public EObject getFirstMatch(NodePattern node) {
+		if (!selectionModified) {
+			Iterator<EObject> matchIt = getMatch(node);
+			
+			if (matchIt.hasNext()) {
+				return matchIt.next();
+			} else {
+				return null;
+			}
 		} else {
 			throw new ConcurrentModificationException();
 		}

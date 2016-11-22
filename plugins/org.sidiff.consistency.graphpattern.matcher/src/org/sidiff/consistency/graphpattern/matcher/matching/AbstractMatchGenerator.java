@@ -1,12 +1,8 @@
 package org.sidiff.consistency.graphpattern.matcher.matching;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.matcher.matching.partial.NodeMatching;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.AtomicPattern;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
 
@@ -31,11 +27,6 @@ public abstract class AbstractMatchGenerator<R> implements IMatchGenerator<R> {
 	 */
 	protected List<NodePattern> variableNodes;
 	
-	/**
-	 * All variable nodes and their corresponding matchings.
-	 */
-	protected Map<NodePattern, NodeMatching> matching = new LinkedHashMap<>();
-	
 	@Override
 	public void initialize(List<NodePattern> graphPattern, List<NodePattern> variableNodes) {
 		this.graphPattern = graphPattern;
@@ -58,14 +49,6 @@ public abstract class AbstractMatchGenerator<R> implements IMatchGenerator<R> {
 	@Override
 	public List<NodePattern> getVariableNodes() {
 		return variableNodes;
-	}
-	
-	/**
-	 * @return The (unmodifiable) matching for each variable node. The matching
-	 *         will be updated each time {@link #findNextMatch()} is called.
-	 */
-	public Map<NodePattern, NodeMatching> getVariableMatching() {
-		return Collections.unmodifiableMap(matching);
 	}
 	
 	/**

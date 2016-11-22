@@ -1,7 +1,6 @@
 package org.sidiff.consistency.graphpattern.matcher.matching;
 
 import java.util.List;
-import java.util.Map;
 
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.algorithms.IIncrementalAlgorithm;
@@ -41,10 +40,4 @@ public interface IMatchGenerator<R> extends IIncrementalAlgorithm<R> {
 	 *         <code>match = v_1 x v_2 x ... x v_n</code>
 	 */
 	public List<NodePattern> getVariableNodes();
-
-	/**
-	 * @return The actual matching of the variable nodes (
-	 *         {@link IMatchGenerator#getVariableNodes()}).
-	 */
-	public Map<NodePattern, ? extends INodeMatching> getVariableMatching();
 }

@@ -46,6 +46,10 @@ public class MatchSelection {
 		return selected;
 	}
 	
+	public boolean isEmpty() {
+		return !selectedMatches.containsValue(SelectionType.ACCEPTED);
+	}
+	
 	public void selectMatches(Collection<EObject> selections) {
 		for (EObject selection : selections) {
 			assert (selection != null) : "Null selection!";

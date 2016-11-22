@@ -2,6 +2,7 @@ package org.sidiff.consistency.graphpattern.matcher;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.sidiff.consistency.graphpattern.GraphPattern;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
 
 /**
  * Creates a new matching engine. Used to register new engines to the extension
@@ -9,7 +10,7 @@ import org.sidiff.consistency.graphpattern.GraphPattern;
  * 
  * @author Manuel Ohrndorf
  */
-public interface IPatternMatchingEngineFactory {
+public interface IPatternMatchingEngineFactory<M extends IMatching> {
 
 	/**
 	 * Creates an <strong>initialized</strong> pattern matching engine.
@@ -20,5 +21,5 @@ public interface IPatternMatchingEngineFactory {
 	 *            All target model resources.
 	 * @return The <strong>initialized</strong> pattern matching engine.
 	 */
-	IPatternMatchingEngine<?> createPatternMatchingEngine(GraphPattern graphpattern, ResourceSet targetModels);
+	IPatternMatchingEngine<M> createPatternMatchingEngine(GraphPattern graphpattern, ResourceSet targetModels);
 }

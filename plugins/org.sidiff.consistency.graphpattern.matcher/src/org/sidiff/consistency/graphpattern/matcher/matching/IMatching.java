@@ -1,5 +1,6 @@
 package org.sidiff.consistency.graphpattern.matcher.matching;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
@@ -18,4 +19,8 @@ public interface IMatching {
 	 * @return The corresponding matched object.
 	 */
 	public Iterator<EObject> getMatch(NodePattern node);
+	
+	public EObject getFirstMatch(NodePattern node);
+	
+	public Collection<NodePattern> getNodes();
 }
