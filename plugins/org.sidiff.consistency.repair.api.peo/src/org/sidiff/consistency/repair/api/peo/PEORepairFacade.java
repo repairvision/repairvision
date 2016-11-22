@@ -30,7 +30,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
  * 
  * @author Manuel Ohrndorf
  */
-public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSettings> {
+public abstract class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSettings> {
 
 	@Override
 	public PEORepairJob getRepairs(URI uriModelA, URI uriModelB, PEORepairSettings settings) {
@@ -77,7 +77,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		AbstractRepairFilter repairFilter = new AbstractRepairFilter(modelB, true);
 		
 		// Calculate repairs:
-		ComplementFinder complementFinder = new ComplementFinder(modelA, modelB, difference);
+		ComplementFinder complementFinder = createComplementFinder(modelA, modelB, difference);
 		Map<Rule, List<IRepair>> repairs = new LinkedHashMap<>();
 		
 		for (Rule editRule : settings.getEditRules()) {
@@ -118,4 +118,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		
 		return repairJob;
 	}
+	
+	protected abstract ComplementFinder createComplementFinder(
+			Resource modelAResource, Resource modelBResource, SymmetricDifference difference);
 }

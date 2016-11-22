@@ -6,9 +6,10 @@ import java.util.List;
 
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngineFactory;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
 import org.sidiff.consistency.repair.api.peo.util.RecognitionRuleUtil;
 
-public abstract class LiftingEngineFactory implements IPatternMatchingEngineFactory {
+public abstract class LiftingEngineFactory implements IPatternMatchingEngineFactory<IMatching> {
 
 	protected Collection<NodePattern> getChangeNodePatterns(List<NodePattern> graphPattern) {
 		List <NodePattern> changeNodes = new ArrayList<>();

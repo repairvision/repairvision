@@ -3,18 +3,18 @@ package org.sidiff.consistency.repair.api.peo.engine;
 import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.graphpattern.matcher.matching.BasicMatchValidation;
 import org.sidiff.consistency.graphpattern.matcher.matching.IMatchValidation;
-import org.sidiff.consistency.graphpattern.matcher.matching.partial.PartialMatchGenerator;
+import org.sidiff.consistency.graphpattern.matcher.matching.partial.PartialMatchGeneratorFP;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
 import org.sidiff.consistency.repair.api.peo.matching.atomic.AtomicLiftingPatternFactory;
 import org.sidiff.consistency.repair.api.peo.util.DebuggingHelper;
 
-public class LiftingMatchGenerator extends PartialMatchGenerator {
+public class LiftingMatchGeneratorFP extends PartialMatchGeneratorFP {
 
 	protected IAtomicPatternFactory atomicPatternFactory;
 	
 	protected IMatchValidation matchValidation;
 	
-	public LiftingMatchGenerator() {
+	public LiftingMatchGeneratorFP() {
 		atomicPatternFactory = new AtomicLiftingPatternFactory();
 		matchValidation = new BasicMatchValidation();
 	}

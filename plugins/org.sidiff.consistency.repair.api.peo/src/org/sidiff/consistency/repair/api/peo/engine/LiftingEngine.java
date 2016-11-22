@@ -8,16 +8,17 @@ import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.AbstractPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.data.NavigableMatchesDS;
-import org.sidiff.consistency.graphpattern.matcher.data.selection.SelectionMatching;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatchGenerator;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
 import org.sidiff.consistency.repair.api.peo.util.LiftingGraphDomainMap;
 import org.sidiff.consistency.repair.api.peo.util.LiftingGraphIndex;
 import org.sidiff.consistency.repair.api.peo.util.RecognitionRuleUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.MergeImports;
 
-public abstract class LiftingEngine extends AbstractPatternMatchingEngine<SelectionMatching> {
+public abstract class LiftingEngine extends AbstractPatternMatchingEngine<IMatching> {
 	
-	protected LiftingMatchGenerator matchGenerator;
+	protected IMatchGenerator<IMatching> matchGenerator;
 	
 	protected MergeImports mergeImports;
 
@@ -32,8 +33,10 @@ public abstract class LiftingEngine extends AbstractPatternMatchingEngine<Select
 		this.changeIndex = changeIndex;
 		this.changeDomainMap = changeDomainMap;
 		
-		this.matchGenerator = new LiftingMatchGenerator();
+		this.matchGenerator = createMatchGenerator();
 	}
+	
+	protected abstract IMatchGenerator<IMatching> createMatchGenerator();
 	
 	@Override
 	public void start() {
@@ -62,7 +65,7 @@ public abstract class LiftingEngine extends AbstractPatternMatchingEngine<Select
 	}
 	
 	@Override
-	public LiftingMatchGenerator getMatchGenerator() {
+	public IMatchGenerator<IMatching> getMatchGenerator() {
 		return matchGenerator;
 	}
 }

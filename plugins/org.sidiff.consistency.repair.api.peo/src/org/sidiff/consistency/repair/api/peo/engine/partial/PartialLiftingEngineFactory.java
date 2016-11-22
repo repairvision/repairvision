@@ -11,16 +11,17 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.consistency.repair.api.peo.engine.LiftingEngine;
 import org.sidiff.consistency.repair.api.peo.engine.LiftingEngineFactory;
 import org.sidiff.consistency.repair.api.peo.util.LiftingGraphDomainMap;
 import org.sidiff.consistency.repair.api.peo.util.LiftingGraphIndex;
 import org.sidiff.consistency.repair.api.peo.util.RecognitionRuleUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 
-public class PartialLiftingEngineFactory extends LiftingEngineFactory {
+public abstract class PartialLiftingEngineFactory extends LiftingEngineFactory {
 
 	@Override
-	public PartialLiftingEngine createPatternMatchingEngine(GraphPattern graphPattern, ResourceSet targetModels) {
+	public LiftingEngine createPatternMatchingEngine(GraphPattern graphPattern, ResourceSet targetModels) {
 		
 		// Get target difference model:
 		SymmetricDifference difference = RecognitionRuleUtil.getSymmetricDifference(targetModels);
@@ -34,7 +35,7 @@ public class PartialLiftingEngineFactory extends LiftingEngineFactory {
 			// Create the engine:
 			List<NodePattern> graphPatternNodes = new ArrayList<>(graphPattern.getNodes());
 			
-			PartialLiftingEngine engine = new PartialLiftingEngine(
+			LiftingEngine engine = createLiftingEngine(
 					graphPatternNodes, targetModels, changeIndex, changeDomainMap);
 			Map<NodePattern, Collection<EObject>> changeNodeDomains = calculateChangeNodeDomains(
 					graphPatternNodes, changeDomainMap);
@@ -61,4 +62,8 @@ public class PartialLiftingEngineFactory extends LiftingEngineFactory {
 
 		return changeDomains;
 	}
+	
+	protected abstract LiftingEngine createLiftingEngine(
+			List<NodePattern> graphPattern, ResourceSet targetModels, 
+			LiftingGraphIndex changeIndex,LiftingGraphDomainMap changeDomainMap);
 }

@@ -20,7 +20,7 @@ import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 
-public class PartialLiftingEngine extends LiftingEngine {
+public abstract class PartialLiftingEngine extends LiftingEngine {
 	
 	protected PartialWorkingGraphConstructor workingGraphConstructor;
 	
