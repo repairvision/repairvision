@@ -128,10 +128,13 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			NavigableMatchesDS dataStore = getDataStore(variable.node.getEvaluation());
 			MatchSelection matchSelection = dataStore.getMatchSelection();
 			
+			// [HEURISTIC]: only elements that were not assigned yet:
 			List<EObject> match = matchSelection.getMatch();
 			match.removeAll(assigned);
 			return match.iterator();
-			//			return matchSelection.getSelectedMatches();
+
+			// all possible matchings:
+			// return matchSelection.getSelectedMatches();
 		} else {
 			// no initial selection:
 			NavigableMatchesDS dataStore = getDataStore(variable.node.getEvaluation());
@@ -157,6 +160,8 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		
 		// count assignments:
 		++assignmentCount;
+		
+		// store assigned values:
 		assigned.add(value);
 	}
 	
