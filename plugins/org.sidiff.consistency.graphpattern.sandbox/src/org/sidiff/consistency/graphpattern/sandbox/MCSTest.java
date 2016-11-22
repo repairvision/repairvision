@@ -13,7 +13,7 @@ import org.sidiff.consistency.graphpattern.sandbox.graph.Node;
 import org.sidiff.consistency.graphpattern.sandbox.io.ReadGraphs;
 import org.sidiff.consistency.graphpattern.sandbox.io.WriteVisualization;
 
-public class Main {
+public class MCSTest {
 
 	private static String base = "D:\\Workspace\\SiLift\\org.sidiff.consistency.graphpattern.sandbox\\examples\\";
 
