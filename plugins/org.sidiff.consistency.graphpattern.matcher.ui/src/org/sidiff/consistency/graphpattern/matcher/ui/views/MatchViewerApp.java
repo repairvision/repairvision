@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -27,7 +26,6 @@ import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.consistency.graphpattern.matcher.data.CollectingMatchesDS;
 import org.sidiff.consistency.graphpattern.matcher.matching.IMatchGenerator;
 import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
-import org.sidiff.consistency.graphpattern.matcher.matching.INodeMatching;
 import org.sidiff.consistency.graphpattern.matcher.matching.util.MatchingUtil;
 import org.sidiff.consistency.graphpattern.matcher.ui.session.EngineManager;
 import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
@@ -79,6 +77,7 @@ public class MatchViewerApp {
 				IPatternMatchingEngine<? extends IMatching> engine = EngineManager.getInstance().getMatchingEngine();
 				IMatchGenerator<? extends IMatching> matchGenerator = engine.getMatchGenerator();
 				Iterator<? extends IMatching> matchIterator = matchGenerator.getResults();
+				List<NodePattern> variableNodes = matchGenerator.getVariableNodes();
 				
 				variableAssignments = new ArrayList<>();
 				allMatchings = new ArrayList<>();
@@ -97,7 +96,7 @@ public class MatchViewerApp {
 						InfoConsole.printInfos(Collections.emptyList(), "Match Generation Time: " 
 								+ ((stopTime - timeStart) / 1000.0) + "s");
 						
-						addVariableMatch(matchGenerator.getVariableMatching());
+						addVariableMatch(variableNodes, match);
 						allMatchings.add(MatchingUtil.createMatching(matchGenerator, match));
 						
 						++matchingCount;
@@ -143,18 +142,18 @@ public class MatchViewerApp {
 		job.schedule(); 
 	}
 	
-	private void addVariableMatch(Map<NodePattern, ? extends INodeMatching> matching) {
+	private void addVariableMatch(List<NodePattern> variableNodes, IMatching matching) {
 		EObjectList assignment = GraphpatternFactory.eINSTANCE.createEObjectList();
-		int count = 0;
 		
-		for (INodeMatching match : matching.values()) {
-			if (match.getMatch() != null) {
-				assignment.getContent().add(match.getMatch());
-				++count;
+		for (NodePattern variableNode : variableNodes) {
+			EObject match = matching.getFirstMatch(variableNode);
+			
+			if (match != null) {
+				assignment.getContent().add(match);
 			}
 		}
 		
-		assignment.setLabel("Variable Assignment [" + count + "/" + matching.size() + "]");
+		assignment.setLabel("Variable Assignment [" + assignment.getContent().size() + "/" + matching.getNodes().size() + "]");
 		variableAssignments.add(assignment);
 	}
 
