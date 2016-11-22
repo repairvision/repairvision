@@ -234,35 +234,38 @@ public class ComplementUtil {
 	 */
 	public static void makePreserve(Edge edge) {
 		MappingList mappings = edge.getGraph().getRule().getMappings();
-		Node source = getRemoteNode(mappings, edge.getSource());
-		Node target = getRemoteNode(mappings, edge.getTarget());
+		Node remoteSource = getRemoteNode(mappings, edge.getSource());
+		Node remoteTarget = getRemoteNode(mappings, edge.getTarget());
 
-		if (source == null) {
-			makePreserve(source);
+		if (remoteSource == null) {
+			remoteSource = makePreserve(edge.getSource());
 		}
 
-		if (target == null) {
-			makePreserve(target);
+		if (remoteTarget == null) {
+			remoteTarget = makePreserve(edge.getTarget());
 		}
 
-		copyEdge(edge, source, target);
+		copyEdge(edge, remoteSource, remoteTarget);
 	}
 
 	/**
 	 * @param node
 	 *            The nodes that becomes a << preserve >> node.
+	 * @return The copied nodes.
 	 */
-	public static void makePreserve(Node node) {
+	public static Node makePreserve(Node node) {
 		Rule rule = node.getGraph().getRule();
 
 		if (isRHSNode(node)) {
 			Node copiedNode = copyNode(rule.getLhs(), node, true);
 			Mapping mapping = HenshinFactory.eINSTANCE.createMapping(copiedNode, node);
 			rule.getMappings().add(mapping);
+			return copiedNode;
 		} else {
 			Node copiedNode = copyNode(rule.getRhs(), node, true);
 			Mapping mapping = HenshinFactory.eINSTANCE.createMapping(node, copiedNode);
 			rule.getMappings().add(mapping);
+			return copiedNode;
 		}
 	}
 
