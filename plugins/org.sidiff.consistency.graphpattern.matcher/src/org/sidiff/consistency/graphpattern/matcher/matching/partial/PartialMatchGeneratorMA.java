@@ -42,7 +42,9 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	
 	//-------------------------------------------------
 	
-	private Set<EObject> assigned = new HashSet<>();
+	private Map<Variable, Set<EObject>> assigned = new HashMap<>();
+	
+	//-------------------------------------------------
 	
 	private class Variable {
 		int index;
@@ -61,6 +63,8 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			
 			variables[i] = iVariable;
 			nodeToVariables.put(iVariable.node, iVariable);
+			
+			assigned.put(iVariable, new HashSet<>());
 		}
 	}
 	
@@ -93,7 +97,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	private void expandAssignment(int variableIndex) {
 		
 		// is extensible?
-		if (variableIndex < variables.length) {
+		if (isExpandable(variableIndex)) {
 			
 			// get variable domain:
 			Variable variable = variables[variableIndex];
@@ -121,6 +125,31 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 	}
 	
+	private boolean isExpandable(int variableIndex) {
+		
+		// check if there are any more assignable values:
+		boolean assignableValues = false;
+		
+		if (matchSelector != null) {
+			for (int i = variableIndex; i < variables.length; ++i) {
+				NavigableMatchesDS dataStore = getDataStore(variables[i].node.getEvaluation());
+				MatchSelection matchSelection = dataStore.getMatchSelection();
+				
+				if (!matchSelection.isEmpty()) {
+					assignableValues = true;
+					break;
+				}
+			}
+		} else {
+			// selection is not yet initialized!
+			assignableValues = true;
+		}
+		
+		// check if there any more variables to assign:
+		return assignableValues && (variableIndex < variables.length);
+//		return (variableIndex < variables.length);
+	}
+	
 	private Iterator<EObject> getDomain(Variable variable) {
 		
 		if (matchSelector != null) {
@@ -129,8 +158,9 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			MatchSelection matchSelection = dataStore.getMatchSelection();
 			
 			// [HEURISTIC]: only elements that were not assigned yet:
+			// TODO: filter iterator - no list copy
 			List<EObject> match = matchSelection.getMatch();
-			match.removeAll(assigned);
+			match.removeAll(assigned.get(variable));
 			return match.iterator();
 
 			// all possible matchings:
@@ -162,7 +192,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		++assignmentCount;
 		
 		// store assigned values:
-		assigned.add(value);
+		assigned.get(variable).add(value);
 	}
 	
 	private void freeVariable(Variable freeVariable) {
