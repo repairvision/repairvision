@@ -110,8 +110,9 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			
 			// get variable domain:
 			Iterator<EObject> domain = getDomain(variableIndex, expandableVariableIndex);
-			Variable variable = variables[variableIndex];
+			boolean domainIsEmpty = !domain.hasNext();
 			
+			Variable variable = variables[variableIndex];
 			assert (variableIndex == variable.index);
 			
 			// expand assignment:
@@ -122,10 +123,11 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			}
 			
 			// sub-pattern:
-			if (removeVariable(variable)) {
+			if (domainIsEmpty && removeVariable(variable)) {
+//			if (removeVariable(variable)) {
 				expandAssignment(variableIndex + 1);
 				addVariable(variable);
-			}
+			} 
 		} else {
 			
 			// save actual assignment:
