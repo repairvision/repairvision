@@ -246,6 +246,10 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 	}
 	
+	// TODO: Wenn mehrere Variablen im selben atomaren Pattern liegen (z.B. AddObject und Container/Containment),
+	// dann ist eine weitere Selektion (Pathselektion) eigentlich überflüssig!
+	// -> intern für atomares Pattern merken oder mehrere Variablen gleichzeitig festlegen!
+	
 	private void assignVariable(Variable variable, EObject value) {
 		
 		// initialize new sub-matching:
@@ -323,6 +327,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	private boolean removeVariable(Variable variable) {
 		assignment[variable.index] = placeholder;
 		
+		// [Heuristic]: Search until the maximum assignment in this initial selection is found:
 		if (maximumLocalAssignment(variable.index) >= maximumLocalAssignment) {
 			return true;
 		} else {
