@@ -63,10 +63,10 @@ public class MatchingEngineFactoryEntry {
 	/**
 	 * @return An instance of the pattern matching engine (factory).
 	 */
-	public IPatternMatchingEngineFactory getInstance() {
+	public IPatternMatchingEngineFactory<?> getInstance() {
 		
 		try {
-			return (IPatternMatchingEngineFactory) extension.createExecutableExtension("class");
+			return (IPatternMatchingEngineFactory<?>) extension.createExecutableExtension("class");
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
