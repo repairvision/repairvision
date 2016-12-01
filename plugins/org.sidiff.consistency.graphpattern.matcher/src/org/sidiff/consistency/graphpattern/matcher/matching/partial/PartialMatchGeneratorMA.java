@@ -18,10 +18,17 @@ import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.data.NavigableMatchesDS;
 import org.sidiff.consistency.graphpattern.matcher.data.selection.MatchSelection;
 import org.sidiff.consistency.graphpattern.matcher.matching.AbstractMatchGenerator;
+import org.sidiff.consistency.graphpattern.matcher.matching.IMatchGenerator;
 import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
 import org.sidiff.consistency.graphpattern.matcher.matching.selection.MatchSelector;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 
+/**
+ * Concrete implementation of {@link IMatchGenerator}. Iterates through all
+ * possible (maximal) partial matches for a given graph.
+ * 
+ * @author Manuel Ohrndorf
+ */
 public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMatching> {
 
 	private Map<NodePattern, Variable> nodeToVariables = new HashMap<>();
@@ -31,6 +38,8 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	private List<EObject[]> assignments;
 	
 	private EObject[] assignment;
+	
+	private Set<EObject> assignmentSet;
 	
 	private int assignmentCount;
 	
@@ -94,6 +103,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	private void findAssignments() {
 		assignments = new ArrayList<>();
 		assignment = new EObject[variables.length];
+		assignmentSet = new HashSet<>();
 		
 		long matchingTime = System.currentTimeMillis();
 		expandAssignment(0);
@@ -110,7 +120,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			
 			// get variable domain:
 			Iterator<EObject> domain = getDomain(variableIndex, expandableVariableIndex);
-			boolean domainIsEmpty = !domain.hasNext();
+//			boolean domainIsEmpty = !domain.hasNext();
 			
 			Variable variable = variables[variableIndex];
 			assert (variableIndex == variable.index);
@@ -123,8 +133,8 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			}
 			
 			// sub-pattern:
-			if (domainIsEmpty && removeVariable(variable)) {
-//			if (removeVariable(variable)) {
+//			if (domainIsEmpty && removeVariable(variable)) {
+			if (removeVariable(variable)) {
 				expandAssignment(variableIndex + 1);
 				addVariable(variable);
 			} 
@@ -138,7 +148,6 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 	}
 	
-	// TODO: replace directly with get Domain?
 	private int nextExpandable(int variableIndex) {
 		
 		// check if there any more variables to assign:
@@ -151,18 +160,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 					MatchSelection matchSelection = dataStore.getMatchSelection();
 					
 					if (!matchSelection.isEmpty()) {
-						// FIXME: injective
 						return i;
-						
-						
-//						// FIXME: replace directly with get Domain!
-//						for (Iterator<EObject> iterator = matchSelection.getSelectedMatches(); iterator.hasNext();) {
-//							EObject value = iterator.next();
-//							
-//							if (!assigned.get(variables[i]).contains(value)) {
-//								return i;
-//							}
-//						}
 					}
 				}
 			} else {
@@ -192,37 +190,56 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			NavigableMatchesDS dataStore = getDataStore(variable.node.getEvaluation());
 			MatchSelection matchSelection = dataStore.getMatchSelection();
 			
-			// TODO: filter iterator - no list copy
-			List<EObject> match = matchSelection.getMatch();
-			
-			// FIXME: nur initial filtern!
-			// [HEURISTIC]: only elements that were not assigned yet:
-//			match.removeAll(assigned.get(variable));
-			
-			// Ensure injectivity:
-			// TODO: Set of assigned values
-			for (int i = 0; i < variableIndex; i++) {
-				EObject value = assignment[i];
-				
-				if (value != placeholder) {
-					match.remove(value);
-				}
-			}
-
-			return match.iterator();
-			
-			// all possible matchings:
-			// return matchSelection.getSelectedMatches();
+			// all actually selected matchings:
+			return matchSelection.getSelectedMatches();
 		} else {
 			
 			// no initial selection:
-			
-			// FIXME: by iterator
 			// [HEURISTIC]: only elements that were not assigned yet:
-			Variable variable = variables[variableIndex];
-			List<EObject> match = variables[variableIndex].node.getEvaluation().getMatches();
-			match.removeAll(assigned.get(variable));
-			return match.iterator();
+			Iterator<EObject> valueIterator = new Iterator<EObject>() {
+
+				private Iterator<EObject> matchIterator = getDataStore(variables[variableIndex].node.getEvaluation()).getMatchIterator();
+
+				private Set<EObject> assignedValues = assigned.get(variables[variableIndex]);
+				
+				private EObject next = null;
+
+				@Override
+				public boolean hasNext() {
+
+					if (next != null) {
+						return true;
+					} else {
+						while (matchIterator.hasNext()) {
+							next = matchIterator.next();
+
+							// filter already assigned values:
+							if (!assignedValues.contains(next)) {
+								return true;
+							}
+						}
+
+						next = null;
+					}
+
+					return false;
+				}
+
+
+				@Override
+				public EObject next() {
+
+					if (hasNext()) {
+						EObject tmp_next = next;
+						next = null;
+						return tmp_next;
+					} else {
+						throw new NoSuchElementException();
+					}
+				}
+			};
+
+			return valueIterator;
 			
 //			NavigableMatchesDS dataStore = getDataStore(variables[variableIndex].node.getEvaluation());
 //			return dataStore.getMatchIterator();
@@ -242,37 +259,59 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		
 		// store assignment:
 		assignment[variable.index] = value;
+		assignmentSet.add(value);
 		
-		// restrict working graph:
+		//-------------------------------------------------
+		// Restrict Working Graph
+		//-------------------------------------------------
+		
+		// select value:
 		matchSelector.selectMatch(variable.node, value);
+		
+		// ensure injectivity:
+		for (int i = variable.index + 1; i < variables.length; i++) {
+			NavigableMatchesDS nodeDS = getDataStore(variables[i].node.getEvaluation());
+			nodeDS.getMatchSelection().restrictSelection(variable.node, value);
+		}
+		//-------------------------------------------------
 		
 		// count assignments:
 		++assignmentCount;
-		
-		// store assigned values:
-		// FIXME: erst speichern, wenn neuer match gefunden wurde!?
-		assigned.get(variable).add(value);
 		
 		// new match created!
 		isNewMatch = true;
 	}
 	
-	private void freeVariable(Variable freeVariable) {
+	private void freeVariable(Variable variable) {
 		
 		// new initial sub-matching:
-		if (freeVariable == initialVariable) {
+		if (variable == initialVariable) {
 			initialVariable = null;
 			matchSelector = null;
 		}
 		
 		// unset assignment:
-		assignment[freeVariable.index] = null;
+		assignmentSet.remove(assignment[variable.index]);
+		assignment[variable.index] = null;
 
+		//-------------------------------------------------
+		// Restrict Working Graph
+		//-------------------------------------------------
+		
+		// NOTE: undo the restriction in reverse order (injectivity, selection)!
+		
+		// ensure injectivity:
+		for (int i = variable.index + 1; i < variables.length; i++) {
+			NavigableMatchesDS nodeDS = getDataStore(variables[i].node.getEvaluation());
+			nodeDS.getMatchSelection().undoRestrictSelection(variable.node);
+		}
+		
 		// undo restriction on all nodes (full graph):
 		for (NodePattern node : graphPattern) {
 			NavigableMatchesDS nodeDS = getDataStore(node.getEvaluation());
-			nodeDS.getMatchSelection().undoRestrictSelection(freeVariable.node);	
+			nodeDS.getMatchSelection().undoRestrictSelection(variable.node);	
 		}
+		//-------------------------------------------------
 		
 		// count assignments:
 		--assignmentCount;
@@ -282,39 +321,37 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	}
 	
 	private boolean removeVariable(Variable variable) {
+		assignment[variable.index] = placeholder;
 		
-		if (maxPossibleAssignment(variable.index) >= maximumLocalAssignment) {
-			assignment[variable.index] = placeholder;
+		if (maximumLocalAssignment(variable.index) >= maximumLocalAssignment) {
 			return true;
 		} else {
+			assignment[variable.index] = null;
 			return false;
 		}
 	}
 	
-	private int maxPossibleAssignment(int variableIndex) {
+	private int maximumLocalAssignment(int variableIndex) {
 		int maxPossibleAssignments = 0;
 
 		for (int i = 0; i < assignment.length; ++i) {
 			EObject value = assignment[i]; 
 			
-			// TODO: variableIndex erst auf placeholder setzen!
-			if (i != variableIndex) {
-				if (value == null) {
-					NavigableMatchesDS nodeDS = getDataStore(variables[i].node.getEvaluation());
-					
-					if (matchSelector != null) {
-						if (!nodeDS.getMatchSelection().isEmpty()) {
-							++maxPossibleAssignments;
-						}
-					} else {
-						if (!nodeDS.isEmptyMatch()) {
-							++maxPossibleAssignments;
-						}
-					}
-				} else {
-					if (value != placeholder) {
+			if (value == null) {
+				NavigableMatchesDS nodeDS = getDataStore(variables[i].node.getEvaluation());
+
+				if (matchSelector != null) {
+					if (!nodeDS.getMatchSelection().isEmpty()) {
 						++maxPossibleAssignments;
 					}
+				} else {
+					if (!nodeDS.isEmptyMatch()) {
+						++maxPossibleAssignments;
+					}
+				}
+			} else {
+				if (value != placeholder) {
+					++maxPossibleAssignments;
 				}
 			}
 		}
@@ -331,8 +368,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		for (int i = 0; i < assignment.length; ++i) {
 			EObject value = assignment[i]; 
 					
-			// FIXME: müssen null-Werte geprüft werden!?
-			if ((value == placeholder) || (value == null)) {
+			if (value == placeholder) {
 				NavigableMatchesDS nodeDS = getDataStore(variables[i].node.getEvaluation());
 				
 				if (!nodeDS.getMatchSelection().isEmpty()) {
@@ -359,6 +395,9 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			if ((value != placeholder) && (value != null)) {
 				assert (variable.node.getType() == value.eClass());
 				assignment[variable.id] = value;
+				
+				// store assigned values:
+				assigned.get(variable).add(value);
 			}
 		}
 	}
@@ -440,6 +479,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		};
 	}
 	
+	@SuppressWarnings("unused")
 	private String printAssignment() {
 		StringBuffer print = new StringBuffer();
 		
