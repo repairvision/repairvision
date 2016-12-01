@@ -76,78 +76,6 @@ public interface GraphpatternFactory extends EFactory {
 	RuleBase createRuleBase();
 
 	/**
-	 * Returns a new object of class '<em>And</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>And</em>'.
-	 * @generated
-	 */
-	And createAnd();
-
-	/**
-	 * Returns a new object of class '<em>Or</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Or</em>'.
-	 * @generated
-	 */
-	Or createOr();
-
-	/**
-	 * Returns a new object of class '<em>Iff</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Iff</em>'.
-	 * @generated
-	 */
-	Iff createIff();
-
-	/**
-	 * Returns a new object of class '<em>If</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>If</em>'.
-	 * @generated
-	 */
-	If createIf();
-
-	/**
-	 * Returns a new object of class '<em>Not</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Not</em>'.
-	 * @generated
-	 */
-	Not createNot();
-
-	/**
-	 * Returns a new object of class '<em>For All</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>For All</em>'.
-	 * @generated
-	 */
-	ForAll createForAll();
-
-	/**
-	 * Returns a new object of class '<em>Exists</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Exists</em>'.
-	 * @generated
-	 */
-	Exists createExists();
-
-	/**
-	 * Returns a new object of class '<em>Graph Formula</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Graph Formula</em>'.
-	 * @generated
-	 */
-	GraphFormula createGraphFormula();
-
-	/**
 	 * Returns a new object of class '<em>EObject List</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -157,13 +85,31 @@ public interface GraphpatternFactory extends EFactory {
 	EObjectList createEObjectList();
 
 	/**
-	 * Returns a new object of class '<em>Xor</em>'.
+	 * Returns a new object of class '<em>Node Pattern Dependency</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Xor</em>'.
+	 * @return a new object of class '<em>Node Pattern Dependency</em>'.
 	 * @generated
 	 */
-	Xor createXor();
+	NodePatternDependency createNodePatternDependency();
+
+	/**
+	 * Returns a new object of class '<em>Dependency Conjunction</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dependency Conjunction</em>'.
+	 * @generated
+	 */
+	DependencyConjunction createDependencyConjunction();
+
+	/**
+	 * Returns a new object of class '<em>Dependency Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dependency Graph</em>'.
+	 * @generated
+	 */
+	DependencyGraph createDependencyGraph();
 
 	/**
 	 * Returns a new object of class '<em>Pattern</em>'.

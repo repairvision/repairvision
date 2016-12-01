@@ -4,12 +4,26 @@ package org.sidiff.consistency.graphpattern.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.sidiff.consistency.graphpattern.*;
+import org.sidiff.consistency.graphpattern.AttributePattern;
+import org.sidiff.consistency.graphpattern.DataStore;
+import org.sidiff.consistency.graphpattern.Dependency;
+import org.sidiff.consistency.graphpattern.DependencyConjunction;
+import org.sidiff.consistency.graphpattern.DependencyGraph;
+import org.sidiff.consistency.graphpattern.EObjectList;
+import org.sidiff.consistency.graphpattern.EdgePattern;
+import org.sidiff.consistency.graphpattern.Evaluation;
+import org.sidiff.consistency.graphpattern.GraphPattern;
+import org.sidiff.consistency.graphpattern.GraphPatternElement;
+import org.sidiff.consistency.graphpattern.GraphpatternPackage;
+import org.sidiff.consistency.graphpattern.NavigableDataStore;
+import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.consistency.graphpattern.NodePatternDependency;
+import org.sidiff.consistency.graphpattern.Parameter;
+import org.sidiff.consistency.graphpattern.Pattern;
+import org.sidiff.consistency.graphpattern.RuleBase;
+import org.sidiff.consistency.graphpattern.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -100,48 +114,8 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 				return createNavigableDataStoreAdapter();
 			}
 			@Override
-			public Adapter caseUnaryFormula(UnaryFormula object) {
-				return createUnaryFormulaAdapter();
-			}
-			@Override
 			public Adapter caseRuleBase(RuleBase object) {
 				return createRuleBaseAdapter();
-			}
-			@Override
-			public Adapter caseFormula(Formula object) {
-				return createFormulaAdapter();
-			}
-			@Override
-			public Adapter caseBinaryFormula(BinaryFormula object) {
-				return createBinaryFormulaAdapter();
-			}
-			@Override
-			public Adapter caseAnd(And object) {
-				return createAndAdapter();
-			}
-			@Override
-			public Adapter caseOr(Or object) {
-				return createOrAdapter();
-			}
-			@Override
-			public Adapter caseIff(Iff object) {
-				return createIffAdapter();
-			}
-			@Override
-			public Adapter caseIf(If object) {
-				return createIfAdapter();
-			}
-			@Override
-			public Adapter caseNot(Not object) {
-				return createNotAdapter();
-			}
-			@Override
-			public Adapter caseQuantifier(Quantifier object) {
-				return createQuantifierAdapter();
-			}
-			@Override
-			public Adapter caseXor(Xor object) {
-				return createXorAdapter();
 			}
 			@Override
 			public Adapter casePattern(Pattern object) {
@@ -156,20 +130,24 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 				return createParameterAdapter();
 			}
 			@Override
-			public Adapter caseForAll(ForAll object) {
-				return createForAllAdapter();
-			}
-			@Override
-			public Adapter caseExists(Exists object) {
-				return createExistsAdapter();
-			}
-			@Override
-			public Adapter caseGraphFormula(GraphFormula object) {
-				return createGraphFormulaAdapter();
-			}
-			@Override
 			public Adapter caseEObjectList(EObjectList object) {
 				return createEObjectListAdapter();
+			}
+			@Override
+			public Adapter caseNodePatternDependency(NodePatternDependency object) {
+				return createNodePatternDependencyAdapter();
+			}
+			@Override
+			public Adapter caseDependencyConjunction(DependencyConjunction object) {
+				return createDependencyConjunctionAdapter();
+			}
+			@Override
+			public Adapter caseDependencyGraph(DependencyGraph object) {
+				return createDependencyGraphAdapter();
+			}
+			@Override
+			public Adapter caseDependency(Dependency object) {
+				return createDependencyAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -304,20 +282,6 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.UnaryFormula <em>Unary Formula</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.UnaryFormula
-	 * @generated
-	 */
-	public Adapter createUnaryFormulaAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.RuleBase <em>Rule Base</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -328,160 +292,6 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createRuleBaseAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.Formula <em>Formula</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.Formula
-	 * @generated
-	 */
-	public Adapter createFormulaAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.BinaryFormula <em>Binary Formula</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.BinaryFormula
-	 * @generated
-	 */
-	public Adapter createBinaryFormulaAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.And <em>And</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.And
-	 * @generated
-	 */
-	public Adapter createAndAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.Or <em>Or</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.Or
-	 * @generated
-	 */
-	public Adapter createOrAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.Iff <em>Iff</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.Iff
-	 * @generated
-	 */
-	public Adapter createIffAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.If <em>If</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.If
-	 * @generated
-	 */
-	public Adapter createIfAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.Not <em>Not</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.Not
-	 * @generated
-	 */
-	public Adapter createNotAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.Quantifier <em>Quantifier</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.Quantifier
-	 * @generated
-	 */
-	public Adapter createQuantifierAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.ForAll <em>For All</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.ForAll
-	 * @generated
-	 */
-	public Adapter createForAllAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.Exists <em>Exists</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.Exists
-	 * @generated
-	 */
-	public Adapter createExistsAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.GraphFormula <em>Graph Formula</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.GraphFormula
-	 * @generated
-	 */
-	public Adapter createGraphFormulaAdapter() {
 		return null;
 	}
 
@@ -500,16 +310,58 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.Xor <em>Xor</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.NodePatternDependency <em>Node Pattern Dependency</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.consistency.graphpattern.Xor
+	 * @see org.sidiff.consistency.graphpattern.NodePatternDependency
 	 * @generated
 	 */
-	public Adapter createXorAdapter() {
+	public Adapter createNodePatternDependencyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.DependencyConjunction <em>Dependency Conjunction</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.consistency.graphpattern.DependencyConjunction
+	 * @generated
+	 */
+	public Adapter createDependencyConjunctionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.DependencyGraph <em>Dependency Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.consistency.graphpattern.DependencyGraph
+	 * @generated
+	 */
+	public Adapter createDependencyGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.consistency.graphpattern.Dependency <em>Dependency</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.consistency.graphpattern.Dependency
+	 * @generated
+	 */
+	public Adapter createDependencyAdapter() {
 		return null;
 	}
 

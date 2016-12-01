@@ -4,51 +4,42 @@ package org.sidiff.consistency.graphpattern.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.sidiff.consistency.graphpattern.GraphpatternPackage;
-import org.sidiff.consistency.graphpattern.Parameter;
+import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.consistency.graphpattern.NodePatternDependency;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Parameter</b></em>'.
+ * An implementation of the model object '<em><b>Node Pattern Dependency</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.consistency.graphpattern.impl.ParameterImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.consistency.graphpattern.impl.NodePatternDependencyImpl#getNode <em>Node</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ParameterImpl extends MinimalEObjectImpl.Container implements Parameter {
+public class NodePatternDependencyImpl extends DependencyImpl implements NodePatternDependency {
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The cached value of the '{@link #getNode() <em>Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getNode()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
+	protected NodePattern node;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ParameterImpl() {
+	protected NodePatternDependencyImpl() {
 		super();
 	}
 
@@ -59,7 +50,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return GraphpatternPackage.Literals.PARAMETER;
+		return GraphpatternPackage.Literals.NODE_PATTERN_DEPENDENCY;
 	}
 
 	/**
@@ -67,8 +58,16 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
+	public NodePattern getNode() {
+		if (node != null && node.eIsProxy()) {
+			InternalEObject oldNode = (InternalEObject)node;
+			node = (NodePattern)eResolveProxy(oldNode);
+			if (node != oldNode) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE, oldNode, node));
+			}
+		}
+		return node;
 	}
 
 	/**
@@ -76,11 +75,20 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
+	public NodePattern basicGetNode() {
+		return node;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNode(NodePattern newNode) {
+		NodePattern oldNode = node;
+		node = newNode;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.PARAMETER__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE, oldNode, node));
 	}
 
 	/**
@@ -91,8 +99,9 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GraphpatternPackage.PARAMETER__NAME:
-				return getName();
+			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE:
+				if (resolve) return getNode();
+				return basicGetNode();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -105,8 +114,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GraphpatternPackage.PARAMETER__NAME:
-				setName((String)newValue);
+			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE:
+				setNode((NodePattern)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -120,8 +129,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.PARAMETER__NAME:
-				setName(NAME_EDEFAULT);
+			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE:
+				setNode((NodePattern)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -135,26 +144,10 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.PARAMETER__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE:
+				return node != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(')');
-		return result.toString();
-	}
-
-} //ParameterImpl
+} //NodePatternDependencyImpl

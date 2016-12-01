@@ -6,12 +6,22 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.sidiff.consistency.graphpattern.*;
+import org.sidiff.consistency.graphpattern.AttributePattern;
+import org.sidiff.consistency.graphpattern.DependencyConjunction;
+import org.sidiff.consistency.graphpattern.DependencyGraph;
+import org.sidiff.consistency.graphpattern.EObjectList;
+import org.sidiff.consistency.graphpattern.EdgePattern;
+import org.sidiff.consistency.graphpattern.Evaluation;
+import org.sidiff.consistency.graphpattern.GraphPattern;
+import org.sidiff.consistency.graphpattern.GraphpatternFactory;
+import org.sidiff.consistency.graphpattern.GraphpatternPackage;
+import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.consistency.graphpattern.NodePatternDependency;
+import org.sidiff.consistency.graphpattern.Parameter;
+import org.sidiff.consistency.graphpattern.Pattern;
+import org.sidiff.consistency.graphpattern.RuleBase;
 
 /**
  * <!-- begin-user-doc -->
@@ -63,18 +73,12 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 			case GraphpatternPackage.ATTRIBUTE_PATTERN: return createAttributePattern();
 			case GraphpatternPackage.EVALUATION: return createEvaluation();
 			case GraphpatternPackage.RULE_BASE: return createRuleBase();
-			case GraphpatternPackage.AND: return createAnd();
-			case GraphpatternPackage.OR: return createOr();
-			case GraphpatternPackage.IFF: return createIff();
-			case GraphpatternPackage.IF: return createIf();
-			case GraphpatternPackage.NOT: return createNot();
-			case GraphpatternPackage.XOR: return createXor();
 			case GraphpatternPackage.PATTERN: return createPattern();
 			case GraphpatternPackage.PARAMETER: return createParameter();
-			case GraphpatternPackage.FOR_ALL: return createForAll();
-			case GraphpatternPackage.EXISTS: return createExists();
-			case GraphpatternPackage.GRAPH_FORMULA: return createGraphFormula();
 			case GraphpatternPackage.EOBJECT_LIST: return createEObjectList();
+			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY: return createNodePatternDependency();
+			case GraphpatternPackage.DEPENDENCY_CONJUNCTION: return createDependencyConjunction();
+			case GraphpatternPackage.DEPENDENCY_GRAPH: return createDependencyGraph();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -171,86 +175,6 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public And createAnd() {
-		AndImpl and = new AndImpl();
-		return and;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Or createOr() {
-		OrImpl or = new OrImpl();
-		return or;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Iff createIff() {
-		IffImpl iff = new IffImpl();
-		return iff;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public If createIf() {
-		IfImpl if_ = new IfImpl();
-		return if_;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Not createNot() {
-		NotImpl not = new NotImpl();
-		return not;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ForAll createForAll() {
-		ForAllImpl forAll = new ForAllImpl();
-		return forAll;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Exists createExists() {
-		ExistsImpl exists = new ExistsImpl();
-		return exists;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public GraphFormula createGraphFormula() {
-		GraphFormulaImpl graphFormula = new GraphFormulaImpl();
-		return graphFormula;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EObjectList createEObjectList() {
 		EObjectListImpl eObjectList = new EObjectListImpl();
 		return eObjectList;
@@ -261,9 +185,29 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Xor createXor() {
-		XorImpl xor = new XorImpl();
-		return xor;
+	public NodePatternDependency createNodePatternDependency() {
+		NodePatternDependencyImpl nodePatternDependency = new NodePatternDependencyImpl();
+		return nodePatternDependency;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DependencyConjunction createDependencyConjunction() {
+		DependencyConjunctionImpl dependencyConjunction = new DependencyConjunctionImpl();
+		return dependencyConjunction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DependencyGraph createDependencyGraph() {
+		DependencyGraphImpl dependencyGraph = new DependencyGraphImpl();
+		return dependencyGraph;
 	}
 
 	/**

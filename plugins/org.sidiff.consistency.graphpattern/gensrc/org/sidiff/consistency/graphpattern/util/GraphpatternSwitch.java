@@ -4,10 +4,25 @@ package org.sidiff.consistency.graphpattern.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-
-import org.sidiff.consistency.graphpattern.*;
+import org.sidiff.consistency.graphpattern.AttributePattern;
+import org.sidiff.consistency.graphpattern.DataStore;
+import org.sidiff.consistency.graphpattern.Dependency;
+import org.sidiff.consistency.graphpattern.DependencyConjunction;
+import org.sidiff.consistency.graphpattern.DependencyGraph;
+import org.sidiff.consistency.graphpattern.EObjectList;
+import org.sidiff.consistency.graphpattern.EdgePattern;
+import org.sidiff.consistency.graphpattern.Evaluation;
+import org.sidiff.consistency.graphpattern.GraphPattern;
+import org.sidiff.consistency.graphpattern.GraphPatternElement;
+import org.sidiff.consistency.graphpattern.GraphpatternPackage;
+import org.sidiff.consistency.graphpattern.NavigableDataStore;
+import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.consistency.graphpattern.NodePatternDependency;
+import org.sidiff.consistency.graphpattern.Parameter;
+import org.sidiff.consistency.graphpattern.Pattern;
+import org.sidiff.consistency.graphpattern.RuleBase;
+import org.sidiff.consistency.graphpattern.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -118,83 +133,9 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GraphpatternPackage.UNARY_FORMULA: {
-				UnaryFormula unaryFormula = (UnaryFormula)theEObject;
-				T result = caseUnaryFormula(unaryFormula);
-				if (result == null) result = caseFormula(unaryFormula);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case GraphpatternPackage.RULE_BASE: {
 				RuleBase ruleBase = (RuleBase)theEObject;
 				T result = caseRuleBase(ruleBase);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.FORMULA: {
-				Formula formula = (Formula)theEObject;
-				T result = caseFormula(formula);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.BINARY_FORMULA: {
-				BinaryFormula binaryFormula = (BinaryFormula)theEObject;
-				T result = caseBinaryFormula(binaryFormula);
-				if (result == null) result = caseFormula(binaryFormula);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.AND: {
-				And and = (And)theEObject;
-				T result = caseAnd(and);
-				if (result == null) result = caseBinaryFormula(and);
-				if (result == null) result = caseFormula(and);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.OR: {
-				Or or = (Or)theEObject;
-				T result = caseOr(or);
-				if (result == null) result = caseBinaryFormula(or);
-				if (result == null) result = caseFormula(or);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.IFF: {
-				Iff iff = (Iff)theEObject;
-				T result = caseIff(iff);
-				if (result == null) result = caseBinaryFormula(iff);
-				if (result == null) result = caseFormula(iff);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.IF: {
-				If if_ = (If)theEObject;
-				T result = caseIf(if_);
-				if (result == null) result = caseBinaryFormula(if_);
-				if (result == null) result = caseFormula(if_);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.NOT: {
-				Not not = (Not)theEObject;
-				T result = caseNot(not);
-				if (result == null) result = caseUnaryFormula(not);
-				if (result == null) result = caseFormula(not);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.QUANTIFIER: {
-				Quantifier quantifier = (Quantifier)theEObject;
-				T result = caseQuantifier(quantifier);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.XOR: {
-				Xor xor = (Xor)theEObject;
-				T result = caseXor(xor);
-				if (result == null) result = caseBinaryFormula(xor);
-				if (result == null) result = caseFormula(xor);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -216,30 +157,35 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GraphpatternPackage.FOR_ALL: {
-				ForAll forAll = (ForAll)theEObject;
-				T result = caseForAll(forAll);
-				if (result == null) result = caseQuantifier(forAll);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.EXISTS: {
-				Exists exists = (Exists)theEObject;
-				T result = caseExists(exists);
-				if (result == null) result = caseQuantifier(exists);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.GRAPH_FORMULA: {
-				GraphFormula graphFormula = (GraphFormula)theEObject;
-				T result = caseGraphFormula(graphFormula);
-				if (result == null) result = caseFormula(graphFormula);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case GraphpatternPackage.EOBJECT_LIST: {
 				EObjectList eObjectList = (EObjectList)theEObject;
 				T result = caseEObjectList(eObjectList);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY: {
+				NodePatternDependency nodePatternDependency = (NodePatternDependency)theEObject;
+				T result = caseNodePatternDependency(nodePatternDependency);
+				if (result == null) result = caseDependency(nodePatternDependency);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.DEPENDENCY_CONJUNCTION: {
+				DependencyConjunction dependencyConjunction = (DependencyConjunction)theEObject;
+				T result = caseDependencyConjunction(dependencyConjunction);
+				if (result == null) result = caseDependency(dependencyConjunction);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.DEPENDENCY_GRAPH: {
+				DependencyGraph dependencyGraph = (DependencyGraph)theEObject;
+				T result = caseDependencyGraph(dependencyGraph);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.DEPENDENCY: {
+				Dependency dependency = (Dependency)theEObject;
+				T result = caseDependency(dependency);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -368,21 +314,6 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Unary Formula</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Unary Formula</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseUnaryFormula(UnaryFormula object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Rule Base</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -394,171 +325,6 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseRuleBase(RuleBase object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Formula</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Formula</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseFormula(Formula object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Binary Formula</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Binary Formula</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseBinaryFormula(BinaryFormula object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>And</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>And</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseAnd(And object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Or</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Or</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseOr(Or object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Iff</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Iff</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseIff(Iff object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>If</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>If</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseIf(If object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Not</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Not</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseNot(Not object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Quantifier</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Quantifier</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseQuantifier(Quantifier object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>For All</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>For All</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseForAll(ForAll object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Exists</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Exists</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseExists(Exists object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Graph Formula</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Graph Formula</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseGraphFormula(GraphFormula object) {
 		return null;
 	}
 
@@ -578,17 +344,62 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Xor</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Node Pattern Dependency</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Xor</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Node Pattern Dependency</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseXor(Xor object) {
+	public T caseNodePatternDependency(NodePatternDependency object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dependency Conjunction</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dependency Conjunction</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDependencyConjunction(DependencyConjunction object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dependency Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dependency Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDependencyGraph(DependencyGraph object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dependency</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dependency</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDependency(Dependency object) {
 		return null;
 	}
 

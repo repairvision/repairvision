@@ -3,14 +3,11 @@
 package org.sidiff.consistency.graphpattern.impl;
 
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.GraphpatternPackage;
 import org.sidiff.consistency.graphpattern.NavigableDataStore;

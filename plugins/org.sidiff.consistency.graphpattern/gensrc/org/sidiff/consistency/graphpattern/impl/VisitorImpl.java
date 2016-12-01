@@ -3,8 +3,8 @@
 package org.sidiff.consistency.graphpattern.impl;
 
 import java.lang.reflect.InvocationTargetException;
-import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.sidiff.consistency.graphpattern.Evaluation;

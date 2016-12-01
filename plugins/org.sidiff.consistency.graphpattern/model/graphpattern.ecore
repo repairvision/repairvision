@@ -8,6 +8,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" lowerBound="1"
         eType="#//Pattern" eOpposite="#//Pattern/graphs"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="multi" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" eType="#//DependencyGraph"
+        containment="true" eOpposite="#//DependencyGraph/graph"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NodePattern" eSuperTypes="#//GraphPatternElement">
     <eOperations name="getAttribute" eType="#//AttributePattern">
@@ -131,42 +133,11 @@
       <eParameters name="edge" eType="#//EdgePattern"/>
     </eOperations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UnaryFormula" abstract="true" eSuperTypes="#//Formula">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="child" lowerBound="1" eType="#//Formula"
-        containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RuleBase">
     <eStructuralFeatures xsi:type="ecore:EReference" name="patterns" upperBound="-1"
         eType="#//Pattern" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Formula" abstract="true" interface="true">
-    <eOperations name="getResult" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eOperations name="getEmbedding" eType="#//Formula"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="BinaryFormula" abstract="true" eSuperTypes="#//Formula">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="left" lowerBound="1" eType="#//Formula"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="right" lowerBound="1" eType="#//Formula"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="And" eSuperTypes="#//BinaryFormula">
-    <eAnnotations source="http://www.obeo.fr/dsl/dnc/archetype">
-      <details key="archetype" value="Role"/>
-    </eAnnotations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Or" eSuperTypes="#//BinaryFormula">
-    <eAnnotations source="http://www.obeo.fr/dsl/dnc/archetype">
-      <details key="archetype" value="Role"/>
-    </eAnnotations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Iff" eSuperTypes="#//BinaryFormula"/>
-  <eClassifiers xsi:type="ecore:EClass" name="If" eSuperTypes="#//BinaryFormula"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Not" eSuperTypes="#//UnaryFormula"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Quantifier" abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Xor" eSuperTypes="#//BinaryFormula"/>
   <eClassifiers xsi:type="ecore:EClass" name="Pattern">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="formula" lowerBound="1"
-        eType="#//Formula" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="graphs" upperBound="-1"
         eType="#//GraphPattern" containment="true" eOpposite="#//GraphPattern/pattern"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
@@ -174,28 +145,38 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GraphPatternElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="formulas" upperBound="-1"
-        eType="#//GraphFormula" eOpposite="#//GraphFormula/predicates"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="quantifier" eType="#//Quantifier"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Parameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ForAll" eSuperTypes="#//Quantifier"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Exists" eSuperTypes="#//Quantifier">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-        defaultValueLiteral="1"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-        defaultValueLiteral="-1"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GraphFormula" eSuperTypes="#//Formula">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="predicates" lowerBound="1"
-        upperBound="-1" eType="#//GraphPatternElement" eOpposite="#//GraphPatternElement/formulas"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EObjectList">
     <eStructuralFeatures xsi:type="ecore:EReference" name="content" unique="false"
         upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral=""/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodePatternDependency" eSuperTypes="#//Dependency">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//NodePattern"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DependencyConjunction" eSuperTypes="#//Dependency">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
+        eType="#//NodePatternDependency" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DependencyGraph">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="first" upperBound="-1"
+        eType="#//Dependency"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="last" upperBound="-1" eType="#//Dependency"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//GraphPattern"
+        eOpposite="#//GraphPattern/dependencies"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//Dependency" containment="true" eOpposite="#//Dependency/graph"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Dependency" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="successor" eType="#//Dependency"
+        eOpposite="#//Dependency/predecessor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="predecessor" eType="#//Dependency"
+        eOpposite="#//Dependency/successor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//DependencyGraph"
+        eOpposite="#//DependencyGraph/nodes"/>
   </eClassifiers>
 </ecore:EPackage>
