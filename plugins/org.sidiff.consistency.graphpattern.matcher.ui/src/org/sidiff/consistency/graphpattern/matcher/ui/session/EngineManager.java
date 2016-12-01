@@ -89,7 +89,7 @@ public class EngineManager {
 		return graphpattern;
 	}
 
-	public void startEngine(IPatternMatchingEngineFactory targetEngine) {
+	public void startEngine(IPatternMatchingEngineFactory<? extends IMatching> targetEngine) {
 		if (targetEngine == null) {
 			return;
 		}
@@ -102,7 +102,7 @@ public class EngineManager {
 		this.matchingEngine.start();
 	}
 
-	public void startDebugger(IPatternMatchingEngineFactory targetEngine, BreakpointListener... breakpointListeners) {
+	public void startDebugger(IPatternMatchingEngineFactory<? extends IMatching> targetEngine, BreakpointListener... breakpointListeners) {
 		if (targetEngine == null) {
 			return;
 		}

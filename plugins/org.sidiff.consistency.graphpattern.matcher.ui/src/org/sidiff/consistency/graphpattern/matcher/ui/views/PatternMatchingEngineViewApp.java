@@ -114,7 +114,7 @@ public class PatternMatchingEngineViewApp implements BreakpointListener {
 		}
 	}
 
-	private IPatternMatchingEngineFactory getSelectedPatternMatchingEngine() {
+	private IPatternMatchingEngineFactory<?> getSelectedPatternMatchingEngine() {
 		MatchingEngineFactoryEntry selectedEngine = (MatchingEngineFactoryEntry) 
 				((StructuredSelection) viewer_engines.getSelection()).getFirstElement();
 		
