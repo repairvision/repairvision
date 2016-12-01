@@ -77,7 +77,6 @@ public class PatternItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__FORMULA);
 			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__GRAPHS);
 			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__PARAMETERS);
 		}
@@ -132,7 +131,6 @@ public class PatternItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Pattern.class)) {
-			case GraphpatternPackage.PATTERN__FORMULA:
 			case GraphpatternPackage.PATTERN__GRAPHS:
 			case GraphpatternPackage.PATTERN__PARAMETERS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
@@ -151,41 +149,6 @@ public class PatternItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createAnd()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createOr()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createIff()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createIf()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createNot()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createXor()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__FORMULA,
-				 GraphpatternFactory.eINSTANCE.createGraphFormula()));
 
 		newChildDescriptors.add
 			(createChildParameter

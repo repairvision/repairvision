@@ -18,20 +18,17 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.sidiff.consistency.graphpattern.GraphPatternElement;
 import org.sidiff.consistency.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.GraphPatternElement} object.
+ * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.Dependency} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class GraphPatternElementItemProvider 
+public class DependencyItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -45,7 +42,7 @@ public class GraphPatternElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphPatternElementItemProvider(AdapterFactory adapterFactory) {
+	public DependencyItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,29 +57,52 @@ public class GraphPatternElementItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
+			addSuccessorPropertyDescriptor(object);
+			addPredecessorPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This adds a property descriptor for the Successor feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addSuccessorPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_GraphPatternElement_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPatternElement_name_feature", "_UI_GraphPatternElement_type"),
-				 GraphpatternPackage.Literals.GRAPH_PATTERN_ELEMENT__NAME,
+				 getString("_UI_Dependency_successor_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Dependency_successor_feature", "_UI_Dependency_type"),
+				 GraphpatternPackage.Literals.DEPENDENCY__SUCCESSOR,
 				 true,
 				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Predecessor feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addPredecessorPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Dependency_predecessor_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Dependency_predecessor_feature", "_UI_Dependency_type"),
+				 GraphpatternPackage.Literals.DEPENDENCY__PREDECESSOR,
+				 true,
 				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 true,
+				 null,
 				 null,
 				 null));
 	}
@@ -95,10 +115,7 @@ public class GraphPatternElementItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((GraphPatternElement)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_GraphPatternElement_type") :
-			getString("_UI_GraphPatternElement_type") + " " + label;
+		return getString("_UI_Dependency_type");
 	}
 	
 
@@ -112,12 +129,6 @@ public class GraphPatternElementItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
-
-		switch (notification.getFeatureID(GraphPatternElement.class)) {
-			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__NAME:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
 		super.notifyChanged(notification);
 	}
 

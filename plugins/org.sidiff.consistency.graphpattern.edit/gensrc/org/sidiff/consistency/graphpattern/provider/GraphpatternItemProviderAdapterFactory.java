@@ -212,190 +212,6 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.And} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected AndItemProvider andItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.And}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createAndAdapter() {
-		if (andItemProvider == null) {
-			andItemProvider = new AndItemProvider(this);
-		}
-
-		return andItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.Or} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected OrItemProvider orItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.Or}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createOrAdapter() {
-		if (orItemProvider == null) {
-			orItemProvider = new OrItemProvider(this);
-		}
-
-		return orItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.Iff} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected IffItemProvider iffItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.Iff}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createIffAdapter() {
-		if (iffItemProvider == null) {
-			iffItemProvider = new IffItemProvider(this);
-		}
-
-		return iffItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.If} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected IfItemProvider ifItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.If}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createIfAdapter() {
-		if (ifItemProvider == null) {
-			ifItemProvider = new IfItemProvider(this);
-		}
-
-		return ifItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.Not} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NotItemProvider notItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.Not}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNotAdapter() {
-		if (notItemProvider == null) {
-			notItemProvider = new NotItemProvider(this);
-		}
-
-		return notItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.ForAll} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ForAllItemProvider forAllItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.ForAll}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createForAllAdapter() {
-		if (forAllItemProvider == null) {
-			forAllItemProvider = new ForAllItemProvider(this);
-		}
-
-		return forAllItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.Exists} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ExistsItemProvider existsItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.Exists}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createExistsAdapter() {
-		if (existsItemProvider == null) {
-			existsItemProvider = new ExistsItemProvider(this);
-		}
-
-		return existsItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.GraphFormula} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected GraphFormulaItemProvider graphFormulaItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.GraphFormula}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createGraphFormulaAdapter() {
-		if (graphFormulaItemProvider == null) {
-			graphFormulaItemProvider = new GraphFormulaItemProvider(this);
-		}
-
-		return graphFormulaItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.EObjectList} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -419,26 +235,72 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.Xor} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.NodePatternDependency} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected XorItemProvider xorItemProvider;
+	protected NodePatternDependencyItemProvider nodePatternDependencyItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.Xor}.
+	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.NodePatternDependency}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createXorAdapter() {
-		if (xorItemProvider == null) {
-			xorItemProvider = new XorItemProvider(this);
+	public Adapter createNodePatternDependencyAdapter() {
+		if (nodePatternDependencyItemProvider == null) {
+			nodePatternDependencyItemProvider = new NodePatternDependencyItemProvider(this);
 		}
 
-		return xorItemProvider;
+		return nodePatternDependencyItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.DependencyConjunction} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected DependencyConjunctionItemProvider dependencyConjunctionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.DependencyConjunction}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createDependencyConjunctionAdapter() {
+		if (dependencyConjunctionItemProvider == null) {
+			dependencyConjunctionItemProvider = new DependencyConjunctionItemProvider(this);
+		}
+
+		return dependencyConjunctionItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.DependencyGraph} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected DependencyGraphItemProvider dependencyGraphItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.DependencyGraph}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createDependencyGraphAdapter() {
+		if (dependencyGraphItemProvider == null) {
+			dependencyGraphItemProvider = new DependencyGraphItemProvider(this);
+		}
+
+		return dependencyGraphItemProvider;
 	}
 
 	/**
@@ -592,18 +454,12 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 		if (attributePatternItemProvider != null) attributePatternItemProvider.dispose();
 		if (evaluationItemProvider != null) evaluationItemProvider.dispose();
 		if (ruleBaseItemProvider != null) ruleBaseItemProvider.dispose();
-		if (andItemProvider != null) andItemProvider.dispose();
-		if (orItemProvider != null) orItemProvider.dispose();
-		if (iffItemProvider != null) iffItemProvider.dispose();
-		if (ifItemProvider != null) ifItemProvider.dispose();
-		if (notItemProvider != null) notItemProvider.dispose();
-		if (xorItemProvider != null) xorItemProvider.dispose();
 		if (patternItemProvider != null) patternItemProvider.dispose();
 		if (parameterItemProvider != null) parameterItemProvider.dispose();
-		if (forAllItemProvider != null) forAllItemProvider.dispose();
-		if (existsItemProvider != null) existsItemProvider.dispose();
-		if (graphFormulaItemProvider != null) graphFormulaItemProvider.dispose();
 		if (eObjectListItemProvider != null) eObjectListItemProvider.dispose();
+		if (nodePatternDependencyItemProvider != null) nodePatternDependencyItemProvider.dispose();
+		if (dependencyConjunctionItemProvider != null) dependencyConjunctionItemProvider.dispose();
+		if (dependencyGraphItemProvider != null) dependencyGraphItemProvider.dispose();
 	}
 
 }
