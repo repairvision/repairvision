@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.api.peo;
+package org.sidiff.repair.api.peo;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChanges;
 import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
@@ -16,14 +16,14 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.consistency.repair.api.IRepair;
-import org.sidiff.consistency.repair.api.IRepairFacade;
-import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
-import org.sidiff.consistency.repair.complement.construction.ComplementRule;
-import org.sidiff.consistency.repair.complement.peo.finder.AbstractRepairFilter;
-import org.sidiff.consistency.repair.complement.peo.finder.ComplementFinder;
-import org.sidiff.consistency.repair.complement.repair.RepairOperation;
+import org.sidiff.repair.complement.construction.ComplementRule;
+import org.sidiff.repair.complement.peo.finder.AbstractRepairFilter;
+import org.sidiff.repair.complement.peo.finder.ComplementFinder;
+import org.sidiff.repair.complement.repair.RepairOperation;
 import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.api.matching.EditOperationMatching;
 
 /**
  * API for the repair engine functions.

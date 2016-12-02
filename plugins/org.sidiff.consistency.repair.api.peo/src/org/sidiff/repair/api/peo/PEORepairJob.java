@@ -1,10 +1,10 @@
-package org.sidiff.consistency.repair.api.peo;
+package org.sidiff.repair.api.peo;
 
 import java.util.Collection;
 
-import org.sidiff.consistency.repair.api.IRepair;
-import org.sidiff.consistency.repair.api.RepairJob;
-import org.sidiff.consistency.repair.validation.util.Validation;
+import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.RepairJob;
+import org.sidiff.repair.validation.util.Validation;
 
 public class PEORepairJob extends RepairJob<IRepair> {
 

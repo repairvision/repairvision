@@ -3,15 +3,15 @@
 <plugin>
 
    <extension
-         point="org.sidiff.consistency.repair.api.engine">
+         point="org.sidiff.repair.api.engine">
       <engine
-            facade="org.sidiff.consistency.repair.api.peo.PEORepairFacadeMA"
-            id="org.sidiff.consistency.repair.api.peo.engine.partial.ma"
+            facade="org.sidiff.repair.api.peo.PEORepairFacadeMA"
+            id="org.sidiff.repair.api.peo.engine.partial.ma"
             name="Partial CPO Engine (MA)">
       </engine>
       <engine
-            facade="org.sidiff.consistency.repair.api.peo.PEORepairFacadeFP"
-            id="org.sidiff.consistency.repair.api.peo.engine.partial.fp"
+            facade="org.sidiff.repair.api.peo.PEORepairFacadeFP"
+            id="org.sidiff.repair.api.peo.engine.partial.fp"
             name="Partial CPO Engine (FP)">
       </engine>
    </extension>
