@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.edit.commands;
+package org.sidiff.graphpattern.edit.commands;
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
@@ -6,8 +6,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphpatternPackage;
 
 public class SetEdgePatternTypeCommand extends CompoundCommand {
 	

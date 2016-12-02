@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.provider;
+package org.sidiff.graphpattern.provider;
 
 
 import java.util.Collection;
@@ -21,17 +21,16 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import org.sidiff.consistency.graphpattern.GraphPatternElement;
-import org.sidiff.consistency.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.Parameter;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.GraphPatternElement} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.Parameter} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class GraphPatternElementItemProvider 
+public class ParameterItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -45,7 +44,7 @@ public class GraphPatternElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphPatternElementItemProvider(AdapterFactory adapterFactory) {
+	public ParameterItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -76,15 +75,26 @@ public class GraphPatternElementItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_GraphPatternElement_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPatternElement_name_feature", "_UI_GraphPatternElement_type"),
-				 GraphpatternPackage.Literals.GRAPH_PATTERN_ELEMENT__NAME,
+				 getString("_UI_Parameter_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Parameter_name_feature", "_UI_Parameter_type"),
+				 GraphpatternPackage.Literals.PARAMETER__NAME,
 				 true,
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
+	}
+
+	/**
+	 * This returns Parameter.gif.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Parameter"));
 	}
 
 	/**
@@ -95,10 +105,10 @@ public class GraphPatternElementItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((GraphPatternElement)object).getName();
+		String label = ((Parameter)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_GraphPatternElement_type") :
-			getString("_UI_GraphPatternElement_type") + " " + label;
+			getString("_UI_Parameter_type") :
+			getString("_UI_Parameter_type") + " " + label;
 	}
 	
 
@@ -113,8 +123,8 @@ public class GraphPatternElementItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(GraphPatternElement.class)) {
-			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__NAME:
+		switch (notification.getFeatureID(Parameter.class)) {
+			case GraphpatternPackage.PARAMETER__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

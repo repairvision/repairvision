@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.provider;
+package org.sidiff.graphpattern.provider;
 
 
 import java.util.Collection;
@@ -19,10 +19,10 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.sidiff.consistency.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.DataStore} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.DataStore} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

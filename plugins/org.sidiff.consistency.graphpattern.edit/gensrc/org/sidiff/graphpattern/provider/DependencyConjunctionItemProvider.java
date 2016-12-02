@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.provider;
+package org.sidiff.graphpattern.provider;
 
 
 import java.util.Collection;
@@ -13,13 +13,12 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import org.sidiff.consistency.graphpattern.DependencyConjunction;
-import org.sidiff.consistency.graphpattern.GraphpatternFactory;
-import org.sidiff.consistency.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.DependencyConjunction;
+import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.DependencyConjunction} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.DependencyConjunction} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

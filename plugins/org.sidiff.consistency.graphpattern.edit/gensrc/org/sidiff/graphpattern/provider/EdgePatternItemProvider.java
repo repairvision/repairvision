@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.provider;
+package org.sidiff.graphpattern.provider;
 
 
 import java.util.Collection;
@@ -19,15 +19,15 @@ import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.GraphpatternPackage;
-import org.sidiff.consistency.graphpattern.edit.commands.SetEdgePatternCrossReferenceCommand;
-import org.sidiff.consistency.graphpattern.edit.commands.SetEdgePatternTypeCommand;
-import org.sidiff.consistency.graphpattern.edit.util.ItemProviderUtil;
-import org.sidiff.consistency.graphpattern.edit.util.LabelServices;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.edit.commands.SetEdgePatternCrossReferenceCommand;
+import org.sidiff.graphpattern.edit.commands.SetEdgePatternTypeCommand;
+import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
+import org.sidiff.graphpattern.edit.util.LabelServices;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.EdgePattern} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.EdgePattern} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

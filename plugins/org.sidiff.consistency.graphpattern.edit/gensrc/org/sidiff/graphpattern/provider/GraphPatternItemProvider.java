@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.provider;
+package org.sidiff.graphpattern.provider;
 
 
 import java.util.Collection;
@@ -8,45 +8,30 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import org.sidiff.consistency.graphpattern.GraphpatternFactory;
-import org.sidiff.consistency.graphpattern.GraphpatternPackage;
-import org.sidiff.consistency.graphpattern.Pattern;
+import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.Pattern} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.GraphPattern} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class PatternItemProvider 
-	extends ItemProviderAdapter
-	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+public class GraphPatternItemProvider 
+	extends GraphPatternElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PatternItemProvider(AdapterFactory adapterFactory) {
+	public GraphPatternItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -61,8 +46,31 @@ public class PatternItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addMultiPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Multi feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addMultiPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_GraphPattern_multi_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPattern_multi_feature", "_UI_GraphPattern_type"),
+				 GraphpatternPackage.Literals.GRAPH_PATTERN__MULTI,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -77,8 +85,8 @@ public class PatternItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__GRAPHS);
-			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__PARAMETERS);
+			childrenFeatures.add(GraphpatternPackage.Literals.GRAPH_PATTERN__NODES);
+			childrenFeatures.add(GraphpatternPackage.Literals.GRAPH_PATTERN__DEPENDENCIES);
 		}
 		return childrenFeatures;
 	}
@@ -97,14 +105,14 @@ public class PatternItemProvider
 	}
 
 	/**
-	 * This returns Pattern.gif.
+	 * This returns GraphPattern.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Pattern"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/GraphPattern"));
 	}
 
 	/**
@@ -115,7 +123,10 @@ public class PatternItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_Pattern_type");
+		String label = ((GraphPattern)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_GraphPattern_type") :
+			getString("_UI_GraphPattern_type") + " " + label;
 	}
 	
 
@@ -130,9 +141,12 @@ public class PatternItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Pattern.class)) {
-			case GraphpatternPackage.PATTERN__GRAPHS:
-			case GraphpatternPackage.PATTERN__PARAMETERS:
+		switch (notification.getFeatureID(GraphPattern.class)) {
+			case GraphpatternPackage.GRAPH_PATTERN__MULTI:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case GraphpatternPackage.GRAPH_PATTERN__NODES:
+			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -152,24 +166,13 @@ public class PatternItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__GRAPHS,
-				 GraphpatternFactory.eINSTANCE.createGraphPattern()));
+				(GraphpatternPackage.Literals.GRAPH_PATTERN__NODES,
+				 GraphpatternFactory.eINSTANCE.createNodePattern()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__PARAMETERS,
-				 GraphpatternFactory.eINSTANCE.createParameter()));
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public ResourceLocator getResourceLocator() {
-		return GraphpatternEditPlugin.INSTANCE;
+				(GraphpatternPackage.Literals.GRAPH_PATTERN__DEPENDENCIES,
+				 GraphpatternFactory.eINSTANCE.createDependencyGraph()));
 	}
 
 }

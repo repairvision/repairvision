@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.provider;
+package org.sidiff.graphpattern.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,8 +20,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
-import org.sidiff.consistency.graphpattern.util.GraphpatternAdapterFactory;
+import org.sidiff.graphpattern.util.GraphpatternAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -72,7 +71,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.GraphPattern} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.GraphPattern} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -80,7 +79,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected GraphPatternItemProvider graphPatternItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.GraphPattern}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.GraphPattern}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -95,7 +94,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.NodePattern} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.NodePattern} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -103,7 +102,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected NodePatternItemProvider nodePatternItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.NodePattern}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.NodePattern}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -118,7 +117,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.EdgePattern} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.EdgePattern} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -126,7 +125,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected EdgePatternItemProvider edgePatternItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.EdgePattern}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.EdgePattern}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -141,7 +140,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.AttributePattern} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.AttributePattern} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -149,7 +148,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected AttributePatternItemProvider attributePatternItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.AttributePattern}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.AttributePattern}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -164,7 +163,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.Evaluation} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.Evaluation} instances.
 	 * <!-- begin-user-doc -->
 	 * Item provider for abstract class Evaluation.
 	 * <!-- end-user-doc -->
@@ -173,7 +172,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected EvaluationItemProvider evaluationItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.Evaluation}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.Evaluation}.
 	 * <!-- begin-user-doc -->
 	 * Item provider for abstract class Evaluation.
 	 * <!-- end-user-doc -->
@@ -189,7 +188,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.RuleBase} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.RuleBase} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -197,7 +196,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected RuleBaseItemProvider ruleBaseItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.RuleBase}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.RuleBase}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -212,7 +211,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.EObjectList} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.EObjectList} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -220,7 +219,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected EObjectListItemProvider eObjectListItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.EObjectList}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.EObjectList}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -235,7 +234,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.NodePatternDependency} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.NodePatternDependency} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -243,7 +242,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected NodePatternDependencyItemProvider nodePatternDependencyItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.NodePatternDependency}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.NodePatternDependency}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -258,7 +257,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.DependencyConjunction} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.DependencyConjunction} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -266,7 +265,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected DependencyConjunctionItemProvider dependencyConjunctionItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.DependencyConjunction}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.DependencyConjunction}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -281,7 +280,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.DependencyGraph} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.DependencyGraph} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -289,7 +288,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected DependencyGraphItemProvider dependencyGraphItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.DependencyGraph}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.DependencyGraph}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -304,7 +303,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.Pattern} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.Pattern} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -312,7 +311,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected PatternItemProvider patternItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.Pattern}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.Pattern}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -327,7 +326,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.consistency.graphpattern.Parameter} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.Parameter} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -335,7 +334,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	protected ParameterItemProvider parameterItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.consistency.graphpattern.Parameter}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.Parameter}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

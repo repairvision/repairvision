@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.provider;
+package org.sidiff.graphpattern.provider;
 
 
 import java.util.Collection;
@@ -21,18 +21,17 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import org.sidiff.consistency.graphpattern.GraphpatternFactory;
-import org.sidiff.consistency.graphpattern.GraphpatternPackage;
-import org.sidiff.consistency.graphpattern.RuleBase;
+import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.Pattern;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.RuleBase} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.Pattern} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class RuleBaseItemProvider 
+public class PatternItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -46,7 +45,7 @@ public class RuleBaseItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RuleBaseItemProvider(AdapterFactory adapterFactory) {
+	public PatternItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -77,7 +76,8 @@ public class RuleBaseItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(GraphpatternPackage.Literals.RULE_BASE__PATTERNS);
+			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__GRAPHS);
+			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__PARAMETERS);
 		}
 		return childrenFeatures;
 	}
@@ -96,14 +96,14 @@ public class RuleBaseItemProvider
 	}
 
 	/**
-	 * This returns RuleBase.gif.
+	 * This returns Pattern.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/RuleBase"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Pattern"));
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class RuleBaseItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_RuleBase_type");
+		return getString("_UI_Pattern_type");
 	}
 	
 
@@ -129,8 +129,9 @@ public class RuleBaseItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(RuleBase.class)) {
-			case GraphpatternPackage.RULE_BASE__PATTERNS:
+		switch (notification.getFeatureID(Pattern.class)) {
+			case GraphpatternPackage.PATTERN__GRAPHS:
+			case GraphpatternPackage.PATTERN__PARAMETERS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -150,8 +151,13 @@ public class RuleBaseItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(GraphpatternPackage.Literals.RULE_BASE__PATTERNS,
-				 GraphpatternFactory.eINSTANCE.createPattern()));
+				(GraphpatternPackage.Literals.PATTERN__GRAPHS,
+				 GraphpatternFactory.eINSTANCE.createGraphPattern()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.PATTERN__PARAMETERS,
+				 GraphpatternFactory.eINSTANCE.createParameter()));
 	}
 
 	/**

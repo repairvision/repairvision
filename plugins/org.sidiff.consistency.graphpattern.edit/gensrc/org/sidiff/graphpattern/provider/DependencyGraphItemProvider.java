@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.provider;
+package org.sidiff.graphpattern.provider;
 
 
 import java.util.Collection;
@@ -21,16 +21,18 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-
-import org.sidiff.consistency.graphpattern.GraphpatternPackage;
+import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.sidiff.graphpattern.DependencyGraph;
+import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.Evaluation} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.DependencyGraph} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class EvaluationItemProvider 
+public class DependencyGraphItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -44,7 +46,7 @@ public class EvaluationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EvaluationItemProvider(AdapterFactory adapterFactory) {
+	public DependencyGraphItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -59,26 +61,26 @@ public class EvaluationItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addMatchesPropertyDescriptor(object);
-			addStorePropertyDescriptor(object);
+			addFirstPropertyDescriptor(object);
+			addLastPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Matches feature.
+	 * This adds a property descriptor for the First feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addMatchesPropertyDescriptor(Object object) {
+	protected void addFirstPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Evaluation_matches_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Evaluation_matches_feature", "_UI_Evaluation_type"),
-				 GraphpatternPackage.Literals.EVALUATION__MATCHES,
+				 getString("_UI_DependencyGraph_first_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DependencyGraph_first_feature", "_UI_DependencyGraph_type"),
+				 GraphpatternPackage.Literals.DEPENDENCY_GRAPH__FIRST,
 				 true,
 				 false,
 				 true,
@@ -88,19 +90,19 @@ public class EvaluationItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Store feature.
+	 * This adds a property descriptor for the Last feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addStorePropertyDescriptor(Object object) {
+	protected void addLastPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Evaluation_store_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Evaluation_store_feature", "_UI_Evaluation_type"),
-				 GraphpatternPackage.Literals.EVALUATION__STORE,
+				 getString("_UI_DependencyGraph_last_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DependencyGraph_last_feature", "_UI_DependencyGraph_type"),
+				 GraphpatternPackage.Literals.DEPENDENCY_GRAPH__LAST,
 				 true,
 				 false,
 				 true,
@@ -121,7 +123,7 @@ public class EvaluationItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(GraphpatternPackage.Literals.EVALUATION__MATCHES);
+			childrenFeatures.add(GraphpatternPackage.Literals.DEPENDENCY_GRAPH__NODES);
 		}
 		return childrenFeatures;
 	}
@@ -140,14 +142,14 @@ public class EvaluationItemProvider
 	}
 
 	/**
-	 * This returns Evaluation.gif.
+	 * This returns DependencyGraph.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Evaluation"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DependencyGraph"));
 	}
 
 	/**
@@ -158,7 +160,7 @@ public class EvaluationItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_Evaluation_type");
+		return getString("_UI_DependencyGraph_type");
 	}
 	
 
@@ -172,6 +174,12 @@ public class EvaluationItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(DependencyGraph.class)) {
+			case GraphpatternPackage.DEPENDENCY_GRAPH__NODES:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 
@@ -185,6 +193,16 @@ public class EvaluationItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.DEPENDENCY_GRAPH__NODES,
+				 GraphpatternFactory.eINSTANCE.createNodePatternDependency()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.DEPENDENCY_GRAPH__NODES,
+				 GraphpatternFactory.eINSTANCE.createDependencyConjunction()));
 	}
 
 	/**

@@ -1,17 +1,16 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.provider;
+package org.sidiff.graphpattern.provider;
 
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.EAttribute;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -22,18 +21,16 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.sidiff.consistency.graphpattern.AttributePattern;
-import org.sidiff.consistency.graphpattern.GraphpatternPackage;
-import org.sidiff.consistency.graphpattern.edit.util.ItemProviderUtil;
-import org.sidiff.consistency.graphpattern.edit.util.LabelServices;
+import org.sidiff.graphpattern.GraphPatternElement;
+import org.sidiff.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.consistency.graphpattern.AttributePattern} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.GraphPatternElement} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class AttributePatternItemProvider 
+public class GraphPatternElementItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -41,19 +38,13 @@ public class AttributePatternItemProvider
 		ITreeItemContentProvider,
 		IItemLabelProvider,
 		IItemPropertySource {
-	
-	/**
-	 * @generated NOT
-	 */
-	private Map<EAttribute, Object> iconLibrary = new HashMap<>();
-	
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AttributePatternItemProvider(AdapterFactory adapterFactory) {
+	public GraphPatternElementItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -68,26 +59,25 @@ public class AttributePatternItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addValuePropertyDescriptor(object);
-			addTypePropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Value feature.
+	 * This adds a property descriptor for the Name feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addValuePropertyDescriptor(Object object) {
+	protected void addNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_AttributePattern_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AttributePattern_value_feature", "_UI_AttributePattern_type"),
-				 GraphpatternPackage.Literals.ATTRIBUTE_PATTERN__VALUE,
+				 getString("_UI_GraphPatternElement_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPatternElement_name_feature", "_UI_GraphPatternElement_type"),
+				 GraphpatternPackage.Literals.GRAPH_PATTERN_ELEMENT__NAME,
 				 true,
 				 false,
 				 false,
@@ -97,72 +87,17 @@ public class AttributePatternItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Type feature.
+	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_AttributePattern_type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AttributePattern_type_feature", "_UI_AttributePattern_type"),
-				 GraphpatternPackage.Literals.ATTRIBUTE_PATTERN__TYPE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This returns AttributePattern.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public Object getImage(Object object) {
-		EAttribute type = ((AttributePattern)object).getType();
-		
-		if (type != null) {
-			Object image = iconLibrary.get(type);
-					
-			if (image == null) {
-				image = ItemProviderUtil.getImageByObject(type);
-				
-				if (image != null) {
-					iconLibrary.put(type, image);
-					return image;
-				}
-			} 
-			
-			if (image != null) {
-				return image;
-			}
-		}
-		
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/AttributePattern"));
-	}
-
-	/**
-	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
 	@Override
 	public String getText(Object object) {
-		AttributePattern attributePattern = (AttributePattern) object;
-		return LabelServices.getLabel(attributePattern);
-		
-//		String label = ((AttributePattern)object).getValue();
-//		return label == null || label.length() == 0 ?
-//			getString("_UI_AttributePattern_type") :
-//			getString("_UI_AttributePattern_type") + " " + label;
+		String label = ((GraphPatternElement)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_GraphPatternElement_type") :
+			getString("_UI_GraphPatternElement_type") + " " + label;
 	}
 	
 
@@ -177,8 +112,8 @@ public class AttributePatternItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(AttributePattern.class)) {
-			case GraphpatternPackage.ATTRIBUTE_PATTERN__VALUE:
+		switch (notification.getFeatureID(GraphPatternElement.class)) {
+			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

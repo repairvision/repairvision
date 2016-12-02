@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.edit.util;
+package org.sidiff.graphpattern.edit.util;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
