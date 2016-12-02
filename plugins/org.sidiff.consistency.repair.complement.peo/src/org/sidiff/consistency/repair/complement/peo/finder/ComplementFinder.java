@@ -20,7 +20,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngineFactory;
-import org.sidiff.graphpattern.matcher.matching.IMatchGenerator;
+import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
 
 /**
