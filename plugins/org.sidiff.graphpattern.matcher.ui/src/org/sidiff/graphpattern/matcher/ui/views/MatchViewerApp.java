@@ -17,7 +17,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
-import org.sidiff.consistency.common.ui.InfoConsole;
+import org.sidiff.common.ui.InfoConsole;
 import org.sidiff.graphpattern.DataStore;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;

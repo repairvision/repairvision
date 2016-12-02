@@ -25,8 +25,8 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
-import org.sidiff.consistency.common.ui.InfoConsole;
-import org.sidiff.consistency.common.ui.WorkbenchUtil;
+import org.sidiff.common.ui.InfoConsole;
+import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.matcher.ui.Activator;
 
