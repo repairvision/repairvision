@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import java.util.Stack;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.NodePattern;
 
 public class MatchSelection {
 

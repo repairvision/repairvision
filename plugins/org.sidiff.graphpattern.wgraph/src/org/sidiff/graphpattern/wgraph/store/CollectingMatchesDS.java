@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.impl.DataStoreImpl;;
+import org.sidiff.graphpattern.impl.DataStoreImpl;;
 
 public class CollectingMatchesDS extends DataStoreImpl {
 

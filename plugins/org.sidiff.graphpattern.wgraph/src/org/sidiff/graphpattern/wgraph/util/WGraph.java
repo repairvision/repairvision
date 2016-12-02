@@ -1,8 +1,8 @@
 package org.sidiff.graphpattern.wgraph.util;
 
-import org.sidiff.consistency.graphpattern.DataStore;
-import org.sidiff.consistency.graphpattern.Evaluation;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.DataStore;
+import org.sidiff.graphpattern.Evaluation;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.wgraph.store.NavigableMatchesDS;
 
 public class WGraph {

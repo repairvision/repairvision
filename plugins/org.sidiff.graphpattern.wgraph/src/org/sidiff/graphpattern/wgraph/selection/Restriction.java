@@ -3,7 +3,7 @@ package org.sidiff.graphpattern.wgraph.selection;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.NodePattern;
 
 public class Restriction {
 
