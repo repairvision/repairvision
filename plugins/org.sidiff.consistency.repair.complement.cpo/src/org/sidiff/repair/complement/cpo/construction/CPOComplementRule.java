@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.cpo.construction;
+package org.sidiff.repair.complement.cpo.construction;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
 
@@ -14,11 +14,11 @@ import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.debug.DebugUtil;
-import org.sidiff.consistency.repair.api.matching.EOMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
-import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
-import org.sidiff.consistency.repair.complement.construction.ComplementRule;
+import org.sidiff.debug.DebugUtil;
+import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.matching.EONodeSingleMatch;
+import org.sidiff.repair.api.matching.EditOperationMatching;
+import org.sidiff.repair.complement.construction.ComplementRule;
 
 public class CPOComplementRule extends ComplementRule  {
 

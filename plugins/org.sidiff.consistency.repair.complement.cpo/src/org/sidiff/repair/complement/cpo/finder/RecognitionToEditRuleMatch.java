@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.cpo.finder;
+package org.sidiff.repair.complement.cpo.finder;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChangingAttributes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
@@ -23,14 +23,14 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.repair.api.matching.EOAttributeMatch;
-import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
-import org.sidiff.consistency.repair.api.matching.EOMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
 import org.sidiff.difference.rulebase.RecognitionRule;
 import org.sidiff.difference.rulebase.Trace;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.rulebase.EditRule;
+import org.sidiff.repair.api.matching.EOAttributeMatch;
+import org.sidiff.repair.api.matching.EOEdgeMatch;
+import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.matching.EONodeSingleMatch;
 
 public class RecognitionToEditRuleMatch {
 

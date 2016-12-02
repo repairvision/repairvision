@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.cpo.construction;
+package org.sidiff.repair.complement.cpo.construction;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
@@ -16,18 +16,18 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
-import org.sidiff.consistency.common.debug.DebugUtil;
-import org.sidiff.consistency.repair.api.matching.EOAttributeMatch;
-import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
-import org.sidiff.consistency.repair.api.matching.EOMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeMultiMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
-import org.sidiff.consistency.repair.complement.construction.ComplementConstructor;
-import org.sidiff.consistency.repair.complement.construction.ComplementRule;
-import org.sidiff.consistency.repair.complement.cpo.embedding.EmbeddingRulebase;
-import org.sidiff.consistency.repair.complement.cpo.embedding.RuleEmbedding;
-import org.sidiff.consistency.repair.complement.util.ComplementUtil;
+import org.sidiff.debug.DebugUtil;
+import org.sidiff.repair.api.matching.EOAttributeMatch;
+import org.sidiff.repair.api.matching.EOEdgeMatch;
+import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.matching.EONodeMatch;
+import org.sidiff.repair.api.matching.EONodeMultiMatch;
+import org.sidiff.repair.api.matching.EONodeSingleMatch;
+import org.sidiff.repair.complement.construction.ComplementConstructor;
+import org.sidiff.repair.complement.construction.ComplementRule;
+import org.sidiff.repair.complement.cpo.embedding.EmbeddingRulebase;
+import org.sidiff.repair.complement.cpo.embedding.RuleEmbedding;
+import org.sidiff.repair.complement.util.ComplementUtil;
 
 /**
  * Convert sub-rule match to partial super-rule match and constructs the

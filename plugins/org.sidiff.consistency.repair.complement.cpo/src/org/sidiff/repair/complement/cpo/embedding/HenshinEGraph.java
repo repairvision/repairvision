@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * </copyright>
  */
-package org.sidiff.consistency.repair.complement.cpo.embedding;
+package org.sidiff.repair.complement.cpo.embedding;
 
 import java.util.ArrayList;
 import java.util.HashMap;

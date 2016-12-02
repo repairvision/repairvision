@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.cpo.embedding;
+package org.sidiff.repair.complement.cpo.embedding;
 
 import java.util.HashMap;
 import java.util.Map;

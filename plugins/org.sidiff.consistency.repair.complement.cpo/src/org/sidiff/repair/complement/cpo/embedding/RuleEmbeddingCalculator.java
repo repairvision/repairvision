@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.cpo.embedding;
+package org.sidiff.repair.complement.cpo.embedding;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
@@ -30,8 +30,8 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.debug.DebugUtil;
-import org.sidiff.consistency.repair.complement.util.ComplementUtil;
+import org.sidiff.debug.DebugUtil;
+import org.sidiff.repair.complement.util.ComplementUtil;
 
 /**
  * Calculates all possible embeddings of a sub-rule in a super-rule. 

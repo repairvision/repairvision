@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.cpo.finder;
+package org.sidiff.repair.complement.cpo.finder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,17 +14,17 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.debug.DebugUtil;
-import org.sidiff.consistency.repair.api.matching.EOMatch;
-import org.sidiff.consistency.repair.complement.construction.ComplementRule;
-import org.sidiff.consistency.repair.complement.cpo.construction.CPOComplementConstructor;
-import org.sidiff.consistency.repair.complement.cpo.embedding.EmbeddingRulebase;
+import org.sidiff.debug.DebugUtil;
 import org.sidiff.difference.rulebase.RecognitionRule;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.rulebase.EditRule;
 import org.sidiff.editrule.rulebase.RuleBaseItem;
+import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.complement.construction.ComplementRule;
+import org.sidiff.repair.complement.cpo.construction.CPOComplementConstructor;
+import org.sidiff.repair.complement.cpo.embedding.EmbeddingRulebase;
 
 public class ComplementFinder {
 	
