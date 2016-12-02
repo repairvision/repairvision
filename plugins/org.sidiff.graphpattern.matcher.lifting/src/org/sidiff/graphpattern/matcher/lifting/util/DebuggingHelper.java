@@ -17,7 +17,7 @@ import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
 import org.sidiff.difference.symmetric.SymmetricFactory;
 import org.sidiff.difference.symmetric.SymmetricPackage;
-import org.sidiff.graphpattern.matcher.matching.partial.NodeMatching;
+import org.sidiff.graphpattern.matching.algorithms.NodeMatching;
 import org.sidiff.graphpattern.wgraph.selection.MatchSelection;
 import org.sidiff.graphpattern.wgraph.util.WGraph;
 

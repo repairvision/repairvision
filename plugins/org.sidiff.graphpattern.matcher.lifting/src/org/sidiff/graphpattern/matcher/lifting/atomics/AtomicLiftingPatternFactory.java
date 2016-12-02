@@ -3,9 +3,9 @@ package org.sidiff.graphpattern.matcher.lifting.atomics;
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.difference.symmetric.SymmetricPackage;
-import org.sidiff.graphpattern.matcher.matching.selection.AtomicPattern;
-import org.sidiff.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
-import org.sidiff.graphpattern.matcher.matching.selection.PathSelector;
+import org.sidiff.graphpattern.matching.selection.AtomicPattern;
+import org.sidiff.graphpattern.matching.selection.IAtomicPatternFactory;
+import org.sidiff.graphpattern.matching.selection.PathSelector;
 import org.sidiff.matching.model.MatchingModelPackage;
 
 // TODO: AtomicPattern: Add/RemoveObject with containment references!?

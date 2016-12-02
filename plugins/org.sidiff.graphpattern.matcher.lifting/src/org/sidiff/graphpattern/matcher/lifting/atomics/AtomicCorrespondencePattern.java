@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import org.sidiff.consistency.graphpattern.EdgePattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.graphpattern.matcher.matching.selection.AtomicPattern;
-import org.sidiff.graphpattern.matcher.matching.selection.Move;
+import org.sidiff.graphpattern.matching.selection.AtomicPattern;
+import org.sidiff.graphpattern.matching.selection.Move;
 
 public class AtomicCorrespondencePattern extends AtomicPattern {
 

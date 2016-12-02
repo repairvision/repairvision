@@ -3,10 +3,10 @@ package org.sidiff.graphpattern.matcher.lifting.engine;
 import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.graphpattern.matcher.lifting.atomics.AtomicLiftingPatternFactory;
 import org.sidiff.graphpattern.matcher.lifting.util.DebuggingHelper;
-import org.sidiff.graphpattern.matcher.matching.BasicMatchValidation;
-import org.sidiff.graphpattern.matcher.matching.IMatchValidation;
-import org.sidiff.graphpattern.matcher.matching.partial.PartialMatchGeneratorFP;
-import org.sidiff.graphpattern.matcher.matching.selection.IAtomicPatternFactory;
+import org.sidiff.graphpattern.matching.BasicMatchValidation;
+import org.sidiff.graphpattern.matching.IMatchValidation;
+import org.sidiff.graphpattern.matching.algorithms.PartialMatchGeneratorFP;
+import org.sidiff.graphpattern.matching.selection.IAtomicPatternFactory;
 
 public class LiftingMatchGeneratorFP extends PartialMatchGeneratorFP {
 

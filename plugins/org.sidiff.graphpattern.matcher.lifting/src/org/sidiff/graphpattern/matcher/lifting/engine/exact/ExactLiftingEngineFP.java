@@ -8,7 +8,7 @@ import org.sidiff.graphpattern.matcher.lifting.engine.LiftingEngine;
 import org.sidiff.graphpattern.matcher.lifting.engine.LiftingMatchGeneratorFP;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphIndex;
-import org.sidiff.graphpattern.matcher.matching.IMatchGenerator;
+import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
 
 public class ExactLiftingEngineFP extends LiftingEngine {
