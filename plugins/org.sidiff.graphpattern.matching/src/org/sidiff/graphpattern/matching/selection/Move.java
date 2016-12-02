@@ -1,7 +1,7 @@
 package org.sidiff.graphpattern.matching.selection;
 
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.NodePattern;
 
 public class Move {
 	NodePattern source;

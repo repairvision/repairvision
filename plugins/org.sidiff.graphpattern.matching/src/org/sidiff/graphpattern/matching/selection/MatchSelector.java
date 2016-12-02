@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.wgraph.selection.MatchSelection;
 import org.sidiff.graphpattern.wgraph.util.WGraph;
 

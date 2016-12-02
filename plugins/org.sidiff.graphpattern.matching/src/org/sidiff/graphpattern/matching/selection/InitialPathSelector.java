@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.wgraph.selection.MatchSelection;
 import org.sidiff.graphpattern.wgraph.store.NavigableMatchesDS;
 import org.sidiff.graphpattern.wgraph.util.WGraph;

@@ -2,9 +2,9 @@ package org.sidiff.graphpattern.matching.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.sidiff.consistency.graphpattern.EObjectList;
-import org.sidiff.consistency.graphpattern.GraphpatternFactory;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.EObjectList;
+import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
 

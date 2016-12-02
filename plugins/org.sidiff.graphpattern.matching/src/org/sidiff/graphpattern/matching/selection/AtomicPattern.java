@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.NodePattern;
 
 /**
  * An atomic pattern is a part of the graph pattern which can only be matched in single piece.

@@ -1,6 +1,6 @@
 package org.sidiff.graphpattern.matching.selection;
 
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.NodePattern;
 
 /**
  * The factory which creates the {@link AtomicPattern}s of the graph pattern.

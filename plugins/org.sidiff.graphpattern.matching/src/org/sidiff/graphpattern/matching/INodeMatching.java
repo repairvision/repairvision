@@ -1,7 +1,7 @@
 package org.sidiff.graphpattern.matching;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.NodePattern;
 
 /**
  * Stores the match of {@link NodePattern}.

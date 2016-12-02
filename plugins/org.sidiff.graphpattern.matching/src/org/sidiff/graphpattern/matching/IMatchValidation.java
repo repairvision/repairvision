@@ -2,7 +2,7 @@ package org.sidiff.graphpattern.matching;
 
 import java.util.Map;
 
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matching.algorithms.NodeMatching;
 
 /**
