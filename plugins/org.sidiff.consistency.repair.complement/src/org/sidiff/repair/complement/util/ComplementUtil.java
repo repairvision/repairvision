@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.util;
+package org.sidiff.repair.complement.util;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyEdge;
@@ -25,12 +25,12 @@ import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.repair.api.matching.EOAttributeMatch;
-import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
-import org.sidiff.consistency.repair.api.matching.EOMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeMultiMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
+import org.sidiff.repair.api.matching.EOAttributeMatch;
+import org.sidiff.repair.api.matching.EOEdgeMatch;
+import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.matching.EONodeMatch;
+import org.sidiff.repair.api.matching.EONodeMultiMatch;
+import org.sidiff.repair.api.matching.EONodeSingleMatch;
 
 public class ComplementUtil {
 

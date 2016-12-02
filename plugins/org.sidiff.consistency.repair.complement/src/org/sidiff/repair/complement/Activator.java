@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement;
+package org.sidiff.repair.complement;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.repair;
+package org.sidiff.repair.complement.repair;
 
 import java.util.List;
 
@@ -7,10 +7,10 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.repair.api.IRepair;
-import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
-import org.sidiff.consistency.repair.api.matching.EOMatch;
-import org.sidiff.consistency.repair.complement.construction.ComplementRule;
+import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.matching.EditOperationMatching;
+import org.sidiff.repair.complement.construction.ComplementRule;
 
 /**
  * Represents a single repair operation.

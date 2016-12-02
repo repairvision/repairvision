@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.construction;
+package org.sidiff.repair.complement.construction;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChanges;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChangingAttributes;
@@ -35,11 +35,11 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.view.NodePair;
-import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
-import org.sidiff.consistency.repair.api.matching.EOAttributeMatch;
-import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
-import org.sidiff.consistency.repair.api.matching.EOMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeMatch;
+import org.sidiff.repair.api.matching.EOAttributeMatch;
+import org.sidiff.repair.api.matching.EOEdgeMatch;
+import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.matching.EONodeMatch;
+import org.sidiff.repair.api.matching.EditOperationMatching;
 
 /**
  * Wraps a complement rule for a given partially executed source rule.

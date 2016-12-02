@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.construction;
+package org.sidiff.repair.complement.construction;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChangingAttributes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
@@ -22,14 +22,14 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
-import org.sidiff.consistency.common.debug.DebugUtil;
-import org.sidiff.consistency.repair.api.matching.EOAttributeMatch;
-import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
-import org.sidiff.consistency.repair.api.matching.EOMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeMultiMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
-import org.sidiff.consistency.repair.complement.util.ComplementUtil;
+import org.sidiff.debug.DebugUtil;
+import org.sidiff.repair.api.matching.EOAttributeMatch;
+import org.sidiff.repair.api.matching.EOEdgeMatch;
+import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.matching.EONodeMatch;
+import org.sidiff.repair.api.matching.EONodeMultiMatch;
+import org.sidiff.repair.api.matching.EONodeSingleMatch;
+import org.sidiff.repair.complement.util.ComplementUtil;
 
 /**
  * Constructs the complement-rule = source-rule (-) partial-edit-rule-match
