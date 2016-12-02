@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.wgraph.construction.tools.paths.DFSSourceTargetPathIterator.DFSPath;
 
 /**

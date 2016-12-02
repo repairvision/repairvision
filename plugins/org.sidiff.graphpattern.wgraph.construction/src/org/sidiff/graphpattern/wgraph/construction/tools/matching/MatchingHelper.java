@@ -11,9 +11,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.GraphPattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.NodePattern;
 
 public class MatchingHelper {
 

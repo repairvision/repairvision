@@ -1,9 +1,9 @@
 package org.sidiff.graphpattern.wgraph.construction.partial;
 
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.impl.EdgePatternImpl;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.impl.EdgePatternImpl;
 
 /**
  * This implementation of {@link EdgePattern} is not synchronized (opposites /

@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.DataStore;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.Evaluation;
-import org.sidiff.consistency.graphpattern.NavigableDataStore;
-import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.impl.VisitorImpl;
+import org.sidiff.graphpattern.DataStore;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.Evaluation;
+import org.sidiff.graphpattern.NavigableDataStore;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.impl.VisitorImpl;
 import org.sidiff.graphpattern.wgraph.construction.IConstraintTester;
 import org.sidiff.graphpattern.wgraph.construction.tools.matching.MatchingHelper;
 import org.sidiff.graphpattern.wgraph.util.WGraph;

@@ -1,7 +1,7 @@
 package org.sidiff.graphpattern.wgraph.construction;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.NodePattern;
 
 /**
  * Check types and other constraints.

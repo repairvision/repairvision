@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.Visitor;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Visitor;
 import org.sidiff.graphpattern.wgraph.construction.tools.matching.CrossReferencer;
 import org.sidiff.graphpattern.wgraph.construction.tools.matching.MatchingHelper;
 
