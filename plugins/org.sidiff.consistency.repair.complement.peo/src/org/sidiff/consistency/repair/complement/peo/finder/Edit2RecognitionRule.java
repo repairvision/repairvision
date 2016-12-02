@@ -9,13 +9,13 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.sidiff.common.henshin.exceptions.NoMainUnitFoundException;
-import org.sidiff.consistency.graphpattern.GraphPattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.henshin.HenshinConverter;
 import org.sidiff.difference.lifting.edit2recognition.Edit2RecognitionTransformation;
 import org.sidiff.difference.lifting.edit2recognition.exceptions.EditToRecognitionException;
 import org.sidiff.difference.lifting.edit2recognition.traces.TransformationPatterns;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.henshin.HenshinConverter;
 import org.sidiff.matching.model.MatchingModelPackage;
 
 /**
