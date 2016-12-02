@@ -69,7 +69,6 @@ public abstract class PEORepairFacade implements IRepairFacade<PEORepairJob, PEO
 			e.printStackTrace();
 		}
 		
-		// TODO: Support differences without resource...
 		Resource differenceResource = differenceRSS.createResource(URI.createURI(""));
 		differenceResource.getContents().add(difference);
 		
