@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.sandbox.algorithms;
+package org.sidiff.graphpattern.sandbox.algorithms;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.sidiff.consistency.graphpattern.sandbox.graph.Example;
-import org.sidiff.consistency.graphpattern.sandbox.graph.Match;
-import org.sidiff.consistency.graphpattern.sandbox.graph.Node;
+import org.sidiff.graphpattern.sandbox.graph.Example;
+import org.sidiff.graphpattern.sandbox.graph.Match;
+import org.sidiff.graphpattern.sandbox.graph.Node;
 
 public class SubdivisionGraph {
 

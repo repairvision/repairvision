@@ -1,21 +1,21 @@
-package org.sidiff.consistency.graphpattern.sandbox;
+package org.sidiff.graphpattern.sandbox;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sidiff.consistency.graphpattern.sandbox.algorithms.IMatchingEngine;
-import org.sidiff.consistency.graphpattern.sandbox.algorithms.MCCSKrissinelAlgorithm;
-import org.sidiff.consistency.graphpattern.sandbox.algorithms.SubdivisionGraph;
-import org.sidiff.consistency.graphpattern.sandbox.graph.Example;
-import org.sidiff.consistency.graphpattern.sandbox.graph.Match;
-import org.sidiff.consistency.graphpattern.sandbox.graph.Node;
-import org.sidiff.consistency.graphpattern.sandbox.io.ReadGraphs;
-import org.sidiff.consistency.graphpattern.sandbox.io.WriteVisualization;
+import org.sidiff.graphpattern.sandbox.algorithms.IMatchingEngine;
+import org.sidiff.graphpattern.sandbox.algorithms.MCCSKrissinelAlgorithm;
+import org.sidiff.graphpattern.sandbox.algorithms.SubdivisionGraph;
+import org.sidiff.graphpattern.sandbox.graph.Example;
+import org.sidiff.graphpattern.sandbox.graph.Match;
+import org.sidiff.graphpattern.sandbox.graph.Node;
+import org.sidiff.graphpattern.sandbox.io.ReadGraphs;
+import org.sidiff.graphpattern.sandbox.io.WriteVisualization;
 
 public class MCSTest {
 
-	private static String base = "D:\\Workspace\\SiLift\\org.sidiff.consistency.graphpattern.sandbox\\examples\\";
+	private static String base = "D:\\Workspace\\SiLift\\org.sidiff.graphpattern.sandbox\\examples\\";
 
 	private static String name = "M003";
 	

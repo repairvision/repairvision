@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.sandbox.graph;
+package org.sidiff.graphpattern.sandbox.graph;
 
 import java.util.ArrayList;
 import java.util.Collection;

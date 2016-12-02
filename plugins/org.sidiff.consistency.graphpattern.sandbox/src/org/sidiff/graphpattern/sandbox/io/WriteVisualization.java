@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.sandbox.io;
+package org.sidiff.graphpattern.sandbox.io;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,9 +9,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.sidiff.consistency.graphpattern.sandbox.graph.Example;
-import org.sidiff.consistency.graphpattern.sandbox.graph.Match;
-import org.sidiff.consistency.graphpattern.sandbox.graph.Node;
+import org.sidiff.graphpattern.sandbox.graph.Example;
+import org.sidiff.graphpattern.sandbox.graph.Match;
+import org.sidiff.graphpattern.sandbox.graph.Node;
 
 public class WriteVisualization {
 

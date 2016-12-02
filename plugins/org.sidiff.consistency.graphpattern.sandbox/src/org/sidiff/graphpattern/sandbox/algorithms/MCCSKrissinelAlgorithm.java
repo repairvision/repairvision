@@ -1,13 +1,13 @@
-package org.sidiff.consistency.graphpattern.sandbox.algorithms;
+package org.sidiff.graphpattern.sandbox.algorithms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.sidiff.consistency.graphpattern.sandbox.graph.Example;
-import org.sidiff.consistency.graphpattern.sandbox.graph.Match;
-import org.sidiff.consistency.graphpattern.sandbox.graph.Node;
+import org.sidiff.graphpattern.sandbox.graph.Example;
+import org.sidiff.graphpattern.sandbox.graph.Match;
+import org.sidiff.graphpattern.sandbox.graph.Node;
 
 // TODO: subdivision graph -> atomic matching of edge nodes!
 public class MCCSKrissinelAlgorithm implements IMatchingEngine {

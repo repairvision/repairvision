@@ -1,11 +1,11 @@
-package org.sidiff.consistency.graphpattern.sandbox.io;
+package org.sidiff.graphpattern.sandbox.io;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import org.sidiff.consistency.graphpattern.sandbox.graph.Example;
-import org.sidiff.consistency.graphpattern.sandbox.graph.Node;
+import org.sidiff.graphpattern.sandbox.graph.Example;
+import org.sidiff.graphpattern.sandbox.graph.Node;
 
 public class ReadGraphs {
 
