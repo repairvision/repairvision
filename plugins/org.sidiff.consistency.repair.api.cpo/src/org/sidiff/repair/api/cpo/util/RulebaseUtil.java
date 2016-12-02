@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.api.cpo.util;
+package org.sidiff.repair.api.cpo.util;
 
 import java.util.Collection;
 

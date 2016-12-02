@@ -1,10 +1,10 @@
-package org.sidiff.consistency.repair.api.cpo.lifting;
+package org.sidiff.repair.api.cpo.lifting;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.consistency.repair.api.cpo.CPORepairSettings;
 import org.sidiff.difference.lifting.recognitionengine.IRecognitionEngine;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.repair.api.cpo.CPORepairSettings;
 
 public abstract class BasicCPOLifting {
 

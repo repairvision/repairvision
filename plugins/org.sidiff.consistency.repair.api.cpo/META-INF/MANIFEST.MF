@@ -1,14 +1,14 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CPO based Repairs
-Bundle-SymbolicName: org.sidiff.consistency.repair.api.cpo;singleton:=true
+Bundle-SymbolicName: org.sidiff.repair.api.cpo;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.sidiff.consistency.common,
- org.sidiff.consistency.repair.api;visibility:=reexport,
- org.sidiff.consistency.repair.complement,
- org.sidiff.consistency.repair.complement.cpo,
+Require-Bundle: org.sidiff.repair.common,
+ org.sidiff.repair.api;visibility:=reexport,
+ org.sidiff.repair.complement,
+ org.sidiff.repair.complement.cpo,
  org.sidiff.difference.lifting.api;visibility:=reexport,
  org.sidiff.difference.lifting.edit2recognition,
  org.sidiff.difference.rulebase.edit
-Export-Package: org.sidiff.consistency.repair.api.cpo
+Export-Package: org.sidiff.repair.api.cpo

@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.api.cpo;
+package org.sidiff.repair.api.cpo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,19 +16,19 @@ import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
-import org.sidiff.consistency.common.debug.DebugUtil;
-import org.sidiff.consistency.repair.api.IRepair;
-import org.sidiff.consistency.repair.api.IRepairFacade;
-import org.sidiff.consistency.repair.api.cpo.lifting.BasicCPOLifting;
-import org.sidiff.consistency.repair.api.cpo.util.StatisticUtil;
-import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
-import org.sidiff.consistency.repair.complement.construction.ComplementRule;
-import org.sidiff.consistency.repair.complement.cpo.embedding.EmbeddingRulebase;
-import org.sidiff.consistency.repair.complement.cpo.finder.ComplementFinder;
-import org.sidiff.consistency.repair.complement.repair.RepairOperation;
+import org.sidiff.debug.DebugUtil;
 import org.sidiff.difference.lifting.recognitionengine.IRecognitionEngine;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.api.cpo.lifting.BasicCPOLifting;
+import org.sidiff.repair.api.cpo.util.StatisticUtil;
+import org.sidiff.repair.api.matching.EditOperationMatching;
+import org.sidiff.repair.complement.construction.ComplementRule;
+import org.sidiff.repair.complement.cpo.embedding.EmbeddingRulebase;
+import org.sidiff.repair.complement.cpo.finder.ComplementFinder;
+import org.sidiff.repair.complement.repair.RepairOperation;
 
 /**
  * API for the repair engine functions.

@@ -1,6 +1,6 @@
-package org.sidiff.consistency.repair.api.cpo;
+package org.sidiff.repair.api.cpo;
 
-import org.sidiff.consistency.repair.api.cpo.lifting.FragmentedCPOLifting;
+import org.sidiff.repair.api.cpo.lifting.FragmentedCPOLifting;
 
 /**
  * API for the repair engine functions.

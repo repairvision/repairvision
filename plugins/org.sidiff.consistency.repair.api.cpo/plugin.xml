@@ -2,15 +2,15 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.sidiff.consistency.repair.api.engine">
+         point="org.sidiff.repair.api.engine">
       <engine
-            facade="org.sidiff.consistency.repair.api.cpo.CPORepairFacadeComplete"
-            id="org.sidiff.consistency.repair.api.cpo.engine.complete"
+            facade="org.sidiff.repair.api.cpo.CPORepairFacadeComplete"
+            id="org.sidiff.repair.api.cpo.engine.complete"
             name="EO to CPO Engine">
       </engine>
       <engine
-            facade="org.sidiff.consistency.repair.api.cpo.CPORepairFacadeFragmented"
-            id="org.sidiff.consistency.repair.api.cpo.engine.fragmented"
+            facade="org.sidiff.repair.api.cpo.CPORepairFacadeFragmented"
+            id="org.sidiff.repair.api.cpo.engine.fragmented"
             name="EO to CPO Engine (allow overlapping CPOs)">
       </engine>
    </extension>

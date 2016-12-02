@@ -1,10 +1,10 @@
-package org.sidiff.consistency.repair.api.cpo;
+package org.sidiff.repair.api.cpo;
 
 import java.util.Collection;
 
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.repair.api.IRepairSettings;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.repair.api.IRepairSettings;
 
 public class CPORepairSettings implements IRepairSettings {
 
