@@ -7,31 +7,31 @@
          point="org.eclipse.ui.views">
       <category
             name="Model Repair"
-            id="org.sidiff.consistency.repair.ui">
+            id="org.sidiff.repair.ui">
       </category>
       <view
             name="Model Repair"
             icon="icons/repair.png"
-            category="org.sidiff.consistency.repair.ui"
-            class="org.sidiff.consistency.repair.ui.views.RepairView"
-            id="org.sidiff.consistency.repair.ui.views.RepairView">
+            category="org.sidiff.repair.ui"
+            class="org.sidiff.repair.ui.views.RepairView"
+            id="org.sidiff.repair.ui.views.RepairView">
       </view>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="org.sidiff.consistency.repair.ui.config.RepairPreferencePage"
-            id="org.sidiff.consistency.repair.ui.config.mainpage"
+            class="org.sidiff.repair.ui.config.RepairPreferencePage"
+            id="org.sidiff.repair.ui.config.mainpage"
             name="Model Repairing">
       </page>
    </extension>
    
    <extension
-         id="org.sidiff.consistency.repair.ui.decoration.RepairDecoratorProvider"
+         id="org.sidiff.repair.ui.decoration.RepairDecoratorProvider"
          name="Repair Selection Decorator"
          point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
       <decoratorProvider
-            class="org.sidiff.consistency.repair.ui.decoration.RepairDecoratorProvider">
+            class="org.sidiff.repair.ui.decoration.RepairDecoratorProvider">
          <Priority
                name="Lowest">
          </Priority>

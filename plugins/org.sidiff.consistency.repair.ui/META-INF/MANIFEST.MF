@@ -1,26 +1,26 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Repair UI
-Bundle-SymbolicName: org.sidiff.consistency.repair.ui;singleton:=true
+Bundle-SymbolicName: org.sidiff.repair.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.sidiff.consistency.repair.ui.Activator
+Bundle-Activator: org.sidiff.repair.ui.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.edit.ui,
  org.eclipse.core.resources,
- org.sidiff.consistency.repair.api;bundle-version="1.0.0",
+ org.sidiff.repair.api;bundle-version="1.0.0",
  org.sidiff.common.henshin,
  org.sidiff.editrule.consistency.validation,
- org.sidiff.consistency.common,
+ org.sidiff.repair.common,
  org.eclipse.gmf.runtime.notation.edit,
  org.eclipse.gmf.runtime.common.core,
  org.eclipse.gmf.runtime.diagram.ui,
  org.sidiff.integration.editor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.sidiff.consistency.repair.ui.app,
- org.sidiff.consistency.repair.ui.app.impl,
- org.sidiff.consistency.repair.ui.controls,
- org.sidiff.consistency.repair.ui.controls.impl,
- org.sidiff.consistency.repair.ui.presentation,
- org.sidiff.consistency.repair.ui.util
+Export-Package: org.sidiff.repair.ui.app,
+ org.sidiff.repair.ui.app.impl,
+ org.sidiff.repair.ui.controls,
+ org.sidiff.repair.ui.controls.impl,
+ org.sidiff.repair.ui.presentation,
+ org.sidiff.repair.ui.util
