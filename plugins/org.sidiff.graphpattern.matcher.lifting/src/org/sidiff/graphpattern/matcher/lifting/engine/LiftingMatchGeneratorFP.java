@@ -1,6 +1,6 @@
 package org.sidiff.graphpattern.matcher.lifting.engine;
 
-import org.sidiff.consistency.common.debug.DebugUtil;
+import org.sidiff.debug.DebugUtil;
 import org.sidiff.graphpattern.matcher.lifting.atomics.AtomicLiftingPatternFactory;
 import org.sidiff.graphpattern.matcher.lifting.util.DebuggingHelper;
 import org.sidiff.graphpattern.matching.BasicMatchValidation;
