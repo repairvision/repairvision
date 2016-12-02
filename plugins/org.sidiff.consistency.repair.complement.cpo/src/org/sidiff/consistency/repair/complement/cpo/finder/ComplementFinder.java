@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.cpo.matching;
+package org.sidiff.consistency.repair.complement.cpo.finder;
 
 import java.util.ArrayList;
 import java.util.Collection;

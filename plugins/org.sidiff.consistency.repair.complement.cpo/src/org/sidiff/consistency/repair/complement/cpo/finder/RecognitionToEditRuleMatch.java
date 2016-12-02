@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.cpo.matching;
+package org.sidiff.consistency.repair.complement.cpo.finder;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChangingAttributes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
