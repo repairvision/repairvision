@@ -8,11 +8,13 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.sidiff.common.henshin;bundle-version="1.0.0",
  org.sidiff.consistency.graphpattern.henshin;bundle-version="1.0.0",
- org.sidiff.consistency.graphpattern.matcher.lifting,
+ org.sidiff.graphpattern.matcher.lifting,
  org.sidiff.consistency.repair.api,
  org.sidiff.consistency.repair.complement,
  org.sidiff.consistency.repair.validation,
- org.sidiff.difference.lifting.edit2recognition;bundle-version="1.0.0"
+ org.sidiff.difference.lifting.edit2recognition;bundle-version="1.0.0",
+ org.sidiff.graphpattern.matcher,
+ org.sidiff.graphpattern.matching
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.sidiff.consistency.repair.complement.peo.construction,

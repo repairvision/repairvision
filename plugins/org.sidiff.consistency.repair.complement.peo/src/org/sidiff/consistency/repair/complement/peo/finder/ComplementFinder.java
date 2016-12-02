@@ -12,16 +12,16 @@ import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
-import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngineFactory;
-import org.sidiff.consistency.graphpattern.matcher.matching.IMatchGenerator;
-import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
 import org.sidiff.consistency.repair.api.matching.EOMatch;
 import org.sidiff.consistency.repair.complement.construction.ComplementConstructor;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.peo.construction.ContextComplementConstructor;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
+import org.sidiff.graphpattern.matcher.IPatternMatchingEngineFactory;
+import org.sidiff.graphpattern.matcher.matching.IMatchGenerator;
+import org.sidiff.graphpattern.matching.IMatching;
 
 /**
  * Tries to find all complementing operation for a given edit-rule and a model difference. 

@@ -18,7 +18,6 @@ import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.sidiff.common.henshin.view.NodePair;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
 import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
 import org.sidiff.consistency.repair.api.matching.EOMatch;
 import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
@@ -29,6 +28,7 @@ import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.graphpattern.matching.IMatching;
 
 public class Edit2RecognitionMatch {
 
