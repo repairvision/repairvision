@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.sidiff.consistency.graphpattern.matcher.factory">
+      <factory
+            class="org.sidiff.graphpattern.matcher.lifting.engine.exact.ExactLiftingEngineFactoryMA"
+            description="A pattern matching engine for edit rule recognition rules."
+            id="org.sidiff.graphpattern.matcher.lifting.exact.ma"
+            name="[Exact] Lifting Pattern Matching Engine (MA)">
+      </factory>
+      <factory
+            class="org.sidiff.graphpattern.matcher.lifting.engine.partial.PartialLiftingEngineFactoryMA"
+            description="A pattern matching engine for edit rule recognition rules."
+            id="org.sidiff.graphpattern.matcher.lifting.partial.ma"
+            name="[Partial] Lifting Pattern Matching Engine (MA)">
+      </factory>
+      <factory
+            class="org.sidiff.graphpattern.matcher.lifting.engine.partial.PartialLiftingEngineFactoryFP"
+            description="A pattern matching engine for edit rule recognition rules."
+            id="org.sidiff.graphpattern.matcher.lifting.partial.fp"
+            name="[Partial] Lifting Pattern Matching Engine (FP)">
+      </factory>
+      <factory
+            class="org.sidiff.graphpattern.matcher.lifting.engine.exact.ExactLiftingEngineFactoryFP"
+            description="A pattern matching engine for edit rule recognition rules."
+            id="org.sidiff.graphpattern.matcher.lifting.exact.fp"
+            name="[Exact] Lifting Pattern Matching Engine (FP)">
+      </factory>
+   </extension>
+
+</plugin>
