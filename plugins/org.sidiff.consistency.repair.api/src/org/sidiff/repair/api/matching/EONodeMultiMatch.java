@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.api.matching;
+package org.sidiff.repair.api.matching;
 
 import java.util.Collection;
 

@@ -1,12 +1,12 @@
-package org.sidiff.consistency.repair.api.extensions;
+package org.sidiff.repair.api.extensions;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.sidiff.consistency.repair.api.IRepair;
-import org.sidiff.consistency.repair.api.IRepairFacade;
-import org.sidiff.consistency.repair.api.IRepairSettings;
-import org.sidiff.consistency.repair.api.RepairJob;
+import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.api.IRepairSettings;
+import org.sidiff.repair.api.RepairJob;
 
 /**
  * Wraps a {@link IRepairFacade} extension.

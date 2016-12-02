@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Repair
-Bundle-SymbolicName: org.sidiff.consistency.repair.api;singleton:=true
+Bundle-SymbolicName: org.sidiff.repair.api;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.sidiff.consistency.repair.Activator
+Bundle-Activator: org.sidiff.repair.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.henshin.interpreter;visibility:=reexport,
  org.eclipse.emf.henshin.model;visibility:=reexport,
@@ -11,6 +11,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.sidiff.difference.technical.api;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.sidiff.consistency.repair.api,
- org.sidiff.consistency.repair.api.extensions,
- org.sidiff.consistency.repair.api.matching
+Export-Package: org.sidiff.repair.api,
+ org.sidiff.repair.api.extensions,
+ org.sidiff.repair.api.matching

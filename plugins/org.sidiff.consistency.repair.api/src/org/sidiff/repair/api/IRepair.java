@@ -1,12 +1,12 @@
-package org.sidiff.consistency.repair.api;
+package org.sidiff.repair.api;
 
 import java.util.List;
 
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
-import org.sidiff.consistency.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.matching.EditOperationMatching;
 
 /**
  * Represents a single repair operation.

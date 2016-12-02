@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.api;
+package org.sidiff.repair.api;
 
 /**
  * Setup for the repair calculation.

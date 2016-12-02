@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.api.extensions;
+package org.sidiff.repair.api.extensions;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.sidiff.consistency.repair.api.IRepairFacade;
+import org.sidiff.repair.api.IRepairFacade;
 
 /**
  * Convenience functions to manage {@link IRepairFacade} extensions.

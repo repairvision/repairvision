@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.api;
+package org.sidiff.repair.api;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;

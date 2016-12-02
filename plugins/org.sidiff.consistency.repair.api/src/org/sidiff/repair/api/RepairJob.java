@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.api;
+package org.sidiff.repair.api;
 
 import java.io.IOException;
 import java.util.LinkedList;
