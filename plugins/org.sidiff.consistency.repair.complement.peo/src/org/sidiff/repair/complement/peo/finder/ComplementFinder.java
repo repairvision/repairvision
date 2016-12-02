@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.peo.finder;
+package org.sidiff.repair.complement.peo.finder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,10 +10,8 @@ import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.repair.api.matching.EOMatch;
-import org.sidiff.consistency.repair.complement.construction.ComplementConstructor;
-import org.sidiff.consistency.repair.complement.construction.ComplementRule;
-import org.sidiff.consistency.repair.complement.peo.construction.ContextComplementConstructor;
+import org.sidiff.repair.complement.construction.ComplementConstructor;
+import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.graphpattern.GraphPattern;
@@ -22,6 +20,8 @@ import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngineFactory;
 import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
+import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.complement.peo.construction.ContextComplementConstructor;
 
 /**
  * Tries to find all complementing operation for a given edit-rule and a model difference. 

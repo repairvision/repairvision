@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.peo.finder;
+package org.sidiff.repair.complement.peo.finder;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.difference.symmetric.SymmetricDifference;

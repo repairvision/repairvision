@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.peo.construction;
+package org.sidiff.repair.complement.peo.construction;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 
@@ -14,11 +14,11 @@ import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
-import org.sidiff.consistency.repair.api.matching.EOEdgeMatch;
-import org.sidiff.consistency.repair.api.matching.EOMatch;
-import org.sidiff.consistency.repair.api.matching.EONodeSingleMatch;
-import org.sidiff.consistency.repair.complement.construction.ComplementRule;
+import org.sidiff.repair.complement.construction.ComplementRule;
+import org.sidiff.repair.api.matching.EOEdgeMatch;
+import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.matching.EONodeSingleMatch;
+import org.sidiff.repair.api.matching.EditOperationMatching;
 
 /**
  * Constructs the complement-rule = source-rule (-) partial-edit-rule-match.

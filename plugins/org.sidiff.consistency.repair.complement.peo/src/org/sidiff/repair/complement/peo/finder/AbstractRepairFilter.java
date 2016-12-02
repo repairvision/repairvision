@@ -1,7 +1,7 @@
-package org.sidiff.consistency.repair.complement.peo.finder;
+package org.sidiff.repair.complement.peo.finder;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
-import static org.sidiff.consistency.repair.validation.test.library.ConsistencyRuleLibrary.getConsistencyRuleLibrary;
+import static org.sidiff.repair.validation.test.library.ConsistencyRuleLibrary.getConsistencyRuleLibrary;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,13 +17,13 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.emf.access.EMFModelAccess;
-import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
-import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
-import org.sidiff.consistency.repair.validation.fix.Repair;
-import org.sidiff.consistency.repair.validation.fix.Repair.RepairType;
-import org.sidiff.consistency.repair.validation.test.library.ConsistencyRuleLibrary;
-import org.sidiff.consistency.repair.validation.util.BatchValidationIterator;
-import org.sidiff.consistency.repair.validation.util.Validation;
+import org.sidiff.repair.api.matching.EditOperationMatching;
+import org.sidiff.repair.validation.fix.IRepairDecision;
+import org.sidiff.repair.validation.fix.Repair;
+import org.sidiff.repair.validation.fix.Repair.RepairType;
+import org.sidiff.repair.validation.test.library.ConsistencyRuleLibrary;
+import org.sidiff.repair.validation.util.BatchValidationIterator;
+import org.sidiff.repair.validation.util.Validation;
 
 public class AbstractRepairFilter {
 

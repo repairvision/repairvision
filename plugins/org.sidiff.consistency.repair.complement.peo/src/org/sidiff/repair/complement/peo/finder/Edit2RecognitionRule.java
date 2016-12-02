@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.complement.peo.finder;
+package org.sidiff.repair.complement.peo.finder;
 
 import java.util.HashSet;
 import java.util.Map;
