@@ -24,7 +24,7 @@ import org.sidiff.consistency.repair.api.cpo.util.StatisticUtil;
 import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
 import org.sidiff.consistency.repair.complement.cpo.embedding.EmbeddingRulebase;
-import org.sidiff.consistency.repair.complement.cpo.matching.ComplementFinder;
+import org.sidiff.consistency.repair.complement.cpo.finder.ComplementFinder;
 import org.sidiff.consistency.repair.complement.repair.RepairOperation;
 import org.sidiff.difference.lifting.recognitionengine.IRecognitionEngine;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
