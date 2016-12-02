@@ -12,7 +12,7 @@ import java.util.Set;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.sidiff.consistency.common.debug.DebugUtil;
+import org.sidiff.debug.DebugUtil;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
