@@ -6,8 +6,13 @@ Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.sidiff.consistency.graphpattern,
- org.sidiff.graphpattern.wgraph
+ org.sidiff.graphpattern.wgraph,
+ org.sidiff.graphpattern.common,
+ org.sidiff.consistency.common,
+ org.sidiff.difference.symmetric
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.sidiff.graphpattern.matching,
- org.sidiff.graphpattern.matching.impl
+ org.sidiff.graphpattern.matching.algorithms,
+ org.sidiff.graphpattern.matching.selection,
+ org.sidiff.graphpattern.matching.util
