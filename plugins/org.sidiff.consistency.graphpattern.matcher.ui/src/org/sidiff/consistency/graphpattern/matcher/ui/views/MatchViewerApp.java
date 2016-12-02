@@ -25,9 +25,9 @@ import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.consistency.graphpattern.matcher.ui.session.EngineManager;
 import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
-import org.sidiff.graphpattern.matcher.matching.IMatchGenerator;
-import org.sidiff.graphpattern.matcher.matching.util.MatchingUtil;
+import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
+import org.sidiff.graphpattern.matching.util.MatchingUtil;
 import org.sidiff.graphpattern.wgraph.store.CollectingMatchesDS;
 
 public class MatchViewerApp {
