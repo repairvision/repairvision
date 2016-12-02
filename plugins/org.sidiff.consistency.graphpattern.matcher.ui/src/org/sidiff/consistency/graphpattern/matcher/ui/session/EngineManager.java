@@ -10,12 +10,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.consistency.graphpattern.GraphPattern;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngine;
-import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngineFactory;
-import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger;
-import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger.BreakpointListener;
-import org.sidiff.consistency.graphpattern.matcher.matching.IMatching;
 import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
+import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
+import org.sidiff.graphpattern.matcher.IPatternMatchingEngineFactory;
+import org.sidiff.graphpattern.matcher.debug.PatternMatchingDebugger;
+import org.sidiff.graphpattern.matcher.debug.PatternMatchingDebugger.BreakpointListener;
+import org.sidiff.graphpattern.matching.IMatching;
 
 public class EngineManager {
 

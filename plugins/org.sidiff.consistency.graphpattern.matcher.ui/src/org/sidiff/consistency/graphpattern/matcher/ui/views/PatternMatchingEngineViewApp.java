@@ -18,13 +18,13 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.sidiff.consistency.common.ui.InfoConsole;
 import org.sidiff.consistency.common.ui.WorkbenchUtil;
 import org.sidiff.consistency.graphpattern.GraphPattern;
-import org.sidiff.consistency.graphpattern.matcher.IPatternMatchingEngineFactory;
-import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger.Breakpoint;
-import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger.BreakpointListener;
-import org.sidiff.consistency.graphpattern.matcher.debug.PatternMatchingDebugger.Termination;
-import org.sidiff.consistency.graphpattern.matcher.extensions.MatchingEngineFactoryEntry;
 import org.sidiff.consistency.graphpattern.matcher.ui.session.EngineManager;
 import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
+import org.sidiff.graphpattern.matcher.IPatternMatchingEngineFactory;
+import org.sidiff.graphpattern.matcher.debug.PatternMatchingDebugger.Breakpoint;
+import org.sidiff.graphpattern.matcher.debug.PatternMatchingDebugger.BreakpointListener;
+import org.sidiff.graphpattern.matcher.debug.PatternMatchingDebugger.Termination;
+import org.sidiff.graphpattern.matcher.extensions.MatchingEngineFactoryEntry;
 
 public class PatternMatchingEngineViewApp implements BreakpointListener {
 

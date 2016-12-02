@@ -51,10 +51,10 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
-import org.sidiff.consistency.graphpattern.matcher.extensions.MatchingEngineFactoryEntry;
-import org.sidiff.consistency.graphpattern.matcher.extensions.MatchingEngineFactoryLibrary;
 import org.sidiff.consistency.graphpattern.matcher.ui.Activator;
 import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
+import org.sidiff.graphpattern.matcher.extensions.MatchingEngineFactoryEntry;
+import org.sidiff.graphpattern.matcher.extensions.MatchingEngineFactoryLibrary;
 
 public class PatternMatchingEngineView extends ViewPart implements ISelectionListener {
 
