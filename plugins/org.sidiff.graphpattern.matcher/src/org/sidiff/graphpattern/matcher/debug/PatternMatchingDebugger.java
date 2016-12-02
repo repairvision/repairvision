@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import org.sidiff.consistency.graphpattern.Evaluation;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Evaluation;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
 
 public class PatternMatchingDebugger {

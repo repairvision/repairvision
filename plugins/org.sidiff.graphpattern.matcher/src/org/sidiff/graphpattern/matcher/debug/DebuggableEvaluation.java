@@ -1,8 +1,8 @@
 package org.sidiff.graphpattern.matcher.debug;
 
-import org.sidiff.consistency.graphpattern.Evaluation;
-import org.sidiff.consistency.graphpattern.Visitor;
-import org.sidiff.consistency.graphpattern.impl.EvaluationImpl;
+import org.sidiff.graphpattern.Evaluation;
+import org.sidiff.graphpattern.Visitor;
+import org.sidiff.graphpattern.impl.EvaluationImpl;
 import org.sidiff.graphpattern.matcher.debug.PatternMatchingDebugger.Breakpoint;
 
 public class DebuggableEvaluation extends EvaluationImpl  {

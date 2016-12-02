@@ -1,7 +1,7 @@
 package org.sidiff.graphpattern.matcher;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.sidiff.consistency.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.matching.IMatching;
 
 /**
