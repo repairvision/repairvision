@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.matcher.ui.views;
+package org.sidiff.graphpattern.matcher.ui.views;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,13 +18,13 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.consistency.common.ui.InfoConsole;
-import org.sidiff.consistency.graphpattern.DataStore;
-import org.sidiff.consistency.graphpattern.EObjectList;
-import org.sidiff.consistency.graphpattern.GraphpatternFactory;
-import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.matcher.ui.session.EngineManager;
-import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
+import org.sidiff.graphpattern.DataStore;
+import org.sidiff.graphpattern.EObjectList;
+import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
+import org.sidiff.graphpattern.matcher.ui.session.EngineManager;
+import org.sidiff.graphpattern.matcher.ui.util.SiriusUtil;
 import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
 import org.sidiff.graphpattern.matching.util.MatchingUtil;

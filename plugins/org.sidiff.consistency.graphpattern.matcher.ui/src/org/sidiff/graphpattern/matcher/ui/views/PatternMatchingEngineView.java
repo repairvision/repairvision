@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.matcher.ui.views;
+package org.sidiff.graphpattern.matcher.ui.views;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,17 +51,17 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
-import org.sidiff.consistency.graphpattern.matcher.ui.Activator;
-import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
 import org.sidiff.graphpattern.matcher.extensions.MatchingEngineFactoryEntry;
 import org.sidiff.graphpattern.matcher.extensions.MatchingEngineFactoryLibrary;
+import org.sidiff.graphpattern.matcher.ui.Activator;
+import org.sidiff.graphpattern.matcher.ui.util.SiriusUtil;
 
 public class PatternMatchingEngineView extends ViewPart implements ISelectionListener {
 
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "org.sidiff.consistency.graphpattern.matcher.ui.views.PatternMatchingEngineView";
+	public static final String ID = "org.sidiff.graphpattern.matcher.ui.views.PatternMatchingEngineView";
 	
 	/**
 	 * The EMF-Model viewer showing the graph pattern.
@@ -138,7 +138,7 @@ public class PatternMatchingEngineView extends ViewPart implements ISelectionLis
 
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer_pattern.getControl(), 
-				"org.sidiff.consistency.graphpattern.matcher.ui.viewer");
+				"org.sidiff.graphpattern.matcher.ui.viewer");
 		getSite().setSelectionProvider(viewer_pattern);
 
 		int dndOperations = DND.DROP_MOVE | DND.DROP_LINK;

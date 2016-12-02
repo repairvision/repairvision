@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.matcher.ui.views;
+package org.sidiff.graphpattern.matcher.ui.views;
 
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -27,15 +27,15 @@ import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 import org.sidiff.consistency.common.ui.InfoConsole;
 import org.sidiff.consistency.common.ui.WorkbenchUtil;
-import org.sidiff.consistency.graphpattern.EObjectList;
-import org.sidiff.consistency.graphpattern.matcher.ui.Activator;
+import org.sidiff.graphpattern.EObjectList;
+import org.sidiff.graphpattern.matcher.ui.Activator;
 
 public class MatchViewer extends ViewPart {
 
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "org.sidiff.consistency.graphpattern.matcher.ui.views.MatchViewer";
+	public static final String ID = "org.sidiff.graphpattern.matcher.ui.views.MatchViewer";
 
 	/**
 	 * The EMF-Model viewer showing the matches.

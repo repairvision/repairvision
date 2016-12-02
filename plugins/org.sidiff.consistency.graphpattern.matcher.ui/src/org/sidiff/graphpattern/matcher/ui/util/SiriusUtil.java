@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.matcher.ui.util;
+package org.sidiff.graphpattern.matcher.ui.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +21,7 @@ import org.eclipse.sirius.viewpoint.DRepresentation;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
-import org.sidiff.consistency.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphPattern;
 
 @SuppressWarnings("restriction")
 public class SiriusUtil {

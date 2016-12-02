@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.matcher.ui.session;
+package org.sidiff.graphpattern.matcher.ui.session;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,13 +8,13 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.consistency.graphpattern.GraphPattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.matcher.ui.util.SiriusUtil;
+import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngineFactory;
 import org.sidiff.graphpattern.matcher.debug.PatternMatchingDebugger;
 import org.sidiff.graphpattern.matcher.debug.PatternMatchingDebugger.BreakpointListener;
+import org.sidiff.graphpattern.matcher.ui.util.SiriusUtil;
 import org.sidiff.graphpattern.matching.IMatching;
 
 public class EngineManager {
