@@ -7,10 +7,10 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.Visitor;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Visitor;
 import org.sidiff.graphpattern.matcher.lifting.engine.LiftingWorkingGraphConstructor;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphIndex;

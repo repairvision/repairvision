@@ -1,8 +1,8 @@
 package org.sidiff.graphpattern.matcher.lifting.atomics;
 
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matching.selection.AtomicPattern;
 import org.sidiff.graphpattern.matching.selection.IAtomicPatternFactory;
 import org.sidiff.graphpattern.matching.selection.PathSelector;

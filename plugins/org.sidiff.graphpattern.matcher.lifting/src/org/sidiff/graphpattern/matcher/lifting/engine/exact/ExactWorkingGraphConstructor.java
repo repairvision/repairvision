@@ -1,7 +1,7 @@
 package org.sidiff.graphpattern.matcher.lifting.engine.exact;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.sidiff.consistency.graphpattern.Visitor;
+import org.sidiff.graphpattern.Visitor;
 import org.sidiff.graphpattern.matcher.lifting.engine.LiftingWorkingGraphConstructor;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphIndex;

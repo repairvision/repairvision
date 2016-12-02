@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.Change;
@@ -17,6 +16,7 @@ import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
 import org.sidiff.difference.symmetric.SymmetricFactory;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matching.algorithms.NodeMatching;
 import org.sidiff.graphpattern.wgraph.selection.MatchSelection;
 import org.sidiff.graphpattern.wgraph.util.WGraph;

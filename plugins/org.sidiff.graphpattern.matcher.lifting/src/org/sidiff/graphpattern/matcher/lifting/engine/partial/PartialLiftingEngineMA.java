@@ -3,7 +3,7 @@ package org.sidiff.graphpattern.matcher.lifting.engine.partial;
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.lifting.engine.LiftingMatchGeneratorMA;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphIndex;

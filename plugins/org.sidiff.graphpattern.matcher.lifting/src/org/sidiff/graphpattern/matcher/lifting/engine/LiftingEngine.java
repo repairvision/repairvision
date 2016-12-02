@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.sidiff.common.emf.access.Scope;
-import org.sidiff.consistency.graphpattern.DataStore;
-import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.MergeImports;
+import org.sidiff.graphpattern.DataStore;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.AbstractPatternMatchingEngine;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphIndex;

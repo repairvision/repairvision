@@ -7,13 +7,13 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.NavigableDataStore;
-import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.NavigableDataStore;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.lifting.engine.LiftingEngine;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphDomainMap;
 import org.sidiff.graphpattern.matcher.lifting.util.LiftingGraphIndex;

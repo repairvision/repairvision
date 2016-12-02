@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngineFactory;
 import org.sidiff.graphpattern.matcher.lifting.util.RecognitionRuleUtil;
 import org.sidiff.graphpattern.matching.IMatching;

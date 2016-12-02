@@ -3,10 +3,10 @@ package org.sidiff.graphpattern.matcher.lifting.engine.partial;
 import static org.sidiff.graphpattern.wgraph.construction.tools.matching.MatchingHelper.isAssignableTo;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.graphpattern.AttributePattern;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.graphpattern.AttributePattern;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.lifting.util.RecognitionRuleUtil;
 import org.sidiff.graphpattern.wgraph.construction.BasicConstraintTester;
 import org.sidiff.graphpattern.wgraph.construction.tools.matching.MatchingHelper;

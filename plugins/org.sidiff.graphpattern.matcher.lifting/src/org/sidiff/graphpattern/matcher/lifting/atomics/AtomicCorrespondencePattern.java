@@ -2,8 +2,8 @@ package org.sidiff.graphpattern.matcher.lifting.atomics;
 
 import java.util.ArrayList;
 
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matching.selection.AtomicPattern;
 import org.sidiff.graphpattern.matching.selection.Move;
 
