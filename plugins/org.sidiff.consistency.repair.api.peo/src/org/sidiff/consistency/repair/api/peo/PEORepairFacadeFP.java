@@ -1,8 +1,8 @@
 package org.sidiff.consistency.repair.api.peo;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.consistency.repair.api.peo.complement.ComplementFinder;
-import org.sidiff.consistency.repair.api.peo.complement.ComplementFinderFP;
+import org.sidiff.consistency.repair.complement.peo.finder.ComplementFinder;
+import org.sidiff.consistency.repair.complement.peo.finder.ComplementFinderFP;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 
 public class PEORepairFacadeFP extends PEORepairFacade {

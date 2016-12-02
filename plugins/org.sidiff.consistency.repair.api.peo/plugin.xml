@@ -3,34 +3,6 @@
 <plugin>
 
    <extension
-         point="org.sidiff.consistency.graphpattern.matcher.factory">
-      <factory
-            class="org.sidiff.consistency.repair.api.peo.engine.exact.ExactLiftingEngineFactoryMA"
-            description="A pattern matching engine for edit rule recognition rules."
-            id="org.sidiff.consistency.graphpattern.matcher.lifting.exact.ma"
-            name="[Exact] Lifting Pattern Matching Engine (MA)">
-      </factory>
-      <factory
-            class="org.sidiff.consistency.repair.api.peo.engine.partial.PartialLiftingEngineFactoryMA"
-            description="A pattern matching engine for edit rule recognition rules."
-            id="org.sidiff.consistency.graphpattern.matcher.lifting.partial.ma"
-            name="[Partial] Lifting Pattern Matching Engine (MA)">
-      </factory>
-      <factory
-            class="org.sidiff.consistency.repair.api.peo.engine.partial.PartialLiftingEngineFactoryFP"
-            description="A pattern matching engine for edit rule recognition rules."
-            id="org.sidiff.consistency.graphpattern.matcher.lifting.partial.fp"
-            name="[Partial] Lifting Pattern Matching Engine (FP)">
-      </factory>
-      <factory
-            class="org.sidiff.consistency.repair.api.peo.engine.exact.ExactLiftingEngineFactoryFP"
-            description="A pattern matching engine for edit rule recognition rules."
-            id="org.sidiff.consistency.graphpattern.matcher.lifting.exact.fp"
-            name="[Exact] Lifting Pattern Matching Engine (FP)">
-      </factory>
-   </extension>
-
-   <extension
          point="org.sidiff.consistency.repair.api.engine">
       <engine
             facade="org.sidiff.consistency.repair.api.peo.PEORepairFacadeMA"

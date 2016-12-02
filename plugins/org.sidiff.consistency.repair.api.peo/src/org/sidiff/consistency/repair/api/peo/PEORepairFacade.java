@@ -19,9 +19,9 @@ import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.repair.api.IRepair;
 import org.sidiff.consistency.repair.api.IRepairFacade;
 import org.sidiff.consistency.repair.api.matching.EditOperationMatching;
-import org.sidiff.consistency.repair.api.peo.complement.AbstractRepairFilter;
-import org.sidiff.consistency.repair.api.peo.complement.ComplementFinder;
 import org.sidiff.consistency.repair.complement.construction.ComplementRule;
+import org.sidiff.consistency.repair.complement.peo.finder.AbstractRepairFilter;
+import org.sidiff.consistency.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.consistency.repair.complement.repair.RepairOperation;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 
