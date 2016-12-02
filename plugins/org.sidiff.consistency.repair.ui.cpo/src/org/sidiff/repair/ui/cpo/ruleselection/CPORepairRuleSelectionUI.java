@@ -1,12 +1,12 @@
-package org.sidiff.consistency.repair.ui.cpo.ruleselection;
+package org.sidiff.repair.ui.cpo.ruleselection;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.sidiff.consistency.repair.ui.controls.impl.BasicRepairUI;
-import org.sidiff.consistency.repair.ui.controls.impl.ModelDropWidget;
+import org.sidiff.repair.ui.controls.impl.BasicRepairUI;
+import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
 
 public class CPORepairRuleSelectionUI extends BasicRepairUI<SashForm, CPORepairApplication> {
 

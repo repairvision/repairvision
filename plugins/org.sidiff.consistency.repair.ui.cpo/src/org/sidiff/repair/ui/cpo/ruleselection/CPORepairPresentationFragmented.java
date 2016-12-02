@@ -1,7 +1,7 @@
-package org.sidiff.consistency.repair.ui.cpo.ruleselection;
+package org.sidiff.repair.ui.cpo.ruleselection;
 
-import org.sidiff.consistency.repair.api.cpo.CPORepairFacadeFragmented;
-import org.sidiff.consistency.repair.ui.presentation.IRepairPresentation;
+import org.sidiff.repair.api.cpo.CPORepairFacadeFragmented;
+import org.sidiff.repair.ui.presentation.IRepairPresentation;
 
 public class CPORepairPresentationFragmented implements IRepairPresentation {
 

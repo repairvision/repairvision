@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.ui.cpo.ruleselection;
+package org.sidiff.repair.ui.cpo.ruleselection;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,15 +13,15 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
-import org.sidiff.consistency.common.ui.WorkbenchUtil;
-import org.sidiff.consistency.repair.api.IRepair;
-import org.sidiff.consistency.repair.api.IRepairFacade;
-import org.sidiff.consistency.repair.api.cpo.CPORepairJob;
-import org.sidiff.consistency.repair.api.cpo.CPORepairSettings;
-import org.sidiff.consistency.repair.ui.app.impl.BasicRepairApplication;
-import org.sidiff.consistency.repair.ui.controls.impl.ModelDropWidget;
-import org.sidiff.consistency.repair.ui.util.EditRuleUtil;
+import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.api.cpo.CPORepairJob;
+import org.sidiff.repair.api.cpo.CPORepairSettings;
+import org.sidiff.repair.ui.app.impl.BasicRepairApplication;
+import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
+import org.sidiff.repair.ui.util.EditRuleUtil;
 
 public class CPORepairApplication extends BasicRepairApplication<CPORepairJob, CPORepairSettings> {
 	
