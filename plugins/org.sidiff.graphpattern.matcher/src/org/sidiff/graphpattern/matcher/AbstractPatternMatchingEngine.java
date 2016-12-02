@@ -14,7 +14,7 @@ import org.sidiff.consistency.graphpattern.DataStore;
 import org.sidiff.consistency.graphpattern.Evaluation;
 import org.sidiff.consistency.graphpattern.GraphpatternFactory;
 import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.graphpattern.matcher.matching.IMatchGenerator;
+import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
 import org.sidiff.graphpattern.wgraph.construction.IWorkingGraphConstructor;
 
