@@ -1,11 +1,11 @@
-package org.sidiff.consistency.graphpattern.design.service;
+package org.sidiff.graphpattern.design.service;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.consistency.graphpattern.AttributePattern;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.AttributePattern;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.NodePattern;
 
 public class LabelServices {
 

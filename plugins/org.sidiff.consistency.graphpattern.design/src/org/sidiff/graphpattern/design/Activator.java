@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.design;
+package org.sidiff.graphpattern.design;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +13,7 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.sidiff.consistency.graphpattern.design";
+    public static final String PLUGIN_ID = "org.sidiff.graphpattern.design";
 
     // The shared instance
     private static Activator plugin;

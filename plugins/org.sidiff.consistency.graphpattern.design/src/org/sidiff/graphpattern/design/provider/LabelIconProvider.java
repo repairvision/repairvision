@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.design.provider;
+package org.sidiff.graphpattern.design.provider;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,8 +14,8 @@ import org.eclipse.sirius.diagram.ui.tools.api.graphical.edit.styles.SimpleStyle
 import org.eclipse.sirius.diagram.ui.tools.api.graphical.edit.styles.StyleConfiguration;
 import org.eclipse.sirius.viewpoint.Style;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.edit.util.ItemProviderUtil;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 /**
  * Provides the corresponding end/start icons of opposite edges.

@@ -1,7 +1,7 @@
-package org.sidiff.consistency.graphpattern.design.service;
+package org.sidiff.graphpattern.design.service;
 
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.design.consistency.ConsistencyChecks;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.design.consistency.ConsistencyChecks;
 
 public class ConditionService {
 

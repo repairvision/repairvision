@@ -1,6 +1,6 @@
-package org.sidiff.consistency.graphpattern.design.consistency;
+package org.sidiff.graphpattern.design.consistency;
 
-import org.sidiff.consistency.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.EdgePattern;
 
 public class ConsistencyChecks {
 

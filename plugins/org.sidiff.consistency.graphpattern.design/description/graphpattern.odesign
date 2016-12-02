@@ -2,7 +2,7 @@
 <description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="graphpattern" version="10.1.3.201511131800">
   <ownedViewpoints name="graphpattern" label="Graph-Pattern">
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="graphpattern.diagram" label="Graph Pattern Diagram" domainClass="graphpattern.GraphPattern" enablePopupBars="true">
-      <metamodel href="../../org.sidiff.consistency.graphpattern/model/graphpattern.ecore#/"/>
+      <metamodel href="../../org.sidiff.graphpattern/model/graphpattern.ecore#/"/>
       <defaultLayer name="Default">
         <edgeMappings name="graphpattern.edgepattern.nonnavigable" label="Edge Pattern - Non-Navigable" semanticCandidatesExpression="service:getNonNavigableEdgeCandidates()" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern']" targetMapping="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="graphpattern.EdgePattern" useDomainElement="true" reconnections="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.1/@ownedTools[name='graphpattern.section.actions.reconnect.edge']">
           <style routingStyle="manhattan">
@@ -113,10 +113,10 @@
         </toolSections>
       </defaultLayer>
     </ownedRepresentations>
-    <ownedJavaExtensions qualifiedClassName="org.sidiff.consistency.graphpattern.design.service.LabelServices"/>
-    <ownedJavaExtensions qualifiedClassName="org.sidiff.consistency.graphpattern.design.service.ColorServices"/>
-    <ownedJavaExtensions qualifiedClassName="org.sidiff.consistency.graphpattern.design.service.GraphServices"/>
-    <ownedJavaExtensions qualifiedClassName="org.sidiff.consistency.graphpattern.design.service.ConditionService"/>
+    <ownedJavaExtensions qualifiedClassName="org.sidiff.graphpattern.design.service.LabelServices"/>
+    <ownedJavaExtensions qualifiedClassName="org.sidiff.graphpattern.design.service.ColorServices"/>
+    <ownedJavaExtensions qualifiedClassName="org.sidiff.graphpattern.design.service.GraphServices"/>
+    <ownedJavaExtensions qualifiedClassName="org.sidiff.graphpattern.design.service.ConditionService"/>
   </ownedViewpoints>
   <userColorsPalettes>
     <entries xsi:type="description:ComputedColor" name="NodeColor" red="service:getNodeColorR()" green="service:getNodeColorG()" blue="service:getNodeColorB()"/>

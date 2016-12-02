@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.design.service;
+package org.sidiff.graphpattern.design.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,10 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.GraphPattern;
-import org.sidiff.consistency.graphpattern.NodePattern;
-import org.sidiff.consistency.graphpattern.design.consistency.ConsistencyChecks;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.design.consistency.ConsistencyChecks;
 
 public class GraphServices {
 	
