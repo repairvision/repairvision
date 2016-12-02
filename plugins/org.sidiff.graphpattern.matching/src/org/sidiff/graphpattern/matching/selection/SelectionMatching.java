@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.matching.impl;
+package org.sidiff.graphpattern.matching.selection;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
