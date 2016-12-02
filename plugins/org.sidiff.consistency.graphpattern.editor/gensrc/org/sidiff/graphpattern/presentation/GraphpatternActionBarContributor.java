@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.presentation;
+package org.sidiff.graphpattern.presentation;
 
 import java.util.ArrayList;
 import java.util.Collection;

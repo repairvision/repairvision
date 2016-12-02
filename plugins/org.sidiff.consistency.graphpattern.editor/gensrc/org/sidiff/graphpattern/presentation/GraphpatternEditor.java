@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.presentation;
+package org.sidiff.graphpattern.presentation;
 
 
 import java.io.IOException;
@@ -100,7 +100,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
-
+import org.sidiff.graphpattern.provider.GraphpatternItemProviderAdapterFactory;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
@@ -153,9 +153,6 @@ import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
-
-import org.sidiff.consistency.graphpattern.provider.GraphpatternItemProviderAdapterFactory;
-
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 
@@ -618,7 +615,7 @@ public class GraphpatternEditor
 			BasicDiagnostic diagnostic =
 				new BasicDiagnostic
 					(Diagnostic.OK,
-					 "org.sidiff.consistency.graphpattern.editor",
+					 "org.sidiff.graphpattern.editor",
 					 0,
 					 null,
 					 new Object [] { editingDomain.getResourceSet() });
@@ -982,7 +979,7 @@ public class GraphpatternEditor
 			BasicDiagnostic basicDiagnostic =
 				new BasicDiagnostic
 					(hasErrors ? Diagnostic.ERROR : Diagnostic.WARNING,
-					 "org.sidiff.consistency.graphpattern.editor",
+					 "org.sidiff.graphpattern.editor",
 					 0,
 					 getString("_UI_CreateModelError_message", resource.getURI()),
 					 new Object [] { exception == null ? (Object)resource : exception });
@@ -993,7 +990,7 @@ public class GraphpatternEditor
 			return
 				new BasicDiagnostic
 					(Diagnostic.ERROR,
-					 "org.sidiff.consistency.graphpattern.editor",
+					 "org.sidiff.graphpattern.editor",
 					 0,
 					 getString("_UI_CreateModelError_message", resource.getURI()),
 					 new Object[] { exception });

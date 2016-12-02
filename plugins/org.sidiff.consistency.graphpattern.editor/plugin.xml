@@ -12,9 +12,9 @@
             id="org.eclipse.emf.ecore.Wizard.category.ID"
             name="%_UI_Wizard_category"/>
       <wizard
-            id="org.sidiff.consistency.graphpattern.presentation.GraphpatternModelWizardID"
+            id="org.sidiff.graphpattern.presentation.GraphpatternModelWizardID"
             name="%_UI_GraphpatternModelWizard_label"
-            class="org.sidiff.consistency.graphpattern.presentation.GraphpatternModelWizard"
+            class="org.sidiff.graphpattern.presentation.GraphpatternModelWizard"
             category="org.eclipse.emf.ecore.Wizard.category.ID"
             icon="icons/full/obj16/GraphpatternModelFile.gif">
          <description>%_UI_GraphpatternModelWizard_description</description>
@@ -25,12 +25,12 @@
    <extension point="org.eclipse.ui.editors">
       <!-- @generated graphpattern -->
       <editor
-            id="org.sidiff.consistency.graphpattern.presentation.GraphpatternEditorID"
+            id="org.sidiff.graphpattern.presentation.GraphpatternEditorID"
             name="%_UI_GraphpatternEditor_label"
             icon="icons/full/obj16/GraphpatternModelFile.gif"
             extensions="graphpattern"
-            class="org.sidiff.consistency.graphpattern.presentation.GraphpatternEditor"
-            contributorClass="org.sidiff.consistency.graphpattern.presentation.GraphpatternActionBarContributor">
+            class="org.sidiff.graphpattern.presentation.GraphpatternEditor"
+            contributorClass="org.sidiff.graphpattern.presentation.GraphpatternActionBarContributor">
       </editor>
    </extension>
 </plugin>

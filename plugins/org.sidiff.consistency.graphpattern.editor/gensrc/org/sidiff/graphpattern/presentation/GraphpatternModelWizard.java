@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.presentation;
+package org.sidiff.graphpattern.presentation;
 
 
 import java.util.ArrayList;
@@ -68,12 +68,9 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
-
-import org.sidiff.consistency.graphpattern.GraphpatternFactory;
-import org.sidiff.consistency.graphpattern.GraphpatternPackage;
-import org.sidiff.consistency.graphpattern.provider.GraphpatternEditPlugin;
-
-
+import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.provider.GraphpatternEditPlugin;
 import org.eclipse.core.runtime.Path;
 
 import org.eclipse.jface.viewers.ISelection;

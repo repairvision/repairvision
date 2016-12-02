@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.consistency.graphpattern.presentation;
+package org.sidiff.graphpattern.presentation;
 
 import org.eclipse.emf.common.EMFPlugin;
 
