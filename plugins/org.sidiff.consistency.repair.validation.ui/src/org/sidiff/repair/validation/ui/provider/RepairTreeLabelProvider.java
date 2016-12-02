@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.validation.ui.provider;
+package org.sidiff.repair.validation.ui.provider;
 
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -6,13 +6,13 @@ import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.ui.NameUtil;
-import org.sidiff.consistency.repair.validation.fix.Alternative;
-import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
-import org.sidiff.consistency.repair.validation.fix.Repair;
-import org.sidiff.consistency.repair.validation.fix.Sequence;
-import org.sidiff.consistency.repair.validation.ui.Activator;
-import org.sidiff.consistency.repair.validation.util.Validation;
+import org.sidiff.common.ui.NameUtil;
+import org.sidiff.repair.validation.fix.Alternative;
+import org.sidiff.repair.validation.fix.IRepairDecision;
+import org.sidiff.repair.validation.fix.Repair;
+import org.sidiff.repair.validation.fix.Sequence;
+import org.sidiff.repair.validation.ui.Activator;
+import org.sidiff.repair.validation.util.Validation;
 
 public class RepairTreeLabelProvider extends LabelProvider {
 

@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.validation.ui;
+package org.sidiff.repair.validation.ui;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -10,7 +10,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.sidiff.consistency.repair.validation.ui"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.sidiff.repair.validation.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;

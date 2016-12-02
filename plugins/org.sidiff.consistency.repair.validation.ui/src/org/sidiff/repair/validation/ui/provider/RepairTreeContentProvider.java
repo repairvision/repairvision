@@ -1,12 +1,12 @@
-package org.sidiff.consistency.repair.validation.ui.provider;
+package org.sidiff.repair.validation.ui.provider;
 
 import java.util.Collection;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.sidiff.consistency.repair.validation.fix.IRepairDecision;
-import org.sidiff.consistency.repair.validation.util.Validation;
+import org.sidiff.repair.validation.fix.IRepairDecision;
+import org.sidiff.repair.validation.util.Validation;
 
 public class RepairTreeContentProvider implements IStructuredContentProvider, ITreeContentProvider {
 
