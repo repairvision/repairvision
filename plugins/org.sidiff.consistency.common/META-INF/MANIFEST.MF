@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Consistency Common
-Bundle-SymbolicName: org.sidiff.consistency.common
+Bundle-SymbolicName: org.sidiff.repair.common
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime,
@@ -10,6 +10,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.console,
  org.eclipse.ui.workbench,
  org.sidiff.common;visibility:=reexport
-Export-Package: org.sidiff.consistency.common.debug,
- org.sidiff.consistency.common.storage,
- org.sidiff.consistency.common.ui
+Export-Package: org.sidiff.common.storage,
+ org.sidiff.common.ui,
+ org.sidiff.debug

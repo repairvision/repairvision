@@ -1,4 +1,4 @@
-package org.sidiff.consistency.common.ui;
+package org.sidiff.common.ui;
 
 import java.util.HashMap;
 import java.util.Map;

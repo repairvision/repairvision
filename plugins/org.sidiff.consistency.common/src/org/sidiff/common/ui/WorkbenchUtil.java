@@ -1,4 +1,4 @@
-package org.sidiff.consistency.common.ui;
+package org.sidiff.common.ui;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IViewPart;
