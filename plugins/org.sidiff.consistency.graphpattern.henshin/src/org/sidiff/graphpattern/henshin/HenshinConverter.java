@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.henshin;
+package org.sidiff.graphpattern.henshin;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -13,11 +13,11 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.graphpattern.AttributePattern;
-import org.sidiff.consistency.graphpattern.EdgePattern;
-import org.sidiff.consistency.graphpattern.GraphPattern;
-import org.sidiff.consistency.graphpattern.GraphpatternFactory;
-import org.sidiff.consistency.graphpattern.NodePattern;
+import org.sidiff.graphpattern.AttributePattern;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.NodePattern;
 
 /**
  * Converts a Henshin rule into a Graph-Pattern ({@link GraphPattern}).

@@ -1,4 +1,4 @@
-package org.sidiff.consistency.graphpattern.henshin.handler;
+package org.sidiff.graphpattern.henshin.handler;
 import java.io.IOException;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -14,7 +14,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.sidiff.consistency.graphpattern.henshin.HenshinConverter;
+import org.sidiff.graphpattern.henshin.HenshinConverter;
 
 public class HenshinConverterHandler extends AbstractHandler {
 

@@ -9,7 +9,7 @@
          <menu
                label="SiDiff Pattern Matching Engine">
             <command
-                  commandId="org.sidiff.consistency.graphpattern.converter.henshin"
+                  commandId="org.sidiff.graphpattern.converter.henshin"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -34,8 +34,8 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.sidiff.consistency.graphpattern.henshin.handler.HenshinConverterHandler"
-            id="org.sidiff.consistency.graphpattern.converter.henshin"
+            defaultHandler="org.sidiff.graphpattern.henshin.handler.HenshinConverterHandler"
+            id="org.sidiff.graphpattern.converter.henshin"
             name="Convert to Graph-Pattern model">
       </command>
    </extension>
