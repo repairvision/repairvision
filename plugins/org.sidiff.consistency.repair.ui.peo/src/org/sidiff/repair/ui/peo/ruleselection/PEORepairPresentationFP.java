@@ -1,7 +1,7 @@
-package org.sidiff.consistency.repair.ui.peo.ruleselection;
+package org.sidiff.repair.ui.peo.ruleselection;
 
-import org.sidiff.consistency.repair.api.peo.PEORepairFacadeFP;
-import org.sidiff.consistency.repair.ui.presentation.IRepairPresentation;
+import org.sidiff.repair.api.peo.PEORepairFacadeFP;
+import org.sidiff.repair.ui.presentation.IRepairPresentation;
 
 public class PEORepairPresentationFP implements IRepairPresentation {
 

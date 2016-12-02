@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.ui.peo.ruleselection;
+package org.sidiff.repair.ui.peo.ruleselection;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,16 +13,16 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
-import org.sidiff.consistency.common.ui.WorkbenchUtil;
-import org.sidiff.consistency.repair.api.IRepair;
-import org.sidiff.consistency.repair.api.IRepairFacade;
-import org.sidiff.consistency.repair.api.peo.PEORepairJob;
-import org.sidiff.consistency.repair.api.peo.PEORepairSettings;
-import org.sidiff.consistency.repair.ui.app.impl.BasicRepairApplication;
-import org.sidiff.consistency.repair.ui.controls.impl.ModelDropWidget;
-import org.sidiff.consistency.repair.ui.util.EditRuleUtil;
-import org.sidiff.consistency.repair.validation.util.Validation;
+import org.sidiff.repair.api.peo.PEORepairJob;
+import org.sidiff.repair.api.peo.PEORepairSettings;
+import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.ui.app.impl.BasicRepairApplication;
+import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
+import org.sidiff.repair.ui.util.EditRuleUtil;
+import org.sidiff.repair.validation.util.Validation;
 
 public class PEORepairApplication extends BasicRepairApplication<PEORepairJob, PEORepairSettings> {
 

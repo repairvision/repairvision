@@ -1,4 +1,4 @@
-package org.sidiff.consistency.repair.ui.peo.ruleselection;
+package org.sidiff.repair.ui.peo.ruleselection;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.viewers.ISelection;
@@ -8,12 +8,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.sidiff.consistency.repair.api.peo.PEORepairJob;
-import org.sidiff.consistency.repair.ui.app.IResultChangedListener;
-import org.sidiff.consistency.repair.ui.controls.impl.BasicRepairUI;
-import org.sidiff.consistency.repair.ui.controls.impl.ModelDropWidget;
-import org.sidiff.consistency.repair.validation.ui.provider.RepairTreeContentProvider;
-import org.sidiff.consistency.repair.validation.ui.provider.RepairTreeLabelProvider;
+import org.sidiff.repair.api.peo.PEORepairJob;
+import org.sidiff.repair.ui.app.IResultChangedListener;
+import org.sidiff.repair.ui.controls.impl.BasicRepairUI;
+import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
+import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
+import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
 
 public class PEORepairRuleSelectionUI extends BasicRepairUI<SashForm, PEORepairApplication>
 		implements IResultChangedListener<PEORepairJob> {
