@@ -1,19 +1,33 @@
 package org.sidiff.graphpattern.matcher.lifting.dependencies;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHStoRHSChangingAttributes;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationEdge;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationNode;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionEdge;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionNode;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.view.AttributePair;
 import org.sidiff.common.henshin.view.NodePair;
 import org.sidiff.difference.lifting.edit2recognition.traces.AttributeValueChangePattern;
 import org.sidiff.difference.lifting.edit2recognition.traces.TransformationPatterns;
+import org.sidiff.graphpattern.DependencyNode;
+import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.NodePatternDependency;
 
 public class ChangeDependencies {
 
@@ -24,6 +38,8 @@ public class ChangeDependencies {
 	private Map<Node, NodePattern> henshinToGraphPatternTrace;
 	
 	private TransformationPatterns edit2RecognitionTrace;
+	
+	private Map<Edge, DependencyNode> dependencyTrace = new HashMap<>();
 
 	public ChangeDependencies(Rule editRule, GraphPattern recognitionRule,
 			Map<Node, NodePattern> henshinToGraphPatternTrace, 
@@ -40,6 +56,8 @@ public class ChangeDependencies {
 	 */
 	public void calculateDependencyGraph() {
 		
+		createDependencyGraph();
+		
 		/*--------------------------------------------------------------------------------------------------------------
 		A: Every << delete >> node + container/containment edges forms a dependency conjunction.
 		B: All << delete >> opposite edges form a dependency conjunction.
@@ -54,8 +72,7 @@ public class ChangeDependencies {
 		   - Inner and leaf nodes of a << delete >> tree may not be removed (to << preserve >>) from an edit rule!
 		--------------------------------------------------------------------------------------------------------------*/
 		
-		createRemoveObjectDependencies();
-		createRemoveReferenceDependencies();
+		createRemoveChangeDependencies();
 		
 		/*--------------------------------------------------------------------------------------------------------------
 		A: Every << create >> node + container/containment references forms a dependency conjunction.
@@ -72,8 +89,7 @@ public class ChangeDependencies {
 		- Normal (non container/containment) edges, opposite conjunctions have no dependencies!
 		--------------------------------------------------------------------------------------------------------------*/
 		
-		createAddObjectDependencies();
-		createAddReferenceDependencies();
+		createAddChangeDependencies();
 		
 		/*--------------------------------------------------------------------------------------------------------------
 		- Each attribute value change can be treated independently of each other.
@@ -83,36 +99,95 @@ public class ChangeDependencies {
 		createAttributeValueChangePatterns();
 	}
 	
-	private void createRemoveObjectDependencies() {
-		
-		// edit rule LHS \ RHS <<delete>> node:
-		for (Node node : getLHSMinusRHSNodes(editRule)) {
-			
-		}
-	}
-	
-	private void createRemoveReferenceDependencies() {
+	private void createRemoveChangeDependencies() {
 		
 		// edit rule LHS \ RHS <<delete>> node:
 		for (Edge edge : getLHSMinusRHSEdges(editRule)) {
+			EReference type = edge.getType();
 			
+			if (type.isContainment() || type.isContainer()) {
+				
+				// A: Every << delete >> node + container/containment edges forms a dependency conjunction.
+				if (!dependencyTrace.containsKey(edge)) {
+					Edge containerEdge = getOpposite(edge);
+					DependencyNode dependency = createDependency(edge.getTarget(), edge, containerEdge);
+					
+					dependencyTrace.put(edge, dependency);
+					dependencyTrace.put(containerEdge, dependency);
+				}
+			} else {
+				DependencyNode dependency = null;
+				
+				// B: All << delete >> opposite edges form a dependency conjunction.
+				if (edge.getType().getEOpposite() != null) {
+					if (!dependencyTrace.containsKey(edge)) {
+						Edge opposite = getOpposite(edge);
+						dependency = createDependency(edge, opposite);
+						
+						dependencyTrace.put(edge, dependency);
+						dependencyTrace.put(opposite, dependency);
+					}
+				} else {
+					dependency = createDependency(edge);
+					dependencyTrace.put(edge, dependency);
+				}
+				
+				// C: Every << delete >> edge has a direct dependency to its << delete >> source and target node.
+				if (dependency != null) {
+					
+				}
+			}
 		}
-	}
-	
-	private void createAddObjectDependencies() {
 		
-		// edit rule RHS \ LHS <<create>> node:
-		for (Node node : getRHSMinusLHSNodes(editRule)) {
-			
+		// D: Every << delete >> node conjunction [A] has direct dependency to its parent << delete >> node.
+	}
+	
+	private Edge getOpposite(Edge edge) {
+		if (edge.getType().getEOpposite() != null) {
+			return edge.getTarget().getOutgoing(edge.getType().getEOpposite(), edge.getSource());
+		} else {
+			return null;
 		}
 	}
 	
-	private void createAddReferenceDependencies() {
+	private void createAddChangeDependencies() {
 		
 		// edit rule RHS \ LHS (added):
 		for (Edge edge : getRHSMinusLHSEdges(editRule)) {
+			EReference type = edge.getType();
 			
+			if (type.isContainment() || type.isContainer()) {
+				
+				// A: Every << create >> node + container/containment references forms a dependency conjunction.
+				if (!dependencyTrace.containsKey(edge)) {
+					Edge containerEdge = getOpposite(edge);
+					DependencyNode dependency = createDependency(edge.getTarget(), edge, containerEdge);
+					
+					dependencyTrace.put(edge, dependency);
+					dependencyTrace.put(containerEdge, dependency);
+				}
+			} else {
+				
+				// B: All << create >> opposite edges form a dependency conjunction.
+				if (edge.getType().getEOpposite() != null) {
+					if (!dependencyTrace.containsKey(edge)) {
+						Edge opposite = getOpposite(edge);
+						DependencyNode dependency = createDependency(edge, opposite);
+						
+						dependencyTrace.put(edge, dependency);
+						dependencyTrace.put(opposite, dependency);
+					}
+				}
+			}
 		}
+		
+		// edit rule RHS \ LHS <<create>> node:
+		for (Node node : getRHSMinusLHSNodes(editRule)) {
+			// C: Every << create >> node conjunction [A] has a direct dependency to its incident << create >> edges.
+
+		}
+		
+		// D: Every << create >> node conjunction [A] has direct dependencies to its child << create >> nodes. 
 	}
 	
 	private void createAttributeValueChangePatterns() {
@@ -121,6 +196,39 @@ public class ChangeDependencies {
 		for (AttributePair attribute : getLHStoRHSChangingAttributes(editRule)) {
 			
 		}
+	}
+	
+	private void createDependencyGraph() {
+		recognitionRule.setDependencyGraph(GraphpatternFactory.eINSTANCE.createDependencyGraph());
+	}
+	
+	private DependencyNode createDependency(GraphElement... changes) {
+		NodePatternDependency dependency = GraphpatternFactory.eINSTANCE.createNodePatternDependency();
+		
+		for (GraphElement graphElement : changes) {
+			NodePattern recognitionChange = getRecognitionChange(graphElement);
+			dependency.getNodes().add(recognitionChange);
+		}
+		
+		recognitionRule.getDependencyGraph().getNodes().add(dependency);
+		return dependency;
+	}
+	
+	private NodePattern getRecognitionChange(GraphElement change) {
+		
+		if (change instanceof Edge) {
+			return getRecognitionChange((Edge) change);
+		}
+		
+		else if (change instanceof Node) {
+			return getRecognitionChange((Node) change);
+		}
+		
+		else if (change instanceof Attribute) {
+			return getRecognitionChange((Attribute) change);
+		}
+		
+		return null;
 	}
 	
 	private NodePattern getRecognitionChange(Node change) {
