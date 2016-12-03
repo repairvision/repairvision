@@ -39,10 +39,47 @@ public class ChangeDependencies {
 	 * Creates the dependency graph for a recognition rule.
 	 */
 	public void calculateDependencyGraph() {
+		
+		/*--------------------------------------------------------------------------------------------------------------
+		A: Every << delete >> node + container/containment edges forms a dependency conjunction.
+		B: All << delete >> opposite edges form a dependency conjunction.
+		   - node + container/containment, opposite edges => atomic patterns
+		
+		C: Every << delete >> edge has a direct dependency to its << delete >> source and target node.
+		   - 1. set source and target << delete >> node to << preserve >> 
+		   - 2. set the << delete >> edge to << preserve >>
+		
+		D: Every << delete >> node conjunction [A] has direct dependency to its parent << delete >> node.
+		   - Only the root of a << delete >> tree may be removed (to << preserve >>) from an edit rule!
+		   - Inner and leaf nodes of a << delete >> tree may not be removed (to << preserve >>) from an edit rule!
+		--------------------------------------------------------------------------------------------------------------*/
+		
 		createRemoveObjectDependencies();
 		createRemoveReferenceDependencies();
+		
+		/*--------------------------------------------------------------------------------------------------------------
+		A: Every << create >> node + container/containment references forms a dependency conjunction.
+		B: All << create >> opposite edges form a dependency conjunction.
+		   - node + container/containment, opposite edges => atomic patterns
+		
+		C: Every << create >> node conjunction [A] has a direct dependency to its incident << create >> edges.
+		   - 1. remove normal (non container/containment) edges, opposite conjunctions
+		   - 2. remove << create >> node + container/containment edges
+		
+		D: Every << create >> node conjunction [A] has direct dependencies to its child << create >> nodes.   
+		   - Only leaf nodes of a << create >> tree may be removed from an edit rule!
+		   
+		- Normal (non container/containment) edges, opposite conjunctions have no dependencies!
+		--------------------------------------------------------------------------------------------------------------*/
+		
 		createAddObjectDependencies();
 		createAddReferenceDependencies();
+		
+		/*--------------------------------------------------------------------------------------------------------------
+		- Each attribute value change can be treated independently of each other.
+		- An attribute value change has >no< dependencies to other changes.
+		--------------------------------------------------------------------------------------------------------------*/
+		
 		createAttributeValueChangePatterns();
 	}
 	
