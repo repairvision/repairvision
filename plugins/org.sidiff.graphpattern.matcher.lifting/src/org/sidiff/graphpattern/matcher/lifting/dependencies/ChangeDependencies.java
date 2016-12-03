@@ -3,13 +3,14 @@ package org.sidiff.graphpattern.matcher.lifting.dependencies;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHStoRHSChangingAttributes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionNode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EReference;
@@ -22,8 +23,8 @@ import org.sidiff.common.henshin.view.AttributePair;
 import org.sidiff.common.henshin.view.NodePair;
 import org.sidiff.difference.lifting.edit2recognition.traces.AttributeValueChangePattern;
 import org.sidiff.difference.lifting.edit2recognition.traces.TransformationPatterns;
+import org.sidiff.graphpattern.DependencyEdge;
 import org.sidiff.graphpattern.DependencyNode;
-import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
@@ -39,7 +40,7 @@ public class ChangeDependencies {
 	
 	private TransformationPatterns edit2RecognitionTrace;
 	
-	private Map<Edge, DependencyNode> dependencyTrace = new HashMap<>();
+	private Map<GraphElement, DependencyNode> dependencyTrace = new HashMap<>();
 
 	public ChangeDependencies(Rule editRule, GraphPattern recognitionRule,
 			Map<Node, NodePattern> henshinToGraphPatternTrace, 
@@ -67,7 +68,7 @@ public class ChangeDependencies {
 		   - 1. set source and target << delete >> node to << preserve >> 
 		   - 2. set the << delete >> edge to << preserve >>
 		
-		D: Every << delete >> node conjunction [A] has direct dependency to its parent << delete >> node.
+		D: Every << delete >> node conjunction [A] has direct dependency to its parent container << delete >> node.
 		   - Only the root of a << delete >> tree may be removed (to << preserve >>) from an edit rule!
 		   - Inner and leaf nodes of a << delete >> tree may not be removed (to << preserve >>) from an edit rule!
 		--------------------------------------------------------------------------------------------------------------*/
@@ -102,44 +103,62 @@ public class ChangeDependencies {
 	private void createRemoveChangeDependencies() {
 		
 		// edit rule LHS \ RHS <<delete>> node:
-		for (Edge edge : getLHSMinusRHSEdges(editRule)) {
+		List<Edge> deletionEdges =  getLHSMinusRHSEdges(editRule);
+		
+		// A: Every << delete >> node + container/containment edges forms a dependency conjunction:
+		ceateContainmentDependencies(deletionEdges);
+		
+		// B: All << delete >> opposite edges form a dependency conjunction:
+		// C: Every << delete >> edge has a direct dependency to its << delete >> source and target node:
+		for (Edge edge : deletionEdges) {
 			EReference type = edge.getType();
 			
-			if (type.isContainment() || type.isContainer()) {
+			if (!(type.isContainment() || type.isContainer())) {
+				DependencyNode edgeDependency = null;
 				
-				// A: Every << delete >> node + container/containment edges forms a dependency conjunction.
-				if (!dependencyTrace.containsKey(edge)) {
-					Edge containerEdge = getOpposite(edge);
-					DependencyNode dependency = createDependency(edge.getTarget(), edge, containerEdge);
-					
-					dependencyTrace.put(edge, dependency);
-					dependencyTrace.put(containerEdge, dependency);
-				}
-			} else {
-				DependencyNode dependency = null;
-				
-				// B: All << delete >> opposite edges form a dependency conjunction.
+				// B: All << delete >> opposite edges form a dependency conjunction:
 				if (edge.getType().getEOpposite() != null) {
 					if (!dependencyTrace.containsKey(edge)) {
 						Edge opposite = getOpposite(edge);
-						dependency = createDependency(edge, opposite);
+						edgeDependency = createDependencyNode(edge, opposite);
 						
-						dependencyTrace.put(edge, dependency);
-						dependencyTrace.put(opposite, dependency);
+						dependencyTrace.put(edge, edgeDependency);
+						dependencyTrace.put(opposite, edgeDependency);
 					}
 				} else {
-					dependency = createDependency(edge);
-					dependencyTrace.put(edge, dependency);
+					edgeDependency = createDependencyNode(edge);
+					dependencyTrace.put(edge, edgeDependency);
 				}
 				
-				// C: Every << delete >> edge has a direct dependency to its << delete >> source and target node.
-				if (dependency != null) {
+				// C: Every << delete >> edge has a direct dependency to its << delete >> source and target node:
+				if (edgeDependency != null) {	// (already created opposite)
 					
+					if (isDeletionNode(edge.getSource())) {
+						DependencyNode nodeDependency = dependencyTrace.get(edge.getSource());
+						createDependencyEdge(edgeDependency, nodeDependency);
+					}
+					
+					if (isCreationNode(edge.getTarget())) {
+						DependencyNode nodeDependency = dependencyTrace.get(edge.getTarget());
+						createDependencyEdge(edgeDependency, nodeDependency);
+					}
 				}
 			}
 		}
 		
-		// D: Every << delete >> node conjunction [A] has direct dependency to its parent << delete >> node.
+		// D: Every << delete >> node conjunction [A] has direct dependency to its parent container << delete >> node:
+		for (Edge edge : deletionEdges) {
+			EReference type = edge.getType();
+			
+			if (type.isContainment()) {
+				Node containerNode = edge.getSource();
+				Node containedNode = edge.getTarget();
+				
+				if (isDeletionNode(containerNode)) {
+					createDependencyEdge(dependencyTrace.get(containedNode), dependencyTrace.get(containerNode));
+				}
+			}
+		}
 	}
 	
 	private Edge getOpposite(Edge edge) {
@@ -153,26 +172,20 @@ public class ChangeDependencies {
 	private void createAddChangeDependencies() {
 		
 		// edit rule RHS \ LHS (added):
+		List<Edge> creationEdges = getRHSMinusLHSEdges(editRule);
+		
+		// A: Every << create >> node + container/containment references forms a dependency conjunction.
+		ceateContainmentDependencies(creationEdges);
+		
+		// B: All << create >> opposite edges form a dependency conjunction.
 		for (Edge edge : getRHSMinusLHSEdges(editRule)) {
 			EReference type = edge.getType();
 			
-			if (type.isContainment() || type.isContainer()) {
-				
-				// A: Every << create >> node + container/containment references forms a dependency conjunction.
-				if (!dependencyTrace.containsKey(edge)) {
-					Edge containerEdge = getOpposite(edge);
-					DependencyNode dependency = createDependency(edge.getTarget(), edge, containerEdge);
-					
-					dependencyTrace.put(edge, dependency);
-					dependencyTrace.put(containerEdge, dependency);
-				}
-			} else {
-				
-				// B: All << create >> opposite edges form a dependency conjunction.
+			if (!(type.isContainment() || type.isContainer())) {
 				if (edge.getType().getEOpposite() != null) {
 					if (!dependencyTrace.containsKey(edge)) {
 						Edge opposite = getOpposite(edge);
-						DependencyNode dependency = createDependency(edge, opposite);
+						DependencyNode dependency = createDependencyNode(edge, opposite);
 						
 						dependencyTrace.put(edge, dependency);
 						dependencyTrace.put(opposite, dependency);
@@ -181,12 +194,8 @@ public class ChangeDependencies {
 			}
 		}
 		
-		// edit rule RHS \ LHS <<create>> node:
-		for (Node node : getRHSMinusLHSNodes(editRule)) {
-			// C: Every << create >> node conjunction [A] has a direct dependency to its incident << create >> edges.
+		// C: Every << create >> node conjunction [A] has a direct dependency to its incident << create >> edges.
 
-		}
-		
 		// D: Every << create >> node conjunction [A] has direct dependencies to its child << create >> nodes. 
 	}
 	
@@ -194,7 +203,20 @@ public class ChangeDependencies {
 		
 		// edit rule attribute: value1->value2:
 		for (AttributePair attribute : getLHStoRHSChangingAttributes(editRule)) {
+			createDependencyNode(attribute.getRhsAttribute());
+		}
+	}
+	
+	private void ceateContainmentDependencies(List<Edge> edges) {
+		for (Edge edge : edges) {
+			EReference type = edge.getType();
 			
+			if (type.isContainment()) {
+				Edge containerEdge = getOpposite(edge);
+				Node containedNode = edge.getTarget();
+				DependencyNode dependency = createDependencyNode(containedNode, edge, containerEdge);
+				dependencyTrace.put(containedNode, dependency);
+			}
 		}
 	}
 	
@@ -202,7 +224,17 @@ public class ChangeDependencies {
 		recognitionRule.setDependencyGraph(GraphpatternFactory.eINSTANCE.createDependencyGraph());
 	}
 	
-	private DependencyNode createDependency(GraphElement... changes) {
+	private DependencyEdge createDependencyEdge(DependencyNode source, DependencyNode target) {
+		DependencyEdge dependency = GraphpatternFactory.eINSTANCE.createDependencyEdge();
+		
+		dependency.setSource(source);
+		dependency.setTarget(target);
+		
+		recognitionRule.getDependencyGraph().getEdges().add(dependency);
+		return dependency;
+	}
+	
+	private DependencyNode createDependencyNode(GraphElement... changes) {
 		NodePatternDependency dependency = GraphpatternFactory.eINSTANCE.createNodePatternDependency();
 		
 		for (GraphElement graphElement : changes) {
