@@ -22,6 +22,8 @@ import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
 import org.sidiff.repair.api.matching.EOMatch;
 import org.sidiff.repair.complement.peo.construction.ContextComplementConstructor;
+import org.sidiff.repair.complement.peo.edit2recognition.Edit2RecognitionMatch;
+import org.sidiff.repair.complement.peo.edit2recognition.Edit2RecognitionRule;
 
 /**
  * Tries to find all complementing operation for a given edit-rule and a model difference. 

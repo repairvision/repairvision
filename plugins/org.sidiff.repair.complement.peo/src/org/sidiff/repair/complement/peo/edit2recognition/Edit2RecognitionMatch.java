@@ -1,4 +1,4 @@
-package org.sidiff.repair.complement.peo.finder;
+package org.sidiff.repair.complement.peo.edit2recognition;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSNodes;

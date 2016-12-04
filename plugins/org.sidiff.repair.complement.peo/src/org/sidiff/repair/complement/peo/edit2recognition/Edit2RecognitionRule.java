@@ -1,4 +1,4 @@
-package org.sidiff.repair.complement.peo.finder;
+package org.sidiff.repair.complement.peo.edit2recognition;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -63,6 +63,7 @@ public class Edit2RecognitionRule {
 		this.editRule = editRule;
 		
 		try {
+			
 			// Transform edit- to recognition-rule:
 			Edit2RecognitionTransformation edit2Recognition = 
 					new Edit2RecognitionTransformation(editRule.getModule());
@@ -73,6 +74,14 @@ public class Edit2RecognitionRule {
 			HenshinConverter henshinConverter = new HenshinConverter(recognitionUnit, crossReferencedTypes);
 			recognitionRule = henshinConverter.getGraphPattern();
 			henshinToGraphPatternTrace = henshinConverter.getTrace();
+			
+			// Calculate change dependencies:
+			ChangeDependencies dependencyCalculator = new ChangeDependencies(
+					editRule, recognitionRule, henshinToGraphPatternTrace, edit2RecognitionTrace.get(editRule));
+			dependencyCalculator.calculateDependencyGraph();
+			
+			System.out.println(dependencyCalculator);
+			
 		} catch (NoMainUnitFoundException | EditToRecognitionException e) {
 			e.printStackTrace();
 		}
