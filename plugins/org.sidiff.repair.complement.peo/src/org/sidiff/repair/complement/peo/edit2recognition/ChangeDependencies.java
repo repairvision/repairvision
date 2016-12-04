@@ -29,7 +29,6 @@ import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.NodePatternDependency;
 import org.sidiff.graphpattern.dependencies.DependencyCalculation;
 
 public class ChangeDependencies {
@@ -268,7 +267,7 @@ public class ChangeDependencies {
 	}
 	
 	private DependencyNode createDependencyNode(GraphElement... changes) {
-		NodePatternDependency dependency = GraphpatternFactory.eINSTANCE.createNodePatternDependency();
+		DependencyNode dependency = GraphpatternFactory.eINSTANCE.createDependencyNode();
 		
 		for (GraphElement graphElement : changes) {
 			NodePattern recognitionChange = getRecognitionChange(graphElement);
@@ -347,13 +346,10 @@ public class ChangeDependencies {
 			
 			print.append("Change: " + trace.getKey() + "\n");
 			print.append("  Dependency: " + dependency + "\n");
-			
-			if (dependency instanceof NodePatternDependency) {
-				print.append("  Nodes:" + "\n");
-				
-				for (NodePattern node : ((NodePatternDependency) dependency).getNodes()) {
-					print.append("    " + node + "\n");
-				}
+			print.append("  Nodes:" + "\n");
+
+			for (NodePattern node : dependency.getNodes()) {
+				print.append("    " + node + "\n");
 			}
 			
 			if (!dependency.getIncomings().isEmpty()) {
