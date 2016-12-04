@@ -19,15 +19,16 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+
 import org.sidiff.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.graphpattern.Dependency} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.DependencyNode} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class DependencyItemProvider 
+public class DependencyNodeItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -41,7 +42,7 @@ public class DependencyItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DependencyItemProvider(AdapterFactory adapterFactory) {
+	public DependencyNodeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -56,26 +57,26 @@ public class DependencyItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addSuccessorPropertyDescriptor(object);
-			addPredecessorPropertyDescriptor(object);
+			addOutgoingsPropertyDescriptor(object);
+			addIncomingsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Successor feature.
+	 * This adds a property descriptor for the Outgoings feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addSuccessorPropertyDescriptor(Object object) {
+	protected void addOutgoingsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Dependency_successor_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Dependency_successor_feature", "_UI_Dependency_type"),
-				 GraphpatternPackage.Literals.DEPENDENCY__SUCCESSOR,
+				 getString("_UI_DependencyNode_outgoings_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DependencyNode_outgoings_feature", "_UI_DependencyNode_type"),
+				 GraphpatternPackage.Literals.DEPENDENCY_NODE__OUTGOINGS,
 				 true,
 				 false,
 				 true,
@@ -85,19 +86,19 @@ public class DependencyItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Predecessor feature.
+	 * This adds a property descriptor for the Incomings feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addPredecessorPropertyDescriptor(Object object) {
+	protected void addIncomingsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Dependency_predecessor_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Dependency_predecessor_feature", "_UI_Dependency_type"),
-				 GraphpatternPackage.Literals.DEPENDENCY__PREDECESSOR,
+				 getString("_UI_DependencyNode_incomings_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DependencyNode_incomings_feature", "_UI_DependencyNode_type"),
+				 GraphpatternPackage.Literals.DEPENDENCY_NODE__INCOMINGS,
 				 true,
 				 false,
 				 true,
@@ -114,7 +115,7 @@ public class DependencyItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_Dependency_type");
+		return getString("_UI_DependencyNode_type");
 	}
 	
 

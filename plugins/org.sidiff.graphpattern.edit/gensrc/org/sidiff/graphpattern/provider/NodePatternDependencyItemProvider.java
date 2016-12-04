@@ -19,7 +19,7 @@ import org.sidiff.graphpattern.GraphpatternPackage;
  * <!-- end-user-doc -->
  * @generated
  */
-public class NodePatternDependencyItemProvider extends DependencyItemProvider {
+public class NodePatternDependencyItemProvider extends DependencyNodeItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -41,25 +41,25 @@ public class NodePatternDependencyItemProvider extends DependencyItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNodePropertyDescriptor(object);
+			addNodesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Node feature.
+	 * This adds a property descriptor for the Nodes feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNodePropertyDescriptor(Object object) {
+	protected void addNodesPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_NodePatternDependency_node_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NodePatternDependency_node_feature", "_UI_NodePatternDependency_type"),
-				 GraphpatternPackage.Literals.NODE_PATTERN_DEPENDENCY__NODE,
+				 getString("_UI_NodePatternDependency_nodes_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NodePatternDependency_nodes_feature", "_UI_NodePatternDependency_type"),
+				 GraphpatternPackage.Literals.NODE_PATTERN_DEPENDENCY__NODES,
 				 true,
 				 false,
 				 true,

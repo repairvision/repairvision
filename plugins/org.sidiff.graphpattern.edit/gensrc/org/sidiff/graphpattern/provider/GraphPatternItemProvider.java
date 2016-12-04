@@ -86,7 +86,7 @@ public class GraphPatternItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(GraphpatternPackage.Literals.GRAPH_PATTERN__NODES);
-			childrenFeatures.add(GraphpatternPackage.Literals.GRAPH_PATTERN__DEPENDENCIES);
+			childrenFeatures.add(GraphpatternPackage.Literals.GRAPH_PATTERN__DEPENDENCY_GRAPH);
 		}
 		return childrenFeatures;
 	}
@@ -146,7 +146,7 @@ public class GraphPatternItemProvider
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case GraphpatternPackage.GRAPH_PATTERN__NODES:
-			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES:
+			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -171,7 +171,7 @@ public class GraphPatternItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(GraphpatternPackage.Literals.GRAPH_PATTERN__DEPENDENCIES,
+				(GraphpatternPackage.Literals.GRAPH_PATTERN__DEPENDENCY_GRAPH,
 				 GraphpatternFactory.eINSTANCE.createDependencyGraph()));
 	}
 
