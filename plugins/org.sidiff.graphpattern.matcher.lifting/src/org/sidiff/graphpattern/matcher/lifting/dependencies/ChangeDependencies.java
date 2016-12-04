@@ -8,10 +8,10 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationNode
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionNode;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Attribute;
@@ -84,7 +84,7 @@ public class ChangeDependencies {
 		   - 1. remove normal (non container/containment) edges, opposite conjunctions
 		   - 2. remove << create >> node + container/containment edges
 		
-		D: Every << create >> node conjunction [A] has direct dependencies to its child << create >> nodes.   
+		D: Every << create >> node conjunction [A] has a direct dependencies to its child << create >> nodes.   
 		   - Only leaf nodes of a << create >> tree may be removed from an edit rule!
 		   
 		- Normal (non container/containment) edges, opposite conjunctions have no dependencies!
@@ -190,13 +190,36 @@ public class ChangeDependencies {
 						dependencyTrace.put(edge, dependency);
 						dependencyTrace.put(opposite, dependency);
 					}
+				} else {
+					DependencyNode edgeDependency = createDependencyNode(edge);
+					dependencyTrace.put(edge, edgeDependency);
 				}
 			}
 		}
 		
-		// C: Every << create >> node conjunction [A] has a direct dependency to its incident << create >> edges.
-
-		// D: Every << create >> node conjunction [A] has direct dependencies to its child << create >> nodes. 
+		for (Edge edge : creationEdges) {
+			EReference type = edge.getType();
+			
+			if (type.isContainment()) {
+				Node containerNode = edge.getSource();
+				Node containedNode = edge.getTarget();
+				
+				// C: Every << create >> node conjunction [A] has a direct dependency to its incident << create >> edges.
+				for (Edge outgoing : containedNode.getOutgoing()) {
+					if (!outgoing.getType().isContainer()) {
+						createDependencyEdge(dependencyTrace.get(containerNode), dependencyTrace.get(outgoing));
+					}
+				}
+				for (Edge incoming : containedNode.getIncoming()) {
+					if (!incoming.getType().isContainment()) {
+						createDependencyEdge(dependencyTrace.get(containerNode), dependencyTrace.get(incoming));
+					}
+				}
+				
+				// D: Every << create >> node conjunction [A] has a direct dependencies to its child << create >> nodes.
+				createDependencyEdge(dependencyTrace.get(containerNode), dependencyTrace.get(containedNode));
+			}
+		}
 	}
 	
 	private void createAttributeValueChangePatterns() {
@@ -301,5 +324,45 @@ public class ChangeDependencies {
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer print = new StringBuffer();
+		
+		for (Entry<GraphElement, DependencyNode> trace : dependencyTrace.entrySet()) {
+			DependencyNode dependency = trace.getValue();
+			
+			print.append("Change: " + trace.getKey() + "\n");
+			print.append("  Dependency: " + dependency + "\n");
+			
+			if (dependency instanceof NodePatternDependency) {
+				print.append("  Nodes:" + "\n");
+				
+				for (NodePattern node : ((NodePatternDependency) dependency).getNodes()) {
+					print.append("    " + node);
+				}
+			}
+			
+			if (!dependency.getIncomings().isEmpty()) {
+				print.append("  Incomings:" + "\n");
+				
+				for (DependencyEdge incoming : dependency.getIncomings()) {
+					print.append("    Source: " + incoming.getSource());
+					print.append("    Target: " + incoming.getTarget());
+				}
+			}
+			
+			if (!dependency.getOutgoings().isEmpty()) {
+				print.append("  Outgoings:" + "\n");
+				
+				for (DependencyEdge outgoing : dependency.getOutgoings()) {
+					print.append("    Source: " + outgoing.getSource());
+					print.append("    Target: " + outgoing.getTarget());
+				}
+			}
+		}
+		
+		return print.toString();
 	}
 }
