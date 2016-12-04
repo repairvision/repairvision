@@ -59,6 +59,7 @@ public class DependencyNodeItemProvider
 
 			addOutgoingsPropertyDescriptor(object);
 			addIncomingsPropertyDescriptor(object);
+			addNodesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -105,6 +106,39 @@ public class DependencyNodeItemProvider
 				 null,
 				 null,
 				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Nodes feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNodesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DependencyNode_nodes_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DependencyNode_nodes_feature", "_UI_DependencyNode_type"),
+				 GraphpatternPackage.Literals.DEPENDENCY_NODE__NODES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This returns DependencyNode.gif.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DependencyNode"));
 	}
 
 	/**

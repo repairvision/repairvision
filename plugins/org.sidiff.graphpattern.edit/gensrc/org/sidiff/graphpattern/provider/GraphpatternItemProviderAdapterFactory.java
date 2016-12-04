@@ -234,29 +234,6 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.NodePatternDependency} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NodePatternDependencyItemProvider nodePatternDependencyItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.graphpattern.NodePatternDependency}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNodePatternDependencyAdapter() {
-		if (nodePatternDependencyItemProvider == null) {
-			nodePatternDependencyItemProvider = new NodePatternDependencyItemProvider(this);
-		}
-
-		return nodePatternDependencyItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.DependencyGraph} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -277,6 +254,29 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 		}
 
 		return dependencyGraphItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.DependencyNode} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected DependencyNodeItemProvider dependencyNodeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.DependencyNode}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createDependencyNodeAdapter() {
+		if (dependencyNodeItemProvider == null) {
+			dependencyNodeItemProvider = new DependencyNodeItemProvider(this);
+		}
+
+		return dependencyNodeItemProvider;
 	}
 
 	/**
@@ -456,8 +456,8 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 		if (patternItemProvider != null) patternItemProvider.dispose();
 		if (parameterItemProvider != null) parameterItemProvider.dispose();
 		if (eObjectListItemProvider != null) eObjectListItemProvider.dispose();
-		if (nodePatternDependencyItemProvider != null) nodePatternDependencyItemProvider.dispose();
 		if (dependencyGraphItemProvider != null) dependencyGraphItemProvider.dispose();
+		if (dependencyNodeItemProvider != null) dependencyNodeItemProvider.dispose();
 		if (dependencyEdgeItemProvider != null) dependencyEdgeItemProvider.dispose();
 	}
 

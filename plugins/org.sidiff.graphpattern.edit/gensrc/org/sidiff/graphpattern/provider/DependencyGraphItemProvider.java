@@ -176,7 +176,7 @@ public class DependencyGraphItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(GraphpatternPackage.Literals.DEPENDENCY_GRAPH__NODES,
-				 GraphpatternFactory.eINSTANCE.createNodePatternDependency()));
+				 GraphpatternFactory.eINSTANCE.createDependencyNode()));
 
 		newChildDescriptors.add
 			(createChildParameter
