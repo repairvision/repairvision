@@ -80,8 +80,6 @@ public class Edit2RecognitionRule {
 					editRule, recognitionRule, henshinToGraphPatternTrace, edit2RecognitionTrace.get(editRule));
 			dependencyCalculator.calculateDependencyGraph();
 			
-			System.out.println(dependencyCalculator);
-			
 		} catch (NoMainUnitFoundException | EditToRecognitionException e) {
 			e.printStackTrace();
 		}
