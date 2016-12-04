@@ -30,6 +30,7 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.NodePatternDependency;
+import org.sidiff.graphpattern.dependencies.DependencyCalculation;
 
 public class ChangeDependencies {
 
@@ -99,6 +100,9 @@ public class ChangeDependencies {
 		--------------------------------------------------------------------------------------------------------------*/
 		
 		createAttributeValueChangePatterns();
+		
+		// setup all independent nodes:
+		DependencyCalculation.findIndependent(recognitionRule);
 	}
 	
 	private void createRemoveChangeDependencies() {
@@ -337,6 +341,7 @@ public class ChangeDependencies {
 		StringBuffer print = new StringBuffer();
 		print.append(super.toString() + ":\n\n");
 		
+		// dependencies:
 		for (Entry<GraphElement, DependencyNode> trace : dependencyTrace.entrySet()) {
 			DependencyNode dependency = trace.getValue();
 			
@@ -373,6 +378,17 @@ public class ChangeDependencies {
 						print.append("      Trace: " + index + "\n");
 					}
 				}
+			}
+		}
+		
+		// independent:
+		print.append("\n" + "Independent:" + "\n");
+		
+		for (DependencyNode dependency : recognitionRule.getDependencyGraph().getIndependent()) {
+			print.append("  Dependency: " + dependency + "\n");
+			
+			for (GraphElement index : getTrace(dependency)) {
+				print.append("    Trace: " + index + "\n");
 			}
 		}
 		
