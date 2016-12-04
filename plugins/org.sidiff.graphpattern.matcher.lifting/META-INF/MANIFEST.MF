@@ -5,16 +5,14 @@ Bundle-SymbolicName: org.sidiff.graphpattern.matcher.lifting;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.sidiff.graphpattern.matcher.lifting.Activator
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.core.runtime,
  org.eclipse.ui,
- org.sidiff.repair.common,
- org.sidiff.graphpattern;visibility:=reexport,
+ org.sidiff.common.henshin,
  org.sidiff.difference.technical,
+ org.sidiff.graphpattern;visibility:=reexport,
  org.sidiff.graphpattern.matcher,
- org.sidiff.graphpattern.matching,
- org.sidiff.graphpattern.wgraph.construction,
  org.sidiff.graphpattern.wgraph,
- org.sidiff.graphpattern.common;bundle-version="1.0.0"
+ org.sidiff.graphpattern.wgraph.construction,
+ org.sidiff.repair.common
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.sidiff.graphpattern.matcher.lifting.engine.partial
