@@ -5,24 +5,7 @@ package org.sidiff.graphpattern.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.sidiff.graphpattern.AttributePattern;
-import org.sidiff.graphpattern.DataStore;
-import org.sidiff.graphpattern.Dependency;
-import org.sidiff.graphpattern.DependencyConjunction;
-import org.sidiff.graphpattern.DependencyGraph;
-import org.sidiff.graphpattern.EObjectList;
-import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.Evaluation;
-import org.sidiff.graphpattern.GraphPattern;
-import org.sidiff.graphpattern.GraphPatternElement;
-import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.NavigableDataStore;
-import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.NodePatternDependency;
-import org.sidiff.graphpattern.Parameter;
-import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.RuleBase;
-import org.sidiff.graphpattern.Visitor;
+import org.sidiff.graphpattern.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -166,14 +149,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY: {
 				NodePatternDependency nodePatternDependency = (NodePatternDependency)theEObject;
 				T result = caseNodePatternDependency(nodePatternDependency);
-				if (result == null) result = caseDependency(nodePatternDependency);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.DEPENDENCY_CONJUNCTION: {
-				DependencyConjunction dependencyConjunction = (DependencyConjunction)theEObject;
-				T result = caseDependencyConjunction(dependencyConjunction);
-				if (result == null) result = caseDependency(dependencyConjunction);
+				if (result == null) result = caseDependencyNode(nodePatternDependency);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -183,9 +159,15 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GraphpatternPackage.DEPENDENCY: {
-				Dependency dependency = (Dependency)theEObject;
-				T result = caseDependency(dependency);
+			case GraphpatternPackage.DEPENDENCY_NODE: {
+				DependencyNode dependencyNode = (DependencyNode)theEObject;
+				T result = caseDependencyNode(dependencyNode);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.DEPENDENCY_EDGE: {
+				DependencyEdge dependencyEdge = (DependencyEdge)theEObject;
+				T result = caseDependencyEdge(dependencyEdge);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -359,21 +341,6 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Dependency Conjunction</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Dependency Conjunction</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseDependencyConjunction(DependencyConjunction object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Dependency Graph</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -389,17 +356,32 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Dependency</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Dependency Node</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Dependency</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Dependency Node</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseDependency(Dependency object) {
+	public T caseDependencyNode(DependencyNode object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dependency Edge</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dependency Edge</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDependencyEdge(DependencyEdge object) {
 		return null;
 	}
 

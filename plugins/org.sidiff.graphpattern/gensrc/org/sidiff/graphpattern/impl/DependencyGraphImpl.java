@@ -11,12 +11,13 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.sidiff.graphpattern.Dependency;
+import org.sidiff.graphpattern.DependencyEdge;
 import org.sidiff.graphpattern.DependencyGraph;
+import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 
@@ -28,34 +29,24 @@ import org.sidiff.graphpattern.GraphpatternPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.impl.DependencyGraphImpl#getFirst <em>First</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.impl.DependencyGraphImpl#getLast <em>Last</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.DependencyGraphImpl#getIndependent <em>Independent</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.DependencyGraphImpl#getGraph <em>Graph</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.DependencyGraphImpl#getNodes <em>Nodes</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.DependencyGraphImpl#getEdges <em>Edges</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements DependencyGraph {
 	/**
-	 * The cached value of the '{@link #getFirst() <em>First</em>}' reference list.
+	 * The cached value of the '{@link #getIndependent() <em>Independent</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFirst()
+	 * @see #getIndependent()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Dependency> first;
-
-	/**
-	 * The cached value of the '{@link #getLast() <em>Last</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getLast()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Dependency> last;
+	protected EList<DependencyNode> independent;
 
 	/**
 	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
@@ -65,7 +56,17 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Dependency> nodes;
+	protected EList<DependencyNode> nodes;
+
+	/**
+	 * The cached value of the '{@link #getEdges() <em>Edges</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEdges()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<DependencyEdge> edges;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -91,23 +92,11 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Dependency> getFirst() {
-		if (first == null) {
-			first = new EObjectResolvingEList<Dependency>(Dependency.class, this, GraphpatternPackage.DEPENDENCY_GRAPH__FIRST);
+	public EList<DependencyNode> getIndependent() {
+		if (independent == null) {
+			independent = new EObjectResolvingEList<DependencyNode>(DependencyNode.class, this, GraphpatternPackage.DEPENDENCY_GRAPH__INDEPENDENT);
 		}
-		return first;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Dependency> getLast() {
-		if (last == null) {
-			last = new EObjectResolvingEList<Dependency>(Dependency.class, this, GraphpatternPackage.DEPENDENCY_GRAPH__LAST);
-		}
-		return last;
+		return independent;
 	}
 
 	/**
@@ -143,7 +132,7 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newGraph != null)
-				msgs = ((InternalEObject)newGraph).eInverseAdd(this, GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES, GraphPattern.class, msgs);
+				msgs = ((InternalEObject)newGraph).eInverseAdd(this, GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH, GraphPattern.class, msgs);
 			msgs = basicSetGraph(newGraph, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -156,11 +145,23 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Dependency> getNodes() {
+	public EList<DependencyNode> getNodes() {
 		if (nodes == null) {
-			nodes = new EObjectContainmentWithInverseEList<Dependency>(Dependency.class, this, GraphpatternPackage.DEPENDENCY_GRAPH__NODES, GraphpatternPackage.DEPENDENCY__GRAPH);
+			nodes = new EObjectContainmentEList<DependencyNode>(DependencyNode.class, this, GraphpatternPackage.DEPENDENCY_GRAPH__NODES);
 		}
 		return nodes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<DependencyEdge> getEdges() {
+		if (edges == null) {
+			edges = new EObjectContainmentEList<DependencyEdge>(DependencyEdge.class, this, GraphpatternPackage.DEPENDENCY_GRAPH__EDGES);
+		}
+		return edges;
 	}
 
 	/**
@@ -176,8 +177,6 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetGraph((GraphPattern)otherEnd, msgs);
-			case GraphpatternPackage.DEPENDENCY_GRAPH__NODES:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getNodes()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -194,6 +193,8 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 				return basicSetGraph(null, msgs);
 			case GraphpatternPackage.DEPENDENCY_GRAPH__NODES:
 				return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
+			case GraphpatternPackage.DEPENDENCY_GRAPH__EDGES:
+				return ((InternalEList<?>)getEdges()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -207,7 +208,7 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case GraphpatternPackage.DEPENDENCY_GRAPH__GRAPH:
-				return eInternalContainer().eInverseRemove(this, GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES, GraphPattern.class, msgs);
+				return eInternalContainer().eInverseRemove(this, GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH, GraphPattern.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -220,14 +221,14 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GraphpatternPackage.DEPENDENCY_GRAPH__FIRST:
-				return getFirst();
-			case GraphpatternPackage.DEPENDENCY_GRAPH__LAST:
-				return getLast();
+			case GraphpatternPackage.DEPENDENCY_GRAPH__INDEPENDENT:
+				return getIndependent();
 			case GraphpatternPackage.DEPENDENCY_GRAPH__GRAPH:
 				return getGraph();
 			case GraphpatternPackage.DEPENDENCY_GRAPH__NODES:
 				return getNodes();
+			case GraphpatternPackage.DEPENDENCY_GRAPH__EDGES:
+				return getEdges();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -241,20 +242,20 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GraphpatternPackage.DEPENDENCY_GRAPH__FIRST:
-				getFirst().clear();
-				getFirst().addAll((Collection<? extends Dependency>)newValue);
-				return;
-			case GraphpatternPackage.DEPENDENCY_GRAPH__LAST:
-				getLast().clear();
-				getLast().addAll((Collection<? extends Dependency>)newValue);
+			case GraphpatternPackage.DEPENDENCY_GRAPH__INDEPENDENT:
+				getIndependent().clear();
+				getIndependent().addAll((Collection<? extends DependencyNode>)newValue);
 				return;
 			case GraphpatternPackage.DEPENDENCY_GRAPH__GRAPH:
 				setGraph((GraphPattern)newValue);
 				return;
 			case GraphpatternPackage.DEPENDENCY_GRAPH__NODES:
 				getNodes().clear();
-				getNodes().addAll((Collection<? extends Dependency>)newValue);
+				getNodes().addAll((Collection<? extends DependencyNode>)newValue);
+				return;
+			case GraphpatternPackage.DEPENDENCY_GRAPH__EDGES:
+				getEdges().clear();
+				getEdges().addAll((Collection<? extends DependencyEdge>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -268,17 +269,17 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.DEPENDENCY_GRAPH__FIRST:
-				getFirst().clear();
-				return;
-			case GraphpatternPackage.DEPENDENCY_GRAPH__LAST:
-				getLast().clear();
+			case GraphpatternPackage.DEPENDENCY_GRAPH__INDEPENDENT:
+				getIndependent().clear();
 				return;
 			case GraphpatternPackage.DEPENDENCY_GRAPH__GRAPH:
 				setGraph((GraphPattern)null);
 				return;
 			case GraphpatternPackage.DEPENDENCY_GRAPH__NODES:
 				getNodes().clear();
+				return;
+			case GraphpatternPackage.DEPENDENCY_GRAPH__EDGES:
+				getEdges().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -292,14 +293,14 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.DEPENDENCY_GRAPH__FIRST:
-				return first != null && !first.isEmpty();
-			case GraphpatternPackage.DEPENDENCY_GRAPH__LAST:
-				return last != null && !last.isEmpty();
+			case GraphpatternPackage.DEPENDENCY_GRAPH__INDEPENDENT:
+				return independent != null && !independent.isEmpty();
 			case GraphpatternPackage.DEPENDENCY_GRAPH__GRAPH:
 				return getGraph() != null;
 			case GraphpatternPackage.DEPENDENCY_GRAPH__NODES:
 				return nodes != null && !nodes.isEmpty();
+			case GraphpatternPackage.DEPENDENCY_GRAPH__EDGES:
+				return edges != null && !edges.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

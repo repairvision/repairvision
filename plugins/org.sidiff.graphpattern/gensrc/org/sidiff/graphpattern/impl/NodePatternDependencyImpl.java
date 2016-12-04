@@ -2,10 +2,10 @@
  */
 package org.sidiff.graphpattern.impl;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.NodePatternDependency;
@@ -18,22 +18,21 @@ import org.sidiff.graphpattern.NodePatternDependency;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.impl.NodePatternDependencyImpl#getNode <em>Node</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.NodePatternDependencyImpl#getNodes <em>Nodes</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class NodePatternDependencyImpl extends DependencyImpl implements NodePatternDependency {
+public class NodePatternDependencyImpl extends DependencyNodeImpl implements NodePatternDependency {
 	/**
-	 * The cached value of the '{@link #getNode() <em>Node</em>}' reference.
+	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getNode()
+	 * @see #getNodes()
 	 * @generated
 	 * @ordered
 	 */
-	protected NodePattern node;
-
+	protected EList<NodePattern> nodes;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -58,37 +57,11 @@ public class NodePatternDependencyImpl extends DependencyImpl implements NodePat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NodePattern getNode() {
-		if (node != null && node.eIsProxy()) {
-			InternalEObject oldNode = (InternalEObject)node;
-			node = (NodePattern)eResolveProxy(oldNode);
-			if (node != oldNode) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE, oldNode, node));
-			}
+	public EList<NodePattern> getNodes() {
+		if (nodes == null) {
+			nodes = new EObjectResolvingEList<NodePattern>(NodePattern.class, this, GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODES);
 		}
-		return node;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NodePattern basicGetNode() {
-		return node;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setNode(NodePattern newNode) {
-		NodePattern oldNode = node;
-		node = newNode;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE, oldNode, node));
+		return nodes;
 	}
 
 	/**
@@ -99,9 +72,8 @@ public class NodePatternDependencyImpl extends DependencyImpl implements NodePat
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE:
-				if (resolve) return getNode();
-				return basicGetNode();
+			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODES:
+				return getNodes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -111,11 +83,13 @@ public class NodePatternDependencyImpl extends DependencyImpl implements NodePat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE:
-				setNode((NodePattern)newValue);
+			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODES:
+				getNodes().clear();
+				getNodes().addAll((Collection<? extends NodePattern>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -129,8 +103,8 @@ public class NodePatternDependencyImpl extends DependencyImpl implements NodePat
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE:
-				setNode((NodePattern)null);
+			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODES:
+				getNodes().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -144,8 +118,8 @@ public class NodePatternDependencyImpl extends DependencyImpl implements NodePat
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODE:
-				return node != null;
+			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY__NODES:
+				return nodes != null && !nodes.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

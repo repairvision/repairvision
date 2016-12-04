@@ -16,7 +16,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.sidiff.graphpattern.GraphPattern#getNodes <em>Nodes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.GraphPattern#getPattern <em>Pattern</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.GraphPattern#isMulti <em>Multi</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.GraphPattern#getDependencies <em>Dependencies</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.GraphPattern#getDependencyGraph <em>Dependency Graph</em>}</li>
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphPattern()
@@ -97,31 +97,31 @@ public interface GraphPattern extends GraphPatternElement {
 	void setMulti(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Dependencies</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Dependency Graph</b></em>' containment reference.
 	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.DependencyGraph#getGraph <em>Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Dependencies</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Dependency Graph</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Dependencies</em>' containment reference.
-	 * @see #setDependencies(DependencyGraph)
-	 * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphPattern_Dependencies()
+	 * @return the value of the '<em>Dependency Graph</em>' containment reference.
+	 * @see #setDependencyGraph(DependencyGraph)
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphPattern_DependencyGraph()
 	 * @see org.sidiff.graphpattern.DependencyGraph#getGraph
 	 * @model opposite="graph" containment="true"
 	 * @generated
 	 */
-	DependencyGraph getDependencies();
+	DependencyGraph getDependencyGraph();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.graphpattern.GraphPattern#getDependencies <em>Dependencies</em>}' containment reference.
+	 * Sets the value of the '{@link org.sidiff.graphpattern.GraphPattern#getDependencyGraph <em>Dependency Graph</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Dependencies</em>' containment reference.
-	 * @see #getDependencies()
+	 * @param value the new value of the '<em>Dependency Graph</em>' containment reference.
+	 * @see #getDependencyGraph()
 	 * @generated
 	 */
-	void setDependencies(DependencyGraph value);
+	void setDependencyGraph(DependencyGraph value);
 
 } // GraphPattern

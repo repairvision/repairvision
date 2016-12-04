@@ -8,20 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.sidiff.graphpattern.AttributePattern;
-import org.sidiff.graphpattern.DependencyConjunction;
-import org.sidiff.graphpattern.DependencyGraph;
-import org.sidiff.graphpattern.EObjectList;
-import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.Evaluation;
-import org.sidiff.graphpattern.GraphPattern;
-import org.sidiff.graphpattern.GraphpatternFactory;
-import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.NodePatternDependency;
-import org.sidiff.graphpattern.Parameter;
-import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.RuleBase;
+import org.sidiff.graphpattern.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -77,8 +64,8 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 			case GraphpatternPackage.PARAMETER: return createParameter();
 			case GraphpatternPackage.EOBJECT_LIST: return createEObjectList();
 			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY: return createNodePatternDependency();
-			case GraphpatternPackage.DEPENDENCY_CONJUNCTION: return createDependencyConjunction();
 			case GraphpatternPackage.DEPENDENCY_GRAPH: return createDependencyGraph();
+			case GraphpatternPackage.DEPENDENCY_EDGE: return createDependencyEdge();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -195,9 +182,9 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DependencyConjunction createDependencyConjunction() {
-		DependencyConjunctionImpl dependencyConjunction = new DependencyConjunctionImpl();
-		return dependencyConjunction;
+	public DependencyGraph createDependencyGraph() {
+		DependencyGraphImpl dependencyGraph = new DependencyGraphImpl();
+		return dependencyGraph;
 	}
 
 	/**
@@ -205,9 +192,9 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DependencyGraph createDependencyGraph() {
-		DependencyGraphImpl dependencyGraph = new DependencyGraphImpl();
-		return dependencyGraph;
+	public DependencyEdge createDependencyEdge() {
+		DependencyEdgeImpl dependencyEdge = new DependencyEdgeImpl();
+		return dependencyEdge;
 	}
 
 	/**

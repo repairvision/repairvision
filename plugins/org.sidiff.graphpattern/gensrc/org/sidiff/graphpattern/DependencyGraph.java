@@ -14,10 +14,10 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.DependencyGraph#getFirst <em>First</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.DependencyGraph#getLast <em>Last</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.DependencyGraph#getIndependent <em>Independent</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.DependencyGraph#getGraph <em>Graph</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.DependencyGraph#getNodes <em>Nodes</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.DependencyGraph#getEdges <em>Edges</em>}</li>
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getDependencyGraph()
@@ -26,40 +26,24 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface DependencyGraph extends EObject {
 	/**
-	 * Returns the value of the '<em><b>First</b></em>' reference list.
-	 * The list contents are of type {@link org.sidiff.graphpattern.Dependency}.
+	 * Returns the value of the '<em><b>Independent</b></em>' reference list.
+	 * The list contents are of type {@link org.sidiff.graphpattern.DependencyNode}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>First</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Independent</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>First</em>' reference list.
-	 * @see org.sidiff.graphpattern.GraphpatternPackage#getDependencyGraph_First()
+	 * @return the value of the '<em>Independent</em>' reference list.
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getDependencyGraph_Independent()
 	 * @model
 	 * @generated
 	 */
-	EList<Dependency> getFirst();
-
-	/**
-	 * Returns the value of the '<em><b>Last</b></em>' reference list.
-	 * The list contents are of type {@link org.sidiff.graphpattern.Dependency}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Last</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Last</em>' reference list.
-	 * @see org.sidiff.graphpattern.GraphpatternPackage#getDependencyGraph_Last()
-	 * @model
-	 * @generated
-	 */
-	EList<Dependency> getLast();
+	EList<DependencyNode> getIndependent();
 
 	/**
 	 * Returns the value of the '<em><b>Graph</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.GraphPattern#getDependencies <em>Dependencies</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.GraphPattern#getDependencyGraph <em>Dependency Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Graph</em>' container reference isn't clear,
@@ -69,8 +53,8 @@ public interface DependencyGraph extends EObject {
 	 * @return the value of the '<em>Graph</em>' container reference.
 	 * @see #setGraph(GraphPattern)
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getDependencyGraph_Graph()
-	 * @see org.sidiff.graphpattern.GraphPattern#getDependencies
-	 * @model opposite="dependencies" transient="false"
+	 * @see org.sidiff.graphpattern.GraphPattern#getDependencyGraph
+	 * @model opposite="dependencyGraph" transient="false"
 	 * @generated
 	 */
 	GraphPattern getGraph();
@@ -87,8 +71,7 @@ public interface DependencyGraph extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
-	 * The list contents are of type {@link org.sidiff.graphpattern.Dependency}.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.Dependency#getGraph <em>Graph</em>}'.
+	 * The list contents are of type {@link org.sidiff.graphpattern.DependencyNode}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear,
@@ -97,10 +80,25 @@ public interface DependencyGraph extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Nodes</em>' containment reference list.
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getDependencyGraph_Nodes()
-	 * @see org.sidiff.graphpattern.Dependency#getGraph
-	 * @model opposite="graph" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList<Dependency> getNodes();
+	EList<DependencyNode> getNodes();
+
+	/**
+	 * Returns the value of the '<em><b>Edges</b></em>' containment reference list.
+	 * The list contents are of type {@link org.sidiff.graphpattern.DependencyEdge}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Edges</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Edges</em>' containment reference list.
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getDependencyGraph_Edges()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<DependencyEdge> getEdges();
 
 } // DependencyGraph

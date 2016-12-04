@@ -8,7 +8,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" lowerBound="1"
         eType="#//Pattern" eOpposite="#//Pattern/graphs"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="multi" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" eType="#//DependencyGraph"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencyGraph" eType="#//DependencyGraph"
         containment="true" eOpposite="#//DependencyGraph/graph"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NodePattern" eSuperTypes="#//GraphPatternElement">
@@ -155,28 +155,30 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral=""/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NodePatternDependency" eSuperTypes="#//Dependency">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//NodePattern"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DependencyConjunction" eSuperTypes="#//Dependency">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
-        eType="#//NodePatternDependency" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NodePatternDependency" eSuperTypes="#//DependencyNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//NodePattern"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DependencyGraph">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="first" upperBound="-1"
-        eType="#//Dependency"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="last" upperBound="-1" eType="#//Dependency"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="independent" upperBound="-1"
+        eType="#//DependencyNode"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//GraphPattern"
-        eOpposite="#//GraphPattern/dependencies"/>
+        eOpposite="#//GraphPattern/dependencyGraph"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
-        eType="#//Dependency" containment="true" eOpposite="#//Dependency/graph"/>
+        eType="#//DependencyNode" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="edges" upperBound="-1"
+        eType="#//DependencyEdge" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Dependency" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="successor" eType="#//Dependency"
-        eOpposite="#//Dependency/predecessor"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="predecessor" eType="#//Dependency"
-        eOpposite="#//Dependency/successor"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//DependencyGraph"
-        eOpposite="#//DependencyGraph/nodes"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DependencyNode" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoings" upperBound="-1"
+        eType="#//DependencyEdge" eOpposite="#//DependencyEdge/source"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incomings" upperBound="-1"
+        eType="#//DependencyEdge" eOpposite="#//DependencyEdge/target"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DependencyEdge">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//DependencyNode"
+        eOpposite="#//DependencyNode/outgoings"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//DependencyNode"
+        eOpposite="#//DependencyNode/incomings"/>
   </eClassifiers>
 </ecore:EPackage>

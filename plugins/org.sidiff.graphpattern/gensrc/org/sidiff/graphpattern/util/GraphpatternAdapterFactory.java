@@ -6,24 +6,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.graphpattern.AttributePattern;
-import org.sidiff.graphpattern.DataStore;
-import org.sidiff.graphpattern.Dependency;
-import org.sidiff.graphpattern.DependencyConjunction;
-import org.sidiff.graphpattern.DependencyGraph;
-import org.sidiff.graphpattern.EObjectList;
-import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.Evaluation;
-import org.sidiff.graphpattern.GraphPattern;
-import org.sidiff.graphpattern.GraphPatternElement;
-import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.NavigableDataStore;
-import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.NodePatternDependency;
-import org.sidiff.graphpattern.Parameter;
-import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.RuleBase;
-import org.sidiff.graphpattern.Visitor;
+import org.sidiff.graphpattern.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -138,16 +121,16 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 				return createNodePatternDependencyAdapter();
 			}
 			@Override
-			public Adapter caseDependencyConjunction(DependencyConjunction object) {
-				return createDependencyConjunctionAdapter();
-			}
-			@Override
 			public Adapter caseDependencyGraph(DependencyGraph object) {
 				return createDependencyGraphAdapter();
 			}
 			@Override
-			public Adapter caseDependency(Dependency object) {
-				return createDependencyAdapter();
+			public Adapter caseDependencyNode(DependencyNode object) {
+				return createDependencyNodeAdapter();
+			}
+			@Override
+			public Adapter caseDependencyEdge(DependencyEdge object) {
+				return createDependencyEdgeAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -324,20 +307,6 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.DependencyConjunction <em>Dependency Conjunction</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.graphpattern.DependencyConjunction
-	 * @generated
-	 */
-	public Adapter createDependencyConjunctionAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.DependencyGraph <em>Dependency Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -352,16 +321,30 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Dependency <em>Dependency</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.DependencyNode <em>Dependency Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.graphpattern.Dependency
+	 * @see org.sidiff.graphpattern.DependencyNode
 	 * @generated
 	 */
-	public Adapter createDependencyAdapter() {
+	public Adapter createDependencyNodeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.DependencyEdge <em>Dependency Edge</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.DependencyEdge
+	 * @generated
+	 */
+	public Adapter createDependencyEdgeAdapter() {
 		return null;
 	}
 

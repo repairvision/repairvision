@@ -242,13 +242,13 @@ public interface GraphpatternPackage extends EPackage {
 	int GRAPH_PATTERN__MULTI = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Dependencies</b></em>' containment reference.
+	 * The feature id for the '<em><b>Dependency Graph</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN__DEPENDENCIES = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 3;
+	int GRAPH_PATTERN__DEPENDENCY_GRAPH = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Graph Pattern</em>' class.
@@ -1026,59 +1026,50 @@ public interface GraphpatternPackage extends EPackage {
 	int EOBJECT_LIST_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.graphpattern.impl.DependencyImpl <em>Dependency</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.graphpattern.impl.DependencyNodeImpl <em>Dependency Node</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.graphpattern.impl.DependencyImpl
-	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getDependency()
+	 * @see org.sidiff.graphpattern.impl.DependencyNodeImpl
+	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getDependencyNode()
 	 * @generated
 	 */
-	int DEPENDENCY = 16;
+	int DEPENDENCY_NODE = 15;
 
 	/**
-	 * The feature id for the '<em><b>Successor</b></em>' reference.
+	 * The feature id for the '<em><b>Outgoings</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEPENDENCY__SUCCESSOR = 0;
+	int DEPENDENCY_NODE__OUTGOINGS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Predecessor</b></em>' reference.
+	 * The feature id for the '<em><b>Incomings</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEPENDENCY__PREDECESSOR = 1;
+	int DEPENDENCY_NODE__INCOMINGS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Graph</b></em>' container reference.
+	 * The number of structural features of the '<em>Dependency Node</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEPENDENCY__GRAPH = 2;
+	int DEPENDENCY_NODE_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of structural features of the '<em>Dependency</em>' class.
+	 * The number of operations of the '<em>Dependency Node</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEPENDENCY_FEATURE_COUNT = 3;
-
-	/**
-	 * The number of operations of the '<em>Dependency</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEPENDENCY_OPERATION_COUNT = 0;
+	int DEPENDENCY_NODE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.graphpattern.impl.NodePatternDependencyImpl <em>Node Pattern Dependency</em>}' class.
@@ -1091,40 +1082,31 @@ public interface GraphpatternPackage extends EPackage {
 	int NODE_PATTERN_DEPENDENCY = 13;
 
 	/**
-	 * The feature id for the '<em><b>Successor</b></em>' reference.
+	 * The feature id for the '<em><b>Outgoings</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_DEPENDENCY__SUCCESSOR = DEPENDENCY__SUCCESSOR;
+	int NODE_PATTERN_DEPENDENCY__OUTGOINGS = DEPENDENCY_NODE__OUTGOINGS;
 
 	/**
-	 * The feature id for the '<em><b>Predecessor</b></em>' reference.
+	 * The feature id for the '<em><b>Incomings</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_DEPENDENCY__PREDECESSOR = DEPENDENCY__PREDECESSOR;
+	int NODE_PATTERN_DEPENDENCY__INCOMINGS = DEPENDENCY_NODE__INCOMINGS;
 
 	/**
-	 * The feature id for the '<em><b>Graph</b></em>' container reference.
+	 * The feature id for the '<em><b>Nodes</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_DEPENDENCY__GRAPH = DEPENDENCY__GRAPH;
-
-	/**
-	 * The feature id for the '<em><b>Node</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_PATTERN_DEPENDENCY__NODE = DEPENDENCY_FEATURE_COUNT + 0;
+	int NODE_PATTERN_DEPENDENCY__NODES = DEPENDENCY_NODE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Node Pattern Dependency</em>' class.
@@ -1133,7 +1115,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 1;
+	int NODE_PATTERN_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_NODE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Node Pattern Dependency</em>' class.
@@ -1142,71 +1124,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_DEPENDENCY_OPERATION_COUNT = DEPENDENCY_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.sidiff.graphpattern.impl.DependencyConjunctionImpl <em>Dependency Conjunction</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.graphpattern.impl.DependencyConjunctionImpl
-	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getDependencyConjunction()
-	 * @generated
-	 */
-	int DEPENDENCY_CONJUNCTION = 14;
-
-	/**
-	 * The feature id for the '<em><b>Successor</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEPENDENCY_CONJUNCTION__SUCCESSOR = DEPENDENCY__SUCCESSOR;
-
-	/**
-	 * The feature id for the '<em><b>Predecessor</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEPENDENCY_CONJUNCTION__PREDECESSOR = DEPENDENCY__PREDECESSOR;
-
-	/**
-	 * The feature id for the '<em><b>Graph</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEPENDENCY_CONJUNCTION__GRAPH = DEPENDENCY__GRAPH;
-
-	/**
-	 * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEPENDENCY_CONJUNCTION__DEPENDENCIES = DEPENDENCY_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Dependency Conjunction</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEPENDENCY_CONJUNCTION_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of operations of the '<em>Dependency Conjunction</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEPENDENCY_CONJUNCTION_OPERATION_COUNT = DEPENDENCY_OPERATION_COUNT + 0;
+	int NODE_PATTERN_DEPENDENCY_OPERATION_COUNT = DEPENDENCY_NODE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.graphpattern.impl.DependencyGraphImpl <em>Dependency Graph</em>}' class.
@@ -1216,25 +1134,16 @@ public interface GraphpatternPackage extends EPackage {
 	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getDependencyGraph()
 	 * @generated
 	 */
-	int DEPENDENCY_GRAPH = 15;
+	int DEPENDENCY_GRAPH = 14;
 
 	/**
-	 * The feature id for the '<em><b>First</b></em>' reference list.
+	 * The feature id for the '<em><b>Independent</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEPENDENCY_GRAPH__FIRST = 0;
-
-	/**
-	 * The feature id for the '<em><b>Last</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEPENDENCY_GRAPH__LAST = 1;
+	int DEPENDENCY_GRAPH__INDEPENDENT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' container reference.
@@ -1243,7 +1152,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEPENDENCY_GRAPH__GRAPH = 2;
+	int DEPENDENCY_GRAPH__GRAPH = 1;
 
 	/**
 	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
@@ -1252,7 +1161,16 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEPENDENCY_GRAPH__NODES = 3;
+	int DEPENDENCY_GRAPH__NODES = 2;
+
+	/**
+	 * The feature id for the '<em><b>Edges</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCY_GRAPH__EDGES = 3;
 
 	/**
 	 * The number of structural features of the '<em>Dependency Graph</em>' class.
@@ -1271,6 +1189,52 @@ public interface GraphpatternPackage extends EPackage {
 	 * @ordered
 	 */
 	int DEPENDENCY_GRAPH_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.graphpattern.impl.DependencyEdgeImpl <em>Dependency Edge</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.graphpattern.impl.DependencyEdgeImpl
+	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getDependencyEdge()
+	 * @generated
+	 */
+	int DEPENDENCY_EDGE = 16;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCY_EDGE__SOURCE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCY_EDGE__TARGET = 1;
+
+	/**
+	 * The number of structural features of the '<em>Dependency Edge</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCY_EDGE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Dependency Edge</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCY_EDGE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '<em>ECollection</em>' data type.
@@ -1336,15 +1300,15 @@ public interface GraphpatternPackage extends EPackage {
 	EAttribute getGraphPattern_Multi();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.sidiff.graphpattern.GraphPattern#getDependencies <em>Dependencies</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.sidiff.graphpattern.GraphPattern#getDependencyGraph <em>Dependency Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Dependencies</em>'.
-	 * @see org.sidiff.graphpattern.GraphPattern#getDependencies()
+	 * @return the meta object for the containment reference '<em>Dependency Graph</em>'.
+	 * @see org.sidiff.graphpattern.GraphPattern#getDependencyGraph()
 	 * @see #getGraphPattern()
 	 * @generated
 	 */
-	EReference getGraphPattern_Dependencies();
+	EReference getGraphPattern_DependencyGraph();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.NodePattern <em>Node Pattern</em>}'.
@@ -1938,36 +1902,15 @@ public interface GraphpatternPackage extends EPackage {
 	EClass getNodePatternDependency();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.graphpattern.NodePatternDependency#getNode <em>Node</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.NodePatternDependency#getNodes <em>Nodes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Node</em>'.
-	 * @see org.sidiff.graphpattern.NodePatternDependency#getNode()
+	 * @return the meta object for the reference list '<em>Nodes</em>'.
+	 * @see org.sidiff.graphpattern.NodePatternDependency#getNodes()
 	 * @see #getNodePatternDependency()
 	 * @generated
 	 */
-	EReference getNodePatternDependency_Node();
-
-	/**
-	 * Returns the meta object for class '{@link org.sidiff.graphpattern.DependencyConjunction <em>Dependency Conjunction</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Dependency Conjunction</em>'.
-	 * @see org.sidiff.graphpattern.DependencyConjunction
-	 * @generated
-	 */
-	EClass getDependencyConjunction();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.graphpattern.DependencyConjunction#getDependencies <em>Dependencies</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Dependencies</em>'.
-	 * @see org.sidiff.graphpattern.DependencyConjunction#getDependencies()
-	 * @see #getDependencyConjunction()
-	 * @generated
-	 */
-	EReference getDependencyConjunction_Dependencies();
+	EReference getNodePatternDependency_Nodes();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.DependencyGraph <em>Dependency Graph</em>}'.
@@ -1980,26 +1923,15 @@ public interface GraphpatternPackage extends EPackage {
 	EClass getDependencyGraph();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.DependencyGraph#getFirst <em>First</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.DependencyGraph#getIndependent <em>Independent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>First</em>'.
-	 * @see org.sidiff.graphpattern.DependencyGraph#getFirst()
+	 * @return the meta object for the reference list '<em>Independent</em>'.
+	 * @see org.sidiff.graphpattern.DependencyGraph#getIndependent()
 	 * @see #getDependencyGraph()
 	 * @generated
 	 */
-	EReference getDependencyGraph_First();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.DependencyGraph#getLast <em>Last</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Last</em>'.
-	 * @see org.sidiff.graphpattern.DependencyGraph#getLast()
-	 * @see #getDependencyGraph()
-	 * @generated
-	 */
-	EReference getDependencyGraph_Last();
+	EReference getDependencyGraph_Independent();
 
 	/**
 	 * Returns the meta object for the container reference '{@link org.sidiff.graphpattern.DependencyGraph#getGraph <em>Graph</em>}'.
@@ -2024,47 +1956,79 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getDependencyGraph_Nodes();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.graphpattern.Dependency <em>Dependency</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.graphpattern.DependencyGraph#getEdges <em>Edges</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Dependency</em>'.
-	 * @see org.sidiff.graphpattern.Dependency
+	 * @return the meta object for the containment reference list '<em>Edges</em>'.
+	 * @see org.sidiff.graphpattern.DependencyGraph#getEdges()
+	 * @see #getDependencyGraph()
 	 * @generated
 	 */
-	EClass getDependency();
+	EReference getDependencyGraph_Edges();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.graphpattern.Dependency#getSuccessor <em>Successor</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.graphpattern.DependencyNode <em>Dependency Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Successor</em>'.
-	 * @see org.sidiff.graphpattern.Dependency#getSuccessor()
-	 * @see #getDependency()
+	 * @return the meta object for class '<em>Dependency Node</em>'.
+	 * @see org.sidiff.graphpattern.DependencyNode
 	 * @generated
 	 */
-	EReference getDependency_Successor();
+	EClass getDependencyNode();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.graphpattern.Dependency#getPredecessor <em>Predecessor</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.DependencyNode#getOutgoings <em>Outgoings</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Predecessor</em>'.
-	 * @see org.sidiff.graphpattern.Dependency#getPredecessor()
-	 * @see #getDependency()
+	 * @return the meta object for the reference list '<em>Outgoings</em>'.
+	 * @see org.sidiff.graphpattern.DependencyNode#getOutgoings()
+	 * @see #getDependencyNode()
 	 * @generated
 	 */
-	EReference getDependency_Predecessor();
+	EReference getDependencyNode_Outgoings();
 
 	/**
-	 * Returns the meta object for the container reference '{@link org.sidiff.graphpattern.Dependency#getGraph <em>Graph</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.DependencyNode#getIncomings <em>Incomings</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Graph</em>'.
-	 * @see org.sidiff.graphpattern.Dependency#getGraph()
-	 * @see #getDependency()
+	 * @return the meta object for the reference list '<em>Incomings</em>'.
+	 * @see org.sidiff.graphpattern.DependencyNode#getIncomings()
+	 * @see #getDependencyNode()
 	 * @generated
 	 */
-	EReference getDependency_Graph();
+	EReference getDependencyNode_Incomings();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.graphpattern.DependencyEdge <em>Dependency Edge</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Dependency Edge</em>'.
+	 * @see org.sidiff.graphpattern.DependencyEdge
+	 * @generated
+	 */
+	EClass getDependencyEdge();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.graphpattern.DependencyEdge#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Source</em>'.
+	 * @see org.sidiff.graphpattern.DependencyEdge#getSource()
+	 * @see #getDependencyEdge()
+	 * @generated
+	 */
+	EReference getDependencyEdge_Source();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.graphpattern.DependencyEdge#getTarget <em>Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Target</em>'.
+	 * @see org.sidiff.graphpattern.DependencyEdge#getTarget()
+	 * @see #getDependencyEdge()
+	 * @generated
+	 */
+	EReference getDependencyEdge_Target();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.Pattern <em>Pattern</em>}'.
@@ -2220,12 +2184,12 @@ public interface GraphpatternPackage extends EPackage {
 		EAttribute GRAPH_PATTERN__MULTI = eINSTANCE.getGraphPattern_Multi();
 
 		/**
-		 * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Dependency Graph</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GRAPH_PATTERN__DEPENDENCIES = eINSTANCE.getGraphPattern_Dependencies();
+		EReference GRAPH_PATTERN__DEPENDENCY_GRAPH = eINSTANCE.getGraphPattern_DependencyGraph();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.NodePatternImpl <em>Node Pattern</em>}' class.
@@ -2704,30 +2668,12 @@ public interface GraphpatternPackage extends EPackage {
 		EClass NODE_PATTERN_DEPENDENCY = eINSTANCE.getNodePatternDependency();
 
 		/**
-		 * The meta object literal for the '<em><b>Node</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Nodes</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference NODE_PATTERN_DEPENDENCY__NODE = eINSTANCE.getNodePatternDependency_Node();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.DependencyConjunctionImpl <em>Dependency Conjunction</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.graphpattern.impl.DependencyConjunctionImpl
-		 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getDependencyConjunction()
-		 * @generated
-		 */
-		EClass DEPENDENCY_CONJUNCTION = eINSTANCE.getDependencyConjunction();
-
-		/**
-		 * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DEPENDENCY_CONJUNCTION__DEPENDENCIES = eINSTANCE.getDependencyConjunction_Dependencies();
+		EReference NODE_PATTERN_DEPENDENCY__NODES = eINSTANCE.getNodePatternDependency_Nodes();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.DependencyGraphImpl <em>Dependency Graph</em>}' class.
@@ -2740,20 +2686,12 @@ public interface GraphpatternPackage extends EPackage {
 		EClass DEPENDENCY_GRAPH = eINSTANCE.getDependencyGraph();
 
 		/**
-		 * The meta object literal for the '<em><b>First</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Independent</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DEPENDENCY_GRAPH__FIRST = eINSTANCE.getDependencyGraph_First();
-
-		/**
-		 * The meta object literal for the '<em><b>Last</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DEPENDENCY_GRAPH__LAST = eINSTANCE.getDependencyGraph_Last();
+		EReference DEPENDENCY_GRAPH__INDEPENDENT = eINSTANCE.getDependencyGraph_Independent();
 
 		/**
 		 * The meta object literal for the '<em><b>Graph</b></em>' container reference feature.
@@ -2772,38 +2710,64 @@ public interface GraphpatternPackage extends EPackage {
 		EReference DEPENDENCY_GRAPH__NODES = eINSTANCE.getDependencyGraph_Nodes();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.DependencyImpl <em>Dependency</em>}' class.
+		 * The meta object literal for the '<em><b>Edges</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.graphpattern.impl.DependencyImpl
-		 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getDependency()
 		 * @generated
 		 */
-		EClass DEPENDENCY = eINSTANCE.getDependency();
+		EReference DEPENDENCY_GRAPH__EDGES = eINSTANCE.getDependencyGraph_Edges();
 
 		/**
-		 * The meta object literal for the '<em><b>Successor</b></em>' reference feature.
+		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.DependencyNodeImpl <em>Dependency Node</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * @see org.sidiff.graphpattern.impl.DependencyNodeImpl
+		 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getDependencyNode()
 		 * @generated
 		 */
-		EReference DEPENDENCY__SUCCESSOR = eINSTANCE.getDependency_Successor();
+		EClass DEPENDENCY_NODE = eINSTANCE.getDependencyNode();
 
 		/**
-		 * The meta object literal for the '<em><b>Predecessor</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Outgoings</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DEPENDENCY__PREDECESSOR = eINSTANCE.getDependency_Predecessor();
+		EReference DEPENDENCY_NODE__OUTGOINGS = eINSTANCE.getDependencyNode_Outgoings();
 
 		/**
-		 * The meta object literal for the '<em><b>Graph</b></em>' container reference feature.
+		 * The meta object literal for the '<em><b>Incomings</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DEPENDENCY__GRAPH = eINSTANCE.getDependency_Graph();
+		EReference DEPENDENCY_NODE__INCOMINGS = eINSTANCE.getDependencyNode_Incomings();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.DependencyEdgeImpl <em>Dependency Edge</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.graphpattern.impl.DependencyEdgeImpl
+		 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getDependencyEdge()
+		 * @generated
+		 */
+		EClass DEPENDENCY_EDGE = eINSTANCE.getDependencyEdge();
+
+		/**
+		 * The meta object literal for the '<em><b>Source</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEPENDENCY_EDGE__SOURCE = eINSTANCE.getDependencyEdge_Source();
+
+		/**
+		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEPENDENCY_EDGE__TARGET = eINSTANCE.getDependencyEdge_Target();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.PatternImpl <em>Pattern</em>}' class.

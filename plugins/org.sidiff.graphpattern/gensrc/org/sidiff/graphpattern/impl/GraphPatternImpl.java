@@ -30,7 +30,7 @@ import org.sidiff.graphpattern.Pattern;
  *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getPattern <em>Pattern</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#isMulti <em>Multi</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getDependencies <em>Dependencies</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getDependencyGraph <em>Dependency Graph</em>}</li>
  * </ul>
  *
  * @generated
@@ -66,14 +66,14 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 	protected boolean multi = MULTI_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' containment reference.
+	 * The cached value of the '{@link #getDependencyGraph() <em>Dependency Graph</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDependencies()
+	 * @see #getDependencyGraph()
 	 * @generated
 	 * @ordered
 	 */
-	protected DependencyGraph dependencies;
+	protected DependencyGraph dependencyGraph;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -173,8 +173,8 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DependencyGraph getDependencies() {
-		return dependencies;
+	public DependencyGraph getDependencyGraph() {
+		return dependencyGraph;
 	}
 
 	/**
@@ -182,11 +182,11 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetDependencies(DependencyGraph newDependencies, NotificationChain msgs) {
-		DependencyGraph oldDependencies = dependencies;
-		dependencies = newDependencies;
+	public NotificationChain basicSetDependencyGraph(DependencyGraph newDependencyGraph, NotificationChain msgs) {
+		DependencyGraph oldDependencyGraph = dependencyGraph;
+		dependencyGraph = newDependencyGraph;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES, oldDependencies, newDependencies);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH, oldDependencyGraph, newDependencyGraph);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -197,18 +197,18 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setDependencies(DependencyGraph newDependencies) {
-		if (newDependencies != dependencies) {
+	public void setDependencyGraph(DependencyGraph newDependencyGraph) {
+		if (newDependencyGraph != dependencyGraph) {
 			NotificationChain msgs = null;
-			if (dependencies != null)
-				msgs = ((InternalEObject)dependencies).eInverseRemove(this, GraphpatternPackage.DEPENDENCY_GRAPH__GRAPH, DependencyGraph.class, msgs);
-			if (newDependencies != null)
-				msgs = ((InternalEObject)newDependencies).eInverseAdd(this, GraphpatternPackage.DEPENDENCY_GRAPH__GRAPH, DependencyGraph.class, msgs);
-			msgs = basicSetDependencies(newDependencies, msgs);
+			if (dependencyGraph != null)
+				msgs = ((InternalEObject)dependencyGraph).eInverseRemove(this, GraphpatternPackage.DEPENDENCY_GRAPH__GRAPH, DependencyGraph.class, msgs);
+			if (newDependencyGraph != null)
+				msgs = ((InternalEObject)newDependencyGraph).eInverseAdd(this, GraphpatternPackage.DEPENDENCY_GRAPH__GRAPH, DependencyGraph.class, msgs);
+			msgs = basicSetDependencyGraph(newDependencyGraph, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES, newDependencies, newDependencies));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH, newDependencyGraph, newDependencyGraph));
 	}
 
 	/**
@@ -226,10 +226,10 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetPattern((Pattern)otherEnd, msgs);
-			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES:
-				if (dependencies != null)
-					msgs = ((InternalEObject)dependencies).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES, null, msgs);
-				return basicSetDependencies((DependencyGraph)otherEnd, msgs);
+			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
+				if (dependencyGraph != null)
+					msgs = ((InternalEObject)dependencyGraph).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH, null, msgs);
+				return basicSetDependencyGraph((DependencyGraph)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -246,8 +246,8 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 				return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
 			case GraphpatternPackage.GRAPH_PATTERN__PATTERN:
 				return basicSetPattern(null, msgs);
-			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES:
-				return basicSetDependencies(null, msgs);
+			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
+				return basicSetDependencyGraph(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -280,8 +280,8 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 				return getPattern();
 			case GraphpatternPackage.GRAPH_PATTERN__MULTI:
 				return isMulti();
-			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES:
-				return getDependencies();
+			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
+				return getDependencyGraph();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -305,8 +305,8 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 			case GraphpatternPackage.GRAPH_PATTERN__MULTI:
 				setMulti((Boolean)newValue);
 				return;
-			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES:
-				setDependencies((DependencyGraph)newValue);
+			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
+				setDependencyGraph((DependencyGraph)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -329,8 +329,8 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 			case GraphpatternPackage.GRAPH_PATTERN__MULTI:
 				setMulti(MULTI_EDEFAULT);
 				return;
-			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES:
-				setDependencies((DependencyGraph)null);
+			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
+				setDependencyGraph((DependencyGraph)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -350,8 +350,8 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 				return getPattern() != null;
 			case GraphpatternPackage.GRAPH_PATTERN__MULTI:
 				return multi != MULTI_EDEFAULT;
-			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCIES:
-				return dependencies != null;
+			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
+				return dependencyGraph != null;
 		}
 		return super.eIsSet(featureID);
 	}

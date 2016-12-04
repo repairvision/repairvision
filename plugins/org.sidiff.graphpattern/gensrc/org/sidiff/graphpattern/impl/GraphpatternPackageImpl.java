@@ -15,9 +15,9 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.DataStore;
-import org.sidiff.graphpattern.Dependency;
-import org.sidiff.graphpattern.DependencyConjunction;
+import org.sidiff.graphpattern.DependencyEdge;
 import org.sidiff.graphpattern.DependencyGraph;
+import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.Evaluation;
@@ -122,13 +122,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass dependencyConjunctionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass dependencyGraphEClass = null;
 
 	/**
@@ -136,7 +129,14 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass dependencyEClass = null;
+	private EClass dependencyNodeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dependencyEdgeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -278,7 +278,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGraphPattern_Dependencies() {
+	public EReference getGraphPattern_DependencyGraph() {
 		return (EReference)graphPatternEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -800,26 +800,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNodePatternDependency_Node() {
+	public EReference getNodePatternDependency_Nodes() {
 		return (EReference)nodePatternDependencyEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getDependencyConjunction() {
-		return dependencyConjunctionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDependencyConjunction_Dependencies() {
-		return (EReference)dependencyConjunctionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -836,7 +818,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDependencyGraph_First() {
+	public EReference getDependencyGraph_Independent() {
 		return (EReference)dependencyGraphEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -845,7 +827,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDependencyGraph_Last() {
+	public EReference getDependencyGraph_Graph() {
 		return (EReference)dependencyGraphEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -854,7 +836,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDependencyGraph_Graph() {
+	public EReference getDependencyGraph_Nodes() {
 		return (EReference)dependencyGraphEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -863,7 +845,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDependencyGraph_Nodes() {
+	public EReference getDependencyGraph_Edges() {
 		return (EReference)dependencyGraphEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -872,8 +854,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getDependency() {
-		return dependencyEClass;
+	public EClass getDependencyNode() {
+		return dependencyNodeEClass;
 	}
 
 	/**
@@ -881,8 +863,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDependency_Successor() {
-		return (EReference)dependencyEClass.getEStructuralFeatures().get(0);
+	public EReference getDependencyNode_Outgoings() {
+		return (EReference)dependencyNodeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -890,8 +872,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDependency_Predecessor() {
-		return (EReference)dependencyEClass.getEStructuralFeatures().get(1);
+	public EReference getDependencyNode_Incomings() {
+		return (EReference)dependencyNodeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -899,8 +881,26 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDependency_Graph() {
-		return (EReference)dependencyEClass.getEStructuralFeatures().get(2);
+	public EClass getDependencyEdge() {
+		return dependencyEdgeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDependencyEdge_Source() {
+		return (EReference)dependencyEdgeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDependencyEdge_Target() {
+		return (EReference)dependencyEdgeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1016,7 +1016,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEReference(graphPatternEClass, GRAPH_PATTERN__NODES);
 		createEReference(graphPatternEClass, GRAPH_PATTERN__PATTERN);
 		createEAttribute(graphPatternEClass, GRAPH_PATTERN__MULTI);
-		createEReference(graphPatternEClass, GRAPH_PATTERN__DEPENDENCIES);
+		createEReference(graphPatternEClass, GRAPH_PATTERN__DEPENDENCY_GRAPH);
 
 		nodePatternEClass = createEClass(NODE_PATTERN);
 		createEReference(nodePatternEClass, NODE_PATTERN__OUTGOINGS);
@@ -1094,21 +1094,21 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEAttribute(eObjectListEClass, EOBJECT_LIST__LABEL);
 
 		nodePatternDependencyEClass = createEClass(NODE_PATTERN_DEPENDENCY);
-		createEReference(nodePatternDependencyEClass, NODE_PATTERN_DEPENDENCY__NODE);
-
-		dependencyConjunctionEClass = createEClass(DEPENDENCY_CONJUNCTION);
-		createEReference(dependencyConjunctionEClass, DEPENDENCY_CONJUNCTION__DEPENDENCIES);
+		createEReference(nodePatternDependencyEClass, NODE_PATTERN_DEPENDENCY__NODES);
 
 		dependencyGraphEClass = createEClass(DEPENDENCY_GRAPH);
-		createEReference(dependencyGraphEClass, DEPENDENCY_GRAPH__FIRST);
-		createEReference(dependencyGraphEClass, DEPENDENCY_GRAPH__LAST);
+		createEReference(dependencyGraphEClass, DEPENDENCY_GRAPH__INDEPENDENT);
 		createEReference(dependencyGraphEClass, DEPENDENCY_GRAPH__GRAPH);
 		createEReference(dependencyGraphEClass, DEPENDENCY_GRAPH__NODES);
+		createEReference(dependencyGraphEClass, DEPENDENCY_GRAPH__EDGES);
 
-		dependencyEClass = createEClass(DEPENDENCY);
-		createEReference(dependencyEClass, DEPENDENCY__SUCCESSOR);
-		createEReference(dependencyEClass, DEPENDENCY__PREDECESSOR);
-		createEReference(dependencyEClass, DEPENDENCY__GRAPH);
+		dependencyNodeEClass = createEClass(DEPENDENCY_NODE);
+		createEReference(dependencyNodeEClass, DEPENDENCY_NODE__OUTGOINGS);
+		createEReference(dependencyNodeEClass, DEPENDENCY_NODE__INCOMINGS);
+
+		dependencyEdgeEClass = createEClass(DEPENDENCY_EDGE);
+		createEReference(dependencyEdgeEClass, DEPENDENCY_EDGE__SOURCE);
+		createEReference(dependencyEdgeEClass, DEPENDENCY_EDGE__TARGET);
 
 		// Create data types
 		eCollectionEDataType = createEDataType(ECOLLECTION);
@@ -1150,15 +1150,14 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		nodePatternEClass.getESuperTypes().add(this.getGraphPatternElement());
 		edgePatternEClass.getESuperTypes().add(this.getGraphPatternElement());
 		navigableDataStoreEClass.getESuperTypes().add(this.getDataStore());
-		nodePatternDependencyEClass.getESuperTypes().add(this.getDependency());
-		dependencyConjunctionEClass.getESuperTypes().add(this.getDependency());
+		nodePatternDependencyEClass.getESuperTypes().add(this.getDependencyNode());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(graphPatternEClass, GraphPattern.class, "GraphPattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getGraphPattern_Nodes(), this.getNodePattern(), this.getNodePattern_Graph(), "nodes", null, 0, -1, GraphPattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGraphPattern_Pattern(), this.getPattern(), this.getPattern_Graphs(), "pattern", null, 1, 1, GraphPattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGraphPattern_Multi(), ecorePackage.getEBoolean(), "multi", null, 0, 1, GraphPattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getGraphPattern_Dependencies(), this.getDependencyGraph(), this.getDependencyGraph_Graph(), "dependencies", null, 0, 1, GraphPattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGraphPattern_DependencyGraph(), this.getDependencyGraph(), this.getDependencyGraph_Graph(), "dependencyGraph", null, 0, 1, GraphPattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nodePatternEClass, NodePattern.class, "NodePattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNodePattern_Outgoings(), this.getEdgePattern(), this.getEdgePattern_Source(), "outgoings", null, 0, -1, NodePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1290,21 +1289,21 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		initEAttribute(getEObjectList_Label(), ecorePackage.getEString(), "label", "", 0, 1, EObjectList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nodePatternDependencyEClass, NodePatternDependency.class, "NodePatternDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getNodePatternDependency_Node(), this.getNodePattern(), null, "node", null, 0, 1, NodePatternDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(dependencyConjunctionEClass, DependencyConjunction.class, "DependencyConjunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDependencyConjunction_Dependencies(), this.getNodePatternDependency(), null, "dependencies", null, 0, -1, DependencyConjunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNodePatternDependency_Nodes(), this.getNodePattern(), null, "nodes", null, 0, -1, NodePatternDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(dependencyGraphEClass, DependencyGraph.class, "DependencyGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDependencyGraph_First(), this.getDependency(), null, "first", null, 0, -1, DependencyGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDependencyGraph_Last(), this.getDependency(), null, "last", null, 0, -1, DependencyGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDependencyGraph_Graph(), this.getGraphPattern(), this.getGraphPattern_Dependencies(), "graph", null, 0, 1, DependencyGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDependencyGraph_Nodes(), this.getDependency(), this.getDependency_Graph(), "nodes", null, 0, -1, DependencyGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependencyGraph_Independent(), this.getDependencyNode(), null, "independent", null, 0, -1, DependencyGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependencyGraph_Graph(), this.getGraphPattern(), this.getGraphPattern_DependencyGraph(), "graph", null, 0, 1, DependencyGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependencyGraph_Nodes(), this.getDependencyNode(), null, "nodes", null, 0, -1, DependencyGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependencyGraph_Edges(), this.getDependencyEdge(), null, "edges", null, 0, -1, DependencyGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(dependencyEClass, Dependency.class, "Dependency", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDependency_Successor(), this.getDependency(), this.getDependency_Predecessor(), "successor", null, 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDependency_Predecessor(), this.getDependency(), this.getDependency_Successor(), "predecessor", null, 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDependency_Graph(), this.getDependencyGraph(), this.getDependencyGraph_Nodes(), "graph", null, 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(dependencyNodeEClass, DependencyNode.class, "DependencyNode", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDependencyNode_Outgoings(), this.getDependencyEdge(), this.getDependencyEdge_Source(), "outgoings", null, 0, -1, DependencyNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependencyNode_Incomings(), this.getDependencyEdge(), this.getDependencyEdge_Target(), "incomings", null, 0, -1, DependencyNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(dependencyEdgeEClass, DependencyEdge.class, "DependencyEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDependencyEdge_Source(), this.getDependencyNode(), this.getDependencyNode_Outgoings(), "source", null, 0, 1, DependencyEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependencyEdge_Target(), this.getDependencyNode(), this.getDependencyNode_Incomings(), "target", null, 0, 1, DependencyEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(eCollectionEDataType, Collection.class, "ECollection", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Collection<? extends org.eclipse.emf.ecore.EObject>");
