@@ -1,5 +1,6 @@
 package org.sidiff.graphpattern.dependencies;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,6 +19,8 @@ public class DependencyEvaluation {
 
 	private DependencyGraph graph;
 	
+	private List<DependencyNode> atomics = new ArrayList<>();
+	
 	private Map<NodePattern, DependencyNode> nodeToDependency = new HashMap<>();
 	
 	private Set<DependencyNode> actualIndependent = new HashSet<>();
@@ -30,10 +33,25 @@ public class DependencyEvaluation {
 		this.graph = graph.getDependencyGraph();
 		
 		for (DependencyNode dependency : this.graph.getNodes()) {
+			
+			// trace:
 			for (NodePattern node : dependency.getNodes()) {
 				nodeToDependency.put(node, dependency);
 			}
+			
+			// atomics:
+			if (dependency.getNodes().size() > 1) {
+				atomics.add(dependency);
+			}
 		}
+	}
+	
+	public List<DependencyNode> getAtomics() {
+		return atomics;
+	}
+	
+	public List<NodePattern> getAtomic(NodePattern node) {
+		return nodeToDependency.get(node).getNodes();
 	}
 	
 	/**
