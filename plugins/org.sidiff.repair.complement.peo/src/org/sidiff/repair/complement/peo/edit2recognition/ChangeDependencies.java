@@ -110,7 +110,25 @@ public class ChangeDependencies {
 		List<Edge> deletionEdges =  getLHSMinusRHSEdges(editRule);
 		
 		// A: Every << delete >> node + container/containment edges forms a dependency conjunction:
-		ceateContainmentDependencies(deletionEdges);
+		for (Edge containmentEdge : deletionEdges) {
+			if (containmentEdge.getType().isContainment()) {
+				Edge containerEdge = getOpposite(containmentEdge);
+				Node containedNode = containmentEdge.getTarget();
+				
+				if (isDeletionNode(containedNode)) {
+					// << create >> node:
+					DependencyNode dependency = createDependencyNode(containedNode, containmentEdge, containerEdge);
+					dependencyTrace.put(containedNode, dependency);
+				} else {
+					// move node => container/containment edges as opposites:
+					DependencyNode dependency = createDependencyNode(containmentEdge, containerEdge);
+					
+					dependencyTrace.put(containmentEdge, dependency);
+					dependencyTrace.put(containerEdge, dependency);
+				}
+			}
+		}
+		
 		
 		// B: All << delete >> opposite edges form a dependency conjunction:
 		// C: Every << delete >> edge has a direct dependency to its << delete >> source and target node:
@@ -178,8 +196,25 @@ public class ChangeDependencies {
 		// edit rule RHS \ LHS (added):
 		List<Edge> creationEdges = getRHSMinusLHSEdges(editRule);
 		
-		// A: Every << create >> node + container/containment references forms a dependency conjunction.
-		ceateContainmentDependencies(creationEdges);
+		// A: Every << create >> node + container/containment edges forms a dependency conjunction.
+		for (Edge containmentEdge : creationEdges) {
+			if (containmentEdge.getType().isContainment()) {
+				Edge containerEdge = getOpposite(containmentEdge);
+				Node containedNode = containmentEdge.getTarget();
+				
+				if (isCreationNode(containedNode)) {
+					// << create >> node:
+					DependencyNode dependency = createDependencyNode(containedNode, containmentEdge, containerEdge);
+					dependencyTrace.put(containedNode, dependency);
+				} else {
+					// move node => container/containment edges as opposites:
+					DependencyNode dependency = createDependencyNode(containmentEdge, containerEdge);
+					
+					dependencyTrace.put(containmentEdge, dependency);
+					dependencyTrace.put(containerEdge, dependency);
+				}
+			}
+		}
 		
 		// B: All << create >> opposite edges form a dependency conjunction.
 		for (Edge edge : getRHSMinusLHSEdges(editRule)) {
@@ -236,19 +271,6 @@ public class ChangeDependencies {
 		// edit rule attribute: value1->value2:
 		for (AttributePair attribute : getLHStoRHSChangingAttributes(editRule)) {
 			createDependencyNode(attribute.getRhsAttribute());
-		}
-	}
-	
-	private void ceateContainmentDependencies(List<Edge> edges) {
-		for (Edge edge : edges) {
-			EReference type = edge.getType();
-			
-			if (type.isContainment()) {
-				Edge containerEdge = getOpposite(edge);
-				Node containedNode = edge.getTarget();
-				DependencyNode dependency = createDependencyNode(containedNode, edge, containerEdge);
-				dependencyTrace.put(containedNode, dependency);
-			}
 		}
 	}
 	
