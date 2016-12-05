@@ -3,7 +3,9 @@ package org.sidiff.repair.api.peo;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChanges;
 import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -24,6 +26,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.repair.api.IRepair;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.matching.EditOperationMatching;
+import org.sidiff.repair.api.util.RepairAPIUtil;
 
 /**
  * API for the repair engine functions.
@@ -69,8 +72,17 @@ public abstract class PEORepairFacade implements IRepairFacade<PEORepairJob, PEO
 			e.printStackTrace();
 		}
 		
-		Resource differenceResource = differenceRSS.createResource(URI.createURI(""));
+		Resource differenceResource = differenceRSS.createResource(
+				RepairAPIUtil.getDifferenceURI(modelA.getURI(), modelB.getURI()));
 		differenceResource.getContents().add(difference);
+		
+		if (settings.saveDifference()) {
+			try {
+				differenceResource.save(Collections.EMPTY_MAP);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		// Validate model and calculate abstract repairs:
 		AbstractRepairFilter repairFilter = new AbstractRepairFilter(modelB, true);
