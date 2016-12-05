@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.dependencies.DependencyEvaluation;
 import org.sidiff.graphpattern.matching.AbstractMatchGenerator;
@@ -216,7 +217,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 					WGraph.getDataStore(variables[variableIndex].node.getEvaluation()).getMatchIterator(), 
 					assigned.get(variables[variableIndex]));
 			
-//			NavigableMatchesDS dataStore =  WGraph.getDataStore(variables[variableIndex].node.getEvaluation());
+//			NavigableMatchesDS dataStore = WGraph.getDataStore(variables[variableIndex].node.getEvaluation());
 //			return dataStore.getMatchIterator();
 		}
 	}
@@ -326,14 +327,17 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 				// set placeholder:
 				assignment[removedVariable.index] = placeholder;
 			}
+			
+			return removedSize;
 		} else {
+			
 			// undo remove variables from dependency graph:
 			if (!removed.isEmpty()) {
 				Assert.isTrue(dependencyEvaluation.add(variables[variable.index].node));
 			}
+			
+			return -1;
 		}
-		
-		return -1;
 	}
 	
 	private boolean canRemoveVariables(int variableIndex, List<NodePattern> removed) {
@@ -358,6 +362,8 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 				if (maximumLocalAssignment(variableIndex + removedSize) >= maximumLocalAssignment) {
 					return true;
 				}
+				
+//				return true;
 			}
 		}
 		
@@ -397,12 +403,14 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		Assert.isTrue(dependencyEvaluation.add(variables[variableIndex].node));
 	}
 	
-	// FIXME: Auf Atomic-Patterns bzw. Dependency-Conjunctions prüfen!
-	// ggf. bereits in assignVariable! 
 	private boolean validateAssignment() {
-		return isNewMatch && isMaximumAssignment() && isPartialAssignment();
+		return isNewMatch && isPartialAssignment() && isMaximumAssignment() && validateAtomics();
 	}
-
+	
+	private boolean isPartialAssignment() {
+		return (assignmentCount != variables.length) && (assignmentCount != 0);
+	}
+	
 	private boolean isMaximumAssignment() {
 		
 		for (int i = 0; i < assignment.length; ++i) {
@@ -420,8 +428,30 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		return true;
 	}
 	
-	private boolean isPartialAssignment() {
-		return (assignmentCount != variables.length) && (assignmentCount != 0);
+	// TODO: Auf Atomic-Patterns bzw. Dependency-Conjunctions prüfen!
+	// => bereits in assignVariable oder bei der Selektion!? 
+	private boolean validateAtomics() {
+		Set<NodePattern> matched = new HashSet<>();
+		
+		for (int i = 0; i < assignment.length; i++) {
+			EObject value = assignment[i];
+			
+			if ((value != null) && (value != placeholder)) {
+				matched.add(variables[i].node);
+			}
+		}
+		
+		for (DependencyNode dependency : dependencyEvaluation.getAtomics()) {
+			if (matched.contains(dependency.getNodes().get(0))) {
+				for (NodePattern atomicNode : dependency.getNodes()) {
+					if (!matched.remove(atomicNode)) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
 	}
 	
 	private void storeAssignment() {
