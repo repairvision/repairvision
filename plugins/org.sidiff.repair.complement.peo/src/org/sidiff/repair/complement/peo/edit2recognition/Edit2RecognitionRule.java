@@ -1,10 +1,16 @@
 package org.sidiff.repair.complement.peo.edit2recognition;
 
+import java.io.IOException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
@@ -81,6 +87,18 @@ public class Edit2RecognitionRule {
 			dependencyCalculator.calculateDependencyGraph();
 			
 		} catch (NoMainUnitFoundException | EditToRecognitionException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveRecognitionRule(URI uri) {
+		ResourceSet rss = new ResourceSetImpl();
+		Resource graphPatternResource = rss.createResource(uri);
+		graphPatternResource.getContents().add(recognitionRule);
+
+		try {
+			graphPatternResource.save(Collections.EMPTY_MAP);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

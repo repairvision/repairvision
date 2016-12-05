@@ -20,7 +20,9 @@ import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngineFactory;
 import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
+import org.sidiff.graphpattern.util.GraphPatternConstants;
 import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.peo.construction.ContextComplementConstructor;
 import org.sidiff.repair.complement.peo.edit2recognition.Edit2RecognitionMatch;
 import org.sidiff.repair.complement.peo.edit2recognition.Edit2RecognitionRule;
@@ -51,6 +53,11 @@ public abstract class ComplementFinder {
 	 * Converts an recognition to an edit rule match.
 	 */
 	private Edit2RecognitionMatch matchConverter;
+	
+	/**
+	 * Writes the recognition rule to the location of the edit rule (e.g. debugging).
+	 */
+	private boolean saveRecognitionRule;
 
 	/**
 	 * @param modelAResource
@@ -81,6 +88,11 @@ public abstract class ComplementFinder {
 		Edit2RecognitionRule edit2Recognition = new Edit2RecognitionRule(editRule);
 		GraphPattern recognitionRule = edit2Recognition.getRecognitionRule();
 		removeSymmetricDifferenceNode(recognitionRule);
+		
+		if (saveRecognitionRule) {
+			edit2Recognition.saveRecognitionRule(RepairAPIUtil.getRecognitionRuleURI(
+							editRule.eResource().getURI(), GraphPatternConstants.FILE_EXTENSION));
+		}
 		
 		//// Lifting ////
 
@@ -138,5 +150,13 @@ public abstract class ComplementFinder {
 		}
 	}
 	
+	public boolean isSaveRecognitionRule() {
+		return saveRecognitionRule;
+	}
+
+	public void setSaveRecognitionRule(boolean saveRecognitionRule) {
+		this.saveRecognitionRule = saveRecognitionRule;
+	}
+
 	protected abstract IPatternMatchingEngineFactory<IMatching> getEngineFactory();
 }
