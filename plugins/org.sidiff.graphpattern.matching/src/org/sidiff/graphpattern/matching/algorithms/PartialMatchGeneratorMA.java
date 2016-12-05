@@ -145,7 +145,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 				freeVariable(variable);
 			}
 			
-			// sub-pattern:
+			// create sub-pattern:
 			int removedSize = removeVariable(variable);
 			
 //			if (domainIsEmpty && (removedSize > 0)) {
@@ -156,11 +156,16 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		} else {
 			
 			// save actual assignment:
-			if (isNewMatch && isMaximumAssignment() && isPartialAssignment()) {
+			if (validateAssignment()) {
 				maximumLocalAssignment = Math.max(maximumLocalAssignment, assignmentCount);
 				storeAssignment();
 			}
 		}
+	}
+	
+	// FIXME: Auf Atomic-Patterns bzw. Dependency-Conjunctions prüfen!
+	private boolean validateAssignment() {
+		return isNewMatch && isMaximumAssignment() && isPartialAssignment();
 	}
 	
 	private int nextExpandable(int variableIndex) {
@@ -402,8 +407,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	private int maximumLocalAssignment(int freeVariables) {
 		int maxPossibleAssignments = 0;
 
-//		for (int i = freeVariables; i < assignment.length; ++i) { // FIXME use this!
-		for (int i = 0; i < assignment.length; ++i) {
+		for (int i = freeVariables; i < assignment.length; ++i) {
 			EObject value = assignment[i]; 
 			
 			if (value == null) {
