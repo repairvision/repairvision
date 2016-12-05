@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.dependencies.DependencyEvaluation;
 import org.sidiff.graphpattern.matching.AbstractMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
@@ -46,9 +47,13 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	
 	private Variable initialVariable;
 	
+	private EObject placeholder = new EObjectImpl() {};
+	
+	//-------------------------------------------------
+	
 	private MatchSelector matchSelector;
 	
-	private EObject placeholder = new EObjectImpl() {};
+	private DependencyEvaluation dependencyEvaluation;
 	
 	//-------------------------------------------------
 	
@@ -67,6 +72,15 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	@Override
 	public void initialize(List<NodePattern> graphPattern, List<NodePattern> variableNodes) {
 		super.initialize(graphPattern, variableNodes);
+		
+		// evaluation:
+		// TODO: add GraphPattern or DependencyGraph to initialize!
+		if (!graphPattern.isEmpty()) {
+			dependencyEvaluation = new DependencyEvaluation(graphPattern.get(0).getGraph());
+			dependencyEvaluation.start();
+		}
+		
+		// variables:
 		variables = new Variable[variableNodes.size()];
 		
 		for (int i = 0; i < variableNodes.size(); i++) {
@@ -132,10 +146,12 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			}
 			
 			// sub-pattern:
-//			if (domainIsEmpty && removeVariable(variable)) {
-			if (removeVariable(variable)) {
-				expandAssignment(variableIndex + 1);
-				addVariable(variable);
+			int removedSize = removeVariable(variable);
+			
+//			if (domainIsEmpty && (removedSize > 0)) {
+			if (removedSize > 0) {
+				expandAssignment(variableIndex + removedSize);
+				addVariable(variableIndex, removedSize);
 			} 
 		} else {
 			
@@ -212,7 +228,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 						while (matchIterator.hasNext()) {
 							next = matchIterator.next();
 
-							// filter already assigned values:
+							// [HEURISTIC]: filter already assigned values:
 							if (!assignedValues.contains(next)) {
 								return true;
 							}
@@ -240,7 +256,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 
 			return valueIterator;
 			
-//			NavigableMatchesDS dataStore = getDataStore(variables[variableIndex].node.getEvaluation());
+//			NavigableMatchesDS dataStore =  WGraph.getDataStore(variables[variableIndex].node.getEvaluation());
 //			return dataStore.getMatchIterator();
 		}
 	}
@@ -323,21 +339,70 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		isNewMatch = false;
 	}
 	
-	private boolean removeVariable(Variable variable) {
-		assignment[variable.index] = placeholder;
+	private int removeVariable(Variable variable) {
+//		assignment[variable.index] = placeholder;
 		
-		// [Heuristic]: Search until the maximum assignment in this initial selection is found:
-		if (maximumLocalAssignment(variable.index) >= maximumLocalAssignment) {
-			return true;
-		} else {
-			assignment[variable.index] = null;
-			return false;
+		List<NodePattern> removed = dependencyEvaluation.remove(variable.node);
+		int removedSize = removed.size();
+		
+		// filter empty patterns:
+		if ((variable.index + removedSize) >= variables.length) {
+			if (!dependencyEvaluation.add(variable.node)) {
+				assert false : "we should never get here!";
+			}
+			return -1;
 		}
+		
+		// Check if variable could be removed?
+		if (removedSize > 0) {
+			
+			// create sub-pattern -> set placeholders:
+			for (int i = 0; i < removedSize; i++) {
+				Variable removedVariable = nodeToVariables.get(removed.get(i));
+				
+				// NOTE: Do not remove already assigned variables!
+				if (removedVariable.index >= variable.index) {
+					
+					// move/append variables:
+					int nextPosition = variable.index + i;
+					
+					if (removedVariable.index != nextPosition) {
+						variables[removedVariable.index] = variables[nextPosition];
+						variables[removedVariable.index].index = removedVariable.index;
+						
+						variables[nextPosition] = removedVariable;
+						removedVariable.index = nextPosition;
+					}
+					
+					assignment[removedVariable.index] = placeholder;
+				} else {
+					if (!dependencyEvaluation.add(variable.node)) {
+						assert false : "we should never get here!";
+					}
+					return -1;
+				}
+			}
+			
+			// [Heuristic]: Search until the maximum assignment in this initial selection is found:
+			if (maximumLocalAssignment(variable.index + removedSize) >= maximumLocalAssignment) {
+				return removedSize;
+			} else {
+				if (!dependencyEvaluation.add(variable.node)) {
+					assert false : "we should never get here!";
+				}
+				return -1;
+			}
+			
+//			return removedSize;
+		}
+		
+		return -1;
 	}
 	
-	private int maximumLocalAssignment(int variableIndex) {
+	private int maximumLocalAssignment(int freeVariables) {
 		int maxPossibleAssignments = 0;
 
+//		for (int i = freeVariables; i < assignment.length; ++i) { // FIXME use this!
 		for (int i = 0; i < assignment.length; ++i) {
 			EObject value = assignment[i]; 
 			
@@ -362,9 +427,21 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		
 		return maxPossibleAssignments;
 	}
-
-	private void addVariable(Variable variable) {
-		assignment[variable.index] = null;
+ 
+	private void addVariable(int variableIndex, int length) {
+		
+		for (int i = variableIndex; i < (variableIndex + length); i++) {
+			assignment[i] = null;
+		}
+	
+		// FIXME: Es dürften eigentlich keine null-Werte im Pattern auftreten!
+//		if (assignment[variableIndex + 1] != null) {
+//			System.out.println("PartialMatchGeneratorMA.addVariable()");
+//		}
+		
+		if (!dependencyEvaluation.add(variables[variableIndex].node)) {
+			assert false : "we should never get here!";
+		}
 	}
 
 	private boolean isMaximumAssignment() {
@@ -400,7 +477,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 				assert (variable.node.getType() == value.eClass());
 				assignment[variable.id] = value;
 				
-				// store assigned values:
+				// [Heuristic]: Store assigned values:
 				assigned.get(variable).add(value);
 			}
 		}
