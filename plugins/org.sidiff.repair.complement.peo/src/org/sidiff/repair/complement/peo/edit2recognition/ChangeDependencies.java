@@ -292,8 +292,10 @@ public class ChangeDependencies {
 		DependencyNode dependency = GraphpatternFactory.eINSTANCE.createDependencyNode();
 		
 		for (GraphElement graphElement : changes) {
-			NodePattern recognitionChange = getRecognitionChange(graphElement);
-			dependency.getNodes().add(recognitionChange);
+			if (graphElement != null) { // e.g. missing containment opposite
+				NodePattern recognitionChange = getRecognitionChange(graphElement);
+				dependency.getNodes().add(recognitionChange);
+			}
 		}
 		
 		recognitionRule.getDependencyGraph().getNodes().add(dependency);
