@@ -2,7 +2,10 @@ package org.sidiff.repair.api;
 
 public class BasicRepairSettings implements IRepairSettings {
 
-	private boolean saveDifference = true;
+	/**
+	 * Save the calculated model difference.
+	 */
+	private boolean saveDifference = false;
 
 	@Override
 	public boolean saveDifference() {

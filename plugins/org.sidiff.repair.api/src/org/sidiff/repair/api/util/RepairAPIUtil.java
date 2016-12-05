@@ -9,4 +9,9 @@ public class RepairAPIUtil {
 				modelA.trimFileExtension().toString() + "_to_" +
 				modelB.trimFileExtension().appendFileExtension(".symmetric").lastSegment());
 	}
+	
+	public static URI getRecognitionRuleURI(URI editRule, String fileExtension) {
+		return editRule.trimSegments(1).appendSegment("rr_" + editRule.lastSegment())
+				.trimFileExtension().appendFileExtension(fileExtension);
+	}
 }
