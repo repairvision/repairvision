@@ -164,6 +164,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	}
 	
 	// FIXME: Auf Atomic-Patterns bzw. Dependency-Conjunctions prüfen!
+	// ggf. bereits in assignVariable! 
 	private boolean validateAssignment() {
 		return isNewMatch && isMaximumAssignment() && isPartialAssignment();
 	}
