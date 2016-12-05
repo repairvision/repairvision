@@ -13,12 +13,14 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.sidiff.graphpattern.DependencyEdge;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.NodePattern;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,11 +32,12 @@ import org.sidiff.graphpattern.GraphpatternPackage;
  * <ul>
  *   <li>{@link org.sidiff.graphpattern.impl.DependencyNodeImpl#getOutgoings <em>Outgoings</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.DependencyNodeImpl#getIncomings <em>Incomings</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.DependencyNodeImpl#getNodes <em>Nodes</em>}</li>
  * </ul>
  *
  * @generated
  */
-public abstract class DependencyNodeImpl extends MinimalEObjectImpl.Container implements DependencyNode {
+public class DependencyNodeImpl extends MinimalEObjectImpl.Container implements DependencyNode {
 	/**
 	 * The cached value of the '{@link #getOutgoings() <em>Outgoings</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -54,6 +57,16 @@ public abstract class DependencyNodeImpl extends MinimalEObjectImpl.Container im
 	 * @ordered
 	 */
 	protected EList<DependencyEdge> incomings;
+
+	/**
+	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNodes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<NodePattern> nodes;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -103,6 +116,18 @@ public abstract class DependencyNodeImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<NodePattern> getNodes() {
+		if (nodes == null) {
+			nodes = new EObjectResolvingEList<NodePattern>(NodePattern.class, this, GraphpatternPackage.DEPENDENCY_NODE__NODES);
+		}
+		return nodes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -143,6 +168,8 @@ public abstract class DependencyNodeImpl extends MinimalEObjectImpl.Container im
 				return getOutgoings();
 			case GraphpatternPackage.DEPENDENCY_NODE__INCOMINGS:
 				return getIncomings();
+			case GraphpatternPackage.DEPENDENCY_NODE__NODES:
+				return getNodes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -164,6 +191,10 @@ public abstract class DependencyNodeImpl extends MinimalEObjectImpl.Container im
 				getIncomings().clear();
 				getIncomings().addAll((Collection<? extends DependencyEdge>)newValue);
 				return;
+			case GraphpatternPackage.DEPENDENCY_NODE__NODES:
+				getNodes().clear();
+				getNodes().addAll((Collection<? extends NodePattern>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -182,6 +213,9 @@ public abstract class DependencyNodeImpl extends MinimalEObjectImpl.Container im
 			case GraphpatternPackage.DEPENDENCY_NODE__INCOMINGS:
 				getIncomings().clear();
 				return;
+			case GraphpatternPackage.DEPENDENCY_NODE__NODES:
+				getNodes().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -198,6 +232,8 @@ public abstract class DependencyNodeImpl extends MinimalEObjectImpl.Container im
 				return outgoings != null && !outgoings.isEmpty();
 			case GraphpatternPackage.DEPENDENCY_NODE__INCOMINGS:
 				return incomings != null && !incomings.isEmpty();
+			case GraphpatternPackage.DEPENDENCY_NODE__NODES:
+				return nodes != null && !nodes.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -63,8 +63,8 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 			case GraphpatternPackage.PATTERN: return createPattern();
 			case GraphpatternPackage.PARAMETER: return createParameter();
 			case GraphpatternPackage.EOBJECT_LIST: return createEObjectList();
-			case GraphpatternPackage.NODE_PATTERN_DEPENDENCY: return createNodePatternDependency();
 			case GraphpatternPackage.DEPENDENCY_GRAPH: return createDependencyGraph();
+			case GraphpatternPackage.DEPENDENCY_NODE: return createDependencyNode();
 			case GraphpatternPackage.DEPENDENCY_EDGE: return createDependencyEdge();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -172,9 +172,9 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NodePatternDependency createNodePatternDependency() {
-		NodePatternDependencyImpl nodePatternDependency = new NodePatternDependencyImpl();
-		return nodePatternDependency;
+	public DependencyGraph createDependencyGraph() {
+		DependencyGraphImpl dependencyGraph = new DependencyGraphImpl();
+		return dependencyGraph;
 	}
 
 	/**
@@ -182,9 +182,9 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DependencyGraph createDependencyGraph() {
-		DependencyGraphImpl dependencyGraph = new DependencyGraphImpl();
-		return dependencyGraph;
+	public DependencyNode createDependencyNode() {
+		DependencyNodeImpl dependencyNode = new DependencyNodeImpl();
+		return dependencyNode;
 	}
 
 	/**

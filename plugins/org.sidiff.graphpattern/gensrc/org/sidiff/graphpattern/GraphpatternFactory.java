@@ -85,15 +85,6 @@ public interface GraphpatternFactory extends EFactory {
 	EObjectList createEObjectList();
 
 	/**
-	 * Returns a new object of class '<em>Node Pattern Dependency</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Node Pattern Dependency</em>'.
-	 * @generated
-	 */
-	NodePatternDependency createNodePatternDependency();
-
-	/**
 	 * Returns a new object of class '<em>Dependency Graph</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -101,6 +92,15 @@ public interface GraphpatternFactory extends EFactory {
 	 * @generated
 	 */
 	DependencyGraph createDependencyGraph();
+
+	/**
+	 * Returns a new object of class '<em>Dependency Node</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dependency Node</em>'.
+	 * @generated
+	 */
+	DependencyNode createDependencyNode();
 
 	/**
 	 * Returns a new object of class '<em>Dependency Edge</em>'.
