@@ -60,7 +60,11 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	
 	//-------------------------------------------------
 	
+	private boolean GREEDY = true;
+	
 	private Map<Variable, Set<EObject>> assigned = new HashMap<>();
+	
+	private boolean LOCAL_MAXIMUM = true;
 	
 	private int maximumLocalAssignment = -1;
 	
@@ -212,13 +216,15 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		} else {
 			
 			// no initial selection:
-			// [HEURISTIC]: only elements that were not assigned yet:
-			return new FilteredIterator(
-					WGraph.getDataStore(variables[variableIndex].node.getEvaluation()).getMatchIterator(), 
-					assigned.get(variables[variableIndex]));
-			
-//			NavigableMatchesDS dataStore = WGraph.getDataStore(variables[variableIndex].node.getEvaluation());
-//			return dataStore.getMatchIterator();
+			if (GREEDY) {
+				// [HEURISTIC]: only elements that were not assigned yet:
+				return new FilteredIterator(
+						WGraph.getDataStore(variables[variableIndex].node.getEvaluation()).getMatchIterator(), 
+						assigned.get(variables[variableIndex]));
+			} else {
+				NavigableMatchesDS dataStore = WGraph.getDataStore(variables[variableIndex].node.getEvaluation());
+				return dataStore.getMatchIterator();
+			}
 		}
 	}
 	
@@ -358,12 +364,14 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 					}
 				}
 				
-				// [Heuristic]: Search until the maximum assignment in this initial selection is found:
-				if (maximumLocalAssignment(variableIndex + removedSize) >= maximumLocalAssignment) {
+				if (LOCAL_MAXIMUM) {
+					// [Heuristic]: Search until the maximum assignment in this initial selection is found:
+					if (maximumLocalAssignment(variableIndex + removedSize) >= maximumLocalAssignment) {
+						return true;
+					}
+				} else {
 					return true;
 				}
-				
-//				return true;
 			}
 		}
 		
