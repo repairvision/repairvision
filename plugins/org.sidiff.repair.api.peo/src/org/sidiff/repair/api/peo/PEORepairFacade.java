@@ -89,6 +89,8 @@ public abstract class PEORepairFacade implements IRepairFacade<PEORepairJob, PEO
 		
 		// Calculate repairs:
 		ComplementFinder complementFinder = createComplementFinder(modelA, modelB, difference);
+		complementFinder.setSaveRecognitionRule(settings.saveRecognitionRules());
+		
 		Map<Rule, List<IRepair>> repairs = new LinkedHashMap<>();
 		
 		for (Rule editRule : settings.getEditRules()) {

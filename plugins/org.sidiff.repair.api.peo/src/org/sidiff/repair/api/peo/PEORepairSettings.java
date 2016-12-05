@@ -17,6 +17,11 @@ public class PEORepairSettings extends BasicRepairSettings {
 	 * The settings for the difference calculation.
 	 */
 	private DifferenceSettings differenceSettings;
+	
+	/**
+	 * Store generated recognition rules.
+	 */
+	private boolean saveRecognitionRules = false;
 
 	public PEORepairSettings(Collection<Rule> editRules, DifferenceSettings differenceSettings) {
 		super();
@@ -38,5 +43,13 @@ public class PEORepairSettings extends BasicRepairSettings {
 
 	public void setDifferenceSettings(DifferenceSettings differenceSettings) {
 		this.differenceSettings = differenceSettings;
+	}
+
+	public boolean saveRecognitionRules() {
+		return saveRecognitionRules;
+	}
+
+	public void setSaveRecognitionRules(boolean saveRecognitionRules) {
+		this.saveRecognitionRules = saveRecognitionRules;
 	}
 }
