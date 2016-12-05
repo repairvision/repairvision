@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.sidiff.difference.symmetric.SymmetricPackage;
@@ -353,9 +354,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		
 		// filter empty patterns:
 		if ((variable.index + removedSize) >= variables.length) {
-			if (!dependencyEvaluation.add(variable.node)) {
-				assert false : "we should never get here!";
-			}
+			Assert.isTrue(dependencyEvaluation.add(variable.node));
 			return -1;
 		}
 		
@@ -393,9 +392,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			if (maximumLocalAssignment(variable.index + removedSize) >= maximumLocalAssignment) {
 				return removedSize;
 			} else {
-				if (!dependencyEvaluation.add(variable.node)) {
-					assert false : "we should never get here!";
-				}
+				Assert.isTrue(dependencyEvaluation.add(variable.node));
 				return -1;
 			}
 			
@@ -444,9 +441,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 //			System.out.println("PartialMatchGeneratorMA.addVariable()");
 //		}
 		
-		if (!dependencyEvaluation.add(variables[variableIndex].node)) {
-			assert false : "we should never get here!";
-		}
+		Assert.isTrue(dependencyEvaluation.add(variables[variableIndex].node));
 	}
 
 	private boolean isMaximumAssignment() {
