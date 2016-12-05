@@ -4,9 +4,9 @@ import java.util.Collection;
 
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.repair.api.IRepairSettings;
+import org.sidiff.repair.api.BasicRepairSettings;
 
-public class CPORepairSettings implements IRepairSettings {
+public class CPORepairSettings extends BasicRepairSettings {
 
 	/**
 	 * All edit-rules which are to be investigated for partial executions.

@@ -1,6 +1,8 @@
 package org.sidiff.repair.api.cpo;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,6 +27,7 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.cpo.lifting.BasicCPOLifting;
 import org.sidiff.repair.api.cpo.util.StatisticUtil;
 import org.sidiff.repair.api.matching.EditOperationMatching;
+import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.cpo.embedding.EmbeddingRulebase;
 import org.sidiff.repair.complement.cpo.finder.ComplementFinder;
@@ -116,14 +119,24 @@ public class CPORepairFacade implements IRepairFacade<CPORepairJob, CPORepairSet
 			LogUtil.log(LogEvent.NOTICE, embeddings.print());
 		}
 		
-		// Calculate repairs:
+		// Get difference:
 		SymmetricDifference difference = lifting.getDifference();
 		IRecognitionEngine recognitionEngine = lifting.getRecognitionEngine();
 		ILiftingRuleBase rulebases_sub = lifting.getRulebasesSub();
 		
-		Resource differenceResource = differenceRSS.createResource(URI.createURI(""));
+		Resource differenceResource = differenceRSS.createResource(
+				RepairAPIUtil.getDifferenceURI(modelA.getURI(), modelB.getURI()));
 		differenceResource.getContents().add(difference);
 		
+		if (settings.saveDifference()) {
+			try {
+				differenceResource.save(Collections.EMPTY_MAP);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// Calculate repairs:
 		Map<Rule, List<IRepair>> repairs = new LinkedHashMap<>();
 		
 		if (difference.getChangeSets().size() > 0) {
