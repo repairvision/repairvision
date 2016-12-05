@@ -36,11 +36,22 @@ public class DependencyEvaluation {
 		}
 	}
 	
+	/**
+	 * Must be called for (re)initialization.
+	 */
 	public void start() {
 		actualIndependent = new HashSet<>(graph.getIndependent());
 		removedNodes = new HashSet<>();
 	}
 	
+	/**
+	 * @param node
+	 *            A node which corresponds to a dependency. NOTE: A dependency
+	 *            can have multiple nodes but this function should be called
+	 *            only for one corresponding node.
+	 * @return <code>true</code> if the corresponding dependency could be
+	 *         removed successfully; <code>false</code> otherwise.
+	 */
 	public List<NodePattern> remove(NodePattern node) {
 		
 		// A node can be removed if its corresponding dependency node is independent!
@@ -92,7 +103,7 @@ public class DependencyEvaluation {
 	 *            can have multiple nodes but this function should be called
 	 *            only for one corresponding node.
 	 * @return <code>true</code> if the corresponding dependency could be
-	 *         removed successfully; <code>false</code> otherwise.
+	 *         added successfully; <code>false</code> otherwise.
 	 */
 	public boolean add(NodePattern node) {
 		DependencyNode dependency = nodeToDependency.get(node);
