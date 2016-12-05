@@ -6,14 +6,15 @@
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
     operationReflection="true" importOrganizing="true">
   <foreignModel>graphpattern.ecore</foreignModel>
-  <genPackages prefix="Graphpattern" basePackage="org.sidiff" resource="XMI"
-      disposableProviderFactory="true" ecorePackage="graphpattern.ecore#/">
+  <genPackages prefix="Graphpattern" basePackage="org.sidiff" resource="XMI" disposableProviderFactory="true"
+      ecorePackage="graphpattern.ecore#/">
     <genDataTypes ecoreDataType="graphpattern.ecore#//ECollection"/>
     <genDataTypes ecoreDataType="graphpattern.ecore#//EIterator"/>
     <genClasses ecoreClass="graphpattern.ecore#//GraphPattern">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//GraphPattern/nodes"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference graphpattern.ecore#//GraphPattern/pattern"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//GraphPattern/multi"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//GraphPattern/dependencyGraph"/>
     </genClasses>
     <genClasses ecoreClass="graphpattern.ecore#//NodePattern">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//NodePattern/outgoings"/>
@@ -44,7 +45,8 @@
       <genOperations ecoreOperation="graphpattern.ecore#//NodePattern/getAdjacent"/>
     </genClasses>
     <genClasses ecoreClass="graphpattern.ecore#//EdgePattern">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//EdgePattern/target"/>
+      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference graphpattern.ecore#//EdgePattern/target"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference graphpattern.ecore#//EdgePattern/source"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//EdgePattern/opposite"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//EdgePattern/type"/>
@@ -120,52 +122,39 @@
         <genParameters ecoreParameter="graphpattern.ecore#//NavigableDataStore/cleanRemoteMatches/edge"/>
       </genOperations>
     </genClasses>
-    <genClasses image="false" ecoreClass="graphpattern.ecore#//UnaryFormula">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//UnaryFormula/child"/>
-    </genClasses>
     <genClasses ecoreClass="graphpattern.ecore#//RuleBase">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//RuleBase/patterns"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="graphpattern.ecore#//Formula">
-      <genOperations ecoreOperation="graphpattern.ecore#//Formula/getResult"/>
-      <genOperations ecoreOperation="graphpattern.ecore#//Formula/getEmbedding"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="graphpattern.ecore#//BinaryFormula">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//BinaryFormula/left"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//BinaryFormula/right"/>
-    </genClasses>
-    <genClasses ecoreClass="graphpattern.ecore#//And"/>
-    <genClasses ecoreClass="graphpattern.ecore#//Or"/>
-    <genClasses ecoreClass="graphpattern.ecore#//Iff"/>
-    <genClasses ecoreClass="graphpattern.ecore#//If"/>
-    <genClasses ecoreClass="graphpattern.ecore#//Not"/>
-    <genClasses image="false" ecoreClass="graphpattern.ecore#//Quantifier"/>
-    <genClasses ecoreClass="graphpattern.ecore#//Xor"/>
     <genClasses ecoreClass="graphpattern.ecore#//Pattern">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//Pattern/formula"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//Pattern/graphs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//Pattern/parameters"/>
     </genClasses>
     <genClasses image="false" ecoreClass="graphpattern.ecore#//GraphPatternElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//GraphPatternElement/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//GraphPatternElement/formulas"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//GraphPatternElement/quantifier"/>
     </genClasses>
     <genClasses ecoreClass="graphpattern.ecore#//Parameter">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//Parameter/name"/>
-    </genClasses>
-    <genClasses ecoreClass="graphpattern.ecore#//ForAll"/>
-    <genClasses ecoreClass="graphpattern.ecore#//Exists">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//Exists/lowerBound"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//Exists/upperBound"/>
-    </genClasses>
-    <genClasses ecoreClass="graphpattern.ecore#//GraphFormula">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//GraphFormula/predicates"/>
     </genClasses>
     <genClasses ecoreClass="graphpattern.ecore#//EObjectList">
       <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
           ecoreFeature="ecore:EReference graphpattern.ecore#//EObjectList/content"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//EObjectList/label"/>
+    </genClasses>
+    <genClasses ecoreClass="graphpattern.ecore#//DependencyGraph">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//DependencyGraph/independent"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference graphpattern.ecore#//DependencyGraph/graph"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//DependencyGraph/nodes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//DependencyGraph/edges"/>
+    </genClasses>
+    <genClasses ecoreClass="graphpattern.ecore#//DependencyNode">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//DependencyNode/outgoings"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//DependencyNode/incomings"/>
+      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference graphpattern.ecore#//DependencyNode/nodes"/>
+    </genClasses>
+    <genClasses ecoreClass="graphpattern.ecore#//DependencyEdge">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//DependencyEdge/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//DependencyEdge/target"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
