@@ -7,4 +7,8 @@ package org.sidiff.repair.api;
  */
 public interface IRepairSettings {
 
+	boolean saveDifference();
+	
+	void setSaveDifference(boolean saveDifference);
+	
 }
