@@ -14,7 +14,6 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.sidiff.difference.symmetric.SymmetricPackage;
-import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.dependencies.DependencyEvaluation;
 import org.sidiff.graphpattern.matching.AbstractMatchGenerator;
@@ -43,7 +42,9 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	
 	private Set<EObject> assignmentSet;
 	
-	private int assignmentCount;
+	private int assignmentCount = 0;
+	
+	private int falsePositives = 0;
 	
 	// NOTE: Expand after remove variable might lead to no new matchings! 
 	private boolean isNewMatch = false;
@@ -128,6 +129,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		long matchingTime = System.currentTimeMillis();
 		expandAssignment(0);
 		System.out.println("Matching Time: " + (((double) System.currentTimeMillis() - matchingTime) / 1000.0) + "s");
+		System.out.println("False Positives: " + falsePositives);
 		System.out.println("Matchings Found: " + assignments.size());
 	}
 
@@ -165,6 +167,8 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			// save actual assignment:
 			if (validateAssignment()) {
 				storeAssignment();
+			} else {
+				++falsePositives;
 			}
 		}
 	}
@@ -449,12 +453,10 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			}
 		}
 		
-		for (DependencyNode dependency : dependencyEvaluation.getAtomics()) {
-			if (matched.contains(dependency.getNodes().get(0))) {
-				for (NodePattern atomicNode : dependency.getNodes()) {
-					if (!matched.remove(atomicNode)) {
-						return false;
-					}
+		for (NodePattern matchedNode : matched) {
+			for (NodePattern dependentNode : dependencyEvaluation.getAtomic(matchedNode)) {
+				if (!matched.contains(dependentNode)) {
+					return false;
 				}
 			}
 		}
