@@ -124,9 +124,9 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		System.out.println("Matching Time: " + (((double) System.currentTimeMillis() - matchingTime) / 1000.0) + "s");
 		System.out.println("Matchings Found: " + assignments.size());
 	}
-	
+	int pc;
 	private void expandAssignment(int variableIndex) {
-		
+		pc++;
 		// is expandable?
 		int expandableVariableIndex = nextExpandable(variableIndex);
 		
@@ -403,7 +403,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	}
 	
 	private int maximumLocalAssignment(int freeVariables) {
-		int maxPossibleAssignments = 0;
+		int maxPossibleAssignments = assignmentCount;
 
 		for (int i = freeVariables; i < assignment.length; ++i) {
 			EObject value = assignment[i]; 
@@ -420,10 +420,6 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 						++maxPossibleAssignments;
 					}
 				}
-			} else {
-				if (value != placeholder) {
-					++maxPossibleAssignments;
-				}
 			}
 		}
 		
@@ -437,9 +433,9 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 	
 		// FIXME: Es dürften eigentlich keine null-Werte im Pattern auftreten!
-//		if (assignment[variableIndex + 1] != null) {
-//			System.out.println("PartialMatchGeneratorMA.addVariable()");
-//		}
+		if (assignment[variableIndex + 1] != null) {
+			System.out.println("PartialMatchGeneratorMA.addVariable()");
+		}
 		
 		Assert.isTrue(dependencyEvaluation.add(variables[variableIndex].node));
 	}
