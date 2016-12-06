@@ -62,6 +62,10 @@ public class DependencyEvaluation {
 		removedNodes = new HashSet<>();
 	}
 	
+	public boolean canRemove(NodePattern node) {
+		return actualIndependent.contains(nodeToDependency.get(node));
+	}
+	
 	/**
 	 * @param node
 	 *            A node which corresponds to a dependency. NOTE: A dependency
@@ -87,10 +91,8 @@ public class DependencyEvaluation {
 			for (DependencyEdge incomingDependency : dependency.getIncomings()) {
 				DependencyNode adjacentDependency = incomingDependency.getSource();
 				
-				if (!removedNodes.contains(adjacentDependency)) {
-					if (isIndependent(adjacentDependency)) {
-						actualIndependent.add(adjacentDependency);
-					}
+				if (isIndependent(adjacentDependency)) {
+					actualIndependent.add(adjacentDependency);
 				}
 			}
 				
@@ -123,6 +125,11 @@ public class DependencyEvaluation {
 		DependencyNode dependency = nodeToDependency.get(node);
 
 		if (removedNodesTrace.peek() == dependency) {
+			
+			for (DependencyEdge incomingDependency : dependency.getIncomings()) {
+				DependencyNode adjacentDependency = incomingDependency.getSource();
+				actualIndependent.remove(adjacentDependency);
+			}
 			
 			actualIndependent.add(dependency);
 			removedNodesTrace.pop();
