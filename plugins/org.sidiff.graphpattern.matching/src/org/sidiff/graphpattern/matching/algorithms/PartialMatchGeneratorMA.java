@@ -133,15 +133,16 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		System.out.println("Matchings Found: " + assignments.size());
 	}
 
+	// variableIndex = assignmentCount + placeholderCount
 	private void expandAssignment(int variableIndex) {
 		
 		// is expandable?
-		int expandableVariableIndex = nextExpandable(variableIndex);
+		int nextVariableIndex = nextVariable(variableIndex);
 		
-		if (expandableVariableIndex != -1) {
+		if (nextVariableIndex != -1) {
 			
 			// get variable domain:
-			Iterator<EObject> domain = getDomain(variableIndex, expandableVariableIndex);
+			Iterator<EObject> domain = getDomain(variableIndex, nextVariableIndex);
 //			boolean domainIsEmpty = !domain.hasNext();
 			
 			Variable variable = variables[variableIndex];
@@ -173,7 +174,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 	}
 	
-	private int nextExpandable(int variableIndex) {
+	private int nextVariable(int variableIndex) {
 		
 		// check if there any more variables to assign:
 		if (variableIndex < variables.length) {
