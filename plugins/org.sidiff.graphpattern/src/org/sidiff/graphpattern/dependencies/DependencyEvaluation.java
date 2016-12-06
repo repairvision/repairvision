@@ -83,10 +83,6 @@ public class DependencyEvaluation {
 			removedNodesTrace.push(dependency);
 			actualIndependent.remove(dependency);
 			
-			if (removedNodes.size() != removedNodesTrace.size()) {
-				System.out.println("DependencyEvaluation.remove()");
-			}
-			
 			// check for new independent nodes:
 			for (DependencyEdge incomingDependency : dependency.getIncomings()) {
 				DependencyNode adjacentDependency = incomingDependency.getSource();
