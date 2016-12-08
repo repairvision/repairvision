@@ -46,6 +46,10 @@ public class DependencyEvaluation {
 		}
 	}
 	
+	public Set<DependencyNode> getActualIndependent() {
+		return actualIndependent;
+	}
+
 	public List<DependencyNode> getAtomics() {
 		return atomics;
 	}
@@ -80,7 +84,7 @@ public class DependencyEvaluation {
 		DependencyNode dependency = nodeToDependency.get(node);
 		
 		// update independent nodes:
-		if (actualIndependent.contains(dependency)) {
+		if (actualIndependent.contains(dependency)) { // TODO: to assertion
 			
 			// (virtual) remove dependency:
 			removedNodes.add(dependency);
@@ -124,7 +128,7 @@ public class DependencyEvaluation {
 	public boolean add(NodePattern node) {
 		DependencyNode dependency = nodeToDependency.get(node);
 
-		if (removedNodesTrace.peek() == dependency) {
+		if (!removedNodesTrace.isEmpty() && (removedNodesTrace.peek() == dependency)) {
 			
 			for (DependencyEdge incomingDependency : dependency.getIncomings()) {
 				DependencyNode adjacentDependency = incomingDependency.getSource();
