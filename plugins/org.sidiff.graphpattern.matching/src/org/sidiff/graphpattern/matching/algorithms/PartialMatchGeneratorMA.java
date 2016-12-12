@@ -20,6 +20,7 @@ import org.sidiff.graphpattern.matching.AbstractMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
 import org.sidiff.graphpattern.matching.selection.MatchSelector;
+import org.sidiff.graphpattern.matching.util.Stack;
 import org.sidiff.graphpattern.wgraph.selection.MatchSelection;
 import org.sidiff.graphpattern.wgraph.store.NavigableMatchesDS;
 import org.sidiff.graphpattern.wgraph.util.WGraph;
@@ -80,7 +81,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	@Override
 	public void initialize(List<NodePattern> graphPattern, List<NodePattern> variableNodes) {
 		super.initialize(graphPattern, variableNodes);
-		
+		Stack<Variable> t = new Stack<>(45);
 		// evaluation:
 		// TODO: add GraphPattern or DependencyGraph to initialize!
 		if (!graphPattern.isEmpty()) {
@@ -365,6 +366,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		//-------------------------------------------------
 		
 		// update dependencies:
+		// FIXME: -> nextVariable 
 		dependencyEvaluation.remove(variable.node);
 		
 		// count assignments:
@@ -454,6 +456,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			if ((variableIndex + removedSize) < variables.length) {
 				
 				// Do not remove already assigned variables!
+				// TODO: remove this!?
 				for (int i = 0; i < removedSize; i++) {
 					Variable removedVariable = nodeToVariables.get(removed.get(i));
 					
