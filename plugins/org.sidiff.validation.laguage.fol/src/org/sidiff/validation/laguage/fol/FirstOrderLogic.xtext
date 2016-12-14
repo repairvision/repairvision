@@ -1,0 +1,80 @@
+grammar org.sidiff.validation.laguage.fol.FirstOrderLogic with org.eclipse.xtext.common.Terminals
+
+generate firstOrderLogic "http://www.sidiff.org/validation/laguage/fol/FirstOrderLogic"
+
+ConsistencyRule:
+	'context' type=ID variable=Variable ':' formula=Formula;
+
+Variable:
+	name=ID;
+
+// terms:
+
+Term:
+	Function;
+	
+Function returns Term:
+	Get;
+
+Get returns Term:
+	Variable ({Get.context=current} "." feature=ID)*;
+
+/* 
+ * Precedence: not, and, or, xor, if
+ * 
+ * To define the precedence we must write the rule for the operator with less precedence in 
+ * terms of the rule for the operator with higher precedence. This means that in the grammar, 
+ * the rules for operators with less precedence are defined first.
+ */
+ 
+Formula:
+	BinaryFormula;
+
+// binary formulas:
+
+BinaryFormula returns Formula:
+	If;
+
+If returns Formula:
+	Xor ({If.left=current} "implies" right=Xor)*;
+
+Xor returns Formula:
+	Or ({Xor.left=current} "xor" right=Or)*;
+
+Or returns Formula:
+	And ({Or.left=current} "or" right=And)*;
+
+And returns Formula:
+	Primary ({And.left=current} "and" right=Primary)*;
+
+// unary formulas:
+
+UnaryFormula returns Formula :
+	Not;
+
+Not returns UnaryFormula:
+	{Not} "not(" not=Formula ")";
+	
+// quantifier
+
+Quantifier returns Formula:
+	ForAll | Exists;
+
+ForAll returns Quantifier:
+	{ForAll} "forAll(" bounded=Variable "in" iteration=Term ":" formula=Formula ")";
+	
+Exists returns Quantifier:
+	{Exists} "exists(" bounded=Variable "in" iteration=Term ":" formula=Formula ")";
+
+// general:
+
+Primary returns Formula:
+	'(' Formula ')' |
+	UnaryFormula | Quantifier |
+	TerminalExpression;
+	
+TerminalExpression returns Formula:
+	{IntConstant} value=INT |
+	{StringConstant} value=STRING |
+	{BoolConstant} value=('true' | 'false') |
+	{VariableRef} variable=[Variable];
