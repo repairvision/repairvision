@@ -5,8 +5,6 @@ package org.sidiff.validation.laguage.fol.firstOrderLogic.impl;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Term;
 
@@ -17,7 +15,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Term;
  *
  * @generated
  */
-public class TermImpl extends MinimalEObjectImpl.Container implements Term
+public class TermImpl extends FormulaImpl implements Term
 {
   /**
    * <!-- begin-user-doc -->

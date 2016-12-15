@@ -25,7 +25,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant;
  *
  * @generated
  */
-public class IntConstantImpl extends FormulaImpl implements IntConstant
+public class IntConstantImpl extends TermImpl implements IntConstant
 {
   /**
    * The default value of the '{@link #getValue() <em>Value</em>}' attribute.

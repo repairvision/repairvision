@@ -20,7 +20,7 @@ package org.sidiff.validation.laguage.fol.firstOrderLogic;
  * @model
  * @generated
  */
-public interface VariableRef extends Formula
+public interface VariableRef extends Term
 {
   /**
    * Returns the value of the '<em><b>Variable</b></em>' reference.

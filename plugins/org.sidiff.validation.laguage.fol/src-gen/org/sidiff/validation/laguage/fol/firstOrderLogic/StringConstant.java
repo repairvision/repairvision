@@ -20,7 +20,7 @@ package org.sidiff.validation.laguage.fol.firstOrderLogic;
  * @model
  * @generated
  */
-public interface StringConstant extends Formula
+public interface StringConstant extends Term
 {
   /**
    * Returns the value of the '<em><b>Value</b></em>' attribute.

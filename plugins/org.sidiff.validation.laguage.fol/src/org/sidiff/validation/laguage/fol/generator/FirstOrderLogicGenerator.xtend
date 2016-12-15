@@ -3,10 +3,15 @@
  */
 package org.sidiff.validation.laguage.fol.generator
 
+import java.util.Map
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import java.util.Collections
 
 /**
  * Generates code from your model files on save.
@@ -21,5 +26,37 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 //				.filter(typeof(Greeting))
 //				.map[name]
 //				.join(', '))
+
+		var root = resource.contents.get(0)
+		var trace = deepCopy(root)
+		
+		var copyRoot = trace.get(root)
+		var resourceSet = new ResourceSetImpl();
+		
+	 	var xmiResource = resourceSet.createResource(resource.URI.trimFileExtension.appendFileExtension("xmi"));
+		xmiResource.contents.add(copyRoot);
+		
+		xmiResource.save(Collections.emptyMap());
+	}
+	
+		/**
+	 * Creates a deep copy (i.e. full tree content) of the given object.
+	 * 
+	 * @param original
+	 *            The root object which will be copied.
+	 * @return The copy trace: Original -> Copy
+	 */
+	def static Map<EObject, EObject> deepCopy(EObject original) {
+
+		// Copier = Map: Original -> Copy
+		var copier = new Copier();
+
+		// Root:
+		copier.copy(original);
+
+		// References:
+		copier.copyReferences();
+
+		return copier;
 	}
 }

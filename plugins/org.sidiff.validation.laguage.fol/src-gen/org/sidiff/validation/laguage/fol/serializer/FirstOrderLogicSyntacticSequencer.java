@@ -57,6 +57,7 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) 'exists(' name=Variable
 	 *     (rule start) (ambiguity) 'forAll(' name=Variable
+	 *     (rule start) (ambiguity) 'isEmpty(' term=[Term|ID]
 	 *     (rule start) (ambiguity) 'not(' not=Formula
 	 *     (rule start) (ambiguity) value='false'
 	 *     (rule start) (ambiguity) value='true'
@@ -64,8 +65,13 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) variable=[Variable|ID]
 	 *     (rule start) (ambiguity) {And.left=}
+	 *     (rule start) (ambiguity) {Equality.left=}
+	 *     (rule start) (ambiguity) {Greater.left=}
+	 *     (rule start) (ambiguity) {GreaterEqual.left=}
 	 *     (rule start) (ambiguity) {If.left=}
 	 *     (rule start) (ambiguity) {Or.left=}
+	 *     (rule start) (ambiguity) {Smaller.left=}
+	 *     (rule start) (ambiguity) {SmallerEqual.left=}
 	 *     (rule start) (ambiguity) {Xor.left=}
 	 */
 	protected void emit_Primary_LeftParenthesisKeyword_0_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -78,8 +84,13 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) {And.left=}
+	 *     (rule start) (ambiguity) {Equality.left=}
+	 *     (rule start) (ambiguity) {Greater.left=}
+	 *     (rule start) (ambiguity) {GreaterEqual.left=}
 	 *     (rule start) (ambiguity) {If.left=}
 	 *     (rule start) (ambiguity) {Or.left=}
+	 *     (rule start) (ambiguity) {Smaller.left=}
+	 *     (rule start) (ambiguity) {SmallerEqual.left=}
 	 *     (rule start) (ambiguity) {Xor.left=}
 	 */
 	protected void emit_Primary_LeftParenthesisKeyword_0_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

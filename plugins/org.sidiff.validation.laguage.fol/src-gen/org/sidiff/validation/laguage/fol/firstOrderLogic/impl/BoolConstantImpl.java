@@ -25,7 +25,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
  *
  * @generated
  */
-public class BoolConstantImpl extends FormulaImpl implements BoolConstant
+public class BoolConstantImpl extends TermImpl implements BoolConstant
 {
   /**
    * The default value of the '{@link #getValue() <em>Value</em>}' attribute.

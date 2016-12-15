@@ -6,53 +6,45 @@ package org.sidiff.validation.laguage.fol.firstOrderLogic.impl;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
-import org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Term;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>String Constant</b></em>'.
+ * An implementation of the model object '<em><b>Is Empty</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.StringConstantImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.IsEmptyImpl#getTerm <em>Term</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class StringConstantImpl extends TermImpl implements StringConstant
+public class IsEmptyImpl extends FormulaImpl implements IsEmpty
 {
   /**
-   * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+   * The cached value of the '{@link #getTerm() <em>Term</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getValue()
+   * @see #getTerm()
    * @generated
    * @ordered
    */
-  protected static final String VALUE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getValue()
-   * @generated
-   * @ordered
-   */
-  protected String value = VALUE_EDEFAULT;
+  protected Term term;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected StringConstantImpl()
+  protected IsEmptyImpl()
   {
     super();
   }
@@ -65,7 +57,7 @@ public class StringConstantImpl extends TermImpl implements StringConstant
   @Override
   protected EClass eStaticClass()
   {
-    return FirstOrderLogicPackage.Literals.STRING_CONSTANT;
+    return FirstOrderLogicPackage.Literals.IS_EMPTY;
   }
 
   /**
@@ -73,9 +65,19 @@ public class StringConstantImpl extends TermImpl implements StringConstant
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getValue()
+  public Term getTerm()
   {
-    return value;
+    if (term != null && term.eIsProxy())
+    {
+      InternalEObject oldTerm = (InternalEObject)term;
+      term = (Term)eResolveProxy(oldTerm);
+      if (term != oldTerm)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, FirstOrderLogicPackage.IS_EMPTY__TERM, oldTerm, term));
+      }
+    }
+    return term;
   }
 
   /**
@@ -83,12 +85,22 @@ public class StringConstantImpl extends TermImpl implements StringConstant
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setValue(String newValue)
+  public Term basicGetTerm()
   {
-    String oldValue = value;
-    value = newValue;
+    return term;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTerm(Term newTerm)
+  {
+    Term oldTerm = term;
+    term = newTerm;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.STRING_CONSTANT__VALUE, oldValue, value));
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.IS_EMPTY__TERM, oldTerm, term));
   }
 
   /**
@@ -101,8 +113,9 @@ public class StringConstantImpl extends TermImpl implements StringConstant
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.STRING_CONSTANT__VALUE:
-        return getValue();
+      case FirstOrderLogicPackage.IS_EMPTY__TERM:
+        if (resolve) return getTerm();
+        return basicGetTerm();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -117,8 +130,8 @@ public class StringConstantImpl extends TermImpl implements StringConstant
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.STRING_CONSTANT__VALUE:
-        setValue((String)newValue);
+      case FirstOrderLogicPackage.IS_EMPTY__TERM:
+        setTerm((Term)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -134,8 +147,8 @@ public class StringConstantImpl extends TermImpl implements StringConstant
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.STRING_CONSTANT__VALUE:
-        setValue(VALUE_EDEFAULT);
+      case FirstOrderLogicPackage.IS_EMPTY__TERM:
+        setTerm((Term)null);
         return;
     }
     super.eUnset(featureID);
@@ -151,27 +164,10 @@ public class StringConstantImpl extends TermImpl implements StringConstant
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.STRING_CONSTANT__VALUE:
-        return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+      case FirstOrderLogicPackage.IS_EMPTY__TERM:
+        return term != null;
     }
     return super.eIsSet(featureID);
   }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (value: ");
-    result.append(value);
-    result.append(')');
-    return result.toString();
-  }
-
-} //StringConstantImpl
+} //IsEmptyImpl

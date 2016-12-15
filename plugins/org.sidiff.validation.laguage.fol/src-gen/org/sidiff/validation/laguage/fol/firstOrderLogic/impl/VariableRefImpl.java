@@ -27,7 +27,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef;
  *
  * @generated
  */
-public class VariableRefImpl extends FormulaImpl implements VariableRef
+public class VariableRefImpl extends TermImpl implements VariableRef
 {
   /**
    * The cached value of the '{@link #getVariable() <em>Variable</em>}' reference.

@@ -3,7 +3,6 @@
  */
 package org.sidiff.validation.laguage.fol.firstOrderLogic;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,6 +14,6 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Term extends EObject
+public interface Term extends Formula
 {
 } // Term

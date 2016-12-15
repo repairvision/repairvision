@@ -14,6 +14,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.And;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Equality;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicFactory;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
@@ -21,11 +22,16 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Formula;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Greater;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.If;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Not;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Or;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Smaller;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.SmallerEqual;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Term;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.UnaryFormula;
@@ -60,14 +66,14 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass variableEClass = null;
+  private EClass termEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass termEClass = null;
+  private EClass variableEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -95,6 +101,13 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass isEmptyEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass quantifierEClass = null;
 
   /**
@@ -103,6 +116,13 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * @generated
    */
   private EClass getTermEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass equalityEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -138,6 +158,34 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * @generated
    */
   private EClass notEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass greaterEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass greaterEqualEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass smallerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass smallerEqualEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -309,6 +357,16 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getTerm()
+  {
+    return termEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getVariable()
   {
     return variableEClass;
@@ -332,16 +390,6 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
   public EAttribute getVariable_Name()
   {
     return (EAttribute)variableEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getTerm()
-  {
-    return termEClass;
   }
 
   /**
@@ -402,6 +450,26 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
   public EClass getUnaryFormula()
   {
     return unaryFormulaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIsEmpty()
+  {
+    return isEmptyEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIsEmpty_Term()
+  {
+    return (EReference)isEmptyEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -472,6 +540,36 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
   public EReference getGetTerm_Feature()
   {
     return (EReference)getTermEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEquality()
+  {
+    return equalityEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEquality_Left()
+  {
+    return (EReference)equalityEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEquality_Right()
+  {
+    return (EReference)equalityEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -619,6 +717,126 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getGreater()
+  {
+    return greaterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getGreater_Left()
+  {
+    return (EReference)greaterEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getGreater_Right()
+  {
+    return (EReference)greaterEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getGreaterEqual()
+  {
+    return greaterEqualEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getGreaterEqual_Left()
+  {
+    return (EReference)greaterEqualEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getGreaterEqual_Right()
+  {
+    return (EReference)greaterEqualEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSmaller()
+  {
+    return smallerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSmaller_Left()
+  {
+    return (EReference)smallerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSmaller_Right()
+  {
+    return (EReference)smallerEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSmallerEqual()
+  {
+    return smallerEqualEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSmallerEqual_Left()
+  {
+    return (EReference)smallerEqualEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSmallerEqual_Right()
+  {
+    return (EReference)smallerEqualEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getForAll()
   {
     return forAllEClass;
@@ -752,11 +970,11 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     createEReference(constraintEClass, CONSTRAINT__VARIABLE);
     createEReference(constraintEClass, CONSTRAINT__FORMULA);
 
+    termEClass = createEClass(TERM);
+
     variableEClass = createEClass(VARIABLE);
     createEAttribute(variableEClass, VARIABLE__TYPE);
     createEAttribute(variableEClass, VARIABLE__NAME);
-
-    termEClass = createEClass(TERM);
 
     getEClass = createEClass(GET);
     createEAttribute(getEClass, GET__TYPE);
@@ -767,6 +985,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
 
     unaryFormulaEClass = createEClass(UNARY_FORMULA);
 
+    isEmptyEClass = createEClass(IS_EMPTY);
+    createEReference(isEmptyEClass, IS_EMPTY__TERM);
+
     quantifierEClass = createEClass(QUANTIFIER);
     createEReference(quantifierEClass, QUANTIFIER__NAME);
     createEReference(quantifierEClass, QUANTIFIER__ITERATION);
@@ -775,6 +996,10 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     getTermEClass = createEClass(GET_TERM);
     createEReference(getTermEClass, GET_TERM__NAME);
     createEReference(getTermEClass, GET_TERM__FEATURE);
+
+    equalityEClass = createEClass(EQUALITY);
+    createEReference(equalityEClass, EQUALITY__LEFT);
+    createEReference(equalityEClass, EQUALITY__RIGHT);
 
     ifEClass = createEClass(IF);
     createEReference(ifEClass, IF__LEFT);
@@ -794,6 +1019,22 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
 
     notEClass = createEClass(NOT);
     createEReference(notEClass, NOT__NOT);
+
+    greaterEClass = createEClass(GREATER);
+    createEReference(greaterEClass, GREATER__LEFT);
+    createEReference(greaterEClass, GREATER__RIGHT);
+
+    greaterEqualEClass = createEClass(GREATER_EQUAL);
+    createEReference(greaterEqualEClass, GREATER_EQUAL__LEFT);
+    createEReference(greaterEqualEClass, GREATER_EQUAL__RIGHT);
+
+    smallerEClass = createEClass(SMALLER);
+    createEReference(smallerEClass, SMALLER__LEFT);
+    createEReference(smallerEClass, SMALLER__RIGHT);
+
+    smallerEqualEClass = createEClass(SMALLER_EQUAL);
+    createEReference(smallerEqualEClass, SMALLER_EQUAL__LEFT);
+    createEReference(smallerEqualEClass, SMALLER_EQUAL__RIGHT);
 
     forAllEClass = createEClass(FOR_ALL);
 
@@ -841,20 +1082,28 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    termEClass.getESuperTypes().add(this.getFormula());
+    variableEClass.getESuperTypes().add(this.getTerm());
     unaryFormulaEClass.getESuperTypes().add(this.getFormula());
+    isEmptyEClass.getESuperTypes().add(this.getFormula());
     quantifierEClass.getESuperTypes().add(this.getFormula());
     getTermEClass.getESuperTypes().add(this.getTerm());
+    equalityEClass.getESuperTypes().add(this.getFormula());
     ifEClass.getESuperTypes().add(this.getFormula());
     xorEClass.getESuperTypes().add(this.getFormula());
     orEClass.getESuperTypes().add(this.getFormula());
     andEClass.getESuperTypes().add(this.getFormula());
     notEClass.getESuperTypes().add(this.getUnaryFormula());
+    greaterEClass.getESuperTypes().add(this.getFormula());
+    greaterEqualEClass.getESuperTypes().add(this.getFormula());
+    smallerEClass.getESuperTypes().add(this.getFormula());
+    smallerEqualEClass.getESuperTypes().add(this.getFormula());
     forAllEClass.getESuperTypes().add(this.getQuantifier());
     existsEClass.getESuperTypes().add(this.getQuantifier());
-    intConstantEClass.getESuperTypes().add(this.getFormula());
-    stringConstantEClass.getESuperTypes().add(this.getFormula());
-    boolConstantEClass.getESuperTypes().add(this.getFormula());
-    variableRefEClass.getESuperTypes().add(this.getFormula());
+    intConstantEClass.getESuperTypes().add(this.getTerm());
+    stringConstantEClass.getESuperTypes().add(this.getTerm());
+    boolConstantEClass.getESuperTypes().add(this.getTerm());
+    variableRefEClass.getESuperTypes().add(this.getTerm());
 
     // Initialize classes and features; add operations and parameters
     initEClass(constraintRuleBaseEClass, ConstraintRuleBase.class, "ConstraintRuleBase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -865,11 +1114,11 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     initEReference(getConstraint_Variable(), this.getVariable(), null, "variable", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConstraint_Formula(), this.getFormula(), null, "formula", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(termEClass, Term.class, "Term", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
     initEClass(variableEClass, Variable.class, "Variable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVariable_Type(), ecorePackage.getEString(), "type", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariable_Name(), ecorePackage.getEString(), "name", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(termEClass, Term.class, "Term", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(getEClass, Get.class, "Get", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getGet_Type(), ecorePackage.getEString(), "type", null, 0, 1, Get.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -880,6 +1129,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
 
     initEClass(unaryFormulaEClass, UnaryFormula.class, "UnaryFormula", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(isEmptyEClass, IsEmpty.class, "IsEmpty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getIsEmpty_Term(), this.getTerm(), null, "term", null, 0, 1, IsEmpty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(quantifierEClass, Quantifier.class, "Quantifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getQuantifier_Name(), this.getVariable(), null, "name", null, 0, 1, Quantifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getQuantifier_Iteration(), this.getTerm(), null, "iteration", null, 0, 1, Quantifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -888,6 +1140,10 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     initEClass(getTermEClass, GetTerm.class, "GetTerm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getGetTerm_Name(), this.getVariable(), null, "name", null, 0, 1, GetTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getGetTerm_Feature(), this.getGet(), null, "feature", null, 0, 1, GetTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(equalityEClass, Equality.class, "Equality", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEquality_Left(), this.getFormula(), null, "left", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEquality_Right(), this.getFormula(), null, "right", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(ifEClass, If.class, "If", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getIf_Left(), this.getFormula(), null, "left", null, 0, 1, If.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -907,6 +1163,22 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
 
     initEClass(notEClass, Not.class, "Not", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getNot_Not(), this.getFormula(), null, "not", null, 0, 1, Not.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(greaterEClass, Greater.class, "Greater", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getGreater_Left(), this.getFormula(), null, "left", null, 0, 1, Greater.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGreater_Right(), this.getFormula(), null, "right", null, 0, 1, Greater.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(greaterEqualEClass, GreaterEqual.class, "GreaterEqual", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getGreaterEqual_Left(), this.getFormula(), null, "left", null, 0, 1, GreaterEqual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGreaterEqual_Right(), this.getFormula(), null, "right", null, 0, 1, GreaterEqual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(smallerEClass, Smaller.class, "Smaller", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSmaller_Left(), this.getFormula(), null, "left", null, 0, 1, Smaller.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSmaller_Right(), this.getFormula(), null, "right", null, 0, 1, Smaller.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(smallerEqualEClass, SmallerEqual.class, "SmallerEqual", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSmallerEqual_Left(), this.getFormula(), null, "left", null, 0, 1, SmallerEqual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSmallerEqual_Right(), this.getFormula(), null, "right", null, 0, 1, SmallerEqual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(forAllEClass, ForAll.class, "ForAll", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -42,15 +42,6 @@ public interface FirstOrderLogicFactory extends EFactory
   Constraint createConstraint();
 
   /**
-   * Returns a new object of class '<em>Variable</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable</em>'.
-   * @generated
-   */
-  Variable createVariable();
-
-  /**
    * Returns a new object of class '<em>Term</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -58,6 +49,15 @@ public interface FirstOrderLogicFactory extends EFactory
    * @generated
    */
   Term createTerm();
+
+  /**
+   * Returns a new object of class '<em>Variable</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Variable</em>'.
+   * @generated
+   */
+  Variable createVariable();
 
   /**
    * Returns a new object of class '<em>Get</em>'.
@@ -87,6 +87,15 @@ public interface FirstOrderLogicFactory extends EFactory
   UnaryFormula createUnaryFormula();
 
   /**
+   * Returns a new object of class '<em>Is Empty</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Is Empty</em>'.
+   * @generated
+   */
+  IsEmpty createIsEmpty();
+
+  /**
    * Returns a new object of class '<em>Quantifier</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -103,6 +112,15 @@ public interface FirstOrderLogicFactory extends EFactory
    * @generated
    */
   GetTerm createGetTerm();
+
+  /**
+   * Returns a new object of class '<em>Equality</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Equality</em>'.
+   * @generated
+   */
+  Equality createEquality();
 
   /**
    * Returns a new object of class '<em>If</em>'.
@@ -148,6 +166,42 @@ public interface FirstOrderLogicFactory extends EFactory
    * @generated
    */
   Not createNot();
+
+  /**
+   * Returns a new object of class '<em>Greater</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Greater</em>'.
+   * @generated
+   */
+  Greater createGreater();
+
+  /**
+   * Returns a new object of class '<em>Greater Equal</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Greater Equal</em>'.
+   * @generated
+   */
+  GreaterEqual createGreaterEqual();
+
+  /**
+   * Returns a new object of class '<em>Smaller</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Smaller</em>'.
+   * @generated
+   */
+  Smaller createSmaller();
+
+  /**
+   * Returns a new object of class '<em>Smaller Equal</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Smaller Equal</em>'.
+   * @generated
+   */
+  SmallerEqual createSmallerEqual();
 
   /**
    * Returns a new object of class '<em>For All</em>'.

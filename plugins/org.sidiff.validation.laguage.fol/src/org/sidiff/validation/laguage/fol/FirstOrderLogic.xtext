@@ -11,13 +11,13 @@ ConstraintRuleBase:
 Constraint:
 	'context' variable=Variable ':' formula=Formula;
 
-Variable:
-	type=ID name=ID;
-
 // terms:
 
 Term:
-	Function;
+	Variable | Function;
+	
+Variable:
+	type=ID name=ID;
 	
 Function returns Term: 
 //	Get
@@ -35,6 +35,14 @@ Get:
 
 Feature returns ecore::EString:
     ID;
+    
+// equality:
+
+Formula:
+	Equality;
+	
+Equality returns Formula:
+	BinaryFormula ({Equality.left=current} "=" right=BinaryFormula)*;
 
 /* 
  * Precedence: not, and, or, xor, if
@@ -43,9 +51,6 @@ Feature returns ecore::EString:
  * terms of the rule for the operator with higher precedence. This means that in the grammar, 
  * the rules for operators with less precedence are defined first.
  */
- 
-Formula:
-	BinaryFormula;
 
 // binary formulas:
 // TODO: How to make If, Xor,... inherit from BinaryFormula?
@@ -63,7 +68,7 @@ Or returns Formula:
 	And ({Or.left=current} "or" right=And)*;
 
 And returns Formula:
-	Primary ({And.left=current} "and" right=Primary)*;
+	Greater ({And.left=current} "and" right=Greater)*;
 
 // unary formulas:
 
@@ -72,6 +77,27 @@ UnaryFormula returns Formula :
 
 Not returns UnaryFormula:
 	{Not} "not(" not=Formula ")";
+	
+// predicates (term -> boolean):
+
+Predicate returns Formula:
+	IsEmpty;
+
+IsEmpty:
+	"isEmpty(" term=[Term] ")";
+
+// TODO: left/right should be of type Term
+Greater returns Formula:
+	GreaterEqual ({Greater.left=current} ">" right=GreaterEqual)*;
+	
+GreaterEqual returns Formula:
+	Smaller ({GreaterEqual.left=current} ">=" right=Smaller)*;
+
+Smaller returns Formula:
+	SmallerEqual ({Smaller.left=current} "<" right=SmallerEqual)*;
+	
+SmallerEqual returns Formula:
+	Primary ({SmallerEqual.left=current} "<=" right=Primary)*;
 	
 // quantifier
 
@@ -87,11 +113,9 @@ Exists returns Quantifier:
 // general:
 
 Primary returns Formula:
-	'(' Formula ')' |
-	UnaryFormula | Quantifier |
-	TerminalExpression;
+	'(' Formula ')' | UnaryFormula | Quantifier | Predicate | Constant;
 	
-TerminalExpression returns Formula:
+Constant returns Term:
 	{IntConstant} value=INT |
 	{StringConstant} value=STRING |
 	{BoolConstant} value=('true' | 'false') |

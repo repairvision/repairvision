@@ -8,7 +8,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
@@ -27,7 +26,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
  *
  * @generated
  */
-public class VariableImpl extends MinimalEObjectImpl.Container implements Variable
+public class VariableImpl extends TermImpl implements Variable
 {
   /**
    * The default value of the '{@link #getType() <em>Type</em>}' attribute.
