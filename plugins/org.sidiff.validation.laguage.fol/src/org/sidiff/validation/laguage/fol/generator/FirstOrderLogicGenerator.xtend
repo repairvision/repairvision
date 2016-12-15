@@ -16,6 +16,7 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable
+import java.util.HashMap
 
 /**
  * Generates code from your model files on save.
@@ -25,17 +26,19 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable
 class FirstOrderLogicGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+		var names = new HashMap<Object, String>();
+		
 		var variableCounter = 0
 		var pathCounter = 0
-		
+
 		var code = 
 			'''
 				«FOR variable : resource.allContents.filter(typeof(Variable)).toIterable»
-					«compile(variable, variableCounter++)»
+					«compile(variable, variableCounter++, names)»
 				«ENDFOR»
 				
 				«FOR getTerm : resource.allContents.filter(typeof(GetTerm)).toIterable»
-					«compile(getTerm, pathCounter++)»
+					«compile(getTerm, pathCounter++, names)»
 				«ENDFOR»
 			'''
 		
@@ -43,14 +46,19 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		saveAsXMI(resource);
 	}
 	
-	def String compile(Variable variable, int counter) {
-		'''Variable v«counter»_«variable.name» = new Variable("«variable.name»");'''
+	def String compile(Variable variable, int counter, HashMap<Object, String> names) {
+		var name = 'v' + counter + '_' variable.name;
+		names.put(variable, name)
+		
+		return '''Variable «name» = new Variable("«variable.name»");'''
 	}
 	
-	def String compile(GetTerm path, int counter) {
+	def String compile(GetTerm path, int counter, HashMap<Object, String> names) {
 		
 		// Term t1_m_receiveEvent_covered =
-		var getVariable = '''Term t«counter»_«path.eAllContents.filter(typeof(Get)).map[name.name].join('_')» = '''
+		var name = '''t«counter»_«path.eAllContents.filter(typeof(Get)).map[name.name].join('_')»'''
+		var getVariable = 'Term  = ' + name
+		names.put(path, name)
 		
 		//new Get(new Get(m, DOMAIN.getMessage_ReceiveEvent()), DOMAIN.getInteractionFragment_Covered());
 		var code = new StringBuffer('new Get(' + path.name.name + ', ' + compile(path.feature.name) + ')')
