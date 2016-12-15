@@ -2,7 +2,6 @@ package org.sidiff.graphpattern.matching.algorithms;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,7 +11,6 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.dependencies.DependencyEvaluation;
@@ -21,7 +19,6 @@ import org.sidiff.graphpattern.matching.IMatchGenerator;
 import org.sidiff.graphpattern.matching.IMatching;
 import org.sidiff.graphpattern.matching.selection.MatchSelector;
 import org.sidiff.graphpattern.matching.util.Stack;
-import org.sidiff.graphpattern.wgraph.selection.MatchSelection;
 import org.sidiff.graphpattern.wgraph.store.NavigableMatchesDS;
 import org.sidiff.graphpattern.wgraph.util.WGraph;
 
@@ -35,73 +32,149 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 
 	private Map<NodePattern, Variable> nodeToVariables = new HashMap<>();
 	
-	private Variable[] variables;
+	private List<EObject[]> results;
 	
-	private List<EObject[]> assignments;
+	//-------------------------------------------------
 	
-	private EObject[] assignment;
+	private VariableSet remainingVariables;
 	
-	private Set<EObject> assignmentSet;
+	private Stack<Variable> removedVariables;
 	
-	private int assignmentCount = 0;
+	private Stack<Variable> blockedVariables;
 	
-	private int falsePositives = 0;
+	private Stack<Variable> subVariables;
 	
-	// NOTE: Expand after remove variable might lead to no new matchings! 
+	private Stack<EObject> assignments;
+
+	//-------------------------------------------------
+	
+	/**
+	 * NOTE: Expand after remove variable might lead to no new matchings! 
+	 */
 	private boolean isNewMatch = false;
+	
+	//-------------------------------------------------
 	
 	private Variable initialVariable;
 	
-	private EObject placeholder = new EObjectImpl() {};
-	
-	//-------------------------------------------------
-	
 	private MatchSelector matchSelector;
 	
-	private DependencyEvaluation dependencyEvaluation;
+	private DependencyEvaluation dependencies;
 	
 	//-------------------------------------------------
 	
-	private boolean GREEDY = false;
+	private int falsePositives = 0;
 	
-	private Map<Variable, Set<EObject>> assigned = new HashMap<>();
+	//-------------------------------------------------
 	
-	private boolean LOCAL_MAXIMUM = false;
+	private boolean GLOBAL_GREEDY = true;
 	
-	private int maximumLocalAssignment = -1;
+	private Map<Variable, Set<EObject>> globalAssigned;
+	
+	private boolean LOCAL_GREEDY = true;
+	
+	private Map<Variable, Set<EObject>> localAssigned;
 	
 	//-------------------------------------------------
 	
 	private class Variable {
 		int index;
-		int id;
 		NodePattern node;
 	}
+	
+	private class VariableSet implements Iterable<Variable> {
+		
+		Variable[] variables;
+		int size = 0;
+		
+		public VariableSet(int capacity) {
+			variables = new Variable[capacity];
+		}
+		
+		void add(Variable variable) {
+			variables[variable.index] = variable;
+			++size;
+		}
+		
+		void remove(Variable variable) {
+			variables[variable.index] = null;
+			--size;
+		}
+		
+		int size() {
+			return variables.length;
+		}
+
+		@Override
+		public Iterator<Variable> iterator() {
+			return new Iterator<Variable>() {
+				int i = 0;
+				int view = 0;
+				
+				public boolean hasNext() {
+					return i < size;
+				}
+
+				public Variable next() {
+					for (; view < variables.length; ++view) {
+						if (variables[view] != null) {
+							++i;
+							return variables[view];
+						}
+					}
+					
+					throw new NoSuchElementException();
+				}
+			};
+		}
+	}
+	
+	//-------------------------------------------------
 	
 	@Override
 	public void initialize(List<NodePattern> graphPattern, List<NodePattern> variableNodes) {
 		super.initialize(graphPattern, variableNodes);
-		Stack<Variable> t = new Stack<>(45);
+
 		// evaluation:
+		assignments = new Stack<EObject>(variableNodes.size());
+		
+		// dependencies:
 		// TODO: add GraphPattern or DependencyGraph to initialize!
 		if (!graphPattern.isEmpty()) {
-			dependencyEvaluation = new DependencyEvaluation(graphPattern.get(0).getGraph());
-			dependencyEvaluation.start();
+			dependencies = new DependencyEvaluation(graphPattern.get(0).getGraph());
+			dependencies.start();
+		}
+
+		//  [Heuristic]: assignment stores:
+		if (GLOBAL_GREEDY) {
+			globalAssigned = new HashMap<>();
+		}
+		if (LOCAL_GREEDY) {
+			localAssigned = new HashMap<>();
 		}
 		
 		// variables:
-		variables = new Variable[variableNodes.size()];
+		remainingVariables = new VariableSet(variableNodes.size());
+		removedVariables = new Stack<Variable>(variableNodes.size());
+		blockedVariables = new Stack<Variable>(variableNodes.size());
+		subVariables = new Stack<Variable>(variableNodes.size());
 		
+		// TODO: cluster and sort atomic variables! (-> VariableSet store initially removed)
 		for (int i = 0; i < variableNodes.size(); i++) {
 			Variable iVariable = new Variable();
 			iVariable.index = i;
-			iVariable.id = i;
 			iVariable.node = variableNodes.get(i);
 			
-			variables[i] = iVariable;
+			remainingVariables.add(iVariable);
 			nodeToVariables.put(iVariable.node, iVariable);
 			
-			assigned.put(iVariable, new HashSet<>());
+			//  [Heuristic]: assignment stores:
+			if (GLOBAL_GREEDY) {
+				globalAssigned.put(iVariable, new HashSet<>());
+			}
+			if (LOCAL_GREEDY) {
+				localAssigned.put(iVariable, new HashSet<>());
+			}
 		}
 	}
 	
@@ -123,103 +196,41 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	}
 	
 	private void findAssignments() {
-		assignments = new ArrayList<>();
-		assignment = new EObject[variables.length];
-		assignmentSet = new HashSet<>();
+		results = new ArrayList<>();
+		assignments.reset();
 		
 		long matchingTime = System.currentTimeMillis();
-		expandAssignment(0, 0);
+		expandAssignment(0);
 		System.out.println("Matching Time: " + (((double) System.currentTimeMillis() - matchingTime) / 1000.0) + "s");
 		System.out.println("False Positives: " + falsePositives);
-		System.out.println("Matchings Found: " + assignments.size());
+		System.out.println("Matchings Found: " + results.size());
 	}
-
-//	// variableIndex = assignmentCount + placeholderCount
-//	private void expandAssignment(int variableIndex) {
-//		
-//		// is expandable?
-//		List<NodePattern> atomicVariables = nextVariables(variableIndex);
-//		
-//		if (!atomicVariables.isEmpty()) {
-//			
-//			// create all sub-patterns which include the picked variable(s):
-//			appendVariables(atomicVariables, variableIndex);
-//			
-//			// assign (first) variable:
-//			Variable variable = variables[variableIndex];
-//			assert (variableIndex == variable.index); // TODO remove
-//			
-//			Iterator<EObject> domain = getDomain(variable);
-//
-//			while (domain.hasNext()) {
-//				assignVariable(variable, domain.next());
-//				boolean couldAssign = true;
-//				
-//				for (int i = variableIndex + 1; i < variableIndex + atomicVariables.size(); ++i) {
-//					couldAssign = coAssignVariable(variables[i]);
-//				}
-//				
-//				if (couldAssign) {
-//					expandAssignment(variableIndex + atomicVariables.size());
-//				}
-//				
-//				freeVariable(variable);
-//				
-//				for (int i = variableIndex + 1; i < variableIndex + atomicVariables.size(); ++i) {
-//					coFreeVariable(variables[i]);
-//				}
-//			}
-//			
-//			// create all sub-patterns which exclude the picked variable(s):
-//			if (canRemoveVariables(variableIndex, atomicVariables)) {
-//				removeVariable(atomicVariables);
-//				expandAssignment(variableIndex + atomicVariables.size());
-//				addVariable(atomicVariables);
-//			}
-//		} else {
-//			
-//			// save actual assignment:
-//			if (validateAssignment()) {
-//				storeAssignment();
-//			} else {
-//				++falsePositives;
-//			}
-//		}
-//	}
 	
-	// variableIndex = assignmentCount + placeholderCount
-	private void expandAssignment(int variableIndex, int atomicSize) {
+	private void expandAssignment(int unassigned) {
 		
 		// is expandable?
-		List<NodePattern> atomicVariables = null;
-		
-		if (atomicSize == 0) {
-			atomicVariables = new ArrayList<>(nextVariables(variableIndex));
-			atomicSize = atomicVariables.size();
-			
-			if (!atomicVariables.isEmpty()) {
-				appendVariables(atomicVariables, variableIndex);
-			}
-		}
-		
-		if (atomicSize != 0) {
-			
-			// create all sub-patterns which include the picked variable(s):
-			Variable variable = variables[variableIndex];
-			assert (variableIndex == variable.index); // TODO remove
-			Iterator<EObject> domain = getDomain(variable);
+		int next = (unassigned == 0) ? pickAndAppendVariable() : unassigned;
 
+		if (next != 0) {
+			Variable variable = subVariables.get(assignments.size());
+			Iterator<EObject> domain = getDomain(variable);
+			boolean domainIsEmpty = !domain.hasNext();
+			
+			// ensure atomic dependencies:
+			if ((unassigned > 0) && domainIsEmpty) return;
+
+			// create all sub-patterns which include the picked variable(s):
 			while (domain.hasNext()) {
 				assignVariable(variable, domain.next());
-				expandAssignment(variableIndex + 1, atomicSize - 1);
+				expandAssignment(next - 1);
 				freeVariable(variable);
 			}
-			
+
 			// create all sub-patterns which exclude the picked variable(s):
-			if (atomicVariables != null && canRemoveVariables(variableIndex, atomicVariables)) {
-				removeVariable(atomicVariables);
-				expandAssignment(variableIndex + atomicVariables.size(), 0);
-				addVariable(atomicVariables);
+			if (unassigned == 0) {
+				removeVariable(next, domainIsEmpty);
+				expandAssignment(unassigned);
+				addVariable(next, domainIsEmpty);
 			}
 		} else {
 			
@@ -232,73 +243,56 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 	}
 
-	// TODO: map nodes to atomic variables
-	// oder eine Variable kann mehrere Knoten repräsentieren
-	private List<NodePattern> nextVariables(int variableIndex) {
+	private int pickAndAppendVariable() {
 		
 		// check if there any more variables to assign:
-		if (variableIndex < variables.length) {
+		if (remainingVariables.size() > 0) {
 			
-			for (int i = variableIndex; i < variables.length; ++i) {
-				NodePattern node = variables[i].node;
+			for (Variable remainingVariable : remainingVariables) {
+				NodePattern node = remainingVariable.node;
 
 				// is currently independent variable?
-				if (dependencyEvaluation.canRemove(node)) {
-					NavigableMatchesDS dataStore = WGraph.getDataStore(node.getEvaluation());
-
-					// can expand the actual matching?
-					if (matchSelector != null) {
-						if (!dataStore.getMatchSelection().isEmpty()) {
-							return dependencyEvaluation.getAtomic(node);
-						}
-					} else {
-						if (!dataStore.isEmptyMatch()) {
-							// if (GREEDY) TODO: filter already selected...
-							return dependencyEvaluation.getAtomic(node);
-						}
+				if (dependencies.canRemove(node)) {
+					List<NodePattern> atomicNodes = dependencies.getAtomic(node);
+					
+					for (NodePattern atomicNode : atomicNodes) {
+						Variable atomicVariable = nodeToVariables.get(atomicNode);
+						subVariables.push(atomicVariable);
+						remainingVariables.remove(atomicVariable);
 					}
+					
+					dependencies.remove(node);
+					return atomicNodes.size();
 				}
 			}
 		}
 		
-		return Collections.emptyList();
-	}
-	
-	private void appendVariables(List<NodePattern> atomicVariables, int variableIndex) {
-		for (NodePattern node : atomicVariables) {
-			Variable actualVariable = nodeToVariables.get(node);
-			int actualVariableIndex = actualVariable.index;
-			
-			variables[variableIndex].index = actualVariableIndex;
-			variables[actualVariableIndex] = variables[variableIndex];
-			
-			variables[variableIndex] = actualVariable;
-			actualVariable.index =variableIndex;
-			
-			++variableIndex;
-		}
+		return 0;
 	}
 	
 	private Iterator<EObject> getDomain(Variable variable) {
+		NavigableMatchesDS dataStore = WGraph.getDataStore(variable.node.getEvaluation());
 		
 		if (matchSelector != null) {
 			
 			// domain based on restricted working graph:
-			NavigableMatchesDS dataStore = WGraph.getDataStore(variable.node.getEvaluation());
-			MatchSelection matchSelection = dataStore.getMatchSelection();
-			
-			// all actually selected matchings:
-			return matchSelection.getSelectedMatches();
+			if (LOCAL_GREEDY) {
+				// [HEURISTIC]: only elements that were not assigned yet:
+				return new FilteredIterator(
+						dataStore.getMatchSelection().getSelectedMatches(), 
+						localAssigned.get(variable));
+			} else {
+				return dataStore.getMatchSelection().getSelectedMatches();
+			}
 		} else {
 			
 			// no initial selection:
-			if (GREEDY) {
+			if (GLOBAL_GREEDY) {
 				// [HEURISTIC]: only elements that were not assigned yet:
 				return new FilteredIterator(
-						WGraph.getDataStore(variable.node.getEvaluation()).getMatchIterator(), 
-						assigned.get(variable));
+						dataStore.getMatchIterator(), 
+						globalAssigned.get(variable));
 			} else {
-				NavigableMatchesDS dataStore = WGraph.getDataStore(variable.node.getEvaluation());
 				return dataStore.getMatchIterator();
 			}
 		}
@@ -307,40 +301,12 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	// TODO: Wenn mehrere Variablen im selben atomaren Pattern liegen (z.B. AddObject und Container/Containment),
 	// dann ist eine weitere Selektion (Pathselektion) eigentlich überflüssig!
 	// -> intern für atomares Pattern merken oder mehrere Variablen gleichzeitig festlegen!
-	
-	private boolean coAssignVariable(Variable variable) {
-		NavigableMatchesDS nodeDS = WGraph.getDataStore(variable.node.getEvaluation());
-		Iterator<EObject> it = nodeDS.getMatchSelection().getSelectedMatches();
-		
-		if (it.hasNext()) {
-			EObject value = it.next();
-			assert !it.hasNext(); // FIXME
-			
-			// store assignment:
-			assignment[variable.index] = value;
-			assignmentSet.add(value);
-			
-			// ensure injectivity:
-			for (int i = variable.index + 1; i < variables.length; i++) {
-				NavigableMatchesDS otherNodeDS = WGraph.getDataStore(variables[i].node.getEvaluation());
-				otherNodeDS.getMatchSelection().restrictSelection(variable.node, value);
-			}
-			
-			// count assignments:
-			++assignmentCount;
-		} else {
-			return false;
-		}
-		
-		
-		return true;
-	}
-	
 	private void assignVariable(Variable variable, EObject value) {
 		
 		// initialize new sub-matching:
 		if (matchSelector == null) {
-			maximumLocalAssignment = -1;
+			clearLocalAssigned();
+			
 			initialVariable = variable;
 			matchSelector = new MatchSelector(
 					getAtomicPatternFactory(), graphPattern, 
@@ -348,8 +314,8 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 		
 		// store assignment:
-		assignment[variable.index] = value;
-		assignmentSet.add(value);
+		assignments.push(value);
+		localAssigned.get(variable).add(value);
 		
 		//-------------------------------------------------
 		// Restrict Working Graph
@@ -359,39 +325,19 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		matchSelector.selectMatch(variable.node, value);
 		
 		// ensure injectivity:
-		for (int i = variable.index + 1; i < variables.length; i++) {
-			NavigableMatchesDS nodeDS = WGraph.getDataStore(variables[i].node.getEvaluation());
+		for (Variable remainingVariable : remainingVariables) {
+			NavigableMatchesDS nodeDS = WGraph.getDataStore(remainingVariable.node.getEvaluation());
 			nodeDS.getMatchSelection().restrictSelection(variable.node, value);
 		}
 		//-------------------------------------------------
-		
-		// update dependencies:
-		// FIXME: -> nextVariable 
-		dependencyEvaluation.remove(variable.node);
-		
-		// count assignments:
-		++assignmentCount;
 		
 		// new match created!
 		isNewMatch = true;
 	}
 	
-	private void coFreeVariable(Variable variable) {
-		
-		if (assignment[variable.index] != null) {
-			
-			// unset assignment:
-			assignmentSet.remove(assignment[variable.index]);
-			assignment[variable.index] = null;
-			
-			// undo restriction on all nodes (full graph):
-			for (NodePattern node : graphPattern) {
-				NavigableMatchesDS nodeDS = WGraph.getDataStore(node.getEvaluation());
-				nodeDS.getMatchSelection().undoRestrictSelection(variable.node);	
-			}
-			
-			// count assignments:
-			--assignmentCount;
+	private void clearLocalAssigned() {
+		for (Variable variable : localAssigned.keySet()) {
+			localAssigned.get(variable).clear();
 		}
 	}
 	
@@ -404,8 +350,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 		
 		// unset assignment:
-		assignmentSet.remove(assignment[variable.index]); // FIXME ???
-		assignment[variable.index] = null;
+		assignments.pop();
 
 		//-------------------------------------------------
 		// Restrict Working Graph
@@ -414,8 +359,8 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		// NOTE: undo the restriction in reverse order (injectivity, selection)!
 		
 		// ensure injectivity:
-		for (int i = variable.index + 1; i < variables.length; i++) {
-			NavigableMatchesDS nodeDS = WGraph.getDataStore(variables[i].node.getEvaluation());
+		for (Variable remainingVariable : remainingVariables) {
+			NavigableMatchesDS nodeDS = WGraph.getDataStore(remainingVariable.node.getEvaluation());
 			nodeDS.getMatchSelection().undoRestrictSelection(variable.node);
 		}
 		
@@ -426,108 +371,47 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 		//-------------------------------------------------
 		
-		// update dependencies:
-//		Assert.isTrue(dependencyEvaluation.add(variables[variable.index].node));
-		dependencyEvaluation.add(variables[variable.index].node);
-		
-		// count assignments:
-		--assignmentCount;
-		
 		// reverted to old match!
 		isNewMatch = false;
 	}
 	
-	// TODO: by length
-	private void removeVariable(List<NodePattern> atomicVariables) {
-//		assignment[variable.index] = placeholder;
-		
-		for (NodePattern node : atomicVariables) {
-			assignment[nodeToVariables.get(node).index] = placeholder;
+	private void removeVariable(int count, boolean domainIsEmpty) {
+		for (int i = 0; i < count; ++i) {
+			Variable atomicVariable = subVariables.pop();
+	        removedVariables.push(atomicVariable);
+	        
+	        if (!domainIsEmpty) {
+	        	blockedVariables.push(atomicVariable);
+	        }
 		}
+		dependencies.undoRemoveDependency();
 	}
 	
-	private boolean canRemoveVariables(int variableIndex, List<NodePattern> removed) {
-		int removedSize = removed.size();
-		
-		// Check if variable(s) could be removed?
-		if (removedSize > 0) {
-			
-			// filter empty patterns:
-			if ((variableIndex + removedSize) < variables.length) {
-				
-				// Do not remove already assigned variables!
-				// TODO: remove this!?
-				for (int i = 0; i < removedSize; i++) {
-					Variable removedVariable = nodeToVariables.get(removed.get(i));
-					
-					if (removedVariable.index < variableIndex) {
-						return false;
-					}
-				}
-				
-				if (LOCAL_MAXIMUM) {
-					// [Heuristic]: Search until the maximum assignment in this initial selection is found:
-					if (maximumLocalAssignment(variableIndex + removedSize) >= maximumLocalAssignment) {
-						return true;
-					}
-				} else {
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
-	
-	private int maximumLocalAssignment(int freeVariables) {
-		int maxPossibleAssignments = assignmentCount;
-
-		for (int i = freeVariables; i < assignment.length; ++i) {
-			EObject value = assignment[i]; 
-			
-			if (value == null) {
-				NavigableMatchesDS nodeDS = WGraph.getDataStore(variables[i].node.getEvaluation());
-
-				if (matchSelector != null) {
-					if (!nodeDS.getMatchSelection().isEmpty()) {
-						++maxPossibleAssignments;
-					}
-				} else {
-					if (!nodeDS.isEmptyMatch()) {
-						++maxPossibleAssignments;
-					}
-				}
-			}
-		}
-		
-		return maxPossibleAssignments;
+	private void addVariable(int count, boolean domainIsEmpty) {
+		for (int i = 0; i < count; ++i) {
+	          Variable atomicVariable = removedVariables.pop();
+	          remainingVariables.add(atomicVariable);
+	          
+	          if (!domainIsEmpty) {
+	        	  blockedVariables.pop();
+	          }
+	     } 
 	}
  
-	// TODO: by length
-	private void addVariable(List<NodePattern> atomicVariables) {
-		// assignment[variable.index] = null;
-		
-		for (NodePattern node : atomicVariables) {
-			assignment[nodeToVariables.get(node).index] = null;
-		}
-	}
-	
 	private boolean validateAssignment() {
-		return isNewMatch && isPartialAssignment() && isMaximumAssignment() && validateAtomics();
+		return isNewMatch && isPartialAssignment() && isMaximumAssignment(); // && validateAtomics();
 	}
 	
 	private boolean isPartialAssignment() {
-		return (assignmentCount != variables.length) && (assignmentCount != 0);
+		return (assignments.size() != remainingVariables.size()) && (assignments.size() != 0);
 	}
 	
 	private boolean isMaximumAssignment() {
 		
-		for (int i = 0; i < assignment.length; ++i) {
-			EObject value = assignment[i]; 
-			NodePattern node = variables[i].node;
+		for (int i = 0; i < blockedVariables.size(); ++i) {
+			NodePattern node = blockedVariables.get(i).node;
 					
-//			if (value == placeholder) {
-			if ((value == placeholder) && (dependencyEvaluation.canRemove(node))) {
+			if (dependencies.canRemove(node)) {
 				NavigableMatchesDS nodeDS = WGraph.getDataStore(node.getEvaluation());
 				
 				if (!nodeDS.getMatchSelection().isEmpty()) {
@@ -539,56 +423,45 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		return true;
 	}
 	
-	// TODO: Auf Atomic-Patterns bzw. Dependency-Conjunctions prüfen!
-	// => bereits in assignVariable oder bei der Selektion!? 
-	private boolean validateAtomics() {
-		Set<NodePattern> matched = new HashSet<>();
-		
-		for (int i = 0; i < assignment.length; i++) {
-			EObject value = assignment[i];
-			
-			if ((value != null) && (value != placeholder)) {
-				matched.add(variables[i].node);
-			}
-		}
-		
-		for (NodePattern matchedNode : matched) {
-			for (NodePattern dependentNode : dependencyEvaluation.getAtomic(matchedNode)) {
-				if (!matched.contains(dependentNode)) {
-					return false;
-				}
-			}
-		}
-		
-		return true;
-	}
+//	private boolean validateAtomics() {
+//		Set<NodePattern> matched = new HashSet<>();
+//		
+//		for (int i = 0; i < subVariables.size(); i++) {
+//			matched.addAll(dependencies.getAtomic(subVariables.get(i).node));
+//		}
+//		
+//		for (NodePattern matchedNode : matched) {
+//			for (NodePattern dependentNode : dependencies.getAtomic(matchedNode)) {
+//				if (!matched.contains(dependentNode)) {
+//					return false;
+//				}
+//			}
+//		}
+//		
+//		return true;
+//	}
 	
 	private void storeAssignment() {
-		EObject[] assignment = new EObject[this.assignment.length];
-		assignments.add(assignment);
+		EObject[] assignments = new EObject[variableNodes.size()];
+		results.add(assignments);
 		
-		for (int i = 0; i < variables.length; i++) {
-			Variable variable = variables[i];
-			EObject value = this.assignment[variable.index];
+		for (int i = 0; i < this.assignments.size(); i++) {
+			Variable variable = subVariables.get(i);
+			EObject value = this.assignments.get(i);
 			
-			if ((value != placeholder) && (value != null)) {
-				assert (variable.node.getType() == value.eClass());
-				assignment[variable.id] = value;
+			assert (variable.node.getType() == value.eClass());
+			assignments[variable.index] = value;
 				
-				// [Heuristic]: store assigned values:
-				assigned.get(variable).add(value);
-			}
+			// [Heuristic]: store assigned values:
+			globalAssigned.get(variable).add(value);
 		}
-		
-		// [Heuristic]: store new maximum assignment?
-		maximumLocalAssignment = Math.max(maximumLocalAssignment, assignmentCount);
 	}
 	
 	@Override
 	public Iterator<IMatching> getResults() {
 		return new Iterator<IMatching>() {
 
-			private Iterator<EObject[]> assignmentIterator = assignments.listIterator();
+			private Iterator<EObject[]> assignmentIterator = results.listIterator();
 			
 			@Override
 			public boolean hasNext() {
@@ -620,7 +493,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 									public EObject next() {
 										if (hasNext()) {
 											hasNext = false;
-											return assignment[nodeToVariables.get(node).id];
+											return assignment[nodeToVariables.get(node).index];
 										} else {
 											throw new NoSuchElementException();
 										}
@@ -651,7 +524,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 
 						@Override
 						public EObject getFirstMatch(NodePattern node) {
-							return assignment[nodeToVariables.get(node).id];
+							return assignment[nodeToVariables.get(node).index];
 						}
 					};
 				} else {
@@ -665,10 +538,10 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	private String printAssignment() {
 		StringBuffer print = new StringBuffer();
 		
-		for (int i = 0; i < variables.length; ++i) {
+		for (int i = 0; i < subVariables.size(); ++i) {
 			
 			// Node:
-			NodePattern node =  variables[i].node;
+			NodePattern node =  subVariables.get(i).node;
 			
 			print.append("[" + i + "] Name: " + node.getName());
 			print.append(", Type: " + node.getType().getName());
@@ -700,12 +573,12 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			print.append("\n");
 			
 			// Value:
-			EObject value = assignment[i];
+			EObject value = assignments.get(i);
 			
 			print.append("  Value: " + value);
 			print.append("\n");
 			
-			if ((value != null) && (value != placeholder)) {
+			if (value != null) {
 				if (node.getType() == SymmetricPackage.eINSTANCE.getAddObject()) {
 					print.append("  Obj: " + value.eGet(SymmetricPackage.eINSTANCE.getAddObject_Obj()));
 					print.append("\n");
