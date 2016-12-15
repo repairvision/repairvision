@@ -3,15 +3,19 @@
  */
 package org.sidiff.validation.laguage.fol.generator
 
+import java.util.Collections
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import java.util.Collections
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Get
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable
 
 /**
  * Generates code from your model files on save.
@@ -21,12 +25,55 @@ import java.util.Collections
 class FirstOrderLogicGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(typeof(Greeting))
-//				.map[name]
-//				.join(', '))
-
+		var variableCounter = 0
+		var pathCounter = 0
+		
+		var code = 
+			'''
+				«FOR variable : resource.allContents.filter(typeof(Variable)).toIterable»
+					«compile(variable, variableCounter++)»
+				«ENDFOR»
+				
+				«FOR getTerm : resource.allContents.filter(typeof(GetTerm)).toIterable»
+					«compile(getTerm, pathCounter++)»
+				«ENDFOR»
+			'''
+		
+		fsa.generateFile(resource.URI.lastSegment + '.java', code)
+		saveAsXMI(resource);
+	}
+	
+	def String compile(Variable variable, int counter) {
+		'''Variable v«counter»_«variable.name» = new Variable("«variable.name»");'''
+	}
+	
+	def String compile(GetTerm path, int counter) {
+		
+		// Term t1_m_receiveEvent_covered =
+		var getVariable = '''Term t«counter»_«path.eAllContents.filter(typeof(Get)).map[name.name].join('_')» = '''
+		
+		//new Get(new Get(m, DOMAIN.getMessage_ReceiveEvent()), DOMAIN.getInteractionFragment_Covered());
+		var code = new StringBuffer('new Get(' + path.name.name + ', ' + compile(path.feature.name) + ')')
+		compile(path.feature.next, code)
+		
+		return getVariable + code + ';'
+	}
+	
+	def void compile(Get get, StringBuffer code) {
+		
+		if (get != null) {
+			code.insert(0, 'new Get(')
+			code.append(', ' + compile(get.name) + ')')
+		
+			compile(get.next, code)
+		}
+	}
+	
+	def String compile(EStructuralFeature featue) {
+		return 'DOMAIN.get' + featue.containerClass.simpleName + '_' + featue.name + '()'
+	}
+	
+	def static void saveAsXMI(Resource resource) {
 		var root = resource.contents.get(0)
 		var trace = deepCopy(root)
 		
