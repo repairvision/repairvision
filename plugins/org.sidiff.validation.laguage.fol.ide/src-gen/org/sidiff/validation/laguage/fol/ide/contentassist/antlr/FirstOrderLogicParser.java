@@ -39,7 +39,10 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPrimaryAccess().getAlternatives(), "rule__Primary__Alternatives");
 					put(grammarAccess.getTerminalExpressionAccess().getAlternatives(), "rule__TerminalExpression__Alternatives");
 					put(grammarAccess.getTerminalExpressionAccess().getValueAlternatives_2_1_0(), "rule__TerminalExpression__ValueAlternatives_2_1_0");
-					put(grammarAccess.getConsistencyRuleAccess().getGroup(), "rule__ConsistencyRule__Group__0");
+					put(grammarAccess.getConstraintRuleBaseAccess().getGroup(), "rule__ConstraintRuleBase__Group__0");
+					put(grammarAccess.getConstraintAccess().getGroup(), "rule__Constraint__Group__0");
+					put(grammarAccess.getVariableAccess().getGroup(), "rule__Variable__Group__0");
+					put(grammarAccess.getGetTermAccess().getGroup(), "rule__GetTerm__Group__0");
 					put(grammarAccess.getGetAccess().getGroup(), "rule__Get__Group__0");
 					put(grammarAccess.getGetAccess().getGroup_1(), "rule__Get__Group_1__0");
 					put(grammarAccess.getIfAccess().getGroup(), "rule__If__Group__0");
@@ -58,20 +61,26 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTerminalExpressionAccess().getGroup_1(), "rule__TerminalExpression__Group_1__0");
 					put(grammarAccess.getTerminalExpressionAccess().getGroup_2(), "rule__TerminalExpression__Group_2__0");
 					put(grammarAccess.getTerminalExpressionAccess().getGroup_3(), "rule__TerminalExpression__Group_3__0");
-					put(grammarAccess.getConsistencyRuleAccess().getTypeAssignment_1(), "rule__ConsistencyRule__TypeAssignment_1");
-					put(grammarAccess.getConsistencyRuleAccess().getVariableAssignment_2(), "rule__ConsistencyRule__VariableAssignment_2");
-					put(grammarAccess.getConsistencyRuleAccess().getFormulaAssignment_4(), "rule__ConsistencyRule__FormulaAssignment_4");
-					put(grammarAccess.getVariableAccess().getNameAssignment(), "rule__Variable__NameAssignment");
-					put(grammarAccess.getGetAccess().getFeatureAssignment_1_2(), "rule__Get__FeatureAssignment_1_2");
+					put(grammarAccess.getConstraintRuleBaseAccess().getDomainAssignment_1(), "rule__ConstraintRuleBase__DomainAssignment_1");
+					put(grammarAccess.getConstraintRuleBaseAccess().getConstraintsAssignment_2(), "rule__ConstraintRuleBase__ConstraintsAssignment_2");
+					put(grammarAccess.getConstraintAccess().getVariableAssignment_1(), "rule__Constraint__VariableAssignment_1");
+					put(grammarAccess.getConstraintAccess().getFormulaAssignment_3(), "rule__Constraint__FormulaAssignment_3");
+					put(grammarAccess.getVariableAccess().getTypeAssignment_0(), "rule__Variable__TypeAssignment_0");
+					put(grammarAccess.getVariableAccess().getNameAssignment_1(), "rule__Variable__NameAssignment_1");
+					put(grammarAccess.getGetTermAccess().getNameAssignment_1(), "rule__GetTerm__NameAssignment_1");
+					put(grammarAccess.getGetTermAccess().getFeatureAssignment_2(), "rule__GetTerm__FeatureAssignment_2");
+					put(grammarAccess.getGetAccess().getTypeAssignment_1_0(), "rule__Get__TypeAssignment_1_0");
+					put(grammarAccess.getGetAccess().getNameAssignment_2(), "rule__Get__NameAssignment_2");
+					put(grammarAccess.getGetAccess().getNextAssignment_3(), "rule__Get__NextAssignment_3");
 					put(grammarAccess.getIfAccess().getRightAssignment_1_2(), "rule__If__RightAssignment_1_2");
 					put(grammarAccess.getXorAccess().getRightAssignment_1_2(), "rule__Xor__RightAssignment_1_2");
 					put(grammarAccess.getOrAccess().getRightAssignment_1_2(), "rule__Or__RightAssignment_1_2");
 					put(grammarAccess.getAndAccess().getRightAssignment_1_2(), "rule__And__RightAssignment_1_2");
 					put(grammarAccess.getNotAccess().getNotAssignment_2(), "rule__Not__NotAssignment_2");
-					put(grammarAccess.getForAllAccess().getBoundedAssignment_2(), "rule__ForAll__BoundedAssignment_2");
+					put(grammarAccess.getForAllAccess().getNameAssignment_2(), "rule__ForAll__NameAssignment_2");
 					put(grammarAccess.getForAllAccess().getIterationAssignment_4(), "rule__ForAll__IterationAssignment_4");
 					put(grammarAccess.getForAllAccess().getFormulaAssignment_6(), "rule__ForAll__FormulaAssignment_6");
-					put(grammarAccess.getExistsAccess().getBoundedAssignment_2(), "rule__Exists__BoundedAssignment_2");
+					put(grammarAccess.getExistsAccess().getNameAssignment_2(), "rule__Exists__NameAssignment_2");
 					put(grammarAccess.getExistsAccess().getIterationAssignment_4(), "rule__Exists__IterationAssignment_4");
 					put(grammarAccess.getExistsAccess().getFormulaAssignment_6(), "rule__Exists__FormulaAssignment_6");
 					put(grammarAccess.getTerminalExpressionAccess().getValueAssignment_0_1(), "rule__TerminalExpression__ValueAssignment_0_1");
@@ -88,7 +97,7 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
 			InternalFirstOrderLogicParser typedParser = (InternalFirstOrderLogicParser) parser;
-			typedParser.entryRuleConsistencyRule();
+			typedParser.entryRuleConstraintRuleBase();
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);
