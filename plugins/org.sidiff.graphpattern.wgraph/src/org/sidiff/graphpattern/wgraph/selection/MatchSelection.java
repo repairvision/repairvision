@@ -12,6 +12,7 @@ import java.util.Stack;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.graphpattern.NodePattern;
 
+// TODO: Die Erhaltung der Reihenfolge ist eigentlich nur für die initiale Selektion relevant!
 public class MatchSelection {
 
 	// Selection -> Restricted-Selection
