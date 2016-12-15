@@ -1,4 +1,4 @@
-package org.sidiff.repair.validation.formulas;
+package org.sidiff.repair.validation.formulas.binary;
 
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;

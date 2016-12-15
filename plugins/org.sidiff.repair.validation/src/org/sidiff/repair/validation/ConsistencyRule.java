@@ -4,7 +4,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.formulas.Formula;
+import org.sidiff.repair.validation.formulas.binary.Formula;
 import org.sidiff.repair.validation.terms.Variable;
 
 public class ConsistencyRule extends NamedElement {

@@ -1,4 +1,6 @@
-package org.sidiff.repair.validation.formulas;
+package org.sidiff.repair.validation.formulas.unary;
+
+import org.sidiff.repair.validation.formulas.binary.Formula;
 
 public abstract class UnaryFormula extends Formula {
 

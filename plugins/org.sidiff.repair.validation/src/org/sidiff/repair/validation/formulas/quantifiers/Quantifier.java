@@ -2,7 +2,7 @@ package org.sidiff.repair.validation.formulas.quantifiers;
 
 import java.util.Collections;
 
-import org.sidiff.repair.validation.formulas.Formula;
+import org.sidiff.repair.validation.formulas.binary.Formula;
 import org.sidiff.repair.validation.terms.Term;
 import org.sidiff.repair.validation.terms.Variable;
 

@@ -7,13 +7,13 @@ import java.util.Map;
 
 import org.eclipse.uml2.uml.UMLPackage;
 import org.sidiff.repair.validation.ConsistencyRule;
-import org.sidiff.repair.validation.formulas.And;
-import org.sidiff.repair.validation.formulas.Formula;
-import org.sidiff.repair.validation.formulas.Not;
+import org.sidiff.repair.validation.formulas.binary.And;
+import org.sidiff.repair.validation.formulas.binary.Formula;
 import org.sidiff.repair.validation.formulas.predicates.Equality;
 import org.sidiff.repair.validation.formulas.predicates.IsEmpty;
 import org.sidiff.repair.validation.formulas.quantifiers.Exists;
 import org.sidiff.repair.validation.formulas.quantifiers.ForAll;
+import org.sidiff.repair.validation.formulas.unary.Not;
 import org.sidiff.repair.validation.terms.Term;
 import org.sidiff.repair.validation.terms.Variable;
 import org.sidiff.repair.validation.terms.functions.Get;

@@ -4,7 +4,7 @@ import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.Sequence;
 import org.sidiff.repair.validation.fix.Repair.RepairType;
-import org.sidiff.repair.validation.formulas.Formula;
+import org.sidiff.repair.validation.formulas.binary.Formula;
 import org.sidiff.repair.validation.terms.Term;
 import org.sidiff.repair.validation.terms.Variable;
 

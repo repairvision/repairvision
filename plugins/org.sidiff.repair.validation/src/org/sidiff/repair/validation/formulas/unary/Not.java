@@ -1,6 +1,7 @@
-package org.sidiff.repair.validation.formulas;
+package org.sidiff.repair.validation.formulas.unary;
 
 import org.sidiff.repair.validation.fix.IRepairDecision;
+import org.sidiff.repair.validation.formulas.binary.Formula;
 
 public class Not extends UnaryFormula {
 

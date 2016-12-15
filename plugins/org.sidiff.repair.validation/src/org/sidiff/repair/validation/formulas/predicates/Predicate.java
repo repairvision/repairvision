@@ -1,6 +1,6 @@
 package org.sidiff.repair.validation.formulas.predicates;
 
-import org.sidiff.repair.validation.formulas.Formula;
+import org.sidiff.repair.validation.formulas.binary.Formula;
 import org.sidiff.repair.validation.terms.Term;
 
 /**
