@@ -25,7 +25,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.QuantifierImpl#getBounded <em>Bounded</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.QuantifierImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.QuantifierImpl#getIteration <em>Iteration</em>}</li>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.QuantifierImpl#getFormula <em>Formula</em>}</li>
  * </ul>
@@ -35,14 +35,14 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
 public class QuantifierImpl extends FormulaImpl implements Quantifier
 {
   /**
-   * The cached value of the '{@link #getBounded() <em>Bounded</em>}' containment reference.
+   * The cached value of the '{@link #getName() <em>Name</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getBounded()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected Variable bounded;
+  protected Variable name;
 
   /**
    * The cached value of the '{@link #getIteration() <em>Iteration</em>}' containment reference.
@@ -90,9 +90,9 @@ public class QuantifierImpl extends FormulaImpl implements Quantifier
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable getBounded()
+  public Variable getName()
   {
-    return bounded;
+    return name;
   }
 
   /**
@@ -100,13 +100,13 @@ public class QuantifierImpl extends FormulaImpl implements Quantifier
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetBounded(Variable newBounded, NotificationChain msgs)
+  public NotificationChain basicSetName(Variable newName, NotificationChain msgs)
   {
-    Variable oldBounded = bounded;
-    bounded = newBounded;
+    Variable oldName = name;
+    name = newName;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.QUANTIFIER__BOUNDED, oldBounded, newBounded);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.QUANTIFIER__NAME, oldName, newName);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -117,20 +117,20 @@ public class QuantifierImpl extends FormulaImpl implements Quantifier
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setBounded(Variable newBounded)
+  public void setName(Variable newName)
   {
-    if (newBounded != bounded)
+    if (newName != name)
     {
       NotificationChain msgs = null;
-      if (bounded != null)
-        msgs = ((InternalEObject)bounded).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.QUANTIFIER__BOUNDED, null, msgs);
-      if (newBounded != null)
-        msgs = ((InternalEObject)newBounded).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.QUANTIFIER__BOUNDED, null, msgs);
-      msgs = basicSetBounded(newBounded, msgs);
+      if (name != null)
+        msgs = ((InternalEObject)name).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.QUANTIFIER__NAME, null, msgs);
+      if (newName != null)
+        msgs = ((InternalEObject)newName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.QUANTIFIER__NAME, null, msgs);
+      msgs = basicSetName(newName, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.QUANTIFIER__BOUNDED, newBounded, newBounded));
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.QUANTIFIER__NAME, newName, newName));
   }
 
   /**
@@ -239,8 +239,8 @@ public class QuantifierImpl extends FormulaImpl implements Quantifier
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.QUANTIFIER__BOUNDED:
-        return basicSetBounded(null, msgs);
+      case FirstOrderLogicPackage.QUANTIFIER__NAME:
+        return basicSetName(null, msgs);
       case FirstOrderLogicPackage.QUANTIFIER__ITERATION:
         return basicSetIteration(null, msgs);
       case FirstOrderLogicPackage.QUANTIFIER__FORMULA:
@@ -259,8 +259,8 @@ public class QuantifierImpl extends FormulaImpl implements Quantifier
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.QUANTIFIER__BOUNDED:
-        return getBounded();
+      case FirstOrderLogicPackage.QUANTIFIER__NAME:
+        return getName();
       case FirstOrderLogicPackage.QUANTIFIER__ITERATION:
         return getIteration();
       case FirstOrderLogicPackage.QUANTIFIER__FORMULA:
@@ -279,8 +279,8 @@ public class QuantifierImpl extends FormulaImpl implements Quantifier
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.QUANTIFIER__BOUNDED:
-        setBounded((Variable)newValue);
+      case FirstOrderLogicPackage.QUANTIFIER__NAME:
+        setName((Variable)newValue);
         return;
       case FirstOrderLogicPackage.QUANTIFIER__ITERATION:
         setIteration((Term)newValue);
@@ -302,8 +302,8 @@ public class QuantifierImpl extends FormulaImpl implements Quantifier
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.QUANTIFIER__BOUNDED:
-        setBounded((Variable)null);
+      case FirstOrderLogicPackage.QUANTIFIER__NAME:
+        setName((Variable)null);
         return;
       case FirstOrderLogicPackage.QUANTIFIER__ITERATION:
         setIteration((Term)null);
@@ -325,8 +325,8 @@ public class QuantifierImpl extends FormulaImpl implements Quantifier
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.QUANTIFIER__BOUNDED:
-        return bounded != null;
+      case FirstOrderLogicPackage.QUANTIFIER__NAME:
+        return name != null;
       case FirstOrderLogicPackage.QUANTIFIER__ITERATION:
         return iteration != null;
       case FirstOrderLogicPackage.QUANTIFIER__FORMULA:

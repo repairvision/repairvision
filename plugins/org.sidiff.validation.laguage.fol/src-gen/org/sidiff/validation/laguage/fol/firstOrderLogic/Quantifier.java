@@ -13,7 +13,7 @@ package org.sidiff.validation.laguage.fol.firstOrderLogic;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier#getBounded <em>Bounded</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier#getName <em>Name</em>}</li>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier#getIteration <em>Iteration</em>}</li>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier#getFormula <em>Formula</em>}</li>
  * </ul>
@@ -25,30 +25,30 @@ package org.sidiff.validation.laguage.fol.firstOrderLogic;
 public interface Quantifier extends Formula
 {
   /**
-   * Returns the value of the '<em><b>Bounded</b></em>' containment reference.
+   * Returns the value of the '<em><b>Name</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Bounded</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Name</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Bounded</em>' containment reference.
-   * @see #setBounded(Variable)
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getQuantifier_Bounded()
+   * @return the value of the '<em>Name</em>' containment reference.
+   * @see #setName(Variable)
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getQuantifier_Name()
    * @model containment="true"
    * @generated
    */
-  Variable getBounded();
+  Variable getName();
 
   /**
-   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier#getBounded <em>Bounded</em>}' containment reference.
+   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier#getName <em>Name</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Bounded</em>' containment reference.
-   * @see #getBounded()
+   * @param value the new value of the '<em>Name</em>' containment reference.
+   * @see #getName()
    * @generated
    */
-  void setBounded(Variable value);
+  void setName(Variable value);
 
   /**
    * Returns the value of the '<em><b>Iteration</b></em>' containment reference.

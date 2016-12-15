@@ -73,10 +73,17 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case FirstOrderLogicPackage.CONSISTENCY_RULE:
+      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE:
       {
-        ConsistencyRule consistencyRule = (ConsistencyRule)theEObject;
-        T result = caseConsistencyRule(consistencyRule);
+        ConstraintRuleBase constraintRuleBase = (ConstraintRuleBase)theEObject;
+        T result = caseConstraintRuleBase(constraintRuleBase);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case FirstOrderLogicPackage.CONSTRAINT:
+      {
+        Constraint constraint = (Constraint)theEObject;
+        T result = caseConstraint(constraint);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -84,7 +91,6 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
       {
         Variable variable = (Variable)theEObject;
         T result = caseVariable(variable);
-        if (result == null) result = caseTerm(variable);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -92,6 +98,13 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
       {
         Term term = (Term)theEObject;
         T result = caseTerm(term);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case FirstOrderLogicPackage.GET:
+      {
+        Get get = (Get)theEObject;
+        T result = caseGet(get);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -118,11 +131,11 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case FirstOrderLogicPackage.GET:
+      case FirstOrderLogicPackage.GET_TERM:
       {
-        Get get = (Get)theEObject;
-        T result = caseGet(get);
-        if (result == null) result = caseTerm(get);
+        GetTerm getTerm = (GetTerm)theEObject;
+        T result = caseGetTerm(getTerm);
+        if (result == null) result = caseTerm(getTerm);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -222,17 +235,33 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Consistency Rule</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Constraint Rule Base</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Consistency Rule</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Constraint Rule Base</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseConsistencyRule(ConsistencyRule object)
+  public T caseConstraintRuleBase(ConstraintRuleBase object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Constraint</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Constraint</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConstraint(Constraint object)
   {
     return null;
   }
@@ -265,6 +294,22 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseTerm(Term object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Get</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Get</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGet(Get object)
   {
     return null;
   }
@@ -318,17 +363,17 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Get</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Get Term</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Get</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Get Term</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseGet(Get object)
+  public T caseGetTerm(GetTerm object)
   {
     return null;
   }

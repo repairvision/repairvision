@@ -76,9 +76,14 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
     new FirstOrderLogicSwitch<Adapter>()
     {
       @Override
-      public Adapter caseConsistencyRule(ConsistencyRule object)
+      public Adapter caseConstraintRuleBase(ConstraintRuleBase object)
       {
-        return createConsistencyRuleAdapter();
+        return createConstraintRuleBaseAdapter();
+      }
+      @Override
+      public Adapter caseConstraint(Constraint object)
+      {
+        return createConstraintAdapter();
       }
       @Override
       public Adapter caseVariable(Variable object)
@@ -89,6 +94,11 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
       public Adapter caseTerm(Term object)
       {
         return createTermAdapter();
+      }
+      @Override
+      public Adapter caseGet(Get object)
+      {
+        return createGetAdapter();
       }
       @Override
       public Adapter caseFormula(Formula object)
@@ -106,9 +116,9 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createQuantifierAdapter();
       }
       @Override
-      public Adapter caseGet(Get object)
+      public Adapter caseGetTerm(GetTerm object)
       {
-        return createGetAdapter();
+        return createGetTermAdapter();
       }
       @Override
       public Adapter caseIf(If object)
@@ -188,16 +198,31 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConsistencyRule <em>Consistency Rule</em>}'.
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase <em>Constraint Rule Base</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConsistencyRule
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase
    * @generated
    */
-  public Adapter createConsistencyRuleAdapter()
+  public Adapter createConstraintRuleBaseAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint <em>Constraint</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint
+   * @generated
+   */
+  public Adapter createConstraintAdapter()
   {
     return null;
   }
@@ -228,6 +253,21 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTermAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get <em>Get</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Get
+   * @generated
+   */
+  public Adapter createGetAdapter()
   {
     return null;
   }
@@ -278,16 +318,16 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get <em>Get</em>}'.
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm <em>Get Term</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Get
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm
    * @generated
    */
-  public Adapter createGetAdapter()
+  public Adapter createGetTermAdapter()
   {
     return null;
   }

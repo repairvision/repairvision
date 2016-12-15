@@ -6,25 +6,34 @@
     complianceLevel="6.0" copyrightFields="false" runtimeVersion="2.12">
   <genPackages prefix="FirstOrderLogic" basePackage="org.sidiff.validation.laguage.fol"
       disposableProviderFactory="true" fileExtensions="fol" ecorePackage="FirstOrderLogic.ecore#/">
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//ConsistencyRule">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//ConsistencyRule/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//ConsistencyRule/variable"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//ConsistencyRule/formula"/>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//ConstraintRuleBase">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//ConstraintRuleBase/domain"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//ConstraintRuleBase/constraints"/>
+    </genClasses>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//Constraint">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Constraint/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Constraint/formula"/>
     </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Variable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Variable/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Variable/name"/>
     </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Term"/>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//Get">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Get/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Get/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Get/next"/>
+    </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Formula"/>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//UnaryFormula"/>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Quantifier">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Quantifier/bounded"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Quantifier/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Quantifier/iteration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Quantifier/formula"/>
     </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//Get">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Get/context"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Get/feature"/>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//GetTerm">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//GetTerm/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//GetTerm/feature"/>
     </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//If">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//If/left"/>

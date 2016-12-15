@@ -43,7 +43,7 @@ import org.sidiff.validation.laguage.fol.services.FirstOrderLogicGrammarAccess;
 
     @Override
     protected String getFirstRuleName() {
-    	return "ConsistencyRule";
+    	return "ConstraintRuleBase";
    	}
 
    	@Override
@@ -60,15 +60,75 @@ import org.sidiff.validation.laguage.fol.services.FirstOrderLogicGrammarAccess;
     }
 }
 
-// Entry rule entryRuleConsistencyRule
-entryRuleConsistencyRule returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getConsistencyRuleRule()); }
-	iv_ruleConsistencyRule=ruleConsistencyRule
-	{ $current=$iv_ruleConsistencyRule.current; }
+// Entry rule entryRuleConstraintRuleBase
+entryRuleConstraintRuleBase returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getConstraintRuleBaseRule()); }
+	iv_ruleConstraintRuleBase=ruleConstraintRuleBase
+	{ $current=$iv_ruleConstraintRuleBase.current; }
 	EOF;
 
-// Rule ConsistencyRule
-ruleConsistencyRule returns [EObject current=null]
+// Rule ConstraintRuleBase
+ruleConstraintRuleBase returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='domain'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getConstraintRuleBaseAccess().getDomainKeyword_0());
+		}
+		(
+			(
+				lv_domain_1_0=RULE_STRING
+				{
+					newLeafNode(lv_domain_1_0, grammarAccess.getConstraintRuleBaseAccess().getDomainSTRINGTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConstraintRuleBaseRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"domain",
+						lv_domain_1_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getConstraintRuleBaseAccess().getConstraintsConstraintParserRuleCall_2_0());
+				}
+				lv_constraints_2_0=ruleConstraint
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getConstraintRuleBaseRule());
+					}
+					add(
+						$current,
+						"constraints",
+						lv_constraints_2_0,
+						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Constraint");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleConstraint
+entryRuleConstraint returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getConstraintRule()); }
+	iv_ruleConstraint=ruleConstraint
+	{ $current=$iv_ruleConstraint.current; }
+	EOF;
+
+// Rule Constraint
+ruleConstraint returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -78,63 +138,45 @@ ruleConsistencyRule returns [EObject current=null]
 	(
 		otherlv_0='context'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getConsistencyRuleAccess().getContextKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getConstraintAccess().getContextKeyword_0());
 		}
 		(
 			(
-				lv_type_1_0=RULE_ID
 				{
-					newLeafNode(lv_type_1_0, grammarAccess.getConsistencyRuleAccess().getTypeIDTerminalRuleCall_1_0());
+					newCompositeNode(grammarAccess.getConstraintAccess().getVariableVariableParserRuleCall_1_0());
 				}
+				lv_variable_1_0=ruleVariable
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getConsistencyRuleRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"type",
-						lv_type_1_0,
-						"org.eclipse.xtext.common.Terminals.ID");
-				}
-			)
-		)
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getConsistencyRuleAccess().getVariableVariableParserRuleCall_2_0());
-				}
-				lv_variable_2_0=ruleVariable
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getConsistencyRuleRule());
+						$current = createModelElementForParent(grammarAccess.getConstraintRule());
 					}
 					set(
 						$current,
 						"variable",
-						lv_variable_2_0,
+						lv_variable_1_0,
 						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Variable");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_3=':'
+		otherlv_2=':'
 		{
-			newLeafNode(otherlv_3, grammarAccess.getConsistencyRuleAccess().getColonKeyword_3());
+			newLeafNode(otherlv_2, grammarAccess.getConstraintAccess().getColonKeyword_2());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getConsistencyRuleAccess().getFormulaFormulaParserRuleCall_4_0());
+					newCompositeNode(grammarAccess.getConstraintAccess().getFormulaFormulaParserRuleCall_3_0());
 				}
-				lv_formula_4_0=ruleFormula
+				lv_formula_3_0=ruleFormula
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getConsistencyRuleRule());
+						$current = createModelElementForParent(grammarAccess.getConstraintRule());
 					}
 					set(
 						$current,
 						"formula",
-						lv_formula_4_0,
+						lv_formula_3_0,
 						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Formula");
 					afterParserOrEnumRuleCall();
 				}
@@ -160,20 +202,40 @@ ruleVariable returns [EObject current=null]
 }:
 	(
 		(
-			lv_name_0_0=RULE_ID
-			{
-				newLeafNode(lv_name_0_0, grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_0());
-			}
-			{
-				if ($current==null) {
-					$current = createModelElement(grammarAccess.getVariableRule());
+			(
+				lv_type_0_0=RULE_ID
+				{
+					newLeafNode(lv_type_0_0, grammarAccess.getVariableAccess().getTypeIDTerminalRuleCall_0_0());
 				}
-				setWithLastConsumed(
-					$current,
-					"name",
-					lv_name_0_0,
-					"org.eclipse.xtext.common.Terminals.ID");
-			}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getVariableRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"type",
+						lv_type_0_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		(
+			(
+				lv_name_1_0=RULE_ID
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getVariableRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
 		)
 	)
 ;
@@ -219,13 +281,71 @@ ruleFunction returns [EObject current=null]
 	leaveRule();
 }:
 	{
-		newCompositeNode(grammarAccess.getFunctionAccess().getGetParserRuleCall());
+		newCompositeNode(grammarAccess.getFunctionAccess().getGetTermParserRuleCall());
 	}
-	this_Get_0=ruleGet
+	this_GetTerm_0=ruleGetTerm
 	{
-		$current = $this_Get_0.current;
+		$current = $this_GetTerm_0.current;
 		afterParserOrEnumRuleCall();
 	}
+;
+
+// Entry rule entryRuleGetTerm
+entryRuleGetTerm returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getGetTermRule()); }
+	iv_ruleGetTerm=ruleGetTerm
+	{ $current=$iv_ruleGetTerm.current; }
+	EOF;
+
+// Rule GetTerm
+ruleGetTerm returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getGetTermAccess().getGetTermAction_0(),
+					$current);
+			}
+		)
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getGetTermRule());
+					}
+				}
+				otherlv_1=RULE_ID
+				{
+					newLeafNode(otherlv_1, grammarAccess.getGetTermAccess().getNameVariableCrossReference_1_0());
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getGetTermAccess().getFeatureGetParserRuleCall_2_0());
+				}
+				lv_feature_2_0=ruleGet
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGetTermRule());
+					}
+					set(
+						$current,
+						"feature",
+						lv_feature_2_0,
+						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Get");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+	)
 ;
 
 // Entry rule entryRuleGet
@@ -244,31 +364,16 @@ ruleGet returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		otherlv_0='.'
 		{
-			newCompositeNode(grammarAccess.getGetAccess().getVariableParserRuleCall_0());
-		}
-		this_Variable_0=ruleVariable
-		{
-			$current = $this_Variable_0.current;
-			afterParserOrEnumRuleCall();
+			newLeafNode(otherlv_0, grammarAccess.getGetAccess().getFullStopKeyword_0());
 		}
 		(
 			(
-				{
-					$current = forceCreateModelElementAndSet(
-						grammarAccess.getGetAccess().getGetContextAction_1_0(),
-						$current);
-				}
-			)
-			otherlv_2='.'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getGetAccess().getFullStopKeyword_1_1());
-			}
-			(
 				(
-					lv_feature_3_0=RULE_ID
+					lv_type_1_0=RULE_ID
 					{
-						newLeafNode(lv_feature_3_0, grammarAccess.getGetAccess().getFeatureIDTerminalRuleCall_1_2_0());
+						newLeafNode(lv_type_1_0, grammarAccess.getGetAccess().getTypeIDTerminalRuleCall_1_0_0());
 					}
 					{
 						if ($current==null) {
@@ -276,14 +381,77 @@ ruleGet returns [EObject current=null]
 						}
 						setWithLastConsumed(
 							$current,
-							"feature",
-							lv_feature_3_0,
+							"type",
+							lv_type_1_0,
 							"org.eclipse.xtext.common.Terminals.ID");
 					}
 				)
 			)
-		)*
+			otherlv_2='::'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getGetAccess().getColonColonKeyword_1_1());
+			}
+		)?
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getGetRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getGetAccess().getNameEStructuralFeatureCrossReference_2_0());
+				}
+				ruleFeature
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getGetAccess().getNextGetParserRuleCall_3_0());
+				}
+				lv_next_4_0=ruleGet
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGetRule());
+					}
+					set(
+						$current,
+						"next",
+						lv_next_4_0,
+						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Get");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
 	)
+;
+
+// Entry rule entryRuleFeature
+entryRuleFeature returns [String current=null]:
+	{ newCompositeNode(grammarAccess.getFeatureRule()); }
+	iv_ruleFeature=ruleFeature
+	{ $current=$iv_ruleFeature.current.getText(); }
+	EOF;
+
+// Rule Feature
+ruleFeature returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	this_ID_0=RULE_ID
+	{
+		$current.merge(this_ID_0);
+	}
+	{
+		newLeafNode(this_ID_0, grammarAccess.getFeatureAccess().getIDTerminalRuleCall());
+	}
 ;
 
 // Entry rule entryRuleFormula
@@ -716,17 +884,17 @@ ruleForAll returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getForAllAccess().getBoundedVariableParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getForAllAccess().getNameVariableParserRuleCall_2_0());
 				}
-				lv_bounded_2_0=ruleVariable
+				lv_name_2_0=ruleVariable
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getForAllRule());
 					}
 					set(
 						$current,
-						"bounded",
-						lv_bounded_2_0,
+						"name",
+						lv_name_2_0,
 						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Variable");
 					afterParserOrEnumRuleCall();
 				}
@@ -815,17 +983,17 @@ ruleExists returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getExistsAccess().getBoundedVariableParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getExistsAccess().getNameVariableParserRuleCall_2_0());
 				}
-				lv_bounded_2_0=ruleVariable
+				lv_name_2_0=ruleVariable
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getExistsRule());
 					}
 					set(
 						$current,
-						"bounded",
-						lv_bounded_2_0,
+						"name",
+						lv_name_2_0,
 						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Variable");
 					afterParserOrEnumRuleCall();
 				}

@@ -12,48 +12,27 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.sidiff.validation.laguage.fol.firstOrderLogic.ConsistencyRule;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Formula;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Consistency Rule</b></em>'.
+ * An implementation of the model object '<em><b>Constraint</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConsistencyRuleImpl#getType <em>Type</em>}</li>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConsistencyRuleImpl#getVariable <em>Variable</em>}</li>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConsistencyRuleImpl#getFormula <em>Formula</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintImpl#getVariable <em>Variable</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintImpl#getFormula <em>Formula</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements ConsistencyRule
+public class ConstraintImpl extends MinimalEObjectImpl.Container implements Constraint
 {
-  /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected static final String TYPE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected String type = TYPE_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getVariable() <em>Variable</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -79,7 +58,7 @@ public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ConsistencyRuleImpl()
+  protected ConstraintImpl()
   {
     super();
   }
@@ -92,30 +71,7 @@ public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements
   @Override
   protected EClass eStaticClass()
   {
-    return FirstOrderLogicPackage.Literals.CONSISTENCY_RULE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getType()
-  {
-    return type;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setType(String newType)
-  {
-    String oldType = type;
-    type = newType;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSISTENCY_RULE__TYPE, oldType, type));
+    return FirstOrderLogicPackage.Literals.CONSTRAINT;
   }
 
   /**
@@ -139,7 +95,7 @@ public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements
     variable = newVariable;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSISTENCY_RULE__VARIABLE, oldVariable, newVariable);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSTRAINT__VARIABLE, oldVariable, newVariable);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -156,14 +112,14 @@ public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements
     {
       NotificationChain msgs = null;
       if (variable != null)
-        msgs = ((InternalEObject)variable).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.CONSISTENCY_RULE__VARIABLE, null, msgs);
+        msgs = ((InternalEObject)variable).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.CONSTRAINT__VARIABLE, null, msgs);
       if (newVariable != null)
-        msgs = ((InternalEObject)newVariable).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.CONSISTENCY_RULE__VARIABLE, null, msgs);
+        msgs = ((InternalEObject)newVariable).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.CONSTRAINT__VARIABLE, null, msgs);
       msgs = basicSetVariable(newVariable, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSISTENCY_RULE__VARIABLE, newVariable, newVariable));
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSTRAINT__VARIABLE, newVariable, newVariable));
   }
 
   /**
@@ -187,7 +143,7 @@ public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements
     formula = newFormula;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSISTENCY_RULE__FORMULA, oldFormula, newFormula);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSTRAINT__FORMULA, oldFormula, newFormula);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -204,14 +160,14 @@ public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements
     {
       NotificationChain msgs = null;
       if (formula != null)
-        msgs = ((InternalEObject)formula).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.CONSISTENCY_RULE__FORMULA, null, msgs);
+        msgs = ((InternalEObject)formula).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.CONSTRAINT__FORMULA, null, msgs);
       if (newFormula != null)
-        msgs = ((InternalEObject)newFormula).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.CONSISTENCY_RULE__FORMULA, null, msgs);
+        msgs = ((InternalEObject)newFormula).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.CONSTRAINT__FORMULA, null, msgs);
       msgs = basicSetFormula(newFormula, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSISTENCY_RULE__FORMULA, newFormula, newFormula));
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSTRAINT__FORMULA, newFormula, newFormula));
   }
 
   /**
@@ -224,9 +180,9 @@ public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__VARIABLE:
+      case FirstOrderLogicPackage.CONSTRAINT__VARIABLE:
         return basicSetVariable(null, msgs);
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__FORMULA:
+      case FirstOrderLogicPackage.CONSTRAINT__FORMULA:
         return basicSetFormula(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -242,11 +198,9 @@ public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__TYPE:
-        return getType();
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__VARIABLE:
+      case FirstOrderLogicPackage.CONSTRAINT__VARIABLE:
         return getVariable();
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__FORMULA:
+      case FirstOrderLogicPackage.CONSTRAINT__FORMULA:
         return getFormula();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -262,13 +216,10 @@ public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__TYPE:
-        setType((String)newValue);
-        return;
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__VARIABLE:
+      case FirstOrderLogicPackage.CONSTRAINT__VARIABLE:
         setVariable((Variable)newValue);
         return;
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__FORMULA:
+      case FirstOrderLogicPackage.CONSTRAINT__FORMULA:
         setFormula((Formula)newValue);
         return;
     }
@@ -285,13 +236,10 @@ public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__TYPE:
-        setType(TYPE_EDEFAULT);
-        return;
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__VARIABLE:
+      case FirstOrderLogicPackage.CONSTRAINT__VARIABLE:
         setVariable((Variable)null);
         return;
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__FORMULA:
+      case FirstOrderLogicPackage.CONSTRAINT__FORMULA:
         setFormula((Formula)null);
         return;
     }
@@ -308,31 +256,12 @@ public class ConsistencyRuleImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__TYPE:
-        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__VARIABLE:
+      case FirstOrderLogicPackage.CONSTRAINT__VARIABLE:
         return variable != null;
-      case FirstOrderLogicPackage.CONSISTENCY_RULE__FORMULA:
+      case FirstOrderLogicPackage.CONSTRAINT__FORMULA:
         return formula != null;
     }
     return super.eIsSet(featureID);
   }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (type: ");
-    result.append(type);
-    result.append(')');
-    return result.toString();
-  }
-
-} //ConsistencyRuleImpl
+} //ConstraintImpl

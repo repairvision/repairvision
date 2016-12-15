@@ -8,6 +8,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
@@ -20,13 +21,34 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.VariableImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.VariableImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class VariableImpl extends TermImpl implements Variable
+public class VariableImpl extends MinimalEObjectImpl.Container implements Variable
 {
+  /**
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected static final String TYPE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected String type = TYPE_EDEFAULT;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -73,6 +95,29 @@ public class VariableImpl extends TermImpl implements Variable
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getType()
+  {
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setType(String newType)
+  {
+    String oldType = type;
+    type = newType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.VARIABLE__TYPE, oldType, type));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getName()
   {
     return name;
@@ -101,6 +146,8 @@ public class VariableImpl extends TermImpl implements Variable
   {
     switch (featureID)
     {
+      case FirstOrderLogicPackage.VARIABLE__TYPE:
+        return getType();
       case FirstOrderLogicPackage.VARIABLE__NAME:
         return getName();
     }
@@ -117,6 +164,9 @@ public class VariableImpl extends TermImpl implements Variable
   {
     switch (featureID)
     {
+      case FirstOrderLogicPackage.VARIABLE__TYPE:
+        setType((String)newValue);
+        return;
       case FirstOrderLogicPackage.VARIABLE__NAME:
         setName((String)newValue);
         return;
@@ -134,6 +184,9 @@ public class VariableImpl extends TermImpl implements Variable
   {
     switch (featureID)
     {
+      case FirstOrderLogicPackage.VARIABLE__TYPE:
+        setType(TYPE_EDEFAULT);
+        return;
       case FirstOrderLogicPackage.VARIABLE__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -151,6 +204,8 @@ public class VariableImpl extends TermImpl implements Variable
   {
     switch (featureID)
     {
+      case FirstOrderLogicPackage.VARIABLE__TYPE:
+        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
       case FirstOrderLogicPackage.VARIABLE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
@@ -168,7 +223,9 @@ public class VariableImpl extends TermImpl implements Variable
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
+    result.append(" (type: ");
+    result.append(type);
+    result.append(", name: ");
     result.append(name);
     result.append(')');
     return result.toString();

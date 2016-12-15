@@ -24,63 +24,99 @@ import org.eclipse.xtext.service.GrammarProvider;
 @Singleton
 public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
-	public class ConsistencyRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.ConsistencyRule");
+	public class ConstraintRuleBaseElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.ConstraintRuleBase");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cContextKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTypeIDTerminalRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
-		private final Assignment cVariableAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cVariableVariableParserRuleCall_2_0 = (RuleCall)cVariableAssignment_2.eContents().get(0);
-		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cFormulaAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cFormulaFormulaParserRuleCall_4_0 = (RuleCall)cFormulaAssignment_4.eContents().get(0);
+		private final Keyword cDomainKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cDomainAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cDomainSTRINGTerminalRuleCall_1_0 = (RuleCall)cDomainAssignment_1.eContents().get(0);
+		private final Assignment cConstraintsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cConstraintsConstraintParserRuleCall_2_0 = (RuleCall)cConstraintsAssignment_2.eContents().get(0);
 		
-		//ConsistencyRule:
-		//	'context' type=ID variable=Variable ':' formula=Formula;
+		//ConstraintRuleBase:
+		//	"domain" domain=STRING
+		//	constraints+=Constraint;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'context' type=ID variable=Variable ':' formula=Formula
+		//"domain" domain=STRING constraints+=Constraint
+		public Group getGroup() { return cGroup; }
+		
+		//"domain"
+		public Keyword getDomainKeyword_0() { return cDomainKeyword_0; }
+		
+		//domain=STRING
+		public Assignment getDomainAssignment_1() { return cDomainAssignment_1; }
+		
+		//STRING
+		public RuleCall getDomainSTRINGTerminalRuleCall_1_0() { return cDomainSTRINGTerminalRuleCall_1_0; }
+		
+		//constraints+=Constraint
+		public Assignment getConstraintsAssignment_2() { return cConstraintsAssignment_2; }
+		
+		//Constraint
+		public RuleCall getConstraintsConstraintParserRuleCall_2_0() { return cConstraintsConstraintParserRuleCall_2_0; }
+	}
+	public class ConstraintElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Constraint");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cContextKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cVariableAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cVariableVariableParserRuleCall_1_0 = (RuleCall)cVariableAssignment_1.eContents().get(0);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cFormulaAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cFormulaFormulaParserRuleCall_3_0 = (RuleCall)cFormulaAssignment_3.eContents().get(0);
+		
+		//Constraint:
+		//	'context' variable=Variable ':' formula=Formula;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'context' variable=Variable ':' formula=Formula
 		public Group getGroup() { return cGroup; }
 		
 		//'context'
 		public Keyword getContextKeyword_0() { return cContextKeyword_0; }
 		
-		//type=ID
-		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
-		
-		//ID
-		public RuleCall getTypeIDTerminalRuleCall_1_0() { return cTypeIDTerminalRuleCall_1_0; }
-		
 		//variable=Variable
-		public Assignment getVariableAssignment_2() { return cVariableAssignment_2; }
+		public Assignment getVariableAssignment_1() { return cVariableAssignment_1; }
 		
 		//Variable
-		public RuleCall getVariableVariableParserRuleCall_2_0() { return cVariableVariableParserRuleCall_2_0; }
+		public RuleCall getVariableVariableParserRuleCall_1_0() { return cVariableVariableParserRuleCall_1_0; }
 		
 		//':'
-		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
 		
 		//formula=Formula
-		public Assignment getFormulaAssignment_4() { return cFormulaAssignment_4; }
+		public Assignment getFormulaAssignment_3() { return cFormulaAssignment_3; }
 		
 		//Formula
-		public RuleCall getFormulaFormulaParserRuleCall_4_0() { return cFormulaFormulaParserRuleCall_4_0; }
+		public RuleCall getFormulaFormulaParserRuleCall_3_0() { return cFormulaFormulaParserRuleCall_3_0; }
 	}
 	public class VariableElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Variable");
-		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cTypeIDTerminalRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
 		//Variable:
-		//	name=ID;
+		//	type=ID name=ID;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID
-		public Assignment getNameAssignment() { return cNameAssignment; }
+		//type=ID name=ID
+		public Group getGroup() { return cGroup; }
+		
+		//type=ID
+		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
+		public RuleCall getTypeIDTerminalRuleCall_0_0() { return cTypeIDTerminalRuleCall_0_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 	}
 	public class TermElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Term");
@@ -96,49 +132,115 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class FunctionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Function");
-		private final RuleCall cGetParserRuleCall = (RuleCall)rule.eContents().get(1);
+		private final RuleCall cGetTermParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//Function Term:
-		//	Get
+		//	GetTerm
 		@Override public ParserRule getRule() { return rule; }
 		
+		////	Get
+		// GetTerm
+		public RuleCall getGetTermParserRuleCall() { return cGetTermParserRuleCall; }
+	}
+	public class GetTermElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.GetTerm");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cGetTermAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cNameVariableCrossReference_1_0 = (CrossReference)cNameAssignment_1.eContents().get(0);
+		private final RuleCall cNameVariableIDTerminalRuleCall_1_0_1 = (RuleCall)cNameVariableCrossReference_1_0.eContents().get(1);
+		private final Assignment cFeatureAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cFeatureGetParserRuleCall_2_0 = (RuleCall)cFeatureAssignment_2.eContents().get(0);
+		
+		//GetTerm Term:
+		//	{GetTerm} name=[Variable] feature=Get?
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{GetTerm} name=[Variable] feature=Get?
+		public Group getGroup() { return cGroup; }
+		
+		//{GetTerm}
+		public Action getGetTermAction_0() { return cGetTermAction_0; }
+		
+		//name=[Variable]
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//[Variable]
+		public CrossReference getNameVariableCrossReference_1_0() { return cNameVariableCrossReference_1_0; }
+		
+		//ID
+		public RuleCall getNameVariableIDTerminalRuleCall_1_0_1() { return cNameVariableIDTerminalRuleCall_1_0_1; }
+		
+		//feature=Get?
+		public Assignment getFeatureAssignment_2() { return cFeatureAssignment_2; }
+		
 		//Get
-		public RuleCall getGetParserRuleCall() { return cGetParserRuleCall; }
+		public RuleCall getFeatureGetParserRuleCall_2_0() { return cFeatureGetParserRuleCall_2_0; }
 	}
 	public class GetElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Get");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cVariableParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Keyword cFullStopKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cGetContextAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Keyword cFullStopKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Assignment cFeatureAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cFeatureIDTerminalRuleCall_1_2_0 = (RuleCall)cFeatureAssignment_1_2.eContents().get(0);
+		private final Assignment cTypeAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cTypeIDTerminalRuleCall_1_0_0 = (RuleCall)cTypeAssignment_1_0.eContents().get(0);
+		private final Keyword cColonColonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cNameEStructuralFeatureCrossReference_2_0 = (CrossReference)cNameAssignment_2.eContents().get(0);
+		private final RuleCall cNameEStructuralFeatureFeatureParserRuleCall_2_0_1 = (RuleCall)cNameEStructuralFeatureCrossReference_2_0.eContents().get(1);
+		private final Assignment cNextAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cNextGetParserRuleCall_3_0 = (RuleCall)cNextAssignment_3.eContents().get(0);
 		
-		//Get Term:
-		//	Variable ({Get.context=current} "." feature=ID)*
+		//Get:
+		//	"." (type=ID "::")? name=[ecore::EStructuralFeature|Feature] next=Get?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//Variable ({Get.context=current} "." feature=ID)*
+		//"." (type=ID "::")? name=[ecore::EStructuralFeature|Feature] next=Get?
 		public Group getGroup() { return cGroup; }
 		
-		//Variable
-		public RuleCall getVariableParserRuleCall_0() { return cVariableParserRuleCall_0; }
+		//"."
+		public Keyword getFullStopKeyword_0() { return cFullStopKeyword_0; }
 		
-		//({Get.context=current} "." feature=ID)*
+		//(type=ID "::")?
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{Get.context=current}
-		public Action getGetContextAction_1_0() { return cGetContextAction_1_0; }
-		
-		//"."
-		public Keyword getFullStopKeyword_1_1() { return cFullStopKeyword_1_1; }
-		
-		//feature=ID
-		public Assignment getFeatureAssignment_1_2() { return cFeatureAssignment_1_2; }
+		//type=ID
+		public Assignment getTypeAssignment_1_0() { return cTypeAssignment_1_0; }
 		
 		//ID
-		public RuleCall getFeatureIDTerminalRuleCall_1_2_0() { return cFeatureIDTerminalRuleCall_1_2_0; }
+		public RuleCall getTypeIDTerminalRuleCall_1_0_0() { return cTypeIDTerminalRuleCall_1_0_0; }
+		
+		//"::"
+		public Keyword getColonColonKeyword_1_1() { return cColonColonKeyword_1_1; }
+		
+		//name=[ecore::EStructuralFeature|Feature]
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		
+		//[ecore::EStructuralFeature|Feature]
+		public CrossReference getNameEStructuralFeatureCrossReference_2_0() { return cNameEStructuralFeatureCrossReference_2_0; }
+		
+		//Feature
+		public RuleCall getNameEStructuralFeatureFeatureParserRuleCall_2_0_1() { return cNameEStructuralFeatureFeatureParserRuleCall_2_0_1; }
+		
+		//next=Get?
+		public Assignment getNextAssignment_3() { return cNextAssignment_3; }
+		
+		//Get
+		public RuleCall getNextGetParserRuleCall_3_0() { return cNextGetParserRuleCall_3_0; }
+	}
+	public class FeatureElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Feature");
+		private final RuleCall cIDTerminalRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		////Get returns Term:
+		// //	Variable ({Get.context=current} "." feature=[ecore::EStructuralFeature|Feature])*;
+		////  Variable ({Get.context=current} "." feature=ID)*;
+		//Feature:
+		//	ID;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall() { return cIDTerminalRuleCall; }
 	}
 	public class FormulaElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Formula");
@@ -162,6 +264,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIfParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//// binary formulas:
+		//// TODO: How to make If, Xor,... inherit from BinaryFormula?
 		//BinaryFormula Formula:
 		//	If
 		@Override public ParserRule getRule() { return rule; }
@@ -377,8 +480,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cForAllAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cForAllKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cBoundedAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cBoundedVariableParserRuleCall_2_0 = (RuleCall)cBoundedAssignment_2.eContents().get(0);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameVariableParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cInKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cIterationAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cIterationTermParserRuleCall_4_0 = (RuleCall)cIterationAssignment_4.eContents().get(0);
@@ -388,10 +491,10 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//ForAll Quantifier:
-		//	{ForAll} "forAll(" bounded=Variable "in" iteration=Term ":" formula=Formula ")"
+		//	{ForAll} "forAll(" name=Variable "in" iteration=Term ":" formula=Formula ")"
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ForAll} "forAll(" bounded=Variable "in" iteration=Term ":" formula=Formula ")"
+		//{ForAll} "forAll(" name=Variable "in" iteration=Term ":" formula=Formula ")"
 		public Group getGroup() { return cGroup; }
 		
 		//{ForAll}
@@ -400,11 +503,11 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//"forAll("
 		public Keyword getForAllKeyword_1() { return cForAllKeyword_1; }
 		
-		//bounded=Variable
-		public Assignment getBoundedAssignment_2() { return cBoundedAssignment_2; }
+		//name=Variable
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 		
 		//Variable
-		public RuleCall getBoundedVariableParserRuleCall_2_0() { return cBoundedVariableParserRuleCall_2_0; }
+		public RuleCall getNameVariableParserRuleCall_2_0() { return cNameVariableParserRuleCall_2_0; }
 		
 		//"in"
 		public Keyword getInKeyword_3() { return cInKeyword_3; }
@@ -432,8 +535,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cExistsAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cExistsKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cBoundedAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cBoundedVariableParserRuleCall_2_0 = (RuleCall)cBoundedAssignment_2.eContents().get(0);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameVariableParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cInKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cIterationAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cIterationTermParserRuleCall_4_0 = (RuleCall)cIterationAssignment_4.eContents().get(0);
@@ -443,10 +546,10 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Exists Quantifier:
-		//	{Exists} "exists(" bounded=Variable "in" iteration=Term ":" formula=Formula ")"
+		//	{Exists} "exists(" name=Variable "in" iteration=Term ":" formula=Formula ")"
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Exists} "exists(" bounded=Variable "in" iteration=Term ":" formula=Formula ")"
+		//{Exists} "exists(" name=Variable "in" iteration=Term ":" formula=Formula ")"
 		public Group getGroup() { return cGroup; }
 		
 		//{Exists}
@@ -455,11 +558,11 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//"exists("
 		public Keyword getExistsKeyword_1() { return cExistsKeyword_1; }
 		
-		//bounded=Variable
-		public Assignment getBoundedAssignment_2() { return cBoundedAssignment_2; }
+		//name=Variable
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 		
 		//Variable
-		public RuleCall getBoundedVariableParserRuleCall_2_0() { return cBoundedVariableParserRuleCall_2_0; }
+		public RuleCall getNameVariableParserRuleCall_2_0() { return cNameVariableParserRuleCall_2_0; }
 		
 		//"in"
 		public Keyword getInKeyword_3() { return cInKeyword_3; }
@@ -613,11 +716,14 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
-	private final ConsistencyRuleElements pConsistencyRule;
+	private final ConstraintRuleBaseElements pConstraintRuleBase;
+	private final ConstraintElements pConstraint;
 	private final VariableElements pVariable;
 	private final TermElements pTerm;
 	private final FunctionElements pFunction;
+	private final GetTermElements pGetTerm;
 	private final GetElements pGet;
+	private final FeatureElements pFeature;
 	private final FormulaElements pFormula;
 	private final BinaryFormulaElements pBinaryFormula;
 	private final IfElements pIf;
@@ -641,11 +747,14 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
-		this.pConsistencyRule = new ConsistencyRuleElements();
+		this.pConstraintRuleBase = new ConstraintRuleBaseElements();
+		this.pConstraint = new ConstraintElements();
 		this.pVariable = new VariableElements();
 		this.pTerm = new TermElements();
 		this.pFunction = new FunctionElements();
+		this.pGetTerm = new GetTermElements();
 		this.pGet = new GetElements();
+		this.pFeature = new FeatureElements();
 		this.pFormula = new FormulaElements();
 		this.pBinaryFormula = new BinaryFormulaElements();
 		this.pIf = new IfElements();
@@ -688,18 +797,29 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//ConsistencyRule:
-	//	'context' type=ID variable=Variable ':' formula=Formula;
-	public ConsistencyRuleElements getConsistencyRuleAccess() {
-		return pConsistencyRule;
+	//ConstraintRuleBase:
+	//	"domain" domain=STRING
+	//	constraints+=Constraint;
+	public ConstraintRuleBaseElements getConstraintRuleBaseAccess() {
+		return pConstraintRuleBase;
 	}
 	
-	public ParserRule getConsistencyRuleRule() {
-		return getConsistencyRuleAccess().getRule();
+	public ParserRule getConstraintRuleBaseRule() {
+		return getConstraintRuleBaseAccess().getRule();
+	}
+	
+	//Constraint:
+	//	'context' variable=Variable ':' formula=Formula;
+	public ConstraintElements getConstraintAccess() {
+		return pConstraint;
+	}
+	
+	public ParserRule getConstraintRule() {
+		return getConstraintAccess().getRule();
 	}
 	
 	//Variable:
-	//	name=ID;
+	//	type=ID name=ID;
 	public VariableElements getVariableAccess() {
 		return pVariable;
 	}
@@ -720,7 +840,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Function Term:
-	//	Get
+	//	GetTerm
 	public FunctionElements getFunctionAccess() {
 		return pFunction;
 	}
@@ -729,14 +849,37 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionAccess().getRule();
 	}
 	
-	//Get Term:
-	//	Variable ({Get.context=current} "." feature=ID)*
+	//GetTerm Term:
+	//	{GetTerm} name=[Variable] feature=Get?
+	public GetTermElements getGetTermAccess() {
+		return pGetTerm;
+	}
+	
+	public ParserRule getGetTermRule() {
+		return getGetTermAccess().getRule();
+	}
+	
+	//Get:
+	//	"." (type=ID "::")? name=[ecore::EStructuralFeature|Feature] next=Get?;
 	public GetElements getGetAccess() {
 		return pGet;
 	}
 	
 	public ParserRule getGetRule() {
 		return getGetAccess().getRule();
+	}
+	
+	////Get returns Term:
+	// //	Variable ({Get.context=current} "." feature=[ecore::EStructuralFeature|Feature])*;
+	////  Variable ({Get.context=current} "." feature=ID)*;
+	//Feature:
+	//	ID;
+	public FeatureElements getFeatureAccess() {
+		return pFeature;
+	}
+	
+	public ParserRule getFeatureRule() {
+		return getFeatureAccess().getRule();
 	}
 	
 	/// * 
@@ -756,6 +899,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//// binary formulas:
+	//// TODO: How to make If, Xor,... inherit from BinaryFormula?
 	//BinaryFormula Formula:
 	//	If
 	public BinaryFormulaElements getBinaryFormulaAccess() {
@@ -839,7 +983,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ForAll Quantifier:
-	//	{ForAll} "forAll(" bounded=Variable "in" iteration=Term ":" formula=Formula ")"
+	//	{ForAll} "forAll(" name=Variable "in" iteration=Term ":" formula=Formula ")"
 	public ForAllElements getForAllAccess() {
 		return pForAll;
 	}
@@ -849,7 +993,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Exists Quantifier:
-	//	{Exists} "exists(" bounded=Variable "in" iteration=Term ":" formula=Formula ")"
+	//	{Exists} "exists(" name=Variable "in" iteration=Term ":" formula=Formula ")"
 	public ExistsElements getExistsAccess() {
 		return pExists;
 	}

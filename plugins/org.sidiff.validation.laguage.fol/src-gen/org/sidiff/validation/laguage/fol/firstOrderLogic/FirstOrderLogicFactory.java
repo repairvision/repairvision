@@ -24,13 +24,22 @@ public interface FirstOrderLogicFactory extends EFactory
   FirstOrderLogicFactory eINSTANCE = org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Consistency Rule</em>'.
+   * Returns a new object of class '<em>Constraint Rule Base</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Consistency Rule</em>'.
+   * @return a new object of class '<em>Constraint Rule Base</em>'.
    * @generated
    */
-  ConsistencyRule createConsistencyRule();
+  ConstraintRuleBase createConstraintRuleBase();
+
+  /**
+   * Returns a new object of class '<em>Constraint</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Constraint</em>'.
+   * @generated
+   */
+  Constraint createConstraint();
 
   /**
    * Returns a new object of class '<em>Variable</em>'.
@@ -49,6 +58,15 @@ public interface FirstOrderLogicFactory extends EFactory
    * @generated
    */
   Term createTerm();
+
+  /**
+   * Returns a new object of class '<em>Get</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Get</em>'.
+   * @generated
+   */
+  Get createGet();
 
   /**
    * Returns a new object of class '<em>Formula</em>'.
@@ -78,13 +96,13 @@ public interface FirstOrderLogicFactory extends EFactory
   Quantifier createQuantifier();
 
   /**
-   * Returns a new object of class '<em>Get</em>'.
+   * Returns a new object of class '<em>Get Term</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Get</em>'.
+   * @return a new object of class '<em>Get Term</em>'.
    * @generated
    */
-  Get createGet();
+  GetTerm createGetTerm();
 
   /**
    * Returns a new object of class '<em>If</em>'.

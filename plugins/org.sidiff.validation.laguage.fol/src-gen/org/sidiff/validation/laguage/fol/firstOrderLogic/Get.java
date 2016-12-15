@@ -3,6 +3,8 @@
  */
 package org.sidiff.validation.laguage.fol.firstOrderLogic;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,66 +15,93 @@ package org.sidiff.validation.laguage.fol.firstOrderLogic;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get#getContext <em>Context</em>}</li>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get#getFeature <em>Feature</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get#getType <em>Type</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get#getNext <em>Next</em>}</li>
  * </ul>
  *
  * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getGet()
  * @model
  * @generated
  */
-public interface Get extends Term
+public interface Get extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Context</b></em>' containment reference.
+   * Returns the value of the '<em><b>Type</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Context</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Type</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Context</em>' containment reference.
-   * @see #setContext(Term)
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getGet_Context()
-   * @model containment="true"
-   * @generated
-   */
-  Term getContext();
-
-  /**
-   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get#getContext <em>Context</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Context</em>' containment reference.
-   * @see #getContext()
-   * @generated
-   */
-  void setContext(Term value);
-
-  /**
-   * Returns the value of the '<em><b>Feature</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Feature</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Feature</em>' attribute.
-   * @see #setFeature(String)
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getGet_Feature()
+   * @return the value of the '<em>Type</em>' attribute.
+   * @see #setType(String)
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getGet_Type()
    * @model
    * @generated
    */
-  String getFeature();
+  String getType();
 
   /**
-   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get#getFeature <em>Feature</em>}' attribute.
+   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get#getType <em>Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Feature</em>' attribute.
-   * @see #getFeature()
+   * @param value the new value of the '<em>Type</em>' attribute.
+   * @see #getType()
    * @generated
    */
-  void setFeature(String value);
+  void setType(String value);
+
+  /**
+   * Returns the value of the '<em><b>Name</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Name</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Name</em>' reference.
+   * @see #setName(EStructuralFeature)
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getGet_Name()
+   * @model
+   * @generated
+   */
+  EStructuralFeature getName();
+
+  /**
+   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get#getName <em>Name</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Name</em>' reference.
+   * @see #getName()
+   * @generated
+   */
+  void setName(EStructuralFeature value);
+
+  /**
+   * Returns the value of the '<em><b>Next</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Next</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Next</em>' containment reference.
+   * @see #setNext(Get)
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getGet_Next()
+   * @model containment="true"
+   * @generated
+   */
+  Get getNext();
+
+  /**
+   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get#getNext <em>Next</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Next</em>' containment reference.
+   * @see #getNext()
+   * @generated
+   */
+  void setNext(Get value);
 
 } // Get

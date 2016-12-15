@@ -65,13 +65,15 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
   {
     switch (eClass.getClassifierID())
     {
-      case FirstOrderLogicPackage.CONSISTENCY_RULE: return createConsistencyRule();
+      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE: return createConstraintRuleBase();
+      case FirstOrderLogicPackage.CONSTRAINT: return createConstraint();
       case FirstOrderLogicPackage.VARIABLE: return createVariable();
       case FirstOrderLogicPackage.TERM: return createTerm();
+      case FirstOrderLogicPackage.GET: return createGet();
       case FirstOrderLogicPackage.FORMULA: return createFormula();
       case FirstOrderLogicPackage.UNARY_FORMULA: return createUnaryFormula();
       case FirstOrderLogicPackage.QUANTIFIER: return createQuantifier();
-      case FirstOrderLogicPackage.GET: return createGet();
+      case FirstOrderLogicPackage.GET_TERM: return createGetTerm();
       case FirstOrderLogicPackage.IF: return createIf();
       case FirstOrderLogicPackage.XOR: return createXor();
       case FirstOrderLogicPackage.OR: return createOr();
@@ -93,10 +95,21 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public ConsistencyRule createConsistencyRule()
+  public ConstraintRuleBase createConstraintRuleBase()
   {
-    ConsistencyRuleImpl consistencyRule = new ConsistencyRuleImpl();
-    return consistencyRule;
+    ConstraintRuleBaseImpl constraintRuleBase = new ConstraintRuleBaseImpl();
+    return constraintRuleBase;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Constraint createConstraint()
+  {
+    ConstraintImpl constraint = new ConstraintImpl();
+    return constraint;
   }
 
   /**
@@ -119,6 +132,17 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
   {
     TermImpl term = new TermImpl();
     return term;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Get createGet()
+  {
+    GetImpl get = new GetImpl();
+    return get;
   }
 
   /**
@@ -159,10 +183,10 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public Get createGet()
+  public GetTerm createGetTerm()
   {
-    GetImpl get = new GetImpl();
-    return get;
+    GetTermImpl getTerm = new GetTermImpl();
+    return getTerm;
   }
 
   /**

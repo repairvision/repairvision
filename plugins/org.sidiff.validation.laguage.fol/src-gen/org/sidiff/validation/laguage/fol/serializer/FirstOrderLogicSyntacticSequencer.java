@@ -55,8 +55,8 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 	 *     '('*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) 'exists(' bounded=Variable
-	 *     (rule start) (ambiguity) 'forAll(' bounded=Variable
+	 *     (rule start) (ambiguity) 'exists(' name=Variable
+	 *     (rule start) (ambiguity) 'forAll(' name=Variable
 	 *     (rule start) (ambiguity) 'not(' not=Formula
 	 *     (rule start) (ambiguity) value='false'
 	 *     (rule start) (ambiguity) value='true'
