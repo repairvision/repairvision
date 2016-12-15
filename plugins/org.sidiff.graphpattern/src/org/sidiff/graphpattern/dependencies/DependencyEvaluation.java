@@ -125,22 +125,14 @@ public class DependencyEvaluation {
 	 * @return <code>true</code> if the corresponding dependency could be
 	 *         added successfully; <code>false</code> otherwise.
 	 */
-	public boolean add(NodePattern node) {
-		DependencyNode dependency = nodeToDependency.get(node);
+	public void undoRemoveDependency() {
+		DependencyNode dependency = removedNodesTrace.pop();
+		actualIndependent.add(dependency);
+		removedNodes.remove(dependency);
 
-		if (!removedNodesTrace.isEmpty() && (removedNodesTrace.peek() == dependency)) {
-			
-			for (DependencyEdge incomingDependency : dependency.getIncomings()) {
-				DependencyNode adjacentDependency = incomingDependency.getSource();
-				actualIndependent.remove(adjacentDependency);
-			}
-			
-			actualIndependent.add(dependency);
-			removedNodesTrace.pop();
-			
-			return removedNodes.remove(dependency);
-		} else {
-			return false;
+		for (DependencyEdge incomingDependency : dependency.getIncomings()) {
+			DependencyNode adjacentDependency = incomingDependency.getSource();
+			actualIndependent.remove(adjacentDependency);
 		}
 	}
 }
