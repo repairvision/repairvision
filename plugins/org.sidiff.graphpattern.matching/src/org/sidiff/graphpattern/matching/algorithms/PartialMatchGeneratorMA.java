@@ -67,11 +67,15 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	
 	//-------------------------------------------------
 	
-	private boolean GLOBAL_GREEDY = true;
+	private boolean MINIMUM_SOLUTION = true;
+	
+	private int minimumSolutionSize = 1;
+	
+	private boolean GLOBAL_GREEDY = false;
 	
 	private Map<Variable, Set<EObject>> globalAssigned;
 	
-	private boolean LOCAL_GREEDY = true;
+	private boolean LOCAL_GREEDY = false;
 	
 	private Map<Variable, Set<EObject>> localAssigned;
 	
@@ -206,6 +210,10 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		System.out.println("Matchings Found: " + results.size());
 	}
 	
+	//-------------------------------------------------
+	// Main Algorithm:
+	//-------------------------------------------------
+	
 	private void expandAssignment(int unassigned) {
 		
 		// is expandable?
@@ -229,7 +237,13 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			// create all sub-patterns which exclude the picked variable(s):
 			if (unassigned == 0) {
 				removeVariable(next, domainIsEmpty);
-				expandAssignment(unassigned);
+//				int cleared = cleanUpVariables(next);
+				
+				if (estimateSolutionSize() >= minimumSolutionSize) {
+					expandAssignment(unassigned);
+				}
+
+//				undoCleanUp(cleared);
 				addVariable(next, domainIsEmpty);
 			}
 		} else {
@@ -242,7 +256,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			}
 		}
 	}
-
+	
 	private int pickAndAppendVariable() {
 		
 		// check if there any more variables to assign:
@@ -305,7 +319,9 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		
 		// initialize new sub-matching:
 		if (matchSelector == null) {
-			clearLocalAssigned();
+			if (LOCAL_GREEDY) {
+				clearLocalAssigned();
+			}
 			
 			initialVariable = variable;
 			matchSelector = new MatchSelector(
@@ -315,7 +331,10 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		
 		// store assignment:
 		assignments.push(value);
-		localAssigned.get(variable).add(value);
+		
+		if (LOCAL_GREEDY) {
+			localAssigned.get(variable).add(value);
+		}
 		
 		//-------------------------------------------------
 		// Restrict Working Graph
@@ -397,9 +416,60 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	          }
 	     } 
 	}
+	
+//	private int cleanUpVariables(int lastRemoved) {
+//		if (MINIMUM_SOLUTION) {
+//			int cleared = 0;
+//			
+//			for (int i = removedVariables.size() - lastRemoved; i < removedVariables.size(); ++i) {
+//				Set<NodePattern> dependent = dependencies.getDependent(removedVariables.get(i).node);
+//				
+//				for (Variable remainingVariable : remainingVariables) {
+//					if (dependent.contains(remainingVariable.node)) {
+//						remainingVariables.remove(remainingVariable);
+//						removedVariables.push(remainingVariable);
+//						++cleared;
+//					}
+//				}
+//			}
+//			
+//			return cleared;
+//		}
+//		return 0;
+//	}
+//
+//
+//	private void undoCleanUp(int cleared) {
+//		if (MINIMUM_SOLUTION) {
+//			for (int i = 0; i < cleared; ++i) {
+//				Variable clearedVariable = removedVariables.pop();
+//		        remainingVariables.add(clearedVariable);
+//			}
+//		}
+//	}
+
+	private int estimateSolutionSize() {
+		if (MINIMUM_SOLUTION) {
+			if (matchSelector != null) {
+				int estimatedSize = subVariables.size();
+				
+				for (Variable remainingVariable : remainingVariables) {
+					if (getDomain(remainingVariable).hasNext()) {
+						++estimatedSize;
+					}
+				}
+				
+				return estimatedSize;
+			} else {
+				return subVariables.size() + remainingVariables.size();
+			}
+		}
+		return Integer.MAX_VALUE;
+	}
  
 	private boolean validateAssignment() {
-		return isNewMatch && isPartialAssignment() && isMaximumAssignment(); // && validateAtomics();
+		return (!MINIMUM_SOLUTION || assignments.size() >= minimumSolutionSize) && isNewMatch 
+				&& isPartialAssignment() && isMaximumAssignment(); // && validateAtomics();
 	}
 	
 	private boolean isPartialAssignment() {
@@ -453,7 +523,9 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			assignments[variable.index] = value;
 				
 			// [Heuristic]: store assigned values:
-			globalAssigned.get(variable).add(value);
+			if (GLOBAL_GREEDY) {
+				globalAssigned.get(variable).add(value);
+			}
 		}
 	}
 	
