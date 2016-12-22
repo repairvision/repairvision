@@ -309,6 +309,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		// * the rules for operators with less precedence are defined first.
 		// * / // binary formulas:
 		//// TODO: How to make If, Xor,... inherit from BinaryFormula?
+		//// http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
 		//BinaryFormula Formula:
 		//	If
 		@Override public ParserRule getRule() { return rule; }
@@ -1157,6 +1158,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	// * the rules for operators with less precedence are defined first.
 	// * / // binary formulas:
 	//// TODO: How to make If, Xor,... inherit from BinaryFormula?
+	//// http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
 	//BinaryFormula Formula:
 	//	If
 	public BinaryFormulaElements getBinaryFormulaAccess() {
