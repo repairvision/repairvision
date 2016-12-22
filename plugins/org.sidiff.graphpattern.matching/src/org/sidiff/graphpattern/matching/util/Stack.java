@@ -6,7 +6,7 @@ public class Stack<T extends Object> {
 
 	private T[] stack;
 	
-	private int size = 0;
+	private int pointer = 0;
 	
 	@SuppressWarnings("unchecked")
 	public Stack(int capacity) {
@@ -18,17 +18,17 @@ public class Stack<T extends Object> {
 	}
 	
 	public void push(T element) {
-		stack[size] = element;
-		++size;
+		stack[pointer] = element;
+		++pointer;
 	}
 	
 	public T pop() {
-		--size;
-		return stack[size];
+		--pointer;
+		return stack[pointer];
 	}
 	
 	public T peek() {
-		return stack[size - 1];
+		return stack[pointer - 1];
 	}
 	
 	public T get(int i) {
@@ -36,21 +36,21 @@ public class Stack<T extends Object> {
 	}
 	
 	public boolean isEmpty() {
-		return (size == 0);
+		return (pointer == 0);
 	}
 	
 	public int size() {
-		return size;
+		return pointer;
 	}
 	
 	public void reset() {
 		for (int i = 0; i < stack.length; ++i) {
 			stack[i] = null;
 		}
-		size = 0;
+		pointer = 0;
 	}
 	
 	public T[] toArray() {
-		return Arrays.copyOf(stack, size);
+		return Arrays.copyOf(stack, pointer);
 	}
 }

@@ -67,7 +67,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	
 	//-------------------------------------------------
 	
-	private boolean MINIMUM_SOLUTION = true;
+	private boolean MINIMUM_SOLUTION = false;
 	
 	private int minimumSolutionSize = 1;
 	
@@ -106,7 +106,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 		
 		int size() {
-			return variables.length;
+			return size;
 		}
 
 		@Override
@@ -120,10 +120,12 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 				}
 
 				public Variable next() {
-					for (; view < variables.length; ++view) {
-						if (variables[view] != null) {
+					while (view < variables.length) {
+						++view;
+						
+						if (variables[view - 1] != null) {
 							++i;
-							return variables[view];
+							return variables[view - 1];
 						}
 					}
 					
@@ -237,13 +239,13 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			// create all sub-patterns which exclude the picked variable(s):
 			if (unassigned == 0) {
 				removeVariable(next, domainIsEmpty);
-//				int cleared = cleanUpVariables(next);
+				int cleared = cleanUpVariables(next);
 				
 				if (estimateSolutionSize() >= minimumSolutionSize) {
 					expandAssignment(unassigned);
 				}
 
-//				undoCleanUp(cleared);
+				undoCleanUp(cleared);
 				addVariable(next, domainIsEmpty);
 			}
 		} else {
@@ -417,58 +419,50 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	     } 
 	}
 	
-//	private int cleanUpVariables(int lastRemoved) {
-//		if (MINIMUM_SOLUTION) {
-//			int cleared = 0;
-//			
-//			for (int i = removedVariables.size() - lastRemoved; i < removedVariables.size(); ++i) {
-//				Set<NodePattern> dependent = dependencies.getDependent(removedVariables.get(i).node);
-//				
-//				for (Variable remainingVariable : remainingVariables) {
-//					if (dependent.contains(remainingVariable.node)) {
-//						remainingVariables.remove(remainingVariable);
-//						removedVariables.push(remainingVariable);
-//						++cleared;
-//					}
-//				}
-//			}
-//			
-//			return cleared;
-//		}
-//		return 0;
-//	}
-//
-//
-//	private void undoCleanUp(int cleared) {
-//		if (MINIMUM_SOLUTION) {
-//			for (int i = 0; i < cleared; ++i) {
-//				Variable clearedVariable = removedVariables.pop();
-//		        remainingVariables.add(clearedVariable);
-//			}
-//		}
-//	}
+	private int cleanUpVariables(int lastRemoved) {
+		if (MINIMUM_SOLUTION) {
+			int cleared = 0;
+			
+			// NOTE: It is sufficient to check one variable of an atomic patter!
+			Set<NodePattern> dependent = dependencies.getDependent(removedVariables.peek().node);
+				
+			for (Variable remainingVariable : remainingVariables) {
+				
+				// remove dependent variables:
+				if (dependent.contains(remainingVariable.node) 
+						// Remove variables with empty domains -> simplifies size estimation:
+						|| ((matchSelector != null) && !getDomain(remainingVariable).hasNext())) {
+					
+					remainingVariables.remove(remainingVariable);
+					removedVariables.push(remainingVariable);
+					++cleared;
+				}
+			}
+			
+			return cleared;
+		}
+		return 0;
+	}
+
+
+	private void undoCleanUp(int cleared) {
+		if (MINIMUM_SOLUTION) {
+			for (int i = 0; i < cleared; ++i) {
+				Variable clearedVariable = removedVariables.pop();
+		        remainingVariables.add(clearedVariable);
+			}
+		}
+	}
 
 	private int estimateSolutionSize() {
 		if (MINIMUM_SOLUTION) {
-			if (matchSelector != null) {
-				int estimatedSize = subVariables.size();
-				
-				for (Variable remainingVariable : remainingVariables) {
-					if (getDomain(remainingVariable).hasNext()) {
-						++estimatedSize;
-					}
-				}
-				
-				return estimatedSize;
-			} else {
-				return subVariables.size() + remainingVariables.size();
-			}
+			return subVariables.size() + remainingVariables.size();
 		}
 		return Integer.MAX_VALUE;
 	}
  
 	private boolean validateAssignment() {
-		return (!MINIMUM_SOLUTION || assignments.size() >= minimumSolutionSize) && isNewMatch 
+		return (!MINIMUM_SOLUTION || (assignments.size() >= minimumSolutionSize)) && isNewMatch 
 				&& isPartialAssignment() && isMaximumAssignment(); // && validateAtomics();
 	}
 	
@@ -645,41 +639,43 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			print.append("\n");
 			
 			// Value:
-			EObject value = assignments.get(i);
-			
-			print.append("  Value: " + value);
-			print.append("\n");
-			
-			if (value != null) {
-				if (node.getType() == SymmetricPackage.eINSTANCE.getAddObject()) {
-					print.append("  Obj: " + value.eGet(SymmetricPackage.eINSTANCE.getAddObject_Obj()));
-					print.append("\n");
-				}
+			if (i < assignments.size()) {
+				EObject value = assignments.get(i);
 				
-				else if (node.getType() == SymmetricPackage.eINSTANCE.getRemoveObject()) {
-					print.append("  Obj: " + value.eGet(SymmetricPackage.eINSTANCE.getRemoveObject_Obj()));
-					print.append("\n");
-				}
+				print.append("  Value: " + value);
+				print.append("\n");
 				
-				else if (node.getType() == SymmetricPackage.eINSTANCE.getAddReference()) {
-					print.append("  Src: " + value.eGet(SymmetricPackage.eINSTANCE.getAddReference_Src()));
-					print.append("\n");
-					print.append("  Tgt: " + value.eGet(SymmetricPackage.eINSTANCE.getAddReference_Tgt()));
-					print.append("\n");
-				}
-				
-				else if (node.getType() == SymmetricPackage.eINSTANCE.getRemoveReference()) {
-					print.append("  Src: " + value.eGet(SymmetricPackage.eINSTANCE.getRemoveReference_Src()));
-					print.append("\n");
-					print.append("  Tgt: " + value.eGet(SymmetricPackage.eINSTANCE.getRemoveReference_Tgt()));
-					print.append("\n");
-				}
-				
-				else if (node.getType() == SymmetricPackage.eINSTANCE.getAttributeValueChange()) {
-					print.append("  ObjA: " + value.eGet(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjA()));
-					print.append("\n");
-					print.append("  ObjB: " + value.eGet(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjB()));
-					print.append("\n");
+				if (value != null) {
+					if (node.getType() == SymmetricPackage.eINSTANCE.getAddObject()) {
+						print.append("  Obj: " + value.eGet(SymmetricPackage.eINSTANCE.getAddObject_Obj()));
+						print.append("\n");
+					}
+					
+					else if (node.getType() == SymmetricPackage.eINSTANCE.getRemoveObject()) {
+						print.append("  Obj: " + value.eGet(SymmetricPackage.eINSTANCE.getRemoveObject_Obj()));
+						print.append("\n");
+					}
+					
+					else if (node.getType() == SymmetricPackage.eINSTANCE.getAddReference()) {
+						print.append("  Src: " + value.eGet(SymmetricPackage.eINSTANCE.getAddReference_Src()));
+						print.append("\n");
+						print.append("  Tgt: " + value.eGet(SymmetricPackage.eINSTANCE.getAddReference_Tgt()));
+						print.append("\n");
+					}
+					
+					else if (node.getType() == SymmetricPackage.eINSTANCE.getRemoveReference()) {
+						print.append("  Src: " + value.eGet(SymmetricPackage.eINSTANCE.getRemoveReference_Src()));
+						print.append("\n");
+						print.append("  Tgt: " + value.eGet(SymmetricPackage.eINSTANCE.getRemoveReference_Tgt()));
+						print.append("\n");
+					}
+					
+					else if (node.getType() == SymmetricPackage.eINSTANCE.getAttributeValueChange()) {
+						print.append("  ObjA: " + value.eGet(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjA()));
+						print.append("\n");
+						print.append("  ObjB: " + value.eGet(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjB()));
+						print.append("\n");
+					}
 				}
 			}
 		}
