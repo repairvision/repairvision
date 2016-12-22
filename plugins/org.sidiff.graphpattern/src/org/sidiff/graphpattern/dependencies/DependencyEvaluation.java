@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
 
@@ -23,7 +24,7 @@ public class DependencyEvaluation {
 	
 	private Map<NodePattern, DependencyNode> nodeToDependency = new HashMap<>();
 	
-//	private Map<NodePattern, Set<NodePattern>> dependent = new HashMap<>();
+	private Map<DependencyNode, Set<NodePattern>> dependent = new HashMap<>();
 	
 	private Set<DependencyNode> actualIndependent = new HashSet<>();
 	
@@ -33,7 +34,7 @@ public class DependencyEvaluation {
 
 	public DependencyEvaluation(GraphPattern graph) {
 		this.graph = graph.getDependencyGraph();
-//		Map<DependencyNode, Set<DependencyNode>> dependenciesPerNodes = new HashMap<>();
+		Map<DependencyNode, Set<DependencyNode>> dependenciesPerNodes = new HashMap<>();
 		
 		for (DependencyNode dependency : this.graph.getNodes()) {
 			
@@ -47,43 +48,41 @@ public class DependencyEvaluation {
 				atomics.add(dependency);
 			}
 			
-//			// depended:
-//			Set<DependencyNode> dependenciesPerNode = calculateDependenciesPerNode(dependency);
-//			dependenciesPerNodes.put(dependency, dependenciesPerNode);
+			// depended:
+			Set<DependencyNode> dependenciesPerNode = calculateDependenciesPerNode(dependency);
+			dependenciesPerNodes.put(dependency, dependenciesPerNode);
 		}
 		
-//		// convert dependencies per node:
-//		for (Entry<DependencyNode, Set<DependencyNode>> dependency : dependenciesPerNodes.entrySet()) {
-//			for (NodePattern node : dependency.getKey().getNodes()) {
-//				Set<NodePattern> dependedNodes = dependent.getOrDefault(node, new HashSet<>());
-//				dependent.put(node, dependedNodes);
-//				
-//				for (DependencyNode dependedDependency : dependency.getValue()) {
-//					dependedNodes.addAll(dependedDependency.getNodes());
-//				}
-//			}
-//		}
+		// convert dependencies per node:
+		for (Entry<DependencyNode, Set<DependencyNode>> dependency : dependenciesPerNodes.entrySet()) {
+			Set<NodePattern> dependedNodes = new HashSet<>();
+			dependent.put(dependency.getKey(), dependedNodes);
+
+			for (DependencyNode dependedDependency : dependency.getValue()) {
+				dependedNodes.addAll(dependedDependency.getNodes());
+			}
+		}
 	}
 	
-//	private Set<DependencyNode> calculateDependenciesPerNode(DependencyNode dependency) {
-//		Set<DependencyNode> dependent = new HashSet<>();
-//		calculateDependenciesPerNode(dependency, dependent);
-//		return dependent;
-//	}
-//	
-//	private void calculateDependenciesPerNode(DependencyNode dependency, Set<DependencyNode> dependent) {
-//		for (DependencyEdge edge : dependency.getIncomings()) {
-//			DependencyNode sourceNode = edge.getSource();
-//			
-//			if (dependent.add(sourceNode)) {
-//				calculateDependenciesPerNode(sourceNode, dependent);
-//			}	
-//		}
-//	}
-//	
-//	public Set<NodePattern> getDependent(NodePattern node) {
-//		return dependent.get(node);
-//	}
+	private Set<DependencyNode> calculateDependenciesPerNode(DependencyNode dependency) {
+		Set<DependencyNode> dependent = new HashSet<>();
+		calculateDependenciesPerNode(dependency, dependent);
+		return dependent;
+	}
+	
+	private void calculateDependenciesPerNode(DependencyNode dependency, Set<DependencyNode> dependent) {
+		for (DependencyEdge edge : dependency.getIncomings()) {
+			DependencyNode sourceNode = edge.getSource();
+			
+			if (dependent.add(sourceNode)) {
+				calculateDependenciesPerNode(sourceNode, dependent);
+			}	
+		}
+	}
+	
+	public Set<NodePattern> getDependent(NodePattern node) {
+		return dependent.get(nodeToDependency.get(node));
+	}
 	
 	public Set<DependencyNode> getActualIndependent() {
 		return actualIndependent;
