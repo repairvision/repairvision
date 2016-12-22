@@ -94,7 +94,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		xmiResource.save(Collections.emptyMap());
 	}
 	
-		/**
+	/**
 	 * Creates a deep copy (i.e. full tree content) of the given object.
 	 * 
 	 * @param original
