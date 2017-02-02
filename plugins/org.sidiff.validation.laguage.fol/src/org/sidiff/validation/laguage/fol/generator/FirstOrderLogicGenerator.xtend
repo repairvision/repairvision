@@ -194,8 +194,16 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		return 'MISSING_FORMULA'
 	}
 	
+	// TODO: !?
 	def dispatch String compileFormula(Equality equality, HashMap<Object, String> names) {
-		return 'new Equality(' + compileFormula(equality.left, names) + ', ' + compileFormula(equality.right, names)  + ')'
+		
+		if ((equality.left instanceof IntConstant) || (equality.left instanceof StringConstant) ||
+			(equality.right instanceof IntConstant) || (equality.right instanceof StringConstant)) {
+			
+			return 'new Equality(' + compileFormula(equality.left, names) + ', ' + compileFormula(equality.right, names) + ')'
+		} else {
+			return 'new Iff(' + compileFormula(equality.left, names) + ', ' + compileFormula(equality.right, names) + ')'
+		}
 	}
 	
 	def dispatch String compileFormula(If ifFormula, HashMap<Object, String> names) {
