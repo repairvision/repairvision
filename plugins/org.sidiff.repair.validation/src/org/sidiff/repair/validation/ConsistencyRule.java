@@ -15,6 +15,8 @@ public class ConsistencyRule extends NamedElement {
 	
 	private Formula formula;
 	
+	private String message;
+	
 	public ConsistencyRule(EClass contextType, Variable context, Formula formula) {
 		super();
 		this.contextType = contextType;
@@ -53,6 +55,14 @@ public class ConsistencyRule extends NamedElement {
 
 	public void setFormula(Formula formula) {
 		this.formula = formula;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public IRepairDecision repair() {

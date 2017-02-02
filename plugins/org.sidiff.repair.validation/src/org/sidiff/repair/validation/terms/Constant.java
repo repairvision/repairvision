@@ -5,9 +5,8 @@ import org.sidiff.repair.validation.fix.Repair.RepairType;
 
 public class Constant extends Term {
 	
-	public Constant(String name, Object constant) {
+	public Constant(Object constant) {
 		this.value = constant;
-		this.name = name;
 	}
 
 	@Override

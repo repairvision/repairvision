@@ -32,10 +32,11 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 		addConsistencyRule(createUnimplementedRealizationRule());
 	}
 	
-	public static void addConsistencyRule(ConsistencyRule rule) {
+	private static void addConsistencyRule(ConsistencyRule rule) {
 		rules.put(rule.getName(), rule);
 	}
 	
+	@Override
 	public String getDocumentType() {
 		return documentType;
 	}
@@ -44,7 +45,6 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 	public List<ConsistencyRule> getConsistencyRules() {
 		return new ArrayList<>(rules.values());
 	}
-
 
 	@Override
 	public ConsistencyRule getConsistencyRule(String name) {
