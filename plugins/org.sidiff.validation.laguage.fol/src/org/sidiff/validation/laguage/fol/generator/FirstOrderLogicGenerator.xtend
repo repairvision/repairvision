@@ -4,6 +4,7 @@
 package org.sidiff.validation.laguage.fol.generator
 
 import java.util.Collections
+import java.util.HashMap
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
@@ -13,10 +14,29 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import org.sidiff.validation.laguage.fol.firstOrderLogic.And
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Equality
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Formula
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Greater
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual
+import org.sidiff.validation.laguage.fol.firstOrderLogic.If
+import org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Not
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Or
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Smaller
+import org.sidiff.validation.laguage.fol.firstOrderLogic.SmallerEqual
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable
-import java.util.HashMap
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Xor
+import org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant
+import org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant
+import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant
+import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef
 
 /**
  * Generates code from your model files on save.
@@ -28,18 +48,45 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var names = new HashMap<Object, String>();
 		
+		var constraintCounter = 0
 		var variableCounter = 0
 		var pathCounter = 0
 
 		var code = 
 			'''
-				«FOR variable : resource.allContents.filter(typeof(Variable)).toIterable»
-					«compile(variable, variableCounter++, names)»
-				«ENDFOR»
+			package testpackage;
+			
+			import org.sidiff.repair.validation.ConsistencyRule;
+			import org.sidiff.repair.validation.formulas.binary.And;
+			import org.sidiff.repair.validation.formulas.binary.Formula;
+			import org.sidiff.repair.validation.formulas.predicates.Equality;
+			import org.sidiff.repair.validation.formulas.predicates.IsEmpty;
+			import org.sidiff.repair.validation.formulas.quantifiers.Exists;
+			import org.sidiff.repair.validation.formulas.quantifiers.ForAll;
+			import org.sidiff.repair.validation.formulas.unary.Not;
+			import org.sidiff.repair.validation.terms.Term;
+			import org.sidiff.repair.validation.terms.Variable;
+			import org.sidiff.repair.validation.terms.functions.Get;
+			
+			public class ConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 				
-				«FOR getTerm : resource.allContents.filter(typeof(GetTerm)).toIterable»
-					«compile(getTerm, pathCounter++, names)»
+				private static UMLPackage DOMAIN = UMLPackage.eINSTANCE;
+			
+				public static ConsistencyRule createXYZRule() {
+					
+				«FOR constraint : (resource.contents.get(0) as ConstraintRuleBase).constraints»
+					«FOR variable : constraint.eAllContents.filter(typeof(Variable)).toIterable»
+						«compile(variable, variableCounter++, names)»
+					«ENDFOR»
+				
+					«FOR getTerm : constraint.eAllContents.filter(typeof(GetTerm)).toIterable»
+						«compile(getTerm, pathCounter++, names)»
+					«ENDFOR»
+				
+					«compile(constraint, constraintCounter++, names)»
 				«ENDFOR»
+				}
+			}
 			'''
 		
 		fsa.generateFile(resource.URI.lastSegment + '.java', code)
@@ -47,7 +94,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	}
 	
 	def String compile(Variable variable, int counter, HashMap<Object, String> names) {
-		var name = 'v' + counter + '_' variable.name;
+		var name = 'v' + counter + '_' + variable.name;
 		names.put(variable, name)
 		
 		return '''Variable «name» = new Variable("«variable.name»");'''
@@ -57,7 +104,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		
 		// Term t1_m_receiveEvent_covered =
 		var name = '''t«counter»_«path.eAllContents.filter(typeof(Get)).map[name.name].join('_')»'''
-		var getVariable = 'Term  = ' + name
+		var getVariable = 'Term ' + name + ' = '
 		names.put(path, name)
 		
 		//new Get(new Get(m, DOMAIN.getMessage_ReceiveEvent()), DOMAIN.getInteractionFragment_Covered());
@@ -81,6 +128,82 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		return 'DOMAIN.get' + featue.containerClass.simpleName + '_' + featue.name + '()'
 	}
 	
+	def String compile(Constraint constraint, int constraintCounter, HashMap<Object, String> names) {
+		return 'Formula constraint_' + constraintCounter +' = ' + compileFormula(constraint.formula, names) + ';'
+	}
+	
+	def dispatch String compileFormula(Formula formula, HashMap<Object, String> names) {
+		return 'MISSING_FORMULA'
+	}
+	
+	def dispatch String compileFormula(Equality equality, HashMap<Object, String> names) {
+		return 'new Equality(' + compileFormula(equality.left, names) + ', ' + compileFormula(equality.right, names)  + ')'
+	}
+	
+	def dispatch String compileFormula(If ifFormula, HashMap<Object, String> names) {
+		return 'new If(' + compileFormula(ifFormula.left, names) + ', ' + compileFormula(ifFormula.right, names)  + ')'
+	}
+	
+	def dispatch String compileFormula(Xor xor, HashMap<Object, String> names) {
+		return 'new Xor(' + compileFormula(xor.left, names) + ', ' + compileFormula(xor.right, names)  + ')'
+	}
+	
+	def dispatch String compileFormula(Or or, HashMap<Object, String> names) {
+		return 'new Or(' + compileFormula(or.left, names) + ', ' + compileFormula(or.right, names)  + ')'
+	}
+	
+	def dispatch String compileFormula(And and, HashMap<Object, String> names) {
+		return 'new And(' + compileFormula(and.left, names) + ', ' + compileFormula(and.right, names)  + ')'
+	}
+	
+	def dispatch String compileFormula(Not not, HashMap<Object, String> names) {
+		return 'new Not(' + compileFormula(not.not, names) + ')'
+	}
+	
+	def dispatch String compileFormula(IsEmpty isEmpty, HashMap<Object, String> names) {
+		return 'new IsEmpty(' + compileFormula(isEmpty.term, names) + ')'
+	}
+	
+	def dispatch String compileFormula(Greater greater, HashMap<Object, String> names) {
+		return 'new Greater(' + compileFormula(greater.left, names) + ', ' + compileFormula(greater.right, names)  + ')'
+	}
+	
+	def dispatch String compileFormula(GreaterEqual greaterEqual, HashMap<Object, String> names) {
+		return 'new GreaterEqual(' + compileFormula(greaterEqual.left, names) + ', ' + compileFormula(greaterEqual.right, names)  + ')'
+	}
+	
+	def dispatch String compileFormula(Smaller smaller, HashMap<Object, String> names) {
+		return 'new Smaller(' + compileFormula(smaller.left, names) + ', ' + compileFormula(smaller.right, names)  + ')'
+	}
+	
+	def dispatch String compileFormula(SmallerEqual smallerEqual, HashMap<Object, String> names) {
+		return 'new SmallerEqual(' + compileFormula(smallerEqual.left, names) + ', ' + compileFormula(smallerEqual.right, names)  + ')'
+	}
+	
+	def dispatch String compileFormula(ForAll forAll, HashMap<Object, String> names) {
+		return 'new ForAll(' + names.get(forAll.name) + ', ' + names.get(forAll.iteration) +  ', '  + compileFormula(forAll.formula, names) + ')'
+	}
+	
+	def dispatch String compileFormula(Exists exists, HashMap<Object, String> names) {
+		return 'new Exists(' + names.get(exists.name) + ', ' + names.get(exists.iteration) +  ', '  + compileFormula(exists.formula, names) + ')'
+	}
+	
+	def dispatch String compileFormula(IntConstant integer, HashMap<Object, String> names) {
+		return 'new IntConstant(' + integer.value + ')'
+	}
+	
+	def dispatch String compileFormula(StringConstant string, HashMap<Object, String> names) {
+		return 'new StringConstant(' + string.value + ')'
+	}
+	
+	def dispatch String compileFormula(BoolConstant bool, HashMap<Object, String> names) {
+		return 'new BoolConstant(' + bool.value + ')'
+	}
+	
+	def dispatch String compileFormula(VariableRef variable, HashMap<Object, String> names) {
+		return 'new VariableRef(' + names.get(variable.variable) + ')'
+	}
+	 
 	def static void saveAsXMI(Resource resource) {
 		var root = resource.contents.get(0)
 		var trace = deepCopy(root)
