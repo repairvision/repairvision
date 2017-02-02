@@ -121,6 +121,7 @@ public class NodePatternItemProvider
 			childrenFeatures.add(GraphpatternPackage.Literals.NODE_PATTERN__OUTGOINGS);
 			childrenFeatures.add(GraphpatternPackage.Literals.NODE_PATTERN__ATTRIBUTES);
 			childrenFeatures.add(GraphpatternPackage.Literals.NODE_PATTERN__EVALUATION);
+			childrenFeatures.add(GraphpatternPackage.Literals.NODE_PATTERN__ASSOCIATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -196,6 +197,7 @@ public class NodePatternItemProvider
 			case GraphpatternPackage.NODE_PATTERN__OUTGOINGS:
 			case GraphpatternPackage.NODE_PATTERN__ATTRIBUTES:
 			case GraphpatternPackage.NODE_PATTERN__EVALUATION:
+			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -227,6 +229,11 @@ public class NodePatternItemProvider
 			(createChildParameter
 				(GraphpatternPackage.Literals.NODE_PATTERN__EVALUATION,
 				 GraphpatternFactory.eINSTANCE.createEvaluation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.NODE_PATTERN__ASSOCIATIONS,
+				 GraphpatternFactory.eINSTANCE.createAssociation()));
 	}
 
 }

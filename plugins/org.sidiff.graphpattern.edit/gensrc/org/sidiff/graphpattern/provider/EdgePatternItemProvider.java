@@ -87,6 +87,7 @@ public class EdgePatternItemProvider
 			addOppositePropertyDescriptor(object);
 			addTypePropertyDescriptor(object);
 			addCrossReferencePropertyDescriptor(object);
+			addAssociationsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -175,6 +176,28 @@ public class EdgePatternItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Associations feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addAssociationsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_EdgePattern_associations_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EdgePattern_associations_feature", "_UI_EdgePattern_type"),
+				 GraphpatternPackage.Literals.EDGE_PATTERN__ASSOCIATIONS,
+				 true,
+				 false,
+				 true,
+				 null,
 				 null,
 				 null));
 	}

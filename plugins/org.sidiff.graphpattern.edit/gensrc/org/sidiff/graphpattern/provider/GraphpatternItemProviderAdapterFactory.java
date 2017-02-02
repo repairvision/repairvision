@@ -303,6 +303,29 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.Association} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected AssociationItemProvider associationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.Association}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createAssociationAdapter() {
+		if (associationItemProvider == null) {
+			associationItemProvider = new AssociationItemProvider(this);
+		}
+
+		return associationItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.Pattern} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -459,6 +482,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 		if (dependencyGraphItemProvider != null) dependencyGraphItemProvider.dispose();
 		if (dependencyNodeItemProvider != null) dependencyNodeItemProvider.dispose();
 		if (dependencyEdgeItemProvider != null) dependencyEdgeItemProvider.dispose();
+		if (associationItemProvider != null) associationItemProvider.dispose();
 	}
 
 }
