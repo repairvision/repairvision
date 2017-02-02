@@ -2,13 +2,19 @@
  */
 package org.sidiff.graphpattern.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
@@ -26,6 +32,7 @@ import org.sidiff.graphpattern.NodePattern;
  *   <li>{@link org.sidiff.graphpattern.impl.EdgePatternImpl#getOpposite <em>Opposite</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.EdgePatternImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.EdgePatternImpl#isCrossReference <em>Cross Reference</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.EdgePatternImpl#getAssociations <em>Associations</em>}</li>
  * </ul>
  *
  * @generated
@@ -80,6 +87,16 @@ public class EdgePatternImpl extends GraphPatternElementImpl implements EdgePatt
 	 * @ordered
 	 */
 	protected boolean crossReference = CROSS_REFERENCE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getAssociations() <em>Associations</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssociations()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Association> associations;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -303,6 +320,19 @@ public class EdgePatternImpl extends GraphPatternElementImpl implements EdgePatt
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Association> getAssociations() {
+		if (associations == null) {
+			associations = new EObjectWithInverseResolvingEList<Association>(Association.class, this, GraphpatternPackage.EDGE_PATTERN__ASSOCIATIONS, GraphpatternPackage.ASSOCIATION__TARGET);
+		}
+		return associations;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -314,6 +344,8 @@ public class EdgePatternImpl extends GraphPatternElementImpl implements EdgePatt
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetSource((NodePattern)otherEnd, msgs);
+			case GraphpatternPackage.EDGE_PATTERN__ASSOCIATIONS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAssociations()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -330,6 +362,8 @@ public class EdgePatternImpl extends GraphPatternElementImpl implements EdgePatt
 				return basicSetTarget(null, msgs);
 			case GraphpatternPackage.EDGE_PATTERN__SOURCE:
 				return basicSetSource(null, msgs);
+			case GraphpatternPackage.EDGE_PATTERN__ASSOCIATIONS:
+				return ((InternalEList<?>)getAssociations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -369,6 +403,8 @@ public class EdgePatternImpl extends GraphPatternElementImpl implements EdgePatt
 				return basicGetType();
 			case GraphpatternPackage.EDGE_PATTERN__CROSS_REFERENCE:
 				return isCrossReference();
+			case GraphpatternPackage.EDGE_PATTERN__ASSOCIATIONS:
+				return getAssociations();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -378,6 +414,7 @@ public class EdgePatternImpl extends GraphPatternElementImpl implements EdgePatt
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -395,6 +432,10 @@ public class EdgePatternImpl extends GraphPatternElementImpl implements EdgePatt
 				return;
 			case GraphpatternPackage.EDGE_PATTERN__CROSS_REFERENCE:
 				setCrossReference((Boolean)newValue);
+				return;
+			case GraphpatternPackage.EDGE_PATTERN__ASSOCIATIONS:
+				getAssociations().clear();
+				getAssociations().addAll((Collection<? extends Association>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -423,6 +464,9 @@ public class EdgePatternImpl extends GraphPatternElementImpl implements EdgePatt
 			case GraphpatternPackage.EDGE_PATTERN__CROSS_REFERENCE:
 				setCrossReference(CROSS_REFERENCE_EDEFAULT);
 				return;
+			case GraphpatternPackage.EDGE_PATTERN__ASSOCIATIONS:
+				getAssociations().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -445,6 +489,8 @@ public class EdgePatternImpl extends GraphPatternElementImpl implements EdgePatt
 				return type != null;
 			case GraphpatternPackage.EDGE_PATTERN__CROSS_REFERENCE:
 				return crossReference != CROSS_REFERENCE_EDEFAULT;
+			case GraphpatternPackage.EDGE_PATTERN__ASSOCIATIONS:
+				return associations != null && !associations.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

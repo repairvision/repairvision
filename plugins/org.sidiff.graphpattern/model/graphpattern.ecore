@@ -43,6 +43,8 @@
         eOpposite="#//GraphPattern/nodes"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomings" upperBound="-1"
         eType="#//EdgePattern" eOpposite="#//EdgePattern/target"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="associations" upperBound="-1"
+        eType="#//Association" containment="true" eOpposite="#//Association/source"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EdgePattern" eSuperTypes="#//GraphPatternElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
@@ -52,6 +54,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="opposite" eType="#//EdgePattern"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="crossReference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="associations" upperBound="-1"
+        eType="#//Association" eOpposite="#//Association/target"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributePattern">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"/>
@@ -178,5 +182,11 @@
         eOpposite="#//DependencyNode/outgoings"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//DependencyNode"
         eOpposite="#//DependencyNode/incomings"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Association">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        eType="#//NodePattern" eOpposite="#//NodePattern/associations"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//EdgePattern" eOpposite="#//EdgePattern/associations"/>
   </eClassifiers>
 </ecore:EPackage>

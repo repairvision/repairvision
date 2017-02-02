@@ -5,7 +5,24 @@ package org.sidiff.graphpattern.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.sidiff.graphpattern.*;
+import org.sidiff.graphpattern.Association;
+import org.sidiff.graphpattern.AttributePattern;
+import org.sidiff.graphpattern.DataStore;
+import org.sidiff.graphpattern.DependencyEdge;
+import org.sidiff.graphpattern.DependencyGraph;
+import org.sidiff.graphpattern.DependencyNode;
+import org.sidiff.graphpattern.EObjectList;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.Evaluation;
+import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphPatternElement;
+import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.NavigableDataStore;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Parameter;
+import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.RuleBase;
+import org.sidiff.graphpattern.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -161,6 +178,12 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 			case GraphpatternPackage.DEPENDENCY_EDGE: {
 				DependencyEdge dependencyEdge = (DependencyEdge)theEObject;
 				T result = caseDependencyEdge(dependencyEdge);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.ASSOCIATION: {
+				Association association = (Association)theEObject;
+				T result = caseAssociation(association);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -360,6 +383,21 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDependencyEdge(DependencyEdge object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Association</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Association</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAssociation(Association object) {
 		return null;
 	}
 

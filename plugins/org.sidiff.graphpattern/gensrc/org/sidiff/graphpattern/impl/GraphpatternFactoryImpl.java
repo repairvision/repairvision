@@ -8,7 +8,21 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.sidiff.graphpattern.*;
+import org.sidiff.graphpattern.Association;
+import org.sidiff.graphpattern.AttributePattern;
+import org.sidiff.graphpattern.DependencyEdge;
+import org.sidiff.graphpattern.DependencyGraph;
+import org.sidiff.graphpattern.DependencyNode;
+import org.sidiff.graphpattern.EObjectList;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.Evaluation;
+import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Parameter;
+import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.RuleBase;
 
 /**
  * <!-- begin-user-doc -->
@@ -66,6 +80,7 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 			case GraphpatternPackage.DEPENDENCY_GRAPH: return createDependencyGraph();
 			case GraphpatternPackage.DEPENDENCY_NODE: return createDependencyNode();
 			case GraphpatternPackage.DEPENDENCY_EDGE: return createDependencyEdge();
+			case GraphpatternPackage.ASSOCIATION: return createAssociation();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -195,6 +210,16 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	public DependencyEdge createDependencyEdge() {
 		DependencyEdgeImpl dependencyEdge = new DependencyEdgeImpl();
 		return dependencyEdge;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Association createAssociation() {
+		AssociationImpl association = new AssociationImpl();
+		return association;
 	}
 
 	/**

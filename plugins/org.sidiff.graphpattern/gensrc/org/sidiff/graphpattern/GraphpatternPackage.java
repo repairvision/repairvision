@@ -332,13 +332,22 @@ public interface GraphpatternPackage extends EPackage {
 	int NODE_PATTERN__INCOMINGS = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Associations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_PATTERN__ASSOCIATIONS = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 6;
+
+	/**
 	 * The number of structural features of the '<em>Node Pattern</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_FEATURE_COUNT = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 6;
+	int NODE_PATTERN_FEATURE_COUNT = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Get Attribute</em>' operation.
@@ -476,13 +485,22 @@ public interface GraphpatternPackage extends EPackage {
 	int EDGE_PATTERN__CROSS_REFERENCE = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Associations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_PATTERN__ASSOCIATIONS = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Edge Pattern</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN_FEATURE_COUNT = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 5;
+	int EDGE_PATTERN_FEATURE_COUNT = GRAPH_PATTERN_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of operations of the '<em>Edge Pattern</em>' class.
@@ -1191,6 +1209,52 @@ public interface GraphpatternPackage extends EPackage {
 	int DEPENDENCY_EDGE_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.sidiff.graphpattern.impl.AssociationImpl <em>Association</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.graphpattern.impl.AssociationImpl
+	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getAssociation()
+	 * @generated
+	 */
+	int ASSOCIATION = 16;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSOCIATION__SOURCE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSOCIATION__TARGET = 1;
+
+	/**
+	 * The number of structural features of the '<em>Association</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSOCIATION_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Association</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSOCIATION_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '<em>ECollection</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1198,7 +1262,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getECollection()
 	 * @generated
 	 */
-	int ECOLLECTION = 16;
+	int ECOLLECTION = 17;
 
 	/**
 	 * The meta object id for the '<em>EIterator</em>' data type.
@@ -1208,7 +1272,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getEIterator()
 	 * @generated
 	 */
-	int EITERATOR = 17;
+	int EITERATOR = 18;
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.GraphPattern <em>Graph Pattern</em>}'.
@@ -1339,6 +1403,17 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getNodePattern_Incomings();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.graphpattern.NodePattern#getAssociations <em>Associations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Associations</em>'.
+	 * @see org.sidiff.graphpattern.NodePattern#getAssociations()
+	 * @see #getNodePattern()
+	 * @generated
+	 */
+	EReference getNodePattern_Associations();
 
 	/**
 	 * Returns the meta object for the '{@link org.sidiff.graphpattern.NodePattern#getAttribute(org.eclipse.emf.ecore.EAttribute) <em>Get Attribute</em>}' operation.
@@ -1484,6 +1559,17 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEdgePattern_CrossReference();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.EdgePattern#getAssociations <em>Associations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Associations</em>'.
+	 * @see org.sidiff.graphpattern.EdgePattern#getAssociations()
+	 * @see #getEdgePattern()
+	 * @generated
+	 */
+	EReference getEdgePattern_Associations();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.AttributePattern <em>Attribute Pattern</em>}'.
@@ -1975,6 +2061,38 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getDependencyEdge_Target();
 
 	/**
+	 * Returns the meta object for class '{@link org.sidiff.graphpattern.Association <em>Association</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Association</em>'.
+	 * @see org.sidiff.graphpattern.Association
+	 * @generated
+	 */
+	EClass getAssociation();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.sidiff.graphpattern.Association#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Source</em>'.
+	 * @see org.sidiff.graphpattern.Association#getSource()
+	 * @see #getAssociation()
+	 * @generated
+	 */
+	EReference getAssociation_Source();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.graphpattern.Association#getTarget <em>Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Target</em>'.
+	 * @see org.sidiff.graphpattern.Association#getTarget()
+	 * @see #getAssociation()
+	 * @generated
+	 */
+	EReference getAssociation_Target();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.Pattern <em>Pattern</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2194,6 +2312,14 @@ public interface GraphpatternPackage extends EPackage {
 		EReference NODE_PATTERN__INCOMINGS = eINSTANCE.getNodePattern_Incomings();
 
 		/**
+		 * The meta object literal for the '<em><b>Associations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NODE_PATTERN__ASSOCIATIONS = eINSTANCE.getNodePattern_Associations();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Attribute</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2306,6 +2432,14 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EDGE_PATTERN__CROSS_REFERENCE = eINSTANCE.getEdgePattern_CrossReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Associations</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EDGE_PATTERN__ASSOCIATIONS = eINSTANCE.getEdgePattern_Associations();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.AttributePatternImpl <em>Attribute Pattern</em>}' class.
@@ -2702,6 +2836,32 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DEPENDENCY_EDGE__TARGET = eINSTANCE.getDependencyEdge_Target();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.AssociationImpl <em>Association</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.graphpattern.impl.AssociationImpl
+		 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getAssociation()
+		 * @generated
+		 */
+		EClass ASSOCIATION = eINSTANCE.getAssociation();
+
+		/**
+		 * The meta object literal for the '<em><b>Source</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ASSOCIATION__SOURCE = eINSTANCE.getAssociation_Source();
+
+		/**
+		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ASSOCIATION__TARGET = eINSTANCE.getAssociation_Target();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.PatternImpl <em>Pattern</em>}' class.

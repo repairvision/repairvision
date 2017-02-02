@@ -6,7 +6,24 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.graphpattern.*;
+import org.sidiff.graphpattern.Association;
+import org.sidiff.graphpattern.AttributePattern;
+import org.sidiff.graphpattern.DataStore;
+import org.sidiff.graphpattern.DependencyEdge;
+import org.sidiff.graphpattern.DependencyGraph;
+import org.sidiff.graphpattern.DependencyNode;
+import org.sidiff.graphpattern.EObjectList;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.Evaluation;
+import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphPatternElement;
+import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.NavigableDataStore;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Parameter;
+import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.RuleBase;
+import org.sidiff.graphpattern.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -127,6 +144,10 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseDependencyEdge(DependencyEdge object) {
 				return createDependencyEdgeAdapter();
+			}
+			@Override
+			public Adapter caseAssociation(Association object) {
+				return createAssociationAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -327,6 +348,20 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDependencyEdgeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Association <em>Association</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.Association
+	 * @generated
+	 */
+	public Adapter createAssociationAdapter() {
 		return null;
 	}
 

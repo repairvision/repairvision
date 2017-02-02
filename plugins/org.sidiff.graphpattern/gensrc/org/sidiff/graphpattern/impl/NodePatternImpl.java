@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.Evaluation;
@@ -41,6 +42,7 @@ import org.sidiff.graphpattern.NodePattern;
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getEvaluation <em>Evaluation</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getGraph <em>Graph</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getIncomings <em>Incomings</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getAssociations <em>Associations</em>}</li>
  * </ul>
  *
  * @generated
@@ -110,6 +112,16 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 	 * @ordered
 	 */
 	protected EList<EdgePattern> incomings;
+
+	/**
+	 * The cached value of the '{@link #getAssociations() <em>Associations</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssociations()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Association> associations;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -424,6 +436,18 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Association> getAssociations() {
+		if (associations == null) {
+			associations = new EObjectContainmentWithInverseEList<Association>(Association.class, this, GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS, GraphpatternPackage.ASSOCIATION__SOURCE);
+		}
+		return associations;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public AttributePattern getAttribute(EAttribute type) {
@@ -460,6 +484,8 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 				return basicSetGraph((GraphPattern)otherEnd, msgs);
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomings()).basicAdd(otherEnd, msgs);
+			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAssociations()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -482,6 +508,8 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 				return basicSetGraph(null, msgs);
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
 				return ((InternalEList<?>)getIncomings()).basicRemove(otherEnd, msgs);
+			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:
+				return ((InternalEList<?>)getAssociations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -521,6 +549,8 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 				return getGraph();
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
 				return getIncomings();
+			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:
+				return getAssociations();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -555,6 +585,10 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 				getIncomings().clear();
 				getIncomings().addAll((Collection<? extends EdgePattern>)newValue);
 				return;
+			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:
+				getAssociations().clear();
+				getAssociations().addAll((Collection<? extends Association>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -585,6 +619,9 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
 				getIncomings().clear();
 				return;
+			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:
+				getAssociations().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -609,6 +646,8 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 				return getGraph() != null;
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
 				return incomings != null && !incomings.isEmpty();
+			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:
+				return associations != null && !associations.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

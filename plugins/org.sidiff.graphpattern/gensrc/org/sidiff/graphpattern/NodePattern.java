@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getEvaluation <em>Evaluation</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getGraph <em>Graph</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getIncomings <em>Incomings</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.NodePattern#getAssociations <em>Associations</em>}</li>
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getNodePattern()
@@ -165,6 +166,24 @@ public interface NodePattern extends GraphPatternElement {
 	 */
 	EList<EdgePattern> getIncomings();
 	
+	/**
+	 * Returns the value of the '<em><b>Associations</b></em>' containment reference list.
+	 * The list contents are of type {@link org.sidiff.graphpattern.Association}.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.Association#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Associations</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Associations</em>' containment reference list.
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getNodePattern_Associations()
+	 * @see org.sidiff.graphpattern.Association#getSource
+	 * @model opposite="source" containment="true"
+	 * @generated
+	 */
+	EList<Association> getAssociations();
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
