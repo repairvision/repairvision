@@ -74,9 +74,12 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConstantAccess().getGroup_2(), "rule__Constant__Group_2__0");
 					put(grammarAccess.getConstantAccess().getGroup_3(), "rule__Constant__Group_3__0");
 					put(grammarAccess.getConstraintRuleBaseAccess().getDomainAssignment_1(), "rule__ConstraintRuleBase__DomainAssignment_1");
-					put(grammarAccess.getConstraintRuleBaseAccess().getConstraintsAssignment_2(), "rule__ConstraintRuleBase__ConstraintsAssignment_2");
-					put(grammarAccess.getConstraintAccess().getVariableAssignment_1(), "rule__Constraint__VariableAssignment_1");
-					put(grammarAccess.getConstraintAccess().getFormulaAssignment_3(), "rule__Constraint__FormulaAssignment_3");
+					put(grammarAccess.getConstraintRuleBaseAccess().getPackageImportAssignment_3(), "rule__ConstraintRuleBase__PackageImportAssignment_3");
+					put(grammarAccess.getConstraintRuleBaseAccess().getConstraintsAssignment_4(), "rule__ConstraintRuleBase__ConstraintsAssignment_4");
+					put(grammarAccess.getConstraintAccess().getNameAssignment_1(), "rule__Constraint__NameAssignment_1");
+					put(grammarAccess.getConstraintAccess().getMessageAssignment_3(), "rule__Constraint__MessageAssignment_3");
+					put(grammarAccess.getConstraintAccess().getVariableAssignment_5(), "rule__Constraint__VariableAssignment_5");
+					put(grammarAccess.getConstraintAccess().getFormulaAssignment_7(), "rule__Constraint__FormulaAssignment_7");
 					put(grammarAccess.getVariableAccess().getTypeAssignment_0(), "rule__Variable__TypeAssignment_0");
 					put(grammarAccess.getVariableAccess().getNameAssignment_1(), "rule__Variable__NameAssignment_1");
 					put(grammarAccess.getGetTermAccess().getNameAssignment_1(), "rule__GetTerm__NameAssignment_1");
