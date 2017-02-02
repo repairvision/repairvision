@@ -6,6 +6,9 @@ import org.sidiff.repair.validation.formulas.binary.Formula;
 import org.sidiff.repair.validation.terms.Term;
 import org.sidiff.repair.validation.terms.Variable;
 
+// TODO: Store evaluation iteration for repair generation!
+//       - copy the formula for each iteration step
+
 public abstract class Quantifier extends Formula {
 
 	protected Variable bounded;
