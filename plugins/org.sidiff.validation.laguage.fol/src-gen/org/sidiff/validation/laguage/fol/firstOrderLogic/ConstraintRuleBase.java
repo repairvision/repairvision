@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getDomain <em>Domain</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getPackageImport <em>Package Import</em>}</li>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
@@ -51,6 +52,32 @@ public interface ConstraintRuleBase extends EObject
    * @generated
    */
   void setDomain(String value);
+
+  /**
+   * Returns the value of the '<em><b>Package Import</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Package Import</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Package Import</em>' attribute.
+   * @see #setPackageImport(String)
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getConstraintRuleBase_PackageImport()
+   * @model
+   * @generated
+   */
+  String getPackageImport();
+
+  /**
+   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getPackageImport <em>Package Import</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Package Import</em>' attribute.
+   * @see #getPackageImport()
+   * @generated
+   */
+  void setPackageImport(String value);
 
   /**
    * Returns the value of the '<em><b>Constraints</b></em>' containment reference list.

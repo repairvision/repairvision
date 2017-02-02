@@ -5,11 +5,11 @@ generate firstOrderLogic "http://www.sidiff.org/validation/laguage/fol/FirstOrde
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 ConstraintRuleBase:
-	"domain" domain=STRING
+	"domain" domain=STRING 'import' packageImport=STRING 
 	constraints+=Constraint;
 
 Constraint:
-	'context' variable=Variable ':' formula=Formula;
+	'name' name=STRING 'message' message=STRING 'context' variable=Variable ':' formula=Formula;
 
 // terms:
 

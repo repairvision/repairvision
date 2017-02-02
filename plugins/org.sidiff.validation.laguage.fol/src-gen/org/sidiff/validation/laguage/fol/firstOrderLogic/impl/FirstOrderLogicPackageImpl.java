@@ -317,9 +317,19 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getConstraintRuleBase_PackageImport()
+  {
+    return (EAttribute)constraintRuleBaseEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getConstraintRuleBase_Constraints()
   {
-    return (EReference)constraintRuleBaseEClass.getEStructuralFeatures().get(1);
+    return (EReference)constraintRuleBaseEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -337,9 +347,29 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getConstraint_Name()
+  {
+    return (EAttribute)constraintEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConstraint_Message()
+  {
+    return (EAttribute)constraintEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getConstraint_Variable()
   {
-    return (EReference)constraintEClass.getEStructuralFeatures().get(0);
+    return (EReference)constraintEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -349,7 +379,7 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    */
   public EReference getConstraint_Formula()
   {
-    return (EReference)constraintEClass.getEStructuralFeatures().get(1);
+    return (EReference)constraintEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -964,9 +994,12 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     // Create classes and their features
     constraintRuleBaseEClass = createEClass(CONSTRAINT_RULE_BASE);
     createEAttribute(constraintRuleBaseEClass, CONSTRAINT_RULE_BASE__DOMAIN);
+    createEAttribute(constraintRuleBaseEClass, CONSTRAINT_RULE_BASE__PACKAGE_IMPORT);
     createEReference(constraintRuleBaseEClass, CONSTRAINT_RULE_BASE__CONSTRAINTS);
 
     constraintEClass = createEClass(CONSTRAINT);
+    createEAttribute(constraintEClass, CONSTRAINT__NAME);
+    createEAttribute(constraintEClass, CONSTRAINT__MESSAGE);
     createEReference(constraintEClass, CONSTRAINT__VARIABLE);
     createEReference(constraintEClass, CONSTRAINT__FORMULA);
 
@@ -1108,9 +1141,12 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     // Initialize classes and features; add operations and parameters
     initEClass(constraintRuleBaseEClass, ConstraintRuleBase.class, "ConstraintRuleBase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getConstraintRuleBase_Domain(), ecorePackage.getEString(), "domain", null, 0, 1, ConstraintRuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConstraintRuleBase_PackageImport(), ecorePackage.getEString(), "packageImport", null, 0, 1, ConstraintRuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConstraintRuleBase_Constraints(), this.getConstraint(), null, "constraints", null, 0, -1, ConstraintRuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(constraintEClass, Constraint.class, "Constraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getConstraint_Name(), ecorePackage.getEString(), "name", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConstraint_Message(), ecorePackage.getEString(), "message", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConstraint_Variable(), this.getVariable(), null, "variable", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConstraint_Formula(), this.getFormula(), null, "formula", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

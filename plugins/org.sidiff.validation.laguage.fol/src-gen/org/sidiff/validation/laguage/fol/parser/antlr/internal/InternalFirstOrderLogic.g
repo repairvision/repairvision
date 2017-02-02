@@ -98,12 +98,34 @@ ruleConstraintRuleBase returns [EObject current=null]
 				}
 			)
 		)
+		otherlv_2='import'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getConstraintRuleBaseAccess().getImportKeyword_2());
+		}
+		(
+			(
+				lv_packageImport_3_0=RULE_STRING
+				{
+					newLeafNode(lv_packageImport_3_0, grammarAccess.getConstraintRuleBaseAccess().getPackageImportSTRINGTerminalRuleCall_3_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConstraintRuleBaseRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"packageImport",
+						lv_packageImport_3_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getConstraintRuleBaseAccess().getConstraintsConstraintParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getConstraintRuleBaseAccess().getConstraintsConstraintParserRuleCall_4_0());
 				}
-				lv_constraints_2_0=ruleConstraint
+				lv_constraints_4_0=ruleConstraint
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getConstraintRuleBaseRule());
@@ -111,7 +133,7 @@ ruleConstraintRuleBase returns [EObject current=null]
 					add(
 						$current,
 						"constraints",
-						lv_constraints_2_0,
+						lv_constraints_4_0,
 						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Constraint");
 					afterParserOrEnumRuleCall();
 				}
@@ -136,16 +158,60 @@ ruleConstraint returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='context'
+		otherlv_0='name'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getConstraintAccess().getContextKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getConstraintAccess().getNameKeyword_0());
+		}
+		(
+			(
+				lv_name_1_0=RULE_STRING
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getConstraintAccess().getNameSTRINGTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConstraintRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		otherlv_2='message'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getConstraintAccess().getMessageKeyword_2());
+		}
+		(
+			(
+				lv_message_3_0=RULE_STRING
+				{
+					newLeafNode(lv_message_3_0, grammarAccess.getConstraintAccess().getMessageSTRINGTerminalRuleCall_3_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConstraintRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"message",
+						lv_message_3_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		otherlv_4='context'
+		{
+			newLeafNode(otherlv_4, grammarAccess.getConstraintAccess().getContextKeyword_4());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getConstraintAccess().getVariableVariableParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getConstraintAccess().getVariableVariableParserRuleCall_5_0());
 				}
-				lv_variable_1_0=ruleVariable
+				lv_variable_5_0=ruleVariable
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getConstraintRule());
@@ -153,22 +219,22 @@ ruleConstraint returns [EObject current=null]
 					set(
 						$current,
 						"variable",
-						lv_variable_1_0,
+						lv_variable_5_0,
 						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Variable");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_2=':'
+		otherlv_6=':'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getConstraintAccess().getColonKeyword_2());
+			newLeafNode(otherlv_6, grammarAccess.getConstraintAccess().getColonKeyword_6());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getConstraintAccess().getFormulaFormulaParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getConstraintAccess().getFormulaFormulaParserRuleCall_7_0());
 				}
-				lv_formula_3_0=ruleFormula
+				lv_formula_7_0=ruleFormula
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getConstraintRule());
@@ -176,7 +242,7 @@ ruleConstraint returns [EObject current=null]
 					set(
 						$current,
 						"formula",
-						lv_formula_3_0,
+						lv_formula_7_0,
 						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Formula");
 					afterParserOrEnumRuleCall();
 				}

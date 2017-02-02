@@ -30,15 +30,18 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cDomainKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cDomainAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cDomainSTRINGTerminalRuleCall_1_0 = (RuleCall)cDomainAssignment_1.eContents().get(0);
-		private final Assignment cConstraintsAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cConstraintsConstraintParserRuleCall_2_0 = (RuleCall)cConstraintsAssignment_2.eContents().get(0);
+		private final Keyword cImportKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cPackageImportAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cPackageImportSTRINGTerminalRuleCall_3_0 = (RuleCall)cPackageImportAssignment_3.eContents().get(0);
+		private final Assignment cConstraintsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cConstraintsConstraintParserRuleCall_4_0 = (RuleCall)cConstraintsAssignment_4.eContents().get(0);
 		
 		//ConstraintRuleBase:
-		//	"domain" domain=STRING
+		//	"domain" domain=STRING 'import' packageImport=STRING
 		//	constraints+=Constraint;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//"domain" domain=STRING constraints+=Constraint
+		//"domain" domain=STRING 'import' packageImport=STRING constraints+=Constraint
 		public Group getGroup() { return cGroup; }
 		
 		//"domain"
@@ -50,46 +53,79 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getDomainSTRINGTerminalRuleCall_1_0() { return cDomainSTRINGTerminalRuleCall_1_0; }
 		
+		//'import'
+		public Keyword getImportKeyword_2() { return cImportKeyword_2; }
+		
+		//packageImport=STRING
+		public Assignment getPackageImportAssignment_3() { return cPackageImportAssignment_3; }
+		
+		//STRING
+		public RuleCall getPackageImportSTRINGTerminalRuleCall_3_0() { return cPackageImportSTRINGTerminalRuleCall_3_0; }
+		
 		//constraints+=Constraint
-		public Assignment getConstraintsAssignment_2() { return cConstraintsAssignment_2; }
+		public Assignment getConstraintsAssignment_4() { return cConstraintsAssignment_4; }
 		
 		//Constraint
-		public RuleCall getConstraintsConstraintParserRuleCall_2_0() { return cConstraintsConstraintParserRuleCall_2_0; }
+		public RuleCall getConstraintsConstraintParserRuleCall_4_0() { return cConstraintsConstraintParserRuleCall_4_0; }
 	}
 	public class ConstraintElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Constraint");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cContextKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cVariableAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cVariableVariableParserRuleCall_1_0 = (RuleCall)cVariableAssignment_1.eContents().get(0);
-		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cFormulaAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cFormulaFormulaParserRuleCall_3_0 = (RuleCall)cFormulaAssignment_3.eContents().get(0);
+		private final Keyword cNameKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameSTRINGTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Keyword cMessageKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cMessageAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cMessageSTRINGTerminalRuleCall_3_0 = (RuleCall)cMessageAssignment_3.eContents().get(0);
+		private final Keyword cContextKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cVariableAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cVariableVariableParserRuleCall_5_0 = (RuleCall)cVariableAssignment_5.eContents().get(0);
+		private final Keyword cColonKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Assignment cFormulaAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cFormulaFormulaParserRuleCall_7_0 = (RuleCall)cFormulaAssignment_7.eContents().get(0);
 		
 		//Constraint:
-		//	'context' variable=Variable ':' formula=Formula;
+		//	'name' name=STRING 'message' message=STRING 'context' variable=Variable ':' formula=Formula;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'context' variable=Variable ':' formula=Formula
+		//'name' name=STRING 'message' message=STRING 'context' variable=Variable ':' formula=Formula
 		public Group getGroup() { return cGroup; }
 		
+		//'name'
+		public Keyword getNameKeyword_0() { return cNameKeyword_0; }
+		
+		//name=STRING
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//STRING
+		public RuleCall getNameSTRINGTerminalRuleCall_1_0() { return cNameSTRINGTerminalRuleCall_1_0; }
+		
+		//'message'
+		public Keyword getMessageKeyword_2() { return cMessageKeyword_2; }
+		
+		//message=STRING
+		public Assignment getMessageAssignment_3() { return cMessageAssignment_3; }
+		
+		//STRING
+		public RuleCall getMessageSTRINGTerminalRuleCall_3_0() { return cMessageSTRINGTerminalRuleCall_3_0; }
+		
 		//'context'
-		public Keyword getContextKeyword_0() { return cContextKeyword_0; }
+		public Keyword getContextKeyword_4() { return cContextKeyword_4; }
 		
 		//variable=Variable
-		public Assignment getVariableAssignment_1() { return cVariableAssignment_1; }
+		public Assignment getVariableAssignment_5() { return cVariableAssignment_5; }
 		
 		//Variable
-		public RuleCall getVariableVariableParserRuleCall_1_0() { return cVariableVariableParserRuleCall_1_0; }
+		public RuleCall getVariableVariableParserRuleCall_5_0() { return cVariableVariableParserRuleCall_5_0; }
 		
 		//':'
-		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+		public Keyword getColonKeyword_6() { return cColonKeyword_6; }
 		
 		//formula=Formula
-		public Assignment getFormulaAssignment_3() { return cFormulaAssignment_3; }
+		public Assignment getFormulaAssignment_7() { return cFormulaAssignment_7; }
 		
 		//Formula
-		public RuleCall getFormulaFormulaParserRuleCall_3_0() { return cFormulaFormulaParserRuleCall_3_0; }
+		public RuleCall getFormulaFormulaParserRuleCall_7_0() { return cFormulaFormulaParserRuleCall_7_0; }
 	}
 	public class TermElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Term");
@@ -1045,7 +1081,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//ConstraintRuleBase:
-	//	"domain" domain=STRING
+	//	"domain" domain=STRING 'import' packageImport=STRING
 	//	constraints+=Constraint;
 	public ConstraintRuleBaseElements getConstraintRuleBaseAccess() {
 		return pConstraintRuleBase;
@@ -1056,7 +1092,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Constraint:
-	//	'context' variable=Variable ':' formula=Formula;
+	//	'name' name=STRING 'message' message=STRING 'context' variable=Variable ':' formula=Formula;
 	public ConstraintElements getConstraintAccess() {
 		return pConstraint;
 	}

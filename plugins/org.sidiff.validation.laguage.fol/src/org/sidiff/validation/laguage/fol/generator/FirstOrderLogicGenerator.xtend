@@ -51,30 +51,70 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		var constraintCounter = 0
 		var variableCounter = 0
 		var pathCounter = 0
+		
+		var ruleBase = getRuleBase(resource)
+		var packageImportClass = getPackageImportClass(ruleBase.packageImport)
+		
+		var packageName = resource.URI.trimFileExtension.lastSegment
+		var className = 'ConsistencyRuleLibrary' + packageImportClass
 
 		var code = 
 			'''
-			package testpackage;
+			package «packageName»;
 			
-			import org.sidiff.repair.validation.ConsistencyRule;
-			import org.sidiff.repair.validation.formulas.binary.And;
-			import org.sidiff.repair.validation.formulas.binary.Formula;
-			import org.sidiff.repair.validation.formulas.predicates.Equality;
-			import org.sidiff.repair.validation.formulas.predicates.IsEmpty;
-			import org.sidiff.repair.validation.formulas.quantifiers.Exists;
-			import org.sidiff.repair.validation.formulas.quantifiers.ForAll;
-			import org.sidiff.repair.validation.formulas.unary.Not;
-			import org.sidiff.repair.validation.terms.Term;
-			import org.sidiff.repair.validation.terms.Variable;
-			import org.sidiff.repair.validation.terms.functions.Get;
+			import java.util.ArrayList;
+			import java.util.HashMap;
+			import java.util.List;
+			import java.util.Map;
 			
-			public class ConsistencyRuleLibrary extends ConsistencyRuleLibrary {
+			import «ruleBase.packageImport»;
+			
+			import org.sidiff.repair.validation.test.library.*;
+			
+			import org.sidiff.repair.validation.*;
+			import org.sidiff.repair.validation.formulas.binary.*;
+			import org.sidiff.repair.validation.formulas.predicates.*;
+			import org.sidiff.repair.validation.formulas.quantifiers.*;
+			import org.sidiff.repair.validation.formulas.unary.*;
+			import org.sidiff.repair.validation.terms.*;
+			import org.sidiff.repair.validation.terms.functions.*;
+			
+			public class «className» extends ConsistencyRuleLibrary {
 				
-				private static UMLPackage DOMAIN = UMLPackage.eINSTANCE;
-			
-				public static ConsistencyRule createXYZRule() {
+				private static String documentType = «packageImportClass».eINSTANCE.getNsURI();
 					
-				«FOR constraint : (resource.contents.get(0) as ConstraintRuleBase).constraints»
+				private static «packageImportClass» DOMAIN = «packageImportClass».eINSTANCE;
+				
+				private static Map<String, ConsistencyRule> rules = new HashMap<>();
+					
+				static {
+					«FOR constraint : ruleBase.constraints»
+						addConsistencyRule(create«constraint.name»Rule());
+					«ENDFOR»
+				}
+				
+				private static void addConsistencyRule(ConsistencyRule rule) {
+					rules.put(rule.getName(), rule);
+				}
+				
+				@Override	
+				public String getDocumentType() {
+					return documentType;
+				}
+				
+				@Override
+				public List<ConsistencyRule> getConsistencyRules() {
+					return new ArrayList<>(rules.values());
+				}
+				
+				@Override
+				public ConsistencyRule getConsistencyRule(String name) {
+					return rules.get(name);
+				}
+					
+				«FOR constraint : ruleBase.constraints»
+				public static ConsistencyRule create«constraint.name»Rule() {
+					
 					«FOR variable : constraint.eAllContents.filter(typeof(Variable)).toIterable»
 						«compile(variable, variableCounter++, names)»
 					«ENDFOR»
@@ -84,13 +124,28 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 					«ENDFOR»
 				
 					«compile(constraint, constraintCounter++, names)»
-				«ENDFOR»
+					
+					«var ruleName = 'rule_' + constraint.name»
+					ConsistencyRule «ruleName» = new ConsistencyRule(DOMAIN.get«constraint.variable.type»(), «names.get(constraint.variable)», «names.get(constraint)»);
+					«ruleName».setName("«constraint.name»");
+					«ruleName».setMessage("«constraint.message»");
+					
+					return «ruleName»;
 				}
+				«ENDFOR»
 			}
 			'''
 		
-		fsa.generateFile(resource.URI.lastSegment + '.java', code)
+		fsa.generateFile(packageName + '/' + className + '.java', code)
 		saveAsXMI(resource);
+	}
+	
+	def String getPackageImportClass(String packageImport) {
+		return packageImport.subSequence(packageImport.lastIndexOf('.') + 1, packageImport.length) as String 
+	}
+	
+	def ConstraintRuleBase getRuleBase(Resource resource) {
+		return (resource.contents.get(0) as ConstraintRuleBase)
 	}
 	
 	def String compile(Variable variable, int counter, HashMap<Object, String> names) {
@@ -108,7 +163,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		names.put(path, name)
 		
 		//new Get(new Get(m, DOMAIN.getMessage_ReceiveEvent()), DOMAIN.getInteractionFragment_Covered());
-		var code = new StringBuffer('new Get(' + path.name.name + ', ' + compile(path.feature.name) + ')')
+		var code = new StringBuffer('new Get(' + names.get(path.name) + ', ' + compile(path.feature.name) + ')')
 		compile(path.feature.next, code)
 		
 		return getVariable + code + ';'
@@ -125,11 +180,14 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	}
 	
 	def String compile(EStructuralFeature featue) {
-		return 'DOMAIN.get' + featue.containerClass.simpleName + '_' + featue.name + '()'
+		return 'DOMAIN.get' + featue.containerClass.simpleName + '_' + featue.name.toFirstUpper + '()'
 	}
 	
 	def String compile(Constraint constraint, int constraintCounter, HashMap<Object, String> names) {
-		return 'Formula constraint_' + constraintCounter +' = ' + compileFormula(constraint.formula, names) + ';'
+		var name = 'constraint' + constraintCounter + '_' + constraint.name
+		names.put(constraint, name)
+		
+		return 'Formula ' + name + ' = ' + compileFormula(constraint.formula, names) + ';'
 	}
 	
 	def dispatch String compileFormula(Formula formula, HashMap<Object, String> names) {
@@ -189,19 +247,19 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	}
 	
 	def dispatch String compileFormula(IntConstant integer, HashMap<Object, String> names) {
-		return 'new IntConstant(' + integer.value + ')'
+		return 'new Constant(' + integer.value + ')'
 	}
 	
 	def dispatch String compileFormula(StringConstant string, HashMap<Object, String> names) {
-		return 'new StringConstant(' + string.value + ')'
+		return 'new Constant(' + string.value + ')'
 	}
 	
 	def dispatch String compileFormula(BoolConstant bool, HashMap<Object, String> names) {
-		return 'new BoolConstant(' + bool.value + ')'
+		return 'new Constant(' + bool.value + ')'
 	}
 	
 	def dispatch String compileFormula(VariableRef variable, HashMap<Object, String> names) {
-		return 'new VariableRef(' + names.get(variable.variable) + ')'
+		return names.get(variable.variable)
 	}
 	 
 	def static void saveAsXMI(Resource resource) {

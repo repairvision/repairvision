@@ -32,6 +32,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintRuleBaseImpl#getDomain <em>Domain</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintRuleBaseImpl#getPackageImport <em>Package Import</em>}</li>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintRuleBaseImpl#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
@@ -58,6 +59,26 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
    * @ordered
    */
   protected String domain = DOMAIN_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getPackageImport() <em>Package Import</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPackageImport()
+   * @generated
+   * @ordered
+   */
+  protected static final String PACKAGE_IMPORT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getPackageImport() <em>Package Import</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPackageImport()
+   * @generated
+   * @ordered
+   */
+  protected String packageImport = PACKAGE_IMPORT_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getConstraints() <em>Constraints</em>}' containment reference list.
@@ -118,6 +139,29 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getPackageImport()
+  {
+    return packageImport;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setPackageImport(String newPackageImport)
+  {
+    String oldPackageImport = packageImport;
+    packageImport = newPackageImport;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__PACKAGE_IMPORT, oldPackageImport, packageImport));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Constraint> getConstraints()
   {
     if (constraints == null)
@@ -155,6 +199,8 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
     {
       case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__DOMAIN:
         return getDomain();
+      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__PACKAGE_IMPORT:
+        return getPackageImport();
       case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__CONSTRAINTS:
         return getConstraints();
     }
@@ -174,6 +220,9 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
     {
       case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__DOMAIN:
         setDomain((String)newValue);
+        return;
+      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__PACKAGE_IMPORT:
+        setPackageImport((String)newValue);
         return;
       case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__CONSTRAINTS:
         getConstraints().clear();
@@ -196,6 +245,9 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
       case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__DOMAIN:
         setDomain(DOMAIN_EDEFAULT);
         return;
+      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__PACKAGE_IMPORT:
+        setPackageImport(PACKAGE_IMPORT_EDEFAULT);
+        return;
       case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__CONSTRAINTS:
         getConstraints().clear();
         return;
@@ -215,6 +267,8 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
     {
       case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__DOMAIN:
         return DOMAIN_EDEFAULT == null ? domain != null : !DOMAIN_EDEFAULT.equals(domain);
+      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__PACKAGE_IMPORT:
+        return PACKAGE_IMPORT_EDEFAULT == null ? packageImport != null : !PACKAGE_IMPORT_EDEFAULT.equals(packageImport);
       case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__CONSTRAINTS:
         return constraints != null && !constraints.isEmpty();
     }
@@ -234,6 +288,8 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (domain: ");
     result.append(domain);
+    result.append(", packageImport: ");
+    result.append(packageImport);
     result.append(')');
     return result.toString();
   }

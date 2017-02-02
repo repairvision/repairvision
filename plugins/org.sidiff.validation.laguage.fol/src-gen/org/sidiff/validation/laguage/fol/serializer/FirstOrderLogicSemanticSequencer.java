@@ -320,7 +320,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     ConstraintRuleBase returns ConstraintRuleBase
 	 *
 	 * Constraint:
-	 *     (domain=STRING constraints+=Constraint)
+	 *     (domain=STRING packageImport=STRING constraints+=Constraint)
 	 */
 	protected void sequence_ConstraintRuleBase(ISerializationContext context, ConstraintRuleBase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -332,18 +332,24 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Constraint returns Constraint
 	 *
 	 * Constraint:
-	 *     (variable=Variable formula=Formula)
+	 *     (name=STRING message=STRING variable=Variable formula=Formula)
 	 */
 	protected void sequence_Constraint(ISerializationContext context, Constraint semanticObject) {
 		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.CONSTRAINT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.CONSTRAINT__NAME));
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.CONSTRAINT__MESSAGE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.CONSTRAINT__MESSAGE));
 			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.CONSTRAINT__VARIABLE) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.CONSTRAINT__VARIABLE));
 			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.CONSTRAINT__FORMULA) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.CONSTRAINT__FORMULA));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConstraintAccess().getVariableVariableParserRuleCall_1_0(), semanticObject.getVariable());
-		feeder.accept(grammarAccess.getConstraintAccess().getFormulaFormulaParserRuleCall_3_0(), semanticObject.getFormula());
+		feeder.accept(grammarAccess.getConstraintAccess().getNameSTRINGTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getConstraintAccess().getMessageSTRINGTerminalRuleCall_3_0(), semanticObject.getMessage());
+		feeder.accept(grammarAccess.getConstraintAccess().getVariableVariableParserRuleCall_5_0(), semanticObject.getVariable());
+		feeder.accept(grammarAccess.getConstraintAccess().getFormulaFormulaParserRuleCall_7_0(), semanticObject.getFormula());
 		feeder.finish();
 	}
 	

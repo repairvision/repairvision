@@ -25,6 +25,8 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintImpl#getMessage <em>Message</em>}</li>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintImpl#getVariable <em>Variable</em>}</li>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintImpl#getFormula <em>Formula</em>}</li>
  * </ul>
@@ -33,6 +35,46 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
  */
 public class ConstraintImpl extends MinimalEObjectImpl.Container implements Constraint
 {
+  /**
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected static final String NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected String name = NAME_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getMessage() <em>Message</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getMessage()
+   * @generated
+   * @ordered
+   */
+  protected static final String MESSAGE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getMessage() <em>Message</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getMessage()
+   * @generated
+   * @ordered
+   */
+  protected String message = MESSAGE_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getVariable() <em>Variable</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -72,6 +114,52 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
   protected EClass eStaticClass()
   {
     return FirstOrderLogicPackage.Literals.CONSTRAINT;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getName()
+  {
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setName(String newName)
+  {
+    String oldName = name;
+    name = newName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSTRAINT__NAME, oldName, name));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getMessage()
+  {
+    return message;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setMessage(String newMessage)
+  {
+    String oldMessage = message;
+    message = newMessage;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSTRAINT__MESSAGE, oldMessage, message));
   }
 
   /**
@@ -198,6 +286,10 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
   {
     switch (featureID)
     {
+      case FirstOrderLogicPackage.CONSTRAINT__NAME:
+        return getName();
+      case FirstOrderLogicPackage.CONSTRAINT__MESSAGE:
+        return getMessage();
       case FirstOrderLogicPackage.CONSTRAINT__VARIABLE:
         return getVariable();
       case FirstOrderLogicPackage.CONSTRAINT__FORMULA:
@@ -216,6 +308,12 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
   {
     switch (featureID)
     {
+      case FirstOrderLogicPackage.CONSTRAINT__NAME:
+        setName((String)newValue);
+        return;
+      case FirstOrderLogicPackage.CONSTRAINT__MESSAGE:
+        setMessage((String)newValue);
+        return;
       case FirstOrderLogicPackage.CONSTRAINT__VARIABLE:
         setVariable((Variable)newValue);
         return;
@@ -236,6 +334,12 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
   {
     switch (featureID)
     {
+      case FirstOrderLogicPackage.CONSTRAINT__NAME:
+        setName(NAME_EDEFAULT);
+        return;
+      case FirstOrderLogicPackage.CONSTRAINT__MESSAGE:
+        setMessage(MESSAGE_EDEFAULT);
+        return;
       case FirstOrderLogicPackage.CONSTRAINT__VARIABLE:
         setVariable((Variable)null);
         return;
@@ -256,12 +360,35 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
   {
     switch (featureID)
     {
+      case FirstOrderLogicPackage.CONSTRAINT__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case FirstOrderLogicPackage.CONSTRAINT__MESSAGE:
+        return MESSAGE_EDEFAULT == null ? message != null : !MESSAGE_EDEFAULT.equals(message);
       case FirstOrderLogicPackage.CONSTRAINT__VARIABLE:
         return variable != null;
       case FirstOrderLogicPackage.CONSTRAINT__FORMULA:
         return formula != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (name: ");
+    result.append(name);
+    result.append(", message: ");
+    result.append(message);
+    result.append(')');
+    return result.toString();
   }
 
 } //ConstraintImpl

@@ -77,13 +77,22 @@ public interface FirstOrderLogicPackage extends EPackage
   int CONSTRAINT_RULE_BASE__DOMAIN = 0;
 
   /**
+   * The feature id for the '<em><b>Package Import</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONSTRAINT_RULE_BASE__PACKAGE_IMPORT = 1;
+
+  /**
    * The feature id for the '<em><b>Constraints</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONSTRAINT_RULE_BASE__CONSTRAINTS = 1;
+  int CONSTRAINT_RULE_BASE__CONSTRAINTS = 2;
 
   /**
    * The number of structural features of the '<em>Constraint Rule Base</em>' class.
@@ -92,7 +101,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONSTRAINT_RULE_BASE_FEATURE_COUNT = 2;
+  int CONSTRAINT_RULE_BASE_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintImpl <em>Constraint</em>}' class.
@@ -105,13 +114,31 @@ public interface FirstOrderLogicPackage extends EPackage
   int CONSTRAINT = 1;
 
   /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONSTRAINT__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Message</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONSTRAINT__MESSAGE = 1;
+
+  /**
    * The feature id for the '<em><b>Variable</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONSTRAINT__VARIABLE = 0;
+  int CONSTRAINT__VARIABLE = 2;
 
   /**
    * The feature id for the '<em><b>Formula</b></em>' containment reference.
@@ -120,7 +147,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONSTRAINT__FORMULA = 1;
+  int CONSTRAINT__FORMULA = 3;
 
   /**
    * The number of structural features of the '<em>Constraint</em>' class.
@@ -129,7 +156,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONSTRAINT_FEATURE_COUNT = 2;
+  int CONSTRAINT_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FormulaImpl <em>Formula</em>}' class.
@@ -970,6 +997,17 @@ public interface FirstOrderLogicPackage extends EPackage
   EAttribute getConstraintRuleBase_Domain();
 
   /**
+   * Returns the meta object for the attribute '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getPackageImport <em>Package Import</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Package Import</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getPackageImport()
+   * @see #getConstraintRuleBase()
+   * @generated
+   */
+  EAttribute getConstraintRuleBase_PackageImport();
+
+  /**
    * Returns the meta object for the containment reference list '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getConstraints <em>Constraints</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -989,6 +1027,28 @@ public interface FirstOrderLogicPackage extends EPackage
    * @generated
    */
   EClass getConstraint();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint#getName()
+   * @see #getConstraint()
+   * @generated
+   */
+  EAttribute getConstraint_Name();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint#getMessage <em>Message</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Message</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint#getMessage()
+   * @see #getConstraint()
+   * @generated
+   */
+  EAttribute getConstraint_Message();
 
   /**
    * Returns the meta object for the containment reference '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint#getVariable <em>Variable</em>}'.
@@ -1668,6 +1728,14 @@ public interface FirstOrderLogicPackage extends EPackage
     EAttribute CONSTRAINT_RULE_BASE__DOMAIN = eINSTANCE.getConstraintRuleBase_Domain();
 
     /**
+     * The meta object literal for the '<em><b>Package Import</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONSTRAINT_RULE_BASE__PACKAGE_IMPORT = eINSTANCE.getConstraintRuleBase_PackageImport();
+
+    /**
      * The meta object literal for the '<em><b>Constraints</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1684,6 +1752,22 @@ public interface FirstOrderLogicPackage extends EPackage
      * @generated
      */
     EClass CONSTRAINT = eINSTANCE.getConstraint();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONSTRAINT__NAME = eINSTANCE.getConstraint_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Message</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONSTRAINT__MESSAGE = eINSTANCE.getConstraint_Message();
 
     /**
      * The meta object literal for the '<em><b>Variable</b></em>' containment reference feature.
