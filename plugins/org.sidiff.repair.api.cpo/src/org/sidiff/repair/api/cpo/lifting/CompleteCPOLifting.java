@@ -40,7 +40,7 @@ public class CompleteCPOLifting extends BasicCPOLifting {
 			// Common-Lifting settings:
 			LiftingSettings liftingSettings = new LiftingSettings(Collections.singleton(settings.getDocumentType()));
 			liftingSettings.setMatcher(settings.getDifferenceSettings().getMatcher());
-			liftingSettings.setTechBuilder(PipelineUtils.getDefaultTechnicalDifferenceBuilder(settings.getDocumentType()));
+			liftingSettings.setTechBuilder(PipelineUtils.getDefaultTechnicalDifferenceBuilder(Collections.singleton(settings.getDocumentType())));
 			liftingSettings.setCalculateEditRuleMatch(false);
 			
 			// Create technical difference:
