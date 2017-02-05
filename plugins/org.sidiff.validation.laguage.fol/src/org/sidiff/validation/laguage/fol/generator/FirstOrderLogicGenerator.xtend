@@ -269,6 +269,14 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	def dispatch String compileFormula(VariableRef variable, HashMap<Object, String> names) {
 		return names.get(variable.variable)
 	}
+	
+	def dispatch String compileFormula(Variable variable, HashMap<Object, String> names) {
+		return names.get(variable)
+	}
+	 
+	def dispatch String compileFormula(GetTerm path, HashMap<Object, String> names) {
+		return names.get(path)
+	}
 	 
 	def static void saveAsXMI(Resource resource) {
 		var root = resource.contents.get(0)
