@@ -3,13 +3,9 @@
 package org.sidiff.repair.model.repairjob.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.henshin.provider.HenshinEditPlugin;
-
 import org.sidiff.difference.symmetric.provider.SymmetricEditPlugin;
-
 import org.sidiff.matching.model.model.provider.MatchingModelEditPlugin;
 
 /**
