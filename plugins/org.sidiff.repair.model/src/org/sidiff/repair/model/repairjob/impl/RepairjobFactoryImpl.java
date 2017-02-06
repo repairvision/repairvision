@@ -5,12 +5,20 @@ package org.sidiff.repair.model.repairjob.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.sidiff.repair.model.repairjob.*;
+import org.sidiff.repair.model.repairjob.Change;
+import org.sidiff.repair.model.repairjob.ComplementRule;
+import org.sidiff.repair.model.repairjob.EditRule;
+import org.sidiff.repair.model.repairjob.Match;
+import org.sidiff.repair.model.repairjob.PartialRule;
+import org.sidiff.repair.model.repairjob.RepairJob;
+import org.sidiff.repair.model.repairjob.RepairMatch;
+import org.sidiff.repair.model.repairjob.RepairOperation;
+import org.sidiff.repair.model.repairjob.RepairParameter;
+import org.sidiff.repair.model.repairjob.RepairjobFactory;
+import org.sidiff.repair.model.repairjob.RepairjobPackage;
+import org.sidiff.repair.model.repairjob.SubRule;
 
 /**
  * <!-- begin-user-doc -->

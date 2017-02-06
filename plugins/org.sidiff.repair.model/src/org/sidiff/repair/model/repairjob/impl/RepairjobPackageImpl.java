@@ -6,13 +6,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.emf.henshin.model.HenshinPackage;
-
 import org.sidiff.difference.symmetric.SymmetricPackage;
-
 import org.sidiff.repair.model.repairjob.Change;
 import org.sidiff.repair.model.repairjob.ComplementRule;
 import org.sidiff.repair.model.repairjob.EditRule;
