@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated repairjob -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.sidiff.repair.model.repairjob.presentation.RepairjobModelWizardID"
+            name="%_UI_RepairjobModelWizard_label"
+            class="org.sidiff.repair.model.repairjob.presentation.RepairjobModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/RepairjobModelFile.gif">
+         <description>%_UI_RepairjobModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated repairjob -->
+      <editor
+            id="org.sidiff.repair.model.repairjob.presentation.RepairjobEditorID"
+            name="%_UI_RepairjobEditor_label"
+            icon="icons/full/obj16/RepairjobModelFile.gif"
+            extensions="repairjob"
+            class="org.sidiff.repair.model.repairjob.presentation.RepairjobEditor"
+            contributorClass="org.sidiff.repair.model.repairjob.presentation.RepairjobActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>
