@@ -6,23 +6,37 @@
     operationReflection="true" importOrganizing="true">
   <foreignModel>repairjob.ecore</foreignModel>
   <genPackages prefix="" disposableProviderFactory="true" ecorePackage="repairjob.ecore#/">
-    <genDataTypes ecoreDataType="repairjob.ecore#//EResource"/>
     <genClasses ecoreClass="repairjob.ecore#//RepairJob">
-      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairJob/editRule"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairJob/%"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairJob/difference"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairJob/editRules"/>
     </genClasses>
     <genClasses ecoreClass="repairjob.ecore#//EditRule">
-      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//EditRule/subRule"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//EditRule/repairJob"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//EditRule/rule"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//EditRule/repairJob"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//EditRule/repairOperations"/>
+      <genOperations ecoreOperation="repairjob.ecore#//EditRule/getRating"/>
     </genClasses>
-    <genClasses ecoreClass="repairjob.ecore#//Repair">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//Repair/complementRule"/>
+    <genClasses ecoreClass="repairjob.ecore#//RepairOperation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairOperation/context"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairOperation/editRule"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairOperation/subRule"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairOperation/complementRule"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairOperation/repairs"/>
+      <genOperations ecoreOperation="repairjob.ecore#//RepairOperation/getRating"/>
+    </genClasses>
+    <genClasses ecoreClass="repairjob.ecore#//PartialRule">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repairjob.ecore#//PartialRule/change"/>
+    </genClasses>
+    <genClasses ecoreClass="repairjob.ecore#//SubRule">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//SubRule/repairOperation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repairjob.ecore#//SubRule/match"/>
     </genClasses>
     <genClasses ecoreClass="repairjob.ecore#//ComplementRule">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//ComplementRule/subRule"/>
-      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//ComplementRule/repairs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//ComplementRule/repairOperation"/>
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//PartialRule/change"/>
+    </genClasses>
+    <genClasses ecoreClass="repairjob.ecore#//Repair">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//Repair/repairOperation"/>
     </genClasses>
     <genClasses ecoreClass="repairjob.ecore#//RepairMatch"/>
     <genClasses ecoreClass="repairjob.ecore#//RepairParameter">
@@ -32,17 +46,9 @@
     <genClasses ecoreClass="repairjob.ecore#//Change">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//Change/element"/>
     </genClasses>
-    <genClasses ecoreClass="repairjob.ecore#//SubRule">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//SubRule/editRule"/>
-      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//SubRule/complementRule"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repairjob.ecore#//SubRule/match"/>
-    </genClasses>
     <genClasses ecoreClass="repairjob.ecore#//Match">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//Match/change"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//Match/elements"/>
-    </genClasses>
-    <genClasses ecoreClass="repairjob.ecore#//PartialRule">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repairjob.ecore#//PartialRule/change"/>
     </genClasses>
   </genPackages>
   <genPackages prefix="Ecore" ecorePackage="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#/">
@@ -557,5 +563,122 @@
     <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.henshin.model/model/henshin.ecore#//Or"/>
     <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.henshin.model/model/henshin.ecore#//Xor"/>
     <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.henshin.model/model/henshin.ecore#//Not"/>
+  </genPackages>
+  <genPackages prefix="Symmetric" ecorePackage="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#/">
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/changes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/changeSets"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/modelA"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/modelB"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/uriModelA"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/uriModelB"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/notOverlappings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/unusedChangeSets"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/matching"/>
+      <genOperations ecoreOperation="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/getCorrespondingObjectInA">
+        <genParameters ecoreParameter="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/getCorrespondingObjectInA/objectInB"/>
+      </genOperations>
+      <genOperations ecoreOperation="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/getCorrespondingObjectInB">
+        <genParameters ecoreParameter="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/getCorrespondingObjectInB/objectInA"/>
+      </genOperations>
+      <genOperations ecoreOperation="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/getCorrespondenceOfModelA">
+        <genParameters ecoreParameter="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/getCorrespondenceOfModelA/objectInA"/>
+      </genOperations>
+      <genOperations ecoreOperation="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/getCorrespondenceOfModelB">
+        <genParameters ecoreParameter="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/getCorrespondenceOfModelB/objectInB"/>
+      </genOperations>
+      <genOperations ecoreOperation="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/addCorrespondence">
+        <genParameters ecoreParameter="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/addCorrespondence/correspondence"/>
+      </genOperations>
+      <genOperations ecoreOperation="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/removeCorrespondence">
+        <genParameters ecoreParameter="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference/removeCorrespondence/correspondence"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//AddObject">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//AddObject/obj"/>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//RemoveObject">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//RemoveObject/obj"/>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//AddReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//AddReference/src"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//AddReference/tgt"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//AddReference/type"/>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//RemoveReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//RemoveReference/src"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//RemoveReference/tgt"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//RemoveReference/type"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//Change"/>
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/changes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/priority"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/recognitionRName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/refinementLevel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/editRName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/partiallyOverlappings"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/subsets"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/supersets"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/overlayings"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/numberOfACs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/numberOfParams"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/editRuleMatch"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/joins"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//SemanticChangeSet/splits"/>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//AttributeValueChange">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//AttributeValueChange/objA"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//AttributeValueChange/objB"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//AttributeValueChange/type"/>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//EString2EObjectSetMap">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//EString2EObjectSetMap/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//EString2EObjectSetMap/key"/>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//EditRuleMatch">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//EditRuleMatch/nodeOccurrencesA"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//EditRuleMatch/nodeOccurrencesB"/>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//EObjectSet">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//EObjectSet/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//FragmentJoin">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//FragmentJoin/scs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//FragmentJoin/joinFrom"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//FragmentJoin/joinInto"/>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//FragmentSplit">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//FragmentSplit/scs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//FragmentSplit/splitFrom"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.difference.symmetric/model/Symmetric.ecore#//FragmentSplit/splitInto"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Model" ecorePackage="../../org.sidiff.matching.model/model/MatchingModel.ecore#/">
+    <genClasses ecoreClass="../../org.sidiff.matching.model/model/MatchingModel.ecore#//Correspondence">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Correspondence/matchedA"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Correspondence/matchedB"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Correspondence/containerCorrespondence"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Correspondence/containmentCorrespondences"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Correspondence/eClass"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../../org.sidiff.matching.model/model/MatchingModel.ecore#//ExtendableObject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.matching.model/model/MatchingModel.ecore#//ExtendableObject/extensions"/>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.matching.model/model/MatchingModel.ecore#//EStringToEStringMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.matching.model/model/MatchingModel.ecore#//EStringToEStringMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.matching.model/model/MatchingModel.ecore#//EStringToEStringMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="../../org.sidiff.matching.model/model/MatchingModel.ecore#//Matching">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Matching/correspondences"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Matching/unmatchedA"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Matching/unmatchedB"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Matching/eResourceA"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Matching/eResourceB"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Matching/uriA"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../../org.sidiff.matching.model/model/MatchingModel.ecore#//Matching/uriB"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>
