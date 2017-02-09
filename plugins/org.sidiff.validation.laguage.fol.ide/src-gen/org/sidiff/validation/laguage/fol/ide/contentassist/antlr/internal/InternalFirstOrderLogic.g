@@ -3979,13 +3979,9 @@ rule__IsEmpty__TermAssignment_1
 	}
 :
 	(
-		{ before(grammarAccess.getIsEmptyAccess().getTermTermCrossReference_1_0()); }
-		(
-			{ before(grammarAccess.getIsEmptyAccess().getTermTermIDTerminalRuleCall_1_0_1()); }
-			RULE_ID
-			{ after(grammarAccess.getIsEmptyAccess().getTermTermIDTerminalRuleCall_1_0_1()); }
-		)
-		{ after(grammarAccess.getIsEmptyAccess().getTermTermCrossReference_1_0()); }
+		{ before(grammarAccess.getIsEmptyAccess().getTermTermParserRuleCall_1_0()); }
+		ruleTerm
+		{ after(grammarAccess.getIsEmptyAccess().getTermTermParserRuleCall_1_0()); }
 	)
 ;
 finally {
