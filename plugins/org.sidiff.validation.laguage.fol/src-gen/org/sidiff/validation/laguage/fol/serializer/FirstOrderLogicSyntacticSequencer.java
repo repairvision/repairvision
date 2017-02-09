@@ -57,7 +57,7 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) 'exists(' name=Variable
 	 *     (rule start) (ambiguity) 'forAll(' name=Variable
-	 *     (rule start) (ambiguity) 'isEmpty(' term=[Term|ID]
+	 *     (rule start) (ambiguity) 'isEmpty(' term=Term
 	 *     (rule start) (ambiguity) 'not(' not=Formula
 	 *     (rule start) (ambiguity) value='false'
 	 *     (rule start) (ambiguity) value='true'

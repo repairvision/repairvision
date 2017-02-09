@@ -4,6 +4,7 @@
 package org.sidiff.validation.laguage.fol.firstOrderLogic.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -30,7 +31,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Term;
 public class IsEmptyImpl extends FormulaImpl implements IsEmpty
 {
   /**
-   * The cached value of the '{@link #getTerm() <em>Term</em>}' reference.
+   * The cached value of the '{@link #getTerm() <em>Term</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getTerm()
@@ -67,16 +68,6 @@ public class IsEmptyImpl extends FormulaImpl implements IsEmpty
    */
   public Term getTerm()
   {
-    if (term != null && term.eIsProxy())
-    {
-      InternalEObject oldTerm = (InternalEObject)term;
-      term = (Term)eResolveProxy(oldTerm);
-      if (term != oldTerm)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, FirstOrderLogicPackage.IS_EMPTY__TERM, oldTerm, term));
-      }
-    }
     return term;
   }
 
@@ -85,9 +76,16 @@ public class IsEmptyImpl extends FormulaImpl implements IsEmpty
    * <!-- end-user-doc -->
    * @generated
    */
-  public Term basicGetTerm()
+  public NotificationChain basicSetTerm(Term newTerm, NotificationChain msgs)
   {
-    return term;
+    Term oldTerm = term;
+    term = newTerm;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.IS_EMPTY__TERM, oldTerm, newTerm);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   /**
@@ -97,10 +95,34 @@ public class IsEmptyImpl extends FormulaImpl implements IsEmpty
    */
   public void setTerm(Term newTerm)
   {
-    Term oldTerm = term;
-    term = newTerm;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.IS_EMPTY__TERM, oldTerm, term));
+    if (newTerm != term)
+    {
+      NotificationChain msgs = null;
+      if (term != null)
+        msgs = ((InternalEObject)term).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.IS_EMPTY__TERM, null, msgs);
+      if (newTerm != null)
+        msgs = ((InternalEObject)newTerm).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.IS_EMPTY__TERM, null, msgs);
+      msgs = basicSetTerm(newTerm, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.IS_EMPTY__TERM, newTerm, newTerm));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case FirstOrderLogicPackage.IS_EMPTY__TERM:
+        return basicSetTerm(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -114,8 +136,7 @@ public class IsEmptyImpl extends FormulaImpl implements IsEmpty
     switch (featureID)
     {
       case FirstOrderLogicPackage.IS_EMPTY__TERM:
-        if (resolve) return getTerm();
-        return basicGetTerm();
+        return getTerm();
     }
     return super.eGet(featureID, resolve, coreType);
   }

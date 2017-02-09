@@ -23,26 +23,26 @@ package org.sidiff.validation.laguage.fol.firstOrderLogic;
 public interface IsEmpty extends Formula
 {
   /**
-   * Returns the value of the '<em><b>Term</b></em>' reference.
+   * Returns the value of the '<em><b>Term</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Term</em>' reference isn't clear,
+   * If the meaning of the '<em>Term</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Term</em>' reference.
+   * @return the value of the '<em>Term</em>' containment reference.
    * @see #setTerm(Term)
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getIsEmpty_Term()
-   * @model
+   * @model containment="true"
    * @generated
    */
   Term getTerm();
 
   /**
-   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty#getTerm <em>Term</em>}' reference.
+   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty#getTerm <em>Term</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Term</em>' reference.
+   * @param value the new value of the '<em>Term</em>' containment reference.
    * @see #getTerm()
    * @generated
    */

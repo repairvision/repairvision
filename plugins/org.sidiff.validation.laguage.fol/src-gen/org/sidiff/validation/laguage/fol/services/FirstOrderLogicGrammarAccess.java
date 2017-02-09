@@ -553,28 +553,24 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cIsEmptyKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cTermAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cTermTermCrossReference_1_0 = (CrossReference)cTermAssignment_1.eContents().get(0);
-		private final RuleCall cTermTermIDTerminalRuleCall_1_0_1 = (RuleCall)cTermTermCrossReference_1_0.eContents().get(1);
+		private final RuleCall cTermTermParserRuleCall_1_0 = (RuleCall)cTermAssignment_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
 		//IsEmpty:
-		//	"isEmpty(" term=[Term] ")";
+		//	"isEmpty(" term=Term ")";
 		@Override public ParserRule getRule() { return rule; }
 		
-		//"isEmpty(" term=[Term] ")"
+		//"isEmpty(" term=Term ")"
 		public Group getGroup() { return cGroup; }
 		
 		//"isEmpty("
 		public Keyword getIsEmptyKeyword_0() { return cIsEmptyKeyword_0; }
 		
-		//term=[Term]
+		//term=Term
 		public Assignment getTermAssignment_1() { return cTermAssignment_1; }
 		
-		//[Term]
-		public CrossReference getTermTermCrossReference_1_0() { return cTermTermCrossReference_1_0; }
-		
-		//ID
-		public RuleCall getTermTermIDTerminalRuleCall_1_0_1() { return cTermTermIDTerminalRuleCall_1_0_1; }
+		//Term
+		public RuleCall getTermTermParserRuleCall_1_0() { return cTermTermParserRuleCall_1_0; }
 		
 		//")"
 		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
@@ -1278,7 +1274,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//IsEmpty:
-	//	"isEmpty(" term=[Term] ")";
+	//	"isEmpty(" term=Term ")";
 	public IsEmptyElements getIsEmptyAccess() {
 		return pIsEmpty;
 	}

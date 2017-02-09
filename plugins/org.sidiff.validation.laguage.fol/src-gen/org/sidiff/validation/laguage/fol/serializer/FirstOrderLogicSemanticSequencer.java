@@ -663,7 +663,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Primary returns IsEmpty
 	 *
 	 * Constraint:
-	 *     term=[Term|ID]
+	 *     term=Term
 	 */
 	protected void sequence_IsEmpty(ISerializationContext context, IsEmpty semanticObject) {
 		if (errorAcceptor != null) {
@@ -671,7 +671,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.IS_EMPTY__TERM));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getIsEmptyAccess().getTermTermIDTerminalRuleCall_1_0_1(), semanticObject.getTerm());
+		feeder.accept(grammarAccess.getIsEmptyAccess().getTermTermParserRuleCall_1_0(), semanticObject.getTerm());
 		feeder.finish();
 	}
 	

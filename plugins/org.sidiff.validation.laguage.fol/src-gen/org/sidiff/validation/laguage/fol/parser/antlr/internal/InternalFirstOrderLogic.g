@@ -1002,13 +1002,19 @@ ruleIsEmpty returns [EObject current=null]
 		(
 			(
 				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getIsEmptyRule());
-					}
+					newCompositeNode(grammarAccess.getIsEmptyAccess().getTermTermParserRuleCall_1_0());
 				}
-				otherlv_1=RULE_ID
+				lv_term_1_0=ruleTerm
 				{
-					newLeafNode(otherlv_1, grammarAccess.getIsEmptyAccess().getTermTermCrossReference_1_0());
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getIsEmptyRule());
+					}
+					set(
+						$current,
+						"term",
+						lv_term_1_0,
+						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Term");
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)

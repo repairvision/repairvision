@@ -29,7 +29,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Formula"/>
   <eClassifiers xsi:type="ecore:EClass" name="UnaryFormula" eSuperTypes="#//Formula"/>
   <eClassifiers xsi:type="ecore:EClass" name="IsEmpty" eSuperTypes="#//Formula">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="term" eType="#//Term"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="term" eType="#//Term" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Quantifier" eSuperTypes="#//Formula">
     <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Variable"
