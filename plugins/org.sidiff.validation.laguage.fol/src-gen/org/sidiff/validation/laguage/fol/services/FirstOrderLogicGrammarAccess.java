@@ -271,6 +271,11 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		////Get returns Term:
 		// //	Variable ({Get.context=current} "." feature=[ecore::EStructuralFeature|Feature])*;
 		////  Variable ({Get.context=current} "." feature=ID)*;
+		////GetTerm returns Term:
+		////	Constant ({Get.context=current} "." feature=Get)*;
+		////	
+		////Get:
+		////	(type=ID "::" )? name=[ecore::EStructuralFeature|Feature] (next=Get)?;
 		//Feature:
 		//	ID;
 		@Override public ParserRule getRule() { return rule; }
@@ -571,6 +576,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightSquareBracketKeyword_3_1_2 = (Keyword)cGroup_3_1.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
+		//// FIXME: Constant | Term
 		//Equals:
 		//	"equals(" (left=Term | "[" left=Constant "]") "," (right=Term | "[" right=Constant "]") ")";
 		@Override public ParserRule getRule() { return rule; }
@@ -1240,6 +1246,11 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	////Get returns Term:
 	// //	Variable ({Get.context=current} "." feature=[ecore::EStructuralFeature|Feature])*;
 	////  Variable ({Get.context=current} "." feature=ID)*;
+	////GetTerm returns Term:
+	////	Constant ({Get.context=current} "." feature=Get)*;
+	////	
+	////Get:
+	////	(type=ID "::" )? name=[ecore::EStructuralFeature|Feature] (next=Get)?;
 	//Feature:
 	//	ID;
 	public FeatureElements getFeatureAccess() {
@@ -1362,6 +1373,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getPredicateAccess().getRule();
 	}
 	
+	//// FIXME: Constant | Term
 	//Equals:
 	//	"equals(" (left=Term | "[" left=Constant "]") "," (right=Term | "[" right=Constant "]") ")";
 	public EqualsElements getEqualsAccess() {

@@ -33,6 +33,12 @@ Get:
 //	Variable ({Get.context=current} "." feature=[ecore::EStructuralFeature|Feature])*;
 //  Variable ({Get.context=current} "." feature=ID)*;
 
+//GetTerm returns Term:
+//	Constant ({Get.context=current} "." feature=Get)*;
+//	
+//Get:
+//	(type=ID "::" )? name=[ecore::EStructuralFeature|Feature] (next=Get)?;
+
 Feature returns ecore::EString:
     ID;
     
@@ -84,6 +90,7 @@ Not returns UnaryFormula:
 Predicate returns Formula:
 	Equals | IsEmpty;
 
+// FIXME: Constant | Term
 Equals:
 	"equals(" (left=Term | ("[" left=Constant "]")) "," (right=Term | ("[" right=Constant "]")) ")";
 
