@@ -42,15 +42,6 @@ public interface FirstOrderLogicFactory extends EFactory
   Constraint createConstraint();
 
   /**
-   * Returns a new object of class '<em>Term</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Term</em>'.
-   * @generated
-   */
-  Term createTerm();
-
-  /**
    * Returns a new object of class '<em>Variable</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -58,6 +49,15 @@ public interface FirstOrderLogicFactory extends EFactory
    * @generated
    */
   Variable createVariable();
+
+  /**
+   * Returns a new object of class '<em>Term</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Term</em>'.
+   * @generated
+   */
+  Term createTerm();
 
   /**
    * Returns a new object of class '<em>Get</em>'.
@@ -87,6 +87,15 @@ public interface FirstOrderLogicFactory extends EFactory
   UnaryFormula createUnaryFormula();
 
   /**
+   * Returns a new object of class '<em>Equals</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Equals</em>'.
+   * @generated
+   */
+  Equals createEquals();
+
+  /**
    * Returns a new object of class '<em>Is Empty</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -114,13 +123,13 @@ public interface FirstOrderLogicFactory extends EFactory
   GetTerm createGetTerm();
 
   /**
-   * Returns a new object of class '<em>Equality</em>'.
+   * Returns a new object of class '<em>Iff</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Equality</em>'.
+   * @return a new object of class '<em>Iff</em>'.
    * @generated
    */
-  Equality createEquality();
+  Iff createIff();
 
   /**
    * Returns a new object of class '<em>If</em>'.

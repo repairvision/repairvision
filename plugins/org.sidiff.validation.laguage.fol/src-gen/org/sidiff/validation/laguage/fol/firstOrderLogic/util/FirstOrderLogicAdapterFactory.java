@@ -86,14 +86,14 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createConstraintAdapter();
       }
       @Override
-      public Adapter caseTerm(Term object)
-      {
-        return createTermAdapter();
-      }
-      @Override
       public Adapter caseVariable(Variable object)
       {
         return createVariableAdapter();
+      }
+      @Override
+      public Adapter caseTerm(Term object)
+      {
+        return createTermAdapter();
       }
       @Override
       public Adapter caseGet(Get object)
@@ -111,6 +111,11 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createUnaryFormulaAdapter();
       }
       @Override
+      public Adapter caseEquals(Equals object)
+      {
+        return createEqualsAdapter();
+      }
+      @Override
       public Adapter caseIsEmpty(IsEmpty object)
       {
         return createIsEmptyAdapter();
@@ -126,9 +131,9 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createGetTermAdapter();
       }
       @Override
-      public Adapter caseEquality(Equality object)
+      public Adapter caseIff(Iff object)
       {
-        return createEqualityAdapter();
+        return createIffAdapter();
       }
       @Override
       public Adapter caseIf(If object)
@@ -258,21 +263,6 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Term <em>Term</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Term
-   * @generated
-   */
-  public Adapter createTermAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Variable <em>Variable</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -283,6 +273,21 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVariableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Term <em>Term</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Term
+   * @generated
+   */
+  public Adapter createTermAdapter()
   {
     return null;
   }
@@ -333,6 +338,21 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Equals <em>Equals</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Equals
+   * @generated
+   */
+  public Adapter createEqualsAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty <em>Is Empty</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -378,16 +398,16 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Equality <em>Equality</em>}'.
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Iff <em>Iff</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Equality
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Iff
    * @generated
    */
-  public Adapter createEqualityAdapter()
+  public Adapter createIffAdapter()
   {
     return null;
   }

@@ -14,7 +14,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.And;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase;
-import org.sidiff.validation.laguage.fol.firstOrderLogic.Equality;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Equals;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicFactory;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
@@ -25,6 +25,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Greater;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.If;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Iff;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Not;
@@ -66,14 +67,14 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass termEClass = null;
+  private EClass variableEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass variableEClass = null;
+  private EClass termEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -101,6 +102,13 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass equalsEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass isEmptyEClass = null;
 
   /**
@@ -122,7 +130,7 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass equalityEClass = null;
+  private EClass iffEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -387,16 +395,6 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getTerm()
-  {
-    return termEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getVariable()
   {
     return variableEClass;
@@ -420,6 +418,16 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
   public EAttribute getVariable_Name()
   {
     return (EAttribute)variableEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTerm()
+  {
+    return termEClass;
   }
 
   /**
@@ -480,6 +488,36 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
   public EClass getUnaryFormula()
   {
     return unaryFormulaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEquals()
+  {
+    return equalsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEquals_Left()
+  {
+    return (EReference)equalsEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEquals_Right()
+  {
+    return (EReference)equalsEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -577,9 +615,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getEquality()
+  public EClass getIff()
   {
-    return equalityEClass;
+    return iffEClass;
   }
 
   /**
@@ -587,9 +625,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getEquality_Left()
+  public EReference getIff_Left()
   {
-    return (EReference)equalityEClass.getEStructuralFeatures().get(0);
+    return (EReference)iffEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -597,9 +635,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getEquality_Right()
+  public EReference getIff_Right()
   {
-    return (EReference)equalityEClass.getEStructuralFeatures().get(1);
+    return (EReference)iffEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1003,11 +1041,11 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     createEReference(constraintEClass, CONSTRAINT__VARIABLE);
     createEReference(constraintEClass, CONSTRAINT__FORMULA);
 
-    termEClass = createEClass(TERM);
-
     variableEClass = createEClass(VARIABLE);
     createEAttribute(variableEClass, VARIABLE__TYPE);
     createEAttribute(variableEClass, VARIABLE__NAME);
+
+    termEClass = createEClass(TERM);
 
     getEClass = createEClass(GET);
     createEAttribute(getEClass, GET__TYPE);
@@ -1017,6 +1055,10 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     formulaEClass = createEClass(FORMULA);
 
     unaryFormulaEClass = createEClass(UNARY_FORMULA);
+
+    equalsEClass = createEClass(EQUALS);
+    createEReference(equalsEClass, EQUALS__LEFT);
+    createEReference(equalsEClass, EQUALS__RIGHT);
 
     isEmptyEClass = createEClass(IS_EMPTY);
     createEReference(isEmptyEClass, IS_EMPTY__TERM);
@@ -1030,9 +1072,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     createEReference(getTermEClass, GET_TERM__NAME);
     createEReference(getTermEClass, GET_TERM__FEATURE);
 
-    equalityEClass = createEClass(EQUALITY);
-    createEReference(equalityEClass, EQUALITY__LEFT);
-    createEReference(equalityEClass, EQUALITY__RIGHT);
+    iffEClass = createEClass(IFF);
+    createEReference(iffEClass, IFF__LEFT);
+    createEReference(iffEClass, IFF__RIGHT);
 
     ifEClass = createEClass(IF);
     createEReference(ifEClass, IF__LEFT);
@@ -1116,12 +1158,12 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
 
     // Add supertypes to classes
     termEClass.getESuperTypes().add(this.getFormula());
-    variableEClass.getESuperTypes().add(this.getTerm());
     unaryFormulaEClass.getESuperTypes().add(this.getFormula());
+    equalsEClass.getESuperTypes().add(this.getFormula());
     isEmptyEClass.getESuperTypes().add(this.getFormula());
     quantifierEClass.getESuperTypes().add(this.getFormula());
     getTermEClass.getESuperTypes().add(this.getTerm());
-    equalityEClass.getESuperTypes().add(this.getFormula());
+    iffEClass.getESuperTypes().add(this.getFormula());
     ifEClass.getESuperTypes().add(this.getFormula());
     xorEClass.getESuperTypes().add(this.getFormula());
     orEClass.getESuperTypes().add(this.getFormula());
@@ -1150,11 +1192,11 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     initEReference(getConstraint_Variable(), this.getVariable(), null, "variable", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConstraint_Formula(), this.getFormula(), null, "formula", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(termEClass, Term.class, "Term", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
     initEClass(variableEClass, Variable.class, "Variable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVariable_Type(), ecorePackage.getEString(), "type", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariable_Name(), ecorePackage.getEString(), "name", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(termEClass, Term.class, "Term", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(getEClass, Get.class, "Get", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getGet_Type(), ecorePackage.getEString(), "type", null, 0, 1, Get.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1164,6 +1206,10 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     initEClass(formulaEClass, Formula.class, "Formula", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(unaryFormulaEClass, UnaryFormula.class, "UnaryFormula", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(equalsEClass, Equals.class, "Equals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEquals_Left(), this.getTerm(), null, "left", null, 0, 1, Equals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEquals_Right(), this.getTerm(), null, "right", null, 0, 1, Equals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(isEmptyEClass, IsEmpty.class, "IsEmpty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getIsEmpty_Term(), this.getTerm(), null, "term", null, 0, 1, IsEmpty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1177,9 +1223,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     initEReference(getGetTerm_Name(), this.getVariable(), null, "name", null, 0, 1, GetTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getGetTerm_Feature(), this.getGet(), null, "feature", null, 0, 1, GetTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(equalityEClass, Equality.class, "Equality", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEquality_Left(), this.getFormula(), null, "left", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEquality_Right(), this.getFormula(), null, "right", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(iffEClass, Iff.class, "Iff", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getIff_Left(), this.getFormula(), null, "left", null, 0, 1, Iff.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIff_Right(), this.getFormula(), null, "right", null, 0, 1, Iff.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(ifEClass, If.class, "If", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getIf_Left(), this.getFormula(), null, "left", null, 0, 1, If.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

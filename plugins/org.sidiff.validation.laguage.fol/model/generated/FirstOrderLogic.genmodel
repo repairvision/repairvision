@@ -17,11 +17,11 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Constraint/variable"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Constraint/formula"/>
     </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//Term"/>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Variable">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Variable/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Variable/name"/>
     </genClasses>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//Term"/>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Get">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Get/type"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Get/name"/>
@@ -29,6 +29,10 @@
     </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Formula"/>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//UnaryFormula"/>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//Equals">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Equals/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Equals/right"/>
+    </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//IsEmpty">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//IsEmpty/term"/>
     </genClasses>
@@ -41,9 +45,9 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//GetTerm/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//GetTerm/feature"/>
     </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//Equality">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Equality/left"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Equality/right"/>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//Iff">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Iff/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Iff/right"/>
     </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//If">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//If/left"/>

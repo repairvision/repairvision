@@ -55,6 +55,8 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 	 *     '('*
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) 'equals(' '[' left=Constant
+	 *     (rule start) (ambiguity) 'equals(' left=Term
 	 *     (rule start) (ambiguity) 'exists(' name=Variable
 	 *     (rule start) (ambiguity) 'forAll(' name=Variable
 	 *     (rule start) (ambiguity) 'isEmpty(' term=Term
@@ -65,10 +67,10 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) variable=[Variable|ID]
 	 *     (rule start) (ambiguity) {And.left=}
-	 *     (rule start) (ambiguity) {Equality.left=}
 	 *     (rule start) (ambiguity) {Greater.left=}
 	 *     (rule start) (ambiguity) {GreaterEqual.left=}
 	 *     (rule start) (ambiguity) {If.left=}
+	 *     (rule start) (ambiguity) {Iff.left=}
 	 *     (rule start) (ambiguity) {Or.left=}
 	 *     (rule start) (ambiguity) {Smaller.left=}
 	 *     (rule start) (ambiguity) {SmallerEqual.left=}
@@ -84,10 +86,10 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) {And.left=}
-	 *     (rule start) (ambiguity) {Equality.left=}
 	 *     (rule start) (ambiguity) {Greater.left=}
 	 *     (rule start) (ambiguity) {GreaterEqual.left=}
 	 *     (rule start) (ambiguity) {If.left=}
+	 *     (rule start) (ambiguity) {Iff.left=}
 	 *     (rule start) (ambiguity) {Or.left=}
 	 *     (rule start) (ambiguity) {Smaller.left=}
 	 *     (rule start) (ambiguity) {SmallerEqual.left=}

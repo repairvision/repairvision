@@ -67,15 +67,16 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
     {
       case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE: return createConstraintRuleBase();
       case FirstOrderLogicPackage.CONSTRAINT: return createConstraint();
-      case FirstOrderLogicPackage.TERM: return createTerm();
       case FirstOrderLogicPackage.VARIABLE: return createVariable();
+      case FirstOrderLogicPackage.TERM: return createTerm();
       case FirstOrderLogicPackage.GET: return createGet();
       case FirstOrderLogicPackage.FORMULA: return createFormula();
       case FirstOrderLogicPackage.UNARY_FORMULA: return createUnaryFormula();
+      case FirstOrderLogicPackage.EQUALS: return createEquals();
       case FirstOrderLogicPackage.IS_EMPTY: return createIsEmpty();
       case FirstOrderLogicPackage.QUANTIFIER: return createQuantifier();
       case FirstOrderLogicPackage.GET_TERM: return createGetTerm();
-      case FirstOrderLogicPackage.EQUALITY: return createEquality();
+      case FirstOrderLogicPackage.IFF: return createIff();
       case FirstOrderLogicPackage.IF: return createIf();
       case FirstOrderLogicPackage.XOR: return createXor();
       case FirstOrderLogicPackage.OR: return createOr();
@@ -123,10 +124,10 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public Term createTerm()
+  public Variable createVariable()
   {
-    TermImpl term = new TermImpl();
-    return term;
+    VariableImpl variable = new VariableImpl();
+    return variable;
   }
 
   /**
@@ -134,10 +135,10 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable createVariable()
+  public Term createTerm()
   {
-    VariableImpl variable = new VariableImpl();
-    return variable;
+    TermImpl term = new TermImpl();
+    return term;
   }
 
   /**
@@ -178,6 +179,17 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
+  public Equals createEquals()
+  {
+    EqualsImpl equals = new EqualsImpl();
+    return equals;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public IsEmpty createIsEmpty()
   {
     IsEmptyImpl isEmpty = new IsEmptyImpl();
@@ -211,10 +223,10 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public Equality createEquality()
+  public Iff createIff()
   {
-    EqualityImpl equality = new EqualityImpl();
-    return equality;
+    IffImpl iff = new IffImpl();
+    return iff;
   }
 
   /**

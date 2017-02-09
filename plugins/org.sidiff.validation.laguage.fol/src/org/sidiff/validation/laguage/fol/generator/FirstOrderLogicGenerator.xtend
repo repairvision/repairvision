@@ -15,9 +15,10 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import org.sidiff.validation.laguage.fol.firstOrderLogic.And
+import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase
-import org.sidiff.validation.laguage.fol.firstOrderLogic.Equality
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Equals
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Formula
@@ -26,17 +27,17 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Greater
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual
 import org.sidiff.validation.laguage.fol.firstOrderLogic.If
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Iff
+import org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Not
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Or
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Smaller
 import org.sidiff.validation.laguage.fol.firstOrderLogic.SmallerEqual
-import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable
-import org.sidiff.validation.laguage.fol.firstOrderLogic.Xor
-import org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant
-import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Xor
 
 /**
  * Generates code from your model files on save.
@@ -111,8 +112,8 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 				public ConsistencyRule getConsistencyRule(String name) {
 					return rules.get(name);
 				}
-					
 				«FOR constraint : ruleBase.constraints»
+				
 				public static ConsistencyRule create«constraint.name»Rule() {
 					
 					«FOR variable : constraint.eAllContents.filter(typeof(Variable)).toIterable»
@@ -194,18 +195,10 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		return 'MISSING_FORMULA'
 	}
 	
-	// TODO: !?
-	def dispatch String compileFormula(Equality equality, HashMap<Object, String> names) {
-		
-		if ((equality.left instanceof IntConstant) || (equality.left instanceof StringConstant) ||
-			(equality.right instanceof IntConstant) || (equality.right instanceof StringConstant)) {
-			
-			return 'new Equality(' + compileFormula(equality.left, names) + ', ' + compileFormula(equality.right, names) + ')'
-		} else {
-			return 'new Iff(' + compileFormula(equality.left, names) + ', ' + compileFormula(equality.right, names) + ')'
-		}
+	def dispatch String compileFormula(Iff iff, HashMap<Object, String> names) {
+		return 'new Iff(' + compileFormula(iff.left, names) + ', ' + compileFormula(iff.right, names) + ')'
 	}
-	
+
 	def dispatch String compileFormula(If ifFormula, HashMap<Object, String> names) {
 		return 'new If(' + compileFormula(ifFormula.left, names) + ', ' + compileFormula(ifFormula.right, names)  + ')'
 	}
@@ -228,6 +221,10 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	
 	def dispatch String compileFormula(IsEmpty isEmpty, HashMap<Object, String> names) {
 		return 'new IsEmpty(' + compileFormula(isEmpty.term, names) + ')'
+	}
+	
+	def dispatch String compileFormula(Equals equals, HashMap<Object, String> names) {			
+		return 'new Equality(' + compileFormula(equals.left, names) + ', ' + compileFormula(equals.right, names) + ')'
 	}
 	
 	def dispatch String compileFormula(Greater greater, HashMap<Object, String> names) {

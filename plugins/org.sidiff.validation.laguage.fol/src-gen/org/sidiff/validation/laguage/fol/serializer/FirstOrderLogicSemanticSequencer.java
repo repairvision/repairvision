@@ -18,7 +18,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.And;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase;
-import org.sidiff.validation.laguage.fol.firstOrderLogic.Equality;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Equals;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll;
@@ -27,6 +27,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Greater;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.If;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Iff;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Not;
@@ -65,8 +66,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 			case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE:
 				sequence_ConstraintRuleBase(context, (ConstraintRuleBase) semanticObject); 
 				return; 
-			case FirstOrderLogicPackage.EQUALITY:
-				sequence_Equality(context, (Equality) semanticObject); 
+			case FirstOrderLogicPackage.EQUALS:
+				sequence_Equals(context, (Equals) semanticObject); 
 				return; 
 			case FirstOrderLogicPackage.EXISTS:
 				sequence_Exists(context, (Exists) semanticObject); 
@@ -88,6 +89,9 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				return; 
 			case FirstOrderLogicPackage.IF:
 				sequence_If(context, (If) semanticObject); 
+				return; 
+			case FirstOrderLogicPackage.IFF:
+				sequence_Iff(context, (Iff) semanticObject); 
 				return; 
 			case FirstOrderLogicPackage.INT_CONSTANT:
 				sequence_Constant(context, (IntConstant) semanticObject); 
@@ -127,8 +131,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns And
-	 *     Equality returns And
-	 *     Equality.Equality_1_0 returns And
+	 *     Iff returns And
+	 *     Iff.Iff_1_0 returns And
 	 *     BinaryFormula returns And
 	 *     If returns And
 	 *     If.If_1_0 returns And
@@ -168,8 +172,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns BoolConstant
-	 *     Equality returns BoolConstant
-	 *     Equality.Equality_1_0 returns BoolConstant
+	 *     Iff returns BoolConstant
+	 *     Iff.Iff_1_0 returns BoolConstant
 	 *     BinaryFormula returns BoolConstant
 	 *     If returns BoolConstant
 	 *     If.If_1_0 returns BoolConstant
@@ -201,8 +205,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns IntConstant
-	 *     Equality returns IntConstant
-	 *     Equality.Equality_1_0 returns IntConstant
+	 *     Iff returns IntConstant
+	 *     Iff.Iff_1_0 returns IntConstant
 	 *     BinaryFormula returns IntConstant
 	 *     If returns IntConstant
 	 *     If.If_1_0 returns IntConstant
@@ -240,8 +244,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns StringConstant
-	 *     Equality returns StringConstant
-	 *     Equality.Equality_1_0 returns StringConstant
+	 *     Iff returns StringConstant
+	 *     Iff.Iff_1_0 returns StringConstant
 	 *     BinaryFormula returns StringConstant
 	 *     If returns StringConstant
 	 *     If.If_1_0 returns StringConstant
@@ -279,8 +283,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns VariableRef
-	 *     Equality returns VariableRef
-	 *     Equality.Equality_1_0 returns VariableRef
+	 *     Iff returns VariableRef
+	 *     Iff.Iff_1_0 returns VariableRef
 	 *     BinaryFormula returns VariableRef
 	 *     If returns VariableRef
 	 *     If.If_1_0 returns VariableRef
@@ -320,7 +324,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     ConstraintRuleBase returns ConstraintRuleBase
 	 *
 	 * Constraint:
-	 *     (domain=STRING packageImport=STRING constraints+=Constraint)
+	 *     (domain=STRING packageImport=STRING constraints+=Constraint*)
 	 */
 	protected void sequence_ConstraintRuleBase(ISerializationContext context, ConstraintRuleBase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -356,50 +360,43 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     Formula returns Equality
-	 *     Equality returns Equality
-	 *     Equality.Equality_1_0 returns Equality
-	 *     BinaryFormula returns Equality
-	 *     If returns Equality
-	 *     If.If_1_0 returns Equality
-	 *     Xor returns Equality
-	 *     Xor.Xor_1_0 returns Equality
-	 *     Or returns Equality
-	 *     Or.Or_1_0 returns Equality
-	 *     And returns Equality
-	 *     And.And_1_0 returns Equality
-	 *     Greater returns Equality
-	 *     Greater.Greater_1_0 returns Equality
-	 *     GreaterEqual returns Equality
-	 *     GreaterEqual.GreaterEqual_1_0 returns Equality
-	 *     Smaller returns Equality
-	 *     Smaller.Smaller_1_0 returns Equality
-	 *     SmallerEqual returns Equality
-	 *     SmallerEqual.SmallerEqual_1_0 returns Equality
-	 *     Primary returns Equality
+	 *     Formula returns Equals
+	 *     Iff returns Equals
+	 *     Iff.Iff_1_0 returns Equals
+	 *     BinaryFormula returns Equals
+	 *     If returns Equals
+	 *     If.If_1_0 returns Equals
+	 *     Xor returns Equals
+	 *     Xor.Xor_1_0 returns Equals
+	 *     Or returns Equals
+	 *     Or.Or_1_0 returns Equals
+	 *     And returns Equals
+	 *     And.And_1_0 returns Equals
+	 *     Predicate returns Equals
+	 *     Equals returns Equals
+	 *     Greater returns Equals
+	 *     Greater.Greater_1_0 returns Equals
+	 *     GreaterEqual returns Equals
+	 *     GreaterEqual.GreaterEqual_1_0 returns Equals
+	 *     Smaller returns Equals
+	 *     Smaller.Smaller_1_0 returns Equals
+	 *     SmallerEqual returns Equals
+	 *     SmallerEqual.SmallerEqual_1_0 returns Equals
+	 *     Primary returns Equals
 	 *
 	 * Constraint:
-	 *     (left=Equality_Equality_1_0 right=BinaryFormula)
+	 *     ((left=Term | left=Constant) (right=Term | right=Constant))
 	 */
-	protected void sequence_Equality(ISerializationContext context, Equality semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.EQUALITY__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.EQUALITY__LEFT));
-			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.EQUALITY__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.EQUALITY__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getEqualityAccess().getEqualityLeftAction_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getEqualityAccess().getRightBinaryFormulaParserRuleCall_1_2_0(), semanticObject.getRight());
-		feeder.finish();
+	protected void sequence_Equals(ISerializationContext context, Equals semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
 	 *     Formula returns Exists
-	 *     Equality returns Exists
-	 *     Equality.Equality_1_0 returns Exists
+	 *     Iff returns Exists
+	 *     Iff.Iff_1_0 returns Exists
 	 *     BinaryFormula returns Exists
 	 *     If returns Exists
 	 *     If.If_1_0 returns Exists
@@ -444,8 +441,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns ForAll
-	 *     Equality returns ForAll
-	 *     Equality.Equality_1_0 returns ForAll
+	 *     Iff returns ForAll
+	 *     Iff.Iff_1_0 returns ForAll
 	 *     BinaryFormula returns ForAll
 	 *     If returns ForAll
 	 *     If.If_1_0 returns ForAll
@@ -516,8 +513,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns GreaterEqual
-	 *     Equality returns GreaterEqual
-	 *     Equality.Equality_1_0 returns GreaterEqual
+	 *     Iff returns GreaterEqual
+	 *     Iff.Iff_1_0 returns GreaterEqual
 	 *     BinaryFormula returns GreaterEqual
 	 *     If returns GreaterEqual
 	 *     If.If_1_0 returns GreaterEqual
@@ -557,8 +554,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns Greater
-	 *     Equality returns Greater
-	 *     Equality.Equality_1_0 returns Greater
+	 *     Iff returns Greater
+	 *     Iff.Iff_1_0 returns Greater
 	 *     BinaryFormula returns Greater
 	 *     If returns Greater
 	 *     If.If_1_0 returns Greater
@@ -598,8 +595,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns If
-	 *     Equality returns If
-	 *     Equality.Equality_1_0 returns If
+	 *     Iff returns If
+	 *     Iff.Iff_1_0 returns If
 	 *     BinaryFormula returns If
 	 *     If returns If
 	 *     If.If_1_0 returns If
@@ -638,9 +635,50 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
+	 *     Formula returns Iff
+	 *     Iff returns Iff
+	 *     Iff.Iff_1_0 returns Iff
+	 *     BinaryFormula returns Iff
+	 *     If returns Iff
+	 *     If.If_1_0 returns Iff
+	 *     Xor returns Iff
+	 *     Xor.Xor_1_0 returns Iff
+	 *     Or returns Iff
+	 *     Or.Or_1_0 returns Iff
+	 *     And returns Iff
+	 *     And.And_1_0 returns Iff
+	 *     Greater returns Iff
+	 *     Greater.Greater_1_0 returns Iff
+	 *     GreaterEqual returns Iff
+	 *     GreaterEqual.GreaterEqual_1_0 returns Iff
+	 *     Smaller returns Iff
+	 *     Smaller.Smaller_1_0 returns Iff
+	 *     SmallerEqual returns Iff
+	 *     SmallerEqual.SmallerEqual_1_0 returns Iff
+	 *     Primary returns Iff
+	 *
+	 * Constraint:
+	 *     (left=Iff_Iff_1_0 right=BinaryFormula)
+	 */
+	protected void sequence_Iff(ISerializationContext context, Iff semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.IFF__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.IFF__LEFT));
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.IFF__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.IFF__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getIffAccess().getIffLeftAction_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getIffAccess().getRightBinaryFormulaParserRuleCall_1_2_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Formula returns IsEmpty
-	 *     Equality returns IsEmpty
-	 *     Equality.Equality_1_0 returns IsEmpty
+	 *     Iff returns IsEmpty
+	 *     Iff.Iff_1_0 returns IsEmpty
 	 *     BinaryFormula returns IsEmpty
 	 *     If returns IsEmpty
 	 *     If.If_1_0 returns IsEmpty
@@ -679,8 +717,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns Not
-	 *     Equality returns Not
-	 *     Equality.Equality_1_0 returns Not
+	 *     Iff returns Not
+	 *     Iff.Iff_1_0 returns Not
 	 *     BinaryFormula returns Not
 	 *     If returns Not
 	 *     If.If_1_0 returns Not
@@ -719,8 +757,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns Or
-	 *     Equality returns Or
-	 *     Equality.Equality_1_0 returns Or
+	 *     Iff returns Or
+	 *     Iff.Iff_1_0 returns Or
 	 *     BinaryFormula returns Or
 	 *     If returns Or
 	 *     If.If_1_0 returns Or
@@ -760,8 +798,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns SmallerEqual
-	 *     Equality returns SmallerEqual
-	 *     Equality.Equality_1_0 returns SmallerEqual
+	 *     Iff returns SmallerEqual
+	 *     Iff.Iff_1_0 returns SmallerEqual
 	 *     BinaryFormula returns SmallerEqual
 	 *     If returns SmallerEqual
 	 *     If.If_1_0 returns SmallerEqual
@@ -801,8 +839,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns Smaller
-	 *     Equality returns Smaller
-	 *     Equality.Equality_1_0 returns Smaller
+	 *     Iff returns Smaller
+	 *     Iff.Iff_1_0 returns Smaller
 	 *     BinaryFormula returns Smaller
 	 *     If returns Smaller
 	 *     If.If_1_0 returns Smaller
@@ -841,7 +879,6 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     Term returns Variable
 	 *     Variable returns Variable
 	 *
 	 * Constraint:
@@ -864,8 +901,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	/**
 	 * Contexts:
 	 *     Formula returns Xor
-	 *     Equality returns Xor
-	 *     Equality.Equality_1_0 returns Xor
+	 *     Iff returns Xor
+	 *     Iff.Iff_1_0 returns Xor
 	 *     BinaryFormula returns Xor
 	 *     If returns Xor
 	 *     If.If_1_0 returns Xor

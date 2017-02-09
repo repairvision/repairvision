@@ -6,18 +6,18 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 ConstraintRuleBase:
 	"domain" domain=STRING 'import' packageImport=STRING 
-	constraints+=Constraint;
+	constraints+=Constraint*;
 
 Constraint:
 	'name' name=STRING 'message' message=STRING 'context' variable=Variable ':' formula=Formula;
 
+Variable:
+	type=ID name=ID;
+
 // terms:
 
 Term:
-	Variable | Function;
-	
-Variable:
-	type=ID name=ID;
+	Function;
 	
 Function returns Term: 
 //	Get
@@ -39,13 +39,13 @@ Feature returns ecore::EString:
 // equality:
 
 Formula:
-	Equality;
+	Iff;
 	
-Equality returns Formula:
-	BinaryFormula ({Equality.left=current} "=" right=BinaryFormula)*;
+Iff returns Formula:
+	BinaryFormula ({Iff.left=current} "=" right=BinaryFormula)*;
 
 /* 
- * Precedence: not, and, or, xor, if
+ * Precedence: not, and, or, xor, if, iff
  * 
  * To define the precedence we must write the rule for the operator with less precedence in 
  * terms of the rule for the operator with higher precedence. This means that in the grammar, 
@@ -82,7 +82,10 @@ Not returns UnaryFormula:
 // predicates (term -> boolean):
 
 Predicate returns Formula:
-	IsEmpty;
+	Equals | IsEmpty;
+
+Equals:
+	"equals(" (left=Term | ("[" left=Constant "]")) "," (right=Term | ("[" right=Constant "]")) ")";
 
 IsEmpty:
 	"isEmpty(" term=Term ")";

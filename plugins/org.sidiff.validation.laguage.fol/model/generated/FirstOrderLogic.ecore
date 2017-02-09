@@ -16,11 +16,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="formula" eType="#//Formula"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Term" eSuperTypes="#//Formula"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//Term">
+  <eClassifiers xsi:type="ecore:EClass" name="Variable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Term" eSuperTypes="#//Formula"/>
   <eClassifiers xsi:type="ecore:EClass" name="Get">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
@@ -28,6 +28,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Formula"/>
   <eClassifiers xsi:type="ecore:EClass" name="UnaryFormula" eSuperTypes="#//Formula"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Equals" eSuperTypes="#//Formula">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Term" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Term"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IsEmpty" eSuperTypes="#//Formula">
     <eStructuralFeatures xsi:type="ecore:EReference" name="term" eType="#//Term" containment="true"/>
   </eClassifiers>
@@ -44,7 +49,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="feature" eType="#//Get"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Equality" eSuperTypes="#//Formula">
+  <eClassifiers xsi:type="ecore:EClass" name="Iff" eSuperTypes="#//Formula">
     <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Formula"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Formula"

@@ -87,20 +87,18 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case FirstOrderLogicPackage.VARIABLE:
+      {
+        Variable variable = (Variable)theEObject;
+        T result = caseVariable(variable);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case FirstOrderLogicPackage.TERM:
       {
         Term term = (Term)theEObject;
         T result = caseTerm(term);
         if (result == null) result = caseFormula(term);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case FirstOrderLogicPackage.VARIABLE:
-      {
-        Variable variable = (Variable)theEObject;
-        T result = caseVariable(variable);
-        if (result == null) result = caseTerm(variable);
-        if (result == null) result = caseFormula(variable);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -123,6 +121,14 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
         UnaryFormula unaryFormula = (UnaryFormula)theEObject;
         T result = caseUnaryFormula(unaryFormula);
         if (result == null) result = caseFormula(unaryFormula);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case FirstOrderLogicPackage.EQUALS:
+      {
+        Equals equals = (Equals)theEObject;
+        T result = caseEquals(equals);
+        if (result == null) result = caseFormula(equals);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -151,11 +157,11 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case FirstOrderLogicPackage.EQUALITY:
+      case FirstOrderLogicPackage.IFF:
       {
-        Equality equality = (Equality)theEObject;
-        T result = caseEquality(equality);
-        if (result == null) result = caseFormula(equality);
+        Iff iff = (Iff)theEObject;
+        T result = caseIff(iff);
+        if (result == null) result = caseFormula(iff);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -323,22 +329,6 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Term</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Term</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTerm(Term object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -350,6 +340,22 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseVariable(Variable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Term</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Term</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTerm(Term object)
   {
     return null;
   }
@@ -403,6 +409,22 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Equals</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Equals</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEquals(Equals object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Is Empty</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -451,17 +473,17 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Equality</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Iff</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Equality</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Iff</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseEquality(Equality object)
+  public T caseIff(Iff object)
   {
     return null;
   }

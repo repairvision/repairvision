@@ -38,10 +38,10 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ConstraintRuleBase:
 		//	"domain" domain=STRING 'import' packageImport=STRING
-		//	constraints+=Constraint;
+		//	constraints+=Constraint*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//"domain" domain=STRING 'import' packageImport=STRING constraints+=Constraint
+		//"domain" domain=STRING 'import' packageImport=STRING constraints+=Constraint*
 		public Group getGroup() { return cGroup; }
 		
 		//"domain"
@@ -62,7 +62,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getPackageImportSTRINGTerminalRuleCall_3_0() { return cPackageImportSTRINGTerminalRuleCall_3_0; }
 		
-		//constraints+=Constraint
+		//constraints+=Constraint*
 		public Assignment getConstraintsAssignment_4() { return cConstraintsAssignment_4; }
 		
 		//Constraint
@@ -127,26 +127,6 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//Formula
 		public RuleCall getFormulaFormulaParserRuleCall_7_0() { return cFormulaFormulaParserRuleCall_7_0; }
 	}
-	public class TermElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Term");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cVariableParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cFunctionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//// terms:
-		//Term:
-		//	Variable | Function;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//Variable | Function
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//Variable
-		public RuleCall getVariableParserRuleCall_0() { return cVariableParserRuleCall_0; }
-		
-		//Function
-		public RuleCall getFunctionParserRuleCall_1() { return cFunctionParserRuleCall_1; }
-	}
 	public class VariableElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Variable");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -173,6 +153,18 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+	}
+	public class TermElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Term");
+		private final RuleCall cFunctionParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//// terms:
+		//Term:
+		//	Function;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Function
+		public RuleCall getFunctionParserRuleCall() { return cFunctionParserRuleCall; }
 	}
 	public class FunctionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Function");
@@ -288,41 +280,41 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class FormulaElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Formula");
-		private final RuleCall cEqualityParserRuleCall = (RuleCall)rule.eContents().get(1);
+		private final RuleCall cIffParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//// equality:
 		//Formula:
-		//	Equality;
+		//	Iff;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//Equality
-		public RuleCall getEqualityParserRuleCall() { return cEqualityParserRuleCall; }
+		//Iff
+		public RuleCall getIffParserRuleCall() { return cIffParserRuleCall; }
 	}
-	public class EqualityElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Equality");
+	public class IffElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Iff");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cBinaryFormulaParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cEqualityLeftAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Action cIffLeftAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Keyword cEqualsSignKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
 		private final Assignment cRightAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cRightBinaryFormulaParserRuleCall_1_2_0 = (RuleCall)cRightAssignment_1_2.eContents().get(0);
 		
-		//Equality Formula:
-		//	BinaryFormula ({Equality.left=current} "=" right=BinaryFormula)*
+		//Iff Formula:
+		//	BinaryFormula ({Iff.left=current} "=" right=BinaryFormula)*
 		@Override public ParserRule getRule() { return rule; }
 		
-		//BinaryFormula ({Equality.left=current} "=" right=BinaryFormula)*
+		//BinaryFormula ({Iff.left=current} "=" right=BinaryFormula)*
 		public Group getGroup() { return cGroup; }
 		
 		//BinaryFormula
 		public RuleCall getBinaryFormulaParserRuleCall_0() { return cBinaryFormulaParserRuleCall_0; }
 		
-		//({Equality.left=current} "=" right=BinaryFormula)*
+		//({Iff.left=current} "=" right=BinaryFormula)*
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{Equality.left=current}
-		public Action getEqualityLeftAction_1_0() { return cEqualityLeftAction_1_0; }
+		//{Iff.left=current}
+		public Action getIffLeftAction_1_0() { return cIffLeftAction_1_0; }
 		
 		//"="
 		public Keyword getEqualsSignKeyword_1_1() { return cEqualsSignKeyword_1_1; }
@@ -338,7 +330,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIfParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		/// * 
-		// * Precedence: not, and, or, xor, if
+		// * Precedence: not, and, or, xor, if, iff
 		// * 
 		// * To define the precedence we must write the rule for the operator with less precedence in 
 		// * terms of the rule for the operator with higher precedence. This means that in the grammar, 
@@ -538,15 +530,110 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class PredicateElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Predicate");
-		private final RuleCall cIsEmptyParserRuleCall = (RuleCall)rule.eContents().get(1);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cEqualsParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cIsEmptyParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// predicates (term -> boolean):
 		//Predicate Formula:
-		//	IsEmpty
+		//	Equals | IsEmpty
 		@Override public ParserRule getRule() { return rule; }
 		
+		//Equals | IsEmpty
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//Equals
+		public RuleCall getEqualsParserRuleCall_0() { return cEqualsParserRuleCall_0; }
+		
 		//IsEmpty
-		public RuleCall getIsEmptyParserRuleCall() { return cIsEmptyParserRuleCall; }
+		public RuleCall getIsEmptyParserRuleCall_1() { return cIsEmptyParserRuleCall_1; }
+	}
+	public class EqualsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Equals");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cEqualsKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Assignment cLeftAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
+		private final RuleCall cLeftTermParserRuleCall_1_0_0 = (RuleCall)cLeftAssignment_1_0.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
+		private final Assignment cLeftAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cLeftConstantParserRuleCall_1_1_1_0 = (RuleCall)cLeftAssignment_1_1_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_1_1_2 = (Keyword)cGroup_1_1.eContents().get(2);
+		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cRightAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cRightTermParserRuleCall_3_0_0 = (RuleCall)cRightAssignment_3_0.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cAlternatives_3.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
+		private final Assignment cRightAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cRightConstantParserRuleCall_3_1_1_0 = (RuleCall)cRightAssignment_3_1_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_3_1_2 = (Keyword)cGroup_3_1.eContents().get(2);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//Equals:
+		//	"equals(" (left=Term | "[" left=Constant "]") "," (right=Term | "[" right=Constant "]") ")";
+		@Override public ParserRule getRule() { return rule; }
+		
+		//"equals(" (left=Term | "[" left=Constant "]") "," (right=Term | "[" right=Constant "]") ")"
+		public Group getGroup() { return cGroup; }
+		
+		//"equals("
+		public Keyword getEqualsKeyword_0() { return cEqualsKeyword_0; }
+		
+		//(left=Term | "[" left=Constant "]")
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		
+		//left=Term
+		public Assignment getLeftAssignment_1_0() { return cLeftAssignment_1_0; }
+		
+		//Term
+		public RuleCall getLeftTermParserRuleCall_1_0_0() { return cLeftTermParserRuleCall_1_0_0; }
+		
+		//"[" left=Constant "]"
+		public Group getGroup_1_1() { return cGroup_1_1; }
+		
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_1_0() { return cLeftSquareBracketKeyword_1_1_0; }
+		
+		//left=Constant
+		public Assignment getLeftAssignment_1_1_1() { return cLeftAssignment_1_1_1; }
+		
+		//Constant
+		public RuleCall getLeftConstantParserRuleCall_1_1_1_0() { return cLeftConstantParserRuleCall_1_1_1_0; }
+		
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_1_2() { return cRightSquareBracketKeyword_1_1_2; }
+		
+		//","
+		public Keyword getCommaKeyword_2() { return cCommaKeyword_2; }
+		
+		//(right=Term | "[" right=Constant "]")
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+		
+		//right=Term
+		public Assignment getRightAssignment_3_0() { return cRightAssignment_3_0; }
+		
+		//Term
+		public RuleCall getRightTermParserRuleCall_3_0_0() { return cRightTermParserRuleCall_3_0_0; }
+		
+		//"[" right=Constant "]"
+		public Group getGroup_3_1() { return cGroup_3_1; }
+		
+		//"["
+		public Keyword getLeftSquareBracketKeyword_3_1_0() { return cLeftSquareBracketKeyword_3_1_0; }
+		
+		//right=Constant
+		public Assignment getRightAssignment_3_1_1() { return cRightAssignment_3_1_1; }
+		
+		//Constant
+		public RuleCall getRightConstantParserRuleCall_3_1_1_0() { return cRightConstantParserRuleCall_3_1_1_0; }
+		
+		//"]"
+		public Keyword getRightSquareBracketKeyword_3_1_2() { return cRightSquareBracketKeyword_3_1_2; }
+		
+		//")"
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 	}
 	public class IsEmptyElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.IsEmpty");
@@ -983,14 +1070,14 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final ConstraintRuleBaseElements pConstraintRuleBase;
 	private final ConstraintElements pConstraint;
-	private final TermElements pTerm;
 	private final VariableElements pVariable;
+	private final TermElements pTerm;
 	private final FunctionElements pFunction;
 	private final GetTermElements pGetTerm;
 	private final GetElements pGet;
 	private final FeatureElements pFeature;
 	private final FormulaElements pFormula;
-	private final EqualityElements pEquality;
+	private final IffElements pIff;
 	private final BinaryFormulaElements pBinaryFormula;
 	private final IfElements pIf;
 	private final XorElements pXor;
@@ -999,6 +1086,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	private final UnaryFormulaElements pUnaryFormula;
 	private final NotElements pNot;
 	private final PredicateElements pPredicate;
+	private final EqualsElements pEquals;
 	private final IsEmptyElements pIsEmpty;
 	private final GreaterElements pGreater;
 	private final GreaterEqualElements pGreaterEqual;
@@ -1021,14 +1109,14 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaTerminals = gaTerminals;
 		this.pConstraintRuleBase = new ConstraintRuleBaseElements();
 		this.pConstraint = new ConstraintElements();
-		this.pTerm = new TermElements();
 		this.pVariable = new VariableElements();
+		this.pTerm = new TermElements();
 		this.pFunction = new FunctionElements();
 		this.pGetTerm = new GetTermElements();
 		this.pGet = new GetElements();
 		this.pFeature = new FeatureElements();
 		this.pFormula = new FormulaElements();
-		this.pEquality = new EqualityElements();
+		this.pIff = new IffElements();
 		this.pBinaryFormula = new BinaryFormulaElements();
 		this.pIf = new IfElements();
 		this.pXor = new XorElements();
@@ -1037,6 +1125,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		this.pUnaryFormula = new UnaryFormulaElements();
 		this.pNot = new NotElements();
 		this.pPredicate = new PredicateElements();
+		this.pEquals = new EqualsElements();
 		this.pIsEmpty = new IsEmptyElements();
 		this.pGreater = new GreaterElements();
 		this.pGreaterEqual = new GreaterEqualElements();
@@ -1078,7 +1167,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ConstraintRuleBase:
 	//	"domain" domain=STRING 'import' packageImport=STRING
-	//	constraints+=Constraint;
+	//	constraints+=Constraint*;
 	public ConstraintRuleBaseElements getConstraintRuleBaseAccess() {
 		return pConstraintRuleBase;
 	}
@@ -1097,17 +1186,6 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getConstraintAccess().getRule();
 	}
 	
-	//// terms:
-	//Term:
-	//	Variable | Function;
-	public TermElements getTermAccess() {
-		return pTerm;
-	}
-	
-	public ParserRule getTermRule() {
-		return getTermAccess().getRule();
-	}
-	
 	//Variable:
 	//	type=ID name=ID;
 	public VariableElements getVariableAccess() {
@@ -1116,6 +1194,17 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getVariableRule() {
 		return getVariableAccess().getRule();
+	}
+	
+	//// terms:
+	//Term:
+	//	Function;
+	public TermElements getTermAccess() {
+		return pTerm;
+	}
+	
+	public ParserRule getTermRule() {
+		return getTermAccess().getRule();
 	}
 	
 	//Function Term:
@@ -1163,7 +1252,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// equality:
 	//Formula:
-	//	Equality;
+	//	Iff;
 	public FormulaElements getFormulaAccess() {
 		return pFormula;
 	}
@@ -1172,18 +1261,18 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getFormulaAccess().getRule();
 	}
 	
-	//Equality Formula:
-	//	BinaryFormula ({Equality.left=current} "=" right=BinaryFormula)*
-	public EqualityElements getEqualityAccess() {
-		return pEquality;
+	//Iff Formula:
+	//	BinaryFormula ({Iff.left=current} "=" right=BinaryFormula)*
+	public IffElements getIffAccess() {
+		return pIff;
 	}
 	
-	public ParserRule getEqualityRule() {
-		return getEqualityAccess().getRule();
+	public ParserRule getIffRule() {
+		return getIffAccess().getRule();
 	}
 	
 	/// * 
-	// * Precedence: not, and, or, xor, if
+	// * Precedence: not, and, or, xor, if, iff
 	// * 
 	// * To define the precedence we must write the rule for the operator with less precedence in 
 	// * terms of the rule for the operator with higher precedence. This means that in the grammar, 
@@ -1264,13 +1353,23 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// predicates (term -> boolean):
 	//Predicate Formula:
-	//	IsEmpty
+	//	Equals | IsEmpty
 	public PredicateElements getPredicateAccess() {
 		return pPredicate;
 	}
 	
 	public ParserRule getPredicateRule() {
 		return getPredicateAccess().getRule();
+	}
+	
+	//Equals:
+	//	"equals(" (left=Term | "[" left=Constant "]") "," (right=Term | "[" right=Constant "]") ")";
+	public EqualsElements getEqualsAccess() {
+		return pEquals;
+	}
+	
+	public ParserRule getEqualsRule() {
+		return getEqualsAccess().getRule();
 	}
 	
 	//IsEmpty:

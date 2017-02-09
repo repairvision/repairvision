@@ -3,6 +3,7 @@
  */
 package org.sidiff.validation.laguage.fol.firstOrderLogic;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,7 +22,7 @@ package org.sidiff.validation.laguage.fol.firstOrderLogic;
  * @model
  * @generated
  */
-public interface Variable extends Term
+public interface Variable extends EObject
 {
   /**
    * Returns the value of the '<em><b>Type</b></em>' attribute.
