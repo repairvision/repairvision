@@ -35,7 +35,9 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getTermAccess().getAlternatives(), "rule__Term__Alternatives");
+					put(grammarAccess.getPredicateAccess().getAlternatives(), "rule__Predicate__Alternatives");
+					put(grammarAccess.getEqualsAccess().getAlternatives_1(), "rule__Equals__Alternatives_1");
+					put(grammarAccess.getEqualsAccess().getAlternatives_3(), "rule__Equals__Alternatives_3");
 					put(grammarAccess.getQuantifierAccess().getAlternatives(), "rule__Quantifier__Alternatives");
 					put(grammarAccess.getPrimaryAccess().getAlternatives(), "rule__Primary__Alternatives");
 					put(grammarAccess.getConstantAccess().getAlternatives(), "rule__Constant__Alternatives");
@@ -46,8 +48,8 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getGetTermAccess().getGroup(), "rule__GetTerm__Group__0");
 					put(grammarAccess.getGetAccess().getGroup(), "rule__Get__Group__0");
 					put(grammarAccess.getGetAccess().getGroup_1(), "rule__Get__Group_1__0");
-					put(grammarAccess.getEqualityAccess().getGroup(), "rule__Equality__Group__0");
-					put(grammarAccess.getEqualityAccess().getGroup_1(), "rule__Equality__Group_1__0");
+					put(grammarAccess.getIffAccess().getGroup(), "rule__Iff__Group__0");
+					put(grammarAccess.getIffAccess().getGroup_1(), "rule__Iff__Group_1__0");
 					put(grammarAccess.getIfAccess().getGroup(), "rule__If__Group__0");
 					put(grammarAccess.getIfAccess().getGroup_1(), "rule__If__Group_1__0");
 					put(grammarAccess.getXorAccess().getGroup(), "rule__Xor__Group__0");
@@ -57,6 +59,9 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAndAccess().getGroup(), "rule__And__Group__0");
 					put(grammarAccess.getAndAccess().getGroup_1(), "rule__And__Group_1__0");
 					put(grammarAccess.getNotAccess().getGroup(), "rule__Not__Group__0");
+					put(grammarAccess.getEqualsAccess().getGroup(), "rule__Equals__Group__0");
+					put(grammarAccess.getEqualsAccess().getGroup_1_1(), "rule__Equals__Group_1_1__0");
+					put(grammarAccess.getEqualsAccess().getGroup_3_1(), "rule__Equals__Group_3_1__0");
 					put(grammarAccess.getIsEmptyAccess().getGroup(), "rule__IsEmpty__Group__0");
 					put(grammarAccess.getGreaterAccess().getGroup(), "rule__Greater__Group__0");
 					put(grammarAccess.getGreaterAccess().getGroup_1(), "rule__Greater__Group_1__0");
@@ -87,12 +92,16 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getGetAccess().getTypeAssignment_1_0(), "rule__Get__TypeAssignment_1_0");
 					put(grammarAccess.getGetAccess().getNameAssignment_2(), "rule__Get__NameAssignment_2");
 					put(grammarAccess.getGetAccess().getNextAssignment_3(), "rule__Get__NextAssignment_3");
-					put(grammarAccess.getEqualityAccess().getRightAssignment_1_2(), "rule__Equality__RightAssignment_1_2");
+					put(grammarAccess.getIffAccess().getRightAssignment_1_2(), "rule__Iff__RightAssignment_1_2");
 					put(grammarAccess.getIfAccess().getRightAssignment_1_2(), "rule__If__RightAssignment_1_2");
 					put(grammarAccess.getXorAccess().getRightAssignment_1_2(), "rule__Xor__RightAssignment_1_2");
 					put(grammarAccess.getOrAccess().getRightAssignment_1_2(), "rule__Or__RightAssignment_1_2");
 					put(grammarAccess.getAndAccess().getRightAssignment_1_2(), "rule__And__RightAssignment_1_2");
 					put(grammarAccess.getNotAccess().getNotAssignment_2(), "rule__Not__NotAssignment_2");
+					put(grammarAccess.getEqualsAccess().getLeftAssignment_1_0(), "rule__Equals__LeftAssignment_1_0");
+					put(grammarAccess.getEqualsAccess().getLeftAssignment_1_1_1(), "rule__Equals__LeftAssignment_1_1_1");
+					put(grammarAccess.getEqualsAccess().getRightAssignment_3_0(), "rule__Equals__RightAssignment_3_0");
+					put(grammarAccess.getEqualsAccess().getRightAssignment_3_1_1(), "rule__Equals__RightAssignment_3_1_1");
 					put(grammarAccess.getIsEmptyAccess().getTermAssignment_1(), "rule__IsEmpty__TermAssignment_1");
 					put(grammarAccess.getGreaterAccess().getRightAssignment_1_2(), "rule__Greater__RightAssignment_1_2");
 					put(grammarAccess.getGreaterEqualAccess().getRightAssignment_1_2(), "rule__GreaterEqual__RightAssignment_1_2");
