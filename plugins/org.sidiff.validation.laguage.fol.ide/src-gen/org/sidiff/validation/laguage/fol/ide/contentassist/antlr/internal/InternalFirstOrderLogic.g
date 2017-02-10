@@ -49,25 +49,25 @@ import org.sidiff.validation.laguage.fol.services.FirstOrderLogicGrammarAccess;
 	}
 }
 
-// Entry rule entryRuleConstraintRuleBase
-entryRuleConstraintRuleBase
+// Entry rule entryRuleConstraintLibrary
+entryRuleConstraintLibrary
 :
-{ before(grammarAccess.getConstraintRuleBaseRule()); }
-	 ruleConstraintRuleBase
-{ after(grammarAccess.getConstraintRuleBaseRule()); } 
+{ before(grammarAccess.getConstraintLibraryRule()); }
+	 ruleConstraintLibrary
+{ after(grammarAccess.getConstraintLibraryRule()); } 
 	 EOF 
 ;
 
-// Rule ConstraintRuleBase
-ruleConstraintRuleBase 
+// Rule ConstraintLibrary
+ruleConstraintLibrary 
 	@init {
 		int stackSize = keepStackSize();
 	}
 	:
 	(
-		{ before(grammarAccess.getConstraintRuleBaseAccess().getGroup()); }
-		(rule__ConstraintRuleBase__Group__0)
-		{ after(grammarAccess.getConstraintRuleBaseAccess().getGroup()); }
+		{ before(grammarAccess.getConstraintLibraryAccess().getGroup()); }
+		(rule__ConstraintLibrary__Group__0)
+		{ after(grammarAccess.getConstraintLibraryAccess().getGroup()); }
 	)
 ;
 finally {
@@ -963,134 +963,134 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__Group__0
+rule__ConstraintLibrary__Group__0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__ConstraintRuleBase__Group__0__Impl
-	rule__ConstraintRuleBase__Group__1
+	rule__ConstraintLibrary__Group__0__Impl
+	rule__ConstraintLibrary__Group__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__Group__0__Impl
+rule__ConstraintLibrary__Group__0__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getConstraintRuleBaseAccess().getDomainKeyword_0()); }
+	{ before(grammarAccess.getConstraintLibraryAccess().getDomainKeyword_0()); }
 	'domain'
-	{ after(grammarAccess.getConstraintRuleBaseAccess().getDomainKeyword_0()); }
+	{ after(grammarAccess.getConstraintLibraryAccess().getDomainKeyword_0()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__Group__1
+rule__ConstraintLibrary__Group__1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__ConstraintRuleBase__Group__1__Impl
-	rule__ConstraintRuleBase__Group__2
+	rule__ConstraintLibrary__Group__1__Impl
+	rule__ConstraintLibrary__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__Group__1__Impl
+rule__ConstraintLibrary__Group__1__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getConstraintRuleBaseAccess().getDomainAssignment_1()); }
-	(rule__ConstraintRuleBase__DomainAssignment_1)
-	{ after(grammarAccess.getConstraintRuleBaseAccess().getDomainAssignment_1()); }
+	{ before(grammarAccess.getConstraintLibraryAccess().getDomainAssignment_1()); }
+	(rule__ConstraintLibrary__DomainAssignment_1)
+	{ after(grammarAccess.getConstraintLibraryAccess().getDomainAssignment_1()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__Group__2
+rule__ConstraintLibrary__Group__2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__ConstraintRuleBase__Group__2__Impl
-	rule__ConstraintRuleBase__Group__3
+	rule__ConstraintLibrary__Group__2__Impl
+	rule__ConstraintLibrary__Group__3
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__Group__2__Impl
+rule__ConstraintLibrary__Group__2__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getConstraintRuleBaseAccess().getImportKeyword_2()); }
+	{ before(grammarAccess.getConstraintLibraryAccess().getImportKeyword_2()); }
 	'import'
-	{ after(grammarAccess.getConstraintRuleBaseAccess().getImportKeyword_2()); }
+	{ after(grammarAccess.getConstraintLibraryAccess().getImportKeyword_2()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__Group__3
+rule__ConstraintLibrary__Group__3
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__ConstraintRuleBase__Group__3__Impl
-	rule__ConstraintRuleBase__Group__4
+	rule__ConstraintLibrary__Group__3__Impl
+	rule__ConstraintLibrary__Group__4
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__Group__3__Impl
+rule__ConstraintLibrary__Group__3__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getConstraintRuleBaseAccess().getPackageImportAssignment_3()); }
-	(rule__ConstraintRuleBase__PackageImportAssignment_3)
-	{ after(grammarAccess.getConstraintRuleBaseAccess().getPackageImportAssignment_3()); }
+	{ before(grammarAccess.getConstraintLibraryAccess().getPackageImportAssignment_3()); }
+	(rule__ConstraintLibrary__PackageImportAssignment_3)
+	{ after(grammarAccess.getConstraintLibraryAccess().getPackageImportAssignment_3()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__Group__4
+rule__ConstraintLibrary__Group__4
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__ConstraintRuleBase__Group__4__Impl
+	rule__ConstraintLibrary__Group__4__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__Group__4__Impl
+rule__ConstraintLibrary__Group__4__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getConstraintRuleBaseAccess().getConstraintsAssignment_4()); }
-	(rule__ConstraintRuleBase__ConstraintsAssignment_4)*
-	{ after(grammarAccess.getConstraintRuleBaseAccess().getConstraintsAssignment_4()); }
+	{ before(grammarAccess.getConstraintLibraryAccess().getConstraintsAssignment_4()); }
+	(rule__ConstraintLibrary__ConstraintsAssignment_4)*
+	{ after(grammarAccess.getConstraintLibraryAccess().getConstraintsAssignment_4()); }
 )
 ;
 finally {
@@ -3825,45 +3825,45 @@ finally {
 }
 
 
-rule__ConstraintRuleBase__DomainAssignment_1
+rule__ConstraintLibrary__DomainAssignment_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getConstraintRuleBaseAccess().getDomainSTRINGTerminalRuleCall_1_0()); }
+		{ before(grammarAccess.getConstraintLibraryAccess().getDomainSTRINGTerminalRuleCall_1_0()); }
 		RULE_STRING
-		{ after(grammarAccess.getConstraintRuleBaseAccess().getDomainSTRINGTerminalRuleCall_1_0()); }
+		{ after(grammarAccess.getConstraintLibraryAccess().getDomainSTRINGTerminalRuleCall_1_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__PackageImportAssignment_3
+rule__ConstraintLibrary__PackageImportAssignment_3
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getConstraintRuleBaseAccess().getPackageImportSTRINGTerminalRuleCall_3_0()); }
+		{ before(grammarAccess.getConstraintLibraryAccess().getPackageImportSTRINGTerminalRuleCall_3_0()); }
 		RULE_STRING
-		{ after(grammarAccess.getConstraintRuleBaseAccess().getPackageImportSTRINGTerminalRuleCall_3_0()); }
+		{ after(grammarAccess.getConstraintLibraryAccess().getPackageImportSTRINGTerminalRuleCall_3_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstraintRuleBase__ConstraintsAssignment_4
+rule__ConstraintLibrary__ConstraintsAssignment_4
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getConstraintRuleBaseAccess().getConstraintsConstraintParserRuleCall_4_0()); }
+		{ before(grammarAccess.getConstraintLibraryAccess().getConstraintsConstraintParserRuleCall_4_0()); }
 		ruleConstraint
-		{ after(grammarAccess.getConstraintRuleBaseAccess().getConstraintsConstraintParserRuleCall_4_0()); }
+		{ after(grammarAccess.getConstraintLibraryAccess().getConstraintsConstraintParserRuleCall_4_0()); }
 	)
 ;
 finally {
