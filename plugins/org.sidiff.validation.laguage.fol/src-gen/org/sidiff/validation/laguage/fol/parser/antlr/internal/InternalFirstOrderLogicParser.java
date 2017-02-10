@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'domain'", "'import'", "'constraint'", "'message'", "'context'", "':'", "'='", "'implies'", "'xor'", "'or'", "'and'", "'not('", "')'", "'equals('", "','", "'isGreater('", "'isGreaterEqual('", "'isSmaller('", "'isSmallerEqual('", "'isEmpty('", "'forAll('", "'in'", "'exists('", "'('", "'true'", "'false'", "'.'", "'::'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'domain'", "'import'", "'constraint'", "'message'", "'context'", "':'", "'='", "'implies'", "'xor'", "'or'", "'and'", "'not('", "')'", "'isEqual('", "','", "'isGreater('", "'isGreaterEqual('", "'isSmaller('", "'isSmallerEqual('", "'isEmpty('", "'forAll('", "'in'", "'exists('", "'('", "'true'", "'false'", "'.'", "'::'"
     };
     public static final int RULE_STRING=4;
     public static final int RULE_SL_COMMENT=8;
@@ -2006,7 +2006,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEquals"
-    // InternalFirstOrderLogic.g:785:1: ruleEquals returns [EObject current=null] : (otherlv_0= 'equals(' ( (lv_left_1_0= ruleTerm ) ) otherlv_2= ',' ( (lv_right_3_0= ruleTerm ) ) otherlv_4= ')' ) ;
+    // InternalFirstOrderLogic.g:785:1: ruleEquals returns [EObject current=null] : (otherlv_0= 'isEqual(' ( (lv_left_1_0= ruleTerm ) ) otherlv_2= ',' ( (lv_right_3_0= ruleTerm ) ) otherlv_4= ')' ) ;
     public final EObject ruleEquals() throws RecognitionException {
         EObject current = null;
 
@@ -2022,15 +2022,15 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:791:2: ( (otherlv_0= 'equals(' ( (lv_left_1_0= ruleTerm ) ) otherlv_2= ',' ( (lv_right_3_0= ruleTerm ) ) otherlv_4= ')' ) )
-            // InternalFirstOrderLogic.g:792:2: (otherlv_0= 'equals(' ( (lv_left_1_0= ruleTerm ) ) otherlv_2= ',' ( (lv_right_3_0= ruleTerm ) ) otherlv_4= ')' )
+            // InternalFirstOrderLogic.g:791:2: ( (otherlv_0= 'isEqual(' ( (lv_left_1_0= ruleTerm ) ) otherlv_2= ',' ( (lv_right_3_0= ruleTerm ) ) otherlv_4= ')' ) )
+            // InternalFirstOrderLogic.g:792:2: (otherlv_0= 'isEqual(' ( (lv_left_1_0= ruleTerm ) ) otherlv_2= ',' ( (lv_right_3_0= ruleTerm ) ) otherlv_4= ')' )
             {
-            // InternalFirstOrderLogic.g:792:2: (otherlv_0= 'equals(' ( (lv_left_1_0= ruleTerm ) ) otherlv_2= ',' ( (lv_right_3_0= ruleTerm ) ) otherlv_4= ')' )
-            // InternalFirstOrderLogic.g:793:3: otherlv_0= 'equals(' ( (lv_left_1_0= ruleTerm ) ) otherlv_2= ',' ( (lv_right_3_0= ruleTerm ) ) otherlv_4= ')'
+            // InternalFirstOrderLogic.g:792:2: (otherlv_0= 'isEqual(' ( (lv_left_1_0= ruleTerm ) ) otherlv_2= ',' ( (lv_right_3_0= ruleTerm ) ) otherlv_4= ')' )
+            // InternalFirstOrderLogic.g:793:3: otherlv_0= 'isEqual(' ( (lv_left_1_0= ruleTerm ) ) otherlv_2= ',' ( (lv_right_3_0= ruleTerm ) ) otherlv_4= ')'
             {
             otherlv_0=(Token)match(input,24,FOLLOW_17); 
 
-            			newLeafNode(otherlv_0, grammarAccess.getEqualsAccess().getEqualsKeyword_0());
+            			newLeafNode(otherlv_0, grammarAccess.getEqualsAccess().getIsEqualKeyword_0());
             		
             // InternalFirstOrderLogic.g:797:3: ( (lv_left_1_0= ruleTerm ) )
             // InternalFirstOrderLogic.g:798:4: (lv_left_1_0= ruleTerm )

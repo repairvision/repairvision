@@ -432,7 +432,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	public class EqualsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Equals");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cEqualsKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cIsEqualKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cLeftAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cLeftTermParserRuleCall_1_0 = (RuleCall)cLeftAssignment_1.eContents().get(0);
 		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
@@ -441,14 +441,14 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Equals:
-		//	"equals(" left=Term "," right=Term ")";
+		//	"isEqual(" left=Term "," right=Term ")";
 		@Override public ParserRule getRule() { return rule; }
 		
-		//"equals(" left=Term "," right=Term ")"
+		//"isEqual(" left=Term "," right=Term ")"
 		public Group getGroup() { return cGroup; }
 		
-		//"equals("
-		public Keyword getEqualsKeyword_0() { return cEqualsKeyword_0; }
+		//"isEqual("
+		public Keyword getIsEqualKeyword_0() { return cIsEqualKeyword_0; }
 		
 		//left=Term
 		public Assignment getLeftAssignment_1() { return cLeftAssignment_1; }
@@ -1292,7 +1292,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Equals:
-	//	"equals(" left=Term "," right=Term ")";
+	//	"isEqual(" left=Term "," right=Term ")";
 	public EqualsElements getEqualsAccess() {
 		return pEquals;
 	}

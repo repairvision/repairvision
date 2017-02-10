@@ -790,9 +790,9 @@ ruleEquals returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='equals('
+		otherlv_0='isEqual('
 		{
-			newLeafNode(otherlv_0, grammarAccess.getEqualsAccess().getEqualsKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getEqualsAccess().getIsEqualKeyword_0());
 		}
 		(
 			(
