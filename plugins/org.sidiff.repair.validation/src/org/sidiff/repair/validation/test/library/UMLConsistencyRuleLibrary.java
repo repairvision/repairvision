@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.uml2.uml.UMLPackage;
-import org.sidiff.repair.validation.ConsistencyRule;
+import org.sidiff.repair.validation.Constraint;
 import org.sidiff.repair.validation.formulas.binary.And;
 import org.sidiff.repair.validation.formulas.binary.Formula;
 import org.sidiff.repair.validation.formulas.predicates.Equality;
@@ -24,7 +24,7 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 	
 	private static UMLPackage UML = UMLPackage.eINSTANCE;
 
-	private static Map<String, ConsistencyRule> rules = new HashMap<>();
+	private static Map<String, Constraint> rules = new HashMap<>();
 	
 	static {
 		addConsistencyRule(createMessageBasedOnOperationRule());
@@ -32,7 +32,7 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 		addConsistencyRule(createUnimplementedRealizationRule());
 	}
 	
-	private static void addConsistencyRule(ConsistencyRule rule) {
+	private static void addConsistencyRule(Constraint rule) {
 		rules.put(rule.getName(), rule);
 	}
 	
@@ -42,16 +42,16 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 	}
 	
 	@Override
-	public List<ConsistencyRule> getConsistencyRules() {
+	public List<Constraint> getConsistencyRules() {
 		return new ArrayList<>(rules.values());
 	}
 
 	@Override
-	public ConsistencyRule getConsistencyRule(String name) {
+	public Constraint getConsistencyRule(String name) {
 		return rules.get(name);
 	}
 	
-	public static ConsistencyRule createMessageBasedOnOperationRule() {
+	public static Constraint createMessageBasedOnOperationRule() {
 		
 		// Create consistency rule:
 		Variable m = new Variable("m");
@@ -109,7 +109,7 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 		
 		Formula validation = new And(checkAssoziation, checkNames);
 		
-		ConsistencyRule messageBasedOnOperation = new ConsistencyRule(
+		Constraint messageBasedOnOperation = new Constraint(
 				UML.getMessage(), m, validation);
 		
 		messageBasedOnOperation.setName("messageBasedOnOperation");
@@ -117,7 +117,7 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 		return messageBasedOnOperation;
 	}
 	
-	public static ConsistencyRule createTransitionWithoutTriggerRule() {
+	public static Constraint createTransitionWithoutTriggerRule() {
 		
 		// Create consistency rule:
 		Variable transition = new Variable("transition");
@@ -128,7 +128,7 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 				new Get(transition, UML.getTransition_Trigger()),
 				new Not(new IsEmpty(transition))); 
 		
-		ConsistencyRule transitionWithoutTrigger = new ConsistencyRule(
+		Constraint transitionWithoutTrigger = new Constraint(
 				UML.getTransition(), transition, validation);
 		
 		transitionWithoutTrigger.setName("transitionWithoutTrigger");
@@ -145,7 +145,7 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 	 * 
 	 * @return The FOL consistency-rule.
 	 */
-	public static ConsistencyRule createUnimplementedRealizationRule() {
+	public static Constraint createUnimplementedRealizationRule() {
 		
 		// Create consistency rule:
 		Variable realization = new Variable("realization");
@@ -163,7 +163,7 @@ public class UMLConsistencyRuleLibrary extends ConsistencyRuleLibrary {
 														new Get(op_interface, UML.getNamedElement_Name()), 
 														new Get(op_class, UML.getNamedElement_Name())))))); 
 		
-		ConsistencyRule unimplementedRealization = new ConsistencyRule(
+		Constraint unimplementedRealization = new Constraint(
 				UML.getRealization(), realization, validation);
 		
 		unimplementedRealization.setName("unimplementedRealization");

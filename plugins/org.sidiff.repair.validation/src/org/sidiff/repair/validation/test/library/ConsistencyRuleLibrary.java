@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.sidiff.repair.validation.ConsistencyRule;
+import org.sidiff.repair.validation.Constraint;
 
 public abstract class ConsistencyRuleLibrary {
 
@@ -22,7 +22,7 @@ public abstract class ConsistencyRuleLibrary {
 	
 	public abstract String getDocumentType();
 	
-	public abstract List<ConsistencyRule> getConsistencyRules();
+	public abstract List<Constraint> getConsistencyRules();
 	
-	public abstract ConsistencyRule getConsistencyRule(String name);
+	public abstract Constraint getConsistencyRule(String name);
 }

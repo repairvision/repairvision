@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.common.emf.access.EMFModelAccess;
-import org.sidiff.repair.validation.ConsistencyRule;
+import org.sidiff.repair.validation.Constraint;
 import org.sidiff.repair.validation.test.library.ConsistencyRuleLibrary;
 import org.sidiff.repair.validation.util.BatchValidationIterator;
 
@@ -33,10 +33,10 @@ public class TestApplication implements IApplication {
 		// Load consistency rule:
 		ConsistencyRuleLibrary cruleLibrary = ConsistencyRuleLibrary.getConsistencyRuleLibrary(
 				EMFModelAccess.getDocumentType(modelResource));
-		ConsistencyRule crule = cruleLibrary.getConsistencyRule(consistencyRule);
+		Constraint crule = cruleLibrary.getConsistencyRule(consistencyRule);
 		
 		// Check consistency:
-		List<ConsistencyRule> consistencyRules = new ArrayList<>();
+		List<Constraint> consistencyRules = new ArrayList<>();
 		consistencyRules.add(crule);
 		
 		new BatchValidationIterator(modelResource, consistencyRules).forEachRemaining(validation -> {

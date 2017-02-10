@@ -10,14 +10,14 @@ import java.util.NoSuchElementException;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.repair.validation.ConsistencyRule;
+import org.sidiff.repair.validation.Constraint;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 
 public class BatchValidationIterator implements Iterator<Validation> {
 
 	private Iterator<EObject> modelIterator; 
 	
-	private Map<EClass, List<ConsistencyRule>> rules = new HashMap<>();
+	private Map<EClass, List<Constraint>> rules = new HashMap<>();
 	
 	private LinkedList<Validation> next = new LinkedList<>();
 	
@@ -27,14 +27,14 @@ public class BatchValidationIterator implements Iterator<Validation> {
 	
 	private boolean cleanupRepairTree = true;
 	
-	public BatchValidationIterator(Resource modelResource, List<ConsistencyRule> consistencyRules) {
+	public BatchValidationIterator(Resource modelResource, List<Constraint> consistencyRules) {
 		this.modelIterator = modelResource.getAllContents();
 		
 		init(consistencyRules);
 	}
 
 	public BatchValidationIterator(
-			Resource modelResource, List<ConsistencyRule> consistencyRules,
+			Resource modelResource, List<Constraint> consistencyRules,
 			boolean showPositiveResults, 
 			boolean showNegativeResults,
 			boolean cleanupRepairTree) {
@@ -47,9 +47,9 @@ public class BatchValidationIterator implements Iterator<Validation> {
 		init(consistencyRules);
 	}
 
-	private void init(List<ConsistencyRule> consistencyRules) {
+	private void init(List<Constraint> consistencyRules) {
 		
-		for (ConsistencyRule consistencyRule : consistencyRules) {
+		for (Constraint consistencyRule : consistencyRules) {
 			
 			if (!rules.containsKey(consistencyRule.getContextType())) {
 				rules.put(consistencyRule.getContextType(), new LinkedList<>());
@@ -97,7 +97,7 @@ public class BatchValidationIterator implements Iterator<Validation> {
 			EObject modelElement = modelIterator.next();
 			
 			if (rules.containsKey(modelElement.eClass())) {
-				for (ConsistencyRule crule : rules.get(modelElement.eClass())) {
+				for (Constraint crule : rules.get(modelElement.eClass())) {
 					crule.evaluate(modelElement);
 					
 					if ((crule.getResult() && showPositiveResults) || (!crule.getResult() && showNegativeResults)) {
