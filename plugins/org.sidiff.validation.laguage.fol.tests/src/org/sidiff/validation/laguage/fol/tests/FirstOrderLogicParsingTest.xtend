@@ -10,14 +10,14 @@ import org.eclipse.xtext.junit4.util.ParseHelper
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary
 
 @RunWith(XtextRunner)
 @InjectWith(FirstOrderLogicInjectorProvider)
 class FirstOrderLogicParsingTest{
 
 	@Inject
-	ParseHelper<ConstraintRuleBase> parseHelper
+	ParseHelper<ConstraintLibrary> parseHelper
 
 	@Test 
 	def void loadModel() {
