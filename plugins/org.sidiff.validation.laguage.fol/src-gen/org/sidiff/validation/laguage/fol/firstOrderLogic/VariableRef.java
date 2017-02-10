@@ -13,7 +13,8 @@ package org.sidiff.validation.laguage.fol.firstOrderLogic;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef#getVariable <em>Variable</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef#getGet <em>Get</em>}</li>
  * </ul>
  *
  * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getVariableRef()
@@ -23,29 +24,55 @@ package org.sidiff.validation.laguage.fol.firstOrderLogic;
 public interface VariableRef extends Term
 {
   /**
-   * Returns the value of the '<em><b>Variable</b></em>' reference.
+   * Returns the value of the '<em><b>Name</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Variable</em>' reference isn't clear,
+   * If the meaning of the '<em>Name</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Variable</em>' reference.
-   * @see #setVariable(Variable)
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getVariableRef_Variable()
+   * @return the value of the '<em>Name</em>' reference.
+   * @see #setName(Variable)
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getVariableRef_Name()
    * @model
    * @generated
    */
-  Variable getVariable();
+  Variable getName();
 
   /**
-   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef#getVariable <em>Variable</em>}' reference.
+   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef#getName <em>Name</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Variable</em>' reference.
-   * @see #getVariable()
+   * @param value the new value of the '<em>Name</em>' reference.
+   * @see #getName()
    * @generated
    */
-  void setVariable(Variable value);
+  void setName(Variable value);
+
+  /**
+   * Returns the value of the '<em><b>Get</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Get</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Get</em>' containment reference.
+   * @see #setGet(Get)
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getVariableRef_Get()
+   * @model containment="true"
+   * @generated
+   */
+  Get getGet();
+
+  /**
+   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef#getGet <em>Get</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Get</em>' containment reference.
+   * @see #getGet()
+   * @generated
+   */
+  void setGet(Get value);
 
 } // VariableRef

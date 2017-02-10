@@ -4,51 +4,19 @@ generate firstOrderLogic "http://www.sidiff.org/validation/laguage/fol/FirstOrde
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
+// NOTE: escape keywords with ^keyword
+
 ConstraintRuleBase:
 	"domain" domain=STRING 'import' packageImport=STRING 
 	constraints+=Constraint*;
 
 Constraint:
-	'name' name=STRING 'message' message=STRING 'context' variable=Variable ':' formula=Formula;
+	'constraint' name=ID 'message' message=STRING 'context' variable=Variable ':' formula=Formula;
 
 Variable:
 	type=ID name=ID;
 
-// terms:
-
-Term:
-	Function;
-	
-Function returns Term: 
-//	Get
-	GetTerm;
-	
-GetTerm returns Term:
-	{GetTerm} name=[Variable] (feature=Get)?;
-
-Get:
-	"." (type=ID "::" )? name=[ecore::EStructuralFeature|Feature] (next=Get)?;
-
-//Get returns Term:
-//	Variable ({Get.context=current} "." feature=[ecore::EStructuralFeature|Feature])*;
-//  Variable ({Get.context=current} "." feature=ID)*;
-
-//GetTerm returns Term:
-//	Constant ({Get.context=current} "." feature=Get)*;
-//	
-//Get:
-//	(type=ID "::" )? name=[ecore::EStructuralFeature|Feature] (next=Get)?;
-
-Feature returns ecore::EString:
-    ID;
-    
-// equality:
-
-Formula:
-	Iff;
-	
-Iff returns Formula:
-	BinaryFormula ({Iff.left=current} "=" right=BinaryFormula)*;
+// formula:
 
 /* 
  * Precedence: not, and, or, xor, if, iff
@@ -57,6 +25,12 @@ Iff returns Formula:
  * terms of the rule for the operator with higher precedence. This means that in the grammar, 
  * the rules for operators with less precedence are defined first.
  */
+
+Formula:
+	Iff;
+	
+Iff returns Formula:
+	BinaryFormula ({Iff.left=current} "=" right=BinaryFormula)*;
 
 // binary formulas:
 // TODO: How to make If, Xor,... inherit from BinaryFormula?
@@ -75,7 +49,7 @@ Or returns Formula:
 	And ({Or.left=current} "or" right=And)*;
 
 And returns Formula:
-	Greater ({And.left=current} "and" right=Greater)*;
+	BooleanExpression ({And.left=current} "and" right=BooleanExpression)*;
 
 // unary formulas:
 
@@ -88,27 +62,41 @@ Not returns UnaryFormula:
 // predicates (term -> boolean):
 
 Predicate returns Formula:
-	Equals | IsEmpty;
+	Equals | Inequality | IsEmpty;
 
-// FIXME: Constant | Term
 Equals:
-	"equals(" (left=Term | ("[" left=Constant "]")) "," (right=Term | ("[" right=Constant "]")) ")";
+	"isEqual(" (left=Term) "," (right=Term) ")";
 
+Inequality returns Formula:
+	Greater | GreaterEqual | Smaller | SmallerEqual;
+
+Greater:
+	"isGreater(" (left=Term) "," (right=Term) ")";
+	
+GreaterEqual:
+	"isGreaterEqual(" (left=Term) "," (right=Term) ")";
+	
+Smaller:
+	"isSmaller(" (left=Term) "," (right=Term) ")";
+	
+SmallerEqual:
+	"isSmallerEqual(" (left=Term) "," (right=Term) ")";	
+	
 IsEmpty:
 	"isEmpty(" term=Term ")";
 
-// TODO: left/right should be of type Term
-Greater returns Formula:
-	GreaterEqual ({Greater.left=current} ">" right=GreaterEqual)*;
-	
-GreaterEqual returns Formula:
-	Smaller ({GreaterEqual.left=current} ">=" right=Smaller)*;
-
-Smaller returns Formula:
-	SmallerEqual ({Smaller.left=current} "<" right=SmallerEqual)*;
-	
-SmallerEqual returns Formula:
-	Primary ({SmallerEqual.left=current} "<=" right=Primary)*;
+// TODO: infix inequality expressions
+//Greater returns Formula:
+//	GreaterEqual ({Greater.left=current} ">" right=GreaterEqual)*;
+//	
+//GreaterEqual returns Formula:
+//	Smaller ({GreaterEqual.left=current} ">=" right=Smaller)*;
+//
+//Smaller returns Formula:
+//	SmallerEqual ({Smaller.left=current} "<" right=SmallerEqual)*;
+//	
+//SmallerEqual returns Formula:
+//	Term ({SmallerEqual.left=current} "<=" right=Term)*;
 	
 // quantifier
 
@@ -121,13 +109,26 @@ ForAll returns Quantifier:
 Exists returns Quantifier:
 	{Exists} "exists(" name=Variable "in" iteration=Term ":" formula=Formula ")";
 
-// general:
+// boolean:
 
-Primary returns Formula:
-	'(' Formula ')' | UnaryFormula | Quantifier | Predicate | Constant;
+BooleanExpression returns Formula:
+	'(' Formula ')' | UnaryFormula | Quantifier | Predicate | BoolConstant;
 	
+BoolConstant returns Term:
+	{BoolConstant} value=('true' | 'false');
+
+// terms:
+
+Term:
+	Constant | VariableRef;
+	
+VariableRef returns Term:
+	{VariableRef} name=[Variable] (get=Get)?;
+
+Get:
+	"." (type=ID "::" )? name=[ecore::EStructuralFeature] (next=Get)?;
+
 Constant returns Term:
 	{IntConstant} value=INT |
 	{StringConstant} value=STRING |
-	{BoolConstant} value=('true' | 'false') |
-	{VariableRef} variable=[Variable];
+	BoolConstant;

@@ -23,7 +23,6 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Formula
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get
-import org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Greater
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual
 import org.sidiff.validation.laguage.fol.firstOrderLogic.If
@@ -120,8 +119,8 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 						«compile(variable, variableCounter++, names)»
 					«ENDFOR»
 				
-					«FOR getTerm : constraint.eAllContents.filter(typeof(GetTerm)).toIterable»
-						«compile(getTerm, pathCounter++, names)»
+					«FOR getTerm : constraint.eAllContents.filter(typeof(VariableRef)).toIterable»
+						«if (getTerm.get != null) compile(getTerm, pathCounter++, names)»
 					«ENDFOR»
 				
 					«compile(constraint, constraintCounter++, names)»
@@ -156,7 +155,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		return '''Variable «name» = new Variable("«variable.name»");'''
 	}
 	
-	def String compile(GetTerm path, int counter, HashMap<Object, String> names) {
+	def String compile(VariableRef path, int counter, HashMap<Object, String> names) {
 		
 		// Term t1_m_receiveEvent_covered =
 		var name = '''t«counter»_«path.eAllContents.filter(typeof(Get)).map[name.name].join('_')»'''
@@ -164,8 +163,8 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		names.put(path, name)
 		
 		//new Get(new Get(m, DOMAIN.getMessage_ReceiveEvent()), DOMAIN.getInteractionFragment_Covered());
-		var code = new StringBuffer('new Get(' + names.get(path.name) + ', ' + compile(path.feature.name) + ')')
-		compile(path.feature.next, code)
+		var code = new StringBuffer('new Get(' + names.get(path.name) + ', ' + compile(path.get.name) + ')')
+		compile(path.get.next, code)
 		
 		return getVariable + code + ';'
 	}
@@ -256,23 +255,27 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	}
 	
 	def dispatch String compileFormula(StringConstant string, HashMap<Object, String> names) {
-		return 'new Constant(' + string.value + ')'
+		return 'new Constant("' + string.value + '")'
 	}
 	
 	def dispatch String compileFormula(BoolConstant bool, HashMap<Object, String> names) {
-		return 'new Constant(' + bool.value + ')'
+		if (bool.value.equalsIgnoreCase('true')) {
+			return 'BoolConstant.TRUE'
+		} else {
+			return 'BoolConstant.FALSE'
+		}
 	}
 	
 	def dispatch String compileFormula(VariableRef variable, HashMap<Object, String> names) {
-		return names.get(variable.variable)
+		if (variable.get != null) {
+			return names.get(variable)
+		} else {
+			return names.get(variable.name)			
+		}
 	}
 	
 	def dispatch String compileFormula(Variable variable, HashMap<Object, String> names) {
 		return names.get(variable)
-	}
-	 
-	def dispatch String compileFormula(GetTerm path, HashMap<Object, String> names) {
-		return names.get(path)
 	}
 	 
 	def static void saveAsXMI(Resource resource) {

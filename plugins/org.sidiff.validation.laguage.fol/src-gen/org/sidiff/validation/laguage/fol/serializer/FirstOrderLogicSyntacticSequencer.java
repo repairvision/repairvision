@@ -20,14 +20,14 @@ import org.sidiff.validation.laguage.fol.services.FirstOrderLogicGrammarAccess;
 public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected FirstOrderLogicGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Primary_LeftParenthesisKeyword_0_0_a;
-	protected AbstractElementAlias match_Primary_LeftParenthesisKeyword_0_0_p;
+	protected AbstractElementAlias match_BooleanExpression_LeftParenthesisKeyword_0_0_a;
+	protected AbstractElementAlias match_BooleanExpression_LeftParenthesisKeyword_0_0_p;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (FirstOrderLogicGrammarAccess) access;
-		match_Primary_LeftParenthesisKeyword_0_0_a = new TokenAlias(true, true, grammarAccess.getPrimaryAccess().getLeftParenthesisKeyword_0_0());
-		match_Primary_LeftParenthesisKeyword_0_0_p = new TokenAlias(true, false, grammarAccess.getPrimaryAccess().getLeftParenthesisKeyword_0_0());
+		match_BooleanExpression_LeftParenthesisKeyword_0_0_a = new TokenAlias(true, true, grammarAccess.getBooleanExpressionAccess().getLeftParenthesisKeyword_0_0());
+		match_BooleanExpression_LeftParenthesisKeyword_0_0_p = new TokenAlias(true, false, grammarAccess.getBooleanExpressionAccess().getLeftParenthesisKeyword_0_0());
 	}
 	
 	@Override
@@ -42,10 +42,10 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Primary_LeftParenthesisKeyword_0_0_a.equals(syntax))
-				emit_Primary_LeftParenthesisKeyword_0_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Primary_LeftParenthesisKeyword_0_0_p.equals(syntax))
-				emit_Primary_LeftParenthesisKeyword_0_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_BooleanExpression_LeftParenthesisKeyword_0_0_a.equals(syntax))
+				emit_BooleanExpression_LeftParenthesisKeyword_0_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_BooleanExpression_LeftParenthesisKeyword_0_0_p.equals(syntax))
+				emit_BooleanExpression_LeftParenthesisKeyword_0_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -55,28 +55,24 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 	 *     '('*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) 'equals(' '[' left=Constant
 	 *     (rule start) (ambiguity) 'equals(' left=Term
 	 *     (rule start) (ambiguity) 'exists(' name=Variable
 	 *     (rule start) (ambiguity) 'forAll(' name=Variable
 	 *     (rule start) (ambiguity) 'isEmpty(' term=Term
+	 *     (rule start) (ambiguity) 'isGreater(' left=Term
+	 *     (rule start) (ambiguity) 'isGreaterEqual(' left=Term
+	 *     (rule start) (ambiguity) 'isSmaller(' left=Term
+	 *     (rule start) (ambiguity) 'isSmallerEqual(' left=Term
 	 *     (rule start) (ambiguity) 'not(' not=Formula
 	 *     (rule start) (ambiguity) value='false'
 	 *     (rule start) (ambiguity) value='true'
-	 *     (rule start) (ambiguity) value=INT
-	 *     (rule start) (ambiguity) value=STRING
-	 *     (rule start) (ambiguity) variable=[Variable|ID]
 	 *     (rule start) (ambiguity) {And.left=}
-	 *     (rule start) (ambiguity) {Greater.left=}
-	 *     (rule start) (ambiguity) {GreaterEqual.left=}
 	 *     (rule start) (ambiguity) {If.left=}
 	 *     (rule start) (ambiguity) {Iff.left=}
 	 *     (rule start) (ambiguity) {Or.left=}
-	 *     (rule start) (ambiguity) {Smaller.left=}
-	 *     (rule start) (ambiguity) {SmallerEqual.left=}
 	 *     (rule start) (ambiguity) {Xor.left=}
 	 */
-	protected void emit_Primary_LeftParenthesisKeyword_0_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_BooleanExpression_LeftParenthesisKeyword_0_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -86,16 +82,12 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) {And.left=}
-	 *     (rule start) (ambiguity) {Greater.left=}
-	 *     (rule start) (ambiguity) {GreaterEqual.left=}
 	 *     (rule start) (ambiguity) {If.left=}
 	 *     (rule start) (ambiguity) {Iff.left=}
 	 *     (rule start) (ambiguity) {Or.left=}
-	 *     (rule start) (ambiguity) {Smaller.left=}
-	 *     (rule start) (ambiguity) {SmallerEqual.left=}
 	 *     (rule start) (ambiguity) {Xor.left=}
 	 */
-	protected void emit_Primary_LeftParenthesisKeyword_0_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_BooleanExpression_LeftParenthesisKeyword_0_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

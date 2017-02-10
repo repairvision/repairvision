@@ -23,7 +23,6 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
-import org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Greater;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.If;
@@ -58,7 +57,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				sequence_And(context, (And) semanticObject); 
 				return; 
 			case FirstOrderLogicPackage.BOOL_CONSTANT:
-				sequence_Constant(context, (BoolConstant) semanticObject); 
+				sequence_BoolConstant(context, (BoolConstant) semanticObject); 
 				return; 
 			case FirstOrderLogicPackage.CONSTRAINT:
 				sequence_Constraint(context, (Constraint) semanticObject); 
@@ -77,9 +76,6 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				return; 
 			case FirstOrderLogicPackage.GET:
 				sequence_Get(context, (Get) semanticObject); 
-				return; 
-			case FirstOrderLogicPackage.GET_TERM:
-				sequence_GetTerm(context, (GetTerm) semanticObject); 
 				return; 
 			case FirstOrderLogicPackage.GREATER:
 				sequence_Greater(context, (Greater) semanticObject); 
@@ -118,7 +114,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				sequence_Variable(context, (Variable) semanticObject); 
 				return; 
 			case FirstOrderLogicPackage.VARIABLE_REF:
-				sequence_Constant(context, (VariableRef) semanticObject); 
+				sequence_VariableRef(context, (VariableRef) semanticObject); 
 				return; 
 			case FirstOrderLogicPackage.XOR:
 				sequence_Xor(context, (Xor) semanticObject); 
@@ -142,18 +138,10 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns And
 	 *     And returns And
 	 *     And.And_1_0 returns And
-	 *     Greater returns And
-	 *     Greater.Greater_1_0 returns And
-	 *     GreaterEqual returns And
-	 *     GreaterEqual.GreaterEqual_1_0 returns And
-	 *     Smaller returns And
-	 *     Smaller.Smaller_1_0 returns And
-	 *     SmallerEqual returns And
-	 *     SmallerEqual.SmallerEqual_1_0 returns And
-	 *     Primary returns And
+	 *     BooleanExpression returns And
 	 *
 	 * Constraint:
-	 *     (left=And_And_1_0 right=Greater)
+	 *     (left=And_And_1_0 right=BooleanExpression)
 	 */
 	protected void sequence_And(ISerializationContext context, And semanticObject) {
 		if (errorAcceptor != null) {
@@ -164,7 +152,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getAndAccess().getAndLeftAction_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getAndAccess().getRightGreaterParserRuleCall_1_2_0(), semanticObject.getRight());
+		feeder.accept(grammarAccess.getAndAccess().getRightBooleanExpressionParserRuleCall_1_2_0(), semanticObject.getRight());
 		feeder.finish();
 	}
 	
@@ -183,48 +171,22 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns BoolConstant
 	 *     And returns BoolConstant
 	 *     And.And_1_0 returns BoolConstant
-	 *     Greater returns BoolConstant
-	 *     Greater.Greater_1_0 returns BoolConstant
-	 *     GreaterEqual returns BoolConstant
-	 *     GreaterEqual.GreaterEqual_1_0 returns BoolConstant
-	 *     Smaller returns BoolConstant
-	 *     Smaller.Smaller_1_0 returns BoolConstant
-	 *     SmallerEqual returns BoolConstant
-	 *     SmallerEqual.SmallerEqual_1_0 returns BoolConstant
-	 *     Primary returns BoolConstant
+	 *     BooleanExpression returns BoolConstant
+	 *     BoolConstant returns BoolConstant
+	 *     Term returns BoolConstant
 	 *     Constant returns BoolConstant
 	 *
 	 * Constraint:
 	 *     (value='true' | value='false')
 	 */
-	protected void sequence_Constant(ISerializationContext context, BoolConstant semanticObject) {
+	protected void sequence_BoolConstant(ISerializationContext context, BoolConstant semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Formula returns IntConstant
-	 *     Iff returns IntConstant
-	 *     Iff.Iff_1_0 returns IntConstant
-	 *     BinaryFormula returns IntConstant
-	 *     If returns IntConstant
-	 *     If.If_1_0 returns IntConstant
-	 *     Xor returns IntConstant
-	 *     Xor.Xor_1_0 returns IntConstant
-	 *     Or returns IntConstant
-	 *     Or.Or_1_0 returns IntConstant
-	 *     And returns IntConstant
-	 *     And.And_1_0 returns IntConstant
-	 *     Greater returns IntConstant
-	 *     Greater.Greater_1_0 returns IntConstant
-	 *     GreaterEqual returns IntConstant
-	 *     GreaterEqual.GreaterEqual_1_0 returns IntConstant
-	 *     Smaller returns IntConstant
-	 *     Smaller.Smaller_1_0 returns IntConstant
-	 *     SmallerEqual returns IntConstant
-	 *     SmallerEqual.SmallerEqual_1_0 returns IntConstant
-	 *     Primary returns IntConstant
+	 *     Term returns IntConstant
 	 *     Constant returns IntConstant
 	 *
 	 * Constraint:
@@ -243,27 +205,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     Formula returns StringConstant
-	 *     Iff returns StringConstant
-	 *     Iff.Iff_1_0 returns StringConstant
-	 *     BinaryFormula returns StringConstant
-	 *     If returns StringConstant
-	 *     If.If_1_0 returns StringConstant
-	 *     Xor returns StringConstant
-	 *     Xor.Xor_1_0 returns StringConstant
-	 *     Or returns StringConstant
-	 *     Or.Or_1_0 returns StringConstant
-	 *     And returns StringConstant
-	 *     And.And_1_0 returns StringConstant
-	 *     Greater returns StringConstant
-	 *     Greater.Greater_1_0 returns StringConstant
-	 *     GreaterEqual returns StringConstant
-	 *     GreaterEqual.GreaterEqual_1_0 returns StringConstant
-	 *     Smaller returns StringConstant
-	 *     Smaller.Smaller_1_0 returns StringConstant
-	 *     SmallerEqual returns StringConstant
-	 *     SmallerEqual.SmallerEqual_1_0 returns StringConstant
-	 *     Primary returns StringConstant
+	 *     Term returns StringConstant
 	 *     Constant returns StringConstant
 	 *
 	 * Constraint:
@@ -276,45 +218,6 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getConstantAccess().getValueSTRINGTerminalRuleCall_1_1_0(), semanticObject.getValue());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Formula returns VariableRef
-	 *     Iff returns VariableRef
-	 *     Iff.Iff_1_0 returns VariableRef
-	 *     BinaryFormula returns VariableRef
-	 *     If returns VariableRef
-	 *     If.If_1_0 returns VariableRef
-	 *     Xor returns VariableRef
-	 *     Xor.Xor_1_0 returns VariableRef
-	 *     Or returns VariableRef
-	 *     Or.Or_1_0 returns VariableRef
-	 *     And returns VariableRef
-	 *     And.And_1_0 returns VariableRef
-	 *     Greater returns VariableRef
-	 *     Greater.Greater_1_0 returns VariableRef
-	 *     GreaterEqual returns VariableRef
-	 *     GreaterEqual.GreaterEqual_1_0 returns VariableRef
-	 *     Smaller returns VariableRef
-	 *     Smaller.Smaller_1_0 returns VariableRef
-	 *     SmallerEqual returns VariableRef
-	 *     SmallerEqual.SmallerEqual_1_0 returns VariableRef
-	 *     Primary returns VariableRef
-	 *     Constant returns VariableRef
-	 *
-	 * Constraint:
-	 *     variable=[Variable|ID]
-	 */
-	protected void sequence_Constant(ISerializationContext context, VariableRef semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.VARIABLE_REF__VARIABLE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.VARIABLE_REF__VARIABLE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConstantAccess().getVariableVariableIDTerminalRuleCall_3_1_0_1(), semanticObject.getVariable());
 		feeder.finish();
 	}
 	
@@ -336,7 +239,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Constraint returns Constraint
 	 *
 	 * Constraint:
-	 *     (name=STRING message=STRING variable=Variable formula=Formula)
+	 *     (name=ID message=STRING variable=Variable formula=Formula)
 	 */
 	protected void sequence_Constraint(ISerializationContext context, Constraint semanticObject) {
 		if (errorAcceptor != null) {
@@ -350,7 +253,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.CONSTRAINT__FORMULA));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConstraintAccess().getNameSTRINGTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getConstraintAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
 		feeder.accept(grammarAccess.getConstraintAccess().getMessageSTRINGTerminalRuleCall_3_0(), semanticObject.getMessage());
 		feeder.accept(grammarAccess.getConstraintAccess().getVariableVariableParserRuleCall_5_0(), semanticObject.getVariable());
 		feeder.accept(grammarAccess.getConstraintAccess().getFormulaFormulaParserRuleCall_7_0(), semanticObject.getFormula());
@@ -374,21 +277,22 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     And.And_1_0 returns Equals
 	 *     Predicate returns Equals
 	 *     Equals returns Equals
-	 *     Greater returns Equals
-	 *     Greater.Greater_1_0 returns Equals
-	 *     GreaterEqual returns Equals
-	 *     GreaterEqual.GreaterEqual_1_0 returns Equals
-	 *     Smaller returns Equals
-	 *     Smaller.Smaller_1_0 returns Equals
-	 *     SmallerEqual returns Equals
-	 *     SmallerEqual.SmallerEqual_1_0 returns Equals
-	 *     Primary returns Equals
+	 *     BooleanExpression returns Equals
 	 *
 	 * Constraint:
-	 *     ((left=Term | left=Constant) (right=Term | right=Constant))
+	 *     (left=Term right=Term)
 	 */
 	protected void sequence_Equals(ISerializationContext context, Equals semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.EQUALS__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.EQUALS__LEFT));
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.EQUALS__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.EQUALS__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getEqualsAccess().getLeftTermParserRuleCall_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getEqualsAccess().getRightTermParserRuleCall_3_0(), semanticObject.getRight());
+		feeder.finish();
 	}
 	
 	
@@ -406,17 +310,9 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns Exists
 	 *     And returns Exists
 	 *     And.And_1_0 returns Exists
-	 *     Greater returns Exists
-	 *     Greater.Greater_1_0 returns Exists
-	 *     GreaterEqual returns Exists
-	 *     GreaterEqual.GreaterEqual_1_0 returns Exists
-	 *     Smaller returns Exists
-	 *     Smaller.Smaller_1_0 returns Exists
-	 *     SmallerEqual returns Exists
-	 *     SmallerEqual.SmallerEqual_1_0 returns Exists
 	 *     Quantifier returns Exists
 	 *     Exists returns Exists
-	 *     Primary returns Exists
+	 *     BooleanExpression returns Exists
 	 *
 	 * Constraint:
 	 *     (name=Variable iteration=Term formula=Formula)
@@ -452,17 +348,9 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns ForAll
 	 *     And returns ForAll
 	 *     And.And_1_0 returns ForAll
-	 *     Greater returns ForAll
-	 *     Greater.Greater_1_0 returns ForAll
-	 *     GreaterEqual returns ForAll
-	 *     GreaterEqual.GreaterEqual_1_0 returns ForAll
-	 *     Smaller returns ForAll
-	 *     Smaller.Smaller_1_0 returns ForAll
-	 *     SmallerEqual returns ForAll
-	 *     SmallerEqual.SmallerEqual_1_0 returns ForAll
 	 *     Quantifier returns ForAll
 	 *     ForAll returns ForAll
-	 *     Primary returns ForAll
+	 *     BooleanExpression returns ForAll
 	 *
 	 * Constraint:
 	 *     (name=Variable iteration=Term formula=Formula)
@@ -486,24 +374,10 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     Term returns GetTerm
-	 *     Function returns GetTerm
-	 *     GetTerm returns GetTerm
-	 *
-	 * Constraint:
-	 *     (name=[Variable|ID] feature=Get?)
-	 */
-	protected void sequence_GetTerm(ISerializationContext context, GetTerm semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Get returns Get
 	 *
 	 * Constraint:
-	 *     (type=ID? name=[EStructuralFeature|Feature] next=Get?)
+	 *     (type=ID? name=[EStructuralFeature|ID] next=Get?)
 	 */
 	protected void sequence_Get(ISerializationContext context, Get semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -524,18 +398,13 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns GreaterEqual
 	 *     And returns GreaterEqual
 	 *     And.And_1_0 returns GreaterEqual
-	 *     Greater returns GreaterEqual
-	 *     Greater.Greater_1_0 returns GreaterEqual
+	 *     Predicate returns GreaterEqual
+	 *     Inequality returns GreaterEqual
 	 *     GreaterEqual returns GreaterEqual
-	 *     GreaterEqual.GreaterEqual_1_0 returns GreaterEqual
-	 *     Smaller returns GreaterEqual
-	 *     Smaller.Smaller_1_0 returns GreaterEqual
-	 *     SmallerEqual returns GreaterEqual
-	 *     SmallerEqual.SmallerEqual_1_0 returns GreaterEqual
-	 *     Primary returns GreaterEqual
+	 *     BooleanExpression returns GreaterEqual
 	 *
 	 * Constraint:
-	 *     (left=GreaterEqual_GreaterEqual_1_0 right=Smaller)
+	 *     (left=Term right=Term)
 	 */
 	protected void sequence_GreaterEqual(ISerializationContext context, GreaterEqual semanticObject) {
 		if (errorAcceptor != null) {
@@ -545,8 +414,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.GREATER_EQUAL__RIGHT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getGreaterEqualAccess().getGreaterEqualLeftAction_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getGreaterEqualAccess().getRightSmallerParserRuleCall_1_2_0(), semanticObject.getRight());
+		feeder.accept(grammarAccess.getGreaterEqualAccess().getLeftTermParserRuleCall_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getGreaterEqualAccess().getRightTermParserRuleCall_3_0(), semanticObject.getRight());
 		feeder.finish();
 	}
 	
@@ -565,18 +434,13 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns Greater
 	 *     And returns Greater
 	 *     And.And_1_0 returns Greater
+	 *     Predicate returns Greater
+	 *     Inequality returns Greater
 	 *     Greater returns Greater
-	 *     Greater.Greater_1_0 returns Greater
-	 *     GreaterEqual returns Greater
-	 *     GreaterEqual.GreaterEqual_1_0 returns Greater
-	 *     Smaller returns Greater
-	 *     Smaller.Smaller_1_0 returns Greater
-	 *     SmallerEqual returns Greater
-	 *     SmallerEqual.SmallerEqual_1_0 returns Greater
-	 *     Primary returns Greater
+	 *     BooleanExpression returns Greater
 	 *
 	 * Constraint:
-	 *     (left=Greater_Greater_1_0 right=GreaterEqual)
+	 *     (left=Term right=Term)
 	 */
 	protected void sequence_Greater(ISerializationContext context, Greater semanticObject) {
 		if (errorAcceptor != null) {
@@ -586,8 +450,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.GREATER__RIGHT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getGreaterAccess().getGreaterLeftAction_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getGreaterAccess().getRightGreaterEqualParserRuleCall_1_2_0(), semanticObject.getRight());
+		feeder.accept(grammarAccess.getGreaterAccess().getLeftTermParserRuleCall_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getGreaterAccess().getRightTermParserRuleCall_3_0(), semanticObject.getRight());
 		feeder.finish();
 	}
 	
@@ -606,15 +470,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns If
 	 *     And returns If
 	 *     And.And_1_0 returns If
-	 *     Greater returns If
-	 *     Greater.Greater_1_0 returns If
-	 *     GreaterEqual returns If
-	 *     GreaterEqual.GreaterEqual_1_0 returns If
-	 *     Smaller returns If
-	 *     Smaller.Smaller_1_0 returns If
-	 *     SmallerEqual returns If
-	 *     SmallerEqual.SmallerEqual_1_0 returns If
-	 *     Primary returns If
+	 *     BooleanExpression returns If
 	 *
 	 * Constraint:
 	 *     (left=If_If_1_0 right=Xor)
@@ -647,15 +503,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns Iff
 	 *     And returns Iff
 	 *     And.And_1_0 returns Iff
-	 *     Greater returns Iff
-	 *     Greater.Greater_1_0 returns Iff
-	 *     GreaterEqual returns Iff
-	 *     GreaterEqual.GreaterEqual_1_0 returns Iff
-	 *     Smaller returns Iff
-	 *     Smaller.Smaller_1_0 returns Iff
-	 *     SmallerEqual returns Iff
-	 *     SmallerEqual.SmallerEqual_1_0 returns Iff
-	 *     Primary returns Iff
+	 *     BooleanExpression returns Iff
 	 *
 	 * Constraint:
 	 *     (left=Iff_Iff_1_0 right=BinaryFormula)
@@ -690,15 +538,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     And.And_1_0 returns IsEmpty
 	 *     Predicate returns IsEmpty
 	 *     IsEmpty returns IsEmpty
-	 *     Greater returns IsEmpty
-	 *     Greater.Greater_1_0 returns IsEmpty
-	 *     GreaterEqual returns IsEmpty
-	 *     GreaterEqual.GreaterEqual_1_0 returns IsEmpty
-	 *     Smaller returns IsEmpty
-	 *     Smaller.Smaller_1_0 returns IsEmpty
-	 *     SmallerEqual returns IsEmpty
-	 *     SmallerEqual.SmallerEqual_1_0 returns IsEmpty
-	 *     Primary returns IsEmpty
+	 *     BooleanExpression returns IsEmpty
 	 *
 	 * Constraint:
 	 *     term=Term
@@ -730,15 +570,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     And.And_1_0 returns Not
 	 *     UnaryFormula returns Not
 	 *     Not returns Not
-	 *     Greater returns Not
-	 *     Greater.Greater_1_0 returns Not
-	 *     GreaterEqual returns Not
-	 *     GreaterEqual.GreaterEqual_1_0 returns Not
-	 *     Smaller returns Not
-	 *     Smaller.Smaller_1_0 returns Not
-	 *     SmallerEqual returns Not
-	 *     SmallerEqual.SmallerEqual_1_0 returns Not
-	 *     Primary returns Not
+	 *     BooleanExpression returns Not
 	 *
 	 * Constraint:
 	 *     not=Formula
@@ -768,15 +600,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns Or
 	 *     And returns Or
 	 *     And.And_1_0 returns Or
-	 *     Greater returns Or
-	 *     Greater.Greater_1_0 returns Or
-	 *     GreaterEqual returns Or
-	 *     GreaterEqual.GreaterEqual_1_0 returns Or
-	 *     Smaller returns Or
-	 *     Smaller.Smaller_1_0 returns Or
-	 *     SmallerEqual returns Or
-	 *     SmallerEqual.SmallerEqual_1_0 returns Or
-	 *     Primary returns Or
+	 *     BooleanExpression returns Or
 	 *
 	 * Constraint:
 	 *     (left=Or_Or_1_0 right=And)
@@ -809,18 +633,13 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns SmallerEqual
 	 *     And returns SmallerEqual
 	 *     And.And_1_0 returns SmallerEqual
-	 *     Greater returns SmallerEqual
-	 *     Greater.Greater_1_0 returns SmallerEqual
-	 *     GreaterEqual returns SmallerEqual
-	 *     GreaterEqual.GreaterEqual_1_0 returns SmallerEqual
-	 *     Smaller returns SmallerEqual
-	 *     Smaller.Smaller_1_0 returns SmallerEqual
+	 *     Predicate returns SmallerEqual
+	 *     Inequality returns SmallerEqual
 	 *     SmallerEqual returns SmallerEqual
-	 *     SmallerEqual.SmallerEqual_1_0 returns SmallerEqual
-	 *     Primary returns SmallerEqual
+	 *     BooleanExpression returns SmallerEqual
 	 *
 	 * Constraint:
-	 *     (left=SmallerEqual_SmallerEqual_1_0 right=Primary)
+	 *     (left=Term right=Term)
 	 */
 	protected void sequence_SmallerEqual(ISerializationContext context, SmallerEqual semanticObject) {
 		if (errorAcceptor != null) {
@@ -830,8 +649,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.SMALLER_EQUAL__RIGHT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSmallerEqualAccess().getSmallerEqualLeftAction_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getSmallerEqualAccess().getRightPrimaryParserRuleCall_1_2_0(), semanticObject.getRight());
+		feeder.accept(grammarAccess.getSmallerEqualAccess().getLeftTermParserRuleCall_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getSmallerEqualAccess().getRightTermParserRuleCall_3_0(), semanticObject.getRight());
 		feeder.finish();
 	}
 	
@@ -850,18 +669,13 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns Smaller
 	 *     And returns Smaller
 	 *     And.And_1_0 returns Smaller
-	 *     Greater returns Smaller
-	 *     Greater.Greater_1_0 returns Smaller
-	 *     GreaterEqual returns Smaller
-	 *     GreaterEqual.GreaterEqual_1_0 returns Smaller
+	 *     Predicate returns Smaller
+	 *     Inequality returns Smaller
 	 *     Smaller returns Smaller
-	 *     Smaller.Smaller_1_0 returns Smaller
-	 *     SmallerEqual returns Smaller
-	 *     SmallerEqual.SmallerEqual_1_0 returns Smaller
-	 *     Primary returns Smaller
+	 *     BooleanExpression returns Smaller
 	 *
 	 * Constraint:
-	 *     (left=Smaller_Smaller_1_0 right=SmallerEqual)
+	 *     (left=Term right=Term)
 	 */
 	protected void sequence_Smaller(ISerializationContext context, Smaller semanticObject) {
 		if (errorAcceptor != null) {
@@ -871,9 +685,22 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.SMALLER__RIGHT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSmallerAccess().getSmallerLeftAction_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getSmallerAccess().getRightSmallerEqualParserRuleCall_1_2_0(), semanticObject.getRight());
+		feeder.accept(grammarAccess.getSmallerAccess().getLeftTermParserRuleCall_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getSmallerAccess().getRightTermParserRuleCall_3_0(), semanticObject.getRight());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Term returns VariableRef
+	 *     VariableRef returns VariableRef
+	 *
+	 * Constraint:
+	 *     (name=[Variable|ID] get=Get?)
+	 */
+	protected void sequence_VariableRef(ISerializationContext context, VariableRef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -912,15 +739,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Or.Or_1_0 returns Xor
 	 *     And returns Xor
 	 *     And.And_1_0 returns Xor
-	 *     Greater returns Xor
-	 *     Greater.Greater_1_0 returns Xor
-	 *     GreaterEqual returns Xor
-	 *     GreaterEqual.GreaterEqual_1_0 returns Xor
-	 *     Smaller returns Xor
-	 *     Smaller.Smaller_1_0 returns Xor
-	 *     SmallerEqual returns Xor
-	 *     SmallerEqual.SmallerEqual_1_0 returns Xor
-	 *     Primary returns Xor
+	 *     BooleanExpression returns Xor
 	 *
 	 * Constraint:
 	 *     (left=Xor_Xor_1_0 right=Or)

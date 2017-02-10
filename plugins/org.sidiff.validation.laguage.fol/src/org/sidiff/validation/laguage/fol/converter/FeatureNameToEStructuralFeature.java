@@ -8,8 +8,8 @@ import org.eclipse.xtext.common.services.DefaultTerminalConverters;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
-import org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef;
 
 public class FeatureNameToEStructuralFeature extends DefaultTerminalConverters {
 
@@ -68,8 +68,8 @@ public class FeatureNameToEStructuralFeature extends DefaultTerminalConverters {
 			return ((Constraint) obj).getVariable().getType();
 		} else if (obj instanceof Quantifier) {
 			return ((Quantifier) obj).getName().getType();
-		} else if (obj instanceof GetTerm) {
-			return ((GetTerm) obj).getName().getType();
+		} else if (obj instanceof VariableRef) {
+			return ((VariableRef) obj).getName().getType();
 		} else if (obj instanceof Get) {
 			Get get = ((Get) obj);
 			

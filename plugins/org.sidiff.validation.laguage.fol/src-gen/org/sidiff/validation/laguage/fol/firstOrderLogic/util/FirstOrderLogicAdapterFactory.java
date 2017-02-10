@@ -91,16 +91,6 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createVariableAdapter();
       }
       @Override
-      public Adapter caseTerm(Term object)
-      {
-        return createTermAdapter();
-      }
-      @Override
-      public Adapter caseGet(Get object)
-      {
-        return createGetAdapter();
-      }
-      @Override
       public Adapter caseFormula(Formula object)
       {
         return createFormulaAdapter();
@@ -116,6 +106,26 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createEqualsAdapter();
       }
       @Override
+      public Adapter caseGreater(Greater object)
+      {
+        return createGreaterAdapter();
+      }
+      @Override
+      public Adapter caseGreaterEqual(GreaterEqual object)
+      {
+        return createGreaterEqualAdapter();
+      }
+      @Override
+      public Adapter caseSmaller(Smaller object)
+      {
+        return createSmallerAdapter();
+      }
+      @Override
+      public Adapter caseSmallerEqual(SmallerEqual object)
+      {
+        return createSmallerEqualAdapter();
+      }
+      @Override
       public Adapter caseIsEmpty(IsEmpty object)
       {
         return createIsEmptyAdapter();
@@ -126,9 +136,14 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createQuantifierAdapter();
       }
       @Override
-      public Adapter caseGetTerm(GetTerm object)
+      public Adapter caseTerm(Term object)
       {
-        return createGetTermAdapter();
+        return createTermAdapter();
+      }
+      @Override
+      public Adapter caseGet(Get object)
+      {
+        return createGetAdapter();
       }
       @Override
       public Adapter caseIff(Iff object)
@@ -161,26 +176,6 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createNotAdapter();
       }
       @Override
-      public Adapter caseGreater(Greater object)
-      {
-        return createGreaterAdapter();
-      }
-      @Override
-      public Adapter caseGreaterEqual(GreaterEqual object)
-      {
-        return createGreaterEqualAdapter();
-      }
-      @Override
-      public Adapter caseSmaller(Smaller object)
-      {
-        return createSmallerAdapter();
-      }
-      @Override
-      public Adapter caseSmallerEqual(SmallerEqual object)
-      {
-        return createSmallerEqualAdapter();
-      }
-      @Override
       public Adapter caseForAll(ForAll object)
       {
         return createForAllAdapter();
@@ -191,16 +186,6 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createExistsAdapter();
       }
       @Override
-      public Adapter caseIntConstant(IntConstant object)
-      {
-        return createIntConstantAdapter();
-      }
-      @Override
-      public Adapter caseStringConstant(StringConstant object)
-      {
-        return createStringConstantAdapter();
-      }
-      @Override
       public Adapter caseBoolConstant(BoolConstant object)
       {
         return createBoolConstantAdapter();
@@ -209,6 +194,16 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
       public Adapter caseVariableRef(VariableRef object)
       {
         return createVariableRefAdapter();
+      }
+      @Override
+      public Adapter caseIntConstant(IntConstant object)
+      {
+        return createIntConstantAdapter();
+      }
+      @Override
+      public Adapter caseStringConstant(StringConstant object)
+      {
+        return createStringConstantAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -278,36 +273,6 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Term <em>Term</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Term
-   * @generated
-   */
-  public Adapter createTermAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get <em>Get</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Get
-   * @generated
-   */
-  public Adapter createGetAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Formula <em>Formula</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -353,6 +318,66 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Greater <em>Greater</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Greater
+   * @generated
+   */
+  public Adapter createGreaterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual <em>Greater Equal</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual
+   * @generated
+   */
+  public Adapter createGreaterEqualAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Smaller <em>Smaller</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Smaller
+   * @generated
+   */
+  public Adapter createSmallerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.SmallerEqual <em>Smaller Equal</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.SmallerEqual
+   * @generated
+   */
+  public Adapter createSmallerEqualAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty <em>Is Empty</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -383,16 +408,31 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm <em>Get Term</em>}'.
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Term <em>Term</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.GetTerm
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Term
    * @generated
    */
-  public Adapter createGetTermAdapter()
+  public Adapter createTermAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get <em>Get</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Get
+   * @generated
+   */
+  public Adapter createGetAdapter()
   {
     return null;
   }
@@ -488,66 +528,6 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Greater <em>Greater</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Greater
-   * @generated
-   */
-  public Adapter createGreaterAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual <em>Greater Equal</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual
-   * @generated
-   */
-  public Adapter createGreaterEqualAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Smaller <em>Smaller</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Smaller
-   * @generated
-   */
-  public Adapter createSmallerAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.SmallerEqual <em>Smaller Equal</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.SmallerEqual
-   * @generated
-   */
-  public Adapter createSmallerEqualAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll <em>For All</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -578,36 +558,6 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant <em>Int Constant</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant
-   * @generated
-   */
-  public Adapter createIntConstantAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant <em>String Constant</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant
-   * @generated
-   */
-  public Adapter createStringConstantAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant <em>Bool Constant</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -633,6 +583,36 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVariableRefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant <em>Int Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant
+   * @generated
+   */
+  public Adapter createIntConstantAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant <em>String Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant
+   * @generated
+   */
+  public Adapter createStringConstantAdapter()
   {
     return null;
   }

@@ -21,17 +21,27 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Variable/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Variable/name"/>
     </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//Term"/>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//Get">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Get/type"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Get/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Get/next"/>
-    </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Formula"/>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//UnaryFormula"/>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Equals">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Equals/left"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Equals/right"/>
+    </genClasses>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//Greater">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Greater/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Greater/right"/>
+    </genClasses>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//GreaterEqual">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//GreaterEqual/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//GreaterEqual/right"/>
+    </genClasses>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//Smaller">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Smaller/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Smaller/right"/>
+    </genClasses>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//SmallerEqual">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//SmallerEqual/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//SmallerEqual/right"/>
     </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//IsEmpty">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//IsEmpty/term"/>
@@ -41,9 +51,11 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Quantifier/iteration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Quantifier/formula"/>
     </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//GetTerm">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//GetTerm/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//GetTerm/feature"/>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//Term"/>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//Get">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Get/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Get/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Get/next"/>
     </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Iff">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Iff/left"/>
@@ -68,35 +80,20 @@
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Not">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Not/not"/>
     </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//Greater">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Greater/left"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Greater/right"/>
-    </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//GreaterEqual">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//GreaterEqual/left"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//GreaterEqual/right"/>
-    </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//Smaller">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Smaller/left"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Smaller/right"/>
-    </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//SmallerEqual">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//SmallerEqual/left"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//SmallerEqual/right"/>
-    </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//ForAll"/>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Exists"/>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//BoolConstant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//BoolConstant/value"/>
+    </genClasses>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//VariableRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//VariableRef/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//VariableRef/get"/>
+    </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//IntConstant">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//IntConstant/value"/>
     </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//StringConstant">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//StringConstant/value"/>
-    </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//BoolConstant">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//BoolConstant/value"/>
-    </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//VariableRef">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//VariableRef/variable"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

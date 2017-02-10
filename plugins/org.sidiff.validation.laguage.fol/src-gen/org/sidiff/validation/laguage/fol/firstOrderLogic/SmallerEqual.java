@@ -32,12 +32,12 @@ public interface SmallerEqual extends Formula
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Left</em>' containment reference.
-   * @see #setLeft(Formula)
+   * @see #setLeft(Term)
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getSmallerEqual_Left()
    * @model containment="true"
    * @generated
    */
-  Formula getLeft();
+  Term getLeft();
 
   /**
    * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.SmallerEqual#getLeft <em>Left</em>}' containment reference.
@@ -47,7 +47,7 @@ public interface SmallerEqual extends Formula
    * @see #getLeft()
    * @generated
    */
-  void setLeft(Formula value);
+  void setLeft(Term value);
 
   /**
    * Returns the value of the '<em><b>Right</b></em>' containment reference.
@@ -58,12 +58,12 @@ public interface SmallerEqual extends Formula
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Right</em>' containment reference.
-   * @see #setRight(Formula)
+   * @see #setRight(Term)
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getSmallerEqual_Right()
    * @model containment="true"
    * @generated
    */
-  Formula getRight();
+  Term getRight();
 
   /**
    * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.SmallerEqual#getRight <em>Right</em>}' containment reference.
@@ -73,6 +73,6 @@ public interface SmallerEqual extends Formula
    * @see #getRight()
    * @generated
    */
-  void setRight(Formula value);
+  void setRight(Term value);
 
 } // SmallerEqual

@@ -12,8 +12,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
-import org.sidiff.validation.laguage.fol.firstOrderLogic.Formula;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.SmallerEqual;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Term;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,7 +39,7 @@ public class SmallerEqualImpl extends FormulaImpl implements SmallerEqual
    * @generated
    * @ordered
    */
-  protected Formula left;
+  protected Term left;
 
   /**
    * The cached value of the '{@link #getRight() <em>Right</em>}' containment reference.
@@ -49,7 +49,7 @@ public class SmallerEqualImpl extends FormulaImpl implements SmallerEqual
    * @generated
    * @ordered
    */
-  protected Formula right;
+  protected Term right;
 
   /**
    * <!-- begin-user-doc -->
@@ -77,7 +77,7 @@ public class SmallerEqualImpl extends FormulaImpl implements SmallerEqual
    * <!-- end-user-doc -->
    * @generated
    */
-  public Formula getLeft()
+  public Term getLeft()
   {
     return left;
   }
@@ -87,9 +87,9 @@ public class SmallerEqualImpl extends FormulaImpl implements SmallerEqual
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetLeft(Formula newLeft, NotificationChain msgs)
+  public NotificationChain basicSetLeft(Term newLeft, NotificationChain msgs)
   {
-    Formula oldLeft = left;
+    Term oldLeft = left;
     left = newLeft;
     if (eNotificationRequired())
     {
@@ -104,7 +104,7 @@ public class SmallerEqualImpl extends FormulaImpl implements SmallerEqual
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setLeft(Formula newLeft)
+  public void setLeft(Term newLeft)
   {
     if (newLeft != left)
     {
@@ -125,7 +125,7 @@ public class SmallerEqualImpl extends FormulaImpl implements SmallerEqual
    * <!-- end-user-doc -->
    * @generated
    */
-  public Formula getRight()
+  public Term getRight()
   {
     return right;
   }
@@ -135,9 +135,9 @@ public class SmallerEqualImpl extends FormulaImpl implements SmallerEqual
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetRight(Formula newRight, NotificationChain msgs)
+  public NotificationChain basicSetRight(Term newRight, NotificationChain msgs)
   {
-    Formula oldRight = right;
+    Term oldRight = right;
     right = newRight;
     if (eNotificationRequired())
     {
@@ -152,7 +152,7 @@ public class SmallerEqualImpl extends FormulaImpl implements SmallerEqual
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setRight(Formula newRight)
+  public void setRight(Term newRight)
   {
     if (newRight != right)
     {
@@ -215,10 +215,10 @@ public class SmallerEqualImpl extends FormulaImpl implements SmallerEqual
     switch (featureID)
     {
       case FirstOrderLogicPackage.SMALLER_EQUAL__LEFT:
-        setLeft((Formula)newValue);
+        setLeft((Term)newValue);
         return;
       case FirstOrderLogicPackage.SMALLER_EQUAL__RIGHT:
-        setRight((Formula)newValue);
+        setRight((Term)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -235,10 +235,10 @@ public class SmallerEqualImpl extends FormulaImpl implements SmallerEqual
     switch (featureID)
     {
       case FirstOrderLogicPackage.SMALLER_EQUAL__LEFT:
-        setLeft((Formula)null);
+        setLeft((Term)null);
         return;
       case FirstOrderLogicPackage.SMALLER_EQUAL__RIGHT:
-        setRight((Formula)null);
+        setRight((Term)null);
         return;
     }
     super.eUnset(featureID);

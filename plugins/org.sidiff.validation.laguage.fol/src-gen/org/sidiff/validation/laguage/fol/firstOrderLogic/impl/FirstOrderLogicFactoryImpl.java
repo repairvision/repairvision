@@ -68,30 +68,29 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
       case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE: return createConstraintRuleBase();
       case FirstOrderLogicPackage.CONSTRAINT: return createConstraint();
       case FirstOrderLogicPackage.VARIABLE: return createVariable();
-      case FirstOrderLogicPackage.TERM: return createTerm();
-      case FirstOrderLogicPackage.GET: return createGet();
       case FirstOrderLogicPackage.FORMULA: return createFormula();
       case FirstOrderLogicPackage.UNARY_FORMULA: return createUnaryFormula();
       case FirstOrderLogicPackage.EQUALS: return createEquals();
+      case FirstOrderLogicPackage.GREATER: return createGreater();
+      case FirstOrderLogicPackage.GREATER_EQUAL: return createGreaterEqual();
+      case FirstOrderLogicPackage.SMALLER: return createSmaller();
+      case FirstOrderLogicPackage.SMALLER_EQUAL: return createSmallerEqual();
       case FirstOrderLogicPackage.IS_EMPTY: return createIsEmpty();
       case FirstOrderLogicPackage.QUANTIFIER: return createQuantifier();
-      case FirstOrderLogicPackage.GET_TERM: return createGetTerm();
+      case FirstOrderLogicPackage.TERM: return createTerm();
+      case FirstOrderLogicPackage.GET: return createGet();
       case FirstOrderLogicPackage.IFF: return createIff();
       case FirstOrderLogicPackage.IF: return createIf();
       case FirstOrderLogicPackage.XOR: return createXor();
       case FirstOrderLogicPackage.OR: return createOr();
       case FirstOrderLogicPackage.AND: return createAnd();
       case FirstOrderLogicPackage.NOT: return createNot();
-      case FirstOrderLogicPackage.GREATER: return createGreater();
-      case FirstOrderLogicPackage.GREATER_EQUAL: return createGreaterEqual();
-      case FirstOrderLogicPackage.SMALLER: return createSmaller();
-      case FirstOrderLogicPackage.SMALLER_EQUAL: return createSmallerEqual();
       case FirstOrderLogicPackage.FOR_ALL: return createForAll();
       case FirstOrderLogicPackage.EXISTS: return createExists();
-      case FirstOrderLogicPackage.INT_CONSTANT: return createIntConstant();
-      case FirstOrderLogicPackage.STRING_CONSTANT: return createStringConstant();
       case FirstOrderLogicPackage.BOOL_CONSTANT: return createBoolConstant();
       case FirstOrderLogicPackage.VARIABLE_REF: return createVariableRef();
+      case FirstOrderLogicPackage.INT_CONSTANT: return createIntConstant();
+      case FirstOrderLogicPackage.STRING_CONSTANT: return createStringConstant();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -135,28 +134,6 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public Term createTerm()
-  {
-    TermImpl term = new TermImpl();
-    return term;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Get createGet()
-  {
-    GetImpl get = new GetImpl();
-    return get;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Formula createFormula()
   {
     FormulaImpl formula = new FormulaImpl();
@@ -190,6 +167,50 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
+  public Greater createGreater()
+  {
+    GreaterImpl greater = new GreaterImpl();
+    return greater;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public GreaterEqual createGreaterEqual()
+  {
+    GreaterEqualImpl greaterEqual = new GreaterEqualImpl();
+    return greaterEqual;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Smaller createSmaller()
+  {
+    SmallerImpl smaller = new SmallerImpl();
+    return smaller;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SmallerEqual createSmallerEqual()
+  {
+    SmallerEqualImpl smallerEqual = new SmallerEqualImpl();
+    return smallerEqual;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public IsEmpty createIsEmpty()
   {
     IsEmptyImpl isEmpty = new IsEmptyImpl();
@@ -212,10 +233,21 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public GetTerm createGetTerm()
+  public Term createTerm()
   {
-    GetTermImpl getTerm = new GetTermImpl();
-    return getTerm;
+    TermImpl term = new TermImpl();
+    return term;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Get createGet()
+  {
+    GetImpl get = new GetImpl();
+    return get;
   }
 
   /**
@@ -289,50 +321,6 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public Greater createGreater()
-  {
-    GreaterImpl greater = new GreaterImpl();
-    return greater;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public GreaterEqual createGreaterEqual()
-  {
-    GreaterEqualImpl greaterEqual = new GreaterEqualImpl();
-    return greaterEqual;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Smaller createSmaller()
-  {
-    SmallerImpl smaller = new SmallerImpl();
-    return smaller;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SmallerEqual createSmallerEqual()
-  {
-    SmallerEqualImpl smallerEqual = new SmallerEqualImpl();
-    return smallerEqual;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public ForAll createForAll()
   {
     ForAllImpl forAll = new ForAllImpl();
@@ -355,28 +343,6 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public IntConstant createIntConstant()
-  {
-    IntConstantImpl intConstant = new IntConstantImpl();
-    return intConstant;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StringConstant createStringConstant()
-  {
-    StringConstantImpl stringConstant = new StringConstantImpl();
-    return stringConstant;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public BoolConstant createBoolConstant()
   {
     BoolConstantImpl boolConstant = new BoolConstantImpl();
@@ -392,6 +358,28 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
   {
     VariableRefImpl variableRef = new VariableRefImpl();
     return variableRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IntConstant createIntConstant()
+  {
+    IntConstantImpl intConstant = new IntConstantImpl();
+    return intConstant;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StringConstant createStringConstant()
+  {
+    StringConstantImpl stringConstant = new StringConstantImpl();
+    return stringConstant;
   }
 
   /**

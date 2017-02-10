@@ -51,24 +51,6 @@ public interface FirstOrderLogicFactory extends EFactory
   Variable createVariable();
 
   /**
-   * Returns a new object of class '<em>Term</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Term</em>'.
-   * @generated
-   */
-  Term createTerm();
-
-  /**
-   * Returns a new object of class '<em>Get</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Get</em>'.
-   * @generated
-   */
-  Get createGet();
-
-  /**
    * Returns a new object of class '<em>Formula</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -96,6 +78,42 @@ public interface FirstOrderLogicFactory extends EFactory
   Equals createEquals();
 
   /**
+   * Returns a new object of class '<em>Greater</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Greater</em>'.
+   * @generated
+   */
+  Greater createGreater();
+
+  /**
+   * Returns a new object of class '<em>Greater Equal</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Greater Equal</em>'.
+   * @generated
+   */
+  GreaterEqual createGreaterEqual();
+
+  /**
+   * Returns a new object of class '<em>Smaller</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Smaller</em>'.
+   * @generated
+   */
+  Smaller createSmaller();
+
+  /**
+   * Returns a new object of class '<em>Smaller Equal</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Smaller Equal</em>'.
+   * @generated
+   */
+  SmallerEqual createSmallerEqual();
+
+  /**
    * Returns a new object of class '<em>Is Empty</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -114,13 +132,22 @@ public interface FirstOrderLogicFactory extends EFactory
   Quantifier createQuantifier();
 
   /**
-   * Returns a new object of class '<em>Get Term</em>'.
+   * Returns a new object of class '<em>Term</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Get Term</em>'.
+   * @return a new object of class '<em>Term</em>'.
    * @generated
    */
-  GetTerm createGetTerm();
+  Term createTerm();
+
+  /**
+   * Returns a new object of class '<em>Get</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Get</em>'.
+   * @generated
+   */
+  Get createGet();
 
   /**
    * Returns a new object of class '<em>Iff</em>'.
@@ -177,42 +204,6 @@ public interface FirstOrderLogicFactory extends EFactory
   Not createNot();
 
   /**
-   * Returns a new object of class '<em>Greater</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Greater</em>'.
-   * @generated
-   */
-  Greater createGreater();
-
-  /**
-   * Returns a new object of class '<em>Greater Equal</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Greater Equal</em>'.
-   * @generated
-   */
-  GreaterEqual createGreaterEqual();
-
-  /**
-   * Returns a new object of class '<em>Smaller</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Smaller</em>'.
-   * @generated
-   */
-  Smaller createSmaller();
-
-  /**
-   * Returns a new object of class '<em>Smaller Equal</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Smaller Equal</em>'.
-   * @generated
-   */
-  SmallerEqual createSmallerEqual();
-
-  /**
    * Returns a new object of class '<em>For All</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -231,24 +222,6 @@ public interface FirstOrderLogicFactory extends EFactory
   Exists createExists();
 
   /**
-   * Returns a new object of class '<em>Int Constant</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Int Constant</em>'.
-   * @generated
-   */
-  IntConstant createIntConstant();
-
-  /**
-   * Returns a new object of class '<em>String Constant</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>String Constant</em>'.
-   * @generated
-   */
-  StringConstant createStringConstant();
-
-  /**
    * Returns a new object of class '<em>Bool Constant</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -265,6 +238,24 @@ public interface FirstOrderLogicFactory extends EFactory
    * @generated
    */
   VariableRef createVariableRef();
+
+  /**
+   * Returns a new object of class '<em>Int Constant</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Int Constant</em>'.
+   * @generated
+   */
+  IntConstant createIntConstant();
+
+  /**
+   * Returns a new object of class '<em>String Constant</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>String Constant</em>'.
+   * @generated
+   */
+  StringConstant createStringConstant();
 
   /**
    * Returns the package supported by this factory.
