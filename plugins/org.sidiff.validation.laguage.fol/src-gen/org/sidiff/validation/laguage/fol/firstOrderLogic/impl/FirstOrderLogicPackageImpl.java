@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.And;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
-import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Equals;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicFactory;
@@ -52,7 +52,7 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass constraintRuleBaseEClass = null;
+  private EClass constraintLibraryEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -297,9 +297,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getConstraintRuleBase()
+  public EClass getConstraintLibrary()
   {
-    return constraintRuleBaseEClass;
+    return constraintLibraryEClass;
   }
 
   /**
@@ -307,9 +307,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getConstraintRuleBase_Domain()
+  public EAttribute getConstraintLibrary_Domain()
   {
-    return (EAttribute)constraintRuleBaseEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)constraintLibraryEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -317,9 +317,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getConstraintRuleBase_PackageImport()
+  public EAttribute getConstraintLibrary_PackageImport()
   {
-    return (EAttribute)constraintRuleBaseEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)constraintLibraryEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -327,9 +327,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getConstraintRuleBase_Constraints()
+  public EReference getConstraintLibrary_Constraints()
   {
-    return (EReference)constraintRuleBaseEClass.getEStructuralFeatures().get(2);
+    return (EReference)constraintLibraryEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1002,10 +1002,10 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     isCreated = true;
 
     // Create classes and their features
-    constraintRuleBaseEClass = createEClass(CONSTRAINT_RULE_BASE);
-    createEAttribute(constraintRuleBaseEClass, CONSTRAINT_RULE_BASE__DOMAIN);
-    createEAttribute(constraintRuleBaseEClass, CONSTRAINT_RULE_BASE__PACKAGE_IMPORT);
-    createEReference(constraintRuleBaseEClass, CONSTRAINT_RULE_BASE__CONSTRAINTS);
+    constraintLibraryEClass = createEClass(CONSTRAINT_LIBRARY);
+    createEAttribute(constraintLibraryEClass, CONSTRAINT_LIBRARY__DOMAIN);
+    createEAttribute(constraintLibraryEClass, CONSTRAINT_LIBRARY__PACKAGE_IMPORT);
+    createEReference(constraintLibraryEClass, CONSTRAINT_LIBRARY__CONSTRAINTS);
 
     constraintEClass = createEClass(CONSTRAINT);
     createEAttribute(constraintEClass, CONSTRAINT__NAME);
@@ -1149,10 +1149,10 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     stringConstantEClass.getESuperTypes().add(this.getTerm());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(constraintRuleBaseEClass, ConstraintRuleBase.class, "ConstraintRuleBase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getConstraintRuleBase_Domain(), ecorePackage.getEString(), "domain", null, 0, 1, ConstraintRuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getConstraintRuleBase_PackageImport(), ecorePackage.getEString(), "packageImport", null, 0, 1, ConstraintRuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConstraintRuleBase_Constraints(), this.getConstraint(), null, "constraints", null, 0, -1, ConstraintRuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(constraintLibraryEClass, ConstraintLibrary.class, "ConstraintLibrary", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getConstraintLibrary_Domain(), ecorePackage.getEString(), "domain", null, 0, 1, ConstraintLibrary.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConstraintLibrary_PackageImport(), ecorePackage.getEString(), "packageImport", null, 0, 1, ConstraintLibrary.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConstraintLibrary_Constraints(), this.getConstraint(), null, "constraints", null, 0, -1, ConstraintLibrary.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(constraintEClass, Constraint.class, "Constraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getConstraint_Name(), ecorePackage.getEString(), "name", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

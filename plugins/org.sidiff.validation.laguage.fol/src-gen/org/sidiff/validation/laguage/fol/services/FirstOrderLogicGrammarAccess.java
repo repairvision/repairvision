@@ -24,8 +24,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 @Singleton
 public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
-	public class ConstraintRuleBaseElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.ConstraintRuleBase");
+	public class ConstraintLibraryElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.ConstraintLibrary");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cDomainKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cDomainAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -37,7 +37,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cConstraintsConstraintParserRuleCall_4_0 = (RuleCall)cConstraintsAssignment_4.eContents().get(0);
 		
 		//// NOTE: escape keywords with ^keyword
-		//ConstraintRuleBase:
+		//ConstraintLibrary:
 		//	"domain" domain=STRING 'import' packageImport=STRING
 		//	constraints+=Constraint*;
 		@Override public ParserRule getRule() { return rule; }
@@ -1050,7 +1050,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
-	private final ConstraintRuleBaseElements pConstraintRuleBase;
+	private final ConstraintLibraryElements pConstraintLibrary;
 	private final ConstraintElements pConstraint;
 	private final VariableElements pVariable;
 	private final FormulaElements pFormula;
@@ -1089,7 +1089,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
-		this.pConstraintRuleBase = new ConstraintRuleBaseElements();
+		this.pConstraintLibrary = new ConstraintLibraryElements();
 		this.pConstraint = new ConstraintElements();
 		this.pVariable = new VariableElements();
 		this.pFormula = new FormulaElements();
@@ -1148,15 +1148,15 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//// NOTE: escape keywords with ^keyword
-	//ConstraintRuleBase:
+	//ConstraintLibrary:
 	//	"domain" domain=STRING 'import' packageImport=STRING
 	//	constraints+=Constraint*;
-	public ConstraintRuleBaseElements getConstraintRuleBaseAccess() {
-		return pConstraintRuleBase;
+	public ConstraintLibraryElements getConstraintLibraryAccess() {
+		return pConstraintLibrary;
 	}
 	
-	public ParserRule getConstraintRuleBaseRule() {
-		return getConstraintRuleBaseAccess().getRule();
+	public ParserRule getConstraintLibraryRule() {
+		return getConstraintLibraryAccess().getRule();
 	}
 	
 	//Constraint:

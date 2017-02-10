@@ -24,13 +24,13 @@ public interface FirstOrderLogicFactory extends EFactory
   FirstOrderLogicFactory eINSTANCE = org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Constraint Rule Base</em>'.
+   * Returns a new object of class '<em>Constraint Library</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Constraint Rule Base</em>'.
+   * @return a new object of class '<em>Constraint Library</em>'.
    * @generated
    */
-  ConstraintRuleBase createConstraintRuleBase();
+  ConstraintLibrary createConstraintLibrary();
 
   /**
    * Returns a new object of class '<em>Constraint</em>'.

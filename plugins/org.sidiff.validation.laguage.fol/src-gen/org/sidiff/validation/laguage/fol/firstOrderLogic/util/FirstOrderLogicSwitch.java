@@ -73,10 +73,10 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY:
       {
-        ConstraintRuleBase constraintRuleBase = (ConstraintRuleBase)theEObject;
-        T result = caseConstraintRuleBase(constraintRuleBase);
+        ConstraintLibrary constraintLibrary = (ConstraintLibrary)theEObject;
+        T result = caseConstraintLibrary(constraintLibrary);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -288,17 +288,17 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Constraint Rule Base</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Constraint Library</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Constraint Rule Base</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Constraint Library</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseConstraintRuleBase(ConstraintRuleBase object)
+  public T caseConstraintLibrary(ConstraintLibrary object)
   {
     return null;
   }

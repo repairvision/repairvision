@@ -88,7 +88,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
         @Override
         protected String getFirstRuleName() {
-        	return "ConstraintRuleBase";
+        	return "ConstraintLibrary";
        	}
 
        	@Override
@@ -99,25 +99,25 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
 
-    // $ANTLR start "entryRuleConstraintRuleBase"
-    // InternalFirstOrderLogic.g:64:1: entryRuleConstraintRuleBase returns [EObject current=null] : iv_ruleConstraintRuleBase= ruleConstraintRuleBase EOF ;
-    public final EObject entryRuleConstraintRuleBase() throws RecognitionException {
+    // $ANTLR start "entryRuleConstraintLibrary"
+    // InternalFirstOrderLogic.g:64:1: entryRuleConstraintLibrary returns [EObject current=null] : iv_ruleConstraintLibrary= ruleConstraintLibrary EOF ;
+    public final EObject entryRuleConstraintLibrary() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleConstraintRuleBase = null;
+        EObject iv_ruleConstraintLibrary = null;
 
 
         try {
-            // InternalFirstOrderLogic.g:64:59: (iv_ruleConstraintRuleBase= ruleConstraintRuleBase EOF )
-            // InternalFirstOrderLogic.g:65:2: iv_ruleConstraintRuleBase= ruleConstraintRuleBase EOF
+            // InternalFirstOrderLogic.g:64:58: (iv_ruleConstraintLibrary= ruleConstraintLibrary EOF )
+            // InternalFirstOrderLogic.g:65:2: iv_ruleConstraintLibrary= ruleConstraintLibrary EOF
             {
-             newCompositeNode(grammarAccess.getConstraintRuleBaseRule()); 
+             newCompositeNode(grammarAccess.getConstraintLibraryRule()); 
             pushFollow(FOLLOW_1);
-            iv_ruleConstraintRuleBase=ruleConstraintRuleBase();
+            iv_ruleConstraintLibrary=ruleConstraintLibrary();
 
             state._fsp--;
 
-             current =iv_ruleConstraintRuleBase; 
+             current =iv_ruleConstraintLibrary; 
             match(input,EOF,FOLLOW_2); 
 
             }
@@ -132,12 +132,12 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleConstraintRuleBase"
+    // $ANTLR end "entryRuleConstraintLibrary"
 
 
-    // $ANTLR start "ruleConstraintRuleBase"
-    // InternalFirstOrderLogic.g:71:1: ruleConstraintRuleBase returns [EObject current=null] : (otherlv_0= 'domain' ( (lv_domain_1_0= RULE_STRING ) ) otherlv_2= 'import' ( (lv_packageImport_3_0= RULE_STRING ) ) ( (lv_constraints_4_0= ruleConstraint ) )* ) ;
-    public final EObject ruleConstraintRuleBase() throws RecognitionException {
+    // $ANTLR start "ruleConstraintLibrary"
+    // InternalFirstOrderLogic.g:71:1: ruleConstraintLibrary returns [EObject current=null] : (otherlv_0= 'domain' ( (lv_domain_1_0= RULE_STRING ) ) otherlv_2= 'import' ( (lv_packageImport_3_0= RULE_STRING ) ) ( (lv_constraints_4_0= ruleConstraint ) )* ) ;
+    public final EObject ruleConstraintLibrary() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
@@ -159,7 +159,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
             {
             otherlv_0=(Token)match(input,11,FOLLOW_3); 
 
-            			newLeafNode(otherlv_0, grammarAccess.getConstraintRuleBaseAccess().getDomainKeyword_0());
+            			newLeafNode(otherlv_0, grammarAccess.getConstraintLibraryAccess().getDomainKeyword_0());
             		
             // InternalFirstOrderLogic.g:83:3: ( (lv_domain_1_0= RULE_STRING ) )
             // InternalFirstOrderLogic.g:84:4: (lv_domain_1_0= RULE_STRING )
@@ -169,11 +169,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
             {
             lv_domain_1_0=(Token)match(input,RULE_STRING,FOLLOW_4); 
 
-            					newLeafNode(lv_domain_1_0, grammarAccess.getConstraintRuleBaseAccess().getDomainSTRINGTerminalRuleCall_1_0());
+            					newLeafNode(lv_domain_1_0, grammarAccess.getConstraintLibraryAccess().getDomainSTRINGTerminalRuleCall_1_0());
             				
 
             					if (current==null) {
-            						current = createModelElement(grammarAccess.getConstraintRuleBaseRule());
+            						current = createModelElement(grammarAccess.getConstraintLibraryRule());
             					}
             					setWithLastConsumed(
             						current,
@@ -189,7 +189,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             otherlv_2=(Token)match(input,12,FOLLOW_3); 
 
-            			newLeafNode(otherlv_2, grammarAccess.getConstraintRuleBaseAccess().getImportKeyword_2());
+            			newLeafNode(otherlv_2, grammarAccess.getConstraintLibraryAccess().getImportKeyword_2());
             		
             // InternalFirstOrderLogic.g:105:3: ( (lv_packageImport_3_0= RULE_STRING ) )
             // InternalFirstOrderLogic.g:106:4: (lv_packageImport_3_0= RULE_STRING )
@@ -199,11 +199,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
             {
             lv_packageImport_3_0=(Token)match(input,RULE_STRING,FOLLOW_5); 
 
-            					newLeafNode(lv_packageImport_3_0, grammarAccess.getConstraintRuleBaseAccess().getPackageImportSTRINGTerminalRuleCall_3_0());
+            					newLeafNode(lv_packageImport_3_0, grammarAccess.getConstraintLibraryAccess().getPackageImportSTRINGTerminalRuleCall_3_0());
             				
 
             					if (current==null) {
-            						current = createModelElement(grammarAccess.getConstraintRuleBaseRule());
+            						current = createModelElement(grammarAccess.getConstraintLibraryRule());
             					}
             					setWithLastConsumed(
             						current,
@@ -236,7 +236,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
             	    // InternalFirstOrderLogic.g:125:5: lv_constraints_4_0= ruleConstraint
             	    {
 
-            	    					newCompositeNode(grammarAccess.getConstraintRuleBaseAccess().getConstraintsConstraintParserRuleCall_4_0());
+            	    					newCompositeNode(grammarAccess.getConstraintLibraryAccess().getConstraintsConstraintParserRuleCall_4_0());
             	    				
             	    pushFollow(FOLLOW_5);
             	    lv_constraints_4_0=ruleConstraint();
@@ -245,7 +245,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
             	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getConstraintRuleBaseRule());
+            	    						current = createModelElementForParent(grammarAccess.getConstraintLibraryRule());
             	    					}
             	    					add(
             	    						current,
@@ -285,7 +285,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleConstraintRuleBase"
+    // $ANTLR end "ruleConstraintLibrary"
 
 
     // $ANTLR start "entryRuleConstraint"

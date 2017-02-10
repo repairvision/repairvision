@@ -20,25 +20,25 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
-import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Constraint Rule Base</b></em>'.
+ * An implementation of the model object '<em><b>Constraint Library</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintRuleBaseImpl#getDomain <em>Domain</em>}</li>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintRuleBaseImpl#getPackageImport <em>Package Import</em>}</li>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintRuleBaseImpl#getConstraints <em>Constraints</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintLibraryImpl#getDomain <em>Domain</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintLibraryImpl#getPackageImport <em>Package Import</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintLibraryImpl#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container implements ConstraintRuleBase
+public class ConstraintLibraryImpl extends MinimalEObjectImpl.Container implements ConstraintLibrary
 {
   /**
    * The default value of the '{@link #getDomain() <em>Domain</em>}' attribute.
@@ -95,7 +95,7 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ConstraintRuleBaseImpl()
+  protected ConstraintLibraryImpl()
   {
     super();
   }
@@ -108,7 +108,7 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
   @Override
   protected EClass eStaticClass()
   {
-    return FirstOrderLogicPackage.Literals.CONSTRAINT_RULE_BASE;
+    return FirstOrderLogicPackage.Literals.CONSTRAINT_LIBRARY;
   }
 
   /**
@@ -131,7 +131,7 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
     String oldDomain = domain;
     domain = newDomain;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__DOMAIN, oldDomain, domain));
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSTRAINT_LIBRARY__DOMAIN, oldDomain, domain));
   }
 
   /**
@@ -154,7 +154,7 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
     String oldPackageImport = packageImport;
     packageImport = newPackageImport;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__PACKAGE_IMPORT, oldPackageImport, packageImport));
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.CONSTRAINT_LIBRARY__PACKAGE_IMPORT, oldPackageImport, packageImport));
   }
 
   /**
@@ -166,7 +166,7 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
   {
     if (constraints == null)
     {
-      constraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__CONSTRAINTS);
+      constraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, FirstOrderLogicPackage.CONSTRAINT_LIBRARY__CONSTRAINTS);
     }
     return constraints;
   }
@@ -181,7 +181,7 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__CONSTRAINTS:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__CONSTRAINTS:
         return ((InternalEList<?>)getConstraints()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -197,11 +197,11 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__DOMAIN:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__DOMAIN:
         return getDomain();
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__PACKAGE_IMPORT:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__PACKAGE_IMPORT:
         return getPackageImport();
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__CONSTRAINTS:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__CONSTRAINTS:
         return getConstraints();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -218,13 +218,13 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__DOMAIN:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__DOMAIN:
         setDomain((String)newValue);
         return;
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__PACKAGE_IMPORT:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__PACKAGE_IMPORT:
         setPackageImport((String)newValue);
         return;
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__CONSTRAINTS:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__CONSTRAINTS:
         getConstraints().clear();
         getConstraints().addAll((Collection<? extends Constraint>)newValue);
         return;
@@ -242,13 +242,13 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__DOMAIN:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__DOMAIN:
         setDomain(DOMAIN_EDEFAULT);
         return;
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__PACKAGE_IMPORT:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__PACKAGE_IMPORT:
         setPackageImport(PACKAGE_IMPORT_EDEFAULT);
         return;
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__CONSTRAINTS:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__CONSTRAINTS:
         getConstraints().clear();
         return;
     }
@@ -265,11 +265,11 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__DOMAIN:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__DOMAIN:
         return DOMAIN_EDEFAULT == null ? domain != null : !DOMAIN_EDEFAULT.equals(domain);
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__PACKAGE_IMPORT:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__PACKAGE_IMPORT:
         return PACKAGE_IMPORT_EDEFAULT == null ? packageImport != null : !PACKAGE_IMPORT_EDEFAULT.equals(packageImport);
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE__CONSTRAINTS:
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY__CONSTRAINTS:
         return constraints != null && !constraints.isEmpty();
     }
     return super.eIsSet(featureID);
@@ -294,4 +294,4 @@ public class ConstraintRuleBaseImpl extends MinimalEObjectImpl.Container impleme
     return result.toString();
   }
 
-} //ConstraintRuleBaseImpl
+} //ConstraintLibraryImpl

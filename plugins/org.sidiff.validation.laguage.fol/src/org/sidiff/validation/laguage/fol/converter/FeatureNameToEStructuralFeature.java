@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.common.services.DefaultTerminalConverters;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
-import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef;
@@ -16,7 +16,7 @@ public class FeatureNameToEStructuralFeature extends DefaultTerminalConverters {
 //	private Map<EClass, Set<EClass>> subTypes = new HashMap<>();
 	
 	public static EClass getClass(Get context) {
-		ConstraintRuleBase rulebase = getConstraintRuleBase(context);
+		ConstraintLibrary rulebase = getConstraintLibrary(context);
 		
 		if (rulebase != null) {
 			EPackage domainPackage = EPackage.Registry.INSTANCE.getEPackage(rulebase.getDomain().trim());
@@ -42,11 +42,11 @@ public class FeatureNameToEStructuralFeature extends DefaultTerminalConverters {
 		return null;
 	}
 	
-	private static ConstraintRuleBase getConstraintRuleBase(EObject obj) {
+	private static ConstraintLibrary getConstraintLibrary(EObject obj) {
 		EObject root = obj.eResource().getContents().get(0);
 		
-		if (root instanceof ConstraintRuleBase) {
-			return (ConstraintRuleBase) root;
+		if (root instanceof ConstraintLibrary) {
+			return (ConstraintLibrary) root;
 		} else {
 			return null;
 		}

@@ -76,9 +76,9 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
     new FirstOrderLogicSwitch<Adapter>()
     {
       @Override
-      public Adapter caseConstraintRuleBase(ConstraintRuleBase object)
+      public Adapter caseConstraintLibrary(ConstraintLibrary object)
       {
-        return createConstraintRuleBaseAdapter();
+        return createConstraintLibraryAdapter();
       }
       @Override
       public Adapter caseConstraint(Constraint object)
@@ -228,16 +228,16 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase <em>Constraint Rule Base</em>}'.
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary <em>Constraint Library</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary
    * @generated
    */
-  public Adapter createConstraintRuleBaseAdapter()
+  public Adapter createConstraintLibraryAdapter()
   {
     return null;
   }

@@ -58,14 +58,14 @@ public interface FirstOrderLogicPackage extends EPackage
   FirstOrderLogicPackage eINSTANCE = org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintRuleBaseImpl <em>Constraint Rule Base</em>}' class.
+   * The meta object id for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintLibraryImpl <em>Constraint Library</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintRuleBaseImpl
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getConstraintRuleBase()
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintLibraryImpl
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getConstraintLibrary()
    * @generated
    */
-  int CONSTRAINT_RULE_BASE = 0;
+  int CONSTRAINT_LIBRARY = 0;
 
   /**
    * The feature id for the '<em><b>Domain</b></em>' attribute.
@@ -74,7 +74,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONSTRAINT_RULE_BASE__DOMAIN = 0;
+  int CONSTRAINT_LIBRARY__DOMAIN = 0;
 
   /**
    * The feature id for the '<em><b>Package Import</b></em>' attribute.
@@ -83,7 +83,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONSTRAINT_RULE_BASE__PACKAGE_IMPORT = 1;
+  int CONSTRAINT_LIBRARY__PACKAGE_IMPORT = 1;
 
   /**
    * The feature id for the '<em><b>Constraints</b></em>' containment reference list.
@@ -92,16 +92,16 @@ public interface FirstOrderLogicPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONSTRAINT_RULE_BASE__CONSTRAINTS = 2;
+  int CONSTRAINT_LIBRARY__CONSTRAINTS = 2;
 
   /**
-   * The number of structural features of the '<em>Constraint Rule Base</em>' class.
+   * The number of structural features of the '<em>Constraint Library</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONSTRAINT_RULE_BASE_FEATURE_COUNT = 3;
+  int CONSTRAINT_LIBRARY_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintImpl <em>Constraint</em>}' class.
@@ -985,47 +985,47 @@ public interface FirstOrderLogicPackage extends EPackage
 
 
   /**
-   * Returns the meta object for class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase <em>Constraint Rule Base</em>}'.
+   * Returns the meta object for class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary <em>Constraint Library</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Constraint Rule Base</em>'.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase
+   * @return the meta object for class '<em>Constraint Library</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary
    * @generated
    */
-  EClass getConstraintRuleBase();
+  EClass getConstraintLibrary();
 
   /**
-   * Returns the meta object for the attribute '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getDomain <em>Domain</em>}'.
+   * Returns the meta object for the attribute '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary#getDomain <em>Domain</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Domain</em>'.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getDomain()
-   * @see #getConstraintRuleBase()
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary#getDomain()
+   * @see #getConstraintLibrary()
    * @generated
    */
-  EAttribute getConstraintRuleBase_Domain();
+  EAttribute getConstraintLibrary_Domain();
 
   /**
-   * Returns the meta object for the attribute '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getPackageImport <em>Package Import</em>}'.
+   * Returns the meta object for the attribute '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary#getPackageImport <em>Package Import</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Package Import</em>'.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getPackageImport()
-   * @see #getConstraintRuleBase()
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary#getPackageImport()
+   * @see #getConstraintLibrary()
    * @generated
    */
-  EAttribute getConstraintRuleBase_PackageImport();
+  EAttribute getConstraintLibrary_PackageImport();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getConstraints <em>Constraints</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary#getConstraints <em>Constraints</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Constraints</em>'.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getConstraints()
-   * @see #getConstraintRuleBase()
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary#getConstraints()
+   * @see #getConstraintLibrary()
    * @generated
    */
-  EReference getConstraintRuleBase_Constraints();
+  EReference getConstraintLibrary_Constraints();
 
   /**
    * Returns the meta object for class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint <em>Constraint</em>}'.
@@ -1730,14 +1730,14 @@ public interface FirstOrderLogicPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintRuleBaseImpl <em>Constraint Rule Base</em>}' class.
+     * The meta object literal for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintLibraryImpl <em>Constraint Library</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintRuleBaseImpl
-     * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getConstraintRuleBase()
+     * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintLibraryImpl
+     * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getConstraintLibrary()
      * @generated
      */
-    EClass CONSTRAINT_RULE_BASE = eINSTANCE.getConstraintRuleBase();
+    EClass CONSTRAINT_LIBRARY = eINSTANCE.getConstraintLibrary();
 
     /**
      * The meta object literal for the '<em><b>Domain</b></em>' attribute feature.
@@ -1745,7 +1745,7 @@ public interface FirstOrderLogicPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONSTRAINT_RULE_BASE__DOMAIN = eINSTANCE.getConstraintRuleBase_Domain();
+    EAttribute CONSTRAINT_LIBRARY__DOMAIN = eINSTANCE.getConstraintLibrary_Domain();
 
     /**
      * The meta object literal for the '<em><b>Package Import</b></em>' attribute feature.
@@ -1753,7 +1753,7 @@ public interface FirstOrderLogicPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONSTRAINT_RULE_BASE__PACKAGE_IMPORT = eINSTANCE.getConstraintRuleBase_PackageImport();
+    EAttribute CONSTRAINT_LIBRARY__PACKAGE_IMPORT = eINSTANCE.getConstraintLibrary_PackageImport();
 
     /**
      * The meta object literal for the '<em><b>Constraints</b></em>' containment reference list feature.
@@ -1761,7 +1761,7 @@ public interface FirstOrderLogicPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CONSTRAINT_RULE_BASE__CONSTRAINTS = eINSTANCE.getConstraintRuleBase_Constraints();
+    EReference CONSTRAINT_LIBRARY__CONSTRAINTS = eINSTANCE.getConstraintLibrary_Constraints();
 
     /**
      * The meta object literal for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ConstraintImpl <em>Constraint</em>}' class.

@@ -9,23 +9,23 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Constraint Rule Base</b></em>'.
+ * A representation of the model object '<em><b>Constraint Library</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getDomain <em>Domain</em>}</li>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getPackageImport <em>Package Import</em>}</li>
- *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getConstraints <em>Constraints</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary#getDomain <em>Domain</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary#getPackageImport <em>Package Import</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
- * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getConstraintRuleBase()
+ * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getConstraintLibrary()
  * @model
  * @generated
  */
-public interface ConstraintRuleBase extends EObject
+public interface ConstraintLibrary extends EObject
 {
   /**
    * Returns the value of the '<em><b>Domain</b></em>' attribute.
@@ -37,14 +37,14 @@ public interface ConstraintRuleBase extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Domain</em>' attribute.
    * @see #setDomain(String)
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getConstraintRuleBase_Domain()
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getConstraintLibrary_Domain()
    * @model
    * @generated
    */
   String getDomain();
 
   /**
-   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getDomain <em>Domain</em>}' attribute.
+   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary#getDomain <em>Domain</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Domain</em>' attribute.
@@ -63,14 +63,14 @@ public interface ConstraintRuleBase extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Package Import</em>' attribute.
    * @see #setPackageImport(String)
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getConstraintRuleBase_PackageImport()
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getConstraintLibrary_PackageImport()
    * @model
    * @generated
    */
   String getPackageImport();
 
   /**
-   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase#getPackageImport <em>Package Import</em>}' attribute.
+   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary#getPackageImport <em>Package Import</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Package Import</em>' attribute.
@@ -89,10 +89,10 @@ public interface ConstraintRuleBase extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Constraints</em>' containment reference list.
-   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getConstraintRuleBase_Constraints()
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getConstraintLibrary_Constraints()
    * @model containment="true"
    * @generated
    */
   EList<Constraint> getConstraints();
 
-} // ConstraintRuleBase
+} // ConstraintLibrary

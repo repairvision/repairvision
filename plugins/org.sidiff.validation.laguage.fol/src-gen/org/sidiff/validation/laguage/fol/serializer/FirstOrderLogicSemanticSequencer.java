@@ -17,7 +17,7 @@ import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransi
 import org.sidiff.validation.laguage.fol.firstOrderLogic.And;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
-import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Equals;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
@@ -62,8 +62,8 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 			case FirstOrderLogicPackage.CONSTRAINT:
 				sequence_Constraint(context, (Constraint) semanticObject); 
 				return; 
-			case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE:
-				sequence_ConstraintRuleBase(context, (ConstraintRuleBase) semanticObject); 
+			case FirstOrderLogicPackage.CONSTRAINT_LIBRARY:
+				sequence_ConstraintLibrary(context, (ConstraintLibrary) semanticObject); 
 				return; 
 			case FirstOrderLogicPackage.EQUALS:
 				sequence_Equals(context, (Equals) semanticObject); 
@@ -224,12 +224,12 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     ConstraintRuleBase returns ConstraintRuleBase
+	 *     ConstraintLibrary returns ConstraintLibrary
 	 *
 	 * Constraint:
 	 *     (domain=STRING packageImport=STRING constraints+=Constraint*)
 	 */
-	protected void sequence_ConstraintRuleBase(ISerializationContext context, ConstraintRuleBase semanticObject) {
+	protected void sequence_ConstraintLibrary(ISerializationContext context, ConstraintLibrary semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

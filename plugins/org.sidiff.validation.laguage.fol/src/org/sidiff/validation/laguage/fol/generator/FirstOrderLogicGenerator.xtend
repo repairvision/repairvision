@@ -17,7 +17,7 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import org.sidiff.validation.laguage.fol.firstOrderLogic.And
 import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint
-import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintRuleBase
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Equals
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll
@@ -56,7 +56,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		var packageImportClass = getPackageImportClass(ruleBase.packageImport)
 		
 		var packageName = resource.URI.trimFileExtension.lastSegment
-		var className = 'ConsistencyRuleLibrary' + packageImportClass
+		var className = 'ConstraintLibrary' + packageImportClass
 
 		var code = 
 			'''
@@ -69,7 +69,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 			
 			import «ruleBase.packageImport»;
 			
-			import org.sidiff.repair.validation.test.library.*;
+			import org.sidiff.validation.constraint.library.*;
 			
 			import org.sidiff.repair.validation.*;
 			import org.sidiff.repair.validation.formulas.binary.*;
@@ -79,21 +79,21 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 			import org.sidiff.repair.validation.terms.*;
 			import org.sidiff.repair.validation.terms.functions.*;
 			
-			public class «className» extends ConsistencyRuleLibrary {
+			public class «className» implements IConstraintLibrary {
 				
 				private static String documentType = «packageImportClass».eINSTANCE.getNsURI();
 					
 				private static «packageImportClass» DOMAIN = «packageImportClass».eINSTANCE;
 				
-				private static Map<String, ConsistencyRule> rules = new HashMap<>();
+				private static Map<String, IConstraint> rules = new HashMap<>();
 					
 				static {
 					«FOR constraint : ruleBase.constraints»
-						addConsistencyRule(create«constraint.name»Rule());
+						addConstraint(create«constraint.name»Rule());
 					«ENDFOR»
 				}
 				
-				private static void addConsistencyRule(ConsistencyRule rule) {
+				private static void addConstraint(IConstraint rule) {
 					rules.put(rule.getName(), rule);
 				}
 				
@@ -103,17 +103,17 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 				}
 				
 				@Override
-				public List<ConsistencyRule> getConsistencyRules() {
+				public List<IConstraint> getConstraints() {
 					return new ArrayList<>(rules.values());
 				}
 				
 				@Override
-				public ConsistencyRule getConsistencyRule(String name) {
+				public IConstraint getConstraint(String name) {
 					return rules.get(name);
 				}
 				«FOR constraint : ruleBase.constraints»
 				
-				public static ConsistencyRule create«constraint.name»Rule() {
+				public static IConstraint create«constraint.name»Rule() {
 					
 					«FOR variable : constraint.eAllContents.filter(typeof(Variable)).toIterable»
 						«compile(variable, variableCounter++, names)»
@@ -126,7 +126,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 					«compile(constraint, constraintCounter++, names)»
 					
 					«var ruleName = 'rule_' + constraint.name»
-					ConsistencyRule «ruleName» = new ConsistencyRule(DOMAIN.get«constraint.variable.type»(), «names.get(constraint.variable)», «names.get(constraint)»);
+					IConstraint «ruleName» = new Constraint(DOMAIN.get«constraint.variable.type»(), «names.get(constraint.variable)», «names.get(constraint)»);
 					«ruleName».setName("«constraint.name»");
 					«ruleName».setMessage("«constraint.message»");
 					
@@ -144,8 +144,8 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		return packageImport.subSequence(packageImport.lastIndexOf('.') + 1, packageImport.length) as String 
 	}
 	
-	def ConstraintRuleBase getRuleBase(Resource resource) {
-		return (resource.contents.get(0) as ConstraintRuleBase)
+	def ConstraintLibrary getRuleBase(Resource resource) {
+		return (resource.contents.get(0) as ConstraintLibrary)
 	}
 	
 	def String compile(Variable variable, int counter, HashMap<Object, String> names) {

@@ -43,7 +43,7 @@ import org.sidiff.validation.laguage.fol.services.FirstOrderLogicGrammarAccess;
 
     @Override
     protected String getFirstRuleName() {
-    	return "ConstraintRuleBase";
+    	return "ConstraintLibrary";
    	}
 
    	@Override
@@ -60,15 +60,15 @@ import org.sidiff.validation.laguage.fol.services.FirstOrderLogicGrammarAccess;
     }
 }
 
-// Entry rule entryRuleConstraintRuleBase
-entryRuleConstraintRuleBase returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getConstraintRuleBaseRule()); }
-	iv_ruleConstraintRuleBase=ruleConstraintRuleBase
-	{ $current=$iv_ruleConstraintRuleBase.current; }
+// Entry rule entryRuleConstraintLibrary
+entryRuleConstraintLibrary returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getConstraintLibraryRule()); }
+	iv_ruleConstraintLibrary=ruleConstraintLibrary
+	{ $current=$iv_ruleConstraintLibrary.current; }
 	EOF;
 
-// Rule ConstraintRuleBase
-ruleConstraintRuleBase returns [EObject current=null]
+// Rule ConstraintLibrary
+ruleConstraintLibrary returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -78,17 +78,17 @@ ruleConstraintRuleBase returns [EObject current=null]
 	(
 		otherlv_0='domain'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getConstraintRuleBaseAccess().getDomainKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getConstraintLibraryAccess().getDomainKeyword_0());
 		}
 		(
 			(
 				lv_domain_1_0=RULE_STRING
 				{
-					newLeafNode(lv_domain_1_0, grammarAccess.getConstraintRuleBaseAccess().getDomainSTRINGTerminalRuleCall_1_0());
+					newLeafNode(lv_domain_1_0, grammarAccess.getConstraintLibraryAccess().getDomainSTRINGTerminalRuleCall_1_0());
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getConstraintRuleBaseRule());
+						$current = createModelElement(grammarAccess.getConstraintLibraryRule());
 					}
 					setWithLastConsumed(
 						$current,
@@ -100,17 +100,17 @@ ruleConstraintRuleBase returns [EObject current=null]
 		)
 		otherlv_2='import'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getConstraintRuleBaseAccess().getImportKeyword_2());
+			newLeafNode(otherlv_2, grammarAccess.getConstraintLibraryAccess().getImportKeyword_2());
 		}
 		(
 			(
 				lv_packageImport_3_0=RULE_STRING
 				{
-					newLeafNode(lv_packageImport_3_0, grammarAccess.getConstraintRuleBaseAccess().getPackageImportSTRINGTerminalRuleCall_3_0());
+					newLeafNode(lv_packageImport_3_0, grammarAccess.getConstraintLibraryAccess().getPackageImportSTRINGTerminalRuleCall_3_0());
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getConstraintRuleBaseRule());
+						$current = createModelElement(grammarAccess.getConstraintLibraryRule());
 					}
 					setWithLastConsumed(
 						$current,
@@ -123,12 +123,12 @@ ruleConstraintRuleBase returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getConstraintRuleBaseAccess().getConstraintsConstraintParserRuleCall_4_0());
+					newCompositeNode(grammarAccess.getConstraintLibraryAccess().getConstraintsConstraintParserRuleCall_4_0());
 				}
 				lv_constraints_4_0=ruleConstraint
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getConstraintRuleBaseRule());
+						$current = createModelElementForParent(grammarAccess.getConstraintLibraryRule());
 					}
 					add(
 						$current,

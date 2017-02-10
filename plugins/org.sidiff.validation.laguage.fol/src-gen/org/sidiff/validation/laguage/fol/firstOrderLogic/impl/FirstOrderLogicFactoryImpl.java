@@ -65,7 +65,7 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
   {
     switch (eClass.getClassifierID())
     {
-      case FirstOrderLogicPackage.CONSTRAINT_RULE_BASE: return createConstraintRuleBase();
+      case FirstOrderLogicPackage.CONSTRAINT_LIBRARY: return createConstraintLibrary();
       case FirstOrderLogicPackage.CONSTRAINT: return createConstraint();
       case FirstOrderLogicPackage.VARIABLE: return createVariable();
       case FirstOrderLogicPackage.FORMULA: return createFormula();
@@ -101,10 +101,10 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
-  public ConstraintRuleBase createConstraintRuleBase()
+  public ConstraintLibrary createConstraintLibrary()
   {
-    ConstraintRuleBaseImpl constraintRuleBase = new ConstraintRuleBaseImpl();
-    return constraintRuleBase;
+    ConstraintLibraryImpl constraintLibrary = new ConstraintLibraryImpl();
+    return constraintLibrary;
   }
 
   /**
