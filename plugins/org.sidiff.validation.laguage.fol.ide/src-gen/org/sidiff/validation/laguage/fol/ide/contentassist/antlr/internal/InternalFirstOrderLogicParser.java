@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalFirstOrderLogicParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'true'", "'false'", "'domain'", "'import'", "'constraint'", "'message'", "'context'", "':'", "'='", "'implies'", "'xor'", "'or'", "'and'", "'not('", "')'", "'equals('", "','", "'isGreater('", "'isGreaterEqual('", "'isSmaller('", "'isSmallerEqual('", "'isEmpty('", "'forAll('", "'in'", "'exists('", "'('", "'.'", "'::'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'true'", "'false'", "'domain'", "'import'", "'constraint'", "'message'", "'context'", "':'", "'='", "'implies'", "'xor'", "'or'", "'and'", "'not('", "')'", "'isEqual('", "','", "'isGreater('", "'isGreaterEqual('", "'isSmaller('", "'isSmallerEqual('", "'isEmpty('", "'forAll('", "'in'", "'exists('", "'('", "'.'", "'::'"
     };
     public static final int RULE_STRING=4;
     public static final int RULE_SL_COMMENT=8;
@@ -6666,21 +6666,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__Group__0__Impl"
-    // InternalFirstOrderLogic.g:2166:1: rule__Equals__Group__0__Impl : ( 'equals(' ) ;
+    // InternalFirstOrderLogic.g:2166:1: rule__Equals__Group__0__Impl : ( 'isEqual(' ) ;
     public final void rule__Equals__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2170:1: ( ( 'equals(' ) )
-            // InternalFirstOrderLogic.g:2171:1: ( 'equals(' )
+            // InternalFirstOrderLogic.g:2170:1: ( ( 'isEqual(' ) )
+            // InternalFirstOrderLogic.g:2171:1: ( 'isEqual(' )
             {
-            // InternalFirstOrderLogic.g:2171:1: ( 'equals(' )
-            // InternalFirstOrderLogic.g:2172:2: 'equals('
+            // InternalFirstOrderLogic.g:2171:1: ( 'isEqual(' )
+            // InternalFirstOrderLogic.g:2172:2: 'isEqual('
             {
-             before(grammarAccess.getEqualsAccess().getEqualsKeyword_0()); 
+             before(grammarAccess.getEqualsAccess().getIsEqualKeyword_0()); 
             match(input,26,FOLLOW_2); 
-             after(grammarAccess.getEqualsAccess().getEqualsKeyword_0()); 
+             after(grammarAccess.getEqualsAccess().getIsEqualKeyword_0()); 
 
             }
 

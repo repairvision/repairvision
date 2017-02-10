@@ -2169,9 +2169,9 @@ rule__Equals__Group__0__Impl
 	}
 :
 (
-	{ before(grammarAccess.getEqualsAccess().getEqualsKeyword_0()); }
-	'equals('
-	{ after(grammarAccess.getEqualsAccess().getEqualsKeyword_0()); }
+	{ before(grammarAccess.getEqualsAccess().getIsEqualKeyword_0()); }
+	'isEqual('
+	{ after(grammarAccess.getEqualsAccess().getIsEqualKeyword_0()); }
 )
 ;
 finally {
