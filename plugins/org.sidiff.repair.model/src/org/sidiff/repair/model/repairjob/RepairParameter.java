@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface RepairParameter extends Repair {
+public interface RepairParameter extends IRepair {
 	/**
 	 * Returns the value of the '<em><b>Change</b></em>' reference.
 	 * <!-- begin-user-doc -->

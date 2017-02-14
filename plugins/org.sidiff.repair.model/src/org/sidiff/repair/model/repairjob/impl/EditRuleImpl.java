@@ -30,8 +30,8 @@ import org.sidiff.repair.model.repairjob.RepairjobPackage;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.repair.model.repairjob.impl.EditRuleImpl#getRule <em>Rule</em>}</li>
- *   <li>{@link org.sidiff.repair.model.repairjob.impl.EditRuleImpl#getRepairJob <em>Repair Job</em>}</li>
  *   <li>{@link org.sidiff.repair.model.repairjob.impl.EditRuleImpl#getRepairOperations <em>Repair Operations</em>}</li>
+ *   <li>{@link org.sidiff.repair.model.repairjob.impl.EditRuleImpl#getRepairJob <em>Repair Job</em>}</li>
  * </ul>
  *
  * @generated
@@ -147,7 +147,7 @@ public class EditRuleImpl extends MinimalEObjectImpl.Container implements EditRu
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newRepairJob != null)
-				msgs = ((InternalEObject)newRepairJob).eInverseAdd(this, RepairjobPackage.REPAIR_JOB__EDIT_RULES, RepairJob.class, msgs);
+				msgs = ((InternalEObject)newRepairJob).eInverseAdd(this, RepairjobPackage.REPAIR_JOB__REPAIRS, RepairJob.class, msgs);
 			msgs = basicSetRepairJob(newRepairJob, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -187,12 +187,12 @@ public class EditRuleImpl extends MinimalEObjectImpl.Container implements EditRu
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case RepairjobPackage.EDIT_RULE__REPAIR_OPERATIONS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getRepairOperations()).basicAdd(otherEnd, msgs);
 			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetRepairJob((RepairJob)otherEnd, msgs);
-			case RepairjobPackage.EDIT_RULE__REPAIR_OPERATIONS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getRepairOperations()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -205,10 +205,10 @@ public class EditRuleImpl extends MinimalEObjectImpl.Container implements EditRu
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
-				return basicSetRepairJob(null, msgs);
 			case RepairjobPackage.EDIT_RULE__REPAIR_OPERATIONS:
 				return ((InternalEList<?>)getRepairOperations()).basicRemove(otherEnd, msgs);
+			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
+				return basicSetRepairJob(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -222,7 +222,7 @@ public class EditRuleImpl extends MinimalEObjectImpl.Container implements EditRu
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
-				return eInternalContainer().eInverseRemove(this, RepairjobPackage.REPAIR_JOB__EDIT_RULES, RepairJob.class, msgs);
+				return eInternalContainer().eInverseRemove(this, RepairjobPackage.REPAIR_JOB__REPAIRS, RepairJob.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -238,10 +238,10 @@ public class EditRuleImpl extends MinimalEObjectImpl.Container implements EditRu
 			case RepairjobPackage.EDIT_RULE__RULE:
 				if (resolve) return getRule();
 				return basicGetRule();
-			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
-				return getRepairJob();
 			case RepairjobPackage.EDIT_RULE__REPAIR_OPERATIONS:
 				return getRepairOperations();
+			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
+				return getRepairJob();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -258,12 +258,12 @@ public class EditRuleImpl extends MinimalEObjectImpl.Container implements EditRu
 			case RepairjobPackage.EDIT_RULE__RULE:
 				setRule((Rule)newValue);
 				return;
-			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
-				setRepairJob((RepairJob)newValue);
-				return;
 			case RepairjobPackage.EDIT_RULE__REPAIR_OPERATIONS:
 				getRepairOperations().clear();
 				getRepairOperations().addAll((Collection<? extends RepairOperation>)newValue);
+				return;
+			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
+				setRepairJob((RepairJob)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -280,11 +280,11 @@ public class EditRuleImpl extends MinimalEObjectImpl.Container implements EditRu
 			case RepairjobPackage.EDIT_RULE__RULE:
 				setRule((Rule)null);
 				return;
-			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
-				setRepairJob((RepairJob)null);
-				return;
 			case RepairjobPackage.EDIT_RULE__REPAIR_OPERATIONS:
 				getRepairOperations().clear();
+				return;
+			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
+				setRepairJob((RepairJob)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -300,10 +300,10 @@ public class EditRuleImpl extends MinimalEObjectImpl.Container implements EditRu
 		switch (featureID) {
 			case RepairjobPackage.EDIT_RULE__RULE:
 				return rule != null;
-			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
-				return getRepairJob() != null;
 			case RepairjobPackage.EDIT_RULE__REPAIR_OPERATIONS:
 				return repairOperations != null && !repairOperations.isEmpty();
+			case RepairjobPackage.EDIT_RULE__REPAIR_JOB:
+				return getRepairJob() != null;
 		}
 		return super.eIsSet(featureID);
 	}

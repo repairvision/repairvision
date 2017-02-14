@@ -76,13 +76,22 @@ public interface RepairjobPackage extends EPackage {
 	int REPAIR_JOB__DIFFERENCE = 0;
 
 	/**
-	 * The feature id for the '<em><b>Edit Rules</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Repairs</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_JOB__EDIT_RULES = 1;
+	int REPAIR_JOB__REPAIRS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Inconsistencies</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REPAIR_JOB__INCONSISTENCIES = 2;
 
 	/**
 	 * The number of structural features of the '<em>Repair Job</em>' class.
@@ -91,7 +100,7 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_JOB_FEATURE_COUNT = 2;
+	int REPAIR_JOB_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Repair Job</em>' class.
@@ -122,22 +131,22 @@ public interface RepairjobPackage extends EPackage {
 	int EDIT_RULE__RULE = 0;
 
 	/**
-	 * The feature id for the '<em><b>Repair Job</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDIT_RULE__REPAIR_JOB = 1;
-
-	/**
 	 * The feature id for the '<em><b>Repair Operations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDIT_RULE__REPAIR_OPERATIONS = 2;
+	int EDIT_RULE__REPAIR_OPERATIONS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Repair Job</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDIT_RULE__REPAIR_JOB = 2;
 
 	/**
 	 * The number of structural features of the '<em>Edit Rule</em>' class.
@@ -387,14 +396,14 @@ public interface RepairjobPackage extends EPackage {
 	int COMPLEMENT_RULE_OPERATION_COUNT = PARTIAL_RULE_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.repair.model.repairjob.Repair <em>Repair</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.repair.model.repairjob.IRepair <em>IRepair</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.repair.model.repairjob.Repair
-	 * @see org.sidiff.repair.model.repairjob.impl.RepairjobPackageImpl#getRepair()
+	 * @see org.sidiff.repair.model.repairjob.IRepair
+	 * @see org.sidiff.repair.model.repairjob.impl.RepairjobPackageImpl#getIRepair()
 	 * @generated
 	 */
-	int REPAIR = 6;
+	int IREPAIR = 6;
 
 	/**
 	 * The feature id for the '<em><b>Repair Operation</b></em>' container reference.
@@ -403,25 +412,25 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR__REPAIR_OPERATION = 0;
+	int IREPAIR__REPAIR_OPERATION = 0;
 
 	/**
-	 * The number of structural features of the '<em>Repair</em>' class.
+	 * The number of structural features of the '<em>IRepair</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_FEATURE_COUNT = 1;
+	int IREPAIR_FEATURE_COUNT = 1;
 
 	/**
-	 * The number of operations of the '<em>Repair</em>' class.
+	 * The number of operations of the '<em>IRepair</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_OPERATION_COUNT = 0;
+	int IREPAIR_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.repair.model.repairjob.impl.RepairMatchImpl <em>Repair Match</em>}' class.
@@ -440,7 +449,7 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_MATCH__REPAIR_OPERATION = REPAIR__REPAIR_OPERATION;
+	int REPAIR_MATCH__REPAIR_OPERATION = IREPAIR__REPAIR_OPERATION;
 
 	/**
 	 * The feature id for the '<em><b>Change</b></em>' reference list.
@@ -449,7 +458,7 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_MATCH__CHANGE = REPAIR_FEATURE_COUNT + 0;
+	int REPAIR_MATCH__CHANGE = IREPAIR_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Elements</b></em>' reference list.
@@ -458,7 +467,7 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_MATCH__ELEMENTS = REPAIR_FEATURE_COUNT + 1;
+	int REPAIR_MATCH__ELEMENTS = IREPAIR_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Repair Match</em>' class.
@@ -467,7 +476,7 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_MATCH_FEATURE_COUNT = REPAIR_FEATURE_COUNT + 2;
+	int REPAIR_MATCH_FEATURE_COUNT = IREPAIR_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Repair Match</em>' class.
@@ -476,7 +485,7 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_MATCH_OPERATION_COUNT = REPAIR_OPERATION_COUNT + 0;
+	int REPAIR_MATCH_OPERATION_COUNT = IREPAIR_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.repair.model.repairjob.impl.RepairParameterImpl <em>Repair Parameter</em>}' class.
@@ -495,7 +504,7 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_PARAMETER__REPAIR_OPERATION = REPAIR__REPAIR_OPERATION;
+	int REPAIR_PARAMETER__REPAIR_OPERATION = IREPAIR__REPAIR_OPERATION;
 
 	/**
 	 * The feature id for the '<em><b>Change</b></em>' reference.
@@ -504,7 +513,7 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_PARAMETER__CHANGE = REPAIR_FEATURE_COUNT + 0;
+	int REPAIR_PARAMETER__CHANGE = IREPAIR_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Domain</b></em>' reference.
@@ -513,7 +522,7 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_PARAMETER__DOMAIN = REPAIR_FEATURE_COUNT + 1;
+	int REPAIR_PARAMETER__DOMAIN = IREPAIR_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Repair Parameter</em>' class.
@@ -522,7 +531,7 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_PARAMETER_FEATURE_COUNT = REPAIR_FEATURE_COUNT + 2;
+	int REPAIR_PARAMETER_FEATURE_COUNT = IREPAIR_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Repair Parameter</em>' class.
@@ -531,7 +540,7 @@ public interface RepairjobPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REPAIR_PARAMETER_OPERATION_COUNT = REPAIR_OPERATION_COUNT + 0;
+	int REPAIR_PARAMETER_OPERATION_COUNT = IREPAIR_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.repair.model.repairjob.impl.ChangeImpl <em>Change</em>}' class.
@@ -618,6 +627,44 @@ public interface RepairjobPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.sidiff.repair.model.repairjob.Inconsistency <em>Inconsistency</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.repair.model.repairjob.Inconsistency
+	 * @see org.sidiff.repair.model.repairjob.impl.RepairjobPackageImpl#getInconsistency()
+	 * @generated
+	 */
+	int INCONSISTENCY = 11;
+
+	/**
+	 * The feature id for the '<em><b>Repairs</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INCONSISTENCY__REPAIRS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Inconsistency</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INCONSISTENCY_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Inconsistency</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INCONSISTENCY_OPERATION_COUNT = 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.repair.model.repairjob.RepairJob <em>Repair Job</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -639,15 +686,26 @@ public interface RepairjobPackage extends EPackage {
 	EReference getRepairJob_Difference();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.repair.model.repairjob.RepairJob#getEditRules <em>Edit Rules</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.repair.model.repairjob.RepairJob#getRepairs <em>Repairs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Edit Rules</em>'.
-	 * @see org.sidiff.repair.model.repairjob.RepairJob#getEditRules()
+	 * @return the meta object for the containment reference list '<em>Repairs</em>'.
+	 * @see org.sidiff.repair.model.repairjob.RepairJob#getRepairs()
 	 * @see #getRepairJob()
 	 * @generated
 	 */
-	EReference getRepairJob_EditRules();
+	EReference getRepairJob_Repairs();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.repair.model.repairjob.RepairJob#getInconsistencies <em>Inconsistencies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Inconsistencies</em>'.
+	 * @see org.sidiff.repair.model.repairjob.RepairJob#getInconsistencies()
+	 * @see #getRepairJob()
+	 * @generated
+	 */
+	EReference getRepairJob_Inconsistencies();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.repair.model.repairjob.EditRule <em>Edit Rule</em>}'.
@@ -852,25 +910,25 @@ public interface RepairjobPackage extends EPackage {
 	EReference getComplementRule_RepairOperation();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.repair.model.repairjob.Repair <em>Repair</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.repair.model.repairjob.IRepair <em>IRepair</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Repair</em>'.
-	 * @see org.sidiff.repair.model.repairjob.Repair
+	 * @return the meta object for class '<em>IRepair</em>'.
+	 * @see org.sidiff.repair.model.repairjob.IRepair
 	 * @generated
 	 */
-	EClass getRepair();
+	EClass getIRepair();
 
 	/**
-	 * Returns the meta object for the container reference '{@link org.sidiff.repair.model.repairjob.Repair#getRepairOperation <em>Repair Operation</em>}'.
+	 * Returns the meta object for the container reference '{@link org.sidiff.repair.model.repairjob.IRepair#getRepairOperation <em>Repair Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the container reference '<em>Repair Operation</em>'.
-	 * @see org.sidiff.repair.model.repairjob.Repair#getRepairOperation()
-	 * @see #getRepair()
+	 * @see org.sidiff.repair.model.repairjob.IRepair#getRepairOperation()
+	 * @see #getIRepair()
 	 * @generated
 	 */
-	EReference getRepair_RepairOperation();
+	EReference getIRepair_RepairOperation();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.repair.model.repairjob.RepairMatch <em>Repair Match</em>}'.
@@ -968,6 +1026,27 @@ public interface RepairjobPackage extends EPackage {
 	EReference getMatch_Elements();
 
 	/**
+	 * Returns the meta object for class '{@link org.sidiff.repair.model.repairjob.Inconsistency <em>Inconsistency</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Inconsistency</em>'.
+	 * @see org.sidiff.repair.model.repairjob.Inconsistency
+	 * @generated
+	 */
+	EClass getInconsistency();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.repair.model.repairjob.Inconsistency#getRepairs <em>Repairs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Repairs</em>'.
+	 * @see org.sidiff.repair.model.repairjob.Inconsistency#getRepairs()
+	 * @see #getInconsistency()
+	 * @generated
+	 */
+	EReference getInconsistency_Repairs();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1009,12 +1088,20 @@ public interface RepairjobPackage extends EPackage {
 		EReference REPAIR_JOB__DIFFERENCE = eINSTANCE.getRepairJob_Difference();
 
 		/**
-		 * The meta object literal for the '<em><b>Edit Rules</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Repairs</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference REPAIR_JOB__EDIT_RULES = eINSTANCE.getRepairJob_EditRules();
+		EReference REPAIR_JOB__REPAIRS = eINSTANCE.getRepairJob_Repairs();
+
+		/**
+		 * The meta object literal for the '<em><b>Inconsistencies</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference REPAIR_JOB__INCONSISTENCIES = eINSTANCE.getRepairJob_Inconsistencies();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.repair.model.repairjob.impl.EditRuleImpl <em>Edit Rule</em>}' class.
@@ -1179,14 +1266,14 @@ public interface RepairjobPackage extends EPackage {
 		EReference COMPLEMENT_RULE__REPAIR_OPERATION = eINSTANCE.getComplementRule_RepairOperation();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.repair.model.repairjob.Repair <em>Repair</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.repair.model.repairjob.IRepair <em>IRepair</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.repair.model.repairjob.Repair
-		 * @see org.sidiff.repair.model.repairjob.impl.RepairjobPackageImpl#getRepair()
+		 * @see org.sidiff.repair.model.repairjob.IRepair
+		 * @see org.sidiff.repair.model.repairjob.impl.RepairjobPackageImpl#getIRepair()
 		 * @generated
 		 */
-		EClass REPAIR = eINSTANCE.getRepair();
+		EClass IREPAIR = eINSTANCE.getIRepair();
 
 		/**
 		 * The meta object literal for the '<em><b>Repair Operation</b></em>' container reference feature.
@@ -1194,7 +1281,7 @@ public interface RepairjobPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference REPAIR__REPAIR_OPERATION = eINSTANCE.getRepair_RepairOperation();
+		EReference IREPAIR__REPAIR_OPERATION = eINSTANCE.getIRepair_RepairOperation();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.repair.model.repairjob.impl.RepairMatchImpl <em>Repair Match</em>}' class.
@@ -1275,6 +1362,24 @@ public interface RepairjobPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MATCH__ELEMENTS = eINSTANCE.getMatch_Elements();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.repair.model.repairjob.Inconsistency <em>Inconsistency</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.repair.model.repairjob.Inconsistency
+		 * @see org.sidiff.repair.model.repairjob.impl.RepairjobPackageImpl#getInconsistency()
+		 * @generated
+		 */
+		EClass INCONSISTENCY = eINSTANCE.getInconsistency();
+
+		/**
+		 * The meta object literal for the '<em><b>Repairs</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INCONSISTENCY__REPAIRS = eINSTANCE.getInconsistency_Repairs();
 
 	}
 

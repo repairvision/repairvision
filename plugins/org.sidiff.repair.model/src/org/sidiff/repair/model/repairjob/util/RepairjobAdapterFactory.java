@@ -6,18 +6,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.repair.model.repairjob.Change;
-import org.sidiff.repair.model.repairjob.ComplementRule;
-import org.sidiff.repair.model.repairjob.EditRule;
-import org.sidiff.repair.model.repairjob.Match;
-import org.sidiff.repair.model.repairjob.PartialRule;
-import org.sidiff.repair.model.repairjob.Repair;
-import org.sidiff.repair.model.repairjob.RepairJob;
-import org.sidiff.repair.model.repairjob.RepairMatch;
-import org.sidiff.repair.model.repairjob.RepairOperation;
-import org.sidiff.repair.model.repairjob.RepairParameter;
-import org.sidiff.repair.model.repairjob.RepairjobPackage;
-import org.sidiff.repair.model.repairjob.SubRule;
+import org.sidiff.repair.model.repairjob.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -100,8 +89,8 @@ public class RepairjobAdapterFactory extends AdapterFactoryImpl {
 				return createComplementRuleAdapter();
 			}
 			@Override
-			public Adapter caseRepair(Repair object) {
-				return createRepairAdapter();
+			public Adapter caseIRepair(IRepair object) {
+				return createIRepairAdapter();
 			}
 			@Override
 			public Adapter caseRepairMatch(RepairMatch object) {
@@ -118,6 +107,10 @@ public class RepairjobAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseMatch(Match object) {
 				return createMatchAdapter();
+			}
+			@Override
+			public Adapter caseInconsistency(Inconsistency object) {
+				return createInconsistencyAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -224,16 +217,16 @@ public class RepairjobAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.repair.model.repairjob.Repair <em>Repair</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.repair.model.repairjob.IRepair <em>IRepair</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.repair.model.repairjob.Repair
+	 * @see org.sidiff.repair.model.repairjob.IRepair
 	 * @generated
 	 */
-	public Adapter createRepairAdapter() {
+	public Adapter createIRepairAdapter() {
 		return null;
 	}
 
@@ -290,6 +283,20 @@ public class RepairjobAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMatchAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.repair.model.repairjob.Inconsistency <em>Inconsistency</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.repair.model.repairjob.Inconsistency
+	 * @generated
+	 */
+	public Adapter createInconsistencyAdapter() {
 		return null;
 	}
 

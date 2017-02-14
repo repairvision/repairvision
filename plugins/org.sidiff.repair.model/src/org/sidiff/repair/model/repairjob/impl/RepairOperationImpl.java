@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.repair.model.repairjob.ComplementRule;
 import org.sidiff.repair.model.repairjob.EditRule;
-import org.sidiff.repair.model.repairjob.Repair;
+import org.sidiff.repair.model.repairjob.IRepair;
 import org.sidiff.repair.model.repairjob.RepairOperation;
 import org.sidiff.repair.model.repairjob.RepairjobPackage;
 import org.sidiff.repair.model.repairjob.SubRule;
@@ -79,7 +79,7 @@ public class RepairOperationImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Repair> repairs;
+	protected EList<IRepair> repairs;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -270,9 +270,9 @@ public class RepairOperationImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Repair> getRepairs() {
+	public EList<IRepair> getRepairs() {
 		if (repairs == null) {
-			repairs = new EObjectContainmentWithInverseEList<Repair>(Repair.class, this, RepairjobPackage.REPAIR_OPERATION__REPAIRS, RepairjobPackage.REPAIR__REPAIR_OPERATION);
+			repairs = new EObjectContainmentWithInverseEList<IRepair>(IRepair.class, this, RepairjobPackage.REPAIR_OPERATION__REPAIRS, RepairjobPackage.IREPAIR__REPAIR_OPERATION);
 		}
 		return repairs;
 	}
@@ -395,7 +395,7 @@ public class RepairOperationImpl extends MinimalEObjectImpl.Container implements
 				return;
 			case RepairjobPackage.REPAIR_OPERATION__REPAIRS:
 				getRepairs().clear();
-				getRepairs().addAll((Collection<? extends Repair>)newValue);
+				getRepairs().addAll((Collection<? extends IRepair>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

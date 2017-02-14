@@ -10,12 +10,13 @@
       ecorePackage="repairjob.ecore#/">
     <genClasses ecoreClass="repairjob.ecore#//RepairJob">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairJob/difference"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairJob/editRules"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairJob/repairs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repairjob.ecore#//RepairJob/inconsistencies"/>
     </genClasses>
     <genClasses ecoreClass="repairjob.ecore#//EditRule">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//EditRule/rule"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference repairjob.ecore#//EditRule/repairJob"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repairjob.ecore#//EditRule/repairOperations"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference repairjob.ecore#//EditRule/repairJob"/>
       <genOperations ecoreOperation="repairjob.ecore#//EditRule/getRating"/>
     </genClasses>
     <genClasses ecoreClass="repairjob.ecore#//RepairOperation">
@@ -36,8 +37,8 @@
     <genClasses ecoreClass="repairjob.ecore#//ComplementRule">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference repairjob.ecore#//ComplementRule/repairOperation"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="repairjob.ecore#//Repair">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference repairjob.ecore#//Repair/repairOperation"/>
+    <genClasses image="false" ecoreClass="repairjob.ecore#//IRepair">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference repairjob.ecore#//IRepair/repairOperation"/>
     </genClasses>
     <genClasses ecoreClass="repairjob.ecore#//RepairMatch"/>
     <genClasses ecoreClass="repairjob.ecore#//RepairParameter">
@@ -50,6 +51,9 @@
     <genClasses ecoreClass="repairjob.ecore#//Match">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//Match/change"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//Match/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="repairjob.ecore#//Inconsistency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repairjob.ecore#//Inconsistency/repairs"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

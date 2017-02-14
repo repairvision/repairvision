@@ -12,9 +12,10 @@ import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.repair.model.repairjob.Change;
 import org.sidiff.repair.model.repairjob.ComplementRule;
 import org.sidiff.repair.model.repairjob.EditRule;
+import org.sidiff.repair.model.repairjob.IRepair;
+import org.sidiff.repair.model.repairjob.Inconsistency;
 import org.sidiff.repair.model.repairjob.Match;
 import org.sidiff.repair.model.repairjob.PartialRule;
-import org.sidiff.repair.model.repairjob.Repair;
 import org.sidiff.repair.model.repairjob.RepairJob;
 import org.sidiff.repair.model.repairjob.RepairMatch;
 import org.sidiff.repair.model.repairjob.RepairOperation;
@@ -77,7 +78,7 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass repairEClass = null;
+	private EClass iRepairEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -106,6 +107,13 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 	 * @generated
 	 */
 	private EClass matchEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass inconsistencyEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -195,8 +203,17 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRepairJob_EditRules() {
+	public EReference getRepairJob_Repairs() {
 		return (EReference)repairJobEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRepairJob_Inconsistencies() {
+		return (EReference)repairJobEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -223,7 +240,7 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 	 * @generated
 	 */
 	public EReference getEditRule_RepairJob() {
-		return (EReference)editRuleEClass.getEStructuralFeatures().get(1);
+		return (EReference)editRuleEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -232,7 +249,7 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 	 * @generated
 	 */
 	public EReference getEditRule_RepairOperations() {
-		return (EReference)editRuleEClass.getEStructuralFeatures().get(2);
+		return (EReference)editRuleEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -375,8 +392,8 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getRepair() {
-		return repairEClass;
+	public EClass getIRepair() {
+		return iRepairEClass;
 	}
 
 	/**
@@ -384,8 +401,8 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRepair_RepairOperation() {
-		return (EReference)repairEClass.getEStructuralFeatures().get(0);
+	public EReference getIRepair_RepairOperation() {
+		return (EReference)iRepairEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -474,6 +491,24 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getInconsistency() {
+		return inconsistencyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getInconsistency_Repairs() {
+		return (EReference)inconsistencyEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public RepairjobFactory getRepairjobFactory() {
 		return (RepairjobFactory)getEFactoryInstance();
 	}
@@ -499,12 +534,13 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 		// Create classes and their features
 		repairJobEClass = createEClass(REPAIR_JOB);
 		createEReference(repairJobEClass, REPAIR_JOB__DIFFERENCE);
-		createEReference(repairJobEClass, REPAIR_JOB__EDIT_RULES);
+		createEReference(repairJobEClass, REPAIR_JOB__REPAIRS);
+		createEReference(repairJobEClass, REPAIR_JOB__INCONSISTENCIES);
 
 		editRuleEClass = createEClass(EDIT_RULE);
 		createEReference(editRuleEClass, EDIT_RULE__RULE);
-		createEReference(editRuleEClass, EDIT_RULE__REPAIR_JOB);
 		createEReference(editRuleEClass, EDIT_RULE__REPAIR_OPERATIONS);
+		createEReference(editRuleEClass, EDIT_RULE__REPAIR_JOB);
 		createEOperation(editRuleEClass, EDIT_RULE___GET_RATING);
 
 		repairOperationEClass = createEClass(REPAIR_OPERATION);
@@ -525,8 +561,8 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 		complementRuleEClass = createEClass(COMPLEMENT_RULE);
 		createEReference(complementRuleEClass, COMPLEMENT_RULE__REPAIR_OPERATION);
 
-		repairEClass = createEClass(REPAIR);
-		createEReference(repairEClass, REPAIR__REPAIR_OPERATION);
+		iRepairEClass = createEClass(IREPAIR);
+		createEReference(iRepairEClass, IREPAIR__REPAIR_OPERATION);
 
 		repairMatchEClass = createEClass(REPAIR_MATCH);
 
@@ -540,6 +576,9 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 		matchEClass = createEClass(MATCH);
 		createEReference(matchEClass, MATCH__CHANGE);
 		createEReference(matchEClass, MATCH__ELEMENTS);
+
+		inconsistencyEClass = createEClass(INCONSISTENCY);
+		createEReference(inconsistencyEClass, INCONSISTENCY__REPAIRS);
 	}
 
 	/**
@@ -576,19 +615,20 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 		// Add supertypes to classes
 		subRuleEClass.getESuperTypes().add(this.getPartialRule());
 		complementRuleEClass.getESuperTypes().add(this.getPartialRule());
-		repairMatchEClass.getESuperTypes().add(this.getRepair());
+		repairMatchEClass.getESuperTypes().add(this.getIRepair());
 		repairMatchEClass.getESuperTypes().add(this.getMatch());
-		repairParameterEClass.getESuperTypes().add(this.getRepair());
+		repairParameterEClass.getESuperTypes().add(this.getIRepair());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(repairJobEClass, RepairJob.class, "RepairJob", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRepairJob_Difference(), theSymmetricPackage.getSymmetricDifference(), null, "difference", null, 0, 1, RepairJob.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRepairJob_EditRules(), this.getEditRule(), this.getEditRule_RepairJob(), "editRules", null, 0, -1, RepairJob.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRepairJob_Repairs(), this.getEditRule(), this.getEditRule_RepairJob(), "repairs", null, 0, -1, RepairJob.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRepairJob_Inconsistencies(), this.getInconsistency(), null, "inconsistencies", null, 0, -1, RepairJob.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(editRuleEClass, EditRule.class, "EditRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEditRule_Rule(), theHenshinPackage.getRule(), null, "rule", null, 0, 1, EditRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getEditRule_RepairJob(), this.getRepairJob(), this.getRepairJob_EditRules(), "repairJob", null, 0, 1, EditRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getEditRule_RepairOperations(), this.getRepairOperation(), this.getRepairOperation_EditRule(), "repairOperations", null, 0, -1, EditRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getEditRule_RepairJob(), this.getRepairJob(), this.getRepairJob_Repairs(), "repairJob", null, 0, 1, EditRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getEditRule__GetRating(), ecorePackage.getEDouble(), "getRating", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -597,7 +637,7 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 		initEReference(getRepairOperation_EditRule(), this.getEditRule(), this.getEditRule_RepairOperations(), "editRule", null, 0, 1, RepairOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRepairOperation_SubRule(), this.getSubRule(), this.getSubRule_RepairOperation(), "subRule", null, 0, 1, RepairOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRepairOperation_ComplementRule(), this.getComplementRule(), this.getComplementRule_RepairOperation(), "complementRule", null, 0, 1, RepairOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRepairOperation_Repairs(), this.getRepair(), this.getRepair_RepairOperation(), "repairs", null, 0, -1, RepairOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRepairOperation_Repairs(), this.getIRepair(), this.getIRepair_RepairOperation(), "repairs", null, 0, -1, RepairOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getRepairOperation__GetRating(), ecorePackage.getEDouble(), "getRating", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -611,8 +651,8 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 		initEClass(complementRuleEClass, ComplementRule.class, "ComplementRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComplementRule_RepairOperation(), this.getRepairOperation(), this.getRepairOperation_ComplementRule(), "repairOperation", null, 0, 1, ComplementRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(repairEClass, Repair.class, "Repair", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRepair_RepairOperation(), this.getRepairOperation(), this.getRepairOperation_Repairs(), "repairOperation", null, 0, 1, Repair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(iRepairEClass, IRepair.class, "IRepair", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getIRepair_RepairOperation(), this.getRepairOperation(), this.getRepairOperation_Repairs(), "repairOperation", null, 0, 1, IRepair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(repairMatchEClass, RepairMatch.class, "RepairMatch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -626,6 +666,9 @@ public class RepairjobPackageImpl extends EPackageImpl implements RepairjobPacka
 		initEClass(matchEClass, Match.class, "Match", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getMatch_Change(), this.getChange(), null, "change", null, 0, -1, Match.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getMatch_Elements(), ecorePackage.getEObject(), null, "elements", null, 0, -1, Match.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(inconsistencyEClass, Inconsistency.class, "Inconsistency", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getInconsistency_Repairs(), this.getRepairOperation(), null, "repairs", null, 0, -1, Inconsistency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

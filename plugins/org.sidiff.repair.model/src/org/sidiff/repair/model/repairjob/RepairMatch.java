@@ -13,5 +13,5 @@ package org.sidiff.repair.model.repairjob;
  * @model
  * @generated
  */
-public interface RepairMatch extends Repair, Match {
+public interface RepairMatch extends IRepair, Match {
 } // RepairMatch

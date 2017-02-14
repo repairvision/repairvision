@@ -5,18 +5,7 @@ package org.sidiff.repair.model.repairjob.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.sidiff.repair.model.repairjob.Change;
-import org.sidiff.repair.model.repairjob.ComplementRule;
-import org.sidiff.repair.model.repairjob.EditRule;
-import org.sidiff.repair.model.repairjob.Match;
-import org.sidiff.repair.model.repairjob.PartialRule;
-import org.sidiff.repair.model.repairjob.Repair;
-import org.sidiff.repair.model.repairjob.RepairJob;
-import org.sidiff.repair.model.repairjob.RepairMatch;
-import org.sidiff.repair.model.repairjob.RepairOperation;
-import org.sidiff.repair.model.repairjob.RepairParameter;
-import org.sidiff.repair.model.repairjob.RepairjobPackage;
-import org.sidiff.repair.model.repairjob.SubRule;
+import org.sidiff.repair.model.repairjob.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -113,16 +102,16 @@ public class RepairjobSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case RepairjobPackage.REPAIR: {
-				Repair repair = (Repair)theEObject;
-				T result = caseRepair(repair);
+			case RepairjobPackage.IREPAIR: {
+				IRepair iRepair = (IRepair)theEObject;
+				T result = caseIRepair(iRepair);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case RepairjobPackage.REPAIR_MATCH: {
 				RepairMatch repairMatch = (RepairMatch)theEObject;
 				T result = caseRepairMatch(repairMatch);
-				if (result == null) result = caseRepair(repairMatch);
+				if (result == null) result = caseIRepair(repairMatch);
 				if (result == null) result = caseMatch(repairMatch);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -130,7 +119,7 @@ public class RepairjobSwitch<T> extends Switch<T> {
 			case RepairjobPackage.REPAIR_PARAMETER: {
 				RepairParameter repairParameter = (RepairParameter)theEObject;
 				T result = caseRepairParameter(repairParameter);
-				if (result == null) result = caseRepair(repairParameter);
+				if (result == null) result = caseIRepair(repairParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -143,6 +132,12 @@ public class RepairjobSwitch<T> extends Switch<T> {
 			case RepairjobPackage.MATCH: {
 				Match match = (Match)theEObject;
 				T result = caseMatch(match);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case RepairjobPackage.INCONSISTENCY: {
+				Inconsistency inconsistency = (Inconsistency)theEObject;
+				T result = caseInconsistency(inconsistency);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -241,17 +236,17 @@ public class RepairjobSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Repair</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>IRepair</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Repair</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>IRepair</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseRepair(Repair object) {
+	public T caseIRepair(IRepair object) {
 		return null;
 	}
 
@@ -312,6 +307,21 @@ public class RepairjobSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseMatch(Match object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Inconsistency</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Inconsistency</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInconsistency(Inconsistency object) {
 		return null;
 	}
 

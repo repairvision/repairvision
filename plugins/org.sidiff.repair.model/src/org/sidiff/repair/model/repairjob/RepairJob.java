@@ -16,7 +16,8 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.repair.model.repairjob.RepairJob#getDifference <em>Difference</em>}</li>
- *   <li>{@link org.sidiff.repair.model.repairjob.RepairJob#getEditRules <em>Edit Rules</em>}</li>
+ *   <li>{@link org.sidiff.repair.model.repairjob.RepairJob#getRepairs <em>Repairs</em>}</li>
+ *   <li>{@link org.sidiff.repair.model.repairjob.RepairJob#getInconsistencies <em>Inconsistencies</em>}</li>
  * </ul>
  *
  * @see org.sidiff.repair.model.repairjob.RepairjobPackage#getRepairJob()
@@ -51,21 +52,37 @@ public interface RepairJob extends EObject {
 	void setDifference(SymmetricDifference value);
 
 	/**
-	 * Returns the value of the '<em><b>Edit Rules</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Repairs</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.repair.model.repairjob.EditRule}.
 	 * It is bidirectional and its opposite is '{@link org.sidiff.repair.model.repairjob.EditRule#getRepairJob <em>Repair Job</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Edit Rules</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Repairs</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Edit Rules</em>' containment reference list.
-	 * @see org.sidiff.repair.model.repairjob.RepairjobPackage#getRepairJob_EditRules()
+	 * @return the value of the '<em>Repairs</em>' containment reference list.
+	 * @see org.sidiff.repair.model.repairjob.RepairjobPackage#getRepairJob_Repairs()
 	 * @see org.sidiff.repair.model.repairjob.EditRule#getRepairJob
 	 * @model opposite="repairJob" containment="true"
 	 * @generated
 	 */
-	EList<EditRule> getEditRules();
+	EList<EditRule> getRepairs();
+
+	/**
+	 * Returns the value of the '<em><b>Inconsistencies</b></em>' containment reference list.
+	 * The list contents are of type {@link org.sidiff.repair.model.repairjob.Inconsistency}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Inconsistencies</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Inconsistencies</em>' containment reference list.
+	 * @see org.sidiff.repair.model.repairjob.RepairjobPackage#getRepairJob_Inconsistencies()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Inconsistency> getInconsistencies();
 
 } // RepairJob

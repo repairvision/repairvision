@@ -11,10 +11,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.repair.model.repairjob.EditRule;
+import org.sidiff.repair.model.repairjob.Inconsistency;
 import org.sidiff.repair.model.repairjob.RepairJob;
 import org.sidiff.repair.model.repairjob.RepairjobPackage;
 
@@ -27,7 +29,8 @@ import org.sidiff.repair.model.repairjob.RepairjobPackage;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.repair.model.repairjob.impl.RepairJobImpl#getDifference <em>Difference</em>}</li>
- *   <li>{@link org.sidiff.repair.model.repairjob.impl.RepairJobImpl#getEditRules <em>Edit Rules</em>}</li>
+ *   <li>{@link org.sidiff.repair.model.repairjob.impl.RepairJobImpl#getRepairs <em>Repairs</em>}</li>
+ *   <li>{@link org.sidiff.repair.model.repairjob.impl.RepairJobImpl#getInconsistencies <em>Inconsistencies</em>}</li>
  * </ul>
  *
  * @generated
@@ -44,14 +47,24 @@ public class RepairJobImpl extends MinimalEObjectImpl.Container implements Repai
 	protected SymmetricDifference difference;
 
 	/**
-	 * The cached value of the '{@link #getEditRules() <em>Edit Rules</em>}' containment reference list.
+	 * The cached value of the '{@link #getRepairs() <em>Repairs</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getEditRules()
+	 * @see #getRepairs()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<EditRule> editRules;
+	protected EList<EditRule> repairs;
+
+	/**
+	 * The cached value of the '{@link #getInconsistencies() <em>Inconsistencies</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInconsistencies()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Inconsistency> inconsistencies;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -115,11 +128,23 @@ public class RepairJobImpl extends MinimalEObjectImpl.Container implements Repai
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<EditRule> getEditRules() {
-		if (editRules == null) {
-			editRules = new EObjectContainmentWithInverseEList<EditRule>(EditRule.class, this, RepairjobPackage.REPAIR_JOB__EDIT_RULES, RepairjobPackage.EDIT_RULE__REPAIR_JOB);
+	public EList<EditRule> getRepairs() {
+		if (repairs == null) {
+			repairs = new EObjectContainmentWithInverseEList<EditRule>(EditRule.class, this, RepairjobPackage.REPAIR_JOB__REPAIRS, RepairjobPackage.EDIT_RULE__REPAIR_JOB);
 		}
-		return editRules;
+		return repairs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Inconsistency> getInconsistencies() {
+		if (inconsistencies == null) {
+			inconsistencies = new EObjectContainmentEList<Inconsistency>(Inconsistency.class, this, RepairjobPackage.REPAIR_JOB__INCONSISTENCIES);
+		}
+		return inconsistencies;
 	}
 
 	/**
@@ -131,8 +156,8 @@ public class RepairJobImpl extends MinimalEObjectImpl.Container implements Repai
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case RepairjobPackage.REPAIR_JOB__EDIT_RULES:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getEditRules()).basicAdd(otherEnd, msgs);
+			case RepairjobPackage.REPAIR_JOB__REPAIRS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getRepairs()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -145,8 +170,10 @@ public class RepairJobImpl extends MinimalEObjectImpl.Container implements Repai
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case RepairjobPackage.REPAIR_JOB__EDIT_RULES:
-				return ((InternalEList<?>)getEditRules()).basicRemove(otherEnd, msgs);
+			case RepairjobPackage.REPAIR_JOB__REPAIRS:
+				return ((InternalEList<?>)getRepairs()).basicRemove(otherEnd, msgs);
+			case RepairjobPackage.REPAIR_JOB__INCONSISTENCIES:
+				return ((InternalEList<?>)getInconsistencies()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -162,8 +189,10 @@ public class RepairJobImpl extends MinimalEObjectImpl.Container implements Repai
 			case RepairjobPackage.REPAIR_JOB__DIFFERENCE:
 				if (resolve) return getDifference();
 				return basicGetDifference();
-			case RepairjobPackage.REPAIR_JOB__EDIT_RULES:
-				return getEditRules();
+			case RepairjobPackage.REPAIR_JOB__REPAIRS:
+				return getRepairs();
+			case RepairjobPackage.REPAIR_JOB__INCONSISTENCIES:
+				return getInconsistencies();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -180,9 +209,13 @@ public class RepairJobImpl extends MinimalEObjectImpl.Container implements Repai
 			case RepairjobPackage.REPAIR_JOB__DIFFERENCE:
 				setDifference((SymmetricDifference)newValue);
 				return;
-			case RepairjobPackage.REPAIR_JOB__EDIT_RULES:
-				getEditRules().clear();
-				getEditRules().addAll((Collection<? extends EditRule>)newValue);
+			case RepairjobPackage.REPAIR_JOB__REPAIRS:
+				getRepairs().clear();
+				getRepairs().addAll((Collection<? extends EditRule>)newValue);
+				return;
+			case RepairjobPackage.REPAIR_JOB__INCONSISTENCIES:
+				getInconsistencies().clear();
+				getInconsistencies().addAll((Collection<? extends Inconsistency>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -199,8 +232,11 @@ public class RepairJobImpl extends MinimalEObjectImpl.Container implements Repai
 			case RepairjobPackage.REPAIR_JOB__DIFFERENCE:
 				setDifference((SymmetricDifference)null);
 				return;
-			case RepairjobPackage.REPAIR_JOB__EDIT_RULES:
-				getEditRules().clear();
+			case RepairjobPackage.REPAIR_JOB__REPAIRS:
+				getRepairs().clear();
+				return;
+			case RepairjobPackage.REPAIR_JOB__INCONSISTENCIES:
+				getInconsistencies().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -216,8 +252,10 @@ public class RepairJobImpl extends MinimalEObjectImpl.Container implements Repai
 		switch (featureID) {
 			case RepairjobPackage.REPAIR_JOB__DIFFERENCE:
 				return difference != null;
-			case RepairjobPackage.REPAIR_JOB__EDIT_RULES:
-				return editRules != null && !editRules.isEmpty();
+			case RepairjobPackage.REPAIR_JOB__REPAIRS:
+				return repairs != null && !repairs.isEmpty();
+			case RepairjobPackage.REPAIR_JOB__INCONSISTENCIES:
+				return inconsistencies != null && !inconsistencies.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

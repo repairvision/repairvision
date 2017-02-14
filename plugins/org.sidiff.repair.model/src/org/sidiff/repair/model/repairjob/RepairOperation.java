@@ -138,8 +138,8 @@ public interface RepairOperation extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Repairs</b></em>' containment reference list.
-	 * The list contents are of type {@link org.sidiff.repair.model.repairjob.Repair}.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.repair.model.repairjob.Repair#getRepairOperation <em>Repair Operation</em>}'.
+	 * The list contents are of type {@link org.sidiff.repair.model.repairjob.IRepair}.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.repair.model.repairjob.IRepair#getRepairOperation <em>Repair Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Repairs</em>' containment reference list isn't clear,
@@ -148,11 +148,11 @@ public interface RepairOperation extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Repairs</em>' containment reference list.
 	 * @see org.sidiff.repair.model.repairjob.RepairjobPackage#getRepairOperation_Repairs()
-	 * @see org.sidiff.repair.model.repairjob.Repair#getRepairOperation
+	 * @see org.sidiff.repair.model.repairjob.IRepair#getRepairOperation
 	 * @model opposite="repairOperation" containment="true"
 	 * @generated
 	 */
-	EList<Repair> getRepairs();
+	EList<IRepair> getRepairs();
 
 	/**
 	 * <!-- begin-user-doc -->
