@@ -97,7 +97,8 @@ public class RepairJobItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(RepairjobPackage.Literals.REPAIR_JOB__EDIT_RULES);
+			childrenFeatures.add(RepairjobPackage.Literals.REPAIR_JOB__REPAIRS);
+			childrenFeatures.add(RepairjobPackage.Literals.REPAIR_JOB__INCONSISTENCIES);
 		}
 		return childrenFeatures;
 	}
@@ -150,7 +151,8 @@ public class RepairJobItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(RepairJob.class)) {
-			case RepairjobPackage.REPAIR_JOB__EDIT_RULES:
+			case RepairjobPackage.REPAIR_JOB__REPAIRS:
+			case RepairjobPackage.REPAIR_JOB__INCONSISTENCIES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -170,7 +172,7 @@ public class RepairJobItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(RepairjobPackage.Literals.REPAIR_JOB__EDIT_RULES,
+				(RepairjobPackage.Literals.REPAIR_JOB__REPAIRS,
 				 RepairjobFactory.eINSTANCE.createEditRule()));
 	}
 
