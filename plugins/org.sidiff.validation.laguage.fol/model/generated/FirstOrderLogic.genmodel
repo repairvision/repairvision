@@ -51,7 +51,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Quantifier/iteration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Quantifier/formula"/>
     </genClasses>
-    <genClasses ecoreClass="FirstOrderLogic.ecore#//Term"/>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//Term">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Term/element"/>
+    </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Get">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Get/type"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Get/name"/>

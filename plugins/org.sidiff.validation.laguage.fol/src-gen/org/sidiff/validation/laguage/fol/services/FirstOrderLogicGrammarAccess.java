@@ -157,17 +157,31 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class FormulaElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Formula");
-		private final RuleCall cIffParserRuleCall = (RuleCall)rule.eContents().get(1);
+		private final RuleCall cBinaryFormulaParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//// formula:
 		/// * 
-		// * Precedence: not, and, or, xor, if, iff
+		// * Precedence: not, and, or, xor, if/implies, iff
 		// * 
 		// * To define the precedence we must write the rule for the operator with less precedence in 
 		// * terms of the rule for the operator with higher precedence. This means that in the grammar, 
 		// * the rules for operators with less precedence are defined first.
-		// * / Formula:
-		//	Iff;
+		// * / // binary formulas:
+		//// TODO: How to make If, Xor,... inherit from BinaryFormula?
+		//// http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
+		//Formula:
+		//	BinaryFormula;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//BinaryFormula
+		public RuleCall getBinaryFormulaParserRuleCall() { return cBinaryFormulaParserRuleCall; }
+	}
+	public class BinaryFormulaElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.BinaryFormula");
+		private final RuleCall cIffParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//BinaryFormula Formula:
+		//	Iff
 		@Override public ParserRule getRule() { return rule; }
 		
 		//Iff
@@ -176,24 +190,24 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	public class IffElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Iff");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cBinaryFormulaParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cIfParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cIffLeftAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Keyword cEqualsSignKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
 		private final Assignment cRightAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cRightBinaryFormulaParserRuleCall_1_2_0 = (RuleCall)cRightAssignment_1_2.eContents().get(0);
+		private final RuleCall cRightIfParserRuleCall_1_2_0 = (RuleCall)cRightAssignment_1_2.eContents().get(0);
 		
 		//Iff Formula:
-		//	BinaryFormula ({Iff.left=current} "=" right=BinaryFormula)*
+		//	If ({Iff.left=current} "=" right=If)*
 		@Override public ParserRule getRule() { return rule; }
 		
-		//BinaryFormula ({Iff.left=current} "=" right=BinaryFormula)*
+		//If ({Iff.left=current} "=" right=If)*
 		public Group getGroup() { return cGroup; }
 		
-		//BinaryFormula
-		public RuleCall getBinaryFormulaParserRuleCall_0() { return cBinaryFormulaParserRuleCall_0; }
+		//If
+		public RuleCall getIfParserRuleCall_0() { return cIfParserRuleCall_0; }
 		
-		//({Iff.left=current} "=" right=BinaryFormula)*
+		//({Iff.left=current} "=" right=If)*
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//{Iff.left=current}
@@ -202,25 +216,11 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//"="
 		public Keyword getEqualsSignKeyword_1_1() { return cEqualsSignKeyword_1_1; }
 		
-		//right=BinaryFormula
+		//right=If
 		public Assignment getRightAssignment_1_2() { return cRightAssignment_1_2; }
 		
-		//BinaryFormula
-		public RuleCall getRightBinaryFormulaParserRuleCall_1_2_0() { return cRightBinaryFormulaParserRuleCall_1_2_0; }
-	}
-	public class BinaryFormulaElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.BinaryFormula");
-		private final RuleCall cIfParserRuleCall = (RuleCall)rule.eContents().get(1);
-		
-		//// binary formulas:
-		//// TODO: How to make If, Xor,... inherit from BinaryFormula?
-		//// http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
-		//BinaryFormula Formula:
-		//	If
-		@Override public ParserRule getRule() { return rule; }
-		
 		//If
-		public RuleCall getIfParserRuleCall() { return cIfParserRuleCall; }
+		public RuleCall getRightIfParserRuleCall_1_2_0() { return cRightIfParserRuleCall_1_2_0; }
 	}
 	public class IfElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.If");
@@ -900,13 +900,15 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cConstantParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cVariableRefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cGetContainmentParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cGetContainerParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//// terms:
 		//Term:
-		//	Constant | VariableRef;
+		//	Constant | VariableRef | GetContainment | GetContainer;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//Constant | VariableRef
+		//Constant | VariableRef | GetContainment | GetContainer
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//Constant
@@ -914,6 +916,12 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//VariableRef
 		public RuleCall getVariableRefParserRuleCall_1() { return cVariableRefParserRuleCall_1; }
+		
+		//GetContainment
+		public RuleCall getGetContainmentParserRuleCall_2() { return cGetContainmentParserRuleCall_2; }
+		
+		//GetContainer
+		public RuleCall getGetContainerParserRuleCall_3() { return cGetContainerParserRuleCall_3; }
 	}
 	public class VariableRefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.VariableRef");
@@ -1001,6 +1009,60 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//Get
 		public RuleCall getNextGetParserRuleCall_3_0() { return cNextGetParserRuleCall_3_0; }
 	}
+	public class GetContainerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.GetContainer");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cGetContainerKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cElementAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cElementTermParserRuleCall_1_0 = (RuleCall)cElementAssignment_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//GetContainer Term:
+		//	"getContainer(" element=Term ")"
+		@Override public ParserRule getRule() { return rule; }
+		
+		//"getContainer(" element=Term ")"
+		public Group getGroup() { return cGroup; }
+		
+		//"getContainer("
+		public Keyword getGetContainerKeyword_0() { return cGetContainerKeyword_0; }
+		
+		//element=Term
+		public Assignment getElementAssignment_1() { return cElementAssignment_1; }
+		
+		//Term
+		public RuleCall getElementTermParserRuleCall_1_0() { return cElementTermParserRuleCall_1_0; }
+		
+		//")"
+		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
+	}
+	public class GetContainmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.GetContainment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cGetContainmentsKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cElementAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cElementTermParserRuleCall_1_0 = (RuleCall)cElementAssignment_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//GetContainment Term:
+		//	"getContainments(" element=Term ")"
+		@Override public ParserRule getRule() { return rule; }
+		
+		//"getContainments(" element=Term ")"
+		public Group getGroup() { return cGroup; }
+		
+		//"getContainments("
+		public Keyword getGetContainmentsKeyword_0() { return cGetContainmentsKeyword_0; }
+		
+		//element=Term
+		public Assignment getElementAssignment_1() { return cElementAssignment_1; }
+		
+		//Term
+		public RuleCall getElementTermParserRuleCall_1_0() { return cElementTermParserRuleCall_1_0; }
+		
+		//")"
+		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
+	}
 	public class ConstantElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Constant");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1054,8 +1116,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	private final ConstraintElements pConstraint;
 	private final VariableElements pVariable;
 	private final FormulaElements pFormula;
-	private final IffElements pIff;
 	private final BinaryFormulaElements pBinaryFormula;
+	private final IffElements pIff;
 	private final IfElements pIf;
 	private final XorElements pXor;
 	private final OrElements pOr;
@@ -1078,6 +1140,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	private final TermElements pTerm;
 	private final VariableRefElements pVariableRef;
 	private final GetElements pGet;
+	private final GetContainerElements pGetContainer;
+	private final GetContainmentElements pGetContainment;
 	private final ConstantElements pConstant;
 	
 	private final Grammar grammar;
@@ -1093,8 +1157,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		this.pConstraint = new ConstraintElements();
 		this.pVariable = new VariableElements();
 		this.pFormula = new FormulaElements();
-		this.pIff = new IffElements();
 		this.pBinaryFormula = new BinaryFormulaElements();
+		this.pIff = new IffElements();
 		this.pIf = new IfElements();
 		this.pXor = new XorElements();
 		this.pOr = new OrElements();
@@ -1117,6 +1181,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		this.pTerm = new TermElements();
 		this.pVariableRef = new VariableRefElements();
 		this.pGet = new GetElements();
+		this.pGetContainer = new GetContainerElements();
+		this.pGetContainment = new GetContainmentElements();
 		this.pConstant = new ConstantElements();
 	}
 	
@@ -1181,13 +1247,16 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// formula:
 	/// * 
-	// * Precedence: not, and, or, xor, if, iff
+	// * Precedence: not, and, or, xor, if/implies, iff
 	// * 
 	// * To define the precedence we must write the rule for the operator with less precedence in 
 	// * terms of the rule for the operator with higher precedence. This means that in the grammar, 
 	// * the rules for operators with less precedence are defined first.
-	// * / Formula:
-	//	Iff;
+	// * / // binary formulas:
+	//// TODO: How to make If, Xor,... inherit from BinaryFormula?
+	//// http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
+	//Formula:
+	//	BinaryFormula;
 	public FormulaElements getFormulaAccess() {
 		return pFormula;
 	}
@@ -1196,27 +1265,24 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getFormulaAccess().getRule();
 	}
 	
-	//Iff Formula:
-	//	BinaryFormula ({Iff.left=current} "=" right=BinaryFormula)*
-	public IffElements getIffAccess() {
-		return pIff;
-	}
-	
-	public ParserRule getIffRule() {
-		return getIffAccess().getRule();
-	}
-	
-	//// binary formulas:
-	//// TODO: How to make If, Xor,... inherit from BinaryFormula?
-	//// http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
 	//BinaryFormula Formula:
-	//	If
+	//	Iff
 	public BinaryFormulaElements getBinaryFormulaAccess() {
 		return pBinaryFormula;
 	}
 	
 	public ParserRule getBinaryFormulaRule() {
 		return getBinaryFormulaAccess().getRule();
+	}
+	
+	//Iff Formula:
+	//	If ({Iff.left=current} "=" right=If)*
+	public IffElements getIffAccess() {
+		return pIff;
+	}
+	
+	public ParserRule getIffRule() {
+		return getIffAccess().getRule();
 	}
 	
 	//If Formula:
@@ -1427,7 +1493,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// terms:
 	//Term:
-	//	Constant | VariableRef;
+	//	Constant | VariableRef | GetContainment | GetContainer;
 	public TermElements getTermAccess() {
 		return pTerm;
 	}
@@ -1454,6 +1520,26 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getGetRule() {
 		return getGetAccess().getRule();
+	}
+	
+	//GetContainer Term:
+	//	"getContainer(" element=Term ")"
+	public GetContainerElements getGetContainerAccess() {
+		return pGetContainer;
+	}
+	
+	public ParserRule getGetContainerRule() {
+		return getGetContainerAccess().getRule();
+	}
+	
+	//GetContainment Term:
+	//	"getContainments(" element=Term ")"
+	public GetContainmentElements getGetContainmentAccess() {
+		return pGetContainment;
+	}
+	
+	public ParserRule getGetContainmentRule() {
+		return getGetContainmentAccess().getRule();
 	}
 	
 	//Constant Term:

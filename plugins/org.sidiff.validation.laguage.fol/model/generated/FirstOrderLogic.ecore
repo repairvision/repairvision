@@ -58,7 +58,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="formula" eType="#//Formula"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Term" eSuperTypes="#//Formula"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Term" eSuperTypes="#//Formula">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//Term"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Get">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>

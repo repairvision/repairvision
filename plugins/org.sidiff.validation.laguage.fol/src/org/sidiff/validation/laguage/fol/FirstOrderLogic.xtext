@@ -19,25 +19,26 @@ Variable:
 // formula:
 
 /* 
- * Precedence: not, and, or, xor, if, iff
+ * Precedence: not, and, or, xor, if/implies, iff
  * 
  * To define the precedence we must write the rule for the operator with less precedence in 
  * terms of the rule for the operator with higher precedence. This means that in the grammar, 
  * the rules for operators with less precedence are defined first.
  */
-
-Formula:
-	Iff;
-	
-Iff returns Formula:
-	BinaryFormula ({Iff.left=current} "=" right=BinaryFormula)*;
-
+ 
 // binary formulas:
 // TODO: How to make If, Xor,... inherit from BinaryFormula?
 // http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
+ 
 
+Formula:
+	BinaryFormula;
+	
 BinaryFormula returns Formula:
-	If;
+	Iff;
+	
+Iff returns Formula:
+	If ({Iff.left=current} "=" right=If)*;
 
 If returns Formula:
 	Xor ({If.left=current} "implies" right=Xor)*;
@@ -120,13 +121,19 @@ BoolConstant returns Term:
 // terms:
 
 Term:
-	Constant | VariableRef;
+	Constant | VariableRef | GetContainment | GetContainer;
 	
 VariableRef returns Term:
 	{VariableRef} name=[Variable] (get=Get)?;
 
 Get:
 	"." (type=ID "::" )? name=[ecore::EStructuralFeature] (next=Get)?;
+	
+GetContainer returns Term:
+	"getContainer("element=Term")";
+	
+GetContainment returns Term:
+	"getContainments("element=Term")";
 
 Constant returns Term:
 	{IntConstant} value=INT |

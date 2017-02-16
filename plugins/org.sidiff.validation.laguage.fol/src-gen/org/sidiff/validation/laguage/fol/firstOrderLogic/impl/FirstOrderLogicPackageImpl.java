@@ -657,6 +657,16 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getTerm_Element()
+  {
+    return (EReference)termEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getGet()
   {
     return getEClass;
@@ -1050,6 +1060,7 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     createEReference(quantifierEClass, QUANTIFIER__FORMULA);
 
     termEClass = createEClass(TERM);
+    createEReference(termEClass, TERM__ELEMENT);
 
     getEClass = createEClass(GET);
     createEAttribute(getEClass, GET__TYPE);
@@ -1197,6 +1208,7 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     initEReference(getQuantifier_Formula(), this.getFormula(), null, "formula", null, 0, 1, Quantifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(termEClass, Term.class, "Term", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTerm_Element(), this.getTerm(), null, "element", null, 0, 1, Term.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(getEClass, Get.class, "Get", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getGet_Type(), ecorePackage.getEString(), "type", null, 0, 1, Get.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
