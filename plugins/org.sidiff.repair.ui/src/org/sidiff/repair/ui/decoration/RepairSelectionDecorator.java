@@ -1,5 +1,6 @@
 package org.sidiff.repair.ui.decoration;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -151,18 +152,23 @@ public class RepairSelectionDecorator extends AbstractDecorator {
 		}
 		return null;
 	}
-
-	private boolean selectionContains(EObject element) {
-		element = IntegrationEditorAccess.getInstance().getHighlightableElement(element);
-		boolean contained = false;
-
-		if (element != null) {
-			for (EObject selected : controller.getSelected()) {
-				String fragmentA = EcoreUtil.getURI(selected).fragment();
-				String fragmentB = EcoreUtil.getURI(element).fragment();
-				contained |= fragmentA.equals(fragmentB);
+	
+	private boolean selectionContains(EObject viewDataElement){
+		Collection<EObject> viewDataElements = IntegrationEditorAccess.getInstance().getHighlightableElements(viewDataElement);
+		
+		if(viewDataElements != null && !viewDataElements.isEmpty()){
+			for(EObject selected : controller.getSelected()){
+				for (EObject element : viewDataElements){
+					String fragmentA = EcoreUtil.getURI(selected).fragment();
+					String fragmentB = EcoreUtil.getURI(element).fragment();
+					
+					if (fragmentA.equals(fragmentB)){
+						return true;
+					}					
+				}			
 			}
 		}
-		return contained;
+			
+		return false;
 	}
 }
