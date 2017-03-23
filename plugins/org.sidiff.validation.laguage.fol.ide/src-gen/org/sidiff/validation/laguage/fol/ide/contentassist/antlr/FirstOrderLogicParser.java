@@ -62,6 +62,7 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSmallerAccess().getGroup(), "rule__Smaller__Group__0");
 					put(grammarAccess.getSmallerEqualAccess().getGroup(), "rule__SmallerEqual__Group__0");
 					put(grammarAccess.getIsEmptyAccess().getGroup(), "rule__IsEmpty__Group__0");
+					put(grammarAccess.getIsInstanceOfAccess().getGroup(), "rule__IsInstanceOf__Group__0");
 					put(grammarAccess.getForAllAccess().getGroup(), "rule__ForAll__Group__0");
 					put(grammarAccess.getExistsAccess().getGroup(), "rule__Exists__Group__0");
 					put(grammarAccess.getBooleanExpressionAccess().getGroup_0(), "rule__BooleanExpression__Group_0__0");
@@ -71,6 +72,9 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getGetAccess().getGroup_1(), "rule__Get__Group_1__0");
 					put(grammarAccess.getGetContainerAccess().getGroup(), "rule__GetContainer__Group__0");
 					put(grammarAccess.getGetContainmentAccess().getGroup(), "rule__GetContainment__Group__0");
+					put(grammarAccess.getGetClosureAccess().getGroup(), "rule__GetClosure__Group__0");
+					put(grammarAccess.getConcatenateAccess().getGroup(), "rule__Concatenate__Group__0");
+					put(grammarAccess.getCapitalizeAccess().getGroup(), "rule__Capitalize__Group__0");
 					put(grammarAccess.getConstantAccess().getGroup_0(), "rule__Constant__Group_0__0");
 					put(grammarAccess.getConstantAccess().getGroup_1(), "rule__Constant__Group_1__0");
 					put(grammarAccess.getConstraintLibraryAccess().getDomainAssignment_1(), "rule__ConstraintLibrary__DomainAssignment_1");
@@ -99,6 +103,8 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSmallerEqualAccess().getLeftAssignment_1(), "rule__SmallerEqual__LeftAssignment_1");
 					put(grammarAccess.getSmallerEqualAccess().getRightAssignment_3(), "rule__SmallerEqual__RightAssignment_3");
 					put(grammarAccess.getIsEmptyAccess().getTermAssignment_1(), "rule__IsEmpty__TermAssignment_1");
+					put(grammarAccess.getIsInstanceOfAccess().getTermAssignment_1(), "rule__IsInstanceOf__TermAssignment_1");
+					put(grammarAccess.getIsInstanceOfAccess().getTypeAssignment_3(), "rule__IsInstanceOf__TypeAssignment_3");
 					put(grammarAccess.getForAllAccess().getNameAssignment_2(), "rule__ForAll__NameAssignment_2");
 					put(grammarAccess.getForAllAccess().getIterationAssignment_4(), "rule__ForAll__IterationAssignment_4");
 					put(grammarAccess.getForAllAccess().getFormulaAssignment_6(), "rule__ForAll__FormulaAssignment_6");
@@ -113,6 +119,11 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getGetAccess().getNextAssignment_3(), "rule__Get__NextAssignment_3");
 					put(grammarAccess.getGetContainerAccess().getElementAssignment_1(), "rule__GetContainer__ElementAssignment_1");
 					put(grammarAccess.getGetContainmentAccess().getElementAssignment_1(), "rule__GetContainment__ElementAssignment_1");
+					put(grammarAccess.getGetClosureAccess().getElementAssignment_1(), "rule__GetClosure__ElementAssignment_1");
+					put(grammarAccess.getGetClosureAccess().getFeatureAssignment_3(), "rule__GetClosure__FeatureAssignment_3");
+					put(grammarAccess.getConcatenateAccess().getLeftAssignment_1(), "rule__Concatenate__LeftAssignment_1");
+					put(grammarAccess.getConcatenateAccess().getRightAssignment_3(), "rule__Concatenate__RightAssignment_3");
+					put(grammarAccess.getCapitalizeAccess().getStringAssignment_1(), "rule__Capitalize__StringAssignment_1");
 					put(grammarAccess.getConstantAccess().getValueAssignment_0_1(), "rule__Constant__ValueAssignment_0_1");
 					put(grammarAccess.getConstantAccess().getValueAssignment_1_1(), "rule__Constant__ValueAssignment_1_1");
 				}
