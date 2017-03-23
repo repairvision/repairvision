@@ -12,20 +12,22 @@ public class IsEmpty extends Predicate {
 	protected Term term;
 	
 	public IsEmpty(Term term) {
-		super();
+		this.name = "isEmpty";
 		this.term = term;
 	}
 
 	@Override
 	public boolean evaluate() {
 		if (term.getValue() == null) {
-			return true;
+			result = true;
 		} else {
 			if (term.getValue() instanceof Collection<?>) {
-				return ((Collection<?>) term.getValue()).isEmpty();
+				result = ((Collection<?>) term.getValue()).isEmpty();
+			} else {
+				result = false;
 			}
 		}
-		return false;
+		return result;
 	}
 
 	@Override

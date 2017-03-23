@@ -6,55 +6,54 @@ import org.sidiff.repair.validation.fix.Repair.RepairType;
 import org.sidiff.repair.validation.terms.Constant;
 import org.sidiff.repair.validation.terms.Term;
 
-public class Equality extends Predicate {
+public class Equality extends Comparison {
 
-	protected Term termA;
-	
-	protected Term termB;
-	
-	public Equality(Term termA, Term termB) {
-		super();
-		this.termA = termA;
-		this.termB = termB;
+	public Equality(Term left, Term right) {
+		super("equality", left, right);
 	}
 
 	@Override
 	public boolean evaluate() {
-		return termA.evaluate().equals(termB.evaluate());
+		left.evaluate();
+		right.evaluate();
+		
+		result = left.getValue().equals(right.getValue());
+		
+		return result;
 	}
 
 	public Term getTermA() {
-		return termA;
+		return left;
 	}
 
 	public void setTermA(Term termA) {
-		this.termA = termA;
+		this.left = termA;
 	}
 
 	public Term getTermB() {
-		return termB;
+		return right;
 	}
 
 	public void setTermB(Term termB) {
-		this.termB = termB;
+		this.right = termB;
 	}
 
 	@Override
 	public void repair(IRepairDecision parent, boolean expected) {
 		
-		if (termB instanceof Constant) {
-			termA.repair(parent, RepairType.MODIFY);
+		if (right instanceof Constant) {
+			left.repair(parent, RepairType.MODIFY);
 		}
 		
-		else if (termA instanceof Constant) {
-			termB.repair(parent, RepairType.MODIFY);
+		else if (left instanceof Constant) {
+			right.repair(parent, RepairType.MODIFY);
 		}
 		
 		else {
 			Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 
-			termA.repair(newRepairAlternative, RepairType.MODIFY);
-			termB.repair(newRepairAlternative, RepairType.MODIFY);
+			left.repair(newRepairAlternative, RepairType.MODIFY);
+			right.repair(newRepairAlternative, RepairType.MODIFY);
 		}
 	}
 }
