@@ -4,7 +4,9 @@ generate firstOrderLogic "http://www.sidiff.org/validation/laguage/fol/FirstOrde
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
-// NOTE: escape keywords with ^keyword
+// NOTES: 
+// - escape keywords with ^keyword
+// - http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
 
 ConstraintLibrary:
 	"domain" domain=STRING 'import' packageImport=STRING 
@@ -27,9 +29,6 @@ Variable:
  */
  
 // binary formulas:
-// TODO: How to make If, Xor,... inherit from BinaryFormula?
-// http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
- 
 
 Formula:
 	BinaryFormula;
@@ -63,7 +62,7 @@ Not returns UnaryFormula:
 // predicates (term -> boolean):
 
 Predicate returns Formula:
-	Equals | Inequality | IsEmpty;
+	Equals | Inequality | IsEmpty | IsInstanceOf;
 
 Equals:
 	"isEqual(" (left=Term) "," (right=Term) ")";
@@ -85,19 +84,9 @@ SmallerEqual:
 	
 IsEmpty:
 	"isEmpty(" term=Term ")";
-
-// TODO: infix inequality expressions
-//Greater returns Formula:
-//	GreaterEqual ({Greater.left=current} ">" right=GreaterEqual)*;
-//	
-//GreaterEqual returns Formula:
-//	Smaller ({GreaterEqual.left=current} ">=" right=Smaller)*;
-//
-//Smaller returns Formula:
-//	SmallerEqual ({Smaller.left=current} "<" right=SmallerEqual)*;
-//	
-//SmallerEqual returns Formula:
-//	Term ({SmallerEqual.left=current} "<=" right=Term)*;
+	
+IsInstanceOf:
+	"isInstanceOf(" term=Term "," type=ID ")";
 	
 // quantifier
 
@@ -121,19 +110,32 @@ BoolConstant returns Term:
 // terms:
 
 Term:
-	Constant | VariableRef | GetContainment | GetContainer;
+	Constant | VariableRef | GetContainment | GetContainer | GetClosure | Concatenate | Capitalize;
 	
 VariableRef returns Term:
 	{VariableRef} name=[Variable] (get=Get)?;
+
+// function terms (term -> term):
 
 Get:
 	"." (type=ID "::" )? name=[ecore::EStructuralFeature] (next=Get)?;
 	
 GetContainer returns Term:
-	"getContainer("element=Term")";
+	"getContainer(" element=Term ")";
 	
 GetContainment returns Term:
-	"getContainments("element=Term")";
+	"getContainments(" element=Term ")";
+	
+GetClosure returns Term:
+	"getClosure(" element=Term "," feature=ID ")";
+	
+Concatenate returns Term:
+	"concatenate(" left=Term "," right=Term ")";
+	
+Capitalize returns Term:
+	"capitalize(" string=Term ")";
+
+// primitive terms:
 
 Constant returns Term:
 	{IntConstant} value=INT |

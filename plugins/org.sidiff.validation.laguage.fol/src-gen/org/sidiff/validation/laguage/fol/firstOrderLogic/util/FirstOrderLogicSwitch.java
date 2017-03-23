@@ -157,6 +157,14 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case FirstOrderLogicPackage.IS_INSTANCE_OF:
+      {
+        IsInstanceOf isInstanceOf = (IsInstanceOf)theEObject;
+        T result = caseIsInstanceOf(isInstanceOf);
+        if (result == null) result = caseFormula(isInstanceOf);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case FirstOrderLogicPackage.QUANTIFIER:
       {
         Quantifier quantifier = (Quantifier)theEObject;
@@ -459,6 +467,22 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseIsEmpty(IsEmpty object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Is Instance Of</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Is Instance Of</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseIsInstanceOf(IsInstanceOf object)
   {
     return null;
   }

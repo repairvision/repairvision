@@ -61,6 +61,7 @@ public class FirstOrderLogicSyntacticSequencer extends AbstractSyntacticSequence
 	 *     (rule start) (ambiguity) 'isEqual(' left=Term
 	 *     (rule start) (ambiguity) 'isGreater(' left=Term
 	 *     (rule start) (ambiguity) 'isGreaterEqual(' left=Term
+	 *     (rule start) (ambiguity) 'isInstanceOf(' term=Term
 	 *     (rule start) (ambiguity) 'isSmaller(' left=Term
 	 *     (rule start) (ambiguity) 'isSmallerEqual(' left=Term
 	 *     (rule start) (ambiguity) 'not(' not=Formula

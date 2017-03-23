@@ -76,6 +76,7 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
       case FirstOrderLogicPackage.SMALLER: return createSmaller();
       case FirstOrderLogicPackage.SMALLER_EQUAL: return createSmallerEqual();
       case FirstOrderLogicPackage.IS_EMPTY: return createIsEmpty();
+      case FirstOrderLogicPackage.IS_INSTANCE_OF: return createIsInstanceOf();
       case FirstOrderLogicPackage.QUANTIFIER: return createQuantifier();
       case FirstOrderLogicPackage.TERM: return createTerm();
       case FirstOrderLogicPackage.GET: return createGet();
@@ -215,6 +216,17 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
   {
     IsEmptyImpl isEmpty = new IsEmptyImpl();
     return isEmpty;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IsInstanceOf createIsInstanceOf()
+  {
+    IsInstanceOfImpl isInstanceOf = new IsInstanceOfImpl();
+    return isInstanceOf;
   }
 
   /**

@@ -23,6 +23,10 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Term;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.TermImpl#getElement <em>Element</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.TermImpl#getFeature <em>Feature</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.TermImpl#getLeft <em>Left</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.TermImpl#getRight <em>Right</em>}</li>
+ *   <li>{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.TermImpl#getString <em>String</em>}</li>
  * </ul>
  *
  * @generated
@@ -38,6 +42,56 @@ public class TermImpl extends FormulaImpl implements Term
    * @ordered
    */
   protected Term element;
+
+  /**
+   * The default value of the '{@link #getFeature() <em>Feature</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFeature()
+   * @generated
+   * @ordered
+   */
+  protected static final String FEATURE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getFeature() <em>Feature</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFeature()
+   * @generated
+   * @ordered
+   */
+  protected String feature = FEATURE_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getLeft() <em>Left</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLeft()
+   * @generated
+   * @ordered
+   */
+  protected Term left;
+
+  /**
+   * The cached value of the '{@link #getRight() <em>Right</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRight()
+   * @generated
+   * @ordered
+   */
+  protected Term right;
+
+  /**
+   * The cached value of the '{@link #getString() <em>String</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getString()
+   * @generated
+   * @ordered
+   */
+  protected Term string;
 
   /**
    * <!-- begin-user-doc -->
@@ -113,6 +167,173 @@ public class TermImpl extends FormulaImpl implements Term
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getFeature()
+  {
+    return feature;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setFeature(String newFeature)
+  {
+    String oldFeature = feature;
+    feature = newFeature;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.TERM__FEATURE, oldFeature, feature));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Term getLeft()
+  {
+    return left;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetLeft(Term newLeft, NotificationChain msgs)
+  {
+    Term oldLeft = left;
+    left = newLeft;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.TERM__LEFT, oldLeft, newLeft);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLeft(Term newLeft)
+  {
+    if (newLeft != left)
+    {
+      NotificationChain msgs = null;
+      if (left != null)
+        msgs = ((InternalEObject)left).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.TERM__LEFT, null, msgs);
+      if (newLeft != null)
+        msgs = ((InternalEObject)newLeft).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.TERM__LEFT, null, msgs);
+      msgs = basicSetLeft(newLeft, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.TERM__LEFT, newLeft, newLeft));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Term getRight()
+  {
+    return right;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetRight(Term newRight, NotificationChain msgs)
+  {
+    Term oldRight = right;
+    right = newRight;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.TERM__RIGHT, oldRight, newRight);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setRight(Term newRight)
+  {
+    if (newRight != right)
+    {
+      NotificationChain msgs = null;
+      if (right != null)
+        msgs = ((InternalEObject)right).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.TERM__RIGHT, null, msgs);
+      if (newRight != null)
+        msgs = ((InternalEObject)newRight).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.TERM__RIGHT, null, msgs);
+      msgs = basicSetRight(newRight, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.TERM__RIGHT, newRight, newRight));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Term getString()
+  {
+    return string;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetString(Term newString, NotificationChain msgs)
+  {
+    Term oldString = string;
+    string = newString;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.TERM__STRING, oldString, newString);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setString(Term newString)
+  {
+    if (newString != string)
+    {
+      NotificationChain msgs = null;
+      if (string != null)
+        msgs = ((InternalEObject)string).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.TERM__STRING, null, msgs);
+      if (newString != null)
+        msgs = ((InternalEObject)newString).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FirstOrderLogicPackage.TERM__STRING, null, msgs);
+      msgs = basicSetString(newString, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.TERM__STRING, newString, newString));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -120,6 +341,12 @@ public class TermImpl extends FormulaImpl implements Term
     {
       case FirstOrderLogicPackage.TERM__ELEMENT:
         return basicSetElement(null, msgs);
+      case FirstOrderLogicPackage.TERM__LEFT:
+        return basicSetLeft(null, msgs);
+      case FirstOrderLogicPackage.TERM__RIGHT:
+        return basicSetRight(null, msgs);
+      case FirstOrderLogicPackage.TERM__STRING:
+        return basicSetString(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -136,6 +363,14 @@ public class TermImpl extends FormulaImpl implements Term
     {
       case FirstOrderLogicPackage.TERM__ELEMENT:
         return getElement();
+      case FirstOrderLogicPackage.TERM__FEATURE:
+        return getFeature();
+      case FirstOrderLogicPackage.TERM__LEFT:
+        return getLeft();
+      case FirstOrderLogicPackage.TERM__RIGHT:
+        return getRight();
+      case FirstOrderLogicPackage.TERM__STRING:
+        return getString();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -152,6 +387,18 @@ public class TermImpl extends FormulaImpl implements Term
     {
       case FirstOrderLogicPackage.TERM__ELEMENT:
         setElement((Term)newValue);
+        return;
+      case FirstOrderLogicPackage.TERM__FEATURE:
+        setFeature((String)newValue);
+        return;
+      case FirstOrderLogicPackage.TERM__LEFT:
+        setLeft((Term)newValue);
+        return;
+      case FirstOrderLogicPackage.TERM__RIGHT:
+        setRight((Term)newValue);
+        return;
+      case FirstOrderLogicPackage.TERM__STRING:
+        setString((Term)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -170,6 +417,18 @@ public class TermImpl extends FormulaImpl implements Term
       case FirstOrderLogicPackage.TERM__ELEMENT:
         setElement((Term)null);
         return;
+      case FirstOrderLogicPackage.TERM__FEATURE:
+        setFeature(FEATURE_EDEFAULT);
+        return;
+      case FirstOrderLogicPackage.TERM__LEFT:
+        setLeft((Term)null);
+        return;
+      case FirstOrderLogicPackage.TERM__RIGHT:
+        setRight((Term)null);
+        return;
+      case FirstOrderLogicPackage.TERM__STRING:
+        setString((Term)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -186,8 +445,33 @@ public class TermImpl extends FormulaImpl implements Term
     {
       case FirstOrderLogicPackage.TERM__ELEMENT:
         return element != null;
+      case FirstOrderLogicPackage.TERM__FEATURE:
+        return FEATURE_EDEFAULT == null ? feature != null : !FEATURE_EDEFAULT.equals(feature);
+      case FirstOrderLogicPackage.TERM__LEFT:
+        return left != null;
+      case FirstOrderLogicPackage.TERM__RIGHT:
+        return right != null;
+      case FirstOrderLogicPackage.TERM__STRING:
+        return string != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (feature: ");
+    result.append(feature);
+    result.append(')');
+    return result.toString();
   }
 
 } //TermImpl

@@ -46,6 +46,10 @@
     <genClasses ecoreClass="FirstOrderLogic.ecore#//IsEmpty">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//IsEmpty/term"/>
     </genClasses>
+    <genClasses ecoreClass="FirstOrderLogic.ecore#//IsInstanceOf">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//IsInstanceOf/term"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//IsInstanceOf/type"/>
+    </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Quantifier">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Quantifier/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Quantifier/iteration"/>
@@ -53,6 +57,10 @@
     </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Term">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Term/element"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Term/feature"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Term/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Term/right"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FirstOrderLogic.ecore#//Term/string"/>
     </genClasses>
     <genClasses ecoreClass="FirstOrderLogic.ecore#//Get">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FirstOrderLogic.ecore#//Get/type"/>

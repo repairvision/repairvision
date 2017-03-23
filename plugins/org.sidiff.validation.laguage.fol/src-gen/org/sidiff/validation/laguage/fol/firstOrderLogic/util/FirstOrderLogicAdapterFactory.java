@@ -131,6 +131,11 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createIsEmptyAdapter();
       }
       @Override
+      public Adapter caseIsInstanceOf(IsInstanceOf object)
+      {
+        return createIsInstanceOfAdapter();
+      }
+      @Override
       public Adapter caseQuantifier(Quantifier object)
       {
         return createQuantifierAdapter();
@@ -388,6 +393,21 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createIsEmptyAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IsInstanceOf <em>Is Instance Of</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.IsInstanceOf
+   * @generated
+   */
+  public Adapter createIsInstanceOfAdapter()
   {
     return null;
   }

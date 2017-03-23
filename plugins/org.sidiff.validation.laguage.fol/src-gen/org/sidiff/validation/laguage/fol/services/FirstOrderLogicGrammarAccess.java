@@ -411,13 +411,14 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEqualsParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cInequalityParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cIsEmptyParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cIsInstanceOfParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//// predicates (term -> boolean):
 		//Predicate Formula:
-		//	Equals | Inequality | IsEmpty
+		//	Equals | Inequality | IsEmpty | IsInstanceOf
 		@Override public ParserRule getRule() { return rule; }
 		
-		//Equals | Inequality | IsEmpty
+		//Equals | Inequality | IsEmpty | IsInstanceOf
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//Equals
@@ -428,6 +429,9 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//IsEmpty
 		public RuleCall getIsEmptyParserRuleCall_2() { return cIsEmptyParserRuleCall_2; }
+		
+		//IsInstanceOf
+		public RuleCall getIsInstanceOfParserRuleCall_3() { return cIsInstanceOfParserRuleCall_3; }
 	}
 	public class EqualsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Equals");
@@ -678,6 +682,45 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
 	}
+	public class IsInstanceOfElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.IsInstanceOf");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cIsInstanceOfKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cTermAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTermTermParserRuleCall_1_0 = (RuleCall)cTermAssignment_1.eContents().get(0);
+		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTypeIDTerminalRuleCall_3_0 = (RuleCall)cTypeAssignment_3.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//IsInstanceOf:
+		//	"isInstanceOf(" term=Term "," type=ID ")";
+		@Override public ParserRule getRule() { return rule; }
+		
+		//"isInstanceOf(" term=Term "," type=ID ")"
+		public Group getGroup() { return cGroup; }
+		
+		//"isInstanceOf("
+		public Keyword getIsInstanceOfKeyword_0() { return cIsInstanceOfKeyword_0; }
+		
+		//term=Term
+		public Assignment getTermAssignment_1() { return cTermAssignment_1; }
+		
+		//Term
+		public RuleCall getTermTermParserRuleCall_1_0() { return cTermTermParserRuleCall_1_0; }
+		
+		//","
+		public Keyword getCommaKeyword_2() { return cCommaKeyword_2; }
+		
+		//type=ID
+		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
+		
+		//ID
+		public RuleCall getTypeIDTerminalRuleCall_3_0() { return cTypeIDTerminalRuleCall_3_0; }
+		
+		//")"
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
 	public class QuantifierElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Quantifier");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -902,13 +945,16 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVariableRefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cGetContainmentParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cGetContainerParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cGetClosureParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cConcatenateParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cCapitalizeParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		
 		//// terms:
 		//Term:
-		//	Constant | VariableRef | GetContainment | GetContainer;
+		//	Constant | VariableRef | GetContainment | GetContainer | GetClosure | Concatenate | Capitalize;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//Constant | VariableRef | GetContainment | GetContainer
+		//Constant | VariableRef | GetContainment | GetContainer | GetClosure | Concatenate | Capitalize
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//Constant
@@ -922,6 +968,15 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//GetContainer
 		public RuleCall getGetContainerParserRuleCall_3() { return cGetContainerParserRuleCall_3; }
+		
+		//GetClosure
+		public RuleCall getGetClosureParserRuleCall_4() { return cGetClosureParserRuleCall_4; }
+		
+		//Concatenate
+		public RuleCall getConcatenateParserRuleCall_5() { return cConcatenateParserRuleCall_5; }
+		
+		//Capitalize
+		public RuleCall getCapitalizeParserRuleCall_6() { return cCapitalizeParserRuleCall_6; }
 	}
 	public class VariableRefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.VariableRef");
@@ -1063,6 +1118,111 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
 	}
+	public class GetClosureElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.GetClosure");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cGetClosureKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cElementAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cElementTermParserRuleCall_1_0 = (RuleCall)cElementAssignment_1.eContents().get(0);
+		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cFeatureAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cFeatureIDTerminalRuleCall_3_0 = (RuleCall)cFeatureAssignment_3.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//GetClosure Term:
+		//	"getClosure(" element=Term "," feature=ID ")"
+		@Override public ParserRule getRule() { return rule; }
+		
+		//"getClosure(" element=Term "," feature=ID ")"
+		public Group getGroup() { return cGroup; }
+		
+		//"getClosure("
+		public Keyword getGetClosureKeyword_0() { return cGetClosureKeyword_0; }
+		
+		//element=Term
+		public Assignment getElementAssignment_1() { return cElementAssignment_1; }
+		
+		//Term
+		public RuleCall getElementTermParserRuleCall_1_0() { return cElementTermParserRuleCall_1_0; }
+		
+		//","
+		public Keyword getCommaKeyword_2() { return cCommaKeyword_2; }
+		
+		//feature=ID
+		public Assignment getFeatureAssignment_3() { return cFeatureAssignment_3; }
+		
+		//ID
+		public RuleCall getFeatureIDTerminalRuleCall_3_0() { return cFeatureIDTerminalRuleCall_3_0; }
+		
+		//")"
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+	public class ConcatenateElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Concatenate");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cConcatenateKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cLeftAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cLeftTermParserRuleCall_1_0 = (RuleCall)cLeftAssignment_1.eContents().get(0);
+		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cRightAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cRightTermParserRuleCall_3_0 = (RuleCall)cRightAssignment_3.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//Concatenate Term:
+		//	"concatenate(" left=Term "," right=Term ")"
+		@Override public ParserRule getRule() { return rule; }
+		
+		//"concatenate(" left=Term "," right=Term ")"
+		public Group getGroup() { return cGroup; }
+		
+		//"concatenate("
+		public Keyword getConcatenateKeyword_0() { return cConcatenateKeyword_0; }
+		
+		//left=Term
+		public Assignment getLeftAssignment_1() { return cLeftAssignment_1; }
+		
+		//Term
+		public RuleCall getLeftTermParserRuleCall_1_0() { return cLeftTermParserRuleCall_1_0; }
+		
+		//","
+		public Keyword getCommaKeyword_2() { return cCommaKeyword_2; }
+		
+		//right=Term
+		public Assignment getRightAssignment_3() { return cRightAssignment_3; }
+		
+		//Term
+		public RuleCall getRightTermParserRuleCall_3_0() { return cRightTermParserRuleCall_3_0; }
+		
+		//")"
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+	public class CapitalizeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Capitalize");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCapitalizeKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cStringAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cStringTermParserRuleCall_1_0 = (RuleCall)cStringAssignment_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//Capitalize Term:
+		//	"capitalize(" string=Term ")"
+		@Override public ParserRule getRule() { return rule; }
+		
+		//"capitalize(" string=Term ")"
+		public Group getGroup() { return cGroup; }
+		
+		//"capitalize("
+		public Keyword getCapitalizeKeyword_0() { return cCapitalizeKeyword_0; }
+		
+		//string=Term
+		public Assignment getStringAssignment_1() { return cStringAssignment_1; }
+		
+		//Term
+		public RuleCall getStringTermParserRuleCall_1_0() { return cStringTermParserRuleCall_1_0; }
+		
+		//")"
+		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
+	}
 	public class ConstantElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Constant");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1132,6 +1292,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	private final SmallerElements pSmaller;
 	private final SmallerEqualElements pSmallerEqual;
 	private final IsEmptyElements pIsEmpty;
+	private final IsInstanceOfElements pIsInstanceOf;
 	private final QuantifierElements pQuantifier;
 	private final ForAllElements pForAll;
 	private final ExistsElements pExists;
@@ -1142,6 +1303,9 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	private final GetElements pGet;
 	private final GetContainerElements pGetContainer;
 	private final GetContainmentElements pGetContainment;
+	private final GetClosureElements pGetClosure;
+	private final ConcatenateElements pConcatenate;
+	private final CapitalizeElements pCapitalize;
 	private final ConstantElements pConstant;
 	
 	private final Grammar grammar;
@@ -1173,6 +1337,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		this.pSmaller = new SmallerElements();
 		this.pSmallerEqual = new SmallerEqualElements();
 		this.pIsEmpty = new IsEmptyElements();
+		this.pIsInstanceOf = new IsInstanceOfElements();
 		this.pQuantifier = new QuantifierElements();
 		this.pForAll = new ForAllElements();
 		this.pExists = new ExistsElements();
@@ -1183,6 +1348,9 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		this.pGet = new GetElements();
 		this.pGetContainer = new GetContainerElements();
 		this.pGetContainment = new GetContainmentElements();
+		this.pGetClosure = new GetClosureElements();
+		this.pConcatenate = new ConcatenateElements();
+		this.pCapitalize = new CapitalizeElements();
 		this.pConstant = new ConstantElements();
 	}
 	
@@ -1348,7 +1516,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// predicates (term -> boolean):
 	//Predicate Formula:
-	//	Equals | Inequality | IsEmpty
+	//	Equals | Inequality | IsEmpty | IsInstanceOf
 	public PredicateElements getPredicateAccess() {
 		return pPredicate;
 	}
@@ -1427,6 +1595,16 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getIsEmptyAccess().getRule();
 	}
 	
+	//IsInstanceOf:
+	//	"isInstanceOf(" term=Term "," type=ID ")";
+	public IsInstanceOfElements getIsInstanceOfAccess() {
+		return pIsInstanceOf;
+	}
+	
+	public ParserRule getIsInstanceOfRule() {
+		return getIsInstanceOfAccess().getRule();
+	}
+	
 	//// TODO: infix inequality expressions
 	////Greater returns Formula:
 	////	GreaterEqual ({Greater.left=current} ">" right=GreaterEqual)*;
@@ -1493,7 +1671,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// terms:
 	//Term:
-	//	Constant | VariableRef | GetContainment | GetContainer;
+	//	Constant | VariableRef | GetContainment | GetContainer | GetClosure | Concatenate | Capitalize;
 	public TermElements getTermAccess() {
 		return pTerm;
 	}
@@ -1540,6 +1718,36 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getGetContainmentRule() {
 		return getGetContainmentAccess().getRule();
+	}
+	
+	//GetClosure Term:
+	//	"getClosure(" element=Term "," feature=ID ")"
+	public GetClosureElements getGetClosureAccess() {
+		return pGetClosure;
+	}
+	
+	public ParserRule getGetClosureRule() {
+		return getGetClosureAccess().getRule();
+	}
+	
+	//Concatenate Term:
+	//	"concatenate(" left=Term "," right=Term ")"
+	public ConcatenateElements getConcatenateAccess() {
+		return pConcatenate;
+	}
+	
+	public ParserRule getConcatenateRule() {
+		return getConcatenateAccess().getRule();
+	}
+	
+	//Capitalize Term:
+	//	"capitalize(" string=Term ")"
+	public CapitalizeElements getCapitalizeAccess() {
+		return pCapitalize;
+	}
+	
+	public ParserRule getCapitalizeRule() {
+		return getCapitalizeAccess().getRule();
 	}
 	
 	//Constant Term:

@@ -123,6 +123,15 @@ public interface FirstOrderLogicFactory extends EFactory
   IsEmpty createIsEmpty();
 
   /**
+   * Returns a new object of class '<em>Is Instance Of</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Is Instance Of</em>'.
+   * @generated
+   */
+  IsInstanceOf createIsInstanceOf();
+
+  /**
    * Returns a new object of class '<em>Quantifier</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

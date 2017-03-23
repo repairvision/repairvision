@@ -447,6 +447,43 @@ public interface FirstOrderLogicPackage extends EPackage
   int IS_EMPTY_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.IsInstanceOfImpl <em>Is Instance Of</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.IsInstanceOfImpl
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getIsInstanceOf()
+   * @generated
+   */
+  int IS_INSTANCE_OF = 11;
+
+  /**
+   * The feature id for the '<em><b>Term</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IS_INSTANCE_OF__TERM = FORMULA_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IS_INSTANCE_OF__TYPE = FORMULA_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Is Instance Of</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IS_INSTANCE_OF_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.QuantifierImpl <em>Quantifier</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -454,7 +491,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getQuantifier()
    * @generated
    */
-  int QUANTIFIER = 11;
+  int QUANTIFIER = 12;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' containment reference.
@@ -500,7 +537,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getTerm()
    * @generated
    */
-  int TERM = 12;
+  int TERM = 13;
 
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference.
@@ -512,13 +549,49 @@ public interface FirstOrderLogicPackage extends EPackage
   int TERM__ELEMENT = FORMULA_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM__FEATURE = FORMULA_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM__LEFT = FORMULA_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM__RIGHT = FORMULA_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>String</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM__STRING = FORMULA_FEATURE_COUNT + 4;
+
+  /**
    * The number of structural features of the '<em>Term</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TERM_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 1;
+  int TERM_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.GetImpl <em>Get</em>}' class.
@@ -528,7 +601,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getGet()
    * @generated
    */
-  int GET = 13;
+  int GET = 14;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -574,7 +647,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getIff()
    * @generated
    */
-  int IFF = 14;
+  int IFF = 15;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -611,7 +684,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getIf()
    * @generated
    */
-  int IF = 15;
+  int IF = 16;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -648,7 +721,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getXor()
    * @generated
    */
-  int XOR = 16;
+  int XOR = 17;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -685,7 +758,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getOr()
    * @generated
    */
-  int OR = 17;
+  int OR = 18;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -722,7 +795,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getAnd()
    * @generated
    */
-  int AND = 18;
+  int AND = 19;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -759,7 +832,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getNot()
    * @generated
    */
-  int NOT = 19;
+  int NOT = 20;
 
   /**
    * The feature id for the '<em><b>Not</b></em>' containment reference.
@@ -787,7 +860,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getForAll()
    * @generated
    */
-  int FOR_ALL = 20;
+  int FOR_ALL = 21;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' containment reference.
@@ -833,7 +906,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getExists()
    * @generated
    */
-  int EXISTS = 21;
+  int EXISTS = 22;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' containment reference.
@@ -879,7 +952,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getBoolConstant()
    * @generated
    */
-  int BOOL_CONSTANT = 22;
+  int BOOL_CONSTANT = 23;
 
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference.
@@ -889,6 +962,42 @@ public interface FirstOrderLogicPackage extends EPackage
    * @ordered
    */
   int BOOL_CONSTANT__ELEMENT = TERM__ELEMENT;
+
+  /**
+   * The feature id for the '<em><b>Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOL_CONSTANT__FEATURE = TERM__FEATURE;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOL_CONSTANT__LEFT = TERM__LEFT;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOL_CONSTANT__RIGHT = TERM__RIGHT;
+
+  /**
+   * The feature id for the '<em><b>String</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOL_CONSTANT__STRING = TERM__STRING;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -916,7 +1025,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getVariableRef()
    * @generated
    */
-  int VARIABLE_REF = 23;
+  int VARIABLE_REF = 24;
 
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference.
@@ -926,6 +1035,42 @@ public interface FirstOrderLogicPackage extends EPackage
    * @ordered
    */
   int VARIABLE_REF__ELEMENT = TERM__ELEMENT;
+
+  /**
+   * The feature id for the '<em><b>Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_REF__FEATURE = TERM__FEATURE;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_REF__LEFT = TERM__LEFT;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_REF__RIGHT = TERM__RIGHT;
+
+  /**
+   * The feature id for the '<em><b>String</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_REF__STRING = TERM__STRING;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' reference.
@@ -962,7 +1107,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getIntConstant()
    * @generated
    */
-  int INT_CONSTANT = 24;
+  int INT_CONSTANT = 25;
 
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference.
@@ -972,6 +1117,42 @@ public interface FirstOrderLogicPackage extends EPackage
    * @ordered
    */
   int INT_CONSTANT__ELEMENT = TERM__ELEMENT;
+
+  /**
+   * The feature id for the '<em><b>Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INT_CONSTANT__FEATURE = TERM__FEATURE;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INT_CONSTANT__LEFT = TERM__LEFT;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INT_CONSTANT__RIGHT = TERM__RIGHT;
+
+  /**
+   * The feature id for the '<em><b>String</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INT_CONSTANT__STRING = TERM__STRING;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -999,7 +1180,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getStringConstant()
    * @generated
    */
-  int STRING_CONSTANT = 25;
+  int STRING_CONSTANT = 26;
 
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference.
@@ -1009,6 +1190,42 @@ public interface FirstOrderLogicPackage extends EPackage
    * @ordered
    */
   int STRING_CONSTANT__ELEMENT = TERM__ELEMENT;
+
+  /**
+   * The feature id for the '<em><b>Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRING_CONSTANT__FEATURE = TERM__FEATURE;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRING_CONSTANT__LEFT = TERM__LEFT;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRING_CONSTANT__RIGHT = TERM__RIGHT;
+
+  /**
+   * The feature id for the '<em><b>String</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRING_CONSTANT__STRING = TERM__STRING;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1360,6 +1577,38 @@ public interface FirstOrderLogicPackage extends EPackage
   EReference getIsEmpty_Term();
 
   /**
+   * Returns the meta object for class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IsInstanceOf <em>Is Instance Of</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Is Instance Of</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.IsInstanceOf
+   * @generated
+   */
+  EClass getIsInstanceOf();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IsInstanceOf#getTerm <em>Term</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Term</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.IsInstanceOf#getTerm()
+   * @see #getIsInstanceOf()
+   * @generated
+   */
+  EReference getIsInstanceOf_Term();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IsInstanceOf#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.IsInstanceOf#getType()
+   * @see #getIsInstanceOf()
+   * @generated
+   */
+  EAttribute getIsInstanceOf_Type();
+
+  /**
    * Returns the meta object for class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier <em>Quantifier</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1422,6 +1671,50 @@ public interface FirstOrderLogicPackage extends EPackage
    * @generated
    */
   EReference getTerm_Element();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Term#getFeature <em>Feature</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Feature</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Term#getFeature()
+   * @see #getTerm()
+   * @generated
+   */
+  EAttribute getTerm_Feature();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Term#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Term#getLeft()
+   * @see #getTerm()
+   * @generated
+   */
+  EReference getTerm_Left();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Term#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Term#getRight()
+   * @see #getTerm()
+   * @generated
+   */
+  EReference getTerm_Right();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Term#getString <em>String</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>String</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Term#getString()
+   * @see #getTerm()
+   * @generated
+   */
+  EReference getTerm_String();
 
   /**
    * Returns the meta object for class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Get <em>Get</em>}'.
@@ -2056,6 +2349,32 @@ public interface FirstOrderLogicPackage extends EPackage
     EReference IS_EMPTY__TERM = eINSTANCE.getIsEmpty_Term();
 
     /**
+     * The meta object literal for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.IsInstanceOfImpl <em>Is Instance Of</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.IsInstanceOfImpl
+     * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getIsInstanceOf()
+     * @generated
+     */
+    EClass IS_INSTANCE_OF = eINSTANCE.getIsInstanceOf();
+
+    /**
+     * The meta object literal for the '<em><b>Term</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference IS_INSTANCE_OF__TERM = eINSTANCE.getIsInstanceOf_Term();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute IS_INSTANCE_OF__TYPE = eINSTANCE.getIsInstanceOf_Type();
+
+    /**
      * The meta object literal for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.QuantifierImpl <em>Quantifier</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2106,6 +2425,38 @@ public interface FirstOrderLogicPackage extends EPackage
      * @generated
      */
     EReference TERM__ELEMENT = eINSTANCE.getTerm_Element();
+
+    /**
+     * The meta object literal for the '<em><b>Feature</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TERM__FEATURE = eINSTANCE.getTerm_Feature();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TERM__LEFT = eINSTANCE.getTerm_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TERM__RIGHT = eINSTANCE.getTerm_Right();
+
+    /**
+     * The meta object literal for the '<em><b>String</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TERM__STRING = eINSTANCE.getTerm_String();
 
     /**
      * The meta object literal for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.GetImpl <em>Get</em>}' class.
