@@ -3,6 +3,7 @@
  */
 package org.sidiff.validation.laguage.fol.firstOrderLogic;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -25,30 +26,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface Variable extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Type</b></em>' attribute.
+   * Returns the value of the '<em><b>Type</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Type</em>' attribute isn't clear,
+   * If the meaning of the '<em>Type</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' attribute.
-   * @see #setType(String)
+   * @return the value of the '<em>Type</em>' reference.
+   * @see #setType(EClassifier)
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage#getVariable_Type()
    * @model
    * @generated
    */
-  String getType();
+  EClassifier getType();
 
   /**
-   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Variable#getType <em>Type</em>}' attribute.
+   * Sets the value of the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Variable#getType <em>Type</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Type</em>' attribute.
+   * @param value the new value of the '<em>Type</em>' reference.
    * @see #getType()
    * @generated
    */
-  void setType(String value);
+  void setType(EClassifier value);
 
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

@@ -16,7 +16,7 @@ Constraint:
 	'constraint' name=ID 'message' message=STRING 'context' variable=Variable ':' formula=Formula;
 
 Variable:
-	type=ID name=ID;
+	type=[ecore::EClassifier] name=ID;
 
 // formula:
 
@@ -86,7 +86,7 @@ IsEmpty:
 	"isEmpty(" term=Term ")";
 	
 IsInstanceOf:
-	"isInstanceOf(" term=Term "," type=ID ")";
+	"isInstanceOf(" term=Term "," type=[ecore::EClassifier] ")";
 	
 // quantifier
 
@@ -110,7 +110,7 @@ BoolConstant returns Term:
 // terms:
 
 Term:
-	Constant | VariableRef | GetContainment | GetContainer | GetClosure | Concatenate | Capitalize;
+	Constant | VariableRef | GetContainments | GetContainer | GetClosure | Size | Concatenate | Capitalize;
 	
 VariableRef returns Term:
 	{VariableRef} name=[Variable] (get=Get)?;
@@ -118,21 +118,24 @@ VariableRef returns Term:
 // function terms (term -> term):
 
 Get:
-	"." (type=ID "::" )? name=[ecore::EStructuralFeature] (next=Get)?;
+	"." (type=[ecore::EClassifier] "::" )? name=[ecore::EStructuralFeature] (next=Get)?;
 	
-GetContainer returns Term:
+GetContainer:
 	"getContainer(" element=Term ")";
 	
-GetContainment returns Term:
+GetContainments:
 	"getContainments(" element=Term ")";
 	
-GetClosure returns Term:
-	"getClosure(" element=Term "," feature=ID ")";
+GetClosure:
+	"getClosure(" element=Term "," feature=[ecore::EStructuralFeature] ")";
 	
-Concatenate returns Term:
+Size: 
+	"size(" elements=Term ")";
+	
+Concatenate :
 	"concatenate(" left=Term "," right=Term ")";
 	
-Capitalize returns Term:
+Capitalize :
 	"capitalize(" string=Term ")";
 
 // primitive terms:

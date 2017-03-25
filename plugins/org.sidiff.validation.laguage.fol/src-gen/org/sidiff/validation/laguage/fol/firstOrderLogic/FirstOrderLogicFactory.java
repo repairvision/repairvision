@@ -159,6 +159,60 @@ public interface FirstOrderLogicFactory extends EFactory
   Get createGet();
 
   /**
+   * Returns a new object of class '<em>Get Container</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Get Container</em>'.
+   * @generated
+   */
+  GetContainer createGetContainer();
+
+  /**
+   * Returns a new object of class '<em>Get Containments</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Get Containments</em>'.
+   * @generated
+   */
+  GetContainments createGetContainments();
+
+  /**
+   * Returns a new object of class '<em>Get Closure</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Get Closure</em>'.
+   * @generated
+   */
+  GetClosure createGetClosure();
+
+  /**
+   * Returns a new object of class '<em>Size</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Size</em>'.
+   * @generated
+   */
+  Size createSize();
+
+  /**
+   * Returns a new object of class '<em>Concatenate</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Concatenate</em>'.
+   * @generated
+   */
+  Concatenate createConcatenate();
+
+  /**
+   * Returns a new object of class '<em>Capitalize</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Capitalize</em>'.
+   * @generated
+   */
+  Capitalize createCapitalize();
+
+  /**
    * Returns a new object of class '<em>Iff</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

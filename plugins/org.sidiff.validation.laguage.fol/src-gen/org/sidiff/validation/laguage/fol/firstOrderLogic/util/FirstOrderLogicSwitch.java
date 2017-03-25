@@ -188,6 +188,60 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case FirstOrderLogicPackage.GET_CONTAINER:
+      {
+        GetContainer getContainer = (GetContainer)theEObject;
+        T result = caseGetContainer(getContainer);
+        if (result == null) result = caseTerm(getContainer);
+        if (result == null) result = caseFormula(getContainer);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case FirstOrderLogicPackage.GET_CONTAINMENTS:
+      {
+        GetContainments getContainments = (GetContainments)theEObject;
+        T result = caseGetContainments(getContainments);
+        if (result == null) result = caseTerm(getContainments);
+        if (result == null) result = caseFormula(getContainments);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case FirstOrderLogicPackage.GET_CLOSURE:
+      {
+        GetClosure getClosure = (GetClosure)theEObject;
+        T result = caseGetClosure(getClosure);
+        if (result == null) result = caseTerm(getClosure);
+        if (result == null) result = caseFormula(getClosure);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case FirstOrderLogicPackage.SIZE:
+      {
+        Size size = (Size)theEObject;
+        T result = caseSize(size);
+        if (result == null) result = caseTerm(size);
+        if (result == null) result = caseFormula(size);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case FirstOrderLogicPackage.CONCATENATE:
+      {
+        Concatenate concatenate = (Concatenate)theEObject;
+        T result = caseConcatenate(concatenate);
+        if (result == null) result = caseTerm(concatenate);
+        if (result == null) result = caseFormula(concatenate);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case FirstOrderLogicPackage.CAPITALIZE:
+      {
+        Capitalize capitalize = (Capitalize)theEObject;
+        T result = caseCapitalize(capitalize);
+        if (result == null) result = caseTerm(capitalize);
+        if (result == null) result = caseFormula(capitalize);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case FirstOrderLogicPackage.IFF:
       {
         Iff iff = (Iff)theEObject;
@@ -531,6 +585,102 @@ public class FirstOrderLogicSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseGet(Get object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Get Container</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Get Container</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGetContainer(GetContainer object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Get Containments</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Get Containments</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGetContainments(GetContainments object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Get Closure</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Get Closure</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGetClosure(GetClosure object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Size</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Size</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSize(Size object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Concatenate</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Concatenate</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConcatenate(Concatenate object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Capitalize</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Capitalize</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCapitalize(Capitalize object)
   {
     return null;
   }

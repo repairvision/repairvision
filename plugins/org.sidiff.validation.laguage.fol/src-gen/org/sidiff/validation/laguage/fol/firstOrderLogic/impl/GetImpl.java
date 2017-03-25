@@ -7,6 +7,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -34,24 +35,14 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
 public class GetImpl extends MinimalEObjectImpl.Container implements Get
 {
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #getType() <em>Type</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getType()
    * @generated
    * @ordered
    */
-  protected static final String TYPE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected String type = TYPE_EDEFAULT;
+  protected EClassifier type;
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' reference.
@@ -99,7 +90,27 @@ public class GetImpl extends MinimalEObjectImpl.Container implements Get
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getType()
+  public EClassifier getType()
+  {
+    if (type != null && type.eIsProxy())
+    {
+      InternalEObject oldType = (InternalEObject)type;
+      type = (EClassifier)eResolveProxy(oldType);
+      if (type != oldType)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, FirstOrderLogicPackage.GET__TYPE, oldType, type));
+      }
+    }
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClassifier basicGetType()
   {
     return type;
   }
@@ -109,9 +120,9 @@ public class GetImpl extends MinimalEObjectImpl.Container implements Get
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setType(String newType)
+  public void setType(EClassifier newType)
   {
-    String oldType = type;
+    EClassifier oldType = type;
     type = newType;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.GET__TYPE, oldType, type));
@@ -235,7 +246,8 @@ public class GetImpl extends MinimalEObjectImpl.Container implements Get
     switch (featureID)
     {
       case FirstOrderLogicPackage.GET__TYPE:
-        return getType();
+        if (resolve) return getType();
+        return basicGetType();
       case FirstOrderLogicPackage.GET__NAME:
         if (resolve) return getName();
         return basicGetName();
@@ -256,7 +268,7 @@ public class GetImpl extends MinimalEObjectImpl.Container implements Get
     switch (featureID)
     {
       case FirstOrderLogicPackage.GET__TYPE:
-        setType((String)newValue);
+        setType((EClassifier)newValue);
         return;
       case FirstOrderLogicPackage.GET__NAME:
         setName((EStructuralFeature)newValue);
@@ -279,7 +291,7 @@ public class GetImpl extends MinimalEObjectImpl.Container implements Get
     switch (featureID)
     {
       case FirstOrderLogicPackage.GET__TYPE:
-        setType(TYPE_EDEFAULT);
+        setType((EClassifier)null);
         return;
       case FirstOrderLogicPackage.GET__NAME:
         setName((EStructuralFeature)null);
@@ -302,30 +314,13 @@ public class GetImpl extends MinimalEObjectImpl.Container implements Get
     switch (featureID)
     {
       case FirstOrderLogicPackage.GET__TYPE:
-        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+        return type != null;
       case FirstOrderLogicPackage.GET__NAME:
         return name != null;
       case FirstOrderLogicPackage.GET__NEXT:
         return next != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (type: ");
-    result.append(type);
-    result.append(')');
-    return result.toString();
   }
 
 } //GetImpl

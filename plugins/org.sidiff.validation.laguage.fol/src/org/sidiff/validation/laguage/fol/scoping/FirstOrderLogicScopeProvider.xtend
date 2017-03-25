@@ -6,9 +6,9 @@ package org.sidiff.validation.laguage.fol.scoping
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.Scopes
-import org.sidiff.validation.laguage.fol.converter.FeatureNameToEStructuralFeature
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage
-import org.sidiff.validation.laguage.fol.firstOrderLogic.Get
+import org.sidiff.validation.laguage.fol.util.ScopeUtil
+import org.eclipse.emf.ecore.EClass
 
 /**
  * This class contains custom scoping description.
@@ -19,11 +19,29 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Get
 class FirstOrderLogicScopeProvider extends AbstractFirstOrderLogicScopeProvider {
 
 	override getScope(EObject context, EReference reference) {
+
+		// Variable
+		if (reference == FirstOrderLogicPackage.eINSTANCE.variable_Type) {
+			return Scopes::scopeFor(ScopeUtil.getAllTypes(context)
+				.filter[it instanceof EClass]
+			)
+		} 
 		
-		if (context instanceof Get) {
-			if (reference == FirstOrderLogicPackage.eINSTANCE.get_Name) {
-				return Scopes::scopeFor(FeatureNameToEStructuralFeature.getClass(context).EAllStructuralFeatures)
-			}
+		// IsInstanceOf:
+		else if (reference == FirstOrderLogicPackage.eINSTANCE.isInstanceOf_Type) {
+			return Scopes::scopeFor(ScopeUtil.getAllTypes(context))
+		} 
+		
+		// Get:
+		else if (reference == FirstOrderLogicPackage.eINSTANCE.get_Name) {
+			return Scopes::scopeFor(ScopeUtil.getAllFeatures(context))
+		} else if (reference == FirstOrderLogicPackage.eINSTANCE.get_Type) {
+			return Scopes::scopeFor(ScopeUtil.getAllSubTypes(context));
+		} 
+		
+		// GetClosure:
+		else if (reference == FirstOrderLogicPackage.eINSTANCE.getClosure_Feature) {
+			return Scopes::scopeFor(ScopeUtil.getAllFeatures(context))
 		}
 		
 		super.getScope(context, reference)

@@ -36,7 +36,9 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cConstraintsAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cConstraintsConstraintParserRuleCall_4_0 = (RuleCall)cConstraintsAssignment_4.eContents().get(0);
 		
-		//// NOTE: escape keywords with ^keyword
+		//// NOTES: 
+		//// - escape keywords with ^keyword
+		//// - http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
 		//ConstraintLibrary:
 		//	"domain" domain=STRING 'import' packageImport=STRING
 		//	constraints+=Constraint*;
@@ -132,22 +134,26 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Variable");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cTypeIDTerminalRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
+		private final CrossReference cTypeEClassifierCrossReference_0_0 = (CrossReference)cTypeAssignment_0.eContents().get(0);
+		private final RuleCall cTypeEClassifierIDTerminalRuleCall_0_0_1 = (RuleCall)cTypeEClassifierCrossReference_0_0.eContents().get(1);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
 		//Variable:
-		//	type=ID name=ID;
+		//	type=[ecore::EClassifier] name=ID;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//type=ID name=ID
+		//type=[ecore::EClassifier] name=ID
 		public Group getGroup() { return cGroup; }
 		
-		//type=ID
+		//type=[ecore::EClassifier]
 		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
 		
+		//[ecore::EClassifier]
+		public CrossReference getTypeEClassifierCrossReference_0_0() { return cTypeEClassifierCrossReference_0_0; }
+		
 		//ID
-		public RuleCall getTypeIDTerminalRuleCall_0_0() { return cTypeIDTerminalRuleCall_0_0; }
+		public RuleCall getTypeEClassifierIDTerminalRuleCall_0_0_1() { return cTypeEClassifierIDTerminalRuleCall_0_0_1; }
 		
 		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
@@ -167,8 +173,6 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		// * terms of the rule for the operator with higher precedence. This means that in the grammar, 
 		// * the rules for operators with less precedence are defined first.
 		// * / // binary formulas:
-		//// TODO: How to make If, Xor,... inherit from BinaryFormula?
-		//// http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
 		//Formula:
 		//	BinaryFormula;
 		@Override public ParserRule getRule() { return rule; }
@@ -690,14 +694,15 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTermTermParserRuleCall_1_0 = (RuleCall)cTermAssignment_1.eContents().get(0);
 		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTypeIDTerminalRuleCall_3_0 = (RuleCall)cTypeAssignment_3.eContents().get(0);
+		private final CrossReference cTypeEClassifierCrossReference_3_0 = (CrossReference)cTypeAssignment_3.eContents().get(0);
+		private final RuleCall cTypeEClassifierIDTerminalRuleCall_3_0_1 = (RuleCall)cTypeEClassifierCrossReference_3_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//IsInstanceOf:
-		//	"isInstanceOf(" term=Term "," type=ID ")";
+		//	"isInstanceOf(" term=Term "," type=[ecore::EClassifier] ")";
 		@Override public ParserRule getRule() { return rule; }
 		
-		//"isInstanceOf(" term=Term "," type=ID ")"
+		//"isInstanceOf(" term=Term "," type=[ecore::EClassifier] ")"
 		public Group getGroup() { return cGroup; }
 		
 		//"isInstanceOf("
@@ -712,11 +717,14 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//","
 		public Keyword getCommaKeyword_2() { return cCommaKeyword_2; }
 		
-		//type=ID
+		//type=[ecore::EClassifier]
 		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
 		
+		//[ecore::EClassifier]
+		public CrossReference getTypeEClassifierCrossReference_3_0() { return cTypeEClassifierCrossReference_3_0; }
+		
 		//ID
-		public RuleCall getTypeIDTerminalRuleCall_3_0() { return cTypeIDTerminalRuleCall_3_0; }
+		public RuleCall getTypeEClassifierIDTerminalRuleCall_3_0_1() { return cTypeEClassifierIDTerminalRuleCall_3_0_1; }
 		
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
@@ -727,18 +735,6 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cForAllParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cExistsParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//// TODO: infix inequality expressions
-		////Greater returns Formula:
-		////	GreaterEqual ({Greater.left=current} ">" right=GreaterEqual)*;
-		////	
-		////GreaterEqual returns Formula:
-		////	Smaller ({GreaterEqual.left=current} ">=" right=Smaller)*;
-		////
-		////Smaller returns Formula:
-		////	SmallerEqual ({Smaller.left=current} "<" right=SmallerEqual)*;
-		////	
-		////SmallerEqual returns Formula:
-		////	Term ({SmallerEqual.left=current} "<=" right=Term)*;
 		//// quantifier
 		//Quantifier Formula:
 		//	ForAll | Exists
@@ -943,18 +939,19 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cConstantParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cVariableRefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cGetContainmentParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cGetContainmentsParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cGetContainerParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cGetClosureParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cConcatenateParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cCapitalizeParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cSizeParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cConcatenateParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cCapitalizeParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		
 		//// terms:
 		//Term:
-		//	Constant | VariableRef | GetContainment | GetContainer | GetClosure | Concatenate | Capitalize;
+		//	Constant | VariableRef | GetContainments | GetContainer | GetClosure | Size | Concatenate | Capitalize;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//Constant | VariableRef | GetContainment | GetContainer | GetClosure | Concatenate | Capitalize
+		//Constant | VariableRef | GetContainments | GetContainer | GetClosure | Size | Concatenate | Capitalize
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//Constant
@@ -963,8 +960,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//VariableRef
 		public RuleCall getVariableRefParserRuleCall_1() { return cVariableRefParserRuleCall_1; }
 		
-		//GetContainment
-		public RuleCall getGetContainmentParserRuleCall_2() { return cGetContainmentParserRuleCall_2; }
+		//GetContainments
+		public RuleCall getGetContainmentsParserRuleCall_2() { return cGetContainmentsParserRuleCall_2; }
 		
 		//GetContainer
 		public RuleCall getGetContainerParserRuleCall_3() { return cGetContainerParserRuleCall_3; }
@@ -972,11 +969,14 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//GetClosure
 		public RuleCall getGetClosureParserRuleCall_4() { return cGetClosureParserRuleCall_4; }
 		
+		//Size
+		public RuleCall getSizeParserRuleCall_5() { return cSizeParserRuleCall_5; }
+		
 		//Concatenate
-		public RuleCall getConcatenateParserRuleCall_5() { return cConcatenateParserRuleCall_5; }
+		public RuleCall getConcatenateParserRuleCall_6() { return cConcatenateParserRuleCall_6; }
 		
 		//Capitalize
-		public RuleCall getCapitalizeParserRuleCall_6() { return cCapitalizeParserRuleCall_6; }
+		public RuleCall getCapitalizeParserRuleCall_7() { return cCapitalizeParserRuleCall_7; }
 	}
 	public class VariableRefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.VariableRef");
@@ -1019,7 +1019,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFullStopKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Assignment cTypeAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final RuleCall cTypeIDTerminalRuleCall_1_0_0 = (RuleCall)cTypeAssignment_1_0.eContents().get(0);
+		private final CrossReference cTypeEClassifierCrossReference_1_0_0 = (CrossReference)cTypeAssignment_1_0.eContents().get(0);
+		private final RuleCall cTypeEClassifierIDTerminalRuleCall_1_0_0_1 = (RuleCall)cTypeEClassifierCrossReference_1_0_0.eContents().get(1);
 		private final Keyword cColonColonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final CrossReference cNameEStructuralFeatureCrossReference_2_0 = (CrossReference)cNameAssignment_2.eContents().get(0);
@@ -1027,24 +1028,28 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNextAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cNextGetParserRuleCall_3_0 = (RuleCall)cNextAssignment_3.eContents().get(0);
 		
+		//// function terms (term -> term):
 		//Get:
-		//	"." (type=ID "::")? name=[ecore::EStructuralFeature] next=Get?;
+		//	"." (type=[ecore::EClassifier] "::")? name=[ecore::EStructuralFeature] next=Get?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//"." (type=ID "::")? name=[ecore::EStructuralFeature] next=Get?
+		//"." (type=[ecore::EClassifier] "::")? name=[ecore::EStructuralFeature] next=Get?
 		public Group getGroup() { return cGroup; }
 		
 		//"."
 		public Keyword getFullStopKeyword_0() { return cFullStopKeyword_0; }
 		
-		//(type=ID "::")?
+		//(type=[ecore::EClassifier] "::")?
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//type=ID
+		//type=[ecore::EClassifier]
 		public Assignment getTypeAssignment_1_0() { return cTypeAssignment_1_0; }
 		
+		//[ecore::EClassifier]
+		public CrossReference getTypeEClassifierCrossReference_1_0_0() { return cTypeEClassifierCrossReference_1_0_0; }
+		
 		//ID
-		public RuleCall getTypeIDTerminalRuleCall_1_0_0() { return cTypeIDTerminalRuleCall_1_0_0; }
+		public RuleCall getTypeEClassifierIDTerminalRuleCall_1_0_0_1() { return cTypeEClassifierIDTerminalRuleCall_1_0_0_1; }
 		
 		//"::"
 		public Keyword getColonColonKeyword_1_1() { return cColonColonKeyword_1_1; }
@@ -1072,8 +1077,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cElementTermParserRuleCall_1_0 = (RuleCall)cElementAssignment_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
-		//GetContainer Term:
-		//	"getContainer(" element=Term ")"
+		//GetContainer:
+		//	"getContainer(" element=Term ")";
 		@Override public ParserRule getRule() { return rule; }
 		
 		//"getContainer(" element=Term ")"
@@ -1091,16 +1096,16 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
 	}
-	public class GetContainmentElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.GetContainment");
+	public class GetContainmentsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.GetContainments");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cGetContainmentsKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cElementAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cElementTermParserRuleCall_1_0 = (RuleCall)cElementAssignment_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
-		//GetContainment Term:
-		//	"getContainments(" element=Term ")"
+		//GetContainments:
+		//	"getContainments(" element=Term ")";
 		@Override public ParserRule getRule() { return rule; }
 		
 		//"getContainments(" element=Term ")"
@@ -1126,14 +1131,15 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cElementTermParserRuleCall_1_0 = (RuleCall)cElementAssignment_1.eContents().get(0);
 		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cFeatureAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cFeatureIDTerminalRuleCall_3_0 = (RuleCall)cFeatureAssignment_3.eContents().get(0);
+		private final CrossReference cFeatureEStructuralFeatureCrossReference_3_0 = (CrossReference)cFeatureAssignment_3.eContents().get(0);
+		private final RuleCall cFeatureEStructuralFeatureIDTerminalRuleCall_3_0_1 = (RuleCall)cFeatureEStructuralFeatureCrossReference_3_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//GetClosure Term:
-		//	"getClosure(" element=Term "," feature=ID ")"
+		//GetClosure:
+		//	"getClosure(" element=Term "," feature=[ecore::EStructuralFeature] ")";
 		@Override public ParserRule getRule() { return rule; }
 		
-		//"getClosure(" element=Term "," feature=ID ")"
+		//"getClosure(" element=Term "," feature=[ecore::EStructuralFeature] ")"
 		public Group getGroup() { return cGroup; }
 		
 		//"getClosure("
@@ -1148,14 +1154,44 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//","
 		public Keyword getCommaKeyword_2() { return cCommaKeyword_2; }
 		
-		//feature=ID
+		//feature=[ecore::EStructuralFeature]
 		public Assignment getFeatureAssignment_3() { return cFeatureAssignment_3; }
 		
+		//[ecore::EStructuralFeature]
+		public CrossReference getFeatureEStructuralFeatureCrossReference_3_0() { return cFeatureEStructuralFeatureCrossReference_3_0; }
+		
 		//ID
-		public RuleCall getFeatureIDTerminalRuleCall_3_0() { return cFeatureIDTerminalRuleCall_3_0; }
+		public RuleCall getFeatureEStructuralFeatureIDTerminalRuleCall_3_0_1() { return cFeatureEStructuralFeatureIDTerminalRuleCall_3_0_1; }
 		
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+	public class SizeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Size");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cSizeKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cElementsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cElementsTermParserRuleCall_1_0 = (RuleCall)cElementsAssignment_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//Size:
+		//	"size(" elements=Term ")";
+		@Override public ParserRule getRule() { return rule; }
+		
+		//"size(" elements=Term ")"
+		public Group getGroup() { return cGroup; }
+		
+		//"size("
+		public Keyword getSizeKeyword_0() { return cSizeKeyword_0; }
+		
+		//elements=Term
+		public Assignment getElementsAssignment_1() { return cElementsAssignment_1; }
+		
+		//Term
+		public RuleCall getElementsTermParserRuleCall_1_0() { return cElementsTermParserRuleCall_1_0; }
+		
+		//")"
+		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
 	}
 	public class ConcatenateElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Concatenate");
@@ -1168,8 +1204,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cRightTermParserRuleCall_3_0 = (RuleCall)cRightAssignment_3.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//Concatenate Term:
-		//	"concatenate(" left=Term "," right=Term ")"
+		//Concatenate:
+		//	"concatenate(" left=Term "," right=Term ")";
 		@Override public ParserRule getRule() { return rule; }
 		
 		//"concatenate(" left=Term "," right=Term ")"
@@ -1204,8 +1240,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStringTermParserRuleCall_1_0 = (RuleCall)cStringAssignment_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
-		//Capitalize Term:
-		//	"capitalize(" string=Term ")"
+		//Capitalize:
+		//	"capitalize(" string=Term ")";
 		@Override public ParserRule getRule() { return rule; }
 		
 		//"capitalize(" string=Term ")"
@@ -1236,6 +1272,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValueSTRINGTerminalRuleCall_1_1_0 = (RuleCall)cValueAssignment_1_1.eContents().get(0);
 		private final RuleCall cBoolConstantParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
+		//// primitive terms:
 		//Constant Term:
 		//	{IntConstant} value=INT | {StringConstant} value=STRING | BoolConstant
 		@Override public ParserRule getRule() { return rule; }
@@ -1302,8 +1339,9 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	private final VariableRefElements pVariableRef;
 	private final GetElements pGet;
 	private final GetContainerElements pGetContainer;
-	private final GetContainmentElements pGetContainment;
+	private final GetContainmentsElements pGetContainments;
 	private final GetClosureElements pGetClosure;
+	private final SizeElements pSize;
 	private final ConcatenateElements pConcatenate;
 	private final CapitalizeElements pCapitalize;
 	private final ConstantElements pConstant;
@@ -1347,8 +1385,9 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		this.pVariableRef = new VariableRefElements();
 		this.pGet = new GetElements();
 		this.pGetContainer = new GetContainerElements();
-		this.pGetContainment = new GetContainmentElements();
+		this.pGetContainments = new GetContainmentsElements();
 		this.pGetClosure = new GetClosureElements();
+		this.pSize = new SizeElements();
 		this.pConcatenate = new ConcatenateElements();
 		this.pCapitalize = new CapitalizeElements();
 		this.pConstant = new ConstantElements();
@@ -1381,7 +1420,9 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//// NOTE: escape keywords with ^keyword
+	//// NOTES: 
+	//// - escape keywords with ^keyword
+	//// - http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
 	//ConstraintLibrary:
 	//	"domain" domain=STRING 'import' packageImport=STRING
 	//	constraints+=Constraint*;
@@ -1404,7 +1445,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Variable:
-	//	type=ID name=ID;
+	//	type=[ecore::EClassifier] name=ID;
 	public VariableElements getVariableAccess() {
 		return pVariable;
 	}
@@ -1421,8 +1462,6 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	// * terms of the rule for the operator with higher precedence. This means that in the grammar, 
 	// * the rules for operators with less precedence are defined first.
 	// * / // binary formulas:
-	//// TODO: How to make If, Xor,... inherit from BinaryFormula?
-	//// http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
 	//Formula:
 	//	BinaryFormula;
 	public FormulaElements getFormulaAccess() {
@@ -1596,7 +1635,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//IsInstanceOf:
-	//	"isInstanceOf(" term=Term "," type=ID ")";
+	//	"isInstanceOf(" term=Term "," type=[ecore::EClassifier] ")";
 	public IsInstanceOfElements getIsInstanceOfAccess() {
 		return pIsInstanceOf;
 	}
@@ -1605,18 +1644,6 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getIsInstanceOfAccess().getRule();
 	}
 	
-	//// TODO: infix inequality expressions
-	////Greater returns Formula:
-	////	GreaterEqual ({Greater.left=current} ">" right=GreaterEqual)*;
-	////	
-	////GreaterEqual returns Formula:
-	////	Smaller ({GreaterEqual.left=current} ">=" right=Smaller)*;
-	////
-	////Smaller returns Formula:
-	////	SmallerEqual ({Smaller.left=current} "<" right=SmallerEqual)*;
-	////	
-	////SmallerEqual returns Formula:
-	////	Term ({SmallerEqual.left=current} "<=" right=Term)*;
 	//// quantifier
 	//Quantifier Formula:
 	//	ForAll | Exists
@@ -1671,7 +1698,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// terms:
 	//Term:
-	//	Constant | VariableRef | GetContainment | GetContainer | GetClosure | Concatenate | Capitalize;
+	//	Constant | VariableRef | GetContainments | GetContainer | GetClosure | Size | Concatenate | Capitalize;
 	public TermElements getTermAccess() {
 		return pTerm;
 	}
@@ -1690,8 +1717,9 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableRefAccess().getRule();
 	}
 	
+	//// function terms (term -> term):
 	//Get:
-	//	"." (type=ID "::")? name=[ecore::EStructuralFeature] next=Get?;
+	//	"." (type=[ecore::EClassifier] "::")? name=[ecore::EStructuralFeature] next=Get?;
 	public GetElements getGetAccess() {
 		return pGet;
 	}
@@ -1700,8 +1728,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getGetAccess().getRule();
 	}
 	
-	//GetContainer Term:
-	//	"getContainer(" element=Term ")"
+	//GetContainer:
+	//	"getContainer(" element=Term ")";
 	public GetContainerElements getGetContainerAccess() {
 		return pGetContainer;
 	}
@@ -1710,18 +1738,18 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getGetContainerAccess().getRule();
 	}
 	
-	//GetContainment Term:
-	//	"getContainments(" element=Term ")"
-	public GetContainmentElements getGetContainmentAccess() {
-		return pGetContainment;
+	//GetContainments:
+	//	"getContainments(" element=Term ")";
+	public GetContainmentsElements getGetContainmentsAccess() {
+		return pGetContainments;
 	}
 	
-	public ParserRule getGetContainmentRule() {
-		return getGetContainmentAccess().getRule();
+	public ParserRule getGetContainmentsRule() {
+		return getGetContainmentsAccess().getRule();
 	}
 	
-	//GetClosure Term:
-	//	"getClosure(" element=Term "," feature=ID ")"
+	//GetClosure:
+	//	"getClosure(" element=Term "," feature=[ecore::EStructuralFeature] ")";
 	public GetClosureElements getGetClosureAccess() {
 		return pGetClosure;
 	}
@@ -1730,8 +1758,18 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getGetClosureAccess().getRule();
 	}
 	
-	//Concatenate Term:
-	//	"concatenate(" left=Term "," right=Term ")"
+	//Size:
+	//	"size(" elements=Term ")";
+	public SizeElements getSizeAccess() {
+		return pSize;
+	}
+	
+	public ParserRule getSizeRule() {
+		return getSizeAccess().getRule();
+	}
+	
+	//Concatenate:
+	//	"concatenate(" left=Term "," right=Term ")";
 	public ConcatenateElements getConcatenateAccess() {
 		return pConcatenate;
 	}
@@ -1740,8 +1778,8 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getConcatenateAccess().getRule();
 	}
 	
-	//Capitalize Term:
-	//	"capitalize(" string=Term ")"
+	//Capitalize:
+	//	"capitalize(" string=Term ")";
 	public CapitalizeElements getCapitalizeAccess() {
 		return pCapitalize;
 	}
@@ -1750,6 +1788,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		return getCapitalizeAccess().getRule();
 	}
 	
+	//// primitive terms:
 	//Constant Term:
 	//	{IntConstant} value=INT | {StringConstant} value=STRING | BoolConstant
 	public ConstantElements getConstantAccess() {

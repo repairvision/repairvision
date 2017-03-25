@@ -6,6 +6,7 @@ package org.sidiff.validation.laguage.fol.generator
 import java.util.Collections
 import java.util.HashMap
 import java.util.Map
+import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.resource.Resource
@@ -16,6 +17,8 @@ import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import org.sidiff.validation.laguage.fol.firstOrderLogic.And
 import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Capitalize
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Concatenate
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Equals
@@ -23,12 +26,14 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Formula
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetClosure
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Greater
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual
 import org.sidiff.validation.laguage.fol.firstOrderLogic.If
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Iff
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty
+import org.sidiff.validation.laguage.fol.firstOrderLogic.IsInstanceOf
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Not
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Or
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Smaller
@@ -37,6 +42,9 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Xor
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainer
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainments
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Size
 
 /**
  * Generates code from your model files on save.
@@ -116,17 +124,17 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 				public static IConstraint create«constraint.name»Rule() {
 					
 					«FOR variable : constraint.eAllContents.filter(typeof(Variable)).toIterable»
-						«compile(variable, variableCounter++, names)»
+						«compileVariable(variable, variableCounter++, names)»
 					«ENDFOR»
 				
 					«FOR getTerm : constraint.eAllContents.filter(typeof(VariableRef)).toIterable»
-						«if (getTerm.get != null) compile(getTerm, pathCounter++, names)»
+						«if (getTerm.get != null) compileVariableRef(getTerm, pathCounter++, names)»
 					«ENDFOR»
 				
-					«compile(constraint, constraintCounter++, names)»
+					«compileConstraint(constraint, constraintCounter++, names)»
 					
 					«var ruleName = 'rule_' + constraint.name»
-					IConstraint «ruleName» = new Constraint(DOMAIN.get«constraint.variable.type»(), «names.get(constraint.variable)», «names.get(constraint)»);
+					IConstraint «ruleName» = new Constraint(«compileType(constraint.variable.type)», «names.get(constraint.variable)», «names.get(constraint)»);
 					«ruleName».setName("«constraint.name»");
 					«ruleName».setMessage("«constraint.message»");
 					
@@ -147,15 +155,22 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	def ConstraintLibrary getRuleBase(Resource resource) {
 		return (resource.contents.get(0) as ConstraintLibrary)
 	}
+		
+	def String compileConstraint(Constraint constraint, int constraintCounter, HashMap<Object, String> names) {
+		var name = 'constraint' + constraintCounter + '_' + constraint.name
+		names.put(constraint, name)
+		
+ 		return 'Formula ' + name + ' = ' + compileFormula(constraint.formula, names) + ';'
+	}
 	
-	def String compile(Variable variable, int counter, HashMap<Object, String> names) {
+	def String compileVariable(Variable variable, int counter, HashMap<Object, String> names) {
 		var name = 'v' + counter + '_' + variable.name;
 		names.put(variable, name)
 		
 		return '''Variable «name» = new Variable("«variable.name»");'''
 	}
 	
-	def String compile(VariableRef path, int counter, HashMap<Object, String> names) {
+	def String compileVariableRef(VariableRef path, int counter, HashMap<Object, String> names) {
 		
 		// Term t1_m_receiveEvent_covered =
 		var name = '''t«counter»_«path.eAllContents.filter(typeof(Get)).map[name.name].join('_')»'''
@@ -163,31 +178,28 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		names.put(path, name)
 		
 		//new Get(new Get(m, DOMAIN.getMessage_ReceiveEvent()), DOMAIN.getInteractionFragment_Covered());
-		var code = new StringBuffer('new Get(' + names.get(path.name) + ', ' + compile(path.get.name) + ')')
-		compile(path.get.next, code)
+		var code = new StringBuffer('new Get(' + names.get(path.name) + ', ' + compileFeature(path.get.name) + ')')
+		compileGet(path.get.next, code)
 		
 		return getVariable + code + ';'
 	}
 	
-	def void compile(Get get, StringBuffer code) {
+	def void compileGet(Get get, StringBuffer code) {
 		
 		if (get != null) {
 			code.insert(0, 'new Get(')
-			code.append(', ' + compile(get.name) + ')')
+			code.append(', ' + compileFeature(get.name) + ')')
 		
-			compile(get.next, code)
+			compileGet(get.next, code)
 		}
 	}
 	
-	def String compile(EStructuralFeature featue) {
-		return 'DOMAIN.get' + featue.containerClass.simpleName + '_' + featue.name.toFirstUpper + '()'
+	def String compileType(EClassifier type) {
+		return 'DOMAIN.get' + type.name + '()'
 	}
 	
-	def String compile(Constraint constraint, int constraintCounter, HashMap<Object, String> names) {
-		var name = 'constraint' + constraintCounter + '_' + constraint.name
-		names.put(constraint, name)
-		
-		return 'Formula ' + name + ' = ' + compileFormula(constraint.formula, names) + ';'
+	def String compileFeature(EStructuralFeature featue) {
+		return 'DOMAIN.get' + featue.containerClass.simpleName + '_' + featue.name.toFirstUpper + '()'
 	}
 	
 	def dispatch String compileFormula(Formula formula, HashMap<Object, String> names) {
@@ -227,27 +239,31 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	}
 	
 	def dispatch String compileFormula(Greater greater, HashMap<Object, String> names) {
-		return 'new Greater(' + compileFormula(greater.left, names) + ', ' + compileFormula(greater.right, names)  + ')'
+		return 'new IsGreater(' + compileFormula(greater.left, names) + ', ' + compileFormula(greater.right, names)  + ')'
 	}
 	
 	def dispatch String compileFormula(GreaterEqual greaterEqual, HashMap<Object, String> names) {
-		return 'new GreaterEqual(' + compileFormula(greaterEqual.left, names) + ', ' + compileFormula(greaterEqual.right, names)  + ')'
+		return 'new IsGreaterEqual(' + compileFormula(greaterEqual.left, names) + ', ' + compileFormula(greaterEqual.right, names)  + ')'
 	}
 	
 	def dispatch String compileFormula(Smaller smaller, HashMap<Object, String> names) {
-		return 'new Smaller(' + compileFormula(smaller.left, names) + ', ' + compileFormula(smaller.right, names)  + ')'
+		return 'new IsSmaller(' + compileFormula(smaller.left, names) + ', ' + compileFormula(smaller.right, names)  + ')'
 	}
 	
 	def dispatch String compileFormula(SmallerEqual smallerEqual, HashMap<Object, String> names) {
-		return 'new SmallerEqual(' + compileFormula(smallerEqual.left, names) + ', ' + compileFormula(smallerEqual.right, names)  + ')'
+		return 'new IsSmallerEqual(' + compileFormula(smallerEqual.left, names) + ', ' + compileFormula(smallerEqual.right, names)  + ')'
+	}
+	
+	def dispatch String compileFormula(IsInstanceOf isInstanceOf, HashMap<Object, String> names) {
+		return 'new IsInstanceOf(' + compileFormula(isInstanceOf.term, names) + ', ' + compileType(isInstanceOf.type)  + ')'
 	}
 	
 	def dispatch String compileFormula(ForAll forAll, HashMap<Object, String> names) {
-		return 'new ForAll(' + names.get(forAll.name) + ', ' + names.get(forAll.iteration) +  ', '  + compileFormula(forAll.formula, names) + ')'
+		return 'new ForAll(' + compileFormula(forAll.name, names) + ', ' + compileFormula(forAll.iteration, names) +  ', '  + compileFormula(forAll.formula, names) + ')'
 	}
 	
 	def dispatch String compileFormula(Exists exists, HashMap<Object, String> names) {
-		return 'new Exists(' + names.get(exists.name) + ', ' + names.get(exists.iteration) +  ', '  + compileFormula(exists.formula, names) + ')'
+		return 'new Exists(' + compileFormula(exists.name, names) + ', ' + compileFormula(exists.iteration, names) +  ', '  + compileFormula(exists.formula, names) + ')'
 	}
 	
 	def dispatch String compileFormula(IntConstant integer, HashMap<Object, String> names) {
@@ -264,6 +280,30 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		} else {
 			return 'BoolConstant.FALSE'
 		}
+	}
+	
+	def dispatch String compileFormula(Capitalize capitalize, HashMap<Object, String> names) {
+		return 'new Capitalize(' + compileFormula(capitalize.string, names) + ')'
+	}
+	
+	def dispatch String compileFormula(Concatenate concatenate, HashMap<Object, String> names) {
+		return 'new Concatenate(' + compileFormula(concatenate.left, names) + ', ' + compileFormula(concatenate.right, names) + ')'
+	}
+	
+	def dispatch String compileFormula(GetClosure getClosure, HashMap<Object, String> names) {
+		return 'new GetClosure(' + compileFormula(getClosure.element, names) + ', ' + compileFeature(getClosure.feature) + ')'
+	}
+	
+	def dispatch String compileFormula(GetContainer getContainer, HashMap<Object, String> names) {
+		return 'new GetContainer(' + compileFormula(getContainer.element, names) + ')'
+	}
+	
+	def dispatch String compileFormula(GetContainments getContainments, HashMap<Object, String> names) {
+		return 'new GetContainments(' + compileFormula(getContainments.element, names) + ')'
+	}
+	
+	def dispatch String compileFormula(Size size, HashMap<Object, String> names) {
+		return 'new Size(' + compileFormula(size.elements, names) + ')'
 	}
 	
 	def dispatch String compileFormula(VariableRef variable, HashMap<Object, String> names) {

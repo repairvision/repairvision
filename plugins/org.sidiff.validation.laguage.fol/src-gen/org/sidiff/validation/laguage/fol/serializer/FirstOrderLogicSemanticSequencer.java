@@ -16,6 +16,8 @@ import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequence
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.And;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Capitalize;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Concatenate;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Equals;
@@ -23,6 +25,9 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetClosure;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainer;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainments;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Greater;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GreaterEqual;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.If;
@@ -32,10 +37,10 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.IsEmpty;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IsInstanceOf;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Not;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Or;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Size;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Smaller;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.SmallerEqual;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant;
-import org.sidiff.validation.laguage.fol.firstOrderLogic.Term;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Xor;
@@ -61,6 +66,12 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 			case FirstOrderLogicPackage.BOOL_CONSTANT:
 				sequence_BoolConstant(context, (BoolConstant) semanticObject); 
 				return; 
+			case FirstOrderLogicPackage.CAPITALIZE:
+				sequence_Capitalize(context, (Capitalize) semanticObject); 
+				return; 
+			case FirstOrderLogicPackage.CONCATENATE:
+				sequence_Concatenate(context, (Concatenate) semanticObject); 
+				return; 
 			case FirstOrderLogicPackage.CONSTRAINT:
 				sequence_Constraint(context, (Constraint) semanticObject); 
 				return; 
@@ -78,6 +89,15 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				return; 
 			case FirstOrderLogicPackage.GET:
 				sequence_Get(context, (Get) semanticObject); 
+				return; 
+			case FirstOrderLogicPackage.GET_CLOSURE:
+				sequence_GetClosure(context, (GetClosure) semanticObject); 
+				return; 
+			case FirstOrderLogicPackage.GET_CONTAINER:
+				sequence_GetContainer(context, (GetContainer) semanticObject); 
+				return; 
+			case FirstOrderLogicPackage.GET_CONTAINMENTS:
+				sequence_GetContainments(context, (GetContainments) semanticObject); 
 				return; 
 			case FirstOrderLogicPackage.GREATER:
 				sequence_Greater(context, (Greater) semanticObject); 
@@ -106,6 +126,9 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 			case FirstOrderLogicPackage.OR:
 				sequence_Or(context, (Or) semanticObject); 
 				return; 
+			case FirstOrderLogicPackage.SIZE:
+				sequence_Size(context, (Size) semanticObject); 
+				return; 
 			case FirstOrderLogicPackage.SMALLER:
 				sequence_Smaller(context, (Smaller) semanticObject); 
 				return; 
@@ -115,32 +138,6 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 			case FirstOrderLogicPackage.STRING_CONSTANT:
 				sequence_Constant(context, (StringConstant) semanticObject); 
 				return; 
-			case FirstOrderLogicPackage.TERM:
-				if (rule == grammarAccess.getTermRule()) {
-					sequence_Capitalize_Concatenate_GetClosure_GetContainer_GetContainment(context, (Term) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getCapitalizeRule()) {
-					sequence_Capitalize(context, (Term) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getConcatenateRule()) {
-					sequence_Concatenate(context, (Term) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getGetClosureRule()) {
-					sequence_GetClosure(context, (Term) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getGetContainerRule()) {
-					sequence_GetContainer(context, (Term) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getGetContainmentRule()) {
-					sequence_GetContainment(context, (Term) semanticObject); 
-					return; 
-				}
-				else break;
 			case FirstOrderLogicPackage.VARIABLE:
 				sequence_Variable(context, (Variable) semanticObject); 
 				return; 
@@ -217,27 +214,16 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     Term returns Term
-	 *
-	 * Constraint:
-	 *     (element=Term | element=Term | (element=Term feature=ID) | (left=Term right=Term) | string=Term)
-	 */
-	protected void sequence_Capitalize_Concatenate_GetClosure_GetContainer_GetContainment(ISerializationContext context, Term semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Capitalize returns Term
+	 *     Term returns Capitalize
+	 *     Capitalize returns Capitalize
 	 *
 	 * Constraint:
 	 *     string=Term
 	 */
-	protected void sequence_Capitalize(ISerializationContext context, Term semanticObject) {
+	protected void sequence_Capitalize(ISerializationContext context, Capitalize semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.TERM__STRING) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.TERM__STRING));
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.CAPITALIZE__STRING) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.CAPITALIZE__STRING));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getCapitalizeAccess().getStringTermParserRuleCall_1_0(), semanticObject.getString());
@@ -247,17 +233,18 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     Concatenate returns Term
+	 *     Term returns Concatenate
+	 *     Concatenate returns Concatenate
 	 *
 	 * Constraint:
 	 *     (left=Term right=Term)
 	 */
-	protected void sequence_Concatenate(ISerializationContext context, Term semanticObject) {
+	protected void sequence_Concatenate(ISerializationContext context, Concatenate semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.TERM__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.TERM__LEFT));
-			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.TERM__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.TERM__RIGHT));
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.CONCATENATE__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.CONCATENATE__LEFT));
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.CONCATENATE__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.CONCATENATE__RIGHT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getConcatenateAccess().getLeftTermParserRuleCall_1_0(), semanticObject.getLeft());
@@ -456,36 +443,38 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     GetClosure returns Term
+	 *     Term returns GetClosure
+	 *     GetClosure returns GetClosure
 	 *
 	 * Constraint:
-	 *     (element=Term feature=ID)
+	 *     (element=Term feature=[EStructuralFeature|ID])
 	 */
-	protected void sequence_GetClosure(ISerializationContext context, Term semanticObject) {
+	protected void sequence_GetClosure(ISerializationContext context, GetClosure semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.TERM__ELEMENT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.TERM__ELEMENT));
-			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.TERM__FEATURE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.TERM__FEATURE));
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.GET_CLOSURE__ELEMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.GET_CLOSURE__ELEMENT));
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.GET_CLOSURE__FEATURE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.GET_CLOSURE__FEATURE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getGetClosureAccess().getElementTermParserRuleCall_1_0(), semanticObject.getElement());
-		feeder.accept(grammarAccess.getGetClosureAccess().getFeatureIDTerminalRuleCall_3_0(), semanticObject.getFeature());
+		feeder.accept(grammarAccess.getGetClosureAccess().getFeatureEStructuralFeatureIDTerminalRuleCall_3_0_1(), semanticObject.getFeature());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     GetContainer returns Term
+	 *     Term returns GetContainer
+	 *     GetContainer returns GetContainer
 	 *
 	 * Constraint:
 	 *     element=Term
 	 */
-	protected void sequence_GetContainer(ISerializationContext context, Term semanticObject) {
+	protected void sequence_GetContainer(ISerializationContext context, GetContainer semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.TERM__ELEMENT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.TERM__ELEMENT));
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.GET_CONTAINER__ELEMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.GET_CONTAINER__ELEMENT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getGetContainerAccess().getElementTermParserRuleCall_1_0(), semanticObject.getElement());
@@ -495,18 +484,19 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     GetContainment returns Term
+	 *     Term returns GetContainments
+	 *     GetContainments returns GetContainments
 	 *
 	 * Constraint:
 	 *     element=Term
 	 */
-	protected void sequence_GetContainment(ISerializationContext context, Term semanticObject) {
+	protected void sequence_GetContainments(ISerializationContext context, GetContainments semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.TERM__ELEMENT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.TERM__ELEMENT));
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.GET_CONTAINMENTS__ELEMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.GET_CONTAINMENTS__ELEMENT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getGetContainmentAccess().getElementTermParserRuleCall_1_0(), semanticObject.getElement());
+		feeder.accept(grammarAccess.getGetContainmentsAccess().getElementTermParserRuleCall_1_0(), semanticObject.getElement());
 		feeder.finish();
 	}
 	
@@ -516,7 +506,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Get returns Get
 	 *
 	 * Constraint:
-	 *     (type=ID? name=[EStructuralFeature|ID] next=Get?)
+	 *     (type=[EClassifier|ID]? name=[EStructuralFeature|ID] next=Get?)
 	 */
 	protected void sequence_Get(ISerializationContext context, Get semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -712,7 +702,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     BooleanExpression returns IsInstanceOf
 	 *
 	 * Constraint:
-	 *     (term=Term type=ID)
+	 *     (term=Term type=[EClassifier|ID])
 	 */
 	protected void sequence_IsInstanceOf(ISerializationContext context, IsInstanceOf semanticObject) {
 		if (errorAcceptor != null) {
@@ -723,7 +713,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getIsInstanceOfAccess().getTermTermParserRuleCall_1_0(), semanticObject.getTerm());
-		feeder.accept(grammarAccess.getIsInstanceOfAccess().getTypeIDTerminalRuleCall_3_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getIsInstanceOfAccess().getTypeEClassifierIDTerminalRuleCall_3_0_1(), semanticObject.getType());
 		feeder.finish();
 	}
 	
@@ -789,6 +779,25 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getOrAccess().getOrLeftAction_1_0(), semanticObject.getLeft());
 		feeder.accept(grammarAccess.getOrAccess().getRightAndParserRuleCall_1_2_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Term returns Size
+	 *     Size returns Size
+	 *
+	 * Constraint:
+	 *     elements=Term
+	 */
+	protected void sequence_Size(ISerializationContext context, Size semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.SIZE__ELEMENTS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.SIZE__ELEMENTS));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSizeAccess().getElementsTermParserRuleCall_1_0(), semanticObject.getElements());
 		feeder.finish();
 	}
 	
@@ -883,7 +892,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     Variable returns Variable
 	 *
 	 * Constraint:
-	 *     (type=ID name=ID)
+	 *     (type=[EClassifier|ID] name=ID)
 	 */
 	protected void sequence_Variable(ISerializationContext context, Variable semanticObject) {
 		if (errorAcceptor != null) {
@@ -893,7 +902,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.VARIABLE__NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getVariableAccess().getTypeIDTerminalRuleCall_0_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getVariableAccess().getTypeEClassifierIDTerminalRuleCall_0_0_1(), semanticObject.getType());
 		feeder.accept(grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
 		feeder.finish();
 	}

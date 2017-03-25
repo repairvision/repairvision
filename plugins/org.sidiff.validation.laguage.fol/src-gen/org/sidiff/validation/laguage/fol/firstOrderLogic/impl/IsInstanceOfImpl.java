@@ -7,6 +7,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -42,24 +43,14 @@ public class IsInstanceOfImpl extends FormulaImpl implements IsInstanceOf
   protected Term term;
 
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #getType() <em>Type</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getType()
    * @generated
    * @ordered
    */
-  protected static final String TYPE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected String type = TYPE_EDEFAULT;
+  protected EClassifier type;
 
   /**
    * <!-- begin-user-doc -->
@@ -135,7 +126,27 @@ public class IsInstanceOfImpl extends FormulaImpl implements IsInstanceOf
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getType()
+  public EClassifier getType()
+  {
+    if (type != null && type.eIsProxy())
+    {
+      InternalEObject oldType = (InternalEObject)type;
+      type = (EClassifier)eResolveProxy(oldType);
+      if (type != oldType)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, FirstOrderLogicPackage.IS_INSTANCE_OF__TYPE, oldType, type));
+      }
+    }
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClassifier basicGetType()
   {
     return type;
   }
@@ -145,9 +156,9 @@ public class IsInstanceOfImpl extends FormulaImpl implements IsInstanceOf
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setType(String newType)
+  public void setType(EClassifier newType)
   {
-    String oldType = type;
+    EClassifier oldType = type;
     type = newType;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, FirstOrderLogicPackage.IS_INSTANCE_OF__TYPE, oldType, type));
@@ -182,7 +193,8 @@ public class IsInstanceOfImpl extends FormulaImpl implements IsInstanceOf
       case FirstOrderLogicPackage.IS_INSTANCE_OF__TERM:
         return getTerm();
       case FirstOrderLogicPackage.IS_INSTANCE_OF__TYPE:
-        return getType();
+        if (resolve) return getType();
+        return basicGetType();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -201,7 +213,7 @@ public class IsInstanceOfImpl extends FormulaImpl implements IsInstanceOf
         setTerm((Term)newValue);
         return;
       case FirstOrderLogicPackage.IS_INSTANCE_OF__TYPE:
-        setType((String)newValue);
+        setType((EClassifier)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -221,7 +233,7 @@ public class IsInstanceOfImpl extends FormulaImpl implements IsInstanceOf
         setTerm((Term)null);
         return;
       case FirstOrderLogicPackage.IS_INSTANCE_OF__TYPE:
-        setType(TYPE_EDEFAULT);
+        setType((EClassifier)null);
         return;
     }
     super.eUnset(featureID);
@@ -240,26 +252,9 @@ public class IsInstanceOfImpl extends FormulaImpl implements IsInstanceOf
       case FirstOrderLogicPackage.IS_INSTANCE_OF__TERM:
         return term != null;
       case FirstOrderLogicPackage.IS_INSTANCE_OF__TYPE:
-        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+        return type != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (type: ");
-    result.append(type);
-    result.append(')');
-    return result.toString();
   }
 
 } //IsInstanceOfImpl

@@ -151,6 +151,36 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createGetAdapter();
       }
       @Override
+      public Adapter caseGetContainer(GetContainer object)
+      {
+        return createGetContainerAdapter();
+      }
+      @Override
+      public Adapter caseGetContainments(GetContainments object)
+      {
+        return createGetContainmentsAdapter();
+      }
+      @Override
+      public Adapter caseGetClosure(GetClosure object)
+      {
+        return createGetClosureAdapter();
+      }
+      @Override
+      public Adapter caseSize(Size object)
+      {
+        return createSizeAdapter();
+      }
+      @Override
+      public Adapter caseConcatenate(Concatenate object)
+      {
+        return createConcatenateAdapter();
+      }
+      @Override
+      public Adapter caseCapitalize(Capitalize object)
+      {
+        return createCapitalizeAdapter();
+      }
+      @Override
       public Adapter caseIff(Iff object)
       {
         return createIffAdapter();
@@ -453,6 +483,96 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createGetAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainer <em>Get Container</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainer
+   * @generated
+   */
+  public Adapter createGetContainerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainments <em>Get Containments</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainments
+   * @generated
+   */
+  public Adapter createGetContainmentsAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.GetClosure <em>Get Closure</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.GetClosure
+   * @generated
+   */
+  public Adapter createGetClosureAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Size <em>Size</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Size
+   * @generated
+   */
+  public Adapter createSizeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Concatenate <em>Concatenate</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Concatenate
+   * @generated
+   */
+  public Adapter createConcatenateAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Capitalize <em>Capitalize</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.Capitalize
+   * @generated
+   */
+  public Adapter createCapitalizeAdapter()
   {
     return null;
   }

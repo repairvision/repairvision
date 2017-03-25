@@ -80,6 +80,12 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
       case FirstOrderLogicPackage.QUANTIFIER: return createQuantifier();
       case FirstOrderLogicPackage.TERM: return createTerm();
       case FirstOrderLogicPackage.GET: return createGet();
+      case FirstOrderLogicPackage.GET_CONTAINER: return createGetContainer();
+      case FirstOrderLogicPackage.GET_CONTAINMENTS: return createGetContainments();
+      case FirstOrderLogicPackage.GET_CLOSURE: return createGetClosure();
+      case FirstOrderLogicPackage.SIZE: return createSize();
+      case FirstOrderLogicPackage.CONCATENATE: return createConcatenate();
+      case FirstOrderLogicPackage.CAPITALIZE: return createCapitalize();
       case FirstOrderLogicPackage.IFF: return createIff();
       case FirstOrderLogicPackage.IF: return createIf();
       case FirstOrderLogicPackage.XOR: return createXor();
@@ -260,6 +266,72 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
   {
     GetImpl get = new GetImpl();
     return get;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public GetContainer createGetContainer()
+  {
+    GetContainerImpl getContainer = new GetContainerImpl();
+    return getContainer;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public GetContainments createGetContainments()
+  {
+    GetContainmentsImpl getContainments = new GetContainmentsImpl();
+    return getContainments;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public GetClosure createGetClosure()
+  {
+    GetClosureImpl getClosure = new GetClosureImpl();
+    return getClosure;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Size createSize()
+  {
+    SizeImpl size = new SizeImpl();
+    return size;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Concatenate createConcatenate()
+  {
+    ConcatenateImpl concatenate = new ConcatenateImpl();
+    return concatenate;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Capitalize createCapitalize()
+  {
+    CapitalizeImpl capitalize = new CapitalizeImpl();
+    return capitalize;
   }
 
   /**
