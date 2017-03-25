@@ -71,8 +71,9 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getGetAccess().getGroup(), "rule__Get__Group__0");
 					put(grammarAccess.getGetAccess().getGroup_1(), "rule__Get__Group_1__0");
 					put(grammarAccess.getGetContainerAccess().getGroup(), "rule__GetContainer__Group__0");
-					put(grammarAccess.getGetContainmentAccess().getGroup(), "rule__GetContainment__Group__0");
+					put(grammarAccess.getGetContainmentsAccess().getGroup(), "rule__GetContainments__Group__0");
 					put(grammarAccess.getGetClosureAccess().getGroup(), "rule__GetClosure__Group__0");
+					put(grammarAccess.getSizeAccess().getGroup(), "rule__Size__Group__0");
 					put(grammarAccess.getConcatenateAccess().getGroup(), "rule__Concatenate__Group__0");
 					put(grammarAccess.getCapitalizeAccess().getGroup(), "rule__Capitalize__Group__0");
 					put(grammarAccess.getConstantAccess().getGroup_0(), "rule__Constant__Group_0__0");
@@ -118,9 +119,10 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 					put(grammarAccess.getGetAccess().getNameAssignment_2(), "rule__Get__NameAssignment_2");
 					put(grammarAccess.getGetAccess().getNextAssignment_3(), "rule__Get__NextAssignment_3");
 					put(grammarAccess.getGetContainerAccess().getElementAssignment_1(), "rule__GetContainer__ElementAssignment_1");
-					put(grammarAccess.getGetContainmentAccess().getElementAssignment_1(), "rule__GetContainment__ElementAssignment_1");
+					put(grammarAccess.getGetContainmentsAccess().getElementAssignment_1(), "rule__GetContainments__ElementAssignment_1");
 					put(grammarAccess.getGetClosureAccess().getElementAssignment_1(), "rule__GetClosure__ElementAssignment_1");
 					put(grammarAccess.getGetClosureAccess().getFeatureAssignment_3(), "rule__GetClosure__FeatureAssignment_3");
+					put(grammarAccess.getSizeAccess().getElementsAssignment_1(), "rule__Size__ElementsAssignment_1");
 					put(grammarAccess.getConcatenateAccess().getLeftAssignment_1(), "rule__Concatenate__LeftAssignment_1");
 					put(grammarAccess.getConcatenateAccess().getRightAssignment_3(), "rule__Concatenate__RightAssignment_3");
 					put(grammarAccess.getCapitalizeAccess().getStringAssignment_1(), "rule__Capitalize__StringAssignment_1");

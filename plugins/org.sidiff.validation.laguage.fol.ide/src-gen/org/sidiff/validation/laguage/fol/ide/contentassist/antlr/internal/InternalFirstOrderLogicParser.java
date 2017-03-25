@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalFirstOrderLogicParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'true'", "'false'", "'domain'", "'import'", "'constraint'", "'message'", "'context'", "':'", "'='", "'implies'", "'xor'", "'or'", "'and'", "'not('", "')'", "'isEqual('", "','", "'isGreater('", "'isGreaterEqual('", "'isSmaller('", "'isSmallerEqual('", "'isEmpty('", "'isInstanceOf('", "'forAll('", "'in'", "'exists('", "'('", "'.'", "'::'", "'getContainer('", "'getContainments('", "'getClosure('", "'concatenate('", "'capitalize('"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'true'", "'false'", "'domain'", "'import'", "'constraint'", "'message'", "'context'", "':'", "'='", "'implies'", "'xor'", "'or'", "'and'", "'not('", "')'", "'isEqual('", "','", "'isGreater('", "'isGreaterEqual('", "'isSmaller('", "'isSmallerEqual('", "'isEmpty('", "'isInstanceOf('", "'forAll('", "'in'", "'exists('", "'('", "'.'", "'::'", "'getContainer('", "'getContainments('", "'getClosure('", "'size('", "'concatenate('", "'capitalize('"
     };
     public static final int T__19=19;
     public static final int T__15=15;
@@ -62,6 +62,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
     public static final int RULE_WS=9;
     public static final int RULE_ANY_OTHER=10;
     public static final int T__44=44;
+    public static final int T__45=45;
     public static final int T__40=40;
     public static final int T__41=41;
     public static final int T__42=42;
@@ -2394,20 +2395,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
     // $ANTLR end "ruleGetContainer"
 
 
-    // $ANTLR start "entryRuleGetContainment"
-    // InternalFirstOrderLogic.g:803:1: entryRuleGetContainment : ruleGetContainment EOF ;
-    public final void entryRuleGetContainment() throws RecognitionException {
+    // $ANTLR start "entryRuleGetContainments"
+    // InternalFirstOrderLogic.g:803:1: entryRuleGetContainments : ruleGetContainments EOF ;
+    public final void entryRuleGetContainments() throws RecognitionException {
         try {
-            // InternalFirstOrderLogic.g:804:1: ( ruleGetContainment EOF )
-            // InternalFirstOrderLogic.g:805:1: ruleGetContainment EOF
+            // InternalFirstOrderLogic.g:804:1: ( ruleGetContainments EOF )
+            // InternalFirstOrderLogic.g:805:1: ruleGetContainments EOF
             {
-             before(grammarAccess.getGetContainmentRule()); 
+             before(grammarAccess.getGetContainmentsRule()); 
             pushFollow(FOLLOW_1);
-            ruleGetContainment();
+            ruleGetContainments();
 
             state._fsp--;
 
-             after(grammarAccess.getGetContainmentRule()); 
+             after(grammarAccess.getGetContainmentsRule()); 
             match(input,EOF,FOLLOW_2); 
 
             }
@@ -2421,35 +2422,35 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "entryRuleGetContainment"
+    // $ANTLR end "entryRuleGetContainments"
 
 
-    // $ANTLR start "ruleGetContainment"
-    // InternalFirstOrderLogic.g:812:1: ruleGetContainment : ( ( rule__GetContainment__Group__0 ) ) ;
-    public final void ruleGetContainment() throws RecognitionException {
+    // $ANTLR start "ruleGetContainments"
+    // InternalFirstOrderLogic.g:812:1: ruleGetContainments : ( ( rule__GetContainments__Group__0 ) ) ;
+    public final void ruleGetContainments() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:816:2: ( ( ( rule__GetContainment__Group__0 ) ) )
-            // InternalFirstOrderLogic.g:817:2: ( ( rule__GetContainment__Group__0 ) )
+            // InternalFirstOrderLogic.g:816:2: ( ( ( rule__GetContainments__Group__0 ) ) )
+            // InternalFirstOrderLogic.g:817:2: ( ( rule__GetContainments__Group__0 ) )
             {
-            // InternalFirstOrderLogic.g:817:2: ( ( rule__GetContainment__Group__0 ) )
-            // InternalFirstOrderLogic.g:818:3: ( rule__GetContainment__Group__0 )
+            // InternalFirstOrderLogic.g:817:2: ( ( rule__GetContainments__Group__0 ) )
+            // InternalFirstOrderLogic.g:818:3: ( rule__GetContainments__Group__0 )
             {
-             before(grammarAccess.getGetContainmentAccess().getGroup()); 
-            // InternalFirstOrderLogic.g:819:3: ( rule__GetContainment__Group__0 )
-            // InternalFirstOrderLogic.g:819:4: rule__GetContainment__Group__0
+             before(grammarAccess.getGetContainmentsAccess().getGroup()); 
+            // InternalFirstOrderLogic.g:819:3: ( rule__GetContainments__Group__0 )
+            // InternalFirstOrderLogic.g:819:4: rule__GetContainments__Group__0
             {
             pushFollow(FOLLOW_2);
-            rule__GetContainment__Group__0();
+            rule__GetContainments__Group__0();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getGetContainmentAccess().getGroup()); 
+             after(grammarAccess.getGetContainmentsAccess().getGroup()); 
 
             }
 
@@ -2468,7 +2469,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "ruleGetContainment"
+    // $ANTLR end "ruleGetContainments"
 
 
     // $ANTLR start "entryRuleGetClosure"
@@ -2548,12 +2549,89 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
     // $ANTLR end "ruleGetClosure"
 
 
+    // $ANTLR start "entryRuleSize"
+    // InternalFirstOrderLogic.g:853:1: entryRuleSize : ruleSize EOF ;
+    public final void entryRuleSize() throws RecognitionException {
+        try {
+            // InternalFirstOrderLogic.g:854:1: ( ruleSize EOF )
+            // InternalFirstOrderLogic.g:855:1: ruleSize EOF
+            {
+             before(grammarAccess.getSizeRule()); 
+            pushFollow(FOLLOW_1);
+            ruleSize();
+
+            state._fsp--;
+
+             after(grammarAccess.getSizeRule()); 
+            match(input,EOF,FOLLOW_2); 
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+        }
+        return ;
+    }
+    // $ANTLR end "entryRuleSize"
+
+
+    // $ANTLR start "ruleSize"
+    // InternalFirstOrderLogic.g:862:1: ruleSize : ( ( rule__Size__Group__0 ) ) ;
+    public final void ruleSize() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalFirstOrderLogic.g:866:2: ( ( ( rule__Size__Group__0 ) ) )
+            // InternalFirstOrderLogic.g:867:2: ( ( rule__Size__Group__0 ) )
+            {
+            // InternalFirstOrderLogic.g:867:2: ( ( rule__Size__Group__0 ) )
+            // InternalFirstOrderLogic.g:868:3: ( rule__Size__Group__0 )
+            {
+             before(grammarAccess.getSizeAccess().getGroup()); 
+            // InternalFirstOrderLogic.g:869:3: ( rule__Size__Group__0 )
+            // InternalFirstOrderLogic.g:869:4: rule__Size__Group__0
+            {
+            pushFollow(FOLLOW_2);
+            rule__Size__Group__0();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getSizeAccess().getGroup()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "ruleSize"
+
+
     // $ANTLR start "entryRuleConcatenate"
-    // InternalFirstOrderLogic.g:853:1: entryRuleConcatenate : ruleConcatenate EOF ;
+    // InternalFirstOrderLogic.g:878:1: entryRuleConcatenate : ruleConcatenate EOF ;
     public final void entryRuleConcatenate() throws RecognitionException {
         try {
-            // InternalFirstOrderLogic.g:854:1: ( ruleConcatenate EOF )
-            // InternalFirstOrderLogic.g:855:1: ruleConcatenate EOF
+            // InternalFirstOrderLogic.g:879:1: ( ruleConcatenate EOF )
+            // InternalFirstOrderLogic.g:880:1: ruleConcatenate EOF
             {
              before(grammarAccess.getConcatenateRule()); 
             pushFollow(FOLLOW_1);
@@ -2579,21 +2657,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "ruleConcatenate"
-    // InternalFirstOrderLogic.g:862:1: ruleConcatenate : ( ( rule__Concatenate__Group__0 ) ) ;
+    // InternalFirstOrderLogic.g:887:1: ruleConcatenate : ( ( rule__Concatenate__Group__0 ) ) ;
     public final void ruleConcatenate() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:866:2: ( ( ( rule__Concatenate__Group__0 ) ) )
-            // InternalFirstOrderLogic.g:867:2: ( ( rule__Concatenate__Group__0 ) )
+            // InternalFirstOrderLogic.g:891:2: ( ( ( rule__Concatenate__Group__0 ) ) )
+            // InternalFirstOrderLogic.g:892:2: ( ( rule__Concatenate__Group__0 ) )
             {
-            // InternalFirstOrderLogic.g:867:2: ( ( rule__Concatenate__Group__0 ) )
-            // InternalFirstOrderLogic.g:868:3: ( rule__Concatenate__Group__0 )
+            // InternalFirstOrderLogic.g:892:2: ( ( rule__Concatenate__Group__0 ) )
+            // InternalFirstOrderLogic.g:893:3: ( rule__Concatenate__Group__0 )
             {
              before(grammarAccess.getConcatenateAccess().getGroup()); 
-            // InternalFirstOrderLogic.g:869:3: ( rule__Concatenate__Group__0 )
-            // InternalFirstOrderLogic.g:869:4: rule__Concatenate__Group__0
+            // InternalFirstOrderLogic.g:894:3: ( rule__Concatenate__Group__0 )
+            // InternalFirstOrderLogic.g:894:4: rule__Concatenate__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__Concatenate__Group__0();
@@ -2626,11 +2704,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "entryRuleCapitalize"
-    // InternalFirstOrderLogic.g:878:1: entryRuleCapitalize : ruleCapitalize EOF ;
+    // InternalFirstOrderLogic.g:903:1: entryRuleCapitalize : ruleCapitalize EOF ;
     public final void entryRuleCapitalize() throws RecognitionException {
         try {
-            // InternalFirstOrderLogic.g:879:1: ( ruleCapitalize EOF )
-            // InternalFirstOrderLogic.g:880:1: ruleCapitalize EOF
+            // InternalFirstOrderLogic.g:904:1: ( ruleCapitalize EOF )
+            // InternalFirstOrderLogic.g:905:1: ruleCapitalize EOF
             {
              before(grammarAccess.getCapitalizeRule()); 
             pushFollow(FOLLOW_1);
@@ -2656,21 +2734,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "ruleCapitalize"
-    // InternalFirstOrderLogic.g:887:1: ruleCapitalize : ( ( rule__Capitalize__Group__0 ) ) ;
+    // InternalFirstOrderLogic.g:912:1: ruleCapitalize : ( ( rule__Capitalize__Group__0 ) ) ;
     public final void ruleCapitalize() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:891:2: ( ( ( rule__Capitalize__Group__0 ) ) )
-            // InternalFirstOrderLogic.g:892:2: ( ( rule__Capitalize__Group__0 ) )
+            // InternalFirstOrderLogic.g:916:2: ( ( ( rule__Capitalize__Group__0 ) ) )
+            // InternalFirstOrderLogic.g:917:2: ( ( rule__Capitalize__Group__0 ) )
             {
-            // InternalFirstOrderLogic.g:892:2: ( ( rule__Capitalize__Group__0 ) )
-            // InternalFirstOrderLogic.g:893:3: ( rule__Capitalize__Group__0 )
+            // InternalFirstOrderLogic.g:917:2: ( ( rule__Capitalize__Group__0 ) )
+            // InternalFirstOrderLogic.g:918:3: ( rule__Capitalize__Group__0 )
             {
              before(grammarAccess.getCapitalizeAccess().getGroup()); 
-            // InternalFirstOrderLogic.g:894:3: ( rule__Capitalize__Group__0 )
-            // InternalFirstOrderLogic.g:894:4: rule__Capitalize__Group__0
+            // InternalFirstOrderLogic.g:919:3: ( rule__Capitalize__Group__0 )
+            // InternalFirstOrderLogic.g:919:4: rule__Capitalize__Group__0
             {
             pushFollow(FOLLOW_2);
             rule__Capitalize__Group__0();
@@ -2703,11 +2781,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "entryRuleConstant"
-    // InternalFirstOrderLogic.g:903:1: entryRuleConstant : ruleConstant EOF ;
+    // InternalFirstOrderLogic.g:928:1: entryRuleConstant : ruleConstant EOF ;
     public final void entryRuleConstant() throws RecognitionException {
         try {
-            // InternalFirstOrderLogic.g:904:1: ( ruleConstant EOF )
-            // InternalFirstOrderLogic.g:905:1: ruleConstant EOF
+            // InternalFirstOrderLogic.g:929:1: ( ruleConstant EOF )
+            // InternalFirstOrderLogic.g:930:1: ruleConstant EOF
             {
              before(grammarAccess.getConstantRule()); 
             pushFollow(FOLLOW_1);
@@ -2733,21 +2811,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "ruleConstant"
-    // InternalFirstOrderLogic.g:912:1: ruleConstant : ( ( rule__Constant__Alternatives ) ) ;
+    // InternalFirstOrderLogic.g:937:1: ruleConstant : ( ( rule__Constant__Alternatives ) ) ;
     public final void ruleConstant() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:916:2: ( ( ( rule__Constant__Alternatives ) ) )
-            // InternalFirstOrderLogic.g:917:2: ( ( rule__Constant__Alternatives ) )
+            // InternalFirstOrderLogic.g:941:2: ( ( ( rule__Constant__Alternatives ) ) )
+            // InternalFirstOrderLogic.g:942:2: ( ( rule__Constant__Alternatives ) )
             {
-            // InternalFirstOrderLogic.g:917:2: ( ( rule__Constant__Alternatives ) )
-            // InternalFirstOrderLogic.g:918:3: ( rule__Constant__Alternatives )
+            // InternalFirstOrderLogic.g:942:2: ( ( rule__Constant__Alternatives ) )
+            // InternalFirstOrderLogic.g:943:3: ( rule__Constant__Alternatives )
             {
              before(grammarAccess.getConstantAccess().getAlternatives()); 
-            // InternalFirstOrderLogic.g:919:3: ( rule__Constant__Alternatives )
-            // InternalFirstOrderLogic.g:919:4: rule__Constant__Alternatives
+            // InternalFirstOrderLogic.g:944:3: ( rule__Constant__Alternatives )
+            // InternalFirstOrderLogic.g:944:4: rule__Constant__Alternatives
             {
             pushFollow(FOLLOW_2);
             rule__Constant__Alternatives();
@@ -2780,13 +2858,13 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Predicate__Alternatives"
-    // InternalFirstOrderLogic.g:927:1: rule__Predicate__Alternatives : ( ( ruleEquals ) | ( ruleInequality ) | ( ruleIsEmpty ) | ( ruleIsInstanceOf ) );
+    // InternalFirstOrderLogic.g:952:1: rule__Predicate__Alternatives : ( ( ruleEquals ) | ( ruleInequality ) | ( ruleIsEmpty ) | ( ruleIsInstanceOf ) );
     public final void rule__Predicate__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:931:1: ( ( ruleEquals ) | ( ruleInequality ) | ( ruleIsEmpty ) | ( ruleIsInstanceOf ) )
+            // InternalFirstOrderLogic.g:956:1: ( ( ruleEquals ) | ( ruleInequality ) | ( ruleIsEmpty ) | ( ruleIsInstanceOf ) )
             int alt1=4;
             switch ( input.LA(1) ) {
             case 26:
@@ -2821,10 +2899,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
             switch (alt1) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:932:2: ( ruleEquals )
+                    // InternalFirstOrderLogic.g:957:2: ( ruleEquals )
                     {
-                    // InternalFirstOrderLogic.g:932:2: ( ruleEquals )
-                    // InternalFirstOrderLogic.g:933:3: ruleEquals
+                    // InternalFirstOrderLogic.g:957:2: ( ruleEquals )
+                    // InternalFirstOrderLogic.g:958:3: ruleEquals
                     {
                      before(grammarAccess.getPredicateAccess().getEqualsParserRuleCall_0()); 
                     pushFollow(FOLLOW_2);
@@ -2840,10 +2918,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:938:2: ( ruleInequality )
+                    // InternalFirstOrderLogic.g:963:2: ( ruleInequality )
                     {
-                    // InternalFirstOrderLogic.g:938:2: ( ruleInequality )
-                    // InternalFirstOrderLogic.g:939:3: ruleInequality
+                    // InternalFirstOrderLogic.g:963:2: ( ruleInequality )
+                    // InternalFirstOrderLogic.g:964:3: ruleInequality
                     {
                      before(grammarAccess.getPredicateAccess().getInequalityParserRuleCall_1()); 
                     pushFollow(FOLLOW_2);
@@ -2859,10 +2937,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 3 :
-                    // InternalFirstOrderLogic.g:944:2: ( ruleIsEmpty )
+                    // InternalFirstOrderLogic.g:969:2: ( ruleIsEmpty )
                     {
-                    // InternalFirstOrderLogic.g:944:2: ( ruleIsEmpty )
-                    // InternalFirstOrderLogic.g:945:3: ruleIsEmpty
+                    // InternalFirstOrderLogic.g:969:2: ( ruleIsEmpty )
+                    // InternalFirstOrderLogic.g:970:3: ruleIsEmpty
                     {
                      before(grammarAccess.getPredicateAccess().getIsEmptyParserRuleCall_2()); 
                     pushFollow(FOLLOW_2);
@@ -2878,10 +2956,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 4 :
-                    // InternalFirstOrderLogic.g:950:2: ( ruleIsInstanceOf )
+                    // InternalFirstOrderLogic.g:975:2: ( ruleIsInstanceOf )
                     {
-                    // InternalFirstOrderLogic.g:950:2: ( ruleIsInstanceOf )
-                    // InternalFirstOrderLogic.g:951:3: ruleIsInstanceOf
+                    // InternalFirstOrderLogic.g:975:2: ( ruleIsInstanceOf )
+                    // InternalFirstOrderLogic.g:976:3: ruleIsInstanceOf
                     {
                      before(grammarAccess.getPredicateAccess().getIsInstanceOfParserRuleCall_3()); 
                     pushFollow(FOLLOW_2);
@@ -2914,13 +2992,13 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Inequality__Alternatives"
-    // InternalFirstOrderLogic.g:960:1: rule__Inequality__Alternatives : ( ( ruleGreater ) | ( ruleGreaterEqual ) | ( ruleSmaller ) | ( ruleSmallerEqual ) );
+    // InternalFirstOrderLogic.g:985:1: rule__Inequality__Alternatives : ( ( ruleGreater ) | ( ruleGreaterEqual ) | ( ruleSmaller ) | ( ruleSmallerEqual ) );
     public final void rule__Inequality__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:964:1: ( ( ruleGreater ) | ( ruleGreaterEqual ) | ( ruleSmaller ) | ( ruleSmallerEqual ) )
+            // InternalFirstOrderLogic.g:989:1: ( ( ruleGreater ) | ( ruleGreaterEqual ) | ( ruleSmaller ) | ( ruleSmallerEqual ) )
             int alt2=4;
             switch ( input.LA(1) ) {
             case 28:
@@ -2952,10 +3030,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
             switch (alt2) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:965:2: ( ruleGreater )
+                    // InternalFirstOrderLogic.g:990:2: ( ruleGreater )
                     {
-                    // InternalFirstOrderLogic.g:965:2: ( ruleGreater )
-                    // InternalFirstOrderLogic.g:966:3: ruleGreater
+                    // InternalFirstOrderLogic.g:990:2: ( ruleGreater )
+                    // InternalFirstOrderLogic.g:991:3: ruleGreater
                     {
                      before(grammarAccess.getInequalityAccess().getGreaterParserRuleCall_0()); 
                     pushFollow(FOLLOW_2);
@@ -2971,10 +3049,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:971:2: ( ruleGreaterEqual )
+                    // InternalFirstOrderLogic.g:996:2: ( ruleGreaterEqual )
                     {
-                    // InternalFirstOrderLogic.g:971:2: ( ruleGreaterEqual )
-                    // InternalFirstOrderLogic.g:972:3: ruleGreaterEqual
+                    // InternalFirstOrderLogic.g:996:2: ( ruleGreaterEqual )
+                    // InternalFirstOrderLogic.g:997:3: ruleGreaterEqual
                     {
                      before(grammarAccess.getInequalityAccess().getGreaterEqualParserRuleCall_1()); 
                     pushFollow(FOLLOW_2);
@@ -2990,10 +3068,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 3 :
-                    // InternalFirstOrderLogic.g:977:2: ( ruleSmaller )
+                    // InternalFirstOrderLogic.g:1002:2: ( ruleSmaller )
                     {
-                    // InternalFirstOrderLogic.g:977:2: ( ruleSmaller )
-                    // InternalFirstOrderLogic.g:978:3: ruleSmaller
+                    // InternalFirstOrderLogic.g:1002:2: ( ruleSmaller )
+                    // InternalFirstOrderLogic.g:1003:3: ruleSmaller
                     {
                      before(grammarAccess.getInequalityAccess().getSmallerParserRuleCall_2()); 
                     pushFollow(FOLLOW_2);
@@ -3009,10 +3087,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 4 :
-                    // InternalFirstOrderLogic.g:983:2: ( ruleSmallerEqual )
+                    // InternalFirstOrderLogic.g:1008:2: ( ruleSmallerEqual )
                     {
-                    // InternalFirstOrderLogic.g:983:2: ( ruleSmallerEqual )
-                    // InternalFirstOrderLogic.g:984:3: ruleSmallerEqual
+                    // InternalFirstOrderLogic.g:1008:2: ( ruleSmallerEqual )
+                    // InternalFirstOrderLogic.g:1009:3: ruleSmallerEqual
                     {
                      before(grammarAccess.getInequalityAccess().getSmallerEqualParserRuleCall_3()); 
                     pushFollow(FOLLOW_2);
@@ -3045,13 +3123,13 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Quantifier__Alternatives"
-    // InternalFirstOrderLogic.g:993:1: rule__Quantifier__Alternatives : ( ( ruleForAll ) | ( ruleExists ) );
+    // InternalFirstOrderLogic.g:1018:1: rule__Quantifier__Alternatives : ( ( ruleForAll ) | ( ruleExists ) );
     public final void rule__Quantifier__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:997:1: ( ( ruleForAll ) | ( ruleExists ) )
+            // InternalFirstOrderLogic.g:1022:1: ( ( ruleForAll ) | ( ruleExists ) )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -3069,10 +3147,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
             }
             switch (alt3) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:998:2: ( ruleForAll )
+                    // InternalFirstOrderLogic.g:1023:2: ( ruleForAll )
                     {
-                    // InternalFirstOrderLogic.g:998:2: ( ruleForAll )
-                    // InternalFirstOrderLogic.g:999:3: ruleForAll
+                    // InternalFirstOrderLogic.g:1023:2: ( ruleForAll )
+                    // InternalFirstOrderLogic.g:1024:3: ruleForAll
                     {
                      before(grammarAccess.getQuantifierAccess().getForAllParserRuleCall_0()); 
                     pushFollow(FOLLOW_2);
@@ -3088,10 +3166,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:1004:2: ( ruleExists )
+                    // InternalFirstOrderLogic.g:1029:2: ( ruleExists )
                     {
-                    // InternalFirstOrderLogic.g:1004:2: ( ruleExists )
-                    // InternalFirstOrderLogic.g:1005:3: ruleExists
+                    // InternalFirstOrderLogic.g:1029:2: ( ruleExists )
+                    // InternalFirstOrderLogic.g:1030:3: ruleExists
                     {
                      before(grammarAccess.getQuantifierAccess().getExistsParserRuleCall_1()); 
                     pushFollow(FOLLOW_2);
@@ -3124,13 +3202,13 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BooleanExpression__Alternatives"
-    // InternalFirstOrderLogic.g:1014:1: rule__BooleanExpression__Alternatives : ( ( ( rule__BooleanExpression__Group_0__0 ) ) | ( ruleUnaryFormula ) | ( ruleQuantifier ) | ( rulePredicate ) | ( ruleBoolConstant ) );
+    // InternalFirstOrderLogic.g:1039:1: rule__BooleanExpression__Alternatives : ( ( ( rule__BooleanExpression__Group_0__0 ) ) | ( ruleUnaryFormula ) | ( ruleQuantifier ) | ( rulePredicate ) | ( ruleBoolConstant ) );
     public final void rule__BooleanExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1018:1: ( ( ( rule__BooleanExpression__Group_0__0 ) ) | ( ruleUnaryFormula ) | ( ruleQuantifier ) | ( rulePredicate ) | ( ruleBoolConstant ) )
+            // InternalFirstOrderLogic.g:1043:1: ( ( ( rule__BooleanExpression__Group_0__0 ) ) | ( ruleUnaryFormula ) | ( ruleQuantifier ) | ( rulePredicate ) | ( ruleBoolConstant ) )
             int alt4=5;
             switch ( input.LA(1) ) {
             case 37:
@@ -3175,14 +3253,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
             switch (alt4) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:1019:2: ( ( rule__BooleanExpression__Group_0__0 ) )
+                    // InternalFirstOrderLogic.g:1044:2: ( ( rule__BooleanExpression__Group_0__0 ) )
                     {
-                    // InternalFirstOrderLogic.g:1019:2: ( ( rule__BooleanExpression__Group_0__0 ) )
-                    // InternalFirstOrderLogic.g:1020:3: ( rule__BooleanExpression__Group_0__0 )
+                    // InternalFirstOrderLogic.g:1044:2: ( ( rule__BooleanExpression__Group_0__0 ) )
+                    // InternalFirstOrderLogic.g:1045:3: ( rule__BooleanExpression__Group_0__0 )
                     {
                      before(grammarAccess.getBooleanExpressionAccess().getGroup_0()); 
-                    // InternalFirstOrderLogic.g:1021:3: ( rule__BooleanExpression__Group_0__0 )
-                    // InternalFirstOrderLogic.g:1021:4: rule__BooleanExpression__Group_0__0
+                    // InternalFirstOrderLogic.g:1046:3: ( rule__BooleanExpression__Group_0__0 )
+                    // InternalFirstOrderLogic.g:1046:4: rule__BooleanExpression__Group_0__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__BooleanExpression__Group_0__0();
@@ -3200,10 +3278,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:1025:2: ( ruleUnaryFormula )
+                    // InternalFirstOrderLogic.g:1050:2: ( ruleUnaryFormula )
                     {
-                    // InternalFirstOrderLogic.g:1025:2: ( ruleUnaryFormula )
-                    // InternalFirstOrderLogic.g:1026:3: ruleUnaryFormula
+                    // InternalFirstOrderLogic.g:1050:2: ( ruleUnaryFormula )
+                    // InternalFirstOrderLogic.g:1051:3: ruleUnaryFormula
                     {
                      before(grammarAccess.getBooleanExpressionAccess().getUnaryFormulaParserRuleCall_1()); 
                     pushFollow(FOLLOW_2);
@@ -3219,10 +3297,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 3 :
-                    // InternalFirstOrderLogic.g:1031:2: ( ruleQuantifier )
+                    // InternalFirstOrderLogic.g:1056:2: ( ruleQuantifier )
                     {
-                    // InternalFirstOrderLogic.g:1031:2: ( ruleQuantifier )
-                    // InternalFirstOrderLogic.g:1032:3: ruleQuantifier
+                    // InternalFirstOrderLogic.g:1056:2: ( ruleQuantifier )
+                    // InternalFirstOrderLogic.g:1057:3: ruleQuantifier
                     {
                      before(grammarAccess.getBooleanExpressionAccess().getQuantifierParserRuleCall_2()); 
                     pushFollow(FOLLOW_2);
@@ -3238,10 +3316,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 4 :
-                    // InternalFirstOrderLogic.g:1037:2: ( rulePredicate )
+                    // InternalFirstOrderLogic.g:1062:2: ( rulePredicate )
                     {
-                    // InternalFirstOrderLogic.g:1037:2: ( rulePredicate )
-                    // InternalFirstOrderLogic.g:1038:3: rulePredicate
+                    // InternalFirstOrderLogic.g:1062:2: ( rulePredicate )
+                    // InternalFirstOrderLogic.g:1063:3: rulePredicate
                     {
                      before(grammarAccess.getBooleanExpressionAccess().getPredicateParserRuleCall_3()); 
                     pushFollow(FOLLOW_2);
@@ -3257,10 +3335,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 5 :
-                    // InternalFirstOrderLogic.g:1043:2: ( ruleBoolConstant )
+                    // InternalFirstOrderLogic.g:1068:2: ( ruleBoolConstant )
                     {
-                    // InternalFirstOrderLogic.g:1043:2: ( ruleBoolConstant )
-                    // InternalFirstOrderLogic.g:1044:3: ruleBoolConstant
+                    // InternalFirstOrderLogic.g:1068:2: ( ruleBoolConstant )
+                    // InternalFirstOrderLogic.g:1069:3: ruleBoolConstant
                     {
                      before(grammarAccess.getBooleanExpressionAccess().getBoolConstantParserRuleCall_4()); 
                     pushFollow(FOLLOW_2);
@@ -3293,13 +3371,13 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BoolConstant__ValueAlternatives_1_0"
-    // InternalFirstOrderLogic.g:1053:1: rule__BoolConstant__ValueAlternatives_1_0 : ( ( 'true' ) | ( 'false' ) );
+    // InternalFirstOrderLogic.g:1078:1: rule__BoolConstant__ValueAlternatives_1_0 : ( ( 'true' ) | ( 'false' ) );
     public final void rule__BoolConstant__ValueAlternatives_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1057:1: ( ( 'true' ) | ( 'false' ) )
+            // InternalFirstOrderLogic.g:1082:1: ( ( 'true' ) | ( 'false' ) )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -3317,10 +3395,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
             }
             switch (alt5) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:1058:2: ( 'true' )
+                    // InternalFirstOrderLogic.g:1083:2: ( 'true' )
                     {
-                    // InternalFirstOrderLogic.g:1058:2: ( 'true' )
-                    // InternalFirstOrderLogic.g:1059:3: 'true'
+                    // InternalFirstOrderLogic.g:1083:2: ( 'true' )
+                    // InternalFirstOrderLogic.g:1084:3: 'true'
                     {
                      before(grammarAccess.getBoolConstantAccess().getValueTrueKeyword_1_0_0()); 
                     match(input,11,FOLLOW_2); 
@@ -3332,10 +3410,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:1064:2: ( 'false' )
+                    // InternalFirstOrderLogic.g:1089:2: ( 'false' )
                     {
-                    // InternalFirstOrderLogic.g:1064:2: ( 'false' )
-                    // InternalFirstOrderLogic.g:1065:3: 'false'
+                    // InternalFirstOrderLogic.g:1089:2: ( 'false' )
+                    // InternalFirstOrderLogic.g:1090:3: 'false'
                     {
                      before(grammarAccess.getBoolConstantAccess().getValueFalseKeyword_1_0_1()); 
                     match(input,12,FOLLOW_2); 
@@ -3364,14 +3442,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Term__Alternatives"
-    // InternalFirstOrderLogic.g:1074:1: rule__Term__Alternatives : ( ( ruleConstant ) | ( ruleVariableRef ) | ( ruleGetContainment ) | ( ruleGetContainer ) | ( ruleGetClosure ) | ( ruleConcatenate ) | ( ruleCapitalize ) );
+    // InternalFirstOrderLogic.g:1099:1: rule__Term__Alternatives : ( ( ruleConstant ) | ( ruleVariableRef ) | ( ruleGetContainments ) | ( ruleGetContainer ) | ( ruleGetClosure ) | ( ruleSize ) | ( ruleConcatenate ) | ( ruleCapitalize ) );
     public final void rule__Term__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1078:1: ( ( ruleConstant ) | ( ruleVariableRef ) | ( ruleGetContainment ) | ( ruleGetContainer ) | ( ruleGetClosure ) | ( ruleConcatenate ) | ( ruleCapitalize ) )
-            int alt6=7;
+            // InternalFirstOrderLogic.g:1103:1: ( ( ruleConstant ) | ( ruleVariableRef ) | ( ruleGetContainments ) | ( ruleGetContainer ) | ( ruleGetClosure ) | ( ruleSize ) | ( ruleConcatenate ) | ( ruleCapitalize ) )
+            int alt6=8;
             switch ( input.LA(1) ) {
             case RULE_STRING:
             case RULE_INT:
@@ -3411,6 +3489,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                 alt6=7;
                 }
                 break;
+            case 45:
+                {
+                alt6=8;
+                }
+                break;
             default:
                 NoViableAltException nvae =
                     new NoViableAltException("", 6, 0, input);
@@ -3420,10 +3503,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
             switch (alt6) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:1079:2: ( ruleConstant )
+                    // InternalFirstOrderLogic.g:1104:2: ( ruleConstant )
                     {
-                    // InternalFirstOrderLogic.g:1079:2: ( ruleConstant )
-                    // InternalFirstOrderLogic.g:1080:3: ruleConstant
+                    // InternalFirstOrderLogic.g:1104:2: ( ruleConstant )
+                    // InternalFirstOrderLogic.g:1105:3: ruleConstant
                     {
                      before(grammarAccess.getTermAccess().getConstantParserRuleCall_0()); 
                     pushFollow(FOLLOW_2);
@@ -3439,10 +3522,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:1085:2: ( ruleVariableRef )
+                    // InternalFirstOrderLogic.g:1110:2: ( ruleVariableRef )
                     {
-                    // InternalFirstOrderLogic.g:1085:2: ( ruleVariableRef )
-                    // InternalFirstOrderLogic.g:1086:3: ruleVariableRef
+                    // InternalFirstOrderLogic.g:1110:2: ( ruleVariableRef )
+                    // InternalFirstOrderLogic.g:1111:3: ruleVariableRef
                     {
                      before(grammarAccess.getTermAccess().getVariableRefParserRuleCall_1()); 
                     pushFollow(FOLLOW_2);
@@ -3458,18 +3541,18 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 3 :
-                    // InternalFirstOrderLogic.g:1091:2: ( ruleGetContainment )
+                    // InternalFirstOrderLogic.g:1116:2: ( ruleGetContainments )
                     {
-                    // InternalFirstOrderLogic.g:1091:2: ( ruleGetContainment )
-                    // InternalFirstOrderLogic.g:1092:3: ruleGetContainment
+                    // InternalFirstOrderLogic.g:1116:2: ( ruleGetContainments )
+                    // InternalFirstOrderLogic.g:1117:3: ruleGetContainments
                     {
-                     before(grammarAccess.getTermAccess().getGetContainmentParserRuleCall_2()); 
+                     before(grammarAccess.getTermAccess().getGetContainmentsParserRuleCall_2()); 
                     pushFollow(FOLLOW_2);
-                    ruleGetContainment();
+                    ruleGetContainments();
 
                     state._fsp--;
 
-                     after(grammarAccess.getTermAccess().getGetContainmentParserRuleCall_2()); 
+                     after(grammarAccess.getTermAccess().getGetContainmentsParserRuleCall_2()); 
 
                     }
 
@@ -3477,10 +3560,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 4 :
-                    // InternalFirstOrderLogic.g:1097:2: ( ruleGetContainer )
+                    // InternalFirstOrderLogic.g:1122:2: ( ruleGetContainer )
                     {
-                    // InternalFirstOrderLogic.g:1097:2: ( ruleGetContainer )
-                    // InternalFirstOrderLogic.g:1098:3: ruleGetContainer
+                    // InternalFirstOrderLogic.g:1122:2: ( ruleGetContainer )
+                    // InternalFirstOrderLogic.g:1123:3: ruleGetContainer
                     {
                      before(grammarAccess.getTermAccess().getGetContainerParserRuleCall_3()); 
                     pushFollow(FOLLOW_2);
@@ -3496,10 +3579,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 5 :
-                    // InternalFirstOrderLogic.g:1103:2: ( ruleGetClosure )
+                    // InternalFirstOrderLogic.g:1128:2: ( ruleGetClosure )
                     {
-                    // InternalFirstOrderLogic.g:1103:2: ( ruleGetClosure )
-                    // InternalFirstOrderLogic.g:1104:3: ruleGetClosure
+                    // InternalFirstOrderLogic.g:1128:2: ( ruleGetClosure )
+                    // InternalFirstOrderLogic.g:1129:3: ruleGetClosure
                     {
                      before(grammarAccess.getTermAccess().getGetClosureParserRuleCall_4()); 
                     pushFollow(FOLLOW_2);
@@ -3515,18 +3598,18 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 6 :
-                    // InternalFirstOrderLogic.g:1109:2: ( ruleConcatenate )
+                    // InternalFirstOrderLogic.g:1134:2: ( ruleSize )
                     {
-                    // InternalFirstOrderLogic.g:1109:2: ( ruleConcatenate )
-                    // InternalFirstOrderLogic.g:1110:3: ruleConcatenate
+                    // InternalFirstOrderLogic.g:1134:2: ( ruleSize )
+                    // InternalFirstOrderLogic.g:1135:3: ruleSize
                     {
-                     before(grammarAccess.getTermAccess().getConcatenateParserRuleCall_5()); 
+                     before(grammarAccess.getTermAccess().getSizeParserRuleCall_5()); 
                     pushFollow(FOLLOW_2);
-                    ruleConcatenate();
+                    ruleSize();
 
                     state._fsp--;
 
-                     after(grammarAccess.getTermAccess().getConcatenateParserRuleCall_5()); 
+                     after(grammarAccess.getTermAccess().getSizeParserRuleCall_5()); 
 
                     }
 
@@ -3534,18 +3617,37 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 7 :
-                    // InternalFirstOrderLogic.g:1115:2: ( ruleCapitalize )
+                    // InternalFirstOrderLogic.g:1140:2: ( ruleConcatenate )
                     {
-                    // InternalFirstOrderLogic.g:1115:2: ( ruleCapitalize )
-                    // InternalFirstOrderLogic.g:1116:3: ruleCapitalize
+                    // InternalFirstOrderLogic.g:1140:2: ( ruleConcatenate )
+                    // InternalFirstOrderLogic.g:1141:3: ruleConcatenate
                     {
-                     before(grammarAccess.getTermAccess().getCapitalizeParserRuleCall_6()); 
+                     before(grammarAccess.getTermAccess().getConcatenateParserRuleCall_6()); 
+                    pushFollow(FOLLOW_2);
+                    ruleConcatenate();
+
+                    state._fsp--;
+
+                     after(grammarAccess.getTermAccess().getConcatenateParserRuleCall_6()); 
+
+                    }
+
+
+                    }
+                    break;
+                case 8 :
+                    // InternalFirstOrderLogic.g:1146:2: ( ruleCapitalize )
+                    {
+                    // InternalFirstOrderLogic.g:1146:2: ( ruleCapitalize )
+                    // InternalFirstOrderLogic.g:1147:3: ruleCapitalize
+                    {
+                     before(grammarAccess.getTermAccess().getCapitalizeParserRuleCall_7()); 
                     pushFollow(FOLLOW_2);
                     ruleCapitalize();
 
                     state._fsp--;
 
-                     after(grammarAccess.getTermAccess().getCapitalizeParserRuleCall_6()); 
+                     after(grammarAccess.getTermAccess().getCapitalizeParserRuleCall_7()); 
 
                     }
 
@@ -3570,13 +3672,13 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constant__Alternatives"
-    // InternalFirstOrderLogic.g:1125:1: rule__Constant__Alternatives : ( ( ( rule__Constant__Group_0__0 ) ) | ( ( rule__Constant__Group_1__0 ) ) | ( ruleBoolConstant ) );
+    // InternalFirstOrderLogic.g:1156:1: rule__Constant__Alternatives : ( ( ( rule__Constant__Group_0__0 ) ) | ( ( rule__Constant__Group_1__0 ) ) | ( ruleBoolConstant ) );
     public final void rule__Constant__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1129:1: ( ( ( rule__Constant__Group_0__0 ) ) | ( ( rule__Constant__Group_1__0 ) ) | ( ruleBoolConstant ) )
+            // InternalFirstOrderLogic.g:1160:1: ( ( ( rule__Constant__Group_0__0 ) ) | ( ( rule__Constant__Group_1__0 ) ) | ( ruleBoolConstant ) )
             int alt7=3;
             switch ( input.LA(1) ) {
             case RULE_INT:
@@ -3604,14 +3706,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
             switch (alt7) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:1130:2: ( ( rule__Constant__Group_0__0 ) )
+                    // InternalFirstOrderLogic.g:1161:2: ( ( rule__Constant__Group_0__0 ) )
                     {
-                    // InternalFirstOrderLogic.g:1130:2: ( ( rule__Constant__Group_0__0 ) )
-                    // InternalFirstOrderLogic.g:1131:3: ( rule__Constant__Group_0__0 )
+                    // InternalFirstOrderLogic.g:1161:2: ( ( rule__Constant__Group_0__0 ) )
+                    // InternalFirstOrderLogic.g:1162:3: ( rule__Constant__Group_0__0 )
                     {
                      before(grammarAccess.getConstantAccess().getGroup_0()); 
-                    // InternalFirstOrderLogic.g:1132:3: ( rule__Constant__Group_0__0 )
-                    // InternalFirstOrderLogic.g:1132:4: rule__Constant__Group_0__0
+                    // InternalFirstOrderLogic.g:1163:3: ( rule__Constant__Group_0__0 )
+                    // InternalFirstOrderLogic.g:1163:4: rule__Constant__Group_0__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__Constant__Group_0__0();
@@ -3629,14 +3731,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:1136:2: ( ( rule__Constant__Group_1__0 ) )
+                    // InternalFirstOrderLogic.g:1167:2: ( ( rule__Constant__Group_1__0 ) )
                     {
-                    // InternalFirstOrderLogic.g:1136:2: ( ( rule__Constant__Group_1__0 ) )
-                    // InternalFirstOrderLogic.g:1137:3: ( rule__Constant__Group_1__0 )
+                    // InternalFirstOrderLogic.g:1167:2: ( ( rule__Constant__Group_1__0 ) )
+                    // InternalFirstOrderLogic.g:1168:3: ( rule__Constant__Group_1__0 )
                     {
                      before(grammarAccess.getConstantAccess().getGroup_1()); 
-                    // InternalFirstOrderLogic.g:1138:3: ( rule__Constant__Group_1__0 )
-                    // InternalFirstOrderLogic.g:1138:4: rule__Constant__Group_1__0
+                    // InternalFirstOrderLogic.g:1169:3: ( rule__Constant__Group_1__0 )
+                    // InternalFirstOrderLogic.g:1169:4: rule__Constant__Group_1__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__Constant__Group_1__0();
@@ -3654,10 +3756,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
                     }
                     break;
                 case 3 :
-                    // InternalFirstOrderLogic.g:1142:2: ( ruleBoolConstant )
+                    // InternalFirstOrderLogic.g:1173:2: ( ruleBoolConstant )
                     {
-                    // InternalFirstOrderLogic.g:1142:2: ( ruleBoolConstant )
-                    // InternalFirstOrderLogic.g:1143:3: ruleBoolConstant
+                    // InternalFirstOrderLogic.g:1173:2: ( ruleBoolConstant )
+                    // InternalFirstOrderLogic.g:1174:3: ruleBoolConstant
                     {
                      before(grammarAccess.getConstantAccess().getBoolConstantParserRuleCall_2()); 
                     pushFollow(FOLLOW_2);
@@ -3690,14 +3792,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__Group__0"
-    // InternalFirstOrderLogic.g:1152:1: rule__ConstraintLibrary__Group__0 : rule__ConstraintLibrary__Group__0__Impl rule__ConstraintLibrary__Group__1 ;
+    // InternalFirstOrderLogic.g:1183:1: rule__ConstraintLibrary__Group__0 : rule__ConstraintLibrary__Group__0__Impl rule__ConstraintLibrary__Group__1 ;
     public final void rule__ConstraintLibrary__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1156:1: ( rule__ConstraintLibrary__Group__0__Impl rule__ConstraintLibrary__Group__1 )
-            // InternalFirstOrderLogic.g:1157:2: rule__ConstraintLibrary__Group__0__Impl rule__ConstraintLibrary__Group__1
+            // InternalFirstOrderLogic.g:1187:1: ( rule__ConstraintLibrary__Group__0__Impl rule__ConstraintLibrary__Group__1 )
+            // InternalFirstOrderLogic.g:1188:2: rule__ConstraintLibrary__Group__0__Impl rule__ConstraintLibrary__Group__1
             {
             pushFollow(FOLLOW_3);
             rule__ConstraintLibrary__Group__0__Impl();
@@ -3728,17 +3830,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__Group__0__Impl"
-    // InternalFirstOrderLogic.g:1164:1: rule__ConstraintLibrary__Group__0__Impl : ( 'domain' ) ;
+    // InternalFirstOrderLogic.g:1195:1: rule__ConstraintLibrary__Group__0__Impl : ( 'domain' ) ;
     public final void rule__ConstraintLibrary__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1168:1: ( ( 'domain' ) )
-            // InternalFirstOrderLogic.g:1169:1: ( 'domain' )
+            // InternalFirstOrderLogic.g:1199:1: ( ( 'domain' ) )
+            // InternalFirstOrderLogic.g:1200:1: ( 'domain' )
             {
-            // InternalFirstOrderLogic.g:1169:1: ( 'domain' )
-            // InternalFirstOrderLogic.g:1170:2: 'domain'
+            // InternalFirstOrderLogic.g:1200:1: ( 'domain' )
+            // InternalFirstOrderLogic.g:1201:2: 'domain'
             {
              before(grammarAccess.getConstraintLibraryAccess().getDomainKeyword_0()); 
             match(input,13,FOLLOW_2); 
@@ -3765,14 +3867,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__Group__1"
-    // InternalFirstOrderLogic.g:1179:1: rule__ConstraintLibrary__Group__1 : rule__ConstraintLibrary__Group__1__Impl rule__ConstraintLibrary__Group__2 ;
+    // InternalFirstOrderLogic.g:1210:1: rule__ConstraintLibrary__Group__1 : rule__ConstraintLibrary__Group__1__Impl rule__ConstraintLibrary__Group__2 ;
     public final void rule__ConstraintLibrary__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1183:1: ( rule__ConstraintLibrary__Group__1__Impl rule__ConstraintLibrary__Group__2 )
-            // InternalFirstOrderLogic.g:1184:2: rule__ConstraintLibrary__Group__1__Impl rule__ConstraintLibrary__Group__2
+            // InternalFirstOrderLogic.g:1214:1: ( rule__ConstraintLibrary__Group__1__Impl rule__ConstraintLibrary__Group__2 )
+            // InternalFirstOrderLogic.g:1215:2: rule__ConstraintLibrary__Group__1__Impl rule__ConstraintLibrary__Group__2
             {
             pushFollow(FOLLOW_4);
             rule__ConstraintLibrary__Group__1__Impl();
@@ -3803,21 +3905,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__Group__1__Impl"
-    // InternalFirstOrderLogic.g:1191:1: rule__ConstraintLibrary__Group__1__Impl : ( ( rule__ConstraintLibrary__DomainAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:1222:1: rule__ConstraintLibrary__Group__1__Impl : ( ( rule__ConstraintLibrary__DomainAssignment_1 ) ) ;
     public final void rule__ConstraintLibrary__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1195:1: ( ( ( rule__ConstraintLibrary__DomainAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:1196:1: ( ( rule__ConstraintLibrary__DomainAssignment_1 ) )
+            // InternalFirstOrderLogic.g:1226:1: ( ( ( rule__ConstraintLibrary__DomainAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:1227:1: ( ( rule__ConstraintLibrary__DomainAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:1196:1: ( ( rule__ConstraintLibrary__DomainAssignment_1 ) )
-            // InternalFirstOrderLogic.g:1197:2: ( rule__ConstraintLibrary__DomainAssignment_1 )
+            // InternalFirstOrderLogic.g:1227:1: ( ( rule__ConstraintLibrary__DomainAssignment_1 ) )
+            // InternalFirstOrderLogic.g:1228:2: ( rule__ConstraintLibrary__DomainAssignment_1 )
             {
              before(grammarAccess.getConstraintLibraryAccess().getDomainAssignment_1()); 
-            // InternalFirstOrderLogic.g:1198:2: ( rule__ConstraintLibrary__DomainAssignment_1 )
-            // InternalFirstOrderLogic.g:1198:3: rule__ConstraintLibrary__DomainAssignment_1
+            // InternalFirstOrderLogic.g:1229:2: ( rule__ConstraintLibrary__DomainAssignment_1 )
+            // InternalFirstOrderLogic.g:1229:3: rule__ConstraintLibrary__DomainAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__ConstraintLibrary__DomainAssignment_1();
@@ -3850,14 +3952,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__Group__2"
-    // InternalFirstOrderLogic.g:1206:1: rule__ConstraintLibrary__Group__2 : rule__ConstraintLibrary__Group__2__Impl rule__ConstraintLibrary__Group__3 ;
+    // InternalFirstOrderLogic.g:1237:1: rule__ConstraintLibrary__Group__2 : rule__ConstraintLibrary__Group__2__Impl rule__ConstraintLibrary__Group__3 ;
     public final void rule__ConstraintLibrary__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1210:1: ( rule__ConstraintLibrary__Group__2__Impl rule__ConstraintLibrary__Group__3 )
-            // InternalFirstOrderLogic.g:1211:2: rule__ConstraintLibrary__Group__2__Impl rule__ConstraintLibrary__Group__3
+            // InternalFirstOrderLogic.g:1241:1: ( rule__ConstraintLibrary__Group__2__Impl rule__ConstraintLibrary__Group__3 )
+            // InternalFirstOrderLogic.g:1242:2: rule__ConstraintLibrary__Group__2__Impl rule__ConstraintLibrary__Group__3
             {
             pushFollow(FOLLOW_3);
             rule__ConstraintLibrary__Group__2__Impl();
@@ -3888,17 +3990,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__Group__2__Impl"
-    // InternalFirstOrderLogic.g:1218:1: rule__ConstraintLibrary__Group__2__Impl : ( 'import' ) ;
+    // InternalFirstOrderLogic.g:1249:1: rule__ConstraintLibrary__Group__2__Impl : ( 'import' ) ;
     public final void rule__ConstraintLibrary__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1222:1: ( ( 'import' ) )
-            // InternalFirstOrderLogic.g:1223:1: ( 'import' )
+            // InternalFirstOrderLogic.g:1253:1: ( ( 'import' ) )
+            // InternalFirstOrderLogic.g:1254:1: ( 'import' )
             {
-            // InternalFirstOrderLogic.g:1223:1: ( 'import' )
-            // InternalFirstOrderLogic.g:1224:2: 'import'
+            // InternalFirstOrderLogic.g:1254:1: ( 'import' )
+            // InternalFirstOrderLogic.g:1255:2: 'import'
             {
              before(grammarAccess.getConstraintLibraryAccess().getImportKeyword_2()); 
             match(input,14,FOLLOW_2); 
@@ -3925,14 +4027,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__Group__3"
-    // InternalFirstOrderLogic.g:1233:1: rule__ConstraintLibrary__Group__3 : rule__ConstraintLibrary__Group__3__Impl rule__ConstraintLibrary__Group__4 ;
+    // InternalFirstOrderLogic.g:1264:1: rule__ConstraintLibrary__Group__3 : rule__ConstraintLibrary__Group__3__Impl rule__ConstraintLibrary__Group__4 ;
     public final void rule__ConstraintLibrary__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1237:1: ( rule__ConstraintLibrary__Group__3__Impl rule__ConstraintLibrary__Group__4 )
-            // InternalFirstOrderLogic.g:1238:2: rule__ConstraintLibrary__Group__3__Impl rule__ConstraintLibrary__Group__4
+            // InternalFirstOrderLogic.g:1268:1: ( rule__ConstraintLibrary__Group__3__Impl rule__ConstraintLibrary__Group__4 )
+            // InternalFirstOrderLogic.g:1269:2: rule__ConstraintLibrary__Group__3__Impl rule__ConstraintLibrary__Group__4
             {
             pushFollow(FOLLOW_5);
             rule__ConstraintLibrary__Group__3__Impl();
@@ -3963,21 +4065,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__Group__3__Impl"
-    // InternalFirstOrderLogic.g:1245:1: rule__ConstraintLibrary__Group__3__Impl : ( ( rule__ConstraintLibrary__PackageImportAssignment_3 ) ) ;
+    // InternalFirstOrderLogic.g:1276:1: rule__ConstraintLibrary__Group__3__Impl : ( ( rule__ConstraintLibrary__PackageImportAssignment_3 ) ) ;
     public final void rule__ConstraintLibrary__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1249:1: ( ( ( rule__ConstraintLibrary__PackageImportAssignment_3 ) ) )
-            // InternalFirstOrderLogic.g:1250:1: ( ( rule__ConstraintLibrary__PackageImportAssignment_3 ) )
+            // InternalFirstOrderLogic.g:1280:1: ( ( ( rule__ConstraintLibrary__PackageImportAssignment_3 ) ) )
+            // InternalFirstOrderLogic.g:1281:1: ( ( rule__ConstraintLibrary__PackageImportAssignment_3 ) )
             {
-            // InternalFirstOrderLogic.g:1250:1: ( ( rule__ConstraintLibrary__PackageImportAssignment_3 ) )
-            // InternalFirstOrderLogic.g:1251:2: ( rule__ConstraintLibrary__PackageImportAssignment_3 )
+            // InternalFirstOrderLogic.g:1281:1: ( ( rule__ConstraintLibrary__PackageImportAssignment_3 ) )
+            // InternalFirstOrderLogic.g:1282:2: ( rule__ConstraintLibrary__PackageImportAssignment_3 )
             {
              before(grammarAccess.getConstraintLibraryAccess().getPackageImportAssignment_3()); 
-            // InternalFirstOrderLogic.g:1252:2: ( rule__ConstraintLibrary__PackageImportAssignment_3 )
-            // InternalFirstOrderLogic.g:1252:3: rule__ConstraintLibrary__PackageImportAssignment_3
+            // InternalFirstOrderLogic.g:1283:2: ( rule__ConstraintLibrary__PackageImportAssignment_3 )
+            // InternalFirstOrderLogic.g:1283:3: rule__ConstraintLibrary__PackageImportAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__ConstraintLibrary__PackageImportAssignment_3();
@@ -4010,14 +4112,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__Group__4"
-    // InternalFirstOrderLogic.g:1260:1: rule__ConstraintLibrary__Group__4 : rule__ConstraintLibrary__Group__4__Impl ;
+    // InternalFirstOrderLogic.g:1291:1: rule__ConstraintLibrary__Group__4 : rule__ConstraintLibrary__Group__4__Impl ;
     public final void rule__ConstraintLibrary__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1264:1: ( rule__ConstraintLibrary__Group__4__Impl )
-            // InternalFirstOrderLogic.g:1265:2: rule__ConstraintLibrary__Group__4__Impl
+            // InternalFirstOrderLogic.g:1295:1: ( rule__ConstraintLibrary__Group__4__Impl )
+            // InternalFirstOrderLogic.g:1296:2: rule__ConstraintLibrary__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ConstraintLibrary__Group__4__Impl();
@@ -4043,20 +4145,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__Group__4__Impl"
-    // InternalFirstOrderLogic.g:1271:1: rule__ConstraintLibrary__Group__4__Impl : ( ( rule__ConstraintLibrary__ConstraintsAssignment_4 )* ) ;
+    // InternalFirstOrderLogic.g:1302:1: rule__ConstraintLibrary__Group__4__Impl : ( ( rule__ConstraintLibrary__ConstraintsAssignment_4 )* ) ;
     public final void rule__ConstraintLibrary__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1275:1: ( ( ( rule__ConstraintLibrary__ConstraintsAssignment_4 )* ) )
-            // InternalFirstOrderLogic.g:1276:1: ( ( rule__ConstraintLibrary__ConstraintsAssignment_4 )* )
+            // InternalFirstOrderLogic.g:1306:1: ( ( ( rule__ConstraintLibrary__ConstraintsAssignment_4 )* ) )
+            // InternalFirstOrderLogic.g:1307:1: ( ( rule__ConstraintLibrary__ConstraintsAssignment_4 )* )
             {
-            // InternalFirstOrderLogic.g:1276:1: ( ( rule__ConstraintLibrary__ConstraintsAssignment_4 )* )
-            // InternalFirstOrderLogic.g:1277:2: ( rule__ConstraintLibrary__ConstraintsAssignment_4 )*
+            // InternalFirstOrderLogic.g:1307:1: ( ( rule__ConstraintLibrary__ConstraintsAssignment_4 )* )
+            // InternalFirstOrderLogic.g:1308:2: ( rule__ConstraintLibrary__ConstraintsAssignment_4 )*
             {
              before(grammarAccess.getConstraintLibraryAccess().getConstraintsAssignment_4()); 
-            // InternalFirstOrderLogic.g:1278:2: ( rule__ConstraintLibrary__ConstraintsAssignment_4 )*
+            // InternalFirstOrderLogic.g:1309:2: ( rule__ConstraintLibrary__ConstraintsAssignment_4 )*
             loop8:
             do {
                 int alt8=2;
@@ -4069,7 +4171,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
                 switch (alt8) {
             	case 1 :
-            	    // InternalFirstOrderLogic.g:1278:3: rule__ConstraintLibrary__ConstraintsAssignment_4
+            	    // InternalFirstOrderLogic.g:1309:3: rule__ConstraintLibrary__ConstraintsAssignment_4
             	    {
             	    pushFollow(FOLLOW_6);
             	    rule__ConstraintLibrary__ConstraintsAssignment_4();
@@ -4108,14 +4210,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__0"
-    // InternalFirstOrderLogic.g:1287:1: rule__Constraint__Group__0 : rule__Constraint__Group__0__Impl rule__Constraint__Group__1 ;
+    // InternalFirstOrderLogic.g:1318:1: rule__Constraint__Group__0 : rule__Constraint__Group__0__Impl rule__Constraint__Group__1 ;
     public final void rule__Constraint__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1291:1: ( rule__Constraint__Group__0__Impl rule__Constraint__Group__1 )
-            // InternalFirstOrderLogic.g:1292:2: rule__Constraint__Group__0__Impl rule__Constraint__Group__1
+            // InternalFirstOrderLogic.g:1322:1: ( rule__Constraint__Group__0__Impl rule__Constraint__Group__1 )
+            // InternalFirstOrderLogic.g:1323:2: rule__Constraint__Group__0__Impl rule__Constraint__Group__1
             {
             pushFollow(FOLLOW_7);
             rule__Constraint__Group__0__Impl();
@@ -4146,17 +4248,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__0__Impl"
-    // InternalFirstOrderLogic.g:1299:1: rule__Constraint__Group__0__Impl : ( 'constraint' ) ;
+    // InternalFirstOrderLogic.g:1330:1: rule__Constraint__Group__0__Impl : ( 'constraint' ) ;
     public final void rule__Constraint__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1303:1: ( ( 'constraint' ) )
-            // InternalFirstOrderLogic.g:1304:1: ( 'constraint' )
+            // InternalFirstOrderLogic.g:1334:1: ( ( 'constraint' ) )
+            // InternalFirstOrderLogic.g:1335:1: ( 'constraint' )
             {
-            // InternalFirstOrderLogic.g:1304:1: ( 'constraint' )
-            // InternalFirstOrderLogic.g:1305:2: 'constraint'
+            // InternalFirstOrderLogic.g:1335:1: ( 'constraint' )
+            // InternalFirstOrderLogic.g:1336:2: 'constraint'
             {
              before(grammarAccess.getConstraintAccess().getConstraintKeyword_0()); 
             match(input,15,FOLLOW_2); 
@@ -4183,14 +4285,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__1"
-    // InternalFirstOrderLogic.g:1314:1: rule__Constraint__Group__1 : rule__Constraint__Group__1__Impl rule__Constraint__Group__2 ;
+    // InternalFirstOrderLogic.g:1345:1: rule__Constraint__Group__1 : rule__Constraint__Group__1__Impl rule__Constraint__Group__2 ;
     public final void rule__Constraint__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1318:1: ( rule__Constraint__Group__1__Impl rule__Constraint__Group__2 )
-            // InternalFirstOrderLogic.g:1319:2: rule__Constraint__Group__1__Impl rule__Constraint__Group__2
+            // InternalFirstOrderLogic.g:1349:1: ( rule__Constraint__Group__1__Impl rule__Constraint__Group__2 )
+            // InternalFirstOrderLogic.g:1350:2: rule__Constraint__Group__1__Impl rule__Constraint__Group__2
             {
             pushFollow(FOLLOW_8);
             rule__Constraint__Group__1__Impl();
@@ -4221,21 +4323,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__1__Impl"
-    // InternalFirstOrderLogic.g:1326:1: rule__Constraint__Group__1__Impl : ( ( rule__Constraint__NameAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:1357:1: rule__Constraint__Group__1__Impl : ( ( rule__Constraint__NameAssignment_1 ) ) ;
     public final void rule__Constraint__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1330:1: ( ( ( rule__Constraint__NameAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:1331:1: ( ( rule__Constraint__NameAssignment_1 ) )
+            // InternalFirstOrderLogic.g:1361:1: ( ( ( rule__Constraint__NameAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:1362:1: ( ( rule__Constraint__NameAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:1331:1: ( ( rule__Constraint__NameAssignment_1 ) )
-            // InternalFirstOrderLogic.g:1332:2: ( rule__Constraint__NameAssignment_1 )
+            // InternalFirstOrderLogic.g:1362:1: ( ( rule__Constraint__NameAssignment_1 ) )
+            // InternalFirstOrderLogic.g:1363:2: ( rule__Constraint__NameAssignment_1 )
             {
              before(grammarAccess.getConstraintAccess().getNameAssignment_1()); 
-            // InternalFirstOrderLogic.g:1333:2: ( rule__Constraint__NameAssignment_1 )
-            // InternalFirstOrderLogic.g:1333:3: rule__Constraint__NameAssignment_1
+            // InternalFirstOrderLogic.g:1364:2: ( rule__Constraint__NameAssignment_1 )
+            // InternalFirstOrderLogic.g:1364:3: rule__Constraint__NameAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__Constraint__NameAssignment_1();
@@ -4268,14 +4370,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__2"
-    // InternalFirstOrderLogic.g:1341:1: rule__Constraint__Group__2 : rule__Constraint__Group__2__Impl rule__Constraint__Group__3 ;
+    // InternalFirstOrderLogic.g:1372:1: rule__Constraint__Group__2 : rule__Constraint__Group__2__Impl rule__Constraint__Group__3 ;
     public final void rule__Constraint__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1345:1: ( rule__Constraint__Group__2__Impl rule__Constraint__Group__3 )
-            // InternalFirstOrderLogic.g:1346:2: rule__Constraint__Group__2__Impl rule__Constraint__Group__3
+            // InternalFirstOrderLogic.g:1376:1: ( rule__Constraint__Group__2__Impl rule__Constraint__Group__3 )
+            // InternalFirstOrderLogic.g:1377:2: rule__Constraint__Group__2__Impl rule__Constraint__Group__3
             {
             pushFollow(FOLLOW_3);
             rule__Constraint__Group__2__Impl();
@@ -4306,17 +4408,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__2__Impl"
-    // InternalFirstOrderLogic.g:1353:1: rule__Constraint__Group__2__Impl : ( 'message' ) ;
+    // InternalFirstOrderLogic.g:1384:1: rule__Constraint__Group__2__Impl : ( 'message' ) ;
     public final void rule__Constraint__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1357:1: ( ( 'message' ) )
-            // InternalFirstOrderLogic.g:1358:1: ( 'message' )
+            // InternalFirstOrderLogic.g:1388:1: ( ( 'message' ) )
+            // InternalFirstOrderLogic.g:1389:1: ( 'message' )
             {
-            // InternalFirstOrderLogic.g:1358:1: ( 'message' )
-            // InternalFirstOrderLogic.g:1359:2: 'message'
+            // InternalFirstOrderLogic.g:1389:1: ( 'message' )
+            // InternalFirstOrderLogic.g:1390:2: 'message'
             {
              before(grammarAccess.getConstraintAccess().getMessageKeyword_2()); 
             match(input,16,FOLLOW_2); 
@@ -4343,14 +4445,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__3"
-    // InternalFirstOrderLogic.g:1368:1: rule__Constraint__Group__3 : rule__Constraint__Group__3__Impl rule__Constraint__Group__4 ;
+    // InternalFirstOrderLogic.g:1399:1: rule__Constraint__Group__3 : rule__Constraint__Group__3__Impl rule__Constraint__Group__4 ;
     public final void rule__Constraint__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1372:1: ( rule__Constraint__Group__3__Impl rule__Constraint__Group__4 )
-            // InternalFirstOrderLogic.g:1373:2: rule__Constraint__Group__3__Impl rule__Constraint__Group__4
+            // InternalFirstOrderLogic.g:1403:1: ( rule__Constraint__Group__3__Impl rule__Constraint__Group__4 )
+            // InternalFirstOrderLogic.g:1404:2: rule__Constraint__Group__3__Impl rule__Constraint__Group__4
             {
             pushFollow(FOLLOW_9);
             rule__Constraint__Group__3__Impl();
@@ -4381,21 +4483,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__3__Impl"
-    // InternalFirstOrderLogic.g:1380:1: rule__Constraint__Group__3__Impl : ( ( rule__Constraint__MessageAssignment_3 ) ) ;
+    // InternalFirstOrderLogic.g:1411:1: rule__Constraint__Group__3__Impl : ( ( rule__Constraint__MessageAssignment_3 ) ) ;
     public final void rule__Constraint__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1384:1: ( ( ( rule__Constraint__MessageAssignment_3 ) ) )
-            // InternalFirstOrderLogic.g:1385:1: ( ( rule__Constraint__MessageAssignment_3 ) )
+            // InternalFirstOrderLogic.g:1415:1: ( ( ( rule__Constraint__MessageAssignment_3 ) ) )
+            // InternalFirstOrderLogic.g:1416:1: ( ( rule__Constraint__MessageAssignment_3 ) )
             {
-            // InternalFirstOrderLogic.g:1385:1: ( ( rule__Constraint__MessageAssignment_3 ) )
-            // InternalFirstOrderLogic.g:1386:2: ( rule__Constraint__MessageAssignment_3 )
+            // InternalFirstOrderLogic.g:1416:1: ( ( rule__Constraint__MessageAssignment_3 ) )
+            // InternalFirstOrderLogic.g:1417:2: ( rule__Constraint__MessageAssignment_3 )
             {
              before(grammarAccess.getConstraintAccess().getMessageAssignment_3()); 
-            // InternalFirstOrderLogic.g:1387:2: ( rule__Constraint__MessageAssignment_3 )
-            // InternalFirstOrderLogic.g:1387:3: rule__Constraint__MessageAssignment_3
+            // InternalFirstOrderLogic.g:1418:2: ( rule__Constraint__MessageAssignment_3 )
+            // InternalFirstOrderLogic.g:1418:3: rule__Constraint__MessageAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__Constraint__MessageAssignment_3();
@@ -4428,14 +4530,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__4"
-    // InternalFirstOrderLogic.g:1395:1: rule__Constraint__Group__4 : rule__Constraint__Group__4__Impl rule__Constraint__Group__5 ;
+    // InternalFirstOrderLogic.g:1426:1: rule__Constraint__Group__4 : rule__Constraint__Group__4__Impl rule__Constraint__Group__5 ;
     public final void rule__Constraint__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1399:1: ( rule__Constraint__Group__4__Impl rule__Constraint__Group__5 )
-            // InternalFirstOrderLogic.g:1400:2: rule__Constraint__Group__4__Impl rule__Constraint__Group__5
+            // InternalFirstOrderLogic.g:1430:1: ( rule__Constraint__Group__4__Impl rule__Constraint__Group__5 )
+            // InternalFirstOrderLogic.g:1431:2: rule__Constraint__Group__4__Impl rule__Constraint__Group__5
             {
             pushFollow(FOLLOW_7);
             rule__Constraint__Group__4__Impl();
@@ -4466,17 +4568,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__4__Impl"
-    // InternalFirstOrderLogic.g:1407:1: rule__Constraint__Group__4__Impl : ( 'context' ) ;
+    // InternalFirstOrderLogic.g:1438:1: rule__Constraint__Group__4__Impl : ( 'context' ) ;
     public final void rule__Constraint__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1411:1: ( ( 'context' ) )
-            // InternalFirstOrderLogic.g:1412:1: ( 'context' )
+            // InternalFirstOrderLogic.g:1442:1: ( ( 'context' ) )
+            // InternalFirstOrderLogic.g:1443:1: ( 'context' )
             {
-            // InternalFirstOrderLogic.g:1412:1: ( 'context' )
-            // InternalFirstOrderLogic.g:1413:2: 'context'
+            // InternalFirstOrderLogic.g:1443:1: ( 'context' )
+            // InternalFirstOrderLogic.g:1444:2: 'context'
             {
              before(grammarAccess.getConstraintAccess().getContextKeyword_4()); 
             match(input,17,FOLLOW_2); 
@@ -4503,14 +4605,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__5"
-    // InternalFirstOrderLogic.g:1422:1: rule__Constraint__Group__5 : rule__Constraint__Group__5__Impl rule__Constraint__Group__6 ;
+    // InternalFirstOrderLogic.g:1453:1: rule__Constraint__Group__5 : rule__Constraint__Group__5__Impl rule__Constraint__Group__6 ;
     public final void rule__Constraint__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1426:1: ( rule__Constraint__Group__5__Impl rule__Constraint__Group__6 )
-            // InternalFirstOrderLogic.g:1427:2: rule__Constraint__Group__5__Impl rule__Constraint__Group__6
+            // InternalFirstOrderLogic.g:1457:1: ( rule__Constraint__Group__5__Impl rule__Constraint__Group__6 )
+            // InternalFirstOrderLogic.g:1458:2: rule__Constraint__Group__5__Impl rule__Constraint__Group__6
             {
             pushFollow(FOLLOW_10);
             rule__Constraint__Group__5__Impl();
@@ -4541,21 +4643,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__5__Impl"
-    // InternalFirstOrderLogic.g:1434:1: rule__Constraint__Group__5__Impl : ( ( rule__Constraint__VariableAssignment_5 ) ) ;
+    // InternalFirstOrderLogic.g:1465:1: rule__Constraint__Group__5__Impl : ( ( rule__Constraint__VariableAssignment_5 ) ) ;
     public final void rule__Constraint__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1438:1: ( ( ( rule__Constraint__VariableAssignment_5 ) ) )
-            // InternalFirstOrderLogic.g:1439:1: ( ( rule__Constraint__VariableAssignment_5 ) )
+            // InternalFirstOrderLogic.g:1469:1: ( ( ( rule__Constraint__VariableAssignment_5 ) ) )
+            // InternalFirstOrderLogic.g:1470:1: ( ( rule__Constraint__VariableAssignment_5 ) )
             {
-            // InternalFirstOrderLogic.g:1439:1: ( ( rule__Constraint__VariableAssignment_5 ) )
-            // InternalFirstOrderLogic.g:1440:2: ( rule__Constraint__VariableAssignment_5 )
+            // InternalFirstOrderLogic.g:1470:1: ( ( rule__Constraint__VariableAssignment_5 ) )
+            // InternalFirstOrderLogic.g:1471:2: ( rule__Constraint__VariableAssignment_5 )
             {
              before(grammarAccess.getConstraintAccess().getVariableAssignment_5()); 
-            // InternalFirstOrderLogic.g:1441:2: ( rule__Constraint__VariableAssignment_5 )
-            // InternalFirstOrderLogic.g:1441:3: rule__Constraint__VariableAssignment_5
+            // InternalFirstOrderLogic.g:1472:2: ( rule__Constraint__VariableAssignment_5 )
+            // InternalFirstOrderLogic.g:1472:3: rule__Constraint__VariableAssignment_5
             {
             pushFollow(FOLLOW_2);
             rule__Constraint__VariableAssignment_5();
@@ -4588,14 +4690,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__6"
-    // InternalFirstOrderLogic.g:1449:1: rule__Constraint__Group__6 : rule__Constraint__Group__6__Impl rule__Constraint__Group__7 ;
+    // InternalFirstOrderLogic.g:1480:1: rule__Constraint__Group__6 : rule__Constraint__Group__6__Impl rule__Constraint__Group__7 ;
     public final void rule__Constraint__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1453:1: ( rule__Constraint__Group__6__Impl rule__Constraint__Group__7 )
-            // InternalFirstOrderLogic.g:1454:2: rule__Constraint__Group__6__Impl rule__Constraint__Group__7
+            // InternalFirstOrderLogic.g:1484:1: ( rule__Constraint__Group__6__Impl rule__Constraint__Group__7 )
+            // InternalFirstOrderLogic.g:1485:2: rule__Constraint__Group__6__Impl rule__Constraint__Group__7
             {
             pushFollow(FOLLOW_11);
             rule__Constraint__Group__6__Impl();
@@ -4626,17 +4728,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__6__Impl"
-    // InternalFirstOrderLogic.g:1461:1: rule__Constraint__Group__6__Impl : ( ':' ) ;
+    // InternalFirstOrderLogic.g:1492:1: rule__Constraint__Group__6__Impl : ( ':' ) ;
     public final void rule__Constraint__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1465:1: ( ( ':' ) )
-            // InternalFirstOrderLogic.g:1466:1: ( ':' )
+            // InternalFirstOrderLogic.g:1496:1: ( ( ':' ) )
+            // InternalFirstOrderLogic.g:1497:1: ( ':' )
             {
-            // InternalFirstOrderLogic.g:1466:1: ( ':' )
-            // InternalFirstOrderLogic.g:1467:2: ':'
+            // InternalFirstOrderLogic.g:1497:1: ( ':' )
+            // InternalFirstOrderLogic.g:1498:2: ':'
             {
              before(grammarAccess.getConstraintAccess().getColonKeyword_6()); 
             match(input,18,FOLLOW_2); 
@@ -4663,14 +4765,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__7"
-    // InternalFirstOrderLogic.g:1476:1: rule__Constraint__Group__7 : rule__Constraint__Group__7__Impl ;
+    // InternalFirstOrderLogic.g:1507:1: rule__Constraint__Group__7 : rule__Constraint__Group__7__Impl ;
     public final void rule__Constraint__Group__7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1480:1: ( rule__Constraint__Group__7__Impl )
-            // InternalFirstOrderLogic.g:1481:2: rule__Constraint__Group__7__Impl
+            // InternalFirstOrderLogic.g:1511:1: ( rule__Constraint__Group__7__Impl )
+            // InternalFirstOrderLogic.g:1512:2: rule__Constraint__Group__7__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Constraint__Group__7__Impl();
@@ -4696,21 +4798,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__Group__7__Impl"
-    // InternalFirstOrderLogic.g:1487:1: rule__Constraint__Group__7__Impl : ( ( rule__Constraint__FormulaAssignment_7 ) ) ;
+    // InternalFirstOrderLogic.g:1518:1: rule__Constraint__Group__7__Impl : ( ( rule__Constraint__FormulaAssignment_7 ) ) ;
     public final void rule__Constraint__Group__7__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1491:1: ( ( ( rule__Constraint__FormulaAssignment_7 ) ) )
-            // InternalFirstOrderLogic.g:1492:1: ( ( rule__Constraint__FormulaAssignment_7 ) )
+            // InternalFirstOrderLogic.g:1522:1: ( ( ( rule__Constraint__FormulaAssignment_7 ) ) )
+            // InternalFirstOrderLogic.g:1523:1: ( ( rule__Constraint__FormulaAssignment_7 ) )
             {
-            // InternalFirstOrderLogic.g:1492:1: ( ( rule__Constraint__FormulaAssignment_7 ) )
-            // InternalFirstOrderLogic.g:1493:2: ( rule__Constraint__FormulaAssignment_7 )
+            // InternalFirstOrderLogic.g:1523:1: ( ( rule__Constraint__FormulaAssignment_7 ) )
+            // InternalFirstOrderLogic.g:1524:2: ( rule__Constraint__FormulaAssignment_7 )
             {
              before(grammarAccess.getConstraintAccess().getFormulaAssignment_7()); 
-            // InternalFirstOrderLogic.g:1494:2: ( rule__Constraint__FormulaAssignment_7 )
-            // InternalFirstOrderLogic.g:1494:3: rule__Constraint__FormulaAssignment_7
+            // InternalFirstOrderLogic.g:1525:2: ( rule__Constraint__FormulaAssignment_7 )
+            // InternalFirstOrderLogic.g:1525:3: rule__Constraint__FormulaAssignment_7
             {
             pushFollow(FOLLOW_2);
             rule__Constraint__FormulaAssignment_7();
@@ -4743,14 +4845,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Variable__Group__0"
-    // InternalFirstOrderLogic.g:1503:1: rule__Variable__Group__0 : rule__Variable__Group__0__Impl rule__Variable__Group__1 ;
+    // InternalFirstOrderLogic.g:1534:1: rule__Variable__Group__0 : rule__Variable__Group__0__Impl rule__Variable__Group__1 ;
     public final void rule__Variable__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1507:1: ( rule__Variable__Group__0__Impl rule__Variable__Group__1 )
-            // InternalFirstOrderLogic.g:1508:2: rule__Variable__Group__0__Impl rule__Variable__Group__1
+            // InternalFirstOrderLogic.g:1538:1: ( rule__Variable__Group__0__Impl rule__Variable__Group__1 )
+            // InternalFirstOrderLogic.g:1539:2: rule__Variable__Group__0__Impl rule__Variable__Group__1
             {
             pushFollow(FOLLOW_7);
             rule__Variable__Group__0__Impl();
@@ -4781,21 +4883,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Variable__Group__0__Impl"
-    // InternalFirstOrderLogic.g:1515:1: rule__Variable__Group__0__Impl : ( ( rule__Variable__TypeAssignment_0 ) ) ;
+    // InternalFirstOrderLogic.g:1546:1: rule__Variable__Group__0__Impl : ( ( rule__Variable__TypeAssignment_0 ) ) ;
     public final void rule__Variable__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1519:1: ( ( ( rule__Variable__TypeAssignment_0 ) ) )
-            // InternalFirstOrderLogic.g:1520:1: ( ( rule__Variable__TypeAssignment_0 ) )
+            // InternalFirstOrderLogic.g:1550:1: ( ( ( rule__Variable__TypeAssignment_0 ) ) )
+            // InternalFirstOrderLogic.g:1551:1: ( ( rule__Variable__TypeAssignment_0 ) )
             {
-            // InternalFirstOrderLogic.g:1520:1: ( ( rule__Variable__TypeAssignment_0 ) )
-            // InternalFirstOrderLogic.g:1521:2: ( rule__Variable__TypeAssignment_0 )
+            // InternalFirstOrderLogic.g:1551:1: ( ( rule__Variable__TypeAssignment_0 ) )
+            // InternalFirstOrderLogic.g:1552:2: ( rule__Variable__TypeAssignment_0 )
             {
              before(grammarAccess.getVariableAccess().getTypeAssignment_0()); 
-            // InternalFirstOrderLogic.g:1522:2: ( rule__Variable__TypeAssignment_0 )
-            // InternalFirstOrderLogic.g:1522:3: rule__Variable__TypeAssignment_0
+            // InternalFirstOrderLogic.g:1553:2: ( rule__Variable__TypeAssignment_0 )
+            // InternalFirstOrderLogic.g:1553:3: rule__Variable__TypeAssignment_0
             {
             pushFollow(FOLLOW_2);
             rule__Variable__TypeAssignment_0();
@@ -4828,14 +4930,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Variable__Group__1"
-    // InternalFirstOrderLogic.g:1530:1: rule__Variable__Group__1 : rule__Variable__Group__1__Impl ;
+    // InternalFirstOrderLogic.g:1561:1: rule__Variable__Group__1 : rule__Variable__Group__1__Impl ;
     public final void rule__Variable__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1534:1: ( rule__Variable__Group__1__Impl )
-            // InternalFirstOrderLogic.g:1535:2: rule__Variable__Group__1__Impl
+            // InternalFirstOrderLogic.g:1565:1: ( rule__Variable__Group__1__Impl )
+            // InternalFirstOrderLogic.g:1566:2: rule__Variable__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Variable__Group__1__Impl();
@@ -4861,21 +4963,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Variable__Group__1__Impl"
-    // InternalFirstOrderLogic.g:1541:1: rule__Variable__Group__1__Impl : ( ( rule__Variable__NameAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:1572:1: rule__Variable__Group__1__Impl : ( ( rule__Variable__NameAssignment_1 ) ) ;
     public final void rule__Variable__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1545:1: ( ( ( rule__Variable__NameAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:1546:1: ( ( rule__Variable__NameAssignment_1 ) )
+            // InternalFirstOrderLogic.g:1576:1: ( ( ( rule__Variable__NameAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:1577:1: ( ( rule__Variable__NameAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:1546:1: ( ( rule__Variable__NameAssignment_1 ) )
-            // InternalFirstOrderLogic.g:1547:2: ( rule__Variable__NameAssignment_1 )
+            // InternalFirstOrderLogic.g:1577:1: ( ( rule__Variable__NameAssignment_1 ) )
+            // InternalFirstOrderLogic.g:1578:2: ( rule__Variable__NameAssignment_1 )
             {
              before(grammarAccess.getVariableAccess().getNameAssignment_1()); 
-            // InternalFirstOrderLogic.g:1548:2: ( rule__Variable__NameAssignment_1 )
-            // InternalFirstOrderLogic.g:1548:3: rule__Variable__NameAssignment_1
+            // InternalFirstOrderLogic.g:1579:2: ( rule__Variable__NameAssignment_1 )
+            // InternalFirstOrderLogic.g:1579:3: rule__Variable__NameAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__Variable__NameAssignment_1();
@@ -4908,14 +5010,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Iff__Group__0"
-    // InternalFirstOrderLogic.g:1557:1: rule__Iff__Group__0 : rule__Iff__Group__0__Impl rule__Iff__Group__1 ;
+    // InternalFirstOrderLogic.g:1588:1: rule__Iff__Group__0 : rule__Iff__Group__0__Impl rule__Iff__Group__1 ;
     public final void rule__Iff__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1561:1: ( rule__Iff__Group__0__Impl rule__Iff__Group__1 )
-            // InternalFirstOrderLogic.g:1562:2: rule__Iff__Group__0__Impl rule__Iff__Group__1
+            // InternalFirstOrderLogic.g:1592:1: ( rule__Iff__Group__0__Impl rule__Iff__Group__1 )
+            // InternalFirstOrderLogic.g:1593:2: rule__Iff__Group__0__Impl rule__Iff__Group__1
             {
             pushFollow(FOLLOW_12);
             rule__Iff__Group__0__Impl();
@@ -4946,17 +5048,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Iff__Group__0__Impl"
-    // InternalFirstOrderLogic.g:1569:1: rule__Iff__Group__0__Impl : ( ruleIf ) ;
+    // InternalFirstOrderLogic.g:1600:1: rule__Iff__Group__0__Impl : ( ruleIf ) ;
     public final void rule__Iff__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1573:1: ( ( ruleIf ) )
-            // InternalFirstOrderLogic.g:1574:1: ( ruleIf )
+            // InternalFirstOrderLogic.g:1604:1: ( ( ruleIf ) )
+            // InternalFirstOrderLogic.g:1605:1: ( ruleIf )
             {
-            // InternalFirstOrderLogic.g:1574:1: ( ruleIf )
-            // InternalFirstOrderLogic.g:1575:2: ruleIf
+            // InternalFirstOrderLogic.g:1605:1: ( ruleIf )
+            // InternalFirstOrderLogic.g:1606:2: ruleIf
             {
              before(grammarAccess.getIffAccess().getIfParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
@@ -4987,14 +5089,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Iff__Group__1"
-    // InternalFirstOrderLogic.g:1584:1: rule__Iff__Group__1 : rule__Iff__Group__1__Impl ;
+    // InternalFirstOrderLogic.g:1615:1: rule__Iff__Group__1 : rule__Iff__Group__1__Impl ;
     public final void rule__Iff__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1588:1: ( rule__Iff__Group__1__Impl )
-            // InternalFirstOrderLogic.g:1589:2: rule__Iff__Group__1__Impl
+            // InternalFirstOrderLogic.g:1619:1: ( rule__Iff__Group__1__Impl )
+            // InternalFirstOrderLogic.g:1620:2: rule__Iff__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Iff__Group__1__Impl();
@@ -5020,20 +5122,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Iff__Group__1__Impl"
-    // InternalFirstOrderLogic.g:1595:1: rule__Iff__Group__1__Impl : ( ( rule__Iff__Group_1__0 )* ) ;
+    // InternalFirstOrderLogic.g:1626:1: rule__Iff__Group__1__Impl : ( ( rule__Iff__Group_1__0 )* ) ;
     public final void rule__Iff__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1599:1: ( ( ( rule__Iff__Group_1__0 )* ) )
-            // InternalFirstOrderLogic.g:1600:1: ( ( rule__Iff__Group_1__0 )* )
+            // InternalFirstOrderLogic.g:1630:1: ( ( ( rule__Iff__Group_1__0 )* ) )
+            // InternalFirstOrderLogic.g:1631:1: ( ( rule__Iff__Group_1__0 )* )
             {
-            // InternalFirstOrderLogic.g:1600:1: ( ( rule__Iff__Group_1__0 )* )
-            // InternalFirstOrderLogic.g:1601:2: ( rule__Iff__Group_1__0 )*
+            // InternalFirstOrderLogic.g:1631:1: ( ( rule__Iff__Group_1__0 )* )
+            // InternalFirstOrderLogic.g:1632:2: ( rule__Iff__Group_1__0 )*
             {
              before(grammarAccess.getIffAccess().getGroup_1()); 
-            // InternalFirstOrderLogic.g:1602:2: ( rule__Iff__Group_1__0 )*
+            // InternalFirstOrderLogic.g:1633:2: ( rule__Iff__Group_1__0 )*
             loop9:
             do {
                 int alt9=2;
@@ -5046,7 +5148,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
                 switch (alt9) {
             	case 1 :
-            	    // InternalFirstOrderLogic.g:1602:3: rule__Iff__Group_1__0
+            	    // InternalFirstOrderLogic.g:1633:3: rule__Iff__Group_1__0
             	    {
             	    pushFollow(FOLLOW_13);
             	    rule__Iff__Group_1__0();
@@ -5085,14 +5187,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Iff__Group_1__0"
-    // InternalFirstOrderLogic.g:1611:1: rule__Iff__Group_1__0 : rule__Iff__Group_1__0__Impl rule__Iff__Group_1__1 ;
+    // InternalFirstOrderLogic.g:1642:1: rule__Iff__Group_1__0 : rule__Iff__Group_1__0__Impl rule__Iff__Group_1__1 ;
     public final void rule__Iff__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1615:1: ( rule__Iff__Group_1__0__Impl rule__Iff__Group_1__1 )
-            // InternalFirstOrderLogic.g:1616:2: rule__Iff__Group_1__0__Impl rule__Iff__Group_1__1
+            // InternalFirstOrderLogic.g:1646:1: ( rule__Iff__Group_1__0__Impl rule__Iff__Group_1__1 )
+            // InternalFirstOrderLogic.g:1647:2: rule__Iff__Group_1__0__Impl rule__Iff__Group_1__1
             {
             pushFollow(FOLLOW_12);
             rule__Iff__Group_1__0__Impl();
@@ -5123,21 +5225,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Iff__Group_1__0__Impl"
-    // InternalFirstOrderLogic.g:1623:1: rule__Iff__Group_1__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:1654:1: rule__Iff__Group_1__0__Impl : ( () ) ;
     public final void rule__Iff__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1627:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:1628:1: ( () )
+            // InternalFirstOrderLogic.g:1658:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:1659:1: ( () )
             {
-            // InternalFirstOrderLogic.g:1628:1: ( () )
-            // InternalFirstOrderLogic.g:1629:2: ()
+            // InternalFirstOrderLogic.g:1659:1: ( () )
+            // InternalFirstOrderLogic.g:1660:2: ()
             {
              before(grammarAccess.getIffAccess().getIffLeftAction_1_0()); 
-            // InternalFirstOrderLogic.g:1630:2: ()
-            // InternalFirstOrderLogic.g:1630:3: 
+            // InternalFirstOrderLogic.g:1661:2: ()
+            // InternalFirstOrderLogic.g:1661:3: 
             {
             }
 
@@ -5160,14 +5262,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Iff__Group_1__1"
-    // InternalFirstOrderLogic.g:1638:1: rule__Iff__Group_1__1 : rule__Iff__Group_1__1__Impl rule__Iff__Group_1__2 ;
+    // InternalFirstOrderLogic.g:1669:1: rule__Iff__Group_1__1 : rule__Iff__Group_1__1__Impl rule__Iff__Group_1__2 ;
     public final void rule__Iff__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1642:1: ( rule__Iff__Group_1__1__Impl rule__Iff__Group_1__2 )
-            // InternalFirstOrderLogic.g:1643:2: rule__Iff__Group_1__1__Impl rule__Iff__Group_1__2
+            // InternalFirstOrderLogic.g:1673:1: ( rule__Iff__Group_1__1__Impl rule__Iff__Group_1__2 )
+            // InternalFirstOrderLogic.g:1674:2: rule__Iff__Group_1__1__Impl rule__Iff__Group_1__2
             {
             pushFollow(FOLLOW_11);
             rule__Iff__Group_1__1__Impl();
@@ -5198,17 +5300,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Iff__Group_1__1__Impl"
-    // InternalFirstOrderLogic.g:1650:1: rule__Iff__Group_1__1__Impl : ( '=' ) ;
+    // InternalFirstOrderLogic.g:1681:1: rule__Iff__Group_1__1__Impl : ( '=' ) ;
     public final void rule__Iff__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1654:1: ( ( '=' ) )
-            // InternalFirstOrderLogic.g:1655:1: ( '=' )
+            // InternalFirstOrderLogic.g:1685:1: ( ( '=' ) )
+            // InternalFirstOrderLogic.g:1686:1: ( '=' )
             {
-            // InternalFirstOrderLogic.g:1655:1: ( '=' )
-            // InternalFirstOrderLogic.g:1656:2: '='
+            // InternalFirstOrderLogic.g:1686:1: ( '=' )
+            // InternalFirstOrderLogic.g:1687:2: '='
             {
              before(grammarAccess.getIffAccess().getEqualsSignKeyword_1_1()); 
             match(input,19,FOLLOW_2); 
@@ -5235,14 +5337,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Iff__Group_1__2"
-    // InternalFirstOrderLogic.g:1665:1: rule__Iff__Group_1__2 : rule__Iff__Group_1__2__Impl ;
+    // InternalFirstOrderLogic.g:1696:1: rule__Iff__Group_1__2 : rule__Iff__Group_1__2__Impl ;
     public final void rule__Iff__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1669:1: ( rule__Iff__Group_1__2__Impl )
-            // InternalFirstOrderLogic.g:1670:2: rule__Iff__Group_1__2__Impl
+            // InternalFirstOrderLogic.g:1700:1: ( rule__Iff__Group_1__2__Impl )
+            // InternalFirstOrderLogic.g:1701:2: rule__Iff__Group_1__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Iff__Group_1__2__Impl();
@@ -5268,21 +5370,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Iff__Group_1__2__Impl"
-    // InternalFirstOrderLogic.g:1676:1: rule__Iff__Group_1__2__Impl : ( ( rule__Iff__RightAssignment_1_2 ) ) ;
+    // InternalFirstOrderLogic.g:1707:1: rule__Iff__Group_1__2__Impl : ( ( rule__Iff__RightAssignment_1_2 ) ) ;
     public final void rule__Iff__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1680:1: ( ( ( rule__Iff__RightAssignment_1_2 ) ) )
-            // InternalFirstOrderLogic.g:1681:1: ( ( rule__Iff__RightAssignment_1_2 ) )
+            // InternalFirstOrderLogic.g:1711:1: ( ( ( rule__Iff__RightAssignment_1_2 ) ) )
+            // InternalFirstOrderLogic.g:1712:1: ( ( rule__Iff__RightAssignment_1_2 ) )
             {
-            // InternalFirstOrderLogic.g:1681:1: ( ( rule__Iff__RightAssignment_1_2 ) )
-            // InternalFirstOrderLogic.g:1682:2: ( rule__Iff__RightAssignment_1_2 )
+            // InternalFirstOrderLogic.g:1712:1: ( ( rule__Iff__RightAssignment_1_2 ) )
+            // InternalFirstOrderLogic.g:1713:2: ( rule__Iff__RightAssignment_1_2 )
             {
              before(grammarAccess.getIffAccess().getRightAssignment_1_2()); 
-            // InternalFirstOrderLogic.g:1683:2: ( rule__Iff__RightAssignment_1_2 )
-            // InternalFirstOrderLogic.g:1683:3: rule__Iff__RightAssignment_1_2
+            // InternalFirstOrderLogic.g:1714:2: ( rule__Iff__RightAssignment_1_2 )
+            // InternalFirstOrderLogic.g:1714:3: rule__Iff__RightAssignment_1_2
             {
             pushFollow(FOLLOW_2);
             rule__Iff__RightAssignment_1_2();
@@ -5315,14 +5417,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__If__Group__0"
-    // InternalFirstOrderLogic.g:1692:1: rule__If__Group__0 : rule__If__Group__0__Impl rule__If__Group__1 ;
+    // InternalFirstOrderLogic.g:1723:1: rule__If__Group__0 : rule__If__Group__0__Impl rule__If__Group__1 ;
     public final void rule__If__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1696:1: ( rule__If__Group__0__Impl rule__If__Group__1 )
-            // InternalFirstOrderLogic.g:1697:2: rule__If__Group__0__Impl rule__If__Group__1
+            // InternalFirstOrderLogic.g:1727:1: ( rule__If__Group__0__Impl rule__If__Group__1 )
+            // InternalFirstOrderLogic.g:1728:2: rule__If__Group__0__Impl rule__If__Group__1
             {
             pushFollow(FOLLOW_14);
             rule__If__Group__0__Impl();
@@ -5353,17 +5455,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__If__Group__0__Impl"
-    // InternalFirstOrderLogic.g:1704:1: rule__If__Group__0__Impl : ( ruleXor ) ;
+    // InternalFirstOrderLogic.g:1735:1: rule__If__Group__0__Impl : ( ruleXor ) ;
     public final void rule__If__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1708:1: ( ( ruleXor ) )
-            // InternalFirstOrderLogic.g:1709:1: ( ruleXor )
+            // InternalFirstOrderLogic.g:1739:1: ( ( ruleXor ) )
+            // InternalFirstOrderLogic.g:1740:1: ( ruleXor )
             {
-            // InternalFirstOrderLogic.g:1709:1: ( ruleXor )
-            // InternalFirstOrderLogic.g:1710:2: ruleXor
+            // InternalFirstOrderLogic.g:1740:1: ( ruleXor )
+            // InternalFirstOrderLogic.g:1741:2: ruleXor
             {
              before(grammarAccess.getIfAccess().getXorParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
@@ -5394,14 +5496,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__If__Group__1"
-    // InternalFirstOrderLogic.g:1719:1: rule__If__Group__1 : rule__If__Group__1__Impl ;
+    // InternalFirstOrderLogic.g:1750:1: rule__If__Group__1 : rule__If__Group__1__Impl ;
     public final void rule__If__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1723:1: ( rule__If__Group__1__Impl )
-            // InternalFirstOrderLogic.g:1724:2: rule__If__Group__1__Impl
+            // InternalFirstOrderLogic.g:1754:1: ( rule__If__Group__1__Impl )
+            // InternalFirstOrderLogic.g:1755:2: rule__If__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__If__Group__1__Impl();
@@ -5427,20 +5529,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__If__Group__1__Impl"
-    // InternalFirstOrderLogic.g:1730:1: rule__If__Group__1__Impl : ( ( rule__If__Group_1__0 )* ) ;
+    // InternalFirstOrderLogic.g:1761:1: rule__If__Group__1__Impl : ( ( rule__If__Group_1__0 )* ) ;
     public final void rule__If__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1734:1: ( ( ( rule__If__Group_1__0 )* ) )
-            // InternalFirstOrderLogic.g:1735:1: ( ( rule__If__Group_1__0 )* )
+            // InternalFirstOrderLogic.g:1765:1: ( ( ( rule__If__Group_1__0 )* ) )
+            // InternalFirstOrderLogic.g:1766:1: ( ( rule__If__Group_1__0 )* )
             {
-            // InternalFirstOrderLogic.g:1735:1: ( ( rule__If__Group_1__0 )* )
-            // InternalFirstOrderLogic.g:1736:2: ( rule__If__Group_1__0 )*
+            // InternalFirstOrderLogic.g:1766:1: ( ( rule__If__Group_1__0 )* )
+            // InternalFirstOrderLogic.g:1767:2: ( rule__If__Group_1__0 )*
             {
              before(grammarAccess.getIfAccess().getGroup_1()); 
-            // InternalFirstOrderLogic.g:1737:2: ( rule__If__Group_1__0 )*
+            // InternalFirstOrderLogic.g:1768:2: ( rule__If__Group_1__0 )*
             loop10:
             do {
                 int alt10=2;
@@ -5453,7 +5555,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
                 switch (alt10) {
             	case 1 :
-            	    // InternalFirstOrderLogic.g:1737:3: rule__If__Group_1__0
+            	    // InternalFirstOrderLogic.g:1768:3: rule__If__Group_1__0
             	    {
             	    pushFollow(FOLLOW_15);
             	    rule__If__Group_1__0();
@@ -5492,14 +5594,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__If__Group_1__0"
-    // InternalFirstOrderLogic.g:1746:1: rule__If__Group_1__0 : rule__If__Group_1__0__Impl rule__If__Group_1__1 ;
+    // InternalFirstOrderLogic.g:1777:1: rule__If__Group_1__0 : rule__If__Group_1__0__Impl rule__If__Group_1__1 ;
     public final void rule__If__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1750:1: ( rule__If__Group_1__0__Impl rule__If__Group_1__1 )
-            // InternalFirstOrderLogic.g:1751:2: rule__If__Group_1__0__Impl rule__If__Group_1__1
+            // InternalFirstOrderLogic.g:1781:1: ( rule__If__Group_1__0__Impl rule__If__Group_1__1 )
+            // InternalFirstOrderLogic.g:1782:2: rule__If__Group_1__0__Impl rule__If__Group_1__1
             {
             pushFollow(FOLLOW_14);
             rule__If__Group_1__0__Impl();
@@ -5530,21 +5632,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__If__Group_1__0__Impl"
-    // InternalFirstOrderLogic.g:1758:1: rule__If__Group_1__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:1789:1: rule__If__Group_1__0__Impl : ( () ) ;
     public final void rule__If__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1762:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:1763:1: ( () )
+            // InternalFirstOrderLogic.g:1793:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:1794:1: ( () )
             {
-            // InternalFirstOrderLogic.g:1763:1: ( () )
-            // InternalFirstOrderLogic.g:1764:2: ()
+            // InternalFirstOrderLogic.g:1794:1: ( () )
+            // InternalFirstOrderLogic.g:1795:2: ()
             {
              before(grammarAccess.getIfAccess().getIfLeftAction_1_0()); 
-            // InternalFirstOrderLogic.g:1765:2: ()
-            // InternalFirstOrderLogic.g:1765:3: 
+            // InternalFirstOrderLogic.g:1796:2: ()
+            // InternalFirstOrderLogic.g:1796:3: 
             {
             }
 
@@ -5567,14 +5669,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__If__Group_1__1"
-    // InternalFirstOrderLogic.g:1773:1: rule__If__Group_1__1 : rule__If__Group_1__1__Impl rule__If__Group_1__2 ;
+    // InternalFirstOrderLogic.g:1804:1: rule__If__Group_1__1 : rule__If__Group_1__1__Impl rule__If__Group_1__2 ;
     public final void rule__If__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1777:1: ( rule__If__Group_1__1__Impl rule__If__Group_1__2 )
-            // InternalFirstOrderLogic.g:1778:2: rule__If__Group_1__1__Impl rule__If__Group_1__2
+            // InternalFirstOrderLogic.g:1808:1: ( rule__If__Group_1__1__Impl rule__If__Group_1__2 )
+            // InternalFirstOrderLogic.g:1809:2: rule__If__Group_1__1__Impl rule__If__Group_1__2
             {
             pushFollow(FOLLOW_11);
             rule__If__Group_1__1__Impl();
@@ -5605,17 +5707,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__If__Group_1__1__Impl"
-    // InternalFirstOrderLogic.g:1785:1: rule__If__Group_1__1__Impl : ( 'implies' ) ;
+    // InternalFirstOrderLogic.g:1816:1: rule__If__Group_1__1__Impl : ( 'implies' ) ;
     public final void rule__If__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1789:1: ( ( 'implies' ) )
-            // InternalFirstOrderLogic.g:1790:1: ( 'implies' )
+            // InternalFirstOrderLogic.g:1820:1: ( ( 'implies' ) )
+            // InternalFirstOrderLogic.g:1821:1: ( 'implies' )
             {
-            // InternalFirstOrderLogic.g:1790:1: ( 'implies' )
-            // InternalFirstOrderLogic.g:1791:2: 'implies'
+            // InternalFirstOrderLogic.g:1821:1: ( 'implies' )
+            // InternalFirstOrderLogic.g:1822:2: 'implies'
             {
              before(grammarAccess.getIfAccess().getImpliesKeyword_1_1()); 
             match(input,20,FOLLOW_2); 
@@ -5642,14 +5744,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__If__Group_1__2"
-    // InternalFirstOrderLogic.g:1800:1: rule__If__Group_1__2 : rule__If__Group_1__2__Impl ;
+    // InternalFirstOrderLogic.g:1831:1: rule__If__Group_1__2 : rule__If__Group_1__2__Impl ;
     public final void rule__If__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1804:1: ( rule__If__Group_1__2__Impl )
-            // InternalFirstOrderLogic.g:1805:2: rule__If__Group_1__2__Impl
+            // InternalFirstOrderLogic.g:1835:1: ( rule__If__Group_1__2__Impl )
+            // InternalFirstOrderLogic.g:1836:2: rule__If__Group_1__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__If__Group_1__2__Impl();
@@ -5675,21 +5777,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__If__Group_1__2__Impl"
-    // InternalFirstOrderLogic.g:1811:1: rule__If__Group_1__2__Impl : ( ( rule__If__RightAssignment_1_2 ) ) ;
+    // InternalFirstOrderLogic.g:1842:1: rule__If__Group_1__2__Impl : ( ( rule__If__RightAssignment_1_2 ) ) ;
     public final void rule__If__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1815:1: ( ( ( rule__If__RightAssignment_1_2 ) ) )
-            // InternalFirstOrderLogic.g:1816:1: ( ( rule__If__RightAssignment_1_2 ) )
+            // InternalFirstOrderLogic.g:1846:1: ( ( ( rule__If__RightAssignment_1_2 ) ) )
+            // InternalFirstOrderLogic.g:1847:1: ( ( rule__If__RightAssignment_1_2 ) )
             {
-            // InternalFirstOrderLogic.g:1816:1: ( ( rule__If__RightAssignment_1_2 ) )
-            // InternalFirstOrderLogic.g:1817:2: ( rule__If__RightAssignment_1_2 )
+            // InternalFirstOrderLogic.g:1847:1: ( ( rule__If__RightAssignment_1_2 ) )
+            // InternalFirstOrderLogic.g:1848:2: ( rule__If__RightAssignment_1_2 )
             {
              before(grammarAccess.getIfAccess().getRightAssignment_1_2()); 
-            // InternalFirstOrderLogic.g:1818:2: ( rule__If__RightAssignment_1_2 )
-            // InternalFirstOrderLogic.g:1818:3: rule__If__RightAssignment_1_2
+            // InternalFirstOrderLogic.g:1849:2: ( rule__If__RightAssignment_1_2 )
+            // InternalFirstOrderLogic.g:1849:3: rule__If__RightAssignment_1_2
             {
             pushFollow(FOLLOW_2);
             rule__If__RightAssignment_1_2();
@@ -5722,14 +5824,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Xor__Group__0"
-    // InternalFirstOrderLogic.g:1827:1: rule__Xor__Group__0 : rule__Xor__Group__0__Impl rule__Xor__Group__1 ;
+    // InternalFirstOrderLogic.g:1858:1: rule__Xor__Group__0 : rule__Xor__Group__0__Impl rule__Xor__Group__1 ;
     public final void rule__Xor__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1831:1: ( rule__Xor__Group__0__Impl rule__Xor__Group__1 )
-            // InternalFirstOrderLogic.g:1832:2: rule__Xor__Group__0__Impl rule__Xor__Group__1
+            // InternalFirstOrderLogic.g:1862:1: ( rule__Xor__Group__0__Impl rule__Xor__Group__1 )
+            // InternalFirstOrderLogic.g:1863:2: rule__Xor__Group__0__Impl rule__Xor__Group__1
             {
             pushFollow(FOLLOW_16);
             rule__Xor__Group__0__Impl();
@@ -5760,17 +5862,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Xor__Group__0__Impl"
-    // InternalFirstOrderLogic.g:1839:1: rule__Xor__Group__0__Impl : ( ruleOr ) ;
+    // InternalFirstOrderLogic.g:1870:1: rule__Xor__Group__0__Impl : ( ruleOr ) ;
     public final void rule__Xor__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1843:1: ( ( ruleOr ) )
-            // InternalFirstOrderLogic.g:1844:1: ( ruleOr )
+            // InternalFirstOrderLogic.g:1874:1: ( ( ruleOr ) )
+            // InternalFirstOrderLogic.g:1875:1: ( ruleOr )
             {
-            // InternalFirstOrderLogic.g:1844:1: ( ruleOr )
-            // InternalFirstOrderLogic.g:1845:2: ruleOr
+            // InternalFirstOrderLogic.g:1875:1: ( ruleOr )
+            // InternalFirstOrderLogic.g:1876:2: ruleOr
             {
              before(grammarAccess.getXorAccess().getOrParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
@@ -5801,14 +5903,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Xor__Group__1"
-    // InternalFirstOrderLogic.g:1854:1: rule__Xor__Group__1 : rule__Xor__Group__1__Impl ;
+    // InternalFirstOrderLogic.g:1885:1: rule__Xor__Group__1 : rule__Xor__Group__1__Impl ;
     public final void rule__Xor__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1858:1: ( rule__Xor__Group__1__Impl )
-            // InternalFirstOrderLogic.g:1859:2: rule__Xor__Group__1__Impl
+            // InternalFirstOrderLogic.g:1889:1: ( rule__Xor__Group__1__Impl )
+            // InternalFirstOrderLogic.g:1890:2: rule__Xor__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Xor__Group__1__Impl();
@@ -5834,20 +5936,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Xor__Group__1__Impl"
-    // InternalFirstOrderLogic.g:1865:1: rule__Xor__Group__1__Impl : ( ( rule__Xor__Group_1__0 )* ) ;
+    // InternalFirstOrderLogic.g:1896:1: rule__Xor__Group__1__Impl : ( ( rule__Xor__Group_1__0 )* ) ;
     public final void rule__Xor__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1869:1: ( ( ( rule__Xor__Group_1__0 )* ) )
-            // InternalFirstOrderLogic.g:1870:1: ( ( rule__Xor__Group_1__0 )* )
+            // InternalFirstOrderLogic.g:1900:1: ( ( ( rule__Xor__Group_1__0 )* ) )
+            // InternalFirstOrderLogic.g:1901:1: ( ( rule__Xor__Group_1__0 )* )
             {
-            // InternalFirstOrderLogic.g:1870:1: ( ( rule__Xor__Group_1__0 )* )
-            // InternalFirstOrderLogic.g:1871:2: ( rule__Xor__Group_1__0 )*
+            // InternalFirstOrderLogic.g:1901:1: ( ( rule__Xor__Group_1__0 )* )
+            // InternalFirstOrderLogic.g:1902:2: ( rule__Xor__Group_1__0 )*
             {
              before(grammarAccess.getXorAccess().getGroup_1()); 
-            // InternalFirstOrderLogic.g:1872:2: ( rule__Xor__Group_1__0 )*
+            // InternalFirstOrderLogic.g:1903:2: ( rule__Xor__Group_1__0 )*
             loop11:
             do {
                 int alt11=2;
@@ -5860,7 +5962,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
                 switch (alt11) {
             	case 1 :
-            	    // InternalFirstOrderLogic.g:1872:3: rule__Xor__Group_1__0
+            	    // InternalFirstOrderLogic.g:1903:3: rule__Xor__Group_1__0
             	    {
             	    pushFollow(FOLLOW_17);
             	    rule__Xor__Group_1__0();
@@ -5899,14 +6001,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Xor__Group_1__0"
-    // InternalFirstOrderLogic.g:1881:1: rule__Xor__Group_1__0 : rule__Xor__Group_1__0__Impl rule__Xor__Group_1__1 ;
+    // InternalFirstOrderLogic.g:1912:1: rule__Xor__Group_1__0 : rule__Xor__Group_1__0__Impl rule__Xor__Group_1__1 ;
     public final void rule__Xor__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1885:1: ( rule__Xor__Group_1__0__Impl rule__Xor__Group_1__1 )
-            // InternalFirstOrderLogic.g:1886:2: rule__Xor__Group_1__0__Impl rule__Xor__Group_1__1
+            // InternalFirstOrderLogic.g:1916:1: ( rule__Xor__Group_1__0__Impl rule__Xor__Group_1__1 )
+            // InternalFirstOrderLogic.g:1917:2: rule__Xor__Group_1__0__Impl rule__Xor__Group_1__1
             {
             pushFollow(FOLLOW_16);
             rule__Xor__Group_1__0__Impl();
@@ -5937,21 +6039,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Xor__Group_1__0__Impl"
-    // InternalFirstOrderLogic.g:1893:1: rule__Xor__Group_1__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:1924:1: rule__Xor__Group_1__0__Impl : ( () ) ;
     public final void rule__Xor__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1897:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:1898:1: ( () )
+            // InternalFirstOrderLogic.g:1928:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:1929:1: ( () )
             {
-            // InternalFirstOrderLogic.g:1898:1: ( () )
-            // InternalFirstOrderLogic.g:1899:2: ()
+            // InternalFirstOrderLogic.g:1929:1: ( () )
+            // InternalFirstOrderLogic.g:1930:2: ()
             {
              before(grammarAccess.getXorAccess().getXorLeftAction_1_0()); 
-            // InternalFirstOrderLogic.g:1900:2: ()
-            // InternalFirstOrderLogic.g:1900:3: 
+            // InternalFirstOrderLogic.g:1931:2: ()
+            // InternalFirstOrderLogic.g:1931:3: 
             {
             }
 
@@ -5974,14 +6076,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Xor__Group_1__1"
-    // InternalFirstOrderLogic.g:1908:1: rule__Xor__Group_1__1 : rule__Xor__Group_1__1__Impl rule__Xor__Group_1__2 ;
+    // InternalFirstOrderLogic.g:1939:1: rule__Xor__Group_1__1 : rule__Xor__Group_1__1__Impl rule__Xor__Group_1__2 ;
     public final void rule__Xor__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1912:1: ( rule__Xor__Group_1__1__Impl rule__Xor__Group_1__2 )
-            // InternalFirstOrderLogic.g:1913:2: rule__Xor__Group_1__1__Impl rule__Xor__Group_1__2
+            // InternalFirstOrderLogic.g:1943:1: ( rule__Xor__Group_1__1__Impl rule__Xor__Group_1__2 )
+            // InternalFirstOrderLogic.g:1944:2: rule__Xor__Group_1__1__Impl rule__Xor__Group_1__2
             {
             pushFollow(FOLLOW_11);
             rule__Xor__Group_1__1__Impl();
@@ -6012,17 +6114,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Xor__Group_1__1__Impl"
-    // InternalFirstOrderLogic.g:1920:1: rule__Xor__Group_1__1__Impl : ( 'xor' ) ;
+    // InternalFirstOrderLogic.g:1951:1: rule__Xor__Group_1__1__Impl : ( 'xor' ) ;
     public final void rule__Xor__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1924:1: ( ( 'xor' ) )
-            // InternalFirstOrderLogic.g:1925:1: ( 'xor' )
+            // InternalFirstOrderLogic.g:1955:1: ( ( 'xor' ) )
+            // InternalFirstOrderLogic.g:1956:1: ( 'xor' )
             {
-            // InternalFirstOrderLogic.g:1925:1: ( 'xor' )
-            // InternalFirstOrderLogic.g:1926:2: 'xor'
+            // InternalFirstOrderLogic.g:1956:1: ( 'xor' )
+            // InternalFirstOrderLogic.g:1957:2: 'xor'
             {
              before(grammarAccess.getXorAccess().getXorKeyword_1_1()); 
             match(input,21,FOLLOW_2); 
@@ -6049,14 +6151,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Xor__Group_1__2"
-    // InternalFirstOrderLogic.g:1935:1: rule__Xor__Group_1__2 : rule__Xor__Group_1__2__Impl ;
+    // InternalFirstOrderLogic.g:1966:1: rule__Xor__Group_1__2 : rule__Xor__Group_1__2__Impl ;
     public final void rule__Xor__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1939:1: ( rule__Xor__Group_1__2__Impl )
-            // InternalFirstOrderLogic.g:1940:2: rule__Xor__Group_1__2__Impl
+            // InternalFirstOrderLogic.g:1970:1: ( rule__Xor__Group_1__2__Impl )
+            // InternalFirstOrderLogic.g:1971:2: rule__Xor__Group_1__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Xor__Group_1__2__Impl();
@@ -6082,21 +6184,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Xor__Group_1__2__Impl"
-    // InternalFirstOrderLogic.g:1946:1: rule__Xor__Group_1__2__Impl : ( ( rule__Xor__RightAssignment_1_2 ) ) ;
+    // InternalFirstOrderLogic.g:1977:1: rule__Xor__Group_1__2__Impl : ( ( rule__Xor__RightAssignment_1_2 ) ) ;
     public final void rule__Xor__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1950:1: ( ( ( rule__Xor__RightAssignment_1_2 ) ) )
-            // InternalFirstOrderLogic.g:1951:1: ( ( rule__Xor__RightAssignment_1_2 ) )
+            // InternalFirstOrderLogic.g:1981:1: ( ( ( rule__Xor__RightAssignment_1_2 ) ) )
+            // InternalFirstOrderLogic.g:1982:1: ( ( rule__Xor__RightAssignment_1_2 ) )
             {
-            // InternalFirstOrderLogic.g:1951:1: ( ( rule__Xor__RightAssignment_1_2 ) )
-            // InternalFirstOrderLogic.g:1952:2: ( rule__Xor__RightAssignment_1_2 )
+            // InternalFirstOrderLogic.g:1982:1: ( ( rule__Xor__RightAssignment_1_2 ) )
+            // InternalFirstOrderLogic.g:1983:2: ( rule__Xor__RightAssignment_1_2 )
             {
              before(grammarAccess.getXorAccess().getRightAssignment_1_2()); 
-            // InternalFirstOrderLogic.g:1953:2: ( rule__Xor__RightAssignment_1_2 )
-            // InternalFirstOrderLogic.g:1953:3: rule__Xor__RightAssignment_1_2
+            // InternalFirstOrderLogic.g:1984:2: ( rule__Xor__RightAssignment_1_2 )
+            // InternalFirstOrderLogic.g:1984:3: rule__Xor__RightAssignment_1_2
             {
             pushFollow(FOLLOW_2);
             rule__Xor__RightAssignment_1_2();
@@ -6129,14 +6231,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Or__Group__0"
-    // InternalFirstOrderLogic.g:1962:1: rule__Or__Group__0 : rule__Or__Group__0__Impl rule__Or__Group__1 ;
+    // InternalFirstOrderLogic.g:1993:1: rule__Or__Group__0 : rule__Or__Group__0__Impl rule__Or__Group__1 ;
     public final void rule__Or__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1966:1: ( rule__Or__Group__0__Impl rule__Or__Group__1 )
-            // InternalFirstOrderLogic.g:1967:2: rule__Or__Group__0__Impl rule__Or__Group__1
+            // InternalFirstOrderLogic.g:1997:1: ( rule__Or__Group__0__Impl rule__Or__Group__1 )
+            // InternalFirstOrderLogic.g:1998:2: rule__Or__Group__0__Impl rule__Or__Group__1
             {
             pushFollow(FOLLOW_18);
             rule__Or__Group__0__Impl();
@@ -6167,17 +6269,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Or__Group__0__Impl"
-    // InternalFirstOrderLogic.g:1974:1: rule__Or__Group__0__Impl : ( ruleAnd ) ;
+    // InternalFirstOrderLogic.g:2005:1: rule__Or__Group__0__Impl : ( ruleAnd ) ;
     public final void rule__Or__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1978:1: ( ( ruleAnd ) )
-            // InternalFirstOrderLogic.g:1979:1: ( ruleAnd )
+            // InternalFirstOrderLogic.g:2009:1: ( ( ruleAnd ) )
+            // InternalFirstOrderLogic.g:2010:1: ( ruleAnd )
             {
-            // InternalFirstOrderLogic.g:1979:1: ( ruleAnd )
-            // InternalFirstOrderLogic.g:1980:2: ruleAnd
+            // InternalFirstOrderLogic.g:2010:1: ( ruleAnd )
+            // InternalFirstOrderLogic.g:2011:2: ruleAnd
             {
              before(grammarAccess.getOrAccess().getAndParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
@@ -6208,14 +6310,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Or__Group__1"
-    // InternalFirstOrderLogic.g:1989:1: rule__Or__Group__1 : rule__Or__Group__1__Impl ;
+    // InternalFirstOrderLogic.g:2020:1: rule__Or__Group__1 : rule__Or__Group__1__Impl ;
     public final void rule__Or__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:1993:1: ( rule__Or__Group__1__Impl )
-            // InternalFirstOrderLogic.g:1994:2: rule__Or__Group__1__Impl
+            // InternalFirstOrderLogic.g:2024:1: ( rule__Or__Group__1__Impl )
+            // InternalFirstOrderLogic.g:2025:2: rule__Or__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Or__Group__1__Impl();
@@ -6241,20 +6343,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Or__Group__1__Impl"
-    // InternalFirstOrderLogic.g:2000:1: rule__Or__Group__1__Impl : ( ( rule__Or__Group_1__0 )* ) ;
+    // InternalFirstOrderLogic.g:2031:1: rule__Or__Group__1__Impl : ( ( rule__Or__Group_1__0 )* ) ;
     public final void rule__Or__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2004:1: ( ( ( rule__Or__Group_1__0 )* ) )
-            // InternalFirstOrderLogic.g:2005:1: ( ( rule__Or__Group_1__0 )* )
+            // InternalFirstOrderLogic.g:2035:1: ( ( ( rule__Or__Group_1__0 )* ) )
+            // InternalFirstOrderLogic.g:2036:1: ( ( rule__Or__Group_1__0 )* )
             {
-            // InternalFirstOrderLogic.g:2005:1: ( ( rule__Or__Group_1__0 )* )
-            // InternalFirstOrderLogic.g:2006:2: ( rule__Or__Group_1__0 )*
+            // InternalFirstOrderLogic.g:2036:1: ( ( rule__Or__Group_1__0 )* )
+            // InternalFirstOrderLogic.g:2037:2: ( rule__Or__Group_1__0 )*
             {
              before(grammarAccess.getOrAccess().getGroup_1()); 
-            // InternalFirstOrderLogic.g:2007:2: ( rule__Or__Group_1__0 )*
+            // InternalFirstOrderLogic.g:2038:2: ( rule__Or__Group_1__0 )*
             loop12:
             do {
                 int alt12=2;
@@ -6267,7 +6369,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
                 switch (alt12) {
             	case 1 :
-            	    // InternalFirstOrderLogic.g:2007:3: rule__Or__Group_1__0
+            	    // InternalFirstOrderLogic.g:2038:3: rule__Or__Group_1__0
             	    {
             	    pushFollow(FOLLOW_19);
             	    rule__Or__Group_1__0();
@@ -6306,14 +6408,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Or__Group_1__0"
-    // InternalFirstOrderLogic.g:2016:1: rule__Or__Group_1__0 : rule__Or__Group_1__0__Impl rule__Or__Group_1__1 ;
+    // InternalFirstOrderLogic.g:2047:1: rule__Or__Group_1__0 : rule__Or__Group_1__0__Impl rule__Or__Group_1__1 ;
     public final void rule__Or__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2020:1: ( rule__Or__Group_1__0__Impl rule__Or__Group_1__1 )
-            // InternalFirstOrderLogic.g:2021:2: rule__Or__Group_1__0__Impl rule__Or__Group_1__1
+            // InternalFirstOrderLogic.g:2051:1: ( rule__Or__Group_1__0__Impl rule__Or__Group_1__1 )
+            // InternalFirstOrderLogic.g:2052:2: rule__Or__Group_1__0__Impl rule__Or__Group_1__1
             {
             pushFollow(FOLLOW_18);
             rule__Or__Group_1__0__Impl();
@@ -6344,21 +6446,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Or__Group_1__0__Impl"
-    // InternalFirstOrderLogic.g:2028:1: rule__Or__Group_1__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:2059:1: rule__Or__Group_1__0__Impl : ( () ) ;
     public final void rule__Or__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2032:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:2033:1: ( () )
+            // InternalFirstOrderLogic.g:2063:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:2064:1: ( () )
             {
-            // InternalFirstOrderLogic.g:2033:1: ( () )
-            // InternalFirstOrderLogic.g:2034:2: ()
+            // InternalFirstOrderLogic.g:2064:1: ( () )
+            // InternalFirstOrderLogic.g:2065:2: ()
             {
              before(grammarAccess.getOrAccess().getOrLeftAction_1_0()); 
-            // InternalFirstOrderLogic.g:2035:2: ()
-            // InternalFirstOrderLogic.g:2035:3: 
+            // InternalFirstOrderLogic.g:2066:2: ()
+            // InternalFirstOrderLogic.g:2066:3: 
             {
             }
 
@@ -6381,14 +6483,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Or__Group_1__1"
-    // InternalFirstOrderLogic.g:2043:1: rule__Or__Group_1__1 : rule__Or__Group_1__1__Impl rule__Or__Group_1__2 ;
+    // InternalFirstOrderLogic.g:2074:1: rule__Or__Group_1__1 : rule__Or__Group_1__1__Impl rule__Or__Group_1__2 ;
     public final void rule__Or__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2047:1: ( rule__Or__Group_1__1__Impl rule__Or__Group_1__2 )
-            // InternalFirstOrderLogic.g:2048:2: rule__Or__Group_1__1__Impl rule__Or__Group_1__2
+            // InternalFirstOrderLogic.g:2078:1: ( rule__Or__Group_1__1__Impl rule__Or__Group_1__2 )
+            // InternalFirstOrderLogic.g:2079:2: rule__Or__Group_1__1__Impl rule__Or__Group_1__2
             {
             pushFollow(FOLLOW_11);
             rule__Or__Group_1__1__Impl();
@@ -6419,17 +6521,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Or__Group_1__1__Impl"
-    // InternalFirstOrderLogic.g:2055:1: rule__Or__Group_1__1__Impl : ( 'or' ) ;
+    // InternalFirstOrderLogic.g:2086:1: rule__Or__Group_1__1__Impl : ( 'or' ) ;
     public final void rule__Or__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2059:1: ( ( 'or' ) )
-            // InternalFirstOrderLogic.g:2060:1: ( 'or' )
+            // InternalFirstOrderLogic.g:2090:1: ( ( 'or' ) )
+            // InternalFirstOrderLogic.g:2091:1: ( 'or' )
             {
-            // InternalFirstOrderLogic.g:2060:1: ( 'or' )
-            // InternalFirstOrderLogic.g:2061:2: 'or'
+            // InternalFirstOrderLogic.g:2091:1: ( 'or' )
+            // InternalFirstOrderLogic.g:2092:2: 'or'
             {
              before(grammarAccess.getOrAccess().getOrKeyword_1_1()); 
             match(input,22,FOLLOW_2); 
@@ -6456,14 +6558,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Or__Group_1__2"
-    // InternalFirstOrderLogic.g:2070:1: rule__Or__Group_1__2 : rule__Or__Group_1__2__Impl ;
+    // InternalFirstOrderLogic.g:2101:1: rule__Or__Group_1__2 : rule__Or__Group_1__2__Impl ;
     public final void rule__Or__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2074:1: ( rule__Or__Group_1__2__Impl )
-            // InternalFirstOrderLogic.g:2075:2: rule__Or__Group_1__2__Impl
+            // InternalFirstOrderLogic.g:2105:1: ( rule__Or__Group_1__2__Impl )
+            // InternalFirstOrderLogic.g:2106:2: rule__Or__Group_1__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Or__Group_1__2__Impl();
@@ -6489,21 +6591,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Or__Group_1__2__Impl"
-    // InternalFirstOrderLogic.g:2081:1: rule__Or__Group_1__2__Impl : ( ( rule__Or__RightAssignment_1_2 ) ) ;
+    // InternalFirstOrderLogic.g:2112:1: rule__Or__Group_1__2__Impl : ( ( rule__Or__RightAssignment_1_2 ) ) ;
     public final void rule__Or__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2085:1: ( ( ( rule__Or__RightAssignment_1_2 ) ) )
-            // InternalFirstOrderLogic.g:2086:1: ( ( rule__Or__RightAssignment_1_2 ) )
+            // InternalFirstOrderLogic.g:2116:1: ( ( ( rule__Or__RightAssignment_1_2 ) ) )
+            // InternalFirstOrderLogic.g:2117:1: ( ( rule__Or__RightAssignment_1_2 ) )
             {
-            // InternalFirstOrderLogic.g:2086:1: ( ( rule__Or__RightAssignment_1_2 ) )
-            // InternalFirstOrderLogic.g:2087:2: ( rule__Or__RightAssignment_1_2 )
+            // InternalFirstOrderLogic.g:2117:1: ( ( rule__Or__RightAssignment_1_2 ) )
+            // InternalFirstOrderLogic.g:2118:2: ( rule__Or__RightAssignment_1_2 )
             {
              before(grammarAccess.getOrAccess().getRightAssignment_1_2()); 
-            // InternalFirstOrderLogic.g:2088:2: ( rule__Or__RightAssignment_1_2 )
-            // InternalFirstOrderLogic.g:2088:3: rule__Or__RightAssignment_1_2
+            // InternalFirstOrderLogic.g:2119:2: ( rule__Or__RightAssignment_1_2 )
+            // InternalFirstOrderLogic.g:2119:3: rule__Or__RightAssignment_1_2
             {
             pushFollow(FOLLOW_2);
             rule__Or__RightAssignment_1_2();
@@ -6536,14 +6638,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__And__Group__0"
-    // InternalFirstOrderLogic.g:2097:1: rule__And__Group__0 : rule__And__Group__0__Impl rule__And__Group__1 ;
+    // InternalFirstOrderLogic.g:2128:1: rule__And__Group__0 : rule__And__Group__0__Impl rule__And__Group__1 ;
     public final void rule__And__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2101:1: ( rule__And__Group__0__Impl rule__And__Group__1 )
-            // InternalFirstOrderLogic.g:2102:2: rule__And__Group__0__Impl rule__And__Group__1
+            // InternalFirstOrderLogic.g:2132:1: ( rule__And__Group__0__Impl rule__And__Group__1 )
+            // InternalFirstOrderLogic.g:2133:2: rule__And__Group__0__Impl rule__And__Group__1
             {
             pushFollow(FOLLOW_20);
             rule__And__Group__0__Impl();
@@ -6574,17 +6676,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__And__Group__0__Impl"
-    // InternalFirstOrderLogic.g:2109:1: rule__And__Group__0__Impl : ( ruleBooleanExpression ) ;
+    // InternalFirstOrderLogic.g:2140:1: rule__And__Group__0__Impl : ( ruleBooleanExpression ) ;
     public final void rule__And__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2113:1: ( ( ruleBooleanExpression ) )
-            // InternalFirstOrderLogic.g:2114:1: ( ruleBooleanExpression )
+            // InternalFirstOrderLogic.g:2144:1: ( ( ruleBooleanExpression ) )
+            // InternalFirstOrderLogic.g:2145:1: ( ruleBooleanExpression )
             {
-            // InternalFirstOrderLogic.g:2114:1: ( ruleBooleanExpression )
-            // InternalFirstOrderLogic.g:2115:2: ruleBooleanExpression
+            // InternalFirstOrderLogic.g:2145:1: ( ruleBooleanExpression )
+            // InternalFirstOrderLogic.g:2146:2: ruleBooleanExpression
             {
              before(grammarAccess.getAndAccess().getBooleanExpressionParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
@@ -6615,14 +6717,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__And__Group__1"
-    // InternalFirstOrderLogic.g:2124:1: rule__And__Group__1 : rule__And__Group__1__Impl ;
+    // InternalFirstOrderLogic.g:2155:1: rule__And__Group__1 : rule__And__Group__1__Impl ;
     public final void rule__And__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2128:1: ( rule__And__Group__1__Impl )
-            // InternalFirstOrderLogic.g:2129:2: rule__And__Group__1__Impl
+            // InternalFirstOrderLogic.g:2159:1: ( rule__And__Group__1__Impl )
+            // InternalFirstOrderLogic.g:2160:2: rule__And__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__And__Group__1__Impl();
@@ -6648,20 +6750,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__And__Group__1__Impl"
-    // InternalFirstOrderLogic.g:2135:1: rule__And__Group__1__Impl : ( ( rule__And__Group_1__0 )* ) ;
+    // InternalFirstOrderLogic.g:2166:1: rule__And__Group__1__Impl : ( ( rule__And__Group_1__0 )* ) ;
     public final void rule__And__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2139:1: ( ( ( rule__And__Group_1__0 )* ) )
-            // InternalFirstOrderLogic.g:2140:1: ( ( rule__And__Group_1__0 )* )
+            // InternalFirstOrderLogic.g:2170:1: ( ( ( rule__And__Group_1__0 )* ) )
+            // InternalFirstOrderLogic.g:2171:1: ( ( rule__And__Group_1__0 )* )
             {
-            // InternalFirstOrderLogic.g:2140:1: ( ( rule__And__Group_1__0 )* )
-            // InternalFirstOrderLogic.g:2141:2: ( rule__And__Group_1__0 )*
+            // InternalFirstOrderLogic.g:2171:1: ( ( rule__And__Group_1__0 )* )
+            // InternalFirstOrderLogic.g:2172:2: ( rule__And__Group_1__0 )*
             {
              before(grammarAccess.getAndAccess().getGroup_1()); 
-            // InternalFirstOrderLogic.g:2142:2: ( rule__And__Group_1__0 )*
+            // InternalFirstOrderLogic.g:2173:2: ( rule__And__Group_1__0 )*
             loop13:
             do {
                 int alt13=2;
@@ -6674,7 +6776,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
                 switch (alt13) {
             	case 1 :
-            	    // InternalFirstOrderLogic.g:2142:3: rule__And__Group_1__0
+            	    // InternalFirstOrderLogic.g:2173:3: rule__And__Group_1__0
             	    {
             	    pushFollow(FOLLOW_21);
             	    rule__And__Group_1__0();
@@ -6713,14 +6815,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__And__Group_1__0"
-    // InternalFirstOrderLogic.g:2151:1: rule__And__Group_1__0 : rule__And__Group_1__0__Impl rule__And__Group_1__1 ;
+    // InternalFirstOrderLogic.g:2182:1: rule__And__Group_1__0 : rule__And__Group_1__0__Impl rule__And__Group_1__1 ;
     public final void rule__And__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2155:1: ( rule__And__Group_1__0__Impl rule__And__Group_1__1 )
-            // InternalFirstOrderLogic.g:2156:2: rule__And__Group_1__0__Impl rule__And__Group_1__1
+            // InternalFirstOrderLogic.g:2186:1: ( rule__And__Group_1__0__Impl rule__And__Group_1__1 )
+            // InternalFirstOrderLogic.g:2187:2: rule__And__Group_1__0__Impl rule__And__Group_1__1
             {
             pushFollow(FOLLOW_20);
             rule__And__Group_1__0__Impl();
@@ -6751,21 +6853,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__And__Group_1__0__Impl"
-    // InternalFirstOrderLogic.g:2163:1: rule__And__Group_1__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:2194:1: rule__And__Group_1__0__Impl : ( () ) ;
     public final void rule__And__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2167:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:2168:1: ( () )
+            // InternalFirstOrderLogic.g:2198:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:2199:1: ( () )
             {
-            // InternalFirstOrderLogic.g:2168:1: ( () )
-            // InternalFirstOrderLogic.g:2169:2: ()
+            // InternalFirstOrderLogic.g:2199:1: ( () )
+            // InternalFirstOrderLogic.g:2200:2: ()
             {
              before(grammarAccess.getAndAccess().getAndLeftAction_1_0()); 
-            // InternalFirstOrderLogic.g:2170:2: ()
-            // InternalFirstOrderLogic.g:2170:3: 
+            // InternalFirstOrderLogic.g:2201:2: ()
+            // InternalFirstOrderLogic.g:2201:3: 
             {
             }
 
@@ -6788,14 +6890,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__And__Group_1__1"
-    // InternalFirstOrderLogic.g:2178:1: rule__And__Group_1__1 : rule__And__Group_1__1__Impl rule__And__Group_1__2 ;
+    // InternalFirstOrderLogic.g:2209:1: rule__And__Group_1__1 : rule__And__Group_1__1__Impl rule__And__Group_1__2 ;
     public final void rule__And__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2182:1: ( rule__And__Group_1__1__Impl rule__And__Group_1__2 )
-            // InternalFirstOrderLogic.g:2183:2: rule__And__Group_1__1__Impl rule__And__Group_1__2
+            // InternalFirstOrderLogic.g:2213:1: ( rule__And__Group_1__1__Impl rule__And__Group_1__2 )
+            // InternalFirstOrderLogic.g:2214:2: rule__And__Group_1__1__Impl rule__And__Group_1__2
             {
             pushFollow(FOLLOW_11);
             rule__And__Group_1__1__Impl();
@@ -6826,17 +6928,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__And__Group_1__1__Impl"
-    // InternalFirstOrderLogic.g:2190:1: rule__And__Group_1__1__Impl : ( 'and' ) ;
+    // InternalFirstOrderLogic.g:2221:1: rule__And__Group_1__1__Impl : ( 'and' ) ;
     public final void rule__And__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2194:1: ( ( 'and' ) )
-            // InternalFirstOrderLogic.g:2195:1: ( 'and' )
+            // InternalFirstOrderLogic.g:2225:1: ( ( 'and' ) )
+            // InternalFirstOrderLogic.g:2226:1: ( 'and' )
             {
-            // InternalFirstOrderLogic.g:2195:1: ( 'and' )
-            // InternalFirstOrderLogic.g:2196:2: 'and'
+            // InternalFirstOrderLogic.g:2226:1: ( 'and' )
+            // InternalFirstOrderLogic.g:2227:2: 'and'
             {
              before(grammarAccess.getAndAccess().getAndKeyword_1_1()); 
             match(input,23,FOLLOW_2); 
@@ -6863,14 +6965,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__And__Group_1__2"
-    // InternalFirstOrderLogic.g:2205:1: rule__And__Group_1__2 : rule__And__Group_1__2__Impl ;
+    // InternalFirstOrderLogic.g:2236:1: rule__And__Group_1__2 : rule__And__Group_1__2__Impl ;
     public final void rule__And__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2209:1: ( rule__And__Group_1__2__Impl )
-            // InternalFirstOrderLogic.g:2210:2: rule__And__Group_1__2__Impl
+            // InternalFirstOrderLogic.g:2240:1: ( rule__And__Group_1__2__Impl )
+            // InternalFirstOrderLogic.g:2241:2: rule__And__Group_1__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__And__Group_1__2__Impl();
@@ -6896,21 +6998,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__And__Group_1__2__Impl"
-    // InternalFirstOrderLogic.g:2216:1: rule__And__Group_1__2__Impl : ( ( rule__And__RightAssignment_1_2 ) ) ;
+    // InternalFirstOrderLogic.g:2247:1: rule__And__Group_1__2__Impl : ( ( rule__And__RightAssignment_1_2 ) ) ;
     public final void rule__And__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2220:1: ( ( ( rule__And__RightAssignment_1_2 ) ) )
-            // InternalFirstOrderLogic.g:2221:1: ( ( rule__And__RightAssignment_1_2 ) )
+            // InternalFirstOrderLogic.g:2251:1: ( ( ( rule__And__RightAssignment_1_2 ) ) )
+            // InternalFirstOrderLogic.g:2252:1: ( ( rule__And__RightAssignment_1_2 ) )
             {
-            // InternalFirstOrderLogic.g:2221:1: ( ( rule__And__RightAssignment_1_2 ) )
-            // InternalFirstOrderLogic.g:2222:2: ( rule__And__RightAssignment_1_2 )
+            // InternalFirstOrderLogic.g:2252:1: ( ( rule__And__RightAssignment_1_2 ) )
+            // InternalFirstOrderLogic.g:2253:2: ( rule__And__RightAssignment_1_2 )
             {
              before(grammarAccess.getAndAccess().getRightAssignment_1_2()); 
-            // InternalFirstOrderLogic.g:2223:2: ( rule__And__RightAssignment_1_2 )
-            // InternalFirstOrderLogic.g:2223:3: rule__And__RightAssignment_1_2
+            // InternalFirstOrderLogic.g:2254:2: ( rule__And__RightAssignment_1_2 )
+            // InternalFirstOrderLogic.g:2254:3: rule__And__RightAssignment_1_2
             {
             pushFollow(FOLLOW_2);
             rule__And__RightAssignment_1_2();
@@ -6943,14 +7045,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Not__Group__0"
-    // InternalFirstOrderLogic.g:2232:1: rule__Not__Group__0 : rule__Not__Group__0__Impl rule__Not__Group__1 ;
+    // InternalFirstOrderLogic.g:2263:1: rule__Not__Group__0 : rule__Not__Group__0__Impl rule__Not__Group__1 ;
     public final void rule__Not__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2236:1: ( rule__Not__Group__0__Impl rule__Not__Group__1 )
-            // InternalFirstOrderLogic.g:2237:2: rule__Not__Group__0__Impl rule__Not__Group__1
+            // InternalFirstOrderLogic.g:2267:1: ( rule__Not__Group__0__Impl rule__Not__Group__1 )
+            // InternalFirstOrderLogic.g:2268:2: rule__Not__Group__0__Impl rule__Not__Group__1
             {
             pushFollow(FOLLOW_22);
             rule__Not__Group__0__Impl();
@@ -6981,21 +7083,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Not__Group__0__Impl"
-    // InternalFirstOrderLogic.g:2244:1: rule__Not__Group__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:2275:1: rule__Not__Group__0__Impl : ( () ) ;
     public final void rule__Not__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2248:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:2249:1: ( () )
+            // InternalFirstOrderLogic.g:2279:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:2280:1: ( () )
             {
-            // InternalFirstOrderLogic.g:2249:1: ( () )
-            // InternalFirstOrderLogic.g:2250:2: ()
+            // InternalFirstOrderLogic.g:2280:1: ( () )
+            // InternalFirstOrderLogic.g:2281:2: ()
             {
              before(grammarAccess.getNotAccess().getNotAction_0()); 
-            // InternalFirstOrderLogic.g:2251:2: ()
-            // InternalFirstOrderLogic.g:2251:3: 
+            // InternalFirstOrderLogic.g:2282:2: ()
+            // InternalFirstOrderLogic.g:2282:3: 
             {
             }
 
@@ -7018,14 +7120,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Not__Group__1"
-    // InternalFirstOrderLogic.g:2259:1: rule__Not__Group__1 : rule__Not__Group__1__Impl rule__Not__Group__2 ;
+    // InternalFirstOrderLogic.g:2290:1: rule__Not__Group__1 : rule__Not__Group__1__Impl rule__Not__Group__2 ;
     public final void rule__Not__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2263:1: ( rule__Not__Group__1__Impl rule__Not__Group__2 )
-            // InternalFirstOrderLogic.g:2264:2: rule__Not__Group__1__Impl rule__Not__Group__2
+            // InternalFirstOrderLogic.g:2294:1: ( rule__Not__Group__1__Impl rule__Not__Group__2 )
+            // InternalFirstOrderLogic.g:2295:2: rule__Not__Group__1__Impl rule__Not__Group__2
             {
             pushFollow(FOLLOW_11);
             rule__Not__Group__1__Impl();
@@ -7056,17 +7158,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Not__Group__1__Impl"
-    // InternalFirstOrderLogic.g:2271:1: rule__Not__Group__1__Impl : ( 'not(' ) ;
+    // InternalFirstOrderLogic.g:2302:1: rule__Not__Group__1__Impl : ( 'not(' ) ;
     public final void rule__Not__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2275:1: ( ( 'not(' ) )
-            // InternalFirstOrderLogic.g:2276:1: ( 'not(' )
+            // InternalFirstOrderLogic.g:2306:1: ( ( 'not(' ) )
+            // InternalFirstOrderLogic.g:2307:1: ( 'not(' )
             {
-            // InternalFirstOrderLogic.g:2276:1: ( 'not(' )
-            // InternalFirstOrderLogic.g:2277:2: 'not('
+            // InternalFirstOrderLogic.g:2307:1: ( 'not(' )
+            // InternalFirstOrderLogic.g:2308:2: 'not('
             {
              before(grammarAccess.getNotAccess().getNotKeyword_1()); 
             match(input,24,FOLLOW_2); 
@@ -7093,14 +7195,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Not__Group__2"
-    // InternalFirstOrderLogic.g:2286:1: rule__Not__Group__2 : rule__Not__Group__2__Impl rule__Not__Group__3 ;
+    // InternalFirstOrderLogic.g:2317:1: rule__Not__Group__2 : rule__Not__Group__2__Impl rule__Not__Group__3 ;
     public final void rule__Not__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2290:1: ( rule__Not__Group__2__Impl rule__Not__Group__3 )
-            // InternalFirstOrderLogic.g:2291:2: rule__Not__Group__2__Impl rule__Not__Group__3
+            // InternalFirstOrderLogic.g:2321:1: ( rule__Not__Group__2__Impl rule__Not__Group__3 )
+            // InternalFirstOrderLogic.g:2322:2: rule__Not__Group__2__Impl rule__Not__Group__3
             {
             pushFollow(FOLLOW_23);
             rule__Not__Group__2__Impl();
@@ -7131,21 +7233,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Not__Group__2__Impl"
-    // InternalFirstOrderLogic.g:2298:1: rule__Not__Group__2__Impl : ( ( rule__Not__NotAssignment_2 ) ) ;
+    // InternalFirstOrderLogic.g:2329:1: rule__Not__Group__2__Impl : ( ( rule__Not__NotAssignment_2 ) ) ;
     public final void rule__Not__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2302:1: ( ( ( rule__Not__NotAssignment_2 ) ) )
-            // InternalFirstOrderLogic.g:2303:1: ( ( rule__Not__NotAssignment_2 ) )
+            // InternalFirstOrderLogic.g:2333:1: ( ( ( rule__Not__NotAssignment_2 ) ) )
+            // InternalFirstOrderLogic.g:2334:1: ( ( rule__Not__NotAssignment_2 ) )
             {
-            // InternalFirstOrderLogic.g:2303:1: ( ( rule__Not__NotAssignment_2 ) )
-            // InternalFirstOrderLogic.g:2304:2: ( rule__Not__NotAssignment_2 )
+            // InternalFirstOrderLogic.g:2334:1: ( ( rule__Not__NotAssignment_2 ) )
+            // InternalFirstOrderLogic.g:2335:2: ( rule__Not__NotAssignment_2 )
             {
              before(grammarAccess.getNotAccess().getNotAssignment_2()); 
-            // InternalFirstOrderLogic.g:2305:2: ( rule__Not__NotAssignment_2 )
-            // InternalFirstOrderLogic.g:2305:3: rule__Not__NotAssignment_2
+            // InternalFirstOrderLogic.g:2336:2: ( rule__Not__NotAssignment_2 )
+            // InternalFirstOrderLogic.g:2336:3: rule__Not__NotAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__Not__NotAssignment_2();
@@ -7178,14 +7280,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Not__Group__3"
-    // InternalFirstOrderLogic.g:2313:1: rule__Not__Group__3 : rule__Not__Group__3__Impl ;
+    // InternalFirstOrderLogic.g:2344:1: rule__Not__Group__3 : rule__Not__Group__3__Impl ;
     public final void rule__Not__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2317:1: ( rule__Not__Group__3__Impl )
-            // InternalFirstOrderLogic.g:2318:2: rule__Not__Group__3__Impl
+            // InternalFirstOrderLogic.g:2348:1: ( rule__Not__Group__3__Impl )
+            // InternalFirstOrderLogic.g:2349:2: rule__Not__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Not__Group__3__Impl();
@@ -7211,17 +7313,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Not__Group__3__Impl"
-    // InternalFirstOrderLogic.g:2324:1: rule__Not__Group__3__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:2355:1: rule__Not__Group__3__Impl : ( ')' ) ;
     public final void rule__Not__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2328:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:2329:1: ( ')' )
+            // InternalFirstOrderLogic.g:2359:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:2360:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:2329:1: ( ')' )
-            // InternalFirstOrderLogic.g:2330:2: ')'
+            // InternalFirstOrderLogic.g:2360:1: ( ')' )
+            // InternalFirstOrderLogic.g:2361:2: ')'
             {
              before(grammarAccess.getNotAccess().getRightParenthesisKeyword_3()); 
             match(input,25,FOLLOW_2); 
@@ -7248,14 +7350,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__Group__0"
-    // InternalFirstOrderLogic.g:2340:1: rule__Equals__Group__0 : rule__Equals__Group__0__Impl rule__Equals__Group__1 ;
+    // InternalFirstOrderLogic.g:2371:1: rule__Equals__Group__0 : rule__Equals__Group__0__Impl rule__Equals__Group__1 ;
     public final void rule__Equals__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2344:1: ( rule__Equals__Group__0__Impl rule__Equals__Group__1 )
-            // InternalFirstOrderLogic.g:2345:2: rule__Equals__Group__0__Impl rule__Equals__Group__1
+            // InternalFirstOrderLogic.g:2375:1: ( rule__Equals__Group__0__Impl rule__Equals__Group__1 )
+            // InternalFirstOrderLogic.g:2376:2: rule__Equals__Group__0__Impl rule__Equals__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__Equals__Group__0__Impl();
@@ -7286,17 +7388,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__Group__0__Impl"
-    // InternalFirstOrderLogic.g:2352:1: rule__Equals__Group__0__Impl : ( 'isEqual(' ) ;
+    // InternalFirstOrderLogic.g:2383:1: rule__Equals__Group__0__Impl : ( 'isEqual(' ) ;
     public final void rule__Equals__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2356:1: ( ( 'isEqual(' ) )
-            // InternalFirstOrderLogic.g:2357:1: ( 'isEqual(' )
+            // InternalFirstOrderLogic.g:2387:1: ( ( 'isEqual(' ) )
+            // InternalFirstOrderLogic.g:2388:1: ( 'isEqual(' )
             {
-            // InternalFirstOrderLogic.g:2357:1: ( 'isEqual(' )
-            // InternalFirstOrderLogic.g:2358:2: 'isEqual('
+            // InternalFirstOrderLogic.g:2388:1: ( 'isEqual(' )
+            // InternalFirstOrderLogic.g:2389:2: 'isEqual('
             {
              before(grammarAccess.getEqualsAccess().getIsEqualKeyword_0()); 
             match(input,26,FOLLOW_2); 
@@ -7323,14 +7425,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__Group__1"
-    // InternalFirstOrderLogic.g:2367:1: rule__Equals__Group__1 : rule__Equals__Group__1__Impl rule__Equals__Group__2 ;
+    // InternalFirstOrderLogic.g:2398:1: rule__Equals__Group__1 : rule__Equals__Group__1__Impl rule__Equals__Group__2 ;
     public final void rule__Equals__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2371:1: ( rule__Equals__Group__1__Impl rule__Equals__Group__2 )
-            // InternalFirstOrderLogic.g:2372:2: rule__Equals__Group__1__Impl rule__Equals__Group__2
+            // InternalFirstOrderLogic.g:2402:1: ( rule__Equals__Group__1__Impl rule__Equals__Group__2 )
+            // InternalFirstOrderLogic.g:2403:2: rule__Equals__Group__1__Impl rule__Equals__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__Equals__Group__1__Impl();
@@ -7361,21 +7463,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__Group__1__Impl"
-    // InternalFirstOrderLogic.g:2379:1: rule__Equals__Group__1__Impl : ( ( rule__Equals__LeftAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:2410:1: rule__Equals__Group__1__Impl : ( ( rule__Equals__LeftAssignment_1 ) ) ;
     public final void rule__Equals__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2383:1: ( ( ( rule__Equals__LeftAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:2384:1: ( ( rule__Equals__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:2414:1: ( ( ( rule__Equals__LeftAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:2415:1: ( ( rule__Equals__LeftAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:2384:1: ( ( rule__Equals__LeftAssignment_1 ) )
-            // InternalFirstOrderLogic.g:2385:2: ( rule__Equals__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:2415:1: ( ( rule__Equals__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:2416:2: ( rule__Equals__LeftAssignment_1 )
             {
              before(grammarAccess.getEqualsAccess().getLeftAssignment_1()); 
-            // InternalFirstOrderLogic.g:2386:2: ( rule__Equals__LeftAssignment_1 )
-            // InternalFirstOrderLogic.g:2386:3: rule__Equals__LeftAssignment_1
+            // InternalFirstOrderLogic.g:2417:2: ( rule__Equals__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:2417:3: rule__Equals__LeftAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__Equals__LeftAssignment_1();
@@ -7408,14 +7510,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__Group__2"
-    // InternalFirstOrderLogic.g:2394:1: rule__Equals__Group__2 : rule__Equals__Group__2__Impl rule__Equals__Group__3 ;
+    // InternalFirstOrderLogic.g:2425:1: rule__Equals__Group__2 : rule__Equals__Group__2__Impl rule__Equals__Group__3 ;
     public final void rule__Equals__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2398:1: ( rule__Equals__Group__2__Impl rule__Equals__Group__3 )
-            // InternalFirstOrderLogic.g:2399:2: rule__Equals__Group__2__Impl rule__Equals__Group__3
+            // InternalFirstOrderLogic.g:2429:1: ( rule__Equals__Group__2__Impl rule__Equals__Group__3 )
+            // InternalFirstOrderLogic.g:2430:2: rule__Equals__Group__2__Impl rule__Equals__Group__3
             {
             pushFollow(FOLLOW_24);
             rule__Equals__Group__2__Impl();
@@ -7446,17 +7548,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__Group__2__Impl"
-    // InternalFirstOrderLogic.g:2406:1: rule__Equals__Group__2__Impl : ( ',' ) ;
+    // InternalFirstOrderLogic.g:2437:1: rule__Equals__Group__2__Impl : ( ',' ) ;
     public final void rule__Equals__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2410:1: ( ( ',' ) )
-            // InternalFirstOrderLogic.g:2411:1: ( ',' )
+            // InternalFirstOrderLogic.g:2441:1: ( ( ',' ) )
+            // InternalFirstOrderLogic.g:2442:1: ( ',' )
             {
-            // InternalFirstOrderLogic.g:2411:1: ( ',' )
-            // InternalFirstOrderLogic.g:2412:2: ','
+            // InternalFirstOrderLogic.g:2442:1: ( ',' )
+            // InternalFirstOrderLogic.g:2443:2: ','
             {
              before(grammarAccess.getEqualsAccess().getCommaKeyword_2()); 
             match(input,27,FOLLOW_2); 
@@ -7483,14 +7585,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__Group__3"
-    // InternalFirstOrderLogic.g:2421:1: rule__Equals__Group__3 : rule__Equals__Group__3__Impl rule__Equals__Group__4 ;
+    // InternalFirstOrderLogic.g:2452:1: rule__Equals__Group__3 : rule__Equals__Group__3__Impl rule__Equals__Group__4 ;
     public final void rule__Equals__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2425:1: ( rule__Equals__Group__3__Impl rule__Equals__Group__4 )
-            // InternalFirstOrderLogic.g:2426:2: rule__Equals__Group__3__Impl rule__Equals__Group__4
+            // InternalFirstOrderLogic.g:2456:1: ( rule__Equals__Group__3__Impl rule__Equals__Group__4 )
+            // InternalFirstOrderLogic.g:2457:2: rule__Equals__Group__3__Impl rule__Equals__Group__4
             {
             pushFollow(FOLLOW_23);
             rule__Equals__Group__3__Impl();
@@ -7521,21 +7623,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__Group__3__Impl"
-    // InternalFirstOrderLogic.g:2433:1: rule__Equals__Group__3__Impl : ( ( rule__Equals__RightAssignment_3 ) ) ;
+    // InternalFirstOrderLogic.g:2464:1: rule__Equals__Group__3__Impl : ( ( rule__Equals__RightAssignment_3 ) ) ;
     public final void rule__Equals__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2437:1: ( ( ( rule__Equals__RightAssignment_3 ) ) )
-            // InternalFirstOrderLogic.g:2438:1: ( ( rule__Equals__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:2468:1: ( ( ( rule__Equals__RightAssignment_3 ) ) )
+            // InternalFirstOrderLogic.g:2469:1: ( ( rule__Equals__RightAssignment_3 ) )
             {
-            // InternalFirstOrderLogic.g:2438:1: ( ( rule__Equals__RightAssignment_3 ) )
-            // InternalFirstOrderLogic.g:2439:2: ( rule__Equals__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:2469:1: ( ( rule__Equals__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:2470:2: ( rule__Equals__RightAssignment_3 )
             {
              before(grammarAccess.getEqualsAccess().getRightAssignment_3()); 
-            // InternalFirstOrderLogic.g:2440:2: ( rule__Equals__RightAssignment_3 )
-            // InternalFirstOrderLogic.g:2440:3: rule__Equals__RightAssignment_3
+            // InternalFirstOrderLogic.g:2471:2: ( rule__Equals__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:2471:3: rule__Equals__RightAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__Equals__RightAssignment_3();
@@ -7568,14 +7670,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__Group__4"
-    // InternalFirstOrderLogic.g:2448:1: rule__Equals__Group__4 : rule__Equals__Group__4__Impl ;
+    // InternalFirstOrderLogic.g:2479:1: rule__Equals__Group__4 : rule__Equals__Group__4__Impl ;
     public final void rule__Equals__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2452:1: ( rule__Equals__Group__4__Impl )
-            // InternalFirstOrderLogic.g:2453:2: rule__Equals__Group__4__Impl
+            // InternalFirstOrderLogic.g:2483:1: ( rule__Equals__Group__4__Impl )
+            // InternalFirstOrderLogic.g:2484:2: rule__Equals__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Equals__Group__4__Impl();
@@ -7601,17 +7703,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__Group__4__Impl"
-    // InternalFirstOrderLogic.g:2459:1: rule__Equals__Group__4__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:2490:1: rule__Equals__Group__4__Impl : ( ')' ) ;
     public final void rule__Equals__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2463:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:2464:1: ( ')' )
+            // InternalFirstOrderLogic.g:2494:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:2495:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:2464:1: ( ')' )
-            // InternalFirstOrderLogic.g:2465:2: ')'
+            // InternalFirstOrderLogic.g:2495:1: ( ')' )
+            // InternalFirstOrderLogic.g:2496:2: ')'
             {
              before(grammarAccess.getEqualsAccess().getRightParenthesisKeyword_4()); 
             match(input,25,FOLLOW_2); 
@@ -7638,14 +7740,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__Group__0"
-    // InternalFirstOrderLogic.g:2475:1: rule__Greater__Group__0 : rule__Greater__Group__0__Impl rule__Greater__Group__1 ;
+    // InternalFirstOrderLogic.g:2506:1: rule__Greater__Group__0 : rule__Greater__Group__0__Impl rule__Greater__Group__1 ;
     public final void rule__Greater__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2479:1: ( rule__Greater__Group__0__Impl rule__Greater__Group__1 )
-            // InternalFirstOrderLogic.g:2480:2: rule__Greater__Group__0__Impl rule__Greater__Group__1
+            // InternalFirstOrderLogic.g:2510:1: ( rule__Greater__Group__0__Impl rule__Greater__Group__1 )
+            // InternalFirstOrderLogic.g:2511:2: rule__Greater__Group__0__Impl rule__Greater__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__Greater__Group__0__Impl();
@@ -7676,17 +7778,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__Group__0__Impl"
-    // InternalFirstOrderLogic.g:2487:1: rule__Greater__Group__0__Impl : ( 'isGreater(' ) ;
+    // InternalFirstOrderLogic.g:2518:1: rule__Greater__Group__0__Impl : ( 'isGreater(' ) ;
     public final void rule__Greater__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2491:1: ( ( 'isGreater(' ) )
-            // InternalFirstOrderLogic.g:2492:1: ( 'isGreater(' )
+            // InternalFirstOrderLogic.g:2522:1: ( ( 'isGreater(' ) )
+            // InternalFirstOrderLogic.g:2523:1: ( 'isGreater(' )
             {
-            // InternalFirstOrderLogic.g:2492:1: ( 'isGreater(' )
-            // InternalFirstOrderLogic.g:2493:2: 'isGreater('
+            // InternalFirstOrderLogic.g:2523:1: ( 'isGreater(' )
+            // InternalFirstOrderLogic.g:2524:2: 'isGreater('
             {
              before(grammarAccess.getGreaterAccess().getIsGreaterKeyword_0()); 
             match(input,28,FOLLOW_2); 
@@ -7713,14 +7815,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__Group__1"
-    // InternalFirstOrderLogic.g:2502:1: rule__Greater__Group__1 : rule__Greater__Group__1__Impl rule__Greater__Group__2 ;
+    // InternalFirstOrderLogic.g:2533:1: rule__Greater__Group__1 : rule__Greater__Group__1__Impl rule__Greater__Group__2 ;
     public final void rule__Greater__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2506:1: ( rule__Greater__Group__1__Impl rule__Greater__Group__2 )
-            // InternalFirstOrderLogic.g:2507:2: rule__Greater__Group__1__Impl rule__Greater__Group__2
+            // InternalFirstOrderLogic.g:2537:1: ( rule__Greater__Group__1__Impl rule__Greater__Group__2 )
+            // InternalFirstOrderLogic.g:2538:2: rule__Greater__Group__1__Impl rule__Greater__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__Greater__Group__1__Impl();
@@ -7751,21 +7853,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__Group__1__Impl"
-    // InternalFirstOrderLogic.g:2514:1: rule__Greater__Group__1__Impl : ( ( rule__Greater__LeftAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:2545:1: rule__Greater__Group__1__Impl : ( ( rule__Greater__LeftAssignment_1 ) ) ;
     public final void rule__Greater__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2518:1: ( ( ( rule__Greater__LeftAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:2519:1: ( ( rule__Greater__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:2549:1: ( ( ( rule__Greater__LeftAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:2550:1: ( ( rule__Greater__LeftAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:2519:1: ( ( rule__Greater__LeftAssignment_1 ) )
-            // InternalFirstOrderLogic.g:2520:2: ( rule__Greater__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:2550:1: ( ( rule__Greater__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:2551:2: ( rule__Greater__LeftAssignment_1 )
             {
              before(grammarAccess.getGreaterAccess().getLeftAssignment_1()); 
-            // InternalFirstOrderLogic.g:2521:2: ( rule__Greater__LeftAssignment_1 )
-            // InternalFirstOrderLogic.g:2521:3: rule__Greater__LeftAssignment_1
+            // InternalFirstOrderLogic.g:2552:2: ( rule__Greater__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:2552:3: rule__Greater__LeftAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__Greater__LeftAssignment_1();
@@ -7798,14 +7900,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__Group__2"
-    // InternalFirstOrderLogic.g:2529:1: rule__Greater__Group__2 : rule__Greater__Group__2__Impl rule__Greater__Group__3 ;
+    // InternalFirstOrderLogic.g:2560:1: rule__Greater__Group__2 : rule__Greater__Group__2__Impl rule__Greater__Group__3 ;
     public final void rule__Greater__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2533:1: ( rule__Greater__Group__2__Impl rule__Greater__Group__3 )
-            // InternalFirstOrderLogic.g:2534:2: rule__Greater__Group__2__Impl rule__Greater__Group__3
+            // InternalFirstOrderLogic.g:2564:1: ( rule__Greater__Group__2__Impl rule__Greater__Group__3 )
+            // InternalFirstOrderLogic.g:2565:2: rule__Greater__Group__2__Impl rule__Greater__Group__3
             {
             pushFollow(FOLLOW_24);
             rule__Greater__Group__2__Impl();
@@ -7836,17 +7938,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__Group__2__Impl"
-    // InternalFirstOrderLogic.g:2541:1: rule__Greater__Group__2__Impl : ( ',' ) ;
+    // InternalFirstOrderLogic.g:2572:1: rule__Greater__Group__2__Impl : ( ',' ) ;
     public final void rule__Greater__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2545:1: ( ( ',' ) )
-            // InternalFirstOrderLogic.g:2546:1: ( ',' )
+            // InternalFirstOrderLogic.g:2576:1: ( ( ',' ) )
+            // InternalFirstOrderLogic.g:2577:1: ( ',' )
             {
-            // InternalFirstOrderLogic.g:2546:1: ( ',' )
-            // InternalFirstOrderLogic.g:2547:2: ','
+            // InternalFirstOrderLogic.g:2577:1: ( ',' )
+            // InternalFirstOrderLogic.g:2578:2: ','
             {
              before(grammarAccess.getGreaterAccess().getCommaKeyword_2()); 
             match(input,27,FOLLOW_2); 
@@ -7873,14 +7975,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__Group__3"
-    // InternalFirstOrderLogic.g:2556:1: rule__Greater__Group__3 : rule__Greater__Group__3__Impl rule__Greater__Group__4 ;
+    // InternalFirstOrderLogic.g:2587:1: rule__Greater__Group__3 : rule__Greater__Group__3__Impl rule__Greater__Group__4 ;
     public final void rule__Greater__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2560:1: ( rule__Greater__Group__3__Impl rule__Greater__Group__4 )
-            // InternalFirstOrderLogic.g:2561:2: rule__Greater__Group__3__Impl rule__Greater__Group__4
+            // InternalFirstOrderLogic.g:2591:1: ( rule__Greater__Group__3__Impl rule__Greater__Group__4 )
+            // InternalFirstOrderLogic.g:2592:2: rule__Greater__Group__3__Impl rule__Greater__Group__4
             {
             pushFollow(FOLLOW_23);
             rule__Greater__Group__3__Impl();
@@ -7911,21 +8013,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__Group__3__Impl"
-    // InternalFirstOrderLogic.g:2568:1: rule__Greater__Group__3__Impl : ( ( rule__Greater__RightAssignment_3 ) ) ;
+    // InternalFirstOrderLogic.g:2599:1: rule__Greater__Group__3__Impl : ( ( rule__Greater__RightAssignment_3 ) ) ;
     public final void rule__Greater__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2572:1: ( ( ( rule__Greater__RightAssignment_3 ) ) )
-            // InternalFirstOrderLogic.g:2573:1: ( ( rule__Greater__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:2603:1: ( ( ( rule__Greater__RightAssignment_3 ) ) )
+            // InternalFirstOrderLogic.g:2604:1: ( ( rule__Greater__RightAssignment_3 ) )
             {
-            // InternalFirstOrderLogic.g:2573:1: ( ( rule__Greater__RightAssignment_3 ) )
-            // InternalFirstOrderLogic.g:2574:2: ( rule__Greater__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:2604:1: ( ( rule__Greater__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:2605:2: ( rule__Greater__RightAssignment_3 )
             {
              before(grammarAccess.getGreaterAccess().getRightAssignment_3()); 
-            // InternalFirstOrderLogic.g:2575:2: ( rule__Greater__RightAssignment_3 )
-            // InternalFirstOrderLogic.g:2575:3: rule__Greater__RightAssignment_3
+            // InternalFirstOrderLogic.g:2606:2: ( rule__Greater__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:2606:3: rule__Greater__RightAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__Greater__RightAssignment_3();
@@ -7958,14 +8060,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__Group__4"
-    // InternalFirstOrderLogic.g:2583:1: rule__Greater__Group__4 : rule__Greater__Group__4__Impl ;
+    // InternalFirstOrderLogic.g:2614:1: rule__Greater__Group__4 : rule__Greater__Group__4__Impl ;
     public final void rule__Greater__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2587:1: ( rule__Greater__Group__4__Impl )
-            // InternalFirstOrderLogic.g:2588:2: rule__Greater__Group__4__Impl
+            // InternalFirstOrderLogic.g:2618:1: ( rule__Greater__Group__4__Impl )
+            // InternalFirstOrderLogic.g:2619:2: rule__Greater__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Greater__Group__4__Impl();
@@ -7991,17 +8093,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__Group__4__Impl"
-    // InternalFirstOrderLogic.g:2594:1: rule__Greater__Group__4__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:2625:1: rule__Greater__Group__4__Impl : ( ')' ) ;
     public final void rule__Greater__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2598:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:2599:1: ( ')' )
+            // InternalFirstOrderLogic.g:2629:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:2630:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:2599:1: ( ')' )
-            // InternalFirstOrderLogic.g:2600:2: ')'
+            // InternalFirstOrderLogic.g:2630:1: ( ')' )
+            // InternalFirstOrderLogic.g:2631:2: ')'
             {
              before(grammarAccess.getGreaterAccess().getRightParenthesisKeyword_4()); 
             match(input,25,FOLLOW_2); 
@@ -8028,14 +8130,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__Group__0"
-    // InternalFirstOrderLogic.g:2610:1: rule__GreaterEqual__Group__0 : rule__GreaterEqual__Group__0__Impl rule__GreaterEqual__Group__1 ;
+    // InternalFirstOrderLogic.g:2641:1: rule__GreaterEqual__Group__0 : rule__GreaterEqual__Group__0__Impl rule__GreaterEqual__Group__1 ;
     public final void rule__GreaterEqual__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2614:1: ( rule__GreaterEqual__Group__0__Impl rule__GreaterEqual__Group__1 )
-            // InternalFirstOrderLogic.g:2615:2: rule__GreaterEqual__Group__0__Impl rule__GreaterEqual__Group__1
+            // InternalFirstOrderLogic.g:2645:1: ( rule__GreaterEqual__Group__0__Impl rule__GreaterEqual__Group__1 )
+            // InternalFirstOrderLogic.g:2646:2: rule__GreaterEqual__Group__0__Impl rule__GreaterEqual__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__GreaterEqual__Group__0__Impl();
@@ -8066,17 +8168,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__Group__0__Impl"
-    // InternalFirstOrderLogic.g:2622:1: rule__GreaterEqual__Group__0__Impl : ( 'isGreaterEqual(' ) ;
+    // InternalFirstOrderLogic.g:2653:1: rule__GreaterEqual__Group__0__Impl : ( 'isGreaterEqual(' ) ;
     public final void rule__GreaterEqual__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2626:1: ( ( 'isGreaterEqual(' ) )
-            // InternalFirstOrderLogic.g:2627:1: ( 'isGreaterEqual(' )
+            // InternalFirstOrderLogic.g:2657:1: ( ( 'isGreaterEqual(' ) )
+            // InternalFirstOrderLogic.g:2658:1: ( 'isGreaterEqual(' )
             {
-            // InternalFirstOrderLogic.g:2627:1: ( 'isGreaterEqual(' )
-            // InternalFirstOrderLogic.g:2628:2: 'isGreaterEqual('
+            // InternalFirstOrderLogic.g:2658:1: ( 'isGreaterEqual(' )
+            // InternalFirstOrderLogic.g:2659:2: 'isGreaterEqual('
             {
              before(grammarAccess.getGreaterEqualAccess().getIsGreaterEqualKeyword_0()); 
             match(input,29,FOLLOW_2); 
@@ -8103,14 +8205,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__Group__1"
-    // InternalFirstOrderLogic.g:2637:1: rule__GreaterEqual__Group__1 : rule__GreaterEqual__Group__1__Impl rule__GreaterEqual__Group__2 ;
+    // InternalFirstOrderLogic.g:2668:1: rule__GreaterEqual__Group__1 : rule__GreaterEqual__Group__1__Impl rule__GreaterEqual__Group__2 ;
     public final void rule__GreaterEqual__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2641:1: ( rule__GreaterEqual__Group__1__Impl rule__GreaterEqual__Group__2 )
-            // InternalFirstOrderLogic.g:2642:2: rule__GreaterEqual__Group__1__Impl rule__GreaterEqual__Group__2
+            // InternalFirstOrderLogic.g:2672:1: ( rule__GreaterEqual__Group__1__Impl rule__GreaterEqual__Group__2 )
+            // InternalFirstOrderLogic.g:2673:2: rule__GreaterEqual__Group__1__Impl rule__GreaterEqual__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__GreaterEqual__Group__1__Impl();
@@ -8141,21 +8243,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__Group__1__Impl"
-    // InternalFirstOrderLogic.g:2649:1: rule__GreaterEqual__Group__1__Impl : ( ( rule__GreaterEqual__LeftAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:2680:1: rule__GreaterEqual__Group__1__Impl : ( ( rule__GreaterEqual__LeftAssignment_1 ) ) ;
     public final void rule__GreaterEqual__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2653:1: ( ( ( rule__GreaterEqual__LeftAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:2654:1: ( ( rule__GreaterEqual__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:2684:1: ( ( ( rule__GreaterEqual__LeftAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:2685:1: ( ( rule__GreaterEqual__LeftAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:2654:1: ( ( rule__GreaterEqual__LeftAssignment_1 ) )
-            // InternalFirstOrderLogic.g:2655:2: ( rule__GreaterEqual__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:2685:1: ( ( rule__GreaterEqual__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:2686:2: ( rule__GreaterEqual__LeftAssignment_1 )
             {
              before(grammarAccess.getGreaterEqualAccess().getLeftAssignment_1()); 
-            // InternalFirstOrderLogic.g:2656:2: ( rule__GreaterEqual__LeftAssignment_1 )
-            // InternalFirstOrderLogic.g:2656:3: rule__GreaterEqual__LeftAssignment_1
+            // InternalFirstOrderLogic.g:2687:2: ( rule__GreaterEqual__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:2687:3: rule__GreaterEqual__LeftAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__GreaterEqual__LeftAssignment_1();
@@ -8188,14 +8290,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__Group__2"
-    // InternalFirstOrderLogic.g:2664:1: rule__GreaterEqual__Group__2 : rule__GreaterEqual__Group__2__Impl rule__GreaterEqual__Group__3 ;
+    // InternalFirstOrderLogic.g:2695:1: rule__GreaterEqual__Group__2 : rule__GreaterEqual__Group__2__Impl rule__GreaterEqual__Group__3 ;
     public final void rule__GreaterEqual__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2668:1: ( rule__GreaterEqual__Group__2__Impl rule__GreaterEqual__Group__3 )
-            // InternalFirstOrderLogic.g:2669:2: rule__GreaterEqual__Group__2__Impl rule__GreaterEqual__Group__3
+            // InternalFirstOrderLogic.g:2699:1: ( rule__GreaterEqual__Group__2__Impl rule__GreaterEqual__Group__3 )
+            // InternalFirstOrderLogic.g:2700:2: rule__GreaterEqual__Group__2__Impl rule__GreaterEqual__Group__3
             {
             pushFollow(FOLLOW_24);
             rule__GreaterEqual__Group__2__Impl();
@@ -8226,17 +8328,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__Group__2__Impl"
-    // InternalFirstOrderLogic.g:2676:1: rule__GreaterEqual__Group__2__Impl : ( ',' ) ;
+    // InternalFirstOrderLogic.g:2707:1: rule__GreaterEqual__Group__2__Impl : ( ',' ) ;
     public final void rule__GreaterEqual__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2680:1: ( ( ',' ) )
-            // InternalFirstOrderLogic.g:2681:1: ( ',' )
+            // InternalFirstOrderLogic.g:2711:1: ( ( ',' ) )
+            // InternalFirstOrderLogic.g:2712:1: ( ',' )
             {
-            // InternalFirstOrderLogic.g:2681:1: ( ',' )
-            // InternalFirstOrderLogic.g:2682:2: ','
+            // InternalFirstOrderLogic.g:2712:1: ( ',' )
+            // InternalFirstOrderLogic.g:2713:2: ','
             {
              before(grammarAccess.getGreaterEqualAccess().getCommaKeyword_2()); 
             match(input,27,FOLLOW_2); 
@@ -8263,14 +8365,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__Group__3"
-    // InternalFirstOrderLogic.g:2691:1: rule__GreaterEqual__Group__3 : rule__GreaterEqual__Group__3__Impl rule__GreaterEqual__Group__4 ;
+    // InternalFirstOrderLogic.g:2722:1: rule__GreaterEqual__Group__3 : rule__GreaterEqual__Group__3__Impl rule__GreaterEqual__Group__4 ;
     public final void rule__GreaterEqual__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2695:1: ( rule__GreaterEqual__Group__3__Impl rule__GreaterEqual__Group__4 )
-            // InternalFirstOrderLogic.g:2696:2: rule__GreaterEqual__Group__3__Impl rule__GreaterEqual__Group__4
+            // InternalFirstOrderLogic.g:2726:1: ( rule__GreaterEqual__Group__3__Impl rule__GreaterEqual__Group__4 )
+            // InternalFirstOrderLogic.g:2727:2: rule__GreaterEqual__Group__3__Impl rule__GreaterEqual__Group__4
             {
             pushFollow(FOLLOW_23);
             rule__GreaterEqual__Group__3__Impl();
@@ -8301,21 +8403,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__Group__3__Impl"
-    // InternalFirstOrderLogic.g:2703:1: rule__GreaterEqual__Group__3__Impl : ( ( rule__GreaterEqual__RightAssignment_3 ) ) ;
+    // InternalFirstOrderLogic.g:2734:1: rule__GreaterEqual__Group__3__Impl : ( ( rule__GreaterEqual__RightAssignment_3 ) ) ;
     public final void rule__GreaterEqual__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2707:1: ( ( ( rule__GreaterEqual__RightAssignment_3 ) ) )
-            // InternalFirstOrderLogic.g:2708:1: ( ( rule__GreaterEqual__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:2738:1: ( ( ( rule__GreaterEqual__RightAssignment_3 ) ) )
+            // InternalFirstOrderLogic.g:2739:1: ( ( rule__GreaterEqual__RightAssignment_3 ) )
             {
-            // InternalFirstOrderLogic.g:2708:1: ( ( rule__GreaterEqual__RightAssignment_3 ) )
-            // InternalFirstOrderLogic.g:2709:2: ( rule__GreaterEqual__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:2739:1: ( ( rule__GreaterEqual__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:2740:2: ( rule__GreaterEqual__RightAssignment_3 )
             {
              before(grammarAccess.getGreaterEqualAccess().getRightAssignment_3()); 
-            // InternalFirstOrderLogic.g:2710:2: ( rule__GreaterEqual__RightAssignment_3 )
-            // InternalFirstOrderLogic.g:2710:3: rule__GreaterEqual__RightAssignment_3
+            // InternalFirstOrderLogic.g:2741:2: ( rule__GreaterEqual__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:2741:3: rule__GreaterEqual__RightAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__GreaterEqual__RightAssignment_3();
@@ -8348,14 +8450,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__Group__4"
-    // InternalFirstOrderLogic.g:2718:1: rule__GreaterEqual__Group__4 : rule__GreaterEqual__Group__4__Impl ;
+    // InternalFirstOrderLogic.g:2749:1: rule__GreaterEqual__Group__4 : rule__GreaterEqual__Group__4__Impl ;
     public final void rule__GreaterEqual__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2722:1: ( rule__GreaterEqual__Group__4__Impl )
-            // InternalFirstOrderLogic.g:2723:2: rule__GreaterEqual__Group__4__Impl
+            // InternalFirstOrderLogic.g:2753:1: ( rule__GreaterEqual__Group__4__Impl )
+            // InternalFirstOrderLogic.g:2754:2: rule__GreaterEqual__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__GreaterEqual__Group__4__Impl();
@@ -8381,17 +8483,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__Group__4__Impl"
-    // InternalFirstOrderLogic.g:2729:1: rule__GreaterEqual__Group__4__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:2760:1: rule__GreaterEqual__Group__4__Impl : ( ')' ) ;
     public final void rule__GreaterEqual__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2733:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:2734:1: ( ')' )
+            // InternalFirstOrderLogic.g:2764:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:2765:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:2734:1: ( ')' )
-            // InternalFirstOrderLogic.g:2735:2: ')'
+            // InternalFirstOrderLogic.g:2765:1: ( ')' )
+            // InternalFirstOrderLogic.g:2766:2: ')'
             {
              before(grammarAccess.getGreaterEqualAccess().getRightParenthesisKeyword_4()); 
             match(input,25,FOLLOW_2); 
@@ -8418,14 +8520,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__Group__0"
-    // InternalFirstOrderLogic.g:2745:1: rule__Smaller__Group__0 : rule__Smaller__Group__0__Impl rule__Smaller__Group__1 ;
+    // InternalFirstOrderLogic.g:2776:1: rule__Smaller__Group__0 : rule__Smaller__Group__0__Impl rule__Smaller__Group__1 ;
     public final void rule__Smaller__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2749:1: ( rule__Smaller__Group__0__Impl rule__Smaller__Group__1 )
-            // InternalFirstOrderLogic.g:2750:2: rule__Smaller__Group__0__Impl rule__Smaller__Group__1
+            // InternalFirstOrderLogic.g:2780:1: ( rule__Smaller__Group__0__Impl rule__Smaller__Group__1 )
+            // InternalFirstOrderLogic.g:2781:2: rule__Smaller__Group__0__Impl rule__Smaller__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__Smaller__Group__0__Impl();
@@ -8456,17 +8558,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__Group__0__Impl"
-    // InternalFirstOrderLogic.g:2757:1: rule__Smaller__Group__0__Impl : ( 'isSmaller(' ) ;
+    // InternalFirstOrderLogic.g:2788:1: rule__Smaller__Group__0__Impl : ( 'isSmaller(' ) ;
     public final void rule__Smaller__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2761:1: ( ( 'isSmaller(' ) )
-            // InternalFirstOrderLogic.g:2762:1: ( 'isSmaller(' )
+            // InternalFirstOrderLogic.g:2792:1: ( ( 'isSmaller(' ) )
+            // InternalFirstOrderLogic.g:2793:1: ( 'isSmaller(' )
             {
-            // InternalFirstOrderLogic.g:2762:1: ( 'isSmaller(' )
-            // InternalFirstOrderLogic.g:2763:2: 'isSmaller('
+            // InternalFirstOrderLogic.g:2793:1: ( 'isSmaller(' )
+            // InternalFirstOrderLogic.g:2794:2: 'isSmaller('
             {
              before(grammarAccess.getSmallerAccess().getIsSmallerKeyword_0()); 
             match(input,30,FOLLOW_2); 
@@ -8493,14 +8595,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__Group__1"
-    // InternalFirstOrderLogic.g:2772:1: rule__Smaller__Group__1 : rule__Smaller__Group__1__Impl rule__Smaller__Group__2 ;
+    // InternalFirstOrderLogic.g:2803:1: rule__Smaller__Group__1 : rule__Smaller__Group__1__Impl rule__Smaller__Group__2 ;
     public final void rule__Smaller__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2776:1: ( rule__Smaller__Group__1__Impl rule__Smaller__Group__2 )
-            // InternalFirstOrderLogic.g:2777:2: rule__Smaller__Group__1__Impl rule__Smaller__Group__2
+            // InternalFirstOrderLogic.g:2807:1: ( rule__Smaller__Group__1__Impl rule__Smaller__Group__2 )
+            // InternalFirstOrderLogic.g:2808:2: rule__Smaller__Group__1__Impl rule__Smaller__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__Smaller__Group__1__Impl();
@@ -8531,21 +8633,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__Group__1__Impl"
-    // InternalFirstOrderLogic.g:2784:1: rule__Smaller__Group__1__Impl : ( ( rule__Smaller__LeftAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:2815:1: rule__Smaller__Group__1__Impl : ( ( rule__Smaller__LeftAssignment_1 ) ) ;
     public final void rule__Smaller__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2788:1: ( ( ( rule__Smaller__LeftAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:2789:1: ( ( rule__Smaller__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:2819:1: ( ( ( rule__Smaller__LeftAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:2820:1: ( ( rule__Smaller__LeftAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:2789:1: ( ( rule__Smaller__LeftAssignment_1 ) )
-            // InternalFirstOrderLogic.g:2790:2: ( rule__Smaller__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:2820:1: ( ( rule__Smaller__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:2821:2: ( rule__Smaller__LeftAssignment_1 )
             {
              before(grammarAccess.getSmallerAccess().getLeftAssignment_1()); 
-            // InternalFirstOrderLogic.g:2791:2: ( rule__Smaller__LeftAssignment_1 )
-            // InternalFirstOrderLogic.g:2791:3: rule__Smaller__LeftAssignment_1
+            // InternalFirstOrderLogic.g:2822:2: ( rule__Smaller__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:2822:3: rule__Smaller__LeftAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__Smaller__LeftAssignment_1();
@@ -8578,14 +8680,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__Group__2"
-    // InternalFirstOrderLogic.g:2799:1: rule__Smaller__Group__2 : rule__Smaller__Group__2__Impl rule__Smaller__Group__3 ;
+    // InternalFirstOrderLogic.g:2830:1: rule__Smaller__Group__2 : rule__Smaller__Group__2__Impl rule__Smaller__Group__3 ;
     public final void rule__Smaller__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2803:1: ( rule__Smaller__Group__2__Impl rule__Smaller__Group__3 )
-            // InternalFirstOrderLogic.g:2804:2: rule__Smaller__Group__2__Impl rule__Smaller__Group__3
+            // InternalFirstOrderLogic.g:2834:1: ( rule__Smaller__Group__2__Impl rule__Smaller__Group__3 )
+            // InternalFirstOrderLogic.g:2835:2: rule__Smaller__Group__2__Impl rule__Smaller__Group__3
             {
             pushFollow(FOLLOW_24);
             rule__Smaller__Group__2__Impl();
@@ -8616,17 +8718,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__Group__2__Impl"
-    // InternalFirstOrderLogic.g:2811:1: rule__Smaller__Group__2__Impl : ( ',' ) ;
+    // InternalFirstOrderLogic.g:2842:1: rule__Smaller__Group__2__Impl : ( ',' ) ;
     public final void rule__Smaller__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2815:1: ( ( ',' ) )
-            // InternalFirstOrderLogic.g:2816:1: ( ',' )
+            // InternalFirstOrderLogic.g:2846:1: ( ( ',' ) )
+            // InternalFirstOrderLogic.g:2847:1: ( ',' )
             {
-            // InternalFirstOrderLogic.g:2816:1: ( ',' )
-            // InternalFirstOrderLogic.g:2817:2: ','
+            // InternalFirstOrderLogic.g:2847:1: ( ',' )
+            // InternalFirstOrderLogic.g:2848:2: ','
             {
              before(grammarAccess.getSmallerAccess().getCommaKeyword_2()); 
             match(input,27,FOLLOW_2); 
@@ -8653,14 +8755,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__Group__3"
-    // InternalFirstOrderLogic.g:2826:1: rule__Smaller__Group__3 : rule__Smaller__Group__3__Impl rule__Smaller__Group__4 ;
+    // InternalFirstOrderLogic.g:2857:1: rule__Smaller__Group__3 : rule__Smaller__Group__3__Impl rule__Smaller__Group__4 ;
     public final void rule__Smaller__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2830:1: ( rule__Smaller__Group__3__Impl rule__Smaller__Group__4 )
-            // InternalFirstOrderLogic.g:2831:2: rule__Smaller__Group__3__Impl rule__Smaller__Group__4
+            // InternalFirstOrderLogic.g:2861:1: ( rule__Smaller__Group__3__Impl rule__Smaller__Group__4 )
+            // InternalFirstOrderLogic.g:2862:2: rule__Smaller__Group__3__Impl rule__Smaller__Group__4
             {
             pushFollow(FOLLOW_23);
             rule__Smaller__Group__3__Impl();
@@ -8691,21 +8793,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__Group__3__Impl"
-    // InternalFirstOrderLogic.g:2838:1: rule__Smaller__Group__3__Impl : ( ( rule__Smaller__RightAssignment_3 ) ) ;
+    // InternalFirstOrderLogic.g:2869:1: rule__Smaller__Group__3__Impl : ( ( rule__Smaller__RightAssignment_3 ) ) ;
     public final void rule__Smaller__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2842:1: ( ( ( rule__Smaller__RightAssignment_3 ) ) )
-            // InternalFirstOrderLogic.g:2843:1: ( ( rule__Smaller__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:2873:1: ( ( ( rule__Smaller__RightAssignment_3 ) ) )
+            // InternalFirstOrderLogic.g:2874:1: ( ( rule__Smaller__RightAssignment_3 ) )
             {
-            // InternalFirstOrderLogic.g:2843:1: ( ( rule__Smaller__RightAssignment_3 ) )
-            // InternalFirstOrderLogic.g:2844:2: ( rule__Smaller__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:2874:1: ( ( rule__Smaller__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:2875:2: ( rule__Smaller__RightAssignment_3 )
             {
              before(grammarAccess.getSmallerAccess().getRightAssignment_3()); 
-            // InternalFirstOrderLogic.g:2845:2: ( rule__Smaller__RightAssignment_3 )
-            // InternalFirstOrderLogic.g:2845:3: rule__Smaller__RightAssignment_3
+            // InternalFirstOrderLogic.g:2876:2: ( rule__Smaller__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:2876:3: rule__Smaller__RightAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__Smaller__RightAssignment_3();
@@ -8738,14 +8840,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__Group__4"
-    // InternalFirstOrderLogic.g:2853:1: rule__Smaller__Group__4 : rule__Smaller__Group__4__Impl ;
+    // InternalFirstOrderLogic.g:2884:1: rule__Smaller__Group__4 : rule__Smaller__Group__4__Impl ;
     public final void rule__Smaller__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2857:1: ( rule__Smaller__Group__4__Impl )
-            // InternalFirstOrderLogic.g:2858:2: rule__Smaller__Group__4__Impl
+            // InternalFirstOrderLogic.g:2888:1: ( rule__Smaller__Group__4__Impl )
+            // InternalFirstOrderLogic.g:2889:2: rule__Smaller__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Smaller__Group__4__Impl();
@@ -8771,17 +8873,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__Group__4__Impl"
-    // InternalFirstOrderLogic.g:2864:1: rule__Smaller__Group__4__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:2895:1: rule__Smaller__Group__4__Impl : ( ')' ) ;
     public final void rule__Smaller__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2868:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:2869:1: ( ')' )
+            // InternalFirstOrderLogic.g:2899:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:2900:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:2869:1: ( ')' )
-            // InternalFirstOrderLogic.g:2870:2: ')'
+            // InternalFirstOrderLogic.g:2900:1: ( ')' )
+            // InternalFirstOrderLogic.g:2901:2: ')'
             {
              before(grammarAccess.getSmallerAccess().getRightParenthesisKeyword_4()); 
             match(input,25,FOLLOW_2); 
@@ -8808,14 +8910,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__Group__0"
-    // InternalFirstOrderLogic.g:2880:1: rule__SmallerEqual__Group__0 : rule__SmallerEqual__Group__0__Impl rule__SmallerEqual__Group__1 ;
+    // InternalFirstOrderLogic.g:2911:1: rule__SmallerEqual__Group__0 : rule__SmallerEqual__Group__0__Impl rule__SmallerEqual__Group__1 ;
     public final void rule__SmallerEqual__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2884:1: ( rule__SmallerEqual__Group__0__Impl rule__SmallerEqual__Group__1 )
-            // InternalFirstOrderLogic.g:2885:2: rule__SmallerEqual__Group__0__Impl rule__SmallerEqual__Group__1
+            // InternalFirstOrderLogic.g:2915:1: ( rule__SmallerEqual__Group__0__Impl rule__SmallerEqual__Group__1 )
+            // InternalFirstOrderLogic.g:2916:2: rule__SmallerEqual__Group__0__Impl rule__SmallerEqual__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__SmallerEqual__Group__0__Impl();
@@ -8846,17 +8948,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__Group__0__Impl"
-    // InternalFirstOrderLogic.g:2892:1: rule__SmallerEqual__Group__0__Impl : ( 'isSmallerEqual(' ) ;
+    // InternalFirstOrderLogic.g:2923:1: rule__SmallerEqual__Group__0__Impl : ( 'isSmallerEqual(' ) ;
     public final void rule__SmallerEqual__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2896:1: ( ( 'isSmallerEqual(' ) )
-            // InternalFirstOrderLogic.g:2897:1: ( 'isSmallerEqual(' )
+            // InternalFirstOrderLogic.g:2927:1: ( ( 'isSmallerEqual(' ) )
+            // InternalFirstOrderLogic.g:2928:1: ( 'isSmallerEqual(' )
             {
-            // InternalFirstOrderLogic.g:2897:1: ( 'isSmallerEqual(' )
-            // InternalFirstOrderLogic.g:2898:2: 'isSmallerEqual('
+            // InternalFirstOrderLogic.g:2928:1: ( 'isSmallerEqual(' )
+            // InternalFirstOrderLogic.g:2929:2: 'isSmallerEqual('
             {
              before(grammarAccess.getSmallerEqualAccess().getIsSmallerEqualKeyword_0()); 
             match(input,31,FOLLOW_2); 
@@ -8883,14 +8985,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__Group__1"
-    // InternalFirstOrderLogic.g:2907:1: rule__SmallerEqual__Group__1 : rule__SmallerEqual__Group__1__Impl rule__SmallerEqual__Group__2 ;
+    // InternalFirstOrderLogic.g:2938:1: rule__SmallerEqual__Group__1 : rule__SmallerEqual__Group__1__Impl rule__SmallerEqual__Group__2 ;
     public final void rule__SmallerEqual__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2911:1: ( rule__SmallerEqual__Group__1__Impl rule__SmallerEqual__Group__2 )
-            // InternalFirstOrderLogic.g:2912:2: rule__SmallerEqual__Group__1__Impl rule__SmallerEqual__Group__2
+            // InternalFirstOrderLogic.g:2942:1: ( rule__SmallerEqual__Group__1__Impl rule__SmallerEqual__Group__2 )
+            // InternalFirstOrderLogic.g:2943:2: rule__SmallerEqual__Group__1__Impl rule__SmallerEqual__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__SmallerEqual__Group__1__Impl();
@@ -8921,21 +9023,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__Group__1__Impl"
-    // InternalFirstOrderLogic.g:2919:1: rule__SmallerEqual__Group__1__Impl : ( ( rule__SmallerEqual__LeftAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:2950:1: rule__SmallerEqual__Group__1__Impl : ( ( rule__SmallerEqual__LeftAssignment_1 ) ) ;
     public final void rule__SmallerEqual__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2923:1: ( ( ( rule__SmallerEqual__LeftAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:2924:1: ( ( rule__SmallerEqual__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:2954:1: ( ( ( rule__SmallerEqual__LeftAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:2955:1: ( ( rule__SmallerEqual__LeftAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:2924:1: ( ( rule__SmallerEqual__LeftAssignment_1 ) )
-            // InternalFirstOrderLogic.g:2925:2: ( rule__SmallerEqual__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:2955:1: ( ( rule__SmallerEqual__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:2956:2: ( rule__SmallerEqual__LeftAssignment_1 )
             {
              before(grammarAccess.getSmallerEqualAccess().getLeftAssignment_1()); 
-            // InternalFirstOrderLogic.g:2926:2: ( rule__SmallerEqual__LeftAssignment_1 )
-            // InternalFirstOrderLogic.g:2926:3: rule__SmallerEqual__LeftAssignment_1
+            // InternalFirstOrderLogic.g:2957:2: ( rule__SmallerEqual__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:2957:3: rule__SmallerEqual__LeftAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__SmallerEqual__LeftAssignment_1();
@@ -8968,14 +9070,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__Group__2"
-    // InternalFirstOrderLogic.g:2934:1: rule__SmallerEqual__Group__2 : rule__SmallerEqual__Group__2__Impl rule__SmallerEqual__Group__3 ;
+    // InternalFirstOrderLogic.g:2965:1: rule__SmallerEqual__Group__2 : rule__SmallerEqual__Group__2__Impl rule__SmallerEqual__Group__3 ;
     public final void rule__SmallerEqual__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2938:1: ( rule__SmallerEqual__Group__2__Impl rule__SmallerEqual__Group__3 )
-            // InternalFirstOrderLogic.g:2939:2: rule__SmallerEqual__Group__2__Impl rule__SmallerEqual__Group__3
+            // InternalFirstOrderLogic.g:2969:1: ( rule__SmallerEqual__Group__2__Impl rule__SmallerEqual__Group__3 )
+            // InternalFirstOrderLogic.g:2970:2: rule__SmallerEqual__Group__2__Impl rule__SmallerEqual__Group__3
             {
             pushFollow(FOLLOW_24);
             rule__SmallerEqual__Group__2__Impl();
@@ -9006,17 +9108,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__Group__2__Impl"
-    // InternalFirstOrderLogic.g:2946:1: rule__SmallerEqual__Group__2__Impl : ( ',' ) ;
+    // InternalFirstOrderLogic.g:2977:1: rule__SmallerEqual__Group__2__Impl : ( ',' ) ;
     public final void rule__SmallerEqual__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2950:1: ( ( ',' ) )
-            // InternalFirstOrderLogic.g:2951:1: ( ',' )
+            // InternalFirstOrderLogic.g:2981:1: ( ( ',' ) )
+            // InternalFirstOrderLogic.g:2982:1: ( ',' )
             {
-            // InternalFirstOrderLogic.g:2951:1: ( ',' )
-            // InternalFirstOrderLogic.g:2952:2: ','
+            // InternalFirstOrderLogic.g:2982:1: ( ',' )
+            // InternalFirstOrderLogic.g:2983:2: ','
             {
              before(grammarAccess.getSmallerEqualAccess().getCommaKeyword_2()); 
             match(input,27,FOLLOW_2); 
@@ -9043,14 +9145,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__Group__3"
-    // InternalFirstOrderLogic.g:2961:1: rule__SmallerEqual__Group__3 : rule__SmallerEqual__Group__3__Impl rule__SmallerEqual__Group__4 ;
+    // InternalFirstOrderLogic.g:2992:1: rule__SmallerEqual__Group__3 : rule__SmallerEqual__Group__3__Impl rule__SmallerEqual__Group__4 ;
     public final void rule__SmallerEqual__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2965:1: ( rule__SmallerEqual__Group__3__Impl rule__SmallerEqual__Group__4 )
-            // InternalFirstOrderLogic.g:2966:2: rule__SmallerEqual__Group__3__Impl rule__SmallerEqual__Group__4
+            // InternalFirstOrderLogic.g:2996:1: ( rule__SmallerEqual__Group__3__Impl rule__SmallerEqual__Group__4 )
+            // InternalFirstOrderLogic.g:2997:2: rule__SmallerEqual__Group__3__Impl rule__SmallerEqual__Group__4
             {
             pushFollow(FOLLOW_23);
             rule__SmallerEqual__Group__3__Impl();
@@ -9081,21 +9183,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__Group__3__Impl"
-    // InternalFirstOrderLogic.g:2973:1: rule__SmallerEqual__Group__3__Impl : ( ( rule__SmallerEqual__RightAssignment_3 ) ) ;
+    // InternalFirstOrderLogic.g:3004:1: rule__SmallerEqual__Group__3__Impl : ( ( rule__SmallerEqual__RightAssignment_3 ) ) ;
     public final void rule__SmallerEqual__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2977:1: ( ( ( rule__SmallerEqual__RightAssignment_3 ) ) )
-            // InternalFirstOrderLogic.g:2978:1: ( ( rule__SmallerEqual__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:3008:1: ( ( ( rule__SmallerEqual__RightAssignment_3 ) ) )
+            // InternalFirstOrderLogic.g:3009:1: ( ( rule__SmallerEqual__RightAssignment_3 ) )
             {
-            // InternalFirstOrderLogic.g:2978:1: ( ( rule__SmallerEqual__RightAssignment_3 ) )
-            // InternalFirstOrderLogic.g:2979:2: ( rule__SmallerEqual__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:3009:1: ( ( rule__SmallerEqual__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:3010:2: ( rule__SmallerEqual__RightAssignment_3 )
             {
              before(grammarAccess.getSmallerEqualAccess().getRightAssignment_3()); 
-            // InternalFirstOrderLogic.g:2980:2: ( rule__SmallerEqual__RightAssignment_3 )
-            // InternalFirstOrderLogic.g:2980:3: rule__SmallerEqual__RightAssignment_3
+            // InternalFirstOrderLogic.g:3011:2: ( rule__SmallerEqual__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:3011:3: rule__SmallerEqual__RightAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__SmallerEqual__RightAssignment_3();
@@ -9128,14 +9230,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__Group__4"
-    // InternalFirstOrderLogic.g:2988:1: rule__SmallerEqual__Group__4 : rule__SmallerEqual__Group__4__Impl ;
+    // InternalFirstOrderLogic.g:3019:1: rule__SmallerEqual__Group__4 : rule__SmallerEqual__Group__4__Impl ;
     public final void rule__SmallerEqual__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:2992:1: ( rule__SmallerEqual__Group__4__Impl )
-            // InternalFirstOrderLogic.g:2993:2: rule__SmallerEqual__Group__4__Impl
+            // InternalFirstOrderLogic.g:3023:1: ( rule__SmallerEqual__Group__4__Impl )
+            // InternalFirstOrderLogic.g:3024:2: rule__SmallerEqual__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__SmallerEqual__Group__4__Impl();
@@ -9161,17 +9263,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__Group__4__Impl"
-    // InternalFirstOrderLogic.g:2999:1: rule__SmallerEqual__Group__4__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:3030:1: rule__SmallerEqual__Group__4__Impl : ( ')' ) ;
     public final void rule__SmallerEqual__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3003:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:3004:1: ( ')' )
+            // InternalFirstOrderLogic.g:3034:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:3035:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:3004:1: ( ')' )
-            // InternalFirstOrderLogic.g:3005:2: ')'
+            // InternalFirstOrderLogic.g:3035:1: ( ')' )
+            // InternalFirstOrderLogic.g:3036:2: ')'
             {
              before(grammarAccess.getSmallerEqualAccess().getRightParenthesisKeyword_4()); 
             match(input,25,FOLLOW_2); 
@@ -9198,14 +9300,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsEmpty__Group__0"
-    // InternalFirstOrderLogic.g:3015:1: rule__IsEmpty__Group__0 : rule__IsEmpty__Group__0__Impl rule__IsEmpty__Group__1 ;
+    // InternalFirstOrderLogic.g:3046:1: rule__IsEmpty__Group__0 : rule__IsEmpty__Group__0__Impl rule__IsEmpty__Group__1 ;
     public final void rule__IsEmpty__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3019:1: ( rule__IsEmpty__Group__0__Impl rule__IsEmpty__Group__1 )
-            // InternalFirstOrderLogic.g:3020:2: rule__IsEmpty__Group__0__Impl rule__IsEmpty__Group__1
+            // InternalFirstOrderLogic.g:3050:1: ( rule__IsEmpty__Group__0__Impl rule__IsEmpty__Group__1 )
+            // InternalFirstOrderLogic.g:3051:2: rule__IsEmpty__Group__0__Impl rule__IsEmpty__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__IsEmpty__Group__0__Impl();
@@ -9236,17 +9338,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsEmpty__Group__0__Impl"
-    // InternalFirstOrderLogic.g:3027:1: rule__IsEmpty__Group__0__Impl : ( 'isEmpty(' ) ;
+    // InternalFirstOrderLogic.g:3058:1: rule__IsEmpty__Group__0__Impl : ( 'isEmpty(' ) ;
     public final void rule__IsEmpty__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3031:1: ( ( 'isEmpty(' ) )
-            // InternalFirstOrderLogic.g:3032:1: ( 'isEmpty(' )
+            // InternalFirstOrderLogic.g:3062:1: ( ( 'isEmpty(' ) )
+            // InternalFirstOrderLogic.g:3063:1: ( 'isEmpty(' )
             {
-            // InternalFirstOrderLogic.g:3032:1: ( 'isEmpty(' )
-            // InternalFirstOrderLogic.g:3033:2: 'isEmpty('
+            // InternalFirstOrderLogic.g:3063:1: ( 'isEmpty(' )
+            // InternalFirstOrderLogic.g:3064:2: 'isEmpty('
             {
              before(grammarAccess.getIsEmptyAccess().getIsEmptyKeyword_0()); 
             match(input,32,FOLLOW_2); 
@@ -9273,14 +9375,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsEmpty__Group__1"
-    // InternalFirstOrderLogic.g:3042:1: rule__IsEmpty__Group__1 : rule__IsEmpty__Group__1__Impl rule__IsEmpty__Group__2 ;
+    // InternalFirstOrderLogic.g:3073:1: rule__IsEmpty__Group__1 : rule__IsEmpty__Group__1__Impl rule__IsEmpty__Group__2 ;
     public final void rule__IsEmpty__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3046:1: ( rule__IsEmpty__Group__1__Impl rule__IsEmpty__Group__2 )
-            // InternalFirstOrderLogic.g:3047:2: rule__IsEmpty__Group__1__Impl rule__IsEmpty__Group__2
+            // InternalFirstOrderLogic.g:3077:1: ( rule__IsEmpty__Group__1__Impl rule__IsEmpty__Group__2 )
+            // InternalFirstOrderLogic.g:3078:2: rule__IsEmpty__Group__1__Impl rule__IsEmpty__Group__2
             {
             pushFollow(FOLLOW_23);
             rule__IsEmpty__Group__1__Impl();
@@ -9311,21 +9413,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsEmpty__Group__1__Impl"
-    // InternalFirstOrderLogic.g:3054:1: rule__IsEmpty__Group__1__Impl : ( ( rule__IsEmpty__TermAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:3085:1: rule__IsEmpty__Group__1__Impl : ( ( rule__IsEmpty__TermAssignment_1 ) ) ;
     public final void rule__IsEmpty__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3058:1: ( ( ( rule__IsEmpty__TermAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:3059:1: ( ( rule__IsEmpty__TermAssignment_1 ) )
+            // InternalFirstOrderLogic.g:3089:1: ( ( ( rule__IsEmpty__TermAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:3090:1: ( ( rule__IsEmpty__TermAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:3059:1: ( ( rule__IsEmpty__TermAssignment_1 ) )
-            // InternalFirstOrderLogic.g:3060:2: ( rule__IsEmpty__TermAssignment_1 )
+            // InternalFirstOrderLogic.g:3090:1: ( ( rule__IsEmpty__TermAssignment_1 ) )
+            // InternalFirstOrderLogic.g:3091:2: ( rule__IsEmpty__TermAssignment_1 )
             {
              before(grammarAccess.getIsEmptyAccess().getTermAssignment_1()); 
-            // InternalFirstOrderLogic.g:3061:2: ( rule__IsEmpty__TermAssignment_1 )
-            // InternalFirstOrderLogic.g:3061:3: rule__IsEmpty__TermAssignment_1
+            // InternalFirstOrderLogic.g:3092:2: ( rule__IsEmpty__TermAssignment_1 )
+            // InternalFirstOrderLogic.g:3092:3: rule__IsEmpty__TermAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__IsEmpty__TermAssignment_1();
@@ -9358,14 +9460,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsEmpty__Group__2"
-    // InternalFirstOrderLogic.g:3069:1: rule__IsEmpty__Group__2 : rule__IsEmpty__Group__2__Impl ;
+    // InternalFirstOrderLogic.g:3100:1: rule__IsEmpty__Group__2 : rule__IsEmpty__Group__2__Impl ;
     public final void rule__IsEmpty__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3073:1: ( rule__IsEmpty__Group__2__Impl )
-            // InternalFirstOrderLogic.g:3074:2: rule__IsEmpty__Group__2__Impl
+            // InternalFirstOrderLogic.g:3104:1: ( rule__IsEmpty__Group__2__Impl )
+            // InternalFirstOrderLogic.g:3105:2: rule__IsEmpty__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__IsEmpty__Group__2__Impl();
@@ -9391,17 +9493,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsEmpty__Group__2__Impl"
-    // InternalFirstOrderLogic.g:3080:1: rule__IsEmpty__Group__2__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:3111:1: rule__IsEmpty__Group__2__Impl : ( ')' ) ;
     public final void rule__IsEmpty__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3084:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:3085:1: ( ')' )
+            // InternalFirstOrderLogic.g:3115:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:3116:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:3085:1: ( ')' )
-            // InternalFirstOrderLogic.g:3086:2: ')'
+            // InternalFirstOrderLogic.g:3116:1: ( ')' )
+            // InternalFirstOrderLogic.g:3117:2: ')'
             {
              before(grammarAccess.getIsEmptyAccess().getRightParenthesisKeyword_2()); 
             match(input,25,FOLLOW_2); 
@@ -9428,14 +9530,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__Group__0"
-    // InternalFirstOrderLogic.g:3096:1: rule__IsInstanceOf__Group__0 : rule__IsInstanceOf__Group__0__Impl rule__IsInstanceOf__Group__1 ;
+    // InternalFirstOrderLogic.g:3127:1: rule__IsInstanceOf__Group__0 : rule__IsInstanceOf__Group__0__Impl rule__IsInstanceOf__Group__1 ;
     public final void rule__IsInstanceOf__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3100:1: ( rule__IsInstanceOf__Group__0__Impl rule__IsInstanceOf__Group__1 )
-            // InternalFirstOrderLogic.g:3101:2: rule__IsInstanceOf__Group__0__Impl rule__IsInstanceOf__Group__1
+            // InternalFirstOrderLogic.g:3131:1: ( rule__IsInstanceOf__Group__0__Impl rule__IsInstanceOf__Group__1 )
+            // InternalFirstOrderLogic.g:3132:2: rule__IsInstanceOf__Group__0__Impl rule__IsInstanceOf__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__IsInstanceOf__Group__0__Impl();
@@ -9466,17 +9568,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__Group__0__Impl"
-    // InternalFirstOrderLogic.g:3108:1: rule__IsInstanceOf__Group__0__Impl : ( 'isInstanceOf(' ) ;
+    // InternalFirstOrderLogic.g:3139:1: rule__IsInstanceOf__Group__0__Impl : ( 'isInstanceOf(' ) ;
     public final void rule__IsInstanceOf__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3112:1: ( ( 'isInstanceOf(' ) )
-            // InternalFirstOrderLogic.g:3113:1: ( 'isInstanceOf(' )
+            // InternalFirstOrderLogic.g:3143:1: ( ( 'isInstanceOf(' ) )
+            // InternalFirstOrderLogic.g:3144:1: ( 'isInstanceOf(' )
             {
-            // InternalFirstOrderLogic.g:3113:1: ( 'isInstanceOf(' )
-            // InternalFirstOrderLogic.g:3114:2: 'isInstanceOf('
+            // InternalFirstOrderLogic.g:3144:1: ( 'isInstanceOf(' )
+            // InternalFirstOrderLogic.g:3145:2: 'isInstanceOf('
             {
              before(grammarAccess.getIsInstanceOfAccess().getIsInstanceOfKeyword_0()); 
             match(input,33,FOLLOW_2); 
@@ -9503,14 +9605,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__Group__1"
-    // InternalFirstOrderLogic.g:3123:1: rule__IsInstanceOf__Group__1 : rule__IsInstanceOf__Group__1__Impl rule__IsInstanceOf__Group__2 ;
+    // InternalFirstOrderLogic.g:3154:1: rule__IsInstanceOf__Group__1 : rule__IsInstanceOf__Group__1__Impl rule__IsInstanceOf__Group__2 ;
     public final void rule__IsInstanceOf__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3127:1: ( rule__IsInstanceOf__Group__1__Impl rule__IsInstanceOf__Group__2 )
-            // InternalFirstOrderLogic.g:3128:2: rule__IsInstanceOf__Group__1__Impl rule__IsInstanceOf__Group__2
+            // InternalFirstOrderLogic.g:3158:1: ( rule__IsInstanceOf__Group__1__Impl rule__IsInstanceOf__Group__2 )
+            // InternalFirstOrderLogic.g:3159:2: rule__IsInstanceOf__Group__1__Impl rule__IsInstanceOf__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__IsInstanceOf__Group__1__Impl();
@@ -9541,21 +9643,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__Group__1__Impl"
-    // InternalFirstOrderLogic.g:3135:1: rule__IsInstanceOf__Group__1__Impl : ( ( rule__IsInstanceOf__TermAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:3166:1: rule__IsInstanceOf__Group__1__Impl : ( ( rule__IsInstanceOf__TermAssignment_1 ) ) ;
     public final void rule__IsInstanceOf__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3139:1: ( ( ( rule__IsInstanceOf__TermAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:3140:1: ( ( rule__IsInstanceOf__TermAssignment_1 ) )
+            // InternalFirstOrderLogic.g:3170:1: ( ( ( rule__IsInstanceOf__TermAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:3171:1: ( ( rule__IsInstanceOf__TermAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:3140:1: ( ( rule__IsInstanceOf__TermAssignment_1 ) )
-            // InternalFirstOrderLogic.g:3141:2: ( rule__IsInstanceOf__TermAssignment_1 )
+            // InternalFirstOrderLogic.g:3171:1: ( ( rule__IsInstanceOf__TermAssignment_1 ) )
+            // InternalFirstOrderLogic.g:3172:2: ( rule__IsInstanceOf__TermAssignment_1 )
             {
              before(grammarAccess.getIsInstanceOfAccess().getTermAssignment_1()); 
-            // InternalFirstOrderLogic.g:3142:2: ( rule__IsInstanceOf__TermAssignment_1 )
-            // InternalFirstOrderLogic.g:3142:3: rule__IsInstanceOf__TermAssignment_1
+            // InternalFirstOrderLogic.g:3173:2: ( rule__IsInstanceOf__TermAssignment_1 )
+            // InternalFirstOrderLogic.g:3173:3: rule__IsInstanceOf__TermAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__IsInstanceOf__TermAssignment_1();
@@ -9588,14 +9690,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__Group__2"
-    // InternalFirstOrderLogic.g:3150:1: rule__IsInstanceOf__Group__2 : rule__IsInstanceOf__Group__2__Impl rule__IsInstanceOf__Group__3 ;
+    // InternalFirstOrderLogic.g:3181:1: rule__IsInstanceOf__Group__2 : rule__IsInstanceOf__Group__2__Impl rule__IsInstanceOf__Group__3 ;
     public final void rule__IsInstanceOf__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3154:1: ( rule__IsInstanceOf__Group__2__Impl rule__IsInstanceOf__Group__3 )
-            // InternalFirstOrderLogic.g:3155:2: rule__IsInstanceOf__Group__2__Impl rule__IsInstanceOf__Group__3
+            // InternalFirstOrderLogic.g:3185:1: ( rule__IsInstanceOf__Group__2__Impl rule__IsInstanceOf__Group__3 )
+            // InternalFirstOrderLogic.g:3186:2: rule__IsInstanceOf__Group__2__Impl rule__IsInstanceOf__Group__3
             {
             pushFollow(FOLLOW_7);
             rule__IsInstanceOf__Group__2__Impl();
@@ -9626,17 +9728,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__Group__2__Impl"
-    // InternalFirstOrderLogic.g:3162:1: rule__IsInstanceOf__Group__2__Impl : ( ',' ) ;
+    // InternalFirstOrderLogic.g:3193:1: rule__IsInstanceOf__Group__2__Impl : ( ',' ) ;
     public final void rule__IsInstanceOf__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3166:1: ( ( ',' ) )
-            // InternalFirstOrderLogic.g:3167:1: ( ',' )
+            // InternalFirstOrderLogic.g:3197:1: ( ( ',' ) )
+            // InternalFirstOrderLogic.g:3198:1: ( ',' )
             {
-            // InternalFirstOrderLogic.g:3167:1: ( ',' )
-            // InternalFirstOrderLogic.g:3168:2: ','
+            // InternalFirstOrderLogic.g:3198:1: ( ',' )
+            // InternalFirstOrderLogic.g:3199:2: ','
             {
              before(grammarAccess.getIsInstanceOfAccess().getCommaKeyword_2()); 
             match(input,27,FOLLOW_2); 
@@ -9663,14 +9765,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__Group__3"
-    // InternalFirstOrderLogic.g:3177:1: rule__IsInstanceOf__Group__3 : rule__IsInstanceOf__Group__3__Impl rule__IsInstanceOf__Group__4 ;
+    // InternalFirstOrderLogic.g:3208:1: rule__IsInstanceOf__Group__3 : rule__IsInstanceOf__Group__3__Impl rule__IsInstanceOf__Group__4 ;
     public final void rule__IsInstanceOf__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3181:1: ( rule__IsInstanceOf__Group__3__Impl rule__IsInstanceOf__Group__4 )
-            // InternalFirstOrderLogic.g:3182:2: rule__IsInstanceOf__Group__3__Impl rule__IsInstanceOf__Group__4
+            // InternalFirstOrderLogic.g:3212:1: ( rule__IsInstanceOf__Group__3__Impl rule__IsInstanceOf__Group__4 )
+            // InternalFirstOrderLogic.g:3213:2: rule__IsInstanceOf__Group__3__Impl rule__IsInstanceOf__Group__4
             {
             pushFollow(FOLLOW_23);
             rule__IsInstanceOf__Group__3__Impl();
@@ -9701,21 +9803,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__Group__3__Impl"
-    // InternalFirstOrderLogic.g:3189:1: rule__IsInstanceOf__Group__3__Impl : ( ( rule__IsInstanceOf__TypeAssignment_3 ) ) ;
+    // InternalFirstOrderLogic.g:3220:1: rule__IsInstanceOf__Group__3__Impl : ( ( rule__IsInstanceOf__TypeAssignment_3 ) ) ;
     public final void rule__IsInstanceOf__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3193:1: ( ( ( rule__IsInstanceOf__TypeAssignment_3 ) ) )
-            // InternalFirstOrderLogic.g:3194:1: ( ( rule__IsInstanceOf__TypeAssignment_3 ) )
+            // InternalFirstOrderLogic.g:3224:1: ( ( ( rule__IsInstanceOf__TypeAssignment_3 ) ) )
+            // InternalFirstOrderLogic.g:3225:1: ( ( rule__IsInstanceOf__TypeAssignment_3 ) )
             {
-            // InternalFirstOrderLogic.g:3194:1: ( ( rule__IsInstanceOf__TypeAssignment_3 ) )
-            // InternalFirstOrderLogic.g:3195:2: ( rule__IsInstanceOf__TypeAssignment_3 )
+            // InternalFirstOrderLogic.g:3225:1: ( ( rule__IsInstanceOf__TypeAssignment_3 ) )
+            // InternalFirstOrderLogic.g:3226:2: ( rule__IsInstanceOf__TypeAssignment_3 )
             {
              before(grammarAccess.getIsInstanceOfAccess().getTypeAssignment_3()); 
-            // InternalFirstOrderLogic.g:3196:2: ( rule__IsInstanceOf__TypeAssignment_3 )
-            // InternalFirstOrderLogic.g:3196:3: rule__IsInstanceOf__TypeAssignment_3
+            // InternalFirstOrderLogic.g:3227:2: ( rule__IsInstanceOf__TypeAssignment_3 )
+            // InternalFirstOrderLogic.g:3227:3: rule__IsInstanceOf__TypeAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__IsInstanceOf__TypeAssignment_3();
@@ -9748,14 +9850,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__Group__4"
-    // InternalFirstOrderLogic.g:3204:1: rule__IsInstanceOf__Group__4 : rule__IsInstanceOf__Group__4__Impl ;
+    // InternalFirstOrderLogic.g:3235:1: rule__IsInstanceOf__Group__4 : rule__IsInstanceOf__Group__4__Impl ;
     public final void rule__IsInstanceOf__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3208:1: ( rule__IsInstanceOf__Group__4__Impl )
-            // InternalFirstOrderLogic.g:3209:2: rule__IsInstanceOf__Group__4__Impl
+            // InternalFirstOrderLogic.g:3239:1: ( rule__IsInstanceOf__Group__4__Impl )
+            // InternalFirstOrderLogic.g:3240:2: rule__IsInstanceOf__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__IsInstanceOf__Group__4__Impl();
@@ -9781,17 +9883,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__Group__4__Impl"
-    // InternalFirstOrderLogic.g:3215:1: rule__IsInstanceOf__Group__4__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:3246:1: rule__IsInstanceOf__Group__4__Impl : ( ')' ) ;
     public final void rule__IsInstanceOf__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3219:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:3220:1: ( ')' )
+            // InternalFirstOrderLogic.g:3250:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:3251:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:3220:1: ( ')' )
-            // InternalFirstOrderLogic.g:3221:2: ')'
+            // InternalFirstOrderLogic.g:3251:1: ( ')' )
+            // InternalFirstOrderLogic.g:3252:2: ')'
             {
              before(grammarAccess.getIsInstanceOfAccess().getRightParenthesisKeyword_4()); 
             match(input,25,FOLLOW_2); 
@@ -9818,14 +9920,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__0"
-    // InternalFirstOrderLogic.g:3231:1: rule__ForAll__Group__0 : rule__ForAll__Group__0__Impl rule__ForAll__Group__1 ;
+    // InternalFirstOrderLogic.g:3262:1: rule__ForAll__Group__0 : rule__ForAll__Group__0__Impl rule__ForAll__Group__1 ;
     public final void rule__ForAll__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3235:1: ( rule__ForAll__Group__0__Impl rule__ForAll__Group__1 )
-            // InternalFirstOrderLogic.g:3236:2: rule__ForAll__Group__0__Impl rule__ForAll__Group__1
+            // InternalFirstOrderLogic.g:3266:1: ( rule__ForAll__Group__0__Impl rule__ForAll__Group__1 )
+            // InternalFirstOrderLogic.g:3267:2: rule__ForAll__Group__0__Impl rule__ForAll__Group__1
             {
             pushFollow(FOLLOW_26);
             rule__ForAll__Group__0__Impl();
@@ -9856,21 +9958,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__0__Impl"
-    // InternalFirstOrderLogic.g:3243:1: rule__ForAll__Group__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:3274:1: rule__ForAll__Group__0__Impl : ( () ) ;
     public final void rule__ForAll__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3247:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:3248:1: ( () )
+            // InternalFirstOrderLogic.g:3278:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:3279:1: ( () )
             {
-            // InternalFirstOrderLogic.g:3248:1: ( () )
-            // InternalFirstOrderLogic.g:3249:2: ()
+            // InternalFirstOrderLogic.g:3279:1: ( () )
+            // InternalFirstOrderLogic.g:3280:2: ()
             {
              before(grammarAccess.getForAllAccess().getForAllAction_0()); 
-            // InternalFirstOrderLogic.g:3250:2: ()
-            // InternalFirstOrderLogic.g:3250:3: 
+            // InternalFirstOrderLogic.g:3281:2: ()
+            // InternalFirstOrderLogic.g:3281:3: 
             {
             }
 
@@ -9893,14 +9995,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__1"
-    // InternalFirstOrderLogic.g:3258:1: rule__ForAll__Group__1 : rule__ForAll__Group__1__Impl rule__ForAll__Group__2 ;
+    // InternalFirstOrderLogic.g:3289:1: rule__ForAll__Group__1 : rule__ForAll__Group__1__Impl rule__ForAll__Group__2 ;
     public final void rule__ForAll__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3262:1: ( rule__ForAll__Group__1__Impl rule__ForAll__Group__2 )
-            // InternalFirstOrderLogic.g:3263:2: rule__ForAll__Group__1__Impl rule__ForAll__Group__2
+            // InternalFirstOrderLogic.g:3293:1: ( rule__ForAll__Group__1__Impl rule__ForAll__Group__2 )
+            // InternalFirstOrderLogic.g:3294:2: rule__ForAll__Group__1__Impl rule__ForAll__Group__2
             {
             pushFollow(FOLLOW_7);
             rule__ForAll__Group__1__Impl();
@@ -9931,17 +10033,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__1__Impl"
-    // InternalFirstOrderLogic.g:3270:1: rule__ForAll__Group__1__Impl : ( 'forAll(' ) ;
+    // InternalFirstOrderLogic.g:3301:1: rule__ForAll__Group__1__Impl : ( 'forAll(' ) ;
     public final void rule__ForAll__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3274:1: ( ( 'forAll(' ) )
-            // InternalFirstOrderLogic.g:3275:1: ( 'forAll(' )
+            // InternalFirstOrderLogic.g:3305:1: ( ( 'forAll(' ) )
+            // InternalFirstOrderLogic.g:3306:1: ( 'forAll(' )
             {
-            // InternalFirstOrderLogic.g:3275:1: ( 'forAll(' )
-            // InternalFirstOrderLogic.g:3276:2: 'forAll('
+            // InternalFirstOrderLogic.g:3306:1: ( 'forAll(' )
+            // InternalFirstOrderLogic.g:3307:2: 'forAll('
             {
              before(grammarAccess.getForAllAccess().getForAllKeyword_1()); 
             match(input,34,FOLLOW_2); 
@@ -9968,14 +10070,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__2"
-    // InternalFirstOrderLogic.g:3285:1: rule__ForAll__Group__2 : rule__ForAll__Group__2__Impl rule__ForAll__Group__3 ;
+    // InternalFirstOrderLogic.g:3316:1: rule__ForAll__Group__2 : rule__ForAll__Group__2__Impl rule__ForAll__Group__3 ;
     public final void rule__ForAll__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3289:1: ( rule__ForAll__Group__2__Impl rule__ForAll__Group__3 )
-            // InternalFirstOrderLogic.g:3290:2: rule__ForAll__Group__2__Impl rule__ForAll__Group__3
+            // InternalFirstOrderLogic.g:3320:1: ( rule__ForAll__Group__2__Impl rule__ForAll__Group__3 )
+            // InternalFirstOrderLogic.g:3321:2: rule__ForAll__Group__2__Impl rule__ForAll__Group__3
             {
             pushFollow(FOLLOW_27);
             rule__ForAll__Group__2__Impl();
@@ -10006,21 +10108,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__2__Impl"
-    // InternalFirstOrderLogic.g:3297:1: rule__ForAll__Group__2__Impl : ( ( rule__ForAll__NameAssignment_2 ) ) ;
+    // InternalFirstOrderLogic.g:3328:1: rule__ForAll__Group__2__Impl : ( ( rule__ForAll__NameAssignment_2 ) ) ;
     public final void rule__ForAll__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3301:1: ( ( ( rule__ForAll__NameAssignment_2 ) ) )
-            // InternalFirstOrderLogic.g:3302:1: ( ( rule__ForAll__NameAssignment_2 ) )
+            // InternalFirstOrderLogic.g:3332:1: ( ( ( rule__ForAll__NameAssignment_2 ) ) )
+            // InternalFirstOrderLogic.g:3333:1: ( ( rule__ForAll__NameAssignment_2 ) )
             {
-            // InternalFirstOrderLogic.g:3302:1: ( ( rule__ForAll__NameAssignment_2 ) )
-            // InternalFirstOrderLogic.g:3303:2: ( rule__ForAll__NameAssignment_2 )
+            // InternalFirstOrderLogic.g:3333:1: ( ( rule__ForAll__NameAssignment_2 ) )
+            // InternalFirstOrderLogic.g:3334:2: ( rule__ForAll__NameAssignment_2 )
             {
              before(grammarAccess.getForAllAccess().getNameAssignment_2()); 
-            // InternalFirstOrderLogic.g:3304:2: ( rule__ForAll__NameAssignment_2 )
-            // InternalFirstOrderLogic.g:3304:3: rule__ForAll__NameAssignment_2
+            // InternalFirstOrderLogic.g:3335:2: ( rule__ForAll__NameAssignment_2 )
+            // InternalFirstOrderLogic.g:3335:3: rule__ForAll__NameAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__ForAll__NameAssignment_2();
@@ -10053,14 +10155,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__3"
-    // InternalFirstOrderLogic.g:3312:1: rule__ForAll__Group__3 : rule__ForAll__Group__3__Impl rule__ForAll__Group__4 ;
+    // InternalFirstOrderLogic.g:3343:1: rule__ForAll__Group__3 : rule__ForAll__Group__3__Impl rule__ForAll__Group__4 ;
     public final void rule__ForAll__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3316:1: ( rule__ForAll__Group__3__Impl rule__ForAll__Group__4 )
-            // InternalFirstOrderLogic.g:3317:2: rule__ForAll__Group__3__Impl rule__ForAll__Group__4
+            // InternalFirstOrderLogic.g:3347:1: ( rule__ForAll__Group__3__Impl rule__ForAll__Group__4 )
+            // InternalFirstOrderLogic.g:3348:2: rule__ForAll__Group__3__Impl rule__ForAll__Group__4
             {
             pushFollow(FOLLOW_24);
             rule__ForAll__Group__3__Impl();
@@ -10091,17 +10193,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__3__Impl"
-    // InternalFirstOrderLogic.g:3324:1: rule__ForAll__Group__3__Impl : ( 'in' ) ;
+    // InternalFirstOrderLogic.g:3355:1: rule__ForAll__Group__3__Impl : ( 'in' ) ;
     public final void rule__ForAll__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3328:1: ( ( 'in' ) )
-            // InternalFirstOrderLogic.g:3329:1: ( 'in' )
+            // InternalFirstOrderLogic.g:3359:1: ( ( 'in' ) )
+            // InternalFirstOrderLogic.g:3360:1: ( 'in' )
             {
-            // InternalFirstOrderLogic.g:3329:1: ( 'in' )
-            // InternalFirstOrderLogic.g:3330:2: 'in'
+            // InternalFirstOrderLogic.g:3360:1: ( 'in' )
+            // InternalFirstOrderLogic.g:3361:2: 'in'
             {
              before(grammarAccess.getForAllAccess().getInKeyword_3()); 
             match(input,35,FOLLOW_2); 
@@ -10128,14 +10230,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__4"
-    // InternalFirstOrderLogic.g:3339:1: rule__ForAll__Group__4 : rule__ForAll__Group__4__Impl rule__ForAll__Group__5 ;
+    // InternalFirstOrderLogic.g:3370:1: rule__ForAll__Group__4 : rule__ForAll__Group__4__Impl rule__ForAll__Group__5 ;
     public final void rule__ForAll__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3343:1: ( rule__ForAll__Group__4__Impl rule__ForAll__Group__5 )
-            // InternalFirstOrderLogic.g:3344:2: rule__ForAll__Group__4__Impl rule__ForAll__Group__5
+            // InternalFirstOrderLogic.g:3374:1: ( rule__ForAll__Group__4__Impl rule__ForAll__Group__5 )
+            // InternalFirstOrderLogic.g:3375:2: rule__ForAll__Group__4__Impl rule__ForAll__Group__5
             {
             pushFollow(FOLLOW_10);
             rule__ForAll__Group__4__Impl();
@@ -10166,21 +10268,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__4__Impl"
-    // InternalFirstOrderLogic.g:3351:1: rule__ForAll__Group__4__Impl : ( ( rule__ForAll__IterationAssignment_4 ) ) ;
+    // InternalFirstOrderLogic.g:3382:1: rule__ForAll__Group__4__Impl : ( ( rule__ForAll__IterationAssignment_4 ) ) ;
     public final void rule__ForAll__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3355:1: ( ( ( rule__ForAll__IterationAssignment_4 ) ) )
-            // InternalFirstOrderLogic.g:3356:1: ( ( rule__ForAll__IterationAssignment_4 ) )
+            // InternalFirstOrderLogic.g:3386:1: ( ( ( rule__ForAll__IterationAssignment_4 ) ) )
+            // InternalFirstOrderLogic.g:3387:1: ( ( rule__ForAll__IterationAssignment_4 ) )
             {
-            // InternalFirstOrderLogic.g:3356:1: ( ( rule__ForAll__IterationAssignment_4 ) )
-            // InternalFirstOrderLogic.g:3357:2: ( rule__ForAll__IterationAssignment_4 )
+            // InternalFirstOrderLogic.g:3387:1: ( ( rule__ForAll__IterationAssignment_4 ) )
+            // InternalFirstOrderLogic.g:3388:2: ( rule__ForAll__IterationAssignment_4 )
             {
              before(grammarAccess.getForAllAccess().getIterationAssignment_4()); 
-            // InternalFirstOrderLogic.g:3358:2: ( rule__ForAll__IterationAssignment_4 )
-            // InternalFirstOrderLogic.g:3358:3: rule__ForAll__IterationAssignment_4
+            // InternalFirstOrderLogic.g:3389:2: ( rule__ForAll__IterationAssignment_4 )
+            // InternalFirstOrderLogic.g:3389:3: rule__ForAll__IterationAssignment_4
             {
             pushFollow(FOLLOW_2);
             rule__ForAll__IterationAssignment_4();
@@ -10213,14 +10315,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__5"
-    // InternalFirstOrderLogic.g:3366:1: rule__ForAll__Group__5 : rule__ForAll__Group__5__Impl rule__ForAll__Group__6 ;
+    // InternalFirstOrderLogic.g:3397:1: rule__ForAll__Group__5 : rule__ForAll__Group__5__Impl rule__ForAll__Group__6 ;
     public final void rule__ForAll__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3370:1: ( rule__ForAll__Group__5__Impl rule__ForAll__Group__6 )
-            // InternalFirstOrderLogic.g:3371:2: rule__ForAll__Group__5__Impl rule__ForAll__Group__6
+            // InternalFirstOrderLogic.g:3401:1: ( rule__ForAll__Group__5__Impl rule__ForAll__Group__6 )
+            // InternalFirstOrderLogic.g:3402:2: rule__ForAll__Group__5__Impl rule__ForAll__Group__6
             {
             pushFollow(FOLLOW_11);
             rule__ForAll__Group__5__Impl();
@@ -10251,17 +10353,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__5__Impl"
-    // InternalFirstOrderLogic.g:3378:1: rule__ForAll__Group__5__Impl : ( ':' ) ;
+    // InternalFirstOrderLogic.g:3409:1: rule__ForAll__Group__5__Impl : ( ':' ) ;
     public final void rule__ForAll__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3382:1: ( ( ':' ) )
-            // InternalFirstOrderLogic.g:3383:1: ( ':' )
+            // InternalFirstOrderLogic.g:3413:1: ( ( ':' ) )
+            // InternalFirstOrderLogic.g:3414:1: ( ':' )
             {
-            // InternalFirstOrderLogic.g:3383:1: ( ':' )
-            // InternalFirstOrderLogic.g:3384:2: ':'
+            // InternalFirstOrderLogic.g:3414:1: ( ':' )
+            // InternalFirstOrderLogic.g:3415:2: ':'
             {
              before(grammarAccess.getForAllAccess().getColonKeyword_5()); 
             match(input,18,FOLLOW_2); 
@@ -10288,14 +10390,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__6"
-    // InternalFirstOrderLogic.g:3393:1: rule__ForAll__Group__6 : rule__ForAll__Group__6__Impl rule__ForAll__Group__7 ;
+    // InternalFirstOrderLogic.g:3424:1: rule__ForAll__Group__6 : rule__ForAll__Group__6__Impl rule__ForAll__Group__7 ;
     public final void rule__ForAll__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3397:1: ( rule__ForAll__Group__6__Impl rule__ForAll__Group__7 )
-            // InternalFirstOrderLogic.g:3398:2: rule__ForAll__Group__6__Impl rule__ForAll__Group__7
+            // InternalFirstOrderLogic.g:3428:1: ( rule__ForAll__Group__6__Impl rule__ForAll__Group__7 )
+            // InternalFirstOrderLogic.g:3429:2: rule__ForAll__Group__6__Impl rule__ForAll__Group__7
             {
             pushFollow(FOLLOW_23);
             rule__ForAll__Group__6__Impl();
@@ -10326,21 +10428,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__6__Impl"
-    // InternalFirstOrderLogic.g:3405:1: rule__ForAll__Group__6__Impl : ( ( rule__ForAll__FormulaAssignment_6 ) ) ;
+    // InternalFirstOrderLogic.g:3436:1: rule__ForAll__Group__6__Impl : ( ( rule__ForAll__FormulaAssignment_6 ) ) ;
     public final void rule__ForAll__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3409:1: ( ( ( rule__ForAll__FormulaAssignment_6 ) ) )
-            // InternalFirstOrderLogic.g:3410:1: ( ( rule__ForAll__FormulaAssignment_6 ) )
+            // InternalFirstOrderLogic.g:3440:1: ( ( ( rule__ForAll__FormulaAssignment_6 ) ) )
+            // InternalFirstOrderLogic.g:3441:1: ( ( rule__ForAll__FormulaAssignment_6 ) )
             {
-            // InternalFirstOrderLogic.g:3410:1: ( ( rule__ForAll__FormulaAssignment_6 ) )
-            // InternalFirstOrderLogic.g:3411:2: ( rule__ForAll__FormulaAssignment_6 )
+            // InternalFirstOrderLogic.g:3441:1: ( ( rule__ForAll__FormulaAssignment_6 ) )
+            // InternalFirstOrderLogic.g:3442:2: ( rule__ForAll__FormulaAssignment_6 )
             {
              before(grammarAccess.getForAllAccess().getFormulaAssignment_6()); 
-            // InternalFirstOrderLogic.g:3412:2: ( rule__ForAll__FormulaAssignment_6 )
-            // InternalFirstOrderLogic.g:3412:3: rule__ForAll__FormulaAssignment_6
+            // InternalFirstOrderLogic.g:3443:2: ( rule__ForAll__FormulaAssignment_6 )
+            // InternalFirstOrderLogic.g:3443:3: rule__ForAll__FormulaAssignment_6
             {
             pushFollow(FOLLOW_2);
             rule__ForAll__FormulaAssignment_6();
@@ -10373,14 +10475,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__7"
-    // InternalFirstOrderLogic.g:3420:1: rule__ForAll__Group__7 : rule__ForAll__Group__7__Impl ;
+    // InternalFirstOrderLogic.g:3451:1: rule__ForAll__Group__7 : rule__ForAll__Group__7__Impl ;
     public final void rule__ForAll__Group__7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3424:1: ( rule__ForAll__Group__7__Impl )
-            // InternalFirstOrderLogic.g:3425:2: rule__ForAll__Group__7__Impl
+            // InternalFirstOrderLogic.g:3455:1: ( rule__ForAll__Group__7__Impl )
+            // InternalFirstOrderLogic.g:3456:2: rule__ForAll__Group__7__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ForAll__Group__7__Impl();
@@ -10406,17 +10508,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__Group__7__Impl"
-    // InternalFirstOrderLogic.g:3431:1: rule__ForAll__Group__7__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:3462:1: rule__ForAll__Group__7__Impl : ( ')' ) ;
     public final void rule__ForAll__Group__7__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3435:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:3436:1: ( ')' )
+            // InternalFirstOrderLogic.g:3466:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:3467:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:3436:1: ( ')' )
-            // InternalFirstOrderLogic.g:3437:2: ')'
+            // InternalFirstOrderLogic.g:3467:1: ( ')' )
+            // InternalFirstOrderLogic.g:3468:2: ')'
             {
              before(grammarAccess.getForAllAccess().getRightParenthesisKeyword_7()); 
             match(input,25,FOLLOW_2); 
@@ -10443,14 +10545,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__0"
-    // InternalFirstOrderLogic.g:3447:1: rule__Exists__Group__0 : rule__Exists__Group__0__Impl rule__Exists__Group__1 ;
+    // InternalFirstOrderLogic.g:3478:1: rule__Exists__Group__0 : rule__Exists__Group__0__Impl rule__Exists__Group__1 ;
     public final void rule__Exists__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3451:1: ( rule__Exists__Group__0__Impl rule__Exists__Group__1 )
-            // InternalFirstOrderLogic.g:3452:2: rule__Exists__Group__0__Impl rule__Exists__Group__1
+            // InternalFirstOrderLogic.g:3482:1: ( rule__Exists__Group__0__Impl rule__Exists__Group__1 )
+            // InternalFirstOrderLogic.g:3483:2: rule__Exists__Group__0__Impl rule__Exists__Group__1
             {
             pushFollow(FOLLOW_28);
             rule__Exists__Group__0__Impl();
@@ -10481,21 +10583,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__0__Impl"
-    // InternalFirstOrderLogic.g:3459:1: rule__Exists__Group__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:3490:1: rule__Exists__Group__0__Impl : ( () ) ;
     public final void rule__Exists__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3463:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:3464:1: ( () )
+            // InternalFirstOrderLogic.g:3494:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:3495:1: ( () )
             {
-            // InternalFirstOrderLogic.g:3464:1: ( () )
-            // InternalFirstOrderLogic.g:3465:2: ()
+            // InternalFirstOrderLogic.g:3495:1: ( () )
+            // InternalFirstOrderLogic.g:3496:2: ()
             {
              before(grammarAccess.getExistsAccess().getExistsAction_0()); 
-            // InternalFirstOrderLogic.g:3466:2: ()
-            // InternalFirstOrderLogic.g:3466:3: 
+            // InternalFirstOrderLogic.g:3497:2: ()
+            // InternalFirstOrderLogic.g:3497:3: 
             {
             }
 
@@ -10518,14 +10620,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__1"
-    // InternalFirstOrderLogic.g:3474:1: rule__Exists__Group__1 : rule__Exists__Group__1__Impl rule__Exists__Group__2 ;
+    // InternalFirstOrderLogic.g:3505:1: rule__Exists__Group__1 : rule__Exists__Group__1__Impl rule__Exists__Group__2 ;
     public final void rule__Exists__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3478:1: ( rule__Exists__Group__1__Impl rule__Exists__Group__2 )
-            // InternalFirstOrderLogic.g:3479:2: rule__Exists__Group__1__Impl rule__Exists__Group__2
+            // InternalFirstOrderLogic.g:3509:1: ( rule__Exists__Group__1__Impl rule__Exists__Group__2 )
+            // InternalFirstOrderLogic.g:3510:2: rule__Exists__Group__1__Impl rule__Exists__Group__2
             {
             pushFollow(FOLLOW_7);
             rule__Exists__Group__1__Impl();
@@ -10556,17 +10658,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__1__Impl"
-    // InternalFirstOrderLogic.g:3486:1: rule__Exists__Group__1__Impl : ( 'exists(' ) ;
+    // InternalFirstOrderLogic.g:3517:1: rule__Exists__Group__1__Impl : ( 'exists(' ) ;
     public final void rule__Exists__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3490:1: ( ( 'exists(' ) )
-            // InternalFirstOrderLogic.g:3491:1: ( 'exists(' )
+            // InternalFirstOrderLogic.g:3521:1: ( ( 'exists(' ) )
+            // InternalFirstOrderLogic.g:3522:1: ( 'exists(' )
             {
-            // InternalFirstOrderLogic.g:3491:1: ( 'exists(' )
-            // InternalFirstOrderLogic.g:3492:2: 'exists('
+            // InternalFirstOrderLogic.g:3522:1: ( 'exists(' )
+            // InternalFirstOrderLogic.g:3523:2: 'exists('
             {
              before(grammarAccess.getExistsAccess().getExistsKeyword_1()); 
             match(input,36,FOLLOW_2); 
@@ -10593,14 +10695,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__2"
-    // InternalFirstOrderLogic.g:3501:1: rule__Exists__Group__2 : rule__Exists__Group__2__Impl rule__Exists__Group__3 ;
+    // InternalFirstOrderLogic.g:3532:1: rule__Exists__Group__2 : rule__Exists__Group__2__Impl rule__Exists__Group__3 ;
     public final void rule__Exists__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3505:1: ( rule__Exists__Group__2__Impl rule__Exists__Group__3 )
-            // InternalFirstOrderLogic.g:3506:2: rule__Exists__Group__2__Impl rule__Exists__Group__3
+            // InternalFirstOrderLogic.g:3536:1: ( rule__Exists__Group__2__Impl rule__Exists__Group__3 )
+            // InternalFirstOrderLogic.g:3537:2: rule__Exists__Group__2__Impl rule__Exists__Group__3
             {
             pushFollow(FOLLOW_27);
             rule__Exists__Group__2__Impl();
@@ -10631,21 +10733,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__2__Impl"
-    // InternalFirstOrderLogic.g:3513:1: rule__Exists__Group__2__Impl : ( ( rule__Exists__NameAssignment_2 ) ) ;
+    // InternalFirstOrderLogic.g:3544:1: rule__Exists__Group__2__Impl : ( ( rule__Exists__NameAssignment_2 ) ) ;
     public final void rule__Exists__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3517:1: ( ( ( rule__Exists__NameAssignment_2 ) ) )
-            // InternalFirstOrderLogic.g:3518:1: ( ( rule__Exists__NameAssignment_2 ) )
+            // InternalFirstOrderLogic.g:3548:1: ( ( ( rule__Exists__NameAssignment_2 ) ) )
+            // InternalFirstOrderLogic.g:3549:1: ( ( rule__Exists__NameAssignment_2 ) )
             {
-            // InternalFirstOrderLogic.g:3518:1: ( ( rule__Exists__NameAssignment_2 ) )
-            // InternalFirstOrderLogic.g:3519:2: ( rule__Exists__NameAssignment_2 )
+            // InternalFirstOrderLogic.g:3549:1: ( ( rule__Exists__NameAssignment_2 ) )
+            // InternalFirstOrderLogic.g:3550:2: ( rule__Exists__NameAssignment_2 )
             {
              before(grammarAccess.getExistsAccess().getNameAssignment_2()); 
-            // InternalFirstOrderLogic.g:3520:2: ( rule__Exists__NameAssignment_2 )
-            // InternalFirstOrderLogic.g:3520:3: rule__Exists__NameAssignment_2
+            // InternalFirstOrderLogic.g:3551:2: ( rule__Exists__NameAssignment_2 )
+            // InternalFirstOrderLogic.g:3551:3: rule__Exists__NameAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__Exists__NameAssignment_2();
@@ -10678,14 +10780,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__3"
-    // InternalFirstOrderLogic.g:3528:1: rule__Exists__Group__3 : rule__Exists__Group__3__Impl rule__Exists__Group__4 ;
+    // InternalFirstOrderLogic.g:3559:1: rule__Exists__Group__3 : rule__Exists__Group__3__Impl rule__Exists__Group__4 ;
     public final void rule__Exists__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3532:1: ( rule__Exists__Group__3__Impl rule__Exists__Group__4 )
-            // InternalFirstOrderLogic.g:3533:2: rule__Exists__Group__3__Impl rule__Exists__Group__4
+            // InternalFirstOrderLogic.g:3563:1: ( rule__Exists__Group__3__Impl rule__Exists__Group__4 )
+            // InternalFirstOrderLogic.g:3564:2: rule__Exists__Group__3__Impl rule__Exists__Group__4
             {
             pushFollow(FOLLOW_24);
             rule__Exists__Group__3__Impl();
@@ -10716,17 +10818,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__3__Impl"
-    // InternalFirstOrderLogic.g:3540:1: rule__Exists__Group__3__Impl : ( 'in' ) ;
+    // InternalFirstOrderLogic.g:3571:1: rule__Exists__Group__3__Impl : ( 'in' ) ;
     public final void rule__Exists__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3544:1: ( ( 'in' ) )
-            // InternalFirstOrderLogic.g:3545:1: ( 'in' )
+            // InternalFirstOrderLogic.g:3575:1: ( ( 'in' ) )
+            // InternalFirstOrderLogic.g:3576:1: ( 'in' )
             {
-            // InternalFirstOrderLogic.g:3545:1: ( 'in' )
-            // InternalFirstOrderLogic.g:3546:2: 'in'
+            // InternalFirstOrderLogic.g:3576:1: ( 'in' )
+            // InternalFirstOrderLogic.g:3577:2: 'in'
             {
              before(grammarAccess.getExistsAccess().getInKeyword_3()); 
             match(input,35,FOLLOW_2); 
@@ -10753,14 +10855,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__4"
-    // InternalFirstOrderLogic.g:3555:1: rule__Exists__Group__4 : rule__Exists__Group__4__Impl rule__Exists__Group__5 ;
+    // InternalFirstOrderLogic.g:3586:1: rule__Exists__Group__4 : rule__Exists__Group__4__Impl rule__Exists__Group__5 ;
     public final void rule__Exists__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3559:1: ( rule__Exists__Group__4__Impl rule__Exists__Group__5 )
-            // InternalFirstOrderLogic.g:3560:2: rule__Exists__Group__4__Impl rule__Exists__Group__5
+            // InternalFirstOrderLogic.g:3590:1: ( rule__Exists__Group__4__Impl rule__Exists__Group__5 )
+            // InternalFirstOrderLogic.g:3591:2: rule__Exists__Group__4__Impl rule__Exists__Group__5
             {
             pushFollow(FOLLOW_10);
             rule__Exists__Group__4__Impl();
@@ -10791,21 +10893,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__4__Impl"
-    // InternalFirstOrderLogic.g:3567:1: rule__Exists__Group__4__Impl : ( ( rule__Exists__IterationAssignment_4 ) ) ;
+    // InternalFirstOrderLogic.g:3598:1: rule__Exists__Group__4__Impl : ( ( rule__Exists__IterationAssignment_4 ) ) ;
     public final void rule__Exists__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3571:1: ( ( ( rule__Exists__IterationAssignment_4 ) ) )
-            // InternalFirstOrderLogic.g:3572:1: ( ( rule__Exists__IterationAssignment_4 ) )
+            // InternalFirstOrderLogic.g:3602:1: ( ( ( rule__Exists__IterationAssignment_4 ) ) )
+            // InternalFirstOrderLogic.g:3603:1: ( ( rule__Exists__IterationAssignment_4 ) )
             {
-            // InternalFirstOrderLogic.g:3572:1: ( ( rule__Exists__IterationAssignment_4 ) )
-            // InternalFirstOrderLogic.g:3573:2: ( rule__Exists__IterationAssignment_4 )
+            // InternalFirstOrderLogic.g:3603:1: ( ( rule__Exists__IterationAssignment_4 ) )
+            // InternalFirstOrderLogic.g:3604:2: ( rule__Exists__IterationAssignment_4 )
             {
              before(grammarAccess.getExistsAccess().getIterationAssignment_4()); 
-            // InternalFirstOrderLogic.g:3574:2: ( rule__Exists__IterationAssignment_4 )
-            // InternalFirstOrderLogic.g:3574:3: rule__Exists__IterationAssignment_4
+            // InternalFirstOrderLogic.g:3605:2: ( rule__Exists__IterationAssignment_4 )
+            // InternalFirstOrderLogic.g:3605:3: rule__Exists__IterationAssignment_4
             {
             pushFollow(FOLLOW_2);
             rule__Exists__IterationAssignment_4();
@@ -10838,14 +10940,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__5"
-    // InternalFirstOrderLogic.g:3582:1: rule__Exists__Group__5 : rule__Exists__Group__5__Impl rule__Exists__Group__6 ;
+    // InternalFirstOrderLogic.g:3613:1: rule__Exists__Group__5 : rule__Exists__Group__5__Impl rule__Exists__Group__6 ;
     public final void rule__Exists__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3586:1: ( rule__Exists__Group__5__Impl rule__Exists__Group__6 )
-            // InternalFirstOrderLogic.g:3587:2: rule__Exists__Group__5__Impl rule__Exists__Group__6
+            // InternalFirstOrderLogic.g:3617:1: ( rule__Exists__Group__5__Impl rule__Exists__Group__6 )
+            // InternalFirstOrderLogic.g:3618:2: rule__Exists__Group__5__Impl rule__Exists__Group__6
             {
             pushFollow(FOLLOW_11);
             rule__Exists__Group__5__Impl();
@@ -10876,17 +10978,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__5__Impl"
-    // InternalFirstOrderLogic.g:3594:1: rule__Exists__Group__5__Impl : ( ':' ) ;
+    // InternalFirstOrderLogic.g:3625:1: rule__Exists__Group__5__Impl : ( ':' ) ;
     public final void rule__Exists__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3598:1: ( ( ':' ) )
-            // InternalFirstOrderLogic.g:3599:1: ( ':' )
+            // InternalFirstOrderLogic.g:3629:1: ( ( ':' ) )
+            // InternalFirstOrderLogic.g:3630:1: ( ':' )
             {
-            // InternalFirstOrderLogic.g:3599:1: ( ':' )
-            // InternalFirstOrderLogic.g:3600:2: ':'
+            // InternalFirstOrderLogic.g:3630:1: ( ':' )
+            // InternalFirstOrderLogic.g:3631:2: ':'
             {
              before(grammarAccess.getExistsAccess().getColonKeyword_5()); 
             match(input,18,FOLLOW_2); 
@@ -10913,14 +11015,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__6"
-    // InternalFirstOrderLogic.g:3609:1: rule__Exists__Group__6 : rule__Exists__Group__6__Impl rule__Exists__Group__7 ;
+    // InternalFirstOrderLogic.g:3640:1: rule__Exists__Group__6 : rule__Exists__Group__6__Impl rule__Exists__Group__7 ;
     public final void rule__Exists__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3613:1: ( rule__Exists__Group__6__Impl rule__Exists__Group__7 )
-            // InternalFirstOrderLogic.g:3614:2: rule__Exists__Group__6__Impl rule__Exists__Group__7
+            // InternalFirstOrderLogic.g:3644:1: ( rule__Exists__Group__6__Impl rule__Exists__Group__7 )
+            // InternalFirstOrderLogic.g:3645:2: rule__Exists__Group__6__Impl rule__Exists__Group__7
             {
             pushFollow(FOLLOW_23);
             rule__Exists__Group__6__Impl();
@@ -10951,21 +11053,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__6__Impl"
-    // InternalFirstOrderLogic.g:3621:1: rule__Exists__Group__6__Impl : ( ( rule__Exists__FormulaAssignment_6 ) ) ;
+    // InternalFirstOrderLogic.g:3652:1: rule__Exists__Group__6__Impl : ( ( rule__Exists__FormulaAssignment_6 ) ) ;
     public final void rule__Exists__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3625:1: ( ( ( rule__Exists__FormulaAssignment_6 ) ) )
-            // InternalFirstOrderLogic.g:3626:1: ( ( rule__Exists__FormulaAssignment_6 ) )
+            // InternalFirstOrderLogic.g:3656:1: ( ( ( rule__Exists__FormulaAssignment_6 ) ) )
+            // InternalFirstOrderLogic.g:3657:1: ( ( rule__Exists__FormulaAssignment_6 ) )
             {
-            // InternalFirstOrderLogic.g:3626:1: ( ( rule__Exists__FormulaAssignment_6 ) )
-            // InternalFirstOrderLogic.g:3627:2: ( rule__Exists__FormulaAssignment_6 )
+            // InternalFirstOrderLogic.g:3657:1: ( ( rule__Exists__FormulaAssignment_6 ) )
+            // InternalFirstOrderLogic.g:3658:2: ( rule__Exists__FormulaAssignment_6 )
             {
              before(grammarAccess.getExistsAccess().getFormulaAssignment_6()); 
-            // InternalFirstOrderLogic.g:3628:2: ( rule__Exists__FormulaAssignment_6 )
-            // InternalFirstOrderLogic.g:3628:3: rule__Exists__FormulaAssignment_6
+            // InternalFirstOrderLogic.g:3659:2: ( rule__Exists__FormulaAssignment_6 )
+            // InternalFirstOrderLogic.g:3659:3: rule__Exists__FormulaAssignment_6
             {
             pushFollow(FOLLOW_2);
             rule__Exists__FormulaAssignment_6();
@@ -10998,14 +11100,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__7"
-    // InternalFirstOrderLogic.g:3636:1: rule__Exists__Group__7 : rule__Exists__Group__7__Impl ;
+    // InternalFirstOrderLogic.g:3667:1: rule__Exists__Group__7 : rule__Exists__Group__7__Impl ;
     public final void rule__Exists__Group__7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3640:1: ( rule__Exists__Group__7__Impl )
-            // InternalFirstOrderLogic.g:3641:2: rule__Exists__Group__7__Impl
+            // InternalFirstOrderLogic.g:3671:1: ( rule__Exists__Group__7__Impl )
+            // InternalFirstOrderLogic.g:3672:2: rule__Exists__Group__7__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Exists__Group__7__Impl();
@@ -11031,17 +11133,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__Group__7__Impl"
-    // InternalFirstOrderLogic.g:3647:1: rule__Exists__Group__7__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:3678:1: rule__Exists__Group__7__Impl : ( ')' ) ;
     public final void rule__Exists__Group__7__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3651:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:3652:1: ( ')' )
+            // InternalFirstOrderLogic.g:3682:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:3683:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:3652:1: ( ')' )
-            // InternalFirstOrderLogic.g:3653:2: ')'
+            // InternalFirstOrderLogic.g:3683:1: ( ')' )
+            // InternalFirstOrderLogic.g:3684:2: ')'
             {
              before(grammarAccess.getExistsAccess().getRightParenthesisKeyword_7()); 
             match(input,25,FOLLOW_2); 
@@ -11068,14 +11170,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BooleanExpression__Group_0__0"
-    // InternalFirstOrderLogic.g:3663:1: rule__BooleanExpression__Group_0__0 : rule__BooleanExpression__Group_0__0__Impl rule__BooleanExpression__Group_0__1 ;
+    // InternalFirstOrderLogic.g:3694:1: rule__BooleanExpression__Group_0__0 : rule__BooleanExpression__Group_0__0__Impl rule__BooleanExpression__Group_0__1 ;
     public final void rule__BooleanExpression__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3667:1: ( rule__BooleanExpression__Group_0__0__Impl rule__BooleanExpression__Group_0__1 )
-            // InternalFirstOrderLogic.g:3668:2: rule__BooleanExpression__Group_0__0__Impl rule__BooleanExpression__Group_0__1
+            // InternalFirstOrderLogic.g:3698:1: ( rule__BooleanExpression__Group_0__0__Impl rule__BooleanExpression__Group_0__1 )
+            // InternalFirstOrderLogic.g:3699:2: rule__BooleanExpression__Group_0__0__Impl rule__BooleanExpression__Group_0__1
             {
             pushFollow(FOLLOW_11);
             rule__BooleanExpression__Group_0__0__Impl();
@@ -11106,17 +11208,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BooleanExpression__Group_0__0__Impl"
-    // InternalFirstOrderLogic.g:3675:1: rule__BooleanExpression__Group_0__0__Impl : ( '(' ) ;
+    // InternalFirstOrderLogic.g:3706:1: rule__BooleanExpression__Group_0__0__Impl : ( '(' ) ;
     public final void rule__BooleanExpression__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3679:1: ( ( '(' ) )
-            // InternalFirstOrderLogic.g:3680:1: ( '(' )
+            // InternalFirstOrderLogic.g:3710:1: ( ( '(' ) )
+            // InternalFirstOrderLogic.g:3711:1: ( '(' )
             {
-            // InternalFirstOrderLogic.g:3680:1: ( '(' )
-            // InternalFirstOrderLogic.g:3681:2: '('
+            // InternalFirstOrderLogic.g:3711:1: ( '(' )
+            // InternalFirstOrderLogic.g:3712:2: '('
             {
              before(grammarAccess.getBooleanExpressionAccess().getLeftParenthesisKeyword_0_0()); 
             match(input,37,FOLLOW_2); 
@@ -11143,14 +11245,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BooleanExpression__Group_0__1"
-    // InternalFirstOrderLogic.g:3690:1: rule__BooleanExpression__Group_0__1 : rule__BooleanExpression__Group_0__1__Impl rule__BooleanExpression__Group_0__2 ;
+    // InternalFirstOrderLogic.g:3721:1: rule__BooleanExpression__Group_0__1 : rule__BooleanExpression__Group_0__1__Impl rule__BooleanExpression__Group_0__2 ;
     public final void rule__BooleanExpression__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3694:1: ( rule__BooleanExpression__Group_0__1__Impl rule__BooleanExpression__Group_0__2 )
-            // InternalFirstOrderLogic.g:3695:2: rule__BooleanExpression__Group_0__1__Impl rule__BooleanExpression__Group_0__2
+            // InternalFirstOrderLogic.g:3725:1: ( rule__BooleanExpression__Group_0__1__Impl rule__BooleanExpression__Group_0__2 )
+            // InternalFirstOrderLogic.g:3726:2: rule__BooleanExpression__Group_0__1__Impl rule__BooleanExpression__Group_0__2
             {
             pushFollow(FOLLOW_23);
             rule__BooleanExpression__Group_0__1__Impl();
@@ -11181,17 +11283,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BooleanExpression__Group_0__1__Impl"
-    // InternalFirstOrderLogic.g:3702:1: rule__BooleanExpression__Group_0__1__Impl : ( ruleFormula ) ;
+    // InternalFirstOrderLogic.g:3733:1: rule__BooleanExpression__Group_0__1__Impl : ( ruleFormula ) ;
     public final void rule__BooleanExpression__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3706:1: ( ( ruleFormula ) )
-            // InternalFirstOrderLogic.g:3707:1: ( ruleFormula )
+            // InternalFirstOrderLogic.g:3737:1: ( ( ruleFormula ) )
+            // InternalFirstOrderLogic.g:3738:1: ( ruleFormula )
             {
-            // InternalFirstOrderLogic.g:3707:1: ( ruleFormula )
-            // InternalFirstOrderLogic.g:3708:2: ruleFormula
+            // InternalFirstOrderLogic.g:3738:1: ( ruleFormula )
+            // InternalFirstOrderLogic.g:3739:2: ruleFormula
             {
              before(grammarAccess.getBooleanExpressionAccess().getFormulaParserRuleCall_0_1()); 
             pushFollow(FOLLOW_2);
@@ -11222,14 +11324,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BooleanExpression__Group_0__2"
-    // InternalFirstOrderLogic.g:3717:1: rule__BooleanExpression__Group_0__2 : rule__BooleanExpression__Group_0__2__Impl ;
+    // InternalFirstOrderLogic.g:3748:1: rule__BooleanExpression__Group_0__2 : rule__BooleanExpression__Group_0__2__Impl ;
     public final void rule__BooleanExpression__Group_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3721:1: ( rule__BooleanExpression__Group_0__2__Impl )
-            // InternalFirstOrderLogic.g:3722:2: rule__BooleanExpression__Group_0__2__Impl
+            // InternalFirstOrderLogic.g:3752:1: ( rule__BooleanExpression__Group_0__2__Impl )
+            // InternalFirstOrderLogic.g:3753:2: rule__BooleanExpression__Group_0__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__BooleanExpression__Group_0__2__Impl();
@@ -11255,17 +11357,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BooleanExpression__Group_0__2__Impl"
-    // InternalFirstOrderLogic.g:3728:1: rule__BooleanExpression__Group_0__2__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:3759:1: rule__BooleanExpression__Group_0__2__Impl : ( ')' ) ;
     public final void rule__BooleanExpression__Group_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3732:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:3733:1: ( ')' )
+            // InternalFirstOrderLogic.g:3763:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:3764:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:3733:1: ( ')' )
-            // InternalFirstOrderLogic.g:3734:2: ')'
+            // InternalFirstOrderLogic.g:3764:1: ( ')' )
+            // InternalFirstOrderLogic.g:3765:2: ')'
             {
              before(grammarAccess.getBooleanExpressionAccess().getRightParenthesisKeyword_0_2()); 
             match(input,25,FOLLOW_2); 
@@ -11292,14 +11394,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BoolConstant__Group__0"
-    // InternalFirstOrderLogic.g:3744:1: rule__BoolConstant__Group__0 : rule__BoolConstant__Group__0__Impl rule__BoolConstant__Group__1 ;
+    // InternalFirstOrderLogic.g:3775:1: rule__BoolConstant__Group__0 : rule__BoolConstant__Group__0__Impl rule__BoolConstant__Group__1 ;
     public final void rule__BoolConstant__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3748:1: ( rule__BoolConstant__Group__0__Impl rule__BoolConstant__Group__1 )
-            // InternalFirstOrderLogic.g:3749:2: rule__BoolConstant__Group__0__Impl rule__BoolConstant__Group__1
+            // InternalFirstOrderLogic.g:3779:1: ( rule__BoolConstant__Group__0__Impl rule__BoolConstant__Group__1 )
+            // InternalFirstOrderLogic.g:3780:2: rule__BoolConstant__Group__0__Impl rule__BoolConstant__Group__1
             {
             pushFollow(FOLLOW_11);
             rule__BoolConstant__Group__0__Impl();
@@ -11330,21 +11432,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BoolConstant__Group__0__Impl"
-    // InternalFirstOrderLogic.g:3756:1: rule__BoolConstant__Group__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:3787:1: rule__BoolConstant__Group__0__Impl : ( () ) ;
     public final void rule__BoolConstant__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3760:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:3761:1: ( () )
+            // InternalFirstOrderLogic.g:3791:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:3792:1: ( () )
             {
-            // InternalFirstOrderLogic.g:3761:1: ( () )
-            // InternalFirstOrderLogic.g:3762:2: ()
+            // InternalFirstOrderLogic.g:3792:1: ( () )
+            // InternalFirstOrderLogic.g:3793:2: ()
             {
              before(grammarAccess.getBoolConstantAccess().getBoolConstantAction_0()); 
-            // InternalFirstOrderLogic.g:3763:2: ()
-            // InternalFirstOrderLogic.g:3763:3: 
+            // InternalFirstOrderLogic.g:3794:2: ()
+            // InternalFirstOrderLogic.g:3794:3: 
             {
             }
 
@@ -11367,14 +11469,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BoolConstant__Group__1"
-    // InternalFirstOrderLogic.g:3771:1: rule__BoolConstant__Group__1 : rule__BoolConstant__Group__1__Impl ;
+    // InternalFirstOrderLogic.g:3802:1: rule__BoolConstant__Group__1 : rule__BoolConstant__Group__1__Impl ;
     public final void rule__BoolConstant__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3775:1: ( rule__BoolConstant__Group__1__Impl )
-            // InternalFirstOrderLogic.g:3776:2: rule__BoolConstant__Group__1__Impl
+            // InternalFirstOrderLogic.g:3806:1: ( rule__BoolConstant__Group__1__Impl )
+            // InternalFirstOrderLogic.g:3807:2: rule__BoolConstant__Group__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__BoolConstant__Group__1__Impl();
@@ -11400,21 +11502,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BoolConstant__Group__1__Impl"
-    // InternalFirstOrderLogic.g:3782:1: rule__BoolConstant__Group__1__Impl : ( ( rule__BoolConstant__ValueAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:3813:1: rule__BoolConstant__Group__1__Impl : ( ( rule__BoolConstant__ValueAssignment_1 ) ) ;
     public final void rule__BoolConstant__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3786:1: ( ( ( rule__BoolConstant__ValueAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:3787:1: ( ( rule__BoolConstant__ValueAssignment_1 ) )
+            // InternalFirstOrderLogic.g:3817:1: ( ( ( rule__BoolConstant__ValueAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:3818:1: ( ( rule__BoolConstant__ValueAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:3787:1: ( ( rule__BoolConstant__ValueAssignment_1 ) )
-            // InternalFirstOrderLogic.g:3788:2: ( rule__BoolConstant__ValueAssignment_1 )
+            // InternalFirstOrderLogic.g:3818:1: ( ( rule__BoolConstant__ValueAssignment_1 ) )
+            // InternalFirstOrderLogic.g:3819:2: ( rule__BoolConstant__ValueAssignment_1 )
             {
              before(grammarAccess.getBoolConstantAccess().getValueAssignment_1()); 
-            // InternalFirstOrderLogic.g:3789:2: ( rule__BoolConstant__ValueAssignment_1 )
-            // InternalFirstOrderLogic.g:3789:3: rule__BoolConstant__ValueAssignment_1
+            // InternalFirstOrderLogic.g:3820:2: ( rule__BoolConstant__ValueAssignment_1 )
+            // InternalFirstOrderLogic.g:3820:3: rule__BoolConstant__ValueAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__BoolConstant__ValueAssignment_1();
@@ -11447,14 +11549,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__VariableRef__Group__0"
-    // InternalFirstOrderLogic.g:3798:1: rule__VariableRef__Group__0 : rule__VariableRef__Group__0__Impl rule__VariableRef__Group__1 ;
+    // InternalFirstOrderLogic.g:3829:1: rule__VariableRef__Group__0 : rule__VariableRef__Group__0__Impl rule__VariableRef__Group__1 ;
     public final void rule__VariableRef__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3802:1: ( rule__VariableRef__Group__0__Impl rule__VariableRef__Group__1 )
-            // InternalFirstOrderLogic.g:3803:2: rule__VariableRef__Group__0__Impl rule__VariableRef__Group__1
+            // InternalFirstOrderLogic.g:3833:1: ( rule__VariableRef__Group__0__Impl rule__VariableRef__Group__1 )
+            // InternalFirstOrderLogic.g:3834:2: rule__VariableRef__Group__0__Impl rule__VariableRef__Group__1
             {
             pushFollow(FOLLOW_7);
             rule__VariableRef__Group__0__Impl();
@@ -11485,21 +11587,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__VariableRef__Group__0__Impl"
-    // InternalFirstOrderLogic.g:3810:1: rule__VariableRef__Group__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:3841:1: rule__VariableRef__Group__0__Impl : ( () ) ;
     public final void rule__VariableRef__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3814:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:3815:1: ( () )
+            // InternalFirstOrderLogic.g:3845:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:3846:1: ( () )
             {
-            // InternalFirstOrderLogic.g:3815:1: ( () )
-            // InternalFirstOrderLogic.g:3816:2: ()
+            // InternalFirstOrderLogic.g:3846:1: ( () )
+            // InternalFirstOrderLogic.g:3847:2: ()
             {
              before(grammarAccess.getVariableRefAccess().getVariableRefAction_0()); 
-            // InternalFirstOrderLogic.g:3817:2: ()
-            // InternalFirstOrderLogic.g:3817:3: 
+            // InternalFirstOrderLogic.g:3848:2: ()
+            // InternalFirstOrderLogic.g:3848:3: 
             {
             }
 
@@ -11522,14 +11624,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__VariableRef__Group__1"
-    // InternalFirstOrderLogic.g:3825:1: rule__VariableRef__Group__1 : rule__VariableRef__Group__1__Impl rule__VariableRef__Group__2 ;
+    // InternalFirstOrderLogic.g:3856:1: rule__VariableRef__Group__1 : rule__VariableRef__Group__1__Impl rule__VariableRef__Group__2 ;
     public final void rule__VariableRef__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3829:1: ( rule__VariableRef__Group__1__Impl rule__VariableRef__Group__2 )
-            // InternalFirstOrderLogic.g:3830:2: rule__VariableRef__Group__1__Impl rule__VariableRef__Group__2
+            // InternalFirstOrderLogic.g:3860:1: ( rule__VariableRef__Group__1__Impl rule__VariableRef__Group__2 )
+            // InternalFirstOrderLogic.g:3861:2: rule__VariableRef__Group__1__Impl rule__VariableRef__Group__2
             {
             pushFollow(FOLLOW_29);
             rule__VariableRef__Group__1__Impl();
@@ -11560,21 +11662,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__VariableRef__Group__1__Impl"
-    // InternalFirstOrderLogic.g:3837:1: rule__VariableRef__Group__1__Impl : ( ( rule__VariableRef__NameAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:3868:1: rule__VariableRef__Group__1__Impl : ( ( rule__VariableRef__NameAssignment_1 ) ) ;
     public final void rule__VariableRef__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3841:1: ( ( ( rule__VariableRef__NameAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:3842:1: ( ( rule__VariableRef__NameAssignment_1 ) )
+            // InternalFirstOrderLogic.g:3872:1: ( ( ( rule__VariableRef__NameAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:3873:1: ( ( rule__VariableRef__NameAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:3842:1: ( ( rule__VariableRef__NameAssignment_1 ) )
-            // InternalFirstOrderLogic.g:3843:2: ( rule__VariableRef__NameAssignment_1 )
+            // InternalFirstOrderLogic.g:3873:1: ( ( rule__VariableRef__NameAssignment_1 ) )
+            // InternalFirstOrderLogic.g:3874:2: ( rule__VariableRef__NameAssignment_1 )
             {
              before(grammarAccess.getVariableRefAccess().getNameAssignment_1()); 
-            // InternalFirstOrderLogic.g:3844:2: ( rule__VariableRef__NameAssignment_1 )
-            // InternalFirstOrderLogic.g:3844:3: rule__VariableRef__NameAssignment_1
+            // InternalFirstOrderLogic.g:3875:2: ( rule__VariableRef__NameAssignment_1 )
+            // InternalFirstOrderLogic.g:3875:3: rule__VariableRef__NameAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__VariableRef__NameAssignment_1();
@@ -11607,14 +11709,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__VariableRef__Group__2"
-    // InternalFirstOrderLogic.g:3852:1: rule__VariableRef__Group__2 : rule__VariableRef__Group__2__Impl ;
+    // InternalFirstOrderLogic.g:3883:1: rule__VariableRef__Group__2 : rule__VariableRef__Group__2__Impl ;
     public final void rule__VariableRef__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3856:1: ( rule__VariableRef__Group__2__Impl )
-            // InternalFirstOrderLogic.g:3857:2: rule__VariableRef__Group__2__Impl
+            // InternalFirstOrderLogic.g:3887:1: ( rule__VariableRef__Group__2__Impl )
+            // InternalFirstOrderLogic.g:3888:2: rule__VariableRef__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__VariableRef__Group__2__Impl();
@@ -11640,20 +11742,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__VariableRef__Group__2__Impl"
-    // InternalFirstOrderLogic.g:3863:1: rule__VariableRef__Group__2__Impl : ( ( rule__VariableRef__GetAssignment_2 )? ) ;
+    // InternalFirstOrderLogic.g:3894:1: rule__VariableRef__Group__2__Impl : ( ( rule__VariableRef__GetAssignment_2 )? ) ;
     public final void rule__VariableRef__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3867:1: ( ( ( rule__VariableRef__GetAssignment_2 )? ) )
-            // InternalFirstOrderLogic.g:3868:1: ( ( rule__VariableRef__GetAssignment_2 )? )
+            // InternalFirstOrderLogic.g:3898:1: ( ( ( rule__VariableRef__GetAssignment_2 )? ) )
+            // InternalFirstOrderLogic.g:3899:1: ( ( rule__VariableRef__GetAssignment_2 )? )
             {
-            // InternalFirstOrderLogic.g:3868:1: ( ( rule__VariableRef__GetAssignment_2 )? )
-            // InternalFirstOrderLogic.g:3869:2: ( rule__VariableRef__GetAssignment_2 )?
+            // InternalFirstOrderLogic.g:3899:1: ( ( rule__VariableRef__GetAssignment_2 )? )
+            // InternalFirstOrderLogic.g:3900:2: ( rule__VariableRef__GetAssignment_2 )?
             {
              before(grammarAccess.getVariableRefAccess().getGetAssignment_2()); 
-            // InternalFirstOrderLogic.g:3870:2: ( rule__VariableRef__GetAssignment_2 )?
+            // InternalFirstOrderLogic.g:3901:2: ( rule__VariableRef__GetAssignment_2 )?
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -11662,7 +11764,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
             }
             switch (alt14) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:3870:3: rule__VariableRef__GetAssignment_2
+                    // InternalFirstOrderLogic.g:3901:3: rule__VariableRef__GetAssignment_2
                     {
                     pushFollow(FOLLOW_2);
                     rule__VariableRef__GetAssignment_2();
@@ -11698,14 +11800,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group__0"
-    // InternalFirstOrderLogic.g:3879:1: rule__Get__Group__0 : rule__Get__Group__0__Impl rule__Get__Group__1 ;
+    // InternalFirstOrderLogic.g:3910:1: rule__Get__Group__0 : rule__Get__Group__0__Impl rule__Get__Group__1 ;
     public final void rule__Get__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3883:1: ( rule__Get__Group__0__Impl rule__Get__Group__1 )
-            // InternalFirstOrderLogic.g:3884:2: rule__Get__Group__0__Impl rule__Get__Group__1
+            // InternalFirstOrderLogic.g:3914:1: ( rule__Get__Group__0__Impl rule__Get__Group__1 )
+            // InternalFirstOrderLogic.g:3915:2: rule__Get__Group__0__Impl rule__Get__Group__1
             {
             pushFollow(FOLLOW_7);
             rule__Get__Group__0__Impl();
@@ -11736,17 +11838,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group__0__Impl"
-    // InternalFirstOrderLogic.g:3891:1: rule__Get__Group__0__Impl : ( '.' ) ;
+    // InternalFirstOrderLogic.g:3922:1: rule__Get__Group__0__Impl : ( '.' ) ;
     public final void rule__Get__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3895:1: ( ( '.' ) )
-            // InternalFirstOrderLogic.g:3896:1: ( '.' )
+            // InternalFirstOrderLogic.g:3926:1: ( ( '.' ) )
+            // InternalFirstOrderLogic.g:3927:1: ( '.' )
             {
-            // InternalFirstOrderLogic.g:3896:1: ( '.' )
-            // InternalFirstOrderLogic.g:3897:2: '.'
+            // InternalFirstOrderLogic.g:3927:1: ( '.' )
+            // InternalFirstOrderLogic.g:3928:2: '.'
             {
              before(grammarAccess.getGetAccess().getFullStopKeyword_0()); 
             match(input,38,FOLLOW_2); 
@@ -11773,14 +11875,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group__1"
-    // InternalFirstOrderLogic.g:3906:1: rule__Get__Group__1 : rule__Get__Group__1__Impl rule__Get__Group__2 ;
+    // InternalFirstOrderLogic.g:3937:1: rule__Get__Group__1 : rule__Get__Group__1__Impl rule__Get__Group__2 ;
     public final void rule__Get__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3910:1: ( rule__Get__Group__1__Impl rule__Get__Group__2 )
-            // InternalFirstOrderLogic.g:3911:2: rule__Get__Group__1__Impl rule__Get__Group__2
+            // InternalFirstOrderLogic.g:3941:1: ( rule__Get__Group__1__Impl rule__Get__Group__2 )
+            // InternalFirstOrderLogic.g:3942:2: rule__Get__Group__1__Impl rule__Get__Group__2
             {
             pushFollow(FOLLOW_7);
             rule__Get__Group__1__Impl();
@@ -11811,20 +11913,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group__1__Impl"
-    // InternalFirstOrderLogic.g:3918:1: rule__Get__Group__1__Impl : ( ( rule__Get__Group_1__0 )? ) ;
+    // InternalFirstOrderLogic.g:3949:1: rule__Get__Group__1__Impl : ( ( rule__Get__Group_1__0 )? ) ;
     public final void rule__Get__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3922:1: ( ( ( rule__Get__Group_1__0 )? ) )
-            // InternalFirstOrderLogic.g:3923:1: ( ( rule__Get__Group_1__0 )? )
+            // InternalFirstOrderLogic.g:3953:1: ( ( ( rule__Get__Group_1__0 )? ) )
+            // InternalFirstOrderLogic.g:3954:1: ( ( rule__Get__Group_1__0 )? )
             {
-            // InternalFirstOrderLogic.g:3923:1: ( ( rule__Get__Group_1__0 )? )
-            // InternalFirstOrderLogic.g:3924:2: ( rule__Get__Group_1__0 )?
+            // InternalFirstOrderLogic.g:3954:1: ( ( rule__Get__Group_1__0 )? )
+            // InternalFirstOrderLogic.g:3955:2: ( rule__Get__Group_1__0 )?
             {
              before(grammarAccess.getGetAccess().getGroup_1()); 
-            // InternalFirstOrderLogic.g:3925:2: ( rule__Get__Group_1__0 )?
+            // InternalFirstOrderLogic.g:3956:2: ( rule__Get__Group_1__0 )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -11837,7 +11939,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
             }
             switch (alt15) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:3925:3: rule__Get__Group_1__0
+                    // InternalFirstOrderLogic.g:3956:3: rule__Get__Group_1__0
                     {
                     pushFollow(FOLLOW_2);
                     rule__Get__Group_1__0();
@@ -11873,14 +11975,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group__2"
-    // InternalFirstOrderLogic.g:3933:1: rule__Get__Group__2 : rule__Get__Group__2__Impl rule__Get__Group__3 ;
+    // InternalFirstOrderLogic.g:3964:1: rule__Get__Group__2 : rule__Get__Group__2__Impl rule__Get__Group__3 ;
     public final void rule__Get__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3937:1: ( rule__Get__Group__2__Impl rule__Get__Group__3 )
-            // InternalFirstOrderLogic.g:3938:2: rule__Get__Group__2__Impl rule__Get__Group__3
+            // InternalFirstOrderLogic.g:3968:1: ( rule__Get__Group__2__Impl rule__Get__Group__3 )
+            // InternalFirstOrderLogic.g:3969:2: rule__Get__Group__2__Impl rule__Get__Group__3
             {
             pushFollow(FOLLOW_29);
             rule__Get__Group__2__Impl();
@@ -11911,21 +12013,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group__2__Impl"
-    // InternalFirstOrderLogic.g:3945:1: rule__Get__Group__2__Impl : ( ( rule__Get__NameAssignment_2 ) ) ;
+    // InternalFirstOrderLogic.g:3976:1: rule__Get__Group__2__Impl : ( ( rule__Get__NameAssignment_2 ) ) ;
     public final void rule__Get__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3949:1: ( ( ( rule__Get__NameAssignment_2 ) ) )
-            // InternalFirstOrderLogic.g:3950:1: ( ( rule__Get__NameAssignment_2 ) )
+            // InternalFirstOrderLogic.g:3980:1: ( ( ( rule__Get__NameAssignment_2 ) ) )
+            // InternalFirstOrderLogic.g:3981:1: ( ( rule__Get__NameAssignment_2 ) )
             {
-            // InternalFirstOrderLogic.g:3950:1: ( ( rule__Get__NameAssignment_2 ) )
-            // InternalFirstOrderLogic.g:3951:2: ( rule__Get__NameAssignment_2 )
+            // InternalFirstOrderLogic.g:3981:1: ( ( rule__Get__NameAssignment_2 ) )
+            // InternalFirstOrderLogic.g:3982:2: ( rule__Get__NameAssignment_2 )
             {
              before(grammarAccess.getGetAccess().getNameAssignment_2()); 
-            // InternalFirstOrderLogic.g:3952:2: ( rule__Get__NameAssignment_2 )
-            // InternalFirstOrderLogic.g:3952:3: rule__Get__NameAssignment_2
+            // InternalFirstOrderLogic.g:3983:2: ( rule__Get__NameAssignment_2 )
+            // InternalFirstOrderLogic.g:3983:3: rule__Get__NameAssignment_2
             {
             pushFollow(FOLLOW_2);
             rule__Get__NameAssignment_2();
@@ -11958,14 +12060,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group__3"
-    // InternalFirstOrderLogic.g:3960:1: rule__Get__Group__3 : rule__Get__Group__3__Impl ;
+    // InternalFirstOrderLogic.g:3991:1: rule__Get__Group__3 : rule__Get__Group__3__Impl ;
     public final void rule__Get__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3964:1: ( rule__Get__Group__3__Impl )
-            // InternalFirstOrderLogic.g:3965:2: rule__Get__Group__3__Impl
+            // InternalFirstOrderLogic.g:3995:1: ( rule__Get__Group__3__Impl )
+            // InternalFirstOrderLogic.g:3996:2: rule__Get__Group__3__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Get__Group__3__Impl();
@@ -11991,20 +12093,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group__3__Impl"
-    // InternalFirstOrderLogic.g:3971:1: rule__Get__Group__3__Impl : ( ( rule__Get__NextAssignment_3 )? ) ;
+    // InternalFirstOrderLogic.g:4002:1: rule__Get__Group__3__Impl : ( ( rule__Get__NextAssignment_3 )? ) ;
     public final void rule__Get__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3975:1: ( ( ( rule__Get__NextAssignment_3 )? ) )
-            // InternalFirstOrderLogic.g:3976:1: ( ( rule__Get__NextAssignment_3 )? )
+            // InternalFirstOrderLogic.g:4006:1: ( ( ( rule__Get__NextAssignment_3 )? ) )
+            // InternalFirstOrderLogic.g:4007:1: ( ( rule__Get__NextAssignment_3 )? )
             {
-            // InternalFirstOrderLogic.g:3976:1: ( ( rule__Get__NextAssignment_3 )? )
-            // InternalFirstOrderLogic.g:3977:2: ( rule__Get__NextAssignment_3 )?
+            // InternalFirstOrderLogic.g:4007:1: ( ( rule__Get__NextAssignment_3 )? )
+            // InternalFirstOrderLogic.g:4008:2: ( rule__Get__NextAssignment_3 )?
             {
              before(grammarAccess.getGetAccess().getNextAssignment_3()); 
-            // InternalFirstOrderLogic.g:3978:2: ( rule__Get__NextAssignment_3 )?
+            // InternalFirstOrderLogic.g:4009:2: ( rule__Get__NextAssignment_3 )?
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -12013,7 +12115,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
             }
             switch (alt16) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:3978:3: rule__Get__NextAssignment_3
+                    // InternalFirstOrderLogic.g:4009:3: rule__Get__NextAssignment_3
                     {
                     pushFollow(FOLLOW_2);
                     rule__Get__NextAssignment_3();
@@ -12049,14 +12151,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group_1__0"
-    // InternalFirstOrderLogic.g:3987:1: rule__Get__Group_1__0 : rule__Get__Group_1__0__Impl rule__Get__Group_1__1 ;
+    // InternalFirstOrderLogic.g:4018:1: rule__Get__Group_1__0 : rule__Get__Group_1__0__Impl rule__Get__Group_1__1 ;
     public final void rule__Get__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:3991:1: ( rule__Get__Group_1__0__Impl rule__Get__Group_1__1 )
-            // InternalFirstOrderLogic.g:3992:2: rule__Get__Group_1__0__Impl rule__Get__Group_1__1
+            // InternalFirstOrderLogic.g:4022:1: ( rule__Get__Group_1__0__Impl rule__Get__Group_1__1 )
+            // InternalFirstOrderLogic.g:4023:2: rule__Get__Group_1__0__Impl rule__Get__Group_1__1
             {
             pushFollow(FOLLOW_30);
             rule__Get__Group_1__0__Impl();
@@ -12087,21 +12189,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group_1__0__Impl"
-    // InternalFirstOrderLogic.g:3999:1: rule__Get__Group_1__0__Impl : ( ( rule__Get__TypeAssignment_1_0 ) ) ;
+    // InternalFirstOrderLogic.g:4030:1: rule__Get__Group_1__0__Impl : ( ( rule__Get__TypeAssignment_1_0 ) ) ;
     public final void rule__Get__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4003:1: ( ( ( rule__Get__TypeAssignment_1_0 ) ) )
-            // InternalFirstOrderLogic.g:4004:1: ( ( rule__Get__TypeAssignment_1_0 ) )
+            // InternalFirstOrderLogic.g:4034:1: ( ( ( rule__Get__TypeAssignment_1_0 ) ) )
+            // InternalFirstOrderLogic.g:4035:1: ( ( rule__Get__TypeAssignment_1_0 ) )
             {
-            // InternalFirstOrderLogic.g:4004:1: ( ( rule__Get__TypeAssignment_1_0 ) )
-            // InternalFirstOrderLogic.g:4005:2: ( rule__Get__TypeAssignment_1_0 )
+            // InternalFirstOrderLogic.g:4035:1: ( ( rule__Get__TypeAssignment_1_0 ) )
+            // InternalFirstOrderLogic.g:4036:2: ( rule__Get__TypeAssignment_1_0 )
             {
              before(grammarAccess.getGetAccess().getTypeAssignment_1_0()); 
-            // InternalFirstOrderLogic.g:4006:2: ( rule__Get__TypeAssignment_1_0 )
-            // InternalFirstOrderLogic.g:4006:3: rule__Get__TypeAssignment_1_0
+            // InternalFirstOrderLogic.g:4037:2: ( rule__Get__TypeAssignment_1_0 )
+            // InternalFirstOrderLogic.g:4037:3: rule__Get__TypeAssignment_1_0
             {
             pushFollow(FOLLOW_2);
             rule__Get__TypeAssignment_1_0();
@@ -12134,14 +12236,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group_1__1"
-    // InternalFirstOrderLogic.g:4014:1: rule__Get__Group_1__1 : rule__Get__Group_1__1__Impl ;
+    // InternalFirstOrderLogic.g:4045:1: rule__Get__Group_1__1 : rule__Get__Group_1__1__Impl ;
     public final void rule__Get__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4018:1: ( rule__Get__Group_1__1__Impl )
-            // InternalFirstOrderLogic.g:4019:2: rule__Get__Group_1__1__Impl
+            // InternalFirstOrderLogic.g:4049:1: ( rule__Get__Group_1__1__Impl )
+            // InternalFirstOrderLogic.g:4050:2: rule__Get__Group_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Get__Group_1__1__Impl();
@@ -12167,17 +12269,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__Group_1__1__Impl"
-    // InternalFirstOrderLogic.g:4025:1: rule__Get__Group_1__1__Impl : ( '::' ) ;
+    // InternalFirstOrderLogic.g:4056:1: rule__Get__Group_1__1__Impl : ( '::' ) ;
     public final void rule__Get__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4029:1: ( ( '::' ) )
-            // InternalFirstOrderLogic.g:4030:1: ( '::' )
+            // InternalFirstOrderLogic.g:4060:1: ( ( '::' ) )
+            // InternalFirstOrderLogic.g:4061:1: ( '::' )
             {
-            // InternalFirstOrderLogic.g:4030:1: ( '::' )
-            // InternalFirstOrderLogic.g:4031:2: '::'
+            // InternalFirstOrderLogic.g:4061:1: ( '::' )
+            // InternalFirstOrderLogic.g:4062:2: '::'
             {
              before(grammarAccess.getGetAccess().getColonColonKeyword_1_1()); 
             match(input,39,FOLLOW_2); 
@@ -12204,14 +12306,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetContainer__Group__0"
-    // InternalFirstOrderLogic.g:4041:1: rule__GetContainer__Group__0 : rule__GetContainer__Group__0__Impl rule__GetContainer__Group__1 ;
+    // InternalFirstOrderLogic.g:4072:1: rule__GetContainer__Group__0 : rule__GetContainer__Group__0__Impl rule__GetContainer__Group__1 ;
     public final void rule__GetContainer__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4045:1: ( rule__GetContainer__Group__0__Impl rule__GetContainer__Group__1 )
-            // InternalFirstOrderLogic.g:4046:2: rule__GetContainer__Group__0__Impl rule__GetContainer__Group__1
+            // InternalFirstOrderLogic.g:4076:1: ( rule__GetContainer__Group__0__Impl rule__GetContainer__Group__1 )
+            // InternalFirstOrderLogic.g:4077:2: rule__GetContainer__Group__0__Impl rule__GetContainer__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__GetContainer__Group__0__Impl();
@@ -12242,17 +12344,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetContainer__Group__0__Impl"
-    // InternalFirstOrderLogic.g:4053:1: rule__GetContainer__Group__0__Impl : ( 'getContainer(' ) ;
+    // InternalFirstOrderLogic.g:4084:1: rule__GetContainer__Group__0__Impl : ( 'getContainer(' ) ;
     public final void rule__GetContainer__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4057:1: ( ( 'getContainer(' ) )
-            // InternalFirstOrderLogic.g:4058:1: ( 'getContainer(' )
+            // InternalFirstOrderLogic.g:4088:1: ( ( 'getContainer(' ) )
+            // InternalFirstOrderLogic.g:4089:1: ( 'getContainer(' )
             {
-            // InternalFirstOrderLogic.g:4058:1: ( 'getContainer(' )
-            // InternalFirstOrderLogic.g:4059:2: 'getContainer('
+            // InternalFirstOrderLogic.g:4089:1: ( 'getContainer(' )
+            // InternalFirstOrderLogic.g:4090:2: 'getContainer('
             {
              before(grammarAccess.getGetContainerAccess().getGetContainerKeyword_0()); 
             match(input,40,FOLLOW_2); 
@@ -12279,14 +12381,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetContainer__Group__1"
-    // InternalFirstOrderLogic.g:4068:1: rule__GetContainer__Group__1 : rule__GetContainer__Group__1__Impl rule__GetContainer__Group__2 ;
+    // InternalFirstOrderLogic.g:4099:1: rule__GetContainer__Group__1 : rule__GetContainer__Group__1__Impl rule__GetContainer__Group__2 ;
     public final void rule__GetContainer__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4072:1: ( rule__GetContainer__Group__1__Impl rule__GetContainer__Group__2 )
-            // InternalFirstOrderLogic.g:4073:2: rule__GetContainer__Group__1__Impl rule__GetContainer__Group__2
+            // InternalFirstOrderLogic.g:4103:1: ( rule__GetContainer__Group__1__Impl rule__GetContainer__Group__2 )
+            // InternalFirstOrderLogic.g:4104:2: rule__GetContainer__Group__1__Impl rule__GetContainer__Group__2
             {
             pushFollow(FOLLOW_23);
             rule__GetContainer__Group__1__Impl();
@@ -12317,21 +12419,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetContainer__Group__1__Impl"
-    // InternalFirstOrderLogic.g:4080:1: rule__GetContainer__Group__1__Impl : ( ( rule__GetContainer__ElementAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:4111:1: rule__GetContainer__Group__1__Impl : ( ( rule__GetContainer__ElementAssignment_1 ) ) ;
     public final void rule__GetContainer__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4084:1: ( ( ( rule__GetContainer__ElementAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:4085:1: ( ( rule__GetContainer__ElementAssignment_1 ) )
+            // InternalFirstOrderLogic.g:4115:1: ( ( ( rule__GetContainer__ElementAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:4116:1: ( ( rule__GetContainer__ElementAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:4085:1: ( ( rule__GetContainer__ElementAssignment_1 ) )
-            // InternalFirstOrderLogic.g:4086:2: ( rule__GetContainer__ElementAssignment_1 )
+            // InternalFirstOrderLogic.g:4116:1: ( ( rule__GetContainer__ElementAssignment_1 ) )
+            // InternalFirstOrderLogic.g:4117:2: ( rule__GetContainer__ElementAssignment_1 )
             {
              before(grammarAccess.getGetContainerAccess().getElementAssignment_1()); 
-            // InternalFirstOrderLogic.g:4087:2: ( rule__GetContainer__ElementAssignment_1 )
-            // InternalFirstOrderLogic.g:4087:3: rule__GetContainer__ElementAssignment_1
+            // InternalFirstOrderLogic.g:4118:2: ( rule__GetContainer__ElementAssignment_1 )
+            // InternalFirstOrderLogic.g:4118:3: rule__GetContainer__ElementAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__GetContainer__ElementAssignment_1();
@@ -12364,14 +12466,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetContainer__Group__2"
-    // InternalFirstOrderLogic.g:4095:1: rule__GetContainer__Group__2 : rule__GetContainer__Group__2__Impl ;
+    // InternalFirstOrderLogic.g:4126:1: rule__GetContainer__Group__2 : rule__GetContainer__Group__2__Impl ;
     public final void rule__GetContainer__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4099:1: ( rule__GetContainer__Group__2__Impl )
-            // InternalFirstOrderLogic.g:4100:2: rule__GetContainer__Group__2__Impl
+            // InternalFirstOrderLogic.g:4130:1: ( rule__GetContainer__Group__2__Impl )
+            // InternalFirstOrderLogic.g:4131:2: rule__GetContainer__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__GetContainer__Group__2__Impl();
@@ -12397,17 +12499,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetContainer__Group__2__Impl"
-    // InternalFirstOrderLogic.g:4106:1: rule__GetContainer__Group__2__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:4137:1: rule__GetContainer__Group__2__Impl : ( ')' ) ;
     public final void rule__GetContainer__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4110:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:4111:1: ( ')' )
+            // InternalFirstOrderLogic.g:4141:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:4142:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:4111:1: ( ')' )
-            // InternalFirstOrderLogic.g:4112:2: ')'
+            // InternalFirstOrderLogic.g:4142:1: ( ')' )
+            // InternalFirstOrderLogic.g:4143:2: ')'
             {
              before(grammarAccess.getGetContainerAccess().getRightParenthesisKeyword_2()); 
             match(input,25,FOLLOW_2); 
@@ -12433,23 +12535,23 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
     // $ANTLR end "rule__GetContainer__Group__2__Impl"
 
 
-    // $ANTLR start "rule__GetContainment__Group__0"
-    // InternalFirstOrderLogic.g:4122:1: rule__GetContainment__Group__0 : rule__GetContainment__Group__0__Impl rule__GetContainment__Group__1 ;
-    public final void rule__GetContainment__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__GetContainments__Group__0"
+    // InternalFirstOrderLogic.g:4153:1: rule__GetContainments__Group__0 : rule__GetContainments__Group__0__Impl rule__GetContainments__Group__1 ;
+    public final void rule__GetContainments__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4126:1: ( rule__GetContainment__Group__0__Impl rule__GetContainment__Group__1 )
-            // InternalFirstOrderLogic.g:4127:2: rule__GetContainment__Group__0__Impl rule__GetContainment__Group__1
+            // InternalFirstOrderLogic.g:4157:1: ( rule__GetContainments__Group__0__Impl rule__GetContainments__Group__1 )
+            // InternalFirstOrderLogic.g:4158:2: rule__GetContainments__Group__0__Impl rule__GetContainments__Group__1
             {
             pushFollow(FOLLOW_24);
-            rule__GetContainment__Group__0__Impl();
+            rule__GetContainments__Group__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__GetContainment__Group__1();
+            rule__GetContainments__Group__1();
 
             state._fsp--;
 
@@ -12468,25 +12570,25 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__GetContainment__Group__0"
+    // $ANTLR end "rule__GetContainments__Group__0"
 
 
-    // $ANTLR start "rule__GetContainment__Group__0__Impl"
-    // InternalFirstOrderLogic.g:4134:1: rule__GetContainment__Group__0__Impl : ( 'getContainments(' ) ;
-    public final void rule__GetContainment__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__GetContainments__Group__0__Impl"
+    // InternalFirstOrderLogic.g:4165:1: rule__GetContainments__Group__0__Impl : ( 'getContainments(' ) ;
+    public final void rule__GetContainments__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4138:1: ( ( 'getContainments(' ) )
-            // InternalFirstOrderLogic.g:4139:1: ( 'getContainments(' )
+            // InternalFirstOrderLogic.g:4169:1: ( ( 'getContainments(' ) )
+            // InternalFirstOrderLogic.g:4170:1: ( 'getContainments(' )
             {
-            // InternalFirstOrderLogic.g:4139:1: ( 'getContainments(' )
-            // InternalFirstOrderLogic.g:4140:2: 'getContainments('
+            // InternalFirstOrderLogic.g:4170:1: ( 'getContainments(' )
+            // InternalFirstOrderLogic.g:4171:2: 'getContainments('
             {
-             before(grammarAccess.getGetContainmentAccess().getGetContainmentsKeyword_0()); 
+             before(grammarAccess.getGetContainmentsAccess().getGetContainmentsKeyword_0()); 
             match(input,41,FOLLOW_2); 
-             after(grammarAccess.getGetContainmentAccess().getGetContainmentsKeyword_0()); 
+             after(grammarAccess.getGetContainmentsAccess().getGetContainmentsKeyword_0()); 
 
             }
 
@@ -12505,26 +12607,26 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__GetContainment__Group__0__Impl"
+    // $ANTLR end "rule__GetContainments__Group__0__Impl"
 
 
-    // $ANTLR start "rule__GetContainment__Group__1"
-    // InternalFirstOrderLogic.g:4149:1: rule__GetContainment__Group__1 : rule__GetContainment__Group__1__Impl rule__GetContainment__Group__2 ;
-    public final void rule__GetContainment__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__GetContainments__Group__1"
+    // InternalFirstOrderLogic.g:4180:1: rule__GetContainments__Group__1 : rule__GetContainments__Group__1__Impl rule__GetContainments__Group__2 ;
+    public final void rule__GetContainments__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4153:1: ( rule__GetContainment__Group__1__Impl rule__GetContainment__Group__2 )
-            // InternalFirstOrderLogic.g:4154:2: rule__GetContainment__Group__1__Impl rule__GetContainment__Group__2
+            // InternalFirstOrderLogic.g:4184:1: ( rule__GetContainments__Group__1__Impl rule__GetContainments__Group__2 )
+            // InternalFirstOrderLogic.g:4185:2: rule__GetContainments__Group__1__Impl rule__GetContainments__Group__2
             {
             pushFollow(FOLLOW_23);
-            rule__GetContainment__Group__1__Impl();
+            rule__GetContainments__Group__1__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__GetContainment__Group__2();
+            rule__GetContainments__Group__2();
 
             state._fsp--;
 
@@ -12543,35 +12645,35 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__GetContainment__Group__1"
+    // $ANTLR end "rule__GetContainments__Group__1"
 
 
-    // $ANTLR start "rule__GetContainment__Group__1__Impl"
-    // InternalFirstOrderLogic.g:4161:1: rule__GetContainment__Group__1__Impl : ( ( rule__GetContainment__ElementAssignment_1 ) ) ;
-    public final void rule__GetContainment__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__GetContainments__Group__1__Impl"
+    // InternalFirstOrderLogic.g:4192:1: rule__GetContainments__Group__1__Impl : ( ( rule__GetContainments__ElementAssignment_1 ) ) ;
+    public final void rule__GetContainments__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4165:1: ( ( ( rule__GetContainment__ElementAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:4166:1: ( ( rule__GetContainment__ElementAssignment_1 ) )
+            // InternalFirstOrderLogic.g:4196:1: ( ( ( rule__GetContainments__ElementAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:4197:1: ( ( rule__GetContainments__ElementAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:4166:1: ( ( rule__GetContainment__ElementAssignment_1 ) )
-            // InternalFirstOrderLogic.g:4167:2: ( rule__GetContainment__ElementAssignment_1 )
+            // InternalFirstOrderLogic.g:4197:1: ( ( rule__GetContainments__ElementAssignment_1 ) )
+            // InternalFirstOrderLogic.g:4198:2: ( rule__GetContainments__ElementAssignment_1 )
             {
-             before(grammarAccess.getGetContainmentAccess().getElementAssignment_1()); 
-            // InternalFirstOrderLogic.g:4168:2: ( rule__GetContainment__ElementAssignment_1 )
-            // InternalFirstOrderLogic.g:4168:3: rule__GetContainment__ElementAssignment_1
+             before(grammarAccess.getGetContainmentsAccess().getElementAssignment_1()); 
+            // InternalFirstOrderLogic.g:4199:2: ( rule__GetContainments__ElementAssignment_1 )
+            // InternalFirstOrderLogic.g:4199:3: rule__GetContainments__ElementAssignment_1
             {
             pushFollow(FOLLOW_2);
-            rule__GetContainment__ElementAssignment_1();
+            rule__GetContainments__ElementAssignment_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getGetContainmentAccess().getElementAssignment_1()); 
+             after(grammarAccess.getGetContainmentsAccess().getElementAssignment_1()); 
 
             }
 
@@ -12590,21 +12692,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__GetContainment__Group__1__Impl"
+    // $ANTLR end "rule__GetContainments__Group__1__Impl"
 
 
-    // $ANTLR start "rule__GetContainment__Group__2"
-    // InternalFirstOrderLogic.g:4176:1: rule__GetContainment__Group__2 : rule__GetContainment__Group__2__Impl ;
-    public final void rule__GetContainment__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__GetContainments__Group__2"
+    // InternalFirstOrderLogic.g:4207:1: rule__GetContainments__Group__2 : rule__GetContainments__Group__2__Impl ;
+    public final void rule__GetContainments__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4180:1: ( rule__GetContainment__Group__2__Impl )
-            // InternalFirstOrderLogic.g:4181:2: rule__GetContainment__Group__2__Impl
+            // InternalFirstOrderLogic.g:4211:1: ( rule__GetContainments__Group__2__Impl )
+            // InternalFirstOrderLogic.g:4212:2: rule__GetContainments__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__GetContainment__Group__2__Impl();
+            rule__GetContainments__Group__2__Impl();
 
             state._fsp--;
 
@@ -12623,25 +12725,25 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__GetContainment__Group__2"
+    // $ANTLR end "rule__GetContainments__Group__2"
 
 
-    // $ANTLR start "rule__GetContainment__Group__2__Impl"
-    // InternalFirstOrderLogic.g:4187:1: rule__GetContainment__Group__2__Impl : ( ')' ) ;
-    public final void rule__GetContainment__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__GetContainments__Group__2__Impl"
+    // InternalFirstOrderLogic.g:4218:1: rule__GetContainments__Group__2__Impl : ( ')' ) ;
+    public final void rule__GetContainments__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4191:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:4192:1: ( ')' )
+            // InternalFirstOrderLogic.g:4222:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:4223:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:4192:1: ( ')' )
-            // InternalFirstOrderLogic.g:4193:2: ')'
+            // InternalFirstOrderLogic.g:4223:1: ( ')' )
+            // InternalFirstOrderLogic.g:4224:2: ')'
             {
-             before(grammarAccess.getGetContainmentAccess().getRightParenthesisKeyword_2()); 
+             before(grammarAccess.getGetContainmentsAccess().getRightParenthesisKeyword_2()); 
             match(input,25,FOLLOW_2); 
-             after(grammarAccess.getGetContainmentAccess().getRightParenthesisKeyword_2()); 
+             after(grammarAccess.getGetContainmentsAccess().getRightParenthesisKeyword_2()); 
 
             }
 
@@ -12660,18 +12762,18 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__GetContainment__Group__2__Impl"
+    // $ANTLR end "rule__GetContainments__Group__2__Impl"
 
 
     // $ANTLR start "rule__GetClosure__Group__0"
-    // InternalFirstOrderLogic.g:4203:1: rule__GetClosure__Group__0 : rule__GetClosure__Group__0__Impl rule__GetClosure__Group__1 ;
+    // InternalFirstOrderLogic.g:4234:1: rule__GetClosure__Group__0 : rule__GetClosure__Group__0__Impl rule__GetClosure__Group__1 ;
     public final void rule__GetClosure__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4207:1: ( rule__GetClosure__Group__0__Impl rule__GetClosure__Group__1 )
-            // InternalFirstOrderLogic.g:4208:2: rule__GetClosure__Group__0__Impl rule__GetClosure__Group__1
+            // InternalFirstOrderLogic.g:4238:1: ( rule__GetClosure__Group__0__Impl rule__GetClosure__Group__1 )
+            // InternalFirstOrderLogic.g:4239:2: rule__GetClosure__Group__0__Impl rule__GetClosure__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__GetClosure__Group__0__Impl();
@@ -12702,17 +12804,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetClosure__Group__0__Impl"
-    // InternalFirstOrderLogic.g:4215:1: rule__GetClosure__Group__0__Impl : ( 'getClosure(' ) ;
+    // InternalFirstOrderLogic.g:4246:1: rule__GetClosure__Group__0__Impl : ( 'getClosure(' ) ;
     public final void rule__GetClosure__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4219:1: ( ( 'getClosure(' ) )
-            // InternalFirstOrderLogic.g:4220:1: ( 'getClosure(' )
+            // InternalFirstOrderLogic.g:4250:1: ( ( 'getClosure(' ) )
+            // InternalFirstOrderLogic.g:4251:1: ( 'getClosure(' )
             {
-            // InternalFirstOrderLogic.g:4220:1: ( 'getClosure(' )
-            // InternalFirstOrderLogic.g:4221:2: 'getClosure('
+            // InternalFirstOrderLogic.g:4251:1: ( 'getClosure(' )
+            // InternalFirstOrderLogic.g:4252:2: 'getClosure('
             {
              before(grammarAccess.getGetClosureAccess().getGetClosureKeyword_0()); 
             match(input,42,FOLLOW_2); 
@@ -12739,14 +12841,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetClosure__Group__1"
-    // InternalFirstOrderLogic.g:4230:1: rule__GetClosure__Group__1 : rule__GetClosure__Group__1__Impl rule__GetClosure__Group__2 ;
+    // InternalFirstOrderLogic.g:4261:1: rule__GetClosure__Group__1 : rule__GetClosure__Group__1__Impl rule__GetClosure__Group__2 ;
     public final void rule__GetClosure__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4234:1: ( rule__GetClosure__Group__1__Impl rule__GetClosure__Group__2 )
-            // InternalFirstOrderLogic.g:4235:2: rule__GetClosure__Group__1__Impl rule__GetClosure__Group__2
+            // InternalFirstOrderLogic.g:4265:1: ( rule__GetClosure__Group__1__Impl rule__GetClosure__Group__2 )
+            // InternalFirstOrderLogic.g:4266:2: rule__GetClosure__Group__1__Impl rule__GetClosure__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__GetClosure__Group__1__Impl();
@@ -12777,21 +12879,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetClosure__Group__1__Impl"
-    // InternalFirstOrderLogic.g:4242:1: rule__GetClosure__Group__1__Impl : ( ( rule__GetClosure__ElementAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:4273:1: rule__GetClosure__Group__1__Impl : ( ( rule__GetClosure__ElementAssignment_1 ) ) ;
     public final void rule__GetClosure__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4246:1: ( ( ( rule__GetClosure__ElementAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:4247:1: ( ( rule__GetClosure__ElementAssignment_1 ) )
+            // InternalFirstOrderLogic.g:4277:1: ( ( ( rule__GetClosure__ElementAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:4278:1: ( ( rule__GetClosure__ElementAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:4247:1: ( ( rule__GetClosure__ElementAssignment_1 ) )
-            // InternalFirstOrderLogic.g:4248:2: ( rule__GetClosure__ElementAssignment_1 )
+            // InternalFirstOrderLogic.g:4278:1: ( ( rule__GetClosure__ElementAssignment_1 ) )
+            // InternalFirstOrderLogic.g:4279:2: ( rule__GetClosure__ElementAssignment_1 )
             {
              before(grammarAccess.getGetClosureAccess().getElementAssignment_1()); 
-            // InternalFirstOrderLogic.g:4249:2: ( rule__GetClosure__ElementAssignment_1 )
-            // InternalFirstOrderLogic.g:4249:3: rule__GetClosure__ElementAssignment_1
+            // InternalFirstOrderLogic.g:4280:2: ( rule__GetClosure__ElementAssignment_1 )
+            // InternalFirstOrderLogic.g:4280:3: rule__GetClosure__ElementAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__GetClosure__ElementAssignment_1();
@@ -12824,14 +12926,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetClosure__Group__2"
-    // InternalFirstOrderLogic.g:4257:1: rule__GetClosure__Group__2 : rule__GetClosure__Group__2__Impl rule__GetClosure__Group__3 ;
+    // InternalFirstOrderLogic.g:4288:1: rule__GetClosure__Group__2 : rule__GetClosure__Group__2__Impl rule__GetClosure__Group__3 ;
     public final void rule__GetClosure__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4261:1: ( rule__GetClosure__Group__2__Impl rule__GetClosure__Group__3 )
-            // InternalFirstOrderLogic.g:4262:2: rule__GetClosure__Group__2__Impl rule__GetClosure__Group__3
+            // InternalFirstOrderLogic.g:4292:1: ( rule__GetClosure__Group__2__Impl rule__GetClosure__Group__3 )
+            // InternalFirstOrderLogic.g:4293:2: rule__GetClosure__Group__2__Impl rule__GetClosure__Group__3
             {
             pushFollow(FOLLOW_7);
             rule__GetClosure__Group__2__Impl();
@@ -12862,17 +12964,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetClosure__Group__2__Impl"
-    // InternalFirstOrderLogic.g:4269:1: rule__GetClosure__Group__2__Impl : ( ',' ) ;
+    // InternalFirstOrderLogic.g:4300:1: rule__GetClosure__Group__2__Impl : ( ',' ) ;
     public final void rule__GetClosure__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4273:1: ( ( ',' ) )
-            // InternalFirstOrderLogic.g:4274:1: ( ',' )
+            // InternalFirstOrderLogic.g:4304:1: ( ( ',' ) )
+            // InternalFirstOrderLogic.g:4305:1: ( ',' )
             {
-            // InternalFirstOrderLogic.g:4274:1: ( ',' )
-            // InternalFirstOrderLogic.g:4275:2: ','
+            // InternalFirstOrderLogic.g:4305:1: ( ',' )
+            // InternalFirstOrderLogic.g:4306:2: ','
             {
              before(grammarAccess.getGetClosureAccess().getCommaKeyword_2()); 
             match(input,27,FOLLOW_2); 
@@ -12899,14 +13001,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetClosure__Group__3"
-    // InternalFirstOrderLogic.g:4284:1: rule__GetClosure__Group__3 : rule__GetClosure__Group__3__Impl rule__GetClosure__Group__4 ;
+    // InternalFirstOrderLogic.g:4315:1: rule__GetClosure__Group__3 : rule__GetClosure__Group__3__Impl rule__GetClosure__Group__4 ;
     public final void rule__GetClosure__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4288:1: ( rule__GetClosure__Group__3__Impl rule__GetClosure__Group__4 )
-            // InternalFirstOrderLogic.g:4289:2: rule__GetClosure__Group__3__Impl rule__GetClosure__Group__4
+            // InternalFirstOrderLogic.g:4319:1: ( rule__GetClosure__Group__3__Impl rule__GetClosure__Group__4 )
+            // InternalFirstOrderLogic.g:4320:2: rule__GetClosure__Group__3__Impl rule__GetClosure__Group__4
             {
             pushFollow(FOLLOW_23);
             rule__GetClosure__Group__3__Impl();
@@ -12937,21 +13039,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetClosure__Group__3__Impl"
-    // InternalFirstOrderLogic.g:4296:1: rule__GetClosure__Group__3__Impl : ( ( rule__GetClosure__FeatureAssignment_3 ) ) ;
+    // InternalFirstOrderLogic.g:4327:1: rule__GetClosure__Group__3__Impl : ( ( rule__GetClosure__FeatureAssignment_3 ) ) ;
     public final void rule__GetClosure__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4300:1: ( ( ( rule__GetClosure__FeatureAssignment_3 ) ) )
-            // InternalFirstOrderLogic.g:4301:1: ( ( rule__GetClosure__FeatureAssignment_3 ) )
+            // InternalFirstOrderLogic.g:4331:1: ( ( ( rule__GetClosure__FeatureAssignment_3 ) ) )
+            // InternalFirstOrderLogic.g:4332:1: ( ( rule__GetClosure__FeatureAssignment_3 ) )
             {
-            // InternalFirstOrderLogic.g:4301:1: ( ( rule__GetClosure__FeatureAssignment_3 ) )
-            // InternalFirstOrderLogic.g:4302:2: ( rule__GetClosure__FeatureAssignment_3 )
+            // InternalFirstOrderLogic.g:4332:1: ( ( rule__GetClosure__FeatureAssignment_3 ) )
+            // InternalFirstOrderLogic.g:4333:2: ( rule__GetClosure__FeatureAssignment_3 )
             {
              before(grammarAccess.getGetClosureAccess().getFeatureAssignment_3()); 
-            // InternalFirstOrderLogic.g:4303:2: ( rule__GetClosure__FeatureAssignment_3 )
-            // InternalFirstOrderLogic.g:4303:3: rule__GetClosure__FeatureAssignment_3
+            // InternalFirstOrderLogic.g:4334:2: ( rule__GetClosure__FeatureAssignment_3 )
+            // InternalFirstOrderLogic.g:4334:3: rule__GetClosure__FeatureAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__GetClosure__FeatureAssignment_3();
@@ -12984,14 +13086,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetClosure__Group__4"
-    // InternalFirstOrderLogic.g:4311:1: rule__GetClosure__Group__4 : rule__GetClosure__Group__4__Impl ;
+    // InternalFirstOrderLogic.g:4342:1: rule__GetClosure__Group__4 : rule__GetClosure__Group__4__Impl ;
     public final void rule__GetClosure__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4315:1: ( rule__GetClosure__Group__4__Impl )
-            // InternalFirstOrderLogic.g:4316:2: rule__GetClosure__Group__4__Impl
+            // InternalFirstOrderLogic.g:4346:1: ( rule__GetClosure__Group__4__Impl )
+            // InternalFirstOrderLogic.g:4347:2: rule__GetClosure__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__GetClosure__Group__4__Impl();
@@ -13017,17 +13119,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetClosure__Group__4__Impl"
-    // InternalFirstOrderLogic.g:4322:1: rule__GetClosure__Group__4__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:4353:1: rule__GetClosure__Group__4__Impl : ( ')' ) ;
     public final void rule__GetClosure__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4326:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:4327:1: ( ')' )
+            // InternalFirstOrderLogic.g:4357:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:4358:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:4327:1: ( ')' )
-            // InternalFirstOrderLogic.g:4328:2: ')'
+            // InternalFirstOrderLogic.g:4358:1: ( ')' )
+            // InternalFirstOrderLogic.g:4359:2: ')'
             {
              before(grammarAccess.getGetClosureAccess().getRightParenthesisKeyword_4()); 
             match(input,25,FOLLOW_2); 
@@ -13053,15 +13155,245 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
     // $ANTLR end "rule__GetClosure__Group__4__Impl"
 
 
+    // $ANTLR start "rule__Size__Group__0"
+    // InternalFirstOrderLogic.g:4369:1: rule__Size__Group__0 : rule__Size__Group__0__Impl rule__Size__Group__1 ;
+    public final void rule__Size__Group__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalFirstOrderLogic.g:4373:1: ( rule__Size__Group__0__Impl rule__Size__Group__1 )
+            // InternalFirstOrderLogic.g:4374:2: rule__Size__Group__0__Impl rule__Size__Group__1
+            {
+            pushFollow(FOLLOW_24);
+            rule__Size__Group__0__Impl();
+
+            state._fsp--;
+
+            pushFollow(FOLLOW_2);
+            rule__Size__Group__1();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Size__Group__0"
+
+
+    // $ANTLR start "rule__Size__Group__0__Impl"
+    // InternalFirstOrderLogic.g:4381:1: rule__Size__Group__0__Impl : ( 'size(' ) ;
+    public final void rule__Size__Group__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalFirstOrderLogic.g:4385:1: ( ( 'size(' ) )
+            // InternalFirstOrderLogic.g:4386:1: ( 'size(' )
+            {
+            // InternalFirstOrderLogic.g:4386:1: ( 'size(' )
+            // InternalFirstOrderLogic.g:4387:2: 'size('
+            {
+             before(grammarAccess.getSizeAccess().getSizeKeyword_0()); 
+            match(input,43,FOLLOW_2); 
+             after(grammarAccess.getSizeAccess().getSizeKeyword_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Size__Group__0__Impl"
+
+
+    // $ANTLR start "rule__Size__Group__1"
+    // InternalFirstOrderLogic.g:4396:1: rule__Size__Group__1 : rule__Size__Group__1__Impl rule__Size__Group__2 ;
+    public final void rule__Size__Group__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalFirstOrderLogic.g:4400:1: ( rule__Size__Group__1__Impl rule__Size__Group__2 )
+            // InternalFirstOrderLogic.g:4401:2: rule__Size__Group__1__Impl rule__Size__Group__2
+            {
+            pushFollow(FOLLOW_23);
+            rule__Size__Group__1__Impl();
+
+            state._fsp--;
+
+            pushFollow(FOLLOW_2);
+            rule__Size__Group__2();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Size__Group__1"
+
+
+    // $ANTLR start "rule__Size__Group__1__Impl"
+    // InternalFirstOrderLogic.g:4408:1: rule__Size__Group__1__Impl : ( ( rule__Size__ElementsAssignment_1 ) ) ;
+    public final void rule__Size__Group__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalFirstOrderLogic.g:4412:1: ( ( ( rule__Size__ElementsAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:4413:1: ( ( rule__Size__ElementsAssignment_1 ) )
+            {
+            // InternalFirstOrderLogic.g:4413:1: ( ( rule__Size__ElementsAssignment_1 ) )
+            // InternalFirstOrderLogic.g:4414:2: ( rule__Size__ElementsAssignment_1 )
+            {
+             before(grammarAccess.getSizeAccess().getElementsAssignment_1()); 
+            // InternalFirstOrderLogic.g:4415:2: ( rule__Size__ElementsAssignment_1 )
+            // InternalFirstOrderLogic.g:4415:3: rule__Size__ElementsAssignment_1
+            {
+            pushFollow(FOLLOW_2);
+            rule__Size__ElementsAssignment_1();
+
+            state._fsp--;
+
+
+            }
+
+             after(grammarAccess.getSizeAccess().getElementsAssignment_1()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Size__Group__1__Impl"
+
+
+    // $ANTLR start "rule__Size__Group__2"
+    // InternalFirstOrderLogic.g:4423:1: rule__Size__Group__2 : rule__Size__Group__2__Impl ;
+    public final void rule__Size__Group__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalFirstOrderLogic.g:4427:1: ( rule__Size__Group__2__Impl )
+            // InternalFirstOrderLogic.g:4428:2: rule__Size__Group__2__Impl
+            {
+            pushFollow(FOLLOW_2);
+            rule__Size__Group__2__Impl();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Size__Group__2"
+
+
+    // $ANTLR start "rule__Size__Group__2__Impl"
+    // InternalFirstOrderLogic.g:4434:1: rule__Size__Group__2__Impl : ( ')' ) ;
+    public final void rule__Size__Group__2__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalFirstOrderLogic.g:4438:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:4439:1: ( ')' )
+            {
+            // InternalFirstOrderLogic.g:4439:1: ( ')' )
+            // InternalFirstOrderLogic.g:4440:2: ')'
+            {
+             before(grammarAccess.getSizeAccess().getRightParenthesisKeyword_2()); 
+            match(input,25,FOLLOW_2); 
+             after(grammarAccess.getSizeAccess().getRightParenthesisKeyword_2()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Size__Group__2__Impl"
+
+
     // $ANTLR start "rule__Concatenate__Group__0"
-    // InternalFirstOrderLogic.g:4338:1: rule__Concatenate__Group__0 : rule__Concatenate__Group__0__Impl rule__Concatenate__Group__1 ;
+    // InternalFirstOrderLogic.g:4450:1: rule__Concatenate__Group__0 : rule__Concatenate__Group__0__Impl rule__Concatenate__Group__1 ;
     public final void rule__Concatenate__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4342:1: ( rule__Concatenate__Group__0__Impl rule__Concatenate__Group__1 )
-            // InternalFirstOrderLogic.g:4343:2: rule__Concatenate__Group__0__Impl rule__Concatenate__Group__1
+            // InternalFirstOrderLogic.g:4454:1: ( rule__Concatenate__Group__0__Impl rule__Concatenate__Group__1 )
+            // InternalFirstOrderLogic.g:4455:2: rule__Concatenate__Group__0__Impl rule__Concatenate__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__Concatenate__Group__0__Impl();
@@ -13092,20 +13424,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Concatenate__Group__0__Impl"
-    // InternalFirstOrderLogic.g:4350:1: rule__Concatenate__Group__0__Impl : ( 'concatenate(' ) ;
+    // InternalFirstOrderLogic.g:4462:1: rule__Concatenate__Group__0__Impl : ( 'concatenate(' ) ;
     public final void rule__Concatenate__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4354:1: ( ( 'concatenate(' ) )
-            // InternalFirstOrderLogic.g:4355:1: ( 'concatenate(' )
+            // InternalFirstOrderLogic.g:4466:1: ( ( 'concatenate(' ) )
+            // InternalFirstOrderLogic.g:4467:1: ( 'concatenate(' )
             {
-            // InternalFirstOrderLogic.g:4355:1: ( 'concatenate(' )
-            // InternalFirstOrderLogic.g:4356:2: 'concatenate('
+            // InternalFirstOrderLogic.g:4467:1: ( 'concatenate(' )
+            // InternalFirstOrderLogic.g:4468:2: 'concatenate('
             {
              before(grammarAccess.getConcatenateAccess().getConcatenateKeyword_0()); 
-            match(input,43,FOLLOW_2); 
+            match(input,44,FOLLOW_2); 
              after(grammarAccess.getConcatenateAccess().getConcatenateKeyword_0()); 
 
             }
@@ -13129,14 +13461,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Concatenate__Group__1"
-    // InternalFirstOrderLogic.g:4365:1: rule__Concatenate__Group__1 : rule__Concatenate__Group__1__Impl rule__Concatenate__Group__2 ;
+    // InternalFirstOrderLogic.g:4477:1: rule__Concatenate__Group__1 : rule__Concatenate__Group__1__Impl rule__Concatenate__Group__2 ;
     public final void rule__Concatenate__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4369:1: ( rule__Concatenate__Group__1__Impl rule__Concatenate__Group__2 )
-            // InternalFirstOrderLogic.g:4370:2: rule__Concatenate__Group__1__Impl rule__Concatenate__Group__2
+            // InternalFirstOrderLogic.g:4481:1: ( rule__Concatenate__Group__1__Impl rule__Concatenate__Group__2 )
+            // InternalFirstOrderLogic.g:4482:2: rule__Concatenate__Group__1__Impl rule__Concatenate__Group__2
             {
             pushFollow(FOLLOW_25);
             rule__Concatenate__Group__1__Impl();
@@ -13167,21 +13499,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Concatenate__Group__1__Impl"
-    // InternalFirstOrderLogic.g:4377:1: rule__Concatenate__Group__1__Impl : ( ( rule__Concatenate__LeftAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:4489:1: rule__Concatenate__Group__1__Impl : ( ( rule__Concatenate__LeftAssignment_1 ) ) ;
     public final void rule__Concatenate__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4381:1: ( ( ( rule__Concatenate__LeftAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:4382:1: ( ( rule__Concatenate__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:4493:1: ( ( ( rule__Concatenate__LeftAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:4494:1: ( ( rule__Concatenate__LeftAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:4382:1: ( ( rule__Concatenate__LeftAssignment_1 ) )
-            // InternalFirstOrderLogic.g:4383:2: ( rule__Concatenate__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:4494:1: ( ( rule__Concatenate__LeftAssignment_1 ) )
+            // InternalFirstOrderLogic.g:4495:2: ( rule__Concatenate__LeftAssignment_1 )
             {
              before(grammarAccess.getConcatenateAccess().getLeftAssignment_1()); 
-            // InternalFirstOrderLogic.g:4384:2: ( rule__Concatenate__LeftAssignment_1 )
-            // InternalFirstOrderLogic.g:4384:3: rule__Concatenate__LeftAssignment_1
+            // InternalFirstOrderLogic.g:4496:2: ( rule__Concatenate__LeftAssignment_1 )
+            // InternalFirstOrderLogic.g:4496:3: rule__Concatenate__LeftAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__Concatenate__LeftAssignment_1();
@@ -13214,14 +13546,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Concatenate__Group__2"
-    // InternalFirstOrderLogic.g:4392:1: rule__Concatenate__Group__2 : rule__Concatenate__Group__2__Impl rule__Concatenate__Group__3 ;
+    // InternalFirstOrderLogic.g:4504:1: rule__Concatenate__Group__2 : rule__Concatenate__Group__2__Impl rule__Concatenate__Group__3 ;
     public final void rule__Concatenate__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4396:1: ( rule__Concatenate__Group__2__Impl rule__Concatenate__Group__3 )
-            // InternalFirstOrderLogic.g:4397:2: rule__Concatenate__Group__2__Impl rule__Concatenate__Group__3
+            // InternalFirstOrderLogic.g:4508:1: ( rule__Concatenate__Group__2__Impl rule__Concatenate__Group__3 )
+            // InternalFirstOrderLogic.g:4509:2: rule__Concatenate__Group__2__Impl rule__Concatenate__Group__3
             {
             pushFollow(FOLLOW_24);
             rule__Concatenate__Group__2__Impl();
@@ -13252,17 +13584,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Concatenate__Group__2__Impl"
-    // InternalFirstOrderLogic.g:4404:1: rule__Concatenate__Group__2__Impl : ( ',' ) ;
+    // InternalFirstOrderLogic.g:4516:1: rule__Concatenate__Group__2__Impl : ( ',' ) ;
     public final void rule__Concatenate__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4408:1: ( ( ',' ) )
-            // InternalFirstOrderLogic.g:4409:1: ( ',' )
+            // InternalFirstOrderLogic.g:4520:1: ( ( ',' ) )
+            // InternalFirstOrderLogic.g:4521:1: ( ',' )
             {
-            // InternalFirstOrderLogic.g:4409:1: ( ',' )
-            // InternalFirstOrderLogic.g:4410:2: ','
+            // InternalFirstOrderLogic.g:4521:1: ( ',' )
+            // InternalFirstOrderLogic.g:4522:2: ','
             {
              before(grammarAccess.getConcatenateAccess().getCommaKeyword_2()); 
             match(input,27,FOLLOW_2); 
@@ -13289,14 +13621,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Concatenate__Group__3"
-    // InternalFirstOrderLogic.g:4419:1: rule__Concatenate__Group__3 : rule__Concatenate__Group__3__Impl rule__Concatenate__Group__4 ;
+    // InternalFirstOrderLogic.g:4531:1: rule__Concatenate__Group__3 : rule__Concatenate__Group__3__Impl rule__Concatenate__Group__4 ;
     public final void rule__Concatenate__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4423:1: ( rule__Concatenate__Group__3__Impl rule__Concatenate__Group__4 )
-            // InternalFirstOrderLogic.g:4424:2: rule__Concatenate__Group__3__Impl rule__Concatenate__Group__4
+            // InternalFirstOrderLogic.g:4535:1: ( rule__Concatenate__Group__3__Impl rule__Concatenate__Group__4 )
+            // InternalFirstOrderLogic.g:4536:2: rule__Concatenate__Group__3__Impl rule__Concatenate__Group__4
             {
             pushFollow(FOLLOW_23);
             rule__Concatenate__Group__3__Impl();
@@ -13327,21 +13659,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Concatenate__Group__3__Impl"
-    // InternalFirstOrderLogic.g:4431:1: rule__Concatenate__Group__3__Impl : ( ( rule__Concatenate__RightAssignment_3 ) ) ;
+    // InternalFirstOrderLogic.g:4543:1: rule__Concatenate__Group__3__Impl : ( ( rule__Concatenate__RightAssignment_3 ) ) ;
     public final void rule__Concatenate__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4435:1: ( ( ( rule__Concatenate__RightAssignment_3 ) ) )
-            // InternalFirstOrderLogic.g:4436:1: ( ( rule__Concatenate__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:4547:1: ( ( ( rule__Concatenate__RightAssignment_3 ) ) )
+            // InternalFirstOrderLogic.g:4548:1: ( ( rule__Concatenate__RightAssignment_3 ) )
             {
-            // InternalFirstOrderLogic.g:4436:1: ( ( rule__Concatenate__RightAssignment_3 ) )
-            // InternalFirstOrderLogic.g:4437:2: ( rule__Concatenate__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:4548:1: ( ( rule__Concatenate__RightAssignment_3 ) )
+            // InternalFirstOrderLogic.g:4549:2: ( rule__Concatenate__RightAssignment_3 )
             {
              before(grammarAccess.getConcatenateAccess().getRightAssignment_3()); 
-            // InternalFirstOrderLogic.g:4438:2: ( rule__Concatenate__RightAssignment_3 )
-            // InternalFirstOrderLogic.g:4438:3: rule__Concatenate__RightAssignment_3
+            // InternalFirstOrderLogic.g:4550:2: ( rule__Concatenate__RightAssignment_3 )
+            // InternalFirstOrderLogic.g:4550:3: rule__Concatenate__RightAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__Concatenate__RightAssignment_3();
@@ -13374,14 +13706,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Concatenate__Group__4"
-    // InternalFirstOrderLogic.g:4446:1: rule__Concatenate__Group__4 : rule__Concatenate__Group__4__Impl ;
+    // InternalFirstOrderLogic.g:4558:1: rule__Concatenate__Group__4 : rule__Concatenate__Group__4__Impl ;
     public final void rule__Concatenate__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4450:1: ( rule__Concatenate__Group__4__Impl )
-            // InternalFirstOrderLogic.g:4451:2: rule__Concatenate__Group__4__Impl
+            // InternalFirstOrderLogic.g:4562:1: ( rule__Concatenate__Group__4__Impl )
+            // InternalFirstOrderLogic.g:4563:2: rule__Concatenate__Group__4__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Concatenate__Group__4__Impl();
@@ -13407,17 +13739,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Concatenate__Group__4__Impl"
-    // InternalFirstOrderLogic.g:4457:1: rule__Concatenate__Group__4__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:4569:1: rule__Concatenate__Group__4__Impl : ( ')' ) ;
     public final void rule__Concatenate__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4461:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:4462:1: ( ')' )
+            // InternalFirstOrderLogic.g:4573:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:4574:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:4462:1: ( ')' )
-            // InternalFirstOrderLogic.g:4463:2: ')'
+            // InternalFirstOrderLogic.g:4574:1: ( ')' )
+            // InternalFirstOrderLogic.g:4575:2: ')'
             {
              before(grammarAccess.getConcatenateAccess().getRightParenthesisKeyword_4()); 
             match(input,25,FOLLOW_2); 
@@ -13444,14 +13776,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Capitalize__Group__0"
-    // InternalFirstOrderLogic.g:4473:1: rule__Capitalize__Group__0 : rule__Capitalize__Group__0__Impl rule__Capitalize__Group__1 ;
+    // InternalFirstOrderLogic.g:4585:1: rule__Capitalize__Group__0 : rule__Capitalize__Group__0__Impl rule__Capitalize__Group__1 ;
     public final void rule__Capitalize__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4477:1: ( rule__Capitalize__Group__0__Impl rule__Capitalize__Group__1 )
-            // InternalFirstOrderLogic.g:4478:2: rule__Capitalize__Group__0__Impl rule__Capitalize__Group__1
+            // InternalFirstOrderLogic.g:4589:1: ( rule__Capitalize__Group__0__Impl rule__Capitalize__Group__1 )
+            // InternalFirstOrderLogic.g:4590:2: rule__Capitalize__Group__0__Impl rule__Capitalize__Group__1
             {
             pushFollow(FOLLOW_24);
             rule__Capitalize__Group__0__Impl();
@@ -13482,20 +13814,20 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Capitalize__Group__0__Impl"
-    // InternalFirstOrderLogic.g:4485:1: rule__Capitalize__Group__0__Impl : ( 'capitalize(' ) ;
+    // InternalFirstOrderLogic.g:4597:1: rule__Capitalize__Group__0__Impl : ( 'capitalize(' ) ;
     public final void rule__Capitalize__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4489:1: ( ( 'capitalize(' ) )
-            // InternalFirstOrderLogic.g:4490:1: ( 'capitalize(' )
+            // InternalFirstOrderLogic.g:4601:1: ( ( 'capitalize(' ) )
+            // InternalFirstOrderLogic.g:4602:1: ( 'capitalize(' )
             {
-            // InternalFirstOrderLogic.g:4490:1: ( 'capitalize(' )
-            // InternalFirstOrderLogic.g:4491:2: 'capitalize('
+            // InternalFirstOrderLogic.g:4602:1: ( 'capitalize(' )
+            // InternalFirstOrderLogic.g:4603:2: 'capitalize('
             {
              before(grammarAccess.getCapitalizeAccess().getCapitalizeKeyword_0()); 
-            match(input,44,FOLLOW_2); 
+            match(input,45,FOLLOW_2); 
              after(grammarAccess.getCapitalizeAccess().getCapitalizeKeyword_0()); 
 
             }
@@ -13519,14 +13851,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Capitalize__Group__1"
-    // InternalFirstOrderLogic.g:4500:1: rule__Capitalize__Group__1 : rule__Capitalize__Group__1__Impl rule__Capitalize__Group__2 ;
+    // InternalFirstOrderLogic.g:4612:1: rule__Capitalize__Group__1 : rule__Capitalize__Group__1__Impl rule__Capitalize__Group__2 ;
     public final void rule__Capitalize__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4504:1: ( rule__Capitalize__Group__1__Impl rule__Capitalize__Group__2 )
-            // InternalFirstOrderLogic.g:4505:2: rule__Capitalize__Group__1__Impl rule__Capitalize__Group__2
+            // InternalFirstOrderLogic.g:4616:1: ( rule__Capitalize__Group__1__Impl rule__Capitalize__Group__2 )
+            // InternalFirstOrderLogic.g:4617:2: rule__Capitalize__Group__1__Impl rule__Capitalize__Group__2
             {
             pushFollow(FOLLOW_23);
             rule__Capitalize__Group__1__Impl();
@@ -13557,21 +13889,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Capitalize__Group__1__Impl"
-    // InternalFirstOrderLogic.g:4512:1: rule__Capitalize__Group__1__Impl : ( ( rule__Capitalize__StringAssignment_1 ) ) ;
+    // InternalFirstOrderLogic.g:4624:1: rule__Capitalize__Group__1__Impl : ( ( rule__Capitalize__StringAssignment_1 ) ) ;
     public final void rule__Capitalize__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4516:1: ( ( ( rule__Capitalize__StringAssignment_1 ) ) )
-            // InternalFirstOrderLogic.g:4517:1: ( ( rule__Capitalize__StringAssignment_1 ) )
+            // InternalFirstOrderLogic.g:4628:1: ( ( ( rule__Capitalize__StringAssignment_1 ) ) )
+            // InternalFirstOrderLogic.g:4629:1: ( ( rule__Capitalize__StringAssignment_1 ) )
             {
-            // InternalFirstOrderLogic.g:4517:1: ( ( rule__Capitalize__StringAssignment_1 ) )
-            // InternalFirstOrderLogic.g:4518:2: ( rule__Capitalize__StringAssignment_1 )
+            // InternalFirstOrderLogic.g:4629:1: ( ( rule__Capitalize__StringAssignment_1 ) )
+            // InternalFirstOrderLogic.g:4630:2: ( rule__Capitalize__StringAssignment_1 )
             {
              before(grammarAccess.getCapitalizeAccess().getStringAssignment_1()); 
-            // InternalFirstOrderLogic.g:4519:2: ( rule__Capitalize__StringAssignment_1 )
-            // InternalFirstOrderLogic.g:4519:3: rule__Capitalize__StringAssignment_1
+            // InternalFirstOrderLogic.g:4631:2: ( rule__Capitalize__StringAssignment_1 )
+            // InternalFirstOrderLogic.g:4631:3: rule__Capitalize__StringAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__Capitalize__StringAssignment_1();
@@ -13604,14 +13936,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Capitalize__Group__2"
-    // InternalFirstOrderLogic.g:4527:1: rule__Capitalize__Group__2 : rule__Capitalize__Group__2__Impl ;
+    // InternalFirstOrderLogic.g:4639:1: rule__Capitalize__Group__2 : rule__Capitalize__Group__2__Impl ;
     public final void rule__Capitalize__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4531:1: ( rule__Capitalize__Group__2__Impl )
-            // InternalFirstOrderLogic.g:4532:2: rule__Capitalize__Group__2__Impl
+            // InternalFirstOrderLogic.g:4643:1: ( rule__Capitalize__Group__2__Impl )
+            // InternalFirstOrderLogic.g:4644:2: rule__Capitalize__Group__2__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Capitalize__Group__2__Impl();
@@ -13637,17 +13969,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Capitalize__Group__2__Impl"
-    // InternalFirstOrderLogic.g:4538:1: rule__Capitalize__Group__2__Impl : ( ')' ) ;
+    // InternalFirstOrderLogic.g:4650:1: rule__Capitalize__Group__2__Impl : ( ')' ) ;
     public final void rule__Capitalize__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4542:1: ( ( ')' ) )
-            // InternalFirstOrderLogic.g:4543:1: ( ')' )
+            // InternalFirstOrderLogic.g:4654:1: ( ( ')' ) )
+            // InternalFirstOrderLogic.g:4655:1: ( ')' )
             {
-            // InternalFirstOrderLogic.g:4543:1: ( ')' )
-            // InternalFirstOrderLogic.g:4544:2: ')'
+            // InternalFirstOrderLogic.g:4655:1: ( ')' )
+            // InternalFirstOrderLogic.g:4656:2: ')'
             {
              before(grammarAccess.getCapitalizeAccess().getRightParenthesisKeyword_2()); 
             match(input,25,FOLLOW_2); 
@@ -13674,14 +14006,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constant__Group_0__0"
-    // InternalFirstOrderLogic.g:4554:1: rule__Constant__Group_0__0 : rule__Constant__Group_0__0__Impl rule__Constant__Group_0__1 ;
+    // InternalFirstOrderLogic.g:4666:1: rule__Constant__Group_0__0 : rule__Constant__Group_0__0__Impl rule__Constant__Group_0__1 ;
     public final void rule__Constant__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4558:1: ( rule__Constant__Group_0__0__Impl rule__Constant__Group_0__1 )
-            // InternalFirstOrderLogic.g:4559:2: rule__Constant__Group_0__0__Impl rule__Constant__Group_0__1
+            // InternalFirstOrderLogic.g:4670:1: ( rule__Constant__Group_0__0__Impl rule__Constant__Group_0__1 )
+            // InternalFirstOrderLogic.g:4671:2: rule__Constant__Group_0__0__Impl rule__Constant__Group_0__1
             {
             pushFollow(FOLLOW_31);
             rule__Constant__Group_0__0__Impl();
@@ -13712,21 +14044,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constant__Group_0__0__Impl"
-    // InternalFirstOrderLogic.g:4566:1: rule__Constant__Group_0__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:4678:1: rule__Constant__Group_0__0__Impl : ( () ) ;
     public final void rule__Constant__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4570:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:4571:1: ( () )
+            // InternalFirstOrderLogic.g:4682:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:4683:1: ( () )
             {
-            // InternalFirstOrderLogic.g:4571:1: ( () )
-            // InternalFirstOrderLogic.g:4572:2: ()
+            // InternalFirstOrderLogic.g:4683:1: ( () )
+            // InternalFirstOrderLogic.g:4684:2: ()
             {
              before(grammarAccess.getConstantAccess().getIntConstantAction_0_0()); 
-            // InternalFirstOrderLogic.g:4573:2: ()
-            // InternalFirstOrderLogic.g:4573:3: 
+            // InternalFirstOrderLogic.g:4685:2: ()
+            // InternalFirstOrderLogic.g:4685:3: 
             {
             }
 
@@ -13749,14 +14081,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constant__Group_0__1"
-    // InternalFirstOrderLogic.g:4581:1: rule__Constant__Group_0__1 : rule__Constant__Group_0__1__Impl ;
+    // InternalFirstOrderLogic.g:4693:1: rule__Constant__Group_0__1 : rule__Constant__Group_0__1__Impl ;
     public final void rule__Constant__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4585:1: ( rule__Constant__Group_0__1__Impl )
-            // InternalFirstOrderLogic.g:4586:2: rule__Constant__Group_0__1__Impl
+            // InternalFirstOrderLogic.g:4697:1: ( rule__Constant__Group_0__1__Impl )
+            // InternalFirstOrderLogic.g:4698:2: rule__Constant__Group_0__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Constant__Group_0__1__Impl();
@@ -13782,21 +14114,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constant__Group_0__1__Impl"
-    // InternalFirstOrderLogic.g:4592:1: rule__Constant__Group_0__1__Impl : ( ( rule__Constant__ValueAssignment_0_1 ) ) ;
+    // InternalFirstOrderLogic.g:4704:1: rule__Constant__Group_0__1__Impl : ( ( rule__Constant__ValueAssignment_0_1 ) ) ;
     public final void rule__Constant__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4596:1: ( ( ( rule__Constant__ValueAssignment_0_1 ) ) )
-            // InternalFirstOrderLogic.g:4597:1: ( ( rule__Constant__ValueAssignment_0_1 ) )
+            // InternalFirstOrderLogic.g:4708:1: ( ( ( rule__Constant__ValueAssignment_0_1 ) ) )
+            // InternalFirstOrderLogic.g:4709:1: ( ( rule__Constant__ValueAssignment_0_1 ) )
             {
-            // InternalFirstOrderLogic.g:4597:1: ( ( rule__Constant__ValueAssignment_0_1 ) )
-            // InternalFirstOrderLogic.g:4598:2: ( rule__Constant__ValueAssignment_0_1 )
+            // InternalFirstOrderLogic.g:4709:1: ( ( rule__Constant__ValueAssignment_0_1 ) )
+            // InternalFirstOrderLogic.g:4710:2: ( rule__Constant__ValueAssignment_0_1 )
             {
              before(grammarAccess.getConstantAccess().getValueAssignment_0_1()); 
-            // InternalFirstOrderLogic.g:4599:2: ( rule__Constant__ValueAssignment_0_1 )
-            // InternalFirstOrderLogic.g:4599:3: rule__Constant__ValueAssignment_0_1
+            // InternalFirstOrderLogic.g:4711:2: ( rule__Constant__ValueAssignment_0_1 )
+            // InternalFirstOrderLogic.g:4711:3: rule__Constant__ValueAssignment_0_1
             {
             pushFollow(FOLLOW_2);
             rule__Constant__ValueAssignment_0_1();
@@ -13829,14 +14161,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constant__Group_1__0"
-    // InternalFirstOrderLogic.g:4608:1: rule__Constant__Group_1__0 : rule__Constant__Group_1__0__Impl rule__Constant__Group_1__1 ;
+    // InternalFirstOrderLogic.g:4720:1: rule__Constant__Group_1__0 : rule__Constant__Group_1__0__Impl rule__Constant__Group_1__1 ;
     public final void rule__Constant__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4612:1: ( rule__Constant__Group_1__0__Impl rule__Constant__Group_1__1 )
-            // InternalFirstOrderLogic.g:4613:2: rule__Constant__Group_1__0__Impl rule__Constant__Group_1__1
+            // InternalFirstOrderLogic.g:4724:1: ( rule__Constant__Group_1__0__Impl rule__Constant__Group_1__1 )
+            // InternalFirstOrderLogic.g:4725:2: rule__Constant__Group_1__0__Impl rule__Constant__Group_1__1
             {
             pushFollow(FOLLOW_3);
             rule__Constant__Group_1__0__Impl();
@@ -13867,21 +14199,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constant__Group_1__0__Impl"
-    // InternalFirstOrderLogic.g:4620:1: rule__Constant__Group_1__0__Impl : ( () ) ;
+    // InternalFirstOrderLogic.g:4732:1: rule__Constant__Group_1__0__Impl : ( () ) ;
     public final void rule__Constant__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4624:1: ( ( () ) )
-            // InternalFirstOrderLogic.g:4625:1: ( () )
+            // InternalFirstOrderLogic.g:4736:1: ( ( () ) )
+            // InternalFirstOrderLogic.g:4737:1: ( () )
             {
-            // InternalFirstOrderLogic.g:4625:1: ( () )
-            // InternalFirstOrderLogic.g:4626:2: ()
+            // InternalFirstOrderLogic.g:4737:1: ( () )
+            // InternalFirstOrderLogic.g:4738:2: ()
             {
              before(grammarAccess.getConstantAccess().getStringConstantAction_1_0()); 
-            // InternalFirstOrderLogic.g:4627:2: ()
-            // InternalFirstOrderLogic.g:4627:3: 
+            // InternalFirstOrderLogic.g:4739:2: ()
+            // InternalFirstOrderLogic.g:4739:3: 
             {
             }
 
@@ -13904,14 +14236,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constant__Group_1__1"
-    // InternalFirstOrderLogic.g:4635:1: rule__Constant__Group_1__1 : rule__Constant__Group_1__1__Impl ;
+    // InternalFirstOrderLogic.g:4747:1: rule__Constant__Group_1__1 : rule__Constant__Group_1__1__Impl ;
     public final void rule__Constant__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4639:1: ( rule__Constant__Group_1__1__Impl )
-            // InternalFirstOrderLogic.g:4640:2: rule__Constant__Group_1__1__Impl
+            // InternalFirstOrderLogic.g:4751:1: ( rule__Constant__Group_1__1__Impl )
+            // InternalFirstOrderLogic.g:4752:2: rule__Constant__Group_1__1__Impl
             {
             pushFollow(FOLLOW_2);
             rule__Constant__Group_1__1__Impl();
@@ -13937,21 +14269,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constant__Group_1__1__Impl"
-    // InternalFirstOrderLogic.g:4646:1: rule__Constant__Group_1__1__Impl : ( ( rule__Constant__ValueAssignment_1_1 ) ) ;
+    // InternalFirstOrderLogic.g:4758:1: rule__Constant__Group_1__1__Impl : ( ( rule__Constant__ValueAssignment_1_1 ) ) ;
     public final void rule__Constant__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4650:1: ( ( ( rule__Constant__ValueAssignment_1_1 ) ) )
-            // InternalFirstOrderLogic.g:4651:1: ( ( rule__Constant__ValueAssignment_1_1 ) )
+            // InternalFirstOrderLogic.g:4762:1: ( ( ( rule__Constant__ValueAssignment_1_1 ) ) )
+            // InternalFirstOrderLogic.g:4763:1: ( ( rule__Constant__ValueAssignment_1_1 ) )
             {
-            // InternalFirstOrderLogic.g:4651:1: ( ( rule__Constant__ValueAssignment_1_1 ) )
-            // InternalFirstOrderLogic.g:4652:2: ( rule__Constant__ValueAssignment_1_1 )
+            // InternalFirstOrderLogic.g:4763:1: ( ( rule__Constant__ValueAssignment_1_1 ) )
+            // InternalFirstOrderLogic.g:4764:2: ( rule__Constant__ValueAssignment_1_1 )
             {
              before(grammarAccess.getConstantAccess().getValueAssignment_1_1()); 
-            // InternalFirstOrderLogic.g:4653:2: ( rule__Constant__ValueAssignment_1_1 )
-            // InternalFirstOrderLogic.g:4653:3: rule__Constant__ValueAssignment_1_1
+            // InternalFirstOrderLogic.g:4765:2: ( rule__Constant__ValueAssignment_1_1 )
+            // InternalFirstOrderLogic.g:4765:3: rule__Constant__ValueAssignment_1_1
             {
             pushFollow(FOLLOW_2);
             rule__Constant__ValueAssignment_1_1();
@@ -13984,17 +14316,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__DomainAssignment_1"
-    // InternalFirstOrderLogic.g:4662:1: rule__ConstraintLibrary__DomainAssignment_1 : ( RULE_STRING ) ;
+    // InternalFirstOrderLogic.g:4774:1: rule__ConstraintLibrary__DomainAssignment_1 : ( RULE_STRING ) ;
     public final void rule__ConstraintLibrary__DomainAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4666:1: ( ( RULE_STRING ) )
-            // InternalFirstOrderLogic.g:4667:2: ( RULE_STRING )
+            // InternalFirstOrderLogic.g:4778:1: ( ( RULE_STRING ) )
+            // InternalFirstOrderLogic.g:4779:2: ( RULE_STRING )
             {
-            // InternalFirstOrderLogic.g:4667:2: ( RULE_STRING )
-            // InternalFirstOrderLogic.g:4668:3: RULE_STRING
+            // InternalFirstOrderLogic.g:4779:2: ( RULE_STRING )
+            // InternalFirstOrderLogic.g:4780:3: RULE_STRING
             {
              before(grammarAccess.getConstraintLibraryAccess().getDomainSTRINGTerminalRuleCall_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -14021,17 +14353,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__PackageImportAssignment_3"
-    // InternalFirstOrderLogic.g:4677:1: rule__ConstraintLibrary__PackageImportAssignment_3 : ( RULE_STRING ) ;
+    // InternalFirstOrderLogic.g:4789:1: rule__ConstraintLibrary__PackageImportAssignment_3 : ( RULE_STRING ) ;
     public final void rule__ConstraintLibrary__PackageImportAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4681:1: ( ( RULE_STRING ) )
-            // InternalFirstOrderLogic.g:4682:2: ( RULE_STRING )
+            // InternalFirstOrderLogic.g:4793:1: ( ( RULE_STRING ) )
+            // InternalFirstOrderLogic.g:4794:2: ( RULE_STRING )
             {
-            // InternalFirstOrderLogic.g:4682:2: ( RULE_STRING )
-            // InternalFirstOrderLogic.g:4683:3: RULE_STRING
+            // InternalFirstOrderLogic.g:4794:2: ( RULE_STRING )
+            // InternalFirstOrderLogic.g:4795:3: RULE_STRING
             {
              before(grammarAccess.getConstraintLibraryAccess().getPackageImportSTRINGTerminalRuleCall_3_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -14058,17 +14390,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ConstraintLibrary__ConstraintsAssignment_4"
-    // InternalFirstOrderLogic.g:4692:1: rule__ConstraintLibrary__ConstraintsAssignment_4 : ( ruleConstraint ) ;
+    // InternalFirstOrderLogic.g:4804:1: rule__ConstraintLibrary__ConstraintsAssignment_4 : ( ruleConstraint ) ;
     public final void rule__ConstraintLibrary__ConstraintsAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4696:1: ( ( ruleConstraint ) )
-            // InternalFirstOrderLogic.g:4697:2: ( ruleConstraint )
+            // InternalFirstOrderLogic.g:4808:1: ( ( ruleConstraint ) )
+            // InternalFirstOrderLogic.g:4809:2: ( ruleConstraint )
             {
-            // InternalFirstOrderLogic.g:4697:2: ( ruleConstraint )
-            // InternalFirstOrderLogic.g:4698:3: ruleConstraint
+            // InternalFirstOrderLogic.g:4809:2: ( ruleConstraint )
+            // InternalFirstOrderLogic.g:4810:3: ruleConstraint
             {
              before(grammarAccess.getConstraintLibraryAccess().getConstraintsConstraintParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -14099,17 +14431,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__NameAssignment_1"
-    // InternalFirstOrderLogic.g:4707:1: rule__Constraint__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalFirstOrderLogic.g:4819:1: rule__Constraint__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__Constraint__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4711:1: ( ( RULE_ID ) )
-            // InternalFirstOrderLogic.g:4712:2: ( RULE_ID )
+            // InternalFirstOrderLogic.g:4823:1: ( ( RULE_ID ) )
+            // InternalFirstOrderLogic.g:4824:2: ( RULE_ID )
             {
-            // InternalFirstOrderLogic.g:4712:2: ( RULE_ID )
-            // InternalFirstOrderLogic.g:4713:3: RULE_ID
+            // InternalFirstOrderLogic.g:4824:2: ( RULE_ID )
+            // InternalFirstOrderLogic.g:4825:3: RULE_ID
             {
              before(grammarAccess.getConstraintAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -14136,17 +14468,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__MessageAssignment_3"
-    // InternalFirstOrderLogic.g:4722:1: rule__Constraint__MessageAssignment_3 : ( RULE_STRING ) ;
+    // InternalFirstOrderLogic.g:4834:1: rule__Constraint__MessageAssignment_3 : ( RULE_STRING ) ;
     public final void rule__Constraint__MessageAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4726:1: ( ( RULE_STRING ) )
-            // InternalFirstOrderLogic.g:4727:2: ( RULE_STRING )
+            // InternalFirstOrderLogic.g:4838:1: ( ( RULE_STRING ) )
+            // InternalFirstOrderLogic.g:4839:2: ( RULE_STRING )
             {
-            // InternalFirstOrderLogic.g:4727:2: ( RULE_STRING )
-            // InternalFirstOrderLogic.g:4728:3: RULE_STRING
+            // InternalFirstOrderLogic.g:4839:2: ( RULE_STRING )
+            // InternalFirstOrderLogic.g:4840:3: RULE_STRING
             {
              before(grammarAccess.getConstraintAccess().getMessageSTRINGTerminalRuleCall_3_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -14173,17 +14505,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__VariableAssignment_5"
-    // InternalFirstOrderLogic.g:4737:1: rule__Constraint__VariableAssignment_5 : ( ruleVariable ) ;
+    // InternalFirstOrderLogic.g:4849:1: rule__Constraint__VariableAssignment_5 : ( ruleVariable ) ;
     public final void rule__Constraint__VariableAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4741:1: ( ( ruleVariable ) )
-            // InternalFirstOrderLogic.g:4742:2: ( ruleVariable )
+            // InternalFirstOrderLogic.g:4853:1: ( ( ruleVariable ) )
+            // InternalFirstOrderLogic.g:4854:2: ( ruleVariable )
             {
-            // InternalFirstOrderLogic.g:4742:2: ( ruleVariable )
-            // InternalFirstOrderLogic.g:4743:3: ruleVariable
+            // InternalFirstOrderLogic.g:4854:2: ( ruleVariable )
+            // InternalFirstOrderLogic.g:4855:3: ruleVariable
             {
              before(grammarAccess.getConstraintAccess().getVariableVariableParserRuleCall_5_0()); 
             pushFollow(FOLLOW_2);
@@ -14214,17 +14546,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constraint__FormulaAssignment_7"
-    // InternalFirstOrderLogic.g:4752:1: rule__Constraint__FormulaAssignment_7 : ( ruleFormula ) ;
+    // InternalFirstOrderLogic.g:4864:1: rule__Constraint__FormulaAssignment_7 : ( ruleFormula ) ;
     public final void rule__Constraint__FormulaAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4756:1: ( ( ruleFormula ) )
-            // InternalFirstOrderLogic.g:4757:2: ( ruleFormula )
+            // InternalFirstOrderLogic.g:4868:1: ( ( ruleFormula ) )
+            // InternalFirstOrderLogic.g:4869:2: ( ruleFormula )
             {
-            // InternalFirstOrderLogic.g:4757:2: ( ruleFormula )
-            // InternalFirstOrderLogic.g:4758:3: ruleFormula
+            // InternalFirstOrderLogic.g:4869:2: ( ruleFormula )
+            // InternalFirstOrderLogic.g:4870:3: ruleFormula
             {
              before(grammarAccess.getConstraintAccess().getFormulaFormulaParserRuleCall_7_0()); 
             pushFollow(FOLLOW_2);
@@ -14255,21 +14587,29 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Variable__TypeAssignment_0"
-    // InternalFirstOrderLogic.g:4767:1: rule__Variable__TypeAssignment_0 : ( RULE_ID ) ;
+    // InternalFirstOrderLogic.g:4879:1: rule__Variable__TypeAssignment_0 : ( ( RULE_ID ) ) ;
     public final void rule__Variable__TypeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4771:1: ( ( RULE_ID ) )
-            // InternalFirstOrderLogic.g:4772:2: ( RULE_ID )
+            // InternalFirstOrderLogic.g:4883:1: ( ( ( RULE_ID ) ) )
+            // InternalFirstOrderLogic.g:4884:2: ( ( RULE_ID ) )
             {
-            // InternalFirstOrderLogic.g:4772:2: ( RULE_ID )
-            // InternalFirstOrderLogic.g:4773:3: RULE_ID
+            // InternalFirstOrderLogic.g:4884:2: ( ( RULE_ID ) )
+            // InternalFirstOrderLogic.g:4885:3: ( RULE_ID )
             {
-             before(grammarAccess.getVariableAccess().getTypeIDTerminalRuleCall_0_0()); 
+             before(grammarAccess.getVariableAccess().getTypeEClassifierCrossReference_0_0()); 
+            // InternalFirstOrderLogic.g:4886:3: ( RULE_ID )
+            // InternalFirstOrderLogic.g:4887:4: RULE_ID
+            {
+             before(grammarAccess.getVariableAccess().getTypeEClassifierIDTerminalRuleCall_0_0_1()); 
             match(input,RULE_ID,FOLLOW_2); 
-             after(grammarAccess.getVariableAccess().getTypeIDTerminalRuleCall_0_0()); 
+             after(grammarAccess.getVariableAccess().getTypeEClassifierIDTerminalRuleCall_0_0_1()); 
+
+            }
+
+             after(grammarAccess.getVariableAccess().getTypeEClassifierCrossReference_0_0()); 
 
             }
 
@@ -14292,17 +14632,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Variable__NameAssignment_1"
-    // InternalFirstOrderLogic.g:4782:1: rule__Variable__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalFirstOrderLogic.g:4898:1: rule__Variable__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__Variable__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4786:1: ( ( RULE_ID ) )
-            // InternalFirstOrderLogic.g:4787:2: ( RULE_ID )
+            // InternalFirstOrderLogic.g:4902:1: ( ( RULE_ID ) )
+            // InternalFirstOrderLogic.g:4903:2: ( RULE_ID )
             {
-            // InternalFirstOrderLogic.g:4787:2: ( RULE_ID )
-            // InternalFirstOrderLogic.g:4788:3: RULE_ID
+            // InternalFirstOrderLogic.g:4903:2: ( RULE_ID )
+            // InternalFirstOrderLogic.g:4904:3: RULE_ID
             {
              before(grammarAccess.getVariableAccess().getNameIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -14329,17 +14669,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Iff__RightAssignment_1_2"
-    // InternalFirstOrderLogic.g:4797:1: rule__Iff__RightAssignment_1_2 : ( ruleIf ) ;
+    // InternalFirstOrderLogic.g:4913:1: rule__Iff__RightAssignment_1_2 : ( ruleIf ) ;
     public final void rule__Iff__RightAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4801:1: ( ( ruleIf ) )
-            // InternalFirstOrderLogic.g:4802:2: ( ruleIf )
+            // InternalFirstOrderLogic.g:4917:1: ( ( ruleIf ) )
+            // InternalFirstOrderLogic.g:4918:2: ( ruleIf )
             {
-            // InternalFirstOrderLogic.g:4802:2: ( ruleIf )
-            // InternalFirstOrderLogic.g:4803:3: ruleIf
+            // InternalFirstOrderLogic.g:4918:2: ( ruleIf )
+            // InternalFirstOrderLogic.g:4919:3: ruleIf
             {
              before(grammarAccess.getIffAccess().getRightIfParserRuleCall_1_2_0()); 
             pushFollow(FOLLOW_2);
@@ -14370,17 +14710,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__If__RightAssignment_1_2"
-    // InternalFirstOrderLogic.g:4812:1: rule__If__RightAssignment_1_2 : ( ruleXor ) ;
+    // InternalFirstOrderLogic.g:4928:1: rule__If__RightAssignment_1_2 : ( ruleXor ) ;
     public final void rule__If__RightAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4816:1: ( ( ruleXor ) )
-            // InternalFirstOrderLogic.g:4817:2: ( ruleXor )
+            // InternalFirstOrderLogic.g:4932:1: ( ( ruleXor ) )
+            // InternalFirstOrderLogic.g:4933:2: ( ruleXor )
             {
-            // InternalFirstOrderLogic.g:4817:2: ( ruleXor )
-            // InternalFirstOrderLogic.g:4818:3: ruleXor
+            // InternalFirstOrderLogic.g:4933:2: ( ruleXor )
+            // InternalFirstOrderLogic.g:4934:3: ruleXor
             {
              before(grammarAccess.getIfAccess().getRightXorParserRuleCall_1_2_0()); 
             pushFollow(FOLLOW_2);
@@ -14411,17 +14751,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Xor__RightAssignment_1_2"
-    // InternalFirstOrderLogic.g:4827:1: rule__Xor__RightAssignment_1_2 : ( ruleOr ) ;
+    // InternalFirstOrderLogic.g:4943:1: rule__Xor__RightAssignment_1_2 : ( ruleOr ) ;
     public final void rule__Xor__RightAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4831:1: ( ( ruleOr ) )
-            // InternalFirstOrderLogic.g:4832:2: ( ruleOr )
+            // InternalFirstOrderLogic.g:4947:1: ( ( ruleOr ) )
+            // InternalFirstOrderLogic.g:4948:2: ( ruleOr )
             {
-            // InternalFirstOrderLogic.g:4832:2: ( ruleOr )
-            // InternalFirstOrderLogic.g:4833:3: ruleOr
+            // InternalFirstOrderLogic.g:4948:2: ( ruleOr )
+            // InternalFirstOrderLogic.g:4949:3: ruleOr
             {
              before(grammarAccess.getXorAccess().getRightOrParserRuleCall_1_2_0()); 
             pushFollow(FOLLOW_2);
@@ -14452,17 +14792,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Or__RightAssignment_1_2"
-    // InternalFirstOrderLogic.g:4842:1: rule__Or__RightAssignment_1_2 : ( ruleAnd ) ;
+    // InternalFirstOrderLogic.g:4958:1: rule__Or__RightAssignment_1_2 : ( ruleAnd ) ;
     public final void rule__Or__RightAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4846:1: ( ( ruleAnd ) )
-            // InternalFirstOrderLogic.g:4847:2: ( ruleAnd )
+            // InternalFirstOrderLogic.g:4962:1: ( ( ruleAnd ) )
+            // InternalFirstOrderLogic.g:4963:2: ( ruleAnd )
             {
-            // InternalFirstOrderLogic.g:4847:2: ( ruleAnd )
-            // InternalFirstOrderLogic.g:4848:3: ruleAnd
+            // InternalFirstOrderLogic.g:4963:2: ( ruleAnd )
+            // InternalFirstOrderLogic.g:4964:3: ruleAnd
             {
              before(grammarAccess.getOrAccess().getRightAndParserRuleCall_1_2_0()); 
             pushFollow(FOLLOW_2);
@@ -14493,17 +14833,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__And__RightAssignment_1_2"
-    // InternalFirstOrderLogic.g:4857:1: rule__And__RightAssignment_1_2 : ( ruleBooleanExpression ) ;
+    // InternalFirstOrderLogic.g:4973:1: rule__And__RightAssignment_1_2 : ( ruleBooleanExpression ) ;
     public final void rule__And__RightAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4861:1: ( ( ruleBooleanExpression ) )
-            // InternalFirstOrderLogic.g:4862:2: ( ruleBooleanExpression )
+            // InternalFirstOrderLogic.g:4977:1: ( ( ruleBooleanExpression ) )
+            // InternalFirstOrderLogic.g:4978:2: ( ruleBooleanExpression )
             {
-            // InternalFirstOrderLogic.g:4862:2: ( ruleBooleanExpression )
-            // InternalFirstOrderLogic.g:4863:3: ruleBooleanExpression
+            // InternalFirstOrderLogic.g:4978:2: ( ruleBooleanExpression )
+            // InternalFirstOrderLogic.g:4979:3: ruleBooleanExpression
             {
              before(grammarAccess.getAndAccess().getRightBooleanExpressionParserRuleCall_1_2_0()); 
             pushFollow(FOLLOW_2);
@@ -14534,17 +14874,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Not__NotAssignment_2"
-    // InternalFirstOrderLogic.g:4872:1: rule__Not__NotAssignment_2 : ( ruleFormula ) ;
+    // InternalFirstOrderLogic.g:4988:1: rule__Not__NotAssignment_2 : ( ruleFormula ) ;
     public final void rule__Not__NotAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4876:1: ( ( ruleFormula ) )
-            // InternalFirstOrderLogic.g:4877:2: ( ruleFormula )
+            // InternalFirstOrderLogic.g:4992:1: ( ( ruleFormula ) )
+            // InternalFirstOrderLogic.g:4993:2: ( ruleFormula )
             {
-            // InternalFirstOrderLogic.g:4877:2: ( ruleFormula )
-            // InternalFirstOrderLogic.g:4878:3: ruleFormula
+            // InternalFirstOrderLogic.g:4993:2: ( ruleFormula )
+            // InternalFirstOrderLogic.g:4994:3: ruleFormula
             {
              before(grammarAccess.getNotAccess().getNotFormulaParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -14575,17 +14915,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__LeftAssignment_1"
-    // InternalFirstOrderLogic.g:4887:1: rule__Equals__LeftAssignment_1 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5003:1: rule__Equals__LeftAssignment_1 : ( ruleTerm ) ;
     public final void rule__Equals__LeftAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4891:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:4892:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5007:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5008:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:4892:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:4893:3: ruleTerm
+            // InternalFirstOrderLogic.g:5008:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5009:3: ruleTerm
             {
              before(grammarAccess.getEqualsAccess().getLeftTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -14616,17 +14956,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Equals__RightAssignment_3"
-    // InternalFirstOrderLogic.g:4902:1: rule__Equals__RightAssignment_3 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5018:1: rule__Equals__RightAssignment_3 : ( ruleTerm ) ;
     public final void rule__Equals__RightAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4906:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:4907:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5022:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5023:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:4907:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:4908:3: ruleTerm
+            // InternalFirstOrderLogic.g:5023:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5024:3: ruleTerm
             {
              before(grammarAccess.getEqualsAccess().getRightTermParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -14657,17 +14997,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__LeftAssignment_1"
-    // InternalFirstOrderLogic.g:4917:1: rule__Greater__LeftAssignment_1 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5033:1: rule__Greater__LeftAssignment_1 : ( ruleTerm ) ;
     public final void rule__Greater__LeftAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4921:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:4922:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5037:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5038:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:4922:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:4923:3: ruleTerm
+            // InternalFirstOrderLogic.g:5038:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5039:3: ruleTerm
             {
              before(grammarAccess.getGreaterAccess().getLeftTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -14698,17 +15038,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Greater__RightAssignment_3"
-    // InternalFirstOrderLogic.g:4932:1: rule__Greater__RightAssignment_3 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5048:1: rule__Greater__RightAssignment_3 : ( ruleTerm ) ;
     public final void rule__Greater__RightAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4936:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:4937:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5052:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5053:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:4937:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:4938:3: ruleTerm
+            // InternalFirstOrderLogic.g:5053:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5054:3: ruleTerm
             {
              before(grammarAccess.getGreaterAccess().getRightTermParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -14739,17 +15079,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__LeftAssignment_1"
-    // InternalFirstOrderLogic.g:4947:1: rule__GreaterEqual__LeftAssignment_1 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5063:1: rule__GreaterEqual__LeftAssignment_1 : ( ruleTerm ) ;
     public final void rule__GreaterEqual__LeftAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4951:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:4952:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5067:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5068:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:4952:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:4953:3: ruleTerm
+            // InternalFirstOrderLogic.g:5068:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5069:3: ruleTerm
             {
              before(grammarAccess.getGreaterEqualAccess().getLeftTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -14780,17 +15120,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GreaterEqual__RightAssignment_3"
-    // InternalFirstOrderLogic.g:4962:1: rule__GreaterEqual__RightAssignment_3 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5078:1: rule__GreaterEqual__RightAssignment_3 : ( ruleTerm ) ;
     public final void rule__GreaterEqual__RightAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4966:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:4967:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5082:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5083:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:4967:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:4968:3: ruleTerm
+            // InternalFirstOrderLogic.g:5083:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5084:3: ruleTerm
             {
              before(grammarAccess.getGreaterEqualAccess().getRightTermParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -14821,17 +15161,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__LeftAssignment_1"
-    // InternalFirstOrderLogic.g:4977:1: rule__Smaller__LeftAssignment_1 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5093:1: rule__Smaller__LeftAssignment_1 : ( ruleTerm ) ;
     public final void rule__Smaller__LeftAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4981:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:4982:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5097:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5098:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:4982:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:4983:3: ruleTerm
+            // InternalFirstOrderLogic.g:5098:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5099:3: ruleTerm
             {
              before(grammarAccess.getSmallerAccess().getLeftTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -14862,17 +15202,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Smaller__RightAssignment_3"
-    // InternalFirstOrderLogic.g:4992:1: rule__Smaller__RightAssignment_3 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5108:1: rule__Smaller__RightAssignment_3 : ( ruleTerm ) ;
     public final void rule__Smaller__RightAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:4996:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:4997:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5112:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5113:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:4997:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:4998:3: ruleTerm
+            // InternalFirstOrderLogic.g:5113:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5114:3: ruleTerm
             {
              before(grammarAccess.getSmallerAccess().getRightTermParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -14903,17 +15243,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__LeftAssignment_1"
-    // InternalFirstOrderLogic.g:5007:1: rule__SmallerEqual__LeftAssignment_1 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5123:1: rule__SmallerEqual__LeftAssignment_1 : ( ruleTerm ) ;
     public final void rule__SmallerEqual__LeftAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5011:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5012:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5127:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5128:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5012:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5013:3: ruleTerm
+            // InternalFirstOrderLogic.g:5128:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5129:3: ruleTerm
             {
              before(grammarAccess.getSmallerEqualAccess().getLeftTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -14944,17 +15284,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__SmallerEqual__RightAssignment_3"
-    // InternalFirstOrderLogic.g:5022:1: rule__SmallerEqual__RightAssignment_3 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5138:1: rule__SmallerEqual__RightAssignment_3 : ( ruleTerm ) ;
     public final void rule__SmallerEqual__RightAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5026:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5027:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5142:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5143:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5027:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5028:3: ruleTerm
+            // InternalFirstOrderLogic.g:5143:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5144:3: ruleTerm
             {
              before(grammarAccess.getSmallerEqualAccess().getRightTermParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -14985,17 +15325,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsEmpty__TermAssignment_1"
-    // InternalFirstOrderLogic.g:5037:1: rule__IsEmpty__TermAssignment_1 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5153:1: rule__IsEmpty__TermAssignment_1 : ( ruleTerm ) ;
     public final void rule__IsEmpty__TermAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5041:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5042:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5157:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5158:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5042:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5043:3: ruleTerm
+            // InternalFirstOrderLogic.g:5158:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5159:3: ruleTerm
             {
              before(grammarAccess.getIsEmptyAccess().getTermTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -15026,17 +15366,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__TermAssignment_1"
-    // InternalFirstOrderLogic.g:5052:1: rule__IsInstanceOf__TermAssignment_1 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5168:1: rule__IsInstanceOf__TermAssignment_1 : ( ruleTerm ) ;
     public final void rule__IsInstanceOf__TermAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5056:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5057:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5172:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5173:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5057:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5058:3: ruleTerm
+            // InternalFirstOrderLogic.g:5173:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5174:3: ruleTerm
             {
              before(grammarAccess.getIsInstanceOfAccess().getTermTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -15067,21 +15407,29 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__IsInstanceOf__TypeAssignment_3"
-    // InternalFirstOrderLogic.g:5067:1: rule__IsInstanceOf__TypeAssignment_3 : ( RULE_ID ) ;
+    // InternalFirstOrderLogic.g:5183:1: rule__IsInstanceOf__TypeAssignment_3 : ( ( RULE_ID ) ) ;
     public final void rule__IsInstanceOf__TypeAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5071:1: ( ( RULE_ID ) )
-            // InternalFirstOrderLogic.g:5072:2: ( RULE_ID )
+            // InternalFirstOrderLogic.g:5187:1: ( ( ( RULE_ID ) ) )
+            // InternalFirstOrderLogic.g:5188:2: ( ( RULE_ID ) )
             {
-            // InternalFirstOrderLogic.g:5072:2: ( RULE_ID )
-            // InternalFirstOrderLogic.g:5073:3: RULE_ID
+            // InternalFirstOrderLogic.g:5188:2: ( ( RULE_ID ) )
+            // InternalFirstOrderLogic.g:5189:3: ( RULE_ID )
             {
-             before(grammarAccess.getIsInstanceOfAccess().getTypeIDTerminalRuleCall_3_0()); 
+             before(grammarAccess.getIsInstanceOfAccess().getTypeEClassifierCrossReference_3_0()); 
+            // InternalFirstOrderLogic.g:5190:3: ( RULE_ID )
+            // InternalFirstOrderLogic.g:5191:4: RULE_ID
+            {
+             before(grammarAccess.getIsInstanceOfAccess().getTypeEClassifierIDTerminalRuleCall_3_0_1()); 
             match(input,RULE_ID,FOLLOW_2); 
-             after(grammarAccess.getIsInstanceOfAccess().getTypeIDTerminalRuleCall_3_0()); 
+             after(grammarAccess.getIsInstanceOfAccess().getTypeEClassifierIDTerminalRuleCall_3_0_1()); 
+
+            }
+
+             after(grammarAccess.getIsInstanceOfAccess().getTypeEClassifierCrossReference_3_0()); 
 
             }
 
@@ -15104,17 +15452,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__NameAssignment_2"
-    // InternalFirstOrderLogic.g:5082:1: rule__ForAll__NameAssignment_2 : ( ruleVariable ) ;
+    // InternalFirstOrderLogic.g:5202:1: rule__ForAll__NameAssignment_2 : ( ruleVariable ) ;
     public final void rule__ForAll__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5086:1: ( ( ruleVariable ) )
-            // InternalFirstOrderLogic.g:5087:2: ( ruleVariable )
+            // InternalFirstOrderLogic.g:5206:1: ( ( ruleVariable ) )
+            // InternalFirstOrderLogic.g:5207:2: ( ruleVariable )
             {
-            // InternalFirstOrderLogic.g:5087:2: ( ruleVariable )
-            // InternalFirstOrderLogic.g:5088:3: ruleVariable
+            // InternalFirstOrderLogic.g:5207:2: ( ruleVariable )
+            // InternalFirstOrderLogic.g:5208:3: ruleVariable
             {
              before(grammarAccess.getForAllAccess().getNameVariableParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -15145,17 +15493,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__IterationAssignment_4"
-    // InternalFirstOrderLogic.g:5097:1: rule__ForAll__IterationAssignment_4 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5217:1: rule__ForAll__IterationAssignment_4 : ( ruleTerm ) ;
     public final void rule__ForAll__IterationAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5101:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5102:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5221:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5222:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5102:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5103:3: ruleTerm
+            // InternalFirstOrderLogic.g:5222:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5223:3: ruleTerm
             {
              before(grammarAccess.getForAllAccess().getIterationTermParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -15186,17 +15534,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__ForAll__FormulaAssignment_6"
-    // InternalFirstOrderLogic.g:5112:1: rule__ForAll__FormulaAssignment_6 : ( ruleFormula ) ;
+    // InternalFirstOrderLogic.g:5232:1: rule__ForAll__FormulaAssignment_6 : ( ruleFormula ) ;
     public final void rule__ForAll__FormulaAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5116:1: ( ( ruleFormula ) )
-            // InternalFirstOrderLogic.g:5117:2: ( ruleFormula )
+            // InternalFirstOrderLogic.g:5236:1: ( ( ruleFormula ) )
+            // InternalFirstOrderLogic.g:5237:2: ( ruleFormula )
             {
-            // InternalFirstOrderLogic.g:5117:2: ( ruleFormula )
-            // InternalFirstOrderLogic.g:5118:3: ruleFormula
+            // InternalFirstOrderLogic.g:5237:2: ( ruleFormula )
+            // InternalFirstOrderLogic.g:5238:3: ruleFormula
             {
              before(grammarAccess.getForAllAccess().getFormulaFormulaParserRuleCall_6_0()); 
             pushFollow(FOLLOW_2);
@@ -15227,17 +15575,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__NameAssignment_2"
-    // InternalFirstOrderLogic.g:5127:1: rule__Exists__NameAssignment_2 : ( ruleVariable ) ;
+    // InternalFirstOrderLogic.g:5247:1: rule__Exists__NameAssignment_2 : ( ruleVariable ) ;
     public final void rule__Exists__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5131:1: ( ( ruleVariable ) )
-            // InternalFirstOrderLogic.g:5132:2: ( ruleVariable )
+            // InternalFirstOrderLogic.g:5251:1: ( ( ruleVariable ) )
+            // InternalFirstOrderLogic.g:5252:2: ( ruleVariable )
             {
-            // InternalFirstOrderLogic.g:5132:2: ( ruleVariable )
-            // InternalFirstOrderLogic.g:5133:3: ruleVariable
+            // InternalFirstOrderLogic.g:5252:2: ( ruleVariable )
+            // InternalFirstOrderLogic.g:5253:3: ruleVariable
             {
              before(grammarAccess.getExistsAccess().getNameVariableParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -15268,17 +15616,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__IterationAssignment_4"
-    // InternalFirstOrderLogic.g:5142:1: rule__Exists__IterationAssignment_4 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5262:1: rule__Exists__IterationAssignment_4 : ( ruleTerm ) ;
     public final void rule__Exists__IterationAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5146:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5147:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5266:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5267:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5147:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5148:3: ruleTerm
+            // InternalFirstOrderLogic.g:5267:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5268:3: ruleTerm
             {
              before(grammarAccess.getExistsAccess().getIterationTermParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -15309,17 +15657,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Exists__FormulaAssignment_6"
-    // InternalFirstOrderLogic.g:5157:1: rule__Exists__FormulaAssignment_6 : ( ruleFormula ) ;
+    // InternalFirstOrderLogic.g:5277:1: rule__Exists__FormulaAssignment_6 : ( ruleFormula ) ;
     public final void rule__Exists__FormulaAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5161:1: ( ( ruleFormula ) )
-            // InternalFirstOrderLogic.g:5162:2: ( ruleFormula )
+            // InternalFirstOrderLogic.g:5281:1: ( ( ruleFormula ) )
+            // InternalFirstOrderLogic.g:5282:2: ( ruleFormula )
             {
-            // InternalFirstOrderLogic.g:5162:2: ( ruleFormula )
-            // InternalFirstOrderLogic.g:5163:3: ruleFormula
+            // InternalFirstOrderLogic.g:5282:2: ( ruleFormula )
+            // InternalFirstOrderLogic.g:5283:3: ruleFormula
             {
              before(grammarAccess.getExistsAccess().getFormulaFormulaParserRuleCall_6_0()); 
             pushFollow(FOLLOW_2);
@@ -15350,21 +15698,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__BoolConstant__ValueAssignment_1"
-    // InternalFirstOrderLogic.g:5172:1: rule__BoolConstant__ValueAssignment_1 : ( ( rule__BoolConstant__ValueAlternatives_1_0 ) ) ;
+    // InternalFirstOrderLogic.g:5292:1: rule__BoolConstant__ValueAssignment_1 : ( ( rule__BoolConstant__ValueAlternatives_1_0 ) ) ;
     public final void rule__BoolConstant__ValueAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5176:1: ( ( ( rule__BoolConstant__ValueAlternatives_1_0 ) ) )
-            // InternalFirstOrderLogic.g:5177:2: ( ( rule__BoolConstant__ValueAlternatives_1_0 ) )
+            // InternalFirstOrderLogic.g:5296:1: ( ( ( rule__BoolConstant__ValueAlternatives_1_0 ) ) )
+            // InternalFirstOrderLogic.g:5297:2: ( ( rule__BoolConstant__ValueAlternatives_1_0 ) )
             {
-            // InternalFirstOrderLogic.g:5177:2: ( ( rule__BoolConstant__ValueAlternatives_1_0 ) )
-            // InternalFirstOrderLogic.g:5178:3: ( rule__BoolConstant__ValueAlternatives_1_0 )
+            // InternalFirstOrderLogic.g:5297:2: ( ( rule__BoolConstant__ValueAlternatives_1_0 ) )
+            // InternalFirstOrderLogic.g:5298:3: ( rule__BoolConstant__ValueAlternatives_1_0 )
             {
              before(grammarAccess.getBoolConstantAccess().getValueAlternatives_1_0()); 
-            // InternalFirstOrderLogic.g:5179:3: ( rule__BoolConstant__ValueAlternatives_1_0 )
-            // InternalFirstOrderLogic.g:5179:4: rule__BoolConstant__ValueAlternatives_1_0
+            // InternalFirstOrderLogic.g:5299:3: ( rule__BoolConstant__ValueAlternatives_1_0 )
+            // InternalFirstOrderLogic.g:5299:4: rule__BoolConstant__ValueAlternatives_1_0
             {
             pushFollow(FOLLOW_2);
             rule__BoolConstant__ValueAlternatives_1_0();
@@ -15397,21 +15745,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__VariableRef__NameAssignment_1"
-    // InternalFirstOrderLogic.g:5187:1: rule__VariableRef__NameAssignment_1 : ( ( RULE_ID ) ) ;
+    // InternalFirstOrderLogic.g:5307:1: rule__VariableRef__NameAssignment_1 : ( ( RULE_ID ) ) ;
     public final void rule__VariableRef__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5191:1: ( ( ( RULE_ID ) ) )
-            // InternalFirstOrderLogic.g:5192:2: ( ( RULE_ID ) )
+            // InternalFirstOrderLogic.g:5311:1: ( ( ( RULE_ID ) ) )
+            // InternalFirstOrderLogic.g:5312:2: ( ( RULE_ID ) )
             {
-            // InternalFirstOrderLogic.g:5192:2: ( ( RULE_ID ) )
-            // InternalFirstOrderLogic.g:5193:3: ( RULE_ID )
+            // InternalFirstOrderLogic.g:5312:2: ( ( RULE_ID ) )
+            // InternalFirstOrderLogic.g:5313:3: ( RULE_ID )
             {
              before(grammarAccess.getVariableRefAccess().getNameVariableCrossReference_1_0()); 
-            // InternalFirstOrderLogic.g:5194:3: ( RULE_ID )
-            // InternalFirstOrderLogic.g:5195:4: RULE_ID
+            // InternalFirstOrderLogic.g:5314:3: ( RULE_ID )
+            // InternalFirstOrderLogic.g:5315:4: RULE_ID
             {
              before(grammarAccess.getVariableRefAccess().getNameVariableIDTerminalRuleCall_1_0_1()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -15442,17 +15790,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__VariableRef__GetAssignment_2"
-    // InternalFirstOrderLogic.g:5206:1: rule__VariableRef__GetAssignment_2 : ( ruleGet ) ;
+    // InternalFirstOrderLogic.g:5326:1: rule__VariableRef__GetAssignment_2 : ( ruleGet ) ;
     public final void rule__VariableRef__GetAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5210:1: ( ( ruleGet ) )
-            // InternalFirstOrderLogic.g:5211:2: ( ruleGet )
+            // InternalFirstOrderLogic.g:5330:1: ( ( ruleGet ) )
+            // InternalFirstOrderLogic.g:5331:2: ( ruleGet )
             {
-            // InternalFirstOrderLogic.g:5211:2: ( ruleGet )
-            // InternalFirstOrderLogic.g:5212:3: ruleGet
+            // InternalFirstOrderLogic.g:5331:2: ( ruleGet )
+            // InternalFirstOrderLogic.g:5332:3: ruleGet
             {
              before(grammarAccess.getVariableRefAccess().getGetGetParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -15483,21 +15831,29 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__TypeAssignment_1_0"
-    // InternalFirstOrderLogic.g:5221:1: rule__Get__TypeAssignment_1_0 : ( RULE_ID ) ;
+    // InternalFirstOrderLogic.g:5341:1: rule__Get__TypeAssignment_1_0 : ( ( RULE_ID ) ) ;
     public final void rule__Get__TypeAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5225:1: ( ( RULE_ID ) )
-            // InternalFirstOrderLogic.g:5226:2: ( RULE_ID )
+            // InternalFirstOrderLogic.g:5345:1: ( ( ( RULE_ID ) ) )
+            // InternalFirstOrderLogic.g:5346:2: ( ( RULE_ID ) )
             {
-            // InternalFirstOrderLogic.g:5226:2: ( RULE_ID )
-            // InternalFirstOrderLogic.g:5227:3: RULE_ID
+            // InternalFirstOrderLogic.g:5346:2: ( ( RULE_ID ) )
+            // InternalFirstOrderLogic.g:5347:3: ( RULE_ID )
             {
-             before(grammarAccess.getGetAccess().getTypeIDTerminalRuleCall_1_0_0()); 
+             before(grammarAccess.getGetAccess().getTypeEClassifierCrossReference_1_0_0()); 
+            // InternalFirstOrderLogic.g:5348:3: ( RULE_ID )
+            // InternalFirstOrderLogic.g:5349:4: RULE_ID
+            {
+             before(grammarAccess.getGetAccess().getTypeEClassifierIDTerminalRuleCall_1_0_0_1()); 
             match(input,RULE_ID,FOLLOW_2); 
-             after(grammarAccess.getGetAccess().getTypeIDTerminalRuleCall_1_0_0()); 
+             after(grammarAccess.getGetAccess().getTypeEClassifierIDTerminalRuleCall_1_0_0_1()); 
+
+            }
+
+             after(grammarAccess.getGetAccess().getTypeEClassifierCrossReference_1_0_0()); 
 
             }
 
@@ -15520,21 +15876,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__NameAssignment_2"
-    // InternalFirstOrderLogic.g:5236:1: rule__Get__NameAssignment_2 : ( ( RULE_ID ) ) ;
+    // InternalFirstOrderLogic.g:5360:1: rule__Get__NameAssignment_2 : ( ( RULE_ID ) ) ;
     public final void rule__Get__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5240:1: ( ( ( RULE_ID ) ) )
-            // InternalFirstOrderLogic.g:5241:2: ( ( RULE_ID ) )
+            // InternalFirstOrderLogic.g:5364:1: ( ( ( RULE_ID ) ) )
+            // InternalFirstOrderLogic.g:5365:2: ( ( RULE_ID ) )
             {
-            // InternalFirstOrderLogic.g:5241:2: ( ( RULE_ID ) )
-            // InternalFirstOrderLogic.g:5242:3: ( RULE_ID )
+            // InternalFirstOrderLogic.g:5365:2: ( ( RULE_ID ) )
+            // InternalFirstOrderLogic.g:5366:3: ( RULE_ID )
             {
              before(grammarAccess.getGetAccess().getNameEStructuralFeatureCrossReference_2_0()); 
-            // InternalFirstOrderLogic.g:5243:3: ( RULE_ID )
-            // InternalFirstOrderLogic.g:5244:4: RULE_ID
+            // InternalFirstOrderLogic.g:5367:3: ( RULE_ID )
+            // InternalFirstOrderLogic.g:5368:4: RULE_ID
             {
              before(grammarAccess.getGetAccess().getNameEStructuralFeatureIDTerminalRuleCall_2_0_1()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -15565,17 +15921,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Get__NextAssignment_3"
-    // InternalFirstOrderLogic.g:5255:1: rule__Get__NextAssignment_3 : ( ruleGet ) ;
+    // InternalFirstOrderLogic.g:5379:1: rule__Get__NextAssignment_3 : ( ruleGet ) ;
     public final void rule__Get__NextAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5259:1: ( ( ruleGet ) )
-            // InternalFirstOrderLogic.g:5260:2: ( ruleGet )
+            // InternalFirstOrderLogic.g:5383:1: ( ( ruleGet ) )
+            // InternalFirstOrderLogic.g:5384:2: ( ruleGet )
             {
-            // InternalFirstOrderLogic.g:5260:2: ( ruleGet )
-            // InternalFirstOrderLogic.g:5261:3: ruleGet
+            // InternalFirstOrderLogic.g:5384:2: ( ruleGet )
+            // InternalFirstOrderLogic.g:5385:3: ruleGet
             {
              before(grammarAccess.getGetAccess().getNextGetParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -15606,17 +15962,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetContainer__ElementAssignment_1"
-    // InternalFirstOrderLogic.g:5270:1: rule__GetContainer__ElementAssignment_1 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5394:1: rule__GetContainer__ElementAssignment_1 : ( ruleTerm ) ;
     public final void rule__GetContainer__ElementAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5274:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5275:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5398:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5399:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5275:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5276:3: ruleTerm
+            // InternalFirstOrderLogic.g:5399:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5400:3: ruleTerm
             {
              before(grammarAccess.getGetContainerAccess().getElementTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -15646,26 +16002,26 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
     // $ANTLR end "rule__GetContainer__ElementAssignment_1"
 
 
-    // $ANTLR start "rule__GetContainment__ElementAssignment_1"
-    // InternalFirstOrderLogic.g:5285:1: rule__GetContainment__ElementAssignment_1 : ( ruleTerm ) ;
-    public final void rule__GetContainment__ElementAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__GetContainments__ElementAssignment_1"
+    // InternalFirstOrderLogic.g:5409:1: rule__GetContainments__ElementAssignment_1 : ( ruleTerm ) ;
+    public final void rule__GetContainments__ElementAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5289:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5290:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5413:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5414:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5290:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5291:3: ruleTerm
+            // InternalFirstOrderLogic.g:5414:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5415:3: ruleTerm
             {
-             before(grammarAccess.getGetContainmentAccess().getElementTermParserRuleCall_1_0()); 
+             before(grammarAccess.getGetContainmentsAccess().getElementTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
             ruleTerm();
 
             state._fsp--;
 
-             after(grammarAccess.getGetContainmentAccess().getElementTermParserRuleCall_1_0()); 
+             after(grammarAccess.getGetContainmentsAccess().getElementTermParserRuleCall_1_0()); 
 
             }
 
@@ -15684,21 +16040,21 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
         }
         return ;
     }
-    // $ANTLR end "rule__GetContainment__ElementAssignment_1"
+    // $ANTLR end "rule__GetContainments__ElementAssignment_1"
 
 
     // $ANTLR start "rule__GetClosure__ElementAssignment_1"
-    // InternalFirstOrderLogic.g:5300:1: rule__GetClosure__ElementAssignment_1 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5424:1: rule__GetClosure__ElementAssignment_1 : ( ruleTerm ) ;
     public final void rule__GetClosure__ElementAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5304:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5305:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5428:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5429:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5305:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5306:3: ruleTerm
+            // InternalFirstOrderLogic.g:5429:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5430:3: ruleTerm
             {
              before(grammarAccess.getGetClosureAccess().getElementTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -15729,21 +16085,29 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__GetClosure__FeatureAssignment_3"
-    // InternalFirstOrderLogic.g:5315:1: rule__GetClosure__FeatureAssignment_3 : ( RULE_ID ) ;
+    // InternalFirstOrderLogic.g:5439:1: rule__GetClosure__FeatureAssignment_3 : ( ( RULE_ID ) ) ;
     public final void rule__GetClosure__FeatureAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5319:1: ( ( RULE_ID ) )
-            // InternalFirstOrderLogic.g:5320:2: ( RULE_ID )
+            // InternalFirstOrderLogic.g:5443:1: ( ( ( RULE_ID ) ) )
+            // InternalFirstOrderLogic.g:5444:2: ( ( RULE_ID ) )
             {
-            // InternalFirstOrderLogic.g:5320:2: ( RULE_ID )
-            // InternalFirstOrderLogic.g:5321:3: RULE_ID
+            // InternalFirstOrderLogic.g:5444:2: ( ( RULE_ID ) )
+            // InternalFirstOrderLogic.g:5445:3: ( RULE_ID )
             {
-             before(grammarAccess.getGetClosureAccess().getFeatureIDTerminalRuleCall_3_0()); 
+             before(grammarAccess.getGetClosureAccess().getFeatureEStructuralFeatureCrossReference_3_0()); 
+            // InternalFirstOrderLogic.g:5446:3: ( RULE_ID )
+            // InternalFirstOrderLogic.g:5447:4: RULE_ID
+            {
+             before(grammarAccess.getGetClosureAccess().getFeatureEStructuralFeatureIDTerminalRuleCall_3_0_1()); 
             match(input,RULE_ID,FOLLOW_2); 
-             after(grammarAccess.getGetClosureAccess().getFeatureIDTerminalRuleCall_3_0()); 
+             after(grammarAccess.getGetClosureAccess().getFeatureEStructuralFeatureIDTerminalRuleCall_3_0_1()); 
+
+            }
+
+             after(grammarAccess.getGetClosureAccess().getFeatureEStructuralFeatureCrossReference_3_0()); 
 
             }
 
@@ -15765,18 +16129,59 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
     // $ANTLR end "rule__GetClosure__FeatureAssignment_3"
 
 
+    // $ANTLR start "rule__Size__ElementsAssignment_1"
+    // InternalFirstOrderLogic.g:5458:1: rule__Size__ElementsAssignment_1 : ( ruleTerm ) ;
+    public final void rule__Size__ElementsAssignment_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalFirstOrderLogic.g:5462:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5463:2: ( ruleTerm )
+            {
+            // InternalFirstOrderLogic.g:5463:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5464:3: ruleTerm
+            {
+             before(grammarAccess.getSizeAccess().getElementsTermParserRuleCall_1_0()); 
+            pushFollow(FOLLOW_2);
+            ruleTerm();
+
+            state._fsp--;
+
+             after(grammarAccess.getSizeAccess().getElementsTermParserRuleCall_1_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Size__ElementsAssignment_1"
+
+
     // $ANTLR start "rule__Concatenate__LeftAssignment_1"
-    // InternalFirstOrderLogic.g:5330:1: rule__Concatenate__LeftAssignment_1 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5473:1: rule__Concatenate__LeftAssignment_1 : ( ruleTerm ) ;
     public final void rule__Concatenate__LeftAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5334:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5335:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5477:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5478:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5335:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5336:3: ruleTerm
+            // InternalFirstOrderLogic.g:5478:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5479:3: ruleTerm
             {
              before(grammarAccess.getConcatenateAccess().getLeftTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -15807,17 +16212,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Concatenate__RightAssignment_3"
-    // InternalFirstOrderLogic.g:5345:1: rule__Concatenate__RightAssignment_3 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5488:1: rule__Concatenate__RightAssignment_3 : ( ruleTerm ) ;
     public final void rule__Concatenate__RightAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5349:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5350:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5492:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5493:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5350:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5351:3: ruleTerm
+            // InternalFirstOrderLogic.g:5493:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5494:3: ruleTerm
             {
              before(grammarAccess.getConcatenateAccess().getRightTermParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -15848,17 +16253,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Capitalize__StringAssignment_1"
-    // InternalFirstOrderLogic.g:5360:1: rule__Capitalize__StringAssignment_1 : ( ruleTerm ) ;
+    // InternalFirstOrderLogic.g:5503:1: rule__Capitalize__StringAssignment_1 : ( ruleTerm ) ;
     public final void rule__Capitalize__StringAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5364:1: ( ( ruleTerm ) )
-            // InternalFirstOrderLogic.g:5365:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5507:1: ( ( ruleTerm ) )
+            // InternalFirstOrderLogic.g:5508:2: ( ruleTerm )
             {
-            // InternalFirstOrderLogic.g:5365:2: ( ruleTerm )
-            // InternalFirstOrderLogic.g:5366:3: ruleTerm
+            // InternalFirstOrderLogic.g:5508:2: ( ruleTerm )
+            // InternalFirstOrderLogic.g:5509:3: ruleTerm
             {
              before(grammarAccess.getCapitalizeAccess().getStringTermParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -15889,17 +16294,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constant__ValueAssignment_0_1"
-    // InternalFirstOrderLogic.g:5375:1: rule__Constant__ValueAssignment_0_1 : ( RULE_INT ) ;
+    // InternalFirstOrderLogic.g:5518:1: rule__Constant__ValueAssignment_0_1 : ( RULE_INT ) ;
     public final void rule__Constant__ValueAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5379:1: ( ( RULE_INT ) )
-            // InternalFirstOrderLogic.g:5380:2: ( RULE_INT )
+            // InternalFirstOrderLogic.g:5522:1: ( ( RULE_INT ) )
+            // InternalFirstOrderLogic.g:5523:2: ( RULE_INT )
             {
-            // InternalFirstOrderLogic.g:5380:2: ( RULE_INT )
-            // InternalFirstOrderLogic.g:5381:3: RULE_INT
+            // InternalFirstOrderLogic.g:5523:2: ( RULE_INT )
+            // InternalFirstOrderLogic.g:5524:3: RULE_INT
             {
              before(grammarAccess.getConstantAccess().getValueINTTerminalRuleCall_0_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -15926,17 +16331,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
 
 
     // $ANTLR start "rule__Constant__ValueAssignment_1_1"
-    // InternalFirstOrderLogic.g:5390:1: rule__Constant__ValueAssignment_1_1 : ( RULE_STRING ) ;
+    // InternalFirstOrderLogic.g:5533:1: rule__Constant__ValueAssignment_1_1 : ( RULE_STRING ) ;
     public final void rule__Constant__ValueAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalFirstOrderLogic.g:5394:1: ( ( RULE_STRING ) )
-            // InternalFirstOrderLogic.g:5395:2: ( RULE_STRING )
+            // InternalFirstOrderLogic.g:5537:1: ( ( RULE_STRING ) )
+            // InternalFirstOrderLogic.g:5538:2: ( RULE_STRING )
             {
-            // InternalFirstOrderLogic.g:5395:2: ( RULE_STRING )
-            // InternalFirstOrderLogic.g:5396:3: RULE_STRING
+            // InternalFirstOrderLogic.g:5538:2: ( RULE_STRING )
+            // InternalFirstOrderLogic.g:5539:3: RULE_STRING
             {
              before(grammarAccess.getConstantAccess().getValueSTRINGTerminalRuleCall_1_1_0()); 
             match(input,RULE_STRING,FOLLOW_2); 
@@ -15989,7 +16394,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalContentAssist
     public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000000800002L});
     public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000001000000L});
     public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x00001F37F5001870L});
+    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x00003F37F5001870L});
     public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000008000000L});
     public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000400000000L});
     public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000800000000L});
