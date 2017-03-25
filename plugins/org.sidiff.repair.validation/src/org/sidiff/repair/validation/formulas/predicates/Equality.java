@@ -3,7 +3,6 @@ package org.sidiff.repair.validation.formulas.predicates;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.Repair.RepairType;
-import org.sidiff.repair.validation.terms.Constant;
 import org.sidiff.repair.validation.terms.Term;
 
 public class Equality extends Comparison {
@@ -41,15 +40,7 @@ public class Equality extends Comparison {
 	@Override
 	public void repair(IRepairDecision parent, boolean expected) {
 		
-		if (right instanceof Constant) {
-			left.repair(parent, RepairType.MODIFY);
-		}
-		
-		else if (left instanceof Constant) {
-			right.repair(parent, RepairType.MODIFY);
-		}
-		
-		else {
+		if (expected != getResult()) {
 			Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 
 			left.repair(newRepairAlternative, RepairType.MODIFY);

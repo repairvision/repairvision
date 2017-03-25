@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.Repair.RepairType;
-import org.sidiff.repair.validation.terms.Constant;
 import org.sidiff.repair.validation.terms.Term;
 
 public class IsEmpty extends Predicate {
@@ -32,12 +31,13 @@ public class IsEmpty extends Predicate {
 
 	@Override
 	public void repair(IRepairDecision parent, boolean expected) {
-		if (!(term instanceof Constant)) {
-			if (expected) {
-				term.repair(parent, RepairType.DELETE);
-			} else {
-				term.repair(parent, RepairType.ADD);
-			}
+		
+		if (expected && !getResult()) {
+			term.repair(parent, RepairType.DELETE);
+		} 
+
+		else if (!expected && getResult()) {
+			term.repair(parent, RepairType.ADD);
 		}
 	}
 }
