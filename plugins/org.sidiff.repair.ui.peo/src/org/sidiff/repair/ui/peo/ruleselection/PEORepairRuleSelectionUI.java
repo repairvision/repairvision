@@ -18,8 +18,14 @@ import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
 public class PEORepairRuleSelectionUI extends BasicRepairUI<SashForm, PEORepairApplication>
 		implements IResultChangedListener<PEORepairJob> {
 
+	/**
+	 * Shows the abstract repairs.
+	 */
 	private TreeViewer viewer_validation;
 
+	/**
+	 * Drop target to create a rulebase.
+	 */
 	private ModelDropWidget editRules;
 	
 	@Override
@@ -76,7 +82,7 @@ public class PEORepairRuleSelectionUI extends BasicRepairUI<SashForm, PEORepairA
 	
 	@Override
 	public void resultChanged(PEORepairJob repairJob) {
-		viewer_validation.setInput(repairJob);
+		viewer_validation.setInput(repairJob.getValidations());
 	}
 
 	@Override
