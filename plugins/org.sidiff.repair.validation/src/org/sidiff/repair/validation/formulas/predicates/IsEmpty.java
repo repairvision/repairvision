@@ -17,6 +17,8 @@ public class IsEmpty extends Predicate {
 
 	@Override
 	public boolean evaluate() {
+		term.evaluate();
+		
 		if (term.getValue() == null) {
 			result = true;
 		} else {

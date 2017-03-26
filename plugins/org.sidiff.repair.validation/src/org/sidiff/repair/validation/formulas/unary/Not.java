@@ -19,6 +19,6 @@ public class Not extends UnaryFormula {
 	@Override
 	public void repair(IRepairDecision parentRepairDecision, boolean expected) {
 		// G(a, ¬σ)
-		repair(parentRepairDecision, !expected);
+		child.repair(parentRepairDecision, !expected);
 	}
 }

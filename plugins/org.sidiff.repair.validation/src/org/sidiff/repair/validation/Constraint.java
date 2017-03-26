@@ -77,6 +77,8 @@ public class Constraint extends NamedElement implements IConstraint {
 
 	@Override
 	public IRepairDecision repair() {
+		// TODO: Need concrete repair which deletes the root element!
+		
 		IRepairDecision repairTreeRoot = new Alternative();
 		formula.repair(repairTreeRoot, true);
 		return repairTreeRoot;

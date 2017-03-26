@@ -2,19 +2,19 @@ package org.sidiff.repair.validation.util;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.repair.validation.Constraint;
+import org.sidiff.repair.validation.IConstraint;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 
 public class Validation {
 	
-	private Constraint rule;
+	private IConstraint rule;
 	private boolean result;
 	private EClass contextType;
 	private EObject context;
 	private IRepairDecision repair;
 	
 	public Validation(
-			Constraint rule, boolean result, 
+			IConstraint rule, boolean result, 
 			EClass contextType, EObject context, 
 			IRepairDecision repair) {
 		
@@ -25,7 +25,7 @@ public class Validation {
 		this.repair = repair;
 	}
 	
-	public Constraint getRule() {
+	public IConstraint getRule() {
 		return rule;
 	}
 
