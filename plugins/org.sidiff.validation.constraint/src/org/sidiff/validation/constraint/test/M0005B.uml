@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Qs1WMD45Eea0SJ9KOfvj5Q" name="RootElement">
+  <packagedElement xmi:type="uml:Class" xmi:id="_Td6WsD45Eea0SJ9KOfvj5Q" name="A">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_aJalYD45Eea0SJ9KOfvj5Q" name="b" type="_UYE44D45Eea0SJ9KOfvj5Q" association="_aJTQoD45Eea0SJ9KOfvj5Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_UYE44D45Eea0SJ9KOfvj5Q" name="B">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_zMzU4T46Eea0SJ9KOfvj5Q" name="c" type="_xm-mkD46Eea0SJ9KOfvj5Q" association="_zMyGwD46Eea0SJ9KOfvj5Q"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_5ORkQER-Eea0KtVFBFZ58g" name="Nop"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_aJTQoD45Eea0SJ9KOfvj5Q" memberEnd="_aJalYD45Eea0SJ9KOfvj5Q _aJbMcD45Eea0SJ9KOfvj5Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aJXiED45Eea0SJ9KOfvj5Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_aJYJID45Eea0SJ9KOfvj5Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_aJbMcD45Eea0SJ9KOfvj5Q" name="a" type="_Td6WsD45Eea0SJ9KOfvj5Q" association="_aJTQoD45Eea0SJ9KOfvj5Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_6m9OwD45Eea0SJ9KOfvj5Q" name="Interaction1">
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_-OadoD45Eea0SJ9KOfvj5Q" name="a" represents="_L-uL0j46Eea0SJ9KOfvj5Q" coveredBy="_Z07GoD46Eea0SJ9KOfvj5Q"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_UCRLgD46Eea0SJ9KOfvj5Q" name="b" represents="_aJalYD45Eea0SJ9KOfvj5Q" coveredBy="_Z07GoT46Eea0SJ9KOfvj5Q"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_S5FgcD47Eea0SJ9KOfvj5Q" name="c" represents="_zMzU4T46Eea0SJ9KOfvj5Q"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_Z07GoD46Eea0SJ9KOfvj5Q" name="Op_MessageSend" covered="_-OadoD45Eea0SJ9KOfvj5Q" message="_Z02OID46Eea0SJ9KOfvj5Q"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_Z07GoT46Eea0SJ9KOfvj5Q" name="Op_MessageRecv" covered="_UCRLgD46Eea0SJ9KOfvj5Q" message="_Z02OID46Eea0SJ9KOfvj5Q"/>
+    <message xmi:type="uml:Message" xmi:id="_Z02OID46Eea0SJ9KOfvj5Q" name="Op" messageSort="asynchCall" receiveEvent="_Z07GoT46Eea0SJ9KOfvj5Q" sendEvent="_Z07GoD46Eea0SJ9KOfvj5Q" signature="_2uuY8D45Eea0SJ9KOfvj5Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_KFpxYD46Eea0SJ9KOfvj5Q" name="Root">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_L-uL0j46Eea0SJ9KOfvj5Q" name="a" type="_Td6WsD45Eea0SJ9KOfvj5Q" association="_L-tkwD46Eea0SJ9KOfvj5Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_L-tkwD46Eea0SJ9KOfvj5Q" memberEnd="_L-uL0j46Eea0SJ9KOfvj5Q _L-uy4D46Eea0SJ9KOfvj5Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_L-uL0D46Eea0SJ9KOfvj5Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_L-uL0T46Eea0SJ9KOfvj5Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_L-uy4D46Eea0SJ9KOfvj5Q" name="root" type="_KFpxYD46Eea0SJ9KOfvj5Q" association="_L-tkwD46Eea0SJ9KOfvj5Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_xm-mkD46Eea0SJ9KOfvj5Q" name="C">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_2uuY8D45Eea0SJ9KOfvj5Q" name="Op"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_zMyGwD46Eea0SJ9KOfvj5Q" memberEnd="_zMzU4T46Eea0SJ9KOfvj5Q _zMz78D46Eea0SJ9KOfvj5Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_zMyt0D46Eea0SJ9KOfvj5Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zMzU4D46Eea0SJ9KOfvj5Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_zMz78D46Eea0SJ9KOfvj5Q" name="b" type="_UYE44D45Eea0SJ9KOfvj5Q" association="_zMyGwD46Eea0SJ9KOfvj5Q"/>
+  </packagedElement>
+</uml:Model>
