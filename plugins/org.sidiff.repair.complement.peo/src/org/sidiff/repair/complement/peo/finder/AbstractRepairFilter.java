@@ -1,7 +1,6 @@
 package org.sidiff.repair.complement.peo.finder;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
-import static org.sidiff.repair.validation.test.library.ConsistencyRuleLibrary.getConsistencyRuleLibrary;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,12 +17,14 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.repair.api.matching.EditOperationMatching;
+import org.sidiff.repair.validation.IConstraint;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.Repair;
 import org.sidiff.repair.validation.fix.Repair.RepairType;
-import org.sidiff.repair.validation.test.library.ConsistencyRuleLibrary;
 import org.sidiff.repair.validation.util.BatchValidationIterator;
 import org.sidiff.repair.validation.util.Validation;
+import org.sidiff.validation.constraint.library.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.library.util.ConstraintLibraryUtil;
 
 public class AbstractRepairFilter {
 
@@ -32,10 +33,11 @@ public class AbstractRepairFilter {
 	private List<Validation> validations = new ArrayList<>();
 
 	public AbstractRepairFilter(Resource model, boolean storeValidation) {
-		ConsistencyRuleLibrary cruleLibrary = getConsistencyRuleLibrary(EMFModelAccess.getDocumentType(model));
+		List<IConstraint> consistencyRules = ConstraintLibraryUtil.getConsistencyRules(
+				 ConstraintLibraryRegistry.getLibraries(EMFModelAccess.getDocumentType(model)));
 
-		BatchValidationIterator validationIterator = new BatchValidationIterator(model,
-				cruleLibrary.getConsistencyRules(), false, true, false);
+		BatchValidationIterator validationIterator = new BatchValidationIterator(
+				model, consistencyRules, false, true, false);
 
 		// Collect all abstract repair actions:
 		validationIterator.forEachRemaining(validation -> {
