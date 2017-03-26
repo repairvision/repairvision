@@ -72,8 +72,10 @@ public class NameUtil {
 			if (i > 0) {
 				result.append(" ");
 			}
-			result.append(Character.toUpperCase(words[i].charAt(0))).append(words[i].substring(1));
-
+			
+			if (words[i].length() > 1) {
+				result.append(Character.toUpperCase(words[i].charAt(0))).append(words[i].substring(1));
+			}
 		}
 		return result.toString();
 	}
