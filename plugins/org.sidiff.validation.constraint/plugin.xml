@@ -2,4 +2,17 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="library" name="Constraint Library" schema="schema/library.exsd"/>
+   
+   <extension
+         id="org.sidiff.validation.constraint.test"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="org.sidiff.validation.constraint.testdriver.TestApplication">
+         </run>
+      </application>
+   </extension>
 </plugin>

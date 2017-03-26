@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.test;
+package org.sidiff.validation.constraint.testdriver;
 
 import java.util.Collections;
 
@@ -16,19 +16,18 @@ import org.sidiff.validation.constraint.library.util.ConstraintLibraryUtil;
 
 public class TestApplication implements IApplication {
 	
-	@SuppressWarnings("unused")
 	@Override
 	public Object start(IApplicationContext applicationContext) throws Exception {
 		
 		// Load Model
-		String base = "D:/Workspace/SiLiftEvaluation/org.sidiff.validation.constraint/src/org/sidiff/validation/constraint/test/";
-		String consistent =  base + "M0005A.uml";
-		String inconsistent = base + "M0005B.uml";
+		String base = "D:/Workspace/SiLiftEvaluation/org.sidiff.validation.constraint/src/org/sidiff/validation/constraint/testdriver/";
+//		String modelFile = base + "B.InconsistentModelVersion.uml";
+		String modelFile = base + "M0005B.uml";
 		
-		String consistencyRule = "Inconsistency_MessageBasedOnOperation";
+		String consistencyRule = "Inconsistency_UntypedProperty";
 		
 		ResourceSet rss = new ResourceSetImpl();
-		URI modeURI = URI.createFileURI(inconsistent);
+		URI modeURI = URI.createFileURI(modelFile);
 		Resource modelResource = rss.getResource(modeURI, true);;
 		
 		// Load consistency rule:
@@ -37,18 +36,24 @@ public class TestApplication implements IApplication {
 				consistencyRule);
 		
 		// Check consistency:
-		new BatchValidationIterator(modelResource, Collections.singletonList(crule)).forEachRemaining(validation -> {
+		if (crule != null) {
+			new BatchValidationIterator(modelResource, Collections.singletonList(crule)).forEachRemaining(validation -> {
 				System.out.print("Validation [");
 				System.out.print(validation.getResult());
 				System.out.println("] " 
 						+ validation.getRule().getName() + ": " 
 						+ validation.getContext());
-				
+
 				if (validation.getRepair() != null) {
 					System.out.println("\nRepair-Tree: \n\n" + validation.getRepair());
 				}
-		});
+				System.out.println("---------------------------------------------------------------------------------");
+			});
+		} else {
+			System.out.println("Consistency-Rule not found: " + consistencyRule);
+		}
 		
+		System.out.println("Validation finished!");
 		return IApplication.EXIT_OK;
 	}
 
