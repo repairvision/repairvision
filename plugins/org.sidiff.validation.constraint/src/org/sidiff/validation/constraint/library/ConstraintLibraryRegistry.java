@@ -1,6 +1,7 @@
 package org.sidiff.validation.constraint.library;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,11 @@ public class ConstraintLibraryRegistry {
 	 * @return All {@link IConstaintLibrary} extensions for the given document type.
 	 */
 	public static List<IConstraintLibrary> getLibraries(String documentType) {
-		return libraries.get(documentType);
+
+		if (libraries.containsKey(documentType)) {
+			return Collections.unmodifiableList(libraries.get(documentType));
+		} else {
+			return Collections.emptyList();
+		}
 	}
 }
