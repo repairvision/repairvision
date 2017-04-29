@@ -51,6 +51,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Size
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
+// FIXME: Support scopes for variable names -> otherwise variable names have to be unique!
 class FirstOrderLogicGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
