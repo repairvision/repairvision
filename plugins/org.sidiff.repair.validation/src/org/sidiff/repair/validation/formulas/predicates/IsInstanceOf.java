@@ -22,7 +22,11 @@ public class IsInstanceOf extends Predicate {
 	public boolean evaluate() {
 		term.evaluate();
 		
-		result = (((EObject) term.getValue()).eClass() == type);
+		if (term.getValue() == null) {
+			result = false;
+		} else {
+			result = (((EObject) term.getValue()).eClass() == type);
+		}
 		
 		return result;
 	}
