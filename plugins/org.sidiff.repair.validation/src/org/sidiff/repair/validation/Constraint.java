@@ -4,6 +4,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
+import org.sidiff.repair.validation.fix.Repair;
+import org.sidiff.repair.validation.fix.Repair.RepairType;
 import org.sidiff.repair.validation.formulas.binary.Formula;
 import org.sidiff.repair.validation.terms.Variable;
 
@@ -77,10 +79,24 @@ public class Constraint extends NamedElement implements IConstraint {
 
 	@Override
 	public IRepairDecision repair() {
-		// TODO: Need concrete repair which deletes the root element!
-		
 		IRepairDecision repairTreeRoot = new Alternative();
+		
+		// Repair which deletes the root element:
+		if (getContext().eContainmentFeature() != null) {
+			if (getContext().eContainmentFeature().getEOpposite() != null) {
+				// Use container reference:
+				repairTreeRoot.appendChildDecisions(new Repair(
+						RepairType.DELETE, getContext(),  getContext().eContainmentFeature().getEOpposite()));
+			} else {
+				// Use containment reference (as cross-reference):
+				repairTreeRoot.appendChildDecisions(new Repair(
+						RepairType.DELETE, getContext(),  getContext().eContainmentFeature()));
+			}
+		}
+		
+		// Repairs for validation scope:
 		formula.repair(repairTreeRoot, true);
+		
 		return repairTreeRoot;
 	}
 }
