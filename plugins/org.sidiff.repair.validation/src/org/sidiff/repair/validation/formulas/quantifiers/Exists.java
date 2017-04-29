@@ -24,6 +24,7 @@ public class Exists extends Quantifier {
 	
 	@Override
 	public boolean evaluate() {
+		iteration.evaluate();
 
 		for (Object nextObject : getIterable()) {
 			bounded.assign(nextObject);
@@ -45,7 +46,15 @@ public class Exists extends Quantifier {
 		// if σ = t
 		if (expected) {
 			// A: Add at least one valid element (term) to the iterated set!
-			iteration.repair(alternativ, RepairType.ADD);
+			if (isMany()) {
+				iteration.repair(alternativ, RepairType.ADD);
+			} else {
+				if (isEmpty()) {
+					iteration.repair(alternativ, RepairType.ADD);
+				} else {
+					iteration.repair(alternativ, RepairType.MODIFY);
+				}
+			}
 			
 			// B: Make at least one element (term) of the set valid!
 			for (Object nextObject : getIterable()) {

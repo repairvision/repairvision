@@ -66,7 +66,15 @@ public class ForAll extends Quantifier {
 		// if σ = f
 		else {
 			// A: Add at least one invalid element (term) to the iterated set!
-			iteration.repair(alternativ, RepairType.ADD);
+			if (isMany()) {
+				iteration.repair(alternativ, RepairType.ADD);
+			} else {
+				if (isEmpty()) {
+					iteration.repair(alternativ, RepairType.ADD);
+				} else {
+					iteration.repair(alternativ, RepairType.MODIFY);
+				}
+			}
 			
 			// B: Make at least one element (term) of the set invalid!
 			for (Object nextObject : getIterable()) {

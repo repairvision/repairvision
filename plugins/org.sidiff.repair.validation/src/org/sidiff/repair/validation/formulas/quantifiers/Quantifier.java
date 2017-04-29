@@ -24,13 +24,31 @@ public abstract class Quantifier extends Formula {
 		this.formula = formula;
 	}
 	
+	protected boolean isMany() {
+		if ((iteration.getValue() != null) && (iteration.getValue() instanceof Iterable<?>)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	protected boolean isEmpty() {
+		if ((iteration.getValue() != null) && (iteration.getValue() instanceof Iterable<?>)) {
+			return ((Iterable<?>)iteration.getValue()).iterator().hasNext();
+		} else {
+			return (iteration.getValue() == null);
+		}
+	}
+	
 	protected Iterable<?> getIterable() {
-		iteration.evaluate();
-		
 		if ((iteration.getValue() != null) && (iteration.getValue() instanceof Iterable<?>)) {
 			return (Iterable<?>) iteration.getValue();
 		} else {
-			return Collections.emptyList();
+			if (isEmpty()) {
+				return Collections.emptyList();
+			} else {
+				return Collections.singletonList(iteration.evaluate());
+			}
 		}
 	}
 
