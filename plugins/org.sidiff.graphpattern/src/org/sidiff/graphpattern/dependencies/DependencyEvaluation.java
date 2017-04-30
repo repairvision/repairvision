@@ -1,7 +1,6 @@
 package org.sidiff.graphpattern.dependencies;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -120,28 +119,23 @@ public class DependencyEvaluation {
 		
 		// A node can be removed if its corresponding dependency node is independent!
 		DependencyNode dependency = nodeToDependency.get(node);
+		assert (actualIndependent.contains(dependency)) : "Node ist not independent!";
 		
 		// update independent nodes:
-		if (actualIndependent.contains(dependency)) { // TODO: to assertion
-			
-			// (virtual) remove dependency:
-			removedNodes.add(dependency);
-			removedNodesTrace.push(dependency);
-			actualIndependent.remove(dependency);
-			
-			// check for new independent nodes:
-			for (DependencyEdge incomingDependency : dependency.getIncomings()) {
-				DependencyNode adjacentDependency = incomingDependency.getSource();
-				
-				if (isIndependent(adjacentDependency)) {
-					actualIndependent.add(adjacentDependency);
-				}
+		removedNodes.add(dependency);
+		removedNodesTrace.push(dependency);
+		actualIndependent.remove(dependency);
+
+		// check for new independent nodes:
+		for (DependencyEdge incomingDependency : dependency.getIncomings()) {
+			DependencyNode adjacentDependency = incomingDependency.getSource();
+
+			if (isIndependent(adjacentDependency)) {
+				actualIndependent.add(adjacentDependency);
 			}
-				
-			return dependency.getNodes();
 		}
-		
-		return Collections.emptyList();
+
+		return dependency.getNodes();
 	}
 	
 	private boolean isIndependent(DependencyNode node) {
