@@ -68,14 +68,14 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	
 	//-------------------------------------------------
 	
-	private boolean MINIMUM_SOLUTION = true;
+	private boolean MINIMUM_SOLUTION = false;
 	
-	private int minimumSolutionSize = 6;
+	private int minimumSolutionSize = 1;
 
 	/**
 	 * AVOID_NON_MAXIMUM_SOLUTIONS -> globalAssigned
 	 */
-	private boolean AVOID_NON_MAXIMUM_SOLUTIONS = true;
+	private boolean AVOID_NON_MAXIMUM_SOLUTIONS = false;
 	
 	/**
 	 * GLOBAL_GREEDY -> globalAssigned
