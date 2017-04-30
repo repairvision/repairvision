@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.dependencies.DependencyEvaluation;
 import org.sidiff.graphpattern.matching.AbstractMatchGenerator;
@@ -70,11 +71,22 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	private boolean MINIMUM_SOLUTION = false;
 	
 	private int minimumSolutionSize = 1;
+
+	/**
+	 * AVOID_NON_MAXIMUM_SOLUTIONS -> globalAssigned
+	 */
+	private boolean AVOID_NON_MAXIMUM_SOLUTIONS = false;
 	
+	/**
+	 * GLOBAL_GREEDY -> globalAssigned
+	 */
 	private boolean GLOBAL_GREEDY = false;
 	
 	private Map<Variable, Set<EObject>> globalAssigned;
 	
+	/**
+	 * LOCAL_GREEDY -> localAssigned
+	 */
 	private boolean LOCAL_GREEDY = false;
 	
 	private Map<Variable, Set<EObject>> localAssigned;
@@ -88,25 +100,29 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	
 	private class VariableSet implements Iterable<Variable> {
 		
-		Variable[] variables;
-		int size = 0;
+		private Variable[] variables;
+		private int size = 0;
 		
 		public VariableSet(int capacity) {
 			variables = new Variable[capacity];
 		}
 		
-		void add(Variable variable) {
+		public void add(Variable variable) {
 			variables[variable.index] = variable;
 			++size;
 		}
 		
-		void remove(Variable variable) {
+		public void remove(Variable variable) {
 			variables[variable.index] = null;
 			--size;
 		}
 		
-		int size() {
+		public int size() {
 			return size;
+		}
+		
+		public boolean contains(Variable variable) {
+			return variables[variable.index] != null;
 		}
 
 		@Override
@@ -152,7 +168,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 
 		//  [Heuristic]: assignment stores:
-		if (GLOBAL_GREEDY) {
+		if (GLOBAL_GREEDY || AVOID_NON_MAXIMUM_SOLUTIONS) {
 			globalAssigned = new HashMap<>();
 		}
 		if (LOCAL_GREEDY) {
@@ -175,7 +191,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			nodeToVariables.put(iVariable.node, iVariable);
 			
 			//  [Heuristic]: assignment stores:
-			if (GLOBAL_GREEDY) {
+			if (GLOBAL_GREEDY || AVOID_NON_MAXIMUM_SOLUTIONS) {
 				globalAssigned.put(iVariable, new HashSet<>());
 			}
 			if (LOCAL_GREEDY) {
@@ -241,7 +257,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 				removeVariable(next, domainIsEmpty);
 				int cleared = cleanUpVariables(next);
 				
-				if (estimateSolutionSize() >= minimumSolutionSize) {
+				if ((estimateSolutionSize() >= minimumSolutionSize) && (containsUnusedElements())){
 					expandAssignment(unassigned);
 				}
 
@@ -263,27 +279,69 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		
 		// check if there any more variables to assign:
 		if (remainingVariables.size() > 0) {
+			Variable pickedVariable = pickAnyVariable();
 			
-			for (Variable remainingVariable : remainingVariables) {
-				NodePattern node = remainingVariable.node;
+			// FIXME: unstable result!
+//			if (AVOID_NON_MAXIMUM_SOLUTIONS) {
+//				pickedVariable = pickMostUnusedVariable();
+//			} else {
+//				pickedVariable = pickAnyVariable();
+//			}
 
-				// is currently independent variable?
-				if (dependencies.canRemove(node)) {
-					List<NodePattern> atomicNodes = dependencies.getAtomic(node);
-					
-					for (NodePattern atomicNode : atomicNodes) {
-						Variable atomicVariable = nodeToVariables.get(atomicNode);
-						subVariables.push(atomicVariable);
-						remainingVariables.remove(atomicVariable);
-					}
-					
-					dependencies.remove(node);
-					return atomicNodes.size();
+			if (pickedVariable != null) {
+				List<NodePattern> atomicNodes = dependencies.getAtomic(pickedVariable.node);
+
+				for (NodePattern atomicNode : atomicNodes) {
+					Variable atomicVariable = nodeToVariables.get(atomicNode);
+					subVariables.push(atomicVariable);
+					remainingVariables.remove(atomicVariable);
 				}
+
+				dependencies.remove(pickedVariable.node);
+				return atomicNodes.size();
 			}
 		}
 		
 		return 0;
+	}
+	
+	private Variable pickAnyVariable() {
+		for (DependencyNode independent : dependencies.getActualIndependent()) {
+			Variable independentVariable = nodeToVariables.get(independent.getNodes().get(0));
+			
+			if (remainingVariables.contains(independentVariable)) {
+				return independentVariable;
+			}
+		}
+		return null;
+	}
+	
+	private Variable pickMostUnusedVariable() {
+		Variable mostUnusedVariable = null;
+		int maxUnusedElements = -1;
+		
+		for (DependencyNode independent : dependencies.getActualIndependent()) {
+			for (NodePattern independentNode : independent.getNodes()) {
+				Variable independentVariable = nodeToVariables.get(independentNode);
+				
+				if (remainingVariables.contains(independentVariable)) {
+					NavigableMatchesDS dataStore = WGraph.getDataStore(independentVariable.node.getEvaluation());
+					int unusedElements = dataStore.getMatchSize() - globalAssigned.get(independentVariable).size();
+					// NOTE: approximation -> exact -> dataStore.getMatchSelection().getMatch().size()
+					
+					if (unusedElements > maxUnusedElements) {
+						maxUnusedElements = unusedElements;
+						mostUnusedVariable = independentVariable;
+					}
+				} else {
+					// skip atomic dependency:
+					break;
+				}
+					
+			}
+		}
+		
+		return mostUnusedVariable;
 	}
 	
 	private Iterator<EObject> getDomain(Variable variable) {
@@ -316,7 +374,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	
 	// TODO: Wenn mehrere Variablen im selben atomaren Pattern liegen (z.B. AddObject und Container/Containment),
 	// dann ist eine weitere Selektion (Pathselektion) eigentlich überflüssig!
-	// -> intern für atomares Pattern merken oder mehrere Variablen gleichzeitig festlegen!
+	// -> (unassigned == 0)
 	private void assignVariable(Variable variable, EObject value) {
 		
 		// initialize new sub-matching:
@@ -420,15 +478,16 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	}
 	
 	private int cleanUpVariables(int lastRemoved) {
-		if (MINIMUM_SOLUTION) {
-			int cleared = 0;
+		int cleared = 0;
+		
+		// remove dependent variables:
+		if (MINIMUM_SOLUTION || AVOID_NON_MAXIMUM_SOLUTIONS) {
 			
 			// NOTE: It is sufficient to check one variable of an atomic patter!
 			Set<NodePattern> dependent = dependencies.getDependent(removedVariables.peek().node);
 				
 			for (Variable remainingVariable : remainingVariables) {
 				
-				// remove dependent variables:
 				if (dependent.contains(remainingVariable.node) 
 						// Remove variables with empty domains -> simplifies size estimation:
 						|| ((matchSelector != null) && !getDomain(remainingVariable).hasNext())) {
@@ -438,20 +497,39 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 					++cleared;
 				}
 			}
-			
-			return cleared;
 		}
-		return 0;
+		
+		// remove variables 
+		if (AVOID_NON_MAXIMUM_SOLUTIONS) {
+			
+		}
+		
+		return cleared;
 	}
 
-
 	private void undoCleanUp(int cleared) {
-		if (MINIMUM_SOLUTION) {
+		if (MINIMUM_SOLUTION || AVOID_NON_MAXIMUM_SOLUTIONS) {
 			for (int i = 0; i < cleared; ++i) {
 				Variable clearedVariable = removedVariables.pop();
 		        remainingVariables.add(clearedVariable);
 			}
 		}
+	}
+	
+	private boolean containsUnusedElements() {
+		if (AVOID_NON_MAXIMUM_SOLUTIONS) {
+			for (Variable remainingVariable : remainingVariables) {
+				Set<EObject> globalAssignedOfVariable = globalAssigned.get(remainingVariable);
+
+				for (Iterator<EObject> iterator = getDomain(remainingVariable); iterator.hasNext();) {
+					if (!globalAssignedOfVariable.contains(iterator.next())) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		return true;
 	}
 
 	private int estimateSolutionSize() {
@@ -517,7 +595,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 			assignments[variable.index] = value;
 				
 			// [Heuristic]: store assigned values:
-			if (GLOBAL_GREEDY) {
+			if (GLOBAL_GREEDY || AVOID_NON_MAXIMUM_SOLUTIONS) {
 				globalAssigned.get(variable).add(value);
 			}
 		}
