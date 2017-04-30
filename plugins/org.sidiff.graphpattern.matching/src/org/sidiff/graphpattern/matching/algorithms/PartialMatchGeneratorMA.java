@@ -68,14 +68,14 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 	
 	//-------------------------------------------------
 	
-	private boolean MINIMUM_SOLUTION = false;
+	private boolean MINIMUM_SOLUTION = true;
 	
-	private int minimumSolutionSize = 1;
+	private int minimumSolutionSize = 6;
 
 	/**
 	 * AVOID_NON_MAXIMUM_SOLUTIONS -> globalAssigned
 	 */
-	private boolean AVOID_NON_MAXIMUM_SOLUTIONS = false;
+	private boolean AVOID_NON_MAXIMUM_SOLUTIONS = true;
 	
 	/**
 	 * GLOBAL_GREEDY -> globalAssigned
@@ -181,7 +181,6 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		blockedVariables = new Stack<Variable>(variableNodes.size());
 		subVariables = new Stack<Variable>(variableNodes.size());
 		
-		// TODO: cluster and sort atomic variables! (-> VariableSet store initially removed)
 		for (int i = 0; i < variableNodes.size(); i++) {
 			Variable iVariable = new Variable();
 			iVariable.index = i;
@@ -238,6 +237,8 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		int next = (unassigned == 0) ? pickAndAppendVariable() : unassigned;
 
 		if (next != 0) {
+			boolean firstVariableOfAtomic = (unassigned == 0);
+			
 			Variable variable = subVariables.get(assignments.size());
 			Iterator<EObject> domain = getDomain(variable);
 			boolean domainIsEmpty = !domain.hasNext();
@@ -247,13 +248,13 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 
 			// create all sub-patterns which include the picked variable(s):
 			while (domain.hasNext()) {
-				assignVariable(variable, domain.next());
+				assignVariable(variable, domain.next(), firstVariableOfAtomic);
 				expandAssignment(next - 1);
 				freeVariable(variable);
 			}
 
 			// create all sub-patterns which exclude the picked variable(s):
-			if (unassigned == 0) {
+			if (firstVariableOfAtomic) {
 				removeVariable(next, domainIsEmpty);
 				int cleared = cleanUpVariables(next);
 				
@@ -372,10 +373,7 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		}
 	}
 	
-	// TODO: Wenn mehrere Variablen im selben atomaren Pattern liegen (z.B. AddObject und Container/Containment),
-	// dann ist eine weitere Selektion (Pathselektion) eigentlich überflüssig!
-	// -> (unassigned == 0)
-	private void assignVariable(Variable variable, EObject value) {
+	private void assignVariable(Variable variable, EObject value, boolean firstVariableOfAtomic) {
 		
 		// initialize new sub-matching:
 		if (matchSelector == null) {
@@ -401,7 +399,10 @@ public abstract class PartialMatchGeneratorMA extends AbstractMatchGenerator<IMa
 		//-------------------------------------------------
 		
 		// select value:
-		matchSelector.selectMatch(variable.node, value);
+		// NOTE: No further selections needed for atomic dependent variables!
+		if (firstVariableOfAtomic) {
+			matchSelector.selectMatch(variable.node, value);
+		}
 		
 		// ensure injectivity:
 		for (Variable remainingVariable : remainingVariables) {
