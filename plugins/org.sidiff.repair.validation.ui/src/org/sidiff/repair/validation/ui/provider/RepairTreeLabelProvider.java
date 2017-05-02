@@ -6,7 +6,6 @@ import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.common.ui.NameUtil;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.Repair;
@@ -50,7 +49,7 @@ public class RepairTreeLabelProvider extends LabelProvider {
 			Validation validation = (Validation) element;
 			String reslut = validation.getResult() ? "[Passed]" : "[Failed]";
 			
-			return "Validation" + reslut + ": " + NameUtil.beautifyName(validation.getRule().getName());
+			return "Validation" + reslut + ": " + validation.getRule().getMessage();
 		}
 		
 		else if (element instanceof IRepairDecision) {
