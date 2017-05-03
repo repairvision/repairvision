@@ -5,9 +5,13 @@ import org.sidiff.repair.validation.fix.Repair.RepairType;
 
 public class BoolConstantTrue extends Term {
 
+	public BoolConstantTrue() {
+		this.value = true;
+	}
+	
 	@Override
 	public Object evaluate() {
-		return true;
+		return value;
 	}
 
 	@Override
