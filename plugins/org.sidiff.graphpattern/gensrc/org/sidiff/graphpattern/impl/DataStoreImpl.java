@@ -196,6 +196,7 @@ public abstract class DataStoreImpl extends MinimalEObjectImpl.Container impleme
 	 * @generated NOT
 	 */
 	public void clearMatches() {
+		// TODO: Clients will overwrite this method...
 		throw new UnsupportedOperationException();
 	}
 
