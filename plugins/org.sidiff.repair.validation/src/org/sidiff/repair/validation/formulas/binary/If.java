@@ -21,17 +21,19 @@ public class If extends BinaryFormula {
 	public void repair(IRepairDecision parentRepairDecision, boolean expected) {
 		super.repair(parentRepairDecision, expected);
 		
+		// NOTE: Missing inverting expected results in paper!?
+		
 		// if σ = t, ςa = t, ςb = f : G(a, σ) • G(b, σ)
 		if (expected && left.getResult() && !right.getResult()) {
 			Alternative newRepairAlternative = new Alternative();
 			parentRepairDecision.appendChildDecisions(newRepairAlternative);
-			left.repair(newRepairAlternative, expected);
+			left.repair(newRepairAlternative, !expected);
 			right.repair(newRepairAlternative, expected);
 		}
 
 		// if σ = f, ςa = t, ςb = t : G(b, σ)
 		else if (!expected && left.getResult() && right.getResult()) {
-			right.repair(parentRepairDecision, expected);
+			right.repair(parentRepairDecision, !expected);
 		}
 		
 		// if σ = f, ςa = f, ςb = t : G(a, σ) + G(b, σ)
@@ -39,12 +41,12 @@ public class If extends BinaryFormula {
 			Sequence newRepairSequence = new Sequence();
 			parentRepairDecision.appendChildDecisions(newRepairSequence);
 			left.repair(newRepairSequence, expected);
-			right.repair(newRepairSequence, expected);
+			right.repair(newRepairSequence, !expected);
 		}
 		
 		// if σ = f, ςa = f, ςb = f : G(a, σ)
 		else if (!expected && !left.getResult() && !right.getResult()) {
-			left.repair(parentRepairDecision, expected);
+			left.repair(parentRepairDecision, !expected);
 		}
 	}
 }
