@@ -2,6 +2,7 @@ package org.sidiff.repair.ui.app.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -84,7 +85,7 @@ public abstract class BasicRepairApplication<J extends RepairJob<?>, F extends I
 			Resource modelARes = differenceRSS.getResource(ModelDropWidget.getURI(modelAFile), true);
 			Resource modelBRes = differenceRSS.getResource(ModelDropWidget.getURI(modelBFile), true);
 			
-			documentType = EMFModelAccess.getDocumentType(modelARes);
+			documentType = EMFModelAccess.getCharacteristicDocumentType(modelARes);
 			
 			Set<IMatcher> matchers = MatcherUtil.getAvailableMatchers(Arrays.asList(modelARes, modelBRes));
 			RepairPreferencePage.setAvailableMatcher(matchers);
@@ -98,7 +99,7 @@ public abstract class BasicRepairApplication<J extends RepairJob<?>, F extends I
 
 		// Matching-Settings:
 		if (documentType != null) {
-			DifferenceSettings settings = new DifferenceSettings() {};
+			DifferenceSettings settings = new DifferenceSettings(Collections.singleton(documentType)) {};
 			settings.setMatcher(RepairPreferencePage.getSelectedMatcher());
 			return settings;
 		}
