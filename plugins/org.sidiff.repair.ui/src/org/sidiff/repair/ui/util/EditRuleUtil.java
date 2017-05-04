@@ -31,7 +31,7 @@ import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
 
 public class EditRuleUtil {
 
-	public static Collection<Rule> loadEditRules(Collection<IResource> editRuleFiles) {
+	public static Collection<Rule> loadEditRules(Collection<IResource> editRuleFiles, boolean validate) {
 		
 		// Load edit-rules:
 		Collection<Rule> editRules = new ArrayList<>();
@@ -41,29 +41,37 @@ public class EditRuleUtil {
 			URI uriEditRule = ModelDropWidget.getURI(editRuleFile);
 			Resource editRuleRes = editRulesRSS.getResource(uriEditRule, true);
 			
-			List<EditRuleValidation> validation = EditRuleValidator.calculateEditRuleValidations(
-					(Module) editRuleRes.getContents().get(0));
-			
-			if (validation.isEmpty()) {
+			if (!validate || editRuleValidation(editRuleFile, editRuleRes)) {
 				editRules.add(getEditRule(editRuleRes));
-			} else {
-				MultiStatus info = new MultiStatus(Activator.ID, 1, "Edit-Rule Validation Failed:\n\n" 
-						+ editRuleFile.getLocation().toFile(), null);
-				
-				for (EditRuleValidation editRuleValidation : validation) {
-					info.add(new Status(IStatus.ERROR, Activator.ID, 1, editRuleValidation.infoMessage, null));
-				}
-				
-				Display.getDefault().asyncExec(() -> {
-					ErrorDialog.openError(
-							Display.getDefault().getActiveShell(), 
-							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(), 
-							null, info);
-				});
 			}
 		}
 		
 		return editRules;
+	}
+	
+	public static boolean editRuleValidation(IResource editRuleFile, Resource editRuleRes) {
+		List<EditRuleValidation> validation = EditRuleValidator.calculateEditRuleValidations(
+				(Module) editRuleRes.getContents().get(0));
+
+		if (validation.isEmpty()) {
+			return true;
+		} else {
+			MultiStatus info = new MultiStatus(Activator.ID, 1, "Edit-Rule Validation Failed:\n\n" 
+					+ editRuleFile.getLocation().toFile(), null);
+
+			for (EditRuleValidation editRuleValidation : validation) {
+				info.add(new Status(IStatus.ERROR, Activator.ID, 1, editRuleValidation.infoMessage, null));
+			}
+
+			Display.getDefault().asyncExec(() -> {
+				ErrorDialog.openError(
+						Display.getDefault().getActiveShell(), 
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(), 
+						null, info);
+			});
+			
+			return false;
+		}
 	}
 	
 	public static Rule getEditRule(Resource editRuleResource) {
