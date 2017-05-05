@@ -55,7 +55,7 @@ public class PEORepairApplication extends BasicRepairApplication<PEORepairJob, P
 				settings = getMatchingSettings();
 				
 				// Load edit-rules:
-				editRules = EditRuleUtil.loadEditRules(editRuleFiles);
+				editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
 				
 				// Calculate repairs:
 				URI uriModelA = ModelDropWidget.getURI(modelAFile);
