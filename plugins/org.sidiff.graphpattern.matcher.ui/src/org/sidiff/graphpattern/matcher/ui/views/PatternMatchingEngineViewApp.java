@@ -149,7 +149,8 @@ public class PatternMatchingEngineViewApp implements BreakpointListener {
 				// UI update:
 				Display.getDefault().syncExec(() -> {
 					viewer_pattern.refresh();
-					viewer_pattern.expandAll();
+					// viewer_pattern.expandAll(); // recursive
+					viewer_pattern.expandToLevel(2);
 					SiriusUtil.refreshActiveEditor();
 				});	
 				
@@ -197,7 +198,8 @@ public class PatternMatchingEngineViewApp implements BreakpointListener {
 				@Override
 				public void run() {
 					viewer_pattern.refresh();
-					viewer_pattern.expandAll();
+					// viewer_pattern.expandAll(); // recursive
+					viewer_pattern.expandToLevel(2);
 					SiriusUtil.refreshActiveEditor();
 					
 					InfoConsole.printInfo(breakpoint, MSG_EMPTY_SELECTION);

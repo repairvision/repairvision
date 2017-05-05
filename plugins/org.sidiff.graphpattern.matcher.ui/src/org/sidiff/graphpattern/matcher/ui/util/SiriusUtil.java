@@ -23,7 +23,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.sidiff.graphpattern.GraphPattern;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "deprecation" })
 public class SiriusUtil {
 
 	public static void edit(EObject modelElement, Runnable runnable) {

@@ -22,13 +22,12 @@ import org.sidiff.graphpattern.DataStore;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.matcher.IMatching;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
+import org.sidiff.graphpattern.matcher.domain.DomainSet;
 import org.sidiff.graphpattern.matcher.ui.session.EngineManager;
 import org.sidiff.graphpattern.matcher.ui.util.SiriusUtil;
-import org.sidiff.graphpattern.matching.IMatchGenerator;
-import org.sidiff.graphpattern.matching.IMatching;
-import org.sidiff.graphpattern.matching.util.MatchingUtil;
-import org.sidiff.graphpattern.wgraph.store.CollectingMatchesDS;
+import org.sidiff.graphpattern.matcher.util.MatchingUtil;
 
 public class MatchViewerApp {
 
@@ -75,13 +74,12 @@ public class MatchViewerApp {
 				
 				// Calculate matchings:
 				IPatternMatchingEngine<? extends IMatching> engine = EngineManager.getInstance().getMatchingEngine();
-				IMatchGenerator<? extends IMatching> matchGenerator = engine.getMatchGenerator();
-				Iterator<? extends IMatching> matchIterator = matchGenerator.getResults();
-				List<NodePattern> variableNodes = matchGenerator.getVariableNodes();
+				Iterator<? extends IMatching> matchIterator = engine.getResults();
+				List<NodePattern> variableNodes = engine.getVariableNodes();
 				
 				variableAssignments = new ArrayList<>();
 				allMatchings = new ArrayList<>();
-				graphPattern = matchGenerator.getGraphPattern();
+				graphPattern = engine.getGraphPattern();
 						
 				int matchingCount = 0;
 				
@@ -97,7 +95,7 @@ public class MatchViewerApp {
 								+ ((stopTime - timeStart) / 1000.0) + "s");
 						
 						addVariableMatch(variableNodes, match);
-						allMatchings.add(MatchingUtil.createMatching(matchGenerator, match));
+						allMatchings.add(MatchingUtil.createMatching(engine.getVariableNodes(), match));
 						
 						++matchingCount;
 					} else {
@@ -166,7 +164,7 @@ public class MatchViewerApp {
 				@Override
 				protected void doExecute() {
 					EObject matchEntry = match.getContent().get(graphPattern.indexOf(node));
-					DataStore ds = new CollectingMatchesDS();
+					DataStore ds = new DomainSet();
 					node.getEvaluation().setStore(ds);
 
 					if (matchEntry instanceof EObjectList) {

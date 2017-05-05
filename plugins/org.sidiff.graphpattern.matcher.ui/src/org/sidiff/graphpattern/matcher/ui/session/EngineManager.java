@@ -8,14 +8,15 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.matcher.IMatching;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
 import org.sidiff.graphpattern.matcher.IPatternMatchingEngineFactory;
 import org.sidiff.graphpattern.matcher.debug.PatternMatchingDebugger;
 import org.sidiff.graphpattern.matcher.debug.PatternMatchingDebugger.BreakpointListener;
 import org.sidiff.graphpattern.matcher.ui.util.SiriusUtil;
-import org.sidiff.graphpattern.matching.IMatching;
 
 public class EngineManager {
 
@@ -98,8 +99,12 @@ public class EngineManager {
 		stopEngine();
 
 		// Start new engine:
-		this.matchingEngine = targetEngine.createPatternMatchingEngine(graphpattern, targetModels);
-		this.matchingEngine.start();
+		if (graphpattern != null) {
+			this.matchingEngine = targetEngine.createPatternMatchingEngine(graphpattern, targetModels);
+			this.matchingEngine.start();
+		} else {
+			WorkbenchUtil.showError("Missing Graph-Pattern!");
+		}
 	}
 
 	public void startDebugger(IPatternMatchingEngineFactory<? extends IMatching> targetEngine, BreakpointListener... breakpointListeners) {
