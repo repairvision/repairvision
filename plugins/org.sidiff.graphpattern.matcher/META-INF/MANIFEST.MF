@@ -5,13 +5,11 @@ Bundle-SymbolicName: org.sidiff.graphpattern.matcher;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.emf.transaction,
- org.sidiff.repair.common,
  org.sidiff.graphpattern;visibility:=reexport,
  org.sidiff.difference.symmetric,
- org.sidiff.graphpattern.common;visibility:=reexport,
- org.sidiff.graphpattern.wgraph.construction,
- org.sidiff.graphpattern.wgraph,
- org.sidiff.graphpattern.matching;visibility:=reexport
+ org.sidiff.graphpattern.common;visibility:=reexport
 Export-Package: org.sidiff.graphpattern.matcher,
  org.sidiff.graphpattern.matcher.debug,
- org.sidiff.graphpattern.matcher.extensions
+ org.sidiff.graphpattern.matcher.domain,
+ org.sidiff.graphpattern.matcher.extensions,
+ org.sidiff.graphpattern.matcher.util
