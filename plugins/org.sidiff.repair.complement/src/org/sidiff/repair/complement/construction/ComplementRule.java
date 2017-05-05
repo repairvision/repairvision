@@ -1,6 +1,5 @@
 package org.sidiff.repair.complement.construction;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChanges;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChangingAttributes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges;
@@ -34,6 +33,7 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.henshin.ChangePatternUtil;
 import org.sidiff.common.henshin.view.NodePair;
 import org.sidiff.repair.api.matching.EOAttributeMatch;
 import org.sidiff.repair.api.matching.EOEdgeMatch;
@@ -200,7 +200,7 @@ public abstract class ComplementRule {
 	public List<GraphElement> getComplementingChanges() {
 		
 		if (complementingChanges == null) {
-			complementingChanges = getChanges(complementRule);
+			complementingChanges = ChangePatternUtil.getChanges(complementRule);
 		}
 		
 		return complementingChanges;
