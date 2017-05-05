@@ -9,7 +9,13 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface,
  org.eclipse.ui.console,
  org.eclipse.ui.workbench,
- org.sidiff.common;visibility:=reexport
-Export-Package: org.sidiff.common.storage,
+ org.sidiff.common;visibility:=reexport,
+ org.eclipse.emf.henshin.model,
+ org.sidiff.common.henshin,
+ org.sidiff.common.emf,
+ org.sidiff.graphpattern
+Export-Package: org.sidiff.common.henshin,
+ org.sidiff.common.henshin.emf,
+ org.sidiff.common.storage,
  org.sidiff.common.ui,
  org.sidiff.debug
