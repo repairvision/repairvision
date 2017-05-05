@@ -58,8 +58,8 @@ public class CPORepairApplication extends BasicRepairApplication<CPORepairJob, C
 				settings = getMatchingSettings();
 				
 				// Load edit-rules:
-				subEditRules = EditRuleUtil.loadEditRules(subEditRuleFiles);
-				cpEditRules = EditRuleUtil.loadEditRules(cpEditRuleFiles);
+				subEditRules = EditRuleUtil.loadEditRules(subEditRuleFiles, true);
+				cpEditRules = EditRuleUtil.loadEditRules(cpEditRuleFiles, true);
 				
 				// Calculate repairs:
 				if (!subEditRules.isEmpty() && !cpEditRules.isEmpty()) {
