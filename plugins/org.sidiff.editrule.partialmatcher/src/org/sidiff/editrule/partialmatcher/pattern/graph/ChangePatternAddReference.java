@@ -1,0 +1,97 @@
+package org.sidiff.editrule.partialmatcher.pattern.graph;
+
+import java.util.HashSet;
+import java.util.Iterator;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.sidiff.difference.symmetric.AddReference;
+import org.sidiff.difference.symmetric.Change;
+import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
+import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
+import org.sidiff.graphpattern.Association;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphpatternFactory;
+
+public class ChangePatternAddReference extends ChangePatternReference {
+
+	protected LiftingGraphIndex changeIndex;
+	
+	public ChangePatternAddReference(ActionEdge edge) {
+		super(edge);
+		
+		this.changeNodePattern.setType(SymmetricPackage.eINSTANCE.getAddReference());
+		this.changeNodePattern.setName(edge.getEditRuleEdge().getType().getName());
+		this.changeType = changeNodePattern.getType();
+		
+		// change-pattern:
+		EdgePattern srcEdge = GraphpatternFactory.eINSTANCE.createEdgePattern();
+		srcEdge.setType(SymmetricPackage.eINSTANCE.getAddReference_Src());
+		srcEdge.setSource(changeNodePattern);
+		srcEdge.setTarget(edge.getEdgePatternB().getSource());
+		
+		EdgePattern tgtEdge = GraphpatternFactory.eINSTANCE.createEdgePattern();
+		tgtEdge.setType(SymmetricPackage.eINSTANCE.getAddReference_Tgt());
+		tgtEdge.setSource(changeNodePattern);
+		tgtEdge.setTarget(edge.getEdgePatternB().getTarget());
+		
+		Association typeAssociation = GraphpatternFactory.eINSTANCE.createAssociation();
+		typeAssociation.setSource(changeNodePattern);
+		typeAssociation.setTarget(edge.getEdgePatternB());
+		
+		// helper data:
+		this.metaModelType = edge.getEditRuleEdge().getType();
+		this.changeIndex = edge.getSource().getActionGraph().getChangeIndex();
+	}
+	
+	@Override
+	public void searchPaths(Change change) {
+		
+		// mark change:
+		Domain.get(changeNodePattern).mark(change);
+		
+		// search context element (source):
+		edge.getSource().addMatchContextB(((AddReference) change).getSrc());
+		
+		// search context element (target):
+		edge.getTarget().addMatchContextB(((AddReference) change).getTgt());
+		
+		// search paths (source):
+		edge.getSource().searchPaths(this, edge.getSource(), new HashSet<>());
+	}
+
+	@Override
+	public void doEvaluationStep(ActionNode stepSource) {
+//		System.out.println("Match Action: " + this);
+		
+		Iterator<? extends EObject> matchedB = Domain.get(stepSource.getNodePatternB()).getSearchedMatchIterator();
+		
+		while (matchedB.hasNext()) {
+			EReference changeReference = (stepSource == edge.getSource()) 
+					? SymmetricPackage.eINSTANCE.getAddReference_Src()
+					: SymmetricPackage.eINSTANCE.getAddReference_Tgt();
+			
+			Iterator<AddReference> changes = changeIndex.getLocalChanges(matchedB.next(),
+					changeReference, AddReference.class);
+			
+			while (changes.hasNext()) {
+				
+				// Model-Element -> Change 
+				AddReference addReference = changes.next();
+//				System.out.println("    Match: " + addReference);
+				
+				if (addReference.getType() == edge.getEditRuleEdge().getType()) {
+					Domain.get(changeNodePattern).mark(addReference);
+					
+					// Change -> Model-Element
+					if (stepSource == edge.getSource()) {
+						edge.getTarget().addMatchContextB(addReference.getTgt());
+					} else {
+						edge.getSource().addMatchContextB(addReference.getSrc());
+					}
+				}
+			}
+		}
+	}
+}
