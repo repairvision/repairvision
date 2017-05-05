@@ -10,7 +10,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.common.emf.access.EMFModelAccess;
+import org.sidiff.common.henshin.emf.DocumentType;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.matcher.IMatcher;
 import org.sidiff.matcher.MatcherUtil;
@@ -85,7 +85,8 @@ public abstract class BasicRepairApplication<J extends RepairJob<?>, F extends I
 			Resource modelARes = differenceRSS.getResource(ModelDropWidget.getURI(modelAFile), true);
 			Resource modelBRes = differenceRSS.getResource(ModelDropWidget.getURI(modelBFile), true);
 			
-			documentType = EMFModelAccess.getCharacteristicDocumentType(modelARes);
+//			documentType = EMFModelAccess.getCharacteristicDocumentType(modelARes);
+			documentType = DocumentType.getDocumentType(modelARes.getContents().get(0));
 			
 			Set<IMatcher> matchers = MatcherUtil.getAvailableMatchers(Arrays.asList(modelARes, modelBRes));
 			RepairPreferencePage.setAvailableMatcher(matchers);
