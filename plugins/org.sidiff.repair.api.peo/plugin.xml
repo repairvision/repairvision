@@ -5,14 +5,9 @@
    <extension
          point="org.sidiff.repair.api.engine">
       <engine
-            facade="org.sidiff.repair.api.peo.PEORepairFacadeMA"
-            id="org.sidiff.repair.api.peo.engine.partial.ma"
-            name="Partial CPO Engine (MA)">
-      </engine>
-      <engine
-            facade="org.sidiff.repair.api.peo.PEORepairFacadeFP"
-            id="org.sidiff.repair.api.peo.engine.partial.fp"
-            name="Partial CPO Engine (FP)">
+            facade="org.sidiff.repair.api.peo.PEORepairFacade"
+            id="org.sidiff.repair.api.peo.engine.partial"
+            name="Partial CPO Engine">
       </engine>
    </extension>
 

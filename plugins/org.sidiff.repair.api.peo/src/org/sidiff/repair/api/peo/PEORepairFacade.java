@@ -1,6 +1,5 @@
 package org.sidiff.repair.api.peo;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChanges;
 import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
 
 import java.io.IOException;
@@ -18,22 +17,23 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.repair.complement.construction.ComplementRule;
-import org.sidiff.repair.complement.peo.finder.AbstractRepairFilter;
-import org.sidiff.repair.complement.peo.finder.ComplementFinder;
-import org.sidiff.repair.complement.repair.RepairOperation;
+import org.sidiff.common.henshin.ChangePatternUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.editrule.partialmatcher.complement.AbstractRepairFilter;
+import org.sidiff.editrule.partialmatcher.complement.ComplementFinder;
 import org.sidiff.repair.api.IRepair;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.matching.EditOperationMatching;
 import org.sidiff.repair.api.util.RepairAPIUtil;
+import org.sidiff.repair.complement.construction.ComplementRule;
+import org.sidiff.repair.complement.repair.RepairOperation;
 
 /**
  * API for the repair engine functions.
  * 
  * @author Manuel Ohrndorf
  */
-public abstract class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSettings> {
+public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSettings> {
 
 	@Override
 	public PEORepairJob getRepairs(URI uriModelA, URI uriModelB, PEORepairSettings settings) {
@@ -66,11 +66,13 @@ public abstract class PEORepairFacade implements IRepairFacade<PEORepairJob, PEO
 		// Calculate difference:
 		SymmetricDifference difference = null;
 		
+		long start = System.currentTimeMillis();
 		try {
 			difference = deriveTechnicalDifference(modelA, modelB, settings.getDifferenceSettings());
 		} catch (InvalidModelException | NoCorrespondencesException e) {
 			e.printStackTrace();
 		}
+		System.out.println("EVALUATION[Difference]: " + (System.currentTimeMillis() - start) + "ms");
 		
 		Resource differenceResource = differenceRSS.createResource(
 				RepairAPIUtil.getDifferenceURI(modelA.getURI(), modelB.getURI()));
@@ -85,18 +87,22 @@ public abstract class PEORepairFacade implements IRepairFacade<PEORepairJob, PEO
 		}
 		
 		// Validate model and calculate abstract repairs:
+		start = System.currentTimeMillis();
 		AbstractRepairFilter repairFilter = new AbstractRepairFilter(modelB, true);
+		System.out.println("EVALUATION[Validierung]: " + (System.currentTimeMillis() - start) + "ms");
+		System.out.println("EVALUATION[Validierung]: " + repairFilter.getValidations().size() + " Validierungen");
 		
 		// Calculate repairs:
 		ComplementFinder complementFinder = createComplementFinder(modelA, modelB, difference);
 		complementFinder.setSaveRecognitionRule(settings.saveRecognitionRules());
+		complementFinder.start();
 		
 		Map<Rule, List<IRepair>> repairs = new LinkedHashMap<>();
-		
+		int repairCount = 0;
 		for (Rule editRule : settings.getEditRules()) {
 			
 			// Filter edit-rules by abstract repairs:
-			if (repairFilter.filter(getChanges(editRule))) {
+			if (repairFilter.filter(ChangePatternUtil.getChanges(editRule))) {
 				List<IRepair> repairsPerRule = new ArrayList<>();
 				
 				for(ComplementRule complement : complementFinder.searchComplementRules(editRule)) {
@@ -108,6 +114,7 @@ public abstract class PEORepairFacade implements IRepairFacade<PEORepairJob, PEO
 								
 								// Filter complement with pre-match by abstract repairs:
 								if (repairFilter.filter(complement.getComplementingChanges(), preMatch)) {
+									repairCount++;
 									repairsPerRule.add(new RepairOperation(complement, preMatch));
 								}
 							}
@@ -120,6 +127,8 @@ public abstract class PEORepairFacade implements IRepairFacade<PEORepairJob, PEO
 				}
 			}
 		}
+		complementFinder.finish();
+		System.out.println("###Repair Count: " + repairCount);
 		
 		// Create repair job:
 		PEORepairJob repairJob = new PEORepairJob();
@@ -132,6 +141,8 @@ public abstract class PEORepairFacade implements IRepairFacade<PEORepairJob, PEO
 		return repairJob;
 	}
 	
-	protected abstract ComplementFinder createComplementFinder(
-			Resource modelAResource, Resource modelBResource, SymmetricDifference difference);
+	protected ComplementFinder createComplementFinder(
+			Resource modelAResource, Resource modelBResource, SymmetricDifference difference) {
+		return new ComplementFinder(modelAResource, modelBResource, difference);
+	}
 }
