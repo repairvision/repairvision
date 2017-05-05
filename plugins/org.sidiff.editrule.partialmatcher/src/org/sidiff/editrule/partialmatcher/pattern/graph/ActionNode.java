@@ -285,7 +285,10 @@ public class ActionNode extends ActionGraphElement  {
 				}
 				
 				// DFS: evaluate next node:
-				adjacent.searchPaths(selected, start, path);
+				// (Only if the path could be extended.)
+				if (hasNewMatches(adjacent)) {
+					adjacent.searchPaths(selected, start, path);
+				}
 			}
 		}
 		
@@ -302,6 +305,20 @@ public class ActionNode extends ActionGraphElement  {
 		if (correspondence != null) {
 			Domain.get(correspondence).markSearched();
 		}
+	}
+	
+	private boolean hasNewMatches(ActionNode adjacent) {
+		if (adjacent.getNodePatternA() != null) {
+			if (Domain.get(adjacent.getNodePatternA()).containsAnySearched()) {
+				return true;
+			}
+		}
+		if (adjacent.getNodePatternB() != null) {
+			if (Domain.get(adjacent.getNodePatternB()).containsAnySearched()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override

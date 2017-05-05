@@ -30,7 +30,10 @@ public class Domain extends DataStoreImpl {
 	protected Stack<Restriction> restrictions;
 	
 	// FIXME: size calculation!
-	protected int size;
+//	protected int size;
+	
+	// FIXME: Use modCount of Hash-Map!?
+//	protected boolean modified;
 	
 	protected MatchingHelper matchingHelper;
 	
@@ -51,7 +54,7 @@ public class Domain extends DataStoreImpl {
 		this.type = getEvaluation().getNode().getType();
 		this.domain = new LinkedHashMap<EObject, SelectionType>();
 		this.restrictions = new Stack<Restriction>();
-		this.size = 0;
+//		this.size = 0;
 	}
 	
 	public void initialize(MatchingHelper matchingHelper) {
@@ -115,7 +118,8 @@ public class Domain extends DataStoreImpl {
 			
 			if ((selection == null) || !selection.equals(SelectionType.ACCEPTED)) {
 				domain.put(localMatch, SelectionType.ACCEPTED);
-				++size;
+//				modified = true;
+//				++size;
 				// TODO: return true;
 			}
 		}
@@ -137,7 +141,8 @@ public class Domain extends DataStoreImpl {
 			
 			if ((selection == null) || !selection.equals(SelectionType.SEARCHED)) {
 				domain.put(localMatch, SelectionType.SEARCHED);
-				++size;
+//				modified = true;
+//				++size;
 				return true;
 			}
 		}
@@ -149,7 +154,8 @@ public class Domain extends DataStoreImpl {
 	public boolean removeMatch(EObject localMatch) {
 		
 		if (domain.remove(localMatch) != null) {
-			--size;
+//			modified = true;
+//			--size;
 			return true;
 		} else {
 			return false;
@@ -163,6 +169,10 @@ public class Domain extends DataStoreImpl {
 	
 	public boolean containsMatch(EObject localMatch, SelectionType selection) {
 		return (domain.get(localMatch) == selection);
+	}
+	
+	public boolean containsAnySearched() {
+		return domain.containsValue(SelectionType.SEARCHED);
 	}
 	
 	@Override
@@ -180,7 +190,8 @@ public class Domain extends DataStoreImpl {
 
 	@Override
 	public boolean isEmptyMatch() {
-		return (size == 0);
+		return !domain.containsValue(SelectionType.ACCEPTED);
+//		return (size == 0); // FIXME
 	}
 	
 	public boolean isSelected(EObject match) {
@@ -193,6 +204,7 @@ public class Domain extends DataStoreImpl {
 		
 		if ((selection != null) && selection.equals(SelectionType.ACCEPTED)) {
 			domain.put(element, SelectionType.MARKED);
+//			modified = true;
 		}
 	}
 	
@@ -209,6 +221,7 @@ public class Domain extends DataStoreImpl {
 		if (selection != null) {
 			if (!selection.equals(SelectionType.SEARCHED) && SelectionType.isSelected(selection)) {
 				domain.put(element, SelectionType.SEARCHED);
+//				modified = true;
 			}
 		}
 		
@@ -219,6 +232,7 @@ public class Domain extends DataStoreImpl {
 		for (Entry<EObject, SelectionType> element : domain.entrySet()) {
 			if (element.getValue().equals(SelectionType.SEARCHED)) {
 				element.setValue(SelectionType.MARKED);
+//				modified = true;
 			}
 		}
 	}
@@ -230,11 +244,13 @@ public class Domain extends DataStoreImpl {
 		for (Entry<EObject, SelectionType> element : domain.entrySet()) {
 			if (element.getValue().equals(SelectionType.MARKED)) {
 				element.setValue(SelectionType.ACCEPTED);
+//				modified = true;
 			} else {
 				if (!element.getValue().equals(SelectionType.RESTRICTED)) {
 					element.setValue(SelectionType.RESTRICTED);
 					restriction.add(element.getKey());
-					--size;
+//					modified = true;
+//					--size;
 				}
 			}
 		}
@@ -252,7 +268,8 @@ public class Domain extends DataStoreImpl {
 		if ((selectionType != null) && SelectionType.isSelected(selectionType)) {
 			if (!selectionType.equals(SelectionType.RESTRICTED)) {
 				domain.put(selection, SelectionType.RESTRICTED);
-				--size;
+//				modified = true;
+//				--size;
 				
 				// Save restriction history:
 				restrictions.push(new Restriction(restrictionSource, Collections.singletonList(selection)));
@@ -276,7 +293,8 @@ public class Domain extends DataStoreImpl {
 		for (Entry<EObject, SelectionType> element : domain.entrySet()) {
 			if (!element.getValue().equals(SelectionType.ACCEPTED)) {
 				element.setValue(SelectionType.ACCEPTED);
-				++size;
+//				modified = true;
+//				++size;
 			}
 		}
 		
@@ -286,7 +304,7 @@ public class Domain extends DataStoreImpl {
 	public void clearMatches() {
 		domain.clear();
 		restrictions.clear();
-		size = 0;
+//		size = 0;
 	}
 	
 	/**

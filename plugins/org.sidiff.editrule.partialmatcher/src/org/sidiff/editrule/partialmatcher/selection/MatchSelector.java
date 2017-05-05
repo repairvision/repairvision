@@ -58,7 +58,7 @@ public class MatchSelector implements IMatchSelector {
 	
 	@Override
 	public void selection(NodePattern selectedNode, EObject selectedMatch) {
-		System.out.println("Selection: " + selectedNode);
+//		System.out.println("Selection: " + selectedNode);
 				
 		recognitionPattern.getChangePattern(selectedNode).searchPaths((Change) selectedMatch);
 		
