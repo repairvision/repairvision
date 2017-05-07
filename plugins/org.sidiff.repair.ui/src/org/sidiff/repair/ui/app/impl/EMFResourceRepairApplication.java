@@ -6,10 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.common.henshin.emf.DocumentType;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.matcher.IMatcher;
@@ -19,15 +16,14 @@ import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
-import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
 
-public abstract class BasicRepairApplication<J extends RepairJob<?>, F extends IRepairSettings> implements IRepairApplication<J, F> {
+public abstract class EMFResourceRepairApplication<J extends RepairJob<?>, F extends IRepairSettings> implements IRepairApplication<J, F> {
 
 	protected List<IResultChangedListener<J>> listeners = new ArrayList<>();
 	
-	protected IResource modelAFile;
+	protected Resource modelA;
 	
-	protected IResource modelBFile;
+	protected Resource modelB;
 	
 	protected String documentType;
 	
@@ -45,50 +41,45 @@ public abstract class BasicRepairApplication<J extends RepairJob<?>, F extends I
 		listeners.forEach(l -> l.resultChanged(getRepairJob()));
 	}
 	
-	public IResource getModelAFile() {
-		return modelAFile;
+	public Resource getModelAFile() {
+		return modelA;
 	}
 	
-	public IResource removeModelA(IResource selection) {
-		modelAFile = null;
+	public Resource unsetModelA(Resource selection) {
+		modelA = null;
 		showAvailableMatchers();
 		return selection;
 	}
 
-	public IResource addModelA(IResource element) {
-		modelAFile = element;
+	public Resource setModelA(Resource element) {
+		modelA = element;
 		showAvailableMatchers();
 		return element;
 	}
 
-	public IResource removeModelB(IResource selection) {
-		modelBFile = null;
+	public Resource unsetModelB(Resource selection) {
+		modelB = null;
 		showAvailableMatchers();
 		return selection;
 	}
 
-	public IResource addModelB(IResource element) {
-		modelBFile = element;
+	public Resource setModelB(Resource element) {
+		modelB = element;
 		showAvailableMatchers();
 		return element;
 	}
 	
-	public IResource getModelBFile() {
-		return modelBFile;
+	public Resource getModelBFile() {
+		return modelB;
 	}
 
 	private void showAvailableMatchers() {
-		if ((modelAFile != null) && (modelBFile != null))  {
-			
-			// FIXME: We need a parser which only reads the document-type in the header...
-			ResourceSet differenceRSS = new ResourceSetImpl();
-			Resource modelARes = differenceRSS.getResource(ModelDropWidget.getURI(modelAFile), true);
-			Resource modelBRes = differenceRSS.getResource(ModelDropWidget.getURI(modelBFile), true);
+		if ((modelA != null) && (modelB != null))  {
 			
 //			documentType = EMFModelAccess.getCharacteristicDocumentType(modelARes);
-			documentType = DocumentType.getDocumentType(modelARes.getContents().get(0));
+			documentType = DocumentType.getDocumentType(modelA.getContents().get(0));
 			
-			Set<IMatcher> matchers = MatcherUtil.getAvailableMatchers(Arrays.asList(modelARes, modelBRes));
+			Set<IMatcher> matchers = MatcherUtil.getAvailableMatchers(Arrays.asList(modelA, modelB));
 			RepairPreferencePage.setAvailableMatcher(matchers);
 		} else {
 			RepairPreferencePage.setAvailableMatcher(null);
@@ -110,8 +101,8 @@ public abstract class BasicRepairApplication<J extends RepairJob<?>, F extends I
 	
 	@Override
 	public void clear() {
-		removeModelA(modelAFile);
-		removeModelB(modelBFile);
+		unsetModelA(modelA);
+		unsetModelB(modelB);
 		documentType = null;
 	}
 }

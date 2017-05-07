@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 
 public abstract class ModelDropWidget {
 
-	protected TableViewer viewer_models;
+	protected TableViewer modelviewer;
 	
 	protected String dropMessage = "Please drop the model(s) here!";
 	
@@ -31,11 +31,11 @@ public abstract class ModelDropWidget {
 		this.dropMessage = dropMessage;
 		
 		// Initialize:
-		viewer_models = new TableViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		modelviewer = new TableViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		{
-			viewer_models.setContentProvider(new ArrayContentProvider());
-			viewer_models.setLabelProvider(new StorageLabelProvider());
-			viewer_models.add(dropMessage);
+			modelviewer.setContentProvider(new ArrayContentProvider());
+			modelviewer.setLabelProvider(new StorageLabelProvider());
+			modelviewer.add(dropMessage);
 		}
 		
 		// Drag and Drop support:
@@ -45,7 +45,7 @@ public abstract class ModelDropWidget {
 				LocalSelectionTransfer.getTransfer(), 
 				FileTransfer.getInstance() };
 
-		viewer_models.addDropSupport(dndOperations, transfers, new ViewerDropAdapter(viewer_models) {
+		modelviewer.addDropSupport(dndOperations, transfers, new ViewerDropAdapter(modelviewer) {
 
 			@Override
 			public boolean validateDrop(Object target, int operation, TransferData transferType) {
@@ -95,21 +95,28 @@ public abstract class ModelDropWidget {
 			}
 		});
 		
-		viewer_models.addDragSupport(DND.DROP_MOVE, transfers, new ViewerDragAdapter(viewer_models) {
+		modelviewer.addDragSupport(DND.DROP_MOVE, transfers, new ViewerDragAdapter(modelviewer) {
 			
 			@Override
 			public void dragFinished(DragSourceEvent event) {
 				super.dragFinished(event);
-				Object selection = ((StructuredSelection) viewer_models.getSelection()).getFirstElement();
+				Object selection = ((StructuredSelection) modelviewer.getSelection()).getFirstElement();
 				
 				if (selection instanceof IResource) {
 					removeFile((IResource) selection);
 				} else {
 					// Normally we shouldn't get here...
-					viewer_models.remove(selection);
+					modelviewer.remove(selection);
 				}
 			}
 		});
+		
+		// Additional initializations:
+		initialize();
+	}
+	
+	protected void initialize() {
+		// additional initializations...
 	}
 	
 	private void addFiles(Set<IResource> resources) {
@@ -138,8 +145,8 @@ public abstract class ModelDropWidget {
 			IResource added = addModel(resource);
 			
 			if (added != null) {
-				viewer_models.add(added);
-				viewer_models.remove(dropMessage);
+				modelviewer.add(added);
+				modelviewer.remove(dropMessage);
 			}
 		}
 	}
@@ -148,19 +155,19 @@ public abstract class ModelDropWidget {
 		IResource removed = removeModel(resource);
 		
 		if (removed != null) {
-			viewer_models.remove(resource);
+			modelviewer.remove(resource);
 		}
 		
-		if (viewer_models.getTable().getItemCount() == 0) {
-			viewer_models.add(dropMessage);
+		if (modelviewer.getTable().getItemCount() == 0) {
+			modelviewer.add(dropMessage);
 		}
 	}
 	
 	public void clear() {
-		viewer_models.setInput(null);
-		viewer_models.add(dropMessage);
+		modelviewer.setInput(null);
+		modelviewer.add(dropMessage);
 	}
-
+	
 	protected abstract IResource addModel(IResource element);
 
 	protected abstract IResource removeModel(IResource selection);
