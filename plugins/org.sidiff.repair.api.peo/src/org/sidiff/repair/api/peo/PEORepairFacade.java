@@ -86,8 +86,16 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 			}
 		}
 		
+		// Calculate repairs:
+		return getRepairs(difference, settings);
+	}
+	
+	public PEORepairJob getRepairs(SymmetricDifference difference, PEORepairSettings settings) {
+		Resource modelA = difference.getModelA();
+		Resource modelB = difference.getModelB();
+		
 		// Validate model and calculate abstract repairs:
-		start = System.currentTimeMillis();
+		long start = System.currentTimeMillis();
 		AbstractRepairFilter repairFilter = new AbstractRepairFilter(modelB, true);
 		System.out.println("EVALUATION[Validierung]: " + (System.currentTimeMillis() - start) + "ms");
 		System.out.println("EVALUATION[Validierung]: " + repairFilter.getValidations().size() + " Validierungen");
@@ -132,7 +140,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		
 		// Create repair job:
 		PEORepairJob repairJob = new PEORepairJob();
-		repairJob.setDifference(differenceResource);
+		repairJob.setDifference(difference.eResource());
 		repairJob.setModelA(modelA);
 		repairJob.setModelB(modelB);
 		repairJob.setRepairs(repairs);
