@@ -5,10 +5,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.sidiff.repair.ui.controls.impl.BasicRepairUI;
+import org.sidiff.repair.ui.controls.impl.BasicModelDropRepairUI;
 import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
 
-public class CPORepairRuleSelectionUI extends BasicRepairUI<SashForm, CPORepairApplication> {
+public class CPORepairRuleSelectionUI extends BasicModelDropRepairUI<SashForm, CPORepairApplication> {
 
 	private ModelDropWidget cpEditRules;
 	
