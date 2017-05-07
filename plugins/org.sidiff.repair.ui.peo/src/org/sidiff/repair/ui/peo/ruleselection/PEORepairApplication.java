@@ -19,12 +19,12 @@ import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.IRepair;
 import org.sidiff.repair.api.IRepairFacade;
-import org.sidiff.repair.ui.app.impl.BasicRepairApplication;
+import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
 import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
 import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.repair.validation.util.Validation;
 
-public class PEORepairApplication extends BasicRepairApplication<PEORepairJob, PEORepairSettings> {
+public class PEORepairApplication extends EclipseResourceRepairApplication<PEORepairJob, PEORepairSettings> {
 
 	private IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade;
 

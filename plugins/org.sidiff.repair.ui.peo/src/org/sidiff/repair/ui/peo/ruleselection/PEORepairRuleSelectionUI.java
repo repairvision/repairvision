@@ -10,12 +10,12 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.ui.app.IResultChangedListener;
-import org.sidiff.repair.ui.controls.impl.BasicRepairUI;
+import org.sidiff.repair.ui.controls.impl.BasicModelDropRepairUI;
 import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
 import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
 import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
 
-public class PEORepairRuleSelectionUI extends BasicRepairUI<SashForm, PEORepairApplication>
+public class PEORepairRuleSelectionUI extends BasicModelDropRepairUI<SashForm, PEORepairApplication>
 		implements IResultChangedListener<PEORepairJob> {
 
 	/**
