@@ -1,6 +1,7 @@
 package org.sidiff.repair.ui.peo.evaluation.history;
 
 import org.sidiff.repair.api.peo.PEORepairFacade;
+import org.sidiff.repair.ui.peo.evaluation.HistoryEvaluationApplication;
 import org.sidiff.repair.ui.presentation.IRepairPresentation;
 
 public class HistoryRepairPresentation implements IRepairPresentation {
@@ -9,7 +10,7 @@ public class HistoryRepairPresentation implements IRepairPresentation {
 	public HistoryRepairUI getRepairPresentation() {
 		
 		// Create application logic:
-		HistoryRepairApplication application = new HistoryRepairApplication();
+		HistoryEvaluationApplication application = new HistoryEvaluationApplication();
 		application.initialize(new PEORepairFacade());
 		
 		// Create UI:

@@ -22,15 +22,14 @@ import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.Version;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.controls.impl.BasicRepairUI;
 import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
-import org.sidiff.repair.ui.peo.evaluation.HistoryEvaluation;
+import org.sidiff.repair.ui.peo.evaluation.HistoryEvaluationApplication;
 import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
 import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
 
-public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryRepairApplication>
+public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationApplication>
 		implements IResultChangedListener<PEORepairJob> {
 
 	/**
@@ -52,16 +51,6 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryRepairApplic
 	 * Shows all differences.
 	 */
 	private TreeViewer historyViewer;
-	
-	/**
-	 * The history resource.
-	 */
-	private History history;
-	
-	/**
-	 * The selected validation error.
-	 */
-	private ValidationError validationError;
 	
 	@Override
 	public void createPartControls(SashForm parent) {
@@ -112,36 +101,8 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryRepairApplic
 				Object selection = ((StructuredSelection) event.getSelection()).getFirstElement();
 
 				if (selection instanceof ValidationError) {
-					validationError = (ValidationError) selection;
-					Version V_t = validationError.getIntroducedIn();
-					
-					if (V_t != null) {
-						Version V_tminus1 = getPrecessorRevision(V_t);
-						
-						if (V_tminus1 != null) {
-							Version V_resolved = validationError.getResolvedIn();
-							
-							if (V_resolved != null) {
-								Version V_actual = getSuccessorRevision(V_resolved);
-								
-								new HistoryEvaluation().startEvaluation(getApplication(),
-										V_tminus1.getModel(), V_actual.getModel());
-							} else {
-								WorkbenchUtil.showMessage(
-										"There is no version in which the inconsistency has been resolved! "
-										+ "The last version in the history will be used as actual model!");
-								
-								Version V_actual = history.getVersions().get(history.getVersions().size() - 1);
-								
-								new HistoryEvaluation().startEvaluation(getApplication(),
-										V_tminus1.getModel(), V_actual.getModel());
-							}
-						} else {
-							WorkbenchUtil.showError("There is no previous consistent version available!");
-						}
-					} else {
-						WorkbenchUtil.showError("The version in which the inconsistency was introduced is missing!");
-					}
+					getApplication().selectValidationError((ValidationError) selection);
+					getApplication().startEvaluation();
 				} else {
 					WorkbenchUtil.showMessage("Please select a validation error!");
 				}
@@ -169,8 +130,8 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryRepairApplic
 				EObject rootElement = historyResource.getContents().get(0);
 				
 				if (rootElement instanceof History) {
-					history = (History) rootElement;
-					historyViewer.setInput(history);
+					getApplication().setHistory((History) rootElement);
+					historyViewer.setInput(getApplication().getValidations());
 				}
 				
 				return element;
@@ -198,26 +159,6 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryRepairApplic
 		parent.setWeights(new int[] {100, 50, 40, 10, 10});
 	}
 	
-	public Version getPrecessorRevision(Version version) {
-		int index = history.getVersions().indexOf(version);
-
-		if ((index - 1) >= 0) {
-			return history.getVersions().get(index);
-		}
-		
-		return null;
-	}
-
-	public Version getSuccessorRevision(Version version) {
-		int index = history.getVersions().indexOf(version);
-
-		if ((index + 1) < history.getVersions().size()) {
-			return history.getVersions().get(index);
-		}
-		
-		return null;
-	}
-	
 	@Override
 	public void resultChanged(PEORepairJob repairJob) {
 		viewer_validation.setInput(repairJob.getValidations());
@@ -225,14 +166,15 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryRepairApplic
 
 	@Override
 	public void clear() {
+		
+		// Clear Application:
+		getApplication().clear();
+		
+		// Clear UI:
 		viewer_validation.setInput(null);
-		
 		editRules.clear();
-		
 		histroyStoreInput.clear();
 		historyViewer.setInput(null);
-		history = null;
-		validationError = null;
 	}
 	
 	@Override
