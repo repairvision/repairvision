@@ -28,7 +28,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	public void startEvaluation() {
 		System.out.println("#################### Evaluation Startet ####################");
 		System.out.println("Model A: " + modelA);
-		System.out.println("Model A: " + modelB);
+		System.out.println("Model B: " + modelB);
 		
 		setModelA(modelA);
 		setModelB(modelB);
@@ -118,7 +118,6 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 					setModelA(V_tminus1.getModel());
 					setModelB(V_actual.getModel());
 					setValidationError(validationError);
-					startEvaluation();
 				} else {
 					WorkbenchUtil.showMessage(
 							"There is no version in which the inconsistency has been resolved! "
@@ -129,7 +128,6 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 					setModelA(V_tminus1.getModel());
 					setModelB(V_actual.getModel());
 					setValidationError(validationError);
-					startEvaluation();
 				}
 			} else {
 				WorkbenchUtil.showError("There is no previous consistent version available!");
