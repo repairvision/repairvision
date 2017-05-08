@@ -119,7 +119,7 @@ public class RepairSelectionController implements ISelectionListener, ISelection
 		}
 		
 		// Set new selection:
-		selected = SelectionAdapter.getElements(selection);
+		selected = SelectionAdapterRegistry.getElements(selection);
 		
 		// Start the highlighting:
 		highlightingProcess = new CountDownLatch(1);
