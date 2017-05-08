@@ -1,5 +1,8 @@
 package org.sidiff.repair.ui.peo.evaluation.history;
 
+import java.util.Collections;
+import java.util.Iterator;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -25,9 +28,14 @@ import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.controls.impl.BasicRepairUI;
 import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
+import org.sidiff.repair.ui.decoration.ISelectionAdapter;
+import org.sidiff.repair.ui.decoration.RepairSelectionController;
+import org.sidiff.repair.ui.decoration.SelectionAdapterRegistry;
 import org.sidiff.repair.ui.peo.evaluation.HistoryEvaluationApplication;
+import org.sidiff.repair.validation.fix.Repair;
 import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
 import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
+import org.sidiff.repair.validation.util.Validation;
 
 public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationApplication>
 		implements IResultChangedListener<PEORepairJob> {
@@ -37,6 +45,9 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 	 */
 	private TreeViewer viewer_validation;
 
+	// TODO: Generalize this!
+	private ISelectionAdapter decorationAdapter;
+	
 	/**
 	 * Drop target to create a rulebase.
 	 */
@@ -52,6 +63,7 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 	 */
 	private TreeViewer historyViewer;
 	
+	
 	@Override
 	public void createPartControls(SashForm parent) {
 		
@@ -63,6 +75,33 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 		viewer_validation.setContentProvider(new RepairTreeContentProvider());
 		viewer_validation.setLabelProvider(new RepairTreeLabelProvider());
 //		viewer_validation.setSorter(new NameSorter());
+		
+		viewer_validation.addSelectionChangedListener(RepairSelectionController.getInstance());
+		
+		decorationAdapter = new ISelectionAdapter() {
+			
+			@Override
+			public Iterator<EObject> getElements(ISelection selection) {
+				
+				if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
+					Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
+					
+					if (selectedElement instanceof Validation) {
+						Validation validation = (Validation) selectedElement;
+						return Collections.singletonList(validation.getContext()).iterator();
+					}
+					
+					else if (selectedElement instanceof Repair) {
+						Repair repair = (Repair) selectedElement;
+						return Collections.singletonList(repair.getContext()).iterator();
+					}
+				}
+				
+				return null;
+			}
+		};
+		SelectionAdapterRegistry.registerAdapter(decorationAdapter);
+		
 		viewer_validation.addDoubleClickListener(event -> {
 			ISelection selection = event.getSelection();
 
@@ -180,5 +219,6 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 	@Override
 	public void dispose() {
 		application.removeResultChangeListener(this);
+		SelectionAdapterRegistry.deregisterAdapter(decorationAdapter);
 	}
 }
