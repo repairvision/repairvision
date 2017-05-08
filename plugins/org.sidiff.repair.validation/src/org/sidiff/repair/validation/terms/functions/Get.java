@@ -60,7 +60,6 @@ public class Get extends Function {
 			context.repair(alternative, RepairType.MODIFY);
 		}
 		
-		// TODO: Did we have use for empty repairs?
 		if (context.getValue() != null) {
 			Repair newRepair = new Repair(type, (EObject) context.getValue(), feature); 
 			alternative.appendChildDecisions(newRepair);

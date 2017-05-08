@@ -1,5 +1,8 @@
 package org.sidiff.repair.validation.formulas.quantifiers;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.Sequence;
@@ -7,6 +10,7 @@ import org.sidiff.repair.validation.fix.Repair.RepairType;
 import org.sidiff.repair.validation.formulas.binary.Formula;
 import org.sidiff.repair.validation.terms.Term;
 import org.sidiff.repair.validation.terms.Variable;
+import org.sidiff.repair.validation.terms.functions.GetClosure;
 
 /**
  * Represents an universal quantifier.
@@ -46,7 +50,22 @@ public class ForAll extends Quantifier {
 		// if σ = t
 		if (expected) {
 			// A: Delete all invalid elements (terms) of the set!
-			iteration.repair(alternativ, RepairType.DELETE);
+			if (iteration instanceof GetClosure) {
+				// Closure:
+				Set<Object> invalid = new HashSet<>();
+				
+				for (Object nextObject : getIterable()) {
+					bounded.assign(nextObject);
+
+					if (!formula.evaluate())  {
+						invalid.add(nextObject);
+					}
+				}
+				
+				((GetClosure) iteration).repair(alternativ, RepairType.DELETE, invalid);
+			} else {
+				iteration.repair(alternativ, RepairType.DELETE);
+			}
 			
 			// B: Make all invalid elements (terms) of the set valid!
 			Sequence sequence = Sequence.nextSequence(alternativ);
@@ -56,9 +75,6 @@ public class ForAll extends Quantifier {
 				
 				if (!formula.evaluate())  {
 					formula.repair(sequence, expected);
-					
-					// TODO: Case A: Concrete vs. abstract remove!?
-//					bounded.repair(sequence, RepairType.DELETE);
 				}
 			}
 		}
@@ -66,13 +82,28 @@ public class ForAll extends Quantifier {
 		// if σ = f
 		else {
 			// A: Add at least one invalid element (term) to the iterated set!
-			if (isMany()) {
-				iteration.repair(alternativ, RepairType.ADD);
+			if (iteration instanceof GetClosure) {
+				// Closure:
+				Set<Object> invalid = new HashSet<>();
+				
+				for (Object nextObject : getIterable()) {
+					bounded.assign(nextObject);
+
+					if (!formula.evaluate())  {
+						invalid.add(nextObject);
+					}
+				}
+				
+				((GetClosure) iteration).repair(alternativ, RepairType.ADD, invalid);
 			} else {
-				if (isEmpty()) {
+				if (isMany()) {
 					iteration.repair(alternativ, RepairType.ADD);
 				} else {
-					iteration.repair(alternativ, RepairType.MODIFY);
+					if (isEmpty()) {
+						iteration.repair(alternativ, RepairType.ADD);
+					} else {
+						iteration.repair(alternativ, RepairType.MODIFY);
+					}
 				}
 			}
 			
