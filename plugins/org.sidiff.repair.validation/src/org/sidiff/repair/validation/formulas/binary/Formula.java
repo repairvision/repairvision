@@ -13,6 +13,10 @@ public abstract class Formula extends NamedElement {
 		return result;
 	}
 	
+	public void clear() {
+		result = null;
+	}
+	
 	/**
 	 * Appends all child repair decisions (from left to right) of this
 	 * {@link IValidation} to the given repair decision.

@@ -12,6 +12,8 @@ public class Iff extends BinaryFormula {
 
 	@Override
 	public boolean evaluate() {
+		super.evaluate();
+		
 		result = left.evaluate() == right.evaluate();
 		return result;
 	}

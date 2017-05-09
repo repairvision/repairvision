@@ -24,7 +24,7 @@ public class ValidationUtil {
 		}
 		
 		// Clean up children:
-		cleanup(root, root.getChildDecisions());
+		while (cleanup(root, root.getChildDecisions()));
 		
 		// Clean up root:
 		if (root.getChildDecisions().size() == 1) {
@@ -34,7 +34,7 @@ public class ValidationUtil {
 		}
 	}
 	
-	private static void cleanup(IRepairDecision parent, List<IRepairDecision> children) {
+	private static boolean cleanup(IRepairDecision parent, List<IRepairDecision> children) {
 		List<IRepairDecision> pullUpRepairs = new LinkedList<>(); 
 		
 		// Identify unnecessary repair nodes (alternatives / sequences) :
@@ -83,5 +83,6 @@ public class ValidationUtil {
 			parent.appendChildDecisions(pullUpRepair);
 		}
 		
+		return !pullUpRepairs.isEmpty();
 	}
 }

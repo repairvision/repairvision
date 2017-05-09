@@ -18,4 +18,10 @@ public abstract class UnaryFormula extends Formula {
 	public void setChild(Formula child) {
 		this.child = child;
 	}
+	
+	@Override
+	public boolean evaluate() {
+		child.clear();
+		return false;
+	}
 }

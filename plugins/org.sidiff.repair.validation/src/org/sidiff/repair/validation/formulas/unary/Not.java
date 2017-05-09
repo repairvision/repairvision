@@ -12,6 +12,8 @@ public class Not extends UnaryFormula {
 
 	@Override
 	public boolean evaluate() {
+		super.evaluate();
+		
 		result = !child.evaluate();
 		return result;
 	}

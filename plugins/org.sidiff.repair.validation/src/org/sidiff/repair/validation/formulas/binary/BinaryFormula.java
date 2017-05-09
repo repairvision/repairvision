@@ -31,6 +31,16 @@ public abstract class BinaryFormula extends Formula {
 	}
 	
 	@Override
+	public boolean evaluate() {
+		
+		// Clear old evaluation:
+		left.clear();
+		right.clear();;
+		
+		return false;
+	}
+	
+	@Override
 	public void repair(IRepairDecision parentRepairDecision, boolean expected) {
 		
 		// Ensure complete (unoptimized) evaluation:
