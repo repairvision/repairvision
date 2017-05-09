@@ -2,11 +2,20 @@ package org.sidiff.repair.ui.peo.evaluation;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.henshin.interpreter.Match;
+import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.ui.WorkbenchUtil;
+import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.repair.api.IRepair;
 import org.sidiff.repair.api.peo.PEORepairJob;
+import org.sidiff.repair.evaluation.oracle.DeveloperIntentionOracle;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
@@ -39,6 +48,31 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 			@Override
 			public void resultChanged(PEORepairJob repairJob) {
 				System.out.println(repairJob);
+				int count = 0;
+				
+				for (Rule complementRule : repairJob.getRepairs().keySet()) {
+					for (IRepair repair : repairJob.getRepairs().get(complementRule)) {
+						
+						// The preMatch turning the complement rule into a repair operation.
+						Match preMatch = repair.getRepairPreMatch().getMatch();
+						
+						// The evolutionStep in which inconsistency has been resolved historically
+						SymmetricDifference evolutionStep = (SymmetricDifference) repairJob
+								.getDifference().getContents().get(0);
+						
+						// Mode
+						boolean strict = false;
+						
+						DeveloperIntentionOracle oracle = new DeveloperIntentionOracle();
+						
+						if (oracle.isHistoricallyObservable(preMatch, evolutionStep, strict)) {
+							count++;
+						}
+					}
+				}
+				
+				WorkbenchUtil.showMessage(count + " Historically Observable Repair(s) Found!");
+				
 //				System.out.println("Repairs Found: " repairJob.getRepairs());
 				System.out.println("#################### Evaluation Finished ####################");
 			}
@@ -87,7 +121,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		int index = history.getVersions().indexOf(version);
 
 		if ((index - 1) >= 0) {
-			return history.getVersions().get(index);
+			return history.getVersions().get(index - 1);
 		}
 		
 		return null;
@@ -97,7 +131,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		int index = history.getVersions().indexOf(version);
 
 		if ((index + 1) < history.getVersions().size()) {
-			return history.getVersions().get(index);
+			return history.getVersions().get(index + 1);
 		}
 		
 		return null;
@@ -113,21 +147,15 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 				Version V_resolved = validationError.getResolvedIn();
 				
 				if (V_resolved != null) {
-					Version V_actual = getSuccessorRevision(V_resolved);
-					
-					setModelA(V_tminus1.getModel());
-					setModelB(V_actual.getModel());
-					setValidationError(validationError);
+					Version V_actual = getPrecessorRevision(V_resolved);
+					loadModels(validationError, V_tminus1, V_actual);
 				} else {
 					WorkbenchUtil.showMessage(
 							"There is no version in which the inconsistency has been resolved! "
 							+ "The last version in the history will be used as actual model!");
 					
 					Version V_actual = history.getVersions().get(history.getVersions().size() - 1);
-					
-					setModelA(V_tminus1.getModel());
-					setModelB(V_actual.getModel());
-					setValidationError(validationError);
+					loadModels(validationError, V_tminus1, V_actual);
 				}
 			} else {
 				WorkbenchUtil.showError("There is no previous consistent version available!");
@@ -135,6 +163,16 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		} else {
 			WorkbenchUtil.showError("The version in which the inconsistency was introduced is missing!");
 		}
+	}
+	
+	private void loadModels(ValidationError validationError, Version vA, Version vB) {
+		ResourceSet rss = new ResourceSetImpl();
+		Resource modelA = rss.getResource(URI.createURI(vA.getModelURI()), true);
+		Resource modelB = rss.getResource(URI.createURI(vB.getModelURI()), true);
+		
+		setModelA(modelA);
+		setModelB(modelB);
+		setValidationError(validationError);
 	}
 	
 	public History getHistory() {

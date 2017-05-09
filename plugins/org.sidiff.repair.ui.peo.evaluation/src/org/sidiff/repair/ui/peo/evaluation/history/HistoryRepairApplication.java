@@ -56,7 +56,7 @@ public class HistoryRepairApplication extends EMFResourceRepairApplication<PEORe
 				editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
 				
 				// Calculate repairs:
-				repairJob = repairFacade.getRepairs(modelA, modelA,
+				repairJob = repairFacade.getRepairs(modelA, modelB,
 						new PEORepairSettings(editRules, settings));
 				
 				// Update UI:
