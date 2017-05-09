@@ -107,35 +107,68 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		
 		Map<Rule, List<IRepair>> repairs = new LinkedHashMap<>();
 		int repairCount = 0;
+		
+//		for (Rule editRule : settings.getEditRules()) {
+//			
+//			// Filter edit-rules by abstract repairs:
+//			if (repairFilter.filter(ChangePatternUtil.getChanges(editRule))) {
+//				List<IRepair> repairsPerRule = new ArrayList<>();
+//				
+//				for(ComplementRule complement : complementFinder.searchComplementRules(editRule)) {
+//					if (complement.getComplementingChanges().size() > 0) {
+//						
+//						// Filter complements by abstract repairs:
+//						if (repairFilter.filter(complement.getComplementingChanges())) {
+//							for (EditOperationMatching preMatch : complement.getComplementMatches()) {
+//								
+//								// Filter complement with pre-match by abstract repairs:
+//								if (repairFilter.filter(complement.getComplementingChanges(), preMatch)) {
+//									repairCount++;
+//									repairsPerRule.add(new RepairOperation(complement, preMatch));
+//								}
+//							}
+//						}
+//					}
+//				}
+//				
+//				if (!repairsPerRule.isEmpty()) {
+//					repairs.put(editRule, repairsPerRule);
+//				}
+//			}
+//		}
+		
 		for (Rule editRule : settings.getEditRules()) {
 			
 			// Filter edit-rules by abstract repairs:
 			if (repairFilter.filter(ChangePatternUtil.getChanges(editRule))) {
-				List<IRepair> repairsPerRule = new ArrayList<>();
 				
 				for(ComplementRule complement : complementFinder.searchComplementRules(editRule)) {
+					List<IRepair> repairsPerComplementRule = new ArrayList<>();
+
 					if (complement.getComplementingChanges().size() > 0) {
-						
+
 						// Filter complements by abstract repairs:
 						if (repairFilter.filter(complement.getComplementingChanges())) {
 							for (EditOperationMatching preMatch : complement.getComplementMatches()) {
-								
+
 								// Filter complement with pre-match by abstract repairs:
 								if (repairFilter.filter(complement.getComplementingChanges(), preMatch)) {
 									repairCount++;
-									repairsPerRule.add(new RepairOperation(complement, preMatch));
+									repairsPerComplementRule.add(new RepairOperation(complement, preMatch));
 								}
 							}
 						}
 					}
-				}
-				
-				if (!repairsPerRule.isEmpty()) {
-					repairs.put(editRule, repairsPerRule);
+					
+					if (!repairsPerComplementRule.isEmpty()) {
+						repairs.put(complement.getComplementRule(), repairsPerComplementRule);
+					}
 				}
 			}
 		}
+
 		complementFinder.finish();
+		
 		System.out.println("###Repair Count: " + repairCount);
 		
 		// Create repair job:
