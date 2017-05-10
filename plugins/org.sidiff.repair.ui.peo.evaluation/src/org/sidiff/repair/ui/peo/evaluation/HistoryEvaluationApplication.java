@@ -1,7 +1,5 @@
 package org.sidiff.repair.ui.peo.evaluation;
 
-import java.util.List;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -11,8 +9,6 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.graphpattern.EObjectList;
-import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.repair.api.IRepair;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.evaluation.oracle.DeveloperIntentionOracle;
@@ -21,6 +17,7 @@ import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.peo.evaluation.history.HistoryRepairApplication;
+import org.sidiff.repair.ui.peo.evaluation.util.EvaluationUtil;
 
 public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	
@@ -77,44 +74,6 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 				System.out.println("#################### Evaluation Finished ####################");
 			}
 		});
-	}
-	
-	// TODO: Validation Container!
-	public EObjectList getValidations() {
-		EObjectList validations = GraphpatternFactory.eINSTANCE.createEObjectList();
-		validations.setLabel("History (all versions)");
-		
-		for (Version version : history.getVersions()) {
-			for (ValidationError validation : version.getValidationErrors()) {
-				// Is new validation error?
-				if (!contains(validations.getContent(), validation)) {
-					validations.getContent().add(validation);
-				}
-			}
-		}
-		
-		return validations;
-	}
-	
-	public boolean contains(List<EObject> validations, ValidationError validation) {
-		for (EObject containedValidation : validations) {
-			if (equals((ValidationError) containedValidation, validation)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public boolean equals(ValidationError validationA, ValidationError validationB) {
-		if (validationA.getIntroducedIn() == validationB.getIntroducedIn()) {
-			if (validationA.getResolvedIn() == validationB.getResolvedIn()) {
-				// TODO: Identifier for ValidationError.
-				if (validationA.getMessage().equals(validationB.getMessage())) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 	
 	public Version getPrecessorRevision(Version version) {
@@ -196,5 +155,9 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		super.clear();
 		history = null;
 		validationError = null;
+	}
+
+	public EObject getValidations() {
+		return EvaluationUtil.toEObjectList(EvaluationUtil.getValidations(history), "History");
 	}
 }
