@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -103,6 +104,7 @@ public class RepairEvaluationData implements Serializable  {
 	
 	@Override
 	public String toString() {
+		DecimalFormat df = new DecimalFormat( "#,###,###,##0.00" );
 		StringBuffer string = new StringBuffer();
 		
 		string.append("\\begin{table*}[t!]");
@@ -128,14 +130,14 @@ public class RepairEvaluationData implements Serializable  {
 			string.append("&");
 			string.append(rq.getResearchQuestion01().atLeastOnRepairOPK);
 			string.append("&");
-			string.append(rq.getResearchQuestion01().getRatioAtLeastOnRepair());
+			string.append(df.format(rq.getResearchQuestion01().getRatioAtLeastOnRepair()));
 			string.append("&");
 			
 			string.append(rq.getResearchQuestion02().repairAsObservedRE);
 			string.append("&");
 			string.append(rq.getResearchQuestion02().repairAsObservedOPK);
 			string.append("&");
-			string.append(rq.getResearchQuestion02().getRatioRepairAsObserved());
+			string.append(df.format(rq.getResearchQuestion02().getRatioRepairAsObserved()));
 			string.append("&");
 			
 			int repairTreePathsRE = ResearchQuestion03.getRepairActionsRE(rq.getResearchQuestion03().values());
