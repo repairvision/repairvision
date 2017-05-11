@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.repair.historymodel.History;
@@ -25,9 +26,12 @@ public class EvaluationUtil {
 		
 		for (Version version : history.getVersions()) {
 			for (ValidationError validation : version.getValidationErrors()) {
-				// Is new validation error?
-				if (!contains(validations, validation)) {
-					validations.add(validation);
+				if ((validation.getIntroducedIn() != null) && (validation.getResolvedIn() != null)) {
+					
+					// Is new validation error?
+					if (!contains(validations, validation)) {
+						validations.add(validation);
+					}
 				}
 			}
 		}
@@ -45,11 +49,25 @@ public class EvaluationUtil {
 	}
 	
 	public static boolean equals(ValidationError validationA, ValidationError validationB) {
+		
 		if (validationA.getIntroducedIn() == validationB.getIntroducedIn()) {
 			if (validationA.getResolvedIn() == validationB.getResolvedIn()) {
 				if (getValidationID(validationA).equals(getValidationID(validationB))) {
-//					if (validationA.getInvalidElement().equals())
-					return true;
+					EObject invalidElementA = validationA.getInvalidElement().get(0);
+					EObject invalidElementB = validationB.getInvalidElement().get(0);
+					
+					// FIXME: Mapping from file: to platform:
+//					if (invalidElementA.eIsProxy()) {
+//						EcoreUtil.resolve(invalidElementA, validationA.eResource().getResourceSet());
+//					}
+//					if (invalidElementB.eIsProxy()) {
+//						EcoreUtil.resolve(invalidElementB, validationB.eResource().getResourceSet());
+//					}
+					
+//					if (EMFUtil.getXmiId(invalidElementA).equals(EMFUtil.getXmiId(invalidElementB))) {
+					if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
+						return true;
+					}
 				}
 			}
 		}
@@ -57,6 +75,6 @@ public class EvaluationUtil {
 	}
 	
 	public static String getValidationID(ValidationError validation) {
-		return validation.getName();
+		return validation.getName().replaceAll("[^\\p{Alpha}]", "");
 	}
 }
