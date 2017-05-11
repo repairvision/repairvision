@@ -12,14 +12,13 @@ import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
 
 public class EvaluationUtil {
-
+	
 	public static EObjectList toEObjectList(List<? extends EObject> list, String label) {
 		EObjectList eObjectList = GraphpatternFactory.eINSTANCE.createEObjectList();
 		eObjectList.setLabel(label);
 		eObjectList.getContent().addAll(list);
 		return eObjectList;
 	}
-	
 	
 	public static List<ValidationError> getValidations(History history) {
 		List<ValidationError> validations = new ArrayList<>();
@@ -76,5 +75,27 @@ public class EvaluationUtil {
 	
 	public static String getValidationID(ValidationError validation) {
 		return validation.getName().replaceAll("[^\\p{Alpha}]", "");
+	}
+	
+	public static Version getPrecessorRevision(Version version) {
+		History history = (History) version.eContainer();
+		int index = history.getVersions().indexOf(version);
+
+		if ((index - 1) >= 0) {
+			return history.getVersions().get(index - 1);
+		}
+		
+		return null;
+	}
+
+	public static Version getSuccessorRevision(Version version) {
+		History history = (History) version.eContainer();
+		int index = history.getVersions().indexOf(version);
+
+		if ((index + 1) < history.getVersions().size()) {
+			return history.getVersions().get(index + 1);
+		}
+		
+		return null;
 	}
 }

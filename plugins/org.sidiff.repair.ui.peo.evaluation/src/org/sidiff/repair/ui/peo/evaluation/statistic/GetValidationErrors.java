@@ -8,6 +8,7 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
+import org.sidiff.repair.historymodel.Version;
 import org.sidiff.repair.ui.peo.evaluation.data.EvaluationData;
 import org.sidiff.repair.ui.peo.evaluation.util.EvaluationUtil;
 
@@ -23,14 +24,16 @@ public class GetValidationErrors implements IApplication {
 			
 			if (object instanceof ValidationError) {
 				ValidationError inconsistency = (ValidationError) object; 
-				String intorduced = (inconsistency.getIntroducedIn() != null) 
-						? inconsistency.getIntroducedIn().getName() : "#NULL";
-				String resloved = (inconsistency.getResolvedIn() != null) 
-							? inconsistency.getResolvedIn().getName() : "#NULL";
 				
-				URI uri = URI.createURI(inconsistency.getIntroducedIn().getModelURI());
-							
-				return uri.segment(uri.segmentCount() - 3)
+
+					String intorduced = (inconsistency.getIntroducedIn() != null) 
+							? inconsistency.getIntroducedIn().getName() : "#NULL";
+					String resloved = (inconsistency.getResolvedIn() != null) 
+							? inconsistency.getResolvedIn().getName() : "#NULL";
+
+					URI uri = URI.createURI(((Version) inconsistency.eContainer()).getModelURI());
+
+					return uri.segment(uri.segmentCount() - 3)
 						+ ": Intorduced:" + intorduced + " || Resolved: " + resloved;
 			}
 			
@@ -57,12 +60,6 @@ public class GetValidationErrors implements IApplication {
 		
 		Resource historyRes = rss.getResource(URI.createFileURI(EvaluationSetup.FOLDER + "/" + file), true);
 		History history = (History) historyRes.getContents().get(0);
-		
-//		for (Version version : history.getVersions()) {
-//			for (ValidationError inconsistency : version.getValidationErrors()) {
-//				data.appendToRow(KEY, inconsistency.getName(), inconsistency);
-//			}
-//		}
 		
 		for (ValidationError inconsistency : EvaluationUtil.getValidations(history)) {
 			data.appendToRow(KEY, EvaluationUtil.getValidationID(inconsistency), inconsistency);
