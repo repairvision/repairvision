@@ -22,18 +22,25 @@ public class ResearchQuestion04 implements Serializable {
 	
 	public int countOfRepairs = -1;
 	
-	public int positionOfComplement = -1;
+	public int positionOfComplementMax = -1;
+	
+	public int positionOfComplementMin = -1;
 	
 	public int countOfHistoricChanges = -1;
 	
 	public int countOfComplementingChanges = -1;
+	
+	public int getPositionOfComplement() {
+		// return positionOfComplementMin + ((positionOfComplementMax - positionOfComplementMin) / 2)
+		return positionOfComplementMin;
+	}
 	
 	public static int getAVGPositionOfComplement(Collection<ResearchQuestion04> allRQ04) {
 		int positionOfComplement = 0;
 		int count = 0;
 		
 		for (ResearchQuestion04 researchQuestion04 : allRQ04) {
-			positionOfComplement += researchQuestion04.positionOfComplement;
+			positionOfComplement += researchQuestion04.getPositionOfComplement();
 			++count;
 		}
 		

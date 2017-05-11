@@ -10,8 +10,24 @@ import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
+import org.sidiff.repair.validation.fix.IRepairDecision;
+import org.sidiff.repair.validation.fix.Repair;
 
 public class EvaluationUtil {
+	
+	public static void getPathCountOfRepairTree(IRepairDecision node, Integer paths, Integer repairs) {
+		if (node instanceof Repair) {
+			++repairs;
+		}
+		
+		if (node.getChildDecisions().isEmpty()) {
+			++paths;
+		} else {
+			for (IRepairDecision child : node.getChildDecisions()) {
+				getPathCountOfRepairTree(child, paths, repairs);
+			}
+		}
+	}
 	
 	public static EObjectList toEObjectList(List<? extends EObject> list, String label) {
 		EObjectList eObjectList = GraphpatternFactory.eINSTANCE.createEObjectList();
