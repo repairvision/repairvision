@@ -16,7 +16,7 @@ import org.eclipse.emf.common.util.URI;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.repair.historymodel.History;
 
-public class RepairEvaluationData implements Serializable  {
+public class RepairEvaluation implements Serializable  {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -24,6 +24,14 @@ public class RepairEvaluationData implements Serializable  {
 	 * RQ01: History URI -> Evaluation
 	 */
 	private Map<String, ResearchQuestions> researchQuestions = new HashMap<>();
+	
+	public static double ratio(int a, int b) {
+		if (b != 0) {
+			return ((double) a) / ((double) b);
+		} else {
+			return -1;
+		}
+	}
 	
 	public Map<String, ResearchQuestions> getResearchQuestions() {
 		return researchQuestions;
@@ -108,12 +116,19 @@ public class RepairEvaluationData implements Serializable  {
 		StringBuffer string = new StringBuffer();
 		
 		string.append("\\begin{table*}[t!]");
+		string.append("\n");
 		string.append("\\centering");
+		string.append("\n");
 		string.append("\\begin{tabular}{|l|c|c||c|c|c||c|c|c||c|c|c||c|}");
+		string.append("\n");
 		string.append("\\hline");
+		string.append("\n");
 		string.append("\\multicolumn{3}{|c||}{} & \\multicolumn{3}{|c||}{RQ1} & \\multicolumn{3}{|c||}{RQ2} & \\multicolumn{3}{|c||}{RQ3} & \\multicolumn{1}{|c|}{RQ4}\\\\");
+		string.append("\n");
 		string.append("\\hline Model History & Rev. & Elem. & $RI_{M/A} $ & $RI_{wir}$ & $\frac{RI_{wir}}{RI_{M/A}}$ & $HOR_{M/A} $ & $HOR_{wir}$ & $\frac{HOR_{wir}}{HOR_{M/A}}$ & $RA_{M/A} $ & $RA_{wir}$ & $\frac{RA_{wir}}{RA_{M/A}}$ & Prio. \\\\");
+		string.append("\n");
 		string.append("\\hline\\hline");
+		string.append("\n");
 		
 		//	ProjectA.ModelA & 20 & 800 & 40 & 39 & 0.95 & 39 & 39 & 1.0 & 12 & 6 (2/3) & 0.5 & 2/6\\
 		
@@ -152,7 +167,7 @@ public class RepairEvaluationData implements Serializable  {
 			string.append("(" + avgRepairsAllOPK);
 			string.append("/" + avgComplementsAllOPK + ")");
 			string.append("&");
-			string.append(repairTreePathsRE / repairsAllOPK);
+			string.append(RepairEvaluation.ratio(repairTreePathsRE, repairsAllOPK));
 			string.append("&");
 			
 			int avgCountOfRepairs = ResearchQuestion04.getAVGCountOfRepairs(rq.getResearchQuestion04().values());
@@ -162,13 +177,19 @@ public class RepairEvaluationData implements Serializable  {
 			string.append("/" + avgPositionOfComplement + ")");
 			
 			string.append("\\\\");
+			string.append("\n");
 		}
 
 		string.append("\\end{tabular}");
+		string.append("\n");
 		string.append("\\vspace{0.25cm}");
+		string.append("\n");
 		string.append("\\caption{TODO: results ....}");
+		string.append("\n");
 		string.append("\\label{tab:results}");
+		string.append("\n");
 		string.append("\\end{table*}");
+		string.append("\n");
 		
 		return string.toString();
 	}

@@ -20,19 +20,17 @@ public class ResearchQuestion04 implements Serializable {
 	
 	public String editRuleName = "N/A";
 	
-	public int countOfRepairs = -1;
+	public int countOfRepairs = 0;
 	
-	public int positionOfComplementMax = -1;
+	public int positionOfComplement = 0;
 	
-	public int positionOfComplementMin = -1;
+	public int countOfHistoricChanges = 0;
 	
-	public int countOfHistoricChanges = -1;
-	
-	public int countOfComplementingChanges = -1;
+	public int countOfComplementingChanges = 0;
 	
 	public int getPositionOfComplement() {
 		// return positionOfComplementMin + ((positionOfComplementMax - positionOfComplementMin) / 2)
-		return positionOfComplementMin;
+		return positionOfComplement;
 	}
 	
 	public static int getAVGPositionOfComplement(Collection<ResearchQuestion04> allRQ04) {
@@ -44,7 +42,7 @@ public class ResearchQuestion04 implements Serializable {
 			++count;
 		}
 		
-		return positionOfComplement / count;
+		return (int) RepairEvaluation.ratio(positionOfComplement, count);
 	}
 	
 	public static int getAVGCountOfRepairs(Collection<ResearchQuestion04> allRQ04) {
@@ -56,6 +54,6 @@ public class ResearchQuestion04 implements Serializable {
 			++count;
 		}
 		
-		return countOfRepairs / count;
+		return (int) RepairEvaluation.ratio(countOfRepairs, count);
 	}
 }

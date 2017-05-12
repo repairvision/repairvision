@@ -1,5 +1,14 @@
 package org.sidiff.repair.ui.peo.evaluation;
 
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -11,13 +20,22 @@ import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.repair.api.IRepair;
 import org.sidiff.repair.api.peo.PEORepairJob;
+import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.evaluation.oracle.DeveloperIntentionOracle;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
 import org.sidiff.repair.ui.app.IResultChangedListener;
+import org.sidiff.repair.ui.peo.evaluation.data.RepairEvaluation;
+import org.sidiff.repair.ui.peo.evaluation.data.ResearchQuestion01;
+import org.sidiff.repair.ui.peo.evaluation.data.ResearchQuestion03;
+import org.sidiff.repair.ui.peo.evaluation.data.ResearchQuestion04;
+import org.sidiff.repair.ui.peo.evaluation.data.ResearchQuestions;
 import org.sidiff.repair.ui.peo.evaluation.history.HistoryRepairApplication;
 import org.sidiff.repair.ui.peo.evaluation.util.EvaluationUtil;
+import org.sidiff.repair.ui.util.EditRuleUtil;
+import org.sidiff.repair.validation.util.Validation;
+import org.sidiff.validation.constraint.library.ConstraintLibraryRegistry;
 
 public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	
@@ -31,14 +49,191 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	 */
 	private ValidationError validationError;
 	
-	public void startEvaluation() {
+	private RepairEvaluation evaluation;
+	
+	@Override
+	public void calculateRepairs() {
+		
+		// Matching-Settings:
+		settings = getMatchingSettings();
+		
+		// Load edit-rules:
+		editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
+		
+		// Find inconsistencies:
+		List<ValidationError> inconsistenciesAll = EvaluationUtil.getValidations(history);
+		Set<ValidationError> inconsistenciesConfigured = EvaluationUtil.getSupportedValidations(
+				inconsistenciesAll, ConstraintLibraryRegistry.getLibraries());
+		
+		evaluation = new RepairEvaluation();
+		ResearchQuestions rq = evaluation.createNewResearchQuestion(history);
+		
+		rq.getResearchQuestion01().countOfInconsistenciesAll = inconsistenciesAll.size();
+		rq.getResearchQuestion01().countOfInconsistenciesConfigured = inconsistenciesConfigured.size();
+		rq.getResearchQuestion01().revisionsAll = history.getVersions().size();
+		rq.getResearchQuestion01().avgElements = ResearchQuestion01.getAVGElements(history);
+		
+		repairCalculation = new Job("Calculate Repairs") {
+			
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				
+				// Evaluate all inconsistencies of the actual history:
+				for (ValidationError inconsistency : inconsistenciesConfigured) {
+					setModelA(getPrecessorRevision(inconsistency.getIntroducedIn()).getModel());
+					setModelB(getPrecessorRevision(inconsistency.getResolvedIn()).getModel());
+					
+					// Calculate repairs:
+					repairJob = repairFacade.getRepairs(modelA, modelB,
+							new PEORepairSettings(editRules, settings));
+					
+					
+					addResultChangedListener(new IResultChangedListener<PEORepairJob>() {
+						
+						@Override
+						public void resultChanged(PEORepairJob repairJob) {
+							System.out.println("Repairs Found: " + repairJob.getRepairs());
+							
+							// RQ 01:
+							if (!repairJob.getValidations().isEmpty()) {
+								rq.getResearchQuestion01().atLeastOnRepairRE++;
+							}
+							if (!repairJob.getRepairs().isEmpty()) {
+								rq.getResearchQuestion01().atLeastOnRepairOPK++;
+							}
+							
+							// RQ 02:
+							// TODO: Oracle for Repair-Trees:
+							List<IRepair> observable = EvaluationUtil.historicallyObservable(repairJob);
+							
+							if (!observable.isEmpty()) {
+								rq.getResearchQuestion02().historicallyObservableInconsistenciesConfigured++;
+							}
+							
+							// RQ 03:
+							Validation validationForInconsistency = EvaluationUtil.getRepairTree(
+									repairJob.getValidations(), inconsistency);
+							
+							Integer paths = 0;
+							Integer repairs = 0;
+							ResearchQuestion03 rq03 = rq.createNewRQ03(inconsistency);
+							
+							EvaluationUtil.getPathCountOfRepairTree(validationForInconsistency.getRepair(), paths, repairs);
+							
+							rq03.repairActionsRE = repairs;
+							rq03.repairTreePathsRE = paths;
+							
+							for (Rule complement : repairJob.getRepairs().keySet()) {
+								rq03.addRepairsPerComplement(repairJob.getRepairs().get(complement).size());
+							}
+							
+							// RQ 04:
+							
+							ResearchQuestion04 rq04 = rq.createNewRQ04(inconsistency);
+							List<Rule> complements = new LinkedList<>(repairJob.getRepairs().keySet());
+
+							// Calculate Ranking:
+							complements.sort(new Comparator<Rule>() {
+
+								@Override
+								public int compare(Rule complementA, Rule complementB) {
+									
+									// Show the element with the greater ratio on top of the viewer:
+									IRepair repairA = repairJob.getRepairs().get(complementA).get(0);
+									IRepair repairB = repairJob.getRepairs().get(complementB).get(0);
+									
+									double ratioA = (double) repairA.getHistoricChanges().size() / repairA.getComplementingChanges().size();
+									double ratioB = (double) repairB.getHistoricChanges().size() / repairB.getComplementingChanges().size();
+									double diff = (ratioA - ratioB);
+
+									if (diff != 0) {
+										if (diff < 0) {
+											// Ratio of B is greater then A -> B on the top:
+											return 1;
+										} else {
+											// Ratio of A is greater then B -> A on the top:
+											return -1;
+										}
+									} else {
+										// Ratio A equals Ratio B:
+										int countOfNodeDeleteChangesA = EvaluationUtil.countOfNodeDeleteChanges(repairA.getComplementingChanges()); 
+										int countOfNodeDeleteChangesB = EvaluationUtil.countOfNodeDeleteChanges(repairB.getComplementingChanges());
+										
+										int countOfEdgeDeleteChangesA = EvaluationUtil.countOfEdgeDeleteChanges(repairA.getComplementingChanges()); 
+										int countOfEdgeDeleteChangesB = EvaluationUtil.countOfEdgeDeleteChanges(repairB.getComplementingChanges());
+										
+										int morePreserving = 
+												(2 * countOfNodeDeleteChangesA + countOfEdgeDeleteChangesA)
+												- (2 * countOfNodeDeleteChangesB + countOfEdgeDeleteChangesB);
+										
+										if (morePreserving != 0) {
+											if (morePreserving > 0) {
+												// A deletes more then B -> B on the top::
+												return 1;
+											} else {
+												// B deletes more then A -> A on the top:
+												return -1;
+											}
+										}
+									}
+									
+									return 0;
+								}
+							});
+							
+							// Find best observable:
+							int position = 0;
+							Rule bestObservableComplement =  null;
+							IRepair bestObservableRepair = null;
+							
+							for (IRepair observableRepair : observable) {
+								Rule observableComplement = EvaluationUtil.getComplement(repairJob, observableRepair);
+								int positionOfObservable = complements.indexOf(observableComplement);
+								
+								if (positionOfObservable < position) {
+									position = positionOfObservable;
+									bestObservableComplement = observableComplement;
+									bestObservableRepair = observableRepair;
+								}
+							}
+							
+							if (bestObservableComplement != null) {
+								rq04.positionOfComplement = position;
+								rq04.countOfRepairs = repairJob.getRepairs().get(bestObservableComplement).size();
+								rq04.countOfHistoricChanges = bestObservableRepair.getHistoricChanges().size();
+								rq04.countOfComplementingChanges = bestObservableRepair.getComplementingChanges().size();
+							}
+							
+							// Store Evaluation:
+							evaluation.store(rq);
+							
+							System.out.println("#################### Evaluation Result ####################");
+							
+							evaluation.dump();
+
+							System.out.println("#################### Evaluation Finished ####################");
+						}
+					});
+				}
+				
+				return Status.OK_STATUS;
+			}
+		};
+		
+		evaluation.dump();
+		repairCalculation.schedule();
+	}
+	
+	public void startEvaluationForInconsistency() {
 		System.out.println("#################### Evaluation Startet ####################");
 		System.out.println("Model A: " + modelA);
 		System.out.println("Model B: " + modelB);
 		
 		setModelA(modelA);
 		setModelB(modelB);
-		calculateRepairs();
+		
+		// Start calculation:
+		calculateRepairsForInconsistency();
 		
 		addResultChangedListener(new IResultChangedListener<PEORepairJob>() {
 			

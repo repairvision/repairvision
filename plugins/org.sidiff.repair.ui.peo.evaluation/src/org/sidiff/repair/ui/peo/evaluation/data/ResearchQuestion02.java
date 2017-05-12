@@ -11,15 +11,15 @@ public class ResearchQuestion02 implements Serializable {
 
 	public String historyURI = "N/A";
 	
-	public int historicallyObservableInconsistenciesAll = -1;
+	public int historicallyObservableInconsistenciesAll = 0;
 	
-	public int historicallyObservableInconsistenciesConfigured = -1;
+	public int historicallyObservableInconsistenciesConfigured = 0;
 	
-	public int repairAsObservedRE = -1;
+	public int repairAsObservedRE = 0;
 	
-	public int repairAsObservedOPK = -1;
+	public int repairAsObservedOPK = 0;
 	
 	public double getRatioRepairAsObserved() {
-		return repairAsObservedRE / repairAsObservedOPK;
+		return RepairEvaluation.ratio(repairAsObservedRE, repairAsObservedOPK);
 	}
 }

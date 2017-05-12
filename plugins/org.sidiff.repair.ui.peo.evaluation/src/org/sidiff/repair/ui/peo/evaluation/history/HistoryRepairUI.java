@@ -141,7 +141,7 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 
 				if (selection instanceof ValidationError) {
 					getApplication().selectValidationError((ValidationError) selection);
-					getApplication().startEvaluation();
+					getApplication().startEvaluationForInconsistency();
 				} else {
 					WorkbenchUtil.showMessage("Please select a validation error!");
 				}

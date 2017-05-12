@@ -22,27 +22,26 @@ import org.sidiff.repair.ui.app.impl.EMFResourceRepairApplication;
 import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.repair.validation.util.Validation;
 
-public class HistoryRepairApplication extends EMFResourceRepairApplication<PEORepairJob, PEORepairSettings> {
+public abstract class HistoryRepairApplication extends EMFResourceRepairApplication<PEORepairJob, PEORepairSettings> {
 
-	private IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade;
+	protected IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade;
 
-	private Collection<IResource> editRuleFiles = new ArrayList<>();
+	protected Collection<IResource> editRuleFiles = new ArrayList<>();
 	
-	private Job repairCalculation;
+	protected Job repairCalculation;
 	
-	private PEORepairJob repairJob;
+	protected PEORepairJob repairJob;
 	
-	private DifferenceSettings settings;
+	protected DifferenceSettings settings;
 	
-	private Collection<Rule> editRules;
+	protected Collection<Rule> editRules;
 	
 	@Override
 	public void initialize(IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade) {
 		this.repairFacade = repairFacade;
 	}
 	
-	@Override
-	public void calculateRepairs() {
+	public void calculateRepairsForInconsistency() {
 		
 		repairCalculation = new Job("Calculate Repairs") {
 			

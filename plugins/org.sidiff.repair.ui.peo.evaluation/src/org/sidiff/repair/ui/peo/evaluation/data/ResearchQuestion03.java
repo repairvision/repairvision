@@ -20,42 +20,35 @@ public class ResearchQuestion03 implements Serializable {
 	
 	public String validationID = "N/A";
 	
-	public int repairActionsRE = -1;
+	public int repairActionsRE = 0;
 	
-	public int repairTreePathsRE = -1;
+	public int repairTreePathsRE = 0;
 	
-	public List<int[]> complementsRulesAndRepairs = new ArrayList<>();
+	public int complementsAllOPK = 0;
+	
+	public List<Integer> repairsPerComplementOPK = new ArrayList<>();
 	
 	public long msTimePartialMatching;
 	
 	public long msTimeComplementMatching;
 	
-	public void addComplementsAndRepairs(int complements, int repairs) {
-		complementsRulesAndRepairs.add(new int[] {complements, repairs});
-	}
-	
-	public int getComplementsAllOPK() {
-		int count = 0;
-		
-		for (int[] complementRulesAndRepairs : complementsRulesAndRepairs) {
-			count += complementRulesAndRepairs[0];
-		}
-		
-		return count;
+	public void addRepairsPerComplement(int repairs) {
+		repairsPerComplementOPK.add(repairs);
+		++complementsAllOPK;
 	}
 	
 	public int getRepairsAllOPK() {
 		int count = 0;
 		
-		for (int[] complementRulesAndRepairs : complementsRulesAndRepairs) {
-			count += complementRulesAndRepairs[1];
+		for (Integer repairsPerComplement : repairsPerComplementOPK) {
+			count += repairsPerComplement;
 		}
 		
 		return count;
 	}
 	
 	public double getRatio() {
-		return repairTreePathsRE / getRepairsAllOPK();
+		return RepairEvaluation.ratio(repairTreePathsRE, getRepairsAllOPK());
 	}
 	
 	public static int getRepairActionsRE(Collection<ResearchQuestion03> allRQ03) {
@@ -97,7 +90,7 @@ public class ResearchQuestion03 implements Serializable {
 			++count;
 		}
 		
-		return repairsAllOPK / count;
+		return (int) RepairEvaluation.ratio(repairsAllOPK, count);
 	}
 	
 	public static int getAVGComplementsAllOPK(Collection<ResearchQuestion03> allRQ03) {
@@ -105,10 +98,10 @@ public class ResearchQuestion03 implements Serializable {
 		int count = 0;
 		
 		for (ResearchQuestion03 researchQuestion03 : allRQ03) {
-			complementsAllOPK += researchQuestion03.getComplementsAllOPK();
+			complementsAllOPK += researchQuestion03.complementsAllOPK;
 			++count;
 		}
 		
-		return complementsAllOPK / count;
+		return (int) RepairEvaluation.ratio(complementsAllOPK, count);
 	}
 }

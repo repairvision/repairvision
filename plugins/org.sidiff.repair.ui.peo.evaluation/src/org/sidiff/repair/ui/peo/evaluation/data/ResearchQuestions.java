@@ -39,7 +39,7 @@ public class ResearchQuestions implements Serializable  {
 	}
 	
 	public ResearchQuestion01 getResearchQuestion01() {
-		if (researchQuestion01 != null) {
+		if (researchQuestion01 == null) {
 			researchQuestion01 = new ResearchQuestion01();
 			researchQuestion01.historyURI = historyURI;
 		}
@@ -47,7 +47,7 @@ public class ResearchQuestions implements Serializable  {
 	}
 	
 	public ResearchQuestion02 getResearchQuestion02() {
-		if (researchQuestion02 != null) {
+		if (researchQuestion02 == null) {
 			researchQuestion02 = new ResearchQuestion02();
 			researchQuestion02.historyURI = historyURI;
 		}
