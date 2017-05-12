@@ -51,6 +51,10 @@ public class ConstraintLibraryRegistry {
 		return librarys;
 	}
 	
+	public static Map<String, List<IConstraintLibrary>> getLibraries() {
+		return libraries;
+	}
+	
 	/**
 	 * @param The
 	 *            document type of the required constraint library.
