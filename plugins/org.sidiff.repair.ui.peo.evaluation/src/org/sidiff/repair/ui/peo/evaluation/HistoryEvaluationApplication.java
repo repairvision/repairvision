@@ -5,10 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -54,8 +50,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	@Override
 	public void calculateRepairs() {
 		
-		// Matching-Settings:
-		settings = getMatchingSettings();
+		System.out.println("#################### Evaluation Startet ####################");
 		
 		// Load edit-rules:
 		editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
@@ -73,25 +68,37 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		rq.getResearchQuestion01().revisionsAll = history.getVersions().size();
 		rq.getResearchQuestion01().avgElements = ResearchQuestion01.getAVGElements(history);
 		
-		repairCalculation = new Job("Calculate Repairs") {
-			
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+		ResourceSet rss = new ResourceSetImpl();
+		
+//		repairCalculation = new Job("Calculate Repairs") {
+//			
+//			@Override
+//			protected IStatus run(IProgressMonitor monitor) {
 				
 				// Evaluate all inconsistencies of the actual history:
 				for (ValidationError inconsistency : inconsistenciesConfigured) {
-					setModelA(getPrecessorRevision(inconsistency.getIntroducedIn()).getModel());
-					setModelB(getPrecessorRevision(inconsistency.getResolvedIn()).getModel());
+					System.out.println("#################### " + inconsistency.getName() + " ####################");
+					
+					Resource modelA = rss.getResource(
+							URI.createURI(getPrecessorRevision(inconsistency.getIntroducedIn()).getModelURI()), true);
+					Resource modelB = rss.getResource(
+							URI.createURI(getPrecessorRevision(inconsistency.getResolvedIn()).getModelURI()), true);
+					
+					setModelA(modelA);
+					setModelB(modelB);
+					
+					// Matching-Settings:
+					settings = getMatchingSettings();
 					
 					// Calculate repairs:
 					repairJob = repairFacade.getRepairs(modelA, modelB,
 							new PEORepairSettings(editRules, settings));
 					
 					
-					addResultChangedListener(new IResultChangedListener<PEORepairJob>() {
-						
-						@Override
-						public void resultChanged(PEORepairJob repairJob) {
+//					addResultChangedListener(new IResultChangedListener<PEORepairJob>() {
+//						
+//						@Override
+//						public void resultChanged(PEORepairJob repairJob) {
 							System.out.println("Repairs Found: " + repairJob.getRepairs());
 							
 							// RQ 01:
@@ -204,24 +211,23 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 								rq04.countOfComplementingChanges = bestObservableRepair.getComplementingChanges().size();
 							}
 							
-							// Store Evaluation:
-							evaluation.store(rq);
-							
-							System.out.println("#################### Evaluation Result ####################");
-							
-							evaluation.dump();
-
-							System.out.println("#################### Evaluation Finished ####################");
 						}
-					});
-				}
+				// Store Evaluation:
+				evaluation.store(rq);
 				
-				return Status.OK_STATUS;
-			}
-		};
-		
-		evaluation.dump();
-		repairCalculation.schedule();
+				System.out.println("#################### Evaluation Result ####################");
+				
+				evaluation.dump();
+				
+				System.out.println("#################### Evaluation Finished ####################");
+//					});
+//				}
+				
+//				return Status.OK_STATUS;
+//			}
+//		};
+//		
+//		repairCalculation.schedule();
 	}
 	
 	public void startEvaluationForInconsistency() {
@@ -350,6 +356,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		super.clear();
 		history = null;
 		validationError = null;
+		evaluation = null;
 	}
 
 	public EObject getValidations() {
