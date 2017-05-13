@@ -161,16 +161,17 @@ public class EvaluationUtil {
 		return observable;
 	}
 	
-	public static void getPathCountOfRepairTree(IRepairDecision node, Integer paths, Integer repairs) {
+	// repairs / paths
+	public static void getPathCountOfRepairTree(IRepairDecision node, int[] counter) {
 		if (node instanceof Repair) {
-			++repairs;
+			counter[0]++;
 		}
 		
 		if (node.getChildDecisions().isEmpty()) {
-			++paths;
+			counter[1]++;
 		} else {
 			for (IRepairDecision child : node.getChildDecisions()) {
-				getPathCountOfRepairTree(child, paths, repairs);
+				getPathCountOfRepairTree(child, counter);
 			}
 		}
 	}

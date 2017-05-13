@@ -118,20 +118,22 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 							}
 							
 							// RQ 03:
+							ResearchQuestion03 rq03 = rq.createNewRQ03(inconsistency);
+							
 							Validation validationForInconsistency = EvaluationUtil.getRepairTree(
 									repairJob.getValidations(), inconsistency);
 							
-							Integer paths = 0;
-							Integer repairs = 0;
-							ResearchQuestion03 rq03 = rq.createNewRQ03(inconsistency);
-							
-							EvaluationUtil.getPathCountOfRepairTree(validationForInconsistency.getRepair(), paths, repairs);
-							
-							rq03.repairActionsRE = repairs;
-							rq03.repairTreePathsRE = paths;
-							
-							for (Rule complement : repairJob.getRepairs().keySet()) {
-								rq03.addRepairsPerComplement(repairJob.getRepairs().get(complement).size());
+							// FIXME ?
+							if (validationForInconsistency != null) {
+								int[] counter = new int[2];
+								EvaluationUtil.getPathCountOfRepairTree(validationForInconsistency.getRepair(), counter);
+								
+								rq03.repairActionsRE = counter[0];
+								rq03.repairTreePathsRE = counter[1];
+								
+								for (Rule complement : repairJob.getRepairs().keySet()) {
+									rq03.addRepairsPerComplement(repairJob.getRepairs().get(complement).size());
+								}
 							}
 							
 							// RQ 04:
