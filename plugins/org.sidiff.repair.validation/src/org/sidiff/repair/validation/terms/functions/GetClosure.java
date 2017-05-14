@@ -9,8 +9,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.Repair;
-import org.sidiff.repair.validation.fix.Repair.RepairType;
+import org.sidiff.repair.validation.fix.RepairAction;
+import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.fix.Sequence;
 import org.sidiff.repair.validation.terms.Term;
 
@@ -108,7 +108,7 @@ public class GetClosure extends Function {
 		}
 		
 		if (invalidElementReachable) {
-			Repair newRepair = new Repair(type, element, feature); 
+			RepairAction newRepair = new RepairAction(type, element, feature); 
 			parent.appendChildDecisions(newRepair);
 		}
 		

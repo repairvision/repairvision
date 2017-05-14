@@ -2,7 +2,7 @@ package org.sidiff.repair.validation.formulas.predicates;
 
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.Repair.RepairType;
+import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.terms.Term;
 
 public class Equality extends Comparison {

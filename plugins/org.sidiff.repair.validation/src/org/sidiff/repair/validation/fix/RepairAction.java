@@ -7,10 +7,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-public class Repair implements IRepairDecision {
+public class RepairAction implements IRepairDecision {
 
 	public enum RepairType {
-		DELETE, ADD, MODIFY
+		DELETE, CREATE, MODIFY
 	}
 	
 	protected RepairType type;
@@ -19,7 +19,7 @@ public class Repair implements IRepairDecision {
 	
 	protected EStructuralFeature feature;
 	
-	public Repair(RepairType type, EObject context, EStructuralFeature feature) {
+	public RepairAction(RepairType type, EObject context, EStructuralFeature feature) {
 		this.type = type;
 		this.context = context;
 		this.feature = feature;

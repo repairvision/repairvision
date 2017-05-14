@@ -5,8 +5,8 @@ import java.util.Collection;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.Repair;
-import org.sidiff.repair.validation.fix.Repair.RepairType;
+import org.sidiff.repair.validation.fix.RepairAction;
+import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.terms.Term;
 
 public class GetContainer extends Function {
@@ -37,7 +37,7 @@ public class GetContainer extends Function {
 			System.err.println("List results must be repaired by ForAll or Exists!");
 		} else {
 			if (element.getValue() != null) {
-				Repair newRepair = new Repair(type, (EObject) value, ((EObject) element.getValue()).eContainmentFeature()); 
+				RepairAction newRepair = new RepairAction(type, (EObject) value, ((EObject) element.getValue()).eContainmentFeature()); 
 				alternative.appendChildDecisions(newRepair);
 			}
 		}

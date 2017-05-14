@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.Repair;
+import org.sidiff.repair.validation.fix.RepairAction;
 import org.sidiff.repair.validation.fix.Sequence;
 
 public class ValidationUtil {
@@ -34,7 +34,7 @@ public class ValidationUtil {
 		}
 	}
 	
-	public static boolean equals(Repair repairA, Repair repairB) {
+	public static boolean equals(RepairAction repairA, RepairAction repairB) {
 		if (repairA.getType().equals(repairB.getType())) {
 			if (repairA.getFeature().equals(repairB.getFeature())) {
 				if (repairA.getContext().equals(repairB.getContext())) {
@@ -46,11 +46,11 @@ public class ValidationUtil {
 		return false;
 	}
 	
-	public static boolean hasDuplicate(List<IRepairDecision> repairs, Repair repair) {
+	public static boolean hasDuplicate(List<IRepairDecision> repairs, RepairAction repair) {
 		for (IRepairDecision iRepairDecision : repairs) {
-			if (iRepairDecision instanceof Repair) {
+			if (iRepairDecision instanceof RepairAction) {
 				if (iRepairDecision != repair) {
-					if (equals((Repair) iRepairDecision, repair)) {
+					if (equals((RepairAction) iRepairDecision, repair)) {
 						return true;
 					}
 				}
@@ -66,7 +66,7 @@ public class ValidationUtil {
 		for (Iterator<IRepairDecision> iterator = children.iterator(); iterator.hasNext();) {
 			IRepairDecision child = iterator.next();
 			
-			if (child instanceof Repair) {
+			if (child instanceof RepairAction) {
 				continue;
 			}
 			
@@ -98,7 +98,7 @@ public class ValidationUtil {
 		}
 		
 		for (IRepairDecision child : parent.getChildDecisions()) {
-			if (!(child instanceof Repair)) {
+			if (!(child instanceof RepairAction)) {
 				cleanup(child, child.getChildDecisions());
 			}
 		}
@@ -112,8 +112,8 @@ public class ValidationUtil {
 		for (Iterator<IRepairDecision> iterator = parent.getChildDecisions().iterator(); iterator.hasNext();) {
 			IRepairDecision iRepairDecision = (IRepairDecision) iterator.next();
 			
-			if (iRepairDecision instanceof Repair) {
-				if (hasDuplicate(parent.getChildDecisions(), (Repair) iRepairDecision)) {
+			if (iRepairDecision instanceof RepairAction) {
+				if (hasDuplicate(parent.getChildDecisions(), (RepairAction) iRepairDecision)) {
 					iterator.remove();
 				}
 			}

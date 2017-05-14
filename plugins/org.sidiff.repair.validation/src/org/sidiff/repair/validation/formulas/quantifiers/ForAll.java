@@ -6,7 +6,7 @@ import java.util.Set;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.Sequence;
-import org.sidiff.repair.validation.fix.Repair.RepairType;
+import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.formulas.binary.Formula;
 import org.sidiff.repair.validation.terms.Term;
 import org.sidiff.repair.validation.terms.Variable;
@@ -94,13 +94,13 @@ public class ForAll extends Quantifier {
 					}
 				}
 				
-				((GetClosure) iteration).repair(alternativ, RepairType.ADD, invalid);
+				((GetClosure) iteration).repair(alternativ, RepairType.CREATE, invalid);
 			} else {
 				if (isMany()) {
-					iteration.repair(alternativ, RepairType.ADD);
+					iteration.repair(alternativ, RepairType.CREATE);
 				} else {
 					if (isEmpty()) {
-						iteration.repair(alternativ, RepairType.ADD);
+						iteration.repair(alternativ, RepairType.CREATE);
 					} else {
 						iteration.repair(alternativ, RepairType.MODIFY);
 					}

@@ -6,8 +6,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.Repair;
-import org.sidiff.repair.validation.fix.Repair.RepairType;
+import org.sidiff.repair.validation.fix.RepairAction;
+import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.terms.Term;
 
 public class Get extends Function {
@@ -61,7 +61,7 @@ public class Get extends Function {
 		}
 		
 		if (context.getValue() != null) {
-			Repair newRepair = new Repair(type, (EObject) context.getValue(), feature); 
+			RepairAction newRepair = new RepairAction(type, (EObject) context.getValue(), feature); 
 			alternative.appendChildDecisions(newRepair);
 		}
 	}

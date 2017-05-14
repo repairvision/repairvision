@@ -3,7 +3,7 @@ package org.sidiff.repair.validation.terms.functions;
 import java.util.Collection;
 
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.Repair.RepairType;
+import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.terms.Term;
 
 public class Size extends Function {

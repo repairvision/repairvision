@@ -4,8 +4,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.Repair;
-import org.sidiff.repair.validation.fix.Repair.RepairType;
+import org.sidiff.repair.validation.fix.RepairAction;
+import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.formulas.binary.Formula;
 import org.sidiff.repair.validation.terms.Variable;
 
@@ -85,11 +85,11 @@ public class Constraint extends NamedElement implements IConstraint {
 		if (getContext().eContainmentFeature() != null) {
 			if (getContext().eContainmentFeature().getEOpposite() != null) {
 				// Use container reference:
-				repairTreeRoot.appendChildDecisions(new Repair(
+				repairTreeRoot.appendChildDecisions(new RepairAction(
 						RepairType.DELETE, getContext(),  getContext().eContainmentFeature().getEOpposite()));
 			} else {
 				// Use containment reference (as cross-reference):
-				repairTreeRoot.appendChildDecisions(new Repair(
+				repairTreeRoot.appendChildDecisions(new RepairAction(
 						RepairType.DELETE, getContext(),  getContext().eContainmentFeature()));
 			}
 		}

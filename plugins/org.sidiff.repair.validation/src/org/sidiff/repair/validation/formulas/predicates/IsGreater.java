@@ -2,7 +2,7 @@ package org.sidiff.repair.validation.formulas.predicates;
 
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.Repair.RepairType;
+import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.terms.Term;
 
 public class IsGreater extends Comparison {
@@ -29,7 +29,7 @@ public class IsGreater extends Comparison {
 		if (expected && !getResult()) {
 			Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 
-			left.repair(newRepairAlternative, RepairType.ADD);
+			left.repair(newRepairAlternative, RepairType.CREATE);
 			right.repair(newRepairAlternative, RepairType.DELETE);
 		} 
 		
@@ -37,7 +37,7 @@ public class IsGreater extends Comparison {
 			Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 
 			left.repair(newRepairAlternative, RepairType.DELETE);
-			right.repair(newRepairAlternative, RepairType.ADD);
+			right.repair(newRepairAlternative, RepairType.CREATE);
 		}
 	}
 }

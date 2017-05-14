@@ -1,7 +1,7 @@
 package org.sidiff.repair.validation.terms;
 
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.Repair.RepairType;
+import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 
 public class Constant extends Term {
 	
