@@ -17,7 +17,7 @@ import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
 import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
@@ -138,7 +138,7 @@ public class PEORepairApplication extends EclipseResourceRepairApplication<PEORe
 	}
 	
 	@Override
-	public boolean applyRepairs(List<IRepair> repair) {
+	public boolean applyRepairs(List<IRepairPlan> repair) {
 		return (repairJob.applyRepairs(repair) != null);
 	}
 	
