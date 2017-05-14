@@ -30,7 +30,7 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 import org.sidiff.common.ui.NameUtil;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.Activator;
 import org.sidiff.repair.ui.app.IRepairApplication;
@@ -229,11 +229,11 @@ public class RepairView extends ViewPart implements IResultChangedListener<Repai
 				ISelection selection = viewer_repairs.getSelection();
 				
 				if (selection instanceof IStructuredSelection) {
-					List<IRepair> selectedRepairs = new ArrayList<>();
+					List<IRepairPlan> selectedRepairs = new ArrayList<>();
 					
 					((IStructuredSelection)selection).iterator().forEachRemaining(o -> {
-						if (o instanceof IRepair) {
-							selectedRepairs.add((IRepair) o);
+						if (o instanceof IRepairPlan) {
+							selectedRepairs.add((IRepairPlan) o);
 						}
 					});
 					
@@ -320,7 +320,7 @@ public class RepairView extends ViewPart implements IResultChangedListener<Repai
 					} else {
 						
 						// Expand:
-						if (item instanceof IRepair) {
+						if (item instanceof IRepairPlan) {
 							viewer_repairs.expandToLevel(item, 3);
 						} else {
 							viewer_repairs.expandToLevel(item, 1);

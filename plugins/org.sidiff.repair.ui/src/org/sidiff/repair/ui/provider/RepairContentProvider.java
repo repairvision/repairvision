@@ -21,7 +21,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.matching.EOAttributeMatch;
 import org.sidiff.repair.api.matching.EOEdgeMatch;
 import org.sidiff.repair.api.matching.EOMatch;
@@ -31,7 +31,7 @@ import org.sidiff.repair.api.matching.EditOperationMatching;
 
 public class RepairContentProvider implements IStructuredContentProvider, ITreeContentProvider  {
 
-	protected Map<Rule, List<IRepair>> repairs;
+	protected Map<Rule, List<IRepairPlan>> repairs;
 	
 	// TODO: Add specific classes.
 	public class Container {
@@ -43,7 +43,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	
 	public class ContextContainer {
 		public EObject conext;
-		public List<IRepair> repairs;
+		public List<IRepairPlan> repairs;
 	}
 	
 	public class Change {
@@ -65,7 +65,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		
 		if (newInput instanceof Map<?, ?>) {
-			repairs = (Map<Rule, List<IRepair>>) newInput;
+			repairs = (Map<Rule, List<IRepairPlan>>) newInput;
 		}
 	}
 
@@ -75,40 +75,40 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		if (parentElement instanceof Rule) {
 			
 			// Rule-Context -> Repairs:
-			Map<EObject, List<IRepair>> repairsByContext = new LinkedHashMap<>();
+			Map<EObject, List<IRepairPlan>> repairsByContext = new LinkedHashMap<>();
 			
-			for (IRepair repair : repairs.get(parentElement)) {
+			for (IRepairPlan repair : repairs.get(parentElement)) {
 				Parameter context = repair.getRepairPreMatch().getMatch().getRule().getParameter("context");
 				Object value = repair.getRepairPreMatch().getMatch().getParameterValue(context);
 				
 				if (value instanceof EObject) {
 					// Add repair to the context value:
-					List<IRepair> repairs  = repairsByContext.getOrDefault(value, new LinkedList<IRepair>());
+					List<IRepairPlan> repairs  = repairsByContext.getOrDefault(value, new LinkedList<IRepairPlan>());
 					repairs.add(repair);
 					repairsByContext.put((EObject) value, repairs);
 				} else {
 					// Uncategorized repair without context:
-					List<IRepair> repairs  = repairsByContext.getOrDefault(null, new LinkedList<IRepair>());
+					List<IRepairPlan> repairs  = repairsByContext.getOrDefault(null, new LinkedList<IRepairPlan>());
 					repairs.add(repair);
 					repairsByContext.put(null, repairs);
 				}
 			}
 			
 			// Rule content:
-			List<IRepair> repairsWithoutContext = repairsByContext.getOrDefault(null, Collections.emptyList());
+			List<IRepairPlan> repairsWithoutContext = repairsByContext.getOrDefault(null, Collections.emptyList());
 			repairsByContext.remove(null);
 			
 			Object[] ruleContent = new Object[repairsByContext.size() + repairsWithoutContext.size()]; 
 			
 			for (int i = 0; i < repairsWithoutContext.size(); i++) {
-				IRepair repair = repairsWithoutContext.get(i);
+				IRepairPlan repair = repairsWithoutContext.get(i);
 				ruleContent[i + repairsByContext.size()] = repair;
 			}
 			
 			// Create context containers:
 			int i = 0;
 			
-			for (Entry<EObject, List<IRepair>> contextEntry : repairsByContext.entrySet()) {
+			for (Entry<EObject, List<IRepairPlan>> contextEntry : repairsByContext.entrySet()) {
 				ContextContainer contextContainer = new ContextContainer();
 				contextContainer.conext = contextEntry.getKey();
 				contextContainer.repairs = contextEntry.getValue();
@@ -124,8 +124,8 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			return ((ContextContainer) parentElement).repairs.toArray();
 		}
 		
-		else if (parentElement instanceof IRepair) {
-			IRepair repair = (IRepair) parentElement;
+		else if (parentElement instanceof IRepairPlan) {
+			IRepairPlan repair = (IRepairPlan) parentElement;
 			
 			// Historic changes:
 			int historicSize = repair.getHistoricChanges().size();
@@ -190,7 +190,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		
 		// Repair-Rule:
 		if (element instanceof Rule ||
-				element instanceof IRepair ||
+				element instanceof IRepairPlan ||
 				element instanceof Container ||
 				element instanceof ContextContainer ||
 				element instanceof AttributeChange) {

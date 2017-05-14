@@ -3,7 +3,7 @@ package org.sidiff.repair.ui.app;
 import java.util.List;
 
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairSettings;
 import org.sidiff.repair.api.RepairJob;
@@ -59,7 +59,7 @@ public interface IRepairApplication<J extends RepairJob<?>, F extends IRepairSet
 	 *            The repairs which will be applied in the given order.
 	 * @return <code>true</code> if everything was fine; <code>false</code> otherwise.
 	 */
-	boolean applyRepairs(List<IRepair> repair);
+	boolean applyRepairs(List<IRepairPlan> repair);
 	
 	/**
 	 * @return The reverted repairs.

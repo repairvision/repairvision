@@ -9,7 +9,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.ui.provider.RepairContentProvider.Change;
 
 public class SelectionAdapterRegistry {
@@ -37,8 +37,8 @@ public class SelectionAdapterRegistry {
 			}
 			
 			// TODO: Move to RepairSelectionAdapter!
-			else if (selectedElement instanceof IRepair) {
-				return Collections.unmodifiableList(((IRepair) selectedElement)
+			else if (selectedElement instanceof IRepairPlan) {
+				return Collections.unmodifiableList(((IRepairPlan) selectedElement)
 						.getRepairPreMatch().getMatch().getNodeTargets());
 			}
 			
