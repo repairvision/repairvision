@@ -8,7 +8,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.Repair;
+import org.sidiff.repair.validation.fix.RepairAction;
 import org.sidiff.repair.validation.fix.Sequence;
 import org.sidiff.repair.validation.ui.Activator;
 import org.sidiff.repair.validation.util.Validation;
@@ -54,8 +54,8 @@ public class RepairTreeLabelProvider extends LabelProvider {
 		
 		else if (element instanceof IRepairDecision) {
 			
-			if (element instanceof Repair) {
-				return "Repair(" + ((Repair) element).getRepairTripleLabel() + ")";
+			if (element instanceof RepairAction) {
+				return "Repair(" + ((RepairAction) element).getRepairTripleLabel() + ")";
 			}
 			
 			else if (element instanceof Alternative) {
@@ -81,7 +81,7 @@ public class RepairTreeLabelProvider extends LabelProvider {
 		
 		else if (element instanceof IRepairDecision) {
 			
-			if (element instanceof Repair) {
+			if (element instanceof RepairAction) {
 				return IMG_REPAIR;
 			}
 			
