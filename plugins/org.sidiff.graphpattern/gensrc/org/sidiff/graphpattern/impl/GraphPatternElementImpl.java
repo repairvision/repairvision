@@ -148,9 +148,28 @@ public abstract class GraphPatternElementImpl extends MinimalEObjectImpl.Contain
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+	    StringBuilder result = new StringBuilder(eClass().getName());
+	    result.append('@');
+	    result.append(Integer.toHexString(hashCode()));
 
-		StringBuffer result = new StringBuffer(super.toString());
+	    if (eIsProxy())
+	    {
+	      result.append(" (eProxyURI: ");
+	      result.append(eProxyURI());
+	      if (eDynamicClass() != null)
+	      {
+	        result.append(" eClass: ");
+	        result.append(eDynamicClass());
+	      }
+	      result.append(')');
+	    }
+	    else if (eDynamicClass() != null)
+	    {
+	      result.append(" (eClass: ");
+	      result.append(eDynamicClass());
+	      result.append(')');
+	    }
+
 		result.append(" (name: ");
 		result.append(name);
 		result.append(')');
