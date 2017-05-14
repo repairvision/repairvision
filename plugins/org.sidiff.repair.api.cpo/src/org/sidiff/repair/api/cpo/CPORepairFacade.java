@@ -22,7 +22,7 @@ import org.sidiff.debug.DebugUtil;
 import org.sidiff.difference.lifting.recognitionengine.IRecognitionEngine;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.cpo.lifting.BasicCPOLifting;
 import org.sidiff.repair.api.cpo.util.StatisticUtil;
@@ -137,7 +137,7 @@ public class CPORepairFacade implements IRepairFacade<CPORepairJob, CPORepairSet
 		}
 		
 		// Calculate repairs:
-		Map<Rule, List<IRepair>> repairs = new LinkedHashMap<>();
+		Map<Rule, List<IRepairPlan>> repairs = new LinkedHashMap<>();
 		
 		if (difference.getChangeSets().size() > 0) {
 			
@@ -162,7 +162,7 @@ public class CPORepairFacade implements IRepairFacade<CPORepairJob, CPORepairSet
 			long calculateRepairs = System.currentTimeMillis();
 			
 			for (Rule cpEditRule : complementFinder.getSourceRules()) {
-				List<IRepair> repairsPerRule = new ArrayList<>();
+				List<IRepairPlan> repairsPerRule = new ArrayList<>();
 
 				for(ComplementRule complement : complementFinder.getComplementRules(cpEditRule)) {
 					if (complement.getComplementingChanges().size() > 0) {
