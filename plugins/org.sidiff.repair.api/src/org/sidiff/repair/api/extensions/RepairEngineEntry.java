@@ -3,7 +3,7 @@ package org.sidiff.repair.api.extensions;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairSettings;
 import org.sidiff.repair.api.RepairJob;
@@ -63,9 +63,9 @@ public class RepairEngineEntry {
 	 * @return An instance of the repair facade.
 	 */
 	@SuppressWarnings("unchecked")
-	public IRepairFacade<RepairJob<? extends IRepair>, IRepairSettings> getRepairFacade() {
+	public IRepairFacade<RepairJob<? extends IRepairPlan>, IRepairSettings> getRepairFacade() {
 		try {
-			return (IRepairFacade<RepairJob<? extends IRepair>, IRepairSettings>) extension.createExecutableExtension("facade");
+			return (IRepairFacade<RepairJob<? extends IRepairPlan>, IRepairSettings>) extension.createExecutableExtension("facade");
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}

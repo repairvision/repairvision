@@ -13,7 +13,7 @@ import org.sidiff.repair.api.matching.EditOperationMatching;
  * 
  * @author Manuel Ohrndorf
  */
-public interface IRepair {
+public interface IRepairPlan {
 
 	/**
 	 * @return The corresponding partially executed edit-rule.

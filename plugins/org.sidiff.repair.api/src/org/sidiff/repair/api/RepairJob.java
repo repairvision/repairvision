@@ -18,7 +18,7 @@ import org.eclipse.emf.henshin.model.Rule;
  * @param <R>
  *            The kind of {@link Repair}.
  */
-public class RepairJob<R extends IRepair> {
+public class RepairJob<R extends IRepairPlan> {
 
 	/**
 	 * History of applied repairs.
@@ -61,11 +61,11 @@ public class RepairJob<R extends IRepair> {
 		this.repairStack = repairJob.repairStack;
 	}
 
-	public List<RuleApplication> applyRepairs(List<IRepair> repairs) {
+	public List<RuleApplication> applyRepairs(List<IRepairPlan> repairs) {
 		List<RuleApplication> appliedRepairs = new LinkedList<>();
 
 		// Apply repair:
-		for (IRepair repair : repairs) {
+		for (IRepairPlan repair : repairs) {
 			RuleApplication repairApplication = repair.apply();
 			appliedRepairs.add(repairApplication);
 
