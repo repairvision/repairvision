@@ -15,7 +15,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.cpo.CPORepairJob;
 import org.sidiff.repair.api.cpo.CPORepairSettings;
@@ -126,7 +126,7 @@ public class CPORepairApplication extends EclipseResourceRepairApplication<CPORe
 	}
 
 	@Override
-	public boolean applyRepairs(List<IRepair> repair) {
+	public boolean applyRepairs(List<IRepairPlan> repair) {
 		return (repairJob.applyRepairs(repair) != null);
 	}
 	
