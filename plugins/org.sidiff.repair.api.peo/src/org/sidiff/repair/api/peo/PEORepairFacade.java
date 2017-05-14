@@ -19,9 +19,10 @@ import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.henshin.ChangePatternUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.editrule.partialmatcher.complement.AbstractRepairFilter;
 import org.sidiff.editrule.partialmatcher.complement.ComplementFinder;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.editrule.partialmatcher.scope.RepairActionFilter;
+import org.sidiff.editrule.partialmatcher.scope.RepairScope;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.matching.EditOperationMatching;
 import org.sidiff.repair.api.util.RepairAPIUtil;
@@ -96,7 +97,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		
 		// Validate model and calculate abstract repairs:
 		long start = System.currentTimeMillis();
-		AbstractRepairFilter repairFilter = new AbstractRepairFilter(modelB, true);
+		RepairActionFilter repairFilter = new RepairActionFilter(modelB, true);
 		System.out.println("EVALUATION[Validierung]: " + (System.currentTimeMillis() - start) + "ms");
 		System.out.println("EVALUATION[Validierung]: " + repairFilter.getValidations().size() + " Validierungen");
 		
@@ -105,7 +106,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		complementFinder.setSaveRecognitionRule(settings.saveRecognitionRules());
 		complementFinder.start();
 		
-		Map<Rule, List<IRepair>> repairs = new LinkedHashMap<>();
+		Map<Rule, List<IRepairPlan>> repairs = new LinkedHashMap<>();
 		int repairCount = 0;
 		
 //		for (Rule editRule : settings.getEditRules()) {
@@ -140,10 +141,11 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		for (Rule editRule : settings.getEditRules()) {
 			
 			// Filter edit-rules by abstract repairs:
-			if (repairFilter.filter(ChangePatternUtil.getChanges(editRule))) {
-				
-				for(ComplementRule complement : complementFinder.searchComplementRules(editRule)) {
-					List<IRepair> repairsPerComplementRule = new ArrayList<>();
+			RepairScope scope = repairFilter.getScope(ChangePatternUtil.getChanges(editRule));
+			
+			if (!scope.isEmpty()) {
+				for(ComplementRule complement : complementFinder.searchComplementRules(editRule, scope)) {
+					List<IRepairPlan> repairsPerComplementRule = new ArrayList<>();
 
 					if (complement.getComplementingChanges().size() > 0) {
 

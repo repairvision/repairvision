@@ -21,7 +21,7 @@ public class PEORepairSettings extends BasicRepairSettings {
 	/**
 	 * Store generated recognition rules.
 	 */
-	private boolean saveRecognitionRules = true;
+	private boolean saveRecognitionRules = false;
 
 	public PEORepairSettings(Collection<Rule> editRules, DifferenceSettings differenceSettings) {
 		super();

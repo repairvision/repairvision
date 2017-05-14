@@ -2,11 +2,11 @@ package org.sidiff.repair.api.peo;
 
 import java.util.Collection;
 
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.validation.util.Validation;
 
-public class PEORepairJob extends RepairJob<IRepair> {
+public class PEORepairJob extends RepairJob<IRepairPlan> {
 
 	protected Collection<Validation> validations;
 	
