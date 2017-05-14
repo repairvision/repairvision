@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.SymmetricPackage;
@@ -54,8 +53,8 @@ public class ChangePatternRemoveObject extends ChangePatternObject {
 		Iterator<? extends EObject> matchedA = Domain.get(node.getNodePatternA()).getSearchedMatchIterator();
 		
 		while (matchedA.hasNext()) {
-			Iterator<AddObject> changes = changeIndex.getLocalChanges(matchedA.next(), 
-					SymmetricPackage.eINSTANCE.getRemoveObject_Obj(), AddObject.class);
+			Iterator<RemoveObject> changes = changeIndex.getLocalChanges(matchedA.next(), 
+					SymmetricPackage.eINSTANCE.getRemoveObject_Obj(), RemoveObject.class);
 			
 			changes.forEachRemaining(removeObject -> {
 				Domain.get(changeNodePattern).mark(removeObject);
