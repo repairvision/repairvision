@@ -2,6 +2,7 @@ package org.sidiff.common.henshin.emf;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
 
 public class DocumentType {
 
@@ -20,5 +21,13 @@ public class DocumentType {
 		}
 		
 		return pkg.getNsURI();
+	}
+	
+	public static String getDocumentType(Resource resource) {
+		if (!resource.getContents().isEmpty()) {
+			return getDocumentType(resource.getContents().get(0));
+		}
+		
+		return null;
 	}
 }
