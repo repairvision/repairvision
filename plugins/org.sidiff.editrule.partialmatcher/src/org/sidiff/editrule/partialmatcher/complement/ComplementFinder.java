@@ -13,6 +13,8 @@ import org.sidiff.common.henshin.ChangePatternUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.partialmatcher.PartialEditRuleRecognizer;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
+import org.sidiff.editrule.partialmatcher.scope.RepairScope;
+import org.sidiff.editrule.partialmatcher.util.DebugUtil;
 import org.sidiff.graphpattern.common.algorithms.IAlgorithm;
 import org.sidiff.graphpattern.matcher.IMatching;
 import org.sidiff.graphpattern.util.GraphPatternConstants;
@@ -104,13 +106,19 @@ public class ComplementFinder implements IAlgorithm {
 	 *            The partially executed edit-rule.
 	 * @return All complementing operations for the given edit-rule.
 	 */
-	public List<ComplementRule> searchComplementRules(Rule editRule) {
+	public List<ComplementRule> searchComplementRules(Rule editRule, RepairScope scope) {
 		
 		//// Lifting ////
 
 		//Matching:
 		RecognitionPattern recognitionPattern = partialEditRuleRecognizer.createRecognitionPattern(editRule);
-		Iterator<IMatching> matchIterator = partialEditRuleRecognizer.recognizePartialEditRule(recognitionPattern);
+
+		DebugUtil.printEditRule(editRule);
+		long matchingTime = System.currentTimeMillis();
+		
+		Iterator<IMatching> matchIterator = partialEditRuleRecognizer.recognizePartialEditRule(recognitionPattern, scope);
+		
+		DebugUtil.printMatchingTime(matchingTime);
 		
 		// Save recognition-rule:
 		if (saveRecognitionRule) {
@@ -128,6 +136,7 @@ public class ComplementFinder implements IAlgorithm {
 		// Find partially executed edit-operations:
 		while(matchIterator.hasNext()) {
 			IMatching matching = matchIterator.next();
+			DebugUtil.printMatching(recognitionPattern, matching);
 			
 			// Translate: Create partial edit-rule match from recognition-rule match:
 			List<EOMatch> editRuleMatch = matchConverter.createEditRuleMatch(recognitionPattern, matching);

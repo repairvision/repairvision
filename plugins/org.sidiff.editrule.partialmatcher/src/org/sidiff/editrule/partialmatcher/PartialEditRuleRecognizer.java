@@ -12,6 +12,8 @@ import org.sidiff.editrule.partialmatcher.generator.PartialMatchGenerator;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPatternGenerator;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPatternInitializer;
+import org.sidiff.editrule.partialmatcher.scope.RepairScope;
+import org.sidiff.editrule.partialmatcher.scope.RepairScopeConstraint;
 import org.sidiff.editrule.partialmatcher.selection.IMatchSelector;
 import org.sidiff.editrule.partialmatcher.selection.MatchSelector;
 import org.sidiff.editrule.partialmatcher.util.IndexedCrossReferencer;
@@ -73,6 +75,31 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 		new ChangeDependencies(editRule, recognitionPattern).calculateDependencyGraph();
 		
 		return recognitionPattern;
+	}
+	
+	public Iterator<IMatching> recognizePartialEditRule(RecognitionPattern recognitionPattern, RepairScope scope) {
+		
+		if (!started) {
+			throw new RuntimeException("Call PartialEditRuleRecognizer start()!");
+		}
+		
+		// Initialize change domains:
+		RecognitionPatternInitializer.initializeRecognitionPattern(recognitionPattern, changeDomainMap, matchingHelper);
+//		System.out.println("Initial Domains: \n\n" + PrintUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
+		
+		// Create Scope-Constraint:
+		RepairScopeConstraint repairScopeConstraint = new RepairScopeConstraint(scope, recognitionPattern);
+		
+		// Create matcher:
+		PartialMatchGenerator matchGenerator = new PartialMatchGenerator();
+		IMatchSelector matchSelector = new MatchSelector(recognitionPattern);
+		
+		DependencyEvaluation dependencies = new DependencyEvaluation(recognitionPattern.getGraphPattern());
+		matchGenerator.initialize(recognitionPattern.getChangeNodePatterns(), dependencies, matchSelector);
+		matchGenerator.setScope(repairScopeConstraint);
+		
+		matchGenerator.start();
+		return matchGenerator.getResults();
 	}
 
 	public Iterator<IMatching> recognizePartialEditRule(RecognitionPattern recognitionPattern) {

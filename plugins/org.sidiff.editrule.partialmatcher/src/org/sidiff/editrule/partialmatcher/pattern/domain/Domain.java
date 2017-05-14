@@ -222,6 +222,7 @@ public class Domain extends DataStoreImpl {
 			if (!selection.equals(SelectionType.SEARCHED) && SelectionType.isSelected(selection)) {
 				domain.put(element, SelectionType.SEARCHED);
 //				modified = true;
+				return true;
 			}
 		}
 		
@@ -333,5 +334,17 @@ public class Domain extends DataStoreImpl {
 		} else {
 			throw new RuntimeException("Missing Domain!");
 		}
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer string = new StringBuffer();
+		string.append("Domain: " + getEvaluation().getNode() + "\n");
+		
+		for (Entry<EObject, SelectionType> domainEntry : domain.entrySet()) {
+			string.append("  <" + domainEntry.getValue() + "> " + domainEntry.getKey() + "\n");
+		}
+		
+		return string.toString();
 	}
 }

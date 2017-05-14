@@ -16,6 +16,7 @@ import org.sidiff.editrule.partialmatcher.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.partialmatcher.generator.util.FilteredIterator;
 import org.sidiff.editrule.partialmatcher.generator.util.Stack;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
+import org.sidiff.editrule.partialmatcher.scope.RepairScopeConstraint;
 import org.sidiff.editrule.partialmatcher.selection.IMatchSelector;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.NodePattern;
@@ -95,6 +96,8 @@ public class PartialMatchGenerator {
 	
 	private Map<Variable, Set<EObject>> localAssigned;
 	
+	private RepairScopeConstraint scope;
+	
 	//-------------------------------------------------
 	// Main Algorithm:
 	//-------------------------------------------------
@@ -116,8 +119,9 @@ public class PartialMatchGenerator {
 
 			// create all sub-patterns which include the picked variable(s):
 			while (domain.hasNext()) {
-				assignVariable(variable, domain.next(), firstVariableOfAtomic);
-				expandAssignment(next - 1);
+				if (assignVariable(variable, domain.next(), firstVariableOfAtomic)) {
+					expandAssignment(next - 1);
+				}
 				freeVariable(variable);
 			}
 
@@ -149,6 +153,11 @@ public class PartialMatchGenerator {
 	private class Variable {
 		int index;
 		NodePattern node;
+		
+		@Override
+		public String toString() {
+			return "<" + index + "> " + node.toString();
+		}
 	}
 	
 	private class VariableSet implements Iterable<Variable> {
@@ -251,6 +260,10 @@ public class PartialMatchGenerator {
 				localAssigned.put(iVariable, new HashSet<>());
 			}
 		}
+	}
+	
+	public void setScope(RepairScopeConstraint scope) {
+		this.scope = scope;
 	}
 	
 	public void start() {
@@ -377,7 +390,7 @@ public class PartialMatchGenerator {
 		}
 	}
 	
-	private void assignVariable(Variable variable, EObject value, boolean firstVariableOfAtomic) {
+	private boolean assignVariable(Variable variable, EObject value, boolean firstVariableOfAtomic) {
 		
 		// store assignment:
 		assignments.push(value);
@@ -412,8 +425,22 @@ public class PartialMatchGenerator {
 		}
 		//-------------------------------------------------
 		
+		//-------------------------------------------------
+		// Test for scope
+		//-------------------------------------------------
+		
+		// NOTE: Needs only to be checked after the selection has changed!
+		if (firstVariableOfAtomic) {
+			if ((scope != null) && !scope.test()) {
+				return false;
+			}
+		}
+		
+		//-------------------------------------------------
+		
 		// new match created!
 		isNewMatch = true;
+		return true;
 	}
 	
 	private void clearLocalAssigned() {
@@ -496,12 +523,7 @@ public class PartialMatchGenerator {
 				}
 			}
 		}
-		
-		// remove variables 
-		if (AVOID_NON_MAXIMUM_SOLUTIONS) {
-			
-		}
-		
+
 		return cleared;
 	}
 
@@ -756,5 +778,19 @@ public class PartialMatchGenerator {
 		}
 		
 		return print.toString();
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer string = new StringBuffer();
+		
+		string.append("Assignments:\n");
+		 
+		for (int i = 0; i < subVariables.size(); i++) {
+			string.append("  " + subVariables.get(i) + ":\n");
+			string.append("    " + assignments.get(i) + "\n");
+		}
+		
+		return string.toString();
 	}
 }

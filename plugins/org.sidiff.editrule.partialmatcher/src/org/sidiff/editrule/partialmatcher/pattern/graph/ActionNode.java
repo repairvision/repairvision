@@ -178,8 +178,8 @@ public class ActionNode extends ActionGraphElement  {
 	}
 	
 	public void addMatchContextA(EObject matchA) {
-//		System.out.println("    A:" + this);
-//		System.out.println("        Match: " + matchA);
+		System.out.println("    A:" + this);
+		System.out.println("        Match: " + matchA);
 		
 		// Add match for model A:
 		boolean domainHasChanged = false;
@@ -216,8 +216,8 @@ public class ActionNode extends ActionGraphElement  {
 	}
 	
 	public void addMatchContextB(EObject matchB) {
-//		System.out.println("    B:" + this);
-//		System.out.println("        Match: " + matchB);
+		System.out.println("    B:" + this);
+		System.out.println("        Match: " + matchB);
 		
 		// Add match for model B:
 		boolean domainHasChanged = false;
@@ -254,7 +254,7 @@ public class ActionNode extends ActionGraphElement  {
 	}
 
 	public void searchPaths(ChangePattern selected, ActionNode start, Set<ActionNode> path) {
-//		System.out.println("Evaluation Step: " + this);
+		System.out.println("Evaluation Step: " + this);
 		
 		path.add(this);
 		
