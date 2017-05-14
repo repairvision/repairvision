@@ -7,7 +7,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.matching.EOMatch;
 import org.sidiff.repair.api.matching.EditOperationMatching;
 import org.sidiff.repair.complement.construction.ComplementRule;
@@ -17,7 +17,7 @@ import org.sidiff.repair.complement.construction.ComplementRule;
  * 
  * @author Manuel Ohrndorf
  */
-public class RepairOperation implements IRepair {
+public class RepairOperation implements IRepairPlan {
 
 	/**
 	 * The rule that contains the repair changes.
