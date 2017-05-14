@@ -17,7 +17,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.evaluation.oracle.DeveloperIntentionOracle;
 import org.sidiff.repair.historymodel.History;
@@ -25,7 +25,7 @@ import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
 import org.sidiff.repair.validation.IConstraint;
 import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.Repair;
+import org.sidiff.repair.validation.fix.RepairAction;
 import org.sidiff.repair.validation.util.Validation;
 import org.sidiff.validation.constraint.library.IConstraintLibrary;
 import org.sidiff.validation.constraint.library.util.ConstraintLibraryUtil;
@@ -121,10 +121,10 @@ public class EvaluationUtil {
 		return null;
 	}
 	
-	public static Rule getComplement(PEORepairJob repairJob, IRepair repair) {
+	public static Rule getComplement(PEORepairJob repairJob, IRepairPlan repair) {
 		
 		for (Rule complement : repairJob.getRepairs().keySet()) {
-			for (IRepair repairOfcomplement : repairJob.getRepairs().get(complement)) {
+			for (IRepairPlan repairOfcomplement : repairJob.getRepairs().get(complement)) {
 				if (repairOfcomplement == repair) {
 					return complement;
 				}
@@ -134,11 +134,11 @@ public class EvaluationUtil {
 		return null;
 	}
 	
-	public static List<IRepair> historicallyObservable(PEORepairJob repairJob) {
-		List<IRepair> observable = new ArrayList<>();
+	public static List<IRepairPlan> historicallyObservable(PEORepairJob repairJob) {
+		List<IRepairPlan> observable = new ArrayList<>();
 		
 		for (Rule complementRule : repairJob.getRepairs().keySet()) {
-			for (IRepair repair : repairJob.getRepairs().get(complementRule)) {
+			for (IRepairPlan repair : repairJob.getRepairs().get(complementRule)) {
 				
 				// The preMatch turning the complement rule into a repair operation.
 				Match preMatch = repair.getRepairPreMatch().getMatch();
@@ -163,7 +163,7 @@ public class EvaluationUtil {
 	
 	// repairs / paths
 	public static void getPathCountOfRepairTree(IRepairDecision node, int[] counter) {
-		if (node instanceof Repair) {
+		if (node instanceof RepairAction) {
 			counter[0]++;
 		}
 		

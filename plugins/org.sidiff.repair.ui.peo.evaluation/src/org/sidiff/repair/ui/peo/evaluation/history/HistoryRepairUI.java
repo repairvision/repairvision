@@ -32,7 +32,7 @@ import org.sidiff.repair.ui.decoration.ISelectionAdapter;
 import org.sidiff.repair.ui.decoration.RepairSelectionController;
 import org.sidiff.repair.ui.decoration.SelectionAdapterRegistry;
 import org.sidiff.repair.ui.peo.evaluation.HistoryEvaluationApplication;
-import org.sidiff.repair.validation.fix.Repair;
+import org.sidiff.repair.validation.fix.RepairAction;
 import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
 import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
 import org.sidiff.repair.validation.util.Validation;
@@ -91,8 +91,8 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 						return Collections.singletonList(validation.getContext()).iterator();
 					}
 					
-					else if (selectedElement instanceof Repair) {
-						Repair repair = (Repair) selectedElement;
+					else if (selectedElement instanceof RepairAction) {
+						RepairAction repair = (RepairAction) selectedElement;
 						return Collections.singletonList(repair.getContext()).iterator();
 					}
 				}

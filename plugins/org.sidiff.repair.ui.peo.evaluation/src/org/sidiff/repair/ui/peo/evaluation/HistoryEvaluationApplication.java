@@ -14,7 +14,7 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.repair.api.IRepair;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.evaluation.oracle.DeveloperIntentionOracle;
@@ -111,7 +111,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 							
 							// RQ 02:
 							// TODO: Oracle for Repair-Trees:
-							List<IRepair> observable = EvaluationUtil.historicallyObservable(repairJob);
+							List<IRepairPlan> observable = EvaluationUtil.historicallyObservable(repairJob);
 							
 							if (!observable.isEmpty()) {
 								rq.getResearchQuestion02().historicallyObservableInconsistenciesConfigured++;
@@ -148,8 +148,8 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 								public int compare(Rule complementA, Rule complementB) {
 									
 									// Show the element with the greater ratio on top of the viewer:
-									IRepair repairA = repairJob.getRepairs().get(complementA).get(0);
-									IRepair repairB = repairJob.getRepairs().get(complementB).get(0);
+									IRepairPlan repairA = repairJob.getRepairs().get(complementA).get(0);
+									IRepairPlan repairB = repairJob.getRepairs().get(complementB).get(0);
 									
 									double ratioA = (double) repairA.getHistoricChanges().size() / repairA.getComplementingChanges().size();
 									double ratioB = (double) repairB.getHistoricChanges().size() / repairB.getComplementingChanges().size();
@@ -193,9 +193,9 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 							// Find best observable:
 							int position = 0;
 							Rule bestObservableComplement =  null;
-							IRepair bestObservableRepair = null;
+							IRepairPlan bestObservableRepair = null;
 							
-							for (IRepair observableRepair : observable) {
+							for (IRepairPlan observableRepair : observable) {
 								Rule observableComplement = EvaluationUtil.getComplement(repairJob, observableRepair);
 								int positionOfObservable = complements.indexOf(observableComplement);
 								
@@ -251,7 +251,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 				int count = 0;
 				
 				for (Rule complementRule : repairJob.getRepairs().keySet()) {
-					for (IRepair repair : repairJob.getRepairs().get(complementRule)) {
+					for (IRepairPlan repair : repairJob.getRepairs().get(complementRule)) {
 						
 						// The preMatch turning the complement rule into a repair operation.
 						Match preMatch = repair.getRepairPreMatch().getMatch();
