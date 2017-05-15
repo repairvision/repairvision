@@ -114,7 +114,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 							List<IRepairPlan> observable = EvaluationUtil.historicallyObservable(repairJob);
 							
 							if (!observable.isEmpty()) {
-								rq.getResearchQuestion02().historicallyObservableInconsistenciesConfigured++;
+								rq.getResearchQuestion02().repairAsObservedOPK++;
 							}
 							
 							// RQ 03:
@@ -191,7 +191,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 							});
 							
 							// Find best observable:
-							int position = 0;
+							int position = Integer.MAX_VALUE;
 							Rule bestObservableComplement =  null;
 							IRepairPlan bestObservableRepair = null;
 							

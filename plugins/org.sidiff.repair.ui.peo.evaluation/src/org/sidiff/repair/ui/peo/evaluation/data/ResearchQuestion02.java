@@ -11,9 +11,9 @@ public class ResearchQuestion02 implements Serializable {
 
 	public String historyURI = "N/A";
 	
-	public int historicallyObservableInconsistenciesAll = 0;
-	
-	public int historicallyObservableInconsistenciesConfigured = 0;
+//	public int historicallyObservableInconsistenciesAll = 0;
+//	
+//	public int historicallyObservableInconsistenciesConfigured = 0;
 	
 	public int repairAsObservedRE = 0;
 	

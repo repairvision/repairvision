@@ -182,8 +182,8 @@ public class RepairEvaluation implements Serializable  {
 			int avgCountOfRepairs = ResearchQuestion04.getAVGCountOfRepairs(rq.getResearchQuestion04().values());
 			int avgPositionOfComplement = ResearchQuestion04.getAVGPositionOfComplement(rq.getResearchQuestion04().values());
 			
-			string.append("(" + avgCountOfRepairs);
-			string.append("/" + avgPositionOfComplement + ")");
+			string.append("(" + avgPositionOfComplement);
+			string.append("/" + avgCountOfRepairs + ")");
 			
 			string.append("\\\\");
 			string.append("\n");
