@@ -15,6 +15,7 @@ import org.sidiff.common.henshin.view.AttributePair;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain.SelectionType;
 import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
+import org.sidiff.editrule.partialmatcher.util.debug.DebugUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
@@ -178,8 +179,7 @@ public class ActionNode extends ActionGraphElement  {
 	}
 	
 	public void addMatchContextA(EObject matchA) {
-		System.out.println("    A:" + this);
-		System.out.println("        Match: " + matchA);
+		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStepContextA(this, matchA);
 		
 		// Add match for model A:
 		boolean domainHasChanged = false;
@@ -216,8 +216,7 @@ public class ActionNode extends ActionGraphElement  {
 	}
 	
 	public void addMatchContextB(EObject matchB) {
-		System.out.println("    B:" + this);
-		System.out.println("        Match: " + matchB);
+		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStepContextB(this, matchB);
 		
 		// Add match for model B:
 		boolean domainHasChanged = false;
@@ -254,7 +253,7 @@ public class ActionNode extends ActionGraphElement  {
 	}
 
 	public void searchPaths(ChangePattern selected, ActionNode start, Set<ActionNode> path) {
-		System.out.println("Evaluation Step: " + this);
+		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStep(this);
 		
 		path.add(this);
 		

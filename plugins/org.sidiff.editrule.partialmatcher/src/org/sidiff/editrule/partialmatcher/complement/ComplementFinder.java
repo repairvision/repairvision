@@ -14,7 +14,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.partialmatcher.PartialEditRuleRecognizer;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
 import org.sidiff.editrule.partialmatcher.scope.RepairScope;
-import org.sidiff.editrule.partialmatcher.util.DebugUtil;
+import org.sidiff.editrule.partialmatcher.util.debug.DebugUtil;
 import org.sidiff.graphpattern.common.algorithms.IAlgorithm;
 import org.sidiff.graphpattern.matcher.IMatching;
 import org.sidiff.graphpattern.util.GraphPatternConstants;
