@@ -10,9 +10,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.interpreter.Match;
-import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.GraphElement;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.graphpattern.EObjectList;
@@ -32,106 +29,11 @@ import org.sidiff.validation.constraint.library.util.ConstraintLibraryUtil;
 
 public class EvaluationUtil {
 	
-	public static int countOfNodeChanges(List<GraphElement> changes) {
-		int count = 0;
-		
-		for (GraphElement graphElement : changes) {
-			if (graphElement instanceof Node) {
-				++count;
-			}
-		}
-		
-		return count;
-	}
-	
-	public static int countOfNodeCreateChanges(List<GraphElement> changes) {
-		int count = 0;
-		
-		for (GraphElement graphElement : changes) {
-			if (graphElement instanceof Node) {
-				if (graphElement.getGraph().isRhs()) {
-					++count;
-				}
-			}
-		}
-		
-		return count;
-	}
-	
-	public static int countOfNodeDeleteChanges(List<GraphElement> changes) {
-		int count = 0;
-		
-		for (GraphElement graphElement : changes) {
-			if (graphElement instanceof Node) {
-				if (graphElement.getGraph().isLhs()) {
-					++count;
-				}
-			}
-		}
-		
-		return count;
-	}
-	
-	public static int countOfEdgeChanges(List<GraphElement> changes) {
-		int count = 0;
-		
-		for (GraphElement graphElement : changes) {
-			if (graphElement instanceof Edge) {
-				++count;
-			}
-		}
-		
-		return count;
-	}
-	
-	public static int countOfEdgeCreateChanges(List<GraphElement> changes) {
-		int count = 0;
-		
-		for (GraphElement graphElement : changes) {
-			if (graphElement instanceof Edge) {
-				if (graphElement.getGraph().isRhs()) {
-					++count;
-				}
-			}
-		}
-		
-		return count;
-	}
-	
-	public static int countOfEdgeDeleteChanges(List<GraphElement> changes) {
-		int count = 0;
-		
-		for (GraphElement graphElement : changes) {
-			if (graphElement instanceof Edge) {
-				if (graphElement.getGraph().isLhs()) {
-					++count;
-				}
-			}
-		}
-		
-		return count;
-	}
-	
-	public static Validation getRepairTree(Collection<Validation> repairTrees, ValidationError inconsistencies) {
-		for (Validation repairTree : repairTrees) {
-			if (repairTree.getRule().getName().equalsIgnoreCase(getValidationID(inconsistencies))) {
-				return repairTree;
-			}
-		}
-		return null;
-	}
-	
-	public static Rule getComplement(PEORepairJob repairJob, IRepairPlan repair) {
-		
-		for (Rule complement : repairJob.getRepairs().keySet()) {
-			for (IRepairPlan repairOfcomplement : repairJob.getRepairs().get(complement)) {
-				if (repairOfcomplement == repair) {
-					return complement;
-				}
-			}
-		}
-		
-		return null;
+	public static EObjectList toEObjectList(List<? extends EObject> list, String label) {
+		EObjectList eObjectList = GraphpatternFactory.eINSTANCE.createEObjectList();
+		eObjectList.setLabel(label);
+		eObjectList.getContent().addAll(list);
+		return eObjectList;
 	}
 	
 	public static List<IRepairPlan> historicallyObservable(PEORepairJob repairJob) {
@@ -161,6 +63,15 @@ public class EvaluationUtil {
 		return observable;
 	}
 	
+	public static Validation getRepairTree(Collection<Validation> repairTrees, ValidationError inconsistencies) {
+		for (Validation repairTree : repairTrees) {
+			if (repairTree.getRule().getName().equalsIgnoreCase(getValidationID(inconsistencies))) {
+				return repairTree;
+			}
+		}
+		return null;
+	}
+	
 	// repairs / paths
 	public static void getPathCountOfRepairTree(IRepairDecision node, int[] counter) {
 		if (node instanceof RepairAction) {
@@ -174,13 +85,6 @@ public class EvaluationUtil {
 				getPathCountOfRepairTree(child, counter);
 			}
 		}
-	}
-	
-	public static EObjectList toEObjectList(List<? extends EObject> list, String label) {
-		EObjectList eObjectList = GraphpatternFactory.eINSTANCE.createEObjectList();
-		eObjectList.setLabel(label);
-		eObjectList.getContent().addAll(list);
-		return eObjectList;
 	}
 	
 	public static List<ValidationError> getValidations(History history) {
@@ -236,14 +140,6 @@ public class EvaluationUtil {
 					EObject invalidElementA = validationA.getInvalidElement().get(0);
 					EObject invalidElementB = validationB.getInvalidElement().get(0);
 					
-					// FIXME: Mapping from file: to platform:
-//					if (invalidElementA.eIsProxy()) {
-//						EcoreUtil.resolve(invalidElementA, validationA.eResource().getResourceSet());
-//					}
-//					if (invalidElementB.eIsProxy()) {
-//						EcoreUtil.resolve(invalidElementB, validationB.eResource().getResourceSet());
-//					}
-					
 //					if (EMFUtil.getXmiId(invalidElementA).equals(EMFUtil.getXmiId(invalidElementB))) {
 					if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
 						return true;
@@ -269,14 +165,14 @@ public class EvaluationUtil {
 		return null;
 	}
 
-//	public static Version getSuccessorRevision(Version version) {
-//		History history = (History) version.eContainer();
-//		int index = history.getVersions().indexOf(version);
-//
-//		if ((index + 1) < history.getVersions().size()) {
-//			return history.getVersions().get(index + 1);
-//		}
-//		
-//		return null;
-//	}
+	public static Version getSuccessorRevision(Version version) {
+		History history = (History) version.eContainer();
+		int index = history.getVersions().indexOf(version);
+
+		if ((index + 1) < history.getVersions().size()) {
+			return history.getVersions().get(index + 1);
+		}
+		
+		return null;
+	}
 }
