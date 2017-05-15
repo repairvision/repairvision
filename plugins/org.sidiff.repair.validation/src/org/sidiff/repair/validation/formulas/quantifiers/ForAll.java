@@ -3,6 +3,7 @@ package org.sidiff.repair.validation.formulas.quantifiers;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.Sequence;
@@ -27,13 +28,13 @@ public class ForAll extends Quantifier {
 	}
 
 	@Override
-	public boolean evaluate() {
-		iteration.evaluate();
+	public boolean evaluate(IScopeRecorder scope) {
+		iteration.evaluate(scope);
 
 		for (Object nextObject : getIterable()) {
 			bounded.assign(nextObject);
 
-			if (!formula.evaluate())  {
+			if (!formula.evaluate(scope))  {
 				result = false;
 				return result;
 			}
@@ -44,7 +45,7 @@ public class ForAll extends Quantifier {
 	}
 
 	@Override
-	public void repair(IRepairDecision parent, boolean expected) {
+	public void repair(IRepairDecision parent, boolean expected, IScopeRecorder scope) {
 		Alternative alternativ = Alternative.nextAlternative(parent);
 		
 		// if σ = t
@@ -57,14 +58,14 @@ public class ForAll extends Quantifier {
 				for (Object nextObject : getIterable()) {
 					bounded.assign(nextObject);
 
-					if (!formula.evaluate())  {
+					if (!formula.evaluate(scope))  {
 						invalid.add(nextObject);
 					}
 				}
 				
 				((GetClosure) iteration).repair(alternativ, RepairType.DELETE, invalid);
 			} else {
-				iteration.repair(alternativ, RepairType.DELETE);
+				iteration.repair(alternativ, RepairType.DELETE, scope);
 			}
 			
 			// B: Make all invalid elements (terms) of the set valid!
@@ -73,8 +74,8 @@ public class ForAll extends Quantifier {
 			for (Object nextObject : getIterable()) {
 				bounded.assign(nextObject);
 				
-				if (!formula.evaluate())  {
-					formula.repair(sequence, expected);
+				if (!formula.evaluate(scope))  {
+					formula.repair(sequence, expected, scope);
 				}
 			}
 		}
@@ -89,7 +90,7 @@ public class ForAll extends Quantifier {
 				for (Object nextObject : getIterable()) {
 					bounded.assign(nextObject);
 
-					if (!formula.evaluate())  {
+					if (!formula.evaluate(scope))  {
 						invalid.add(nextObject);
 					}
 				}
@@ -97,12 +98,12 @@ public class ForAll extends Quantifier {
 				((GetClosure) iteration).repair(alternativ, RepairType.CREATE, invalid);
 			} else {
 				if (isMany()) {
-					iteration.repair(alternativ, RepairType.CREATE);
+					iteration.repair(alternativ, RepairType.CREATE, scope);
 				} else {
 					if (isEmpty()) {
-						iteration.repair(alternativ, RepairType.CREATE);
+						iteration.repair(alternativ, RepairType.CREATE, scope);
 					} else {
-						iteration.repair(alternativ, RepairType.MODIFY);
+						iteration.repair(alternativ, RepairType.MODIFY, scope);
 					}
 				}
 			}
@@ -111,8 +112,8 @@ public class ForAll extends Quantifier {
 			for (Object nextObject : getIterable()) {
 				bounded.assign(nextObject);
 				
-				if (formula.evaluate())  {
-					formula.repair(alternativ, expected);
+				if (formula.evaluate(scope))  {
+					formula.repair(alternativ, expected, scope);
 				}
 			}
 		}

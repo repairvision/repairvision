@@ -1,5 +1,6 @@
 package org.sidiff.repair.validation.formulas.unary;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.formulas.binary.Formula;
 
 public abstract class UnaryFormula extends Formula {
@@ -20,7 +21,7 @@ public abstract class UnaryFormula extends Formula {
 	}
 	
 	@Override
-	public boolean evaluate() {
+	public boolean evaluate(IScopeRecorder scope) {
 		child.clear();
 		return false;
 	}

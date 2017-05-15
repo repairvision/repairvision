@@ -1,5 +1,6 @@
 package org.sidiff.repair.validation.formulas.binary;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 
 public abstract class BinaryFormula extends Formula {
@@ -31,25 +32,25 @@ public abstract class BinaryFormula extends Formula {
 	}
 	
 	@Override
-	public boolean evaluate() {
+	public boolean evaluate(IScopeRecorder scope) {
 		
 		// Clear old evaluation:
 		left.clear();
-		right.clear();;
+		right.clear();
 		
 		return false;
 	}
 	
 	@Override
-	public void repair(IRepairDecision parentRepairDecision, boolean expected) {
+	public void repair(IRepairDecision parentRepairDecision, boolean expected, IScopeRecorder scope) {
 		
 		// Ensure complete (unoptimized) evaluation:
 		if (left.getResult() == null) {
-			left.evaluate();
+			left.evaluate(scope);
 		}
 		
 		if (right.getResult() == null) {
-			right.evaluate();
+			right.evaluate(scope);
 		}
 	}
 }

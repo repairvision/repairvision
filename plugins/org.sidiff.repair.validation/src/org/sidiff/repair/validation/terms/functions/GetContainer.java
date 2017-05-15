@@ -3,6 +3,7 @@ package org.sidiff.repair.validation.terms.functions;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction;
@@ -19,18 +20,19 @@ public class GetContainer extends Function {
 	}
 	
 	@Override
-	public Object evaluate() {
-		element.evaluate();
+	public Object evaluate(IScopeRecorder scope) {
+		element.evaluate(scope);
 		
 		if (element.getValue() != null) {
 			value = ((EObject) element.getValue()).eContainer();
+			scope.addElement(value);
 		}
 		
 		return value;
 	}
 
 	@Override
-	public void repair(IRepairDecision parent, RepairType type) {
+	public void repair(IRepairDecision parent, RepairType type, IScopeRecorder scope) {
 		Alternative alternative = Alternative.nextAlternative(parent);
 		
 		if (element.getValue() instanceof Collection<?>) {

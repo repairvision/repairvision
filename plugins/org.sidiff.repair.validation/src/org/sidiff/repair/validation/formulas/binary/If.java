@@ -1,5 +1,6 @@
 package org.sidiff.repair.validation.formulas.binary;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.Sequence;
@@ -12,16 +13,16 @@ public class If extends BinaryFormula {
 	}
 
 	@Override
-	public boolean evaluate() {
-		super.evaluate();
+	public boolean evaluate(IScopeRecorder scope) {
+		super.evaluate(scope);
 		
-		result = !left.evaluate() || right.evaluate();
+		result = !left.evaluate(scope) || right.evaluate(scope);
 		return result;
 	}
 
 	@Override
-	public void repair(IRepairDecision parentRepairDecision, boolean expected) {
-		super.repair(parentRepairDecision, expected);
+	public void repair(IRepairDecision parentRepairDecision, boolean expected, IScopeRecorder scope) {
+		super.repair(parentRepairDecision, expected, scope);
 		
 		// NOTE: Missing inverting expected results in paper!?
 		
@@ -29,26 +30,26 @@ public class If extends BinaryFormula {
 		if (expected && left.getResult() && !right.getResult()) {
 			Alternative newRepairAlternative = new Alternative();
 			parentRepairDecision.appendChildDecisions(newRepairAlternative);
-			left.repair(newRepairAlternative, !expected);
-			right.repair(newRepairAlternative, expected);
+			left.repair(newRepairAlternative, !expected, scope);
+			right.repair(newRepairAlternative, expected, scope);
 		}
 
 		// if σ = f, ςa = t, ςb = t : G(b, σ)
 		else if (!expected && left.getResult() && right.getResult()) {
-			right.repair(parentRepairDecision, !expected);
+			right.repair(parentRepairDecision, !expected, scope);
 		}
 		
 		// if σ = f, ςa = f, ςb = t : G(a, σ) + G(b, σ)
 		else if (!expected && !left.getResult() && right.getResult()) {
 			Sequence newRepairSequence = new Sequence();
 			parentRepairDecision.appendChildDecisions(newRepairSequence);
-			left.repair(newRepairSequence, expected);
-			right.repair(newRepairSequence, !expected);
+			left.repair(newRepairSequence, expected, scope);
+			right.repair(newRepairSequence, !expected, scope);
 		}
 		
 		// if σ = f, ςa = f, ςb = f : G(a, σ)
 		else if (!expected && !left.getResult() && !right.getResult()) {
-			left.repair(parentRepairDecision, !expected);
+			left.repair(parentRepairDecision, !expected, scope);
 		}
 	}
 }

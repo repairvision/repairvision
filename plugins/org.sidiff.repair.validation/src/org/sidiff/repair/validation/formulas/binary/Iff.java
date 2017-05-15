@@ -1,5 +1,6 @@
 package org.sidiff.repair.validation.formulas.binary;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 
@@ -11,47 +12,47 @@ public class Iff extends BinaryFormula {
 	}
 
 	@Override
-	public boolean evaluate() {
-		super.evaluate();
+	public boolean evaluate(IScopeRecorder scope) {
+		super.evaluate(scope);
 		
-		result = left.evaluate() == right.evaluate();
+		result = left.evaluate(scope) == right.evaluate(scope);
 		return result;
 	}
 
 	@Override
-	public void repair(IRepairDecision parentRepairDecision, boolean expected) {
-		super.repair(parentRepairDecision, expected);
+	public void repair(IRepairDecision parentRepairDecision, boolean expected, IScopeRecorder scope) {
+		super.repair(parentRepairDecision, expected, scope);
 		
 		// if σ = t, ςa = t, ςb = f : G(a, ¬σ) • G(b, σ)
 		if (expected && left.getResult() && !right.getResult()) {			// expected = true
 			Alternative newRepairAlternative = new Alternative();
 			parentRepairDecision.appendChildDecisions(newRepairAlternative);
-			left.repair(newRepairAlternative, !expected); 					// G(left, false)
-			right.repair(newRepairAlternative, expected);					// G(right, true)
+			left.repair(newRepairAlternative, !expected, scope); 			// G(left, false)
+			right.repair(newRepairAlternative, expected, scope);			// G(right, true)
 		}
 
 		// if σ = t, ςa = f, ςb = t : G(a, σ) • G(b, ¬σ)
 		else if (expected && !left.getResult() && right.getResult()) {		// expected = true
 			Alternative newRepairAlternative = new Alternative();
 			parentRepairDecision.appendChildDecisions(newRepairAlternative);
-			left.repair(newRepairAlternative, expected);					// G(left, true)
-			right.repair(newRepairAlternative, !expected);					// G(right, false)
+			left.repair(newRepairAlternative, expected, scope);				// G(left, true)
+			right.repair(newRepairAlternative, !expected, scope);			// G(right, false)
 		}
 		
 		// if σ = f, ςa = t, ςb = t : G(a, σ) • G(b, σ)
 		else if (!expected && left.getResult() && right.getResult()) {		// expected = false
 			Alternative newRepairSequence = new Alternative();
 			parentRepairDecision.appendChildDecisions(newRepairSequence);
-			left.repair(newRepairSequence, expected);						// G(left, false)
-			right.repair(newRepairSequence, expected);						// G(right, false)
+			left.repair(newRepairSequence, expected, scope);				// G(left, false)
+			right.repair(newRepairSequence, expected, scope);				// G(right, false)
 		}
 		
 		// if σ = f, ςa = f, ςb = f : G(a, ¬σ) • G(b, ¬σ)
 		else if (!expected && !left.getResult() && !right.getResult()) {	// expected = false
 			Alternative newRepairAlternative = new Alternative();
 			parentRepairDecision.appendChildDecisions(newRepairAlternative);
-			left.repair(newRepairAlternative, !expected);				// G(left, true)
-			right.repair(newRepairAlternative, !expected);			// G(left, true)
+			left.repair(newRepairAlternative, !expected, scope);			// G(left, true)
+			right.repair(newRepairAlternative, !expected, scope);			// G(left, true)
 		}
 	}
 }

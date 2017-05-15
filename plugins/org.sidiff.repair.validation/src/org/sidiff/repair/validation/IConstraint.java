@@ -8,6 +8,8 @@ import org.sidiff.repair.validation.formulas.binary.Formula;
 public interface IConstraint extends INamedElement {
 
 	boolean evaluate(EObject contextElement);
+	
+	boolean evaluate(EObject contextElement, IScopeRecorder scope);
 
 	boolean getResult();
 
@@ -28,5 +30,6 @@ public interface IConstraint extends INamedElement {
 	void setMessage(String message);
 
 	IRepairDecision repair();
-
+	
+	IRepairDecision repair(IScopeRecorder scope);
 }

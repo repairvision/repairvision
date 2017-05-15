@@ -1,5 +1,6 @@
 package org.sidiff.repair.validation.terms;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 
@@ -21,7 +22,8 @@ public class Variable extends Term {
 	}
 	
 	@Override
-	public Object evaluate() {
+	public Object evaluate(IScopeRecorder scope) {
+		scope.addElement(value);
 		return value;
 	}
 
@@ -31,12 +33,7 @@ public class Variable extends Term {
 	}
 
 	@Override
-	public void repair(IRepairDecision parent, RepairType type) {
-		
-		// TODO: Concrete vs. abstract remove!?
-//		Repair newRepair = new Repair(type, (EObject) value, ((Get) binding).getFeature());
-//		parentRepairDecision.appendChildDecisions(newRepair);
-				
-		binding.repair(parent, type);
+	public void repair(IRepairDecision parent, RepairType type, IScopeRecorder scope) {
+		binding.repair(parent, type, scope);
 	}
 }

@@ -28,8 +28,13 @@ public class Constraint extends NamedElement implements IConstraint {
 	
 	@Override
 	public boolean evaluate(EObject contextElement) {
+		return evaluate(contextElement, new ScopeRecorderDummy());
+	}
+	
+	@Override
+	public boolean evaluate(EObject contextElement, IScopeRecorder scope) {
 		this.context.assign(contextElement);
-		return formula.evaluate();
+		return formula.evaluate(scope);
 	}
 	
 	@Override
@@ -79,6 +84,11 @@ public class Constraint extends NamedElement implements IConstraint {
 
 	@Override
 	public IRepairDecision repair() {
+		return repair(new ScopeRecorderDummy());
+	}
+
+	@Override
+	public IRepairDecision repair(IScopeRecorder scope) {
 		IRepairDecision repairTreeRoot = new Alternative();
 		
 		// Repair which deletes the root element:
@@ -95,7 +105,7 @@ public class Constraint extends NamedElement implements IConstraint {
 		}
 		
 		// Repairs for validation scope:
-		formula.repair(repairTreeRoot, true);
+		formula.repair(repairTreeRoot, true, scope);
 		
 		return repairTreeRoot;
 	}

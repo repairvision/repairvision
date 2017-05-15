@@ -1,5 +1,6 @@
 package org.sidiff.repair.validation.terms;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.NamedElement;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction.RepairType;
@@ -12,7 +13,7 @@ public abstract class Term extends NamedElement  {
 		return value;
 	}
 	
-	public abstract Object evaluate();
+	public abstract Object evaluate(IScopeRecorder scope);
 	
 	/**
 	 * Appends all child repair decisions (from left to right) of this
@@ -25,5 +26,5 @@ public abstract class Term extends NamedElement  {
 	 *            The modification kind.
 	 * 
 	 */
-	public abstract void repair(IRepairDecision parent, RepairType type);
+	public abstract void repair(IRepairDecision parent, RepairType type, IScopeRecorder scope);
 }

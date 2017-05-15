@@ -2,6 +2,7 @@ package org.sidiff.repair.validation.terms.functions;
 
 import java.util.Collection;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.terms.Term;
@@ -16,8 +17,8 @@ public class Size extends Function {
 	}
 	
 	@Override
-	public Object evaluate() {
-		elements.evaluate();
+	public Object evaluate(IScopeRecorder scope) {
+		elements.evaluate(scope);
 		
 		if (elements.getValue() == null) {
 			value = 0;
@@ -33,8 +34,8 @@ public class Size extends Function {
 	}
 
 	@Override
-	public void repair(IRepairDecision parent, RepairType type) {
+	public void repair(IRepairDecision parent, RepairType type, IScopeRecorder scope) {
 		// size(x.q.w) -> (delete/add, ..., x/q/w) 
-		elements.repair(parent, type);
+		elements.repair(parent, type, scope);
 	}
 }

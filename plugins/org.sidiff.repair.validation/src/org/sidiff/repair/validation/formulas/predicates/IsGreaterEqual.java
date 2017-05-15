@@ -1,5 +1,6 @@
 package org.sidiff.repair.validation.formulas.predicates;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction.RepairType;
@@ -12,9 +13,9 @@ public class IsGreaterEqual extends Comparison {
 	}
 	
 	@Override
-	public boolean evaluate() {
-		left.evaluate();
-		right.evaluate();
+	public boolean evaluate(IScopeRecorder scope) {
+		left.evaluate(scope);
+		right.evaluate(scope);
 		
 		Integer left_value = (Integer) left.getValue();
 		Integer right_value = (Integer) right.getValue();
@@ -24,20 +25,20 @@ public class IsGreaterEqual extends Comparison {
 	}
 
 	@Override
-	public void repair(IRepairDecision parent, boolean expected) {
+	public void repair(IRepairDecision parent, boolean expected, IScopeRecorder scope) {
 		
 		if (expected && !getResult()) {
 			Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 
-			left.repair(newRepairAlternative, RepairType.CREATE);
-			right.repair(newRepairAlternative, RepairType.DELETE);
+			left.repair(newRepairAlternative, RepairType.CREATE, scope);
+			right.repair(newRepairAlternative, RepairType.DELETE, scope);
 		} 
 		
 		else if (!expected && getResult()) {
 			Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 
-			left.repair(newRepairAlternative, RepairType.DELETE);
-			right.repair(newRepairAlternative, RepairType.CREATE);
+			left.repair(newRepairAlternative, RepairType.DELETE, scope);
+			right.repair(newRepairAlternative, RepairType.CREATE, scope);
 		}
 	}
 }

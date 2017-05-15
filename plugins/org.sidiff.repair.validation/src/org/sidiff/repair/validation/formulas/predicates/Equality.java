@@ -1,5 +1,6 @@
 package org.sidiff.repair.validation.formulas.predicates;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction.RepairType;
@@ -12,9 +13,9 @@ public class Equality extends Comparison {
 	}
 
 	@Override
-	public boolean evaluate() {
-		left.evaluate();
-		right.evaluate();
+	public boolean evaluate(IScopeRecorder scope) {
+		left.evaluate(scope);
+		right.evaluate(scope);
 		
 		result = left.getValue().equals(right.getValue());
 		
@@ -38,13 +39,13 @@ public class Equality extends Comparison {
 	}
 
 	@Override
-	public void repair(IRepairDecision parent, boolean expected) {
+	public void repair(IRepairDecision parent, boolean expected, IScopeRecorder scope) {
 		
 		if (expected != getResult()) {
 			Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 
-			left.repair(newRepairAlternative, RepairType.MODIFY);
-			right.repair(newRepairAlternative, RepairType.MODIFY);
+			left.repair(newRepairAlternative, RepairType.MODIFY, scope);
+			right.repair(newRepairAlternative, RepairType.MODIFY, scope);
 		}
 	}
 }

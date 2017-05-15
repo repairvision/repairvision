@@ -47,7 +47,7 @@ public abstract class Quantifier extends Formula {
 			if (isEmpty()) {
 				return Collections.emptyList();
 			} else {
-				return Collections.singletonList(iteration.evaluate());
+				return Collections.singletonList(iteration.getValue());
 			}
 		}
 	}

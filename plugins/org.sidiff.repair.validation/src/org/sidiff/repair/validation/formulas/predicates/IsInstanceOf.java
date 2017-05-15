@@ -2,6 +2,7 @@ package org.sidiff.repair.validation.formulas.predicates;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.terms.Term;
@@ -19,8 +20,8 @@ public class IsInstanceOf extends Predicate {
 	}
 	
 	@Override
-	public boolean evaluate() {
-		term.evaluate();
+	public boolean evaluate(IScopeRecorder scope) {
+		term.evaluate(scope);
 		
 		if (term.getValue() == null) {
 			result = false;
@@ -32,7 +33,7 @@ public class IsInstanceOf extends Predicate {
 	}
 
 	@Override
-	public void repair(IRepairDecision parent, boolean expected) {
-		term.repair(parent, RepairType.MODIFY);
+	public void repair(IRepairDecision parent, boolean expected, IScopeRecorder scope) {
+		term.repair(parent, RepairType.MODIFY, scope);
 	}
 }

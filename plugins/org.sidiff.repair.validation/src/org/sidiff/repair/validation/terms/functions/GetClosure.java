@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction;
@@ -27,14 +28,16 @@ public class GetClosure extends Function {
 	}
 
 	@Override
-	public Object evaluate() {
-		element.evaluate();
+	public Object evaluate(IScopeRecorder scope) {
+		element.evaluate(scope);
 		
 		// Calculate transitive closure:
 		if (element.getValue() != null) {
 			List<EObject> closure = new ArrayList<EObject>();
 			getNext((EObject) element.getValue(), closure);
 			value = closure;
+			
+			scope.addElement(value);
 		} else {
 			value = Collections.emptyList();
 		}
@@ -116,7 +119,7 @@ public class GetClosure extends Function {
 	}
 
 	@Override
-	public void repair(IRepairDecision parent, RepairType type) {
+	public void repair(IRepairDecision parent, RepairType type, IScopeRecorder scope) {
 		throw new UnsupportedOperationException();
 //		Alternative alternative = Alternative.nextAlternative(parent);
 

@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.Alternative;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction;
@@ -32,8 +33,8 @@ public class Get extends Function {
 	}
 
 	@Override
-	public Object evaluate() {
-		context.evaluate();
+	public Object evaluate(IScopeRecorder scope) {
+		context.evaluate(scope);
 
 		if (context.getValue() instanceof Collection<?>) {
 			System.err.println("List results must be repaired by ForAll or Exists!");
@@ -44,6 +45,8 @@ public class Get extends Function {
 				// TODO: Better way to ignore unsupported types!?
 				if (((EObject) context.getValue()).eClass().getEAllStructuralFeatures().contains(feature)) {
 					value = ((EObject) context.getValue()).eGet(feature);
+					
+					scope.addElement(value);
 				}
 			}
 		}
@@ -52,12 +55,12 @@ public class Get extends Function {
 	}
 
 	@Override
-	public void repair(IRepairDecision parent, RepairType type) {
+	public void repair(IRepairDecision parent, RepairType type, IScopeRecorder scope) {
 		 Alternative alternative = Alternative.nextAlternative(parent);
 		
 		// ǫ := a.b | τ = <modify, a, b>
 		if (context instanceof Get) {
-			context.repair(alternative, RepairType.MODIFY);
+			context.repair(alternative, RepairType.MODIFY, scope);
 		}
 		
 		if (context.getValue() != null) {

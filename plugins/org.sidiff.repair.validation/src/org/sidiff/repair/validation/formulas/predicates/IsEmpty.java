@@ -2,6 +2,7 @@ package org.sidiff.repair.validation.formulas.predicates;
 
 import java.util.Collection;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.terms.Term;
@@ -16,8 +17,8 @@ public class IsEmpty extends Predicate {
 	}
 
 	@Override
-	public boolean evaluate() {
-		term.evaluate();
+	public boolean evaluate(IScopeRecorder scope) {
+		term.evaluate(scope);
 		
 		if (term.getValue() == null) {
 			result = true;
@@ -32,14 +33,14 @@ public class IsEmpty extends Predicate {
 	}
 
 	@Override
-	public void repair(IRepairDecision parent, boolean expected) {
+	public void repair(IRepairDecision parent, boolean expected, IScopeRecorder scope) {
 		
 		if (expected && !getResult()) {
-			term.repair(parent, RepairType.DELETE);
+			term.repair(parent, RepairType.DELETE, scope);
 		} 
 
 		else if (!expected && getResult()) {
-			term.repair(parent, RepairType.CREATE);
+			term.repair(parent, RepairType.CREATE, scope);
 		}
 	}
 }

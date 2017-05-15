@@ -1,5 +1,6 @@
 package org.sidiff.repair.validation.terms.functions;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.repair.validation.terms.Term;
@@ -17,9 +18,9 @@ public class Concatenate extends Function {
 	}
 	
 	@Override
-	public Object evaluate() {
-		left.evaluate();
-		right.evaluate();
+	public Object evaluate(IScopeRecorder scope) {
+		left.evaluate(scope);
+		right.evaluate(scope);
 		
 		value = "" + left.getValue() + right.getValue(); 
 		
@@ -27,8 +28,8 @@ public class Concatenate extends Function {
 	}
 
 	@Override
-	public void repair(IRepairDecision parent, RepairType type) {
-		left.repair(parent, type);
-		right.repair(parent, type);
+	public void repair(IRepairDecision parent, RepairType type, IScopeRecorder scope) {
+		left.repair(parent, type, scope);
+		right.repair(parent, type, scope);
 	}
 }

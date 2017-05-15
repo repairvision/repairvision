@@ -1,5 +1,6 @@
 package org.sidiff.repair.validation.formulas.binary;
 
+import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.NamedElement;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 
@@ -7,7 +8,7 @@ public abstract class Formula extends NamedElement {
 
 	protected Boolean result;
 	
-	public abstract boolean evaluate();
+	public abstract boolean evaluate(IScopeRecorder scope);
 	
 	public Boolean getResult() {
 		return result;
@@ -26,5 +27,5 @@ public abstract class Formula extends NamedElement {
 	 *            validation fragment.
 	 * 
 	 */
-	public abstract void repair(IRepairDecision parent, boolean expected);
+	public abstract void repair(IRepairDecision parent, boolean expected, IScopeRecorder scope);
 }
