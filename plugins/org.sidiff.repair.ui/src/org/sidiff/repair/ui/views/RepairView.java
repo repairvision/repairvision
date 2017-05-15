@@ -17,6 +17,8 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
@@ -41,7 +43,6 @@ import org.sidiff.repair.ui.controls.IRepairUI;
 import org.sidiff.repair.ui.decoration.RepairSelectionController;
 import org.sidiff.repair.ui.provider.RepairContentProvider;
 import org.sidiff.repair.ui.provider.RepairLabelProvider;
-import org.sidiff.repair.ui.views.rankings.HistoricComplementingRatioRepairRanking;
 
 public class RepairView extends ViewPart implements IResultChangedListener<RepairJob<?>> {
 
@@ -101,8 +102,6 @@ public class RepairView extends ViewPart implements IResultChangedListener<Repai
 		viewer_repairs = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer_repairs.setContentProvider(new RepairContentProvider());
 		viewer_repairs.setLabelProvider(new RepairLabelProvider());
-		viewer_repairs.setComparator(new HistoricComplementingRatioRepairRanking());
-		
 		viewer_repairs.addSelectionChangedListener(RepairSelectionController.getInstance());
 		
 		drillDownAdapter = new DrillDownAdapter(viewer_repairs);
@@ -345,7 +344,19 @@ public class RepairView extends ViewPart implements IResultChangedListener<Repai
 	
 	@Override
 	public void resultChanged(RepairJob<?> repairJob) {
-		viewer_repairs.setInput(repairJob.getRepairs());
+		// NOTE: Unset old comparator:
+		// - set input triggers compare -> new data with old comparator
+		// - set comparator triggers compare -> new comparator with old data
+		viewer_repairs.setComparator(null); 
+		viewer_repairs.setInput(repairJob);
+		
+		viewer_repairs.setComparator(new ViewerComparator() {
+			
+			@Override
+			public int compare(Viewer viewer, Object o1, Object o2) {
+				return repairJob.getRanking().compare(o1, o2);
+			}
+		});
 	}
 	
 	public void clear() {

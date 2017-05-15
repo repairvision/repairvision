@@ -22,6 +22,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.repair.api.IRepairPlan;
+import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.api.matching.EOAttributeMatch;
 import org.sidiff.repair.api.matching.EOEdgeMatch;
 import org.sidiff.repair.api.matching.EOMatch;
@@ -31,7 +32,7 @@ import org.sidiff.repair.api.matching.EditOperationMatching;
 
 public class RepairContentProvider implements IStructuredContentProvider, ITreeContentProvider  {
 
-	protected Map<Rule, List<IRepairPlan>> repairs;
+	protected RepairJob<? extends IRepairPlan> repairJob;
 	
 	// TODO: Add specific classes.
 	public class Container {
@@ -60,12 +61,11 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	public void dispose() {
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		
-		if (newInput instanceof Map<?, ?>) {
-			repairs = (Map<Rule, List<IRepairPlan>>) newInput;
+		if (newInput instanceof RepairJob<?>) {
+			repairJob = (RepairJob<?>) newInput;
 		}
 	}
 
@@ -77,7 +77,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			// Rule-Context -> Repairs:
 			Map<EObject, List<IRepairPlan>> repairsByContext = new LinkedHashMap<>();
 			
-			for (IRepairPlan repair : repairs.get(parentElement)) {
+			for (IRepairPlan repair : repairJob.getRepairs().get(parentElement)) {
 				Parameter context = repair.getRepairPreMatch().getMatch().getRule().getParameter("context");
 				Object value = repair.getRepairPreMatch().getMatch().getParameterValue(context);
 				
@@ -211,8 +211,8 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	public Object[] getElements(Object inputElement) {
 		
 		// Repair-Rules:
-		if (inputElement instanceof Map<?, ?>) {
-			return ((Map<?, ?>) inputElement).keySet().toArray();
+		if (inputElement instanceof RepairJob<?>) {
+			return ((RepairJob<?>) inputElement).getRepairs().keySet().toArray();
 		}
 		
 		return getChildren(inputElement);
