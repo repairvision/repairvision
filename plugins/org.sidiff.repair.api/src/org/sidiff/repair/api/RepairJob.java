@@ -9,6 +9,7 @@ import java.util.Stack;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.repair.api.ranking.RepairRankingComparator;
 
 /**
  * A container for all applicable repairs.
@@ -29,6 +30,11 @@ public class RepairJob<R extends IRepairPlan> {
 	 * All applicable repairs per CPO.
 	 */
 	protected Map<Rule, List<R>> repairs;
+	
+	/**
+	 * Ranking for complement rules and repairs.
+	 */
+	protected RepairRankingComparator ranking;
 
 	/**
 	 * The historic model version.
@@ -49,6 +55,7 @@ public class RepairJob<R extends IRepairPlan> {
 	 * Initializes an empty repair job.
 	 */
 	public RepairJob() {
+		this.ranking = new RepairRankingComparator(this);
 	}
 
 	/**
@@ -117,7 +124,15 @@ public class RepairJob<R extends IRepairPlan> {
 	public void setRepairs(Map<Rule, List<R>> repairs) {
 		this.repairs = repairs;
 	}
-
+	
+	public RepairRankingComparator getRanking() {
+		return ranking;
+	}
+	
+	public void setRanking(RepairRankingComparator ranking) {
+		this.ranking = ranking;
+	}
+	
 	public Resource getModelA() {
 		return modelA;
 	}
