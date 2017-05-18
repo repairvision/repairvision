@@ -95,6 +95,7 @@ public class RepairView extends ViewPart implements IResultChangedListener<Repai
 			}
 		});
 
+		presentation.hookContextMenu(menuManager);
 		getSite().registerContextMenu(menuManager, presentation.getSelectionProvider());
 	}
 

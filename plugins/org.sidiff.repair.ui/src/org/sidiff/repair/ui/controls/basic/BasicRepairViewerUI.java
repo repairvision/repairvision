@@ -224,13 +224,17 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 	}
 
 	@Override
-	public void createContextMenu(MenuManager manager) {
+	public void createContextMenu(IMenuManager manager) {
 		
 		manager.add(new Separator());
 		manager.add(applyRepairs);
 		manager.add(new Separator());
 
 		drillDownAdapter.addNavigationActions(manager);
+	}
+	
+	@Override
+	public void hookContextMenu(MenuManager manager) {
 		
 		// Hook menu to repair viewer:
 		Menu menu = manager.createContextMenu(viewer_repairs.getControl());

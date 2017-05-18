@@ -41,19 +41,24 @@ public interface IRepairUI<A extends IRepairApplication<?, ?>>
 	public void createPartControls(Composite parent, IWorkbenchPartSite site);
 	
 	/**
-	 * @return The tool-bar actions of the repair view.
+	 * Creates the tool-bar actions of the repair view.
 	 */
 	public void createLocalToolBar(IToolBarManager manager);
 	
 	/**
-	 * @return The tool-bar actions of the repair view.
+	 * Creates the pull down actions of the repair view.
 	 */
 	public void createLocalPullDown(IMenuManager manager);
 	
 	/**
-	 * @return The toolbar actions of the repair view.
+	 * Creates the context actions of the repair view.
 	 */
-	public void createContextMenu(MenuManager manager);
+	public void createContextMenu(IMenuManager manager);
+	
+	/**
+	 * Setups the main menu on an viewer.
+	 */
+	public void hookContextMenu(MenuManager manager);
 	
 	/**
 	 * @return Provides a selection to the workbench.
