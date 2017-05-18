@@ -7,16 +7,17 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.sidiff.repair.api.peo.PEORepairJob;
-import org.sidiff.repair.ui.app.IResultChangedListener;
-import org.sidiff.repair.ui.controls.impl.BasicModelDropRepairUI;
-import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
+import org.eclipse.ui.IWorkbenchPartSite;
+import org.sidiff.repair.api.RepairJob;
+import org.sidiff.repair.ui.controls.basic.BasicRepairViewerUI;
+import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
+import org.sidiff.repair.ui.controls.basic.ModelVersionsDropWidget;
 import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
 import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
 
-public class PEORepairRuleSelectionUI extends BasicModelDropRepairUI<SashForm, PEORepairApplication>
-		implements IResultChangedListener<PEORepairJob> {
+public class PEORepairRuleSelectionUI extends BasicRepairViewerUI<PEORepairApplication> {
 
 	/**
 	 * Shows the abstract repairs.
@@ -28,11 +29,23 @@ public class PEORepairRuleSelectionUI extends BasicModelDropRepairUI<SashForm, P
 	 */
 	private ModelDropWidget editRules;
 	
+	/**
+	 * Drop target for the model versions
+	 */
+	private ModelVersionsDropWidget modelVersions;
+	
 	@Override
-	public void createPartControls(SashForm parent) {
+	public void createPartControls(Composite parent, IWorkbenchPartSite site) {
+		
+		// Sash-Form:
+		SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		// Repair viewer:
+		super.createPartControls(sashForm, site);
 		
 		// Validation-Viewer:
-		viewer_validation = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		viewer_validation = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer_validation.setContentProvider(new RepairTreeContentProvider());
 		viewer_validation.setLabelProvider(new RepairTreeLabelProvider());
 //		viewer_validation.setSorter(new NameSorter());
@@ -53,11 +66,9 @@ public class PEORepairRuleSelectionUI extends BasicModelDropRepairUI<SashForm, P
 				}
 			}
 		});
-		
-		application.addResultChangedListener(this);
 
 		// Edit-Rules:
-		Composite composite_editrules = new Composite(parent, SWT.BORDER);
+		Composite composite_editrules = new Composite(sashForm, SWT.BORDER);
 		composite_editrules.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		editRules = new ModelDropWidget(composite_editrules, "Please drop the edit-rule(s) here!") {
@@ -73,28 +84,32 @@ public class PEORepairRuleSelectionUI extends BasicModelDropRepairUI<SashForm, P
 			}
 		};
 		
-		// Create the model input:
-		super.createPartControls(parent);
+		// Model version input:
+		modelVersions = new ModelVersionsDropWidget(getApplication());
+		modelVersions.createModelAControls(sashForm);
+		modelVersions.createModelBControls(sashForm);
 
 		// Setup Sash-Form:
-		parent.setWeights(new int[] {100, 32, 10, 10, 10});
+		sashForm.setWeights(new int[] {100, 32, 10, 10, 10});
 	}
 	
 	@Override
-	public void resultChanged(PEORepairJob repairJob) {
-		viewer_validation.setInput(repairJob.getValidations());
+	public void resultChanged(RepairJob<?> repairJob) {
+		assert (repairJob  == application.getRepairJob());
+		
+		super.resultChanged(repairJob);
+		viewer_validation.setInput(application.getRepairJob().getValidations());
 	}
 
 	@Override
 	public void clear() {
+		super.clear();
 		viewer_validation.setInput(null);
 		editRules.clear();
-		super.clear();
 	}
 	
 	@Override
 	public void dispose() {
 		super.dispose();
-		application.removeResultChangeListener(this);
 	}
 }

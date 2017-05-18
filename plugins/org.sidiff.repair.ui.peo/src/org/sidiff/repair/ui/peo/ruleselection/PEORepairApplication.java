@@ -20,7 +20,7 @@ import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
-import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
+import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.repair.validation.util.Validation;
 
