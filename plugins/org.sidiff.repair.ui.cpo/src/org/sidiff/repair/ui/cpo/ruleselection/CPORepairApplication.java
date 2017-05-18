@@ -20,7 +20,7 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.cpo.CPORepairJob;
 import org.sidiff.repair.api.cpo.CPORepairSettings;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
-import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
+import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.ui.util.EditRuleUtil;
 
 public class CPORepairApplication extends EclipseResourceRepairApplication<CPORepairJob, CPORepairSettings> {
