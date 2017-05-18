@@ -1,4 +1,4 @@
-package org.sidiff.repair.ui.controls.impl;
+package org.sidiff.repair.ui.controls.basic;
 
 import java.lang.reflect.Method;
 import java.util.HashSet;

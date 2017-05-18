@@ -1,19 +1,25 @@
-package org.sidiff.repair.ui.controls.impl;
+package org.sidiff.repair.ui.controls.basic;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
+import org.sidiff.repair.ui.controls.IUnsetableControl;
 
-public class BasicModelDropRepairUI<C extends Composite, A extends EclipseResourceRepairApplication<?, ?>> extends BasicRepairUI<C, A> {
-
+public class ModelVersionsDropWidget implements IUnsetableControl {
+	
+	protected EclipseResourceRepairApplication<?, ?> application;
+	
 	protected ModelDropWidget modelA;
 	
 	protected ModelDropWidget modelB;
 	
-	@Override
-	public void createPartControls(C parent) {
+	public ModelVersionsDropWidget(EclipseResourceRepairApplication<?, ?> application) {
+		this.application = application;
+	}
+	
+	public void createModelAControls(Composite parent) {
 		
 		// Model A:
 		Composite composite_modelA = new Composite(parent, SWT.BORDER);
@@ -32,7 +38,10 @@ public class BasicModelDropRepairUI<C extends Composite, A extends EclipseResour
 				return application.setModelA(element);
 			}
 		};
-
+	}
+	
+	public void createModelBControls(Composite parent) {
+		
 		// Model B:
 		Composite composite_modelB = new Composite(parent, SWT.BORDER);
 		composite_modelB.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -51,14 +60,10 @@ public class BasicModelDropRepairUI<C extends Composite, A extends EclipseResour
 			}
 		};
 	}
-
+	
 	@Override
 	public void clear() {
 		modelA.clear();
 		modelB.clear();
-	}
-
-	@Override
-	public void dispose() {
 	}
 }

@@ -1,10 +1,9 @@
-package org.sidiff.repair.ui.controls.impl;
+package org.sidiff.repair.ui.controls.basic;
 
-import org.eclipse.swt.widgets.Composite;
 import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.controls.IRepairUI;
 
-public abstract class BasicRepairUI<C extends Composite, A extends IRepairApplication<?, ?>> implements IRepairUI<C, A> {
+public abstract class BasicRepairUI<A extends IRepairApplication<?, ?>> implements IRepairUI<A> {
 
 	protected A application;
 	

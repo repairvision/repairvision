@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package org.sidiff.repair.ui.controls.impl;
+package org.sidiff.repair.ui.controls.basic;
 
 import java.util.HashMap;
 import java.util.Iterator;

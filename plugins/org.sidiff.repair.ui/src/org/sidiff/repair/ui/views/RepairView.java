@@ -1,89 +1,39 @@
 package org.sidiff.repair.ui.views;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.preference.PreferenceDialog;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.dialogs.PreferencesUtil;
-import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
-import org.sidiff.common.ui.NameUtil;
-import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.RepairJob;
-import org.sidiff.repair.ui.Activator;
-import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.config.RepairDectectionEngineProvider;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
 import org.sidiff.repair.ui.controls.IRepairUI;
-import org.sidiff.repair.ui.decoration.RepairSelectionController;
-import org.sidiff.repair.ui.provider.RepairContentProvider;
-import org.sidiff.repair.ui.provider.RepairLabelProvider;
 
 public class RepairView extends ViewPart implements IResultChangedListener<RepairJob<?>> {
 
 	public static final String ID = "org.sidiff.repair.lifting.ui.views.RepairView";
 
-	private IRepairApplication<?, ?> viewerApp;
+	protected IRepairUI<?>  presentation;
 	
-	private RepairDectectionEngineProvider repairEgineProvider;
+	protected RepairDectectionEngineProvider repairEgineProvider;
 	
-	private TreeViewer viewer_repairs;
-	
-	private IRepairUI<SashForm,?>  presentation;
-	
-	private DrillDownAdapter drillDownAdapter;
-
-	private Action openConfiguration;
-	
-	private Action calculateRepairs;
-	
-	private Action applyRepairs;
-	
-	private Action undoRepairs;
-	
-	private Action clearSetup;
-
 	public RepairView() {
 	}
-	
-//	Composite parent;
 
 	public void createPartControl(Composite parent) {
-//		this.parent = parent;
+
 		// Create controls:
-		internal_createPartControl(parent);
-		
-		// Setup actions:
-		makeActions();
-		contributeToActionBars();
-	}
-	
-	private void internal_createPartControl(Composite parent) {
 		parent.setLayout(new FillLayout(SWT.VERTICAL));
 
 		Composite container = new Composite(parent, SWT.NONE);
@@ -94,273 +44,94 @@ public class RepairView extends ViewPart implements IResultChangedListener<Repai
 		gl_composite.horizontalSpacing = 0;
 		container.setLayout(gl_composite);
 
-		// Sash-Form:
-		SashForm sashForm = new SashForm(container, SWT.VERTICAL);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		// Repair-Viewer:
-		viewer_repairs = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer_repairs.setContentProvider(new RepairContentProvider());
-		viewer_repairs.setLabelProvider(new RepairLabelProvider());
-		viewer_repairs.addSelectionChangedListener(RepairSelectionController.getInstance());
-		
-		drillDownAdapter = new DrillDownAdapter(viewer_repairs);
-
-		getSite().setSelectionProvider(viewer_repairs);
-		
 		// Setup repair engine:
 		repairEgineProvider = RepairPreferencePage.getRepairDectectionProvider();
 		repairEgineProvider.addSelectionChangedListener(new ISelectionChangedListener() {
-			
+
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				viewerApp.removeResultChangeListener(RepairView.this);
+
+				// The selected (settings) repair engine has changed:
+				presentation.getApplication().removeResultChangeListener(RepairView.this);
 				presentation.dispose();
-				
+
 				container.dispose();
-				internal_createPartControl(parent);
+				createPartControl(parent);
 				parent.layout();
-				
+
 				repairEgineProvider.removeSelectionChangedListener(this);
 			}
 		});
 		
 		// Add repair engine:
-		setupRepairEngine(sashForm);
+		setupRepairEngine(container);
 		
 		// Setup actions:
 		hookContextMenu();
-		hookDoubleClickAction();
+		
+		// Setup actions:
+		contributeToActionBars();
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void setupRepairEngine(SashForm sashForm) {
-		
-		// FIXME: How to deal with the type of the parent container.
-		presentation = (IRepairUI<SashForm, ?>) repairEgineProvider.getSelectedEngine()
+	protected void setupRepairEngine(Composite parent) {
+		presentation = (IRepairUI<?>) repairEgineProvider.getSelectedEngine()
 				.getPresentationInstance().getRepairPresentation();
 
-		presentation.createPartControls(sashForm);
+		presentation.createPartControls(parent, getSite());
 		presentation.getApplication().addResultChangedListener(this);
-		this.viewerApp = presentation.getApplication();
 	}
 
-	private void hookContextMenu() {
-		MenuManager menuMgr = new MenuManager("#PopupMenu");
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
+	protected void hookContextMenu() {
+		
+		MenuManager menuManager = new MenuManager("#PopupMenu");
+		menuManager.setRemoveAllWhenShown(true);
+		menuManager.addMenuListener(new IMenuListener() {
+			
 			public void menuAboutToShow(IMenuManager manager) {
-				RepairView.this.fillContextMenu(manager);
+				fillContextMenu(menuManager);
+				
+				// Other plug-ins can contribute there actions here
+				manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 			}
 		});
-		Menu menu = menuMgr.createContextMenu(viewer_repairs.getControl());
-		viewer_repairs.getControl().setMenu(menu);
-		getSite().registerContextMenu(menuMgr, viewer_repairs);
+
+		getSite().registerContextMenu(menuManager, presentation.getSelectionProvider());
 	}
 
-	private void contributeToActionBars() {
+	protected void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
+		bars.getMenuManager().removeAll();
+		bars.getToolBarManager().removeAll();
+		
 		fillLocalPullDown(bars.getMenuManager());
 		fillLocalToolBar(bars.getToolBarManager());
-	}
-
-	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(new Separator());
-		manager.add(calculateRepairs);
-		manager.add(new Separator());
-	}
-
-	private void fillContextMenu(IMenuManager manager) {
-		manager.add(new Separator());
-		manager.add(applyRepairs);
-		manager.add(new Separator());
-
-		drillDownAdapter.addNavigationActions(manager);
-
-		// Other plug-ins can contribute there actions here
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-	}
-
-	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(new Separator());
-		manager.add(calculateRepairs);
-		manager.add(applyRepairs);
-		manager.add(undoRepairs);
-		manager.add(new Separator());
-		manager.add(clearSetup);
-		manager.add(openConfiguration);
-		manager.add(new Separator());
 		
-		drillDownAdapter.addNavigationActions(manager);
+		bars.getMenuManager().update(true);
+		bars.getToolBarManager().update(true);
 	}
 
-	private void makeActions() {
-
-		// Open configuration:
-		openConfiguration = new Action() {
-			public void run() {
-				PreferenceDialog configurationPage = PreferencesUtil.createPreferenceDialogOn(
-						getViewSite().getShell(), RepairPreferencePage.ID, null, null);
-				
-				if (configurationPage != null) {
-					configurationPage.open();
-				}
-			}
-		};
-		openConfiguration.setText("Configuration");
-		openConfiguration.setToolTipText("Open Configuration");
-		openConfiguration.setImageDescriptor(Activator.getImageDescriptor("icons/configuration.png"));
-		
-		// Calculate repairs:
-		calculateRepairs = new Action() {
-			public void run() {
-				viewerApp.calculateRepairs();
-			}
-		};
-		calculateRepairs.setText("Search Repairs");
-		calculateRepairs.setToolTipText("Search Repairs");
-		calculateRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/bulb.png"));
-		
-		// Apply repair:
-		applyRepairs = new Action() {
-			@SuppressWarnings("unchecked")
-			public void run() {
-				ISelection selection = viewer_repairs.getSelection();
-				
-				if (selection instanceof IStructuredSelection) {
-					List<IRepairPlan> selectedRepairs = new ArrayList<>();
-					
-					((IStructuredSelection)selection).iterator().forEachRemaining(o -> {
-						if (o instanceof IRepairPlan) {
-							selectedRepairs.add((IRepairPlan) o);
-						}
-					});
-					
-					if (!selectedRepairs.isEmpty()) {
-						if (viewerApp.applyRepairs(selectedRepairs)) {
-							
-							// TODO: Ask the user what to do!
-							// Recalculate repairs:
-							viewerApp.recalculateRepairs();
-							
-							showMessage("Repair successfully applied!");
-						} else {
-							showMessage("Repair could not be applied!");
-						}
-						return;
-					}
-				}
-				
-				showMessage("Please select a repair operation!");
-			}
-		};
-		applyRepairs.setText("Apply Repair");
-		applyRepairs.setToolTipText("Apply Repair");
-		applyRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/apply.png"));
-		
-		// Undo repair:
-		undoRepairs = new Action() {
-			public void run() {
-				List<RuleApplication> lastRepairs = viewerApp.undoLastRepairs();
-				
-				if (lastRepairs != null) {
-					
-					// TODO: Ask the user what to do!
-					// Recalculate repairs:
-					viewerApp.recalculateRepairs();
-					
-					// Show user message:
-					String rules = "";
-					
-					for (RuleApplication lastRepair : lastRepairs) {
-						rules += NameUtil.beautifyName(lastRepair.getRule().getName());
-					}
-					
-					showMessage("Repair ("+ rules +") successfully undone!");
-				} else {
-					showMessage("Repair could not be undone!");
-				}
-			}
-		};
-		undoRepairs.setText("Undo Repair");
-		undoRepairs.setToolTipText("Undo Repair");
-		undoRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/undo.png"));
-		
-		// Clear setup:
-		clearSetup = new Action() {
-			public void run() {
-				viewerApp.clear();
-				clear();
-			}
-		};
-		clearSetup.setText("Clear");
-		clearSetup.setToolTipText("Clear");
-		clearSetup.setImageDescriptor(Activator.getImageDescriptor("icons/clear.png"));
+	protected void fillLocalPullDown(IMenuManager manager) {
+		presentation.createLocalPullDown(manager);
 	}
 
-	private void hookDoubleClickAction() {
-		
-		// Expand / Collapse on double click:
-		viewer_repairs.addDoubleClickListener(event -> {
-			ISelection selection = event.getSelection();
-
-			if (selection instanceof IStructuredSelection) {
-				Object item = ((IStructuredSelection) selection).getFirstElement();
-
-				if (item == null) {
-					return;
-				}
-				
-				try {
-					if (viewer_repairs.getExpandedState(item)) {
-
-						// Collapse:
-						viewer_repairs.collapseToLevel(item, TreeViewer.ALL_LEVELS);
-					} else {
-						
-						// Expand:
-						if (item instanceof IRepairPlan) {
-							viewer_repairs.expandToLevel(item, 3);
-						} else {
-							viewer_repairs.expandToLevel(item, 1);
-						}
-					}
-				} catch (Exception e) {
-				}
-			}
-		});
+	protected void fillContextMenu(MenuManager manager) {
+		presentation.createContextMenu(manager);
 	}
 
-	public void setFocus() {
-		viewer_repairs.getControl().setFocus();
+	protected void fillLocalToolBar(IToolBarManager manager) {
+		presentation.createLocalToolBar(manager);
 	}
-	
-	private void showMessage(String message) {
-		MessageDialog.openInformation(
-			viewer_repairs.getControl().getShell(),
-			this.getTitle(),
-			message);
-	}
-	
+
 	@Override
 	public void resultChanged(RepairJob<?> repairJob) {
-		// NOTE: Unset old comparator:
-		// - set input triggers compare -> new data with old comparator
-		// - set comparator triggers compare -> new comparator with old data
-		viewer_repairs.setComparator(null); 
-		viewer_repairs.setInput(repairJob);
-		
-		viewer_repairs.setComparator(new ViewerComparator() {
-			
-			@Override
-			public int compare(Viewer viewer, Object o1, Object o2) {
-				return repairJob.getRanking().compare(o1, o2);
-			}
-		});
+		presentation.resultChanged(repairJob);
+	}
+	
+	public void setFocus() {
+		presentation.setFocus();
 	}
 	
 	public void clear() {
-		viewer_repairs.setInput(null);
 		presentation.clear();
 	}
 }

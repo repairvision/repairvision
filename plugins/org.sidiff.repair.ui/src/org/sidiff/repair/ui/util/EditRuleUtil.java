@@ -27,7 +27,7 @@ import org.sidiff.common.henshin.exceptions.NoMainUnitFoundException;
 import org.sidiff.editrule.consistency.validation.Activator;
 import org.sidiff.editrule.consistency.validation.EditRuleValidation;
 import org.sidiff.editrule.consistency.validation.EditRuleValidator;
-import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
+import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 
 public class EditRuleUtil {
 
