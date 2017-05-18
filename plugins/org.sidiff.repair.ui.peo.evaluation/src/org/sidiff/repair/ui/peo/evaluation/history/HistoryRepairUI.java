@@ -20,14 +20,15 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IWorkbenchPartSite;
 import org.sidiff.common.ui.WorkbenchUtil;
-import org.sidiff.repair.api.peo.PEORepairJob;
+import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.ui.app.IResultChangedListener;
-import org.sidiff.repair.ui.controls.impl.BasicRepairUI;
-import org.sidiff.repair.ui.controls.impl.ModelDropWidget;
+import org.sidiff.repair.ui.controls.basic.BasicRepairViewerUI;
+import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.ui.decoration.ISelectionAdapter;
 import org.sidiff.repair.ui.decoration.RepairSelectionController;
 import org.sidiff.repair.ui.decoration.SelectionAdapterRegistry;
@@ -37,8 +38,7 @@ import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
 import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
 import org.sidiff.repair.validation.util.Validation;
 
-public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationApplication>
-		implements IResultChangedListener<PEORepairJob> {
+public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplication> {
 
 	/**
 	 * Shows the abstract repairs.
@@ -65,10 +65,17 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 	
 	
 	@Override
-	public void createPartControls(SashForm parent) {
+	public void createPartControls(Composite parent, IWorkbenchPartSite site) {
+		
+		// Sash-Form:
+		SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		// Repair viewer:
+		super.createPartControls(sashForm, site);
 		
 		// Validation-Viewer:
-		Composite composite_viewer_validation = new Composite(parent, SWT.BORDER);
+		Composite composite_viewer_validation = new Composite(sashForm, SWT.BORDER);
 		composite_viewer_validation.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		viewer_validation = new TreeViewer(composite_viewer_validation, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -119,8 +126,6 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 				}
 			}
 		});
-		
-		application.addResultChangedListener(this);
 
 		// Create history viewer:
 		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
@@ -128,7 +133,7 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 		
-		Composite composite_historyViewer = new Composite(parent, SWT.BORDER);
+		Composite composite_historyViewer = new Composite(sashForm, SWT.BORDER);
 		composite_historyViewer.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		historyViewer = new TreeViewer(composite_historyViewer, SWT.H_SCROLL | SWT.V_SCROLL);
@@ -149,7 +154,7 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 		}
 		
 		// Create the history input:
-		Composite composite_histroyStoreInput = new Composite(parent, SWT.BORDER);
+		Composite composite_histroyStoreInput = new Composite(sashForm, SWT.BORDER);
 		composite_histroyStoreInput.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		histroyStoreInput = new ModelDropWidget(composite_histroyStoreInput, "Please drop the model history here!") {
@@ -178,7 +183,7 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 		};
 		
 		// Edit-Rules:
-		Composite composite_editRules = new Composite(parent, SWT.BORDER);
+		Composite composite_editRules = new Composite(sashForm, SWT.BORDER);
 		composite_editRules.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		editRules = new ModelDropWidget(composite_editRules, "Please drop the edit-rule(s) here!") {
@@ -195,12 +200,15 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 		};
 		
 		// Setup Sash-Form:
-		parent.setWeights(new int[] {100, 50, 40, 10, 10});
+		sashForm.setWeights(new int[] {100, 50, 40, 10, 10});
 	}
 	
 	@Override
-	public void resultChanged(PEORepairJob repairJob) {
-		viewer_validation.setInput(repairJob.getValidations());
+	public void resultChanged(RepairJob<?> repairJob) {
+		assert (repairJob  == application.getRepairJob());
+		
+		super.resultChanged(repairJob);
+		viewer_validation.setInput(application.getRepairJob().getValidations());
 	}
 
 	@Override
@@ -218,7 +226,6 @@ public class HistoryRepairUI extends BasicRepairUI<SashForm, HistoryEvaluationAp
 	
 	@Override
 	public void dispose() {
-		application.removeResultChangeListener(this);
 		SelectionAdapterRegistry.deregisterAdapter(decorationAdapter);
 	}
 }
