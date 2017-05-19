@@ -13,6 +13,9 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -32,6 +35,7 @@ import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.ui.decoration.ISelectionAdapter;
 import org.sidiff.repair.ui.decoration.RepairSelectionController;
 import org.sidiff.repair.ui.decoration.SelectionAdapterRegistry;
+import org.sidiff.repair.ui.peo.evaluation.Activator;
 import org.sidiff.repair.ui.peo.evaluation.HistoryEvaluationApplication;
 import org.sidiff.repair.validation.fix.RepairAction;
 import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
@@ -201,6 +205,26 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 		
 		// Setup Sash-Form:
 		sashForm.setWeights(new int[] {100, 50, 40, 10, 10});
+	}
+	
+	@Override
+	public void createLocalToolBar(IToolBarManager manager) {
+		super.createLocalToolBar(manager);
+		
+		Action recordEditRule = new Action() {
+			@Override
+			public void run() {
+				System.out.println("HistoryRepairUI.createLocalToolBar(...).new Action() {...}.run()");
+			}
+		};
+		
+		recordEditRule.setText("Learn Edit-Rule");
+		recordEditRule.setToolTipText("Learn Edit-Rule");
+		recordEditRule.setImageDescriptor(Activator.getImageDescriptor("icons/cat-icon.png"));
+		
+		manager.add(new Separator());
+		manager.add(recordEditRule);
+		manager.add(new Separator());
 	}
 	
 	@Override
