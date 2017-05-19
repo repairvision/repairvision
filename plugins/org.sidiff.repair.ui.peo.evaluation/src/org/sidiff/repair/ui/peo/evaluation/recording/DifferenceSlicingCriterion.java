@@ -11,39 +11,23 @@ public class DifferenceSlicingCriterion {
 
 	// Historical: Model A //
 	
-	protected EObject contextA;
+	protected EObject contextHistorical;
 	
-	protected int contextADistance = -1;
-
-	protected Set<EObject> scopeA; 
+	protected Set<EObject> scopeHistorical; 
 	
-	protected int scopeADistance = -1;
+	protected int scopeHistoricalDistance = -1;
 	
-	protected Set<EObject> modelABlacklist;
-	
-	// Introduced: Model B //
-	
-	protected EObject contextB;
-	
-	protected int contextBDistance = -1;
-	
-	protected Set<EObject> scopeB;
-	
-	protected int scopeBDistance = -1;
-	
-	protected Set<EObject> modelBBlacklist;
+	protected Set<EObject> modelHistoricalBlacklist;
 	
 	// Resolved: Model C //
 	
-	protected EObject contextC;
+	protected EObject contextResolved;
 	
-	protected int contextCDistance = -1;
+	protected Set<EObject> scopeResolved;
 	
-	protected Set<EObject> scopeC;
+	protected int scopeResolvedDistance = -1;
 	
-	protected int scopeCDistance = -1;
-	
-	protected Set<EObject> modelCBlacklist;
+	protected Set<EObject> modelResolvedBlacklist;
 	
 	// Meta-Model //
 	
@@ -52,90 +36,78 @@ public class DifferenceSlicingCriterion {
 	protected Set<EReference> referenceBlacklist;
 	
 	public DifferenceSlicingCriterion() {
-		this.scopeA = new HashSet<>();
-		this.scopeB = new HashSet<>();
-		this.modelABlacklist = new HashSet<>();
-		this.modelBBlacklist = new HashSet<>();
+		this.scopeHistorical = new HashSet<>();
+		this.scopeResolved = new HashSet<>();
+		
+		this.modelHistoricalBlacklist = new HashSet<>();
+		this.modelResolvedBlacklist = new HashSet<>();
+		
+		this.classBlacklist = new HashSet<>();
+		this.referenceBlacklist = new HashSet<>();
 	}
 
-	public EObject getContextA() {
-		return contextA;
+	public EObject getContextHistorical() {
+		return contextHistorical;
 	}
 
-	public void setContextA(EObject contextA) {
-		this.contextA = contextA;
+	public void setContextHistorical(EObject contextHistorical) {
+		this.contextHistorical = contextHistorical;
 	}
 
-	public int getContextADistance() {
-		return contextADistance;
+	public Set<EObject> getScopeHistorical() {
+		return scopeHistorical;
 	}
 
-	public void setContextADistance(int contextADistance) {
-		this.contextADistance = contextADistance;
+	public void setScopeHistorical(Set<EObject> scopeHistorical) {
+		this.scopeHistorical = scopeHistorical;
 	}
 
-	public Set<EObject> getScopeA() {
-		return scopeA;
+	public int getScopeHistoricalDistance() {
+		return scopeHistoricalDistance;
 	}
 
-	public void setScopeA(Set<EObject> scopeA) {
-		this.scopeA = scopeA;
+	public void setScopeHistoricalDistance(int scopeHistoricalDistance) {
+		this.scopeHistoricalDistance = scopeHistoricalDistance;
 	}
 
-	public int getScopeADistance() {
-		return scopeADistance;
+	public Set<EObject> getModelHistoricalBlacklist() {
+		return modelHistoricalBlacklist;
 	}
 
-	public void setScopeADistance(int scopeADistance) {
-		this.scopeADistance = scopeADistance;
+	public void setModelHistoricalBlacklist(Set<EObject> modelHistoricalBlacklist) {
+		this.modelHistoricalBlacklist = modelHistoricalBlacklist;
 	}
 
-	public Set<EObject> getModelABlacklist() {
-		return modelABlacklist;
+	public EObject getContextResolved() {
+		return contextResolved;
 	}
 
-	public void setModelABlacklist(Set<EObject> modelABlacklist) {
-		this.modelABlacklist = modelABlacklist;
+	public void setContextResolved(EObject contextResolved) {
+		this.contextResolved = contextResolved;
 	}
 
-	public EObject getContextB() {
-		return contextB;
+	public Set<EObject> getScopeResolved() {
+		return scopeResolved;
 	}
 
-	public void setContextB(EObject contextB) {
-		this.contextB = contextB;
+	public void setScopeResolved(Set<EObject> scopeResolved) {
+		this.scopeResolved = scopeResolved;
 	}
 
-	public int getContextBDistance() {
-		return contextBDistance;
+	public int getScopeResolvedDistance() {
+		return scopeResolvedDistance;
 	}
 
-	public void setContextBDistance(int contextBDistance) {
-		this.contextBDistance = contextBDistance;
+	public void setScopeResolvedDistance(int scopeResolvedDistance) {
+		this.scopeResolvedDistance = scopeResolvedDistance;
 	}
 
-	public Set<EObject> getScopeB() {
-		return scopeB;
+	public Set<EObject> getModelResolvedBlacklist() {
+		return modelResolvedBlacklist;
 	}
 
-	public void setScopeB(Set<EObject> scopeB) {
-		this.scopeB = scopeB;
-	}
-
-	public int getScopeBDistance() {
-		return scopeBDistance;
-	}
-
-	public void setScopeBDistance(int scopeBDistance) {
-		this.scopeBDistance = scopeBDistance;
-	}
-
-	public Set<EObject> getModelBBlacklist() {
-		return modelBBlacklist;
-	}
-
-	public void setModelBBlacklist(Set<EObject> modelBBlacklist) {
-		this.modelBBlacklist = modelBBlacklist;
+	public void setModelResolvedBlacklist(Set<EObject> modelResolvedBlacklist) {
+		this.modelResolvedBlacklist = modelResolvedBlacklist;
 	}
 
 	public Set<EClass> getClassBlacklist() {
@@ -152,45 +124,5 @@ public class DifferenceSlicingCriterion {
 
 	public void setReferenceBlacklist(Set<EReference> referenceBlacklist) {
 		this.referenceBlacklist = referenceBlacklist;
-	}
-
-	public EObject getContextC() {
-		return contextC;
-	}
-
-	public void setContextC(EObject contextC) {
-		this.contextC = contextC;
-	}
-
-	public int getContextCDistance() {
-		return contextCDistance;
-	}
-
-	public void setContextCDistance(int contextCDistance) {
-		this.contextCDistance = contextCDistance;
-	}
-
-	public Set<EObject> getScopeC() {
-		return scopeC;
-	}
-
-	public void setScopeC(Set<EObject> scopeC) {
-		this.scopeC = scopeC;
-	}
-
-	public int getScopeCDistance() {
-		return scopeCDistance;
-	}
-
-	public void setScopeCDistance(int scopeCDistance) {
-		this.scopeCDistance = scopeCDistance;
-	}
-
-	public Set<EObject> getModelCBlacklist() {
-		return modelCBlacklist;
-	}
-
-	public void setModelCBlacklist(Set<EObject> modelCBlacklist) {
-		this.modelCBlacklist = modelCBlacklist;
 	}
 }

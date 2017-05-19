@@ -85,8 +85,6 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 		viewer_validation = new TreeViewer(composite_viewer_validation, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer_validation.setContentProvider(new RepairTreeContentProvider());
 		viewer_validation.setLabelProvider(new RepairTreeLabelProvider());
-//		viewer_validation.setSorter(new NameSorter());
-		
 		viewer_validation.addSelectionChangedListener(RepairSelectionController.getInstance());
 		
 		decorationAdapter = new ISelectionAdapter() {
