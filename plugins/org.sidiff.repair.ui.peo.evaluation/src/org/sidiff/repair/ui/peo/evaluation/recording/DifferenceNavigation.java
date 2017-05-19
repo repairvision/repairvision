@@ -1,55 +1,41 @@
 package org.sidiff.repair.ui.peo.evaluation.recording;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.sidiff.difference.symmetric.Change;
 import org.sidiff.editrule.partialmatcher.util.IndexedCrossReferencer;
-import org.sidiff.editrule.partialmatcher.util.LiftingGraphDomainMap;
 import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
+import org.sidiff.matching.model.Correspondence;
 
 public class DifferenceNavigation {
 
 	protected LiftingGraphIndex changeIndex;
 	
-	protected LiftingGraphDomainMap changeDomainMap;
-	
 	protected IndexedCrossReferencer crossReferencer;
 
 	public DifferenceNavigation(
 			LiftingGraphIndex changeIndex, 
-			LiftingGraphDomainMap changeDomainMap,
 			IndexedCrossReferencer crossReferencer) {
 		super();
 		this.changeIndex = changeIndex;
-		this.changeDomainMap = changeDomainMap;
 		this.crossReferencer = crossReferencer;
 	}
-
-	public LiftingGraphIndex getChangeIndex() {
-		return changeIndex;
+	
+	public Correspondence getCorrespondenceOfModelA(EObject objectInA) {
+		return changeIndex.getDifference().getCorrespondenceOfModelA(objectInA);
 	}
-
-	public void setChangeIndex(LiftingGraphIndex changeIndex) {
-		this.changeIndex = changeIndex;
+	
+	public Correspondence getCorrespondenceOfModelB(EObject objectInB) {
+		return changeIndex.getDifference().getCorrespondenceOfModelB(objectInB);
 	}
-
-	public LiftingGraphDomainMap getChangeDomainMap() {
-		return changeDomainMap;
-	}
-
-	public void setChangeDomainMap(LiftingGraphDomainMap changeDomainMap) {
-		this.changeDomainMap = changeDomainMap;
-	}
-
-	public IndexedCrossReferencer getCrossReferencer() {
-		return crossReferencer;
-	}
-
-	public void setCrossReferencer(IndexedCrossReferencer crossReferencer) {
-		this.crossReferencer = crossReferencer;
+	
+	public Collection<Change> getLocalChanges(EObject element)  {
+		return changeIndex.getLocalChanges(element);
 	}
 
 	/**
@@ -84,4 +70,21 @@ public class DifferenceNavigation {
 			return targets.iterator();
 		}
 	}
+	
+	public LiftingGraphIndex getChangeIndex() {
+		return changeIndex;
+	}
+
+	public void setChangeIndex(LiftingGraphIndex changeIndex) {
+		this.changeIndex = changeIndex;
+	}
+
+	public IndexedCrossReferencer getCrossReferencer() {
+		return crossReferencer;
+	}
+
+	public void setCrossReferencer(IndexedCrossReferencer crossReferencer) {
+		this.crossReferencer = crossReferencer;
+	}
+
 }

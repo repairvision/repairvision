@@ -1,5 +1,6 @@
 package org.sidiff.repair.ui.peo.evaluation.recording;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +22,38 @@ public class DifferenceSlice {
 		this.difference = difference;
 		this.correspondences = new HashSet<>();
 		this.changes = new HashSet<>();
+	}
+	
+	public boolean addCorrespondence(Correspondence correspondence) {
+		return correspondences.add(correspondence);
+	}
+	
+	public boolean addCorrespondences(Collection<Correspondence> correspondences) {
+		boolean changed = false;
+		
+		for (Correspondence correspondence : correspondences) {
+			if (correspondences.add(correspondence)) {
+				changed = true;
+			}
+		}
+		
+		return changed;
+	}
+	
+	public boolean addChange(Change change) {
+		return changes.add(change);
+	}
+	
+	public boolean addChanges(Collection<Change> changes) {
+		boolean changed = false;
+		
+		for (Change change : changes) {
+			if (changes.add(change)) {
+				changed = true;
+			}
+		}
+		
+		return changed;
 	}
 	
 	public SymmetricDifference getDifference() {

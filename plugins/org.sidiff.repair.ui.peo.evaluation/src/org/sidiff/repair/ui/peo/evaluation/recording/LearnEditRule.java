@@ -15,7 +15,6 @@ import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.partialmatcher.util.IndexedCrossReferencer;
-import org.sidiff.editrule.partialmatcher.util.LiftingGraphDomainMap;
 import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.repair.validation.Constraint;
 import org.sidiff.repair.validation.IScopeRecorder;
@@ -100,7 +99,6 @@ public class LearnEditRule {
 		this.slice = new DifferenceSlice(difference);
 		
 		// Create difference navigation:
-		LiftingGraphDomainMap changeDomainMap = new LiftingGraphDomainMap(difference);
 		LiftingGraphIndex changeIndex = new LiftingGraphIndex(difference);
 
 		// Create matching helper:
@@ -108,7 +106,7 @@ public class LearnEditRule {
 		crossReferencer.addResource(difference.getModelA());
 		crossReferencer.addResource(difference.getModelB());
 
-		this.navigation = new DifferenceNavigation(changeIndex, changeDomainMap, crossReferencer);
+		this.navigation = new DifferenceNavigation(changeIndex, crossReferencer);
 	}
 	
 	public void learn(EObject introducedContext, Constraint consistencyRule) {
@@ -132,7 +130,7 @@ public class LearnEditRule {
 		slicingCriterion.setContextResolved(contextResolved);
 		slicingCriterion.setScopeResolved(scopeResolved.getScope());
 		
-		// Slicing //
+		// Expand Scope //
 		
 		// Historical:
 		Map<EObject, Integer> expandedScopeHistorical = new HashMap<>();
@@ -157,8 +155,13 @@ public class LearnEditRule {
 					slicingCriterion.getModelResolvedBlacklist(),
 					slicingCriterion.getScopeResolvedDistance(), 0);
 		}
+		
+		// Difference Slice //
+		
+		sliceDifferenceModelA(expandedScopeHistorical.keySet());
+		sliceDifferenceModelB(expandedScopeResolved.keySet());
 	}
-	
+
 	private void expandScope(
 			EObject scopeElement, Map<EObject, Integer> expandedScope,
 			Set<EObject> blacklist, int maxDistance, int distance) {
@@ -210,6 +213,20 @@ public class LearnEditRule {
 					}
 				}
 			}
+		}
+	}
+	
+	private void sliceDifferenceModelA(Set<EObject> scopeA) {
+		for (EObject scopeElementA : scopeA) {
+			slice.addCorrespondence(navigation.getCorrespondenceOfModelA(scopeElementA));
+			slice.addChanges(navigation.getLocalChanges(scopeElementA));
+		}
+	}
+	
+	private void sliceDifferenceModelB(Set<EObject> scopeB) {
+		for (EObject scopeElementB : scopeB) {
+			slice.addCorrespondence(navigation.getCorrespondenceOfModelB(scopeElementB));
+			slice.addChanges(navigation.getLocalChanges(scopeElementB));
 		}
 	}
 
