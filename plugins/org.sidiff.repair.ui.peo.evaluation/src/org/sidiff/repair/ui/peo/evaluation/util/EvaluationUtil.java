@@ -1,5 +1,7 @@
 package org.sidiff.repair.ui.peo.evaluation.util;
 
+import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -8,10 +10,14 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.emf.exceptions.InvalidModelException;
+import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.repair.api.IRepairPlan;
@@ -47,28 +53,33 @@ public class EvaluationUtil {
 		return null;
 	}
 	
-	public static List<IRepairPlan> historicallyObservable(PEORepairJob repairJob) {
+	public static List<IRepairPlan> historicallyObservable(PEORepairJob repairJob,
+			DifferenceSettings settings, Resource modelActual, Resource modelResolved) {
+		
 		List<IRepairPlan> observable = new ArrayList<>();
 		
-		for (Rule complementRule : repairJob.getRepairs().keySet()) {
-			for (IRepairPlan repair : repairJob.getRepairs().get(complementRule)) {
-				
-				// The preMatch turning the complement rule into a repair operation.
-				Match preMatch = repair.getRepairPreMatch().getMatch();
-				
-				// The evolutionStep in which inconsistency has been resolved historically
-				SymmetricDifference evolutionStep = (SymmetricDifference) repairJob
-						.getDifference().getContents().get(0);
-				
-				// Mode
-				boolean strict = false;
-				
-				DeveloperIntentionOracle oracle = new DeveloperIntentionOracle();
-				
-				if (oracle.isHistoricallyObservable(preMatch, evolutionStep, strict)) {
-					observable.add(repair);
+		// The evolutionStep in which inconsistency has been resolved historically
+		try {
+			SymmetricDifference actualToResolved = deriveTechnicalDifference(modelActual, modelResolved, settings);
+			
+			for (Rule complementRule : repairJob.getRepairs().keySet()) {
+				for (IRepairPlan repair : repairJob.getRepairs().get(complementRule)) {
+					
+					// The preMatch turning the complement rule into a repair operation.
+					Match preMatch = repair.getRepairPreMatch().getMatch();
+					
+					// Mode
+					boolean strict = false;
+					
+					DeveloperIntentionOracle oracle = new DeveloperIntentionOracle();
+					
+					if (oracle.isHistoricallyObservable(preMatch, actualToResolved, strict)) {
+						observable.add(repair);
+					}
 				}
 			}
+		} catch (InvalidModelException | NoCorrespondencesException e) {
+			e.printStackTrace();
 		}
 		
 		return observable;

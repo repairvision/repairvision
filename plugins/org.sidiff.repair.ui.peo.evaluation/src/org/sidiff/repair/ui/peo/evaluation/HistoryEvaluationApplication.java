@@ -9,16 +9,13 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.ui.WorkbenchUtil;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.api.util.RepairAPIUtil;
-import org.sidiff.repair.evaluation.oracle.DeveloperIntentionOracle;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
@@ -58,6 +55,11 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	 */
 	private Resource modelC;
 	
+	/**
+	 * Actual evaluation result listener.
+	 */
+	private IResultChangedListener<PEORepairJob> resultListener;
+	
 	@Override
 	public void calculateRepairs() {
 		
@@ -80,15 +82,18 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		rq.getResearchQuestion01().revisionsAll = history.getVersions().size();
 		rq.getResearchQuestion01().avgElements = ResearchQuestion01.getAVGElements(history);
 		
-		clearResultChangeListener();
+		// Wait for results...
+		removeResultChangeListener(resultListener);
 		
-		addResultChangedListener(new IResultChangedListener<PEORepairJob>() {
+		resultListener = new IResultChangedListener<PEORepairJob>() {
 			
 			@Override
 			public void resultChanged(PEORepairJob repairJob) {
 				evaluate(rq);
 			}
-		});
+		};
+		
+		addResultChangedListener(resultListener);
 		
 		// Calculate repairs:
 		repairCalculation = new Job("Calculate Repairs") {
@@ -135,7 +140,8 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		
 		// RQ 02:
 		// TODO: Oracle for Repair-Trees:
-		List<IRepairPlan> observable = EvaluationUtil.historicallyObservable(repairJob);
+		List<IRepairPlan> observable = EvaluationUtil.historicallyObservable(
+				repairJob, getMatchingSettings(), getModelB(), getModelC());
 		
 		if (!observable.isEmpty()) {
 			rq.getResearchQuestion02().repairAsObservedOPK++;
@@ -206,42 +212,25 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		setModelA(modelA);
 		setModelB(modelB);
 		
-		// Setup evaluation:
-		clearResultChangeListener();
+		// Wait for results...
+		removeResultChangeListener(resultListener);
 		
-		addResultChangedListener(new IResultChangedListener<PEORepairJob>() {
+		resultListener = new IResultChangedListener<PEORepairJob>() {
 			
 			@Override
 			public void resultChanged(PEORepairJob repairJob) {
-				int count = 0;
 				
-				for (Rule complementRule : repairJob.getRepairs().keySet()) {
-					for (IRepairPlan repair : repairJob.getRepairs().get(complementRule)) {
-						
-						// The preMatch turning the complement rule into a repair operation.
-						Match preMatch = repair.getRepairPreMatch().getMatch();
-						
-						// The evolutionStep in which inconsistency has been resolved historically
-						SymmetricDifference evolutionStep = (SymmetricDifference) repairJob
-								.getDifference().getContents().get(0);
-						
-						// Mode
-						boolean strict = false;
-						
-						DeveloperIntentionOracle oracle = new DeveloperIntentionOracle();
-						
-						if (oracle.isHistoricallyObservable(preMatch, evolutionStep, strict)) {
-							count++;
-						}
-					}
-				}
+				List<IRepairPlan> observable = EvaluationUtil.historicallyObservable(
+						repairJob, getMatchingSettings(), getModelB(), getModelC());
 				
-				WorkbenchUtil.showMessage(count + " Historically Observable Repair(s) Found!");
+				WorkbenchUtil.showMessage(observable.size() + " Historically Observable Repair(s) Found!");
 				
 				System.out.println("Repairs Found: " + repairJob.getRepairs().size());
 				System.out.println("#################### Evaluation Finished ####################");
 			}
-		});
+		};
+		
+		addResultChangedListener(resultListener);
 		
 		// Start calculation:
 		calculateRepairsForInconsistency();
