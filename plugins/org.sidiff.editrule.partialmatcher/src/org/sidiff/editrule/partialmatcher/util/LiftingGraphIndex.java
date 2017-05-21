@@ -38,6 +38,10 @@ public class LiftingGraphIndex {
 		this.localChanges = new HashMap<EObject, Collection<Change>>();
 	}
 	
+	public SymmetricDifference getDifference() {
+		return difference;
+	}
+	
 	public void initialize() {
 		indexCorrespondences();
 		createChangeIndexMap(difference);

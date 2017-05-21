@@ -18,6 +18,10 @@ public class IndexedCrossReferencer implements ICrossReferencer {
 
 	private Map<EObject, List<List<EObject>>> crossReferences = new HashMap<>();
 	
+	public List<EReference> getIncomingReferences(EClass type) {
+		return incomingReferences.get(type);
+	}
+	
 	@Override
 	public Iterator<? extends EObject> getInverse(EObject source, EReference incoming) {
 		if (incoming.isContainment()) {
