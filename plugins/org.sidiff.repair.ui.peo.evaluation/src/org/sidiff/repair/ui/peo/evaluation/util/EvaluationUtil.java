@@ -36,6 +36,17 @@ public class EvaluationUtil {
 		return eObjectList;
 	}
 	
+	public static ValidationError getCorrespondingValidationError(ValidationError validationError, Version model) {
+		
+		for(ValidationError nextValidationError : model.getValidationErrors()) {
+			if (equals(validationError, nextValidationError)) {
+				return nextValidationError;
+			}
+		}
+		
+		return null;
+	}
+	
 	public static List<IRepairPlan> historicallyObservable(PEORepairJob repairJob) {
 		List<IRepairPlan> observable = new ArrayList<>();
 		

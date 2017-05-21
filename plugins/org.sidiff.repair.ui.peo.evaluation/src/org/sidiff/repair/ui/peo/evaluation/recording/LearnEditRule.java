@@ -2,21 +2,30 @@ package org.sidiff.repair.ui.peo.evaluation.recording;
 
 import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
 
+import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.model.Module;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
+import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.partialmatcher.util.IndexedCrossReferencer;
 import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
-import org.sidiff.repair.validation.Constraint;
+import org.sidiff.editrule.recorder.handlers.CreateEditRuleHandler;
+import org.sidiff.editrule.recorder.handlers.util.EditRuleUtil;
+import org.sidiff.repair.validation.IConstraint;
 import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.ScopeRecorder;
 
@@ -109,7 +118,8 @@ public class LearnEditRule {
 		this.navigation = new DifferenceNavigation(changeIndex, crossReferencer);
 	}
 	
-	public void learn(EObject introducedContext, Constraint consistencyRule) {
+	public void learn(EObject introducedContext, IConstraint consistencyRule) {
+		assert intorducedToResolved.getModelA() == introducedContext.eResource();
 		
 		// Validation //
 		
@@ -160,6 +170,30 @@ public class LearnEditRule {
 		
 		sliceDifferenceModelA(expandedScopeHistorical.keySet());
 		sliceDifferenceModelB(expandedScopeResolved.keySet());
+		
+		// Generate the Edit-Rule //
+		Module editRule = CreateEditRuleHandler.createEditRule(consistencyRule.getName(), 
+				slice.getCorrespondences(), slice.getChanges());
+		
+		if (editRule != null) {
+			editRule.getImports().addAll(EditRuleUtil.getImports(editRule));
+			
+			URI eoURI = EcoreUtil.getURI(introducedContext).trimSegments(1)
+					.appendSegment(editRule.getName() + "_execute")
+					.appendFileExtension("henshin");
+			Resource eoRes = new ResourceSetImpl().createResource(eoURI);
+			eoRes.getContents().add(editRule);
+
+			try {
+				eoRes.save(Collections.emptyMap());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + eoURI.toPlatformString(true));
+		} else {
+			WorkbenchUtil.showError("Could not transform this difference to an edit-rule.");
+		}
 	}
 
 	private void expandScope(

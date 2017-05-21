@@ -67,7 +67,6 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 	 */
 	private TreeViewer historyViewer;
 	
-	
 	@Override
 	public void createPartControls(Composite parent, IWorkbenchPartSite site) {
 		
@@ -147,7 +146,7 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 				Object selection = ((StructuredSelection) event.getSelection()).getFirstElement();
 
 				if (selection instanceof ValidationError) {
-					getApplication().selectValidationError((ValidationError) selection);
+					getApplication().selectInconsistency((ValidationError) selection);
 					getApplication().startEvaluationForInconsistency();
 				} else {
 					WorkbenchUtil.showMessage("Please select a validation error!");
@@ -209,10 +208,12 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 	public void createLocalToolBar(IToolBarManager manager) {
 		super.createLocalToolBar(manager);
 		
+		// Edit-Rule Recorder //
+		
 		Action recordEditRule = new Action() {
 			@Override
 			public void run() {
-				System.out.println("HistoryRepairUI.createLocalToolBar(...).new Action() {...}.run()");
+				getApplication().learnEditRule();
 			}
 		};
 		
