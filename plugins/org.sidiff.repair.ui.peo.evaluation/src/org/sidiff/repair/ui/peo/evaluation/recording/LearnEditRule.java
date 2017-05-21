@@ -25,6 +25,7 @@ import org.sidiff.editrule.partialmatcher.util.IndexedCrossReferencer;
 import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.editrule.recorder.handlers.CreateEditRuleHandler;
 import org.sidiff.editrule.recorder.handlers.util.EditRuleUtil;
+import org.sidiff.matching.model.Correspondence;
 import org.sidiff.repair.validation.IConstraint;
 import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.ScopeRecorder;
@@ -252,14 +253,24 @@ public class LearnEditRule {
 	
 	private void sliceDifferenceModelA(Set<EObject> scopeA) {
 		for (EObject scopeElementA : scopeA) {
-			slice.addCorrespondence(navigation.getCorrespondenceOfModelA(scopeElementA));
+			Correspondence correspondence = navigation.getCorrespondenceOfModelA(scopeElementA);
+			
+			if (correspondence != null) {
+				slice.addCorrespondence(correspondence);
+			}
+			
 			slice.addChanges(navigation.getLocalChanges(scopeElementA));
 		}
 	}
 	
 	private void sliceDifferenceModelB(Set<EObject> scopeB) {
 		for (EObject scopeElementB : scopeB) {
-			slice.addCorrespondence(navigation.getCorrespondenceOfModelB(scopeElementB));
+			Correspondence correspondence = navigation.getCorrespondenceOfModelB(scopeElementB);
+			
+			if (correspondence != null) {
+				slice.addCorrespondence(correspondence);
+			}
+			
 			slice.addChanges(navigation.getLocalChanges(scopeElementB));
 		}
 	}
