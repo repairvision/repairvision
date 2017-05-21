@@ -45,6 +45,11 @@ public interface IRepairApplication<J extends RepairJob<?>, F extends IRepairSet
 	void removeResultChangeListener(IResultChangedListener<J> listener);
 	
 	/**
+	 * Removes all listeners.
+	 */
+	void clearResultChangeListener();
+	
+	/**
 	 * Starts a new repair calculation.
 	 */
 	void calculateRepairs();

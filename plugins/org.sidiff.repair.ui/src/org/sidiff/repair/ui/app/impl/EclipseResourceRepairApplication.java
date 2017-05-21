@@ -45,6 +45,11 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 		listeners.forEach(l -> l.resultChanged(getRepairJob()));
 	}
 	
+	@Override
+	public void clearResultChangeListener() {
+		listeners.clear();
+	}
+	
 	public IResource getModelAFile() {
 		return modelAFile;
 	}

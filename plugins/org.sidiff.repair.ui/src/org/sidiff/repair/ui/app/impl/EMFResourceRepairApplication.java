@@ -37,11 +37,16 @@ public abstract class EMFResourceRepairApplication<J extends RepairJob<?>, F ext
 		listeners.remove(listener);
 	}
 	
+	@Override
+	public void clearResultChangeListener() {
+		listeners.clear();
+	}
+	
 	protected void fireResultChangeListener() {
 		listeners.forEach(l -> l.resultChanged(getRepairJob()));
 	}
 	
-	public Resource getModelAFile() {
+	public Resource getModelA() {
 		return modelA;
 	}
 	
@@ -69,7 +74,7 @@ public abstract class EMFResourceRepairApplication<J extends RepairJob<?>, F ext
 		return element;
 	}
 	
-	public Resource getModelBFile() {
+	public Resource getModelB() {
 		return modelB;
 	}
 
