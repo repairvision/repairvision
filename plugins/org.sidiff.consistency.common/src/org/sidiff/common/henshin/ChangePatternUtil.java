@@ -53,7 +53,7 @@ public class ChangePatternUtil {
 		
 		// << create >> attributes (attribute value changes):
 		for (Node lhsNode : rule.getLhs().getNodes()) {
-			for (AttributePair attributePair : getAttributeValueChanges(lhsNode)) {
+			for (AttributePair attributePair : getChangingAttributes(lhsNode)) {
 				changes.add(attributePair.getRhsAttribute());
 			}
 		}
@@ -61,8 +61,8 @@ public class ChangePatternUtil {
 		return changes;
 	}
 	
-	public static List<AttributePair> getAttributeValueChanges(Node node) {
-		List<AttributePair> changingAttributes = getChangingAttributes(node);
+	public static List<AttributePair> getChangingAttributes(Node node) {
+		List<AttributePair> changingAttributes = getAllChangingAttributes(node);
 	
 		for (Iterator<AttributePair> iterator = changingAttributes.iterator(); iterator.hasNext();) {
 			AttributePair attribute = iterator.next();
@@ -74,6 +74,39 @@ public class ChangePatternUtil {
 		}
 		
 		return changingAttributes;
+	}
+	
+	/**
+	 * Returns all attributes of the form value1->value2 and <<set>> value.
+	 * 
+	 * @param lhsNode
+	 *            the Henshin node.
+	 * @return the changing attributes.
+	 */
+	private static List<AttributePair> getAllChangingAttributes(Node node) {
+		Node rhsNode = HenshinRuleAnalysisUtilEx.getRHS(node);
+		Node lhsNode = HenshinRuleAnalysisUtilEx.getLHS(node);
+		
+		if ((rhsNode != null) && (lhsNode != null)) {
+			List<AttributePair> changingAttributes = new LinkedList<AttributePair>();
+
+			for (Attribute rhsAttribute : rhsNode.getAttributes()) {
+				Attribute lhsAttribute = HenshinRuleAnalysisUtilEx.getRemoteAttribute(rhsAttribute);
+
+				if (lhsAttribute == null) {
+					// <<set>> value:
+					changingAttributes.add(new AttributePair(null, rhsAttribute));
+				} else {
+					// value1->value2:
+					if (!lhsAttribute.getValue().equals(rhsAttribute.getValue())) {
+						changingAttributes.add(new AttributePair(lhsAttribute, rhsAttribute));
+					}
+				}
+			}
+			
+			return changingAttributes;
+		}
+		return Collections.emptyList();
 	}
 	
 	/**
@@ -103,39 +136,6 @@ public class ChangePatternUtil {
 		}
 
 		return res;
-	}
-	
-	/**
-	 * Returns all attributes of the form value1->value2 and <<set>> value.
-	 * 
-	 * @param lhsNode
-	 *            the Henshin node.
-	 * @return the changing attributes.
-	 */
-	public static List<AttributePair> getChangingAttributes(Node node) {
-		Node rhsNode = HenshinRuleAnalysisUtilEx.getRHS(node);
-		Node lhsNode = HenshinRuleAnalysisUtilEx.getLHS(node);
-		
-		if ((rhsNode != null) && (lhsNode != null)) {
-			List<AttributePair> changingAttributes = new LinkedList<AttributePair>();
-
-			for (Attribute rhsAttribute : rhsNode.getAttributes()) {
-				Attribute lhsAttribute = HenshinRuleAnalysisUtilEx.getRemoteAttribute(rhsAttribute);
-
-				if (lhsAttribute == null) {
-					// <<set>> value:
-					changingAttributes.add(new AttributePair(null, rhsAttribute));
-				} else {
-					// value1->value2:
-					if (!lhsAttribute.getValue().equals(rhsAttribute.getValue())) {
-						changingAttributes.add(new AttributePair(lhsAttribute, rhsAttribute));
-					}
-				}
-			}
-			
-			return changingAttributes;
-		}
-		return Collections.emptyList();
 	}
 	
 	public static Node tryLHS(Node node) {
