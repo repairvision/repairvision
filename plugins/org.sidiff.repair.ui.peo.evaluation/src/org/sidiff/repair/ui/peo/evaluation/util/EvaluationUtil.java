@@ -87,7 +87,7 @@ public class EvaluationUtil {
 	
 	public static Validation getRepairTree(Collection<Validation> repairTrees, ValidationError inconsistencies) {
 		for (Validation repairTree : repairTrees) {
-			if (repairTree.getRule().getName().equalsIgnoreCase(getValidationID(inconsistencies))) {
+			if (getValidationID(repairTree.getRule().getName()).equalsIgnoreCase(getValidationID(inconsistencies))) {
 				return repairTree;
 			}
 		}
@@ -172,8 +172,12 @@ public class EvaluationUtil {
 		return false;
 	}
 	
+	public static String getValidationID(String name) {
+		return name.replaceAll("[^\\p{Alpha}]", "");
+	}
+	
 	public static String getValidationID(ValidationError validation) {
-		return validation.getName().replaceAll("[^\\p{Alpha}]", "");
+		return getValidationID(validation.getName());
 	}
 	
 	public static Version getPrecessorRevision(Version version) {
