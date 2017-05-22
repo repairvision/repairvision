@@ -117,7 +117,7 @@ public class ActionNode extends ActionGraphElement  {
 		
 		// Create attribute value change pattern:
 		// Content check: value1->value2
-		for (AttributePair attribute : ChangePatternUtil.getAttributeValueChanges(editRuleNode)) {
+		for (AttributePair attribute : ChangePatternUtil.getChangingAttributes(editRuleNode)) {
 			if (attributeChanges == null) {
 				attributeChanges = new ArrayList<>(5);
 			}

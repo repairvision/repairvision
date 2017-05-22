@@ -249,7 +249,7 @@ public class ChangeDependencies {
 		
 		// edit rule attribute: value1->value2:
 		for (Node lhsNode : editRule.getLhs().getNodes()) {
-			for (AttributePair attribute : ChangePatternUtil.getAttributeValueChanges(lhsNode)) {
+			for (AttributePair attribute : ChangePatternUtil.getChangingAttributes(lhsNode)) {
 				createDependencyNode(attribute.getRhsAttribute());
 			}
 		}
