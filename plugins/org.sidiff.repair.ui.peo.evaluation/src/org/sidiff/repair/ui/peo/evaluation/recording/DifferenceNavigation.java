@@ -8,6 +8,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.difference.symmetric.Change;
+import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.partialmatcher.util.IndexedCrossReferencer;
 import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.matching.model.Correspondence;
@@ -18,12 +19,17 @@ public class DifferenceNavigation {
 	
 	protected IndexedCrossReferencer crossReferencer;
 
-	public DifferenceNavigation(
-			LiftingGraphIndex changeIndex, 
-			IndexedCrossReferencer crossReferencer) {
+	public DifferenceNavigation(SymmetricDifference difference) {
 		super();
-		this.changeIndex = changeIndex;
-		this.crossReferencer = crossReferencer;
+		
+		// Create difference navigation:
+		this.changeIndex = new LiftingGraphIndex(difference);
+		this.changeIndex.initialize();
+
+		// Create matching helper:
+		this.crossReferencer = new IndexedCrossReferencer();
+		this.crossReferencer.addResource(difference.getModelA());
+		this.crossReferencer.addResource(difference.getModelB());
 	}
 	
 	public Correspondence getCorrespondenceOfModelA(EObject objectInA) {

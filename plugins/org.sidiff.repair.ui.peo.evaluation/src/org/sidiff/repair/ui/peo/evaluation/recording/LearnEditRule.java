@@ -21,8 +21,6 @@ import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.editrule.partialmatcher.util.IndexedCrossReferencer;
-import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.editrule.recorder.handlers.CreateEditRuleHandler;
 import org.sidiff.editrule.recorder.handlers.util.EditRuleUtil;
 import org.sidiff.matching.model.Correspondence;
@@ -107,16 +105,7 @@ public class LearnEditRule {
 		}
 		
 		this.slice = new DifferenceSlice(difference);
-		
-		// Create difference navigation:
-		LiftingGraphIndex changeIndex = new LiftingGraphIndex(difference);
-
-		// Create matching helper:
-		IndexedCrossReferencer crossReferencer = new IndexedCrossReferencer();
-		crossReferencer.addResource(difference.getModelA());
-		crossReferencer.addResource(difference.getModelB());
-
-		this.navigation = new DifferenceNavigation(changeIndex, crossReferencer);
+		this.navigation = new DifferenceNavigation(difference);
 	}
 	
 	public void learn(EObject introducedContext, IConstraint consistencyRule) {

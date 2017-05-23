@@ -48,7 +48,7 @@ public class DifferenceSlice {
 		boolean changed = false;
 		
 		for (Change change : changes) {
-			if (changes.add(change)) {
+			if (this.changes.add(change)) {
 				changed = true;
 			}
 		}
