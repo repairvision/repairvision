@@ -29,7 +29,6 @@ import org.sidiff.repair.ui.peo.evaluation.history.HistoryRepairApplication;
 import org.sidiff.repair.ui.peo.evaluation.recording.LearnEditRule;
 import org.sidiff.repair.ui.peo.evaluation.util.EvaluationUtil;
 import org.sidiff.repair.ui.util.EditRuleUtil;
-import org.sidiff.repair.validation.IConstraint;
 import org.sidiff.repair.validation.util.Validation;
 import org.sidiff.validation.constraint.library.ConstraintLibraryRegistry;
 
@@ -266,10 +265,14 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	}
 	
 	public void learnEditRule() {
-		LearnEditRule learnEditRule = new LearnEditRule(getMatchingSettings(), getModelA(), getModelB(), getModelC());
-		IConstraint consistencyRule = EvaluationUtil.getRepairTree(repairJob.getValidations(), getInconsistency()).getRule();
+		Validation valiadation = EvaluationUtil.getRepairTree(repairJob.getValidations(), getInconsistency());
 		
- 		learnEditRule.learn(getInconsistency().getInvalidElement().get(0), consistencyRule);
+		if (valiadation != null) {
+			LearnEditRule learnEditRule = new LearnEditRule(getMatchingSettings(), getModelA(), getModelB(), getModelC());
+			learnEditRule.learn(getInconsistency().getInvalidElement().get(0), valiadation.getRule());
+		} else {
+			WorkbenchUtil.showError("No corresponding validation found!");
+		}
 	}
 	
 	public History getHistory() {
