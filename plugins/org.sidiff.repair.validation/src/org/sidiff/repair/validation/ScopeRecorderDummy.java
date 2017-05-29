@@ -1,6 +1,5 @@
 package org.sidiff.repair.validation;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -10,11 +9,6 @@ public class ScopeRecorderDummy implements IScopeRecorder {
 
 	@Override
 	public void addElement(Object modelElement) {
-		// Ignored...
-	}
-	
-	@Override
-	public void addElement(Collection<Object> elements) {
 		// Ignored...
 	}
 

@@ -10,15 +10,17 @@ public class ScopeRecorder implements IScopeRecorder {
 
 	private Set<EObject> scope = new HashSet<>();
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void addElement(Object element) {
 		if (element instanceof EObject) {
 			scope.add((EObject) element);
+		} else if (element instanceof Collection<?>) {
+			addElements((Collection<Object>) element);
 		}
 	}
 	
-	@Override
-	public void addElement(Collection<Object> elements) {
+	public void addElements(Collection<Object> elements) {
 		for (Object element : elements) {
 			addElement(element);
 		}
