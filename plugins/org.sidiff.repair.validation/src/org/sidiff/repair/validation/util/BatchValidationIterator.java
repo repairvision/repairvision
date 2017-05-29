@@ -15,8 +15,6 @@ import org.sidiff.repair.validation.fix.IRepairDecision;
 
 public class BatchValidationIterator implements Iterator<Validation> {
 
-	private Iterator<EObject> modelIterator; 
-	
 	private Map<EClass, List<IConstraint>> rules = new HashMap<>();
 	
 	private LinkedList<Validation> next = new LinkedList<>();
@@ -27,39 +25,36 @@ public class BatchValidationIterator implements Iterator<Validation> {
 	
 	private boolean cleanupRepairTree = true;
 	
-	public BatchValidationIterator(Resource modelResource, List<IConstraint> consistencyRules) {
-		this.modelIterator = modelResource.getAllContents();
-		
-		init(consistencyRules);
-	}
-
 	public BatchValidationIterator(
 			Resource modelResource, List<IConstraint> consistencyRules,
 			boolean showPositiveResults, 
 			boolean showNegativeResults,
 			boolean cleanupRepairTree) {
 		
-		this.modelIterator = modelResource.getAllContents();
 		this.showPositiveResults = showPositiveResults;
 		this.showNegativeResults = showNegativeResults;
 		this.cleanupRepairTree = cleanupRepairTree;
 		
-		init(consistencyRules);
-	}
-
-	private void init(List<IConstraint> consistencyRules) {
-		
+		// Index constraints by type:
 		for (IConstraint consistencyRule : consistencyRules) {
-			
-			if (!rules.containsKey(consistencyRule.getContextType())) {
-				rules.put(consistencyRule.getContextType(), new LinkedList<>());
-			}
-			
-			rules.get(consistencyRule.getContextType()).add(consistencyRule);
+			addConstraintForType(consistencyRule.getContextType(), consistencyRule);
 		}
 		
-		// Initialize iteration:
-		findNext();
+		// Search inconsistencies:
+		findAll(modelResource);
+	}
+	
+	public BatchValidationIterator(Resource modelResource, List<IConstraint> consistencyRules) {
+		this(modelResource, consistencyRules, true, true, true);
+	}
+	
+	private void addConstraintForType(EClass type, IConstraint consistencyRule) {
+		
+		if (!rules.containsKey(type)) {
+			rules.put(type, new LinkedList<>());
+		}
+		
+		rules.get(type).add(consistencyRule);
 	}
 
 	public boolean isShowPositiveResults() {
@@ -84,35 +79,44 @@ public class BatchValidationIterator implements Iterator<Validation> {
 		
 		if (hasNext()) {
 			Validation tmp_next = next.pollFirst();
-			findNext();
 			return tmp_next;
 		} else {
 			throw new NoSuchElementException();
 		}
 	}
 	
-	private void findNext() {
+	private void findAll(Resource modelResource) {
+		Iterator<EObject> modelIterator = modelResource.getAllContents();
 		
 		while (modelIterator.hasNext()) {
 			EObject modelElement = modelIterator.next();
 			
-			if (rules.containsKey(modelElement.eClass())) {
-				for (IConstraint crule : rules.get(modelElement.eClass())) {
-					crule.evaluate(modelElement);
+			evaluate(modelElement, modelElement.eClass());
+			
+			for (EClass superType : modelElement.eClass().getEAllSuperTypes()) {
+				evaluate(modelElement, superType);
+			}
+		}
+	}
+	
+	private void evaluate(EObject modelElement, EClass constraintContextType) {
+		
+		if (rules.containsKey(constraintContextType)) {
+			for (IConstraint crule : rules.get(constraintContextType)) {
+				crule.evaluate(modelElement);
+				
+				if ((crule.getResult() && showPositiveResults) || (!crule.getResult() && showNegativeResults)) {
+					IRepairDecision repair = (!crule.getResult()) ? crule.repair() : null;
+					repair = cleanupRepairTree ? ValidationUtil.cleanup(repair) : repair;
 					
-					if ((crule.getResult() && showPositiveResults) || (!crule.getResult() && showNegativeResults)) {
-						IRepairDecision repair = (!crule.getResult()) ? crule.repair() : null;
-						repair = cleanupRepairTree ? ValidationUtil.cleanup(repair) : repair;
-						
-						Validation newValidation = new Validation(
-								crule,
-								crule.getResult(), 
-								crule.getContextType(), 
-								crule.getContext(), 
-								repair);
-						
-						next.add(newValidation);
-					}
+					Validation newValidation = new Validation(
+							crule,
+							crule.getResult(), 
+							crule.getContextType(), 
+							crule.getContext(), 
+							repair);
+					
+					next.add(newValidation);
 				}
 			}
 		}
