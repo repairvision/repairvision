@@ -24,7 +24,7 @@ public class Size extends Function {
 			value = 0;
 		} else {
 			if (elements.getValue() instanceof Collection<?>) {
-				value = ((Collection<?>) elements).size();
+				value = ((Collection<?>) elements.getValue()).size();
 			} else {
 				value = 1;
 			}
