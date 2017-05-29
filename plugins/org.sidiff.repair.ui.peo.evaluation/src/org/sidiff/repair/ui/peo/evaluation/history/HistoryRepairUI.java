@@ -175,8 +175,17 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 				EObject rootElement = historyResource.getContents().get(0);
 				
 				if (rootElement instanceof History) {
-					getApplication().setHistory((History) rootElement);
+					History history = (History) rootElement;
+					
+					getApplication().setHistory(history);
 					historyViewer.setInput(getApplication().getValidations());
+					
+					// Set models for matching settings...
+					if (history.getVersions().size() > 1) {
+						getApplication().populateSettings(
+								history.getVersions().get(0).getModel(),
+								history.getVersions().get(1).getModel());
+					}
 				}
 				
 				return element;

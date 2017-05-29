@@ -9,18 +9,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
-import org.sidiff.repair.api.peo.PEORepairJob;
-import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.api.IRepairPlan;
+import org.sidiff.repair.api.peo.PEORepairJob;
+import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
-import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.repair.validation.util.Validation;
 
@@ -58,9 +56,7 @@ public class PEORepairApplication extends EclipseResourceRepairApplication<PEORe
 				editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
 				
 				// Calculate repairs:
-				URI uriModelA = ModelDropWidget.getURI(modelAFile);
-				URI uriModelB = ModelDropWidget.getURI(modelBFile);
-				repairJob = repairFacade.getRepairs(uriModelA, uriModelB,
+				repairJob = repairFacade.getRepairs(getModelA(), getModelB(),
 						new PEORepairSettings(editRules, settings));
 				
 				// Update UI:

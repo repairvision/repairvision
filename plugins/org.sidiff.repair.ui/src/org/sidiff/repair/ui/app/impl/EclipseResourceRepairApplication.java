@@ -1,19 +1,13 @@
 package org.sidiff.repair.ui.app.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.common.henshin.emf.DocumentType;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.matcher.IMatcher;
-import org.sidiff.matcher.MatcherUtil;
 import org.sidiff.repair.api.IRepairSettings;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.app.IRepairApplication;
@@ -25,11 +19,15 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 
 	protected List<IResultChangedListener<J>> listeners = new ArrayList<>();
 	
+	protected ResourceSet differenceRSS = new ResourceSetImpl();
+	
+	protected Resource modelA;
+	
 	protected IResource modelAFile;
 	
-	protected IResource modelBFile;
+	protected Resource modelB;
 	
-	protected String documentType;
+	protected IResource modelBFile;
 	
 	@Override
 	public void addResultChangedListener(IResultChangedListener<J> listener) {
@@ -50,73 +48,71 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 		listeners.clear();
 	}
 	
+	public IResource setModelA(IResource element) {
+		modelAFile = element;
+		populateSettings();
+		return element;
+	}
+	
 	public IResource getModelAFile() {
 		return modelAFile;
 	}
 	
+	public Resource getModelA() {
+		
+		if ((modelA == null) && (modelAFile != null)) {
+			modelA = differenceRSS.getResource(ModelDropWidget.getURI(modelAFile), true);
+		}
+		return modelA;
+	}
+	
 	public IResource unsetModelA(IResource selection) {
 		modelAFile = null;
-		showAvailableMatchers();
-		return selection;
-	}
-
-	public IResource setModelA(IResource element) {
-		modelAFile = element;
-		showAvailableMatchers();
-		return element;
-	}
-
-	public IResource unsetModelB(IResource selection) {
-		modelBFile = null;
-		showAvailableMatchers();
+		modelA = null;
+		populateSettings();
 		return selection;
 	}
 
 	public IResource setModelB(IResource element) {
 		modelBFile = element;
-		showAvailableMatchers();
+		populateSettings();
 		return element;
 	}
 	
 	public IResource getModelBFile() {
 		return modelBFile;
 	}
-
-	private void showAvailableMatchers() {
-		if ((modelAFile != null) && (modelBFile != null))  {
-			
-			// FIXME: We need a parser which only reads the document-type in the header...
-			ResourceSet differenceRSS = new ResourceSetImpl();
-			Resource modelARes = differenceRSS.getResource(ModelDropWidget.getURI(modelAFile), true);
-			Resource modelBRes = differenceRSS.getResource(ModelDropWidget.getURI(modelBFile), true);
-			
-//			documentType = EMFModelAccess.getCharacteristicDocumentType(modelARes);
-			documentType = DocumentType.getDocumentType(modelARes.getContents().get(0));
-			
-			Set<IMatcher> matchers = MatcherUtil.getAvailableMatchers(Arrays.asList(modelARes, modelBRes));
-			RepairPreferencePage.setAvailableMatcher(matchers);
-		} else {
-			RepairPreferencePage.setAvailableMatcher(null);
-			documentType = null;
+	
+	public Resource getModelB() {
+		
+		if ((modelB == null) && (modelBFile != null)) {
+			modelB = differenceRSS.getResource(ModelDropWidget.getURI(modelBFile), true);
 		}
+		return modelB;
+	}
+	
+	public IResource unsetModelB(IResource selection) {
+		modelBFile = null;
+		modelB = null;
+		populateSettings();
+		return selection;
+	}
+
+	protected void populateSettings() {
+		RepairPreferencePage.populateSettings(getModelA(), getModelB());
 	}
 	
 	protected DifferenceSettings getMatchingSettings() {
-
-		// Matching-Settings:
-		if (documentType != null) {
-			DifferenceSettings settings = new DifferenceSettings(Collections.singleton(documentType)) {};
-			settings.setMatcher(RepairPreferencePage.getSelectedMatcher());
-			return settings;
-		}
-		
-		return null;
+		return RepairPreferencePage.getMatchingSettings();
+	}
+	
+	protected String getDoumentType() {
+		return RepairPreferencePage.getDoumentType();
 	}
 	
 	@Override
 	public void clear() {
 		unsetModelA(modelAFile);
 		unsetModelB(modelBFile);
-		documentType = null;
 	}
 }

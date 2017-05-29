@@ -1,7 +1,10 @@
 package org.sidiff.repair.ui.config;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -22,12 +25,19 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.sidiff.common.henshin.emf.DocumentType;
 import org.sidiff.common.ui.NameUtil;
 import org.sidiff.configuration.IConfigurable;
+import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
+import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
+import org.sidiff.difference.technical.util.TechnicalDifferenceBuilderUtil;
 import org.sidiff.matcher.IMatcher;
+import org.sidiff.matcher.MatcherUtil;
 import org.sidiff.repair.ui.presentation.extension.RepairPresentationEntry;
 import org.sidiff.repair.ui.presentation.extension.RepairPresentationLibrary;
 
+// TODO: IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 public class RepairPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	public static final String ID = "org.sidiff.repair.ui.config.mainpage";
@@ -36,16 +46,29 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	
 	protected static final String EMPTY_MATCHERS_MESSAGE = "No matchers available for the given model type.";
 	
-	// TODO: IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-	protected static Set<IMatcher> availableMatchers;
+	protected static final String SETUP_DIFFERENCE_BUILDER_MESSAGE = "Please add some models!";
 	
-	private static IMatcher matchingEngine;
+	protected static final String EMPTY_DIFFERENCE_BUILDER_MESSAGE = "No technical difference builder available for the given model type.";
 	
-	private static RepairDectectionEngineProvider repairEngine = new RepairDectectionEngineProvider();
+	//// Settings ////
+	
+	protected static String documentType;
+	
+	protected static List<IMatcher> availableMatchers;
+	
+	protected static IMatcher matchingEngine;
+	
+	protected static List<ITechnicalDifferenceBuilder> availableDifferenceBuilder;
+	
+	protected static ITechnicalDifferenceBuilder differenceBuilder;
+	
+	protected static RepairDectectionEngineProvider repairEngine = new RepairDectectionEngineProvider();
 	
 	//// UI ////
 	
 	private ComboViewer viewer_matching;
+	
+	private ComboViewer viewer_difference;
 	
 	private Composite config_container;
 	
@@ -144,6 +167,72 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			});
 		}
 		
+		/* 
+		 * Difference-Builder to settings:
+		 */
+		Group grpTechnicalDifference = new Group(container, SWT.NONE);
+		{
+			grpTechnicalDifference.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+			grpTechnicalDifference.setText("Technical Difference");
+			grpTechnicalDifference.setLayout(new GridLayout(1, false));
+			
+			viewer_difference = new ComboViewer(grpTechnicalDifference, SWT.NONE);
+			Combo combo_matching = viewer_difference.getCombo();
+			combo_matching.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			
+			// Provider:
+			viewer_difference.setComparator(new ViewerComparator());
+			viewer_difference.setContentProvider(ArrayContentProvider.getInstance());
+			viewer_difference.setLabelProvider(new LabelProvider() {
+				
+				@Override
+				public String getText(Object element) {
+					
+					if (element instanceof ITechnicalDifferenceBuilder) {
+						return ((ITechnicalDifferenceBuilder) element).getName();
+					}
+					
+					return super.getText(element);
+				}
+			});
+			
+			// Input:
+			if (viewer_difference.getInput() != availableDifferenceBuilder) {
+				viewer_difference.setInput(availableDifferenceBuilder);
+			}
+			
+			if (availableDifferenceBuilder == null) {
+				viewer_difference.add(SETUP_DIFFERENCE_BUILDER_MESSAGE);
+				viewer_difference.setSelection(new StructuredSelection(SETUP_DIFFERENCE_BUILDER_MESSAGE));
+			}
+			
+			if ((availableDifferenceBuilder != null) && (availableDifferenceBuilder.isEmpty())) {
+				viewer_difference.add(EMPTY_DIFFERENCE_BUILDER_MESSAGE);
+				viewer_difference.setSelection(new StructuredSelection(EMPTY_DIFFERENCE_BUILDER_MESSAGE));
+			}
+			
+			// Selection:
+			differenceBuilder = getInitialDifferenceBuilder();
+			
+			if (differenceBuilder != null) {
+				viewer_difference.setSelection(new StructuredSelection(differenceBuilder));
+				viewer_difference.refresh(true);
+			}
+			
+			// Update selected matcher:
+			viewer_difference.addSelectionChangedListener(new ISelectionChangedListener() {
+
+				@Override
+				public void selectionChanged(SelectionChangedEvent event) {
+					differenceBuilder = getSelection();
+				}
+
+				private ITechnicalDifferenceBuilder getSelection() {
+					return (ITechnicalDifferenceBuilder) ((StructuredSelection) viewer_difference.getSelection()).getFirstElement();
+				}
+			});
+		}
+		
 		/*
 		 *  Repair detection:
 		 */
@@ -183,12 +272,6 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 				repairEngine.setSelection(event.getSelection());
 			});
 		}
-		
-		// TODO: Add Difference-Builder to settings!
-//		Group grpDifference = new Group(container, SWT.NONE);
-//		grpDifference.setLayout(new GridLayout(1, false));
-//		grpDifference.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-//		grpDifference.setText("Difference");
 
 		return container;
 	}
@@ -264,6 +347,28 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		return selectedMatcher;
 	}
 	
+	private static ITechnicalDifferenceBuilder getInitialDifferenceBuilder() {
+		ITechnicalDifferenceBuilder selectedBuilder = null;
+		
+		if ((differenceBuilder != null) && (availableDifferenceBuilder != null) && (availableDifferenceBuilder.contains(differenceBuilder))) {
+			selectedBuilder = differenceBuilder;
+		} else {
+			if ((availableDifferenceBuilder != null) && (!availableDifferenceBuilder.isEmpty())) {
+				ITechnicalDifferenceBuilder defaultBuilder = TechnicalDifferenceUtils.getDefaultTechnicalDifferenceBuilder(getDoumentTypes());
+				
+				// [WORKAROUND]: Do not reload technical difference builder...
+				for (ITechnicalDifferenceBuilder builder : availableDifferenceBuilder) {
+					if (defaultBuilder.getKey().equals(builder.getKey())) {
+						selectedBuilder = builder;
+						break;
+					}
+				}
+			}
+		}
+		
+		return selectedBuilder;
+	}
+	
 	private static IMatcher getMatcherByName(String name) {
 		for (IMatcher matcher : availableMatchers) {
 			if (matcher.getName().equalsIgnoreCase(name)) {
@@ -282,9 +387,18 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		return null;
 	}
 	
-	public static void setAvailableMatcher(Set<IMatcher> matchers) {
+	public static void setAvailableMatcher(List<IMatcher> matchers) {
 		RepairPreferencePage.availableMatchers = matchers;
 		matchingEngine = getInitialMatcher();
+	}
+	
+	public static ITechnicalDifferenceBuilder getSelectedTechnicalDifferenceBuilder() {
+		return differenceBuilder;
+	}
+	
+	public static void setAvailableTechnicalDifferenceBuilder(List<ITechnicalDifferenceBuilder> builders) {
+		RepairPreferencePage.availableDifferenceBuilder = builders;
+		differenceBuilder = getInitialDifferenceBuilder();
 	}
 	
 	public static IMatcher getSelectedMatcher() {
@@ -293,5 +407,55 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	
 	public static RepairDectectionEngineProvider getRepairDectectionProvider() {
 		return repairEngine;
+	}
+	
+	public static void populateSettings(Resource modelA, Resource modelB) {
+		
+		if ((modelA != null) && (modelB != null))  {
+			
+			// Document type:
+//			documentType = EMFModelAccess.getCharacteristicDocumentType(modelARes);
+			String newDocumentType = DocumentType.getDocumentType(modelA.getContents().get(0));
+			
+			if (!newDocumentType.equals(documentType)) {
+				documentType = newDocumentType;
+				
+				// Matcher:
+				setAvailableMatcher(MatcherUtil.getAvailableMatchers(getDoumentTypes()));
+				
+				// Technical Difference Builder:
+				setAvailableTechnicalDifferenceBuilder(
+						TechnicalDifferenceBuilderUtil.getAvailableTechnicalDifferenceBuilders(getDoumentTypes()));
+			}
+		} else {
+			if ((modelA == null) && (modelB == null)) {
+				setAvailableMatcher(null);
+				differenceBuilder = null;
+				
+				setAvailableTechnicalDifferenceBuilder(null);
+				documentType = null;
+			}
+		}
+	}
+	
+	public static DifferenceSettings getMatchingSettings() {
+
+		// Matching-Settings:
+		if (documentType != null) {
+			DifferenceSettings settings = new DifferenceSettings(getDoumentTypes()) {};
+			settings.setMatcher(getSelectedMatcher());
+			settings.setTechBuilder(getSelectedTechnicalDifferenceBuilder());
+			return settings;
+		}
+		
+		return null;
+	}
+
+	public static String getDoumentType() {
+		return documentType;
+	}
+	
+	public static Set<String> getDoumentTypes() {
+		return Collections.singleton(documentType);
 	}
 }

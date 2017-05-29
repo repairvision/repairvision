@@ -9,18 +9,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.cpo.CPORepairJob;
 import org.sidiff.repair.api.cpo.CPORepairSettings;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
-import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.ui.util.EditRuleUtil;
 
 public class CPORepairApplication extends EclipseResourceRepairApplication<CPORepairJob, CPORepairSettings> {
@@ -63,11 +61,8 @@ public class CPORepairApplication extends EclipseResourceRepairApplication<CPORe
 				
 				// Calculate repairs:
 				if (!subEditRules.isEmpty() && !cpEditRules.isEmpty()) {
-					URI uriModelA = ModelDropWidget.getURI(modelAFile);
-					URI uriModelB = ModelDropWidget.getURI(modelBFile);
-					
-					repairJob = repairFacade.getRepairs(uriModelA, uriModelB, 
-							new CPORepairSettings(subEditRules, cpEditRules, documentType, settings));
+					repairJob = repairFacade.getRepairs(getModelA(), getModelB(), 
+							new CPORepairSettings(subEditRules, cpEditRules, getDoumentType(), settings));
 					
 					// Update UI:
 					Display.getDefault().syncExec(() -> {
@@ -101,7 +96,7 @@ public class CPORepairApplication extends EclipseResourceRepairApplication<CPORe
 					CPORepairJob lastRepairJob = repairJob;
 					
 					repairJob = repairFacade.getRepairs(repairJob.getModelA(), repairJob.getModelB(),
-							new CPORepairSettings(subEditRules, cpEditRules, documentType, settings));
+							new CPORepairSettings(subEditRules, cpEditRules, getDoumentType(), settings));
 					
 					// Copy undo history:
 					repairJob.copyHistory(lastRepairJob);

@@ -106,6 +106,7 @@ public class PEORepairRuleSelectionUI extends BasicRepairViewerUI<PEORepairAppli
 		super.clear();
 		viewer_validation.setInput(null);
 		editRules.clear();
+		modelVersions.clear();
 	}
 	
 	@Override

@@ -50,6 +50,16 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	private ValidationError inconsistency;
 	
 	/**
+	 * Consistent historic model.
+	 */
+	private Resource modelA;
+	
+	/**
+	 * The actual model.
+	 */
+	private Resource modelB;
+	
+	/**
 	 * Model where the inconsistency were resolved.
 	 */
 	private Resource modelC;
@@ -65,7 +75,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		System.out.println("#################### Evaluation Startet ####################");
 		
 		// Load edit-rules:
-		editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
+		this.editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
 		
 		// Find inconsistencies:
 		List<ValidationError> inconsistenciesAll = EvaluationUtil.getValidations(history);
@@ -105,14 +115,10 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 					
 					System.out.println("#################### " + inconsistency.getName() + " ####################");
 					
+					// Calculate repairs:
 					if (setInconsistency(inconsistency)) {
-						
-						// Matching-Settings:
-						settings = getMatchingSettings();
-						
-						// Calculate repairs:
-						repairJob = repairFacade.getRepairs(getModelA(), getModelB(),
-								new PEORepairSettings(editRules, settings));
+						repairJob = repairFacade.getRepairs(modelA, modelB,
+								new PEORepairSettings(editRules, getMatchingSettings()));
 					} else {
 						System.out.println("#################### " + "FAILED" + " ####################");
 					}
@@ -140,7 +146,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		// RQ 02:
 		// TODO: Oracle for Repair-Trees:
 		List<IRepairPlan> observable = EvaluationUtil.historicallyObservable(
-				repairJob, getMatchingSettings(), getModelB(), getModelC());
+				repairJob, getMatchingSettings(), modelB, modelC);
 		
 		if (!observable.isEmpty()) {
 			rq.getResearchQuestion02().repairAsObservedOPK++;
@@ -208,9 +214,6 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		System.out.println("Model A: " + modelA);
 		System.out.println("Model B: " + modelB);
 		
-		setModelA(modelA);
-		setModelB(modelB);
-		
 		// Wait for results...
 		removeResultChangeListener(resultListener);
 		
@@ -220,7 +223,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 			public void resultChanged(PEORepairJob repairJob) {
 				
 				List<IRepairPlan> observable = EvaluationUtil.historicallyObservable(
-						repairJob, getMatchingSettings(), getModelB(), getModelC());
+						repairJob, getMatchingSettings(), modelB, modelC);
 				
 				WorkbenchUtil.showMessage(observable.size() + " Historically Observable Repair(s) Found!");
 				
@@ -232,7 +235,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		addResultChangedListener(resultListener);
 		
 		// Start calculation:
-		calculateRepairsForInconsistency();
+		calculateRepairsForInconsistency(modelA, modelB);
 	}
 	
 	public Version getPrecessorRevision(Version version) {
@@ -256,11 +259,11 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	}
 	
 	private void loadModels(Version vA, Version vB, Version vC) {
-		setModelA(vA.getModel());
-		setModelB(vB.getModel());
+		modelA = vA.getModel();
+		modelB = vB.getModel();
 		
 		if (vC != null) {
-			setModelC(vC.getModel());
+			modelC = vC.getModel();
 		}
 	}
 	
@@ -268,7 +271,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		Validation valiadation = EvaluationUtil.getRepairTree(repairJob.getValidations(), getInconsistency());
 		
 		if (valiadation != null) {
-			LearnEditRule learnEditRule = new LearnEditRule(getMatchingSettings(), getModelA(), getModelB(), getModelC());
+			LearnEditRule learnEditRule = new LearnEditRule(getMatchingSettings(), modelA, modelB, modelC);
 			learnEditRule.learn(getInconsistency().getInvalidElement().get(0), valiadation.getRule());
 		} else {
 			WorkbenchUtil.showError("No corresponding validation found!");
@@ -338,14 +341,6 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		} else {
 			WorkbenchUtil.showError("The version in which the inconsistency was introduced is missing!");
 		}
-	}
-	
-	public Resource getModelC() {
-		return modelC;
-	}
-	
-	public void setModelC(Resource modelC) {
-		this.modelC = modelC;
 	}
 	
 	public EObjectList getValidations() {

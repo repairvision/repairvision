@@ -9,30 +9,33 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.ui.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
-import org.sidiff.repair.ui.app.impl.EMFResourceRepairApplication;
+import org.sidiff.repair.ui.app.IRepairApplication;
+import org.sidiff.repair.ui.app.IResultChangedListener;
+import org.sidiff.repair.ui.config.RepairPreferencePage;
 import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.repair.validation.util.Validation;
 
-public abstract class HistoryRepairApplication extends EMFResourceRepairApplication<PEORepairJob, PEORepairSettings> {
+public abstract class HistoryRepairApplication implements IRepairApplication<PEORepairJob, PEORepairSettings> {
 
 	protected IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade;
+	
+	protected List<IResultChangedListener<PEORepairJob>> listeners = new ArrayList<>();
 
 	protected Collection<IResource> editRuleFiles = new ArrayList<>();
 	
 	protected Job repairCalculation;
 	
 	protected PEORepairJob repairJob;
-	
-	protected DifferenceSettings settings;
 	
 	protected Collection<Rule> editRules;
 	
@@ -41,22 +44,38 @@ public abstract class HistoryRepairApplication extends EMFResourceRepairApplicat
 		this.repairFacade = repairFacade;
 	}
 	
-	public void calculateRepairsForInconsistency() {
+	@Override
+	public void addResultChangedListener(IResultChangedListener<PEORepairJob> listener) {
+		listeners.add(listener);
+	}
+	
+	@Override
+	public void removeResultChangeListener(IResultChangedListener<PEORepairJob> listener) {
+		listeners.remove(listener);
+	}
+	
+	protected void fireResultChangeListener() {
+		listeners.forEach(l -> l.resultChanged(getRepairJob()));
+	}
+	
+	@Override
+	public void clearResultChangeListener() {
+		listeners.clear();
+	}
+	
+	public void calculateRepairsForInconsistency(Resource modelA, Resource modelB) {
 		
 		repairCalculation = new Job("Calculate Repairs") {
 			
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				
-				// Matching-Settings:
-				settings = getMatchingSettings();
-				
 				// Load edit-rules:
 				editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
 				
 				// Calculate repairs:
 				repairJob = repairFacade.getRepairs(modelA, modelB,
-						new PEORepairSettings(editRules, settings));
+						new PEORepairSettings(editRules, getMatchingSettings()));
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
@@ -93,7 +112,7 @@ public abstract class HistoryRepairApplication extends EMFResourceRepairApplicat
 				// Calculate repairs:
 				repairJob = repairFacade.getRepairs(
 						repairJob.getModelA(), repairJob.getModelB(),
-						new PEORepairSettings(editRules, settings));
+						new PEORepairSettings(editRules, getMatchingSettings()));
 				
 				// Copy undo history:
 				repairJob.copyHistory(lastRepairJob);
@@ -163,13 +182,23 @@ public abstract class HistoryRepairApplication extends EMFResourceRepairApplicat
 		return repairJob;
 	}
 	
+	public void populateSettings(Resource modelA, Resource modelB) {
+		RepairPreferencePage.populateSettings(modelA, modelB);
+	}
+	
+	public DifferenceSettings getMatchingSettings() {
+		return RepairPreferencePage.getMatchingSettings();
+	}
+	
+	public String getDoumentType() {
+		return RepairPreferencePage.getDoumentType();
+	}
+	
 	@Override
 	public void clear() {
-		super.clear();
 		editRuleFiles.clear();
 		repairCalculation = null;
 		repairJob = null;
-		settings = null;
 		editRules = null;
 	}
 }
