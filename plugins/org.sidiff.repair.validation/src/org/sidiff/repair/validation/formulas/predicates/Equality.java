@@ -17,7 +17,11 @@ public class Equality extends Comparison {
 		left.evaluate(scope);
 		right.evaluate(scope);
 		
-		result = left.getValue().equals(right.getValue());
+		if ((left.getValue() == null) && (right.getValue() != null)) {
+			result = false;
+		} else {
+			result = left.getValue().equals(right.getValue());
+		}
 		
 		return result;
 	}
