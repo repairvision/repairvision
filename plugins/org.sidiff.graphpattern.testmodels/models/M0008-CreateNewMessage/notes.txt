@@ -1,9 +1,0 @@
-════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
-Notiz: Keine EOpposites, obwohl diese sich semantisch so verhalten:
-- Message.sendEvent und MessageOccurenceSpecification.message
-- Message.receiveEvent und MessageOccurenceSpecifications.message 
-
-=> Führt zu Reparatur bei der die MessageOccurenceSpecifications vertausch werden und sendEvent, receiveEvent werden 
-dann neu eingefügt. Dies wäre nicht der Fall, wenn beide Kanten EOpposite gesetzt wären, dann wäre diese Reparatur durch
-die atomaren Muster ausgefiltert worden.
-════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
