@@ -23,7 +23,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.recorder.handlers.CreateEditRuleHandler;
 import org.sidiff.editrule.recorder.handlers.util.EditRuleUtil;
-import org.sidiff.matching.model.Correspondence;
+import org.sidiff.editrule.recorder.handlers.util.HenshinDiagramUtil;
 import org.sidiff.repair.validation.IConstraint;
 import org.sidiff.repair.validation.IScopeRecorder;
 import org.sidiff.repair.validation.ScopeRecorder;
@@ -51,11 +51,6 @@ public class LearnEditRule {
 	protected Resource modelResolved;
 	
 	/**
-	 * Difference slice: historical, resolved
-	 */
-	protected DifferenceSlice slice;
-	
-	/**
 	 * Difference slicing criterion: historical, resolved
 	 */
 	protected DifferenceSlicingCriterion slicingCriterion;
@@ -74,6 +69,16 @@ public class LearnEditRule {
 	 * Mapping from introduced model version to resolved model version.
 	 */
 	protected SymmetricDifference intorducedToResolved; 
+	
+	/**
+	 * Mapping from historical model version to resolved model version.
+	 */
+	protected SymmetricDifference historicalToResolved; 
+	
+	/**
+	 * The slicing algorithm.
+	 */
+	protected DifferenceSlicer slicer;
 	
 	public LearnEditRule(DifferenceSettings matchingSettings,
 			Resource modelHistorical, 
@@ -96,16 +101,14 @@ public class LearnEditRule {
 		
 		// Calculate difference: Historical -> Resolved
 		this.matchingSettings = matchingSettings;
-		SymmetricDifference difference = null;
 		
 		try {
-			difference = deriveTechnicalDifference(modelHistorical, modelResolved, matchingSettings);
+			historicalToResolved = deriveTechnicalDifference(modelHistorical, modelResolved, matchingSettings);
 		} catch (InvalidModelException | NoCorrespondencesException e) {
 			e.printStackTrace();
 		}
 		
-		this.slice = new DifferenceSlice(difference);
-		this.navigation = new DifferenceNavigation(difference);
+		this.navigation = new DifferenceNavigation(historicalToResolved);
 	}
 	
 	public void learn(EObject introducedContext, IConstraint consistencyRule) {
@@ -114,7 +117,7 @@ public class LearnEditRule {
 		// Validation //
 		
 		EObject contextResolved = intorducedToResolved.getCorrespondingObjectInB(introducedContext);
-		EObject contextHistorical = slice.getDifference().getCorrespondingObjectInA(contextResolved);
+		EObject contextHistorical = historicalToResolved.getCorrespondingObjectInA(contextResolved);
 		
 		// Scope: Historical
 		IScopeRecorder scopeHistorical = new ScopeRecorder();
@@ -158,12 +161,13 @@ public class LearnEditRule {
 		
 		// Difference Slice //
 		
-		sliceDifferenceModelA(expandedScopeHistorical.keySet());
-		sliceDifferenceModelB(expandedScopeResolved.keySet());
+		slicer = new DifferenceSlicer(navigation);
+		slicer.sliceDifferenceModelA(expandedScopeHistorical.keySet());
+		slicer.sliceDifferenceModelB(expandedScopeResolved.keySet());
 		
 		// Generate the Edit-Rule //
 		Module editRule = CreateEditRuleHandler.createEditRule(consistencyRule.getName(), 
-				slice.getCorrespondences(), slice.getChanges());
+				getSlice().getCorrespondences(), getSlice().getChanges());
 		
 		if (editRule != null) {
 			editRule.getImports().addAll(EditRuleUtil.getImports(editRule));
@@ -176,6 +180,7 @@ public class LearnEditRule {
 
 			try {
 				eoRes.save(Collections.emptyMap());
+				HenshinDiagramUtil.createDiagram(editRule);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -239,41 +244,9 @@ public class LearnEditRule {
 			}
 		}
 	}
-	
-	private void sliceDifferenceModelA(Set<EObject> scopeA) {
-		for (EObject scopeElementA : scopeA) {
-			Correspondence correspondence = navigation.getCorrespondenceOfModelA(scopeElementA);
-			
-			if (correspondence != null) {
-				slice.addCorrespondence(correspondence);
-			}
-			
-			slice.addChanges(navigation.getLocalChanges(scopeElementA));
-		}
-	}
-	
-	private void sliceDifferenceModelB(Set<EObject> scopeB) {
-		for (EObject scopeElementB : scopeB) {
-			Correspondence correspondence = navigation.getCorrespondenceOfModelB(scopeElementB);
-			
-			if (correspondence != null) {
-				slice.addCorrespondence(correspondence);
-			}
-			
-			slice.addChanges(navigation.getLocalChanges(scopeElementB));
-		}
-	}
-
-	public SymmetricDifference getDifference() {
-		return slice.getDifference();
-	}
 
 	public DifferenceSlice getSlice() {
-		return slice;
-	}
-
-	public void setSlice(DifferenceSlice slice) {
-		this.slice = slice;
+		return slicer.getSlice();
 	}
 
 	public DifferenceSlicingCriterion getSlicingCriterion() {

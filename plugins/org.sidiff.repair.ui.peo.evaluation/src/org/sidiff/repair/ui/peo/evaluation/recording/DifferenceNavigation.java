@@ -14,13 +14,15 @@ import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.matching.model.Correspondence;
 
 public class DifferenceNavigation {
+	
+	protected SymmetricDifference difference;
 
 	protected LiftingGraphIndex changeIndex;
 	
 	protected IndexedCrossReferencer crossReferencer;
 
 	public DifferenceNavigation(SymmetricDifference difference) {
-		super();
+		this.difference = difference;
 		
 		// Create difference navigation:
 		this.changeIndex = new LiftingGraphIndex(difference);
@@ -30,6 +32,10 @@ public class DifferenceNavigation {
 		this.crossReferencer = new IndexedCrossReferencer();
 		this.crossReferencer.addResource(difference.getModelA());
 		this.crossReferencer.addResource(difference.getModelB());
+	}
+	
+	public SymmetricDifference getDifference() {
+		return difference;
 	}
 	
 	public Correspondence getCorrespondenceOfModelA(EObject objectInA) {
