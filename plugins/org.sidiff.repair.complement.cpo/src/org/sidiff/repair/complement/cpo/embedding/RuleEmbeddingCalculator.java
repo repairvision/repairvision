@@ -30,6 +30,7 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.sidiff.consistency.debug.DebugUtil;
 import org.sidiff.repair.complement.util.ComplementUtil;
 
@@ -257,7 +258,7 @@ public class RuleEmbeddingCalculator {
 		}
 		
 		// Interpret the sub-graph as << preserve >> only rule:
-		Map<EObject, EObject> subMatchingRuleCopy = ComplementUtil.deepCopy(subRule);
+		Map<EObject, EObject> subMatchingRuleCopy = ModelingUtil.deepCopy(subRule);
 		Map<EObject, EObject> subGraphCopy = null;
 		
 		Rule subMatchingRule = (Rule) subMatchingRuleCopy.get(subRule);
@@ -291,7 +292,7 @@ public class RuleEmbeddingCalculator {
 		}
 		
 		// Copy graph to make the graph sides equal:
-		subGraphCopy = ComplementUtil.deepCopy(subMatchingGraph);
+		subGraphCopy = ModelingUtil.deepCopy(subMatchingGraph);
 		
 		if (side.equals(Side.LHS)) {
 			subMatchingRule.setRhs((Graph) subGraphCopy.get(subMatchingGraph));
