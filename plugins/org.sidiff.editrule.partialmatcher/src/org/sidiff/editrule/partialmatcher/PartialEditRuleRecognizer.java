@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.technical.MergeImports;
 import org.sidiff.editrule.partialmatcher.dependencies.ChangeDependencies;
 import org.sidiff.editrule.partialmatcher.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.partialmatcher.generator.PartialMatchGenerator;
@@ -36,7 +35,7 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 
 	protected SymmetricDifference difference;
 	
-	protected MergeImports mergeImports;
+//	protected MergeImports mergeImports;
 
 	protected LiftingGraphIndex changeIndex;
 	
