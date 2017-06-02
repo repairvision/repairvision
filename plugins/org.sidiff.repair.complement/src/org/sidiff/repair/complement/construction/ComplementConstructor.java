@@ -22,6 +22,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
+import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.sidiff.consistency.debug.DebugUtil;
 import org.sidiff.repair.api.matching.EOAttributeMatch;
 import org.sidiff.repair.api.matching.EOEdgeMatch;
@@ -78,7 +79,7 @@ public abstract class ComplementConstructor {
 	private ComplementRule deriveComplementRule(Collection<EOMatch> sourceRuleMatching) {
 
 		// Create copy of the source rule:
-		Map<EObject, EObject> copyTrace = ComplementUtil.deepCopy(sourceRule);
+		Map<EObject, EObject> copyTrace = ModelingUtil.deepCopy(sourceRule);
 		Rule complementRule = (Rule) copyTrace.get(sourceRule);
 
 		// Initialize complement rule:

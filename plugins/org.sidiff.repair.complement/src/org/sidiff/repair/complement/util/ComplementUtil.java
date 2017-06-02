@@ -1,20 +1,19 @@
 package org.sidiff.repair.complement.util;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyAttribute;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyNode;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRemoteNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
@@ -84,45 +83,6 @@ public class ComplementUtil {
 		}
 		
 		return values;
-	}
-	
-	/**
-	 * Creates a deep copy (i.e. full tree content) of the given object.
-	 * 
-	 * @param original
-	 *            The root object which will be copied.
-	 * @return The copy trace: Original -> Copy
-	 */
-	public static Map<EObject, EObject> deepCopy(EObject original) {
-
-		// Copier = Map: Original -> Copy
-		Copier copier = new Copier();
-
-		// Root:
-		copier.copy(original);
-
-		// References:
-		copier.copyReferences();
-
-		return copier;
-	}
-	
-	/**
-	 * @param copy
-	 *            The copied object.
-	 * @param copyTrace
-	 *            The copy trace: Original -> Copy
-	 * @return The original object.
-	 */
-	public static EObject getReverseTrace(EObject copy, Map<EObject, EObject> copyTrace) {
-		
-		for (Entry<EObject, EObject> trace : copyTrace.entrySet()) {
-			if (trace.getValue() == copy) {
-				return trace.getKey();
-			}
-		}
-		
-		return null;
 	}
 	
 	/**
