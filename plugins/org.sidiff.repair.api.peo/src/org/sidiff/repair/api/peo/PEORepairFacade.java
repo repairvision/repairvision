@@ -50,6 +50,9 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 	@Override
 	public PEORepairJob getRepairs(Resource modelA, Resource modelB, PEORepairSettings settings) {
 		
+		// Disable merge imports:
+		settings.getDifferenceSettings().setMergeImports(false);
+		
 		// Initialize:
 		assert (modelA.getResourceSet() == modelB.getResourceSet());
 		ResourceSet differenceRSS = modelA.getResourceSet(); 
