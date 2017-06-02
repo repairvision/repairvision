@@ -1,4 +1,4 @@
-package org.sidiff.common.henshin.emf;
+package org.sidiff.consistency.common.emf;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;

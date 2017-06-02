@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
-import org.sidiff.debug.DebugUtil;
+import org.sidiff.consistency.debug.DebugUtil;
 import org.sidiff.difference.symmetric.SemanticChangeSet;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.util.ChangeSetPriorityComparator;

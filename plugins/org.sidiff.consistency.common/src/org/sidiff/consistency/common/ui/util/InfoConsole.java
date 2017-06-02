@@ -1,4 +1,4 @@
-package org.sidiff.common.ui;
+package org.sidiff.consistency.common.ui.util;
 
 import java.util.Collection;
 import java.util.Collections;

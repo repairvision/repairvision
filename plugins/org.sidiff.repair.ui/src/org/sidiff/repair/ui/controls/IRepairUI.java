@@ -6,6 +6,8 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPartSite;
+import org.sidiff.consistency.common.ui.widgets.IDisposableControl;
+import org.sidiff.consistency.common.ui.widgets.IUnsetableControl;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.app.IResultChangedListener;
@@ -19,7 +21,7 @@ import org.sidiff.repair.ui.app.IResultChangedListener;
  *            The application which controls the UI access.
  */
 public interface IRepairUI<A extends IRepairApplication<?, ?>> 
-			extends IUnsetableControl, IResultChangedListener<RepairJob<?>> {
+			extends IUnsetableControl, IResultChangedListener<RepairJob<?>>, IDisposableControl {
 
 	/**
 	 * @param application
@@ -69,9 +71,4 @@ public interface IRepairUI<A extends IRepairApplication<?, ?>>
 	 * Asks this part to take focus within the workbench.
 	 */
 	public void setFocus();
-	
-	/**
-	 * Dispose all part controls.
-	 */
-	public void dispose();
 }

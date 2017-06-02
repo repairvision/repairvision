@@ -26,23 +26,4 @@
       </page>
    </extension>
    
-   <extension
-         id="org.sidiff.repair.ui.decoration.RepairDecoratorProvider"
-         name="Repair Selection Decorator"
-         point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
-      <decoratorProvider
-            class="org.sidiff.repair.ui.decoration.RepairDecoratorProvider">
-         <Priority
-               name="Lowest">
-         </Priority>
-         <object
-               class="org.eclipse.gmf.runtime.notation.View(org.eclipse.gmf.runtime.notation)"
-               id="NODE">
-         </object>
-         <context
-               decoratorTargets="NODE">
-         </context>
-      </decoratorProvider>
-   </extension>
-   
 </plugin>

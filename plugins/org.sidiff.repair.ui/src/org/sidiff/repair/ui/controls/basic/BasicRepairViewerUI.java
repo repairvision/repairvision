@@ -1,8 +1,11 @@
 package org.sidiff.repair.ui.controls.basic;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
@@ -22,20 +25,24 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
-import org.sidiff.common.ui.NameUtil;
-import org.sidiff.common.ui.WorkbenchUtil;
+import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
+import org.sidiff.consistency.common.ui.util.NameUtil;
+import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.Activator;
 import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
-import org.sidiff.repair.ui.decoration.RepairSelectionController;
 import org.sidiff.repair.ui.provider.RepairContentProvider;
+import org.sidiff.repair.ui.provider.RepairContentProvider.Change;
 import org.sidiff.repair.ui.provider.RepairLabelProvider;
 
 public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends BasicRepairUI<A> {
 
 	protected TreeViewer viewer_repairs;
+	
+	protected ISelectionHighlightingAdapter highlightingAdapter;
 	
 	private DrillDownAdapter drillDownAdapter;
 	
@@ -61,8 +68,33 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		viewer_repairs = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer_repairs.setContentProvider(new RepairContentProvider());
 		viewer_repairs.setLabelProvider(new RepairLabelProvider());
-		viewer_repairs.addSelectionChangedListener(RepairSelectionController.getInstance());
 
+		// Setup editor highlighting:
+		highlightingAdapter = new ISelectionHighlightingAdapter() {
+			
+			@Override
+			public Iterator<? extends EObject> getElements(ISelection selection) {
+				Object selectedElement = ISelectionHighlightingAdapter.getFirstElement(selection);
+				
+				if (selectedElement instanceof IRepairPlan) {
+					return ((IRepairPlan) selectedElement).getRepairPreMatch()
+							.getMatch().getNodeTargets().iterator();
+				}
+				
+				else if (selectedElement instanceof Change) {
+					// FIXME: Needs a XMI-ID copy for the complement-rule!
+					return Collections.singletonList(((Change) selectedElement).graphElement).iterator();
+				}
+				
+				return ISelectionHighlightingAdapter.EMPTY_ITERATOR;
+			}
+		};
+		
+		EditorHighlighting.getInstance().registerAdapter(highlightingAdapter);
+		viewer_repairs.addSelectionChangedListener(
+				EditorHighlighting.getInstance().getSelectionChangedListener());
+		
+		// Workbench selection:
 		site.setSelectionProvider(viewer_repairs);
 		
 		// Expand / Collapse on double click:
@@ -276,5 +308,6 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 
 	@Override
 	public void dispose() {
+		EditorHighlighting.getInstance().deregisterAdapter(highlightingAdapter);
 	}
 }

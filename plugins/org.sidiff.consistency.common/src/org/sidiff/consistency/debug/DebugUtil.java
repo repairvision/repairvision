@@ -1,4 +1,4 @@
-package org.sidiff.debug;
+package org.sidiff.consistency.debug;
 
 import java.util.concurrent.Callable;
 

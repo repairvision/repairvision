@@ -1,9 +1,6 @@
 package org.sidiff.repair.ui.peo.ruleselection;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
@@ -14,15 +11,14 @@ import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.controls.basic.BasicRepairViewerUI;
 import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.ui.controls.basic.ModelVersionsDropWidget;
-import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
-import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
+import org.sidiff.repair.validation.ui.widgets.ValidationWidget;
 
 public class PEORepairRuleSelectionUI extends BasicRepairViewerUI<PEORepairApplication> {
 
 	/**
 	 * Shows the abstract repairs.
 	 */
-	private TreeViewer viewer_validation;
+	private ValidationWidget validationWidget;
 
 	/**
 	 * Drop target to create a rulebase.
@@ -45,27 +41,8 @@ public class PEORepairRuleSelectionUI extends BasicRepairViewerUI<PEORepairAppli
 		super.createPartControls(sashForm, site);
 		
 		// Validation-Viewer:
-		viewer_validation = new TreeViewer(sashForm, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer_validation.setContentProvider(new RepairTreeContentProvider());
-		viewer_validation.setLabelProvider(new RepairTreeLabelProvider());
-//		viewer_validation.setSorter(new NameSorter());
-		viewer_validation.addDoubleClickListener(event -> {
-			ISelection selection = event.getSelection();
-
-			if (selection instanceof IStructuredSelection) {
-				Object item = ((IStructuredSelection) selection).getFirstElement();
-
-				if (item == null) {
-					return;
-				}
-				if (viewer_validation.getExpandedState(item)) {
-					viewer_validation.collapseToLevel(item, 1);
-				}
-				else {
-					viewer_validation.expandToLevel(item, 1);
-				}
-			}
-		});
+		validationWidget = new ValidationWidget();
+		validationWidget.createControls(sashForm);
 
 		// Edit-Rules:
 		Composite composite_editrules = new Composite(sashForm, SWT.BORDER);
@@ -98,13 +75,13 @@ public class PEORepairRuleSelectionUI extends BasicRepairViewerUI<PEORepairAppli
 		assert (repairJob  == application.getRepairJob());
 		
 		super.resultChanged(repairJob);
-		viewer_validation.setInput(application.getRepairJob().getValidations());
+		validationWidget.setInput(application.getRepairJob().getValidations());
 	}
 
 	@Override
 	public void clear() {
 		super.clear();
-		viewer_validation.setInput(null);
+		validationWidget.clear();
 		editRules.clear();
 		modelVersions.clear();
 	}
@@ -112,5 +89,6 @@ public class PEORepairRuleSelectionUI extends BasicRepairViewerUI<PEORepairAppli
 	@Override
 	public void dispose() {
 		super.dispose();
+		validationWidget.dispose();
 	}
 }

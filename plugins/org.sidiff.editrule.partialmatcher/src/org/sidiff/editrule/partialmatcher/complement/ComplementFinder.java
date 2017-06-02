@@ -9,7 +9,7 @@ import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.henshin.ChangePatternUtil;
+import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.partialmatcher.PartialEditRuleRecognizer;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;

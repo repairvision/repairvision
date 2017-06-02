@@ -8,7 +8,7 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.henshin.ChangePatternUtil;
+import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
 import org.sidiff.graphpattern.NodePattern;

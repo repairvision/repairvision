@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.common.henshin.ChangePatternUtil;
+import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.partialmatcher.complement.ComplementFinder;
 import org.sidiff.editrule.partialmatcher.scope.RepairActionFilter;

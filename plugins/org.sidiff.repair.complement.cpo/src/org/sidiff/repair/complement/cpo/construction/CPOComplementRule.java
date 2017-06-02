@@ -14,7 +14,7 @@ import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.debug.DebugUtil;
+import org.sidiff.consistency.debug.DebugUtil;
 import org.sidiff.repair.api.matching.EOMatch;
 import org.sidiff.repair.api.matching.EONodeSingleMatch;
 import org.sidiff.repair.api.matching.EditOperationMatching;

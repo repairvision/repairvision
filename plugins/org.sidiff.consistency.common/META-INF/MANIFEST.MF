@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Consistency Common
-Bundle-SymbolicName: org.sidiff.repair.common
+Bundle-SymbolicName: org.sidiff.consistency.common
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime,
@@ -14,8 +14,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.sidiff.common.henshin,
  org.sidiff.common.emf,
  org.sidiff.graphpattern
-Export-Package: org.sidiff.common.henshin,
- org.sidiff.common.henshin.emf,
- org.sidiff.common.storage,
- org.sidiff.common.ui,
- org.sidiff.debug
+Export-Package: org.sidiff.consistency.common.emf;uses:="org.eclipse.emf.ecore,org.eclipse.emf.ecore.resource",
+ org.sidiff.consistency.common.henshin;uses:="org.sidiff.graphpattern,org.eclipse.emf.common.util,org.eclipse.emf.henshin.model",
+ org.sidiff.consistency.common.storage;uses:="org.eclipse.emf.common.util,org.eclipse.emf.ecore.resource.impl,org.eclipse.emf.ecore.resource",
+ org.sidiff.consistency.common.ui.util;uses:="org.eclipse.ui",
+ org.sidiff.consistency.common.ui.widgets,
+ org.sidiff.consistency.debug

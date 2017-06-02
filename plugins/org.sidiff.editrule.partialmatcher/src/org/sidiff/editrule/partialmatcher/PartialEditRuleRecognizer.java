@@ -3,7 +3,6 @@ package org.sidiff.editrule.partialmatcher;
 import java.util.Iterator;
 
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.emf.access.Scope;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.MergeImports;
 import org.sidiff.editrule.partialmatcher.dependencies.ChangeDependencies;
@@ -126,9 +125,9 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 	@Override
 	public void start() {
 		
-		// Merge external resources into the difference:
-		mergeImports = new MergeImports(difference, Scope.RESOURCE, true);
-		mergeImports.merge();
+//		// Merge external resources into the difference:
+//		mergeImports = new MergeImports(difference, Scope.RESOURCE, true);
+//		mergeImports.merge();
 		
 		// Initialize change/correspondence index:
 		changeIndex.initialize();
@@ -139,8 +138,8 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 	@Override
 	public void finish() {
 		
-		// Unmerge external resources into the difference:
-		mergeImports.unmerge();
-		started = false;
+//		// Unmerge external resources into the difference:
+//		mergeImports.unmerge();
+//		started = false;
 	}
 }

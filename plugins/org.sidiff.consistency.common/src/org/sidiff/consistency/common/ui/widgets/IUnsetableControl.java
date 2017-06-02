@@ -1,4 +1,4 @@
-package org.sidiff.repair.ui.controls;
+package org.sidiff.consistency.common.ui.widgets;
 
 public interface IUnsetableControl {
 

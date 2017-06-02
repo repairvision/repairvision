@@ -8,7 +8,7 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.common.ui.NameUtil;
+import org.sidiff.consistency.common.ui.util.NameUtil;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.ui.Activator;
 import org.sidiff.repair.ui.provider.RepairContentProvider.AttributeChange;

@@ -1,4 +1,4 @@
-package org.sidiff.common.henshin;
+package org.sidiff.consistency.common.henshin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.access.EMFMetaAccess;
+import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.common.henshin.view.AttributePair;
 import org.sidiff.graphpattern.GraphPattern;
 

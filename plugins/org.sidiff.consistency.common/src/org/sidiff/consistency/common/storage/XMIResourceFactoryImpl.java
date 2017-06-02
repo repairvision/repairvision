@@ -1,4 +1,4 @@
-package org.sidiff.common.storage;
+package org.sidiff.consistency.common.storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;

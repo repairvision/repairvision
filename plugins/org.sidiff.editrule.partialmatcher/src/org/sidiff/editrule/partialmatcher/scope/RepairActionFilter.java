@@ -18,7 +18,7 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.henshin.emf.DocumentType;
+import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.repair.api.matching.EditOperationMatching;
 import org.sidiff.repair.validation.IConstraint;
 import org.sidiff.repair.validation.fix.IRepairDecision;
