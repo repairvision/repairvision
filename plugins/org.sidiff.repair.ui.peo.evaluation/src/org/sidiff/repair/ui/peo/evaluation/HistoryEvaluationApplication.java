@@ -10,7 +10,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.ui.WorkbenchUtil;
+import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;

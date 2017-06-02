@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Module;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.common.ui.WorkbenchUtil;
+import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.recorder.handlers.CreateEditRuleHandler;
