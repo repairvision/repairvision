@@ -30,8 +30,8 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.common.emf.ModelingUtil;
-import org.sidiff.consistency.debug.DebugUtil;
 import org.sidiff.repair.complement.util.ComplementUtil;
 
 /**

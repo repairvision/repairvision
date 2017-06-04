@@ -16,7 +16,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
-import org.sidiff.consistency.debug.DebugUtil;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.repair.api.matching.EOAttributeMatch;
 import org.sidiff.repair.api.matching.EOEdgeMatch;
 import org.sidiff.repair.api.matching.EOMatch;

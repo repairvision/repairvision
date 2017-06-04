@@ -1,5 +1,6 @@
 package org.sidiff.consistency.common.emf;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -11,6 +12,24 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 
 public class ModelingUtil {
+	
+	public static Iterator<EObject> getRootPath(EObject element) {
+		return new Iterator<EObject>() {
+			
+			private EObject location = element;
+			
+			@Override
+			public EObject next() {
+				location = location.eContainer();
+				return location;
+			}
+			
+			@Override
+			public boolean hasNext() {
+				return location.eContainer() != null;
+			}
+		};
+	}
 
 	/**
 	 * Creates a deep copy (i.e. full tree content) of the given object.

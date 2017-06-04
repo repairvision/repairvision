@@ -7,7 +7,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.consistency.debug.DebugUtil;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.difference.lifting.api.LiftingFacade;
 import org.sidiff.difference.lifting.api.settings.LiftingSettings;
 import org.sidiff.difference.lifting.api.settings.LiftingSettings.RecognitionEngineMode;

@@ -18,7 +18,7 @@ import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
-import org.sidiff.consistency.debug.DebugUtil;
+import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.difference.lifting.recognitionengine.IRecognitionEngine;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.symmetric.SymmetricDifference;
