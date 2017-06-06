@@ -29,9 +29,9 @@ import org.sidiff.repair.historymodel.Version;
 import org.sidiff.repair.validation.IConstraint;
 import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction;
-import org.sidiff.repair.validation.util.Validation;
-import org.sidiff.validation.constraint.library.IConstraintLibrary;
-import org.sidiff.validation.constraint.library.util.ConstraintLibraryUtil;
+import org.sidiff.validation.constraint.api.library.IConstraintLibrary;
+import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
+import org.sidiff.validation.constraint.api.util.Validation;
 
 public class EvaluationUtil {
 	

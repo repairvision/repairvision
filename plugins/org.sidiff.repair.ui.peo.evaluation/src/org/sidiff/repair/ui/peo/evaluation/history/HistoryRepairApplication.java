@@ -23,7 +23,7 @@ import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
 import org.sidiff.repair.ui.util.EditRuleUtil;
-import org.sidiff.repair.validation.util.Validation;
+import org.sidiff.validation.constraint.api.util.Validation;
 
 public abstract class HistoryRepairApplication implements IRepairApplication<PEORepairJob, PEORepairSettings> {
 

@@ -29,8 +29,8 @@ import org.sidiff.repair.ui.peo.evaluation.history.HistoryRepairApplication;
 import org.sidiff.repair.ui.peo.evaluation.recording.LearnEditRule;
 import org.sidiff.repair.ui.peo.evaluation.util.EvaluationUtil;
 import org.sidiff.repair.ui.util.EditRuleUtil;
-import org.sidiff.repair.validation.util.Validation;
-import org.sidiff.validation.constraint.library.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.api.util.Validation;
 
 public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	
