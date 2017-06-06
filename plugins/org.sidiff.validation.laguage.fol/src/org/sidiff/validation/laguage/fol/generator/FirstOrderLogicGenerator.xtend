@@ -78,7 +78,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 			
 			import «ruleBase.packageImport»;
 			
-			import org.sidiff.validation.constraint.library.*;
+			import org.sidiff.validation.constraint.api.library.*;
 			
 			import org.sidiff.repair.validation.*;
 			import org.sidiff.repair.validation.formulas.binary.*;
