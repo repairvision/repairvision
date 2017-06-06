@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.RepairJob;
-import org.sidiff.repair.validation.util.Validation;
+import org.sidiff.validation.constraint.api.util.Validation;
 
 public class PEORepairJob extends RepairJob<IRepairPlan> {
 

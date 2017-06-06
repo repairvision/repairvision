@@ -5,10 +5,10 @@ Bundle-SymbolicName: org.sidiff.repair.api.peo;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.sidiff.common.henshin,
+ org.sidiff.consistency.common,
+ org.sidiff.editrule.partialmatcher,
  org.sidiff.graphpattern,
  org.sidiff.repair.api;visibility:=reexport,
  org.sidiff.repair.complement,
- org.sidiff.validation.constraint.interpreter,
- org.sidiff.editrule.partialmatcher;bundle-version="0.0.1",
- org.sidiff.consistency.common
+ org.sidiff.validation.constraint.api
 Export-Package: org.sidiff.repair.api.peo

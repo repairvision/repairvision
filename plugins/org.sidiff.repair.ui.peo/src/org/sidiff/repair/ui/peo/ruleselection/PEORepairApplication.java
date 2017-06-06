@@ -20,7 +20,7 @@ import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
 import org.sidiff.repair.ui.util.EditRuleUtil;
-import org.sidiff.repair.validation.util.Validation;
+import org.sidiff.validation.constraint.api.util.Validation;
 
 public class PEORepairApplication extends EclipseResourceRepairApplication<PEORepairJob, PEORepairSettings> {
 

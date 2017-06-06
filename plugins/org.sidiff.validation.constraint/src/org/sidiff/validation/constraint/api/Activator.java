@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint;
+package org.sidiff.validation.constraint.api;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

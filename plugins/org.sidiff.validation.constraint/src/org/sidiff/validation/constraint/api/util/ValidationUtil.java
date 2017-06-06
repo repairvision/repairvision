@@ -1,4 +1,4 @@
-package org.sidiff.repair.validation.util;
+package org.sidiff.validation.constraint.api.util;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -10,7 +10,7 @@ import org.sidiff.repair.validation.fix.RepairAction;
 import org.sidiff.repair.validation.fix.Sequence;
 
 public class ValidationUtil {
-
+	
 	/**
 	 * Removes all unnecessary repair nodes (alternatives / sequences) 
 	 * from the repair tree.

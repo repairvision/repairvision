@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.library;
+package org.sidiff.validation.constraint.api.library;
 
 import java.util.List;
 

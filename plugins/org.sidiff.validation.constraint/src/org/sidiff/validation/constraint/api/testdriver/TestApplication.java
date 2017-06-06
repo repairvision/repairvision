@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.testdriver;
+package org.sidiff.validation.constraint.api.testdriver;
 
 import java.util.Collections;
 
@@ -10,9 +10,9 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.repair.validation.IConstraint;
-import org.sidiff.repair.validation.util.BatchValidationIterator;
-import org.sidiff.validation.constraint.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.library.util.ConstraintLibraryUtil;
+import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
+import org.sidiff.validation.constraint.api.util.BatchValidationIterator;
 
 public class TestApplication implements IApplication {
 	

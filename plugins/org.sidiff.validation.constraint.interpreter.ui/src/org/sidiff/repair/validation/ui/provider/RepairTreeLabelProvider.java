@@ -11,7 +11,7 @@ import org.sidiff.repair.validation.fix.IRepairDecision;
 import org.sidiff.repair.validation.fix.RepairAction;
 import org.sidiff.repair.validation.fix.Sequence;
 import org.sidiff.repair.validation.ui.Activator;
-import org.sidiff.repair.validation.util.Validation;
+import org.sidiff.validation.constraint.api.util.Validation;
 
 public class RepairTreeLabelProvider extends LabelProvider {
 
