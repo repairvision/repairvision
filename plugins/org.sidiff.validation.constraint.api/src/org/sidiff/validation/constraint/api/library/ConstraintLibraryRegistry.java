@@ -20,7 +20,7 @@ public class ConstraintLibraryRegistry {
 	/**
 	 * The {@link IConstaintLibrary} extension point identifier.
 	 */
-	public static final String EXTENSION_POINT_ID = "org.sidiff.validation.constraint.library";
+	public static final String EXTENSION_POINT_ID = "org.sidiff.validation.constraint.api.library";
 	
 	/**
 	 * {@link IConstaintLibrary} extension cache.
