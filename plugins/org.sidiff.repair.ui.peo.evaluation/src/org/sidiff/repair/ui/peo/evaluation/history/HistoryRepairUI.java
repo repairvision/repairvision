@@ -1,7 +1,6 @@
 package org.sidiff.repair.ui.peo.evaluation.history;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -109,12 +108,11 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 			protected IResource addModel(IResource element) {
 				HistoryRepairUI.this.clear();
 				
-				ResourceSet historyRSS  = new ResourceSetImpl();
-				Resource historyResource = historyRSS.getResource(ModelDropWidget.getURI(element), true);
-				EObject rootElement = historyResource.getContents().get(0);
+				ResourceSet resourceSet = new ResourceSetImpl();
+				Resource historyResource = resourceSet.getResource(ModelDropWidget.getURI(element), true);
 				
-				if (rootElement instanceof History) {
-					History history = (History) rootElement;
+				if (historyResource.getContents().get(0) instanceof History) {
+					History history = (History) historyResource.getContents().get(0);
 					
 					getApplication().setHistory(history);
 					historyViewer.setInput(getApplication().getValidations());

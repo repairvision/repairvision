@@ -119,6 +119,8 @@ public class LearnEditRule {
 		EObject contextResolved = intorducedToResolved.getCorrespondingObjectInB(introducedContext);
 		EObject contextHistorical = historicalToResolved.getCorrespondingObjectInA(contextResolved);
 		
+		assert (contextResolved != null) && (contextHistorical != null);
+		
 		// Scope: Historical
 		IScopeRecorder scopeHistorical = new ScopeRecorder();
 		consistencyRule.evaluate(contextHistorical, scopeHistorical);

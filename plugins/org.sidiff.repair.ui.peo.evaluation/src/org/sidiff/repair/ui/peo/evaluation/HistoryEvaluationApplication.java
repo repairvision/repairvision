@@ -10,6 +10,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.swt.widgets.Display;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.repair.api.IRepairPlan;
@@ -236,6 +237,43 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		
 		// Start calculation:
 		calculateRepairsForInconsistency(modelA, modelB);
+	}
+	
+	public void calculateRepairsForInconsistency(Resource modelA, Resource modelB) {
+		
+		repairCalculation = new Job("Calculate Repairs") {
+			
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				
+				// Load edit-rules:
+				editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
+				
+				// Calculate repairs:
+				repairJob = repairFacade.getRepairs(modelA, modelB,
+						new PEORepairSettings(editRules, getMatchingSettings()));
+				
+				// Update UI:
+				Display.getDefault().syncExec(() -> {
+					
+					// Clean up repair-trees:
+					for (Validation validation : repairJob.getValidations()) {
+						validation.cleanUpRepairTree();
+					}
+					
+					// Show repairs:
+					fireResultChangeListener();
+					
+					if (repairJob.getRepairs().isEmpty()) {
+						WorkbenchUtil.showMessage("No repairs found!");
+					}
+				});
+				
+				return Status.OK_STATUS;
+			}
+		};
+		
+		repairCalculation.schedule();
 	}
 	
 	public Version getPrecessorRevision(Version version) {

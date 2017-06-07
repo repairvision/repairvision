@@ -13,8 +13,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
+import org.sidiff.consistency.common.storage.UUIDMatcher;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.difference.technical.util.TechnicalDifferenceBuilderUtil;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
@@ -61,43 +63,6 @@ public abstract class HistoryRepairApplication implements IRepairApplication<PEO
 	@Override
 	public void clearResultChangeListener() {
 		listeners.clear();
-	}
-	
-	public void calculateRepairsForInconsistency(Resource modelA, Resource modelB) {
-		
-		repairCalculation = new Job("Calculate Repairs") {
-			
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				
-				// Load edit-rules:
-				editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
-				
-				// Calculate repairs:
-				repairJob = repairFacade.getRepairs(modelA, modelB,
-						new PEORepairSettings(editRules, getMatchingSettings()));
-				
-				// Update UI:
-				Display.getDefault().syncExec(() -> {
-					
-					// Clean up repair-trees:
-					for (Validation validation : repairJob.getValidations()) {
-						validation.cleanUpRepairTree();
-					}
-					
-					// Show repairs:
-					fireResultChangeListener();
-					
-					if (repairJob.getRepairs().isEmpty()) {
-						WorkbenchUtil.showMessage("No repairs found!");
-					}
-				});
-				
-				return Status.OK_STATUS;
-			}
-		};
-		
-		repairCalculation.schedule();
 	}
 	
 	@Override
@@ -187,7 +152,11 @@ public abstract class HistoryRepairApplication implements IRepairApplication<PEO
 	}
 	
 	public DifferenceSettings getMatchingSettings() {
-		return RepairPreferencePage.getMatchingSettings();
+		DifferenceSettings settings = RepairPreferencePage.getMatchingSettings();
+		settings.setMatcher(new UUIDMatcher());
+		settings.setTechBuilder(TechnicalDifferenceBuilderUtil.getGenericTechnicalDifferenceBuilder());
+		
+		return settings;
 	}
 	
 	public String getDoumentType() {
