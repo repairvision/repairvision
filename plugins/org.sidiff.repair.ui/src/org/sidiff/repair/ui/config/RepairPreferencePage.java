@@ -445,6 +445,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			DifferenceSettings settings = new DifferenceSettings(getDoumentTypes()) {};
 			settings.setMatcher(getSelectedMatcher());
 			settings.setTechBuilder(getSelectedTechnicalDifferenceBuilder());
+			settings.setMergeImports(false);
 			return settings;
 		}
 		
