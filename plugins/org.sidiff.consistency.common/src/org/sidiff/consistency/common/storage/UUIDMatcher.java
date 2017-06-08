@@ -26,8 +26,8 @@ public class UUIDMatcher extends LocalSignatureMatcher {
 	public String getDescription() {
 		return "UUID Resource Matcher";
 	}
-
-	@Override
+	
+ 	@Override
 	protected String getElementSignature(EObject element) {
 		Resource resource = element.eResource();
 		

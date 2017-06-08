@@ -27,6 +27,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.sidiff.configuration.IConfigurable;
 import org.sidiff.consistency.common.emf.DocumentType;
+import org.sidiff.consistency.common.settings.SettingsUtil;
 import org.sidiff.consistency.common.ui.util.NameUtil;
 import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
@@ -442,10 +443,9 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 
 		// Matching-Settings:
 		if (documentType != null) {
-			DifferenceSettings settings = new DifferenceSettings(getDoumentTypes()) {};
+			DifferenceSettings settings = SettingsUtil.getDefaultDifferenceSettings();
 			settings.setMatcher(getSelectedMatcher());
 			settings.setTechBuilder(getSelectedTechnicalDifferenceBuilder());
-			settings.setMergeImports(false);
 			return settings;
 		}
 		

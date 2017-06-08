@@ -14,11 +14,14 @@ Require-Bundle: org.eclipse.core.runtime,
  org.sidiff.common.henshin,
  org.sidiff.common.emf,
  org.sidiff.graphpattern,
- org.sidiff.matcher
+ org.sidiff.matcher,
+ org.sidiff.correspondences.matchingmodel,
+ org.sidiff.difference.technical.api
 Export-Package: org.sidiff.consistency.common.debug,
  org.sidiff.consistency.common.emf;uses:="org.eclipse.emf.ecore,org.eclipse.emf.ecore.resource",
  org.sidiff.consistency.common.henshin;uses:="org.sidiff.graphpattern,org.eclipse.emf.common.util,org.eclipse.emf.henshin.model",
  org.sidiff.consistency.common.java,
+ org.sidiff.consistency.common.settings,
  org.sidiff.consistency.common.storage;uses:="org.eclipse.emf.common.util,org.eclipse.emf.ecore.resource.impl,org.eclipse.emf.ecore.resource",
  org.sidiff.consistency.common.ui.util;uses:="org.eclipse.ui",
  org.sidiff.consistency.common.ui.widgets
