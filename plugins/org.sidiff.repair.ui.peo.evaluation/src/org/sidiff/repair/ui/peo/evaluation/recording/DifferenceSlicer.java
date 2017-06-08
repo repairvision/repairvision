@@ -1,8 +1,10 @@
 package org.sidiff.repair.ui.peo.evaluation.recording;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.Change;
@@ -36,21 +38,7 @@ public class DifferenceSlicer {
 			addCorrespondence(navigation.getCorrespondenceOfModelA(elementA));
 			
 			for (Change change : navigation.getLocalChanges(elementA)) {
-				addChange(change);
-				
-				if (change instanceof RemoveReference) {
-					RemoveReference removeReference = (RemoveReference) change;
-					
-					if (removeReference.getSrc() == elementA) {
-						// Check for target:
-						addCorrespondence(navigation.getCorrespondenceOfModelA(removeReference.getTgt()));
-						addChange(getChangeObject(removeReference.getTgt()));
-					} else {
-						// Check for source:
-						addCorrespondence(navigation.getCorrespondenceOfModelA(removeReference.getSrc()));
-						addChange(getChangeObject(removeReference.getSrc()));
-					}
-				}
+				addChange(change, elementA);
 			}
 		}
 	}
@@ -60,21 +48,7 @@ public class DifferenceSlicer {
 			addCorrespondence(navigation.getCorrespondenceOfModelB(elementB));
 
 			for (Change change : navigation.getLocalChanges(elementB)) {
-				addChange(change);
-				
-				if (change instanceof AddReference) {
-					AddReference removeReference = (AddReference) change;
-					
-					if (removeReference.getSrc() == elementB) {
-						// Check for target:
-						addCorrespondence(navigation.getCorrespondenceOfModelA(removeReference.getTgt()));
-						addChange(getChangeObject(removeReference.getTgt()));
-					} else {
-						// Check for source:
-						addCorrespondence(navigation.getCorrespondenceOfModelA(removeReference.getSrc()));
-						addChange(getChangeObject(removeReference.getSrc()));
-					}
-				}
+				addChange(change, elementB);
 			}
 		}
 	}
@@ -85,20 +59,45 @@ public class DifferenceSlicer {
 		}
 	}
 	
-	private void addChange(Change change) {
+	private void addChange(Change change, EObject source) {
 		if (change != null) {
 			slice.addChange(change);
-		}
-	}
-	
-	private Change getChangeObject(EObject modelElement) {
-		for (Change change : navigation.getLocalChanges(modelElement)) {
-			if (change instanceof RemoveObject) {
-				return change;
-			} else  if (change instanceof AddObject) {
-				return change;
+			
+			if (source != null) {
+				if ((change instanceof AddReference) || (change instanceof RemoveReference)) {
+					EObject target = null;
+					
+					if (DifferenceNavigation.getChangeSource(change) == source) {
+						// Check for target:
+						target = DifferenceNavigation.getChangeTarget(change);
+					} else {
+						// Check for source:
+						target = DifferenceNavigation.getChangeSource(change);
+					}
+					
+					addCorrespondence(navigation.getCorrespondence(target));
+					addChange(navigation.getChangeObject(target), target);
+				} else if ((change instanceof AddObject) || (change instanceof RemoveObject)) {
+					Iterator<EObject> rootPathIterator = ModelingUtil.getRootPath(source);
+					
+					while (rootPathIterator.hasNext()) {
+						EObject container = rootPathIterator.next();
+						Change containerChange = navigation.getChangeObject(container);
+						
+						// Containment:
+						addChange(navigation.getContainerReferenceChange(change), null);
+						addChange(navigation.getContainmentReferenceChange(change), null);
+						
+						// Container node:
+						if (containerChange != null) {
+							addChange(containerChange, container);
+						} else {
+							addCorrespondence(navigation.getCorrespondence(container));
+//							break;
+						}
+					} 
+				}
 			}
 		}
-		return null;
 	}
 }

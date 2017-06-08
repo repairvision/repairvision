@@ -7,7 +7,12 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.sidiff.difference.symmetric.AddObject;
+import org.sidiff.difference.symmetric.AddReference;
+import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
+import org.sidiff.difference.symmetric.RemoveObject;
+import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.partialmatcher.util.IndexedCrossReferencer;
 import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
@@ -46,8 +51,61 @@ public class DifferenceNavigation {
 		return changeIndex.getDifference().getCorrespondenceOfModelB(objectInB);
 	}
 	
+	public Correspondence getCorrespondence(EObject obj) {
+		Correspondence correspondence = getCorrespondenceOfModelA(obj);
+		
+		if (correspondence != null) {
+			return correspondence;
+		} else {
+			return getCorrespondenceOfModelB(obj);
+		}
+	}
+	
 	public Collection<Change> getLocalChanges(EObject element)  {
 		return changeIndex.getLocalChanges(element);
+	}
+	
+	public Change getChangeObject(EObject modelElement) {
+		for (Change change : getLocalChanges(modelElement)) {
+			if (change instanceof RemoveObject) {
+				return change;
+			} else  if (change instanceof AddObject) {
+				return change;
+			}
+		}
+		return null;
+	}
+	
+	public Change getContainerReferenceChange(Change change) {
+		EObject element = getChangeSource(change);
+		
+		for (Change localChange : getLocalChanges(element)) {
+			if (localChange instanceof AddReference) {
+				if (((AddReference) localChange).getSrc() == element) {
+					if (((AddReference) localChange).getType().isContainer()) {
+						return localChange;
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	public Change getContainmentReferenceChange(Change change) {
+		EObject element = getChangeSource(change);
+		
+		for (Change localChange : getLocalChanges(element)) {
+			if (localChange instanceof AddReference) {
+				if (((AddReference) localChange).getTgt() == element) {
+					if (((AddReference) localChange).getType().isContainment()) {
+						return localChange;
+					}
+				}
+			}
+		}
+		
+		return null;
 	}
 
 	/**
@@ -98,5 +156,34 @@ public class DifferenceNavigation {
 	public void setCrossReferencer(IndexedCrossReferencer crossReferencer) {
 		this.crossReferencer = crossReferencer;
 	}
-
+	
+	public static EObject getChangeSource(Change change) {
+		if (change instanceof RemoveReference) {
+			return ((RemoveReference) change).getSrc();
+		} else if (change instanceof AddReference) {
+			return ((AddReference) change).getSrc();
+		} else if (change instanceof AttributeValueChange) {
+			return ((AttributeValueChange) change).getObjA();
+		} else  if (change instanceof AddObject) {
+			return ((AddObject) change).getObj();
+		} else if (change instanceof RemoveObject) {
+			return ((RemoveObject) change).getObj();
+		}
+		return null;
+	}
+	
+	public static EObject getChangeTarget(Change change) {
+		if (change instanceof RemoveReference) {
+			return ((RemoveReference) change).getTgt();
+		} else if (change instanceof AddReference) {
+			return ((AddReference) change).getTgt();
+		} else if (change instanceof AttributeValueChange) {
+			return ((AttributeValueChange) change).getObjB();
+		} else  if (change instanceof AddObject) {
+			return ((AddObject) change).getObj();
+		} else if (change instanceof RemoveObject) {
+			return ((RemoveObject) change).getObj();
+		}
+		return null;
+	}
 }
