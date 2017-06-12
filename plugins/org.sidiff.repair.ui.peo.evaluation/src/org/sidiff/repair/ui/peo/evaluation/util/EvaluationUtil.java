@@ -85,10 +85,10 @@ public class EvaluationUtil {
 		return observable;
 	}
 	
-	public static Validation getRepairTree(Collection<Validation> repairTrees, ValidationError inconsistencies) {
-		for (Validation repairTree : repairTrees) {
-			if (getValidationID(repairTree.getRule().getName()).equalsIgnoreCase(getValidationID(inconsistencies))) {
-				return repairTree;
+	public static Validation getValidation(Collection<Validation> validations, ValidationError inconsistency) {
+		for (Validation validation : validations) {
+			if (equals(validation, inconsistency)) {
+				return validation;
 			}
 		}
 		return null;
@@ -154,15 +154,28 @@ public class EvaluationUtil {
 		return false;
 	}
 	
+	public static boolean equals(Validation validationA, ValidationError validationB) {
+		
+		if (getValidationID(validationA.getRule()).equalsIgnoreCase(getValidationID(validationB))) {
+			EObject invalidElementA = validationA.getContext();
+			EObject invalidElementB = validationB.getInvalidElement().get(0);
+
+			if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
+				return true;
+			}
+		}
+			
+		return false;
+	}
+	
 	public static boolean equals(ValidationError validationA, ValidationError validationB) {
 		
 		if (validationA.getIntroducedIn() == validationB.getIntroducedIn()) {
 			if (validationA.getResolvedIn() == validationB.getResolvedIn()) {
-				if (getValidationID(validationA).equals(getValidationID(validationB))) {
+				if (getValidationID(validationA).equalsIgnoreCase(getValidationID(validationB))) {
 					EObject invalidElementA = validationA.getInvalidElement().get(0);
 					EObject invalidElementB = validationB.getInvalidElement().get(0);
 					
-//					if (EMFUtil.getXmiId(invalidElementA).equals(EMFUtil.getXmiId(invalidElementB))) {
 					if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
 						return true;
 					}
@@ -174,6 +187,10 @@ public class EvaluationUtil {
 	
 	public static String getValidationID(String name) {
 		return name.replaceAll("[^\\p{Alpha}]", "");
+	}
+	
+	public static String getValidationID(IConstraint validation) {
+		return getValidationID(validation.getName());
 	}
 	
 	public static String getValidationID(ValidationError validation) {
