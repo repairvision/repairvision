@@ -11,6 +11,8 @@ import org.sidiff.repair.validation.terms.Variable;
 
 public abstract class Quantifier extends Formula {
 
+	// Quantifier(Type bounded in iteration : formula)
+	
 	protected Variable bounded;
 	
 	protected Term iteration;

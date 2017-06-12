@@ -20,11 +20,10 @@ import org.sidiff.repair.validation.terms.functions.GetClosure;
  */
 public class Exists extends Quantifier {
 
-	public Exists(Variable next, Term iteration, Formula formula) {
-		super(next, iteration, formula);
-		
-		// Bind variable:
-		next.bind(iteration);
+	// exists(Type bounded in iteration : formula)
+	
+	public Exists(Variable bounded, Term iteration, Formula formula) {
+		super(bounded, iteration, formula);
 	}
 	
 	@Override

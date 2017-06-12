@@ -6,15 +6,8 @@ import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 
 public class Variable extends Term {
 
-	// TODO: Do we need this!?
-	protected Term binding;
-	
 	public Variable(String name) {
 		this.name = name;
-	}
-	
-	public void bind(Term binding) {
-		this.binding = binding;
 	}
 
 	public void assign(Object value) {
@@ -34,6 +27,6 @@ public class Variable extends Term {
 
 	@Override
 	public void repair(IRepairDecision parent, RepairType type, IScopeRecorder scope) {
-		binding.repair(parent, type, scope);
+		// nothing to do...
 	}
 }

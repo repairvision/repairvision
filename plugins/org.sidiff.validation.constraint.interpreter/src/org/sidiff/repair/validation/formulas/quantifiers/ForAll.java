@@ -20,11 +20,10 @@ import org.sidiff.repair.validation.terms.functions.GetClosure;
  */
 public class ForAll extends Quantifier {
 
+	// forAll(Type bounded in iteration : formula)
+	
 	public ForAll(Variable bounded, Term iteration, Formula formula) {
 		super(bounded, iteration, formula);
-		
-		// Bind variable:
-		bounded.bind(iteration);
 	}
 
 	@Override
