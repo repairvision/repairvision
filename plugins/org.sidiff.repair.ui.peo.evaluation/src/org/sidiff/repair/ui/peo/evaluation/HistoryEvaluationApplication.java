@@ -156,7 +156,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		// RQ 03:
 		ResearchQuestion03 rq03 = rq.createNewRQ03(inconsistency);
 		
-		Validation validationForInconsistency = EvaluationUtil.getRepairTree(
+		Validation validationForInconsistency = EvaluationUtil.getValidation(
 				repairJob.getValidations(), inconsistency);
 
 		int[] counter = new int[2];
@@ -306,7 +306,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	}
 	
 	public void learnEditRule() {
-		Validation valiadation = EvaluationUtil.getRepairTree(repairJob.getValidations(), getInconsistency());
+		Validation valiadation = EvaluationUtil.getValidation(repairJob.getValidations(), getInconsistency());
 		
 		if (valiadation != null) {
 			LearnEditRule learnEditRule = new LearnEditRule(getMatchingSettings(), modelA, modelB, modelC);
