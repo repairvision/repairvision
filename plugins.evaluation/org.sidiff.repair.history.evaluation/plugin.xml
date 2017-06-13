@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.sidiff.repair.ui.presentation">
+      <presentation
+            id="org.sidiff.repair.ui.peo.evaluation.presentation.history"
+            name="Partial CPO Engine (model history)"
+            presentation="org.sidiff.repair.history.evaluation.history.HistoryRepairPresentation">
+      </presentation>
+   </extension>
+   <extension
+         id="GetValidationErrors"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="org.sidiff.repair.history.evaluation.statistic.GetValidationErrors">
+         </run>
+      </application>
+   </extension>
+</plugin>
