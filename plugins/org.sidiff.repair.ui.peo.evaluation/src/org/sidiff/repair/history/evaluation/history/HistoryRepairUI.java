@@ -1,4 +1,4 @@
-package org.sidiff.repair.ui.peo.evaluation.history;
+package org.sidiff.repair.history.evaluation.history;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -22,12 +22,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.repair.api.RepairJob;
+import org.sidiff.repair.history.evaluation.Activator;
+import org.sidiff.repair.history.evaluation.HistoryEvaluationApplication;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.ui.controls.basic.BasicRepairViewerUI;
 import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
-import org.sidiff.repair.ui.peo.evaluation.Activator;
-import org.sidiff.repair.ui.peo.evaluation.HistoryEvaluationApplication;
 import org.sidiff.repair.validation.ui.widgets.ValidationWidget;
 
 public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplication> {

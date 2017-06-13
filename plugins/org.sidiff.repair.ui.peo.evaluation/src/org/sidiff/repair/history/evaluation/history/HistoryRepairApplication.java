@@ -1,4 +1,4 @@
-package org.sidiff.repair.ui.peo.evaluation.history;
+package org.sidiff.repair.history.evaluation.history;
 
 import java.util.ArrayList;
 import java.util.Collection;

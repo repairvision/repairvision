@@ -1,4 +1,4 @@
-package org.sidiff.repair.ui.peo.evaluation.util;
+package org.sidiff.repair.history.evaluation.util;
 
 import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
 
@@ -22,7 +22,7 @@ import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
-import org.sidiff.repair.evaluation.oracle.DeveloperIntentionOracle;
+import org.sidiff.repair.history.generator.oracle.DeveloperIntentionOracle;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;

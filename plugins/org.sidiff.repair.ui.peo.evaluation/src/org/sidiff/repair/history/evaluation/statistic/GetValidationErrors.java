@@ -1,4 +1,4 @@
-package org.sidiff.repair.ui.peo.evaluation.statistic;
+package org.sidiff.repair.history.evaluation.statistic;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -6,11 +6,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.sidiff.repair.history.evaluation.data.EvaluationData;
+import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
-import org.sidiff.repair.ui.peo.evaluation.data.EvaluationData;
-import org.sidiff.repair.ui.peo.evaluation.util.EvaluationUtil;
 
 public class GetValidationErrors implements IApplication {
 

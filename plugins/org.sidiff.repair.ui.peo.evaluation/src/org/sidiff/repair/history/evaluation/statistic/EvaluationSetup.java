@@ -1,4 +1,4 @@
-package org.sidiff.repair.ui.peo.evaluation.statistic;
+package org.sidiff.repair.history.evaluation.statistic;
 
 public class EvaluationSetup {
 

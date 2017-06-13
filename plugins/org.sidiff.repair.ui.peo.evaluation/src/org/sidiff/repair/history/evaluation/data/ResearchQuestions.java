@@ -1,13 +1,13 @@
-package org.sidiff.repair.ui.peo.evaluation.data;
+package org.sidiff.repair.history.evaluation.data;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
-import org.sidiff.repair.ui.peo.evaluation.util.EvaluationUtil;
 
 public class ResearchQuestions implements Serializable  {
 

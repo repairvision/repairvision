@@ -1,7 +1,7 @@
-package org.sidiff.repair.ui.peo.evaluation.history;
+package org.sidiff.repair.history.evaluation.history;
 
 import org.sidiff.repair.api.peo.PEORepairFacade;
-import org.sidiff.repair.ui.peo.evaluation.HistoryEvaluationApplication;
+import org.sidiff.repair.history.evaluation.HistoryEvaluationApplication;
 import org.sidiff.repair.ui.presentation.IRepairPresentation;
 
 public class HistoryRepairPresentation implements IRepairPresentation {

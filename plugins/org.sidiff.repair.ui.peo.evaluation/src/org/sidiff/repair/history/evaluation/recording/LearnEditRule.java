@@ -1,4 +1,4 @@
-package org.sidiff.repair.ui.peo.evaluation.recording;
+package org.sidiff.repair.history.evaluation.recording;
 
 import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
 
