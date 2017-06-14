@@ -3,6 +3,7 @@ package org.sidiff.repair.history.generator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -27,7 +28,9 @@ import org.sidiff.consistency.common.storage.UUIDResource;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.TechnicalDifferenceFacade;
+import org.sidiff.matching.api.MatchingFacade;
 import org.sidiff.matching.model.Correspondence;
+import org.sidiff.matching.model.Matching;
 import org.sidiff.repair.history.generator.repository.IHistoryRepository;
 import org.sidiff.repair.history.generator.repository.ModelNamingUtil;
 import org.sidiff.repair.history.generator.settings.EvaluationSettings;
@@ -206,9 +209,15 @@ public class HistoryModelGenerator {
 						|| versionB.getStatus().equals(ModelStatus.DEFECT)) {
 					continue;
 				}
-				SymmetricDifference diff = generateTechnicalDifference(versionA, versionB, settings);
-				generateUUIDs(diff);
-				history.getTechnicalDifferences().add(diff);
+				
+				if (WRITE_DIFFERENCES) {
+					SymmetricDifference diff = generateTechnicalDifference(versionA, versionB, settings);
+					generateUUIDs(diff.getMatching());
+					history.getTechnicalDifferences().add(diff);
+				} else {
+					Matching matching = generateMatching(versionA, versionB, settings);
+					generateUUIDs(matching);
+				}
 			} catch (InvalidModelException e) {
 				e.printStackTrace();
 			} catch (NoCorrespondencesException e) {
@@ -257,10 +266,22 @@ public class HistoryModelGenerator {
 		return diff;
 	}
 	
-	private void generateUUIDs(SymmetricDifference diff) {
+	private Matching generateMatching(Version versionA, Version versionB,
+			EvaluationSettings settings) throws InvalidModelException, NoCorrespondencesException {
+		
+		Resource resourceA = versionA.getModel();
+		Resource resourceB = versionB.getModel();
+		
+		Matching matching = MatchingFacade.match(
+				Arrays.asList(resourceA, resourceB), settings.getDifferenceSettings());
+
+		return matching;
+	}
+	
+	private void generateUUIDs(Matching matching) {
 		if (PRINT_IDS) System.out.println("HistoryModelGenerator.generateUUIDs()");
 		
-		for (Correspondence correspondence : diff.getMatching().getCorrespondences()) {
+		for (Correspondence correspondence : matching.getCorrespondences()) {
 			if (!UUIDResource.isDynamic(correspondence.getMatchedA()) && !UUIDResource.isDynamic(correspondence.getMatchedB())) {
 				String uuid = EMFUtil.getXmiId(correspondence.getMatchedA());
 				assert uuid != null : "UUID for element" + correspondence.getMatchedA() + "not set!";
