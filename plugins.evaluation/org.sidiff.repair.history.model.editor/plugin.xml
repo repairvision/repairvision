@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated model -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.sidiff.repair.historymodel.presentation.HistoryModelModelWizardID"
+            name="%_UI_HistoryModelModelWizard_label"
+            class="org.sidiff.repair.historymodel.presentation.HistoryModelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/HistoryModelModelFile.gif">
+         <description>%_UI_HistoryModelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated model -->
+      <editor
+            id="org.sidiff.repair.historymodel.presentation.HistoryModelEditorID"
+            name="%_UI_HistoryModelEditor_label"
+            icon="icons/full/obj16/HistoryModelModelFile.gif"
+            extensions="history"
+            class="org.sidiff.repair.historymodel.presentation.HistoryModelEditor"
+            contributorClass="org.sidiff.repair.historymodel.presentation.HistoryModelActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>
