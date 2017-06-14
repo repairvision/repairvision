@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.sidiff.repair.history.model/src" editDirectory="/org.sidiff.repair.history.model.edit/src"
+    modelPluginID="org.sidiff.repair.history.model" modelName="Model" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    editPluginID="org.sidiff.repair.history.model.edit" editorPluginID="org.sidiff.repair.history.model.editor"
+    usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.sidiff.matching.model/model/MatchingModel.genmodel#//model ../../org.sidiff.difference.symmetric/model/Symmetric.genmodel#//symmetric"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>model.ecore</foreignModel>
+  <genPackages prefix="HistoryModel" basePackage="org.sidiff.repair" resource="XMI"
+      disposableProviderFactory="true" fileExtensions="history" ecorePackage="model.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="model.ecore#//ValidationSeverity">
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ValidationSeverity/ERROR"/>
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ValidationSeverity/WARNING"/>
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ValidationSeverity/UNKNOWN"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="model.ecore#//ModelStatus">
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ModelStatus/VALID"/>
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ModelStatus/INVALID"/>
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ModelStatus/DEFECT"/>
+      <genEnumLiterals ecoreEnumLiteral="model.ecore#//ModelStatus/UNKNOWN"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="model.ecore#//Resource"/>
+    <genClasses ecoreClass="model.ecore#//History">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//History/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//History/versions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//History/technicalDifferences"/>
+      <genOperations ecoreOperation="model.ecore#//History/getPrecessorRevisions">
+        <genParameters ecoreParameter="model.ecore#//History/getPrecessorRevisions/version"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.ecore#//History/getSuccessorRevisions">
+        <genParameters ecoreParameter="model.ecore#//History/getSuccessorRevisions/version"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.ecore#//History/getTechnicalDifference">
+        <genParameters ecoreParameter="model.ecore#//History/getTechnicalDifference/old"/>
+        <genParameters ecoreParameter="model.ecore#//History/getTechnicalDifference/new"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.ecore#//History/getValidationErrors">
+        <genParameters ecoreParameter="model.ecore#//History/getValidationErrors/introduced"/>
+        <genParameters ecoreParameter="model.ecore#//History/getValidationErrors/resolved"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//Version">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Version/validationErrors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Version/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Version/id2Element"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Version/modelURI"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Version/model"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Version/status"/>
+      <genOperations ecoreOperation="model.ecore#//Version/getElement">
+        <genParameters ecoreParameter="model.ecore#//Version/getElement/id"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//ValidationError">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ValidationError/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ValidationError/introducedIn"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ValidationError/resolvedIn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ValidationError/message"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ValidationError/source"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ValidationError/severity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ValidationError/introduced"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ValidationError/resolved"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ValidationError/prec"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ValidationError/succ"/>
+      <genFeatures property="Readonly" notify="false" children="true" createChild="false"
+          propertyCategory="" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ValidationError/invalidElement"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
