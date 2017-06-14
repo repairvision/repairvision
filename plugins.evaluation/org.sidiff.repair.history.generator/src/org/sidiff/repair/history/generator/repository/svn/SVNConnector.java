@@ -61,6 +61,16 @@ public class SVNConnector {
     			fileName = gitHubURL.substring(gitHubURL.lastIndexOf("/") + 1, gitHubURL.length());
     			project = gitHubURL.substring(baseURLEnd + gitViewer.length(), gitHubURL.length() - fileName.length());
     		}
+    	} else if (gitHubURL.contains("/commits/master/")) {
+    		// File:
+    		String gitViewer = "/commits/master/";
+    		int baseURLEnd = gitHubURL.indexOf(gitViewer);
+    		
+    		if (baseURLEnd != -1) {
+    			baseUrl = gitHubURL.substring(0, baseURLEnd);
+    			fileName = gitHubURL.substring(gitHubURL.lastIndexOf("/") + 1, gitHubURL.length());
+    			project = gitHubURL.substring(baseURLEnd + gitViewer.length(), gitHubURL.length() - fileName.length());
+    		}
     	} else if (gitHubURL.contains("/tree/master/")) {
     		// Folder:
     		String gitViewer = "/tree/master/";
