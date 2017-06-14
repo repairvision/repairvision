@@ -9,21 +9,24 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.sidiff.configuration.IConfigurable;
 import org.sidiff.consistency.common.settings.SettingsUtil;
-import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
 import org.sidiff.matcher.IMatcher;
 import org.sidiff.matching.api.util.MatchingUtils;
 import org.sidiff.repair.history.generator.HistoryModelGenerator;
+import org.sidiff.repair.history.generator.repository.BasicHistoryRepository;
+import org.sidiff.repair.history.generator.repository.IHistoryRepository;
 import org.sidiff.repair.history.generator.settings.EvaluationSettings;
-import org.sidiff.repair.history.generator.validation.FOLValidator;
+import org.sidiff.repair.history.generator.validation.EMFValidator;
 
-public class GenerateHistoryModelUMLandFOLHandler extends AbstractHandler implements IHandler {
+public class EcoreValidationEMFFolderGenerator extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -36,21 +39,31 @@ public class GenerateHistoryModelUMLandFOLHandler extends AbstractHandler implem
 				
 				if (selection instanceof IStructuredSelection){
 					IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+					
 					if(structuredSelection.getFirstElement() instanceof IFolder){
 						IFolder folder = (IFolder) structuredSelection.getFirstElement();
 						
 						DifferenceSettings differenceSettings = SettingsUtil.getDefaultDifferenceSettings();
 						
-						IMatcher matcher = MatchingUtils.getMatcherByKey("org.sidiff.matcher.adapter.emfcompare.EMFCompareMatcherAdapter");
-						ITechnicalDifferenceBuilder builder = TechnicalDifferenceUtils.getTechnicalDifferenceBuilder("org.sidiff.uml2v4.difference.technical.TechnicalDifferenceBuilderUML");
+						IMatcher matcher = MatchingUtils.getMatcherByKey("org.sidiff.matcher.signature.name.NamedElementMatcher");
+						ITechnicalDifferenceBuilder builder = TechnicalDifferenceUtils.getTechnicalDifferenceBuilder("org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations");
 						
-						differenceSettings.setCorrespondencesService(new MatchingModelCorrespondences());
+						IConfigurable configurable = (IConfigurable) matcher;
+						configurable.getConfigurationOptions();
+						configurable.setConfigurationOption("Use Qualified Names", true);
+						configurable.setConfigurationOption("Allow Ambiguous Names", true);
+						
 						differenceSettings.setMatcher(matcher);
 						differenceSettings.setTechBuilder(builder);
-						differenceSettings.setMergeImports(false);
 						
-						EvaluationSettings evaluationSettings = new EvaluationSettings(folder.getName(), new String[]{"uml"}, differenceSettings, new FOLValidator());
-						new HistoryModelGenerator().generateHistoryProject(folder.getLocation().toOSString(), evaluationSettings);
+						String inputPath = folder.getLocation().toOSString();
+						String outputProject = HistoryModelGenerator.getProjectName(HistoryModelGenerator.PROJECT_NAME_PREFIX, inputPath);
+						URI versionFolderURI = URI.createPlatformResourceURI(outputProject + "/" + HistoryModelGenerator.VERSIONS_FOLDER, true);
+						
+						IHistoryRepository repository = new BasicHistoryRepository(versionFolderURI);
+						
+						EvaluationSettings evaluationSettings = new EvaluationSettings(folder.getName(), new String[]{"ecore"}, repository, differenceSettings, new EMFValidator());
+						new HistoryModelGenerator().generateHistoryProject(inputPath, outputProject, evaluationSettings);
 					}
 				}				
 				return Status.OK_STATUS;

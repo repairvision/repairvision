@@ -1,13 +1,16 @@
 package org.sidiff.repair.history.generator.settings;
 
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.repair.history.generator.repository.IHistoryRepository;
 import org.sidiff.repair.history.generator.validation.IValidator;
 
 public class EvaluationSettings {
 	
-	private String history_name;
+	private String historyName;
 	
 	private String[] fileFilters;
+	
+	private IHistoryRepository repository; 
 	
 	private DifferenceSettings differenceSettings;
 
@@ -16,21 +19,23 @@ public class EvaluationSettings {
 	public EvaluationSettings(
 			String history_name, 
 			String[] fileFilters, 
+			IHistoryRepository repository,
 			DifferenceSettings differenceSettings,
 			IValidator validator) {
 		super();
-		this.history_name = history_name;
+		this.historyName = history_name;
 		this.fileFilters = fileFilters;
+		this.repository = repository;
 		this.differenceSettings = differenceSettings;
 		this.validator = validator;
 	}
 
-	public String getHistory_name() {
-		return history_name;
+	public String getHistoryName() {
+		return historyName;
 	}
 
-	public void setHistory_name(String history_name) {
-		this.history_name = history_name;
+	public void setHistoryName(String historyName) {
+		this.historyName = historyName;
 	}
 
 	public String[] getFileFilters() {
@@ -39,6 +44,14 @@ public class EvaluationSettings {
 
 	public void setFileFilters(String[] fileFilters) {
 		this.fileFilters = fileFilters;
+	}
+	
+	public IHistoryRepository getRepository() {
+		return repository;
+	}
+	
+	public void setRepository(IHistoryRepository repository) {
+		this.repository = repository;
 	}
 
 	public DifferenceSettings getDifferenceSettings() {

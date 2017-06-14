@@ -1,10 +1,8 @@
 package org.sidiff.repair.history.generator;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,10 +17,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
@@ -30,10 +25,9 @@ import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.consistency.common.storage.UUIDResource;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.TechnicalDifferenceFacade;
-import org.sidiff.ecore.testdata.history.eclipse.LocalHistoryRepository;
-import org.sidiff.ecore.testdata.history.eclipse.ModelNamingUtil;
-import org.sidiff.ecore.testdata.history.eclipse.RepairURIHandler;
 import org.sidiff.matching.model.Correspondence;
+import org.sidiff.repair.history.generator.repository.IHistoryRepository;
+import org.sidiff.repair.history.generator.repository.ModelNamingUtil;
 import org.sidiff.repair.history.generator.settings.EvaluationSettings;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.HistoryModelFactory;
@@ -43,37 +37,34 @@ import org.sidiff.repair.historymodel.Version;
 
 public class HistoryModelGenerator {
 	
-	private boolean WRITE_DIFFERENCES = false;
+	//----
 	
-	private boolean PRINT_IDS = false;
+	public boolean WRITE_DIFFERENCES = false;
 	
-	private String VERSIONS_FOLDER = "versions";
+	public boolean PRINT_IDS = false;
 	
-	private String DIFF_FOLDER = "differences";
+	//----
 	
-	private String PROJECT_NAME_PREFIX = "org.sidiff.ecore.testdata.history.eclipse.";
+	public static String PROJECT_NAME_PREFIX = "org.sidiff.ecore.testdata.history";
 	
-	private String HISTORY_FILE_EXTENSION = "history";
+	public static String VERSIONS_FOLDER = "versions";
+	
+	public static String DIFF_FOLDER = "differences";
+	
+	public static String HISTORY_FILE_EXTENSION = "history";
 	
 	private IProject project = null;
 	
-	private ResourceSet resourceSet;
+	private IHistoryRepository repository;
 	
-	//----
-	
-	private LocalHistoryRepository repository;
-	
-	private RepairURIHandler uriHandler;
-	
-	//----
-
-	public void generateHistoryProject(String folderpath, EvaluationSettings settings) {
+	public void generateHistoryProject(String inputPath, String outputProject, EvaluationSettings settings) {
+		this.repository = settings.getRepository();
 		
 		try {
 			
 			// Scan for model files within that folder:
-			File modelFolder = new File(folderpath);
-			List<File> files = searchModelFiles(modelFolder, settings);
+			File modelFolder = new File(inputPath);
+			List<File> files = IHistoryRepository.searchModelFiles(modelFolder, settings.getFileFilters());
 			
 			if (!files.isEmpty()) {
 				
@@ -81,9 +72,7 @@ public class HistoryModelGenerator {
 				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 				
 				// Get the project the history shall be stored in:
-				String name =  modelFolder.getName().toLowerCase().split("\\.")[0];
-				project = root.getProject(PROJECT_NAME_PREFIX + name);
-				
+				project = root.getProject(outputProject);
 				project.create(null);
 				project.open(null);
 				
@@ -91,16 +80,6 @@ public class HistoryModelGenerator {
 				versionFolder.create(false, true, null);
 				
 				// Create a history:
-				URI versionFolderURI = URI.createPlatformResourceURI(project.getName() + "/" + VERSIONS_FOLDER, true);
-				
-				resourceSet = new ResourceSetImpl();
-				
-				repository = new LocalHistoryRepository("C:\\workspaces\\sidiff\\org.sidiff.ecore.testdata.history.eclipse\\github.com");
-				uriHandler = new RepairURIHandler(resourceSet, versionFolderURI, repository);
-				
-				resourceSet.getLoadOptions().put(XMIResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
-				resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, uriHandler);
-				
 				History history = generateHistory(files, settings);
 				saveHistory(history);
 				
@@ -110,6 +89,12 @@ public class HistoryModelGenerator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static String getProjectName(String projectPrefix, String inputPath) {
+		File modelFolder = new File(inputPath);
+		String name = modelFolder.getName().toLowerCase().split("\\.")[0];
+		return projectPrefix + "." + name;
 	}
 	
 	private void saveHistory(History history) throws CoreException {
@@ -148,7 +133,7 @@ public class HistoryModelGenerator {
 				+ File.separator + history.getName() + "." + HISTORY_FILE_EXTENSION);
 		
 		try {
-			Resource historyResource = resourceSet.createResource(historyURI);
+			Resource historyResource = repository.getResourceSet().createResource(historyURI);
 			historyResource.getContents().add(history);
 			historyResource.save(Collections.EMPTY_MAP);
 		} catch (IOException e) {
@@ -156,57 +141,15 @@ public class HistoryModelGenerator {
 		}
 	}
 	
-	protected String getModelFileName(Version version) {
+	private String getModelFileName(Version version) {
 		int revision = ((History) version.eContainer()).getVersions().indexOf(version);
-		return String.format("%03d", revision) + "_" + repository.parseModelName(URI.createURI(version.getModelURI()));
-		
-//		URI original = version.getModel().getURI();
-//		String fileName = original.trimFileExtension().lastSegment();
-//		String fileExtension = original.fileExtension();
-//		
-//		String index = fileName.substring(0, fileName.indexOf("_"));
-//		
-//		if (index.isEmpty()) {
-//			index = "" + ((History) version.eContainer()).getVersions().indexOf(version);
-//		}
-//		
-//		return index + "." + fileExtension;
-	}
-
-	private static List<File> searchModelFiles(File root, EvaluationSettings settings) {
-		List<File> files = new ArrayList<>();
-		
-		FileFilter filter = new FileFilter() {
-			
-			@Override
-			public boolean accept(File pathname) {
-				if (!pathname.isDirectory()) {
-					for (String filter : settings.getFileFilters()) {
-						if (pathname.getName().toLowerCase().endsWith(filter)) {
-							return true;
-						}
-					}
-				}
-				return false;
-			}
-		};
-		
-		files.addAll(Arrays.asList(root.listFiles(filter)));
-		Collections.sort(files);
-		
-		// scan for sub-directories recursively
-		for (File file : root.listFiles()) {
-			if (file.isDirectory()) {
-				files.addAll(searchModelFiles(file, settings));
-			}
-		}
-		return files;
+		return String.format("%03d", revision) + "_" + repository.formatModelFileName(URI.createURI(version.getModelURI()));
 	}
 	
 	private History generateHistory(List<File> files, EvaluationSettings settings) {
 		
 		History history = HistoryModelFactory.eINSTANCE.createHistory();
-		history.setName(settings.getHistory_name());
+		history.setName(settings.getHistoryName());
 		
 		// Load history:
 		System.out.println("############################## LOAD MODELS ##############################");
@@ -214,17 +157,15 @@ public class HistoryModelGenerator {
 		
 		for (File modelFile : files) {
 			++revision;
+			System.out.println(modelFile);
 			
-			URI uri = EMFStorage.fileToUri(modelFile);
-			System.out.println(uri);
-			Resource resource = new UUIDResource(uri, resourceSet);
+			URI modelURI = EMFStorage.fileToUri(modelFile);
+			Resource resource = repository.loadModel(modelURI);
 			Version version = generateVersion(revision, resource, settings);
 			
 			if (version != null) {
 				history.getVersions().add(version);
 			}
-			
-			uriHandler.clear();
 		}
 		
 		// Calculate matchings:

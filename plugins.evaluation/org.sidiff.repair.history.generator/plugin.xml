@@ -2,27 +2,18 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         id="RunHistoryModelGenerator"
-         name="RunHistoryModelGenerator"
-         point="org.eclipse.core.runtime.applications">
-      <application
-            cardinality="singleton-global"
-            thread="main"
-            visible="true">
-         <run
-               class="org.sidiff.repair.history.generator.run.RunHistoryModelGeneratorEcoreAndEMF">
-         </run>
-      </application>
-   </extension>
-   <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.sidiff.repair.history.generator.handler.GenerateHistoryModelEcoreAndEMFHandler"
-            commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.ecore.emf">
+            class="org.sidiff.repair.history.generator.handler.EcoreValidationEMFFolderGenerator"
+            commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.ecore.emf.folder">
       </handler>
       <handler
-            class="org.sidiff.repair.history.generator.handler.GenerateHistoryModelUMLandFOLHandler"
-            commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.uml.fol">
+            class="org.sidiff.repair.history.generator.handler.EcoreValidationEMFRepositoryGenerator"
+            commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.ecore.emf.repository">
+      </handler>
+      <handler
+            class="org.sidiff.repair.history.generator.handler.UMLValidationFOLFolderGenerator"
+            commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.uml.fol.folder">
       </handler>
    </extension>
    <extension
@@ -33,11 +24,15 @@
          <menu
                label="Model History">
             <command
-                  commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.ecore.emf"
+                  commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.ecore.emf.folder"
                   style="push">
             </command>
             <command
-                  commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.uml.fol"
+                  commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.ecore.emf.repository"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.uml.fol.folder"
                   style="push">
             </command>
          </menu>
@@ -48,14 +43,20 @@
       <command
             categoryId="org.sidiff.difference.ui.category.silift"
             description="Generates an History Model for a list of model versions"
-            id="org.sidiff.repair.evaluation.command.generatehistorymodel.ecore.emf"
-            name="Generate History Model (Ecore, EMF)">
+            id="org.sidiff.repair.evaluation.command.generatehistorymodel.ecore.emf.folder"
+            name="Generate History (Folder, Ecore, EMF-Validation)">
       </command>
       <command
             categoryId="org.sidiff.difference.ui.category.silift"
             description="Generates an History Model for a list of model versions"
-            id="org.sidiff.repair.evaluation.command.generatehistorymodel.uml.fol"
-            name="Generate History Model (UML, FOL)">
+            id="org.sidiff.repair.evaluation.command.generatehistorymodel.ecore.emf.repository"
+            name="Generate History (Project, Ecore, EMF-Validation)">
+      </command>
+      <command
+            categoryId="org.sidiff.difference.ui.category.silift"
+            description="Generates an History Model for a list of model versions"
+            id="org.sidiff.repair.evaluation.command.generatehistorymodel.uml.fol.folder"
+            name="Generate History (Folder, UML, FOL-Validation)">
       </command>
    </extension>
 
