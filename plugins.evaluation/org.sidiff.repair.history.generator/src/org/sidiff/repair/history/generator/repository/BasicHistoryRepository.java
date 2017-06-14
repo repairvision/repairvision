@@ -35,14 +35,26 @@ public class BasicHistoryRepository implements IHistoryRepository {
 
 	@Override
 	public Resource loadModel(URI modelURI) {
-		Resource resource = new UUIDResource(modelURI, resourceSet);
+		Resource resource = null;
+		
+		// -> references model versions changed...
+		do {
+			uriHandler.setNeedsReload(false);
+			resource = new UUIDResource(modelURI, resourceSet);
+		} while(uriHandler.isNeedsReload());
+		
 		uriHandler.clear();
 		return resource;
 	}
-
+	
 	@Override
 	public URI resolveModel(URI source, URI target) {
 		return target;
+	}
+	
+	@Override
+	public URI getNextModelVersion(URI modelURI) {
+		return null;
 	}
 	
 	@Override

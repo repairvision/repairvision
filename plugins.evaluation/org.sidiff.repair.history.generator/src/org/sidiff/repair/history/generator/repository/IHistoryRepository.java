@@ -21,6 +21,8 @@ public interface IHistoryRepository {
 	
 	URI resolveModel(URI source, URI target);
 	
+	URI getNextModelVersion(URI modelURI);
+	
 	ResourceSet getResourceSet();
 	
 	public static List<File> searchModelFiles(File root, String[] filters) {

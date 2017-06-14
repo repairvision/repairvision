@@ -23,6 +23,8 @@ public class RepairURIHandler extends URIHandlerImpl {
 	
 	private URI versionFolder;
 	
+	private boolean needsReload = false;
+	
 	public RepairURIHandler(ResourceSet resourceSet, URI versionFolder, IHistoryRepository repository) {
 		super();
 		this.resourceSet = resourceSet;
@@ -32,18 +34,31 @@ public class RepairURIHandler extends URIHandlerImpl {
 	
 	public void clear() {
 		uriMap.clear();
+		setNeedsReload(false);
+	}
+	
+	public boolean isNeedsReload() {
+		return needsReload;
+	}
+	
+	public void setNeedsReload(boolean needsReload) {
+		this.needsReload = needsReload;
 	}
 
 	@Override
 	public URI resolve(URI uri) {
+		URI original = uri;
 		
 		// Map URI:
+		boolean isMapped = false;
+		
 		for (String uriPrefix : uriMap.keySet()) {
 			String uriString = uri.toString();
 			
 			if (uriString.startsWith(uriPrefix)) {
 				uriString = uriString.replaceFirst(uriPrefix, uriMap.get(uriPrefix));
 				uri = URI.createURI(uriString);
+				isMapped = true;
 				break;
 			}
 		}
@@ -71,6 +86,45 @@ public class RepairURIHandler extends URIHandlerImpl {
 		
 		if ((obj == null) || (obj.eIsProxy())) {
 			
+			// Check for other model version:
+			// FIXME: Better solution? Check all proxies first and find the best match!?
+			if (isMapped) {
+				URI resolvedURI = repository.getNextModelVersion(uri);
+				
+				if (resolvedURI != null) {
+					resolvedURI = resolvedURI.appendFragment(uri.fragment());
+					
+					try {
+						obj = resourceSet.getEObject(resolvedURI.appendFragment(uri.fragment()), true);
+					} catch (Exception e) {
+					}
+					
+					if (obj != null) {
+						try {
+							
+							URI subModelCopy = versionFolder
+									.appendSegment(ModelNamingUtil.getModelName(resolvedURI.lastSegment()))
+									.appendSegment(repository.formatModelFileName(resolvedURI));
+							obj.eResource().setURI(subModelCopy);
+							obj.eResource().save(null);
+							
+							String oldMapping = uriMap.put(original.trimFragment().toString(), subModelCopy.toString());
+							
+							// Overwrites mapping?
+							if (oldMapping != null) {
+								needsReload = true;
+								System.err.println(" -> discarded: " + oldMapping);
+							}
+							
+							return resolve(original); // just for testing the mapping...
+							
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} 
+				}
+			}
+			
 			// Try relative URI:
 			URI relative = URI.createURI(uri.fragment());
 			obj = resourceSet.getEObject(relative, false);
@@ -97,7 +151,7 @@ public class RepairURIHandler extends URIHandlerImpl {
 							
 							uriMap.put(uri.trimFragment().toString(), subModelCopy.toString());
 							
-							return resolve(uri);
+							return resolve(original); // just for testing the mapping...
 							
 						} catch (Exception e) {
 							e.printStackTrace();

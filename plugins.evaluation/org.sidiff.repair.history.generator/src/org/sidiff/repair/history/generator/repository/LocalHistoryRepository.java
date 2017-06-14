@@ -111,10 +111,61 @@ public class LocalHistoryRepository extends BasicHistoryRepository {
 		}
 		
 		if (matchedModel != null) {
-			return URI.createFileURI(localRepositoryPath + "/" + matchedModel.pluginPath + matchedModel.name);
+			return modelToURI(matchedModel);
 		} else {
 			return null;
 		}
+	}
+	
+	@Override
+	public URI getNextModelVersion(URI modelURI) {
+		Date date = null;
+		
+		if (SVNConnector.isSVNVersion(modelURI.lastSegment())) {
+			date = ModelNamingUtil.getDate(modelURI.lastSegment());
+		} else {
+			Model model = getModel(modelURI);
+			
+			if (model != null) {
+				date = model.date;
+			}
+		}
+		
+		if (date != null) {
+			String targetModelName = ModelNamingUtil.getModelName(modelURI.lastSegment().toString());
+			Model nextModel = null;
+			long timeDiff = 0;
+			
+			for (Model model : models) {
+				String name = ModelNamingUtil.getModelName(model.name);
+				
+				if (name.equalsIgnoreCase(targetModelName)) {
+					long time = model.date.getTime() - date.getTime();
+					
+					// Search smallest positive value:
+					if (time > 0) {
+						if (nextModel == null) {
+							nextModel = model;
+						} else {
+							if (time < timeDiff) {
+								nextModel = model;
+								timeDiff = time;
+							}
+						}
+					}
+				}
+			}
+			
+			if (nextModel != null) {
+				return modelToURI(nextModel);
+			}
+		}
+		
+		return null;
+	}
+	
+	private URI modelToURI(Model model) {
+		return URI.createFileURI(localRepositoryPath + "/" + model.pluginPath + model.name);
 	}
 	
 	private Model getModel(URI modelURI) {
