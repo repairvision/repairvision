@@ -121,7 +121,7 @@ public class HistoryModelGenerator {
 					.appendSegment(ModelNamingUtil.getModelName(resolvedURI.lastSegment()))
 					.appendSegment(repository.formatModelFileName(resolvedURI));
 			
-			Resource referencedModel = repository.getResourceSet().getResource(resolvedURI, false);
+			Resource referencedModel = repository.getResourceSet().getResource(resolvedURI, true);
 			referencedModel.setURI(subModelCopy);
 			referencedModel.save(Collections.EMPTY_MAP);
 		}
@@ -221,7 +221,7 @@ public class HistoryModelGenerator {
 			} catch (InvalidModelException e) {
 				e.printStackTrace();
 			} catch (NoCorrespondencesException e) {
-				e.printStackTrace();
+				System.err.println("  No correspondences found: " + versionA.getName() + " -> " + versionB.getName() );
 			}
 		}
 		

@@ -70,9 +70,14 @@ public class RepairURIHandler extends URIHandlerImpl {
 	public URI resolve(URI uri) {
 		URI original = uri;
 		
-		// Map URI:
-		boolean isMapped = false;
+		// Fix:
+		// ../../../../../../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString
+		// platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EString
+		if (uri.toString().contains("Ecore.ecore")) {
+			return URI.createURI("http://www.eclipse.org/emf/2002/Ecore#" + uri.fragment());
+		}
 		
+		// Map URI:
 		if (!uriMap.isEmpty()) {
 			String uriString = null;
 			
@@ -89,17 +94,9 @@ public class RepairURIHandler extends URIHandlerImpl {
 			for (String resourceURI : uriMap.keySet()) {
 				if (resourceURI.contains(uriString)) {
 					uri = URI.createURI(uriMap.get(resourceURI)).appendFragment(uri.fragment());
-					isMapped = true;
 					break;
 				}
 			}
-		}
-		
-		// Fix:
-		// ../../../../../../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString
-		// platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EString
-		if (uri.toString().contains("Ecore.ecore")) {
-			uri = URI.createURI("http://www.eclipse.org/emf/2002/Ecore#" + uri.fragment());
 		}
 		
 		// Try default:
@@ -109,40 +106,32 @@ public class RepairURIHandler extends URIHandlerImpl {
 			return defaultDeresolvedURI;
 		} else {
 			
-			// Check for other model version:
-			if (isMapped) {
-				URI resolvedURI = repository.getNextModelVersion(uri);
-				
-				if (resolvedURI != null) {
-					resolvedURI = resolvedURI.appendFragment(uri.fragment());
-
-					if (tryResolve(resolvedURI.appendFragment(uri.fragment()), true)) {
-							String oldMapping = uriMap.put(original.trimFragment().toString(), resolvedURI.toString());
-							
-							// Overwrites mapping?
-							if (oldMapping != null) {
-								needsReload = true;
-								System.out.println(" -> discarded: " + oldMapping);
-							}
-							
-							return resolve(original); // just for testing the mapping...
-					} 
-				}
+			// Try relative URI:
+			URI relative = URI.createURI(uri.fragment());
+			
+			if (tryResolve(relative, false)) {
+				return relative;
 			} else {
 				
-				// Try relative URI:
-				URI relative = URI.createURI(uri.fragment());
+				// Search target model:
+				URI resolvedURI = repository.resolveModel(getBaseURI(), original);
 				
-				if (tryResolve(relative, false)) {
-					return relative;
-				} else {
-					
-					// Search target model:
-					URI resolvedURI = repository.resolveModel(getBaseURI(), uri).appendFragment(uri.fragment());
-					
+				while (resolvedURI != null) {
 					if (tryResolve(resolvedURI, true)) {
-						uriMap.put(original.trimFragment().toString(), resolvedURI.trimFragment().toString());
+						String oldMapping = uriMap.put(
+								original.trimFragment().toString(),
+								resolvedURI.trimFragment().toString());
+						
+						// Overwrites mapping?
+						if (oldMapping != null) {
+							needsReload = true;
+							System.out.println(" -> discarded: " + oldMapping);
+						}
+						
 						return resolve(original); // just for testing the mapping...
+					} else {
+						// Check for other model version:
+						resolvedURI = repository.getNextModelVersion(resolvedURI);
 					}
 				}
 			}
