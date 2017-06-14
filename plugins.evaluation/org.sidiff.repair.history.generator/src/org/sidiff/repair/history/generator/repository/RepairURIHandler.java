@@ -1,12 +1,16 @@
 package org.sidiff.repair.history.generator.repository;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
+import org.sidiff.consistency.common.storage.UUIDResource;
 
 /**
  * Fixes and resolves URI-References in models.
@@ -15,24 +19,37 @@ import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
  */
 public class RepairURIHandler extends URIHandlerImpl {
 	
+	private IHistoryRepository repository;
+	
 	private ResourceSet resourceSet;
 	
 	private Map<String, String> uriMap = new HashMap<>();
 	
-	private IHistoryRepository repository;
-	
-	private URI versionFolder;
-	
 	private boolean needsReload = false;
 	
-	public RepairURIHandler(ResourceSet resourceSet, URI versionFolder, IHistoryRepository repository) {
+	private Set<String> referencedModels = new HashSet<>();
+	
+	public RepairURIHandler(IHistoryRepository repository) {
 		super();
-		this.resourceSet = resourceSet;
-		this.versionFolder = versionFolder;
 		this.repository = repository;
+		this.resourceSet = repository.getResourceSet();
 	}
 	
-	public void clear() {
+	public Resource loadModel(URI modelURI) {
+		Resource resource = null;
+		
+		// -> references model versions changed...
+		do {
+			setNeedsReload(false);
+			resource = new UUIDResource(modelURI, resourceSet);
+		} while(isNeedsReload());
+		
+		modelLoaded();
+		return resource;
+	}
+	
+	public void modelLoaded() {
+		referencedModels.addAll(uriMap.values());
 		uriMap.clear();
 		setNeedsReload(false);
 	}
@@ -44,6 +61,10 @@ public class RepairURIHandler extends URIHandlerImpl {
 	public void setNeedsReload(boolean needsReload) {
 		this.needsReload = needsReload;
 	}
+	
+	public Set<String> getReferencedModels() {
+		return referencedModels;
+	}
 
 	@Override
 	public URI resolve(URI uri) {
@@ -52,14 +73,25 @@ public class RepairURIHandler extends URIHandlerImpl {
 		// Map URI:
 		boolean isMapped = false;
 		
-		for (String uriPrefix : uriMap.keySet()) {
-			String uriString = uri.toString();
+		if (!uriMap.isEmpty()) {
+			String uriString = null;
 			
-			if (uriString.startsWith(uriPrefix)) {
-				uriString = uriString.replaceFirst(uriPrefix, uriMap.get(uriPrefix));
-				uri = URI.createURI(uriString);
-				isMapped = true;
-				break;
+			// Cut URI:
+			if (uri.segmentCount() > 3) {
+				uriString =
+						uri.segment(uri.segmentCount() - 3) + "/" +
+						uri.segment(uri.segmentCount() - 2) + "/"+
+						uri.segment(uri.segmentCount() - 1);
+			} else {
+				uriString = uri.trimFragment().toString();
+			}
+			
+			for (String resourceURI : uriMap.keySet()) {
+				if (resourceURI.contains(uriString)) {
+					uri = URI.createURI(uriMap.get(resourceURI)).appendFragment(uri.fragment());
+					isMapped = true;
+					break;
+				}
 			}
 		}
 		
@@ -71,111 +103,78 @@ public class RepairURIHandler extends URIHandlerImpl {
 		}
 		
 		// Try default:
-		try {
-			URI defaultDeresolvedURI = super.resolve(uri);
-			EObject obj = resourceSet.getEObject(defaultDeresolvedURI, true);
-			
-			if (obj != null) {
-				return defaultDeresolvedURI;
-			}
-		} catch (Exception e) {
-		}
+		URI defaultDeresolvedURI = super.resolve(uri);
 		
-		// Test URI:
-		EObject obj = resourceSet.getEObject(uri, false);
-		
-		if ((obj == null) || (obj.eIsProxy())) {
+		if (tryResolve(defaultDeresolvedURI, true)) {
+			return defaultDeresolvedURI;
+		} else {
 			
 			// Check for other model version:
-			// FIXME: Better solution? Check all proxies first and find the best match!?
 			if (isMapped) {
 				URI resolvedURI = repository.getNextModelVersion(uri);
 				
 				if (resolvedURI != null) {
 					resolvedURI = resolvedURI.appendFragment(uri.fragment());
-					
-					try {
-						obj = resourceSet.getEObject(resolvedURI.appendFragment(uri.fragment()), true);
-					} catch (Exception e) {
-					}
-					
-					if (obj != null) {
-						try {
-							
-							URI subModelCopy = versionFolder
-									.appendSegment(ModelNamingUtil.getModelName(resolvedURI.lastSegment()))
-									.appendSegment(repository.formatModelFileName(resolvedURI));
-							obj.eResource().setURI(subModelCopy);
-							obj.eResource().save(null);
-							
-							String oldMapping = uriMap.put(original.trimFragment().toString(), subModelCopy.toString());
+
+					if (tryResolve(resolvedURI.appendFragment(uri.fragment()), true)) {
+							String oldMapping = uriMap.put(original.trimFragment().toString(), resolvedURI.toString());
 							
 							// Overwrites mapping?
 							if (oldMapping != null) {
 								needsReload = true;
-								System.err.println(" -> discarded: " + oldMapping);
+								System.out.println(" -> discarded: " + oldMapping);
 							}
 							
 							return resolve(original); // just for testing the mapping...
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
 					} 
 				}
-			}
-			
-			// Try relative URI:
-			URI relative = URI.createURI(uri.fragment());
-			obj = resourceSet.getEObject(relative, false);
-			
-			if (obj != null) {
-				return relative;
 			} else {
-				// Search target model:
-				URI resolvedURI = repository.resolveModel(getBaseURI(), uri);
 				
-				if (resolvedURI != null) {
-					try {
-						obj = resourceSet.getEObject(resolvedURI.appendFragment(uri.fragment()), true);
-					} catch (Exception e) {
+				// Try relative URI:
+				URI relative = URI.createURI(uri.fragment());
+				
+				if (tryResolve(relative, false)) {
+					return relative;
+				} else {
+					
+					// Search target model:
+					URI resolvedURI = repository.resolveModel(getBaseURI(), uri).appendFragment(uri.fragment());
+					
+					if (tryResolve(resolvedURI, true)) {
+						uriMap.put(original.trimFragment().toString(), resolvedURI.trimFragment().toString());
+						return resolve(original); // just for testing the mapping...
 					}
-					
-					if (obj != null) {
-						try {
-							URI subModelCopy = versionFolder
-									.appendSegment(ModelNamingUtil.getModelName(resolvedURI.lastSegment()))
-									.appendSegment(repository.formatModelFileName(resolvedURI));
-							obj.eResource().setURI(subModelCopy);
-							obj.eResource().save(null);
-							
-							uriMap.put(uri.trimFragment().toString(), subModelCopy.toString());
-							
-							return resolve(original); // just for testing the mapping...
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					} 
 				}
-					
-				// Remove: ../../
-				String subModelElementURI = uri.toString();
-				
-				while (subModelElementURI.startsWith("../")) {
-					subModelElementURI = subModelElementURI.substring(3, subModelElementURI.length());
-				}
-				
-				// Remove: protocol
-				subModelElementURI = subModelElementURI.replaceFirst("platform:/plugin/", "");
-				subModelElementURI = subModelElementURI.replaceFirst("platform:/resource/", "");
-				
-				System.err.println("Unresolved URI: " + uri);
-				uri = URI.createURI(subModelElementURI);
-				System.err.println("  -> " + uri);
 			}
+					
+			// Cleanup URI -> make relative: ../../
+			String subModelElementURI = uri.toString();
+			
+			while (subModelElementURI.startsWith("../")) {
+				subModelElementURI = subModelElementURI.substring(3, subModelElementURI.length());
+			}
+			
+			// Remove: protocol
+			subModelElementURI = subModelElementURI.replaceFirst("platform:/plugin/", "");
+			subModelElementURI = subModelElementURI.replaceFirst("platform:/resource/", "");
+			
+			System.err.println("Unresolved URI: " + original);
+			uri = URI.createURI(subModelElementURI);
+			System.err.println("  -> " + uri);
 		}
 		
 		return uri;
+	}
+	
+	private boolean tryResolve(URI modelURI, boolean loadOnDemand) {
+		try {
+			EObject obj = resourceSet.getEObject(modelURI, loadOnDemand);
+			
+			if ((obj != null) && !obj.eIsProxy()) {
+				return true;
+			}
+		} catch (Exception e) {
+		}
+		return false;
 	}
 }

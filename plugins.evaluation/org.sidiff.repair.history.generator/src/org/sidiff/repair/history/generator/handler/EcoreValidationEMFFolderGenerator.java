@@ -9,7 +9,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -57,12 +56,17 @@ public class EcoreValidationEMFFolderGenerator extends AbstractHandler implement
 						differenceSettings.setTechBuilder(builder);
 						
 						String inputPath = folder.getLocation().toOSString();
-						String outputProject = HistoryModelGenerator.getProjectName(HistoryModelGenerator.PROJECT_NAME_PREFIX, inputPath);
-						URI versionFolderURI = URI.createPlatformResourceURI(outputProject + "/" + HistoryModelGenerator.VERSIONS_FOLDER, true);
+						String outputProject = HistoryModelGenerator.getProjectName(
+								HistoryModelGenerator.PROJECT_NAME_PREFIX, inputPath);
 						
-						IHistoryRepository repository = new BasicHistoryRepository(versionFolderURI);
+						IHistoryRepository repository = new BasicHistoryRepository();
+						EvaluationSettings evaluationSettings = new EvaluationSettings(
+								folder.getName(), 
+								new String[]{"ecore"}, 
+								repository, 
+								differenceSettings, 
+								new EMFValidator());
 						
-						EvaluationSettings evaluationSettings = new EvaluationSettings(folder.getName(), new String[]{"ecore"}, repository, differenceSettings, new EMFValidator());
 						new HistoryModelGenerator().generateHistoryProject(inputPath, outputProject, evaluationSettings);
 					}
 				}				

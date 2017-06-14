@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -22,6 +23,8 @@ public interface IHistoryRepository {
 	URI resolveModel(URI source, URI target);
 	
 	URI getNextModelVersion(URI modelURI);
+	
+	Set<String> getReferencedModels();
 	
 	ResourceSet getResourceSet();
 	

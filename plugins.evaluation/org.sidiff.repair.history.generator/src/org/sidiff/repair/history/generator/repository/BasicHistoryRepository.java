@@ -1,11 +1,12 @@
 package org.sidiff.repair.history.generator.repository;
 
+import java.util.Set;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
-import org.sidiff.consistency.common.storage.UUIDResource;
 
 public class BasicHistoryRepository implements IHistoryRepository {
 
@@ -13,10 +14,10 @@ public class BasicHistoryRepository implements IHistoryRepository {
 	
 	protected RepairURIHandler uriHandler;
 	
-	public BasicHistoryRepository(URI versionsTargetFolder) {
+	public BasicHistoryRepository() {
 		resourceSet = new ResourceSetImpl();
 		
-		uriHandler = new RepairURIHandler(resourceSet, versionsTargetFolder, this);
+		uriHandler = new RepairURIHandler(this);
 		
 		resourceSet.getLoadOptions().put(XMIResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
 		resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, uriHandler);
@@ -35,16 +36,7 @@ public class BasicHistoryRepository implements IHistoryRepository {
 
 	@Override
 	public Resource loadModel(URI modelURI) {
-		Resource resource = null;
-		
-		// -> references model versions changed...
-		do {
-			uriHandler.setNeedsReload(false);
-			resource = new UUIDResource(modelURI, resourceSet);
-		} while(uriHandler.isNeedsReload());
-		
-		uriHandler.clear();
-		return resource;
+		return uriHandler.loadModel(modelURI);
 	}
 	
 	@Override
@@ -55,6 +47,11 @@ public class BasicHistoryRepository implements IHistoryRepository {
 	@Override
 	public URI getNextModelVersion(URI modelURI) {
 		return null;
+	}
+	
+	@Override
+	public Set<String> getReferencedModels() {
+		return uriHandler.getReferencedModels();
 	}
 	
 	@Override

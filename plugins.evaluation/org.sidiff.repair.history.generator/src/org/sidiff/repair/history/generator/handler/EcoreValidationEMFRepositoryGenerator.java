@@ -9,7 +9,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -58,13 +57,18 @@ public class EcoreValidationEMFRepositoryGenerator extends AbstractHandler imple
 						
 						String inputFolderPath = folder.getLocation().toOSString();
 						String inputProjectPath = folder.getProject().getLocation().toOSString();
-						String outputProject = HistoryModelGenerator.getProjectName(HistoryModelGenerator.PROJECT_NAME_PREFIX, inputFolderPath);
-						URI versionFolderURI = URI.createPlatformResourceURI(outputProject + "/" + HistoryModelGenerator.VERSIONS_FOLDER, true);
+						String outputProject = HistoryModelGenerator.getProjectName(
+								HistoryModelGenerator.PROJECT_NAME_PREFIX, inputFolderPath);
 						String[] modelFileFilter = new String[]{"ecore"};
 						
-						IHistoryRepository repository = new LocalHistoryRepository(versionFolderURI, inputProjectPath, modelFileFilter);
+						IHistoryRepository repository = new LocalHistoryRepository(inputProjectPath, modelFileFilter);
+						EvaluationSettings evaluationSettings = new EvaluationSettings(
+								folder.getName(),
+								modelFileFilter, 
+								repository, 
+								differenceSettings, 
+								new EMFValidator());
 						
-						EvaluationSettings evaluationSettings = new EvaluationSettings(folder.getName(), modelFileFilter, repository, differenceSettings, new EMFValidator());
 						new HistoryModelGenerator().generateHistoryProject(inputFolderPath, outputProject, evaluationSettings);
 					}
 				}				

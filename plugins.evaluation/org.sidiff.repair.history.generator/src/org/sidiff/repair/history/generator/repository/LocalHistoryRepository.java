@@ -25,8 +25,7 @@ public class LocalHistoryRepository extends BasicHistoryRepository {
 		Date date;
 	}
 	
-	public LocalHistoryRepository(URI versionsTargetFolder, String path, String[] modelFileFilter) {
-		super(versionsTargetFolder);
+	public LocalHistoryRepository(String path, String[] modelFileFilter) {
 		this.localRepositoryPath = path;
 		
 		// Read files:
@@ -163,7 +162,7 @@ public class LocalHistoryRepository extends BasicHistoryRepository {
 		
 		return null;
 	}
-	
+
 	private URI modelToURI(Model model) {
 		return URI.createFileURI(localRepositoryPath + "/" + model.pluginPath + model.name);
 	}

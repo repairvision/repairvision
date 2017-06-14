@@ -14,6 +14,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -23,6 +24,7 @@ import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.consistency.common.storage.UUIDResource;
+import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.TechnicalDifferenceFacade;
 import org.sidiff.matching.model.Correspondence;
@@ -55,39 +57,32 @@ public class HistoryModelGenerator {
 	
 	//----
 	
-	private IProject project = null;
-	
-	private IHistoryRepository repository;
+	protected EvaluationSettings settings;
 	
 	//----
 	
 	public void generateHistoryProject(String inputPath, String outputProject, EvaluationSettings settings) {
-		this.repository = settings.getRepository();
+		this.settings = settings;
 		
 		try {
+			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+			IProject project = root.getProject(outputProject);
 			
-			// Scan for model files within that folder:
-			File modelFolder = new File(inputPath);
-			List<File> files = IHistoryRepository.searchModelFiles(modelFolder, settings.getFileFilters());
-			
-			if (!files.isEmpty()) {
+			if (!project.exists()) {
 				
-				// Get the root of the workspace:
-				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-				
-				// Get the project the history shall be stored in:
-				project = root.getProject(outputProject);
-				project.create(null);
-				project.open(null);
-				
-				IFolder versionFolder = project.getFolder(VERSIONS_FOLDER);
-				versionFolder.create(false, true, null);
+				// Scan for model files within that folder:
+				File modelFolder = new File(inputPath);
+				List<File> files = IHistoryRepository.searchModelFiles(modelFolder, settings.getFileFilters());
 				
 				// Create a history:
-				History history = generateHistory(files, settings);
-				saveHistory(history);
-				
-				System.out.println(history.toString());
+				if (!files.isEmpty()) {
+					History history = generateHistory(files, settings);
+					saveHistory(history, outputProject);
+					
+					System.out.println(history.toString());
+				}
+			} else {
+				WorkbenchUtil.showError("The project '" + project.getName() + "' already exists!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,13 +95,37 @@ public class HistoryModelGenerator {
 		return projectPrefix + "." + name;
 	}
 	
-	private void saveHistory(History history) throws CoreException {
+	private void saveHistory(History history, String outputProject) throws CoreException, IOException {
+		IHistoryRepository repository = settings.getRepository();
+		
+		// Get the project the history shall be stored in:
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IProject project = root.getProject(outputProject);
+		project.create(new NullProgressMonitor());
+		project.open(new NullProgressMonitor());
+		
+		IFolder versionFolder = project.getFolder(VERSIONS_FOLDER);
+		versionFolder.create(false, true, new NullProgressMonitor());
+		
+		URI versionFolderURI = URI.createPlatformResourceURI(
+				project.getName() + "/" + VERSIONS_FOLDER, true);
+		
+		// Save referenced models:
+		for (String uriString : repository.getReferencedModels()) {
+			URI resolvedURI = URI.createURI(uriString);
+			
+			URI subModelCopy = versionFolderURI
+					.appendSegment(ModelNamingUtil.getModelName(resolvedURI.lastSegment()))
+					.appendSegment(repository.formatModelFileName(resolvedURI));
+			
+			Resource referencedModel = repository.getResourceSet().getResource(resolvedURI, false);
+			referencedModel.setURI(subModelCopy);
+			referencedModel.save(Collections.EMPTY_MAP);
+		}
 		
 		// Save versions:
-		String versionFolder = project.getName() + "/" + VERSIONS_FOLDER + "/";
-		
 		for (Version version : history.getVersions()) {
-			URI targetURI = URI.createPlatformResourceURI(versionFolder + getModelFileName(version), true);
+			URI targetURI = versionFolderURI.appendSegment(getModelFileName(version));
 			version.getModel().setURI(targetURI);
 			version.setModelURI(targetURI.toString());
 			
@@ -134,19 +153,16 @@ public class HistoryModelGenerator {
 		// Save history:
 		URI historyURI = EMFStorage.pathToUri(project.getLocation().toOSString() 
 				+ File.separator + history.getName() + "." + HISTORY_FILE_EXTENSION);
-		
-		try {
-			Resource historyResource = repository.getResourceSet().createResource(historyURI);
-			historyResource.getContents().add(history);
-			historyResource.save(Collections.EMPTY_MAP);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		Resource historyResource = repository.getResourceSet().createResource(historyURI);
+		historyResource.getContents().add(history);
+		historyResource.save(Collections.EMPTY_MAP);
+
 	}
 	
 	private String getModelFileName(Version version) {
 		int revision = ((History) version.eContainer()).getVersions().indexOf(version) + 1;
-		return String.format("%03d", revision) + "_" + repository.formatModelFileName(URI.createURI(version.getModelURI()));
+		return String.format("%03d", revision) + "_" + settings.getRepository().formatModelFileName(URI.createURI(version.getModelURI()));
 	}
 	
 	private History generateHistory(List<File> files, EvaluationSettings settings) {
@@ -163,7 +179,7 @@ public class HistoryModelGenerator {
 			System.out.println(modelFile);
 			
 			URI modelURI = EMFStorage.fileToUri(modelFile);
-			Resource resource = repository.loadModel(modelURI);
+			Resource resource = settings.getRepository().loadModel(modelURI);
 			Version version = generateVersion(revision, resource, settings);
 			
 			if (version != null) {
