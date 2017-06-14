@@ -53,9 +53,13 @@ public class HistoryModelGenerator {
 	
 	public static String HISTORY_FILE_EXTENSION = "history";
 	
+	//----
+	
 	private IProject project = null;
 	
 	private IHistoryRepository repository;
+	
+	//----
 	
 	public void generateHistoryProject(String inputPath, String outputProject, EvaluationSettings settings) {
 		this.repository = settings.getRepository();
@@ -84,7 +88,6 @@ public class HistoryModelGenerator {
 				saveHistory(history);
 				
 				System.out.println(history.toString());
-				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -142,7 +145,7 @@ public class HistoryModelGenerator {
 	}
 	
 	private String getModelFileName(Version version) {
-		int revision = ((History) version.eContainer()).getVersions().indexOf(version);
+		int revision = ((History) version.eContainer()).getVersions().indexOf(version) + 1;
 		return String.format("%03d", revision) + "_" + repository.formatModelFileName(URI.createURI(version.getModelURI()));
 	}
 	
