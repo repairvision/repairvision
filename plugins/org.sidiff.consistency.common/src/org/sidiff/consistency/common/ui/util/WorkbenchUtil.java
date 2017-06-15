@@ -1,6 +1,7 @@
 package org.sidiff.consistency.common.ui.util;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.PartInitException;
@@ -30,16 +31,26 @@ public class WorkbenchUtil {
 	}
 
 	public static void showMessage(String message) {
-		MessageDialog.openInformation(
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(),
-				message);
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				MessageDialog.openInformation(
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(),
+						message);
+			}
+		});
 	}
 	
 	public static void showError(String message) {
-		MessageDialog.openError(
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(),
-				message);
+		Display.getDefault().asyncExec(new Runnable() {
+		    @Override
+		    public void run() {
+				MessageDialog.openError(
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(),
+						message);
+		    }
+		});
 	}
 }
