@@ -127,11 +127,11 @@ public class SVNConnector {
 	}
 	
 	private long getHeadRevision(SVNRepository repo) {
-		try {
-			return repo.getLatestRevision();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			return repo.getLatestRevision();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		return -1;
 	}
 	
