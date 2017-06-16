@@ -15,6 +15,11 @@ import org.sidiff.matching.model.Correspondence;
 public class DifferenceSlicer {
 
 	/**
+	 * Adds the container of all changes until the root element of the model.
+	 */
+	protected boolean addContainerContext = false;
+	
+	/**
 	 * Difference navigation: historical, resolved
 	 */
 	protected DifferenceNavigation navigation;
@@ -93,7 +98,10 @@ public class DifferenceSlicer {
 							addChange(containerChange, container);
 						} else {
 							addCorrespondence(navigation.getCorrespondence(container));
-//							break;
+							
+							if (!addContainerContext) {
+								break;
+							}
 						}
 					} 
 				}
