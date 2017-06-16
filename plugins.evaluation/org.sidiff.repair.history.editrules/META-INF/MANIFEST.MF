@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Learn Edit Rules
+Bundle-SymbolicName: org.sidiff.repair.history.editrules
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.sidiff.repair.history.editrules.Activator
+Bundle-Vendor: Software Engineering Group, University of Siegen
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.sidiff.editrule.partialmatcher,
+ org.sidiff.difference.symmetric,
+ org.sidiff.consistency.common,
+ org.sidiff.difference.technical.api,
+ org.sidiff.validation.constraint.interpreter,
+ org.sidiff.editrule.recorder
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: org.sidiff.repair.history.editrules.learning
