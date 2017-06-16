@@ -17,7 +17,7 @@ public class DifferenceSlicer {
 	/**
 	 * Adds the container of all changes until the root element of the model.
 	 */
-	protected boolean addContainerContext = false;
+	protected boolean addContextContainers = false;
 	
 	/**
 	 * Difference navigation: historical, resolved
@@ -99,7 +99,7 @@ public class DifferenceSlicer {
 						} else {
 							addCorrespondence(navigation.getCorrespondence(container));
 							
-							if (!addContainerContext) {
+							if (!addContextContainers) {
 								break;
 							}
 						}
