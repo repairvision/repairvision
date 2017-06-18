@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.sidiff.repair.history.editrules.generator"
+            name="History To Edit-Rules">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.sidiff.repair.history.editrules.generator.HistoryToEditRuleGenerator"
+            commandId="org.sidiff.repair.history.editrules.generator">
+            <activeWhen>
+               <or>
+                  <with
+                        variable="selection">
+                     <iterate
+                           ifEmpty="false">
+                        <reference
+                              definitionId="org.eclipse.emf.modelhistory.fileextension">
+                        </reference>
+                     </iterate>
+                  </with>
+                  <with
+                        variable="activeEditorInput">
+                     <reference
+                           definitionId="org.eclipse.emf.modelhistory.fileextension">
+                     </reference>
+                  </with>
+               </or>
+            </activeWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               label="Edit-Rule Generator">
+            <command
+                  commandId="org.sidiff.repair.history.editrules.generator"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+</plugin>

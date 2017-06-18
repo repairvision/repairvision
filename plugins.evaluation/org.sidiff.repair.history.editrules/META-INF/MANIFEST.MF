@@ -1,10 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Learn Edit Rules
-Bundle-SymbolicName: org.sidiff.repair.history.editrules
+Bundle-SymbolicName: org.sidiff.repair.history.editrules;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.sidiff.repair.history.editrules.Activator
-Bundle-Vendor: Software Engineering Group, University of Siegen
+Bundle-Vendor: Software Engineering Group
+Export-Package: org.sidiff.repair.history.editrules.learning
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.sidiff.editrule.partialmatcher,
@@ -12,7 +13,10 @@ Require-Bundle: org.eclipse.ui,
  org.sidiff.consistency.common,
  org.sidiff.difference.technical.api,
  org.sidiff.validation.constraint.interpreter,
- org.sidiff.editrule.recorder
+ org.sidiff.editrule.recorder,
+ org.eclipse.core.resources;bundle-version="3.11.1",
+ org.sidiff.common.emf,
+ org.sidiff.repair.history.model,
+ org.sidiff.validation.constraint.api
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.sidiff.repair.history.editrules.learning
