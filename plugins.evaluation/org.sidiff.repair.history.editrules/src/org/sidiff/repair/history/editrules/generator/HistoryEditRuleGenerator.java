@@ -17,7 +17,7 @@ public class HistoryEditRuleGenerator {
 		this.history = history;
 	}
 	
-	public void start() {
+	public void analyzeHistory() {
 		for (int i = 0; i < history.getVersions().size(); i++) {
 			Version vA = history.getVersions().get(i);
 			Version vB = history.getVersions().get(i + 1);
@@ -55,6 +55,10 @@ public class HistoryEditRuleGenerator {
 		// Merge matched (as concrete as possible) edit-rules:
 		
 		rulebase.addAll(editRules);
+	}
+	
+	protected void storeRulebas() {
+		
 	}
 	
 	@Override

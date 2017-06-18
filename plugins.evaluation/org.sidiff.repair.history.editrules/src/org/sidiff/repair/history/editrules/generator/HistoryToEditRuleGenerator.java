@@ -15,7 +15,8 @@ public class HistoryToEditRuleGenerator extends AbstractHandler implements IHand
 		
 		if (history != null) {
 			HistoryEditRuleGenerator generator = new HistoryEditRuleGenerator(history);
-			generator.start();
+			generator.analyzeHistory();
+			generator.storeRulebas();
 		}
 		
 		return null;
