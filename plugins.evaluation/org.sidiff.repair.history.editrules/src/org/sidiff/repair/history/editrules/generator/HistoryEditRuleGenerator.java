@@ -51,7 +51,16 @@ public class HistoryEditRuleGenerator {
 		List<EditRule> editRules = new ArrayList<>();
 		
 		// Create change-sets:
-// (?)	// > Reduce/Split change-sets to minimal consistent changes.
+		// > Reduce/Split change-sets to minimal consistent changes.
+// (?)	// > > Schrittweise Änderungen zurücknehmen!?
+		// > > > Cut off: 30 Änderungen
+// (!)	// > > Alternativen bei der Validierung ermitteln!?
+		// > > > Nur positiv validierte Anteile
+		// > > > Validierungszweige protokollieren
+		// (Optimization:)
+		// > Atomic lifting (with dependencies).
+		
+		// => Consistency-Tree:
 		
 		// "Record" edit-rules:
 		
