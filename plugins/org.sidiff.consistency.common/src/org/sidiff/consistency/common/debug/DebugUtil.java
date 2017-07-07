@@ -24,7 +24,7 @@ public class DebugUtil {
 	 */
 	public static boolean isActive = false;
 	
-	// TODO: config flag
+	// TODO: config flag.
 	public static boolean statistic = false;
 
 	static {
