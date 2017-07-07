@@ -14,10 +14,10 @@ import org.sidiff.consistency.common.ui.widgets.IDisposableControl;
 import org.sidiff.consistency.common.ui.widgets.IUnsetableControl;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
-import org.sidiff.repair.validation.fix.RepairAction;
 import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
 import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
 import org.sidiff.validation.constraint.api.util.Validation;
+import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 
 public class ValidationWidget implements IUnsetableControl, IDisposableControl {
 

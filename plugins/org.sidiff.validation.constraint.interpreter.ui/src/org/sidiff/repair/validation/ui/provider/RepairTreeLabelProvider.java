@@ -6,12 +6,12 @@ import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.repair.validation.fix.Alternative;
-import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.RepairAction;
-import org.sidiff.repair.validation.fix.Sequence;
 import org.sidiff.repair.validation.ui.Activator;
 import org.sidiff.validation.constraint.api.util.Validation;
+import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 
 public class RepairTreeLabelProvider extends LabelProvider {
 
@@ -52,7 +52,7 @@ public class RepairTreeLabelProvider extends LabelProvider {
 			return "Validation" + reslut + ": " + validation.getRule().getMessage();
 		}
 		
-		else if (element instanceof IRepairDecision) {
+		else if (element instanceof IDecisionNode) {
 			
 			if (element instanceof RepairAction) {
 				return "Repair(" + ((RepairAction) element).getRepairTripleLabel() + ")";
@@ -79,7 +79,7 @@ public class RepairTreeLabelProvider extends LabelProvider {
 			return validation.getResult() ? IMG_VALIDATION_PASSED : IMG_VALIDATION_FAILED;
 		}
 		
-		else if (element instanceof IRepairDecision) {
+		else if (element instanceof IDecisionNode) {
 			
 			if (element instanceof RepairAction) {
 				return IMG_REPAIR;
