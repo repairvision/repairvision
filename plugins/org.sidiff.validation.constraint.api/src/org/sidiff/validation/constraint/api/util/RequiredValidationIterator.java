@@ -27,9 +27,9 @@ public class RequiredValidationIterator extends ValidationIterator {
 		
 		if (rules.containsKey(constraintContextType)) {
 			for (IConstraint crule : rules.get(constraintContextType)) {
+				crule.evaluate(modelElement);
+				
 				if (reportValidation(crule)) {
-					crule.evaluate(modelElement);
-					
 					RequiredValidation newValidation = new RequiredValidation(
 							crule,
 							crule.getResult(), 
