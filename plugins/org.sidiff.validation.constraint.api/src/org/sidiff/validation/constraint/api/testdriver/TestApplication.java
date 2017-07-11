@@ -8,11 +8,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.sidiff.common.emf.access.EMFModelAccess;
-import org.sidiff.repair.validation.IConstraint;
+import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
-import org.sidiff.validation.constraint.api.util.BatchValidationIterator;
+import org.sidiff.validation.constraint.api.util.ValidationIterator;
+import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class TestApplication implements IApplication {
 	
@@ -32,21 +32,17 @@ public class TestApplication implements IApplication {
 		
 		// Load consistency rule:
 		IConstraint crule = ConstraintLibraryUtil.getConsistencyRule(
-				ConstraintLibraryRegistry.getLibraries(EMFModelAccess.getDocumentType(modelResource)),
+				ConstraintLibraryRegistry.getLibraries(DocumentType.getDocumentType(modelResource)),
 				consistencyRule);
 		
 		// Check consistency:
 		if (crule != null) {
-			new BatchValidationIterator(modelResource, Collections.singletonList(crule)).forEachRemaining(validation -> {
+			new ValidationIterator(modelResource, Collections.singletonList(crule), true, true).forEachRemaining(validation -> {
 				System.out.print("Validation [");
 				System.out.print(validation.getResult());
 				System.out.println("] " 
 						+ validation.getRule().getName() + ": " 
 						+ validation.getContext());
-
-				if (validation.getRepair() != null) {
-					System.out.println("\nRepair-Tree: \n\n" + validation.getRepair());
-				}
 				System.out.println("---------------------------------------------------------------------------------");
 			});
 		} else {

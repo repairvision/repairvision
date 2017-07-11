@@ -1,0 +1,124 @@
+package org.sidiff.validation.constraint.interpreter.formulas.binary;
+
+import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
+
+public class Xor extends BinaryFormula {
+
+	public Xor(Formula left, Formula right) {
+		super(left, right);
+		this.name = "xor";
+	}
+
+	@Override
+	public boolean evaluate(IScopeRecorder scope, boolean optimize) {
+	
+		if (optimize) {
+			result = left.evaluate(scope, optimize) != right.evaluate(scope, optimize);
+		} else {
+			left.evaluate(scope, optimize);
+			right.evaluate(scope, optimize);
+			result = left.getResult() != right.getResult();
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public void required(IDecisionNode parent, boolean expected) {
+		
+		// A XOR B = true:
+		// t     t   f
+		// t*    f*  t*
+		// f*    t*  t*
+		// f     f   f
+		// > Sequence
+		
+		// A XOR B = false:
+		// t*    t*  f*
+		// t     f   t
+		// f     t   t
+		// f*    f*  f*
+		// > Sequence
+		
+		if (result == expected) {
+			if (!expected && left.getResult() && right.getResult()) {
+				Sequence sequence = new Sequence();
+				parent.appendChildDecisions(sequence);
+				left.required(sequence, left.getResult());
+				right.required(sequence, right.getResult());
+			}
+			
+			else if (expected && left.getResult() && !right.getResult()) {
+				Sequence sequence = new Sequence();
+				parent.appendChildDecisions(sequence);
+				left.required(sequence, left.getResult());
+				right.required(sequence, right.getResult());
+			}
+			
+			else if (expected && !left.getResult() && right.getResult()) {
+				Sequence sequence = new Sequence();
+				parent.appendChildDecisions(sequence);
+				left.required(sequence, left.getResult());
+				right.required(sequence, right.getResult());
+			}
+			
+			else if (!expected && !left.getResult() && !right.getResult()) {
+				Sequence sequence = new Sequence();
+				parent.appendChildDecisions(sequence);
+				left.required(sequence, left.getResult());
+				right.required(sequence, right.getResult());
+			}
+		}
+	}
+
+	@Override
+	public void repair(IDecisionNode parentRepairDecision, boolean expected) {
+		
+		// A XOR B = true:
+		// t*    t*  f*
+		// t     f   t
+		// f     t   t
+		// f*    f*  f*
+		// > Alternative
+		
+		// A XOR B = false:
+		// t     t   f
+		// t*    f*  t*
+		// f*    t*  t*
+		// f     f   f
+		// > Alternative
+		
+		if (getResult() != expected) {
+			if (expected && left.getResult() && right.getResult()) {
+				Alternative newRepairAlternative = new Alternative();
+				parentRepairDecision.appendChildDecisions(newRepairAlternative);
+				left.repair(newRepairAlternative, !left.getResult()); 
+				right.repair(newRepairAlternative, !right.getResult());
+			}
+			
+			else if (expected && !left.getResult() && !right.getResult()) {
+				Alternative newRepairAlternative = new Alternative();
+				parentRepairDecision.appendChildDecisions(newRepairAlternative);
+				left.repair(newRepairAlternative, !left.getResult());
+				right.repair(newRepairAlternative, !right.getResult());
+			}
+			
+			else if (!expected && left.getResult() && !right.getResult()) {
+				Alternative newRepairAlternative = new Alternative();
+				parentRepairDecision.appendChildDecisions(newRepairAlternative);
+				left.repair(newRepairAlternative, !left.getResult());
+				right.repair(newRepairAlternative, !right.getResult());
+			}
+			
+			else if (!expected && !left.getResult() && right.getResult()) {
+				Alternative newRepairAlternative = new Alternative();
+				parentRepairDecision.appendChildDecisions(newRepairAlternative);
+				left.repair(newRepairAlternative, !left.getResult());
+				right.repair(newRepairAlternative, !right.getResult());
+			}
+		}
+	}
+}

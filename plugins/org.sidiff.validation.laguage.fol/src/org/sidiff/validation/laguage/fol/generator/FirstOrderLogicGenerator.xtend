@@ -80,13 +80,13 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 			
 			import org.sidiff.validation.constraint.api.library.*;
 			
-			import org.sidiff.repair.validation.*;
-			import org.sidiff.repair.validation.formulas.binary.*;
-			import org.sidiff.repair.validation.formulas.predicates.*;
-			import org.sidiff.repair.validation.formulas.quantifiers.*;
-			import org.sidiff.repair.validation.formulas.unary.*;
-			import org.sidiff.repair.validation.terms.*;
-			import org.sidiff.repair.validation.terms.functions.*;
+			import org.sidiff.validation.constraint.interpreter.*;
+			import org.sidiff.validation.constraint.interpreter.formulas.binary.*;
+			import org.sidiff.validation.constraint.interpreter.formulas.predicates.*;
+			import org.sidiff.validation.constraint.interpreter.formulas.quantifiers.*;
+			import org.sidiff.validation.constraint.interpreter.formulas.unary.*;
+			import org.sidiff.validation.constraint.interpreter.terms.*;
+			import org.sidiff.validation.constraint.interpreter.terms.functions.*;
 			
 			public class «className» implements IConstraintLibrary {
 				

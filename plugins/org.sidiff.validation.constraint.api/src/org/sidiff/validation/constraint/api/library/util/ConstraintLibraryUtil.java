@@ -3,8 +3,8 @@ package org.sidiff.validation.constraint.api.library.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sidiff.repair.validation.IConstraint;
 import org.sidiff.validation.constraint.api.library.IConstraintLibrary;
+import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class ConstraintLibraryUtil {
 

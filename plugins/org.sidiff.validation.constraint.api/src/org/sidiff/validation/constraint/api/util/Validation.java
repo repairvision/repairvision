@@ -2,43 +2,23 @@ package org.sidiff.validation.constraint.api.util;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.repair.validation.IConstraint;
-import org.sidiff.repair.validation.IScopeRecorder;
-import org.sidiff.repair.validation.fix.IRepairDecision;
+import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class Validation {
 	
-	private IConstraint rule;
-	private boolean result;
-	private EClass contextType;
-	private EObject context;
-	private IRepairDecision repair;
-	private IScopeRecorder scope;
+	protected IConstraint rule;
+	protected boolean result;
+	protected EClass contextType;
+	protected EObject context;
 	
 	public Validation(
 			IConstraint rule, boolean result, 
-			EClass contextType, EObject context, 
-			IRepairDecision repair) {
+			EClass contextType, EObject context) {
 		
 		this.rule = rule;
 		this.result = result;
 		this.contextType = contextType;
 		this.context = context;
-		this.repair = repair;
-	}
-	
-	public Validation(
-			IConstraint rule, boolean result, 
-			EClass contextType, EObject context, 
-			IRepairDecision repair,
-			IScopeRecorder scope) {
-		
-		this.rule = rule;
-		this.result = result;
-		this.contextType = contextType;
-		this.context = context;
-		this.repair = repair;
-		this.scope = scope;
 	}
 	
 	public IConstraint getRule() {
@@ -56,20 +36,5 @@ public class Validation {
 	public EObject getContext() {
 		return context;
 	}
-	
-	public IRepairDecision getRepair() {
-		return repair;
-	}
-	
-	public void cleanUpRepairTree() {
-		repair = ValidationUtil.cleanup(repair);
-	}
-	
-	public void setScope(IScopeRecorder scope) {
-		this.scope = scope;
-	}
-	
-	public IScopeRecorder getScope() {
-		return scope;
-	}
 }
+

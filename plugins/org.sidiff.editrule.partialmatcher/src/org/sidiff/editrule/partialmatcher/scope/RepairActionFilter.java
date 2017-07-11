@@ -20,45 +20,45 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.repair.api.matching.EditOperationMatching;
-import org.sidiff.repair.validation.IConstraint;
-import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.RepairAction;
-import org.sidiff.repair.validation.fix.RepairAction.RepairType;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
-import org.sidiff.validation.constraint.api.util.BatchValidationIterator;
-import org.sidiff.validation.constraint.api.util.Validation;
+import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
+import org.sidiff.validation.constraint.api.util.RepairValidation;
+import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 
 public class RepairActionFilter {
 
 	private Map<EClass, Map<EObject, List<RepairAction>>> repairs = new HashMap<>();
 	
-	private List<Validation> validations = new ArrayList<>();
+	private List<RepairValidation> validations = new ArrayList<>();
 
 	public RepairActionFilter(Resource model, boolean storeValidation) {
 		List<IConstraint> consistencyRules = ConstraintLibraryUtil.getConsistencyRules(
 				ConstraintLibraryRegistry.getLibraries(DocumentType.getDocumentType(model)));
 
-		BatchValidationIterator validationIterator = new BatchValidationIterator(
-				model, consistencyRules, false, true, false);
+		RepairValidationIterator validationIterator = new RepairValidationIterator(
+				model, consistencyRules, true);
 
 		// Collect all abstract repair actions:
 		validationIterator.forEachRemaining(validation -> {
 			if (!validation.getResult()) {
-				addRepair(validation.getRepair());
+				addRepair(((RepairValidation) validation).getRepair());
 				
 				if (storeValidation) {
-					validations.add(validation);
+					validations.add((RepairValidation) validation);
 				}
 			}
 		});
 	}
 	
-	public List<Validation> getValidations() {
+	public List<RepairValidation> getValidations() {
 		return validations;
 	}
 
-	private void addRepair(IRepairDecision repairDecision) {
+	private void addRepair(IDecisionNode repairDecision) {
 		if (repairDecision instanceof RepairAction) {
 			EObject context = ((RepairAction) repairDecision).getContext();
 
@@ -80,7 +80,7 @@ public class RepairActionFilter {
 
 			repairsPerObject.add((RepairAction) repairDecision);
 		} else {
-			for (IRepairDecision childDecision : repairDecision.getChildDecisions()) {
+			for (IDecisionNode childDecision : repairDecision.getChildDecisions()) {
 				addRepair(childDecision);
 			}
 		}

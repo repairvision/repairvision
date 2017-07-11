@@ -4,10 +4,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.sidiff.repair.validation.fix.Alternative;
-import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.RepairAction;
-import org.sidiff.repair.validation.fix.Sequence;
+import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 
 public class ValidationUtil {
 	
@@ -18,7 +18,7 @@ public class ValidationUtil {
 	 * @param root
 	 *            The root node of the repair tree.
 	 */
-	public static IRepairDecision cleanup(IRepairDecision root) {
+	public static IDecisionNode cleanup(IDecisionNode root) {
 		if (root == null) {
 			return null;
 		}
@@ -46,8 +46,8 @@ public class ValidationUtil {
 		return false;
 	}
 	
-	public static boolean hasDuplicate(List<IRepairDecision> repairs, RepairAction repair) {
-		for (IRepairDecision iRepairDecision : repairs) {
+	public static boolean hasDuplicate(List<IDecisionNode> repairs, RepairAction repair) {
+		for (IDecisionNode iRepairDecision : repairs) {
 			if (iRepairDecision instanceof RepairAction) {
 				if (iRepairDecision != repair) {
 					if (equals((RepairAction) iRepairDecision, repair)) {
@@ -59,12 +59,12 @@ public class ValidationUtil {
 		return false;
 	}
 	
-	private static boolean cleanup(IRepairDecision parent, List<IRepairDecision> children) {
-		List<IRepairDecision> pullUpRepairs = new LinkedList<>(); 
+	private static boolean cleanup(IDecisionNode parent, List<IDecisionNode> children) {
+		List<IDecisionNode> pullUpRepairs = new LinkedList<>(); 
 		
 		// Identify unnecessary repair nodes (alternatives / sequences) :
-		for (Iterator<IRepairDecision> iterator = children.iterator(); iterator.hasNext();) {
-			IRepairDecision child = iterator.next();
+		for (Iterator<IDecisionNode> iterator = children.iterator(); iterator.hasNext();) {
+			IDecisionNode child = iterator.next();
 			
 			if (child instanceof RepairAction) {
 				continue;
@@ -97,20 +97,20 @@ public class ValidationUtil {
 			cleanup(parent, pullUpRepairs);
 		}
 		
-		for (IRepairDecision child : parent.getChildDecisions()) {
+		for (IDecisionNode child : parent.getChildDecisions()) {
 			if (!(child instanceof RepairAction)) {
 				cleanup(child, child.getChildDecisions());
 			}
 		}
 		
 		// Pull up repairs:
-		for (IRepairDecision pullUpRepair : pullUpRepairs) {
+		for (IDecisionNode pullUpRepair : pullUpRepairs) {
 			parent.appendChildDecisions(pullUpRepair);
 		}
 		
 		// Remove duplicates:
-		for (Iterator<IRepairDecision> iterator = parent.getChildDecisions().iterator(); iterator.hasNext();) {
-			IRepairDecision iRepairDecision = (IRepairDecision) iterator.next();
+		for (Iterator<IDecisionNode> iterator = parent.getChildDecisions().iterator(); iterator.hasNext();) {
+			IDecisionNode iRepairDecision = (IDecisionNode) iterator.next();
 			
 			if (iRepairDecision instanceof RepairAction) {
 				if (hasDuplicate(parent.getChildDecisions(), (RepairAction) iRepairDecision)) {

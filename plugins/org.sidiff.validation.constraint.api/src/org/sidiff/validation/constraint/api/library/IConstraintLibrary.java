@@ -2,7 +2,7 @@ package org.sidiff.validation.constraint.api.library;
 
 import java.util.List;
 
-import org.sidiff.repair.validation.IConstraint;
+import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public interface IConstraintLibrary {
 
