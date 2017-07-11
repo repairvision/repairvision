@@ -45,29 +45,25 @@ public class Xor extends BinaryFormula {
 		
 		if (result == expected) {
 			if (!expected && left.getResult() && right.getResult()) {
-				Sequence sequence = new Sequence();
-				parent.appendChildDecisions(sequence);
+				Sequence sequence = Sequence.nextSequence(parent);
 				left.required(sequence, left.getResult());
 				right.required(sequence, right.getResult());
 			}
 			
 			else if (expected && left.getResult() && !right.getResult()) {
-				Sequence sequence = new Sequence();
-				parent.appendChildDecisions(sequence);
+				Sequence sequence = Sequence.nextSequence(parent);
 				left.required(sequence, left.getResult());
 				right.required(sequence, right.getResult());
 			}
 			
 			else if (expected && !left.getResult() && right.getResult()) {
-				Sequence sequence = new Sequence();
-				parent.appendChildDecisions(sequence);
+				Sequence sequence = Sequence.nextSequence(parent);
 				left.required(sequence, left.getResult());
 				right.required(sequence, right.getResult());
 			}
 			
 			else if (!expected && !left.getResult() && !right.getResult()) {
-				Sequence sequence = new Sequence();
-				parent.appendChildDecisions(sequence);
+				Sequence sequence = Sequence.nextSequence(parent);
 				left.required(sequence, left.getResult());
 				right.required(sequence, right.getResult());
 			}
@@ -75,7 +71,7 @@ public class Xor extends BinaryFormula {
 	}
 
 	@Override
-	public void repair(IDecisionNode parentRepairDecision, boolean expected) {
+	public void repair(IDecisionNode parent, boolean expected) {
 		
 		// A XOR B = true:
 		// t*    t*  f*
@@ -93,29 +89,25 @@ public class Xor extends BinaryFormula {
 		
 		if (getResult() != expected) {
 			if (expected && left.getResult() && right.getResult()) {
-				Alternative newRepairAlternative = new Alternative();
-				parentRepairDecision.appendChildDecisions(newRepairAlternative);
+				Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 				left.repair(newRepairAlternative, !left.getResult()); 
 				right.repair(newRepairAlternative, !right.getResult());
 			}
 			
 			else if (expected && !left.getResult() && !right.getResult()) {
-				Alternative newRepairAlternative = new Alternative();
-				parentRepairDecision.appendChildDecisions(newRepairAlternative);
+				Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 				left.repair(newRepairAlternative, !left.getResult());
 				right.repair(newRepairAlternative, !right.getResult());
 			}
 			
 			else if (!expected && left.getResult() && !right.getResult()) {
-				Alternative newRepairAlternative = new Alternative();
-				parentRepairDecision.appendChildDecisions(newRepairAlternative);
+				Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 				left.repair(newRepairAlternative, !left.getResult());
 				right.repair(newRepairAlternative, !right.getResult());
 			}
 			
 			else if (!expected && !left.getResult() && right.getResult()) {
-				Alternative newRepairAlternative = new Alternative();
-				parentRepairDecision.appendChildDecisions(newRepairAlternative);
+				Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 				left.repair(newRepairAlternative, !left.getResult());
 				right.repair(newRepairAlternative, !right.getResult());
 			}

@@ -44,7 +44,7 @@ public class Constraint extends NamedElement implements IConstraint {
 		IDecisionNode rootNode= new Alternative();
 		
 		if (getResult() == true) {
-			formula.repair(rootNode, true);
+			formula.required(rootNode, true);
 		}
 		
 		return rootNode;

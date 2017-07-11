@@ -45,8 +45,7 @@ public class And extends BinaryFormula {
 
 		if (getResult() == expected) {
 			if (expected && left.getResult() && right.getResult()) {
-				Sequence sequence = new Sequence();
-				parent.appendChildDecisions(sequence);
+				Sequence sequence = Sequence.nextSequence(parent);
 				left.required(sequence, left.getResult());
 				right.required(sequence, right.getResult());
 			}
@@ -60,8 +59,7 @@ public class And extends BinaryFormula {
 			}
 
 			else if (!expected && !left.getResult() && !right.getResult()) {
-				Alternative alternative = new Alternative();
-				parent.appendChildDecisions(alternative);
+				Alternative alternative = Alternative.nextAlternative(parent);
 				left.required(alternative, left.getResult());
 				right.required(alternative, right.getResult());
 			}
@@ -95,15 +93,13 @@ public class And extends BinaryFormula {
 			}
 			
 			else if (expected && !left.getResult() && !right.getResult()) {
-				Sequence newRepairSequence = new Sequence();
-				parent.appendChildDecisions(newRepairSequence);
+				Sequence newRepairSequence = Sequence.nextSequence(parent);
 				left.repair(newRepairSequence, !left.getResult());
 				right.repair(newRepairSequence, !right.getResult());
 			}
 			
 			else if (!expected && left.getResult() && right.getResult()) {
-				Alternative newRepairAlternative = new Alternative();
-				parent.appendChildDecisions(newRepairAlternative);
+				Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 				left.repair(newRepairAlternative, !left.getResult());
 				right.repair(newRepairAlternative, !right.getResult());
 			}

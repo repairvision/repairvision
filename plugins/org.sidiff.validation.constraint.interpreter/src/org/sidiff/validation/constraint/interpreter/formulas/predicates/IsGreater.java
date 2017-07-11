@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.formulas.predicates;
+ package org.sidiff.validation.constraint.interpreter.formulas.predicates;
 
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;

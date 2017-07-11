@@ -9,13 +9,18 @@ public class ScopeNode implements IDecisionNode {
 	private ScopeRecorder scope = new ScopeRecorder();
 	
 	public static ScopeNode getScopeNode(IDecisionNode parent) {
-		if (parent instanceof ScopeNode) {
-			return (ScopeNode) parent;
-		} else {
-			ScopeNode newScopeNode = new ScopeNode();
-			parent.appendChildDecisions(newScopeNode);
-			return newScopeNode;
+		
+		// Check for existing scope node:
+		if (parent.getChildDecisions().size() == 1) {
+			if (parent.getChildDecisions().get(0) instanceof ScopeNode) {
+				return (ScopeNode) parent.getChildDecisions().get(0);
+			}
 		}
+
+		// New scope node:
+		ScopeNode newScopeNode = new ScopeNode();
+		parent.appendChildDecisions(newScopeNode);
+		return newScopeNode;
 	}
 	
 	public void addElement(Object element) {

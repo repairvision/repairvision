@@ -20,12 +20,10 @@ public abstract class Comparison extends Predicate {
 	public void required(IDecisionNode parent, boolean expected) {
 		
 		if (expected && getResult()) {
-			Sequence sequence = new Sequence();
+			Sequence sequence = Sequence.nextSequence(parent);
 			
 			left.required(sequence);
 			right.required(sequence);
-			
-			parent.appendChildDecisions(sequence);
 		}
 	}
 }

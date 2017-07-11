@@ -51,8 +51,7 @@ public class If extends BinaryFormula {
 			}
 			
 			else if (expected && !left.getResult() && right.getResult()) {
-				Alternative alternative = new Alternative();
-				parent.appendChildDecisions(alternative);
+				Alternative alternative = Alternative.nextAlternative(parent);
 				left.required(alternative, left.getResult());
 				right.required(parent, right.getResult());
 			}
@@ -62,8 +61,7 @@ public class If extends BinaryFormula {
 			}
 			
 			else if (!expected && left.getResult() && !right.getResult()) {
-				Sequence sequence = new Sequence();
-				parent.appendChildDecisions(sequence);
+				Sequence sequence = Sequence.nextSequence(parent);
 				left.required(sequence, left.getResult());
 				right.required(sequence, right.getResult());
 			}
@@ -71,7 +69,7 @@ public class If extends BinaryFormula {
 	}
 
 	@Override
-	public void repair(IDecisionNode parentRepairDecision, boolean expected) {
+	public void repair(IDecisionNode parent, boolean expected) {
 		
 		// A IMPLIES B = !A OR B:
 		
@@ -91,25 +89,23 @@ public class If extends BinaryFormula {
 		
 		if (getResult() != expected) {
 			if (expected && left.getResult() && !right.getResult()) {
-				Alternative newRepairAlternative = new Alternative();
-				parentRepairDecision.appendChildDecisions(newRepairAlternative);
+				Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 				left.repair(newRepairAlternative, !left.getResult());
 				right.repair(newRepairAlternative, !right.getResult());
 			}
 			
 			else if (!expected && left.getResult() && right.getResult()) {
-				right.repair(parentRepairDecision, !right.getResult());
+				right.repair(parent, !right.getResult());
 			}
 			
 			else if (!expected && !left.getResult() && right.getResult()) {
-				Sequence newRepairSequence = new Sequence();
-				parentRepairDecision.appendChildDecisions(newRepairSequence);
+				Sequence newRepairSequence = Sequence.nextSequence(parent);
 				left.repair(newRepairSequence, !left.getResult());
 				right.repair(newRepairSequence, !right.getResult());
 			}
 			
 			else if (!expected && !left.getResult() && !right.getResult()) {
-				left.repair(parentRepairDecision, !left.getResult());
+				left.repair(parent, !left.getResult());
 			}
 		}
 	}
