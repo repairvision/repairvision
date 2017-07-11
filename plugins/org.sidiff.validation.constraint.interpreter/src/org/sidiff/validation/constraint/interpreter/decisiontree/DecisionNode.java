@@ -61,18 +61,14 @@ public class DecisionNode implements IDecisionNode {
 	
 	public String childrenToString() {
 		StringBuffer print = new StringBuffer();
-		
-		// Repairs:
-		for (IDecisionNode child : children) {
-			if (!(child instanceof DecisionNode)) {
-				print.append("  " + child + "\n");
-			}
-		}
-		
-		// Container:
+
 		for (IDecisionNode child : children) {
 			if (child instanceof DecisionNode) {
+				// Node:
 				print.append(((DecisionNode) child).toString(2));
+			} else {
+				// Leaf:
+				print.append("  " + child + "\n");
 			}
 		}
 		
