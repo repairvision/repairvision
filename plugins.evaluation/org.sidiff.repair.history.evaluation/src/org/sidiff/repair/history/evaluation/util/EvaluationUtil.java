@@ -26,12 +26,12 @@ import org.sidiff.repair.history.evaluation.oracle.DeveloperIntentionOracle;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
-import org.sidiff.repair.validation.IConstraint;
-import org.sidiff.repair.validation.fix.IRepairDecision;
-import org.sidiff.repair.validation.fix.RepairAction;
 import org.sidiff.validation.constraint.api.library.IConstraintLibrary;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.api.util.Validation;
+import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 
 public class EvaluationUtil {
 	
@@ -85,8 +85,8 @@ public class EvaluationUtil {
 		return observable;
 	}
 	
-	public static Validation getValidation(Collection<Validation> validations, ValidationError inconsistency) {
-		for (Validation validation : validations) {
+	public static <V extends Validation> V getValidation(Collection<V> validations, ValidationError inconsistency) {
+		for (V validation : validations) {
 			if (equals(validation, inconsistency)) {
 				return validation;
 			}
@@ -95,7 +95,7 @@ public class EvaluationUtil {
 	}
 	
 	// repairs / paths
-	public static void getPathCountOfRepairTree(IRepairDecision node, int[] counter) {
+	public static void getPathCountOfRepairTree(IDecisionNode node, int[] counter) {
 		if (node instanceof RepairAction) {
 			counter[0]++;
 		}
@@ -103,7 +103,7 @@ public class EvaluationUtil {
 		if (node.getChildDecisions().isEmpty()) {
 			counter[1]++;
 		} else {
-			for (IRepairDecision child : node.getChildDecisions()) {
+			for (IDecisionNode child : node.getChildDecisions()) {
 				getPathCountOfRepairTree(child, counter);
 			}
 		}

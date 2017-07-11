@@ -3,9 +3,10 @@ package org.sidiff.repair.history.editrules.generator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.Version;
-import org.sidiff.validation.constraint.api.util.Validation;
+import org.sidiff.validation.constraint.api.util.RepairValidation;
 
 public class HistoryEditRuleGenerator {
 
@@ -18,13 +19,13 @@ public class HistoryEditRuleGenerator {
 	}
 	
 	public void analyzeHistory() {
-		for (int i = 0; i < history.getVersions().size(); i++) {
+		for (int i = 0; i < history.getVersions().size() - 1; i++) {
 			Version vA = history.getVersions().get(i);
 			Version vB = history.getVersions().get(i + 1);
 			
-			List<Validation[]> validationPairs = findValidationPairs();
+			List<RepairValidation[]> validationPairs = findValidationPairs(vA.getModel(), vB.getModel());
 			
-			for (Validation[] validationPair : validationPairs) {
+			for (RepairValidation[] validationPair : validationPairs) {
 				List<EditRule> editRules = calculateEditRules(vA, vB, validationPair);
 				
 				for (EditRule editRule : editRules) {
@@ -34,9 +35,17 @@ public class HistoryEditRuleGenerator {
 		}
 	}
 	
-	protected List<Validation[]> findValidationPairs() {
+	protected List<RepairValidation[]> findValidationPairs(Resource vA, Resource vB) {
+		
+		System.out.println("================================================================================");
+		System.out.println("================================== RepairValidation ==================================");
+		System.out.println("================================================================================");
+		System.out.println("Model A: " + vA.getURI());
+		System.out.println("Model B: " + vB.getURI());
 		
 		// Calculate all validation scopes:
+		List<RepairValidation[]> validations = new ArrayList<>();
+		
 		
 		// Calculate difference:
 				
@@ -44,10 +53,10 @@ public class HistoryEditRuleGenerator {
 		
 		// Ignore scopes with no changes:
 		
-		return null;
+		return validations;
 	}
 	
-	protected List<EditRule> calculateEditRules(Version vA, Version vB, Validation[] validationPair) {
+	protected List<EditRule> calculateEditRules(Version vA, Version vB, RepairValidation[] validationPair) {
 		List<EditRule> editRules = new ArrayList<>();
 		
 		// Create change-sets:

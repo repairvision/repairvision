@@ -24,9 +24,9 @@ import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.recorder.handlers.CreateEditRuleHandler;
 import org.sidiff.editrule.recorder.handlers.util.EditRuleUtil;
 import org.sidiff.editrule.recorder.handlers.util.HenshinDiagramUtil;
-import org.sidiff.repair.validation.IConstraint;
-import org.sidiff.repair.validation.IScopeRecorder;
-import org.sidiff.repair.validation.ScopeRecorder;
+import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
+import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 
 /**
  * Learns an edit rule from a resolved inconsistency.

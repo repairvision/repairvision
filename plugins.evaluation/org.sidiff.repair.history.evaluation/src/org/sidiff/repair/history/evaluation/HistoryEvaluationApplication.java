@@ -31,6 +31,7 @@ import org.sidiff.repair.historymodel.Version;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
 
 public class HistoryEvaluationApplication extends HistoryRepairApplication {
@@ -156,7 +157,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		// RQ 03:
 		ResearchQuestion03 rq03 = rq.createNewRQ03(inconsistency);
 		
-		Validation validationForInconsistency = EvaluationUtil.getValidation(
+		RepairValidation validationForInconsistency = EvaluationUtil.getValidation(
 				repairJob.getValidations(), inconsistency);
 
 		int[] counter = new int[2];
@@ -257,7 +258,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 				Display.getDefault().syncExec(() -> {
 					
 					// Clean up repair-trees:
-					for (Validation validation : repairJob.getValidations()) {
+					for (RepairValidation validation : repairJob.getValidations()) {
 						validation.cleanUpRepairTree();
 					}
 					

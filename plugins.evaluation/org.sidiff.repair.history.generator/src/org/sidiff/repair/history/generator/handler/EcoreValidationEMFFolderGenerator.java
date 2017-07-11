@@ -25,6 +25,9 @@ import org.sidiff.repair.history.generator.repository.IHistoryRepository;
 import org.sidiff.repair.history.generator.settings.EvaluationSettings;
 import org.sidiff.repair.history.generator.validation.EMFValidator;
 
+/**
+ * Simple history generator (doesn't resolve other Ecore models.)
+ */
 public class EcoreValidationEMFFolderGenerator extends AbstractHandler implements IHandler {
 
 	@Override

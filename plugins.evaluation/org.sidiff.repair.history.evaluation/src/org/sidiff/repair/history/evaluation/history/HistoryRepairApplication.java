@@ -25,7 +25,7 @@ import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
 import org.sidiff.repair.ui.util.EditRuleUtil;
-import org.sidiff.validation.constraint.api.util.Validation;
+import org.sidiff.validation.constraint.api.util.RepairValidation;
 
 public abstract class HistoryRepairApplication implements IRepairApplication<PEORepairJob, PEORepairSettings> {
 
@@ -86,7 +86,7 @@ public abstract class HistoryRepairApplication implements IRepairApplication<PEO
 				Display.getDefault().syncExec(() -> {
 					
 					// Clean up repair-trees:
-					for (Validation validation : repairJob.getValidations()) {
+					for (RepairValidation validation : repairJob.getValidations()) {
 						validation.cleanUpRepairTree();
 					}
 					
