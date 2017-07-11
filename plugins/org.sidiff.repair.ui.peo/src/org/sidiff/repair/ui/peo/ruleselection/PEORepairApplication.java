@@ -20,7 +20,7 @@ import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
 import org.sidiff.repair.ui.util.EditRuleUtil;
-import org.sidiff.validation.constraint.api.util.Validation;
+import org.sidiff.validation.constraint.api.util.RepairValidation;
 
 public class PEORepairApplication extends EclipseResourceRepairApplication<PEORepairJob, PEORepairSettings> {
 
@@ -63,7 +63,7 @@ public class PEORepairApplication extends EclipseResourceRepairApplication<PEORe
 				Display.getDefault().syncExec(() -> {
 					
 					// Clean up repair-trees:
-					for (Validation validation : repairJob.getValidations()) {
+					for (RepairValidation validation : repairJob.getValidations()) {
 						validation.cleanUpRepairTree();
 					}
 					
@@ -103,7 +103,7 @@ public class PEORepairApplication extends EclipseResourceRepairApplication<PEORe
 				Display.getDefault().syncExec(() -> {
 					
 					// Clean up repair-trees:
-					for (Validation validation : repairJob.getValidations()) {
+					for (RepairValidation validation : repairJob.getValidations()) {
 						validation.cleanUpRepairTree();
 					}
 					

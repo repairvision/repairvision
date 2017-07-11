@@ -16,7 +16,7 @@ import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
 import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
-import org.sidiff.validation.constraint.api.util.Validation;
+import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 
 public class ValidationWidget implements IUnsetableControl, IDisposableControl {
@@ -50,8 +50,8 @@ public class ValidationWidget implements IUnsetableControl, IDisposableControl {
 				if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
 					Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
 					
-					if (selectedElement instanceof Validation) {
-						Validation validation = (Validation) selectedElement;
+					if (selectedElement instanceof RepairValidation) {
+						RepairValidation validation = (RepairValidation) selectedElement;
 						return Collections.singletonList(validation.getContext()).iterator();
 					}
 					
