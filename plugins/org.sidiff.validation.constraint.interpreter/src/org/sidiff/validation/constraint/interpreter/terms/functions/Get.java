@@ -55,13 +55,9 @@ public class Get extends Function {
 	private Object getFeature(Object obj, EStructuralFeature feature) {
 		
 		if (obj instanceof EObject) {
-			try {
+			// Ignore types which does not support this feature:
+			if (((EObject) obj).eClass().getEAllStructuralFeatures().contains(feature)) {
 				return ((EObject) obj).eGet(feature);
-			} catch (Exception e) {
-				// Ignore types which does not support this feature:
-				if (((EObject) obj).eClass().getEAllStructuralFeatures().contains(feature)) {
-					e.printStackTrace();
-				}
 			}
 		}
 		
