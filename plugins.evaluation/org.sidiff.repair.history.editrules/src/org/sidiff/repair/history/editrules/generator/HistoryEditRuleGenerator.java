@@ -56,12 +56,14 @@ public class HistoryEditRuleGenerator {
 		List<RequiredValidation> consistencyVB = ValidationFacade.analyzeRequirements(vB);
 		
 		for (RequiredValidation requiredValidation : consistencyVA) {
-			System.out.println(requiredValidation.getRule().getName());
+			System.out.println();
+			System.out.println("## " + requiredValidation.getRule().getName() + " ##");
 			System.out.println(requiredValidation.getRequiredTree());
 		}
 		
 		for (RequiredValidation requiredValidation : consistencyVB) {
-			System.out.println(requiredValidation.getRule().getName());
+			System.out.println();
+			System.out.println("## " + requiredValidation.getRule().getName() + " ##");
 			System.out.println(requiredValidation.getRequiredTree());
 		}
 				
