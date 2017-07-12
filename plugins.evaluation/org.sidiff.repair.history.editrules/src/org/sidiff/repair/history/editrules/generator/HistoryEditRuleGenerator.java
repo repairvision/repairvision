@@ -6,7 +6,9 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.Version;
+import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
+import org.sidiff.validation.constraint.api.util.RequiredValidation;
 
 public class HistoryEditRuleGenerator {
 
@@ -31,6 +33,9 @@ public class HistoryEditRuleGenerator {
 				for (EditRule editRule : editRules) {
 					integrateIntoRulebase(editRule );
 				}
+				
+				// TODO: Just for testing!
+				break;
 			}
 		}
 	}
@@ -43,13 +48,25 @@ public class HistoryEditRuleGenerator {
 		System.out.println("Model A: " + vA.getURI());
 		System.out.println("Model B: " + vB.getURI());
 		
-		// Calculate all validation scopes:
-		List<RepairValidation[]> validations = new ArrayList<>();
-		
-		
 		// Calculate difference:
+		
+		
+		// Calculate all validation scopes:
+		List<RequiredValidation> consistencyVA = ValidationFacade.analyzeRequirements(vA);
+		List<RequiredValidation> consistencyVB = ValidationFacade.analyzeRequirements(vB);
+		
+		for (RequiredValidation requiredValidation : consistencyVA) {
+			System.out.println(requiredValidation.getRule().getName());
+			System.out.println(requiredValidation.getRequiredTree());
+		}
+		
+		for (RequiredValidation requiredValidation : consistencyVB) {
+			System.out.println(requiredValidation.getRule().getName());
+			System.out.println(requiredValidation.getRequiredTree());
+		}
 				
 		// Find history validation pairs:
+		List<RepairValidation[]> validations = new ArrayList<>();
 		
 		// Ignore scopes with no changes:
 		
@@ -61,15 +78,14 @@ public class HistoryEditRuleGenerator {
 		
 		// Create change-sets:
 		// > Reduce/Split change-sets to minimal consistent changes.
-// (?)	// > > Schrittweise Änderungen zurücknehmen!?
-		// > > > Cut off: 30 Änderungen
-// (!)	// > > Alternativen bei der Validierung ermitteln!?
+		// > > Alternativen bei der Validierung ermitteln!?
 		// > > > Nur positiv validierte Anteile
 		// > > > Validierungszweige protokollieren
 		// (Optimization:)
 		// > Atomic lifting (with dependencies).
 		
 		// => Consistency-Tree:
+		
 		
 		// "Record" edit-rules:
 		

@@ -30,8 +30,6 @@ import org.sidiff.validation.constraint.api.library.IConstraintLibrary;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 
 public class EvaluationUtil {
 	
@@ -92,21 +90,6 @@ public class EvaluationUtil {
 			}
 		}
 		return null;
-	}
-	
-	// repairs / paths
-	public static void getPathCountOfRepairTree(IDecisionNode node, int[] counter) {
-		if (node instanceof RepairAction) {
-			counter[0]++;
-		}
-		
-		if (node.getChildDecisions().isEmpty()) {
-			counter[1]++;
-		} else {
-			for (IDecisionNode child : node.getChildDecisions()) {
-				getPathCountOfRepairTree(child, counter);
-			}
-		}
 	}
 	
 	public static List<ValidationError> getValidations(History history) {

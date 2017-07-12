@@ -33,6 +33,7 @@ import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
+import org.sidiff.validation.constraint.interpreter.decisiontree.DecisionTreeUtil;
 
 public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	
@@ -161,7 +162,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 				repairJob.getValidations(), inconsistency);
 
 		int[] counter = new int[2];
-		EvaluationUtil.getPathCountOfRepairTree(validationForInconsistency.getRepair(), counter);
+		DecisionTreeUtil.getPathCount(validationForInconsistency.getRepair(), counter);
 
 		rq03.repairActionsRE = counter[0];
 		rq03.repairTreePathsRE = counter[1];
