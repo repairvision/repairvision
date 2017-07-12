@@ -1,8 +1,8 @@
 package org.sidiff.validation.constraint.interpreter.decisiontree;
 
-public class Sequence extends DecisionNode  {
+public class Sequence extends DecisionBranch  {
 
-	public static Sequence nextSequence(IDecisionNode parent) {
+	public static Sequence nextSequence(IDecisionBranch parent) {
 		
 		// Repair tree cosmetics:
 		if (parent instanceof Sequence) {
@@ -14,7 +14,7 @@ public class Sequence extends DecisionNode  {
 		}
 	}
 	
-	public static void cleanup(IDecisionNode parent, Sequence sequence) {
+	public static void cleanup(IDecisionBranch parent, Sequence sequence) {
 		
 		// Repair tree cosmetics:
 		if (sequence.getChildDecisions().size() == 1) {

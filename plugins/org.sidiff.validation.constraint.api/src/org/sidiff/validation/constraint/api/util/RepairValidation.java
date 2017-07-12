@@ -3,6 +3,7 @@ package org.sidiff.validation.constraint.api.util;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.interpreter.decisiontree.DecisionTreeUtil;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 
 public class RepairValidation extends Validation {
@@ -23,6 +24,6 @@ public class RepairValidation extends Validation {
 	}
 	
 	public void cleanUpRepairTree() {
-		repair = ValidationUtil.cleanup(repair);
+		repair = DecisionTreeUtil.cleanup(repair);
 	}
 }

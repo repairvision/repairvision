@@ -6,6 +6,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.interpreter.decisiontree.DecisionTreeUtil;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 
 public class RequiredValidationIterator extends ValidationIterator {
 
@@ -14,8 +16,14 @@ public class RequiredValidationIterator extends ValidationIterator {
 	public RequiredValidationIterator(
 			Resource modelResource, List<IConstraint> consistencyRules,
 			boolean cleanupValidationTree) {
-		super(modelResource, consistencyRules, true, false);
+		
+		super(true, false);
 		this.cleanupValidationTree = cleanupValidationTree;
+		init(modelResource, consistencyRules);
+	}
+	
+	public boolean isCleanupValidationTree() {
+		return cleanupValidationTree;
 	}
 
 	@Override
@@ -30,12 +38,15 @@ public class RequiredValidationIterator extends ValidationIterator {
 				crule.evaluate(modelElement);
 				
 				if (reportValidation(crule)) {
+					IDecisionNode required = crule.required();
+					required = cleanupValidationTree ? DecisionTreeUtil.cleanup(required) : required;
+					
 					RequiredValidation newValidation = new RequiredValidation(
 							crule,
 							crule.getResult(), 
 							crule.getContextType(), 
 							crule.getContext(), 
-							crule.required());
+							required);
 					
 					next.add(newValidation);
 				}

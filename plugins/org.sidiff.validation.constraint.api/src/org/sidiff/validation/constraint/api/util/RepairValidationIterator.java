@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.interpreter.decisiontree.DecisionTreeUtil;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 
 public class RepairValidationIterator extends ValidationIterator {
@@ -16,8 +17,9 @@ public class RepairValidationIterator extends ValidationIterator {
 			Resource modelResource, List<IConstraint> consistencyRules, 
 			boolean cleanupRepairTree) {
 		
-		super(modelResource, consistencyRules, false, true);
+		super(false, true);
 		this.cleanupRepairTree = cleanupRepairTree;
+		init(modelResource, consistencyRules);
 	}
 	
 	public boolean isCleanupRepairTree() {
@@ -37,7 +39,7 @@ public class RepairValidationIterator extends ValidationIterator {
 				
 				if (reportValidation(crule)) {
 					IDecisionNode repair = (!crule.getResult()) ? crule.repair() : null;
-					repair = cleanupRepairTree ? ValidationUtil.cleanup(repair) : repair;
+					repair = cleanupRepairTree ? DecisionTreeUtil.cleanup(repair) : repair;
 					
 					RepairValidation newValidation = new RepairValidation(
 							crule,

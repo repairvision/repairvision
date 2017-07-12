@@ -1,6 +1,6 @@
 package org.sidiff.validation.constraint.interpreter.terms;
 
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
@@ -26,12 +26,12 @@ public class Variable extends Term {
 	}
 	
 	@Override
-	public void required(IDecisionNode parent) {
+	public void required(IDecisionBranch parent) {
 		// nothing to do...
 	}
 
 	@Override
-	public void repair(IDecisionNode parent, RepairType type) {
+	public void repair(IDecisionBranch parent, RepairType type) {
 		// nothing to do...
 	}
 }

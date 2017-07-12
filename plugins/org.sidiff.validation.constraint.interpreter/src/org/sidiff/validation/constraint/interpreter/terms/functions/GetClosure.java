@@ -7,7 +7,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
@@ -68,11 +68,11 @@ public class GetClosure extends Function {
 	}
 	
 	@Override
-	public void required(IDecisionNode parent) {
+	public void required(IDecisionBranch parent) {
 		// see: consistency(IScopeDecision parent, EObject valid)
 	}
 	
-	public void required(IDecisionNode parent, EObject valid) {
+	public void required(IDecisionBranch parent, EObject valid) {
 		Sequence sequence = Sequence.nextSequence(parent);
 		
 		// Calculate transitive closure:
@@ -83,7 +83,7 @@ public class GetClosure extends Function {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private boolean getScopeNext(EObject element, List<EObject> closure, IDecisionNode parent, EObject valid) {
+	private boolean getScopeNext(EObject element, List<EObject> closure, IDecisionBranch parent, EObject valid) {
 		boolean validElementReachable = (element == valid);
 		
 		// Check for cycles:
@@ -117,11 +117,11 @@ public class GetClosure extends Function {
 	}
 	
 	@Override
-	public void repair(IDecisionNode parent, RepairType type) {
+	public void repair(IDecisionBranch parent, RepairType type) {
 		// see: repair(IRepairDecision parent, RepairType type, EObject invalid)
 	}
 
-	public void repair(IDecisionNode parent, RepairType type, EObject invalid) {
+	public void repair(IDecisionBranch parent, RepairType type, EObject invalid) {
 		Alternative alternative = Alternative.nextAlternative(parent);
 		
 		// Calculate transitive closure:
@@ -133,7 +133,7 @@ public class GetClosure extends Function {
 	
 	@SuppressWarnings("unchecked")
 	private boolean getRepairNext(EObject element, List<EObject> closure, 
-			IDecisionNode parent, RepairType type, EObject invalid) {
+			IDecisionBranch parent, RepairType type, EObject invalid) {
 		
 		boolean invalidElementReachable = (element == invalid);
 		

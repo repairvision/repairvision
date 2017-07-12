@@ -27,8 +27,16 @@ public class ValidationIterator implements Iterator<Validation> {
 			boolean showPositiveResults, 
 			boolean showNegativeResults) {
 		
+		this(showPositiveResults, showNegativeResults);
+		init(modelResource, consistencyRules);
+	}
+	
+	protected ValidationIterator(boolean showPositiveResults, boolean showNegativeResults) {
 		this.showPositiveResults = showPositiveResults;
 		this.showNegativeResults = showNegativeResults;
+	}
+	
+	protected void init(Resource modelResource, List<IConstraint> consistencyRules) {
 		
 		// Index constraints by type:
 		for (IConstraint consistencyRule : consistencyRules) {
@@ -38,6 +46,7 @@ public class ValidationIterator implements Iterator<Validation> {
 		// Search inconsistencies:
 		findAll(modelResource);
 	}
+	
 	
 	protected void addConstraintForType(EClass type, IConstraint consistencyRule) {
 		

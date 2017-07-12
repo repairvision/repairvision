@@ -6,7 +6,7 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 
 public class RepairTreeContentProvider implements IStructuredContentProvider, ITreeContentProvider {
 
@@ -25,8 +25,8 @@ public class RepairTreeContentProvider implements IStructuredContentProvider, IT
 			return true;
 		}
 		
-		else if (element instanceof IDecisionNode) {
-			return !((IDecisionNode) element).getChildDecisions().isEmpty();
+		else if (element instanceof IDecisionBranch) {
+			return !((IDecisionBranch) element).getChildDecisions().isEmpty();
 		}
 		
 		return false;
@@ -44,8 +44,8 @@ public class RepairTreeContentProvider implements IStructuredContentProvider, IT
 			};
 		}
 		
-		else if (parentElement instanceof IDecisionNode) {
-			IDecisionNode repairDecision = (IDecisionNode) parentElement;
+		else if (parentElement instanceof IDecisionBranch) {
+			IDecisionBranch repairDecision = (IDecisionBranch) parentElement;
 			return repairDecision.getChildDecisions().toArray();
 		}
 		

@@ -2,7 +2,7 @@ package org.sidiff.validation.constraint.interpreter.formulas.predicates;
 
 import java.util.Collection;
 
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -33,7 +33,7 @@ public class IsEmpty extends Predicate {
 	}
 
 	@Override
-	public void required(IDecisionNode parent, boolean expected) {
+	public void required(IDecisionBranch parent, boolean expected) {
 
 		if (!expected && getResult()) {
 			term.required(parent);
@@ -41,7 +41,7 @@ public class IsEmpty extends Predicate {
 	}
 	
 	@Override
-	public void repair(IDecisionNode parent, boolean expected) {
+	public void repair(IDecisionBranch parent, boolean expected) {
 		
 		if (expected && !getResult()) {
 			term.repair(parent, RepairType.DELETE);

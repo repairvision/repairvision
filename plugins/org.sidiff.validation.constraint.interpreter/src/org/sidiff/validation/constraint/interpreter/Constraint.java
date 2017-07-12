@@ -3,7 +3,7 @@ package org.sidiff.validation.constraint.interpreter;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.Formula;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
@@ -39,9 +39,9 @@ public class Constraint extends NamedElement implements IConstraint {
 	}
 	
 	@Override
-	public IDecisionNode required() {
+	public IDecisionBranch required() {
 		formula.evaluate(IScopeRecorder.DUMMY, false);
-		IDecisionNode rootNode= new Alternative();
+		IDecisionBranch rootNode= new Alternative();
 		
 		if (getResult() == true) {
 			formula.required(rootNode, true);
@@ -51,11 +51,11 @@ public class Constraint extends NamedElement implements IConstraint {
 	}
 
 	@Override
-	public IDecisionNode repair() {
+	public IDecisionBranch repair() {
 		formula.evaluate(IScopeRecorder.DUMMY, false);
 		
 		if (getResult() != true) {
-			IDecisionNode repairTree = createRootRepairDecision();
+			IDecisionBranch repairTree = createRootRepairDecision();
 			formula.repair(repairTree, true);
 			return repairTree;
 		} else {
@@ -63,8 +63,8 @@ public class Constraint extends NamedElement implements IConstraint {
 		}
 	}
 	
-	protected IDecisionNode createRootRepairDecision() {
-		IDecisionNode repairTreeRoot = new Alternative();
+	protected IDecisionBranch createRootRepairDecision() {
+		IDecisionBranch repairTreeRoot = new Alternative();
 		
 		// Repair which deletes the root element:
 		if (getContext().eContainmentFeature() != null) {

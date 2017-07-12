@@ -2,7 +2,7 @@ package org.sidiff.validation.constraint.interpreter.terms.functions;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
@@ -32,7 +32,7 @@ public class GetContainer extends Function {
 	}
 	
 	@Override
-	public void required(IDecisionNode parent) {
+	public void required(IDecisionBranch parent) {
 		Sequence sequence = Sequence.nextSequence(parent);
 		
 		element.required(sequence);
@@ -43,7 +43,7 @@ public class GetContainer extends Function {
 	}
 
 	@Override
-	public void repair(IDecisionNode parent, RepairType type) {
+	public void repair(IDecisionBranch parent, RepairType type) {
 		Alternative alternative = Alternative.nextAlternative(parent);
 		
 		element.repair(alternative, type);

@@ -2,7 +2,7 @@ package org.sidiff.validation.constraint.interpreter.formulas.quantifiers;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.Formula;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
@@ -42,7 +42,7 @@ public class Exists extends Quantifier {
 	}
 	
 	@Override
-	public void required(IDecisionNode parent, boolean expected) {
+	public void required(IDecisionBranch parent, boolean expected) {
 
 		if (getResult() == expected) {
 			Sequence sequence = Sequence.nextSequence(parent);
@@ -69,7 +69,7 @@ public class Exists extends Quantifier {
 	}
 
 	@Override
-	public void repair(IDecisionNode parent, boolean expected) {
+	public void repair(IDecisionBranch parent, boolean expected) {
 		Alternative alternativ = Alternative.nextAlternative(parent);
 
 		// if σ = t

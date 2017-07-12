@@ -1,6 +1,6 @@
 package org.sidiff.validation.constraint.interpreter.formulas.unary;
 
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.Formula;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
@@ -18,7 +18,7 @@ public class Not extends UnaryFormula {
 	}
 	
 	@Override
-	public void required(IDecisionNode parent, boolean expected) {
+	public void required(IDecisionBranch parent, boolean expected) {
 		
 		// NOT A = true
 		//     t   f
@@ -34,7 +34,7 @@ public class Not extends UnaryFormula {
 	}
 
 	@Override
-	public void repair(IDecisionNode parentRepairDecision, boolean expected) {
+	public void repair(IDecisionBranch parentRepairDecision, boolean expected) {
 		
 		// NOT A = true
 		//     t*  f*

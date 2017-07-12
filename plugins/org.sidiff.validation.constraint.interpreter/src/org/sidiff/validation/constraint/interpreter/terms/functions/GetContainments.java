@@ -6,7 +6,7 @@ import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
@@ -36,7 +36,7 @@ public class GetContainments extends Function {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void required(IDecisionNode parent) {
+	public void required(IDecisionBranch parent) {
 		element.required(parent);
 		ScopeNode scope = ScopeNode.getScopeNode(parent);
 		
@@ -49,7 +49,7 @@ public class GetContainments extends Function {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void repair(IDecisionNode parent, RepairType type) {
+	public void repair(IDecisionBranch parent, RepairType type) {
 		element.repair(parent, type);
 		
 		if (getValue() instanceof EList<?>) {

@@ -3,7 +3,7 @@ package org.sidiff.validation.constraint.interpreter.decisiontree;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DecisionNode implements IDecisionNode {
+public class DecisionBranch implements IDecisionBranch {
 	
 	protected List<IDecisionNode> children = new LinkedList<>();
 
@@ -33,7 +33,7 @@ public class DecisionNode implements IDecisionNode {
 		
 		// Repairs:
 		for (IDecisionNode child : children) {
-			if (!(child instanceof DecisionNode)) {
+			if (!(child instanceof DecisionBranch)) {
 				appendIndent(indent + 2, print);
 				print.append(child + "\n");
 			}
@@ -41,8 +41,8 @@ public class DecisionNode implements IDecisionNode {
 		
 		// Container:
 		for (IDecisionNode child : children) {
-			if (child instanceof DecisionNode) {
-				print.append(((DecisionNode) child).toString(indent + 2));
+			if (child instanceof DecisionBranch) {
+				print.append(((DecisionBranch) child).toString(indent + 2));
 			}
 		}
 		
@@ -63,9 +63,9 @@ public class DecisionNode implements IDecisionNode {
 		StringBuffer print = new StringBuffer();
 
 		for (IDecisionNode child : children) {
-			if (child instanceof DecisionNode) {
+			if (child instanceof DecisionBranch) {
 				// Node:
-				print.append(((DecisionNode) child).toString(2));
+				print.append(((DecisionBranch) child).toString(2));
 			} else {
 				// Leaf:
 				print.append("  " + child + "\n");

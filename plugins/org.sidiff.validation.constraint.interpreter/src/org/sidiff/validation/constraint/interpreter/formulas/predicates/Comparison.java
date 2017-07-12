@@ -1,6 +1,6 @@
 package org.sidiff.validation.constraint.interpreter.formulas.predicates;
 
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
@@ -17,7 +17,7 @@ public abstract class Comparison extends Predicate {
 	}
 	
 	@Override
-	public void required(IDecisionNode parent, boolean expected) {
+	public void required(IDecisionBranch parent, boolean expected) {
 		
 		if (expected && getResult()) {
 			Sequence sequence = Sequence.nextSequence(parent);

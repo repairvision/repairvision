@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
@@ -65,7 +65,7 @@ public class Get extends Function {
 	}
 	
 	@Override
-	public void required(IDecisionNode parent) {
+	public void required(IDecisionBranch parent) {
 		Sequence sequence = Sequence.nextSequence(parent);
 		
 		context.required(parent);
@@ -76,7 +76,7 @@ public class Get extends Function {
 	}
 	
 	@Override
-	public void repair(IDecisionNode parent, RepairType type) {
+	public void repair(IDecisionBranch parent, RepairType type) {
 		 Alternative alternative = Alternative.nextAlternative(parent);
 		
 		// ǫ := a.b | τ = <modify, a, b>

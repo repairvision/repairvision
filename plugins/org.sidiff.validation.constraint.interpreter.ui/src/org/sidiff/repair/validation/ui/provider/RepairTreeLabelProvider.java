@@ -49,7 +49,7 @@ public class RepairTreeLabelProvider extends LabelProvider {
 			RepairValidation validation = (RepairValidation) element;
 			String reslut = validation.getResult() ? "[Passed]" : "[Failed]";
 			
-			return "RepairValidation" + reslut + ": " + validation.getRule().getMessage();
+			return "Validation" + reslut + ": " + validation.getRule().getMessage();
 		}
 		
 		else if (element instanceof IDecisionNode) {

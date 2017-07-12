@@ -25,6 +25,7 @@ import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
@@ -79,8 +80,8 @@ public class RepairActionFilter {
 			}
 
 			repairsPerObject.add((RepairAction) repairDecision);
-		} else {
-			for (IDecisionNode childDecision : repairDecision.getChildDecisions()) {
+		} else if (repairDecision instanceof IDecisionBranch) {
+			for (IDecisionNode childDecision : ((IDecisionBranch) repairDecision).getChildDecisions()) {
 				addRepair(childDecision);
 			}
 		}

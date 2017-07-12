@@ -1,7 +1,7 @@
 package org.sidiff.validation.constraint.interpreter.formulas.binary;
 
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
@@ -27,7 +27,7 @@ public class Or extends BinaryFormula {
 	}
 	
 	@Override
-	public void required(IDecisionNode parent, boolean expected) {
+	public void required(IDecisionBranch parent, boolean expected) {
 		
 		// A OR B = true:
 		// t*   t*  t*
@@ -67,7 +67,7 @@ public class Or extends BinaryFormula {
 	}
 
 	@Override
-	public void repair(IDecisionNode parent, boolean expected) {
+	public void repair(IDecisionBranch parent, boolean expected) {
 		
 		// A OR B = true:
 		// t    t   t

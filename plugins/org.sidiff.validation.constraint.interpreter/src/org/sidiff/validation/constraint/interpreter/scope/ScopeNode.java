@@ -1,14 +1,13 @@
 package org.sidiff.validation.constraint.interpreter.scope;
 
-import java.util.List;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
 
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-
-public class ScopeNode implements IDecisionNode {
+public class ScopeNode implements IDecisionLeaf {
 
 	private ScopeRecorder scope = new ScopeRecorder();
 	
-	public static ScopeNode getScopeNode(IDecisionNode parent) {
+	public static ScopeNode getScopeNode(IDecisionBranch parent) {
 		
 		// Check for existing scope node:
 		if (parent.getChildDecisions().size() == 1) {
@@ -27,18 +26,21 @@ public class ScopeNode implements IDecisionNode {
 		scope.addElement(element);
 	}
 	
-	@Override
-	public void appendChildDecisions(IDecisionNode... children) {
-		throw new UnsupportedOperationException();
+	public ScopeRecorder getScope() {
+		return scope;
 	}
 
 	@Override
-	public void removeChildDecision(IDecisionNode child) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public List<IDecisionNode> getChildDecisions() {
-		throw new UnsupportedOperationException();
+	public int compareTo(IDecisionLeaf leaf) {
+		
+		if (leaf instanceof ScopeNode) {
+			ScopeNode otherScope = (ScopeNode) leaf;
+			
+			if (this.getScope().getScope().equals(otherScope.getScope().getScope())) {
+				return 0;
+			}
+		}
+		
+		return this.toString().compareTo(leaf.toString());
 	}
 }

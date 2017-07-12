@@ -1,7 +1,7 @@
 package org.sidiff.validation.constraint.interpreter.formulas.predicates;
 
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -25,7 +25,7 @@ public class IsSmallerEqual extends Comparison  {
 	}
 
 	@Override
-	public void repair(IDecisionNode parent, boolean expected) {
+	public void repair(IDecisionBranch parent, boolean expected) {
 		
 		if (expected && !getResult()) {
 			Alternative newRepairAlternative = Alternative.nextAlternative(parent);

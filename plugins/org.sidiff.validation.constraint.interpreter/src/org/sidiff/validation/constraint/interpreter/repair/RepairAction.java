@@ -1,14 +1,11 @@
 package org.sidiff.validation.constraint.interpreter.repair;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
 
-public class RepairAction implements IDecisionNode {
+public class RepairAction implements IDecisionLeaf {
 
 	public enum RepairType {
 		DELETE, CREATE, MODIFY
@@ -37,21 +34,6 @@ public class RepairAction implements IDecisionNode {
 	public EStructuralFeature getFeature() {
 		return feature;
 	}
-
-	@Override
-	public List<IDecisionNode> getChildDecisions() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public void removeChildDecision(IDecisionNode repair) {
-		throw new UnsupportedOperationException("This is a leaf repair decision!");
-	}
-	
-	@Override
-	public void appendChildDecisions(IDecisionNode... repairs) {
-		throw new UnsupportedOperationException("This is a leaf repair decision!");
-	}
 	
 	public String getRepairTripleLabel() {
 		
@@ -78,5 +60,23 @@ public class RepairAction implements IDecisionNode {
 	@Override
 	public String toString() {
 		return "Repair@" + Integer.toHexString(hashCode()) + ": <" + getRepairTripleLabel() + ">";
+	}
+
+	@Override
+	public int compareTo(IDecisionLeaf leaf) {
+		
+		if (leaf instanceof RepairAction) {
+			RepairAction otherRepair = (RepairAction) leaf;
+			
+			if (this.getType().equals(otherRepair.getType())) {
+				if (this.getFeature().equals(otherRepair.getFeature())) {
+					if (this.getContext().equals(otherRepair.getContext())) {
+						return 0;
+					}
+				}
+			}
+		}
+		
+		return this.toString().compareTo(leaf.toString());
 	}
 }

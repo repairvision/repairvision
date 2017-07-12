@@ -46,7 +46,7 @@ public class TestApplication implements IApplication {
 				System.out.println("---------------------------------------------------------------------------------");
 			});
 		} else {
-			System.out.println("Consistency-Rule not found: " + consistencyRule);
+			System.err.println("Consistency-Rule not found: " + consistencyRule);
 		}
 		
 		System.out.println("Validation finished!");

@@ -2,7 +2,7 @@ package org.sidiff.validation.constraint.interpreter.terms.functions;
 
 import java.util.Collection;
 
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -34,12 +34,12 @@ public class Size extends Function {
 	}
 	
 	@Override
-	public void required(IDecisionNode parent) {
+	public void required(IDecisionBranch parent) {
 		elements.required(parent);
 	}
 
 	@Override
-	public void repair(IDecisionNode parent, RepairType type) {
+	public void repair(IDecisionBranch parent, RepairType type) {
 		// size(x.q.w) -> (delete/add, ..., x/q/w) 
 		elements.repair(parent, type);
 	}
