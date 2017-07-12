@@ -37,9 +37,4 @@ public class Alternative extends DecisionBranch {
 	public String containerToString() {
 		return "(*)Alternative@" + Integer.toHexString(hashCode()) + ":";
 	}
-	
-	@Override
-	public String toString() {
-		return containerToString() + "\n" + childrenToString();
-	}
 }

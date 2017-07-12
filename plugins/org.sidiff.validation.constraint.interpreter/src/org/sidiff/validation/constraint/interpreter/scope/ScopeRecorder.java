@@ -31,15 +31,37 @@ public class ScopeRecorder implements IScopeRecorder {
 		return scope;
 	}
 	
-	@Override
-	public String toString() {
+	public String toString(int indent) {
 		StringBuffer string = new StringBuffer();
-		string.append("Scope:\n");
 		
-		for (EObject element : scope) {
-			string.append("  " + element + "\n");
+		if (!scope.isEmpty()) {
+			boolean first = true;
+			
+			for (EObject element : scope) {
+				if (!first) {
+					string.append("\n");
+				} else {
+					first = false;
+				}
+				appendIndent(indent, string);
+				string.append(element);
+			}
+		} else {
+			appendIndent(indent, string);
+			string.append("<empty>");
 		}
 		
 		return string.toString();
+	}
+	
+	private void appendIndent(int indent, StringBuffer print) {
+		for (int i = 0; i < indent; i++) {
+			print.append(" ");
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return toString(0);
 	}
 }

@@ -35,9 +35,4 @@ public class Sequence extends DecisionBranch  {
 	public String containerToString() {
 		return "(+)Sequence@" + Integer.toHexString(hashCode()) + ":";
 	}
-	
-	@Override
-	public String toString() {
-		return containerToString() + "\n" + childrenToString();
-	}
 }

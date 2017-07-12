@@ -58,11 +58,6 @@ public class RepairAction implements IDecisionLeaf {
 	}
 	
 	@Override
-	public String toString() {
-		return "Repair@" + Integer.toHexString(hashCode()) + ": <" + getRepairTripleLabel() + ">";
-	}
-
-	@Override
 	public int compareTo(IDecisionLeaf leaf) {
 		
 		if (leaf instanceof RepairAction) {
@@ -79,4 +74,26 @@ public class RepairAction implements IDecisionLeaf {
 		
 		return this.toString().compareTo(leaf.toString());
 	}
+	
+	@Override
+	public String toString(int indent) {
+		StringBuffer string = new StringBuffer();
+		
+		appendIndent(indent, string);
+		string.append(toString());
+			
+		return string.toString();
+	}
+	
+	private void appendIndent(int indent, StringBuffer print) {
+		for (int i = 0; i < indent; i++) {
+			print.append(" ");
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return "Repair@" + Integer.toHexString(hashCode()) + ": <" + getRepairTripleLabel() + ">";
+	}
+
 }

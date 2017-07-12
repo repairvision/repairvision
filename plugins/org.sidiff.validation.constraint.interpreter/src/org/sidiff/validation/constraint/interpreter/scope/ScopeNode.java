@@ -43,4 +43,14 @@ public class ScopeNode implements IDecisionLeaf {
 		
 		return this.toString().compareTo(leaf.toString());
 	}
+	
+	@Override
+	public String toString(int indent) {
+		return scope.toString(indent);
+	}
+	
+	@Override
+	public String toString() {
+		return scope.toString();
+	}
 }

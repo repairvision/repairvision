@@ -4,10 +4,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
+import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.Formula;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
+import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Variable;
 
 public class Constraint extends NamedElement implements IConstraint {
@@ -41,7 +43,9 @@ public class Constraint extends NamedElement implements IConstraint {
 	@Override
 	public IDecisionBranch required() {
 		formula.evaluate(IScopeRecorder.DUMMY, false);
-		IDecisionBranch rootNode= new Alternative();
+		
+		IDecisionBranch rootNode= new Sequence();
+		ScopeNode.getScopeNode(rootNode).addElement(getContext());
 		
 		if (getResult() == true) {
 			formula.required(rootNode, true);
