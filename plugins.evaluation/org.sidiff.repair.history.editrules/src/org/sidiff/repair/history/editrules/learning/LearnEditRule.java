@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Module;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
@@ -41,14 +40,9 @@ public class LearnEditRule {
 	protected Resource modelHistorical;
 	
 	/**
-	 * (First) occurrence of of the inconsistency. 
+	 * The valid model version.
 	 */
-	protected Resource modelIntroduced;
-	
-	/**
-	 * The fixed model version.
-	 */
-	protected Resource modelResolved;
+	protected Resource modelCurrent;
 	
 	/**
 	 * Difference slicing criterion: historical, resolved
@@ -66,11 +60,6 @@ public class LearnEditRule {
 	protected DifferenceSettings matchingSettings;
 	
 	/**
-	 * Mapping from introduced model version to resolved model version.
-	 */
-	protected SymmetricDifference intorducedToResolved; 
-	
-	/**
 	 * Mapping from historical model version to resolved model version.
 	 */
 	protected SymmetricDifference historicalToResolved; 
@@ -80,24 +69,27 @@ public class LearnEditRule {
 	 */
 	protected DifferenceSlicer slicer;
 	
-	public LearnEditRule(DifferenceSettings matchingSettings,
-			Resource modelHistorical, 
-			Resource modelIntroduced, 
-			Resource modelResolved) {
+	public LearnEditRule(SymmetricDifference historicalToResolved) {
 		
-		this.modelHistorical = modelHistorical;
-		this.modelIntroduced = modelIntroduced;
-		this.modelResolved = modelResolved;
+		this.modelHistorical = historicalToResolved.getModelA();
+		this.modelCurrent = historicalToResolved.getModelB();
 		
 		// Initialize slicing criterion:
 		this.slicingCriterion = new DifferenceSlicingCriterion();
 		
-		// Calculate difference: Introduced -> Resolved
-		try {
-			intorducedToResolved = deriveTechnicalDifference(modelIntroduced, modelResolved, matchingSettings);
-		} catch (InvalidModelException | NoCorrespondencesException e) {
-			e.printStackTrace();
-		}
+		// Index for difference:
+		this.navigation = new DifferenceNavigation(historicalToResolved);
+	}
+	
+	public LearnEditRule(DifferenceSettings matchingSettings,
+			Resource modelHistorical,
+			Resource modelResolved) {
+		
+		this.modelHistorical = modelHistorical;
+		this.modelCurrent = modelResolved;
+		
+		// Initialize slicing criterion:
+		this.slicingCriterion = new DifferenceSlicingCriterion();
 		
 		// Calculate difference: Historical -> Resolved
 		this.matchingSettings = matchingSettings;
@@ -110,53 +102,102 @@ public class LearnEditRule {
 		
 		this.navigation = new DifferenceNavigation(historicalToResolved);
 	}
+
+	/**
+	 * @param modelIntroduced
+	 *            (First) occurrence of of the inconsistency.
+	 * @param consistencyRule
+	 *            The violated consistency rule.
+	 */
+	public DifferenceSlice learnByResolvedInconsistency(EObject introducedContext, IConstraint consistencyRule) {
+		
+		try {
+			
+			// Calculate mapping from introduced model version to resolved model version:
+			SymmetricDifference intorducedToResolved = deriveTechnicalDifference(
+					introducedContext.eResource(), modelCurrent, matchingSettings);
+			
+			// Search resolved context element:
+			EObject contextResolved = intorducedToResolved.getCorrespondingObjectInB(introducedContext);
+			
+			// Learn edit-rule:
+			return learnByConsistentChange(contextResolved, consistencyRule);
+			
+		} catch (InvalidModelException | NoCorrespondencesException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
-	public void learn(EObject introducedContext, IConstraint consistencyRule) {
-		assert intorducedToResolved.getModelA() == introducedContext.eResource();
+	/**
+	 * @param contextCurrent
+	 *            The current model version.
+	 * @param consistencyRule
+	 *            The validated consistency rule.
+	 */
+	public DifferenceSlice learnByConsistentChange(EObject contextCurrent, IConstraint consistencyRule) {
 		
 		// Validation //
+		EObject contextHistorical = historicalToResolved.getCorrespondingObjectInA(contextCurrent);
+		assert (contextHistorical != null);
 		
-		EObject contextResolved = intorducedToResolved.getCorrespondingObjectInB(introducedContext);
-		EObject contextHistorical = historicalToResolved.getCorrespondingObjectInA(contextResolved);
-		
-		assert (contextResolved != null) && (contextHistorical != null);
-		
-		// Scope: Historical
+		// Scope: Historical 
 		IScopeRecorder scopeHistorical = new ScopeRecorder();
 		consistencyRule.evaluate(contextHistorical, scopeHistorical);
 		
-		slicingCriterion.setContextHistorical(contextHistorical);
-		slicingCriterion.setScopeHistorical(scopeHistorical.getScope());
-		
 		// Scope: Resolved
 		IScopeRecorder scopeResolved = new ScopeRecorder();
-		consistencyRule.evaluate(contextResolved, scopeResolved);
+		consistencyRule.evaluate(contextCurrent, scopeResolved);
 		
-		slicingCriterion.setContextResolved(contextResolved);
-		slicingCriterion.setScopeResolved(scopeResolved.getScope());
+		return learnByConsistentChange( 
+				contextHistorical, scopeResolved.getScope(),
+				contextCurrent, scopeResolved.getScope());
+	}
+	
+	/**
+	 * @param contextCurrent
+	 *            The historical model version.
+	 * @param currentFragment
+	 *            The historical validated fragment.
+	 * @param contextCurrent
+	 *            The current model version.
+	 * @param currentFragment
+	 *            The current validated fragment.
+	 */
+	public DifferenceSlice learnByConsistentChange(
+			EObject contextHistorical, Set<EObject> historicalFragment,
+			EObject contextCurrent, Set<EObject> currentFragment) {
+		
+		// Scope: Historical 
+		slicingCriterion.setContextHistorical(contextHistorical);
+		slicingCriterion.setFragmentHistorical(historicalFragment);
+		
+		// Scope: Resolved
+		slicingCriterion.setContextResolved(contextCurrent);
+		slicingCriterion.setFragmentResolved(currentFragment);
 		
 		// Expand Scope //
 		
 		// Historical:
-		Map<EObject, Integer> expandedScopeHistorical = new HashMap<>();
+		Map<EObject, Integer> expandedFragmentHistorical = new HashMap<>();
 		
-		for (EObject scopeElementHistorical : scopeHistorical.getScope()) {
-			expandedScopeHistorical.put(scopeElementHistorical, 0);
+		for (EObject elementHistorical : historicalFragment) {
+			expandedFragmentHistorical.put(elementHistorical, 0);
 		}
-		for (EObject scopeElementHistorical : scopeHistorical.getScope()) {
-			expandScope(scopeElementHistorical, expandedScopeHistorical,
+		for (EObject elementHistorical : historicalFragment) {
+			expandScope(elementHistorical, expandedFragmentHistorical,
 					slicingCriterion.getModelHistoricalBlacklist(),
 					slicingCriterion.getScopeHistoricalDistance(), 0);
 		}
 		
 		// Resolved:
-		Map<EObject, Integer> expandedScopeResolved = new HashMap<>();
+		Map<EObject, Integer> expandedFragmentResolved = new HashMap<>();
 		
-		for (EObject scopeElementResolved : scopeResolved.getScope()) {
-			expandedScopeResolved.put(scopeElementResolved, 0);
+		for (EObject elementCurrent : currentFragment) {
+			expandedFragmentResolved.put(elementCurrent, 0);
 		}
-		for (EObject scopeElementResolved : scopeResolved.getScope()) {
-			expandScope(scopeElementResolved, expandedScopeResolved,
+		for (EObject elementCurrent : currentFragment) {
+			expandScope(elementCurrent, expandedFragmentResolved,
 					slicingCriterion.getModelResolvedBlacklist(),
 					slicingCriterion.getScopeResolvedDistance(), 0);
 		}
@@ -164,17 +205,24 @@ public class LearnEditRule {
 		// Difference Slice //
 		
 		slicer = new DifferenceSlicer(navigation);
-		slicer.sliceDifferenceModelA(expandedScopeHistorical.keySet());
-		slicer.sliceDifferenceModelB(expandedScopeResolved.keySet());
+		slicer.sliceDifferenceModelA(expandedFragmentHistorical.keySet());
+		slicer.sliceDifferenceModelB(expandedFragmentResolved.keySet());
 		
-		// Generate the Edit-Rule //
-		Module editRule = CreateEditRuleHandler.createEditRule(consistencyRule.getName(), 
-				getSlice().getCorrespondences(), getSlice().getChanges());
+		return getSlice();
+	}
+	
+	public Module generateEditRule(String ruleName, DifferenceSlice differenceSlice) {
+		Module editRule = CreateEditRuleHandler.createEditRule(ruleName, 
+				differenceSlice.getCorrespondences(), differenceSlice.getChanges());
+		return editRule;
+	}
+	
+	public void saveEditRule(Module editRule) {
 		
 		if (editRule != null) {
 			editRule.getImports().addAll(EditRuleUtil.getImports(editRule));
 			
-			URI eoURI = EcoreUtil.getURI(introducedContext).trimSegments(1)
+			URI eoURI = modelCurrent.getURI().trimSegments(1)
 					.appendSegment(editRule.getName() + "_execute")
 					.appendFileExtension("henshin");
 			Resource eoRes = new ResourceSetImpl().createResource(eoURI);
@@ -192,7 +240,7 @@ public class LearnEditRule {
 			WorkbenchUtil.showError("Could not transform this difference to an edit-rule.");
 		}
 	}
-
+	
 	private void expandScope(
 			EObject scopeElement, Map<EObject, Integer> expandedScope,
 			Set<EObject> blacklist, int maxDistance, int distance) {
@@ -217,7 +265,6 @@ public class LearnEditRule {
 									expandScope(target, expandedScope, blacklist, maxDistance, (distance + 1));
 								}
 							}
-							
 						}
 					}
 				}

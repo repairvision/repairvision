@@ -58,7 +58,7 @@ public class DifferenceSlicingCriterion {
 		return scopeHistorical;
 	}
 
-	public void setScopeHistorical(Set<EObject> scopeHistorical) {
+	public void setFragmentHistorical(Set<EObject> scopeHistorical) {
 		this.scopeHistorical = scopeHistorical;
 	}
 
@@ -90,7 +90,7 @@ public class DifferenceSlicingCriterion {
 		return scopeResolved;
 	}
 
-	public void setScopeResolved(Set<EObject> scopeResolved) {
+	public void setFragmentResolved(Set<EObject> scopeResolved) {
 		this.scopeResolved = scopeResolved;
 	}
 

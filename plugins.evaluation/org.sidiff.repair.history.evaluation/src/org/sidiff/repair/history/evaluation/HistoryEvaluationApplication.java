@@ -17,6 +17,7 @@ import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.api.util.RepairAPIUtil;
+import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
 import org.sidiff.repair.history.editrules.learning.LearnEditRule;
 import org.sidiff.repair.history.evaluation.data.RepairEvaluation;
 import org.sidiff.repair.history.evaluation.data.ResearchQuestion01;
@@ -311,8 +312,12 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		Validation valiadation = EvaluationUtil.getValidation(repairJob.getValidations(), getInconsistency());
 		
 		if (valiadation != null) {
-			LearnEditRule learnEditRule = new LearnEditRule(getMatchingSettings(), modelA, modelB, modelC);
-			learnEditRule.learn(getInconsistency().getInvalidElement().get(0), valiadation.getRule());
+			LearnEditRule learnEditRule = new LearnEditRule(getMatchingSettings(), modelA, modelC);
+			DifferenceSlice differenceSlice = learnEditRule.learnByResolvedInconsistency(
+					getInconsistency().getInvalidElement().get(0),
+					valiadation.getRule());
+			learnEditRule.saveEditRule(
+					learnEditRule.generateEditRule(valiadation.getRule().getName(), differenceSlice));
 		} else {
 			WorkbenchUtil.showError("No corresponding validation found!");
 		}
