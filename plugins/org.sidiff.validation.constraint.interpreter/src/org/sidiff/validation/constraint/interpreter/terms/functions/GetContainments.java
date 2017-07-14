@@ -22,6 +22,10 @@ public class GetContainments extends Function {
 		this.element = element;
 	}
 	
+	public Term getElement() {
+		return element;
+	}
+	
 	@Override
 	public Object evaluate(IScopeRecorder scope) {
 		element.evaluate(scope);
@@ -43,6 +47,7 @@ public class GetContainments extends Function {
 		if (getValue() instanceof EList<?>) {
 			for (EObject content : (EList<EObject>) getValue()) {
 				scope.addElement(content);
+				scope.addReference((EObject) getElement().getValue(), content, content.eContainmentFeature());
 			}
 		}
 	}

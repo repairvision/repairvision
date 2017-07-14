@@ -7,6 +7,7 @@ import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
+import org.sidiff.validation.constraint.interpreter.scope.ReferenceScope;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
@@ -17,6 +18,10 @@ public class GetContainer extends Function {
 	public GetContainer(Term element) {
 		this.name = "getContainer";
 		this.element = element;
+	}
+	
+	public Term getElement() {
+		return element;
 	}
 	
 	@Override
@@ -38,7 +43,9 @@ public class GetContainer extends Function {
 		element.required(sequence);
 		
 		if ((element.getValue() != null) && (getValue() != null)) {
-			ScopeNode.getScopeNode(sequence).addElement(getValue());
+			ScopeNode scope = ScopeNode.getScopeNode(sequence);
+			scope.addElement(getValue());
+			scope.addReference((EObject) getElement().getValue(), (EObject) getValue(), ReferenceScope.ECONTAINER);
 		}
 	}
 

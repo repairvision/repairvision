@@ -2,7 +2,9 @@ package org.sidiff.validation.constraint.interpreter.terms.functions;
 
 import java.util.Collection;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
@@ -71,7 +73,18 @@ public class Get extends Function {
 		context.required(parent);
 		
 		if ((context.getValue() != null) && (getValue() != null)) {
-			ScopeNode.getScopeNode(sequence).addElement(getValue());
+			ScopeNode scope = ScopeNode.getScopeNode(sequence);
+			scope.addElement(getValue());
+			
+			// Is Reference:
+			if (getFeature() instanceof EReference) {
+				scope.addReference((EObject) getContext().getValue(), (EObject) getValue(), (EReference) getFeature());
+			}
+			
+			// Is Attribute:
+			else if (getFeature() instanceof EAttribute) {
+				scope.addAttribute((EObject) getContext().getValue(), getValue(), (EAttribute) getFeature());
+			}
 		}
 	}
 	

@@ -1,5 +1,8 @@
 package org.sidiff.validation.constraint.interpreter.scope;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
 
@@ -24,6 +27,14 @@ public class ScopeNode implements IDecisionLeaf {
 	
 	public void addElement(Object element) {
 		scope.addElement(element);
+	}
+	
+	public void addReference(EObject source, EObject target, EReference type) {
+		scope.addReference(source, target, type);
+	}
+	
+	public void addAttribute(EObject object, Object value, EAttribute type) {
+		scope.addAttribute(object, value, type);
 	}
 	
 	public ScopeRecorder getScope() {

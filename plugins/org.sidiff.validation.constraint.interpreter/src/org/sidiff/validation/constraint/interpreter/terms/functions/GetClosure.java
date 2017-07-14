@@ -26,6 +26,10 @@ public class GetClosure extends Function {
 		this.element = element;
 		this.feature = feature;
 	}
+	
+	public EReference getFeature() {
+		return feature;
+	}
 
 	@Override
 	public Object evaluate(IScopeRecorder scope) {
@@ -78,12 +82,14 @@ public class GetClosure extends Function {
 		// Calculate transitive closure:
 		if (element.getValue() != null) {
 			List<EObject> closure = new ArrayList<EObject>();
-			getScopeNext((EObject) element.getValue(), closure, sequence, valid);
+			getScopeNext(null, (EObject) element.getValue(), closure, sequence, valid);
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	private boolean getScopeNext(EObject element, List<EObject> closure, IDecisionBranch parent, EObject valid) {
+	private boolean getScopeNext(EObject lastElement, EObject element, 
+			List<EObject> closure, IDecisionBranch parent, EObject valid) {
+		
 		boolean validElementReachable = (element == valid);
 		
 		// Check for cycles:
@@ -96,21 +102,28 @@ public class GetClosure extends Function {
 				List<EObject> targets = (List<EObject>) element.eGet(feature);
 				
 				for (EObject target : targets) {
-					if (getScopeNext(target, closure, parent, valid)) {
+					if (getScopeNext(element, target, closure, parent, valid)) {
 						validElementReachable = true;
 					}
 				}
 			} else {
 				EObject target = (EObject) element.eGet(feature);
 				
-				if (getScopeNext(target, closure, parent, valid)) {
+				if (getScopeNext(element, target, closure, parent, valid)) {
 					validElementReachable = true;
 				}
 			}
 		}
 		
 		if (validElementReachable) {
-			ScopeNode.getScopeNode(parent).addElement(element);
+			
+			// Log all elements on the path to valid elements as scope:
+			ScopeNode scope = ScopeNode.getScopeNode(parent);
+			scope.addElement(element);
+			
+			if (lastElement != null) {
+				scope.addReference(lastElement, element, getFeature());
+			}
 		}
 		
 		return validElementReachable;
