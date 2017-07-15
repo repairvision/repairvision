@@ -20,6 +20,8 @@ import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
 import org.sidiff.matching.api.util.MatchingUtils;
 import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
 import org.sidiff.repair.history.editrules.learning.LearnEditRule;
+import org.sidiff.repair.history.editrules.learning.ScopeAttributeFilter;
+import org.sidiff.repair.history.editrules.learning.ScopeReferenceFilter;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.Version;
 import org.sidiff.validation.constraint.api.ValidationFacade;
@@ -130,7 +132,7 @@ public class HistoryEditRuleGenerator {
 	
 	protected List<EditRule> calculateEditRules(SymmetricDifference difference, RequiredValidation[] validationPair) {
 		List<EditRule> editRules = new ArrayList<>();
-		
+
 		// Create change-sets:
 		// > Reduce/Split change-sets to minimal consistent changes.
 		// > > Alternativen bei der Validierung ermitteln!?
@@ -138,7 +140,7 @@ public class HistoryEditRuleGenerator {
 		// > > > Validierungszweige protokollieren
 		// (Optimization:)
 		// > Atomic lifting (with dependencies).
-		
+
 		// TODO: Consistency-Tree to Consistency-Fragments:
 		if ((validationPair[0].getRequiredTree() instanceof ScopeNode) 
 				&&(validationPair[0].getRequiredTree() instanceof ScopeNode)) {
@@ -150,7 +152,9 @@ public class HistoryEditRuleGenerator {
 			LearnEditRule learnEditRule = new LearnEditRule(difference);
 			DifferenceSlice differenceSlice = learnEditRule.learnByConsistentChange(
 					validationPair[0].getContext(), scopeA.getScope().getScope(), 
-					validationPair[1].getContext(), scopeB.getScope().getScope());
+					new ScopeReferenceFilter(scopeA.getScope()), new ScopeAttributeFilter(scopeA.getScope()),
+					validationPair[1].getContext(), scopeB.getScope().getScope(),
+					new ScopeReferenceFilter(scopeB.getScope()), new ScopeAttributeFilter(scopeB.getScope()));
 			
 			if (differenceSlice.getChanges().size() > 2) { // TODO
 

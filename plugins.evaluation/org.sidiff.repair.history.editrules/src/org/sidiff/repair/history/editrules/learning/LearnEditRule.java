@@ -23,6 +23,8 @@ import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.recorder.handlers.CreateEditRuleHandler;
 import org.sidiff.editrule.recorder.util.EditRuleUtil;
 import org.sidiff.editrule.recorder.util.HenshinDiagramUtil;
+import org.sidiff.editrule.recorder.util.IAttributeFilter;
+import org.sidiff.editrule.recorder.util.IReferenceFilter;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
@@ -151,29 +153,33 @@ public class LearnEditRule {
 		
 		return learnByConsistentChange( 
 				contextHistorical, scopeResolved.getScope(),
-				contextCurrent, scopeResolved.getScope());
+				IReferenceFilter.DUMMY, IAttributeFilter.DUMMY,
+				contextCurrent, scopeResolved.getScope(),
+				IReferenceFilter.DUMMY, IAttributeFilter.DUMMY);
 	}
 	
 	/**
-	 * @param contextCurrent
+	 * @param currentContext
 	 *            The historical model version.
 	 * @param currentFragment
 	 *            The historical validated fragment.
-	 * @param contextCurrent
+	 * @param currentContext
 	 *            The current model version.
 	 * @param currentFragment
 	 *            The current validated fragment.
 	 */
 	public DifferenceSlice learnByConsistentChange(
-			EObject contextHistorical, Set<EObject> historicalFragment,
-			EObject contextCurrent, Set<EObject> currentFragment) {
+			EObject historicalContext, Set<EObject> historicalFragment,
+			IReferenceFilter historicalReferenceFilter, IAttributeFilter historicalAttributeFilter,
+			EObject currentContext, Set<EObject> currentFragment, 
+			IReferenceFilter currentReferenceFilter, IAttributeFilter currentAttributeFilter) {
 		
 		// Scope: Historical 
-		slicingCriterion.setContextHistorical(contextHistorical);
+		slicingCriterion.setContextHistorical(historicalContext);
 		slicingCriterion.setFragmentHistorical(historicalFragment);
 		
 		// Scope: Resolved
-		slicingCriterion.setContextResolved(contextCurrent);
+		slicingCriterion.setContextResolved(currentContext);
 		slicingCriterion.setFragmentResolved(currentFragment);
 		
 		// Expand Scope //
@@ -205,8 +211,10 @@ public class LearnEditRule {
 		// Difference Slice //
 		
 		slicer = new DifferenceSlicer(navigation);
-		slicer.sliceDifferenceModelA(expandedFragmentHistorical.keySet());
-		slicer.sliceDifferenceModelB(expandedFragmentResolved.keySet());
+		slicer.sliceDifferenceModelA(expandedFragmentHistorical.keySet(),
+				historicalReferenceFilter, historicalAttributeFilter);
+		slicer.sliceDifferenceModelB(expandedFragmentResolved.keySet(),
+				currentReferenceFilter, currentAttributeFilter);
 		
 		return getSlice();
 	}
