@@ -2,6 +2,7 @@ package org.sidiff.validation.constraint.interpreter.scope;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -51,7 +52,7 @@ public class ScopeRecorder implements IScopeRecorder {
 	
 	@Override
 	public List<ReferenceScope> getOutgoings(EObject source) {
-		return referenceScope.get(source);
+		return referenceScope.getOrDefault(source, Collections.emptyList());
 	}
 	
 	@Override
@@ -65,7 +66,7 @@ public class ScopeRecorder implements IScopeRecorder {
 
 	@Override
 	public List<AttributeScope> getAttributes(EObject object) {
-		return attributeScope.get(object);
+		return attributeScope.getOrDefault(object, Collections.emptyList());
 	}
 	
 	public String toString(int indent) {
