@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
@@ -313,11 +314,14 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		
 		if (valiadation != null) {
 			LearnEditRule learnEditRule = new LearnEditRule(getMatchingSettings(), modelA, modelC);
+			
 			DifferenceSlice differenceSlice = learnEditRule.learnByResolvedInconsistency(
 					getInconsistency().getInvalidElement().get(0),
 					valiadation.getRule());
-			learnEditRule.saveEditRule(
-					learnEditRule.generateEditRule(valiadation.getRule().getName(), differenceSlice));
+			
+			String editRuleName = LearnEditRule.generateName(valiadation);
+			Module editRule = LearnEditRule.generateEditRule(editRuleName, differenceSlice);
+			LearnEditRule.saveEditRule(editRule,LearnEditRule.generateURI(editRuleName, modelC), true, true);
 		} else {
 			WorkbenchUtil.showError("No corresponding validation found!");
 		}

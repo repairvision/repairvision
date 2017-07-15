@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.henshin.model.Module;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.common.emf.DocumentType;
@@ -32,7 +30,7 @@ public class HistoryEditRuleGenerator {
 
 	protected History history;
 	
-	protected List<EditRule> rulebase;
+	protected List<EditRule> rulebase = new ArrayList<>();
 	
 	public HistoryEditRuleGenerator(History history) {
 		this.history = history;
@@ -76,15 +74,12 @@ public class HistoryEditRuleGenerator {
 						integrateIntoRulebase(editRule );
 					}
 				}
-				
-				// TODO: Just for testing! 
-//				break;
 			} catch (InvalidModelException | NoCorrespondencesException e) {
 				e.printStackTrace();
 			}
 		}
 		
-		System.out.println("Finished!");
+		System.out.println("\nFinished Edit-Rule Generation!");
 	}
 	
 	protected List<RequiredValidation[]> findValidationPairs(SymmetricDifference difference) 
@@ -133,14 +128,6 @@ public class HistoryEditRuleGenerator {
 	protected List<EditRule> calculateEditRules(SymmetricDifference difference, RequiredValidation[] validationPair) {
 		List<EditRule> editRules = new ArrayList<>();
 
-		// Create change-sets:
-		// > Reduce/Split change-sets to minimal consistent changes.
-		// > > Alternativen bei der Validierung ermitteln!?
-		// > > > Nur positiv validierte Anteile
-		// > > > Validierungszweige protokollieren
-		// (Optimization:)
-		// > Atomic lifting (with dependencies).
-
 		// TODO: Consistency-Tree to Consistency-Fragments:
 		if ((validationPair[0].getRequiredTree() instanceof ScopeNode) 
 				&&(validationPair[0].getRequiredTree() instanceof ScopeNode)) {
@@ -156,23 +143,19 @@ public class HistoryEditRuleGenerator {
 					validationPair[1].getContext(), scopeB.getScope().getScope(),
 					new ScopeReferenceFilter(scopeB.getScope()), new ScopeAttributeFilter(scopeB.getScope()));
 			
-			if (differenceSlice.getChanges().size() > 2) { // TODO
+			// NOTE: Needs at least one sub-rule change to be complemented!
+			if (differenceSlice.getChanges().size() >= 2) {
 
-				System.out.println();
-				System.out.println("## " + validationPair[0].getRule().getName() + " ##");
+//				System.out.println();
+//				System.out.println("## " + validationPair[0].getRule().getName() + " ##");
+//				
+//				for (Change change : differenceSlice.getChanges()) {
+//					System.out.println("  " + change);
+//				}
 				
-				for (Change change : differenceSlice.getChanges()) {
-					System.out.println("  " + change);
-				}
-				
-				Module editRule = learnEditRule.generateEditRule(
-						validationPair[0].getRule().getName() + "_" + EcoreUtil.generateUUID(),
-						differenceSlice);
-				
-				learnEditRule.saveEditRule(editRule);
+				editRules.add(new EditRule(LearnEditRule.generateName(validationPair[0]), differenceSlice));
 			}
 		}
-		
 		
 		return editRules;
 	}
@@ -186,13 +169,34 @@ public class HistoryEditRuleGenerator {
 		// Merge matched edit-rules (as concrete as possible):
 		// > PACs/Context as alternatives (OR).
 		
-		rulebase.add(editRule);
+		if (!containsEditRule(rulebase, editRule)) {
+			rulebase.add(editRule);
+		}
 	}
 	
-	protected void storeRulebas(String project, String folder) {
+	private boolean containsEditRule(List<EditRule> rulebase, EditRule editRule) {
 		
-		// Create new project:
+		for (EditRule containedEditRule : rulebase) {
+			if (containedEditRule.isChangeEqual(editRule)) {
+				return true;
+			}
+		}
 		
+		return false;
+	}
+	
+	protected void storeRulebase(String project, String folder) {
+		
+		for (EditRule editRule : rulebase) {
+			System.out.println();
+			System.out.println("## " + editRule + " ##");
+
+			for (Change change : editRule.getDifferenceSlice().getChanges()) {
+				System.out.println("  " + change);
+			}
+			
+			editRule.saveEditRule(LearnEditRule.generateURI(editRule.getName(), history.eResource()));
+		}
 	}
 	
 	@Override

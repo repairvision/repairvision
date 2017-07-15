@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Module;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
@@ -25,6 +26,7 @@ import org.sidiff.editrule.recorder.util.EditRuleUtil;
 import org.sidiff.editrule.recorder.util.HenshinDiagramUtil;
 import org.sidiff.editrule.recorder.util.IAttributeFilter;
 import org.sidiff.editrule.recorder.util.IReferenceFilter;
+import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
@@ -291,34 +293,49 @@ public class LearnEditRule {
 	public void setNavigation(DifferenceNavigation navigation) {
 		this.navigation = navigation;
 	}
+	 
+	public static String generateName(Validation validation) {
+		return validation.getRule().getName() + "_" + EcoreUtil.generateUUID();
+	}
 	
-	public Module generateEditRule(String ruleName, DifferenceSlice differenceSlice) {
+	public static URI generateURI(String editRuleName, Resource relativeToResource) {
+		return relativeToResource.getURI().trimSegments(1)
+				.appendSegment(editRuleName + "_execute")
+				.appendFileExtension("henshin");
+	}
+	
+	public static Module generateEditRule(String ruleName, DifferenceSlice differenceSlice) {
 		Module editRule = CreateEditRuleHandler.createEditRule(ruleName, 
 				differenceSlice.getCorrespondences(), differenceSlice.getChanges());
 		return editRule;
 	}
 	
-	public void saveEditRule(Module editRule) {
+	public static void saveEditRule(Module editRule, URI eoURI, boolean showDiagram, boolean showMessage) {
 		
 		if (editRule != null) {
 			editRule.getImports().addAll(EditRuleUtil.getImports(editRule));
 			
-			URI eoURI = modelCurrent.getURI().trimSegments(1)
-					.appendSegment(editRule.getName() + "_execute")
-					.appendFileExtension("henshin");
 			Resource eoRes = new ResourceSetImpl().createResource(eoURI);
 			eoRes.getContents().add(editRule);
 
 			try {
 				eoRes.save(Collections.emptyMap());
-				HenshinDiagramUtil.createDiagram(editRule);
+				Resource diagramResource = HenshinDiagramUtil.createDiagram(editRule);
+				
+				if (showDiagram && HenshinDiagramUtil.maxNodeCount(editRule, 100)) {
+					HenshinDiagramUtil.openDiagram(diagramResource);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + eoURI.toPlatformString(true));
+			if (showMessage) {
+				WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + eoURI.toPlatformString(true));
+			}
 		} else {
-			WorkbenchUtil.showError("Could not transform this difference to an edit-rule.");
+			if (showMessage) {
+				WorkbenchUtil.showError("Could not transform this difference to an edit-rule.");
+			}
 		}
 	}
 }

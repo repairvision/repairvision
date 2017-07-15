@@ -22,7 +22,7 @@ public class HistoryToEditRuleGenerator extends AbstractHandler implements IHand
 			
 			// Store edit-rules:
 			String projectName = "org.sidiff." + getModelingDomain(history) + ".editrules.cpo";
-			generator.storeRulebas(projectName, history.getName());
+			generator.storeRulebase(projectName, history.getName());
 		}
 		
 		return null;
