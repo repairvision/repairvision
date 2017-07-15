@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 
@@ -12,14 +13,14 @@ public interface IScopeRecorder {
 	public static final IScopeRecorder DUMMY = new IScopeRecorder() {
 		
 		@Override
+		public void addElement(Object modelElement) {
+		}
+		
+		@Override
 		public Set<EObject> getScope() {
 			return Collections.emptySet();
 		}
 		
-		@Override
-		public void addElement(Object modelElement) {
-		}
-
 		@Override
 		public void addReference(EObject source, EObject target, EReference type) {
 		}
@@ -28,13 +29,26 @@ public interface IScopeRecorder {
 		public List<ReferenceScope> getOutgoings(EObject source) {
 			return Collections.emptyList();
 		}
+
+		@Override
+		public void addAttribute(EObject object, Object value, EAttribute type) {
+		}
+
+		@Override
+		public List<AttributeScope> getAttributes(EObject object) {
+			return Collections.emptyList();
+		}
 	};
 
 	void addElement(Object modelElement);
 	
-	void addReference(EObject source, EObject target, EReference type);
-	
 	Set<EObject> getScope();
 	
+	void addReference(EObject source, EObject target, EReference type);
+	
 	List<ReferenceScope> getOutgoings(EObject source);
+	
+	void addAttribute(EObject object, Object value, EAttribute type);
+	
+	List<AttributeScope> getAttributes(EObject object);
 }

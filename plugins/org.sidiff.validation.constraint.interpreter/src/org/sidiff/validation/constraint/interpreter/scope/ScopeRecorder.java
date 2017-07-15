@@ -36,6 +36,11 @@ public class ScopeRecorder implements IScopeRecorder {
 		}
 	}
 	
+	@Override
+	public Set<EObject> getScope() {
+		return scope;
+	}
+	
 	public void addReference(EObject source, EObject target, EReference type) {
 		List<ReferenceScope> outgoings = referenceScope.getOrDefault(source, new ArrayList<>());
 		referenceScope.put(source, outgoings);
@@ -44,6 +49,12 @@ public class ScopeRecorder implements IScopeRecorder {
 		outgoings.add(reference);
 	}
 	
+	@Override
+	public List<ReferenceScope> getOutgoings(EObject source) {
+		return referenceScope.get(source);
+	}
+	
+	@Override
 	public void addAttribute(EObject object, Object value, EAttribute type) {
 		List<AttributeScope> attributes = attributeScope.getOrDefault(object, new ArrayList<>());
 		attributeScope.put(object, attributes);
@@ -53,13 +64,8 @@ public class ScopeRecorder implements IScopeRecorder {
 	}
 
 	@Override
-	public Set<EObject> getScope() {
-		return scope;
-	}
-	
-	@Override
-	public List<ReferenceScope> getOutgoings(EObject source) {
-		return referenceScope.get(source);
+	public List<AttributeScope> getAttributes(EObject object) {
+		return attributeScope.get(object);
 	}
 	
 	public String toString(int indent) {
