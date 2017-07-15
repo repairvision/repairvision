@@ -21,8 +21,8 @@ import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.recorder.handlers.CreateEditRuleHandler;
-import org.sidiff.editrule.recorder.handlers.util.EditRuleUtil;
-import org.sidiff.editrule.recorder.handlers.util.HenshinDiagramUtil;
+import org.sidiff.editrule.recorder.util.EditRuleUtil;
+import org.sidiff.editrule.recorder.util.HenshinDiagramUtil;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
@@ -211,36 +211,6 @@ public class LearnEditRule {
 		return getSlice();
 	}
 	
-	public Module generateEditRule(String ruleName, DifferenceSlice differenceSlice) {
-		Module editRule = CreateEditRuleHandler.createEditRule(ruleName, 
-				differenceSlice.getCorrespondences(), differenceSlice.getChanges());
-		return editRule;
-	}
-	
-	public void saveEditRule(Module editRule) {
-		
-		if (editRule != null) {
-			editRule.getImports().addAll(EditRuleUtil.getImports(editRule));
-			
-			URI eoURI = modelCurrent.getURI().trimSegments(1)
-					.appendSegment(editRule.getName() + "_execute")
-					.appendFileExtension("henshin");
-			Resource eoRes = new ResourceSetImpl().createResource(eoURI);
-			eoRes.getContents().add(editRule);
-
-			try {
-				eoRes.save(Collections.emptyMap());
-				HenshinDiagramUtil.createDiagram(editRule);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + eoURI.toPlatformString(true));
-		} else {
-			WorkbenchUtil.showError("Could not transform this difference to an edit-rule.");
-		}
-	}
-	
 	private void expandScope(
 			EObject scopeElement, Map<EObject, Integer> expandedScope,
 			Set<EObject> blacklist, int maxDistance, int distance) {
@@ -312,5 +282,35 @@ public class LearnEditRule {
 
 	public void setNavigation(DifferenceNavigation navigation) {
 		this.navigation = navigation;
+	}
+	
+	public Module generateEditRule(String ruleName, DifferenceSlice differenceSlice) {
+		Module editRule = CreateEditRuleHandler.createEditRule(ruleName, 
+				differenceSlice.getCorrespondences(), differenceSlice.getChanges());
+		return editRule;
+	}
+	
+	public void saveEditRule(Module editRule) {
+		
+		if (editRule != null) {
+			editRule.getImports().addAll(EditRuleUtil.getImports(editRule));
+			
+			URI eoURI = modelCurrent.getURI().trimSegments(1)
+					.appendSegment(editRule.getName() + "_execute")
+					.appendFileExtension("henshin");
+			Resource eoRes = new ResourceSetImpl().createResource(eoURI);
+			eoRes.getContents().add(editRule);
+
+			try {
+				eoRes.save(Collections.emptyMap());
+				HenshinDiagramUtil.createDiagram(editRule);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + eoURI.toPlatformString(true));
+		} else {
+			WorkbenchUtil.showError("Could not transform this difference to an edit-rule.");
+		}
 	}
 }
