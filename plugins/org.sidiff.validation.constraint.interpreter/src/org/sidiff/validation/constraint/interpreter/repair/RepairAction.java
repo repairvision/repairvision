@@ -1,9 +1,14 @@
 package org.sidiff.validation.constraint.interpreter.repair;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 
 public class RepairAction implements IDecisionLeaf {
 
@@ -96,4 +101,10 @@ public class RepairAction implements IDecisionLeaf {
 		return "Repair@" + Integer.toHexString(hashCode()) + ": <" + getRepairTripleLabel() + ">";
 	}
 
+	@Override
+	public Iterator<List<? extends IDecisionNode>> traversal() {
+		List<? extends IDecisionNode> leafSingleton = Collections.singletonList(this);
+		List<List<? extends IDecisionNode>> leafIterable = Collections.singletonList(leafSingleton);
+		return leafIterable.iterator();
+	}
 }

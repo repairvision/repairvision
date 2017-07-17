@@ -3,7 +3,7 @@ package org.sidiff.validation.constraint.interpreter.decisiontree;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DecisionBranch implements IDecisionBranch {
+public abstract class DecisionBranch implements IDecisionBranch {
 	
 	protected List<IDecisionNode> children = new LinkedList<>();
 

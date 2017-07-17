@@ -1,10 +1,15 @@
 package org.sidiff.validation.constraint.interpreter.scope;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 
 public class ScopeNode implements IDecisionLeaf {
 
@@ -63,5 +68,12 @@ public class ScopeNode implements IDecisionLeaf {
 	@Override
 	public String toString() {
 		return scope.toString();
+	}
+
+	@Override
+	public Iterator<List<? extends IDecisionNode>> traversal() {
+		List<? extends IDecisionNode> leafSingleton = Collections.singletonList(this);
+		List<List<? extends IDecisionNode>> leafIterable = Collections.singletonList(leafSingleton);
+		return leafIterable.iterator();
 	}
 }

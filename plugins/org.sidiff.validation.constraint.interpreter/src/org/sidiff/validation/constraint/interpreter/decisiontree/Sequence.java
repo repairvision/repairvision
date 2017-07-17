@@ -1,5 +1,8 @@
 package org.sidiff.validation.constraint.interpreter.decisiontree;
 
+import java.util.Iterator;
+import java.util.List;
+
 public class Sequence extends DecisionBranch  {
 
 	public static Sequence nextSequence(IDecisionBranch parent) {
@@ -34,5 +37,10 @@ public class Sequence extends DecisionBranch  {
 	@Override
 	public String containerToString() {
 		return "(+)Sequence@" + Integer.toHexString(hashCode()) + ":";
+	}
+
+	@Override
+	public Iterator<List<? extends IDecisionNode>> traversal() {
+		return new SequenceTraversal(this);
 	}
 }
