@@ -14,8 +14,6 @@ public class DifferenceSlicingCriterion {
 
 	// Historical Model //
 
-	protected EObject historicalContext;
-
 	protected Set<EObject> historicalFragment;
 	
 	// Revised Model Extensions //
@@ -31,8 +29,6 @@ public class DifferenceSlicingCriterion {
 	protected IAttributeFilter historicalAttributeFilter = IAttributeFilter.DUMMY;
 
 	// Revised Model //
-
-	protected EObject revisedContext;
 
 	protected Set<EObject> revisedFragment;
 	
@@ -88,14 +84,6 @@ public class DifferenceSlicingCriterion {
 		this.referenceBlacklist = new HashSet<>();
 	}
 
-	public EObject getHistoricalContext() {
-		return historicalContext;
-	}
-
-	public void setHistoricalContext(EObject historicalContext) {
-		this.historicalContext = historicalContext;
-	}
-
 	public Set<EObject> getHistoricalFragment() {
 		return historicalFragment;
 	}
@@ -134,14 +122,6 @@ public class DifferenceSlicingCriterion {
 
 	public void setHistoricalAttributeFilter(IAttributeFilter historicalAttributeFilter) {
 		this.historicalAttributeFilter = historicalAttributeFilter;
-	}
-
-	public EObject getRevisedContext() {
-		return revisedContext;
-	}
-
-	public void setRevisedContext(EObject revisedContext) {
-		this.revisedContext = revisedContext;
 	}
 
 	public Set<EObject> getRevisedFragment() {

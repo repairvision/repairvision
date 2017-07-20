@@ -138,9 +138,9 @@ public class HistoryEditRuleGenerator {
 			// "Record" edit-rules:
 			LearnEditRule learnEditRule = new LearnEditRule(difference);
 			DifferenceSlice differenceSlice = learnEditRule.learnByConsistentChange(
-					validationPair[0].getContext(), scopeA.getScope().getScope(), 
+					scopeA.getScope().getScope(), 
 					new ScopeReferenceFilter(scopeA.getScope()), new ScopeAttributeFilter(scopeA.getScope()),
-					validationPair[1].getContext(), scopeB.getScope().getScope(),
+					scopeB.getScope().getScope(),
 					new ScopeReferenceFilter(scopeB.getScope()), new ScopeAttributeFilter(scopeB.getScope()));
 			
 			// NOTE: Needs at least one sub-rule change to be complemented!
@@ -161,14 +161,7 @@ public class HistoryEditRuleGenerator {
 	}
 	
 	protected void integrateIntoRulebase(EditRule editRule) {
-		
-		// Find similar/nested edit-rules:
-		// > Make rules as abstract as possible.
-		// > reduce to minimal context -> compare change-based.
-		
-		// Merge matched edit-rules (as concrete as possible):
-		// > PACs/Context as alternatives (OR).
-		
+	
 		if (!containsEditRule(rulebase, editRule)) {
 			rulebase.add(editRule);
 		}

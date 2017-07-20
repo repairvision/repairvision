@@ -139,40 +139,34 @@ public class LearnEditRule {
 		consistencyRule.evaluate(contextCurrent, scopeResolved);
 		
 		return learnByConsistentChange( 
-				contextHistorical, scopeResolved.getScope(),
+				scopeResolved.getScope(),
 				IReferenceFilter.DUMMY, IAttributeFilter.DUMMY,
-				contextCurrent, scopeResolved.getScope(),
+				scopeResolved.getScope(),
 				IReferenceFilter.DUMMY, IAttributeFilter.DUMMY);
 	}
 	
 	/**
-	 * @param currentContext
-	 *            The historical model version.
-	 * @param currentFragment
+	 * @param historicalFragment
 	 *            The historical validated fragment.
-	 * @param currentContext
-	 *            The current model version.
-	 * @param currentFragment
-	 *            The current validated fragment.
+	 * @param revisedFragment
+	 *            The revised validated fragment.
 	 */
 	public DifferenceSlice learnByConsistentChange(
-			EObject historicalContext, Set<EObject> historicalFragment,
+			Set<EObject> historicalFragment,
 			IReferenceFilter historicalReferenceFilter, IAttributeFilter historicalAttributeFilter,
-			EObject currentContext, Set<EObject> currentFragment, 
+			Set<EObject> revisedFragment, 
 			IReferenceFilter revisedReferenceFilter, IAttributeFilter revisedAttributeFilter) {
 		
 		// Initialize slicing criterion:
 		DifferenceSlicingCriterion slicingCriterion = new DifferenceSlicingCriterion();
 		
 		// Fragment: Historical 
-		slicingCriterion.setHistoricalContext(historicalContext);
 		slicingCriterion.setHistoricalFragment(historicalFragment);
 		slicingCriterion.setHistoricalReferenceFilter(historicalReferenceFilter);
 		slicingCriterion.setHistoricalAttributeFilter(historicalAttributeFilter);
 		
 		// Fragment: Revised
-		slicingCriterion.setRevisedContext(currentContext);
-		slicingCriterion.setRevisedFragment(currentFragment);
+		slicingCriterion.setRevisedFragment(revisedFragment);
 		slicingCriterion.setRevisedReferenceFilter(revisedReferenceFilter);
 		slicingCriterion.setRevisedAttributeFilter(revisedAttributeFilter);
 		
