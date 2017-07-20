@@ -2,7 +2,11 @@ package org.sidiff.repair.history.editrules.generator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
@@ -24,6 +28,7 @@ import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.Version;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RequiredValidation;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 
 public class HistoryEditRuleGenerator {
@@ -122,6 +127,20 @@ public class HistoryEditRuleGenerator {
 			}
 		}
 		
+		// Create non corresponding validations:
+		// TODO: Variation: Only if context is non corresponding.
+		// NOTE: Use all validation - regardless whether the context is corresponding or not.
+		//       - Can create create/remove rules even if no changes have been applied.
+		for (RequiredValidation requiredA : consistencyVA) {
+			RequiredValidation[] validationPair = {requiredA, null};
+			validations.add(validationPair);
+		}
+		
+		for (RequiredValidation requiredB : consistencyVB) {
+			RequiredValidation[] validationPair = {null, requiredB};
+			validations.add(validationPair);
+		}
+		
 		return validations;
 	}
 	
@@ -158,6 +177,50 @@ public class HistoryEditRuleGenerator {
 		}
 		
 		return editRules;
+	}
+	
+	// TODO:...
+	protected Iterator<Set<EObject>> getFragments(RequiredValidation validation) {
+		return new Iterator<Set<EObject>>() {
+			
+			Iterator<List<? extends IDecisionNode>> decisions = validation.getRequiredTree().traversal();
+			
+			@Override
+			public Set<EObject> next() {
+				
+				if (decisions.hasNext()) {
+					List<? extends IDecisionNode> decision = decisions.next();
+					
+					if (decision.size() == 1) {
+						if (decision.get(0) instanceof ScopeNode) {
+							return ((ScopeNode) decision.get(0)).getScope().getScope();
+						} else {
+							System.err.println("Scope expected: " + decision.get(0));
+							return Collections.emptySet();
+						}
+					} else {
+						Set<EObject> fragment = new HashSet<>();
+						
+						for (IDecisionNode decisionNode : decision) {
+							if (decisionNode instanceof ScopeNode) {
+								fragment.addAll(((ScopeNode) decisionNode).getScope().getScope());
+							} else {
+								System.err.println("Scope expected: " + decisionNode);
+							}
+						}
+						
+						return fragment;
+					}
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+			
+			@Override
+			public boolean hasNext() {
+				return decisions.hasNext();
+			}
+		};
 	}
 	
 	protected void integrateIntoRulebase(EditRule editRule) {
