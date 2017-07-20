@@ -69,7 +69,7 @@ public class DifferenceNavigation {
 		for (Change change : getLocalChanges(modelElement)) {
 			if (change instanceof RemoveObject) {
 				return change;
-			} else  if (change instanceof AddObject) {
+			} else if (change instanceof AddObject) {
 				return change;
 			}
 		}
@@ -86,6 +86,12 @@ public class DifferenceNavigation {
 						return localChange;
 					}
 				}
+			} else if (localChange instanceof RemoveReference) {
+				if (((RemoveReference) localChange).getSrc() == element) {
+					if (((RemoveReference) localChange).getType().isContainer()) {
+						return localChange;
+					}
+				}
 			}
 		}
 		
@@ -99,6 +105,12 @@ public class DifferenceNavigation {
 			if (localChange instanceof AddReference) {
 				if (((AddReference) localChange).getTgt() == element) {
 					if (((AddReference) localChange).getType().isContainment()) {
+						return localChange;
+					}
+				}
+			} else if (localChange instanceof RemoveReference) {
+				if (((RemoveReference) localChange).getTgt() == element) {
+					if (((RemoveReference) localChange).getType().isContainment()) {
 						return localChange;
 					}
 				}
