@@ -1,9 +1,12 @@
 package org.sidiff.repair.history.editrules.learning;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
@@ -11,16 +14,16 @@ import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.editrule.recorder.util.IAttributeFilter;
-import org.sidiff.editrule.recorder.util.IReferenceFilter;
+import org.sidiff.editrule.recorder.filter.IObjectFilter;
+import org.sidiff.editrule.recorder.filter.IReferenceFilter;
 import org.sidiff.matching.model.Correspondence;
 
 public class DifferenceSlicer {
-
+	
 	/**
-	 * Adds the container of all changes until the root element of the model.
+	 * Difference slicing criterion: historical, resolved
 	 */
-	protected boolean addContextContainers = false;
+	protected DifferenceSlicingCriterion slicingCriterion;
 	
 	/**
 	 * Difference navigation: historical, resolved
@@ -32,70 +35,117 @@ public class DifferenceSlicer {
 	 */
 	protected DifferenceSlice slice;
 	
-	public DifferenceSlicer(DifferenceNavigation navigation) {
+	public DifferenceSlicer(DifferenceSlicingCriterion slicingCriterion, DifferenceNavigation navigation) {
+		this.slicingCriterion = slicingCriterion;
 		this.navigation = navigation;
-		this.slice = new DifferenceSlice(navigation.getDifference());
 	}
 	
 	public DifferenceSlice getSlice() {
+		
+		if (slice == null) {
+			slice = new DifferenceSlice(navigation.getDifference());
+			
+			sliceHistoricalModel();
+			sliceRevisedModel();
+		}
 		return slice;
 	}
 
-	public void sliceDifferenceModelA(Set<EObject> elementsA,
-			IReferenceFilter referenceFilter, IAttributeFilter attributeFilter) {
+	private void sliceHistoricalModel() {
+		Set<EObject> historicalFragment = slicingCriterion.getHistoricalFragment();
 		
-		for (EObject elementA : elementsA) {
+		// Distance based slice expansion:
+		if (slicingCriterion.getHistoricalFragmentDistance() > 0) {
+			Map<EObject, Integer> historicalExpandedFragment = new HashMap<>();
+			
+			for (EObject elementCurrent : slicingCriterion.getHistoricalFragment()) {
+				historicalExpandedFragment.put(elementCurrent, 0);
+			}
+			for (EObject elementCurrent : slicingCriterion.getHistoricalFragment()) {
+				expandScope(
+						elementCurrent, historicalExpandedFragment, 
+						slicingCriterion.getHistoricalFragmentDistance(), 0,
+						slicingCriterion.getHistoricalObjectFilter(), slicingCriterion.getHistoricalReferenceFilter());
+			}
+			
+			historicalFragment = historicalExpandedFragment.keySet();
+		}
+		
+		// Collect changes:
+		for (EObject elementA : historicalFragment) {
 			addCorrespondence(navigation.getCorrespondenceOfModelA(elementA));
 			
 			// Remove Object/Reference:
 			for (Change change : navigation.getLocalChanges(elementA)) {
-				if (!filterModelA(change, referenceFilter, attributeFilter)) {
+				if (!filterHistoricalModel(change)) {
 					addChange(change, elementA);
 				}
 			}
 		}
 	}
 	
-	private boolean filterModelA(Change change, IReferenceFilter referenceFilter, IAttributeFilter attributeFilter) {
+	private boolean filterHistoricalModel(Change change) {
 		
 		if (change instanceof RemoveReference) {
 			RemoveReference removeReference = (RemoveReference) change;
-			return referenceFilter.filter(removeReference.getSrc(), removeReference.getTgt(), removeReference.getType());
+			return slicingCriterion.getHistoricalReferenceFilter()
+					.filter(removeReference.getSrc(), removeReference.getTgt(), removeReference.getType());
 		}
 		
 		else if (change instanceof AttributeValueChange) {
 			AttributeValueChange avc = (AttributeValueChange) change;
-			return attributeFilter.filter(avc.getObjA(), avc.getObjA().eGet(avc.getType()), avc.getType());
+			return slicingCriterion.getHistoricalAttributeFilter()
+					.filter(avc.getObjA(), avc.getObjA().eGet(avc.getType()), avc.getType());
 		}
 		
 		return false;
 	}
 	
-	public void sliceDifferenceModelB(Set<EObject> elementsB, 
-			IReferenceFilter referenceFilter, IAttributeFilter attributeFilter) {
+	public void sliceRevisedModel() {
 		
-		for (EObject elementB : elementsB) {
+		Set<EObject> revisedFragment = slicingCriterion.getRevisedFragment();
+		
+		// Distance based slice expansion:
+		if (slicingCriterion.getHistoricalFragmentDistance() > 0) {
+			Map<EObject, Integer> historicalExpandedFragment = new HashMap<>();
+			
+			for (EObject elementCurrent : slicingCriterion.getHistoricalFragment()) {
+				historicalExpandedFragment.put(elementCurrent, 0);
+			}
+			for (EObject elementCurrent : slicingCriterion.getHistoricalFragment()) {
+				expandScope(
+						elementCurrent, historicalExpandedFragment, 
+						slicingCriterion.getRevisedFragmentDistance(), 0,
+						slicingCriterion.getRevisedObjectFilter(), slicingCriterion.getRevisedReferenceFilter());
+			}
+			
+			revisedFragment = historicalExpandedFragment.keySet();
+		}
+		
+		for (EObject elementB : revisedFragment) {
 			addCorrespondence(navigation.getCorrespondenceOfModelB(elementB));
 
 			// Add Object/Reference:
 			for (Change change : navigation.getLocalChanges(elementB)) {
-				if (!filterModelB(change, referenceFilter, attributeFilter)) {
+				if (!filterRevisedModel(change)) {
 					addChange(change, elementB);
 				}
 			}
 		}
 	}
 	
-	private boolean filterModelB(Change change, IReferenceFilter referenceFilter, IAttributeFilter attributeFilter) {
+	private boolean filterRevisedModel(Change change) {
 		
 		if (change instanceof AddReference) {
 			AddReference addReference = (AddReference) change;
-			return referenceFilter.filter(addReference.getSrc(), addReference.getTgt(), addReference.getType());
+			return slicingCriterion.getRevisedReferenceFilter()
+					.filter(addReference.getSrc(), addReference.getTgt(), addReference.getType());
 		}
 
 		else if (change instanceof AttributeValueChange) {
 			AttributeValueChange avc = (AttributeValueChange) change;
-			return attributeFilter.filter(avc.getObjB(), avc.getObjB().eGet(avc.getType()), avc.getType());
+			return slicingCriterion.getRevisedAttributeFilter()
+					.filter(avc.getObjB(), avc.getObjB().eGet(avc.getType()), avc.getType());
 		}
 		
 		return false;
@@ -107,9 +157,10 @@ public class DifferenceSlicer {
 		}
 	}
 	
-	private void addChange(Change change, EObject source) {
+	private boolean addChange(Change change, EObject source) {
+		
 		if (change != null) {
-			slice.addChange(change);
+			boolean hasChanged = slice.addChange(change);
 			
 			if (source != null) {
 				if ((change instanceof AddReference) || (change instanceof RemoveReference)) {
@@ -125,28 +176,116 @@ public class DifferenceSlicer {
 					
 					addCorrespondence(navigation.getCorrespondence(target));
 					addChange(navigation.getChangeObject(target), target);
-				} else if ((change instanceof AddObject) || (change instanceof RemoveObject)) {
-					Iterator<EObject> rootPathIterator = ModelingUtil.getRootPath(source);
 					
-					while (rootPathIterator.hasNext()) {
-						EObject container = rootPathIterator.next();
-						Change containerChange = navigation.getChangeObject(container);
+				} else if ((change instanceof AddObject) || (change instanceof RemoveObject)) {
+					
+					if (slicingCriterion.isAddFirstChangedContainer() || slicingCriterion.isAddAllChangedContainers()) {
+						Iterator<EObject> rootPathIterator = ModelingUtil.getRootPath(source);
 						
-						// Containment:
-						addChange(navigation.getContainerReferenceChange(change), null);
-						addChange(navigation.getContainmentReferenceChange(change), null);
-						
-						// Container node:
-						if (containerChange != null) {
-							addChange(containerChange, container);
-						} else {
-							addCorrespondence(navigation.getCorrespondence(container));
+						while (rootPathIterator.hasNext()) {
+							EObject container = rootPathIterator.next();
+							Change containerChange = navigation.getChangeObject(container);
 							
-							if (!addContextContainers) {
-								break;
+							// Containment:
+							Change containerReference = navigation.getContainerReferenceChange(change);
+							
+							if (containerReference != null) {
+								slice.addChange(containerReference);
+							}
+							
+							Change containmentReference = navigation.getContainmentReferenceChange(change);
+							
+							if (containerReference != null) {
+								slice.addChange(containmentReference);
+							}
+							
+							// Container node:
+							if (containerChange != null) {
+								if (slicingCriterion.isAddFirstChangedContainer()) {
+									slice.addChange(containerChange);
+									
+									if (!slicingCriterion.isAddAllChangedContainers()) {
+										break;
+									}
+								}
+							} else {
+								if (slicingCriterion.isAddFirstCorrespondingContainer()) {
+									addCorrespondence(navigation.getCorrespondence(container));
+									
+									if (!slicingCriterion.isAddAllCorrespondingContainers()) {
+										break;
+									}
+								}
+							}
+						} 
+					}
+				}
+			}
+			return hasChanged;
+		}
+		return false;
+	}
+	
+	private void expandScope(
+			EObject scopeElement, Map<EObject, Integer> expandedScope,
+			int maxDistance, int distance,
+			IObjectFilter objectFilter, IReferenceFilter referenceFilter) {
+		
+		if (distance < maxDistance) {
+				
+			// Outgoing references:
+			for (EReference reference : scopeElement.eClass().getEAllReferences()) {
+				if (!slicingCriterion.getReferenceBlacklist().contains(reference)) {
+					for (Iterator<? extends EObject> iterator 
+							= navigation.getTargets(scopeElement, reference, false); iterator.hasNext();) {
+						
+						EObject target = iterator.next();
+						
+						if (!slicingCriterion.getClassBlacklist().contains(target.eClass())) {
+							if (!objectFilter.filter(target)) {
+								if (!referenceFilter.filter(scopeElement, target, reference)) {
+									int lastTargetDistance = expandedScope.getOrDefault(target, -1);
+									
+									// Optimization: Reached target object on a shorter path?
+									if (lastTargetDistance < (distance + 1)) {
+										expandedScope.put(target, (distance + 1));
+										expandScope(
+												target, expandedScope, 
+												maxDistance, (distance + 1),
+												objectFilter, referenceFilter);
+									}
+								}
 							}
 						}
-					} 
+					}
+				}
+			}
+
+			// Incoming references:
+			for (EReference reference : navigation.getCrossReferencer().getIncomingReferences(scopeElement.eClass())) {
+				if (!slicingCriterion.getReferenceBlacklist().contains(reference)) {
+					for (Iterator<? extends EObject> iterator 
+							= navigation.getTargets(scopeElement, reference, true); iterator.hasNext();) {
+						
+						EObject target = iterator.next();
+						
+						if (!slicingCriterion.getClassBlacklist().contains(target.eClass())) {
+							if (!objectFilter.filter(target)) {
+								if (!referenceFilter.filter(scopeElement, target, reference)) {
+									int lastTargetDistance = expandedScope.getOrDefault(target, -1);
+									
+									// Optimization: Reached target object on a shorter path?
+									if ((distance + 1) < lastTargetDistance) {
+										expandedScope.put(target, (distance + 1));
+										expandScope(
+												target, expandedScope,
+												maxDistance, (distance + 1), 
+												objectFilter, referenceFilter);
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}

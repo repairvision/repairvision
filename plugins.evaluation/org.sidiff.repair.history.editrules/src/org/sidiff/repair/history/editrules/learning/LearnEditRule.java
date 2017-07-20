@@ -4,14 +4,10 @@ import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deri
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -21,11 +17,11 @@ import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.editrule.recorder.filter.IAttributeFilter;
+import org.sidiff.editrule.recorder.filter.IReferenceFilter;
 import org.sidiff.editrule.recorder.handlers.CreateEditRuleHandler;
 import org.sidiff.editrule.recorder.util.EditRuleUtil;
 import org.sidiff.editrule.recorder.util.HenshinDiagramUtil;
-import org.sidiff.editrule.recorder.util.IAttributeFilter;
-import org.sidiff.editrule.recorder.util.IReferenceFilter;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
@@ -49,16 +45,6 @@ public class LearnEditRule {
 	protected Resource modelCurrent;
 	
 	/**
-	 * Difference slicing criterion: historical, resolved
-	 */
-	protected DifferenceSlicingCriterion slicingCriterion;
-	
-	/**
-	 * Difference navigation: historical, resolved
-	 */
-	protected DifferenceNavigation navigation;
-	
-	/**
 	 * Matching settings.
 	 */
 	protected DifferenceSettings matchingSettings;
@@ -67,6 +53,11 @@ public class LearnEditRule {
 	 * Mapping from historical model version to resolved model version.
 	 */
 	protected SymmetricDifference historicalToResolved; 
+	
+	/**
+	 * Difference navigation: historical, resolved
+	 */
+	protected DifferenceNavigation navigation;
 	
 	/**
 	 * The slicing algorithm.
@@ -78,9 +69,6 @@ public class LearnEditRule {
 		this.modelHistorical = historicalToResolved.getModelA();
 		this.modelCurrent = historicalToResolved.getModelB();
 		
-		// Initialize slicing criterion:
-		this.slicingCriterion = new DifferenceSlicingCriterion();
-		
 		// Index for difference:
 		this.navigation = new DifferenceNavigation(historicalToResolved);
 	}
@@ -91,9 +79,6 @@ public class LearnEditRule {
 		
 		this.modelHistorical = modelHistorical;
 		this.modelCurrent = modelResolved;
-		
-		// Initialize slicing criterion:
-		this.slicingCriterion = new DifferenceSlicingCriterion();
 		
 		// Calculate difference: Historical -> Resolved
 		this.matchingSettings = matchingSettings;
@@ -174,118 +159,29 @@ public class LearnEditRule {
 			EObject historicalContext, Set<EObject> historicalFragment,
 			IReferenceFilter historicalReferenceFilter, IAttributeFilter historicalAttributeFilter,
 			EObject currentContext, Set<EObject> currentFragment, 
-			IReferenceFilter currentReferenceFilter, IAttributeFilter currentAttributeFilter) {
+			IReferenceFilter revisedReferenceFilter, IAttributeFilter revisedAttributeFilter) {
 		
-		// Scope: Historical 
-		slicingCriterion.setContextHistorical(historicalContext);
-		slicingCriterion.setFragmentHistorical(historicalFragment);
+		// Initialize slicing criterion:
+		DifferenceSlicingCriterion slicingCriterion = new DifferenceSlicingCriterion();
 		
-		// Scope: Resolved
-		slicingCriterion.setContextResolved(currentContext);
-		slicingCriterion.setFragmentResolved(currentFragment);
+		// Fragment: Historical 
+		slicingCriterion.setHistoricalContext(historicalContext);
+		slicingCriterion.setHistoricalFragment(historicalFragment);
+		slicingCriterion.setHistoricalReferenceFilter(historicalReferenceFilter);
+		slicingCriterion.setHistoricalAttributeFilter(historicalAttributeFilter);
 		
-		// Expand Scope //
-		
-		// Historical:
-		Map<EObject, Integer> expandedFragmentHistorical = new HashMap<>();
-		
-		for (EObject elementHistorical : historicalFragment) {
-			expandedFragmentHistorical.put(elementHistorical, 0);
-		}
-		for (EObject elementHistorical : historicalFragment) {
-			expandScope(elementHistorical, expandedFragmentHistorical,
-					slicingCriterion.getModelHistoricalBlacklist(),
-					slicingCriterion.getScopeHistoricalDistance(), 0);
-		}
-		
-		// Resolved:
-		Map<EObject, Integer> expandedFragmentResolved = new HashMap<>();
-		
-		for (EObject elementCurrent : currentFragment) {
-			expandedFragmentResolved.put(elementCurrent, 0);
-		}
-		for (EObject elementCurrent : currentFragment) {
-			expandScope(elementCurrent, expandedFragmentResolved,
-					slicingCriterion.getModelResolvedBlacklist(),
-					slicingCriterion.getScopeResolvedDistance(), 0);
-		}
+		// Fragment: Revised
+		slicingCriterion.setRevisedContext(currentContext);
+		slicingCriterion.setRevisedFragment(currentFragment);
+		slicingCriterion.setRevisedReferenceFilter(revisedReferenceFilter);
+		slicingCriterion.setRevisedAttributeFilter(revisedAttributeFilter);
 		
 		// Difference Slice //
 		
-		slicer = new DifferenceSlicer(navigation);
-		slicer.sliceDifferenceModelA(expandedFragmentHistorical.keySet(),
-				historicalReferenceFilter, historicalAttributeFilter);
-		slicer.sliceDifferenceModelB(expandedFragmentResolved.keySet(),
-				currentReferenceFilter, currentAttributeFilter);
-		
-		return getSlice();
-	}
-	
-	private void expandScope(
-			EObject scopeElement, Map<EObject, Integer> expandedScope,
-			Set<EObject> blacklist, int maxDistance, int distance) {
-		
-		if (distance < maxDistance) {
-				
-			// Outgoing references:
-			for (EReference reference : scopeElement.eClass().getEAllReferences()) {
-				if (!slicingCriterion.getReferenceBlacklist().contains(reference)) {
-					for (Iterator<? extends EObject> iterator 
-							= navigation.getTargets(scopeElement, reference, false); iterator.hasNext();) {
-						
-						EObject target = iterator.next();
-						
-						if (!slicingCriterion.getClassBlacklist().contains(target.eClass())) {
-							if (!blacklist.contains(target)) {
-								int lastTargetDistance = expandedScope.getOrDefault(target, -1);
-								
-								// Optimization: Reached target object on a shorter path?
-								if (lastTargetDistance < (distance + 1)) {
-									expandedScope.put(target, (distance + 1));
-									expandScope(target, expandedScope, blacklist, maxDistance, (distance + 1));
-								}
-							}
-						}
-					}
-				}
-				
-			}
-
-			// Incoming references:
-			for (EReference reference : navigation.getCrossReferencer().getIncomingReferences(scopeElement.eClass())) {
-				if (!slicingCriterion.getReferenceBlacklist().contains(reference)) {
-					for (Iterator<? extends EObject> iterator 
-							= navigation.getTargets(scopeElement, reference, true); iterator.hasNext();) {
-						
-						EObject target = iterator.next();
-						
-						if (!slicingCriterion.getClassBlacklist().contains(target.eClass())) {
-							int lastTargetDistance = expandedScope.getOrDefault(target, -1);
-							
-							// Optimization: Reached target object on a shorter path?
-							if ((distance + 1) < lastTargetDistance) {
-								expandedScope.put(target, (distance + 1));
-								expandScope(target, expandedScope,  blacklist, maxDistance, (distance + 1));
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	public DifferenceSlice getSlice() {
+		slicer = new DifferenceSlicer(slicingCriterion, navigation);
 		return slicer.getSlice();
 	}
-
-	public DifferenceSlicingCriterion getSlicingCriterion() {
-		return slicingCriterion;
-	}
-
-	public void setSlicingCriterion(DifferenceSlicingCriterion slicingCriterion) {
-		this.slicingCriterion = slicingCriterion;
-	}
-
+	
 	public DifferenceNavigation getNavigation() {
 		return navigation;
 	}

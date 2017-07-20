@@ -6,108 +6,182 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.sidiff.editrule.recorder.filter.IAttributeFilter;
+import org.sidiff.editrule.recorder.filter.IObjectFilter;
+import org.sidiff.editrule.recorder.filter.IReferenceFilter;
 
 public class DifferenceSlicingCriterion {
 
-	// Historical: Model A //
+	// Historical Model //
+
+	protected EObject historicalContext;
+
+	protected Set<EObject> historicalFragment;
 	
-	protected EObject contextHistorical;
+	// Revised Model Extensions //
+
+	protected int historicalFragmentDistance = -1;
 	
-	protected Set<EObject> scopeHistorical; 
+	// Historical Model Filter //
+
+	protected IObjectFilter historicalObjectFilter = IObjectFilter.DUMMY;
 	
-	protected int scopeHistoricalDistance = -1;
+	protected IReferenceFilter historicalReferenceFilter = IReferenceFilter.DUMMY;
 	
-	protected Set<EObject> modelHistoricalBlacklist;
+	protected IAttributeFilter historicalAttributeFilter = IAttributeFilter.DUMMY;
+
+	// Revised Model //
+
+	protected EObject revisedContext;
+
+	protected Set<EObject> revisedFragment;
 	
-	// Resolved: Model C //
+	// Revised Model Extensions //
+
+	protected int revisedFragmentDistance = -1;
+
+	// Revised Model Filter //
 	
-	protected EObject contextResolved;
+	protected IObjectFilter revisedObjectFilter = IObjectFilter.DUMMY;
 	
-	protected Set<EObject> scopeResolved;
+	protected IReferenceFilter revisedReferenceFilter = IReferenceFilter.DUMMY;
 	
-	protected int scopeResolvedDistance = -1;
-	
-	protected Set<EObject> modelResolvedBlacklist;
-	
-	// Meta-Model //
-	
+	protected IAttributeFilter revisedAttributeFilter = IAttributeFilter.DUMMY;
+
+	// Meta-Model Filter //
+
 	protected Set<EClass> classBlacklist;
-	
+
 	protected Set<EReference> referenceBlacklist;
-	
+
+	// Syntactic Extensions //
+
+	/**
+	 * Adds the direct corresponding container of all added/removed objects in
+	 * the fragment.
+	 */
+	protected boolean addFirstCorrespondingContainer = true;
+
+	/**
+	 * Adds the corresponding container of all added/removed objects in the
+	 * fragment until the root element of the model.
+	 */
+	protected boolean addAllCorrespondingContainers = false;
+
+	/**
+	 * Adds the direct added/removed container of all added/removed objects in
+	 * the fragment.
+	 */
+	protected boolean addFirstChangedContainer = true;
+
+	/**
+	 * Adds the added/removed container of all added/removed objects in the
+	 * fragment until the root element of the model.
+	 */
+	protected boolean addAllChangedContainers = false;
+
 	public DifferenceSlicingCriterion() {
-		this.scopeHistorical = new HashSet<>();
-		this.scopeResolved = new HashSet<>();
-		
-		this.modelHistoricalBlacklist = new HashSet<>();
-		this.modelResolvedBlacklist = new HashSet<>();
-		
+		this.historicalFragment = new HashSet<>();
+		this.revisedFragment = new HashSet<>();
+
 		this.classBlacklist = new HashSet<>();
 		this.referenceBlacklist = new HashSet<>();
 	}
 
-	public EObject getContextHistorical() {
-		return contextHistorical;
+	public EObject getHistoricalContext() {
+		return historicalContext;
 	}
 
-	public void setContextHistorical(EObject contextHistorical) {
-		this.contextHistorical = contextHistorical;
+	public void setHistoricalContext(EObject historicalContext) {
+		this.historicalContext = historicalContext;
 	}
 
-	public Set<EObject> getScopeHistorical() {
-		return scopeHistorical;
+	public Set<EObject> getHistoricalFragment() {
+		return historicalFragment;
 	}
 
-	public void setFragmentHistorical(Set<EObject> scopeHistorical) {
-		this.scopeHistorical = scopeHistorical;
+	public void setHistoricalFragment(Set<EObject> historicalFragment) {
+		this.historicalFragment = historicalFragment;
 	}
 
-	public int getScopeHistoricalDistance() {
-		return scopeHistoricalDistance;
+	public int getHistoricalFragmentDistance() {
+		return historicalFragmentDistance;
 	}
 
-	public void setScopeHistoricalDistance(int scopeHistoricalDistance) {
-		this.scopeHistoricalDistance = scopeHistoricalDistance;
+	public void setHistoricalFragmentDistance(int historicalFragmentDistance) {
+		this.historicalFragmentDistance = historicalFragmentDistance;
 	}
 
-	public Set<EObject> getModelHistoricalBlacklist() {
-		return modelHistoricalBlacklist;
+	public IObjectFilter getHistoricalObjectFilter() {
+		return historicalObjectFilter;
 	}
 
-	public void setModelHistoricalBlacklist(Set<EObject> modelHistoricalBlacklist) {
-		this.modelHistoricalBlacklist = modelHistoricalBlacklist;
+	public void setHistoricalObjectFilter(IObjectFilter historicalObjectFilter) {
+		this.historicalObjectFilter = historicalObjectFilter;
 	}
 
-	public EObject getContextResolved() {
-		return contextResolved;
+	public IReferenceFilter getHistoricalReferenceFilter() {
+		return historicalReferenceFilter;
 	}
 
-	public void setContextResolved(EObject contextResolved) {
-		this.contextResolved = contextResolved;
+	public void setHistoricalReferenceFilter(IReferenceFilter historicalReferenceFilter) {
+		this.historicalReferenceFilter = historicalReferenceFilter;
 	}
 
-	public Set<EObject> getScopeResolved() {
-		return scopeResolved;
+	public IAttributeFilter getHistoricalAttributeFilter() {
+		return historicalAttributeFilter;
 	}
 
-	public void setFragmentResolved(Set<EObject> scopeResolved) {
-		this.scopeResolved = scopeResolved;
+	public void setHistoricalAttributeFilter(IAttributeFilter historicalAttributeFilter) {
+		this.historicalAttributeFilter = historicalAttributeFilter;
 	}
 
-	public int getScopeResolvedDistance() {
-		return scopeResolvedDistance;
+	public EObject getRevisedContext() {
+		return revisedContext;
 	}
 
-	public void setScopeResolvedDistance(int scopeResolvedDistance) {
-		this.scopeResolvedDistance = scopeResolvedDistance;
+	public void setRevisedContext(EObject revisedContext) {
+		this.revisedContext = revisedContext;
 	}
 
-	public Set<EObject> getModelResolvedBlacklist() {
-		return modelResolvedBlacklist;
+	public Set<EObject> getRevisedFragment() {
+		return revisedFragment;
 	}
 
-	public void setModelResolvedBlacklist(Set<EObject> modelResolvedBlacklist) {
-		this.modelResolvedBlacklist = modelResolvedBlacklist;
+	public void setRevisedFragment(Set<EObject> revisedFragment) {
+		this.revisedFragment = revisedFragment;
+	}
+
+	public int getRevisedFragmentDistance() {
+		return revisedFragmentDistance;
+	}
+
+	public void setRevisedFragmentDistance(int revisedFragmentDistance) {
+		this.revisedFragmentDistance = revisedFragmentDistance;
+	}
+
+	public IObjectFilter getRevisedObjectFilter() {
+		return revisedObjectFilter;
+	}
+
+	public void setRevisedObjectFilter(IObjectFilter revisedObjectFilter) {
+		this.revisedObjectFilter = revisedObjectFilter;
+	}
+
+	public IReferenceFilter getRevisedReferenceFilter() {
+		return revisedReferenceFilter;
+	}
+
+	public void setRevisedReferenceFilter(IReferenceFilter revisedReferenceFilter) {
+		this.revisedReferenceFilter = revisedReferenceFilter;
+	}
+
+	public IAttributeFilter getRevisedAttributeFilter() {
+		return revisedAttributeFilter;
+	}
+
+	public void setRevisedAttributeFilter(IAttributeFilter revisedAttributeFilter) {
+		this.revisedAttributeFilter = revisedAttributeFilter;
 	}
 
 	public Set<EClass> getClassBlacklist() {
@@ -124,5 +198,37 @@ public class DifferenceSlicingCriterion {
 
 	public void setReferenceBlacklist(Set<EReference> referenceBlacklist) {
 		this.referenceBlacklist = referenceBlacklist;
+	}
+
+	public boolean isAddFirstCorrespondingContainer() {
+		return addFirstCorrespondingContainer;
+	}
+
+	public void setAddFirstCorrespondingContainer(boolean addFirstCorrespondingContainer) {
+		this.addFirstCorrespondingContainer = addFirstCorrespondingContainer;
+	}
+
+	public boolean isAddAllCorrespondingContainers() {
+		return addAllCorrespondingContainers;
+	}
+
+	public void setAddAllCorrespondingContainers(boolean addAllCorrespondingContainers) {
+		this.addAllCorrespondingContainers = addAllCorrespondingContainers;
+	}
+
+	public boolean isAddFirstChangedContainer() {
+		return addFirstChangedContainer;
+	}
+
+	public void setAddFirstChangedContainer(boolean addFirstChangedContainer) {
+		this.addFirstChangedContainer = addFirstChangedContainer;
+	}
+
+	public boolean isAddAllChangedContainers() {
+		return addAllChangedContainers;
+	}
+
+	public void setAddAllChangedContainers(boolean addAllChangedContainers) {
+		this.addAllChangedContainers = addAllChangedContainers;
 	}
 }

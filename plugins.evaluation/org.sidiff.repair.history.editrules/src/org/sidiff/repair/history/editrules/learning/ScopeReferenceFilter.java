@@ -2,7 +2,7 @@ package org.sidiff.repair.history.editrules.learning;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.editrule.recorder.util.IReferenceFilter;
+import org.sidiff.editrule.recorder.filter.IReferenceFilter;
 import org.sidiff.validation.constraint.interpreter.scope.ReferenceScope;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 
