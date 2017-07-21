@@ -1,9 +1,13 @@
 package org.sidiff.repair.history.editrules.generator;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Module;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
@@ -11,6 +15,8 @@ import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
+import org.sidiff.matching.model.Correspondence;
+import org.sidiff.matching.model.MatchingModelFactory;
 import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
 import org.sidiff.repair.history.editrules.learning.LearnEditRule;
 
@@ -25,6 +31,70 @@ public class EditRule {
 	public EditRule(String name, DifferenceSlice differenceSlice) {
 		this.name = name;
 		this.differenceSlice = differenceSlice;
+		
+		// TODO: Correct/Remember context during slicing!?
+		correctContext(differenceSlice);
+	}
+	
+	private static void correctContext(DifferenceSlice differenceSlice) {
+		
+		// Search for missing context nodes:
+		List<Change> convertToContext = new ArrayList<>(5);
+		
+		for (Change change : differenceSlice.getChanges()) {
+			if (convertToContext(change, differenceSlice.getChanges(), differenceSlice.getCorrespondences())) {
+				convertToContext.add(change);
+			}
+		}
+		
+		// Create pseudo correspondence
+		differenceSlice.getChanges().removeAll(convertToContext);
+		
+		for (Change change : convertToContext) {
+			Correspondence correspondence = MatchingModelFactory.eINSTANCE.createCorrespondence();
+			correspondence.setMatchedA(getChangedObject(change));
+			correspondence.setMatchedB(getChangedObject(change));
+			differenceSlice.getCorrespondences().add(correspondence);
+		}
+	}
+	
+	private static boolean convertToContext(Change change, 
+			Collection<Change> changes, Collection<Correspondence> preserved) {
+		
+		if ((change instanceof AddObject) || (change instanceof RemoveObject)) {
+			if (!isContainedChange(change, changes, preserved)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private static boolean isContainedChange(Change change, 
+			Collection<Change> changes, Collection<Correspondence> preserved) {
+
+		EObject container = getChangedObject(change).eContainer();
+
+		for (Change otherChange : changes) {
+			if (getChangedObject(otherChange) == container) {
+				return true;
+			}
+		}
+
+		for (Correspondence correspondence : preserved) {
+			if ((correspondence.getMatchedA() == container) || (correspondence.getMatchedB() == container)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private static EObject getChangedObject(Change change) {
+		if (change instanceof AddObject) {
+			return ((AddObject) change).getObj();
+		} else if (change instanceof RemoveObject) {
+			return ((RemoveObject) change).getObj();
+		}
+		return null;
 	}
 	
 	public String getName() {
