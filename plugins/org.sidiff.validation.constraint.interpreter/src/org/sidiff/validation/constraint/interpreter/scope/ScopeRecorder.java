@@ -15,11 +15,17 @@ import org.eclipse.emf.ecore.EReference;
 
 public class ScopeRecorder implements IScopeRecorder {
 
-	private Set<EObject> scope = new HashSet<>();
+	protected Set<EObject> scope = new HashSet<>();
 	
-	private Map<EObject, List<ReferenceScope>> referenceScope = new HashMap<>();
+	protected Map<EObject, List<ReferenceScope>> referenceScope = new HashMap<>();
 	
-	private Map<EObject, List<AttributeScope>> attributeScope = new HashMap<>();
+	protected Map<EObject, List<AttributeScope>> attributeScope = new HashMap<>();
+	
+	public void addScope(ScopeRecorder scope) {
+		scope.scope.forEach(this.scope::add);
+		scope.referenceScope.forEach(this.referenceScope::put);
+		scope.attributeScope.forEach(this.attributeScope::put);
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
