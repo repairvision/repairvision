@@ -2,11 +2,9 @@ package org.sidiff.repair.history.editrules.generator;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
@@ -29,7 +27,9 @@ import org.sidiff.repair.historymodel.Version;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RequiredValidation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
+import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 
 public class HistoryEditRuleGenerator {
 
@@ -147,80 +147,92 @@ public class HistoryEditRuleGenerator {
 	protected List<EditRule> calculateEditRules(SymmetricDifference difference, RequiredValidation[] validationPair) {
 		List<EditRule> editRules = new ArrayList<>();
 
-		// TODO: Consistency-Tree to Consistency-Fragments:
-		if ((validationPair[0].getRequiredTree() instanceof ScopeNode) 
-				&&(validationPair[0].getRequiredTree() instanceof ScopeNode)) {
-			
-			ScopeNode scopeA = (ScopeNode) validationPair[0].getRequiredTree();
-			ScopeNode scopeB = (ScopeNode) validationPair[1].getRequiredTree();
-			
-			// "Record" edit-rules:
-			LearnEditRule learnEditRule = new LearnEditRule(difference);
-			DifferenceSlice differenceSlice = learnEditRule.learnByConsistentChange(
-					scopeA.getScope().getScope(), 
-					new ScopeReferenceFilter(scopeA.getScope()), new ScopeAttributeFilter(scopeA.getScope()),
-					scopeB.getScope().getScope(),
-					new ScopeReferenceFilter(scopeB.getScope()), new ScopeAttributeFilter(scopeB.getScope()));
-			
-			// NOTE: Needs at least one sub-rule change to be complemented!
-			if (differenceSlice.getChanges().size() >= 2) {
-
-//				System.out.println();
-//				System.out.println("## " + validationPair[0].getRule().getName() + " ##");
-//				
-//				for (Change change : differenceSlice.getChanges()) {
-//					System.out.println("  " + change);
-//				}
+		// Consistency-Tree to Consistency-Fragments:
+		getFragments(validationPair[0]).forEachRemaining(fragmentA -> {
+			getFragments(validationPair[1]).forEachRemaining(fragmentB -> {
 				
-				editRules.add(new EditRule(LearnEditRule.generateName(validationPair[0]), differenceSlice));
-			}
-		}
+				// "Record" edit-rules:
+				LearnEditRule learnEditRule = new LearnEditRule(difference);
+				DifferenceSlice differenceSlice = learnEditRule.learnByConsistentChange(
+						fragmentA.getScope(), 
+						new ScopeReferenceFilter(fragmentA), new ScopeAttributeFilter(fragmentA),
+						fragmentB.getScope(),
+						new ScopeReferenceFilter(fragmentB), new ScopeAttributeFilter(fragmentB));
+				
+				// NOTE: Needs at least one sub-rule change to be complemented!
+				if (differenceSlice.getChanges().size() >= 2) {
+
+//					System.out.println();
+//					System.out.println("## " + validationPair[0].getRule().getName() + " ##");
+//					
+//					for (Change change : differenceSlice.getChanges()) {
+//						System.out.println("  " + change);
+//					}
+					
+					editRules.add(new EditRule(LearnEditRule.generateName(
+							getNonEmptyValidation(validationPair)), differenceSlice));
+				}
+			});
+		});
 		
 		return editRules;
 	}
 	
-	// TODO:...
-	protected Iterator<Set<EObject>> getFragments(RequiredValidation validation) {
-		return new Iterator<Set<EObject>>() {
-			
-			Iterator<List<? extends IDecisionNode>> decisions = validation.getRequiredTree().traversal();
-			
-			@Override
-			public Set<EObject> next() {
+	private RequiredValidation getNonEmptyValidation(RequiredValidation[] validationPair) {
+		if (validationPair[0] != null) {
+			return validationPair[0];
+		} else {
+			return validationPair[1];
+		}
+	}
+	
+	protected Iterator<IScopeRecorder> getFragments(RequiredValidation validation) {
+		
+		if (validation == null) {
+			return Collections.singleton(IScopeRecorder.DUMMY).iterator();
+		} else {
+			return new Iterator<IScopeRecorder>() {
 				
-				if (decisions.hasNext()) {
-					List<? extends IDecisionNode> decision = decisions.next();
+				Iterator<List<? extends IDecisionNode>> decisions = validation.getRequiredTree().traversal();
+				
+				@Override
+				public IScopeRecorder next() {
 					
-					if (decision.size() == 1) {
-						if (decision.get(0) instanceof ScopeNode) {
-							return ((ScopeNode) decision.get(0)).getScope().getScope();
+					if (decisions.hasNext()) {
+						List<? extends IDecisionNode> decision = decisions.next();
+						
+						if (decision.size() == 1) {
+							if (decision.get(0) instanceof ScopeNode) {
+								return ((ScopeNode) decision.get(0)).getScope();
+							} else {
+								System.err.println("Scope expected: " + decision.get(0));
+								return ScopeRecorder.DUMMY;
+							}
 						} else {
-							System.err.println("Scope expected: " + decision.get(0));
-							return Collections.emptySet();
+							// TODO: View on multiple scopes:
+							ScopeRecorder scopes = new ScopeRecorder();
+							
+							for (IDecisionNode decisionNode : decision) {
+								if (decisionNode instanceof ScopeNode) {
+									scopes.addScope(((ScopeNode) decisionNode).getScope());
+								} else {
+									System.err.println("Scope expected: " + decisionNode);
+								}
+							}
+							
+							return scopes;
 						}
 					} else {
-						Set<EObject> fragment = new HashSet<>();
-						
-						for (IDecisionNode decisionNode : decision) {
-							if (decisionNode instanceof ScopeNode) {
-								fragment.addAll(((ScopeNode) decisionNode).getScope().getScope());
-							} else {
-								System.err.println("Scope expected: " + decisionNode);
-							}
-						}
-						
-						return fragment;
+						throw new NoSuchElementException();
 					}
-				} else {
-					throw new NoSuchElementException();
 				}
-			}
-			
-			@Override
-			public boolean hasNext() {
-				return decisions.hasNext();
-			}
-		};
+				
+				@Override
+				public boolean hasNext() {
+					return decisions.hasNext();
+				}
+			};	
+		}
 	}
 	
 	protected void integrateIntoRulebase(EditRule editRule) {

@@ -3,14 +3,14 @@ package org.sidiff.repair.history.editrules.learning;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.editrule.recorder.filter.IReferenceFilter;
+import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ReferenceScope;
-import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 
 public class ScopeReferenceFilter implements IReferenceFilter {
 
-	private ScopeRecorder scope;
+	private IScopeRecorder scope;
 	
-	public ScopeReferenceFilter(ScopeRecorder scope) {
+	public ScopeReferenceFilter(IScopeRecorder scope) {
 		this.scope = scope;
 	}
 	
