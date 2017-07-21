@@ -32,7 +32,8 @@ public class EditRule {
 		this.name = name;
 		this.differenceSlice = differenceSlice;
 		
-		// TODO: Correct/Remember context during slicing!?
+		// TODO: Correct context during slicing!?
+		//       - Remember implicitly/explicitly added changed during slicing
 		correctContext(differenceSlice);
 	}
 	
