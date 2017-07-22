@@ -66,6 +66,7 @@ public class Get extends Function {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void required(IDecisionBranch parent) {
 		Sequence sequence = Sequence.nextSequence(parent);
@@ -78,7 +79,15 @@ public class Get extends Function {
 			
 			// Is Reference:
 			if (getFeature() instanceof EReference) {
-				scope.addReference((EObject) getContext().getValue(), (EObject) getValue(), (EReference) getFeature());
+				EObject source = (EObject) getContext().getValue();
+				
+				if (((EReference) getFeature()).isMany()) {
+					for (EObject target : (Collection<EObject>) getValue()) {
+						scope.addReference(source, target, (EReference) getFeature());
+					}
+				} else {
+					scope.addReference(source, (EObject) getValue(), (EReference) getFeature());
+				}
 			}
 			
 			// Is Attribute:
