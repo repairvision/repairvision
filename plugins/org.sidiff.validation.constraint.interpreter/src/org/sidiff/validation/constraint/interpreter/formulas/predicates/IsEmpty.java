@@ -35,7 +35,7 @@ public class IsEmpty extends Predicate {
 	@Override
 	public void required(IDecisionBranch parent, boolean expected) {
 
-		if (!expected && getResult()) {
+		if (!expected && !getResult()) {
 			term.required(parent);
 		}
 	}

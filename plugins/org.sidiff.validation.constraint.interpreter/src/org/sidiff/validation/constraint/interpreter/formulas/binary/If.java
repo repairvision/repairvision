@@ -47,7 +47,13 @@ public class If extends BinaryFormula {
 
 		if (result == expected) {
 			if (expected && left.getResult() && right.getResult()) {
-				right.required(parent, left.getResult());
+				
+				// FIXME: ??? A IMPLIES B = !A OR B = !A OR (A AND B)
+//				right.required(parent, left.getResult());
+				
+				Sequence sequence = Sequence.nextSequence(parent);
+				left.required(sequence, left.getResult());
+				right.required(sequence, right.getResult());
 			}
 			
 			else if (expected && !left.getResult() && right.getResult()) {
