@@ -15,6 +15,7 @@ import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
+import org.sidiff.editrule.recorder.filters.IReferenceFilter;
 import org.sidiff.editrule.recorder.transformations.DifferenceToEditRule;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.MatchingModelFactory;
@@ -30,14 +31,19 @@ public class EditRule {
 	
 	protected DifferenceSlice differenceSlice;
 	
+	protected IReferenceFilter referenceFilter;
+	
 	protected List<AttributeScope> attributesLHS;
 	
 	protected List<AttributeScope> attributesRHS;
 	
-	public EditRule(String name, DifferenceSlice differenceSlice, 
+	public EditRule(String name, 
+			DifferenceSlice differenceSlice, IReferenceFilter referenceFilter,
 			List<AttributeScope> attributesLHS, List<AttributeScope> attributesRHS) {
+		
 		this.name = name;
 		this.differenceSlice = differenceSlice;
+		this.referenceFilter = referenceFilter;
 		this.attributesLHS = attributesLHS;
 		this.attributesRHS = attributesRHS;
 		
@@ -130,6 +136,7 @@ public class EditRule {
 			
 			DifferenceToEditRule editRuleRecorder = new DifferenceToEditRule(getName(), 
 					differenceSlice.getCorrespondences(), differenceSlice.getChanges());
+			editRuleRecorder.setReferenceFilter(referenceFilter);
 			
 			for (AttributeScope lhsAttribute : attributesLHS) {
 				editRuleRecorder.addAttribute(

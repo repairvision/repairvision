@@ -20,6 +20,7 @@ import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
 import org.sidiff.matching.api.util.MatchingUtils;
 import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
 import org.sidiff.repair.history.editrules.learning.LearnEditRule;
+import org.sidiff.repair.history.editrules.learning.MultiScopeReferenceFilter;
 import org.sidiff.repair.history.editrules.learning.ScopeAttributeFilter;
 import org.sidiff.repair.history.editrules.learning.ScopeReferenceFilter;
 import org.sidiff.repair.historymodel.History;
@@ -160,6 +161,7 @@ public class HistoryEditRuleGenerator {
 						new ScopeReferenceFilter(fragmentB), new ScopeAttributeFilter(fragmentB));
 				
 				// NOTE: Needs at least one sub-rule change to be complemented!
+				// TODO: Count atomic depending changes!
 				if (differenceSlice.getChanges().size() >= 2) {
 
 //					System.out.println();
@@ -170,7 +172,8 @@ public class HistoryEditRuleGenerator {
 //					}
 					
 					String ruleName = LearnEditRule.generateName(getNonEmptyValidation(validationPair));
-					EditRule editRule = new EditRule(ruleName, differenceSlice, 
+					EditRule editRule = new EditRule(ruleName, 
+							differenceSlice, new MultiScopeReferenceFilter(fragmentA, fragmentB),
 							fragmentA.getEqualityTests(), fragmentB.getEqualityTests());
 					
 					editRules.add(editRule);
