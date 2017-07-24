@@ -180,6 +180,15 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getHistory_AllValidationErrors() {
+		return (EReference)historyEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getHistory__GetPrecessorRevisions__Version() {
 		return historyEClass.getEOperations().get(0);
 	}
@@ -209,6 +218,15 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 */
 	public EOperation getHistory__GetValidationErrors__boolean_boolean() {
 		return historyEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getHistory__GetUniqueValidationErrors() {
+		return historyEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -450,10 +468,12 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		createEAttribute(historyEClass, HISTORY__NAME);
 		createEReference(historyEClass, HISTORY__VERSIONS);
 		createEReference(historyEClass, HISTORY__TECHNICAL_DIFFERENCES);
+		createEReference(historyEClass, HISTORY__ALL_VALIDATION_ERRORS);
 		createEOperation(historyEClass, HISTORY___GET_PRECESSOR_REVISIONS__VERSION);
 		createEOperation(historyEClass, HISTORY___GET_SUCCESSOR_REVISIONS__VERSION);
 		createEOperation(historyEClass, HISTORY___GET_TECHNICAL_DIFFERENCE__VERSION_VERSION);
 		createEOperation(historyEClass, HISTORY___GET_VALIDATION_ERRORS__BOOLEAN_BOOLEAN);
+		createEOperation(historyEClass, HISTORY___GET_UNIQUE_VALIDATION_ERRORS);
 
 		versionEClass = createEClass(VERSION);
 		createEReference(versionEClass, VERSION__VALIDATION_ERRORS);
@@ -523,6 +543,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		initEAttribute(getHistory_Name(), ecorePackage.getEString(), "name", null, 0, 1, History.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getHistory_Versions(), this.getVersion(), null, "versions", null, 0, -1, History.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getHistory_TechnicalDifferences(), theSymmetricPackage.getSymmetricDifference(), null, "technicalDifferences", null, 0, -1, History.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getHistory_AllValidationErrors(), this.getValidationError(), null, "allValidationErrors", null, 0, -1, History.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		EOperation op = initEOperation(getHistory__GetPrecessorRevisions__Version(), this.getVersion(), "getPrecessorRevisions", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getVersion(), "version", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -537,6 +558,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		op = initEOperation(getHistory__GetValidationErrors__boolean_boolean(), this.getValidationError(), "getValidationErrors", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEBoolean(), "introduced", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEBoolean(), "resolved", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getHistory__GetUniqueValidationErrors(), this.getValidationError(), "getUniqueValidationErrors", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(versionEClass, Version.class, "Version", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getVersion_ValidationErrors(), this.getValidationError(), null, "validationErrors", null, 0, -1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -97,13 +97,22 @@ public interface HistoryModelPackage extends EPackage {
 	int HISTORY__TECHNICAL_DIFFERENCES = 2;
 
 	/**
+	 * The feature id for the '<em><b>All Validation Errors</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HISTORY__ALL_VALIDATION_ERRORS = 3;
+
+	/**
 	 * The number of structural features of the '<em>History</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HISTORY_FEATURE_COUNT = 3;
+	int HISTORY_FEATURE_COUNT = 4;
 
 	/**
 	 * The operation id for the '<em>Get Precessor Revisions</em>' operation.
@@ -142,13 +151,22 @@ public interface HistoryModelPackage extends EPackage {
 	int HISTORY___GET_VALIDATION_ERRORS__BOOLEAN_BOOLEAN = 3;
 
 	/**
+	 * The operation id for the '<em>Get Unique Validation Errors</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HISTORY___GET_UNIQUE_VALIDATION_ERRORS = 4;
+
+	/**
 	 * The number of operations of the '<em>History</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HISTORY_OPERATION_COUNT = 4;
+	int HISTORY_OPERATION_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.repair.historymodel.impl.VersionImpl <em>Version</em>}' class.
@@ -442,6 +460,17 @@ public interface HistoryModelPackage extends EPackage {
 	EReference getHistory_TechnicalDifferences();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.History#getAllValidationErrors <em>All Validation Errors</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>All Validation Errors</em>'.
+	 * @see org.sidiff.repair.historymodel.History#getAllValidationErrors()
+	 * @see #getHistory()
+	 * @generated
+	 */
+	EReference getHistory_AllValidationErrors();
+
+	/**
 	 * Returns the meta object for the '{@link org.sidiff.repair.historymodel.History#getPrecessorRevisions(org.sidiff.repair.historymodel.Version) <em>Get Precessor Revisions</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -480,6 +509,16 @@ public interface HistoryModelPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getHistory__GetValidationErrors__boolean_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.repair.historymodel.History#getUniqueValidationErrors() <em>Get Unique Validation Errors</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Unique Validation Errors</em>' operation.
+	 * @see org.sidiff.repair.historymodel.History#getUniqueValidationErrors()
+	 * @generated
+	 */
+	EOperation getHistory__GetUniqueValidationErrors();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.repair.historymodel.Version <em>Version</em>}'.
@@ -787,6 +826,14 @@ public interface HistoryModelPackage extends EPackage {
 		EReference HISTORY__TECHNICAL_DIFFERENCES = eINSTANCE.getHistory_TechnicalDifferences();
 
 		/**
+		 * The meta object literal for the '<em><b>All Validation Errors</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference HISTORY__ALL_VALIDATION_ERRORS = eINSTANCE.getHistory_AllValidationErrors();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Precessor Revisions</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -817,6 +864,14 @@ public interface HistoryModelPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation HISTORY___GET_VALIDATION_ERRORS__BOOLEAN_BOOLEAN = eINSTANCE.getHistory__GetValidationErrors__boolean_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Unique Validation Errors</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation HISTORY___GET_UNIQUE_VALIDATION_ERRORS = eINSTANCE.getHistory__GetUniqueValidationErrors();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.repair.historymodel.impl.VersionImpl <em>Version</em>}' class.

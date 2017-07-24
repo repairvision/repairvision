@@ -20,6 +20,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
  *   <li>{@link org.sidiff.repair.historymodel.History#getName <em>Name</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.History#getVersions <em>Versions</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.History#getTechnicalDifferences <em>Technical Differences</em>}</li>
+ *   <li>{@link org.sidiff.repair.historymodel.History#getAllValidationErrors <em>All Validation Errors</em>}</li>
  * </ul>
  *
  * @see org.sidiff.repair.historymodel.HistoryModelPackage#getHistory()
@@ -86,6 +87,22 @@ public interface History extends EObject {
 	EList<SymmetricDifference> getTechnicalDifferences();
 
 	/**
+	 * Returns the value of the '<em><b>All Validation Errors</b></em>' reference list.
+	 * The list contents are of type {@link org.sidiff.repair.historymodel.ValidationError}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>All Validation Errors</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>All Validation Errors</em>' reference list.
+	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getHistory_AllValidationErrors()
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @generated
+	 */
+	EList<ValidationError> getAllValidationErrors();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
@@ -116,5 +133,13 @@ public interface History extends EObject {
 	 * @generated
 	 */
 	EList<ValidationError> getValidationErrors(boolean introduced, boolean resolved);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<ValidationError> getUniqueValidationErrors();
 
 } // History

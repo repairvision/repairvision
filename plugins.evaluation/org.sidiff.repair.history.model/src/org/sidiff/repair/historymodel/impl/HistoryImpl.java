@@ -11,7 +11,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-
+import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -40,6 +40,7 @@ import org.sidiff.repair.historymodel.Version;
  *   <li>{@link org.sidiff.repair.historymodel.impl.HistoryImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.HistoryImpl#getVersions <em>Versions</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.HistoryImpl#getTechnicalDifferences <em>Technical Differences</em>}</li>
+ *   <li>{@link org.sidiff.repair.historymodel.impl.HistoryImpl#getAllValidationErrors <em>All Validation Errors</em>}</li>
  * </ul>
  *
  * @generated
@@ -154,6 +155,19 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	public EList<ValidationError> getAllValidationErrors() {
+		EList<ValidationError> validationErrors = new BasicEList<ValidationError>();
+		for(Version version : this.getVersions()){
+			validationErrors.addAll(version.getValidationErrors());
+		}
+		return validationErrors;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	public EList<Version> getPrecessorRevisions(Version version) {
 		int index = versions.indexOf(version);
 		EList<Version> precessors = new EObjectResolvingEList<Version>(Version.class, this, HistoryModelPackage.HISTORY___GET_SUCCESSOR_REVISIONS__VERSION);
@@ -220,6 +234,21 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<ValidationError> getUniqueValidationErrors() {
+		EList<ValidationError> uniqueValidationErrors = new BasicEList<ValidationError>();
+		for(ValidationError validationError : getAllValidationErrors()){
+			if(validationError.getPrec() == null){
+				uniqueValidationErrors.add(validationError);
+			}
+		}
+		return uniqueValidationErrors;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -245,6 +274,8 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 				return getVersions();
 			case HistoryModelPackage.HISTORY__TECHNICAL_DIFFERENCES:
 				return getTechnicalDifferences();
+			case HistoryModelPackage.HISTORY__ALL_VALIDATION_ERRORS:
+				return getAllValidationErrors();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -308,6 +339,8 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 				return versions != null && !versions.isEmpty();
 			case HistoryModelPackage.HISTORY__TECHNICAL_DIFFERENCES:
 				return technicalDifferences != null && !technicalDifferences.isEmpty();
+			case HistoryModelPackage.HISTORY__ALL_VALIDATION_ERRORS:
+				return !getAllValidationErrors().isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -328,6 +361,8 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 				return getTechnicalDifference((Version)arguments.get(0), (Version)arguments.get(1));
 			case HistoryModelPackage.HISTORY___GET_VALIDATION_ERRORS__BOOLEAN_BOOLEAN:
 				return getValidationErrors((Boolean)arguments.get(0), (Boolean)arguments.get(1));
+			case HistoryModelPackage.HISTORY___GET_UNIQUE_VALIDATION_ERRORS:
+				return getUniqueValidationErrors();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -17,11 +17,15 @@
       <eParameters name="introduced" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
       <eParameters name="resolved" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
     </eOperations>
+    <eOperations name="getUniqueValidationErrors" upperBound="-1" eType="#//ValidationError"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="versions" upperBound="-1"
         eType="#//Version" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="technicalDifferences" upperBound="-1"
         eType="ecore:EClass platform:/plugin/org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allValidationErrors" upperBound="-1"
+        eType="#//ValidationError" changeable="false" volatile="true" transient="true"
+        derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Version">
     <eOperations name="getElement" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">

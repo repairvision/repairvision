@@ -25,6 +25,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//History/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//History/versions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//History/technicalDifferences"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//History/allValidationErrors"/>
       <genOperations ecoreOperation="model.ecore#//History/getPrecessorRevisions">
         <genParameters ecoreParameter="model.ecore#//History/getPrecessorRevisions/version"/>
       </genOperations>
@@ -39,6 +40,7 @@
         <genParameters ecoreParameter="model.ecore#//History/getValidationErrors/introduced"/>
         <genParameters ecoreParameter="model.ecore#//History/getValidationErrors/resolved"/>
       </genOperations>
+      <genOperations ecoreOperation="model.ecore#//History/getUniqueValidationErrors"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//Version">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Version/validationErrors"/>
