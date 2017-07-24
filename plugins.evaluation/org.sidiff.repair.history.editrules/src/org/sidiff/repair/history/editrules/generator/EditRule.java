@@ -15,7 +15,7 @@ import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.editrule.recorder.transformation.EditRuleRecorder;
+import org.sidiff.editrule.recorder.transformations.DifferenceToEditRule;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.MatchingModelFactory;
 import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
@@ -128,7 +128,7 @@ public class EditRule {
 		
 		if (editRule == null) {
 			
-			EditRuleRecorder editRuleRecorder = new EditRuleRecorder(getName(), 
+			DifferenceToEditRule editRuleRecorder = new DifferenceToEditRule(getName(), 
 					differenceSlice.getCorrespondences(), differenceSlice.getChanges());
 			
 			for (AttributeScope lhsAttribute : attributesLHS) {

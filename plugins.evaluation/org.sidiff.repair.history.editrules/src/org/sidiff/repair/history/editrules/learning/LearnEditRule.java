@@ -17,9 +17,9 @@ import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.editrule.recorder.filter.IAttributeFilter;
-import org.sidiff.editrule.recorder.filter.IReferenceFilter;
-import org.sidiff.editrule.recorder.transformation.EditRuleRecorder;
+import org.sidiff.editrule.recorder.filters.IAttributeFilter;
+import org.sidiff.editrule.recorder.filters.IReferenceFilter;
+import org.sidiff.editrule.recorder.transformations.DifferenceToEditRule;
 import org.sidiff.editrule.recorder.util.EditRuleUtil;
 import org.sidiff.editrule.recorder.util.HenshinDiagramUtil;
 import org.sidiff.validation.constraint.api.util.Validation;
@@ -195,7 +195,7 @@ public class LearnEditRule {
 	}
 	
 	public static Module generateEditRule(String ruleName, DifferenceSlice differenceSlice) {
-		EditRuleRecorder editRuleRecorder = new EditRuleRecorder(ruleName, 
+		DifferenceToEditRule editRuleRecorder = new DifferenceToEditRule(ruleName, 
 				differenceSlice.getCorrespondences(), differenceSlice.getChanges());
 		return editRuleRecorder.getEditRule();
 	}
