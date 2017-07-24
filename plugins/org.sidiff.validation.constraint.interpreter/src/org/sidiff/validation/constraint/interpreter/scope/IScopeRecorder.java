@@ -38,6 +38,15 @@ public interface IScopeRecorder {
 		public List<AttributeScope> getAttributes(EObject object) {
 			return Collections.emptyList();
 		}
+
+		@Override
+		public void addEqualityTest(EObject object, Object value, EAttribute type) {
+		}
+
+		@Override
+		public List<AttributeScope> getEqualityTests() {
+			return Collections.emptyList();
+		}
 	};
 
 	void addElement(Object modelElement);
@@ -51,4 +60,8 @@ public interface IScopeRecorder {
 	void addAttribute(EObject object, Object value, EAttribute type);
 	
 	List<AttributeScope> getAttributes(EObject object);
+	
+	void addEqualityTest(EObject object, Object value, EAttribute type);
+	
+	List<AttributeScope> getEqualityTests();
 }

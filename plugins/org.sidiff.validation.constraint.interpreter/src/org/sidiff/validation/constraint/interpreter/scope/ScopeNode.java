@@ -42,6 +42,10 @@ public class ScopeNode implements IDecisionLeaf {
 		scope.addAttribute(object, value, type);
 	}
 	
+	public void addEqualityTest(EObject object, Object value, EAttribute type) {
+		scope.addEqualityTest(object, value, type);
+	}
+	
 	public ScopeRecorder getScope() {
 		return scope;
 	}

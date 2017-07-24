@@ -21,10 +21,13 @@ public class ScopeRecorder implements IScopeRecorder {
 	
 	protected Map<EObject, List<AttributeScope>> attributeScope = new HashMap<>();
 	
+	protected List<AttributeScope> equalityTests = new ArrayList<>();
+	
 	public void addScope(ScopeRecorder scope) {
 		scope.scope.forEach(this.scope::add);
 		scope.referenceScope.forEach(this.referenceScope::put);
 		scope.attributeScope.forEach(this.attributeScope::put);
+		scope.equalityTests.forEach(this.equalityTests::add);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -73,6 +76,16 @@ public class ScopeRecorder implements IScopeRecorder {
 	@Override
 	public List<AttributeScope> getAttributes(EObject object) {
 		return attributeScope.getOrDefault(object, Collections.emptyList());
+	}
+	
+	@Override
+	public void addEqualityTest(EObject object, Object value, EAttribute type) {
+		equalityTests.add(new AttributeScope(object, value, type));
+	}
+
+	@Override
+	public List<AttributeScope> getEqualityTests() {
+		return equalityTests;
 	}
 	
 	public String toString(int indent) {
