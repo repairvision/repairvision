@@ -15,10 +15,12 @@ import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
+import org.sidiff.editrule.recorder.transformation.EditRuleRecorder;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.MatchingModelFactory;
 import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
 import org.sidiff.repair.history.editrules.learning.LearnEditRule;
+import org.sidiff.validation.constraint.interpreter.scope.AttributeScope;
 
 public class EditRule {
 
@@ -28,9 +30,16 @@ public class EditRule {
 	
 	protected DifferenceSlice differenceSlice;
 	
-	public EditRule(String name, DifferenceSlice differenceSlice) {
+	protected List<AttributeScope> attributesLHS;
+	
+	protected List<AttributeScope> attributesRHS;
+	
+	public EditRule(String name, DifferenceSlice differenceSlice, 
+			List<AttributeScope> attributesLHS, List<AttributeScope> attributesRHS) {
 		this.name = name;
 		this.differenceSlice = differenceSlice;
+		this.attributesLHS = attributesLHS;
+		this.attributesRHS = attributesRHS;
 		
 		// TODO: Correct context during slicing!?
 		//       - Remember implicitly/explicitly added changed during slicing
@@ -118,7 +127,25 @@ public class EditRule {
 	public Module getEditRule() {
 		
 		if (editRule == null) {
-			editRule = LearnEditRule.generateEditRule(name, differenceSlice);
+			
+			EditRuleRecorder editRuleRecorder = new EditRuleRecorder(getName(), 
+					differenceSlice.getCorrespondences(), differenceSlice.getChanges());
+			
+			for (AttributeScope lhsAttribute : attributesLHS) {
+				editRuleRecorder.addAttribute(
+						lhsAttribute.getObject(), 
+						lhsAttribute.getValue(), 
+						lhsAttribute.getType());
+			}
+			
+			for (AttributeScope rhsAttribute : attributesRHS) {
+				editRuleRecorder.addAttribute(
+						rhsAttribute.getObject(), 
+						rhsAttribute.getValue(), 
+						rhsAttribute.getType());
+			}
+			
+			editRule = editRuleRecorder.getEditRule();
 		}
 		
 		return editRule;

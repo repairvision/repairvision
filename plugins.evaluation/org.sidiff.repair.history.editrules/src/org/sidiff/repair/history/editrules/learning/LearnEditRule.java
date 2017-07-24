@@ -19,7 +19,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.recorder.filter.IAttributeFilter;
 import org.sidiff.editrule.recorder.filter.IReferenceFilter;
-import org.sidiff.editrule.recorder.handlers.CreateEditRuleHandler;
+import org.sidiff.editrule.recorder.transformation.EditRuleRecorder;
 import org.sidiff.editrule.recorder.util.EditRuleUtil;
 import org.sidiff.editrule.recorder.util.HenshinDiagramUtil;
 import org.sidiff.validation.constraint.api.util.Validation;
@@ -195,9 +195,9 @@ public class LearnEditRule {
 	}
 	
 	public static Module generateEditRule(String ruleName, DifferenceSlice differenceSlice) {
-		Module editRule = CreateEditRuleHandler.createEditRule(ruleName, 
+		EditRuleRecorder editRuleRecorder = new EditRuleRecorder(ruleName, 
 				differenceSlice.getCorrespondences(), differenceSlice.getChanges());
-		return editRule;
+		return editRuleRecorder.getEditRule();
 	}
 	
 	public static void saveEditRule(Module editRule, URI eoURI, boolean showDiagram, boolean showMessage) {

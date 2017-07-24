@@ -169,8 +169,11 @@ public class HistoryEditRuleGenerator {
 //						System.out.println("  " + change);
 //					}
 					
-					editRules.add(new EditRule(LearnEditRule.generateName(
-							getNonEmptyValidation(validationPair)), differenceSlice));
+					String ruleName = LearnEditRule.generateName(getNonEmptyValidation(validationPair));
+					EditRule editRule = new EditRule(ruleName, differenceSlice, 
+							fragmentA.getEqualityTests(), fragmentB.getEqualityTests());
+					
+					editRules.add(editRule);
 				}
 			});
 		});
