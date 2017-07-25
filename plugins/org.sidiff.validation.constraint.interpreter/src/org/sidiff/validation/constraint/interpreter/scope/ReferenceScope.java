@@ -44,4 +44,9 @@ public class ReferenceScope {
 	public void setType(EReference type) {
 		this.type = type;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + " (" + "source: " + source + " target: " + target + " type: " + type + ")";
+	}
 }

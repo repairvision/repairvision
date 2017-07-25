@@ -56,15 +56,15 @@ public class ConstraintLibraryRegistry {
 	}
 	
 	/**
-	 * @param The
-	 *            document type of the required constraint library.
+	 * @param documentType
+	 *            The document type of the required constraint library.
 	 * 
 	 * @return All {@link IConstaintLibrary} extensions for the given document type.
 	 */
 	public static List<IConstraintLibrary> getLibraries(String documentType) {
 
-		if (libraries.containsKey(documentType)) {
-			return Collections.unmodifiableList(libraries.get(documentType));
+		if (getLibraries().containsKey(documentType)) {
+			return Collections.unmodifiableList(getLibraries() .get(documentType));
 		} else {
 			return Collections.emptyList();
 		}

@@ -41,4 +41,9 @@ public class AttributeScope {
 	public void setType(EAttribute type) {
 		this.type = type;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + " (" + "object: " + object + " value: " + value + " type: " + type + ")";
+	}
 }

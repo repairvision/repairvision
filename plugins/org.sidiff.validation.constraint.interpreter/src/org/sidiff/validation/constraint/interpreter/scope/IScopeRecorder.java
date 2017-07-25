@@ -47,6 +47,11 @@ public interface IScopeRecorder {
 		public List<AttributeScope> getEqualityTests() {
 			return Collections.emptyList();
 		}
+		
+		@Override
+		public String toString() {
+			return "<DUMMY>";
+		}
 	};
 
 	void addElement(Object modelElement);

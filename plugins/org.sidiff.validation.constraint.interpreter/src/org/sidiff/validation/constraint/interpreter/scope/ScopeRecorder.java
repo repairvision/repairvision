@@ -91,6 +91,7 @@ public class ScopeRecorder implements IScopeRecorder {
 	public String toString(int indent) {
 		StringBuffer string = new StringBuffer();
 		
+		// Scope tree:
 		if (!scope.isEmpty()) {
 			boolean first = true;
 			
@@ -106,6 +107,13 @@ public class ScopeRecorder implements IScopeRecorder {
 		} else {
 			appendIndent(indent, string);
 			string.append("<empty>");
+		}
+		
+		// Equality tests:
+		string.append("\n");
+		
+		for (AttributeScope attributeScope : equalityTests) {
+			string.append("\n" + attributeScope);
 		}
 		
 		return string.toString();
