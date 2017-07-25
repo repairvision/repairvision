@@ -9,6 +9,7 @@ import java.util.Set;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;
@@ -17,6 +18,7 @@ import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.editrule.recorder.filters.IReferenceFilter;
 import org.sidiff.editrule.recorder.transformations.DifferenceToEditRule;
+import org.sidiff.editrule.recorder.transformations.TransformationSetup;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.MatchingModelFactory;
 import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
@@ -134,9 +136,15 @@ public class EditRule {
 		
 		if (editRule == null) {
 			
-			DifferenceToEditRule editRuleRecorder = new DifferenceToEditRule(getName(), 
-					differenceSlice.getCorrespondences(), differenceSlice.getChanges());
-			editRuleRecorder.setReferenceFilter(referenceFilter);
+			TransformationSetup trafoSetup = new TransformationSetup();
+			trafoSetup.setChanges(differenceSlice.getChanges());
+			trafoSetup.setCorrespondences(differenceSlice.getCorrespondences());
+			trafoSetup.setContextReferenceFilter(referenceFilter);
+			trafoSetup.setEditRuleName(getName());
+			
+			DifferenceToEditRule editRuleRecorder = new DifferenceToEditRule(trafoSetup) {
+				protected void createInitializationAttributes(EObject object, Node node) {}
+			};
 			
 			for (AttributeScope lhsAttribute : attributesLHS) {
 				editRuleRecorder.addAttribute(

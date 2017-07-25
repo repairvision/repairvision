@@ -20,6 +20,7 @@ import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.recorder.filters.IAttributeFilter;
 import org.sidiff.editrule.recorder.filters.IReferenceFilter;
 import org.sidiff.editrule.recorder.transformations.DifferenceToEditRule;
+import org.sidiff.editrule.recorder.transformations.TransformationSetup;
 import org.sidiff.editrule.recorder.util.EditRuleUtil;
 import org.sidiff.editrule.recorder.util.HenshinDiagramUtil;
 import org.sidiff.validation.constraint.api.util.Validation;
@@ -195,8 +196,13 @@ public class LearnEditRule {
 	}
 	
 	public static Module generateEditRule(String ruleName, DifferenceSlice differenceSlice) {
-		DifferenceToEditRule editRuleRecorder = new DifferenceToEditRule(ruleName, 
-				differenceSlice.getCorrespondences(), differenceSlice.getChanges());
+		
+		TransformationSetup trafoSetup = new TransformationSetup();
+		trafoSetup.setChanges(differenceSlice.getChanges());
+		trafoSetup.setCorrespondences(differenceSlice.getCorrespondences());
+		trafoSetup.setEditRuleName(ruleName);
+		
+		DifferenceToEditRule editRuleRecorder = new DifferenceToEditRule(trafoSetup);
 		return editRuleRecorder.getEditRule();
 	}
 	
