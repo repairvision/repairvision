@@ -2,28 +2,26 @@ package org.sidiff.repair.history.editrules.generator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.editrule.recorder.filters.IReferenceFilter;
+import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recorder.transformations.DifferenceToEditRule;
-import org.sidiff.editrule.recorder.transformations.TransformationSetup;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.MatchingModelFactory;
 import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
 import org.sidiff.repair.history.editrules.learning.LearnEditRule;
+import org.sidiff.repair.history.editrules.learning.MultiScopeReferenceFilter;
+import org.sidiff.repair.history.editrules.learning.ScopeAttributeFilter;
+import org.sidiff.repair.history.editrules.learning.ScopeReferenceFilter;
 import org.sidiff.validation.constraint.interpreter.scope.AttributeScope;
+import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
 public class EditRule {
 
@@ -31,27 +29,94 @@ public class EditRule {
 	
 	protected Module editRule;
 	
+	protected SymmetricDifference difference;
+	
 	protected DifferenceSlice differenceSlice;
 	
-	protected IReferenceFilter referenceFilter;
+	protected IScopeRecorder fragmentA;
 	
-	protected List<AttributeScope> attributesLHS;
+	protected IScopeRecorder fragmentB;
 	
-	protected List<AttributeScope> attributesRHS;
+	protected EditRuleSignature signature;
 	
-	public EditRule(String name, 
-			DifferenceSlice differenceSlice, IReferenceFilter referenceFilter,
-			List<AttributeScope> attributesLHS, List<AttributeScope> attributesRHS) {
+	public EditRule(String name, SymmetricDifference difference,
+			IScopeRecorder fragmentA, IScopeRecorder fragmentB) {
 		
 		this.name = name;
-		this.differenceSlice = differenceSlice;
-		this.referenceFilter = referenceFilter;
-		this.attributesLHS = attributesLHS;
-		this.attributesRHS = attributesRHS;
+		this.difference = difference;
+		this.fragmentA = fragmentA;
+		this.fragmentB = fragmentB;
 		
-		// TODO: Correct context during slicing!?
-		//       - Remember implicitly/explicitly added changed during slicing
-		correctContext(differenceSlice);
+		this.signature = new EditRuleSignature(this);
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public SymmetricDifference getDifference() {
+		return difference;
+	}
+	
+	public IScopeRecorder getFragmentA() {
+		return fragmentA;
+	}
+	
+	public IScopeRecorder getFragmentB() {
+		return fragmentB;
+	}
+	
+	public DifferenceSlice getDifferenceSlice() {
+		
+		if (differenceSlice == null) {
+			LearnEditRule learnEditRule = new LearnEditRule(difference);
+			differenceSlice = learnEditRule.learnByConsistentChange(
+					fragmentA.getScope(), 
+					new ScopeReferenceFilter(fragmentA), new ScopeAttributeFilter(fragmentA),
+					fragmentB.getScope(),
+					new ScopeReferenceFilter(fragmentB), new ScopeAttributeFilter(fragmentB));
+		}
+		
+		return differenceSlice;
+	}
+	
+	public Module getEditRule() {
+		
+		if (editRule == null) {
+			
+			// TODO: Correct context during slicing!?
+			//       - Remember implicitly/explicitly added changed during slicing
+			correctContext(getDifferenceSlice());
+			
+			// Convert difference to edit rule:
+			TransformationSetup trafoSetup = new TransformationSetup();
+			trafoSetup.setChanges(differenceSlice.getChanges());
+			trafoSetup.setCorrespondences(differenceSlice.getCorrespondences());
+			trafoSetup.setContextReferenceFilter(new MultiScopeReferenceFilter(fragmentA, fragmentB));
+			trafoSetup.setEditRuleName(getName());
+			
+			DifferenceToEditRule editRuleRecorder = new DifferenceToEditRule(trafoSetup) {
+				protected void createInitializationAttributes(EObject object, Node node) {}
+			};
+			
+			for (AttributeScope lhsAttribute : fragmentA.getEqualityTests()) {
+				editRuleRecorder.addAttribute(
+						lhsAttribute.getObject(), 
+						lhsAttribute.getValue(), 
+						lhsAttribute.getType());
+			}
+			
+			for (AttributeScope rhsAttribute : fragmentB.getEqualityTests()) {
+				editRuleRecorder.addAttribute(
+						rhsAttribute.getObject(), 
+						rhsAttribute.getValue(), 
+						rhsAttribute.getType());
+			}
+			
+			editRule = editRuleRecorder.getEditRule();
+		}
+		
+		return editRule;
 	}
 	
 	private static void correctContext(DifferenceSlice differenceSlice) {
@@ -115,140 +180,17 @@ public class EditRule {
 		return null;
 	}
 	
-	public String getName() {
-		return name;
+	public int getChangeCount() {
+		// TODO: Count atomic depending changes!
+		return getDifferenceSlice().getChanges().size();
 	}
 	
-	public void setName(String name) {
-		
-		if (editRule != null) {
-			editRule.setName(name);
-		}
-		
-		this.name = name;
+	public EditRuleSignature getSignature() {
+		return signature;
 	}
 	
-	public DifferenceSlice getDifferenceSlice() {
-		return differenceSlice;
-	}
-	
-	public Module getEditRule() {
-		
-		if (editRule == null) {
-			
-			TransformationSetup trafoSetup = new TransformationSetup();
-			trafoSetup.setChanges(differenceSlice.getChanges());
-			trafoSetup.setCorrespondences(differenceSlice.getCorrespondences());
-			trafoSetup.setContextReferenceFilter(referenceFilter);
-			trafoSetup.setEditRuleName(getName());
-			
-			DifferenceToEditRule editRuleRecorder = new DifferenceToEditRule(trafoSetup) {
-				protected void createInitializationAttributes(EObject object, Node node) {}
-			};
-			
-			for (AttributeScope lhsAttribute : attributesLHS) {
-				editRuleRecorder.addAttribute(
-						lhsAttribute.getObject(), 
-						lhsAttribute.getValue(), 
-						lhsAttribute.getType());
-			}
-			
-			for (AttributeScope rhsAttribute : attributesRHS) {
-				editRuleRecorder.addAttribute(
-						rhsAttribute.getObject(), 
-						rhsAttribute.getValue(), 
-						rhsAttribute.getType());
-			}
-			
-			editRule = editRuleRecorder.getEditRule();
-		}
-		
-		return editRule;
-	}
-	
-	public boolean isChangeEqual(EditRule otherEditRule) {
-		Set<Change> changeSetA = this.getDifferenceSlice().getChanges();
-		Set<Change> changeSetB = otherEditRule.getDifferenceSlice().getChanges(); 
-		
-		if (changeSetA.size() == changeSetB.size()) {
-			Set<Change> mappedChangesB = new HashSet<>();
-			
-			for (Change changeA : changeSetA) {
-
-				// TODO: minimal rule -> check Structure
-				// TODO: check if changes are type assignable -> integrate rules
-				if (getEqualChange(changeA, changeSetB, mappedChangesB) == null) {
-					return false;
-				}
-			}
-			
-			return true;
-		}
-		
-		return false;
-	}
-	
-	private Change getEqualChange(Change changeA, Set<Change> changeSetB, Set<Change> mappedChangesB) {
-		
-		for (Change changeB : changeSetB) {
-			if (!mappedChangesB.contains(changeB)) {
-				if (isEqualChange(changeA, changeB)) {
-					mappedChangesB.add(changeB);
-					return changeB;
-				}
-			}
-		}
-		return null;
-	}
-	
-	private boolean isEqualChange(Change changeA, Change changeB) {
-		
-		if (changeA.getClass() == changeB.getClass()) {
-			
-			if (changeA instanceof RemoveObject) {
-				if (((RemoveObject) changeA).getObj().eClass() == ((RemoveObject) changeB).getObj().eClass()) {
-					return true;
-				}
-			}
-			
-			else if (changeA instanceof RemoveReference) {
-				if (((RemoveReference) changeA).getType().eClass() == ((RemoveReference) changeB).getType().eClass()) {
-					if (((RemoveReference) changeA).getSrc().eClass() == ((RemoveReference) changeB).getSrc().eClass()) {
-						if (((RemoveReference) changeA).getTgt().eClass() == ((RemoveReference) changeB).getTgt().eClass()) {
-							return true;
-						}
-					}
-				}
-			}
-			
-			else if (changeA instanceof AddObject) {
-				if (((AddObject) changeA).getObj().eClass() == ((AddObject) changeB).getObj().eClass()) {
-					return true;
-				}
-			}
-			
-			else if (changeA instanceof AddReference) {
-				if (((AddReference) changeA).getType().eClass() == ((AddReference) changeB).getType().eClass()) {
-					if (((AddReference) changeA).getSrc().eClass() == ((AddReference) changeB).getSrc().eClass()) {
-						if (((AddReference) changeA).getTgt().eClass() == ((AddReference) changeB).getTgt().eClass()) {
-							return true;
-						}
-					}
-				}
-			}
-			
-			else if (changeA instanceof AttributeValueChange) {
-				if (((AttributeValueChange) changeA).getType().eClass() == ((AttributeValueChange) changeB).getType().eClass()) {
-					if (((AttributeValueChange) changeA).getObjA().eClass() == ((AttributeValueChange) changeB).getObjA().eClass()) {
-						if (((AttributeValueChange) changeA).getObjB().eClass() == ((AttributeValueChange) changeB).getObjB().eClass()) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		
-		return false;
+	public boolean isEqualEditRule(EditRule otherEditRule) {
+		return otherEditRule.getSignature().equals(getSignature());
 	}
 	
 	public void saveEditRule(URI uri) {

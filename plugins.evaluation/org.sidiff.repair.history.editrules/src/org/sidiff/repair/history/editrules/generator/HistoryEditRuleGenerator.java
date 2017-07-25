@@ -18,11 +18,7 @@ import org.sidiff.difference.technical.api.TechnicalDifferenceFacade;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
 import org.sidiff.matching.api.util.MatchingUtils;
-import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
 import org.sidiff.repair.history.editrules.learning.LearnEditRule;
-import org.sidiff.repair.history.editrules.learning.MultiScopeReferenceFilter;
-import org.sidiff.repair.history.editrules.learning.ScopeAttributeFilter;
-import org.sidiff.repair.history.editrules.learning.ScopeReferenceFilter;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.Version;
 import org.sidiff.validation.constraint.api.ValidationFacade;
@@ -33,6 +29,11 @@ import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 
 public class HistoryEditRuleGenerator {
+	
+	/**
+	 * Needs at least one sub-rule change to be complemented!
+	 */
+	protected static final int MIN_EDIT_RULE_SICE = 2;
 
 	protected History history;
 	
@@ -92,7 +93,7 @@ public class HistoryEditRuleGenerator {
 			throws InvalidModelException, NoCorrespondencesException {
 		
 		System.out.println("================================================================================");
-		System.out.println("================================== Validation ==================================");
+		System.out.println("=============================== ANALYZE HISTORY ================================");
 		System.out.println("================================================================================");
 		System.out.println("Model A: " + difference.getModelA().getURI());
 		System.out.println("Model B: " + difference.getModelB().getURI());
@@ -151,31 +152,12 @@ public class HistoryEditRuleGenerator {
 		// Consistency-Tree to Consistency-Fragments:
 		getFragments(validationPair[0]).forEachRemaining(fragmentA -> {
 			getFragments(validationPair[1]).forEachRemaining(fragmentB -> {
-				
-				// "Record" edit-rules:
-				LearnEditRule learnEditRule = new LearnEditRule(difference);
-				DifferenceSlice differenceSlice = learnEditRule.learnByConsistentChange(
-						fragmentA.getScope(), 
-						new ScopeReferenceFilter(fragmentA), new ScopeAttributeFilter(fragmentA),
-						fragmentB.getScope(),
-						new ScopeReferenceFilter(fragmentB), new ScopeAttributeFilter(fragmentB));
-				
-				// NOTE: Needs at least one sub-rule change to be complemented!
-				// TODO: Count atomic depending changes!
-				if (differenceSlice.getChanges().size() >= 2) {
 
-//					System.out.println();
-//					System.out.println("## " + validationPair[0].getRule().getName() + " ##");
-//					
-//					for (Change change : differenceSlice.getChanges()) {
-//						System.out.println("  " + change);
-//					}
+				String ruleName = LearnEditRule.generateName(getNonEmptyValidation(validationPair));
+				EditRule editRule = new EditRule(ruleName, difference, fragmentA, fragmentB);
 					
-					String ruleName = LearnEditRule.generateName(getNonEmptyValidation(validationPair));
-					EditRule editRule = new EditRule(ruleName, 
-							differenceSlice, new MultiScopeReferenceFilter(fragmentA, fragmentB),
-							fragmentA.getEqualityTests(), fragmentB.getEqualityTests());
-					
+				// NOTE: Needs at least one sub-rule change to be complemented!
+				if (editRule.getChangeCount() >= MIN_EDIT_RULE_SICE) {
 					editRules.add(editRule);
 				}
 			});
@@ -251,7 +233,7 @@ public class HistoryEditRuleGenerator {
 	private boolean containsEditRule(List<EditRule> rulebase, EditRule editRule) {
 		
 		for (EditRule containedEditRule : rulebase) {
-			if (containedEditRule.isChangeEqual(editRule)) {
+			if (containedEditRule.isEqualEditRule(editRule)) {
 				return true;
 			}
 		}
@@ -262,12 +244,23 @@ public class HistoryEditRuleGenerator {
 	protected void storeRulebase(String project, String folder) {
 		
 		for (EditRule editRule : rulebase) {
+			
 			System.out.println();
 			System.out.println("## " + editRule + " ##");
 
 			for (Change change : editRule.getDifferenceSlice().getChanges()) {
 				System.out.println("  " + change);
 			}
+			
+			System.out.println();
+			System.out.println("Fragment A:");
+			System.out.println();
+			System.out.println(editRule.getFragmentA());
+			
+			System.out.println();
+			System.out.println("Fragment B:");
+			System.out.println();
+			System.out.println(editRule.getFragmentB());
 			
 			editRule.saveEditRule(LearnEditRule.generateURI(editRule.getName(), history.eResource()));
 		}
