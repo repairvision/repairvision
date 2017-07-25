@@ -52,8 +52,8 @@ public class Equality extends Comparison {
 	@Override
 	public void required(IDecisionBranch parent, boolean expected) {
 		
-		// Record positive constant attribute equality tests:
-		if (expected) {
+		// Record constant attribute equality tests:
+//		if (expected) {
 			if (getTermA() instanceof Get) {
 				EStructuralFeature feature = ((Get) getTermA()).getFeature();
 				Object context = ((Get) getTermA()).getContext().getValue();
@@ -62,11 +62,12 @@ public class Equality extends Comparison {
 					if (getTermB() instanceof Constant) {
 						Sequence sequence = Sequence.nextSequence(parent);
 						ScopeNode scope = ScopeNode.getScopeNode(sequence);
-						scope.addEqualityTest((EObject) context, getTermB().getValue(), (EAttribute) feature);
+//						scope.addEqualityTest((EObject) context, getTermB().getValue(), (EAttribute) feature);
+						scope.addEqualityTest((EObject) context, ((EObject) context).eGet(feature), (EAttribute) feature);
 					}
 				}
 			}
-		}
+//		}
 		
 		super.required(parent, expected);
 	}
