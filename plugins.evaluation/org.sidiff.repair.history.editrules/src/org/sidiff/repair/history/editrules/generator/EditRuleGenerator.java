@@ -12,7 +12,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.common.emf.DocumentType;
-import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.correspondences.CorrespondencesUtil;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.difference.symmetric.Change;
@@ -22,6 +21,7 @@ import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
 import org.sidiff.matching.api.util.MatchingUtils;
 import org.sidiff.repair.history.editrules.learning.LearnEditRule;
+import org.sidiff.repair.history.editrules.util.IterableHistory;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RequiredValidation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
@@ -36,28 +36,26 @@ public class EditRuleGenerator {
 	 */
 	protected static final int MIN_EDIT_RULE_SICE = 2;
 
-	protected Iterable<Resource> history;
-	
 	protected List<EditRule> rulebase = new ArrayList<>();
 	
 	protected String project;
 	
 	protected String folder;
 	
-	public EditRuleGenerator(Iterable<Resource> history, String project, String folder) {
-		this.history = history;
+	public EditRuleGenerator(String project, String folder) {
 		this.project = project;
 		this.folder = folder;
 	}
 	
-	public void analyzeHistory(IProgressMonitor monitor) {
-		Iterator<Resource> vAIterator = history.iterator();
-		Iterator<Resource> vBIterator = history.iterator();
-		JUtil.offset(vBIterator, 1);
+	public void analyzeHistory(IterableHistory historys, IProgressMonitor monitor) {
 		
-		while (vBIterator.hasNext() && !monitor.isCanceled()) {
-			Resource vA = vAIterator.next();
-			Resource vB = vBIterator.next();
+		for (Resource[] history: historys) {
+			if (monitor.isCanceled()) {
+				break;
+			}
+			
+			Resource vA = history[0];
+			Resource vB = history[1];
 			
 			try {
 				
