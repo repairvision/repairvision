@@ -9,13 +9,13 @@ public class JUtil {
 		return Collections.singletonList(obj).iterator();
 	}
 	
-	public static <T> Iterable<T> toIterable(Iterator<T> it) {
-		return new Iterable<T>() {
-
-			@Override
-			public Iterator<T> iterator() {
-				return it;
+	public static void offset(Iterator<?> it, int startIndex) {
+		for (int i = 0; i < startIndex; i++) {
+			if (it.hasNext()) {
+				it.next();
+			} else {
+				break;
 			}
-		};
+		}
 	}
 }
