@@ -13,6 +13,7 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recorder.transformations.DifferenceToEditRule;
+import org.sidiff.editrule.recorder.transformations.TransformationSetup;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.MatchingModelFactory;
 import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
