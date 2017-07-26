@@ -194,7 +194,7 @@ public class EditRule {
 		return otherEditRule.getSignature().equals(getSignature());
 	}
 	
-	public void saveEditRule(URI uri) {
-		LearnEditRule.saveEditRule(getEditRule(), uri, true, false);
+	public void saveEditRule(URI uri, boolean openDiagram) {
+		LearnEditRule.saveEditRule(getEditRule(), uri, openDiagram, false);
 	}
 }

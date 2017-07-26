@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
@@ -195,6 +196,12 @@ public class LearnEditRule {
 				.appendFileExtension("henshin");
 	}
 	
+	public static URI generateURI(String workspacePath, String editRuleName) {
+		return URI.createPlatformResourceURI(workspacePath, true)
+				.appendSegment(editRuleName + "_execute")
+				.appendFileExtension("henshin");
+	}
+	
 	public static Module generateEditRule(String ruleName, DifferenceSlice differenceSlice) {
 		
 		TransformationSetup trafoSetup = new TransformationSetup();
@@ -219,7 +226,12 @@ public class LearnEditRule {
 				Resource diagramResource = HenshinDiagramUtil.createDiagram(editRule);
 				
 				if (showDiagram && HenshinDiagramUtil.maxNodeCount(editRule, 100)) {
-					HenshinDiagramUtil.openDiagram(diagramResource);
+					Display.getDefault().asyncExec(new Runnable() {
+						@Override
+						public void run() {
+							HenshinDiagramUtil.openDiagram(diagramResource);
+						}
+					});
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

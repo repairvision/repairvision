@@ -124,14 +124,18 @@ public class EditRuleSignature {
 	}
 	
 	private static String getAttributesSignature(EObject obj, List<AttributeScope> attributes) {
-		StringBuffer attributeSignature = new StringBuffer();
+//		StringBuffer attributeSignature = new StringBuffer();
+		List<String> attributeSignatures = new ArrayList<>();
 		
 		for (AttributeScope attribute : attributes) {
 			if (attribute.getObject() == obj) {
-				attributeSignature.append(getAttributeSignature(attribute));
+				attributeSignatures.add(getAttributeSignature(attribute));
 			}
 		}
 
+		Collections.sort(attributeSignatures);
+		StringBuffer attributeSignature = new StringBuffer();
+		attributeSignatures.forEach(attributeSignature::append);
 		return attributeSignature.toString();
 	}
 	
@@ -184,7 +188,7 @@ public class EditRuleSignature {
 	public boolean equals(Object obj) {
 		
 		if (obj instanceof EditRuleSignature) {
-			((EditRuleSignature) obj).getSignature().equals(getSignature());
+			return ((EditRuleSignature) obj).getSignature().equals(getSignature());
 		}
 		return false;
 	}

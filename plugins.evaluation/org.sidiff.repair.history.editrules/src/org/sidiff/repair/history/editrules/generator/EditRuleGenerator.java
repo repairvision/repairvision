@@ -6,10 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.common.emf.DocumentType;
+import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.correspondences.CorrespondencesUtil;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.difference.symmetric.Change;
@@ -19,8 +22,6 @@ import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
 import org.sidiff.matching.api.util.MatchingUtils;
 import org.sidiff.repair.history.editrules.learning.LearnEditRule;
-import org.sidiff.repair.historymodel.History;
-import org.sidiff.repair.historymodel.Version;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RequiredValidation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
@@ -28,25 +29,35 @@ import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 
-public class HistoryEditRuleGenerator {
+public class EditRuleGenerator {
 	
 	/**
 	 * Needs at least one sub-rule change to be complemented!
 	 */
 	protected static final int MIN_EDIT_RULE_SICE = 2;
 
-	protected History history;
+	protected Iterable<Resource> history;
 	
 	protected List<EditRule> rulebase = new ArrayList<>();
 	
-	public HistoryEditRuleGenerator(History history) {
+	protected String project;
+	
+	protected String folder;
+	
+	public EditRuleGenerator(Iterable<Resource> history, String project, String folder) {
 		this.history = history;
+		this.project = project;
+		this.folder = folder;
 	}
 	
-	public void analyzeHistory() {
-		for (int i = 0; i < history.getVersions().size() - 1; i++) {
-			Version vA = history.getVersions().get(i);
-			Version vB = history.getVersions().get(i + 1);
+	public void analyzeHistory(IProgressMonitor monitor) {
+		Iterator<Resource> vAIterator = history.iterator();
+		Iterator<Resource> vBIterator = history.iterator();
+		JUtil.offset(vBIterator, 1);
+		
+		while (vBIterator.hasNext() && !monitor.isCanceled()) {
+			Resource vA = vAIterator.next();
+			Resource vB = vBIterator.next();
 			
 			try {
 				
@@ -62,7 +73,7 @@ public class HistoryEditRuleGenerator {
 						MatchingModelCorrespondences.SERVICE_ID));
 				
 				SymmetricDifference difference = TechnicalDifferenceFacade.deriveTechnicalDifference(
-						vA.getModel(), vB.getModel(), diffSettings);
+						vA, vB, diffSettings);
 				
 				// Validation:
 				List<RequiredValidation[]> validationPairs = findValidationPairs(difference);
@@ -84,9 +95,15 @@ public class HistoryEditRuleGenerator {
 			} catch (InvalidModelException | NoCorrespondencesException e) {
 				e.printStackTrace();
 			}
+			
+			monitor.worked(1);
 		}
 		
-		System.out.println("\nFinished Edit-Rule Generation!");
+		if (!monitor.isCanceled()) {
+			System.out.println("\nFinished Edit-Rule Generation!");
+		} else {
+			System.out.println("\nEdit-Rule Generation Canceled!");
+		}
 	}
 	
 	protected List<RequiredValidation[]> findValidationPairs(SymmetricDifference difference) 
@@ -227,6 +244,7 @@ public class HistoryEditRuleGenerator {
 	
 		if (!containsEditRule(rulebase, editRule)) {
 			rulebase.add(editRule);
+			storeEditRule(editRule);
 		}
 	}
 	
@@ -241,29 +259,25 @@ public class HistoryEditRuleGenerator {
 		return false;
 	}
 	
-	protected void storeRulebase(String project, String folder) {
-		
-		for (EditRule editRule : rulebase) {
-			
-			System.out.println();
-			System.out.println("## " + editRule + " ##");
+	protected void storeEditRule(EditRule editRule) {
+		System.out.println();
+		System.out.println("## " + editRule + " ##");
 
-			for (Change change : editRule.getDifferenceSlice().getChanges()) {
-				System.out.println("  " + change);
-			}
-			
-			System.out.println();
-			System.out.println("Fragment A:");
-			System.out.println();
-			System.out.println(editRule.getFragmentA());
-			
-			System.out.println();
-			System.out.println("Fragment B:");
-			System.out.println();
-			System.out.println(editRule.getFragmentB());
-			
-			editRule.saveEditRule(LearnEditRule.generateURI(editRule.getName(), history.eResource()));
+		for (Change change : editRule.getDifferenceSlice().getChanges()) {
+			System.out.println("  " + change);
 		}
+
+		System.out.println();
+		System.out.println("Fragment A:");
+		System.out.println();
+		System.out.println(editRule.getFragmentA());
+
+		System.out.println();
+		System.out.println("Fragment B:");
+		System.out.println();
+		System.out.println(editRule.getFragmentB());
+
+		editRule.saveEditRule(LearnEditRule.generateURI(project + "/" + folder, editRule.getName()), false);
 	}
 	
 	@Override
