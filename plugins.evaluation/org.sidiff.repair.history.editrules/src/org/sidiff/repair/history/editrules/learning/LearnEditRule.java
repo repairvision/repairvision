@@ -187,7 +187,15 @@ public class LearnEditRule {
 	}
 	 
 	public static String generateName(Validation validation) {
-		return validation.getRule().getName() + "_" + EcoreUtil.generateUUID();
+		return generateName(validation, EcoreUtil.generateUUID());
+	}
+	
+	public static String generateName(Validation validation, String signature) {
+		return validation.getContext().eClass().getName() + "_" + signature;
+	}
+	
+	public static String generateDescription(Validation validation) {
+		return validation.getRule().getName();
 	}
 	
 	public static URI generateURI(String editRuleName, Resource relativeToResource) {

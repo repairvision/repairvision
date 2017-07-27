@@ -28,6 +28,8 @@ public class EditRule implements IEditRule {
 
 	protected String name;
 	
+	protected String description;
+	
 	protected Module editRule;
 	
 	protected SymmetricDifference difference;
@@ -53,6 +55,18 @@ public class EditRule implements IEditRule {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	public SymmetricDifference getDifference() {
@@ -115,6 +129,7 @@ public class EditRule implements IEditRule {
 			}
 			
 			editRule = editRuleRecorder.getEditRule();
+			editRule.setDescription(description);
 		}
 		
 		return editRule;

@@ -19,16 +19,10 @@
                         variable="selection">
                      <iterate
                            ifEmpty="false">
-                        <reference
-                              definitionId="org.eclipse.emf.modelhistory.fileextension">
-                        </reference>
+                        <adapt
+                              type="org.eclipse.core.resources.IResource">
+                        </adapt>
                      </iterate>
-                  </with>
-                  <with
-                        variable="activeEditorInput">
-                     <reference
-                           definitionId="org.eclipse.emf.modelhistory.fileextension">
-                     </reference>
                   </with>
                </or>
             </activeWhen>
@@ -45,6 +39,20 @@
                   commandId="org.sidiff.repair.history.editrules.generator"
                   style="push">
             </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <or>
+                  <with
+                        variable="selection">
+                     <iterate
+                           ifEmpty="false">
+                        <adapt
+                              type="org.eclipse.core.resources.IResource">
+                        </adapt>
+                     </iterate>
+                  </with>
+               </or>
+            </visibleWhen>
          </menu>
       </menuContribution>
    </extension>

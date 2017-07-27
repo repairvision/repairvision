@@ -28,12 +28,15 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.consistency.common.ui.dialogs.CreateProjectDialog;
+import org.sidiff.repair.history.editrules.generator.EditRuleGenerator.RulebaseLimitExceededException;
 import org.sidiff.repair.history.editrules.util.IterableHistory;
 import org.sidiff.repair.historymodel.History;
 
 public class EditRuleGeneratorHandler extends AbstractHandler implements IHandler {
 
 	protected static final String EDIT_RULE_FOLDER = "editrules";
+	
+	protected static final int RULEBASE_LIMIT = 2000; // Unlimited = -1
 	
 	protected class IterableWork<T> implements Iterable<T> {
 		
@@ -53,6 +56,8 @@ public class EditRuleGeneratorHandler extends AbstractHandler implements IHandle
 
 		// Read history:
 		List<IterableHistory> historys = getHistory(event);
+		
+//		historys.forEach(history -> System.out.println(history.iterator().next()[0]));
 
 		// Prepare workspace:
 		String projectName = "org.sidiff." + getModelingDomain(historys) + ".editrules.cpo";
@@ -79,9 +84,16 @@ public class EditRuleGeneratorHandler extends AbstractHandler implements IHandle
 					// Generate edit-rules:
 					monitor.beginTask("Analyze Model History for Edit Rules", getHistoryWork(historys));
 					EditRuleGenerator generator = new EditRuleGenerator(projectName, EDIT_RULE_FOLDER);
+					generator.setRulebaseLimit(RULEBASE_LIMIT);
 
 					for (IterableHistory history : historys) {
-						generator.analyzeHistory(history, monitor);
+						try {
+							generator.analyzeHistory(history, monitor);
+						} catch (RulebaseLimitExceededException e) {
+							UIUtil.showMessage("The edit rule limit (" 
+									+ RULEBASE_LIMIT + ") was exceeded: " + projectName);
+							return Status.CANCEL_STATUS;
+						}
 					}
 
 					// Report to user:
@@ -119,7 +131,8 @@ public class EditRuleGeneratorHandler extends AbstractHandler implements IHandle
 							public boolean visit(IResource resource) throws CoreException {
 								
 								// Is history?
-								if (resource.getFileExtension().equals("history")) {
+								if ((resource.getFileExtension() != null) && 
+										resource.getFileExtension().equals("history")) {
 									History history = EMFHandlerUtil.loadResource(
 											resource, History.class, new ResourceSetImpl());
 									

@@ -35,6 +35,8 @@ public class EditRuleGenerator {
 	 * Needs at least one sub-rule change to be complemented!
 	 */
 	protected static final int MIN_EDIT_RULE_SICE = 2;
+	
+	protected int rulebaseLimit = -1;
 
 	protected List<IEditRule> rulebase = new ArrayList<>();
 	
@@ -42,12 +44,25 @@ public class EditRuleGenerator {
 	
 	protected String folder;
 	
+	public class RulebaseLimitExceededException extends Exception {
+		private static final long serialVersionUID = 1L;
+	}
+	
 	public EditRuleGenerator(String project, String folder) {
 		this.project = project;
 		this.folder = folder;
 	}
+
+	public int getRulebaseLimit() {
+		return rulebaseLimit;
+	}
 	
-	public void analyzeHistory(IterableHistory historys, IProgressMonitor monitor) {
+	public void setRulebaseLimit(int rulebaseLimit) {
+		this.rulebaseLimit = rulebaseLimit;
+	}
+	
+	public void analyzeHistory(IterableHistory historys, IProgressMonitor monitor) 
+			throws RulebaseLimitExceededException {
 		
 		for (Resource[] history: historys) {
 			if (monitor.isCanceled()) {
@@ -170,7 +185,16 @@ public class EditRuleGenerator {
 
 				String ruleName = LearnEditRule.generateName(getNonEmptyValidation(validationPair));
 				EditRule editRule = new EditRule(ruleName, difference, fragmentA, fragmentB);
-					
+				
+				// Edit rule signature as rule name:
+				ruleName = LearnEditRule.generateName(
+						getNonEmptyValidation(validationPair), 
+						editRule.getSignature().getSignature());
+				
+				// Store corresponding validation in description:
+				String ruleDescription = LearnEditRule.generateDescription(getNonEmptyValidation(validationPair));
+				editRule.setDescription(ruleDescription);
+						
 				// NOTE: Needs at least one sub-rule change to be complemented!
 				if (editRule.getChangeCount() >= MIN_EDIT_RULE_SICE) {
 					editRules.add(editRule);
@@ -238,12 +262,18 @@ public class EditRuleGenerator {
 		}
 	}
 	
-	protected void integrateIntoRulebase(EditRule editRule) {
+	protected void integrateIntoRulebase(EditRule editRule) throws RulebaseLimitExceededException {
 	
+		// TODO: Integrate edit rule description!
+		
 		if (!containsEditRule(rulebase, editRule)) {
-//			rulebase.add(editRule);
-			rulebase.add(new EditRuleProxy(editRule));
-			storeEditRule(editRule);
+			if ((rulebaseLimit == -1) || (rulebase.size() < rulebaseLimit)) {
+//				rulebase.add(editRule);
+				rulebase.add(new EditRuleProxy(editRule));
+				storeEditRule(editRule);
+			} else {
+				throw new RulebaseLimitExceededException();
+			}
 		}
 	}
 	
