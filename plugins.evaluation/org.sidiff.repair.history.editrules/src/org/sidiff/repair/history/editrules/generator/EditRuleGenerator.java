@@ -185,12 +185,7 @@ public class EditRuleGenerator {
 
 				String ruleName = LearnEditRule.generateName(getNonEmptyValidation(validationPair));
 				EditRule editRule = new EditRule(ruleName, difference, fragmentA, fragmentB);
-				
-				// Edit rule signature as rule name:
-				ruleName = LearnEditRule.generateName(
-						getNonEmptyValidation(validationPair), 
-						editRule.getSignature().getSignature());
-				
+			
 				// Store corresponding validation in description:
 				String ruleDescription = LearnEditRule.generateDescription(getNonEmptyValidation(validationPair));
 				editRule.setDescription(ruleDescription);
