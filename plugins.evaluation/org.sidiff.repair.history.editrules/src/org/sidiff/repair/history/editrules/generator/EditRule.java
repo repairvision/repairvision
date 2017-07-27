@@ -24,7 +24,7 @@ import org.sidiff.repair.history.editrules.learning.ScopeReferenceFilter;
 import org.sidiff.validation.constraint.interpreter.scope.AttributeScope;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
-public class EditRule {
+public class EditRule implements IEditRule {
 
 	protected String name;
 	
@@ -190,7 +190,7 @@ public class EditRule {
 		return signature;
 	}
 	
-	public boolean isEqualEditRule(EditRule otherEditRule) {
+	public boolean isEqualEditRule(IEditRule otherEditRule) {
 		return otherEditRule.getSignature().equals(getSignature());
 	}
 	

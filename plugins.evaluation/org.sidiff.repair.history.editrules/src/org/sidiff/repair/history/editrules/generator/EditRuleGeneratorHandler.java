@@ -78,9 +78,9 @@ public class EditRuleGeneratorHandler extends AbstractHandler implements IHandle
 
 					// Generate edit-rules:
 					monitor.beginTask("Analyze Model History for Edit Rules", getHistoryWork(historys));
+					EditRuleGenerator generator = new EditRuleGenerator(projectName, EDIT_RULE_FOLDER);
 
 					for (IterableHistory history : historys) {
-						EditRuleGenerator generator = new EditRuleGenerator(projectName, EDIT_RULE_FOLDER);
 						generator.analyzeHistory(history, monitor);
 					}
 

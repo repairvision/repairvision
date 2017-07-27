@@ -36,7 +36,7 @@ public class EditRuleGenerator {
 	 */
 	protected static final int MIN_EDIT_RULE_SICE = 2;
 
-	protected List<EditRule> rulebase = new ArrayList<>();
+	protected List<IEditRule> rulebase = new ArrayList<>();
 	
 	protected String project;
 	
@@ -241,14 +241,15 @@ public class EditRuleGenerator {
 	protected void integrateIntoRulebase(EditRule editRule) {
 	
 		if (!containsEditRule(rulebase, editRule)) {
-			rulebase.add(editRule);
+//			rulebase.add(editRule);
+			rulebase.add(new EditRuleProxy(editRule));
 			storeEditRule(editRule);
 		}
 	}
 	
-	private boolean containsEditRule(List<EditRule> rulebase, EditRule editRule) {
+	private boolean containsEditRule(List<IEditRule> rulebase, EditRule editRule) {
 		
-		for (EditRule containedEditRule : rulebase) {
+		for (IEditRule containedEditRule : rulebase) {
 			if (containedEditRule.isEqualEditRule(editRule)) {
 				return true;
 			}

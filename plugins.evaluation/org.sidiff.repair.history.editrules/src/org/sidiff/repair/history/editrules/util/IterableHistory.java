@@ -79,7 +79,7 @@ public class IterableHistory extends IterableWork<Resource[]> {
 					}
 					return false;
 				}
-				return false;
+				return true;
 			}
 		};
 	}
