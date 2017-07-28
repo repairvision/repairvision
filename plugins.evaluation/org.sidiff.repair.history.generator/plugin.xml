@@ -46,6 +46,10 @@
             class="org.sidiff.repair.history.generator.handler.UMLValidationFOLFolderGenerator"
             commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.uml.fol.folder">
       </handler>
+      <handler
+            class="org.sidiff.repair.history.generator.handler.PrintUniqueMessagesHandler"
+            commandId="org.sidiff.repair.evaluation.command.printmessages">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -65,6 +69,10 @@
             </command>
             <command
                   commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.uml.fol.folder"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.sidiff.repair.evaluation.command.printmessages"
                   style="push">
             </command>
          </menu>
@@ -89,6 +97,10 @@
             description="Generates an History Model for a list of model versions"
             id="org.sidiff.repair.evaluation.command.generatehistorymodel.uml.fol.folder"
             name="Generate History (Folder, UML, FOL-Validation)">
+      </command>
+      <command
+            id="org.sidiff.repair.evaluation.command.printmessages"
+            name="Print Unique Validation Error Messages">
       </command>
    </extension>
 

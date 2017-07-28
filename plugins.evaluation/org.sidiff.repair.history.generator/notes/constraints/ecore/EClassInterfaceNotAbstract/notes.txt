@@ -1,0 +1,11 @@
+Constraint
+_UI_EClassInterfaceNotAbstract_diagnostic = A class that is an interface must also be abstract
+
+EcoreValidator.java:
+- validateEClass_InterfaceIsAbstract
+
+Editierschritte
+
+example 01:
+- set eClass.abstract=true && set eClass.interface=true
+- set eClass.abstract=false && set eClass.interface=false

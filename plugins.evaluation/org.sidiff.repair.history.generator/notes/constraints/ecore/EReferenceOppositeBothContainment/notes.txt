@@ -1,0 +1,20 @@
+Constraint
+_UI_EReferenceOppositeBothContainment_diagnostic = The opposite of a containment reference must not be a containment reference
+
+EcoreValidator.java:
+- validateEReference_ConsistentOpposite
+
+Kommentar:
+
+
+Editierschritte
+
+example 01: 
+Precondition: eClassA.eReferenceB.opposite = EClassB.eReferencA
+- set eClassA.eReferenceB.containment=true->false && set eClassB.eReferenceA.containmet=false->true
+
+
+example 01: 
+Precondition: eClassA.eReferenceB.containment=true
+- set EClassA.eReferenceB.opposite = EClassB.eReferenceA && set EClassB.eReferencA.containment=true->false
+- unset eClassA.eReferenceB.opposite && set eClassB.eReferenceA.containmet= true

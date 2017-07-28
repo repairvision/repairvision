@@ -1,0 +1,10 @@
+Constraint
+_UI_EClassAtMostOneID_diagnostic = The features ''{0}'' and ''{1}'' cannot both be IDs
+
+Editierschritte
+example 01
+- set eClass.eAttribute1.ID = false && set eClass.eAttribute2.ID = true
+
+example 02
+- set eClass.eAttribute.ID = false && set eSuperClass.eAttribute.ID = true
+- set eClass.eAttribute.ID = false && set eSubClass.eAttribute.ID = true

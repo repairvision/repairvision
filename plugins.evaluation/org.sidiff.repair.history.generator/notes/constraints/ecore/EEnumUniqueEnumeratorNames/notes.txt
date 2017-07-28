@@ -1,0 +1,14 @@
+Constraint
+_UI_EEnumUniqueEnumeratorNames_diagnostic = There may not be two enumerators named ''{0}''
+
+Editierschritte
+
+example 01:
+- set eEnum.eEnumLiteral01.name=VAR2->VAR1 && eEnum.eEnumLiteral02.name=VAR1->VAR2
+
+example 02:
+- create eEnum.eEnumLiteral01 with name=VAR && delete eEnum.eEnumLiteral02 with name=VAR
+
+example 03:
+- create eEnum.eEnumLiteral01 with name=VAR1 && set eEnum.eEnumLiteral02.name=VAR1->VAR2
+- delete eEnum.eEnumLiteral01 with name=VAR1 && set eEnum.eEnumLiteral02.name=VAR2->VAR1

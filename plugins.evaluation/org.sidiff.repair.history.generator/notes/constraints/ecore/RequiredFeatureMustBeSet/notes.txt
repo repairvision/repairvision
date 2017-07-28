@@ -1,0 +1,19 @@
+Constraint
+_UI_RequiredFeatureMustBeSet_diagnostic = The required feature ''{0}'' of ''{1}'' must be set
+
+EObjectValidator.java:
+- validate_MultiplicityConforms
+
+Kommentar:
+Betrifft i.d.R. die abgeleiteten Referenzen 'eReferenceType' und 'eAttributeType',
+werden ebenfalls durch die CPEOs für 'TheTypedElementMustHaveAType' abgedeckt.
+
+Editierschritte
+
+example 01:
+- create eClass.eAttribute && set eClass.eAttribute.eType
+- unset eClass.eAttribute.eType && delete eClass.eAttribute
+
+example 02:
+- create eClass.eReference && set eClass.eReference.eType
+- unset eClass.eReference.eType && delete eClass.eReference

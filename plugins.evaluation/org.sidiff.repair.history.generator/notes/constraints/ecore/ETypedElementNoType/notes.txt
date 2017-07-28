@@ -1,0 +1,22 @@
+Constraint
+_UI_ETypedElementNoType_diagnostic = The typed element must have a type
+
+EcoreValidator.java:
+- validateETypedElement_ValidType
+
+Kommentar:
+Example 01 u. 02 betrifft auch 'TheRequiredFeatureMustBeSet'
+
+Editierschritte
+
+example 01:
+- create eClass.eAttribute && set eClass.eAttribute.eType
+- unset eClass.eAttribute.eType && delete eClass.eAttribute
+
+example 02:
+- create eClass.eReference && set eClass.eReference.eType
+- unset eClass.eReference.eType && delete eClass.eReference
+
+example 03:
+- create eOperation.eParameter && set eOperation.eParameer.eType
+- unset eOperation.eParameter.eType && delete eOperation.eParameter
