@@ -2,6 +2,7 @@ package org.sidiff.validation.constraint.interpreter.scope;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.consistency.common.emf.ModelingUtil;
 
 public class AttributeScope {
 
@@ -44,6 +45,7 @@ public class AttributeScope {
 	
 	@Override
 	public String toString() {
-		return super.toString() + " (" + "object: " + object + " value: " + value + " type: " + type + ")";
+		return ModelingUtil.getName(object) + "." + type.getName() + " = " + value;
+//		return super.toString() + " (" + "object: " + object + " value: " + value + " type: " + type + ")";
 	}
 }
