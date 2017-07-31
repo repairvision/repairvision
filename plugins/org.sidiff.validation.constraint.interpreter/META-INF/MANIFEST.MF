@@ -3,11 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Abstract Repair Generator
 Bundle-SymbolicName: org.sidiff.validation.constraint.interpreter;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.emf.ecore,
- org.eclipse.equinox.app,
- org.eclipse.uml2.uml,
- org.sidiff.common.emf
 Export-Package: org.sidiff.validation.constraint.interpreter,
  org.sidiff.validation.constraint.interpreter.decisiontree,
  org.sidiff.validation.constraint.interpreter.formulas.binary,
@@ -18,3 +13,9 @@ Export-Package: org.sidiff.validation.constraint.interpreter,
  org.sidiff.validation.constraint.interpreter.scope,
  org.sidiff.validation.constraint.interpreter.terms,
  org.sidiff.validation.constraint.interpreter.terms.functions
+Require-Bundle: org.eclipse.emf.ecore,
+ org.eclipse.equinox.app,
+ org.eclipse.uml2.uml,
+ org.sidiff.common.emf,
+ org.sidiff.consistency.common
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
