@@ -53,7 +53,7 @@ public class Equality extends Comparison {
 	public void required(IDecisionBranch parent, boolean expected) {
 		
 		// Record constant attribute equality tests:
-//		if (expected) {
+		if (expected) {
 			if (getTermA() instanceof Get) {
 				EStructuralFeature feature = ((Get) getTermA()).getFeature();
 				Object context = ((Get) getTermA()).getContext().getValue();
@@ -67,7 +67,7 @@ public class Equality extends Comparison {
 					}
 				}
 			}
-//		}
+		}
 		
 		super.required(parent, expected);
 	}
