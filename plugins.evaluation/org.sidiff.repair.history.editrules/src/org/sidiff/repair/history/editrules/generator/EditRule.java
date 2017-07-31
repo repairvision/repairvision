@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.difference.symmetric.AddObject;
+import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.SymmetricDifference;
@@ -50,8 +51,27 @@ public class EditRule implements IEditRule {
 		this.fragmentA = fragmentA;
 		this.fragmentB = fragmentB;
 		
+		// FIXME: EXPERIMENTAL
+//		if (!containsCreateChanges()) {
+//			fragmentA.getEqualityTests().clear();
+//			fragmentB.getEqualityTests().clear();
+//		}
+		
 		this.signature = new EditRuleSignature(this);
 	}
+	
+//	private boolean containsCreateChanges() {
+//		for (Change change : getDifferenceSlice().getChanges()) {
+//			if (change instanceof AddObject) {
+//				return true;
+//			}
+//			
+//			else if (change instanceof AddReference) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	
 	public String getName() {
 		return name;
@@ -120,14 +140,14 @@ public class EditRule implements IEditRule {
 						lhsAttribute.getValue(), 
 						lhsAttribute.getType());
 			}
-			
+
 			for (AttributeScope rhsAttribute : fragmentB.getEqualityTests()) {
 				editRuleRecorder.addAttribute(
 						rhsAttribute.getObject(), 
 						rhsAttribute.getValue(), 
 						rhsAttribute.getType());
 			}
-			
+
 			editRule = editRuleRecorder.getEditRule();
 			editRule.setDescription(description);
 		}

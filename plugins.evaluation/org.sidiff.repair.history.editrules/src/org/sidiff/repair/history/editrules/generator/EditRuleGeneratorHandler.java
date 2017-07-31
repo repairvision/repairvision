@@ -141,6 +141,13 @@ public class EditRuleGeneratorHandler extends AbstractHandler implements IHandle
 										models.add(URI.createURI(version.getModelURI()));
 									});
 									
+									// FIXME: WORKAROUND
+//									if (!models.isEmpty()) {
+//										if (!models.get(0).lastSegment().contains("svn")) {
+//											Collections.reverse(models);
+//										}
+//									}
+									
 									histories.add(new IterableHistory(models));
 								}
 								
