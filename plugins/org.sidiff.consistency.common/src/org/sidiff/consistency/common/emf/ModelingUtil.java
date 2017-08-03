@@ -142,4 +142,12 @@ public class ModelingUtil {
 
 		return null;
 	}
+	
+	public static String getName(EObject obj) {
+		try {
+			return (String) obj.eGet(obj.eClass().getEStructuralFeature("name"));
+		} catch (Exception e) {
+			return obj.toString();
+		}
+	}
 }
