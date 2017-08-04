@@ -64,7 +64,7 @@ public class ConstraintLibraryRegistry {
 	public static List<IConstraintLibrary> getLibraries(String documentType) {
 
 		if (getLibraries().containsKey(documentType)) {
-			return Collections.unmodifiableList(getLibraries() .get(documentType));
+			return Collections.unmodifiableList(getLibraries().get(documentType));
 		} else {
 			return Collections.emptyList();
 		}
