@@ -2,6 +2,7 @@ package org.sidiff.repair.api.matching;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
+import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.eclipse.emf.henshin.model.Edge;
 
 public class EOEdgeMatch extends EOMatch {
@@ -59,5 +60,19 @@ public class EOEdgeMatch extends EOMatch {
 
 	public void setTgtModelBElement(EObject tgtModelBElement) {
 		this.tgtModelBElement = tgtModelBElement;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer string = new StringBuffer();
+		
+		string.append("<<" + getAction() + ">>");
+		string.append(" " + getEdge());
+		string.append(" A-SRC: " + ModelingUtil.getName(getSrcModelAElement()));
+		string.append(" B-SRC: " + ModelingUtil.getName(getSrcModelBElement()));
+		string.append(" A-TGT: " + ModelingUtil.getName(getTgtModelAElement()));
+		string.append(" B-TGT: " + ModelingUtil.getName(getTgtModelBElement()));
+		
+		return string.toString();
 	}
 }

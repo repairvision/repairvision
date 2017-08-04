@@ -2,6 +2,7 @@ package org.sidiff.repair.api.matching;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
+import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 
 public class EOAttributeMatch extends EOMatch {
@@ -17,7 +18,6 @@ public class EOAttributeMatch extends EOMatch {
 		this.object = object;
 		this.attribute = attribute;
 		this.value = value;
-		
 	}
 
 	public Attribute getAttribute() {
@@ -42,5 +42,17 @@ public class EOAttributeMatch extends EOMatch {
 
 	public void setValue(Object value) {
 		this.value = value;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer string = new StringBuffer();
+		
+		string.append("<<" + getAction() + ">>");
+		string.append(" " + getAttribute());
+		string.append(" Object: " + ModelingUtil.getName(getObject()));
+		string.append(" Value: " + getValue());
+		
+		return string.toString();
 	}
 }
