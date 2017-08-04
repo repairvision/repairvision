@@ -1,5 +1,6 @@
 package org.sidiff.consistency.common.emf;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -143,11 +144,26 @@ public class ModelingUtil {
 		return null;
 	}
 	
+	public static String getNames(Collection<? extends EObject> objects) {
+		StringBuffer string = new StringBuffer();
+		
+		string.append("[");
+		
+		for (EObject object : objects) {
+			string.append(getName(object));
+			string.append(", ");
+		}
+		string.replace(string.length() - 2, string.length(), "");
+		string.append("]");
+		
+		return string.toString();
+	}
+	
 	public static String getName(EObject obj) {
 		try {
 			return (String) obj.eGet(obj.eClass().getEStructuralFeature("name"));
 		} catch (Exception e) {
-			return obj.toString();
+			return "" + obj;
 		}
 	}
 }

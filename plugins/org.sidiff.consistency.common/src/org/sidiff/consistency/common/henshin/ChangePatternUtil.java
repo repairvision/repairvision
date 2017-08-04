@@ -62,6 +62,22 @@ public class ChangePatternUtil {
 		return changes;
 	}
 	
+	public static List<GraphElement> getPotentialChanges(Rule rule) {
+		List<GraphElement> changes = getChanges(rule);
+		changes.addAll(getSettingAttributes(rule));
+		return changes;
+	}
+	
+	public static List<Attribute> getSettingAttributes(Rule rule) {
+		List<Attribute> setAttributes = new ArrayList<>();
+		
+		for (Node createNode : HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes(rule)) {
+			setAttributes.addAll(createNode.getAttributes());
+		}
+		
+		return setAttributes;
+	}
+	
 	public static List<AttributePair> getChangingAttributes(Node node) {
 		List<AttributePair> changingAttributes = getAllChangingAttributes(node);
 	
