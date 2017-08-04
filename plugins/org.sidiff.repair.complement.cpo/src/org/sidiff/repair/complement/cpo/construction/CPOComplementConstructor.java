@@ -5,6 +5,7 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -94,7 +95,7 @@ public class CPOComplementConstructor extends ComplementConstructor {
 			}
 
 			// Create the complement = super - sub:
-			ComplementRule complementRule = createComplementRule(superRuleMatch);
+			ComplementRule complementRule = createComplementRule(superRuleMatch, Collections.emptyList());
 
 			if (complementRule != null) {
 				complementRules.add(complementRule);

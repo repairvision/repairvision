@@ -144,7 +144,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		for (Rule editRule : settings.getEditRules()) {
 			
 			// Filter edit-rules by abstract repairs:
-			RepairScope scope = repairFilter.getScope(ChangePatternUtil.getChanges(editRule));
+			RepairScope scope = repairFilter.getScope(ChangePatternUtil.getPotentialChanges(editRule));
 			
 			if (!scope.isEmpty()) {
 				for(ComplementRule complement : complementFinder.searchComplementRules(editRule, scope)) {

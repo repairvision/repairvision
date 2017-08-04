@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.model.Action;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
@@ -19,6 +22,8 @@ import org.sidiff.graphpattern.common.algorithms.IAlgorithm;
 import org.sidiff.graphpattern.matcher.IMatching;
 import org.sidiff.graphpattern.util.GraphPatternConstants;
 import org.sidiff.repair.api.matching.EOMatch;
+import org.sidiff.repair.api.matching.EONodeMatch;
+import org.sidiff.repair.api.matching.EONodeSingleMatch;
 import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.construction.ComplementConstructor;
 import org.sidiff.repair.complement.construction.ComplementRule;
@@ -143,7 +148,8 @@ public class ComplementFinder implements IAlgorithm {
 			
 			// Store new complement rule:
 			if (!editRuleMatch.isEmpty()) {
-				ComplementRule complementRule = complementConstructor.createComplementRule(editRuleMatch);
+				ComplementRule complementRule = complementConstructor.createComplementRule(
+						editRuleMatch, getRepairableAttributes(editRuleMatch, scope));
 				
 				if (complementRule != null) {
 					complements.add(complementRule);
@@ -157,6 +163,28 @@ public class ComplementFinder implements IAlgorithm {
 		}
 		
 		return complements;
+	}
+	
+	/**
+	 * @return All << set >> attibutes in << create >> nodes which overlaps with
+	 *         the abstract repair actions (type and context object).
+	 */
+	private List<Attribute> getRepairableAttributes(List<EOMatch> editRuleMatch, RepairScope scope) {
+		List<Attribute> repairableAttributes = new ArrayList<>();
+		
+		for (EOMatch match : editRuleMatch) {
+			if (match.getAction().equals(Action.Type.CREATE) && (match instanceof EONodeSingleMatch)) {
+				for (Attribute setAttribute : ((EONodeMatch) match).getNode().getAttributes()) {
+					for (EObject matchedObj :scope.get(setAttribute)) {
+						if (((EONodeSingleMatch) match).getModelBElement() == matchedObj) {
+							repairableAttributes.add(setAttribute);
+						}
+					}
+				}
+			}
+		}
+		
+		return repairableAttributes;
 	}
 	
 	public boolean isSaveRecognitionRule() {
