@@ -171,7 +171,13 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			Change change = ((Change) parentElement);
 			
 			if (change instanceof AttributeChange) {
-				return new Object[] {((AttributeChange) change).matches[0] , ((AttributeChange) change).value};
+				AttributeChange avc = (AttributeChange) change;
+				
+				if (avc.value != null) {
+					return new Object[] {avc.matches[0], avc.value};
+				} else {
+					return new Object[] {avc.matches[0], avc.graphElement};
+				}
 			} else {
 				return change.matches;
 			}
