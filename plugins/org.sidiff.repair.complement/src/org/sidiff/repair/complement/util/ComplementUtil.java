@@ -1,10 +1,11 @@
 package org.sidiff.repair.complement.util;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyAttribute;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRemoteAttribute;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRemoteNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 
