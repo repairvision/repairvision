@@ -1,6 +1,6 @@
 package org.sidiff.repair.complement.util;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyAttribute;
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
@@ -182,6 +182,14 @@ public class ComplementUtil {
 		Rule rule = node.getGraph().getRule();
 		MappingList mappings = rule.getMappings();
 		
+		// attribute value change x -> y:
+		Attribute remoteAttribute = getRemoteAttribute(attribute);
+		
+		if (remoteAttribute != null) {
+			remoteAttribute.getNode().getAttributes().remove(remoteAttribute);
+		}
+		
+		// make attribute preserve:
 		Node remoteNode = getRemoteNode(mappings, node);
 		assert (remoteNode != null);
 		
