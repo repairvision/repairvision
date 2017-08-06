@@ -14,6 +14,7 @@ import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.repair.api.matching.EOAttributeMatch;
 import org.sidiff.repair.api.matching.EOEdgeMatch;
 import org.sidiff.repair.api.matching.EOMatch;
 import org.sidiff.repair.api.matching.EONodeSingleMatch;
@@ -37,7 +38,7 @@ public class ContextComplementRule extends ComplementRule {
 	}
 
 	protected List<EditOperationMatching> createComplementMatches(List<EOMatch> partialSourceMatch) {
-		
+
 		// Create complement pre-match by partial source-rule match:
 		Match complementMatche = new MatchImpl(complementRule);
 
@@ -79,6 +80,14 @@ public class ContextComplementRule extends ComplementRule {
 					addMatch(complementMatche,
 							((EONodeSingleMatch) sourceRuleMatch).getNode(),
 							((EONodeSingleMatch) sourceRuleMatch).getModelBElement());
+				}
+			}
+			
+			else if (sourceRuleMatch instanceof EOAttributeMatch) {
+				if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
+					addMatch(complementMatche,
+							((EOAttributeMatch) sourceRuleMatch).getAttribute().getNode(),
+							((EOAttributeMatch) sourceRuleMatch).getObject());
 				}
 			}
 
