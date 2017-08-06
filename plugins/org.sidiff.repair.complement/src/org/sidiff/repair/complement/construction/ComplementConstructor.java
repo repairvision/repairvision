@@ -117,7 +117,7 @@ public abstract class ComplementConstructor {
 		}
 		
 		// Substitute already executed << create >> attributes:
-		if (!substituteCreateAttributes(sourceRuleMatching, copyTrace)) {
+		if (!substituteAttributeValueChanges(sourceRuleMatching, copyTrace)) {
 			return null;
 		}
 		
@@ -249,7 +249,7 @@ public abstract class ComplementConstructor {
 		return true;
 	}
 
-	protected boolean substituteCreateAttributes(Collection<EOMatch> sourceRuleMatching, Map<EObject, EObject> copyTrace) {
+	protected boolean substituteAttributeValueChanges(Collection<EOMatch> sourceRuleMatching, Map<EObject, EObject> copyTrace) {
 		
 		// Substitute already executed << create >> attributes:
 		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
