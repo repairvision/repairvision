@@ -1,20 +1,14 @@
 package org.sidiff.repair.complement.construction;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChangingAttributes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSNodes;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getPreservedNodes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +27,6 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.henshin.view.NodePair;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.repair.api.matching.EOAttributeMatch;
 import org.sidiff.repair.api.matching.EOEdgeMatch;
@@ -156,37 +149,13 @@ public abstract class ComplementRule {
 	public List<GraphElement> getHistoricChanges() {
 		
 		if (historicChanges == null) {
-			historicChanges = new ArrayList<>();
+			historicChanges = ChangePatternUtil.getPotentialChanges(sourceRule);
 			
-			for (Node deleteNode : getLHSMinusRHSNodes(sourceRule)) {
-				if (!getComplementingChanges().contains(getTrace(deleteNode))) {
-					historicChanges.add(deleteNode);
-				}
-			}
-			
-			for (Edge deleteEdge : getLHSMinusRHSEdges(sourceRule)) {
-				if (!getComplementingChanges().contains(getTrace(deleteEdge))) {
-					historicChanges.add(deleteEdge);
-				}
-			}
-			
-			for (Node createNode : getRHSMinusLHSNodes(sourceRule)) {
-				if (!getComplementingChanges().contains(getTrace(createNode))) {
-					historicChanges.add(createNode);
-				}
-			}
-			
-			for (Edge createEdge : getRHSMinusLHSEdges(sourceRule)) {
-				if (!getComplementingChanges().contains(getTrace(createEdge))) {
-					historicChanges.add(createEdge);
-				}
-			}
-			
-			for (NodePair preserveNode : getPreservedNodes(sourceRule)) {
-				for (Attribute changingAttr : getChangingAttributes(preserveNode.getLhsNode(), preserveNode.getRhsNode())) {
-					if (!getComplementingChanges().contains(getTrace(changingAttr))) {
-						historicChanges.add(changingAttr);
-					}
+			for (Iterator<GraphElement> iterator = historicChanges.iterator(); iterator.hasNext();) {
+				GraphElement potentialHistoricChanges = iterator.next();
+				
+				if (getComplementingChanges().contains(getTrace(potentialHistoricChanges))) {
+					iterator.remove();
 				}
 			}
 		}
@@ -363,6 +332,17 @@ public abstract class ComplementRule {
 		}
 	}
 	
+	public GraphElement getTrace(GraphElement sourceGraphElement) {
+		if (sourceGraphElement instanceof Node) {
+			return getTrace((Node) sourceGraphElement);
+		} else if (sourceGraphElement instanceof Edge) {
+			return getTrace((Edge) sourceGraphElement);
+		} else if (sourceGraphElement instanceof Attribute) {
+			return getTrace((Attribute) sourceGraphElement);
+		}
+		return null;
+	}
+	
 	public Node getTrace(Node sourceNode) {
 		assert ((sourceNode == null) ||(sourceNode.getGraph().getRule() == sourceRule));
 		Node lhsNodeTrace = lhsTrace.get(sourceNode);
@@ -405,99 +385,4 @@ public abstract class ComplementRule {
 		
 		return null;
 	}
-
-// TODO: ACs
-//	//// Handle application conditions ////
-//	
-//	public boolean recheckApplicationCondition(
-//			NestedCondition applicationCondition, ComplementMatch complementPreMatch) {
-//		
-//		Rule minimumConclusion = getMinimumConclusion(applicationCondition);
-//		Match minimumPreMatch = getPreMatch(minimumConclusion, complementPreMatch);
-//		
-//		// Ignored AC -> Activate?
-//		if (complementPreMatch.getIgnoredACs().contains(applicationCondition)) {
-//			complementPreMatch.getIgnoredACs().remove(applicationCondition);
-//			complementPreMatch.getUnfulfilledACs().add(applicationCondition);
-//		}
-//		
-//		// Recheck AC:
-//		if (minimumPreMatch != null) {
-//			Iterator<Match> matchFinder = engine.findMatches(minimumConclusion, graph, minimumPreMatch).iterator();
-//			
-//			if (matchFinder.hasNext()) {
-//				complementPreMatch.getUnfulfilledACs().remove(applicationCondition);
-//				return true;
-//			}
-//		}
-//		
-//		return false;
-//	}
-//		
-//	private Rule getMinimumConclusion(NestedCondition applicationCondition) {
-//		Rule minConclusion = applicationConditions.get(applicationCondition);
-//		
-//		// Create minimum conclusion:
-//		if (minConclusion == null) {
-//			minConclusion = createMinimumConclusion(applicationCondition);
-//		}
-//		
-//		return minConclusion;
-//	}
-//	
-//	private Rule createMinimumConclusion(NestedCondition applicationCondition) {
-//		Rule minConclusion = HenshinFactory.eINSTANCE.createRule();
-//		
-//		Map<EObject, EObject> acCopy = ComplementUtil.deepCopy(applicationCondition);
-//		NestedCondition minConclusionAC = (NestedCondition) acCopy.get(applicationCondition);
-//		minConclusion.getLhs().getNestedConditions().add(minConclusionAC);
-//		
-//		for (Mapping acMapping : applicationCondition.getMappings()) {
-//			Node acContextNode = acMapping.getImage();
-//			
-//			if (HenshinConditionAnalysis.isACBoundaryNode(acContextNode)) {
-//				Node lhsBoundaryNode = acMapping.getOrigin();
-//				Node rhsBoundaryNode = getRHS(lhsBoundaryNode);
-//				NodePair preserveNode = new NodePair(lhsBoundaryNode, rhsBoundaryNode);
-//				
-//				// Copy minimal boundary:
-//				NodePair minConclusionPreserveNode = copyPreserveNodes(minConclusion, preserveNode, false);
-//				
-//				// Copy AC mapping:
-//				Mapping minConclusionACMapping = HenshinFactory.eINSTANCE.createMapping();
-//				minConclusionACMapping.setOrigin(minConclusionPreserveNode.getLhsNode());
-//				minConclusionACMapping.setImage((Node) acCopy.get(acContextNode));
-//				minConclusionAC.getMappings().add(minConclusionACMapping);
-//			}
-//		}
-//		
-//		return minConclusion;
-//	}
-//	
-//	// FIXME: Maybe we should check all ACs of the rule here and not only the latest unfulfilled!?
-//	public void recheckAllApplicationConditions(ComplementMatch contextMatch) {
-//		for (NestedCondition pac : contextMatch.getUnfulfilledACs()) {
-//			recheckApplicationCondition(pac, contextMatch);
-//		}
-//	}
-//	
-//	public void ignoreApplicationCondition(NestedCondition applicationCondition, ComplementMatch contextMatch) {
-//		contextMatch.getIgnoredACs().add(applicationCondition);
-//		contextMatch.getUnfulfilledACs().remove(applicationCondition);
-//		
-//		// Remove AC from complement-rule:
-//		applicationCondition.getConclusion().getNestedConditions().remove(applicationCondition);
-//	}
-//	
-//	private Match getPreMatch(Rule rule, ComplementMatch complementPreMatch) {
-//		Match preMatch = new MatchImpl(rule);
-//		
-//		for (Node lhsNode : rule.getLhs().getNodes()) {
-//			EObject nodePreMatch = complementPreMatch.getNodeMatches().get(lhsNode);
-//			assert (nodePreMatch != null) : "Missing context: " + lhsNode;
-//			preMatch.setNodeTarget(lhsNode, nodePreMatch);
-//		}
-//		
-//		return preMatch;
-//	}
 }
