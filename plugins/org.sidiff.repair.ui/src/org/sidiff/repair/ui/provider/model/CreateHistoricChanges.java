@@ -75,6 +75,7 @@ public class CreateHistoricChanges {
 		else if (editRuleMatch instanceof EOAttributeMatch) {
 			AttributeChange attChange = new AttributeChange();
 			
+			attChange.graphElement = graphElement;
 			attChange.value = ((EOAttributeMatch) editRuleMatch).getValue();
 			attChange.matches = new EObject[] {((EOAttributeMatch) editRuleMatch).getObject()};
 			
