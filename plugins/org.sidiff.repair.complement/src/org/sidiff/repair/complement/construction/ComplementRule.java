@@ -83,11 +83,6 @@ public abstract class ComplementRule {
 	 */
 	private List<EditOperationMatching> complementMatches;
 	
-//	/**
-//	 * Rules which check a single application condition of the complement rule.
-//	 */
-//	private Map<NestedCondition, Rule> applicationConditions = new HashMap<>();
-	
 	/**
 	 * The (Henshin) engine which applies the rules.
 	 */
