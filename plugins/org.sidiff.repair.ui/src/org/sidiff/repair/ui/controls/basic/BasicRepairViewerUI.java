@@ -25,18 +25,18 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
-import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.consistency.common.ui.util.NameUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
+import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.Activator;
 import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
 import org.sidiff.repair.ui.provider.RepairContentProvider;
-import org.sidiff.repair.ui.provider.RepairContentProvider.Change;
 import org.sidiff.repair.ui.provider.RepairLabelProvider;
+import org.sidiff.repair.ui.provider.model.Change;
 
 public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends BasicRepairUI<A> {
 

@@ -11,10 +11,10 @@ import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.util.NameUtil;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.ui.Activator;
-import org.sidiff.repair.ui.provider.RepairContentProvider.AttributeChange;
-import org.sidiff.repair.ui.provider.RepairContentProvider.Change;
-import org.sidiff.repair.ui.provider.RepairContentProvider.Container;
-import org.sidiff.repair.ui.provider.RepairContentProvider.ContextContainer;
+import org.sidiff.repair.ui.provider.model.AttributeChange;
+import org.sidiff.repair.ui.provider.model.Change;
+import org.sidiff.repair.ui.provider.model.Container;
+import org.sidiff.repair.ui.provider.model.ContextContainer;
 
 public class RepairLabelProvider extends LabelProvider {
 
