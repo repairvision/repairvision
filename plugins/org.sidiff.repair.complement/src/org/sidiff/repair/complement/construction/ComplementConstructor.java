@@ -49,20 +49,16 @@ public abstract class ComplementConstructor {
 	 * @param sourceRuleMatching
 	 *            A partial (edit-rule) matching of the partially executed
 	 *            source-rule.
-	 * @param settingAttributes
-	 *            Attributes that needs reinitialization (<< set >> attribute in
-	 *            << create >> node).
 	 * @return The rule which complements the partial partially executed
 	 *         source-rule or <code>null</code> if the complement-rule could not
 	 *         be constructed (e.g. dangling edges, no remaining changes).
 	 */
-	public ComplementRule createComplementRule(
-			List<EOMatch> sourceRuleMatching, List<Attribute> settingAttributes) {
+	public ComplementRule createComplementRule(List<EOMatch> sourceRuleMatching) {
 
 		long deriveComplements = System.currentTimeMillis();
 		
 		// Derive complement rule:
-		ComplementRule complement = deriveComplementRule(sourceRuleMatching, settingAttributes); 
+		ComplementRule complement = deriveComplementRule(sourceRuleMatching); 
 		
 		if (DebugUtil.statistic) {
 			System.out.println("########## Derive Complement: " + (System.currentTimeMillis() - deriveComplements) + "ms");
@@ -75,8 +71,7 @@ public abstract class ComplementConstructor {
 		return complement;
 	}
 	
-	private ComplementRule deriveComplementRule(
-			Collection<EOMatch> sourceRuleMatching, List<Attribute> settingAttributes) {
+	protected ComplementRule deriveComplementRule(Collection<EOMatch> sourceRuleMatching) {
 
 		// Create copy of the source rule:
 		Map<EObject, EObject> copyTrace = ModelingUtil.deepCopy(sourceRule);
@@ -107,7 +102,7 @@ public abstract class ComplementConstructor {
 		
 		// Substitute already executed << create >> nodes:
 		// NOTE: Make << create >> nodes << preserve >> before making << create >> edges << preserve >>!
-		if (!substituteCreateNodes(sourceRuleMatching, settingAttributes, copyTrace)) {
+		if (!substituteCreateNodes(sourceRuleMatching, copyTrace)) {
 			return null;
 		}
 		
@@ -156,8 +151,7 @@ public abstract class ComplementConstructor {
 		return true;
 	}
 
-	protected boolean substituteCreateNodes(Collection<EOMatch> sourceRuleMatching, 
-			List<Attribute> settingAttributes, Map<EObject, EObject> copyTrace) {
+	protected boolean substituteCreateNodes(Collection<EOMatch> sourceRuleMatching,  Map<EObject, EObject> copyTrace) {
 		
 		// Substitute already executed << create >> nodes:
 		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
@@ -167,22 +161,12 @@ public abstract class ComplementConstructor {
 
 				// Create-Node:
 				if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
-					// FIXME: Should we support this case: node is already << preserve >> in CPO ?
+					// FIXME: Should we support this case: node is already << preserve >> in CPO?
 //					assert isCreationNode(complementNode);
 					
+					// Transform create-node to preserve-node:
 					if (isCreationNode(complementNode)) {
-						
-						// Transform create-node to preserve-node:
-						Node lhsComplementNode = ComplementUtil.makePreserve(complementNode);
-						
-						// Make << set >> attributes:
-						for (Attribute complementAttribute : complementNode.getAttributes()) {
-							for (Attribute setAttribute : settingAttributes) {
-								if (copyTrace.get(setAttribute) == complementAttribute) {
-									lhsComplementNode.getAttributes().remove(getRemoteAttribute(complementAttribute));
-								}
-							}
-						}
+						ComplementUtil.makePreserve(complementNode);
 					} else {
 						return false;
 					}
