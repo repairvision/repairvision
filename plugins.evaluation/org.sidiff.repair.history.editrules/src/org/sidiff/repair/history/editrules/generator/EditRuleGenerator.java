@@ -215,7 +215,7 @@ public class EditRuleGenerator {
 		} else {
 			return new Iterator<IScopeRecorder>() {
 				
-				Iterator<List<? extends IDecisionNode>> decisions = validation.getRequiredTree().traversal();
+				Iterator<List<? extends IDecisionNode>> decisions = validation.getRequiredTree().combinations();
 				
 				@Override
 				public IScopeRecorder next() {
