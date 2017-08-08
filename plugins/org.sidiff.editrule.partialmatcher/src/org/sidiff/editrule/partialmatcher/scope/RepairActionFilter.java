@@ -209,7 +209,7 @@ public class RepairActionFilter {
 	 * 
 	 * @param changes
 	 *            The set of changes to test
-	 * @return <code>true</code> if the complement rule is a potential repair;
+	 * @return <code>true</code> if the changes are potential repairs;
 	 *         <code>false</code> otherwise.
 	 */
 	public boolean filter(Collection<GraphElement> changes, EditOperationMatching prematch) {

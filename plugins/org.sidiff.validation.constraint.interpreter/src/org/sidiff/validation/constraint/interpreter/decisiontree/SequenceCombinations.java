@@ -8,7 +8,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
-public class SequenceTraversal implements Iterator<List<? extends IDecisionNode>> {
+public class SequenceCombinations implements Iterator<List<? extends IDecisionNode>> {
 
 	private Sequence sequence;
 	
@@ -20,7 +20,7 @@ public class SequenceTraversal implements Iterator<List<? extends IDecisionNode>
 	
 	private Stack<List<? extends IDecisionNode>> next;
 	
-	public SequenceTraversal(Sequence sequence) {
+	public SequenceCombinations(Sequence sequence) {
 		this.sequence = sequence;
 		this.directChildren = sequence.getChildDecisions().listIterator();
 		
@@ -32,7 +32,7 @@ public class SequenceTraversal implements Iterator<List<? extends IDecisionNode>
 	private void completeNextDecision() {
 		
 		this.directChildren.forEachRemaining(child -> {
-			Iterator<List<? extends IDecisionNode>> childTraversal = child.traversal();
+			Iterator<List<? extends IDecisionNode>> childTraversal = child.combinations();
 			this.childIterator.push(childTraversal);
 			
 			if (childTraversal.hasNext()) {

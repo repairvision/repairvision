@@ -5,6 +5,11 @@ import java.util.Iterator;
 
 public class JUtil {
 
+	@SuppressWarnings("unchecked")
+	public static <T> Iterator<T> emptyIterator() {
+		return (Iterator<T>) Collections.emptyList().iterator();
+	}
+	
 	public static <T> Iterator<T> singeltonIterator(T obj) {
 		return Collections.singletonList(obj).iterator();
 	}

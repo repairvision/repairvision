@@ -33,14 +33,14 @@ public class Sequence extends DecisionBranch  {
 			}
 		}
 	}
-	
+
 	@Override
-	public String containerToString() {
-		return "(+)Sequence@" + Integer.toHexString(hashCode()) + ":";
+	public Iterator<List<? extends IDecisionNode>> combinations() {
+		return new SequenceCombinations(this);
 	}
 
 	@Override
-	public Iterator<List<? extends IDecisionNode>> traversal() {
-		return new SequenceTraversal(this);
+	public String containerToString() {
+		return "(+)Sequence@" + Integer.toHexString(hashCode()) + ":";
 	}
 }

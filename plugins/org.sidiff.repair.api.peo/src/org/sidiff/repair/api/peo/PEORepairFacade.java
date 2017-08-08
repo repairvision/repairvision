@@ -22,8 +22,9 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.partialmatcher.complement.ComplementFinder;
 import org.sidiff.editrule.partialmatcher.scope.RepairActionFilter;
 import org.sidiff.editrule.partialmatcher.scope.RepairScope;
-import org.sidiff.repair.api.IRepairPlan;
+import org.sidiff.editrule.partialmatcher.scope.SettingAttributeFilter;
 import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.matching.EditOperationMatching;
 import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.construction.ComplementRule;
@@ -155,7 +156,15 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 						// Filter complements by abstract repairs:
 						if (repairFilter.filter(complement.getComplementingChanges())) {
 							for (EditOperationMatching preMatch : complement.getComplementMatches()) {
-
+								
+								// Filter setting attributes that do not overlap with an repair action:
+								SettingAttributeFilter.filterSettingAttributes(
+										complement.getComplementRule(), preMatch, repairFilter);
+								
+								// Clear cache:
+								complement.setComplementingChanges(null);
+								complement.setHistoricChanges(null);
+								
 								// Filter complement with pre-match by abstract repairs:
 								if (repairFilter.filter(complement.getComplementingChanges(), preMatch)) {
 									repairCount++;

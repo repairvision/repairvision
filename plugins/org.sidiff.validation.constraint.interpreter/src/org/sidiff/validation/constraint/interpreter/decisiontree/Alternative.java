@@ -42,7 +42,7 @@ public class Alternative extends DecisionBranch {
 	}
 
 	@Override
-	public Iterator<List<? extends IDecisionNode>> traversal() {
-		return new AlternativeTraversal(this);
+	public Iterator<List<? extends IDecisionNode>> combinations() {
+		return new AlternativeCombinations(this);
 	}
 }

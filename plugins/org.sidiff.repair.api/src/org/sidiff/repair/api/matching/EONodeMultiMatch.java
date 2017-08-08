@@ -4,8 +4,8 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
-import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.eclipse.emf.henshin.model.Node;
+import org.sidiff.consistency.common.emf.ModelingUtil;
 
 public class EONodeMultiMatch extends EONodeMatch {
 
@@ -16,7 +16,7 @@ public class EONodeMultiMatch extends EONodeMatch {
 	public EONodeMultiMatch(Type action, Node node) {
 		super(action, node);
 	}
-
+	
 	public Collection<EObject> getModelAElements() {
 		return modelAElements;
 	}

@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class AlternativeTraversal implements Iterator<List<? extends IDecisionNode>> {
+public class AlternativeCombinations implements Iterator<List<? extends IDecisionNode>> {
 
 	private Alternative alternative;
 	
@@ -12,10 +12,10 @@ public class AlternativeTraversal implements Iterator<List<? extends IDecisionNo
 	
 	private Iterator<List<? extends IDecisionNode>> childIterator;
 	
-	public AlternativeTraversal(Alternative alternative) {
+	public AlternativeCombinations(Alternative alternative) {
 		this.alternative = alternative;
 		this.directChildren = alternative.getChildDecisions().iterator();
-		this.childIterator = directChildren.hasNext() ? directChildren.next().traversal() : null;
+		this.childIterator = directChildren.hasNext() ? directChildren.next().combinations() : null;
 	}
 	
 	public Alternative getAlternative() {
@@ -26,7 +26,7 @@ public class AlternativeTraversal implements Iterator<List<? extends IDecisionNo
 	public boolean hasNext() {
 		
 		while (directChildren.hasNext() && !childIterator.hasNext()) {
-			childIterator = directChildren.next().traversal();
+			childIterator = directChildren.next().combinations();
 		}
 		
 		return directChildren.hasNext() || ((childIterator != null) && childIterator.hasNext());

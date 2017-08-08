@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.GraphElement;
 
 public class EOAttributeMatch extends EOMatch {
 
@@ -18,6 +19,11 @@ public class EOAttributeMatch extends EOMatch {
 		this.object = object;
 		this.attribute = attribute;
 		this.value = value;
+	}
+	
+	@Override
+	public GraphElement getGraphElement() {
+		return attribute;
 	}
 
 	public Attribute getAttribute() {

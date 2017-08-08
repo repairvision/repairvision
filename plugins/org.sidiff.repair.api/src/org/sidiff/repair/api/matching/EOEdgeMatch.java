@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.GraphElement;
 
 public class EOEdgeMatch extends EOMatch {
 
@@ -20,6 +21,11 @@ public class EOEdgeMatch extends EOMatch {
 	public EOEdgeMatch(Type action, Edge edge) {
 		super(action);
 		this.edge = edge;
+	}
+	
+	@Override
+	public GraphElement getGraphElement() {
+		return edge;
 	}
 
 	public Edge getEdge() {

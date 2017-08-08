@@ -1,20 +1,22 @@
-package org.sidiff.editrule.partialmatcher.complement;
+package org.sidiff.editrule.partialmatcher.scope;
 
-import org.eclipse.emf.henshin.interpreter.Match;
+import java.util.Collections;
+
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.view.AttributePair;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
-import org.sidiff.editrule.partialmatcher.scope.RepairScope;
+import org.sidiff.repair.api.matching.EditOperationMatching;
 
 public class SettingAttributeFilter {
 
-	public boolean substituteSettingAttributes(Rule complementRule, Match match, RepairScope scope) {
+	public static boolean filterSettingAttributes(Rule complementRule, 
+			EditOperationMatching prematch, RepairActionFilter repairActionFilter) {
 		
 		// Keep only the given attributes in the complement rule:
 		// Get all << set >> attributes in << create >> nodes:
 		for(Attribute complementAttribute : ChangePatternUtil.getSettingAttributes(complementRule)) {
-			if (!isRepairableAttributes(complementAttribute, match, scope)) {
+			if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch)) {
 				complementAttribute.getNode().getAttributes().remove(complementAttribute);
 			}
 		}
@@ -23,18 +25,11 @@ public class SettingAttributeFilter {
 		for(AttributePair complementAttributePair : ChangePatternUtil.getChangingAttributes(complementRule)) {
 			Attribute complementAttribute = complementAttributePair.getRhsAttribute();
 			
-			if (!isRepairableAttributes(complementAttribute, match, scope)) {
+			if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch)) {
 				complementAttribute.getNode().getAttributes().remove(complementAttribute);
 			}
 		}
 
 		return true;
-	}
-	
-	protected boolean isRepairableAttributes(Attribute attribute, Match match, RepairScope scope) {
-		
-		// TODO!!!
-		
-		return false;
 	}
 }

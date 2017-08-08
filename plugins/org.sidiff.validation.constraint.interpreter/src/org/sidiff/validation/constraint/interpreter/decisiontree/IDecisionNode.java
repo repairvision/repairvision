@@ -5,7 +5,9 @@ import java.util.List;
 
 public interface IDecisionNode {
 	
-	Iterator<List<? extends IDecisionNode>> traversal();
+	Iterator<? extends IDecisionNode> traversal();
+	
+	Iterator<List<? extends IDecisionNode>> combinations();
 
 	String toString(int indent);
 }

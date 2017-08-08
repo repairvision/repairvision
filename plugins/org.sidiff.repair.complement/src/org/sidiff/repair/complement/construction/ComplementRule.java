@@ -8,9 +8,9 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -144,31 +144,52 @@ public abstract class ComplementRule {
 	public List<GraphElement> getHistoricChanges() {
 		
 		if (historicChanges == null) {
-			historicChanges = ChangePatternUtil.getPotentialChanges(sourceRule);
 			
-			for (Iterator<GraphElement> iterator = historicChanges.iterator(); iterator.hasNext();) {
-				GraphElement potentialHistoricChanges = iterator.next();
-				
-				if (getComplementingChanges().contains(getTrace(potentialHistoricChanges))) {
-					iterator.remove();
-				}
-			}
+//			// Source-Rule - Complement-Rule:
+//			historicChanges = ChangePatternUtil.getPotentialChanges(sourceRule);
+//			
+//			for (Iterator<GraphElement> iterator = historicChanges.iterator(); iterator.hasNext();) {
+//				GraphElement potentialHistoricChanges = iterator.next();
+//				
+//				if (getComplementingChanges().contains(getTrace(potentialHistoricChanges))) {
+//					iterator.remove();
+//				}
+//			}
+			
+			return sourceMatch.stream().map(EOMatch::getGraphElement).collect(Collectors.toList());
 		}
 		
 		return historicChanges;
 	}
 	
 	/**
-	 * @return All missing changes of the corresponding edit-rule.
+	 * @param historicChanges
+	 *            All already applied changes of the corresponding edit-rule.
+	 */
+	public void setHistoricChanges(List<GraphElement> historicChanges) {
+		this.historicChanges = historicChanges;
+	}
+	
+	/**
+	 * @return All complementing changes of the corresponding edit-rule.
 	 */
 	public List<GraphElement> getComplementingChanges() {
 		
 		if (complementingChanges == null) {
-			complementingChanges = ChangePatternUtil.getChanges(complementRule);
+			complementingChanges = ChangePatternUtil.getPotentialChanges(complementRule);
 		}
 		
 		return complementingChanges;
 	}
+	
+	/**
+	 * @param complementingChanges
+	 *            All complementing changes of the corresponding edit-rule.
+	 */
+	public void setComplementingChanges(List<GraphElement> complementingChanges) {
+		this.complementingChanges = complementingChanges;
+	}
+	
 
 	/**
 	 * @param complementPreMatch

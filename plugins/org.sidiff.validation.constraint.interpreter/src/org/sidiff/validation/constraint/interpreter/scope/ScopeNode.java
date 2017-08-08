@@ -7,6 +7,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
@@ -65,6 +66,18 @@ public class ScopeNode implements IDecisionLeaf {
 	}
 	
 	@Override
+	public Iterator<? extends IDecisionNode> traversal() {
+		return JUtil.singeltonIterator(this);
+	}
+
+	@Override
+	public Iterator<List<? extends IDecisionNode>> combinations() {
+		List<? extends IDecisionNode> leafSingleton = Collections.singletonList(this);
+		List<List<? extends IDecisionNode>> leafIterable = Collections.singletonList(leafSingleton);
+		return leafIterable.iterator();
+	}
+	
+	@Override
 	public String toString(int indent) {
 		return scope.toString(indent);
 	}
@@ -72,12 +85,5 @@ public class ScopeNode implements IDecisionLeaf {
 	@Override
 	public String toString() {
 		return scope.toString();
-	}
-
-	@Override
-	public Iterator<List<? extends IDecisionNode>> traversal() {
-		List<? extends IDecisionNode> leafSingleton = Collections.singletonList(this);
-		List<List<? extends IDecisionNode>> leafIterable = Collections.singletonList(leafSingleton);
-		return leafIterable.iterator();
 	}
 }

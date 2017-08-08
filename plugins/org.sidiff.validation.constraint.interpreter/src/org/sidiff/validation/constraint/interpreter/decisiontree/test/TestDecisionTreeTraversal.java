@@ -13,7 +13,7 @@ public class TestDecisionTreeTraversal {
 		System.out.println(root);
 		
 		// List all possible decisions:
-		root.traversal().forEachRemaining(decision -> {
+		root.combinations().forEachRemaining(decision -> {
 			System.out.println("--------------------------------------------------");
 			decision.forEach(System.out::println);
 			System.out.println("--------------------------------------------------");

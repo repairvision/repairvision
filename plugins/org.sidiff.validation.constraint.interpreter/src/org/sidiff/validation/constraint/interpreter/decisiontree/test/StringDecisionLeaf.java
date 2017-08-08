@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 
@@ -16,7 +17,7 @@ public class StringDecisionLeaf implements IDecisionLeaf {
 	}
 	
 	@Override
-	public Iterator<List<? extends IDecisionNode>> traversal() {
+	public Iterator<List<? extends IDecisionNode>> combinations() {
 		List<? extends IDecisionNode> leafSingleton = Collections.singletonList(this);
 		List<List<? extends IDecisionNode>> leafIterable = Collections.singletonList(leafSingleton);
 		return leafIterable.iterator();
@@ -44,6 +45,11 @@ public class StringDecisionLeaf implements IDecisionLeaf {
 	@Override
 	public int compareTo(IDecisionLeaf o) {
 		return this.compareTo(o);
+	}
+
+	@Override
+	public Iterator<? extends IDecisionNode> traversal() {
+		return JUtil.singeltonIterator(this);
 	}
 
 }

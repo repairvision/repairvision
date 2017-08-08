@@ -1,5 +1,7 @@
 package org.sidiff.validation.constraint.interpreter.decisiontree;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,6 +24,20 @@ public abstract class DecisionBranch implements IDecisionBranch {
 	@Override
 	public List<IDecisionNode> getChildDecisions() {
 		return children;
+	}
+	
+	@Override
+	public Iterator<? extends IDecisionNode> traversal() {
+		List<IDecisionNode> nodes = new ArrayList<>();
+		nodes.add(this);
+		getDescendants(nodes);
+		return nodes.iterator();
+	}
+	
+	private void getDescendants(List<IDecisionNode> nodes) {
+		for (IDecisionNode child : children) {
+			child.traversal().forEachRemaining(nodes::add);
+		}
 	}
 	
 	protected void appendIndent(int indent, StringBuffer print) {

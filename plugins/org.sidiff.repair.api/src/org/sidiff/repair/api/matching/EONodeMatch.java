@@ -1,6 +1,7 @@
 package org.sidiff.repair.api.matching;
 
 import org.eclipse.emf.henshin.model.Action.Type;
+import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 
 public abstract class EONodeMatch extends EOMatch {
@@ -10,6 +11,11 @@ public abstract class EONodeMatch extends EOMatch {
 	public EONodeMatch(Type action, Node node) {
 		super(action);
 		this.node = node;
+	}
+	
+	@Override
+	public GraphElement getGraphElement() {
+		return node;
 	}
 
 	public Node getNode() {
