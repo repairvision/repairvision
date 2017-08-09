@@ -364,6 +364,10 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	}
 	
 	public void selectInconsistency(ValidationError inconsistency) {
+		
+		InfoConsole.printInfo(InfoConsole.getHorizontalLine());
+		InfoConsole.printInfo("Inconsistency: " + inconsistency);
+		
 		Version V_introduced = inconsistency.getIntroducedIn();
 		
 		if (V_introduced != null) {
