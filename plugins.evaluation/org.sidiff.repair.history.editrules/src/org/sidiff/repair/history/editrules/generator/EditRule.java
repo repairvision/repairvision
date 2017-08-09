@@ -9,7 +9,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.SymmetricDifference;
