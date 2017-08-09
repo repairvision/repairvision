@@ -83,7 +83,7 @@ public class LocalHistoryRepository extends BasicHistoryRepository {
 
 			@Override
 			public int compare(URI uriA, URI uriB) {
-				return getModel(uriA).date.compareTo(getModel(uriA).date);
+				return getModel(uriA).date.compareTo(getModel(uriB).date);
 			}
 		});
 	}
