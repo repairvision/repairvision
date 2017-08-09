@@ -28,6 +28,8 @@ public interface IHistoryRepository {
 	
 	ResourceSet getResourceSet();
 	
+	void sortHistory(List<URI> files);
+	
 	public static List<File> searchModelFiles(File root, String[] filters) {
 		List<File> files = new ArrayList<>();
 		

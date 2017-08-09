@@ -1,5 +1,7 @@
 package org.sidiff.repair.history.generator.repository;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
@@ -52,6 +54,17 @@ public class BasicHistoryRepository implements IHistoryRepository {
 	@Override
 	public Set<String> getReferencedModels() {
 		return uriHandler.getReferencedModels();
+	}
+	
+	@Override
+	public void sortHistory(List<URI> files) {
+		files.sort(new Comparator<URI>() {
+
+			@Override
+			public int compare(URI uriA, URI uriB) {
+				return uriA.toString().compareTo(uriB.toString());
+			}
+		});
 	}
 	
 	@Override

@@ -175,15 +175,24 @@ public class HistoryModelGenerator {
 		
 		// Load history:
 		System.out.println("############################## LOAD MODELS ##############################");
-		int revision = 0;
+		
+		// Convert files to URIs:
+		List<URI> modelURIs = new ArrayList<>();
 		
 		for (File modelFile : files) {
-			++revision;
 			System.out.println(modelFile);
 			
 			URI modelURI = EMFStorage.fileToUri(modelFile);
-			Resource resource = settings.getRepository().loadModel(modelURI);
-			Version version = generateVersion(revision, resource, settings);
+			modelURIs.add(modelURI);
+		}
+		
+		// Sort history:
+		settings.getRepository().sortHistory(modelURIs);
+		
+		// Load model data:
+		for (int i = 0; i < modelURIs.size(); i++) {
+			Resource resource = settings.getRepository().loadModel(modelURIs.get(i));
+			Version version = generateVersion(i, resource, settings);
 			
 			if (version != null) {
 				history.getVersions().add(version);

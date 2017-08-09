@@ -2,6 +2,7 @@ package org.sidiff.repair.history.generator.repository;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +75,17 @@ public class LocalHistoryRepository extends BasicHistoryRepository {
 			}
 				
 		}
+	}
+	
+	@Override
+	public void sortHistory(List<URI> files) {
+		files.sort(new Comparator<URI>() {
+
+			@Override
+			public int compare(URI uriA, URI uriB) {
+				return getModel(uriA).date.compareTo(getModel(uriA).date);
+			}
+		});
 	}
 	
 	@Override
