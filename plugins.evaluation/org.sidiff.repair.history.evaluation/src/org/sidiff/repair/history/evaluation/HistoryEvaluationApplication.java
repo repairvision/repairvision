@@ -36,6 +36,7 @@ import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.DecisionTreeUtil;
+import org.sidiff.consistency.common.ui.util.InfoConsole;
 
 public class HistoryEvaluationApplication extends HistoryRepairApplication {
 	
@@ -374,6 +375,7 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 				if (V_resolved != null) {
 					Version V_actual = getPrecessorRevision(V_resolved);
 					
+					printModels(V_historical, V_actual, V_resolved);
 					loadModels(V_historical, V_actual, V_resolved);
 					this.inconsistency = EvaluationUtil.getCorrespondingValidationError(inconsistency, V_actual);
 				} else {
@@ -390,6 +392,12 @@ public class HistoryEvaluationApplication extends HistoryRepairApplication {
 		} else {
 			WorkbenchUtil.showError("The version in which the inconsistency was introduced is missing!");
 		}
+	}
+	
+	private void printModels(Version historical, Version actual, Version resolved) {
+		InfoConsole.printInfo("Historical: " + historical);
+		InfoConsole.printInfo("Actual: "  + actual);
+		InfoConsole.printInfo("Resolved: " + resolved);
 	}
 	
 	public EObjectList getValidations() {
