@@ -101,12 +101,14 @@ public abstract class ComplementConstructor {
 		}
 		
 		// Substitute already executed << create >> nodes:
+		// -> Substitute already executed << create >> attributes!
 		// NOTE: Make << create >> nodes << preserve >> before making << create >> edges << preserve >>!
 		if (!substituteCreateNodes(sourceRuleMatching, copyTrace)) {
 			return null;
 		}
 		
 		// Substitute already executed edges << create >> edges:
+		// NOTE: << create >> target/source nodes are implicitly set to << preserve >> 
 		if (!substituteCreateEdges(sourceRuleMatching, copyTrace)) {
 			return null;
 		}
@@ -256,7 +258,6 @@ public abstract class ComplementConstructor {
 		// Check for << preserve >> nodes matched in A / not matched in B:
 		// NOTE: Sub: Remove Transition Target - Source: Remove-Transition vs. Remove-Transition-Loop
 		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
-			
 			
 			// No matching in model B?
 			if (((sourceRuleMatch instanceof EONodeSingleMatch) && (((EONodeSingleMatch) sourceRuleMatch).getModelBElement() == null))
