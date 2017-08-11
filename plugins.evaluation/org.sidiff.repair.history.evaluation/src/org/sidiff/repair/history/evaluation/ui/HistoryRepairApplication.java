@@ -1,4 +1,4 @@
-package org.sidiff.repair.history.evaluation.history;
+package org.sidiff.repair.history.evaluation.ui;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,13 +21,22 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
+import org.sidiff.repair.history.evaluation.data.RepairEvaluation;
+import org.sidiff.repair.history.evaluation.data.ResearchQuestions;
+import org.sidiff.repair.history.evaluation.driver.HistoryEvaluationDriver;
+import org.sidiff.repair.history.evaluation.driver.HistoryInfo;
+import org.sidiff.repair.history.evaluation.driver.InconsistencyEvaluationDriver;
+import org.sidiff.repair.history.evaluation.driver.LearnEditRuleDriver;
+import org.sidiff.repair.history.evaluation.driver.RepairedInconsistency;
+import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
+import org.sidiff.repair.historymodel.History;
+import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
 import org.sidiff.repair.ui.util.EditRuleUtil;
-import org.sidiff.validation.constraint.api.util.RepairValidation;
 
-public abstract class HistoryRepairApplication implements IRepairApplication<PEORepairJob, PEORepairSettings> {
+public class HistoryRepairApplication implements IRepairApplication<PEORepairJob, PEORepairSettings> {
 
 	protected IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade;
 	
@@ -35,11 +44,23 @@ public abstract class HistoryRepairApplication implements IRepairApplication<PEO
 
 	protected Collection<IResource> editRuleFiles = new ArrayList<>();
 	
-	protected Job repairCalculation;
+	protected Collection<Rule> editRules;
+	
+	protected Job calculation;
+	
+	protected HistoryInfo history;
+	
 	
 	protected PEORepairJob repairJob;
 	
-	protected Collection<Rule> editRules;
+	public void setHistory(History history) {
+		this.history = new HistoryInfo(history);
+	}
+	
+	public Object getValidations() {
+		return EvaluationUtil.toEObjectList(history
+				.getSupportedIntroducedAndResolvedUniqueInconsistencies(), "History");
+	}
 	
 	@Override
 	public void initialize(IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade) {
@@ -66,9 +87,24 @@ public abstract class HistoryRepairApplication implements IRepairApplication<PEO
 	}
 	
 	@Override
+	public void calculateRepairs() {
+		
+		calculation = new Job("Evaluate History") {
+			
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				HistoryEvaluationDriver.calculateRepairs(repairFacade, history, getEditRules(), getMatchingSettings());
+				return Status.OK_STATUS;
+			}
+		};
+		
+		calculation.schedule();
+	}
+	
+	@Override
 	public void recalculateRepairs() {
 		
-		repairCalculation = new Job("Recalculate Repairs") {
+		calculation = new Job("Recalculate Repairs") {
 			
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
@@ -77,18 +113,13 @@ public abstract class HistoryRepairApplication implements IRepairApplication<PEO
 				// Calculate repairs:
 				repairJob = repairFacade.getRepairs(
 						repairJob.getModelA(), repairJob.getModelB(),
-						new PEORepairSettings(editRules, getMatchingSettings()));
+						new PEORepairSettings(getEditRules(), getMatchingSettings()));
 				
 				// Copy undo history:
 				repairJob.copyHistory(lastRepairJob);
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
-					
-					// Clean up repair-trees:
-					for (RepairValidation validation : repairJob.getValidations()) {
-						validation.cleanUpRepairTree();
-					}
 					
 					// Show repairs:
 					fireResultChangeListener();
@@ -102,7 +133,58 @@ public abstract class HistoryRepairApplication implements IRepairApplication<PEO
 			}
 		};
 		
-		repairCalculation.schedule();
+		calculation.schedule();
+	}
+	
+	public void repairInconsistency(ValidationError selection) {
+		
+		calculation = new Job("Calculate Repairs") {
+			
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				
+				// Update UI:
+				Display.getDefault().syncExec(() -> {
+					
+					// Initialize:
+					RepairedInconsistency repaired = RepairedInconsistency.createRepairedInconsistency(selection);
+					RepairEvaluation evaluation = new RepairEvaluation();
+					ResearchQuestions rq = evaluation.createNewResearchQuestion(history.getHistory());
+					
+					// Calculate repairs:
+					repairJob = InconsistencyEvaluationDriver.calculateRepairs(
+							history, repairFacade, rq, repaired, 
+							getEditRules(), getMatchingSettings());
+					
+					// Show results:
+					fireResultChangeListener();
+					evaluation.dump();
+					
+					if (repairJob.getRepairs().isEmpty()) {
+						WorkbenchUtil.showMessage("No repairs found!");
+					}
+				});
+				
+				return Status.OK_STATUS;
+			}
+		};
+		
+		calculation.schedule();
+	}
+	
+	public void learnEditRule(ValidationError selection) {
+		
+		calculation = new Job("Learn Edit Rule") {
+			
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				RepairedInconsistency repaired = RepairedInconsistency.createRepairedInconsistency(selection);
+				LearnEditRuleDriver.learnEditRule(history, getMatchingSettings(), repaired);
+				return Status.OK_STATUS;
+			}
+		};
+		
+		calculation.schedule();
 	}
 	
 	public IResource addEditRule(IResource element) {
@@ -110,6 +192,7 @@ public abstract class HistoryRepairApplication implements IRepairApplication<PEO
 		
 		if ((element != null) && !editRuleFiles.contains(element)) {
 			editRuleFiles.add(element);
+			editRules = null;
 			return element;
 		}
 
@@ -129,7 +212,7 @@ public abstract class HistoryRepairApplication implements IRepairApplication<PEO
 			return null;
 		}
 		
-		if (repairCalculation.getState() == Job.RUNNING) {
+		if (calculation.getState() == Job.RUNNING) {
 			WorkbenchUtil.showMessage("Please wait for the repair calculation!");
 			return null;
 		}
@@ -140,6 +223,15 @@ public abstract class HistoryRepairApplication implements IRepairApplication<PEO
 	public IResource removeEditRule(IResource selection) {
 		editRuleFiles.remove(selection);
 		return selection;
+	}
+	
+	public Collection<Rule> getEditRules() {
+		
+		if (editRules == null) {
+			editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
+		}
+		
+		return editRules;
 	}
 
 	@Override
@@ -166,8 +258,9 @@ public abstract class HistoryRepairApplication implements IRepairApplication<PEO
 	@Override
 	public void clear() {
 		editRuleFiles.clear();
-		repairCalculation = null;
-		repairJob = null;
 		editRules = null;
+		calculation = null;
+		history = null;
+		repairJob = null;
 	}
 }

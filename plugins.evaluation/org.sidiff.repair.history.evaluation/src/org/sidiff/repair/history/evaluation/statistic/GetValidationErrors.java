@@ -61,7 +61,7 @@ public class GetValidationErrors implements IApplication {
 		Resource historyRes = rss.getResource(URI.createFileURI(EvaluationSetup.FOLDER + "/" + file), true);
 		History history = (History) historyRes.getContents().get(0);
 		
-		for (ValidationError inconsistency : EvaluationUtil.getValidations(history)) {
+		for (ValidationError inconsistency : EvaluationUtil.getAllUniqueValidations(history)) {
 			data.appendToRow(KEY, EvaluationUtil.getValidationID(inconsistency), inconsistency);
 		}
 	}

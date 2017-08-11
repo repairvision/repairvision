@@ -1,4 +1,4 @@
-package org.sidiff.repair.history.evaluation.history;
+package org.sidiff.repair.history.evaluation.ui;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -12,6 +12,8 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -23,14 +25,13 @@ import org.eclipse.ui.IWorkbenchPartSite;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.history.evaluation.Activator;
-import org.sidiff.repair.history.evaluation.HistoryEvaluationApplication;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.ui.controls.basic.BasicRepairViewerUI;
 import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.validation.ui.widgets.ValidationWidget;
 
-public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplication> {
+public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplication> {
 
 	/**
 	 * Shows the abstract repairs.
@@ -50,7 +51,7 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 	/**
 	 * Shows all differences.
 	 */
-	private TreeViewer historyViewer;
+	private TreeViewer historyInconsistenciesViewer;
 	
 	@Override
 	public void createPartControls(Composite parent, IWorkbenchPartSite site) {
@@ -75,17 +76,16 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 		Composite composite_historyViewer = new Composite(sashForm, SWT.BORDER);
 		composite_historyViewer.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		historyViewer = new TreeViewer(composite_historyViewer, SWT.H_SCROLL | SWT.V_SCROLL);
+		historyInconsistenciesViewer = new TreeViewer(composite_historyViewer, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		{
-			historyViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-			historyViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+			historyInconsistenciesViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+			historyInconsistenciesViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
 			
-			historyViewer.addDoubleClickListener(event -> {
+			historyInconsistenciesViewer.addDoubleClickListener(event -> {
 				Object selection = ((StructuredSelection) event.getSelection()).getFirstElement();
 
 				if (selection instanceof ValidationError) {
-					getApplication().selectInconsistency((ValidationError) selection);
-					getApplication().startEvaluationForInconsistency();
+					getApplication().repairInconsistency((ValidationError) selection);
 				} else {
 					WorkbenchUtil.showMessage("Please select a validation error!");
 				}
@@ -115,7 +115,7 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 					History history = (History) historyResource.getContents().get(0);
 					
 					getApplication().setHistory(history);
-					historyViewer.setInput(getApplication().getValidations());
+					historyInconsistenciesViewer.setInput(getApplication().getValidations());
 					
 					// Set models for matching settings...
 					if (history.getVersions().size() > 1) {
@@ -159,7 +159,15 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 		Action recordEditRule = new Action() {
 			@Override
 			public void run() {
-				getApplication().learnEditRule();
+				ISelection selection = historyInconsistenciesViewer.getSelection();
+				
+				if (selection instanceof IStructuredSelection) {
+					for (Object selected : ((IStructuredSelection) selection).toList()) {
+						if (selected instanceof ValidationError) {
+							getApplication().learnEditRule((ValidationError) selected);
+						}
+					}
+				}
 			}
 		};
 		
@@ -182,6 +190,7 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 
 	@Override
 	public void clear() {
+		super.clear();
 		
 		// Clear Application:
 		getApplication().clear();
@@ -191,7 +200,7 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryEvaluationApplic
 		editRules.clear();
 		histroyStoreInput.clear();
 		
-		historyViewer.setInput(null);
+		historyInconsistenciesViewer.setInput(null);
 	}
 	
 	@Override

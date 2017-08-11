@@ -3,7 +3,10 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Evaluation
 Bundle-SymbolicName: org.sidiff.repair.history.evaluation;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: .,
+ commons-csv-1.4/commons-csv-1.4.jar
 Bundle-Activator: org.sidiff.repair.history.evaluation.Activator
+Export-Package: org.sidiff.repair.history.evaluation.oracle
 Require-Bundle: org.eclipse.core.runtime,
  org.sidiff.repair.ui,
  org.sidiff.repair.api.peo,
@@ -19,4 +22,3 @@ Require-Bundle: org.eclipse.core.runtime,
  org.sidiff.repair.history.editrules
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.sidiff.repair.history.evaluation.oracle
