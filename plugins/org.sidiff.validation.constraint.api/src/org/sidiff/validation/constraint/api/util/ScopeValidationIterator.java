@@ -12,29 +12,31 @@ import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 public class ScopeValidationIterator extends ValidationIterator {
 	
 	public ScopeValidationIterator(
-			Resource modelResource, List<IConstraint> consistencyRules,
+			Resource modelResource, 
+			List<IConstraint> consistencyRules, IValidationFilter validationFilter,
 			boolean showPositiveResults, boolean showNegativeResults) {
 		
-		super(modelResource, consistencyRules, showPositiveResults, showNegativeResults);
+		super(modelResource, consistencyRules, validationFilter, showPositiveResults, showNegativeResults);
 	}
 	
 	protected void evaluate(EObject modelElement, EClass constraintContextType) {
 		
 		if (rules.containsKey(constraintContextType)) {
 			for (IConstraint crule : rules.get(constraintContextType)) {
-				
-				IScopeRecorder scopeRecorder = new ScopeRecorder();
-				crule.evaluate(modelElement, scopeRecorder);
-				
-				if (reportValidation(crule)) {
-					ScopeValidation newValidation = new ScopeValidation(
-							crule,
-							crule.getResult(), 
-							crule.getContextType(), 
-							crule.getContext(), 
-							scopeRecorder);
+				if (validationFilter.validate(modelElement, crule)) {
+					IScopeRecorder scopeRecorder = new ScopeRecorder();
+					crule.evaluate(modelElement, scopeRecorder);
 					
-					next.add(newValidation);
+					if (reportValidation(crule)) {
+						ScopeValidation newValidation = new ScopeValidation(
+								crule,
+								crule.getResult(), 
+								crule.getContextType(), 
+								crule.getContext(), 
+								scopeRecorder);
+						
+						next.add(newValidation);
+					}
 				}
 			}
 		}

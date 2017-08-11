@@ -87,6 +87,10 @@ public class ValidationWidget implements IUnsetableControl, IDisposableControl {
 		});
 	}
 	
+	public TreeViewer getViewer() {
+		return viewer_validation;
+	}
+	
 	public void setInput(Object input) {
 		viewer_validation.setInput(input);
 	}

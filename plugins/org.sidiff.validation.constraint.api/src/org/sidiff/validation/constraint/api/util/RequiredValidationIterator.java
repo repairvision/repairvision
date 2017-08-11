@@ -14,10 +14,11 @@ public class RequiredValidationIterator extends ValidationIterator {
 	protected boolean cleanupValidationTree = true;
 	
 	public RequiredValidationIterator(
-			Resource modelResource, List<IConstraint> consistencyRules,
+			Resource modelResource, 
+			List<IConstraint> consistencyRules, IValidationFilter validationFilter,
 			boolean cleanupValidationTree) {
 		
-		super(true, false);
+		super(validationFilter, true, false);
 		this.cleanupValidationTree = cleanupValidationTree;
 		init(modelResource, consistencyRules);
 	}

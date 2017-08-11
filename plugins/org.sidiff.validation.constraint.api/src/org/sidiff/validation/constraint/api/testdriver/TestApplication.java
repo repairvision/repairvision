@@ -11,6 +11,7 @@ import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
+import org.sidiff.validation.constraint.api.util.IValidationFilter;
 import org.sidiff.validation.constraint.api.util.ValidationIterator;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 
@@ -37,7 +38,8 @@ public class TestApplication implements IApplication {
 		
 		// Check consistency:
 		if (crule != null) {
-			new ValidationIterator(modelResource, Collections.singletonList(crule), true, true).forEachRemaining(validation -> {
+			new ValidationIterator(modelResource, Collections.singletonList(crule), 
+					IValidationFilter.DUMMY, true, true).forEachRemaining(validation -> {
 				System.out.print("Validation [");
 				System.out.print(validation.getResult());
 				System.out.println("] " 

@@ -1,10 +1,19 @@
 package org.sidiff.repair.api.peo;
 
 import java.util.Collection;
+import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.BasicRepairSettings;
+import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
+import org.sidiff.validation.constraint.api.util.ContextValidationFilter;
+import org.sidiff.validation.constraint.api.util.IValidationFilter;
+import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class PEORepairSettings extends BasicRepairSettings {
 
@@ -22,13 +31,23 @@ public class PEORepairSettings extends BasicRepairSettings {
 	 * Store generated recognition rules.
 	 */
 	private boolean saveRecognitionRules = false;
+	
+	/**
+	 * The consistency rules for the model validation.
+	 */
+	private List<IConstraint> consistencyRules;
+	
+	/**
+	 * Filters validations based on the consistency rule and the context element.
+	 */
+	private IValidationFilter validationFilter = IValidationFilter.DUMMY; 
 
 	public PEORepairSettings(Collection<Rule> editRules, DifferenceSettings differenceSettings) {
 		super();
 		this.editRules = editRules;
 		this.differenceSettings = differenceSettings;
 	}
-
+	
 	public Collection<Rule> getEditRules() {
 		return editRules;
 	}
@@ -51,5 +70,57 @@ public class PEORepairSettings extends BasicRepairSettings {
 
 	public void setSaveRecognitionRules(boolean saveRecognitionRules) {
 		this.saveRecognitionRules = saveRecognitionRules;
+	}
+	
+	public List<IConstraint> getConsistencyRules() {
+		return consistencyRules;
+	}
+	
+	public void setConsistencyRules(List<IConstraint> consistencyRules) {
+		this.consistencyRules = consistencyRules;
+	}
+	
+	/**
+	 * @param model
+	 *            The model that should be validated.
+	 * @return <code>true</code> if the setup could be performed;
+	 *         <code>false</code> otherwise.
+	 */
+	public boolean setupConsistencyRules(Resource model) {
+		consistencyRules = ConstraintLibraryUtil.getConsistencyRules(
+				ConstraintLibraryRegistry.getLibraries(DocumentType.getDocumentType(model)));
+		return (consistencyRules != null);
+	}
+	
+	public IValidationFilter getValidationFilter() {
+		return validationFilter;
+	}
+	
+	public void setValidationFilter(IValidationFilter validationFilter) {
+		this.validationFilter = validationFilter;
+	}
+	
+	/**
+	 * @param contextElements
+	 *            The context elements that should be validated.
+	 * @return <code>true</code> if the setup could be performed;
+	 *         <code>false</code> otherwise.
+	 */
+	public boolean setupValidationFilter(Collection<EObject> contextElements) {
+		this.validationFilter = new ContextValidationFilter(contextElements);
+		return true;
+	}
+	
+	/**
+	 * @param contextElements
+	 *            The context elements that should be validated.
+	 * @param consistencyRules
+	 *            The consistency rules that should be validated.
+	 * @return <code>true</code> if the setup could be performed;
+	 *         <code>false</code> otherwise.
+	 */
+	public boolean setupValidationFilter(Collection<EObject> contextElements, List<IConstraint> consistencyRules) {
+		setConsistencyRules(consistencyRules);
+		return setupValidationFilter(contextElements);
 	}
 }

@@ -16,6 +16,8 @@ public class ValidationIterator implements Iterator<Validation> {
 
 	protected Map<EClass, List<IConstraint>> rules = new HashMap<>();
 	
+	protected IValidationFilter validationFilter = IValidationFilter.DUMMY;
+	
 	protected LinkedList<Validation> next = new LinkedList<>();
 	
 	protected boolean showPositiveResults = true;
@@ -23,15 +25,21 @@ public class ValidationIterator implements Iterator<Validation> {
 	protected boolean showNegativeResults = true;
 	
 	public ValidationIterator(
-			Resource modelResource, List<IConstraint> consistencyRules,
+			Resource modelResource, 
+			List<IConstraint> consistencyRules, IValidationFilter validationFilter,
 			boolean showPositiveResults, 
 			boolean showNegativeResults) {
 		
-		this(showPositiveResults, showNegativeResults);
+		this(validationFilter, showPositiveResults, showNegativeResults);
 		init(modelResource, consistencyRules);
 	}
 	
-	protected ValidationIterator(boolean showPositiveResults, boolean showNegativeResults) {
+	protected ValidationIterator(
+			IValidationFilter validationFilter,
+			boolean showPositiveResults, 
+			boolean showNegativeResults) {
+		
+		this.validationFilter = validationFilter;
 		this.showPositiveResults = showPositiveResults;
 		this.showNegativeResults = showNegativeResults;
 	}
@@ -99,16 +107,18 @@ public class ValidationIterator implements Iterator<Validation> {
 		
 		if (rules.containsKey(constraintContextType)) {
 			for (IConstraint crule : rules.get(constraintContextType)) {
-				crule.evaluate(modelElement);
-				
-				if (reportValidation(crule)) {
-					Validation newValidation = new Validation(
-							crule,
-							crule.getResult(), 
-							crule.getContextType(), 
-							crule.getContext());
+				if (validationFilter.validate(modelElement, crule)) {
+					crule.evaluate(modelElement);
 					
-					next.add(newValidation);
+					if (reportValidation(crule)) {
+						Validation newValidation = new Validation(
+								crule,
+								crule.getResult(), 
+								crule.getContextType(), 
+								crule.getContext());
+						
+						next.add(newValidation);
+					}
 				}
 			}
 		}

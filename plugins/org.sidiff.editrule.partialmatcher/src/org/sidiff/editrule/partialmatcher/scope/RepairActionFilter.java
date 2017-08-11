@@ -18,12 +18,10 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.repair.api.matching.EditOperationMatching;
-import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
-import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
+import org.sidiff.validation.constraint.api.util.IValidationFilter;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
+import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
@@ -35,13 +33,14 @@ public class RepairActionFilter {
 	private Map<EClass, Map<EObject, List<RepairAction>>> repairs = new HashMap<>();
 	
 	private List<RepairValidation> validations = new ArrayList<>();
-
-	public RepairActionFilter(Resource model, boolean storeValidation) {
-		List<IConstraint> consistencyRules = ConstraintLibraryUtil.getConsistencyRules(
-				ConstraintLibraryRegistry.getLibraries(DocumentType.getDocumentType(model)));
+	
+	public RepairActionFilter(Resource model, 
+			List<IConstraint> consistencyRules, 
+			IValidationFilter validationFilter, 
+			boolean storeValidation) {
 
 		RepairValidationIterator validationIterator = new RepairValidationIterator(
-				model, consistencyRules, true);
+				model, consistencyRules, validationFilter, true);
 
 		// Collect all abstract repair actions:
 		validationIterator.forEachRemaining(validation -> {

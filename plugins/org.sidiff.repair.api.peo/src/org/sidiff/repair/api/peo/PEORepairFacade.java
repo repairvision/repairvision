@@ -50,6 +50,10 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 	
 	@Override
 	public PEORepairJob getRepairs(Resource modelA, Resource modelB, PEORepairSettings settings) {
+		return getRepairs(calculateDifference(modelA, modelB, settings), settings);
+	}
+	
+	public SymmetricDifference calculateDifference(Resource modelA, Resource modelB, PEORepairSettings settings) {
 		
 		// Disable merge imports:
 		settings.getDifferenceSettings().setMergeImports(false);
@@ -87,21 +91,26 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 			try {
 				differenceResource.save(Collections.EMPTY_MAP);
 			} catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
-		// Calculate repairs:
-		return getRepairs(difference, settings);
+		return difference;
 	}
 	
 	public PEORepairJob getRepairs(SymmetricDifference difference, PEORepairSettings settings) {
 		Resource modelA = difference.getModelA();
 		Resource modelB = difference.getModelB();
 		
+		// Setup consistency rules?
+		if (settings.getConsistencyRules() == null) {
+			settings.setupConsistencyRules(difference.getModelB());
+		}
+		
 		// Validate model and calculate abstract repairs:
 		long start = System.currentTimeMillis();
-		RepairActionFilter repairFilter = new RepairActionFilter(modelB, true);
+		RepairActionFilter repairFilter = new RepairActionFilter(modelB, 
+				settings.getConsistencyRules(), settings.getValidationFilter(), true);
 		System.out.println("EVALUATION[Validierung]: " + (System.currentTimeMillis() - start) + "ms");
 		System.out.println("EVALUATION[Validierung]: " + repairFilter.getValidations().size() + " Validierungen");
 		
