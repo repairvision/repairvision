@@ -100,16 +100,16 @@ public class LearnEditRule {
 	 * @param consistencyRule
 	 *            The violated consistency rule.
 	 */
-	public DifferenceSlice learnByResolvedInconsistency(EObject introducedContext, IConstraint consistencyRule) {
+	public DifferenceSlice learnByResolvedInconsistency(EObject invalidContext, IConstraint consistencyRule) {
 		
 		try {
 			
 			// Calculate mapping from introduced model version to resolved model version:
-			SymmetricDifference intorducedToResolved = deriveTechnicalDifference(
-					introducedContext.eResource(), modelCurrent, matchingSettings);
+			SymmetricDifference invalidToResolved = deriveTechnicalDifference(
+					invalidContext.eResource(), modelCurrent, matchingSettings);
 			
 			// Search resolved context element:
-			EObject contextResolved = intorducedToResolved.getCorrespondingObjectInB(introducedContext);
+			EObject contextResolved = invalidToResolved.getCorrespondingObjectInB(invalidContext);
 			
 			// Learn edit-rule:
 			return learnByConsistentChange(contextResolved, consistencyRule);
@@ -187,11 +187,19 @@ public class LearnEditRule {
 	}
 	 
 	public static String generateName(Validation validation) {
-		return generateName(validation, EcoreUtil.generateUUID());
+		return generateName(validation.getContext());
 	}
 	
 	public static String generateName(Validation validation, String signature) {
-		return validation.getContext().eClass().getName() + "_" + signature;
+		return generateName(validation.getContext(), signature);
+	}
+	
+	public static String generateName(EObject context) {
+		return generateName(context, EcoreUtil.generateUUID());
+	}
+	
+	public static String generateName(EObject context, String signature) {
+		return context.eClass().getName() + signature;
 	}
 	
 	public static String generateDescription(Validation validation) {
