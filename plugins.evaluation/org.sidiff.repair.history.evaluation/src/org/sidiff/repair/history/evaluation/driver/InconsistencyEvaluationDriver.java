@@ -16,6 +16,8 @@ import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.history.evaluation.data.ResearchQuestion03;
 import org.sidiff.repair.history.evaluation.data.ResearchQuestion04;
 import org.sidiff.repair.history.evaluation.data.ResearchQuestions;
+import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
+import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.DecisionTreeUtil;

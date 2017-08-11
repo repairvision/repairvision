@@ -6,6 +6,8 @@ import org.eclipse.emf.henshin.model.Module;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
 import org.sidiff.repair.history.editrules.learning.LearnEditRule;
+import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
+import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class LearnEditRuleDriver {

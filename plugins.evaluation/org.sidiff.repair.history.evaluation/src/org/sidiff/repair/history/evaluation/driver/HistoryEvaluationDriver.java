@@ -11,6 +11,8 @@ import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.history.evaluation.data.RepairEvaluation;
 import org.sidiff.repair.history.evaluation.data.ResearchQuestion01;
 import org.sidiff.repair.history.evaluation.data.ResearchQuestions;
+import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
+import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
 
 public class HistoryEvaluationDriver {
 	
