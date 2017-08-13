@@ -361,6 +361,8 @@ public class HistoryModelGenerator {
 			
 			if (id != null) {
 				invalidElementAIDs.add(id);
+			} else {
+				invalidElementAIDs.add(EcoreUtil.getURI(invalidElementA).fragment().toString());
 			}
 		}
 		
@@ -368,11 +370,14 @@ public class HistoryModelGenerator {
 		
 		for (EObject invalidElementB : validationErrorB.getInvalidElement()) {
 			String id = EMFUtil.getXmiId(invalidElementB);
-			
+
 			if (id != null) {
 				invalidElementBIDs.add(id);
+			} else {
+				invalidElementBIDs.add(EcoreUtil.getURI(invalidElementB).fragment().toString());
 			}
 		}
+		
 		return equalName && invalidElementAIDs.equals(invalidElementBIDs);
 	}
 }
