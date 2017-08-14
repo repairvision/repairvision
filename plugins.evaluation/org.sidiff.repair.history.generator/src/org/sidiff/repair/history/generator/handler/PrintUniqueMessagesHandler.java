@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.Map.Entry;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -25,6 +24,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.console.ConsolePlugin;
@@ -36,9 +37,30 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
+import org.sidiff.repair.historymodel.Version;
+
 
 
 public class PrintUniqueMessagesHandler extends AbstractHandler {
+	
+	private static MessageConsoleStream out = null;
+	
+	private static void initMessageConsoleStream(){
+		MessageConsole messageConsole = null;
+		String consoleName = "HISTORY REPORT";
+		ConsolePlugin plugin = ConsolePlugin.getDefault();
+		IConsoleManager conMan = plugin.getConsoleManager();
+		IConsole[] existing = conMan.getConsoles();
+		for (int i = 0; i < existing.length; i++)
+			if (consoleName.equals(existing[i].getName()))
+				messageConsole = (MessageConsole) existing[i];
+		// no console found, so create a new on
+		if(messageConsole == null){
+			messageConsole= new MessageConsole(consoleName, null);
+			conMan.addConsoles(new IConsole[] { messageConsole });
+		}
+		out = messageConsole.newMessageStream();
+	}
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -46,11 +68,12 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
+				initMessageConsoleStream();
 				ISelection selection = HandlerUtil.getCurrentSelection(event);
 				
 				if (selection instanceof IStructuredSelection){
 					IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-					Map<String, Integer> messages = new HashMap<String, Integer>();
+					Map<String,  List<ValidationError>> messages = new HashMap<String, List<ValidationError>>();
 					for (Iterator<Object> iterator = structuredSelection.iterator(); iterator.hasNext();) {
 						Object obj = iterator.next();
 						if(obj instanceof IProject){
@@ -61,12 +84,13 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 										IFile file = (IFile)resource;
 										if(file.getFileExtension().equals("history")){
 											History history = (History) EMFStorage.eLoad(EMFStorage.pathToUri(file.getLocation().toOSString()));
+											printHistoryInfo(history);
 											for(ValidationError validationError : history.getUniqueValidationErrors()){
 												if(!messages.containsKey(validationError.getName())){
-													messages.put(validationError.getName(), 0);
+													messages.put(validationError.getName(), new ArrayList<ValidationError>());
 												}
-												if(validationError.getPrec() == null )
-													messages.put(validationError.getName(), messages.get(validationError.getName()) + 1);
+												messages.get(validationError.getName()).add(validationError);
+													
 											}
 										}
 									}
@@ -79,47 +103,42 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 						
 					}
 					
-					List<Entry<String, Integer>> sortedList = new LinkedList<Entry<String,Integer>>(messages.entrySet());
+					List<Entry<String, List<ValidationError>>> sortedList = new LinkedList<Entry<String,List<ValidationError>>>(messages.entrySet());
 					// Defined Custom Comparator here
-					Collections.sort(sortedList, new Comparator<Entry<String, Integer>>() {
-						
-
+					Collections.sort(sortedList, new Comparator<Entry<String, List<ValidationError>>>() {
 
 						@Override
-						public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
-							return (o1.getValue())
-									.compareTo(o2.getValue());
+						public int compare(Entry<String, List<ValidationError>> o1, Entry<String, List<ValidationError>> o2) {
+							return o1.getValue().size()- o2.getValue().size();
 						}
 					});
 					
-					HashMap<String, Integer> sortedHashMap = new LinkedHashMap<String, Integer>();
-					for (Iterator<Entry<String, Integer>> iterator = sortedList.iterator(); iterator.hasNext();) {
-						Entry<String, Integer> entry = iterator.next();
+					HashMap<String, List<ValidationError>> sortedHashMap = new LinkedHashMap<String, List<ValidationError>>();
+					for (Iterator<Entry<String, List<ValidationError>>> iterator = sortedList.iterator(); iterator.hasNext();) {
+						Entry<String, List<ValidationError>> entry = iterator.next();
 						sortedHashMap.put(entry.getKey(), entry.getValue());
 					}
-
-				  
-					
-					String consoleName = "HISTORY REPORT";
-					MessageConsole messageConsole = null;
-					
-					ConsolePlugin plugin = ConsolePlugin.getDefault();
-					IConsoleManager conMan = plugin.getConsoleManager();
-					IConsole[] existing = conMan.getConsoles();
-					for (int i = 0; i < existing.length; i++)
-						if (consoleName.equals(existing[i].getName()))
-							messageConsole = (MessageConsole) existing[i];
-					// no console found, so create a new on
-					if(messageConsole == null){
-						messageConsole= new MessageConsole(consoleName, null);
-						conMan.addConsoles(new IConsole[] { messageConsole });
-					}
-					
 				
-					MessageConsoleStream out = messageConsole.newMessageStream();
 					Collections.reverse(sortedList);
-					for(Entry<String,Integer> entry : sortedList){
-						out.println(entry.getKey() + " (" + entry.getValue() + ")");
+					for(Entry<String,List<ValidationError>> entry : sortedList){
+						out.print(entry.getKey());
+						out.print(";");
+						out.print(entry.getValue().size() + ";");
+						Set<String> projects = new HashSet<String>();
+						for(ValidationError error : entry.getValue()){
+							projects.add(((History)error.eContainer().eContainer()).getName());
+						}
+						for(String s : projects){
+							out.print(s + ", ");
+						}
+						
+						int resolved = 0;
+						for(ValidationError error : entry.getValue()){
+							if(error.isResolved()){
+								resolved++;
+							}
+						}
+						out.print(";" + resolved + "\n");
 					}
 				}
 				return Status.OK_STATUS;
@@ -130,4 +149,66 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 		return null;
 	}
 	
+	private void printHistoryInfo(History history){
+		String historyName = history.getName();
+		out.println(historyName);
+		String header = "Validation Error; Message; Elements; Introduced in; Resolved in";
+		out.println(header);
+		List<ValidationError> introducedResolvedValidationErrors = new ArrayList<ValidationError>();
+		for(Version version : history.getVersions()){
+			if(!version.getValidationErrors().isEmpty()){
+				for(ValidationError validationError : version.getValidationErrors()){
+					if(validationError.getPrec() == null && validationError.isIntroduced() && validationError.isResolved()){
+						introducedResolvedValidationErrors.add(validationError);
+					}
+				}
+			}
+		}
+		for(ValidationError validationError : introducedResolvedValidationErrors){
+			String row = validationError.getName() + "; " + validationError.getMessage() + "; ";
+			for(int i = 0; i < validationError.getInvalidElement().size(); i++){
+				EObject invalidElement = validationError.getInvalidElement().get(i);
+				String signature = calculateSignature(invalidElement);
+				row += signature;
+				if(i<validationError.getInvalidElement().size()-1){
+					row += ", ";
+				}else{
+					row += "; ";
+				}
+			}
+		
+			row	+= validationError.getIntroducedIn().getName() + "; " + validationError.getResolvedIn().getName();
+			out.println(row);
+		}
+		out.println("\n\n");
+	}
+	
+	private static String calculateSignature(EObject eObject) {
+		
+		String signature = "";
+		
+		if(eObject.eContainer() != null){
+			signature = calculateSignature(eObject.eContainer()) + ".";
+		}
+		
+		EStructuralFeature nameFeature = eObject.eClass().getEStructuralFeature("name");
+		
+		boolean hasName = false; 
+		
+		if (nameFeature != null) {
+			Object nameValue = eObject.eGet(nameFeature);
+			
+			if (nameValue != null && nameValue instanceof String && !((String)nameValue).isEmpty()) {
+				signature += (String) nameValue;
+				hasName = true;
+			}
+		}
+		
+		if(!hasName){
+			// Remove Object ID if present:
+			signature += eObject.toString().replaceFirst("@.*?\\s", "").replaceAll("\\(.*\\)", "").replaceAll("\\s", "");
+		}
+		return signature;
+		
+	}
 }

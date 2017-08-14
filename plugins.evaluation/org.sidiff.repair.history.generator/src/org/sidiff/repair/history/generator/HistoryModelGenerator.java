@@ -192,7 +192,7 @@ public class HistoryModelGenerator {
 		// Load model data:
 		for (int i = 0; i < modelURIs.size(); i++) {
 			Resource resource = settings.getRepository().loadModel(modelURIs.get(i));
-			Version version = generateVersion(i, resource, settings);
+			Version version = generateVersion(i+1, resource, settings);
 			
 			if (version != null) {
 				history.getVersions().add(version);
