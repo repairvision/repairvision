@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -94,7 +92,12 @@ public class HistoryModelGenerator {
 	
 	public static String getProjectName(String projectPrefix, String inputPath) {
 		File modelFolder = new File(inputPath);
-		String name = modelFolder.getName().toLowerCase().split("\\.")[0];
+		String name = modelFolder.getName();
+		
+		if (modelFolder.getName().lastIndexOf(".") != -1) {
+			name = modelFolder.getName().toLowerCase().substring(0, modelFolder.getName().lastIndexOf("."));
+		}
+		
 		return projectPrefix + "." + name;
 	}
 	
@@ -192,8 +195,8 @@ public class HistoryModelGenerator {
 		// Load model data:
 		for (int i = 0; i < modelURIs.size(); i++) {
 			Resource resource = settings.getRepository().loadModel(modelURIs.get(i));
-			Version version = generateVersion(i+1, resource, settings);
-			
+			Version version = generateVersion(i + 1, resource, settings);
+
 			if (version != null) {
 				history.getVersions().add(version);
 			}
@@ -234,7 +237,7 @@ public class HistoryModelGenerator {
 			}
 		}
 		
-		generateIntroducedAndResolved(history);
+		generateIntroducedAndResolved(history, settings);
 		
 		return history;
 	}
@@ -301,7 +304,7 @@ public class HistoryModelGenerator {
 		}
 	}
 	
-	private void generateIntroducedAndResolved(History history) {
+	private void generateIntroducedAndResolved(History history, EvaluationSettings settings) {
 		for (Version versionA : history.getVersions()) {
 			if (!history.getSuccessorRevisions(versionA).isEmpty()) {
 				Version versionB = history.getSuccessorRevisions(versionA).get(0);
@@ -310,7 +313,7 @@ public class HistoryModelGenerator {
 					boolean hasCorresponding = false;
 					
 					for (ValidationError errorA : versionA.getValidationErrors()) {
-						if (isEqualValidationError(errorA, errorB)) {
+						if (settings.getValidator().matchValidationError(errorA, errorB)) {
 							errorB.setPrec(errorA);
 							hasCorresponding = true;
 							errorB.setIntroducedIn(errorA.getIntroducedIn());
@@ -335,7 +338,7 @@ public class HistoryModelGenerator {
 					boolean hasCorresponding = false;
 					
 					for (ValidationError errorB : versionB.getValidationErrors()) {
-						if (isEqualValidationError(errorA, errorB)) {
+						if (settings.getValidator().matchValidationError(errorA, errorB)) {
 							errorA.setSucc(errorB);
 							hasCorresponding = true;
 							errorA.setResolvedIn(errorB.getResolvedIn());
@@ -348,36 +351,5 @@ public class HistoryModelGenerator {
 				}
 			}
 		}
-	}
-	
-	private boolean isEqualValidationError(ValidationError validationErrorA, ValidationError validationErrorB) {
-		
-		// replace all object runtime representation in the message
-		boolean equalName = validationErrorA.getName().equals(validationErrorB.getName());
-		Set<String> invalidElementAIDs = new HashSet<>();
-		
-		for (EObject invalidElementA : validationErrorA.getInvalidElement()) {
-			String id = EMFUtil.getXmiId(invalidElementA);
-			
-			if (id != null) {
-				invalidElementAIDs.add(id);
-			} else {
-				invalidElementAIDs.add(EcoreUtil.getURI(invalidElementA).fragment().toString());
-			}
-		}
-		
-		Set<String> invalidElementBIDs = new HashSet<>();
-		
-		for (EObject invalidElementB : validationErrorB.getInvalidElement()) {
-			String id = EMFUtil.getXmiId(invalidElementB);
-
-			if (id != null) {
-				invalidElementBIDs.add(id);
-			} else {
-				invalidElementBIDs.add(EcoreUtil.getURI(invalidElementB).fragment().toString());
-			}
-		}
-		
-		return equalName && invalidElementAIDs.equals(invalidElementBIDs);
 	}
 }

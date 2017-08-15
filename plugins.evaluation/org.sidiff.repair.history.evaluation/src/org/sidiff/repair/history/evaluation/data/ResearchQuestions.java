@@ -70,7 +70,7 @@ public class ResearchQuestions implements Serializable  {
 		ResearchQuestion03 rq03 = new ResearchQuestion03();
 		rq03.historyURI = validation.eResource().getURI().toString();
 		rq03.repairedModelURI = repairedVersion.getModelURI();
-		rq03.elementURI = EcoreUtil.getURI(validation.getInvalidElement().get(0)).toString();
+		rq03.elementURI = EcoreUtil.getURI(validation.getContext()).toString();
 		rq03.validationID = EvaluationUtil.getValidationID(validation);
 		
 		researchQuestion03.put(rq03.validationID, rq03);
@@ -85,7 +85,7 @@ public class ResearchQuestions implements Serializable  {
 		ResearchQuestion04 rq04 = new ResearchQuestion04();
 		rq04.historyURI = validation.eResource().getURI().toString();
 		rq04.repairedModelURI = repairedVersion.getModelURI();
-		rq04.elementURI = EcoreUtil.getURI(validation.getInvalidElement().get(0)).toString();
+		rq04.elementURI = EcoreUtil.getURI(validation.getContext()).toString();
 		rq04.validationID = EvaluationUtil.getValidationID(validation);
 		
 		researchQuestion04.put(rq04.validationID, rq04);

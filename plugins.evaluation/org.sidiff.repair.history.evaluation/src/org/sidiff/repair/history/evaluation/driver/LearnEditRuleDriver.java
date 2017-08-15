@@ -18,7 +18,7 @@ public class LearnEditRuleDriver {
 		LearnEditRule learnEditRule = new LearnEditRule(differenceSettings, 
 				repaired.getModelActual(), repaired.getModelResolved());
 		
-		EObject invalidContext = repaired.getValidationErrorActualModel().getInvalidElement().get(0);
+		EObject invalidContext = repaired.getValidationErrorActualModel().getContext();
 		IConstraint consistencyRule = repaired.getConsistencyRule(history.getSupportedConsistencyRules());
 
 		DifferenceSlice differenceSlice = learnEditRule.learnByResolvedInconsistency(invalidContext, consistencyRule);

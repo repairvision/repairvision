@@ -52,7 +52,7 @@ public class EvaluationUtil {
 			ValidationError validationError, List<IConstraint> consistencyRules) {
 		
 		for (IConstraint consistencyRule : consistencyRules) {
-			if (getValidationID(consistencyRule).equals(getValidationID(validationError))) {
+			if (getValidationID(consistencyRule).equalsIgnoreCase(getValidationID(validationError))) {
 				return consistencyRule;
 			}
 		}
@@ -165,8 +165,8 @@ public class EvaluationUtil {
 		if (validationA.getIntroducedIn() == validationB.getIntroducedIn()) {
 			if (validationA.getResolvedIn() == validationB.getResolvedIn()) {
 				if (getValidationID(validationA).equalsIgnoreCase(getValidationID(validationB))) {
-					EObject invalidElementA = validationA.getInvalidElement().get(0);
-					EObject invalidElementB = validationB.getInvalidElement().get(0);
+					EObject invalidElementA = validationA.getContext();
+					EObject invalidElementB = validationB.getContext();
 					
 					if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
 						return true;
@@ -181,7 +181,7 @@ public class EvaluationUtil {
 		
 		if (getValidationID(validationA.getRule()).equalsIgnoreCase(getValidationID(validationB))) {
 			EObject invalidElementA = validationA.getContext();
-			EObject invalidElementB = validationB.getInvalidElement().get(0);
+			EObject invalidElementB = validationB.getContext();
 
 			if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
 				return true;

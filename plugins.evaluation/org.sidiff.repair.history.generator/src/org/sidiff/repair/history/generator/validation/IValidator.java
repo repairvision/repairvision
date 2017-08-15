@@ -2,6 +2,7 @@ package org.sidiff.repair.history.generator.validation;
 
 import java.util.Collection;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.repair.historymodel.ValidationError;
 
@@ -12,6 +13,9 @@ import org.sidiff.repair.historymodel.ValidationError;
  */
 public interface IValidator {
 
-	public Collection<ValidationError> validate(Resource resource);
+	Collection<ValidationError> validate(Resource resource);
 	
+	boolean matchValidationError(ValidationError validationErrorA, ValidationError validationErrorB);
+	
+	EObject getContextElement(ValidationError validationError);
 }

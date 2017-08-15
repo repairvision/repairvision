@@ -1,6 +1,10 @@
 package org.sidiff.repair.history.evaluation.ui;
 
+import java.util.Collections;
+import java.util.Iterator;
+
 import org.eclipse.core.resources.IResource;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -23,6 +27,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.integration.editor.highlighting.EditorHighlighting;
+import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.history.evaluation.Activator;
 import org.sidiff.repair.historymodel.History;
@@ -52,6 +58,11 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 	 * Shows all differences.
 	 */
 	private TreeViewer historyInconsistenciesViewer;
+	
+	/**
+	 * Editor decoration.
+	 */
+	private ISelectionHighlightingAdapter historyInconsistenciesViewerDecorationAdapter;
 	
 	@Override
 	public void createPartControls(Composite parent, IWorkbenchPartSite site) {
@@ -85,12 +96,33 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 				Object selection = ((StructuredSelection) event.getSelection()).getFirstElement();
 
 				if (selection instanceof ValidationError) {
+					clearResults();
 					getApplication().repairInconsistency((ValidationError) selection);
 				} else {
 					WorkbenchUtil.showMessage("Please select a validation error!");
 				}
 			});
 		}
+		
+		// Setup history viewer highlighting:
+		historyInconsistenciesViewerDecorationAdapter = new ISelectionHighlightingAdapter() {
+			
+			@Override
+			public Iterator<EObject> getElements(ISelection selection) {
+				
+				if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
+					Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
+					
+					if (selectedElement instanceof EObject) {
+						return Collections.singletonList((EObject) selectedElement).iterator();
+					}
+				}
+				
+				return null;
+			}
+		};
+		EditorHighlighting.getInstance().registerAdapter(historyInconsistenciesViewerDecorationAdapter);
+		historyInconsistenciesViewer.addSelectionChangedListener(EditorHighlighting.getInstance().getSelectionChangedListener());
 		
 		// Create the history input:
 		Composite composite_histroyStoreInput = new Composite(sashForm, SWT.BORDER);
@@ -187,6 +219,11 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 		super.resultChanged(repairJob);
 		validationWidget.setInput(application.getRepairJob().getValidations());
 	}
+	
+	public void clearResults() {
+		validationWidget.clear();
+		viewer_repairs.setInput(null);
+	}
 
 	@Override
 	public void clear() {
@@ -206,5 +243,6 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 	@Override
 	public void dispose() {
 		validationWidget.dispose();
+		EditorHighlighting.getInstance().deregisterAdapter(historyInconsistenciesViewerDecorationAdapter);
 	}
 }

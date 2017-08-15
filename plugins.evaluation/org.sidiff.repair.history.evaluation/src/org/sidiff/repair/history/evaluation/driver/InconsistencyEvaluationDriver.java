@@ -34,7 +34,7 @@ public class InconsistencyEvaluationDriver {
 		// Calculate repairs (filtered by validation):
 		PEORepairSettings settings = new PEORepairSettings(editRules, matchingSettings);
 		settings.setupValidationFilter(
-				Collections.singleton(repaired.getValidationErrorActualModel().getInvalidElement().get(0)), 
+				Collections.singleton(repaired.getValidationErrorActualModel().getContext()), 
 				Collections.singletonList(repaired.getConsistencyRule(history.getSupportedConsistencyRules())));
 		
 		PEORepairJob repairJob = repairFacade.getRepairs(

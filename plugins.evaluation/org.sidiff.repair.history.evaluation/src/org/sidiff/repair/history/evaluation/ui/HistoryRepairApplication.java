@@ -139,32 +139,32 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	public void repairInconsistency(ValidationError selection) {
 		
 		calculation = new Job("Calculate Repairs") {
-			
+
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				
+
+				// Initialize:
+				RepairedInconsistency repaired = RepairedInconsistency.createRepairedInconsistency(selection);
+				RepairEvaluation evaluation = new RepairEvaluation();
+				ResearchQuestions rq = evaluation.createNewResearchQuestion(history.getHistory());
+
+				// Calculate repairs:
+				repairJob = InconsistencyEvaluationDriver.calculateRepairs(
+						history, repairFacade, rq, repaired, 
+						getEditRules(), getMatchingSettings());
+
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
-					
-					// Initialize:
-					RepairedInconsistency repaired = RepairedInconsistency.createRepairedInconsistency(selection);
-					RepairEvaluation evaluation = new RepairEvaluation();
-					ResearchQuestions rq = evaluation.createNewResearchQuestion(history.getHistory());
-					
-					// Calculate repairs:
-					repairJob = InconsistencyEvaluationDriver.calculateRepairs(
-							history, repairFacade, rq, repaired, 
-							getEditRules(), getMatchingSettings());
 					
 					// Show results:
 					fireResultChangeListener();
 					evaluation.dump();
-					
+
 					if (repairJob.getRepairs().isEmpty()) {
 						WorkbenchUtil.showMessage("No repairs found!");
 					}
 				});
-				
+
 				return Status.OK_STATUS;
 			}
 		};
