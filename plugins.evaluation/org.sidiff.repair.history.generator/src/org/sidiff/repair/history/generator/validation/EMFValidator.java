@@ -32,9 +32,18 @@ public class EMFValidator extends BasicValidation {
 		docType = getDocumentTyp(resource);
 		assert (docType != 0);
 		
-		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(resource.getContents().get(0));
+		Collection<ValidationError> inconsistencies = new ArrayList<ValidationError>();
+
+		for (EObject rootElement : resource.getContents()) {
+			validate(rootElement, inconsistencies);
+		}
 		
-		Collection<ValidationError> res = new ArrayList<ValidationError>();
+		return inconsistencies;
+	}
+	
+	private void validate(EObject rootElement, Collection<ValidationError> inconsistencies) {
+		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(rootElement);
+		
 		for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
 			if ((childDiagnostic.getSeverity() == Diagnostic.ERROR)
 					|| (childDiagnostic.getSeverity() == Diagnostic.WARNING)) {
@@ -50,7 +59,7 @@ public class EMFValidator extends BasicValidation {
 				} else {
 					validationError.setSeverity(ValidationSeverity.UNKNOWN);
 				}
-
+				
 				String name = childDiagnostic.getMessage().replaceAll("'.*?'", "").trim();
 				name = name.replaceAll("\\s.[^\\s]*@.*?\\s", "");
 				
@@ -69,11 +78,9 @@ public class EMFValidator extends BasicValidation {
 				}
 				
 				validationError.setContext(getContextElement(validationError));
-				res.add(validationError);
+				inconsistencies.add(validationError);
 			}
 		}
-		
-		return res;
 	}
 	
 	private int getDocumentTyp(Resource resource) {
