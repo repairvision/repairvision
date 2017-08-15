@@ -1,5 +1,6 @@
 package org.sidiff.repair.history.evaluation.ui;
 
+import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -26,11 +27,14 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPartSite;
+import org.sidiff.common.emf.modelstorage.EMFStorage;
+import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.history.evaluation.Activator;
+import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.ui.controls.basic.BasicRepairViewerUI;
@@ -97,7 +101,21 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 
 				if (selection instanceof ValidationError) {
 					clearResults();
-					getApplication().repairInconsistency((ValidationError) selection);
+					ValidationError validationError = (ValidationError) selection;
+					getApplication().repairInconsistency(validationError);
+					
+					try {
+						RepairedInconsistency repaired = RepairedInconsistency.createRepairedInconsistency(validationError);
+						
+						if (repaired != null) {
+							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelHistorical().getURI()));
+							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelIntroduced().getURI()));
+							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelActual().getURI()));
+							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelResolved().getURI()));
+						}
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
 				} else {
 					WorkbenchUtil.showMessage("Please select a validation error!");
 				}
