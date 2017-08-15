@@ -120,6 +120,8 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 					}
 				
 					Collections.reverse(sortedList);
+					out.println("History - Overview");
+					out.println("Validation Error; Count; Location; Resolved; ");
 					for(Entry<String,List<ValidationError>> entry : sortedList){
 						out.print(entry.getKey());
 						out.print(";");
@@ -128,18 +130,23 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 						for(ValidationError error : entry.getValue()){
 							projects.add(((History)error.eContainer().eContainer()).getName());
 						}
-						for(String s : projects){
-							out.print(s + ", ");
-						}
-						
-						int resolved = 0;
-						for(ValidationError error : entry.getValue()){
-							if(error.isResolved()){
-								resolved++;
+						ArrayList<String> projectsList = new ArrayList<String>(projects);
+						for(int i=0; i<projectsList.size(); i++){
+							out.print(projectsList.get(i));
+							if(i<projectsList.size()-1){
+								out.print(", ");
 							}
 						}
-						out.print(";" + resolved + "\n");
+						
+						int introducedAndResolved = 0;
+						for(ValidationError error : entry.getValue()){
+							if(error.isIntroduced() && error.isResolved()){
+								introducedAndResolved++;
+							}
+						}
+						out.print(";" + introducedAndResolved + "\n");
 					}
+					out.print("\n\n");
 				}
 				return Status.OK_STATUS;
 			}
@@ -152,7 +159,7 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 	private void printHistoryInfo(History history){
 		String historyName = history.getName();
 		out.println(historyName);
-		String header = "Validation Error; Message; Elements; Introduced in; Resolved in";
+		String header = "Validation Error; Message; Elements; Introduced in; Resolved in; Consistency Rule; Repair Rules; fixable; fixed as observed";
 		out.println(header);
 		List<ValidationError> introducedResolvedValidationErrors = new ArrayList<ValidationError>();
 		for(Version version : history.getVersions()){
@@ -177,7 +184,7 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 				}
 			}
 		
-			row	+= validationError.getIntroducedIn().getName() + "; " + validationError.getResolvedIn().getName();
+			row	+= validationError.getIntroducedIn().getName() + "; " + validationError.getResolvedIn().getName() + "-; -; ;";
 			out.println(row);
 		}
 		out.println("\n\n");
