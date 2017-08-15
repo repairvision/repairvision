@@ -19,41 +19,41 @@ public class RepairedInconsistency {
 	/**
 	 * Consistent historic model.
 	 */
-	private Resource modelHistorical;
+	private Version modelVersionHistorical;
 	
 	/**
 	 * Model where the inconsistency were introduced.
 	 */
-	private Resource modelIntroduced;
+	private Version modelVersionIntroduced;
 	
 	/**
 	 * The actual model.
 	 */
-	private Resource modelActual;
+	private Version modelVersionActual;
 	
 	/**
 	 * Model where the inconsistency were resolved.
 	 */
-	private Resource modelResolved;
+	private Version modelVersionResolved;
 	
 	public static RepairedInconsistency createRepairedInconsistency(ValidationError introducedValidationError) {
 		
 		RepairedInconsistency repaired = new RepairedInconsistency();
 		
 		Version versionIntroduced = introducedValidationError.getIntroducedIn();
-		repaired.setModelIntroduced(versionIntroduced.getModel());
+		repaired.setModelVersionIntroduced(versionIntroduced);
 		
 		if (repaired.getModelIntroduced() != null) {
 			Version versionHistorical = EvaluationUtil.getPrecessorRevision(versionIntroduced);
-			repaired.setModelHistorical(versionHistorical.getModel());
+			repaired.setModelVersionHistorical(versionHistorical);
 			
 			if (versionHistorical != null) {
 				Version versionResolved = introducedValidationError.getResolvedIn();
-				repaired.setModelResolved(versionResolved.getModel());
+				repaired.setModelVersionResolved(versionResolved);
 				
 				if (versionResolved != null) {
 					Version versionActual = EvaluationUtil.getPrecessorRevision(versionResolved);
-					repaired.setModelActual(versionActual.getModel());
+					repaired.setModelVersionActual(versionActual);
 					
 					ValidationError actualValidationError = EvaluationUtil.getCorrespondingValidationError(introducedValidationError, versionActual);
 					repaired.setValidationErrorActualModel(actualValidationError);
@@ -69,10 +69,10 @@ public class RepairedInconsistency {
 	}
 	
 	public void printModels() {
-		InfoConsole.printInfo("Historical: " + modelHistorical);
-		InfoConsole.printInfo("Introduced: "  + modelIntroduced);
-		InfoConsole.printInfo("Actual: "  + modelActual);
-		InfoConsole.printInfo("Resolved: " + modelResolved);
+		InfoConsole.printInfo("Historical: " + modelVersionHistorical.getName());
+		InfoConsole.printInfo("Introduced: "  + modelVersionIntroduced.getName());
+		InfoConsole.printInfo("Actual: "  + modelVersionActual.getName());
+		InfoConsole.printInfo("Resolved: " + modelVersionResolved.getName());
 	}
 	
 	public String getName() {
@@ -92,34 +92,50 @@ public class RepairedInconsistency {
 	}
 	
 	public Resource getModelHistorical() {
-		return modelHistorical;
-	}
-
-	public void setModelHistorical(Resource modelHistorical) {
-		this.modelHistorical = modelHistorical;
+		return modelVersionHistorical.getModel();
 	}
 
 	public Resource getModelIntroduced() {
-		return modelIntroduced;
-	}
-
-	public void setModelIntroduced(Resource modelIntroduced) {
-		this.modelIntroduced = modelIntroduced;
+		return modelVersionIntroduced.getModel();
 	}
 
 	public Resource getModelActual() {
-		return modelActual;
-	}
-
-	public void setModelActual(Resource modelActual) {
-		this.modelActual = modelActual;
+		return modelVersionActual.getModel();
 	}
 
 	public Resource getModelResolved() {
-		return modelResolved;
+		return modelVersionResolved.getModel();
 	}
 
-	public void setModelResolved(Resource modelResolved) {
-		this.modelResolved = modelResolved;
+	public Version getModelVersionHistorical() {
+		return modelVersionHistorical;
+	}
+
+	public void setModelVersionHistorical(Version modelVersionHistorical) {
+		this.modelVersionHistorical = modelVersionHistorical;
+	}
+
+	public Version getModelVersionIntroduced() {
+		return modelVersionIntroduced;
+	}
+
+	public void setModelVersionIntroduced(Version modelVersionIntroduced) {
+		this.modelVersionIntroduced = modelVersionIntroduced;
+	}
+
+	public Version getModelVersionActual() {
+		return modelVersionActual;
+	}
+
+	public void setModelVersionActual(Version modelVersionActual) {
+		this.modelVersionActual = modelVersionActual;
+	}
+
+	public Version getModelVersionResolved() {
+		return modelVersionResolved;
+	}
+
+	public void setModelVersionResolved(Version modelVersionResolved) {
+		this.modelVersionResolved = modelVersionResolved;
 	}
 }
