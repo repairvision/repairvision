@@ -22,6 +22,11 @@ public class GetContainments extends Function {
 		this.element = element;
 	}
 	
+	@Override
+	public String toString() {
+		return element.getValue() + " -> " + super.toString();
+	}
+	
 	public Term getElement() {
 		return element;
 	}

@@ -15,6 +15,11 @@ public class IsEmpty extends Predicate {
 		this.name = "isEmpty";
 		this.term = term;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 
 	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {

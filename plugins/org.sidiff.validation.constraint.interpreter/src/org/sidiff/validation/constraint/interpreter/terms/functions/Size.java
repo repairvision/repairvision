@@ -17,6 +17,11 @@ public class Size extends Function {
 	}
 	
 	@Override
+	public String toString() {
+		return elements.getValue() + " -> " + super.toString();
+	}
+	
+	@Override
 	public Object evaluate(IScopeRecorder scope) {
 		elements.evaluate(scope);
 		

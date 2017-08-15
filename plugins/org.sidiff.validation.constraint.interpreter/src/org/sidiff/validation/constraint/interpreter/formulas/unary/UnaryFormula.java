@@ -10,6 +10,11 @@ public abstract class UnaryFormula extends Formula {
 		super();
 		this.child = child;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 
 	public Formula getChild() {
 		return child;

@@ -9,7 +9,7 @@ public class Variable extends Term {
 	public Variable(String name) {
 		this.name = name;
 	}
-
+	
 	public void assign(Object value) {
 		this.value = value;
 	}

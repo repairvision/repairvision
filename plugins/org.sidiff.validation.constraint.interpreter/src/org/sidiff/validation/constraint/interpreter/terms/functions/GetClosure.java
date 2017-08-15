@@ -15,6 +15,10 @@ import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
+/**
+ * Calculates the closure over a given reference type. The closure includes the
+ * starting element and all elements that are reachable from this element.
+ */
 public class GetClosure extends Function {
 	
 	protected Term element;
@@ -25,6 +29,11 @@ public class GetClosure extends Function {
 		this.name = "getClosure";
 		this.element = element;
 		this.feature = feature;
+	}
+	
+	@Override
+	public String toString() {
+		return element.getValue() + ", " + feature.getName() + " -> " + super.toString();
 	}
 	
 	public EReference getFeature() {

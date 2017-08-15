@@ -11,4 +11,8 @@ import org.sidiff.validation.constraint.interpreter.terms.Term;
  */
 public abstract class Predicate extends Formula {
 
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

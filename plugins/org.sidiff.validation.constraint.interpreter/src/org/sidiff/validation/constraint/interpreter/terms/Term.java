@@ -13,6 +13,19 @@ public abstract class Term extends NamedElement  {
 		return value;
 	}
 	
+	@Override
+	public String toString() {
+		if (name != null) {
+			return name + " -> " + value;
+		} else {
+			if (value != null) {
+				return value.toString();
+			} else {
+				return "null";
+			}
+		}
+	}
+	
 	public abstract Object evaluate(IScopeRecorder scope);
 	
 	public abstract void required(IDecisionBranch parent);

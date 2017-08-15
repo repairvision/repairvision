@@ -10,4 +10,8 @@ import org.sidiff.validation.constraint.interpreter.terms.Term;
  */
 public abstract class Function extends Term {
 
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

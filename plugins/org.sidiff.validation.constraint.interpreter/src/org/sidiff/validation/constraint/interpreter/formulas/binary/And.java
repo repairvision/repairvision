@@ -11,6 +11,11 @@ public class And extends BinaryFormula {
 		super(left, right);
 		this.name = "and";
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 
 	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {

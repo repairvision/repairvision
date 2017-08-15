@@ -10,6 +10,11 @@ public class Constant extends Term {
 	public Constant(Object constant) {
 		this.value = constant;
 	}
+	
+	@Override
+	public String toString() {
+		return value.toString();
+	}
 
 	@Override
 	public Object evaluate(IScopeRecorder scope) {

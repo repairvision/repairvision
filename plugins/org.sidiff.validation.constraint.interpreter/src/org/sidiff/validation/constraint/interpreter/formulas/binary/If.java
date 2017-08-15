@@ -11,6 +11,11 @@ public class If extends BinaryFormula {
 		super(left, right);
 		this.name = "implies";
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 
 	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {

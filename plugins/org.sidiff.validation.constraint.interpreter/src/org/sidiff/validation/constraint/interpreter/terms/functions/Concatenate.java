@@ -18,6 +18,11 @@ public class Concatenate extends Function {
 	}
 	
 	@Override
+	public String toString() {
+		return left.getValue() + ", " + right.getValue() + " -> " + super.toString();
+	}
+	
+	@Override
 	public Object evaluate(IScopeRecorder scope) {
 		left.evaluate(scope);
 		right.evaluate(scope);

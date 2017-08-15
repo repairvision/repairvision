@@ -11,6 +11,11 @@ public class Iff extends BinaryFormula {
 		super(left, right);
 		this.name = "equals";
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 
 	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {

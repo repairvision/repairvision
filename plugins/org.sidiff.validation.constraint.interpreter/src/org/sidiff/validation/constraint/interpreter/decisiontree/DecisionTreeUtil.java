@@ -45,26 +45,30 @@ public class DecisionTreeUtil {
 			else if (child instanceof IDecisionBranch) {
 				IDecisionBranch childBranch = (IDecisionBranch) child;
 				
-				if ((childBranch instanceof Alternative) && (parent instanceof Alternative)) {
+				// Empty node:
+				if (childBranch.getChildDecisions().isEmpty()) {
+					iterator.remove();
+				}
+				
+				// Alternatives of alternatives:
+				else if ((childBranch instanceof Alternative) && (parent instanceof Alternative)) {
 					pullUps.addAll(childBranch.getChildDecisions());
 					iterator.remove();
 				}
 				
+				// Sequences of sequences:
 				else if ((childBranch instanceof Sequence) && (parent instanceof Sequence)) {
 					pullUps.addAll(childBranch.getChildDecisions());
 					iterator.remove();
 				}
 				
-				else if ((childBranch instanceof Alternative) || (parent instanceof Sequence)) {
-					if (childBranch.getChildDecisions().size() == 1) {
-						pullUps.addAll(childBranch.getChildDecisions());
-						iterator.remove();
-					}
-				}
-				
-				else if ((childBranch instanceof Alternative) && (parent instanceof Sequence)) {
-					if (childBranch.getChildDecisions().isEmpty()) {
-						iterator.remove();
+				// Only one decision:
+				else if (childBranch.getChildDecisions().size() == 1) {
+					if ((childBranch instanceof Alternative) || (childBranch instanceof Sequence)) {
+						if ((parent instanceof Alternative) || (parent instanceof Sequence)) {
+							pullUps.addAll(childBranch.getChildDecisions());
+							iterator.remove();
+						}
 					}
 				}
 			}

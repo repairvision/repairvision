@@ -17,6 +17,11 @@ public abstract class Comparison extends Predicate {
 	}
 	
 	@Override
+	public String toString() {
+		return super.toString();
+	}
+	
+	@Override
 	public void required(IDecisionBranch parent, boolean expected) {
 		
 		if (expected && getResult()) {

@@ -5,4 +5,9 @@ public class BoolConstantFalse extends Constant {
 	public BoolConstantFalse() {
 		super(false);
 	}
+	
+	@Override
+	public String toString() {
+		return "false";
+	}
 }

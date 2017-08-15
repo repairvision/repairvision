@@ -22,6 +22,12 @@ public class ForAll extends Quantifier {
 	
 	public ForAll(Variable bounded, Term iteration, Formula formula) {
 		super(bounded, iteration, formula);
+		this.name = "forAll";  
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
 	}
 
 	@Override

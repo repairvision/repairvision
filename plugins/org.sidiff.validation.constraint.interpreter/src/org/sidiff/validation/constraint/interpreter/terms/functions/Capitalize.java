@@ -15,6 +15,11 @@ public class Capitalize extends Function {
 	}
 	
 	@Override
+	public String toString() {
+		return string.getValue() + " -> " + super.toString();
+	}
+	
+	@Override
 	public Object evaluate(IScopeRecorder scope) {
 		String string_value = (String) string.evaluate(scope);
 		

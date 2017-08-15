@@ -26,6 +26,11 @@ public abstract class Quantifier extends Formula {
 		this.formula = formula;
 	}
 	
+	@Override
+	public String toString() {
+		return name + "(" + bounded.toString() + " in " + iteration.toString() + " : " + formula.toString() + ")";
+	}
+	
 	protected boolean isMany() {
 		if ((iteration.getValue() != null) && (iteration.getValue() instanceof Iterable<?>)) {
 			return true;

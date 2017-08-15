@@ -5,4 +5,9 @@ public class BoolConstantTrue extends Constant {
 	public BoolConstantTrue() {
 		super(true);
 	}
+	
+	@Override
+	public String toString() {
+		return "true";
+	}
 }

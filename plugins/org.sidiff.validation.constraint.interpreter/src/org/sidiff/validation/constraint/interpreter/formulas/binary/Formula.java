@@ -8,6 +8,11 @@ public abstract class Formula extends NamedElement {
 
 	protected Boolean result;
 	
+	@Override
+	public String toString() {
+		return name + " = " + result;
+	}
+	
 	public abstract boolean evaluate(IScopeRecorder scope, boolean optimize);
 	
 	public abstract void required(IDecisionBranch parent, boolean expected);

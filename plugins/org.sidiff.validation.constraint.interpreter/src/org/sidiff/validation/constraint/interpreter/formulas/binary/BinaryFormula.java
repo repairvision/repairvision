@@ -12,6 +12,11 @@ public abstract class BinaryFormula extends Formula {
 		this.right = right;
 	}
 	
+	@Override
+	public String toString() {
+		return left.getResult() + " " + name + " " + right.getResult();
+	}
+	
 	public Formula getLeft() {
 		return left;
 	}

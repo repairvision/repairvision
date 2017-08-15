@@ -27,6 +27,11 @@ public class Get extends Function {
 		this.context = context;
 		this.feature = feature;
 	}
+	
+	@Override
+	public String toString() {
+		return context.getValue() + ", " + feature.getName() + " -> " + super.toString();
+	}
 
 	public Term getContext() {
 		return context;

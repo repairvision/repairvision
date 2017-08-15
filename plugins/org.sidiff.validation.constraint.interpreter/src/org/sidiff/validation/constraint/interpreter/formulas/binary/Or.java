@@ -11,6 +11,11 @@ public class Or extends BinaryFormula {
 		super(left, right);
 		this.name = "or";
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 
 	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {

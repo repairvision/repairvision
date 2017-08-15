@@ -10,6 +10,11 @@ public class Not extends UnaryFormula {
 		super(child);
 		this.name = "not";
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 
 	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {

@@ -20,6 +20,11 @@ public class IsInstanceOf extends Predicate {
 	}
 	
 	@Override
+	public String toString() {
+		return name + "(" + term.getValue() + ", " + type.getName() + ")";
+	}
+	
+	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {
 		term.evaluate(scope);
 		

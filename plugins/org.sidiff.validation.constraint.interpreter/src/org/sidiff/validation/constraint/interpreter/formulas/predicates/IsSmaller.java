@@ -13,6 +13,11 @@ public class IsSmaller extends Comparison {
 	}
 	
 	@Override
+	public String toString() {
+		return super.toString();
+	}
+	
+	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {
 		left.evaluate(scope);
 		right.evaluate(scope);

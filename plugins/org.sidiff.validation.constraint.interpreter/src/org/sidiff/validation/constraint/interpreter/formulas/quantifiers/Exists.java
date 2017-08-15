@@ -22,6 +22,12 @@ public class Exists extends Quantifier {
 	
 	public Exists(Variable bounded, Term iteration, Formula formula) {
 		super(bounded, iteration, formula);
+		this.name = "exists";
+	}
+
+	@Override
+	public String toString() {
+		return super.toString();
 	}
 	
 	@Override

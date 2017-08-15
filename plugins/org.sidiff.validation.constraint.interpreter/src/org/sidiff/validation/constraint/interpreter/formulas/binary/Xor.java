@@ -11,6 +11,11 @@ public class Xor extends BinaryFormula {
 		super(left, right);
 		this.name = "xor";
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 
 	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {
