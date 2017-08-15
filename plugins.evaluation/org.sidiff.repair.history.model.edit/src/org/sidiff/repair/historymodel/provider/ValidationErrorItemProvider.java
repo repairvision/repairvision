@@ -71,6 +71,7 @@ public class ValidationErrorItemProvider
 			addPrecPropertyDescriptor(object);
 			addSuccPropertyDescriptor(object);
 			addInvalidElementPropertyDescriptor(object);
+			addContextPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -310,6 +311,28 @@ public class ValidationErrorItemProvider
 				 getString("_UI_PropertyDescriptor_description", "_UI_ValidationError_invalidElement_feature", "_UI_ValidationError_type"),
 				 HistoryModelPackage.Literals.VALIDATION_ERROR__INVALID_ELEMENT,
 				 false,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Context feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addContextPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ValidationError_context_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValidationError_context_feature", "_UI_ValidationError_type"),
+				 HistoryModelPackage.Literals.VALIDATION_ERROR__CONTEXT,
+				 true,
 				 false,
 				 true,
 				 null,

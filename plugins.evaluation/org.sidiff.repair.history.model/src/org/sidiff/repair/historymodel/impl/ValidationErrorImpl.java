@@ -35,6 +35,7 @@ import org.sidiff.repair.historymodel.Version;
  *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getPrec <em>Prec</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getSucc <em>Succ</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getInvalidElement <em>Invalid Element</em>}</li>
+ *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getContext <em>Context</em>}</li>
  * </ul>
  *
  * @generated
@@ -189,6 +190,16 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 	 * @ordered
 	 */
 	protected EList<EObject> invalidElement;
+
+	/**
+	 * The cached value of the '{@link #getContext() <em>Context</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getContext()
+	 * @generated
+	 * @ordered
+	 */
+	protected EObject context;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -524,6 +535,44 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EObject getContext() {
+		if (context != null && context.eIsProxy()) {
+			InternalEObject oldContext = (InternalEObject)context;
+			context = eResolveProxy(oldContext);
+			if (context != oldContext) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, HistoryModelPackage.VALIDATION_ERROR__CONTEXT, oldContext, context));
+			}
+		}
+		return context;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EObject basicGetContext() {
+		return context;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setContext(EObject newContext) {
+		EObject oldContext = context;
+		context = newContext;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HistoryModelPackage.VALIDATION_ERROR__CONTEXT, oldContext, context));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -589,6 +638,9 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 				return basicGetSucc();
 			case HistoryModelPackage.VALIDATION_ERROR__INVALID_ELEMENT:
 				return getInvalidElement();
+			case HistoryModelPackage.VALIDATION_ERROR__CONTEXT:
+				if (resolve) return getContext();
+				return basicGetContext();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -624,6 +676,9 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 				return;
 			case HistoryModelPackage.VALIDATION_ERROR__SUCC:
 				setSucc((ValidationError)newValue);
+				return;
+			case HistoryModelPackage.VALIDATION_ERROR__CONTEXT:
+				setContext((EObject)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -661,6 +716,9 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 			case HistoryModelPackage.VALIDATION_ERROR__SUCC:
 				setSucc((ValidationError)null);
 				return;
+			case HistoryModelPackage.VALIDATION_ERROR__CONTEXT:
+				setContext((EObject)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -695,6 +753,8 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 				return succ != null;
 			case HistoryModelPackage.VALIDATION_ERROR__INVALID_ELEMENT:
 				return invalidElement != null && !invalidElement.isEmpty();
+			case HistoryModelPackage.VALIDATION_ERROR__CONTEXT:
+				return context != null;
 		}
 		return super.eIsSet(featureID);
 	}

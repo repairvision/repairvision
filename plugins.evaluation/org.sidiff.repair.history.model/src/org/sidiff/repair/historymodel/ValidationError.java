@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getPrec <em>Prec</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getSucc <em>Succ</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getInvalidElement <em>Invalid Element</em>}</li>
+ *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getContext <em>Context</em>}</li>
  * </ul>
  *
  * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError()
@@ -294,5 +295,31 @@ public interface ValidationError extends EObject {
 	 * @generated
 	 */
 	EList<EObject> getInvalidElement();
+
+	/**
+	 * Returns the value of the '<em><b>Context</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Context</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Context</em>' reference.
+	 * @see #setContext(EObject)
+	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_Context()
+	 * @model
+	 * @generated
+	 */
+	EObject getContext();
+
+	/**
+	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ValidationError#getContext <em>Context</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Context</em>' reference.
+	 * @see #getContext()
+	 * @generated
+	 */
+	void setContext(EObject value);
 
 } // ValidationError

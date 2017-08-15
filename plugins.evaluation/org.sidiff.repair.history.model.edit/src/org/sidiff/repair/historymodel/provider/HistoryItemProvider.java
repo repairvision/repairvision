@@ -61,6 +61,7 @@ public class HistoryItemProvider
 
 			addNamePropertyDescriptor(object);
 			addTechnicalDifferencesPropertyDescriptor(object);
+			addAllValidationErrorsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -101,6 +102,28 @@ public class HistoryItemProvider
 				 getString("_UI_History_technicalDifferences_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_History_technicalDifferences_feature", "_UI_History_type"),
 				 HistoryModelPackage.Literals.HISTORY__TECHNICAL_DIFFERENCES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the All Validation Errors feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addAllValidationErrorsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_History_allValidationErrors_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_History_allValidationErrors_feature", "_UI_History_type"),
+				 HistoryModelPackage.Literals.HISTORY__ALL_VALIDATION_ERRORS,
 				 true,
 				 false,
 				 true,

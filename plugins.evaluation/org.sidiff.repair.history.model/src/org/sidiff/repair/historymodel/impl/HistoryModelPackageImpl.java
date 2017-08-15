@@ -414,6 +414,15 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getValidationError_Context() {
+		return (EReference)validationErrorEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getValidationSeverity() {
 		return validationSeverityEEnum;
 	}
@@ -496,6 +505,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		createEReference(validationErrorEClass, VALIDATION_ERROR__PREC);
 		createEReference(validationErrorEClass, VALIDATION_ERROR__SUCC);
 		createEReference(validationErrorEClass, VALIDATION_ERROR__INVALID_ELEMENT);
+		createEReference(validationErrorEClass, VALIDATION_ERROR__CONTEXT);
 
 		// Create enums
 		validationSeverityEEnum = createEEnum(VALIDATION_SEVERITY);
@@ -589,6 +599,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		initEReference(getValidationError_Prec(), this.getValidationError(), this.getValidationError_Succ(), "prec", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getValidationError_Succ(), this.getValidationError(), this.getValidationError_Prec(), "succ", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getValidationError_InvalidElement(), theEcorePackage.getEObject(), null, "invalidElement", null, 0, -1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getValidationError_Context(), theEcorePackage.getEObject(), null, "context", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(validationSeverityEEnum, ValidationSeverity.class, "ValidationSeverity");

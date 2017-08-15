@@ -369,13 +369,22 @@ public interface HistoryModelPackage extends EPackage {
 	int VALIDATION_ERROR__INVALID_ELEMENT = 10;
 
 	/**
+	 * The feature id for the '<em><b>Context</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALIDATION_ERROR__CONTEXT = 11;
+
+	/**
 	 * The number of structural features of the '<em>Validation Error</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_ERROR_FEATURE_COUNT = 11;
+	int VALIDATION_ERROR_FEATURE_COUNT = 12;
 
 	/**
 	 * The number of operations of the '<em>Validation Error</em>' class.
@@ -738,6 +747,17 @@ public interface HistoryModelPackage extends EPackage {
 	EReference getValidationError_InvalidElement();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.repair.historymodel.ValidationError#getContext <em>Context</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Context</em>'.
+	 * @see org.sidiff.repair.historymodel.ValidationError#getContext()
+	 * @see #getValidationError()
+	 * @generated
+	 */
+	EReference getValidationError_Context();
+
+	/**
 	 * Returns the meta object for enum '{@link org.sidiff.repair.historymodel.ValidationSeverity <em>Validation Severity</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1036,6 +1056,14 @@ public interface HistoryModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference VALIDATION_ERROR__INVALID_ELEMENT = eINSTANCE.getValidationError_InvalidElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Context</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VALIDATION_ERROR__CONTEXT = eINSTANCE.getValidationError_Context();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.repair.historymodel.ValidationSeverity <em>Validation Severity</em>}' enum.
