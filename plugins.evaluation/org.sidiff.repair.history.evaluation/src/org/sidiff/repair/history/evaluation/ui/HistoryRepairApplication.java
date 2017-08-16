@@ -26,6 +26,7 @@ import org.sidiff.repair.history.evaluation.data.ResearchQuestions;
 import org.sidiff.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.InconsistencyEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.LearnEditRuleDriver;
+import org.sidiff.repair.history.evaluation.driver.PrintHistoryInfoDriver;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
 import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
@@ -55,6 +56,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	
 	public void setHistory(History history) {
 		this.history = new HistoryInfo(history);
+		PrintHistoryInfoDriver.printHistoryInfo(this.history);
 	}
 	
 	public Object getValidations() {
