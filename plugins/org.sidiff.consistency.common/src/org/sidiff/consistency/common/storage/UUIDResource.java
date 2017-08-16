@@ -50,8 +50,8 @@ public class UUIDResource extends XMIIDResourceImpl {
 		this(uri);
 		
 		try {
-			load(resourceSet.getLoadOptions());
 			resourceSet.getResources().add(this);
+			load(resourceSet.getLoadOptions());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
