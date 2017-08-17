@@ -4,6 +4,9 @@ Bundle-Name: Partial Edit-Rule Matcher
 Bundle-SymbolicName: org.sidiff.editrule.partialmatcher;singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Bundle-Activator: org.sidiff.editrule.partialmatcher.Activator
+Export-Package: org.sidiff.editrule.partialmatcher.complement,
+ org.sidiff.editrule.partialmatcher.scope,
+ org.sidiff.editrule.partialmatcher.util
 Require-Bundle: org.eclipse.emf.transaction,
  org.eclipse.ui,
  org.sidiff.common.henshin,
@@ -17,6 +20,3 @@ Require-Bundle: org.eclipse.emf.transaction,
  org.sidiff.consistency.common;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.sidiff.editrule.partialmatcher.complement,
- org.sidiff.editrule.partialmatcher.scope,
- org.sidiff.editrule.partialmatcher.util
