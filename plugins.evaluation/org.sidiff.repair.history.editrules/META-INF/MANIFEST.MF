@@ -5,7 +5,10 @@ Bundle-SymbolicName: org.sidiff.repair.history.editrules;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.sidiff.repair.history.editrules.Activator
 Bundle-Vendor: Software Engineering Group
-Export-Package: org.sidiff.repair.history.editrules.learning
+Export-Package: org.sidiff.repair.history.editrules,
+ org.sidiff.repair.history.editrules.generator,
+ org.sidiff.repair.history.editrules.learning,
+ org.sidiff.repair.history.editrules.util
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.sidiff.editrule.partialmatcher,
