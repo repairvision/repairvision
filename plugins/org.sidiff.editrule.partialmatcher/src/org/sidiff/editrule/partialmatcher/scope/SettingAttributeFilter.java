@@ -16,8 +16,12 @@ public class SettingAttributeFilter {
 		// Keep only the given attributes in the complement rule:
 		// Get all << set >> attributes in << create >> nodes:
 		for(Attribute complementAttribute : ChangePatternUtil.getSettingAttributes(complementRule)) {
-			if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch)) {
-				complementAttribute.getNode().getAttributes().remove(complementAttribute);
+			
+			// Remove only input parameters -> filter constant values:
+			if (complementRule.getParameter(complementAttribute.getValue()) != null) {
+				if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch)) {
+					complementAttribute.getNode().getAttributes().remove(complementAttribute);
+				}
 			}
 		}
 		
@@ -25,8 +29,11 @@ public class SettingAttributeFilter {
 		for(AttributePair complementAttributePair : ChangePatternUtil.getChangingAttributes(complementRule)) {
 			Attribute complementAttribute = complementAttributePair.getRhsAttribute();
 			
-			if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch)) {
-				complementAttribute.getNode().getAttributes().remove(complementAttribute);
+			// Remove only input parameters -> filter constant values:
+			if (complementRule.getParameter(complementAttribute.getValue()) != null) {
+				if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch)) {
+					complementAttribute.getNode().getAttributes().remove(complementAttribute);
+				}
 			}
 		}
 
