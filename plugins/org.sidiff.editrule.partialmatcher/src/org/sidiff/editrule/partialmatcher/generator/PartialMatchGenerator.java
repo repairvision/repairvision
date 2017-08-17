@@ -1,7 +1,6 @@
 package org.sidiff.editrule.partialmatcher.generator;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -147,73 +146,6 @@ public class PartialMatchGenerator {
 			}
 		}
 	}
-	
-	//-------------------------------------------------
-	
-	private class Variable {
-		int index;
-		NodePattern node;
-		
-		@Override
-		public String toString() {
-			return "<" + index + "> " + node.toString();
-		}
-	}
-	
-	private class VariableSet implements Iterable<Variable> {
-		
-		private Variable[] variables;
-		private int size = 0;
-		
-		public VariableSet(int capacity) {
-			variables = new Variable[capacity];
-		}
-		
-		public void add(Variable variable) {
-			variables[variable.index] = variable;
-			++size;
-		}
-		
-		public void remove(Variable variable) {
-			variables[variable.index] = null;
-			--size;
-		}
-		
-		public int size() {
-			return size;
-		}
-		
-		public boolean contains(Variable variable) {
-			return variables[variable.index] != null;
-		}
-
-		@Override
-		public Iterator<Variable> iterator() {
-			return new Iterator<Variable>() {
-				int i = 0;
-				int view = 0;
-				
-				public boolean hasNext() {
-					return i < size;
-				}
-
-				public Variable next() {
-					while (view < variables.length) {
-						++view;
-						
-						if (variables[view - 1] != null) {
-							++i;
-							return variables[view - 1];
-						}
-					}
-					
-					throw new NoSuchElementException();
-				}
-			};
-		}
-	}
-	
-	//-------------------------------------------------
 	
 	public void initialize(
 			List<NodePattern> variableNodes, 
@@ -634,62 +566,7 @@ public class PartialMatchGenerator {
 			@Override
 			public IMatching next() {
 				if (hasNext()) {
-					return new IMatching() {
-						
-						private EObject[] assignment = assignmentIterator.next();
-						
-						@Override
-						public Iterator<EObject> getMatch(NodePattern node) {
-							if (nodeToVariables.containsKey(node)) {
-								
-								// singleton iterator:
-								return new Iterator<EObject>() {
-									
-									private boolean hasNext = true;
-
-									@Override
-									public boolean hasNext() {
-										return hasNext;
-									}
-
-									@Override
-									public EObject next() {
-										if (hasNext()) {
-											hasNext = false;
-											return assignment[nodeToVariables.get(node).index];
-										} else {
-											throw new NoSuchElementException();
-										}
-									}
-								};
-							} else {
-								
-								// empty iterator:
-								return new Iterator<EObject>() {
-
-									@Override
-									public boolean hasNext() {
-										return false;
-									}
-
-									@Override
-									public EObject next() {
-										throw new NoSuchElementException();
-									}
-								};
-							}
-						}
-
-						@Override
-						public Collection<NodePattern> getNodes() {
-							return variableNodes;
-						}
-
-						@Override
-						public EObject getFirstMatch(NodePattern node) {
-							return assignment[nodeToVariables.get(node).index];
-						}
-					};
+					return new VariableMatching(nodeToVariables, variableNodes, assignmentIterator.next());
 				} else {
 					throw new NoSuchElementException();
 				}

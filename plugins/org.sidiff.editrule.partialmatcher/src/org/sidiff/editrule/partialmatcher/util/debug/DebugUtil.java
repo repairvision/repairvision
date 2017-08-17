@@ -13,7 +13,7 @@ public class DebugUtil {
 	
 	public static boolean EVALUATION = true;
 	
-	public static boolean MATCHING = false;
+	public static boolean MATCHING = true;
 
 	public static void print(String text) {
 		if (ACTIVE) {
