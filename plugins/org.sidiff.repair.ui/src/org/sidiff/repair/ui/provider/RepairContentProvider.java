@@ -148,7 +148,11 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 				if (avc.value != null) {
 					return new Object[] {avc.matches[0], avc.value};
 				} else {
-					return new Object[] {avc.matches[0], avc.graphElement};
+					if (avc.matches[0] != null) {
+						return new Object[] {avc.matches[0], avc.graphElement};
+					} else {
+						return new Object[] {avc.graphElement};
+					}
 				}
 			} else {
 				return change.matches;
