@@ -4,11 +4,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.emf.EMFUtil;
+//import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.common.henshin.view.AttributePair;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
@@ -110,7 +111,7 @@ public class DeveloperIntentionOracle {
 	 */
 	private void gatherXmiIDs() {
 		for (Iterator<EObject> iterator = evolutionStep.getModelA().getAllContents(); iterator.hasNext();) {
-			xmiIDs.add(EMFUtil.getXmiId(iterator.next()));
+			xmiIDs.add(EcoreUtil.getURI(iterator.next()).fragment());
 		}
 	}
 
@@ -119,6 +120,7 @@ public class DeveloperIntentionOracle {
 		// Create nodes
 		for (Node node : HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes(complementRule)) {
 			String signature = "AddObject_" + node.getType().getName();
+			
 			if (!changeSignatures.contains(signature)) {
 				return false;
 			}
@@ -127,6 +129,7 @@ public class DeveloperIntentionOracle {
 		// Delete nodes
 		for (Node node : HenshinRuleAnalysisUtilEx.getLHSMinusRHSNodes(complementRule)) {
 			String signature = "RemoveObject_" + node.getType().getName();
+			
 			if (!changeSignatures.contains(signature)) {
 				return false;
 			}
@@ -135,6 +138,7 @@ public class DeveloperIntentionOracle {
 		// Create edges
 		for (Edge edge : HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges(complementRule)) {
 			String signature = "AddReference_" + edge.getType().getName();
+			
 			if (!changeSignatures.contains(signature)) {
 				return false;
 			}
@@ -143,6 +147,7 @@ public class DeveloperIntentionOracle {
 		// Delete edges
 		for (Edge edge : HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges(complementRule)) {
 			String signature = "RemoveReference_" + edge.getType().getName();
+			
 			if (!changeSignatures.contains(signature)) {
 				return false;
 			}
@@ -151,9 +156,14 @@ public class DeveloperIntentionOracle {
 		// Set attributes:
 		for (Node node : HenshinRuleAnalysisUtilEx.getLHSIntersectRHSNodes(complementRule)) {
 			for (AttributePair attribute : ChangePatternUtil.getChangingAttributes(node)) {
-				String signature = "AttributeValueChange_" + attribute.getType().getName();
-				if (!changeSignatures.contains(signature)) {
-					return false;
+				
+				// NOTE: Variable attribute changes are optional.
+				if (complementRule.getParameter(attribute.getRhsAttribute().getValue()) == null) {
+					String signature = "AttributeValueChange_" + attribute.getType().getName();
+					
+					if (!changeSignatures.contains(signature)) {
+						return false;
+					}
 				}
 			}
 		}
@@ -164,7 +174,7 @@ public class DeveloperIntentionOracle {
 
 	private boolean checkPreMatch() {
 		for (EObject obj : preMatch.getNodeTargets()) {
-			if (!xmiIDs.contains(EMFUtil.getXmiId(obj))) {
+			if (!xmiIDs.contains(EcoreUtil.getURI(obj).fragment())) {
 				return false;
 			}
 		}
