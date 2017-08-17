@@ -45,8 +45,6 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 
 	protected Collection<IResource> editRuleFiles = new ArrayList<>();
 	
-	protected Collection<Rule> editRules;
-	
 	protected Job calculation;
 	
 	protected HistoryInfo history;
@@ -194,7 +192,6 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 		
 		if ((element != null) && !editRuleFiles.contains(element)) {
 			editRuleFiles.add(element);
-			editRules = null;
 			return element;
 		}
 
@@ -228,12 +225,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	}
 	
 	public Collection<Rule> getEditRules() {
-		
-		if (editRules == null) {
-			editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
-		}
-		
-		return editRules;
+		return EditRuleUtil.loadEditRules(editRuleFiles, false);
 	}
 
 	@Override
@@ -260,7 +252,6 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	@Override
 	public void clear() {
 		editRuleFiles.clear();
-		editRules = null;
 		calculation = null;
 		history = null;
 		repairJob = null;
