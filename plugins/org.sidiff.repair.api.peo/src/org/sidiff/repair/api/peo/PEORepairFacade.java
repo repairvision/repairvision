@@ -175,7 +175,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 								complement.setHistoricChanges(null);
 								
 								// Filter complement with pre-match by abstract repairs:
-								if (repairFilter.filter(complement.getComplementingChanges(), preMatch)) {
+								if (repairFilter.filter(complement.getComplementingChanges(), preMatch.getMatch())) {
 									repairCount++;
 									repairsPerComplementRule.add(new RepairOperation(complement, preMatch));
 								}

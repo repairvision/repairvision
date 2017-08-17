@@ -14,11 +14,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.repair.api.matching.EditOperationMatching;
 import org.sidiff.validation.constraint.api.util.IValidationFilter;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
@@ -33,6 +33,13 @@ public class RepairActionFilter {
 	private Map<EClass, Map<EObject, List<RepairAction>>> repairs = new HashMap<>();
 	
 	private List<RepairValidation> validations = new ArrayList<>();
+	
+	public RepairActionFilter(Collection<RepairValidation> validations) {
+		for (RepairValidation validation : validations) {
+			addRepair(validation.getRepair());
+			this.validations.add(validation);
+		}
+	}
 	
 	public RepairActionFilter(Resource model, 
 			List<IConstraint> consistencyRules, 
@@ -211,7 +218,7 @@ public class RepairActionFilter {
 	 * @return <code>true</code> if the changes are potential repairs;
 	 *         <code>false</code> otherwise.
 	 */
-	public boolean filter(Collection<GraphElement> changes, EditOperationMatching prematch) {
+	public boolean filter(Collection<GraphElement> changes, Match prematch) {
 
 		for (GraphElement change : changes) {
 
@@ -221,7 +228,7 @@ public class RepairActionFilter {
 				
 				// Get the context object of the edge:
 				Node sourceContextNode = getLHS(((Edge) change).getSource());
-				EObject sourceContextObject = prematch.getMatch().getNodeTarget(sourceContextNode);
+				EObject sourceContextObject = prematch.getNodeTarget(sourceContextNode);
 				
 				if (sourceContextObject != null) {
 					
@@ -236,7 +243,7 @@ public class RepairActionFilter {
 							
 							// Get the context object of the edge:
 							Node targetContextNode = getLHS(((Edge) change).getTarget());
-							EObject targetContextObject = prematch.getMatch().getNodeTarget(targetContextNode);
+							EObject targetContextObject = prematch.getNodeTarget(targetContextNode);
 							
 							if (isRepair(RepairType.DELETE, targetContextObject, referenceType)) {
 								return true;
@@ -262,7 +269,7 @@ public class RepairActionFilter {
 				
 				// Get the context object of the edge:
 				Node contextNode = getLHS(((Attribute) change).getNode());
-				EObject contextObject = prematch.getMatch().getNodeTarget(contextNode);
+				EObject contextObject = prematch.getNodeTarget(contextNode);
 				
 				if (contextObject != null) {
 					if (isRepair(RepairType.MODIFY, contextObject, attributeType)) {

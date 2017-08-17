@@ -23,7 +23,7 @@ public class SettingAttributeFilter {
 			
 			// Remove only input parameters -> filter constant values:
 			if (complementRule.getParameter(complementAttribute.getValue()) != null) {
-				if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch)) {
+				if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch.getMatch())) {
 					complementAttribute.getNode().getAttributes().remove(complementAttribute);
 				}
 			}
@@ -35,7 +35,7 @@ public class SettingAttributeFilter {
 			
 			// Remove only input parameters -> filter constant values:
 			if (complementRule.getParameter(complementAttribute.getValue()) != null) {
-				if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch)) {
+				if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch.getMatch())) {
 					complementAttribute.getNode().getAttributes().remove(complementAttribute);
 				}
 			}
