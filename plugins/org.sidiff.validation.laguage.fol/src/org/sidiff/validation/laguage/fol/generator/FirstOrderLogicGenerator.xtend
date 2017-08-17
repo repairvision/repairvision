@@ -199,8 +199,8 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		return 'DOMAIN.get' + type.name + '()'
 	}
 	
-	def String compileFeature(EStructuralFeature featue) {
-		return 'DOMAIN.get' + featue.containerClass.simpleName + '_' + featue.name.toFirstUpper + '()'
+	def String compileFeature(EStructuralFeature feature) {
+		return 'DOMAIN.get' + feature.EContainingClass.name + '_' + feature.name.toFirstUpper + '()'
 	}
 	
 	def dispatch String compileFormula(Formula formula, HashMap<Object, String> names) {
