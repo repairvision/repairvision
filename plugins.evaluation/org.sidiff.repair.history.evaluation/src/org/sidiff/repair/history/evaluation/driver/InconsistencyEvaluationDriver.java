@@ -63,10 +63,10 @@ public class InconsistencyEvaluationDriver {
 		
 		// RQ 02:
 		// TODO: Oracle for Repair-Trees:
-		List<IRepairPlan> observable = EvaluationUtil.historicallyObservable(
-				repairJob, matchingSettings, repaired.getModelActual(), repaired.getModelResolved());
+		List<IRepairPlan> observable = DeveloperIntentionOracleDriver.getHistoricallyObservable(
+				repaired, repairJob, matchingSettings);
 		
-		InfoConsole.printInfo(observable.size() + " Historically Observable Repair(s) Found!");
+		InfoConsole.printInfo("Historically Observable Repairs: " + observable.size());
 		
 		if (!observable.isEmpty()) {
 			rq.getResearchQuestion02().repairAsObservedOPK++;
