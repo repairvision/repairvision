@@ -226,12 +226,12 @@ public class ComplementUtil {
 		Rule rule = node.getGraph().getRule();
 
 		if (isRHSNode(node)) {
-			Node copiedNode = copyNode(rule.getLhs(), node, true);
+			Node copiedNode = copyNode(rule.getLhs(), node, false);
 			Mapping mapping = HenshinFactory.eINSTANCE.createMapping(copiedNode, node);
 			rule.getMappings().add(mapping);
 			return copiedNode;
 		} else {
-			Node copiedNode = copyNode(rule.getRhs(), node, true);
+			Node copiedNode = copyNode(rule.getRhs(), node, false);
 			Mapping mapping = HenshinFactory.eINSTANCE.createMapping(node, copiedNode);
 			rule.getMappings().add(mapping);
 			return copiedNode;
