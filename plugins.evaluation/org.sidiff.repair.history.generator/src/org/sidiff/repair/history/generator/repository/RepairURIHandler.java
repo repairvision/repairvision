@@ -105,12 +105,15 @@ public class RepairURIHandler extends URIHandlerImpl {
 		if (tryResolve(defaultDeresolvedURI, true)) {
 			return defaultDeresolvedURI;
 		} else {
-			
+			// Make relative:
+			if (getBaseURI().toString().endsWith(uri.lastSegment())) {
+				return getBaseURI().appendFragment(uri.fragment());
+			// NOTE: The model itself isn't loaded yet!
 			// Try relative URI:
-			URI relative = URI.createURI(uri.fragment());
-			
-			if (tryResolve(relative, false)) {
-				return relative;
+//			URI relative = getBaseURI().appendFragment(uri.fragment());
+//			
+//			if (tryResolve(relative, true)) {
+//				return relative;
 			} else {
 				
 				// Search target model:
