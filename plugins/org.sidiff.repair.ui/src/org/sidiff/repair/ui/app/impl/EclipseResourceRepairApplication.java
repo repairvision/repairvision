@@ -67,9 +67,14 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 	}
 	
 	public IResource unsetModelA(IResource selection) {
+		
+		differenceRSS.getResources().remove(getModelA());
+		
 		modelAFile = null;
 		modelA = null;
+		
 		populateSettings();
+		
 		return selection;
 	}
 
@@ -92,9 +97,14 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 	}
 	
 	public IResource unsetModelB(IResource selection) {
+		
+		differenceRSS.getResources().remove(getModelB());
+		
 		modelBFile = null;
 		modelB = null;
+		
 		populateSettings();
+		
 		return selection;
 	}
 
@@ -112,6 +122,7 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 	
 	@Override
 	public void clear() {
+		differenceRSS = new ResourceSetImpl();
 		unsetModelA(modelAFile);
 		unsetModelB(modelBFile);
 	}
