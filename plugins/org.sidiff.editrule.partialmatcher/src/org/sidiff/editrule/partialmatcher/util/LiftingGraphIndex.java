@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.sidiff.consistency.common.java.StringPrinter;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;
@@ -211,5 +212,20 @@ public class LiftingGraphIndex {
 	 */
 	public Correspondence getCorrespondenceB(EObject modelElement) {
 		return difference.getCorrespondenceOfModelB(modelElement);
+	}
+	
+	@Override
+	public String toString() {
+		StringPrinter toString = new StringPrinter();
+		
+		for (EObject modelElement : localChanges.keySet()) {
+			toString.println(modelElement);
+			
+			for (Change change : localChanges.get(modelElement)) {
+				toString.println(2, change);
+			}
+		}
+		
+		return toString.toString();
 	}
 }
