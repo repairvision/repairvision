@@ -7,23 +7,21 @@ Bundle-ClassPath: .,
  commons-csv-1.4/commons-csv-1.4.jar
 Bundle-Activator: org.sidiff.repair.history.evaluation.Activator
 Export-Package: org.sidiff.repair.history.evaluation.oracle
-Require-Bundle: org.eclipse.core.runtime,
- org.sidiff.repair.ui,
- org.sidiff.repair.api.peo,
- org.eclipse.core.resources,
- org.sidiff.validation.constraint.interpreter,
- org.sidiff.consistency.common,
- org.sidiff.repair.history.model,
+Require-Bundle: org.eclipse.core.resources,
+ org.eclipse.core.runtime,
  org.eclipse.emf.edit.ui,
+ org.sidiff.common.ui,
+ org.sidiff.consistency.common,
+ org.sidiff.correspondences.matchingmodel,
+ org.sidiff.editrule.partialmatcher,
  org.sidiff.graphpattern,
  org.sidiff.patching,
- org.sidiff.validation.constraint.api,
- org.sidiff.validation.constraint.interpreter.ui,
+ org.sidiff.repair.api.peo,
  org.sidiff.repair.history.editrules,
- org.sidiff.common.ui,
- org.sidiff.common.emf,
- org.sidiff.correspondences.matchingmodel,
- org.eclipse.emf.henshin.editing.utils,
- org.sidiff.editrule.partialmatcher
+ org.sidiff.repair.history.model,
+ org.sidiff.repair.ui,
+ org.sidiff.validation.constraint.api,
+ org.sidiff.validation.constraint.interpreter,
+ org.sidiff.validation.constraint.interpreter.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
