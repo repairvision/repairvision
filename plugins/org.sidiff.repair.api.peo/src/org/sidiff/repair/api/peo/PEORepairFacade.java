@@ -56,7 +56,9 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 	public SymmetricDifference calculateDifference(Resource modelA, Resource modelB, PEORepairSettings settings) {
 		
 		// Disable merge imports:
+		// FIXME: setMergeImports(true) -> Wrong technical difference for EGenericTypes!
 		settings.getDifferenceSettings().setMergeImports(false);
+//		settings.getDifferenceSettings().setScope(Scope.RESOURCE);
 		
 		// Initialize:
 		assert (modelA.getResourceSet() == modelB.getResourceSet());
