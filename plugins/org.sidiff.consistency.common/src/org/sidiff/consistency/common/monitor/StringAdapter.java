@@ -3,6 +3,9 @@ package org.sidiff.consistency.common.monitor;
 public class StringAdapter {
 
 	public String toString(Object obj) {
-		return obj.toString();
+		if (obj != null) {
+			return obj.toString();
+		}
+		return "null";
 	}
 }

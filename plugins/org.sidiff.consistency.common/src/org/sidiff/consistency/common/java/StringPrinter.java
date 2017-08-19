@@ -26,7 +26,11 @@ public class StringPrinter {
 	}
 	
 	public void println(Object object) {
-		string.append(object.toString() + "\n");
+		if (object != null) {
+			string.append(object.toString() + "\n");
+		} else {
+			string.append("null");
+		}
 	}
 	
 	public void println(int indent, Object object) {

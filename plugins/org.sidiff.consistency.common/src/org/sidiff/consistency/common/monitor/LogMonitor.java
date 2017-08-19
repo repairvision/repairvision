@@ -75,12 +75,12 @@ public class LogMonitor implements IProgressMonitor {
 		for (Entry<String, LogTable> logTableEntry : log.entrySet()) {
 			
 			// generate file name:
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss");
 			String timeStamp = df.format(new Date(System.currentTimeMillis()));
 			String fileName = logTableEntry.getKey() + "_" + timeStamp + ".csv";
 			
 			// create folder:
-			path = path + File.pathSeparator + timeStamp;
+			path = path + File.separator + timeStamp;
 			File folder = new File(path);
 			
 			if (!folder.exists()) {
@@ -88,7 +88,7 @@ public class LogMonitor implements IProgressMonitor {
 			}
 			
 			// save log:
-			logTableEntry.getValue().toCSV(path + File.pathSeparator + fileName);
+			logTableEntry.getValue().toCSV(path + File.separator + fileName);
 		}
 	}
 

@@ -64,8 +64,13 @@ public class LogTable {
 	
 	public boolean append(String name, Object value, boolean lastRow, boolean unique) {
 		
+		// create column if absent:
+		if (!containsColumn(name)) {
+			createColumn(name);
+		}
+		
 		// get column by name key:
-		List<Object> column = getColumn(name);
+		List<Object> column = table.get(name);
 		
 		// check if value is unique in this column:
 		if (unique && column.contains(value)) {
@@ -125,39 +130,54 @@ public class LogTable {
 	
 	public void toCSV(String fileName) {
 		CSVPrinter csvFilePrinter = null;
+		FileWriter fileWriter = null;
 		
 		try {
 			CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator("\n");
-			FileWriter fileWriter = new FileWriter(fileName);
-			csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
-			csvFilePrinter.printRecord();
+			csvFileFormat = csvFileFormat.withDelimiter(';');
 			
 			// print header:
-			for (String header : table.keySet()) {
-				csvFilePrinter.print(header);
-			}
+			csvFileFormat = csvFileFormat.withHeader(table.keySet().toArray(new String[0]));
+			
+			fileWriter = new FileWriter(fileName);
+			csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
 			
 			// print record:
 			for (int i = 0; i < maxColumn.size(); i++) {
 				for (List<Object> column : table.values()) {
 					if (column.size() > i) {
 						Object value = column.get(i);
-						StringAdapter stringAdapter = toStringAdapters.get(value.getClass());
 						
-						if (stringAdapter != null) {
-							csvFilePrinter.print(stringAdapter.toString(value));
+						if (value != null) {
+							StringAdapter stringAdapter = toStringAdapters.get(value.getClass());
+							
+							if (stringAdapter != null) {
+								csvFilePrinter.print(stringAdapter.toString(value));
+							} else {
+								csvFilePrinter.print(value);
+							}
 						} else {
-							csvFilePrinter.print(value);
+							csvFilePrinter.print("null");
 						}
+					} else {
+						csvFilePrinter.print(NA);
 					}
 				}
 			}
+			csvFilePrinter.println();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (csvFilePrinter != null) {
 				try {
 					csvFilePrinter.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (fileWriter != null) {
+				try {
+					fileWriter.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
