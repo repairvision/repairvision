@@ -21,8 +21,6 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
-import org.sidiff.repair.history.evaluation.data.RepairEvaluation;
-import org.sidiff.repair.history.evaluation.data.ResearchQuestions;
 import org.sidiff.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.InconsistencyEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.LearnEditRuleDriver;
@@ -145,12 +143,10 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 
 				// Initialize:
 				RepairedInconsistency repaired = RepairedInconsistency.createRepairedInconsistency(selection);
-				RepairEvaluation evaluation = new RepairEvaluation();
-				ResearchQuestions rq = evaluation.createNewResearchQuestion(history.getHistory());
 
 				// Calculate repairs:
 				repairJob = InconsistencyEvaluationDriver.calculateRepairs(
-						history, repairFacade, rq, repaired, 
+						true, history, repairFacade, repaired, 
 						getEditRules(), getMatchingSettings());
 
 				// Update UI:
@@ -158,7 +154,6 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 					
 					// Show results:
 					fireResultChangeListener();
-					evaluation.dump();
 
 					if (repairJob.getRepairs().isEmpty()) {
 						WorkbenchUtil.showMessage("No repairs found!");
