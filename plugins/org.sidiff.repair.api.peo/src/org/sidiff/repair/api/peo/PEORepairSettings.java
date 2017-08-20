@@ -3,10 +3,13 @@ package org.sidiff.repair.api.peo;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.emf.DocumentType;
+import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.BasicRepairSettings;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
@@ -17,6 +20,16 @@ import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class PEORepairSettings extends BasicRepairSettings {
 
+	/**
+	 * Monitor for the repair process.
+	 */
+	private IProgressMonitor monitor = new NullProgressMonitor();
+	
+	/**
+	 * Logging of processed changes to runtime.
+	 */
+	private LogTable runtimeComlexityLog = null;
+	
 	/**
 	 * All edit-rules which are to be investigated for partial executions.
 	 */
@@ -46,6 +59,22 @@ public class PEORepairSettings extends BasicRepairSettings {
 		super();
 		this.editRules = editRules;
 		this.differenceSettings = differenceSettings;
+	}
+	
+	public IProgressMonitor getMonitor() {
+		return monitor;
+	}
+	
+	public void setMonitor(IProgressMonitor monitor) {
+		this.monitor = monitor;
+	}
+	
+	public LogTable getRuntimeComlexityLog() {
+		return runtimeComlexityLog;
+	}
+	
+	public void setRuntimeComlexityLog(LogTable runtimeComlexityLog) {
+		this.runtimeComlexityLog = runtimeComlexityLog;
 	}
 	
 	public Collection<Rule> getEditRules() {

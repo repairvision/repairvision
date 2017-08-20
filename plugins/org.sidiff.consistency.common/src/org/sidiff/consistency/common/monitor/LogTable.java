@@ -31,6 +31,10 @@ public class LogTable {
 	
 	protected Map<Class<?>, StringAdapter> toStringAdapters = new HashMap<>();
 	
+	public int getLastIndex() {
+		return maxColumn.size() - 1;
+	}
+	
 	public boolean createColumn(String name) {
 		return (table.putIfAbsent(name, new ArrayList<>()) == null);
 	}
@@ -95,6 +99,32 @@ public class LogTable {
 		return true;
 	}
 	
+	public int count(String column, String value) {
+		int count = 0;
+		
+		for(Object objectValue : getColumn(column)) {
+			if (valueToString(objectValue).equals(value)) {
+				++count;
+			}
+		}
+		
+		return count;
+	}
+	
+	public String valueToString(Object value) {
+		if (value != null) {
+			StringAdapter stringAdapter = toStringAdapters.get(value.getClass());
+			
+			if (stringAdapter != null) {
+				return stringAdapter.toString(value);
+			} else {
+				return value.toString();
+			}
+		} else {
+			return "null";
+		}
+	}
+	
 	public StringAdapter setToStringAdapter(Class<?> type, StringAdapter toStringAdapter) {
 		return toStringAdapters.put(type, toStringAdapter);
 	}
@@ -115,13 +145,7 @@ public class LogTable {
 			toString.println(tableEntry.getKey());
 			
 			for (Object value : tableEntry.getValue()) {
-				StringAdapter stringAdapter = toStringAdapters.get(value.getClass());
-				
-				if (stringAdapter != null) {
-					toString.println(2, stringAdapter.toString(value));
-				} else {
-					toString.println(2, value);
-				}
+				toString.println(2, valueToString(value));
 			}
 		}
 		
@@ -146,19 +170,7 @@ public class LogTable {
 			for (int i = 0; i < maxColumn.size(); i++) {
 				for (List<Object> column : table.values()) {
 					if (column.size() > i) {
-						Object value = column.get(i);
-						
-						if (value != null) {
-							StringAdapter stringAdapter = toStringAdapters.get(value.getClass());
-							
-							if (stringAdapter != null) {
-								csvFilePrinter.print(stringAdapter.toString(value));
-							} else {
-								csvFilePrinter.print(value);
-							}
-						} else {
-							csvFilePrinter.print("null");
-						}
+						csvFilePrinter.print(valueToString(column.get(i)));
 					} else {
 						csvFilePrinter.print(NA);
 					}

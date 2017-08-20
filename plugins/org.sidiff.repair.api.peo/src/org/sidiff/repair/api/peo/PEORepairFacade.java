@@ -18,6 +18,9 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.consistency.common.monitor.LogMonitor;
+import org.sidiff.consistency.common.monitor.LogTable;
+import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.partialmatcher.complement.ComplementFinder;
 import org.sidiff.editrule.partialmatcher.scope.RepairActionFilter;
@@ -77,14 +80,23 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		// Calculate difference:
 		SymmetricDifference difference = null;
 		
-		long start = System.currentTimeMillis();
+		LogTime diffTimer = new LogTime();
 		try {
 			difference = deriveTechnicalDifference(modelA, modelB, settings.getDifferenceSettings());
 		} catch (InvalidModelException | NoCorrespondencesException e) {
 			e.printStackTrace();
 		}
-		System.out.println("EVALUATION[Difference]: " + (System.currentTimeMillis() - start) + "ms");
+		diffTimer.stop();
+		System.out.println("Re.Vision[Difference Time]: " + diffTimer + "ms");
 		
+		// Report:
+		if (settings.getMonitor() instanceof LogMonitor) {
+			LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
+			log.append("[Time (ms)] Calculate Difference", diffTimer);
+			log.append("Change Count (Historical->Resolved)", difference.getChanges().size());
+		}
+		
+		// Create difference resource:
 		Resource differenceResource = differenceRSS.createResource(
 				RepairAPIUtil.getDifferenceURI(modelA.getURI(), modelB.getURI()));
 		differenceResource.getContents().add(difference);
@@ -110,11 +122,21 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		}
 		
 		// Validate model and calculate abstract repairs:
-		long start = System.currentTimeMillis();
+		LogTime valiationTimer = new LogTime();
+		
 		RepairActionFilter repairFilter = new RepairActionFilter(modelB, 
 				settings.getConsistencyRules(), settings.getValidationFilter(), true);
-		System.out.println("EVALUATION[Validierung]: " + (System.currentTimeMillis() - start) + "ms");
-		System.out.println("EVALUATION[Validierung]: " + repairFilter.getValidations().size() + " Validierungen");
+		
+		valiationTimer.stop();
+		System.out.println("Re.Vision[Validation Time]: " + valiationTimer + "ms");
+		System.out.println("Re.Vision[Inconsistencies]: " + repairFilter.getValidations().size());
+
+		// Report validation:
+		if (settings.getMonitor() instanceof LogMonitor) {
+			LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
+//			log.append("[Time (ms)] Validation", valiationTimer);
+			log.append("Inconsistencies", repairFilter.getValidations().size());
+		}
 		
 		// Calculate repairs:
 		ComplementFinder complementFinder = createComplementFinder(modelA, modelB, difference);
@@ -122,36 +144,9 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		complementFinder.start();
 		
 		Map<Rule, List<IRepairPlan>> repairs = new LinkedHashMap<>();
+		int potentialEditRules = 0;
+		int complementingEditRules = 0;
 		int repairCount = 0;
-		
-//		for (Rule editRule : settings.getEditRules()) {
-//			
-//			// Filter edit-rules by abstract repairs:
-//			if (repairFilter.filter(ChangePatternUtil.getChanges(editRule))) {
-//				List<IRepair> repairsPerRule = new ArrayList<>();
-//				
-//				for(ComplementRule complement : complementFinder.searchComplementRules(editRule)) {
-//					if (complement.getComplementingChanges().size() > 0) {
-//						
-//						// Filter complements by abstract repairs:
-//						if (repairFilter.filter(complement.getComplementingChanges())) {
-//							for (EditOperationMatching preMatch : complement.getComplementMatches()) {
-//								
-//								// Filter complement with pre-match by abstract repairs:
-//								if (repairFilter.filter(complement.getComplementingChanges(), preMatch)) {
-//									repairCount++;
-//									repairsPerRule.add(new RepairOperation(complement, preMatch));
-//								}
-//							}
-//						}
-//					}
-//				}
-//				
-//				if (!repairsPerRule.isEmpty()) {
-//					repairs.put(editRule, repairsPerRule);
-//				}
-//			}
-//		}
 		
 		for (Rule editRule : settings.getEditRules()) {
 			
@@ -159,27 +154,30 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 			RepairScope scope = repairFilter.getScope(ChangePatternUtil.getPotentialChanges(editRule));
 			
 			if (!scope.isEmpty()) {
-				for(ComplementRule complement : complementFinder.searchComplementRules(editRule, scope)) {
+				List<ComplementRule> complements = complementFinder.searchComplementRules(
+						settings.getMonitor(), settings.getRuntimeComlexityLog(), editRule, scope);
+				++potentialEditRules;
+				
+				for(ComplementRule complement : complements) {
 					List<IRepairPlan> repairsPerComplementRule = new ArrayList<>();
+					LogTime complementMatchingTimer = new LogTime();
 
+					// Filter complements by abstract repairs:
 					if (complement.getComplementingChanges().size() > 0) {
-
-						// Filter complements by abstract repairs:
 						if (repairFilter.filter(complement.getComplementingChanges())) {
-							for (EditOperationMatching preMatch : complement.getComplementMatches()) {
+							complementMatchingTimer.start();
+							List<EditOperationMatching> preMatches = complement.getComplementMatches();
+							complementMatchingTimer.stop();
+							
+							for (EditOperationMatching preMatch : preMatches) {
 								
 								// Filter setting attributes that do not overlap with an repair action:
-								SettingAttributeFilter.filterSettingAttributes(
-										complement.getComplementRule(), preMatch, repairFilter);
-								
-								// Clear cache:
-								complement.setComplementingChanges(null);
-								complement.setHistoricChanges(null);
+								filterSettingAttributes(complement, preMatch, repairFilter);
 								
 								// Filter complement with pre-match by abstract repairs:
 								if (repairFilter.filter(complement.getComplementingChanges(), preMatch.getMatch())) {
-									repairCount++;
 									repairsPerComplementRule.add(new RepairOperation(complement, preMatch));
+									++repairCount;
 								}
 							}
 						}
@@ -187,6 +185,14 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 					
 					if (!repairsPerComplementRule.isEmpty()) {
 						repairs.put(complement.getComplementRule(), repairsPerComplementRule);
+						
+						// Report complements:
+						++complementingEditRules;
+						
+						if (settings.getMonitor() instanceof LogMonitor) {
+							LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
+							log.append("[Time (ms)] Complement Matching", complementMatchingTimer);
+						}
 					}
 				}
 			}
@@ -194,7 +200,15 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 
 		complementFinder.finish();
 		
-		System.out.println("###Repair Count: " + repairCount);
+		// Report:
+		System.out.println("Re.Vision[Repair Count]: " + repairCount);
+		
+		if (settings.getMonitor() instanceof LogMonitor) {
+			LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
+			log.append("Potential Edit Rules", potentialEditRules);
+			log.append("Complements (Repairs)", complementingEditRules);
+			log.append("Complement Matchings", repairCount);
+		}
 		
 		// Create repair job:
 		PEORepairJob repairJob = new PEORepairJob();
@@ -205,6 +219,18 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		repairJob.setValidations(repairFilter.getValidations());
 		
 		return repairJob;
+	}
+	
+	public void filterSettingAttributes(ComplementRule complementRule, 
+			EditOperationMatching prematch, RepairActionFilter repairActionFilter) {
+		
+		// Filter setting attributes that do not overlap with an repair action:
+		SettingAttributeFilter.filterSettingAttributes(
+				complementRule.getComplementRule(), prematch, repairActionFilter);
+		
+		// Clear cache:
+		complementRule.setComplementingChanges(null);
+		complementRule.setHistoricChanges(null);
 	}
 	
 	protected ComplementFinder createComplementFinder(

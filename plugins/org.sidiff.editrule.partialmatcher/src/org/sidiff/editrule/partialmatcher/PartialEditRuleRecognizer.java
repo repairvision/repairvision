@@ -3,6 +3,8 @@ package org.sidiff.editrule.partialmatcher;
 import java.util.Iterator;
 
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.common.monitor.LogTable;
+import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.partialmatcher.dependencies.ChangeDependencies;
 import org.sidiff.editrule.partialmatcher.dependencies.DependencyEvaluation;
@@ -10,6 +12,7 @@ import org.sidiff.editrule.partialmatcher.generator.PartialMatchGenerator;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPatternGenerator;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPatternInitializer;
+import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
 import org.sidiff.editrule.partialmatcher.scope.RepairScope;
 import org.sidiff.editrule.partialmatcher.scope.RepairScopeConstraint;
 import org.sidiff.editrule.partialmatcher.selection.IMatchSelector;
@@ -20,6 +23,7 @@ import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.editrule.partialmatcher.util.MatchingHelper;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.common.algorithms.IAlgorithm;
 import org.sidiff.graphpattern.matcher.IMatching;
 
@@ -75,7 +79,7 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 		return recognitionPattern;
 	}
 	
-	public Iterator<IMatching> recognizePartialEditRule(RecognitionPattern recognitionPattern, RepairScope scope) {
+	public Iterator<IMatching> recognizePartialEditRule(RecognitionPattern recognitionPattern, RepairScope scope, LogTable runtimeLog) {
 		
 		if (!started) {
 			throw new RuntimeException("Call PartialEditRuleRecognizer start()!");
@@ -83,7 +87,17 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 		
 		// Initialize change domains:
 		RecognitionPatternInitializer.initializeRecognitionPattern(recognitionPattern, changeDomainMap, matchingHelper);
-//		System.out.println("Initial Domains: \n\n" + PrintUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
+//		System.out.println("Initial Domains: \n\n" + StringUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
+
+		// Log domain size:
+		int domainSize = 0;
+		
+		for (NodePattern changeNode : recognitionPattern.getChangeNodePatterns()) {
+			domainSize += Domain.get(changeNode).getMatchSize();
+		}
+		
+		runtimeLog.append("Change Count (Sum)", domainSize);
+		runtimeLog.append("Change Node Count", recognitionPattern.getChangeNodePatterns().size());
 		
 		// Create Scope-Constraint:
 		RepairScopeConstraint repairScopeConstraint = new RepairScopeConstraint(scope, recognitionPattern);
@@ -96,7 +110,13 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 		matchGenerator.initialize(recognitionPattern.getChangeNodePatterns(), dependencies, matchSelector);
 		matchGenerator.setScope(repairScopeConstraint);
 		
+		LogTime matchingTimer = new LogTime();
 		matchGenerator.start();
+		matchingTimer.stop();
+		
+		// Report matching:
+		runtimeLog.append("[Time (ms)] Matching Time", matchingTimer);
+		
 		return matchGenerator.getResults();
 	}
 
@@ -108,7 +128,7 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 		
 		// Initialize change domains:
 		RecognitionPatternInitializer.initializeRecognitionPattern(recognitionPattern, changeDomainMap, matchingHelper);
-//		System.out.println("Initial Domains: \n\n" + PrintUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
+//		System.out.println("Initial Domains: \n\n" + StringUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		
 		// Create matcher:
 		PartialMatchGenerator matchGenerator = new PartialMatchGenerator();

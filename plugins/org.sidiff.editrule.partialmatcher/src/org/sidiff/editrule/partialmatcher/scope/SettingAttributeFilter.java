@@ -14,7 +14,7 @@ import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 
 public class SettingAttributeFilter {
 
-	public static boolean filterSettingAttributes(Rule complementRule, 
+	public static void filterSettingAttributes(Rule complementRule, 
 			EditOperationMatching prematch, RepairActionFilter repairActionFilter) {
 		
 		// Keep only the given attributes in the complement rule:
@@ -64,9 +64,5 @@ public class SettingAttributeFilter {
 
 			}
 		}
-
-		return true;
 	}
-	
-	
 }

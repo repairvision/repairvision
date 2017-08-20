@@ -2,6 +2,7 @@ package org.sidiff.editrule.partialmatcher.util.debug;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
 import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
 import org.sidiff.graphpattern.NodePattern;
@@ -29,13 +30,31 @@ public class DebugUtil {
 
 	public static void printEditRule(Rule editRule) {
 		if (EVALUATION) {
-			print("EVALUATION[Edit Rule Matching]: " + editRule.getName());
+			print("Re.Vision[Edit Rule Matching]: " + editRule.getName());
 		}
 	}
 
-	public static void printMatchingTime(long matchingTime) {
+	public static void printRecognitionTime(LogTime matchingTime) {
 		if (EVALUATION) {
-			print("EVALUATION[Matching Time]: " + (System.currentTimeMillis() - matchingTime) + "ms");
+			print("Re.Vision[Recognition Time]: " + matchingTime + "ms");
+		}
+	}
+	
+	public static void printMatchingTime(LogTime matchingTime) {
+		if (EVALUATION) {
+			print("Re.Vision[Matching Time]: " + matchingTime + "ms");
+		}
+	}
+	
+	public static void printFalsePositives(int falsePositives) {
+		if (EVALUATION) {
+			print("Re.Vision[False Positives]: " + falsePositives);
+		}
+	}
+	
+	public static void printFoundMatchings(int matchings) {
+		if (EVALUATION) {
+			print("Re.Vision[Matchings Found]: " + matchings);
 		}
 	}
 

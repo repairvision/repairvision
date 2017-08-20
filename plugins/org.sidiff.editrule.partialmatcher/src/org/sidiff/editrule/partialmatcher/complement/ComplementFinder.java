@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.consistency.common.monitor.LogMonitor;
+import org.sidiff.consistency.common.monitor.LogUtil;
+import org.sidiff.consistency.common.monitor.LogTable;
+import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.partialmatcher.PartialEditRuleRecognizer;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
@@ -106,19 +111,23 @@ public class ComplementFinder implements IAlgorithm {
 	 *            The partially executed edit-rule.
 	 * @return All complementing operations for the given edit-rule.
 	 */
-	public List<ComplementRule> searchComplementRules(Rule editRule, RepairScope scope) {
+	public List<ComplementRule> searchComplementRules(IProgressMonitor monitor, LogTable runtimeLog, Rule editRule, RepairScope scope) {
 		
 		//// Lifting ////
 
-		//Matching:
+		// Matching:
 		RecognitionPattern recognitionPattern = partialEditRuleRecognizer.createRecognitionPattern(editRule);
-
 		DebugUtil.printEditRule(editRule);
-		long matchingTime = System.currentTimeMillis();
 		
-		Iterator<IMatching> matchIterator = partialEditRuleRecognizer.recognizePartialEditRule(recognitionPattern, scope);
+		LogTime recognitionTimer = new LogTime();
+		Iterator<IMatching> matchIterator = partialEditRuleRecognizer.recognizePartialEditRule(recognitionPattern, scope, runtimeLog);
+		recognitionTimer.stop();
+		DebugUtil.printRecognitionTime(recognitionTimer);
 		
-		DebugUtil.printMatchingTime(matchingTime);
+		// Report:
+		if (monitor instanceof LogMonitor) {
+			LogUtil.appendTime((LogMonitor) monitor, "[Time (ms)] Recognition Time", recognitionTimer);
+		}
 		
 		// Save recognition-rule:
 		if (saveRecognitionRule) {

@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.partialmatcher.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.partialmatcher.generator.util.FilteredIterator;
@@ -17,6 +18,7 @@ import org.sidiff.editrule.partialmatcher.generator.util.Stack;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
 import org.sidiff.editrule.partialmatcher.scope.RepairScopeConstraint;
 import org.sidiff.editrule.partialmatcher.selection.IMatchSelector;
+import org.sidiff.editrule.partialmatcher.util.debug.DebugUtil;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.IMatching;
@@ -217,11 +219,14 @@ public class PartialMatchGenerator {
 		results = new ArrayList<>();
 		assignments.reset();
 		
-		long matchingTime = System.currentTimeMillis();
+		LogTime matchingTimer = new LogTime();
+		
 		expandAssignment(0);
-		System.out.println("Matching Time: " + (((double) System.currentTimeMillis() - matchingTime) / 1000.0) + "s");
-		System.out.println("False Positives: " + falsePositives);
-		System.out.println("Matchings Found: " + results.size());
+		
+		matchingTimer.stop();
+		DebugUtil.printMatchingTime(matchingTimer);
+		DebugUtil.printFalsePositives(falsePositives);
+		DebugUtil.printFoundMatchings(results.size());
 	}
 	
 	private int pickAndAppendVariable() {
