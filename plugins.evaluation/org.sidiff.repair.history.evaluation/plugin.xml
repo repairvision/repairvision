@@ -9,16 +9,4 @@
             presentation="org.sidiff.repair.history.evaluation.ui.HistoryRepairPresentation">
       </presentation>
    </extension>
-   <extension
-         id="GetValidationErrors"
-         point="org.eclipse.core.runtime.applications">
-      <application
-            cardinality="singleton-global"
-            thread="main"
-            visible="true">
-         <run
-               class="org.sidiff.repair.history.evaluation.statistic.GetValidationErrors">
-         </run>
-      </application>
-   </extension>
 </plugin>

@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
+import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.storage.UUIDMatcher;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
@@ -143,11 +144,21 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 
 				// Initialize:
 				RepairedInconsistency repaired = RepairedInconsistency.createRepairedInconsistency(selection);
+				
+				LogTable inconsistenciesLog = new LogTable();
+				LogTable runtimeComplexityLog = new LogTable();
 
 				// Calculate repairs:
 				repairJob = InconsistencyEvaluationDriver.calculateRepairs(
 						true, history, repairFacade, repaired, 
-						getEditRules(), getMatchingSettings());
+						getEditRules(), getMatchingSettings(),
+						inconsistenciesLog, runtimeComplexityLog);
+				
+				// Save CSV logs:
+				EvaluationUtil.saveLog(history, inconsistenciesLog, 
+						EvaluationUtil.getTimestamp(), 
+						"inconsistency_" + repaired.getName());
+				EvaluationUtil.updateProject(history);
 
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
