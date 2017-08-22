@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_BG2EECkuEeepFbklRoBR3A" name="EReferenceSingleContainer(SetAttributeEReferenceAUpperBoundToNAndSetAttributeEReferenceBContainmentToFalse)" description="EReferenceSingleContainer">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_BG2EESkuEeepFbklRoBR3A" name="mainUnit" subUnits="_BG2EEikuEeepFbklRoBR3A">
+    <parameters xmi:id="_b6F2IYQdEee8leypsbrNbw" name="UpperBound"/>
+    <parameters xmi:id="_b6F2JIQdEee8leypsbrNbw" name="containerEReference"/>
+    <parameters xmi:id="_b6F2J4QdEee8leypsbrNbw" name="containmentEReference"/>
+    <parameterMappings xmi:id="_b6F2IoQdEee8leypsbrNbw" source="_b6F2IYQdEee8leypsbrNbw" target="_b6F2IIQdEee8leypsbrNbw"/>
+    <parameterMappings xmi:id="_b6F2JYQdEee8leypsbrNbw" source="_b6F2JIQdEee8leypsbrNbw" target="_b6F2I4QdEee8leypsbrNbw"/>
+    <parameterMappings xmi:id="_b6F2KIQdEee8leypsbrNbw" source="_b6F2J4QdEee8leypsbrNbw" target="_b6F2JoQdEee8leypsbrNbw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_BG2EEikuEeepFbklRoBR3A" name="eReferenceSingleContainer(SetAttributeEReferenceAUpperBoundToNAndSetAttributeEReferenceBContainmentToFalse)">
+    <parameters xmi:id="_b6F2IIQdEee8leypsbrNbw" name="UpperBound"/>
+    <parameters xmi:id="_b6F2I4QdEee8leypsbrNbw" name="containerEReference"/>
+    <parameters xmi:id="_b6F2JoQdEee8leypsbrNbw" name="containmentEReference"/>
+    <lhs xmi:id="_BG2EEykuEeepFbklRoBR3A" name="Lhs">
+      <nodes xmi:id="_BG2EFCkuEeepFbklRoBR3A" name="containerEReference" incoming="_BG2EHikuEeepFbklRoBR3A" outgoing="_BG2EGykuEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_BG2EFSkuEeepFbklRoBR3A" name="containmentEReference" incoming="_BG2EGykuEeepFbklRoBR3A" outgoing="_BG2EHikuEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <edges xmi:id="_BG2EGykuEeepFbklRoBR3A" source="_BG2EFCkuEeepFbklRoBR3A" target="_BG2EFSkuEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="_BG2EHikuEeepFbklRoBR3A" source="_BG2EFSkuEeepFbklRoBR3A" target="_BG2EFCkuEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_BG2EJSkuEeepFbklRoBR3A" name="Rhs">
+      <nodes xmi:id="_BG2EJikuEeepFbklRoBR3A" name="containerEReference" incoming="_BG2rJykuEeepFbklRoBR3A" outgoing="_BG2rJCkuEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_BG2EJykuEeepFbklRoBR3A" value="UpperBound">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_BG2EKCkuEeepFbklRoBR3A" name="containmentEReference" incoming="_BG2rJCkuEeepFbklRoBR3A" outgoing="_BG2rJykuEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_BG2EKSkuEeepFbklRoBR3A" value="false">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_BG2rJCkuEeepFbklRoBR3A" source="_BG2EJikuEeepFbklRoBR3A" target="_BG2EKCkuEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="_BG2rJykuEeepFbklRoBR3A" source="_BG2EKCkuEeepFbklRoBR3A" target="_BG2EJikuEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_BG2rLikuEeepFbklRoBR3A" origin="_BG2EFCkuEeepFbklRoBR3A" image="_BG2EJikuEeepFbklRoBR3A"/>
+    <mappings xmi:id="_BG2rLykuEeepFbklRoBR3A" origin="_BG2EFSkuEeepFbklRoBR3A" image="_BG2EKCkuEeepFbklRoBR3A"/>
+  </units>
+</henshin:Module>
