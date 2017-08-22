@@ -93,7 +93,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		if (settings.getMonitor() instanceof LogMonitor) {
 			LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
 			log.append("[Time (ms)] Calculate Difference", diffTimer);
-			log.append("Change Count (Historical->Resolved)", difference.getChanges().size());
+			log.append("Change Count (Historical->Actual)", difference.getChanges().size());
 		}
 		
 		// Create difference resource:
