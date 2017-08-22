@@ -104,6 +104,9 @@ public class ComplementFinder implements IAlgorithm {
 	@Override
 	public void finish() {
 		this.partialEditRuleRecognizer.finish();
+		
+		this.engine.clearCache();
+		this.engine.shutdown();
 	}
 	
 	/**
