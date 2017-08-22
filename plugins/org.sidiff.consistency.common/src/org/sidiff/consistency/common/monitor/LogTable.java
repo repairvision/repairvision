@@ -83,7 +83,7 @@ public class LogTable {
 		
 		// fill column until last row:
 		if (lastRow) {
-			for (int i = 0; i < (maxColumn.size() - 1); i++) {
+			for (int i = column.size(); i < (maxColumn.size() - 1); i++) {
 				column.add(NA);
 			}
 		}
