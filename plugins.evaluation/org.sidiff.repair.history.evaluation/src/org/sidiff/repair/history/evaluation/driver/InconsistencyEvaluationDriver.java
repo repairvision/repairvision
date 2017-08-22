@@ -110,7 +110,7 @@ public class InconsistencyEvaluationDriver {
 		}
 		
 		// evaluate repair tree:
-		log.append("Count of Repair Tress", repairJob.getValidations().size());
+		log.append("Count of Repair Trees", repairJob.getValidations().size());
 		log.append("Count of Repair Tree Actions/Paths", countRepairTreeAction(repairJob.getValidations()));
 //		log.append("Count of Repair Tree Combinations", countRepairTreeCombinations(repairJob.getValidations()));
 	}
