@@ -144,6 +144,8 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		complementFinder.start();
 		
 		Map<Rule, List<IRepairPlan>> repairs = new LinkedHashMap<>();
+		
+		LogTime complementMatchingTimer = new LogTime();
 		int potentialEditRules = 0;
 		int complementingEditRules = 0;
 		int repairCount = 0;
@@ -160,7 +162,6 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 				
 				for(ComplementRule complement : complements) {
 					List<IRepairPlan> repairsPerComplementRule = new ArrayList<>();
-					LogTime complementMatchingTimer = new LogTime();
 
 					// Filter complements by abstract repairs:
 					if (complement.getComplementingChanges().size() > 0) {
@@ -188,11 +189,6 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 						
 						// Report complements:
 						++complementingEditRules;
-						
-						if (settings.getMonitor() instanceof LogMonitor) {
-							LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
-							log.append("[Time (ms)] Complement Matching", complementMatchingTimer);
-						}
 					}
 				}
 			}
@@ -205,6 +201,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		
 		if (settings.getMonitor() instanceof LogMonitor) {
 			LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
+			log.append("[Time (ms)] Complement Matching", complementMatchingTimer);
 			log.append("Potential Edit Rules", potentialEditRules);
 			log.append("Complements (Repairs)", complementingEditRules);
 			log.append("Complement Matchings", repairCount);
