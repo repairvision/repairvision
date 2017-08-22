@@ -155,12 +155,12 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 						inconsistenciesLog, runtimeComplexityLog);
 				
 				// Save CSV logs:
+				String timestamp = EvaluationUtil.getTimestamp();
+				
 				EvaluationUtil.saveLog(history, inconsistenciesLog, 
-						EvaluationUtil.getTimestamp(), 
-						"inconsistency_" + repaired.getName());
+						timestamp, "inconsistency_" + repaired.getName());
 				EvaluationUtil.saveLog(history, runtimeComplexityLog, 
-						EvaluationUtil.getTimestamp(), 
-						"runtime_" + repaired.getName());
+						timestamp, "runtime_" + repaired.getName());
 				EvaluationUtil.updateProject(history);
 
 				// Update UI:
