@@ -158,6 +158,9 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 				EvaluationUtil.saveLog(history, inconsistenciesLog, 
 						EvaluationUtil.getTimestamp(), 
 						"inconsistency_" + repaired.getName());
+				EvaluationUtil.saveLog(history, runtimeComplexityLog, 
+						EvaluationUtil.getTimestamp(), 
+						"runtime_" + repaired.getName());
 				EvaluationUtil.updateProject(history);
 
 				// Update UI:
