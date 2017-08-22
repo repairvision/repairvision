@@ -175,8 +175,8 @@ public class LogTable {
 						csvFilePrinter.print(NA);
 					}
 				}
+				csvFilePrinter.println();
 			}
-			csvFilePrinter.println();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
