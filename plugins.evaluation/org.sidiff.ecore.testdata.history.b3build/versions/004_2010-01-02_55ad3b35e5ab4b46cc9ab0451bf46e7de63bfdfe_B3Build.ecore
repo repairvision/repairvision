@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:id="_U8WFEIj4EeeyCoVSxwTtfg" name="build" nsURI="http://b3build/1.0" nsPrefix="build">
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8gdIYj4EeeyCoVSxwTtfg" name="BuildUnit" eSuperTypes="_U8i5coj4EeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5Yoj4EeeyCoVSxwTtfg" name="unitProvidedCapabilities" upperBound="-1" eType="_U8i5coj4EeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5Y4j4EeeyCoVSxwTtfg" name="builders" upperBound="-1" eType="_U8gdIoj4EeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_VRvtVIj4EeeyCoVSxwTtfg" name="documentation">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_VRvtVoj4EeeyCoVSxwTtfg" name="executionMode">
+      <eType xsi:type="ecore:EEnum" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//ExecutionMode"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtWIj4EeeyCoVSxwTtfg" name="requiredCapabilities" upperBound="-1" eType="_U8i5nIj4EeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtWYj4EeeyCoVSxwTtfg" name="metaRequiredCapabilities" upperBound="-1" eType="_U8i5nIj4EeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtWoj4EeeyCoVSxwTtfg" name="implements" upperBound="-1" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//IType"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtXIj4EeeyCoVSxwTtfg" name="concerns" upperBound="-1" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BConcern"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtXoj4EeeyCoVSxwTtfg" name="defaultProperties" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BPropertySet"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtYIj4EeeyCoVSxwTtfg" name="propertySets" upperBound="-1" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BPropertySet"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtYoj4EeeyCoVSxwTtfg" name="synchronizations" upperBound="-1" eType="_VRvtpYj4EeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtY4j4EeeyCoVSxwTtfg" name="functions" upperBound="-1" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BFunction"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtZYj4EeeyCoVSxwTtfg" name="repositories" upperBound="-1" eType="_VRvtroj4EeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtZoj4EeeyCoVSxwTtfg" name="containers" upperBound="-1" eType="_VRvtu4j4EeeyCoVSxwTtfg" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8gdIoj4EeeyCoVSxwTtfg" name="Builder">
+    <eSuperTypes href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//B3Function"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5ZYj4EeeyCoVSxwTtfg" name="postcondExpr" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BExpression"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5Z4j4EeeyCoVSxwTtfg" name="precondExpr" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BExpression"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5aYj4EeeyCoVSxwTtfg" name="providedCapabilities" upperBound="-1" eType="_U8i5lYj4EeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5aoj4EeeyCoVSxwTtfg" name="input" eType="_U8i5dIj4EeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5a4j4EeeyCoVSxwTtfg" name="output" eType="_U8i5eoj4EeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5bIj4EeeyCoVSxwTtfg" name="defaultProperties" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BPropertySet"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" xmi:id="_U8i5b4j4EeeyCoVSxwTtfg" name="VersionRange" instanceClassName="org.eclipse.equinox.internal.provisional.p2.core.VersionRange"/>
+  <eClassifiers xsi:type="ecore:EDataType" xmi:id="_U8i5cIj4EeeyCoVSxwTtfg" name="Version" instanceClassName="org.eclipse.equinox.internal.provisional.p2.core.Version"/>
+  <eClassifiers xsi:type="ecore:EDataType" xmi:id="_U8i5cYj4EeeyCoVSxwTtfg" name="URI" instanceClassName="java.net.URI"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8i5coj4EeeyCoVSxwTtfg" name="VersionedCapability" eSuperTypes="_U8i5lYj4EeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_U8i5c4j4EeeyCoVSxwTtfg" name="version" eType="_U8i5cIj4EeeyCoVSxwTtfg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8i5dIj4EeeyCoVSxwTtfg" name="BuilderInput">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5dYj4EeeyCoVSxwTtfg" name="precondExpr" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BExpression"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5d4j4EeeyCoVSxwTtfg" name="postcondExpr" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BExpression"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5eYj4EeeyCoVSxwTtfg" name="prerequisites" upperBound="-1" eType="_U8i5foj4EeeyCoVSxwTtfg" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8i5eoj4EeeyCoVSxwTtfg" name="PathGroup">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5e4j4EeeyCoVSxwTtfg" name="annotations" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BPropertySet"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5fYj4EeeyCoVSxwTtfg" name="pathVectors" upperBound="-1" eType="_U8i5noj4EeeyCoVSxwTtfg" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8i5foj4EeeyCoVSxwTtfg" name="Prerequisite">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5f4j4EeeyCoVSxwTtfg" name="condExpr" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BExpression"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_U8i5gYj4EeeyCoVSxwTtfg" name="alias">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5g4j4EeeyCoVSxwTtfg" name="withExpr" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BWithExpression"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5hYj4EeeyCoVSxwTtfg" name="buildResult" eType="_U8i5hoj4EeeyCoVSxwTtfg" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8i5hoj4EeeyCoVSxwTtfg" name="BuildResultReference"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8i5h4j4EeeyCoVSxwTtfg" name="CompoundBuildResultReference" eSuperTypes="_U8i5hoj4EeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5iIj4EeeyCoVSxwTtfg" name="prerequisites" upperBound="-1" eType="_U8i5foj4EeeyCoVSxwTtfg" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_VRvtjIj4EeeyCoVSxwTtfg" name="BuilderReference" eSuperTypes="_U8i5hoj4EeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtjYj4EeeyCoVSxwTtfg" name="parameters" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BParameterList"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_VRvtj4j4EeeyCoVSxwTtfg" name="builderName">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtkYj4EeeyCoVSxwTtfg" name="requiredCapability" eType="_U8i5nIj4EeeyCoVSxwTtfg" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8i5lYj4EeeyCoVSxwTtfg" name="Capability">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_U8i5loj4EeeyCoVSxwTtfg" name="name">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_U8i5mIj4EeeyCoVSxwTtfg" name="nameSpace">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5moj4EeeyCoVSxwTtfg" name="condExpr" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BExpression"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8i5nIj4EeeyCoVSxwTtfg" name="RequiredCapability" eSuperTypes="_U8i5lYj4EeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_U8i5nYj4EeeyCoVSxwTtfg" name="versionRange" eType="_U8i5b4j4EeeyCoVSxwTtfg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8i5noj4EeeyCoVSxwTtfg" name="PathVector">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5n4j4EeeyCoVSxwTtfg" name="condExpr" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BExpression"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_U8i5oYj4EeeyCoVSxwTtfg" name="basePath">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_U8i5o4j4EeeyCoVSxwTtfg" name="paths" upperBound="-1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8i5pYj4EeeyCoVSxwTtfg" name="CompoundPathVector" eSuperTypes="_U8i5noj4EeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_U8i5poj4EeeyCoVSxwTtfg" name="pathVectors" upperBound="-1" eType="_U8i5noj4EeeyCoVSxwTtfg" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_U8i5p4j4EeeyCoVSxwTtfg" name="PathVectorElement" eSuperTypes="_U8i5noj4EeeyCoVSxwTtfg"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_VRvtpYj4EeeyCoVSxwTtfg" name="Synchronization">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtpoj4EeeyCoVSxwTtfg" name="builders" upperBound="-1" eType="_VRvtp4j4EeeyCoVSxwTtfg" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_VRvtp4j4EeeyCoVSxwTtfg" name="SynchronizedBuilder">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_VRvtqIj4EeeyCoVSxwTtfg" name="nameSpace">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_VRvtqoj4EeeyCoVSxwTtfg" name="name">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_VRvtrIj4EeeyCoVSxwTtfg" name="builderName">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_VRvtroj4EeeyCoVSxwTtfg" name="RepositoryConfiguration"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_VRvtr4j4EeeyCoVSxwTtfg" name="RepositoryDeclaration" eSuperTypes="_VRvtroj4EeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_VRvtsIj4EeeyCoVSxwTtfg" name="documentation">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_VRvtsoj4EeeyCoVSxwTtfg" name="location" eType="_U8i5cYj4EeeyCoVSxwTtfg"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvts4j4EeeyCoVSxwTtfg" name="resolverType" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//IType"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvttYj4EeeyCoVSxwTtfg" name="contextBlock" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BExpression"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_VRvtt4j4EeeyCoVSxwTtfg" name="ResolutionStrategy" abstract="true" eSuperTypes="_VRvtroj4EeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtuIj4EeeyCoVSxwTtfg" name="repositories" upperBound="-1" eType="_VRvtroj4EeeyCoVSxwTtfg" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_VRvtuYj4EeeyCoVSxwTtfg" name="ResolutionStrategyFirst" eSuperTypes="_VRvtt4j4EeeyCoVSxwTtfg"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_VRvtuoj4EeeyCoVSxwTtfg" name="ResolutionStrategyBest" eSuperTypes="_VRvtt4j4EeeyCoVSxwTtfg"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_VRvtu4j4EeeyCoVSxwTtfg" name="ContainerConfiguration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_VRvtvIj4EeeyCoVSxwTtfg" name="documentation">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_VRvtvoj4EeeyCoVSxwTtfg" name="name">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtwIj4EeeyCoVSxwTtfg" name="agentType" lowerBound="1" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//IType"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_VRvtwoj4EeeyCoVSxwTtfg" name="contextBlock" containment="true">
+      <eType xsi:type="ecore:EClass" href="B3Backend.ecore/2009-12-31_svn00241_B3Backend.ecore#//BExpression"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>
