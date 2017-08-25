@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_3GJF4CaVEeepFbklRoBR3A" name="SetAttributeEReferenceUpperBoundToOneAndSetAttributeEAttributeUniqueToFalse" description="Sets EReference's attribute UpperBound to one and Sets Ereference's attribute Unique to false">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_3GJF4SaVEeepFbklRoBR3A" name="mainUnit" subUnits="_3GJF4iaVEeepFbklRoBR3A">
+    <parameters xmi:id="_nsmTkSaWEeepFbklRoBR3A" name="ref" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </parameters>
+    <parameterMappings xmi:id="_nsmTkiaWEeepFbklRoBR3A" source="_nsmTkSaWEeepFbklRoBR3A" target="_nsmTkCaWEeepFbklRoBR3A"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_3GJF4iaVEeepFbklRoBR3A" name="setAttributeEReferenceUpperBoundToOneAndSetAttributeEAttributeUniqueToFalse">
+    <parameters xmi:id="_nsmTkCaWEeepFbklRoBR3A" name="ref" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </parameters>
+    <lhs xmi:id="_3GJF4yaVEeepFbklRoBR3A" name="Lhs">
+      <nodes xmi:id="_3GJF5yaVEeepFbklRoBR3A" name="ref">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_3GJF9SaVEeepFbklRoBR3A" name="Rhs">
+      <nodes xmi:id="_3GJF-SaVEeepFbklRoBR3A" name="ref">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_3GJF-iaVEeepFbklRoBR3A" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/unique"/>
+        </attributes>
+        <attributes xmi:id="_3GJF-yaVEeepFbklRoBR3A" value="&quot;1&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_3GJGDCaVEeepFbklRoBR3A" origin="_3GJF5yaVEeepFbklRoBR3A" image="_3GJF-SaVEeepFbklRoBR3A"/>
+  </units>
+</henshin:Module>

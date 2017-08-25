@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:id="_2MPXcIkDEeeyCoVSxwTtfg" name="model1" nsURI="http://www.eclipse.org/emf/CDO/tests/model1/1.0.0" nsPrefix="model1">
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MU3AYkDEeeyCoVSxwTtfg" name="Address">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MU3AokDEeeyCoVSxwTtfg" name="name">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MU3BIkDEeeyCoVSxwTtfg" name="street">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MU3BokDEeeyCoVSxwTtfg" name="city">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MRMqIkDEeeyCoVSxwTtfg" name="Company" eSuperTypes="_2MU3AYkDEeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MRMqYkDEeeyCoVSxwTtfg" name="categories" upperBound="-1" eType="_2MRMpIkDEeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MRMqokDEeeyCoVSxwTtfg" name="suppliers" upperBound="-1" eType="_2MPXcYkDEeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MTB6YkDEeeyCoVSxwTtfg" name="customers" upperBound="-1" eType="_2MTB64kDEeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MRMq4kDEeeyCoVSxwTtfg" name="purchaseOrders" upperBound="-1" eType="_2MPXdIkDEeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MTB6okDEeeyCoVSxwTtfg" name="salesOrders" upperBound="-1" eType="_2MTB74kDEeeyCoVSxwTtfg" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MPXcYkDEeeyCoVSxwTtfg" name="Supplier" eSuperTypes="_2MU3AYkDEeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MU3D4kDEeeyCoVSxwTtfg" name="purchaseOrders" upperBound="-1" eType="_2MPXdIkDEeeyCoVSxwTtfg" eOpposite="_2MPXd4kDEeeyCoVSxwTtfg"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MbkwIkDEeeyCoVSxwTtfg" name="preferred" defaultValueLiteral="true">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MTB64kDEeeyCoVSxwTtfg" name="Customer" eSuperTypes="_2MU3AYkDEeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MTB7okDEeeyCoVSxwTtfg" name="salesOrders" unique="false" upperBound="-1" eType="_2MTB74kDEeeyCoVSxwTtfg" eOpposite="_2MTB8okDEeeyCoVSxwTtfg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MU3EokDEeeyCoVSxwTtfg" name="Order">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MU3E4kDEeeyCoVSxwTtfg" name="orderDetails" upperBound="-1" eType="_2MQlmIkDEeeyCoVSxwTtfg" containment="true" eOpposite="_2MU3FYkDEeeyCoVSxwTtfg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MQlmIkDEeeyCoVSxwTtfg" name="OrderDetail">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MU3FYkDEeeyCoVSxwTtfg" name="order" lowerBound="1" eType="_2MU3EokDEeeyCoVSxwTtfg" eOpposite="_2MU3E4kDEeeyCoVSxwTtfg"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MQlmYkDEeeyCoVSxwTtfg" name="product" eType="_2MiSiIkDEeeyCoVSxwTtfg" eOpposite="_2MiSi4kDEeeyCoVSxwTtfg"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MQlmokDEeeyCoVSxwTtfg" name="price">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MPXdIkDEeeyCoVSxwTtfg" name="PurchaseOrder" eSuperTypes="_2MU3EokDEeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MPXdYkDEeeyCoVSxwTtfg" name="date">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MPXd4kDEeeyCoVSxwTtfg" name="supplier" lowerBound="1" eType="_2MPXcYkDEeeyCoVSxwTtfg" eOpposite="_2MU3D4kDEeeyCoVSxwTtfg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MTB74kDEeeyCoVSxwTtfg" name="SalesOrder" eSuperTypes="_2MU3EokDEeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MTB8IkDEeeyCoVSxwTtfg" name="id">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MTB8okDEeeyCoVSxwTtfg" name="customer" lowerBound="1" eType="_2MTB64kDEeeyCoVSxwTtfg" eOpposite="_2MTB7okDEeeyCoVSxwTtfg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MRMpIkDEeeyCoVSxwTtfg" name="Category">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MRMpYkDEeeyCoVSxwTtfg" name="name">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MSa04kDEeeyCoVSxwTtfg" name="categories" upperBound="-1" eType="_2MRMpIkDEeeyCoVSxwTtfg" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MRMp4kDEeeyCoVSxwTtfg" name="products" upperBound="-1" eType="_2MiSiIkDEeeyCoVSxwTtfg" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MiSiIkDEeeyCoVSxwTtfg" name="Product1">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MiSiYkDEeeyCoVSxwTtfg" name="name">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MiSi4kDEeeyCoVSxwTtfg" name="orderDetails" upperBound="-1" eType="_2MQlmIkDEeeyCoVSxwTtfg" eOpposite="_2MQlmYkDEeeyCoVSxwTtfg"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MiSjIkDEeeyCoVSxwTtfg" name="vat" eType="_2MZIm4kDEeeyCoVSxwTtfg" defaultValueLiteral="vat15"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MnLDYkDEeeyCoVSxwTtfg" name="description" transient="true">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" xmi:id="_2MZIm4kDEeeyCoVSxwTtfg" name="VAT">
+    <eLiterals xmi:id="_2MZInIkDEeeyCoVSxwTtfg" name="vat0"/>
+    <eLiterals xmi:id="_2MZInYkDEeeyCoVSxwTtfg" name="vat7" value="7"/>
+    <eLiterals xmi:id="_2MZInokDEeeyCoVSxwTtfg" name="vat15" value="15"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MiSkYkDEeeyCoVSxwTtfg" name="OrderAddress" eSuperTypes="_2MU3AYkDEeeyCoVSxwTtfg _2MU3EokDEeeyCoVSxwTtfg _2MQlmIkDEeeyCoVSxwTtfg">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MiSkokDEeeyCoVSxwTtfg" name="testAttribute">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:id="_2MPXcIkDEeeyCoVSxwTtfg" name="model1" nsURI="http://www.eclipse.org/emf/CDO/tests/model1/1.0.0" nsPrefix="model1">
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MPXcYkDEeeyCoVSxwTtfg" name="Supplier">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MPXcokDEeeyCoVSxwTtfg" name="name">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_2MPXdIkDEeeyCoVSxwTtfg" name="PurchaseOrder">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_2MPXdYkDEeeyCoVSxwTtfg" name="date">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_2MPXd4kDEeeyCoVSxwTtfg" name="supplier" eType="_2MPXcYkDEeeyCoVSxwTtfg"/>
+  </eClassifiers>
+</ecore:EPackage>
