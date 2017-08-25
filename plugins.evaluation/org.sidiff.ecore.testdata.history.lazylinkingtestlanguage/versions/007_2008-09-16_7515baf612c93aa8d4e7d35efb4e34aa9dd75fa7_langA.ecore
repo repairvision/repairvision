@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmi:id="_P8C9gIkEEeeyCoVSxwTtfg" name="langA" nsURI="http://eclipse.org/xtext/langA" nsPrefix="langA">
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_P8DklIkEEeeyCoVSxwTtfg" name="Type">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_P8DklokEEeeyCoVSxwTtfg" name="name">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_P8DklYkEEeeyCoVSxwTtfg" name="extends" eType="_P8DklIkEEeeyCoVSxwTtfg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_P8DkkYkEEeeyCoVSxwTtfg" name="Import">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="_P8DkkokEEeeyCoVSxwTtfg" name="uri">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="_P8DkmIkEEeeyCoVSxwTtfg" name="Main">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_P8DkmokEEeeyCoVSxwTtfg" name="imports" upperBound="-1" eType="_P8DkkYkEEeeyCoVSxwTtfg" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_P8DkmYkEEeeyCoVSxwTtfg" name="types" upperBound="-1" eType="_P8DklIkEEeeyCoVSxwTtfg" containment="true" resolveProxies="false"/>
+  </eClassifiers>
+</ecore:EPackage>
