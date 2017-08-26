@@ -57,7 +57,7 @@ public class SettingAttributeFilter {
 						valueRHS = valueRHS.substring(1, valueRHS.length() - 1);
 					}
 
-					if (valueB.equals(valueRHS)) {
+					if ((valueB + "").equals(valueRHS)) {
 						ComplementUtil.makePreserve(attribute.getRhsAttribute());
 					}
 				}
