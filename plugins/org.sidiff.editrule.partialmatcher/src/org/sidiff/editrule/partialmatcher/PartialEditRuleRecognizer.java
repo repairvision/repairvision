@@ -96,8 +96,10 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 			domainSize += Domain.get(changeNode).getMatchSize();
 		}
 		
-		runtimeLog.append("Change Count (Sum)", domainSize);
-		runtimeLog.append("Change Node Count", recognitionPattern.getChangeNodePatterns().size());
+		if (runtimeLog != null) {
+			runtimeLog.append("Change Count (Sum)", domainSize);
+			runtimeLog.append("Change Node Count", recognitionPattern.getChangeNodePatterns().size());
+		}
 		
 		// Create Scope-Constraint:
 		RepairScopeConstraint repairScopeConstraint = new RepairScopeConstraint(scope, recognitionPattern);
@@ -115,7 +117,9 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 		matchingTimer.stop();
 		
 		// Report matching:
-		runtimeLog.append("[Time (ms)] Matching Time", matchingTimer);
+		if (runtimeLog != null) {
+			runtimeLog.append("[Time (ms)] Matching Time", matchingTimer);
+		}
 		
 		return matchGenerator.getResults();
 	}
