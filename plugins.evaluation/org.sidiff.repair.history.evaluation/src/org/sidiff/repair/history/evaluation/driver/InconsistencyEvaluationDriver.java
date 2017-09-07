@@ -45,14 +45,14 @@ public class InconsistencyEvaluationDriver {
 		// Calculate repairs (filtered by validation):
 		PEORepairSettings settings = new PEORepairSettings(editRules, matchingSettings);
 		settings.setupValidationFilter(
-				Collections.singleton(repaired.getValidationErrorActualModel().getContext()), 
+				Collections.singleton(repaired.getValidationErrorCurrentModel().getContext()), 
 				Collections.singletonList(repaired.getConsistencyRule(history.getSupportedConsistencyRules())));
 		settings.setSaveDifference(saveDifference);
 		settings.setMonitor(monitor);
 		settings.setRuntimeComlexityLog(runtimeComplexityLog);
 		
 		PEORepairJob repairJob = repairFacade.getRepairs(
-				repaired.getModelHistorical(), repaired.getModelActual(), settings);
+				repaired.getModelHistorical(), repaired.getModelCurrent(), settings);
 		
 		// Evaluate repairs for inconsistency:
 		evaluateRepairs(monitor, history, repaired, repairJob, matchingSettings);
@@ -66,9 +66,9 @@ public class InconsistencyEvaluationDriver {
 		
 		LogMonitor monitor = new LogMonitor(log);
 		
-		log.append("Inconsistency", repaired.getValidationErrorActualModel().getName() + " - " 
-				+ EcoreUtil.getURI(repaired.getValidationErrorActualModel().getContext()));
-		log.append("Context Type", repaired.getValidationErrorActualModel().getContext().eClass().getName());
+		log.append("Inconsistency", repaired.getValidationErrorCurrentModel().getName() + " - " 
+				+ EcoreUtil.getURI(repaired.getValidationErrorCurrentModel().getContext()));
+		log.append("Context Type", repaired.getValidationErrorCurrentModel().getContext().eClass().getName());
 		log.append("History", history.getHistory().getName());
 		log.append("Historical Version (consistent)", history.getHistory().getVersions().indexOf(
 				repaired.getModelVersionHistorical()));

@@ -5,6 +5,7 @@ import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deri
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
@@ -17,16 +18,16 @@ import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
 import org.sidiff.repair.history.evaluation.oracle.DeveloperIntentionOracle;
 
 public class DeveloperIntentionOracleDriver {
-
+	
 	public static List<IRepairPlan> getHistoricallyObservable(
-			RepairedInconsistency repaired, PEORepairJob repairJob, DifferenceSettings settings) {
+			Resource modelCurrent, Resource modelResolved, PEORepairJob repairJob, DifferenceSettings settings) {
 		
 		List<IRepairPlan> observable = new ArrayList<>();
 		
 		// The evolutionStep in which inconsistency has been resolved historically
 		try {
-			SymmetricDifference actualToResolved = deriveTechnicalDifference(
-					repaired.getModelActual(), repaired.getModelResolved(), settings);
+			SymmetricDifference currentToResolved = deriveTechnicalDifference(
+					modelCurrent, modelResolved, settings);
 			
 			for (Rule complementRule : repairJob.getRepairs().keySet()) {
 				for (IRepairPlan repair : repairJob.getRepairs().get(complementRule)) {
@@ -38,7 +39,7 @@ public class DeveloperIntentionOracleDriver {
 					DeveloperIntentionOracle oracle = new DeveloperIntentionOracle();
 
 					if (oracle.isHistoricallyObservable(
-							preMatch, actualToResolved, 
+							preMatch, currentToResolved, 
 							repairJob.getValidations())) {
 						observable.add(repair);
 					}
@@ -49,5 +50,11 @@ public class DeveloperIntentionOracleDriver {
 		}
 		
 		return observable;
+	}
+
+	public static List<IRepairPlan> getHistoricallyObservable(
+			RepairedInconsistency repaired, PEORepairJob repairJob, DifferenceSettings settings) {
+		
+		return getHistoricallyObservable(repaired.getModelCurrent(), repaired.getModelResolved(), repairJob, settings);
 	}
 }

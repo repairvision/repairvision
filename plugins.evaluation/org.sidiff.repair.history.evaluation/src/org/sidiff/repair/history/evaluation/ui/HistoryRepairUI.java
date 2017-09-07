@@ -110,7 +110,7 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 						if (repaired != null) {
 							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelHistorical().getURI()));
 							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelIntroduced().getURI()));
-							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelActual().getURI()));
+							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelCurrent().getURI()));
 							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelResolved().getURI()));
 						}
 					} catch (FileNotFoundException e) {

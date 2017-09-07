@@ -29,13 +29,13 @@ public class LearnEditRuleDriver {
 				repaired.getModelHistorical(), repaired.getModelResolved(), differenceSettings);
 
 		SymmetricDifference actualToResolved = calcualteDifference(true,
-				repaired.getModelActual(), repaired.getModelResolved(), differenceSettings);
+				repaired.getModelCurrent(), repaired.getModelResolved(), differenceSettings);
 
 		SymmetricDifference actualToHistorical = calcualteDifference(true,
-				repaired.getModelActual(), repaired.getModelHistorical(), differenceSettings);
+				repaired.getModelCurrent(), repaired.getModelHistorical(), differenceSettings);
 		
 		// Validation:
-		EObject actualInvalidContext = repaired.getValidationErrorActualModel().getContext();
+		EObject actualInvalidContext = repaired.getValidationErrorCurrentModel().getContext();
 		IConstraint constraint = repaired.getConsistencyRule(history.getSupportedConsistencyRules());
 
 		EObject historicalInvalidContext = actualToHistorical.getCorrespondingObjectInB(actualInvalidContext);

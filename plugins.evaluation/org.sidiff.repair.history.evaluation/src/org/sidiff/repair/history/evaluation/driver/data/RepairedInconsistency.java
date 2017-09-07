@@ -14,7 +14,7 @@ public class RepairedInconsistency {
 	/**
 	 * The "original" EMF diagnostic validation error.
 	 */
-	private ValidationError validationErrorActualModel;
+	private ValidationError validationErrorCurrentModel;
 	
 	/**
 	 * Consistent historic model.
@@ -27,9 +27,9 @@ public class RepairedInconsistency {
 	private Version modelVersionIntroduced;
 	
 	/**
-	 * The actual model.
+	 * The current model.
 	 */
-	private Version modelVersionActual;
+	private Version modelVersionCurrent;
 	
 	/**
 	 * Model where the inconsistency were resolved.
@@ -52,11 +52,11 @@ public class RepairedInconsistency {
 				repaired.setModelVersionResolved(versionResolved);
 				
 				if (versionResolved != null) {
-					Version versionActual = EvaluationUtil.getPrecessorRevision(versionResolved);
-					repaired.setModelVersionActual(versionActual);
+					Version versionCurrent = EvaluationUtil.getPrecessorRevision(versionResolved);
+					repaired.setModelVersionActual(versionCurrent);
 					
-					ValidationError actualValidationError = EvaluationUtil.getCorrespondingValidationError(introducedValidationError, versionActual);
-					repaired.setValidationErrorActualModel(actualValidationError);
+					ValidationError actualValidationError = EvaluationUtil.getCorrespondingValidationError(introducedValidationError, versionCurrent);
+					repaired.setValidationErrorCurrentModel(actualValidationError);
 					
 					if (actualValidationError != null) {
 						return repaired;
@@ -71,24 +71,24 @@ public class RepairedInconsistency {
 	public void printModels() {
 		InfoConsole.printInfo("Historical: " + modelVersionHistorical.getName());
 		InfoConsole.printInfo("Introduced: "  + modelVersionIntroduced.getName());
-		InfoConsole.printInfo("Actual: "  + modelVersionActual.getName());
+		InfoConsole.printInfo("Current: "  + modelVersionCurrent.getName());
 		InfoConsole.printInfo("Resolved: " + modelVersionResolved.getName());
 	}
 	
 	public String getName() {
-		return EvaluationUtil.getValidationID(validationErrorActualModel);
+		return EvaluationUtil.getValidationID(validationErrorCurrentModel);
 	}
 	
 	public IConstraint getConsistencyRule(List<IConstraint> consistencyRules) {
-		return EvaluationUtil.getConsistencyRule(validationErrorActualModel, consistencyRules);
+		return EvaluationUtil.getConsistencyRule(validationErrorCurrentModel, consistencyRules);
 	}
 
-	public ValidationError getValidationErrorActualModel() {
-		return validationErrorActualModel;
+	public ValidationError getValidationErrorCurrentModel() {
+		return validationErrorCurrentModel;
 	}
 
-	public void setValidationErrorActualModel(ValidationError validationErrorActualModel) {
-		this.validationErrorActualModel = validationErrorActualModel;
+	public void setValidationErrorCurrentModel(ValidationError validationErrorCurrentModel) {
+		this.validationErrorCurrentModel = validationErrorCurrentModel;
 	}
 	
 	public Resource getModelHistorical() {
@@ -99,8 +99,8 @@ public class RepairedInconsistency {
 		return modelVersionIntroduced.getModel();
 	}
 
-	public Resource getModelActual() {
-		return modelVersionActual.getModel();
+	public Resource getModelCurrent() {
+		return modelVersionCurrent.getModel();
 	}
 
 	public Resource getModelResolved() {
@@ -124,11 +124,11 @@ public class RepairedInconsistency {
 	}
 
 	public Version getModelVersionActual() {
-		return modelVersionActual;
+		return modelVersionCurrent;
 	}
 
 	public void setModelVersionActual(Version modelVersionActual) {
-		this.modelVersionActual = modelVersionActual;
+		this.modelVersionCurrent = modelVersionActual;
 	}
 
 	public Version getModelVersionResolved() {
