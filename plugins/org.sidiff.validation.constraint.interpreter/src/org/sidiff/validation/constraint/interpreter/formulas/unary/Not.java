@@ -33,7 +33,7 @@ public class Not extends UnaryFormula {
 		//     t*  f*
 		//     f   t
 		
-		if (getResult() ==  true) {
+		if (getResult() ==  expected) {
 			child.required(parent, !expected);
 		}
 	}
@@ -49,7 +49,7 @@ public class Not extends UnaryFormula {
 		//     t   f
 		//     f*  t*
 		
-		if (getResult() !=  true) {
+		if (getResult() !=  expected) {
 			child.repair(parentRepairDecision, !expected);
 		}
 	}
