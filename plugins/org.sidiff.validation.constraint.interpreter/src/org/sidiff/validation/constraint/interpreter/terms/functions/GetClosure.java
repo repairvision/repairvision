@@ -171,20 +171,19 @@ public class GetClosure extends Function {
 				
 				for (EObject target : targets) {
 					if (getRepairNext(target, closure, sequence, type, invalid)) {
+						RepairAction newRepair = new RepairAction(type, element, feature); 
+						parent.appendChildDecisions(newRepair);
 						invalidElementReachable = true;
 					}
 				}
 			} else {
 				EObject target = (EObject) element.eGet(feature);
 				if (getRepairNext(target, closure, parent, type, invalid)) {
+					RepairAction newRepair = new RepairAction(type, element, feature); 
+					parent.appendChildDecisions(newRepair);
 					invalidElementReachable = true;
 				}
 			}
-		}
-		
-		if (invalidElementReachable) {
-			RepairAction newRepair = new RepairAction(type, element, feature); 
-			parent.appendChildDecisions(newRepair);
 		}
 		
 		return invalidElementReachable;
