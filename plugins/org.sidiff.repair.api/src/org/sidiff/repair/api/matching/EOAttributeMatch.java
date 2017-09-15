@@ -6,7 +6,7 @@ import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.GraphElement;
 
-public class EOAttributeMatch extends EOMatch {
+public class EOAttributeMatch extends EOActionMatch {
 
 	private Attribute attribute;
 	

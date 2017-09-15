@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.editrule.partialmatcher.pattern.graph.ActionEdge;
 import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
 import org.sidiff.editrule.partialmatcher.pattern.graph.ChangePattern;
@@ -15,11 +16,13 @@ import org.sidiff.graphpattern.NodePattern;
 
 public class RecognitionPattern {
 	
+	protected Rule editRule;
+	
 	protected Map<Node, ActionNode> nodeTrace = new HashMap<>();
 	
 	protected Map<Edge, ActionEdge> edgeTrace = new HashMap<>();
 
-	protected GraphPattern graphPattern;
+	protected GraphPattern recognitionPattern;
 	
 	protected List<NodePattern> changeNodePatterns = new ArrayList<>();
 	
@@ -27,8 +30,13 @@ public class RecognitionPattern {
 	
 	protected Map<NodePattern, ChangePattern> changePatterns = new HashMap<>();
 	
-	public RecognitionPattern(GraphPattern graphPattern) {
-		this.graphPattern = graphPattern; 
+	public RecognitionPattern(Rule editRule, GraphPattern recognitionPattern) {
+		this.editRule = editRule;
+		this.recognitionPattern = recognitionPattern; 
+	}
+	
+	public Rule getEditRule() {
+		return editRule;
 	}
 	
 	public Map<Node, ActionNode> getNodeTrace() {
@@ -42,18 +50,18 @@ public class RecognitionPattern {
 	public void addChangePattern(NodePattern changeNodePattern, ChangePattern changePattern) {
 		changeNodePatterns.add(changeNodePattern);
 		changePatterns.put(changeNodePattern, changePattern);
-		graphPattern.getNodes().add(changeNodePattern);
+		recognitionPattern.getNodes().add(changeNodePattern);
 	}
 	
 	public void addGraphNodePattern(NodePattern graphNodePattern) {
 		if (graphNodePattern != null) {
 			graphNodePatterns.add(graphNodePattern);
-			graphPattern.getNodes().add(graphNodePattern);
+			recognitionPattern.getNodes().add(graphNodePattern);
 		}
 	}
 
 	public GraphPattern getGraphPattern() {
-		return graphPattern;
+		return recognitionPattern;
 	}
 
 	public List<NodePattern> getChangeNodePatterns() {

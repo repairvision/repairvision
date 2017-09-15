@@ -26,8 +26,10 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.repair.api.matching.EOActionMatch;
 import org.sidiff.repair.api.matching.EOAttributeMatch;
 import org.sidiff.repair.api.matching.EOEdgeMatch;
 import org.sidiff.repair.api.matching.EOMatch;
@@ -144,19 +146,11 @@ public abstract class ComplementRule {
 	public List<GraphElement> getHistoricChanges() {
 		
 		if (historicChanges == null) {
-			
-//			// Source-Rule - Complement-Rule:
-//			historicChanges = ChangePatternUtil.getPotentialChanges(sourceRule);
-//			
-//			for (Iterator<GraphElement> iterator = historicChanges.iterator(); iterator.hasNext();) {
-//				GraphElement potentialHistoricChanges = iterator.next();
-//				
-//				if (getComplementingChanges().contains(getTrace(potentialHistoricChanges))) {
-//					iterator.remove();
-//				}
-//			}
-			
-			return sourceMatch.stream().map(EOMatch::getGraphElement).collect(Collectors.toList());
+			historicChanges = sourceMatch.stream()
+					.filter(sm -> sm instanceof EOActionMatch)
+					.map(sm -> (EOActionMatch) sm)
+					.map(EOActionMatch::getGraphElement)
+					.collect(Collectors.toList());
 		}
 		
 		return historicChanges;
@@ -400,5 +394,9 @@ public abstract class ComplementRule {
 		}
 		
 		return null;
+	}
+	
+	public Parameter getTrace(Parameter sourceParameter) {
+		return complementRule.getParameter(sourceParameter.getName());
 	}
 }

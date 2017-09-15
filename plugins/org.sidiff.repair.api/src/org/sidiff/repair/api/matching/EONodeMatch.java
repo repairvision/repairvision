@@ -4,7 +4,7 @@ import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 
-public abstract class EONodeMatch extends EOMatch {
+public abstract class EONodeMatch extends EOActionMatch {
 
 	private Node node;
 	

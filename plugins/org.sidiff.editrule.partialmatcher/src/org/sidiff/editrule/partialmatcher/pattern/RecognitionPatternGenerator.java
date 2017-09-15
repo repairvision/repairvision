@@ -17,11 +17,11 @@ import org.sidiff.graphpattern.GraphPattern;
 public class RecognitionPatternGenerator {
 
 	public static RecognitionPattern createRecognitionPattern(
-			Rule editRule, GraphPattern graphPattern,
+			Rule editRule, GraphPattern recognitionGraphPattern,
 			MatchingHelper matchingHelper, LiftingGraphIndex changeIndex) {
 		
 		// create recognition-pattern:
-		RecognitionPattern recognitionPattern = new RecognitionPattern(graphPattern);
+		RecognitionPattern recognitionPattern = new RecognitionPattern(editRule, recognitionGraphPattern);
 		
 		// create action-graph:
 		ActionGraph actionGraph = new ActionGraph(editRule, matchingHelper, changeIndex);

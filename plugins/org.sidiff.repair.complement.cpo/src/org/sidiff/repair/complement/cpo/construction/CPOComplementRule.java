@@ -39,10 +39,10 @@ public class CPOComplementRule extends ComplementRule  {
 			
 			// NOTE: The matching unambiguously in CPO approach (regarding EditRuleNodeMultiMatch):
 			if (sourceMatch instanceof EONodeSingleMatch) {
+				EONodeSingleMatch nodeMatch = (EONodeSingleMatch) sourceMatch;
 				
 				// Collect all << create >> and << preserve >> node matches:
-				if (!sourceMatch.getAction().equals(Type.DELETE)) {
-					EONodeSingleMatch nodeMatch = (EONodeSingleMatch) sourceMatch;
+				if (!nodeMatch.getAction().equals(Type.DELETE)) {
 					Node complementNode = getLHS(getTrace(nodeMatch.getNode()));
 					
 					if (complementNode != null) {

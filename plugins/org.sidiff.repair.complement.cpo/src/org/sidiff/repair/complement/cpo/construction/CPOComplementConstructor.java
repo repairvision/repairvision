@@ -119,8 +119,8 @@ public class CPOComplementConstructor extends ComplementConstructor {
 					EObject matchA = ((EONodeSingleMatch) subEditRuleMatch).getModelAElement();
 					EObject matchB = ((EONodeSingleMatch) subEditRuleMatch).getModelBElement();
 
-					EONodeSingleMatch superEditRuleNodeMatch = new EONodeSingleMatch(subEditRuleMatch.getAction(),
-							superRuleNode);
+					EONodeSingleMatch superEditRuleNodeMatch = new EONodeSingleMatch(
+							((EONodeSingleMatch) subEditRuleMatch).getAction(), superRuleNode);
 					superEditRuleNodeMatch.setModelAElement(matchA);
 					superEditRuleNodeMatch.setModelBElement(matchB);
 					superEditRuleMatch.add(superEditRuleNodeMatch);
@@ -130,8 +130,8 @@ public class CPOComplementConstructor extends ComplementConstructor {
 					Collection<EObject> matchesA = ((EONodeMultiMatch) subEditRuleMatch).getModelAElements();
 					Collection<EObject> matchesB = ((EONodeMultiMatch) subEditRuleMatch).getModelBElements();
 
-					EONodeMultiMatch superEditRuleNodeMatch = new EONodeMultiMatch(subEditRuleMatch.getAction(),
-							superRuleNode);
+					EONodeMultiMatch superEditRuleNodeMatch = new EONodeMultiMatch(
+							((EONodeMultiMatch) subEditRuleMatch).getAction(), superRuleNode);
 					superEditRuleNodeMatch.setModelAElements(matchesA);
 					superEditRuleNodeMatch.setModelBElements(matchesB);
 					superEditRuleMatch.add(superEditRuleNodeMatch);

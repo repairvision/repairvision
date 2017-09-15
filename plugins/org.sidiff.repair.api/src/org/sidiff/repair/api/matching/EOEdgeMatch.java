@@ -6,7 +6,7 @@ import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 
-public class EOEdgeMatch extends EOMatch {
+public class EOEdgeMatch extends EOActionMatch {
 
 	private Edge edge;
 	

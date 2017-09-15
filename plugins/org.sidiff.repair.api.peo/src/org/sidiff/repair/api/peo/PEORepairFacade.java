@@ -22,15 +22,15 @@ import org.sidiff.consistency.common.monitor.LogMonitor;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.editrule.partialmatcher.complement.ComplementFinder;
 import org.sidiff.editrule.partialmatcher.scope.RepairActionFilter;
 import org.sidiff.editrule.partialmatcher.scope.RepairScope;
-import org.sidiff.editrule.partialmatcher.scope.SettingAttributeFilter;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.matching.EditOperationMatching;
 import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.construction.ComplementRule;
+import org.sidiff.repair.complement.peo.construction.SettingAttributeFilter;
+import org.sidiff.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.repair.complement.repair.RepairOperation;
 
 /**
@@ -226,8 +226,8 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 				complementRule.getComplementRule(), prematch, repairActionFilter);
 		
 		// Clear cache:
-		complementRule.setComplementingChanges(null);
 		complementRule.setHistoricChanges(null);
+		complementRule.setComplementingChanges(null);
 	}
 	
 	protected ComplementFinder createComplementFinder(

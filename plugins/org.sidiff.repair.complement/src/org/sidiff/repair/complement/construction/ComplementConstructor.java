@@ -136,11 +136,13 @@ public abstract class ComplementConstructor {
 		// Substitute already executed edges << delete >> edges:
 		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
 			if (sourceRuleMatch instanceof EOEdgeMatch) {
-				Edge sourceEdge = ((EOEdgeMatch) sourceRuleMatch).getEdge();
+				EOEdgeMatch sourceEdgeMatch = (EOEdgeMatch) sourceRuleMatch;
+				
+				Edge sourceEdge = sourceEdgeMatch.getEdge();
 				Edge complementEdge = (Edge) copyTrace.get(sourceEdge);
 				
 				// Delete-Edge:
-				if (sourceRuleMatch.getAction().equals(Type.DELETE)) {
+				if (sourceEdgeMatch.getAction().equals(Type.DELETE)) {
 					assert isDeletionEdge(complementEdge);
 					
 					// Remove edge from source-rule:
@@ -157,11 +159,13 @@ public abstract class ComplementConstructor {
 		// Substitute already executed << create >> nodes:
 		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
 			if (sourceRuleMatch instanceof EONodeMatch) {
-				Node sourceNode = ((EONodeMatch) sourceRuleMatch).getNode();
+				EONodeMatch sourceNodeMatch = (EONodeMatch) sourceRuleMatch;
+				
+				Node sourceNode = sourceNodeMatch.getNode();
 				Node complementNode = (Node) copyTrace.get(sourceNode);
 
 				// Create-Node:
-				if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
+				if (sourceNodeMatch.getAction().equals(Type.CREATE)) {
 					// FIXME: Should we support this case: node is already << preserve >> in CPO?
 //					assert isCreationNode(complementNode);
 					
@@ -183,11 +187,13 @@ public abstract class ComplementConstructor {
 		// Substitute already executed << delete >> nodes:
 		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
 			if (sourceRuleMatch instanceof EONodeMatch) {
-				Node sourceNode = ((EONodeMatch) sourceRuleMatch).getNode();
+				EONodeMatch sourceNodeMatch = (EONodeMatch) sourceRuleMatch;
+				
+				Node sourceNode = sourceNodeMatch.getNode();
 				Node complementNode = (Node) copyTrace.get(sourceNode);
 				
 				// Delete-Node:
-				if (sourceRuleMatch.getAction().equals(Type.DELETE)) {
+				if (sourceNodeMatch.getAction().equals(Type.DELETE)) {
 					assert isDeletionNode(complementNode);
 					
 					// Check dangling constraint:
@@ -215,11 +221,13 @@ public abstract class ComplementConstructor {
 		// Substitute already executed edges << create >> edges:
 		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
 			if (sourceRuleMatch instanceof EOEdgeMatch) {
-				Edge sourceEdge = ((EOEdgeMatch) sourceRuleMatch).getEdge();
+				EOEdgeMatch sourceEdgeMatch = (EOEdgeMatch) sourceRuleMatch;
+				
+				Edge sourceEdge = sourceEdgeMatch.getEdge();
 				Edge complementEdge = (Edge) copyTrace.get(sourceEdge);
 				
 				// Create-Edge:
-				if (sourceRuleMatch.getAction().equals(Type.CREATE)) {
+				if (sourceEdgeMatch.getAction().equals(Type.CREATE)) {
 					assert isCreationEdge(complementEdge);
 					
 					// NOTE: << create >> target/source nodes are implicitly set to << preserve >> 
@@ -233,7 +241,7 @@ public abstract class ComplementConstructor {
 		
 		return true;
 	}
-
+	
 	protected boolean substituteAttributeValueChanges(Collection<EOMatch> sourceRuleMatching, Map<EObject, EObject> copyTrace) {
 		
 		// Substitute already executed << create >> attributes:
@@ -261,12 +269,14 @@ public abstract class ComplementConstructor {
 			// No matching in model B?
 			if (((sourceRuleMatch instanceof EONodeSingleMatch) && (((EONodeSingleMatch) sourceRuleMatch).getModelBElement() == null))
 				|| ((sourceRuleMatch instanceof EONodeMultiMatch) && (((EONodeMultiMatch) sourceRuleMatch).getModelBElements().isEmpty()))) {
-					
-				Node sourceNode = ((EONodeMatch) sourceRuleMatch).getNode();
+
+				EONodeMatch sourceNodeMatch = (EONodeMatch) sourceRuleMatch;
+				
+				Node sourceNode = sourceNodeMatch.getNode();
 				Node complementNode = (Node) copyTrace.get(sourceNode);
 
 				// Delete-Node:
-				if (sourceRuleMatch.getAction().equals(Type.PRESERVE)) {
+				if (sourceNodeMatch.getAction().equals(Type.PRESERVE)) {
 					assert isPreservedNode(complementNode);
 
 					// << delete or create >> edge or attribute change => complementing changes on a deleted node!
