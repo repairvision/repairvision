@@ -266,7 +266,7 @@ public abstract class ComplementConstructor {
 		// NOTE: Sub: Remove Transition Target - Source: Remove-Transition vs. Remove-Transition-Loop
 		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
 			
-			// No matching in model B?
+			// Node matching: No matching in model B?
 			if (((sourceRuleMatch instanceof EONodeSingleMatch) && (((EONodeSingleMatch) sourceRuleMatch).getModelBElement() == null))
 				|| ((sourceRuleMatch instanceof EONodeMultiMatch) && (((EONodeMultiMatch) sourceRuleMatch).getModelBElements().isEmpty()))) {
 
@@ -281,20 +281,61 @@ public abstract class ComplementConstructor {
 
 					// << delete or create >> edge or attribute change => complementing changes on a deleted node!
 					// << preserve >> edge => unfulfilled PAC!
-					if (!complementNode.getOutgoing().isEmpty() || !complementNode.getIncoming().isEmpty()
-							|| !getChangingAttributes(getLHS(complementNode), getRHS(complementNode)).isEmpty()) {
-						return false;
-					} else {
-						// Remove deleted context node:
-						ComplementUtil.deletePreserveNode(complementNode);
+					if (isSeparatedContextNode(complementNode)) {
+						// Remove separated context node:
 						complement.removeTrace(getLHS(sourceNode));
 						complement.removeTrace(getRHS(sourceNode));
+						ComplementUtil.deletePreserveNode(complementNode);
+					} else {
+						return false;
+					}
+				}
+			}
+			
+			// Edge matching (source, target): No matching in model B?
+			else if (sourceRuleMatch instanceof EOEdgeMatch) {
+				EOEdgeMatch sourceEdgeMatch = (EOEdgeMatch) sourceRuleMatch;
+				
+				if (sourceEdgeMatch.getSrcModelBElement() == null) {
+					Node sourceSrcNode = sourceEdgeMatch.getEdge().getSource();
+					Node complementSrcNode = (Node) copyTrace.get(sourceSrcNode);
+					
+					if ((complementSrcNode != null) && isPreservedNode(complementSrcNode)) {
+						if (isSeparatedContextNode(complementSrcNode)) {
+							// Remove separated context node:
+							complement.removeTrace(getLHS(complementSrcNode));
+							complement.removeTrace(getRHS(complementSrcNode));
+							ComplementUtil.deletePreserveNode(complementSrcNode);
+						} else {
+							return false;
+						}
+					}
+				}
+				
+				if (sourceEdgeMatch.getTgtModelBElement() == null) {
+					Node sourceTgtNode = sourceEdgeMatch.getEdge().getTarget();
+					Node complementTgtNode = (Node) copyTrace.get(sourceTgtNode);
+					
+					if ((complementTgtNode != null) && isPreservedNode(complementTgtNode)) {
+						if (isSeparatedContextNode(complementTgtNode)) {
+							// Remove separated context node:
+							complement.removeTrace(getLHS(complementTgtNode));
+							complement.removeTrace(getRHS(complementTgtNode));
+							ComplementUtil.deletePreserveNode(complementTgtNode);
+						} else {
+							return false;
+						}
 					}
 				}
 			}
 		}
 		
 		return true;
+	}
+	
+	private boolean isSeparatedContextNode(Node complementNode) {
+		return complementNode.getOutgoing().isEmpty() && complementNode.getIncoming().isEmpty()
+				&& getChangingAttributes(getLHS(complementNode), getRHS(complementNode)).isEmpty();
 	}
 	
 	protected boolean hasChange(Rule rule) {
