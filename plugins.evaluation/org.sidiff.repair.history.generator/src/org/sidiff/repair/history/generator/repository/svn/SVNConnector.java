@@ -20,18 +20,18 @@ import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
 public class SVNConnector {
 		
-	private static String gitURL = "https://github.com/eclipse/b3/blob/master/org.eclipse.b3.backend/model/B3Backend.ecore";
+	private static String gitURL = "https://github.com/eclipse/xtext-core/blob/4de451dd36a0616301ecac8273824da7de0dd01b/org.eclipse.xtext.tests/src/org/eclipse/xtext/metamodelreferencing/tests/EcorePerPlatformPlugin.ecore";
 	
 	private static String VERSION_PREFIX = "svn";
 	
 	private String name = "anonymous";
 	private String password = "anonymous";
 
-    private String baseUrl = "https://github.com/eclipse/buckminster";
+    private String baseUrl = "https://github.com/eclipse/xtext-core";
     private String path = "trunk/";
     
-    private String project = "org.eclipse.b3.backend/model";
-    private String fileName = "B3Backend.ecore";
+    private String project = "org.eclipse.xtext.tests/src/org/eclipse/xtext/metamodelreferencing/tests";
+    private String fileName = "EcorePerPlatformPlugin.ecore";
     
     private String localPath = "C:/workspaces/models";
     
