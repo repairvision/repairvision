@@ -72,6 +72,11 @@ public class ValidationErrorItemProvider
 			addSuccPropertyDescriptor(object);
 			addInvalidElementPropertyDescriptor(object);
 			addContextPropertyDescriptor(object);
+			addIntroducedByChangesPropertyDescriptor(object);
+			addResolvedByChangesPropertyDescriptor(object);
+			addResolvedByUndoPropertyDescriptor(object);
+			addPositivSideEffectsPropertyDescriptor(object);
+			addNegativSideEffectsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -341,6 +346,116 @@ public class ValidationErrorItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Introduced By Changes feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addIntroducedByChangesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ValidationError_introducedByChanges_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValidationError_introducedByChanges_feature", "_UI_ValidationError_type"),
+				 HistoryModelPackage.Literals.VALIDATION_ERROR__INTRODUCED_BY_CHANGES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Resolved By Changes feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addResolvedByChangesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ValidationError_resolvedByChanges_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValidationError_resolvedByChanges_feature", "_UI_ValidationError_type"),
+				 HistoryModelPackage.Literals.VALIDATION_ERROR__RESOLVED_BY_CHANGES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Resolved By Undo feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addResolvedByUndoPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ValidationError_resolvedByUndo_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValidationError_resolvedByUndo_feature", "_UI_ValidationError_type"),
+				 HistoryModelPackage.Literals.VALIDATION_ERROR__RESOLVED_BY_UNDO,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Positiv Side Effects feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addPositivSideEffectsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ValidationError_positivSideEffects_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValidationError_positivSideEffects_feature", "_UI_ValidationError_type"),
+				 HistoryModelPackage.Literals.VALIDATION_ERROR__POSITIV_SIDE_EFFECTS,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Negativ Side Effects feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNegativSideEffectsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ValidationError_negativSideEffects_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValidationError_negativSideEffects_feature", "_UI_ValidationError_type"),
+				 HistoryModelPackage.Literals.VALIDATION_ERROR__NEGATIV_SIDE_EFFECTS,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -425,6 +540,7 @@ public class ValidationErrorItemProvider
 			case HistoryModelPackage.VALIDATION_ERROR__SEVERITY:
 			case HistoryModelPackage.VALIDATION_ERROR__INTRODUCED:
 			case HistoryModelPackage.VALIDATION_ERROR__RESOLVED:
+			case HistoryModelPackage.VALIDATION_ERROR__RESOLVED_BY_UNDO:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
