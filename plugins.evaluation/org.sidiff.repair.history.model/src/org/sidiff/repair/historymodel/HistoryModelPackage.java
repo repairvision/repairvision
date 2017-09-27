@@ -378,13 +378,58 @@ public interface HistoryModelPackage extends EPackage {
 	int VALIDATION_ERROR__CONTEXT = 11;
 
 	/**
+	 * The feature id for the '<em><b>Introduced By Changes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALIDATION_ERROR__INTRODUCED_BY_CHANGES = 12;
+
+	/**
+	 * The feature id for the '<em><b>Resolved By Changes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALIDATION_ERROR__RESOLVED_BY_CHANGES = 13;
+
+	/**
+	 * The feature id for the '<em><b>Resolved By Undo</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALIDATION_ERROR__RESOLVED_BY_UNDO = 14;
+
+	/**
+	 * The feature id for the '<em><b>Positiv Side Effects</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALIDATION_ERROR__POSITIV_SIDE_EFFECTS = 15;
+
+	/**
+	 * The feature id for the '<em><b>Negativ Side Effects</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALIDATION_ERROR__NEGATIV_SIDE_EFFECTS = 16;
+
+	/**
 	 * The number of structural features of the '<em>Validation Error</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_ERROR_FEATURE_COUNT = 12;
+	int VALIDATION_ERROR_FEATURE_COUNT = 17;
 
 	/**
 	 * The number of operations of the '<em>Validation Error</em>' class.
@@ -758,6 +803,61 @@ public interface HistoryModelPackage extends EPackage {
 	EReference getValidationError_Context();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.ValidationError#getIntroducedByChanges <em>Introduced By Changes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Introduced By Changes</em>'.
+	 * @see org.sidiff.repair.historymodel.ValidationError#getIntroducedByChanges()
+	 * @see #getValidationError()
+	 * @generated
+	 */
+	EReference getValidationError_IntroducedByChanges();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.ValidationError#getResolvedByChanges <em>Resolved By Changes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Resolved By Changes</em>'.
+	 * @see org.sidiff.repair.historymodel.ValidationError#getResolvedByChanges()
+	 * @see #getValidationError()
+	 * @generated
+	 */
+	EReference getValidationError_ResolvedByChanges();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.ValidationError#isResolvedByUndo <em>Resolved By Undo</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Resolved By Undo</em>'.
+	 * @see org.sidiff.repair.historymodel.ValidationError#isResolvedByUndo()
+	 * @see #getValidationError()
+	 * @generated
+	 */
+	EAttribute getValidationError_ResolvedByUndo();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.ValidationError#getPositivSideEffects <em>Positiv Side Effects</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Positiv Side Effects</em>'.
+	 * @see org.sidiff.repair.historymodel.ValidationError#getPositivSideEffects()
+	 * @see #getValidationError()
+	 * @generated
+	 */
+	EReference getValidationError_PositivSideEffects();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.ValidationError#getNegativSideEffects <em>Negativ Side Effects</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Negativ Side Effects</em>'.
+	 * @see org.sidiff.repair.historymodel.ValidationError#getNegativSideEffects()
+	 * @see #getValidationError()
+	 * @generated
+	 */
+	EReference getValidationError_NegativSideEffects();
+
+	/**
 	 * Returns the meta object for enum '{@link org.sidiff.repair.historymodel.ValidationSeverity <em>Validation Severity</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1064,6 +1164,46 @@ public interface HistoryModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference VALIDATION_ERROR__CONTEXT = eINSTANCE.getValidationError_Context();
+
+		/**
+		 * The meta object literal for the '<em><b>Introduced By Changes</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VALIDATION_ERROR__INTRODUCED_BY_CHANGES = eINSTANCE.getValidationError_IntroducedByChanges();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolved By Changes</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VALIDATION_ERROR__RESOLVED_BY_CHANGES = eINSTANCE.getValidationError_ResolvedByChanges();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolved By Undo</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VALIDATION_ERROR__RESOLVED_BY_UNDO = eINSTANCE.getValidationError_ResolvedByUndo();
+
+		/**
+		 * The meta object literal for the '<em><b>Positiv Side Effects</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VALIDATION_ERROR__POSITIV_SIDE_EFFECTS = eINSTANCE.getValidationError_PositivSideEffects();
+
+		/**
+		 * The meta object literal for the '<em><b>Negativ Side Effects</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VALIDATION_ERROR__NEGATIV_SIDE_EFFECTS = eINSTANCE.getValidationError_NegativSideEffects();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.repair.historymodel.ValidationSeverity <em>Validation Severity</em>}' enum.
