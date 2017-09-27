@@ -14,7 +14,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
-import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
+import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.repair.history.evaluation.oracle.DeveloperIntentionOracle;
 
 public class DeveloperIntentionOracleDriver {
@@ -53,7 +53,7 @@ public class DeveloperIntentionOracleDriver {
 	}
 
 	public static List<IRepairPlan> getHistoricallyObservable(
-			RepairedInconsistency repaired, PEORepairJob repairJob, DifferenceSettings settings) {
+			InconsistencyTrace repaired, PEORepairJob repairJob, DifferenceSettings settings) {
 		
 		return getHistoricallyObservable(repaired.getModelCurrent(), repaired.getModelResolved(), repairJob, settings);
 	}

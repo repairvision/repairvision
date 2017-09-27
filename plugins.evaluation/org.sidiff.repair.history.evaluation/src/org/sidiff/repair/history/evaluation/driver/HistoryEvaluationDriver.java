@@ -14,7 +14,7 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
-import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
+import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 
 public class HistoryEvaluationDriver {
@@ -29,7 +29,7 @@ public class HistoryEvaluationDriver {
 		
 		// Warm up run:
 		if (history.getRepairedInconsistencies().size() > 0) {
-			RepairedInconsistency inconsistency = history.getRepairedInconsistencies().get(0);
+			InconsistencyTrace inconsistency = history.getRepairedInconsistencies().get(0);
 			InconsistencyEvaluationDriver.calculateRepairs(false,
 					history, repairFacade, inconsistency, editRules, matchingSettings,
 					new LogTable(), new LogTable());
@@ -39,7 +39,7 @@ public class HistoryEvaluationDriver {
 		LogTable inconsistenciesLog = new LogTable();
 		LogTable runtimeComplexityLog = new LogTable();
 		
-		for (RepairedInconsistency inconsistency : history.getRepairedInconsistencies()) {
+		for (InconsistencyTrace inconsistency : history.getRepairedInconsistencies()) {
 			InconsistencyEvaluationDriver.calculateRepairs(false,
 					history, repairFacade, inconsistency, editRules, matchingSettings,
 					inconsistenciesLog, runtimeComplexityLog);

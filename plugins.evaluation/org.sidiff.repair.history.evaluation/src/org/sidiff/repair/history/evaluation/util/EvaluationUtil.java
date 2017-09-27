@@ -155,6 +155,15 @@ public class EvaluationUtil {
 		return inconsistenciesSupported;
 	}
 	
+	public static ValidationError getEqualValidation(List<ValidationError> validations, ValidationError validation) {
+		for (ValidationError containedValidation : validations) {
+			if (equalsValidation(containedValidation, validation)) {
+				return containedValidation;
+			}
+		}
+		return null;
+	}
+	
 	public static boolean containsValidation(List<ValidationError> validations, ValidationError validation) {
 		for (ValidationError containedValidation : validations) {
 			if (equalsValidation(containedValidation, validation)) {
@@ -166,14 +175,16 @@ public class EvaluationUtil {
 	
 	public static boolean equalsValidation(ValidationError validationA, ValidationError validationB) {
 		
-		if (validationA.getIntroducedIn() == validationB.getIntroducedIn()) {
-			if (validationA.getResolvedIn() == validationB.getResolvedIn()) {
-				if (getValidationID(validationA).equalsIgnoreCase(getValidationID(validationB))) {
-					EObject invalidElementA = validationA.getContext();
-					EObject invalidElementB = validationB.getContext();
-					
-					if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
-						return true;
+		if ((validationA != null) && (validationB != null)) {
+			if (validationA.getIntroducedIn() == validationB.getIntroducedIn()) {
+				if (validationA.getResolvedIn() == validationB.getResolvedIn()) {
+					if (getValidationID(validationA).equalsIgnoreCase(getValidationID(validationB))) {
+						EObject invalidElementA = validationA.getContext();
+						EObject invalidElementB = validationB.getContext();
+						
+						if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
+							return true;
+						}
 					}
 				}
 			}

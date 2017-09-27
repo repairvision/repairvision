@@ -29,7 +29,7 @@ public class HistoryInfo {
 	
 	protected List<IConstraint> supportedConsistencyRules;
 	
-	protected List<RepairedInconsistency> repairedInconsistencies;
+	protected List<InconsistencyTrace> repairedInconsistencies;
 	
 	protected Map<String, List<EAnnotation>> inconsistencyAnnotations;
 
@@ -96,14 +96,14 @@ public class HistoryInfo {
 		return supportedConsistencyRules;
 	}
 	
-	public List<RepairedInconsistency> getRepairedInconsistencies() {
+	public List<InconsistencyTrace> getRepairedInconsistencies() {
 		
 		if (repairedInconsistencies == null) {
 			repairedInconsistencies = new ArrayList<>();
 			
 			for (ValidationError introducedValidationError : getSupportedIntroducedAndResolvedUniqueInconsistencies()) {
-				RepairedInconsistency repaired = RepairedInconsistency
-						.createRepairedInconsistency(introducedValidationError);
+				InconsistencyTrace repaired = InconsistencyTrace
+						.createRepairedInconsistency(introducedValidationError, true);
 				repairedInconsistencies.add(repaired);
 			}
 			return repairedInconsistencies;

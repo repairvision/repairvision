@@ -34,7 +34,7 @@ import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.history.evaluation.Activator;
-import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
+import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.ui.controls.basic.BasicRepairViewerUI;
@@ -105,7 +105,7 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 					getApplication().repairInconsistency(validationError);
 					
 					try {
-						RepairedInconsistency repaired = RepairedInconsistency.createRepairedInconsistency(validationError);
+						InconsistencyTrace repaired = InconsistencyTrace.createRepairedInconsistency(validationError, true);
 						
 						if (repaired != null) {
 							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelHistorical().getURI()));

@@ -9,12 +9,7 @@ import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 
-public class RepairedInconsistency {
-	
-	/**
-	 * The "original" EMF diagnostic validation error.
-	 */
-	private ValidationError validationErrorCurrentModel;
+public class InconsistencyTrace {
 	
 	/**
 	 * Consistent historic model.
@@ -26,46 +21,52 @@ public class RepairedInconsistency {
 	 */
 	private Version modelVersionIntroduced;
 	
+	private ValidationError validationErrorIntroducedModel;
+	
 	/**
 	 * The current model.
 	 */
 	private Version modelVersionCurrent;
+	
+	private ValidationError validationErrorCurrentModel;
 	
 	/**
 	 * Model where the inconsistency were resolved.
 	 */
 	private Version modelVersionResolved;
 	
-	public static RepairedInconsistency createRepairedInconsistency(ValidationError introducedValidationError) {
+	public static InconsistencyTrace createRepairedInconsistency(
+			ValidationError introducedValidationError, boolean completeOnly) {
 		
-		RepairedInconsistency repaired = new RepairedInconsistency();
+		InconsistencyTrace trace = new InconsistencyTrace();
+		trace.setValidationErrorIntroducedModel(introducedValidationError);
 		
 		Version versionIntroduced = introducedValidationError.getIntroducedIn();
-		repaired.setModelVersionIntroduced(versionIntroduced);
+		trace.setModelVersionIntroduced(versionIntroduced);
 		
-		if (repaired.getModelIntroduced() != null) {
+		if (trace.getModelIntroduced() != null) {
 			Version versionHistorical = EvaluationUtil.getPrecessorRevision(versionIntroduced);
-			repaired.setModelVersionHistorical(versionHistorical);
+			trace.setModelVersionHistorical(versionHistorical);
 			
 			if (versionHistorical != null) {
 				Version versionResolved = introducedValidationError.getResolvedIn();
-				repaired.setModelVersionResolved(versionResolved);
+				trace.setModelVersionResolved(versionResolved);
 				
 				if (versionResolved != null) {
 					Version versionCurrent = EvaluationUtil.getPrecessorRevision(versionResolved);
-					repaired.setModelVersionActual(versionCurrent);
-					
-					ValidationError actualValidationError = EvaluationUtil.getCorrespondingValidationError(introducedValidationError, versionCurrent);
-					repaired.setValidationErrorCurrentModel(actualValidationError);
-					
-					if (actualValidationError != null) {
-						return repaired;
-					}
+					trace.setModelVersionCurrent(versionCurrent);
 				}
 			}
 		}
 		
-		return null;
+		if (!completeOnly || ((trace.getModelHistorical() != null) 
+				&& (trace.getModelIntroduced() != null)
+				&& (trace.getModelCurrent() != null)
+				&& (trace.getModelResolved() != null))) {
+			return trace;
+		} else {
+			return null;
+		}
 	}
 	
 	public void printModels() {
@@ -82,53 +83,67 @@ public class RepairedInconsistency {
 	public IConstraint getConsistencyRule(List<IConstraint> consistencyRules) {
 		return EvaluationUtil.getConsistencyRule(validationErrorCurrentModel, consistencyRules);
 	}
-
-	public ValidationError getValidationErrorCurrentModel() {
-		return validationErrorCurrentModel;
-	}
-
-	public void setValidationErrorCurrentModel(ValidationError validationErrorCurrentModel) {
-		this.validationErrorCurrentModel = validationErrorCurrentModel;
-	}
 	
+	// historical:
+
 	public Resource getModelHistorical() {
 		return modelVersionHistorical.getModel();
 	}
-
-	public Resource getModelIntroduced() {
-		return modelVersionIntroduced.getModel();
-	}
-
-	public Resource getModelCurrent() {
-		return modelVersionCurrent.getModel();
-	}
-
-	public Resource getModelResolved() {
-		return modelVersionResolved.getModel();
-	}
-
+	
 	public Version getModelVersionHistorical() {
 		return modelVersionHistorical;
 	}
-
+	
 	public void setModelVersionHistorical(Version modelVersionHistorical) {
 		this.modelVersionHistorical = modelVersionHistorical;
 	}
-
+	
+	// introduced:
+	
+	public Resource getModelIntroduced() {
+		return modelVersionIntroduced.getModel();
+	}
+	
 	public Version getModelVersionIntroduced() {
 		return modelVersionIntroduced;
 	}
-
+	
 	public void setModelVersionIntroduced(Version modelVersionIntroduced) {
 		this.modelVersionIntroduced = modelVersionIntroduced;
 	}
-
-	public Version getModelVersionActual() {
+	
+	public ValidationError getValidationErrorIntroducedModel() {
+		return validationErrorIntroducedModel;
+	}
+	
+	public void setValidationErrorIntroducedModel(ValidationError validationErrorIntroducedModel) {
+		this.validationErrorIntroducedModel = validationErrorIntroducedModel;
+	}
+	
+	// current:
+	
+	public Resource getModelCurrent() {
+		return modelVersionCurrent.getModel();
+	}
+	
+	public Version getModelVersionCurrent() {
 		return modelVersionCurrent;
 	}
-
-	public void setModelVersionActual(Version modelVersionActual) {
-		this.modelVersionCurrent = modelVersionActual;
+	
+	public void setModelVersionCurrent(Version modelVersionCurrent) {
+		this.modelVersionCurrent = modelVersionCurrent;
+		this.validationErrorCurrentModel = EvaluationUtil.getEqualValidation(
+				modelVersionCurrent.getValidationErrors(), validationErrorIntroducedModel);
+	}
+	
+	public ValidationError getValidationErrorCurrentModel() {
+		return validationErrorCurrentModel;
+	}
+	
+	// resolved:
+	
+	public Resource getModelResolved() {
+		return modelVersionResolved.getModel();
 	}
 
 	public Version getModelVersionResolved() {

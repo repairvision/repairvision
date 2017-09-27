@@ -15,7 +15,7 @@ import org.sidiff.matching.model.MatchingModelFactory;
 import org.sidiff.repair.history.editrules.generator.EditRule;
 import org.sidiff.repair.history.editrules.learning.LearnEditRule;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
-import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
+import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
@@ -23,7 +23,7 @@ import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 public class LearnEditRuleDriver {
 	
 	public static void learnEditRule(HistoryInfo history, 
-			DifferenceSettings differenceSettings, RepairedInconsistency repaired) {
+			DifferenceSettings differenceSettings, InconsistencyTrace repaired) {
 		
 		SymmetricDifference historicalToResolved = calcualteDifference(true,
 				repaired.getModelHistorical(), repaired.getModelResolved(), differenceSettings);

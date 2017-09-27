@@ -27,7 +27,7 @@ import org.sidiff.repair.history.evaluation.driver.InconsistencyEvaluationDriver
 import org.sidiff.repair.history.evaluation.driver.LearnEditRuleDriver;
 import org.sidiff.repair.history.evaluation.driver.PrintHistoryInfoDriver;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
-import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
+import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
@@ -143,7 +143,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 			protected IStatus run(IProgressMonitor monitor) {
 
 				// Initialize:
-				RepairedInconsistency repaired = RepairedInconsistency.createRepairedInconsistency(selection);
+				InconsistencyTrace repaired = InconsistencyTrace.createRepairedInconsistency(selection, true);
 				
 				LogTable inconsistenciesLog = new LogTable();
 				LogTable runtimeComplexityLog = new LogTable();
@@ -187,7 +187,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 			
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				RepairedInconsistency repaired = RepairedInconsistency.createRepairedInconsistency(selection);
+				InconsistencyTrace repaired = InconsistencyTrace.createRepairedInconsistency(selection, true);
 				LearnEditRuleDriver.learnEditRule(history, getMatchingSettings(), repaired);
 				return Status.OK_STATUS;
 			}

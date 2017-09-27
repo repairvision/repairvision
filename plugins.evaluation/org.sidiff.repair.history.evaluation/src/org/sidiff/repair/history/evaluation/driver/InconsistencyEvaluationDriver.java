@@ -18,7 +18,7 @@ import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
-import org.sidiff.repair.history.evaluation.driver.data.RepairedInconsistency;
+import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
@@ -31,7 +31,7 @@ public class InconsistencyEvaluationDriver {
 			boolean saveDifference, 
 			HistoryInfo history, 
 			IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade,
-			RepairedInconsistency repaired, 
+			InconsistencyTrace repaired, 
 			Collection<Rule> editRules, 
 			DifferenceSettings matchingSettings, 
 			LogTable inconsistencies,
@@ -62,7 +62,7 @@ public class InconsistencyEvaluationDriver {
 		return repairJob;
 	}
 	
-	private static LogMonitor getMonitor(HistoryInfo history, RepairedInconsistency repaired, LogTable log) {
+	private static LogMonitor getMonitor(HistoryInfo history, InconsistencyTrace repaired, LogTable log) {
 		
 		LogMonitor monitor = new LogMonitor(log);
 		
@@ -75,7 +75,7 @@ public class InconsistencyEvaluationDriver {
 		log.append("Introduced Version (inconsistent)", history.getHistory().getVersions().indexOf(
 				repaired.getModelVersionIntroduced()));
 		log.append("Actual Version (inconsistent)", history.getHistory().getVersions().indexOf(
-				repaired.getModelVersionActual()));
+				repaired.getModelVersionCurrent()));
 		log.append("Resolved Version (consistent)", history.getHistory().getVersions().indexOf(
 				repaired.getModelVersionResolved()));
 		
@@ -83,7 +83,7 @@ public class InconsistencyEvaluationDriver {
 	}
 	
 	private static void evaluateRepairs(LogMonitor monitor, HistoryInfo history,
-			RepairedInconsistency repaired, PEORepairJob repairJob,  
+			InconsistencyTrace repaired, PEORepairJob repairJob,  
 			DifferenceSettings matchingSettings) {
 		
 		// evaluate repair results:
