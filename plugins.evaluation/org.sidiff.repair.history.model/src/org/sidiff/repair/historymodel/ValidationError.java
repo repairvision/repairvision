@@ -5,7 +5,6 @@ package org.sidiff.repair.historymodel;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.difference.symmetric.Change;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,11 +27,8 @@ import org.sidiff.difference.symmetric.Change;
  *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getSucc <em>Succ</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getInvalidElement <em>Invalid Element</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getContext <em>Context</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getIntroducedByChanges <em>Introduced By Changes</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getResolvedByChanges <em>Resolved By Changes</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.ValidationError#isResolvedByUndo <em>Resolved By Undo</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getPositivSideEffects <em>Positiv Side Effects</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getNegativSideEffects <em>Negativ Side Effects</em>}</li>
+ *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getChangeSets <em>Change Sets</em>}</li>
  * </ul>
  *
  * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError()
@@ -329,38 +325,6 @@ public interface ValidationError extends EObject {
 	void setContext(EObject value);
 
 	/**
-	 * Returns the value of the '<em><b>Introduced By Changes</b></em>' reference list.
-	 * The list contents are of type {@link org.sidiff.difference.symmetric.Change}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Introduced By Changes</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Introduced By Changes</em>' reference list.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_IntroducedByChanges()
-	 * @model
-	 * @generated
-	 */
-	EList<Change> getIntroducedByChanges();
-
-	/**
-	 * Returns the value of the '<em><b>Resolved By Changes</b></em>' reference list.
-	 * The list contents are of type {@link org.sidiff.difference.symmetric.Change}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Resolved By Changes</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Resolved By Changes</em>' reference list.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_ResolvedByChanges()
-	 * @model
-	 * @generated
-	 */
-	EList<Change> getResolvedByChanges();
-
-	/**
 	 * Returns the value of the '<em><b>Resolved By Undo</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -387,35 +351,19 @@ public interface ValidationError extends EObject {
 	void setResolvedByUndo(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Positiv Side Effects</b></em>' reference list.
-	 * The list contents are of type {@link org.sidiff.repair.historymodel.ValidationError}.
+	 * Returns the value of the '<em><b>Change Sets</b></em>' containment reference list.
+	 * The list contents are of type {@link org.sidiff.repair.historymodel.ChangeSet}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Positiv Side Effects</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Change Sets</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Positiv Side Effects</em>' reference list.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_PositivSideEffects()
-	 * @model
+	 * @return the value of the '<em>Change Sets</em>' containment reference list.
+	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_ChangeSets()
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList<ValidationError> getPositivSideEffects();
-
-	/**
-	 * Returns the value of the '<em><b>Negativ Side Effects</b></em>' reference list.
-	 * The list contents are of type {@link org.sidiff.repair.historymodel.ValidationError}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Negativ Side Effects</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Negativ Side Effects</em>' reference list.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_NegativSideEffects()
-	 * @model
-	 * @generated
-	 */
-	EList<ValidationError> getNegativSideEffects();
+	EList<ChangeSet> getChangeSets();
 
 } // ValidationError

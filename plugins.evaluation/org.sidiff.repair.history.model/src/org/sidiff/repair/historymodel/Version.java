@@ -2,8 +2,6 @@
  */
 package org.sidiff.repair.historymodel;
 
-import java.util.Map;
-
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -21,7 +19,6 @@ import org.eclipse.emf.ecore.resource.Resource;
  * <ul>
  *   <li>{@link org.sidiff.repair.historymodel.Version#getValidationErrors <em>Validation Errors</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.Version#getName <em>Name</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.Version#getId2Element <em>Id2 Element</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.Version#getModelURI <em>Model URI</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.Version#getModel <em>Model</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.Version#getStatus <em>Status</em>}</li>
@@ -73,32 +70,6 @@ public interface Version extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Id2 Element</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Id2 Element</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id2 Element</em>' attribute.
-	 * @see #setId2Element(Map)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getVersion_Id2Element()
-	 * @model transient="true"
-	 * @generated
-	 */
-	Map<String, EObject> getId2Element();
-
-	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.Version#getId2Element <em>Id2 Element</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id2 Element</em>' attribute.
-	 * @see #getId2Element()
-	 * @generated
-	 */
-	void setId2Element(Map<String, EObject> value);
 
 	/**
 	 * Returns the value of the '<em><b>Model URI</b></em>' attribute.

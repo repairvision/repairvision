@@ -5,8 +5,6 @@ package org.sidiff.repair.historymodel.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -35,7 +33,6 @@ import org.sidiff.repair.historymodel.Version;
  * <ul>
  *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getValidationErrors <em>Validation Errors</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getId2Element <em>Id2 Element</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getModelURI <em>Model URI</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getModel <em>Model</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getStatus <em>Status</em>}</li>
@@ -73,16 +70,6 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getId2Element() <em>Id2 Element</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId2Element()
-	 * @generated
-	 * @ordered
-	 */
-	protected Map<String, EObject> id2Element;
 
 	/**
 	 * The default value of the '{@link #getModelURI() <em>Model URI</em>}' attribute.
@@ -201,27 +188,6 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map<String, EObject> getId2Element() {
-		return id2Element;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setId2Element(Map<String, EObject> newId2Element) {
-		Map<String, EObject> oldId2Element = id2Element;
-		id2Element = newId2Element;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HistoryModelPackage.VERSION__ID2_ELEMENT, oldId2Element, id2Element));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getModelURI() {
 		return modelURI;
 	}
@@ -326,8 +292,6 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 				return getValidationErrors();
 			case HistoryModelPackage.VERSION__NAME:
 				return getName();
-			case HistoryModelPackage.VERSION__ID2_ELEMENT:
-				return getId2Element();
 			case HistoryModelPackage.VERSION__MODEL_URI:
 				return getModelURI();
 			case HistoryModelPackage.VERSION__MODEL:
@@ -353,9 +317,6 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 				return;
 			case HistoryModelPackage.VERSION__NAME:
 				setName((String)newValue);
-				return;
-			case HistoryModelPackage.VERSION__ID2_ELEMENT:
-				setId2Element((Map<String, EObject>)newValue);
 				return;
 			case HistoryModelPackage.VERSION__MODEL_URI:
 				setModelURI((String)newValue);
@@ -384,9 +345,6 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 			case HistoryModelPackage.VERSION__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case HistoryModelPackage.VERSION__ID2_ELEMENT:
-				setId2Element((Map<String, EObject>)null);
-				return;
 			case HistoryModelPackage.VERSION__MODEL_URI:
 				setModelURI(MODEL_URI_EDEFAULT);
 				return;
@@ -412,8 +370,6 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 				return validationErrors != null && !validationErrors.isEmpty();
 			case HistoryModelPackage.VERSION__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case HistoryModelPackage.VERSION__ID2_ELEMENT:
-				return id2Element != null;
 			case HistoryModelPackage.VERSION__MODEL_URI:
 				return MODEL_URI_EDEFAULT == null ? modelURI != null : !MODEL_URI_EDEFAULT.equals(modelURI);
 			case HistoryModelPackage.VERSION__MODEL:
@@ -450,8 +406,6 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", id2Element: ");
-		result.append(id2Element);
 		result.append(", modelURI: ");
 		result.append(modelURI);
 		result.append(", model: ");

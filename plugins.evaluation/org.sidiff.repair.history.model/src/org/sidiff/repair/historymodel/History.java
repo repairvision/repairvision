@@ -6,8 +6,6 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.sidiff.difference.symmetric.SymmetricDifference;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>History</b></em>'.
@@ -19,7 +17,6 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
  * <ul>
  *   <li>{@link org.sidiff.repair.historymodel.History#getName <em>Name</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.History#getVersions <em>Versions</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.History#getTechnicalDifferences <em>Technical Differences</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.History#getAllValidationErrors <em>All Validation Errors</em>}</li>
  * </ul>
  *
@@ -71,22 +68,6 @@ public interface History extends EObject {
 	EList<Version> getVersions();
 
 	/**
-	 * Returns the value of the '<em><b>Technical Differences</b></em>' reference list.
-	 * The list contents are of type {@link org.sidiff.difference.symmetric.SymmetricDifference}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Technical Differences</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Technical Differences</em>' reference list.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getHistory_TechnicalDifferences()
-	 * @model
-	 * @generated
-	 */
-	EList<SymmetricDifference> getTechnicalDifferences();
-
-	/**
 	 * Returns the value of the '<em><b>All Validation Errors</b></em>' reference list.
 	 * The list contents are of type {@link org.sidiff.repair.historymodel.ValidationError}.
 	 * <!-- begin-user-doc -->
@@ -117,14 +98,6 @@ public interface History extends EObject {
 	 * @generated
 	 */
 	EList<Version> getSuccessorRevisions(Version version);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	SymmetricDifference getTechnicalDifference(Version old, Version new_);
 
 	/**
 	 * <!-- begin-user-doc -->

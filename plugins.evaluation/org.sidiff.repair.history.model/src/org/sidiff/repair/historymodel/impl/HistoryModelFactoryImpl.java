@@ -61,6 +61,7 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 			case HistoryModelPackage.HISTORY: return createHistory();
 			case HistoryModelPackage.VERSION: return createVersion();
 			case HistoryModelPackage.VALIDATION_ERROR: return createValidationError();
+			case HistoryModelPackage.CHANGE_SET: return createChangeSet();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -132,6 +133,16 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	public ValidationError createValidationError() {
 		ValidationErrorImpl validationError = new ValidationErrorImpl();
 		return validationError;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ChangeSet createChangeSet() {
+		ChangeSetImpl changeSet = new ChangeSetImpl();
+		return changeSet;
 	}
 
 	/**

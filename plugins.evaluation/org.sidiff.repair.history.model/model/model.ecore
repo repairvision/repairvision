@@ -9,10 +9,6 @@
     <eOperations name="getSuccessorRevisions" upperBound="-1" eType="#//Version">
       <eParameters name="version" eType="#//Version"/>
     </eOperations>
-    <eOperations name="getTechnicalDifference" eType="ecore:EClass platform:/plugin/org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference">
-      <eParameters name="old" eType="#//Version"/>
-      <eParameters name="new" eType="#//Version"/>
-    </eOperations>
     <eOperations name="getValidationErrors" upperBound="-1" eType="#//ValidationError">
       <eParameters name="introduced" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eParameters name="resolved" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -21,8 +17,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="versions" upperBound="-1"
         eType="#//Version" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="technicalDifferences" upperBound="-1"
-        eType="ecore:EClass platform:/plugin/org.sidiff.difference.symmetric/model/Symmetric.ecore#//SymmetricDifference"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="allValidationErrors" upperBound="-1"
         eType="#//ValidationError" changeable="false" volatile="true" transient="true"
         derived="true"/>
@@ -34,12 +28,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="validationErrors" upperBound="-1"
         eType="#//ValidationError" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id2Element" transient="true">
-      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
-        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eTypeArguments eClassifier="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-      </eGenericType>
-    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="model" eType="#//Resource"
         transient="true" derived="true"/>
@@ -63,18 +51,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="succ" eType="#//ValidationError"
         eOpposite="#//ValidationError/prec"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="invalidElement" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
-        changeable="false"/>
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" changeable="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="introducedByChanges" upperBound="-1"
-        eType="ecore:EClass platform:/plugin/org.sidiff.difference.symmetric/model/Symmetric.ecore#//Change"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="resolvedByChanges" upperBound="-1"
-        eType="ecore:EClass platform:/plugin/org.sidiff.difference.symmetric/model/Symmetric.ecore#//Change"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="resolvedByUndo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="positivSideEffects" upperBound="-1"
-        eType="#//ValidationError"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="negativSideEffects" upperBound="-1"
-        eType="#//ValidationError"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="changeSets" upperBound="-1"
+        eType="#//ChangeSet" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Resource" instanceClassName="org.eclipse.emf.ecore.resource.Resource"/>
   <eClassifiers xsi:type="ecore:EEnum" name="ValidationSeverity">
@@ -87,5 +68,11 @@
     <eLiterals name="INVALID" value="1"/>
     <eLiterals name="DEFECT" value="2"/>
     <eLiterals name="UNKNOWN" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ChangeSet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="changes" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.sidiff.difference.symmetric/model/Symmetric.ecore#//Change"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

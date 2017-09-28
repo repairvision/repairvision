@@ -3,26 +3,21 @@
 package org.sidiff.repair.historymodel.impl;
 
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.sidiff.difference.symmetric.SymmetricDifference;
-
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.HistoryModelPackage;
 import org.sidiff.repair.historymodel.ValidationError;
@@ -38,7 +33,6 @@ import org.sidiff.repair.historymodel.Version;
  * <ul>
  *   <li>{@link org.sidiff.repair.historymodel.impl.HistoryImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.HistoryImpl#getVersions <em>Versions</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.HistoryImpl#getTechnicalDifferences <em>Technical Differences</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.HistoryImpl#getAllValidationErrors <em>All Validation Errors</em>}</li>
  * </ul>
  *
@@ -74,16 +68,6 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 * @ordered
 	 */
 	protected EList<Version> versions;
-
-	/**
-	 * The cached value of the '{@link #getTechnicalDifferences() <em>Technical Differences</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTechnicalDifferences()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<SymmetricDifference> technicalDifferences;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -140,18 +124,6 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<SymmetricDifference> getTechnicalDifferences() {
-		if (technicalDifferences == null) {
-			technicalDifferences = new EObjectResolvingEList<SymmetricDifference>(SymmetricDifference.class, this, HistoryModelPackage.HISTORY__TECHNICAL_DIFFERENCES);
-		}
-		return technicalDifferences;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public EList<ValidationError> getAllValidationErrors() {
@@ -189,20 +161,6 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 			successors.add(versions.get(++index));
 		}
 		return successors;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public SymmetricDifference getTechnicalDifference(Version old, Version new_) {
-		for(SymmetricDifference diff : technicalDifferences){
-			if(diff.getModelA().equals(old.getModel()) && diff.getModelB().equals(new_.getModel())){
-				return diff;
-			}
-		}
-		return null;
 	}
 
 	/**
@@ -271,8 +229,6 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 				return getName();
 			case HistoryModelPackage.HISTORY__VERSIONS:
 				return getVersions();
-			case HistoryModelPackage.HISTORY__TECHNICAL_DIFFERENCES:
-				return getTechnicalDifferences();
 			case HistoryModelPackage.HISTORY__ALL_VALIDATION_ERRORS:
 				return getAllValidationErrors();
 		}
@@ -295,10 +251,6 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 				getVersions().clear();
 				getVersions().addAll((Collection<? extends Version>)newValue);
 				return;
-			case HistoryModelPackage.HISTORY__TECHNICAL_DIFFERENCES:
-				getTechnicalDifferences().clear();
-				getTechnicalDifferences().addAll((Collection<? extends SymmetricDifference>)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -317,9 +269,6 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 			case HistoryModelPackage.HISTORY__VERSIONS:
 				getVersions().clear();
 				return;
-			case HistoryModelPackage.HISTORY__TECHNICAL_DIFFERENCES:
-				getTechnicalDifferences().clear();
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -336,8 +285,6 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case HistoryModelPackage.HISTORY__VERSIONS:
 				return versions != null && !versions.isEmpty();
-			case HistoryModelPackage.HISTORY__TECHNICAL_DIFFERENCES:
-				return technicalDifferences != null && !technicalDifferences.isEmpty();
 			case HistoryModelPackage.HISTORY__ALL_VALIDATION_ERRORS:
 				return !getAllValidationErrors().isEmpty();
 		}
@@ -356,8 +303,6 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 				return getPrecessorRevisions((Version)arguments.get(0));
 			case HistoryModelPackage.HISTORY___GET_SUCCESSOR_REVISIONS__VERSION:
 				return getSuccessorRevisions((Version)arguments.get(0));
-			case HistoryModelPackage.HISTORY___GET_TECHNICAL_DIFFERENCE__VERSION_VERSION:
-				return getTechnicalDifference((Version)arguments.get(0), (Version)arguments.get(1));
 			case HistoryModelPackage.HISTORY___GET_VALIDATION_ERRORS__BOOLEAN_BOOLEAN:
 				return getValidationErrors((Boolean)arguments.get(0), (Boolean)arguments.get(1));
 			case HistoryModelPackage.HISTORY___GET_UNIQUE_VALIDATION_ERRORS:

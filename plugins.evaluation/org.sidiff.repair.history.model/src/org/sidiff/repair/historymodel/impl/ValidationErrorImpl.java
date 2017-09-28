@@ -11,8 +11,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.sidiff.difference.symmetric.Change;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.sidiff.repair.historymodel.ChangeSet;
 import org.sidiff.repair.historymodel.HistoryModelPackage;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.ValidationSeverity;
@@ -38,11 +40,8 @@ import org.sidiff.repair.historymodel.Version;
  *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getSucc <em>Succ</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getInvalidElement <em>Invalid Element</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getContext <em>Context</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getIntroducedByChanges <em>Introduced By Changes</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getResolvedByChanges <em>Resolved By Changes</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#isResolvedByUndo <em>Resolved By Undo</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getPositivSideEffects <em>Positiv Side Effects</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getNegativSideEffects <em>Negativ Side Effects</em>}</li>
+ *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getChangeSets <em>Change Sets</em>}</li>
  * </ul>
  *
  * @generated
@@ -209,26 +208,6 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 	protected EObject context;
 
 	/**
-	 * The cached value of the '{@link #getIntroducedByChanges() <em>Introduced By Changes</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getIntroducedByChanges()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Change> introducedByChanges;
-
-	/**
-	 * The cached value of the '{@link #getResolvedByChanges() <em>Resolved By Changes</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getResolvedByChanges()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Change> resolvedByChanges;
-
-	/**
 	 * The default value of the '{@link #isResolvedByUndo() <em>Resolved By Undo</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -249,24 +228,14 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 	protected boolean resolvedByUndo = RESOLVED_BY_UNDO_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getPositivSideEffects() <em>Positiv Side Effects</em>}' reference list.
+	 * The cached value of the '{@link #getChangeSets() <em>Change Sets</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPositivSideEffects()
+	 * @see #getChangeSets()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ValidationError> positivSideEffects;
-
-	/**
-	 * The cached value of the '{@link #getNegativSideEffects() <em>Negativ Side Effects</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getNegativSideEffects()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ValidationError> negativSideEffects;
+	protected EList<ChangeSet> changeSets;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -640,30 +609,6 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Change> getIntroducedByChanges() {
-		if (introducedByChanges == null) {
-			introducedByChanges = new EObjectResolvingEList<Change>(Change.class, this, HistoryModelPackage.VALIDATION_ERROR__INTRODUCED_BY_CHANGES);
-		}
-		return introducedByChanges;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Change> getResolvedByChanges() {
-		if (resolvedByChanges == null) {
-			resolvedByChanges = new EObjectResolvingEList<Change>(Change.class, this, HistoryModelPackage.VALIDATION_ERROR__RESOLVED_BY_CHANGES);
-		}
-		return resolvedByChanges;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isResolvedByUndo() {
 		return resolvedByUndo;
 	}
@@ -685,23 +630,11 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ValidationError> getPositivSideEffects() {
-		if (positivSideEffects == null) {
-			positivSideEffects = new EObjectResolvingEList<ValidationError>(ValidationError.class, this, HistoryModelPackage.VALIDATION_ERROR__POSITIV_SIDE_EFFECTS);
+	public EList<ChangeSet> getChangeSets() {
+		if (changeSets == null) {
+			changeSets = new EObjectContainmentEList<ChangeSet>(ChangeSet.class, this, HistoryModelPackage.VALIDATION_ERROR__CHANGE_SETS);
 		}
-		return positivSideEffects;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ValidationError> getNegativSideEffects() {
-		if (negativSideEffects == null) {
-			negativSideEffects = new EObjectResolvingEList<ValidationError>(ValidationError.class, this, HistoryModelPackage.VALIDATION_ERROR__NEGATIV_SIDE_EFFECTS);
-		}
-		return negativSideEffects;
+		return changeSets;
 	}
 
 	/**
@@ -736,6 +669,8 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 				return basicSetPrec(null, msgs);
 			case HistoryModelPackage.VALIDATION_ERROR__SUCC:
 				return basicSetSucc(null, msgs);
+			case HistoryModelPackage.VALIDATION_ERROR__CHANGE_SETS:
+				return ((InternalEList<?>)getChangeSets()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -777,16 +712,10 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 			case HistoryModelPackage.VALIDATION_ERROR__CONTEXT:
 				if (resolve) return getContext();
 				return basicGetContext();
-			case HistoryModelPackage.VALIDATION_ERROR__INTRODUCED_BY_CHANGES:
-				return getIntroducedByChanges();
-			case HistoryModelPackage.VALIDATION_ERROR__RESOLVED_BY_CHANGES:
-				return getResolvedByChanges();
 			case HistoryModelPackage.VALIDATION_ERROR__RESOLVED_BY_UNDO:
 				return isResolvedByUndo();
-			case HistoryModelPackage.VALIDATION_ERROR__POSITIV_SIDE_EFFECTS:
-				return getPositivSideEffects();
-			case HistoryModelPackage.VALIDATION_ERROR__NEGATIV_SIDE_EFFECTS:
-				return getNegativSideEffects();
+			case HistoryModelPackage.VALIDATION_ERROR__CHANGE_SETS:
+				return getChangeSets();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -827,24 +756,12 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 			case HistoryModelPackage.VALIDATION_ERROR__CONTEXT:
 				setContext((EObject)newValue);
 				return;
-			case HistoryModelPackage.VALIDATION_ERROR__INTRODUCED_BY_CHANGES:
-				getIntroducedByChanges().clear();
-				getIntroducedByChanges().addAll((Collection<? extends Change>)newValue);
-				return;
-			case HistoryModelPackage.VALIDATION_ERROR__RESOLVED_BY_CHANGES:
-				getResolvedByChanges().clear();
-				getResolvedByChanges().addAll((Collection<? extends Change>)newValue);
-				return;
 			case HistoryModelPackage.VALIDATION_ERROR__RESOLVED_BY_UNDO:
 				setResolvedByUndo((Boolean)newValue);
 				return;
-			case HistoryModelPackage.VALIDATION_ERROR__POSITIV_SIDE_EFFECTS:
-				getPositivSideEffects().clear();
-				getPositivSideEffects().addAll((Collection<? extends ValidationError>)newValue);
-				return;
-			case HistoryModelPackage.VALIDATION_ERROR__NEGATIV_SIDE_EFFECTS:
-				getNegativSideEffects().clear();
-				getNegativSideEffects().addAll((Collection<? extends ValidationError>)newValue);
+			case HistoryModelPackage.VALIDATION_ERROR__CHANGE_SETS:
+				getChangeSets().clear();
+				getChangeSets().addAll((Collection<? extends ChangeSet>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -885,20 +802,11 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 			case HistoryModelPackage.VALIDATION_ERROR__CONTEXT:
 				setContext((EObject)null);
 				return;
-			case HistoryModelPackage.VALIDATION_ERROR__INTRODUCED_BY_CHANGES:
-				getIntroducedByChanges().clear();
-				return;
-			case HistoryModelPackage.VALIDATION_ERROR__RESOLVED_BY_CHANGES:
-				getResolvedByChanges().clear();
-				return;
 			case HistoryModelPackage.VALIDATION_ERROR__RESOLVED_BY_UNDO:
 				setResolvedByUndo(RESOLVED_BY_UNDO_EDEFAULT);
 				return;
-			case HistoryModelPackage.VALIDATION_ERROR__POSITIV_SIDE_EFFECTS:
-				getPositivSideEffects().clear();
-				return;
-			case HistoryModelPackage.VALIDATION_ERROR__NEGATIV_SIDE_EFFECTS:
-				getNegativSideEffects().clear();
+			case HistoryModelPackage.VALIDATION_ERROR__CHANGE_SETS:
+				getChangeSets().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -936,16 +844,10 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 				return invalidElement != null && !invalidElement.isEmpty();
 			case HistoryModelPackage.VALIDATION_ERROR__CONTEXT:
 				return context != null;
-			case HistoryModelPackage.VALIDATION_ERROR__INTRODUCED_BY_CHANGES:
-				return introducedByChanges != null && !introducedByChanges.isEmpty();
-			case HistoryModelPackage.VALIDATION_ERROR__RESOLVED_BY_CHANGES:
-				return resolvedByChanges != null && !resolvedByChanges.isEmpty();
 			case HistoryModelPackage.VALIDATION_ERROR__RESOLVED_BY_UNDO:
 				return resolvedByUndo != RESOLVED_BY_UNDO_EDEFAULT;
-			case HistoryModelPackage.VALIDATION_ERROR__POSITIV_SIDE_EFFECTS:
-				return positivSideEffects != null && !positivSideEffects.isEmpty();
-			case HistoryModelPackage.VALIDATION_ERROR__NEGATIV_SIDE_EFFECTS:
-				return negativSideEffects != null && !negativSideEffects.isEmpty();
+			case HistoryModelPackage.VALIDATION_ERROR__CHANGE_SETS:
+				return changeSets != null && !changeSets.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

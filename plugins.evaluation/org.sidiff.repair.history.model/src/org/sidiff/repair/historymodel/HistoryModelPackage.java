@@ -88,22 +88,13 @@ public interface HistoryModelPackage extends EPackage {
 	int HISTORY__VERSIONS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Technical Differences</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HISTORY__TECHNICAL_DIFFERENCES = 2;
-
-	/**
 	 * The feature id for the '<em><b>All Validation Errors</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HISTORY__ALL_VALIDATION_ERRORS = 3;
+	int HISTORY__ALL_VALIDATION_ERRORS = 2;
 
 	/**
 	 * The number of structural features of the '<em>History</em>' class.
@@ -112,7 +103,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int HISTORY_FEATURE_COUNT = 4;
+	int HISTORY_FEATURE_COUNT = 3;
 
 	/**
 	 * The operation id for the '<em>Get Precessor Revisions</em>' operation.
@@ -133,22 +124,13 @@ public interface HistoryModelPackage extends EPackage {
 	int HISTORY___GET_SUCCESSOR_REVISIONS__VERSION = 1;
 
 	/**
-	 * The operation id for the '<em>Get Technical Difference</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HISTORY___GET_TECHNICAL_DIFFERENCE__VERSION_VERSION = 2;
-
-	/**
 	 * The operation id for the '<em>Get Validation Errors</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HISTORY___GET_VALIDATION_ERRORS__BOOLEAN_BOOLEAN = 3;
+	int HISTORY___GET_VALIDATION_ERRORS__BOOLEAN_BOOLEAN = 2;
 
 	/**
 	 * The operation id for the '<em>Get Unique Validation Errors</em>' operation.
@@ -157,7 +139,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int HISTORY___GET_UNIQUE_VALIDATION_ERRORS = 4;
+	int HISTORY___GET_UNIQUE_VALIDATION_ERRORS = 3;
 
 	/**
 	 * The number of operations of the '<em>History</em>' class.
@@ -166,7 +148,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int HISTORY_OPERATION_COUNT = 5;
+	int HISTORY_OPERATION_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.repair.historymodel.impl.VersionImpl <em>Version</em>}' class.
@@ -197,22 +179,13 @@ public interface HistoryModelPackage extends EPackage {
 	int VERSION__NAME = 1;
 
 	/**
-	 * The feature id for the '<em><b>Id2 Element</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VERSION__ID2_ELEMENT = 2;
-
-	/**
 	 * The feature id for the '<em><b>Model URI</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERSION__MODEL_URI = 3;
+	int VERSION__MODEL_URI = 2;
 
 	/**
 	 * The feature id for the '<em><b>Model</b></em>' attribute.
@@ -221,7 +194,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VERSION__MODEL = 4;
+	int VERSION__MODEL = 3;
 
 	/**
 	 * The feature id for the '<em><b>Status</b></em>' attribute.
@@ -230,7 +203,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VERSION__STATUS = 5;
+	int VERSION__STATUS = 4;
 
 	/**
 	 * The number of structural features of the '<em>Version</em>' class.
@@ -239,7 +212,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VERSION_FEATURE_COUNT = 6;
+	int VERSION_FEATURE_COUNT = 5;
 
 	/**
 	 * The operation id for the '<em>Get Element</em>' operation.
@@ -378,49 +351,22 @@ public interface HistoryModelPackage extends EPackage {
 	int VALIDATION_ERROR__CONTEXT = 11;
 
 	/**
-	 * The feature id for the '<em><b>Introduced By Changes</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VALIDATION_ERROR__INTRODUCED_BY_CHANGES = 12;
-
-	/**
-	 * The feature id for the '<em><b>Resolved By Changes</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VALIDATION_ERROR__RESOLVED_BY_CHANGES = 13;
-
-	/**
 	 * The feature id for the '<em><b>Resolved By Undo</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_ERROR__RESOLVED_BY_UNDO = 14;
+	int VALIDATION_ERROR__RESOLVED_BY_UNDO = 12;
 
 	/**
-	 * The feature id for the '<em><b>Positiv Side Effects</b></em>' reference list.
+	 * The feature id for the '<em><b>Change Sets</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_ERROR__POSITIV_SIDE_EFFECTS = 15;
-
-	/**
-	 * The feature id for the '<em><b>Negativ Side Effects</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VALIDATION_ERROR__NEGATIV_SIDE_EFFECTS = 16;
+	int VALIDATION_ERROR__CHANGE_SETS = 13;
 
 	/**
 	 * The number of structural features of the '<em>Validation Error</em>' class.
@@ -429,7 +375,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_ERROR_FEATURE_COUNT = 17;
+	int VALIDATION_ERROR_FEATURE_COUNT = 14;
 
 	/**
 	 * The number of operations of the '<em>Validation Error</em>' class.
@@ -441,6 +387,52 @@ public interface HistoryModelPackage extends EPackage {
 	int VALIDATION_ERROR_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.sidiff.repair.historymodel.impl.ChangeSetImpl <em>Change Set</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.repair.historymodel.impl.ChangeSetImpl
+	 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getChangeSet()
+	 * @generated
+	 */
+	int CHANGE_SET = 3;
+
+	/**
+	 * The feature id for the '<em><b>Changes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET__CHANGES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET__NAME = 1;
+
+	/**
+	 * The number of structural features of the '<em>Change Set</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Change Set</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_SET_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.sidiff.repair.historymodel.ValidationSeverity <em>Validation Severity</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -448,7 +440,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getValidationSeverity()
 	 * @generated
 	 */
-	int VALIDATION_SEVERITY = 3;
+	int VALIDATION_SEVERITY = 4;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.repair.historymodel.ModelStatus <em>Model Status</em>}' enum.
@@ -458,7 +450,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getModelStatus()
 	 * @generated
 	 */
-	int MODEL_STATUS = 4;
+	int MODEL_STATUS = 5;
 
 	/**
 	 * The meta object id for the '<em>Resource</em>' data type.
@@ -468,7 +460,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getResource()
 	 * @generated
 	 */
-	int RESOURCE = 5;
+	int RESOURCE = 6;
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.repair.historymodel.History <em>History</em>}'.
@@ -503,17 +495,6 @@ public interface HistoryModelPackage extends EPackage {
 	EReference getHistory_Versions();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.History#getTechnicalDifferences <em>Technical Differences</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Technical Differences</em>'.
-	 * @see org.sidiff.repair.historymodel.History#getTechnicalDifferences()
-	 * @see #getHistory()
-	 * @generated
-	 */
-	EReference getHistory_TechnicalDifferences();
-
-	/**
 	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.History#getAllValidationErrors <em>All Validation Errors</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -543,16 +524,6 @@ public interface HistoryModelPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getHistory__GetSuccessorRevisions__Version();
-
-	/**
-	 * Returns the meta object for the '{@link org.sidiff.repair.historymodel.History#getTechnicalDifference(org.sidiff.repair.historymodel.Version, org.sidiff.repair.historymodel.Version) <em>Get Technical Difference</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Technical Difference</em>' operation.
-	 * @see org.sidiff.repair.historymodel.History#getTechnicalDifference(org.sidiff.repair.historymodel.Version, org.sidiff.repair.historymodel.Version)
-	 * @generated
-	 */
-	EOperation getHistory__GetTechnicalDifference__Version_Version();
 
 	/**
 	 * Returns the meta object for the '{@link org.sidiff.repair.historymodel.History#getValidationErrors(boolean, boolean) <em>Get Validation Errors</em>}' operation.
@@ -605,17 +576,6 @@ public interface HistoryModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getVersion_Name();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.Version#getId2Element <em>Id2 Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id2 Element</em>'.
-	 * @see org.sidiff.repair.historymodel.Version#getId2Element()
-	 * @see #getVersion()
-	 * @generated
-	 */
-	EAttribute getVersion_Id2Element();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.Version#getModelURI <em>Model URI</em>}'.
@@ -803,28 +763,6 @@ public interface HistoryModelPackage extends EPackage {
 	EReference getValidationError_Context();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.ValidationError#getIntroducedByChanges <em>Introduced By Changes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Introduced By Changes</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getIntroducedByChanges()
-	 * @see #getValidationError()
-	 * @generated
-	 */
-	EReference getValidationError_IntroducedByChanges();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.ValidationError#getResolvedByChanges <em>Resolved By Changes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Resolved By Changes</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getResolvedByChanges()
-	 * @see #getValidationError()
-	 * @generated
-	 */
-	EReference getValidationError_ResolvedByChanges();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.ValidationError#isResolvedByUndo <em>Resolved By Undo</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -836,26 +774,47 @@ public interface HistoryModelPackage extends EPackage {
 	EAttribute getValidationError_ResolvedByUndo();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.ValidationError#getPositivSideEffects <em>Positiv Side Effects</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.repair.historymodel.ValidationError#getChangeSets <em>Change Sets</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Positiv Side Effects</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getPositivSideEffects()
+	 * @return the meta object for the containment reference list '<em>Change Sets</em>'.
+	 * @see org.sidiff.repair.historymodel.ValidationError#getChangeSets()
 	 * @see #getValidationError()
 	 * @generated
 	 */
-	EReference getValidationError_PositivSideEffects();
+	EReference getValidationError_ChangeSets();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.ValidationError#getNegativSideEffects <em>Negativ Side Effects</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.repair.historymodel.ChangeSet <em>Change Set</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Negativ Side Effects</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getNegativSideEffects()
-	 * @see #getValidationError()
+	 * @return the meta object for class '<em>Change Set</em>'.
+	 * @see org.sidiff.repair.historymodel.ChangeSet
 	 * @generated
 	 */
-	EReference getValidationError_NegativSideEffects();
+	EClass getChangeSet();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.repair.historymodel.ChangeSet#getChanges <em>Changes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Changes</em>'.
+	 * @see org.sidiff.repair.historymodel.ChangeSet#getChanges()
+	 * @see #getChangeSet()
+	 * @generated
+	 */
+	EReference getChangeSet_Changes();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.ChangeSet#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.sidiff.repair.historymodel.ChangeSet#getName()
+	 * @see #getChangeSet()
+	 * @generated
+	 */
+	EAttribute getChangeSet_Name();
 
 	/**
 	 * Returns the meta object for enum '{@link org.sidiff.repair.historymodel.ValidationSeverity <em>Validation Severity</em>}'.
@@ -938,14 +897,6 @@ public interface HistoryModelPackage extends EPackage {
 		EReference HISTORY__VERSIONS = eINSTANCE.getHistory_Versions();
 
 		/**
-		 * The meta object literal for the '<em><b>Technical Differences</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference HISTORY__TECHNICAL_DIFFERENCES = eINSTANCE.getHistory_TechnicalDifferences();
-
-		/**
 		 * The meta object literal for the '<em><b>All Validation Errors</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -968,14 +919,6 @@ public interface HistoryModelPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation HISTORY___GET_SUCCESSOR_REVISIONS__VERSION = eINSTANCE.getHistory__GetSuccessorRevisions__Version();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Technical Difference</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation HISTORY___GET_TECHNICAL_DIFFERENCE__VERSION_VERSION = eINSTANCE.getHistory__GetTechnicalDifference__Version_Version();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Validation Errors</b></em>' operation.
@@ -1018,14 +961,6 @@ public interface HistoryModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute VERSION__NAME = eINSTANCE.getVersion_Name();
-
-		/**
-		 * The meta object literal for the '<em><b>Id2 Element</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute VERSION__ID2_ELEMENT = eINSTANCE.getVersion_Id2Element();
 
 		/**
 		 * The meta object literal for the '<em><b>Model URI</b></em>' attribute feature.
@@ -1166,22 +1101,6 @@ public interface HistoryModelPackage extends EPackage {
 		EReference VALIDATION_ERROR__CONTEXT = eINSTANCE.getValidationError_Context();
 
 		/**
-		 * The meta object literal for the '<em><b>Introduced By Changes</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference VALIDATION_ERROR__INTRODUCED_BY_CHANGES = eINSTANCE.getValidationError_IntroducedByChanges();
-
-		/**
-		 * The meta object literal for the '<em><b>Resolved By Changes</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference VALIDATION_ERROR__RESOLVED_BY_CHANGES = eINSTANCE.getValidationError_ResolvedByChanges();
-
-		/**
 		 * The meta object literal for the '<em><b>Resolved By Undo</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1190,20 +1109,38 @@ public interface HistoryModelPackage extends EPackage {
 		EAttribute VALIDATION_ERROR__RESOLVED_BY_UNDO = eINSTANCE.getValidationError_ResolvedByUndo();
 
 		/**
-		 * The meta object literal for the '<em><b>Positiv Side Effects</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Change Sets</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference VALIDATION_ERROR__POSITIV_SIDE_EFFECTS = eINSTANCE.getValidationError_PositivSideEffects();
+		EReference VALIDATION_ERROR__CHANGE_SETS = eINSTANCE.getValidationError_ChangeSets();
 
 		/**
-		 * The meta object literal for the '<em><b>Negativ Side Effects</b></em>' reference list feature.
+		 * The meta object literal for the '{@link org.sidiff.repair.historymodel.impl.ChangeSetImpl <em>Change Set</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.repair.historymodel.impl.ChangeSetImpl
+		 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getChangeSet()
+		 * @generated
+		 */
+		EClass CHANGE_SET = eINSTANCE.getChangeSet();
+
+		/**
+		 * The meta object literal for the '<em><b>Changes</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference VALIDATION_ERROR__NEGATIV_SIDE_EFFECTS = eINSTANCE.getValidationError_NegativSideEffects();
+		EReference CHANGE_SET__CHANGES = eINSTANCE.getChangeSet_Changes();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHANGE_SET__NAME = eINSTANCE.getChangeSet_Name();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.repair.historymodel.ValidationSeverity <em>Validation Severity</em>}' enum.

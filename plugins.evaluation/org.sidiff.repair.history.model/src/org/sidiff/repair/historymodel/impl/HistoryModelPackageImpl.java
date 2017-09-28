@@ -6,7 +6,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -17,6 +16,8 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 
+import org.sidiff.matching.model.MatchingModelPackage;
+import org.sidiff.repair.historymodel.ChangeSet;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.HistoryModelFactory;
 import org.sidiff.repair.historymodel.HistoryModelPackage;
@@ -52,6 +53,13 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * @generated
 	 */
 	private EClass validationErrorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass changeSetEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -122,6 +130,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 
 		// Initialize simple dependencies
 		EcorePackage.eINSTANCE.eClass();
+		MatchingModelPackage.eINSTANCE.eClass();
 		SymmetricPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
@@ -171,17 +180,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getHistory_TechnicalDifferences() {
-		return (EReference)historyEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getHistory_AllValidationErrors() {
-		return (EReference)historyEClass.getEStructuralFeatures().get(3);
+		return (EReference)historyEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -207,7 +207,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getHistory__GetTechnicalDifference__Version_Version() {
+	public EOperation getHistory__GetValidationErrors__boolean_boolean() {
 		return historyEClass.getEOperations().get(2);
 	}
 
@@ -216,17 +216,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getHistory__GetValidationErrors__boolean_boolean() {
-		return historyEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getHistory__GetUniqueValidationErrors() {
-		return historyEClass.getEOperations().get(4);
+		return historyEClass.getEOperations().get(3);
 	}
 
 	/**
@@ -261,7 +252,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getVersion_Id2Element() {
+	public EAttribute getVersion_ModelURI() {
 		return (EAttribute)versionEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -270,7 +261,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getVersion_ModelURI() {
+	public EAttribute getVersion_Model() {
 		return (EAttribute)versionEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -279,17 +270,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getVersion_Model() {
-		return (EAttribute)versionEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getVersion_Status() {
-		return (EAttribute)versionEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)versionEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -423,8 +405,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getValidationError_IntroducedByChanges() {
-		return (EReference)validationErrorEClass.getEStructuralFeatures().get(12);
+	public EAttribute getValidationError_ResolvedByUndo() {
+		return (EAttribute)validationErrorEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -432,7 +414,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getValidationError_ResolvedByChanges() {
+	public EReference getValidationError_ChangeSets() {
 		return (EReference)validationErrorEClass.getEStructuralFeatures().get(13);
 	}
 
@@ -441,8 +423,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getValidationError_ResolvedByUndo() {
-		return (EAttribute)validationErrorEClass.getEStructuralFeatures().get(14);
+	public EClass getChangeSet() {
+		return changeSetEClass;
 	}
 
 	/**
@@ -450,8 +432,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getValidationError_PositivSideEffects() {
-		return (EReference)validationErrorEClass.getEStructuralFeatures().get(15);
+	public EReference getChangeSet_Changes() {
+		return (EReference)changeSetEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -459,8 +441,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getValidationError_NegativSideEffects() {
-		return (EReference)validationErrorEClass.getEStructuralFeatures().get(16);
+	public EAttribute getChangeSet_Name() {
+		return (EAttribute)changeSetEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -521,18 +503,15 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		historyEClass = createEClass(HISTORY);
 		createEAttribute(historyEClass, HISTORY__NAME);
 		createEReference(historyEClass, HISTORY__VERSIONS);
-		createEReference(historyEClass, HISTORY__TECHNICAL_DIFFERENCES);
 		createEReference(historyEClass, HISTORY__ALL_VALIDATION_ERRORS);
 		createEOperation(historyEClass, HISTORY___GET_PRECESSOR_REVISIONS__VERSION);
 		createEOperation(historyEClass, HISTORY___GET_SUCCESSOR_REVISIONS__VERSION);
-		createEOperation(historyEClass, HISTORY___GET_TECHNICAL_DIFFERENCE__VERSION_VERSION);
 		createEOperation(historyEClass, HISTORY___GET_VALIDATION_ERRORS__BOOLEAN_BOOLEAN);
 		createEOperation(historyEClass, HISTORY___GET_UNIQUE_VALIDATION_ERRORS);
 
 		versionEClass = createEClass(VERSION);
 		createEReference(versionEClass, VERSION__VALIDATION_ERRORS);
 		createEAttribute(versionEClass, VERSION__NAME);
-		createEAttribute(versionEClass, VERSION__ID2_ELEMENT);
 		createEAttribute(versionEClass, VERSION__MODEL_URI);
 		createEAttribute(versionEClass, VERSION__MODEL);
 		createEAttribute(versionEClass, VERSION__STATUS);
@@ -551,11 +530,12 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		createEReference(validationErrorEClass, VALIDATION_ERROR__SUCC);
 		createEReference(validationErrorEClass, VALIDATION_ERROR__INVALID_ELEMENT);
 		createEReference(validationErrorEClass, VALIDATION_ERROR__CONTEXT);
-		createEReference(validationErrorEClass, VALIDATION_ERROR__INTRODUCED_BY_CHANGES);
-		createEReference(validationErrorEClass, VALIDATION_ERROR__RESOLVED_BY_CHANGES);
 		createEAttribute(validationErrorEClass, VALIDATION_ERROR__RESOLVED_BY_UNDO);
-		createEReference(validationErrorEClass, VALIDATION_ERROR__POSITIV_SIDE_EFFECTS);
-		createEReference(validationErrorEClass, VALIDATION_ERROR__NEGATIV_SIDE_EFFECTS);
+		createEReference(validationErrorEClass, VALIDATION_ERROR__CHANGE_SETS);
+
+		changeSetEClass = createEClass(CHANGE_SET);
+		createEReference(changeSetEClass, CHANGE_SET__CHANGES);
+		createEAttribute(changeSetEClass, CHANGE_SET__NAME);
 
 		// Create enums
 		validationSeverityEEnum = createEEnum(VALIDATION_SEVERITY);
@@ -590,6 +570,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 
 		// Obtain other dependent packages
 		SymmetricPackage theSymmetricPackage = (SymmetricPackage)EPackage.Registry.INSTANCE.getEPackage(SymmetricPackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -601,7 +582,6 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		initEClass(historyEClass, History.class, "History", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getHistory_Name(), ecorePackage.getEString(), "name", null, 0, 1, History.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getHistory_Versions(), this.getVersion(), null, "versions", null, 0, -1, History.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getHistory_TechnicalDifferences(), theSymmetricPackage.getSymmetricDifference(), null, "technicalDifferences", null, 0, -1, History.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getHistory_AllValidationErrors(), this.getValidationError(), null, "allValidationErrors", null, 0, -1, History.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		EOperation op = initEOperation(getHistory__GetPrecessorRevisions__Version(), this.getVersion(), "getPrecessorRevisions", 0, -1, IS_UNIQUE, IS_ORDERED);
@@ -609,10 +589,6 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 
 		op = initEOperation(getHistory__GetSuccessorRevisions__Version(), this.getVersion(), "getSuccessorRevisions", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getVersion(), "version", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getHistory__GetTechnicalDifference__Version_Version(), theSymmetricPackage.getSymmetricDifference(), "getTechnicalDifference", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getVersion(), "old", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getVersion(), "new_", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getHistory__GetValidationErrors__boolean_boolean(), this.getValidationError(), "getValidationErrors", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "introduced", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -623,12 +599,6 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		initEClass(versionEClass, Version.class, "Version", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getVersion_ValidationErrors(), this.getValidationError(), null, "validationErrors", null, 0, -1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVersion_Name(), ecorePackage.getEString(), "name", null, 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		EGenericType g1 = createEGenericType(ecorePackage.getEMap());
-		EGenericType g2 = createEGenericType(ecorePackage.getEString());
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType(ecorePackage.getEObject());
-		g1.getETypeArguments().add(g2);
-		initEAttribute(getVersion_Id2Element(), g1, "id2Element", null, 0, 1, Version.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVersion_ModelURI(), ecorePackage.getEString(), "modelURI", null, 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVersion_Model(), this.getResource(), "model", null, 0, 1, Version.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVersion_Status(), this.getModelStatus(), "status", "UNKNOWN", 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -649,11 +619,12 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		initEReference(getValidationError_Succ(), this.getValidationError(), this.getValidationError_Prec(), "succ", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getValidationError_InvalidElement(), ecorePackage.getEObject(), null, "invalidElement", null, 0, -1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getValidationError_Context(), ecorePackage.getEObject(), null, "context", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getValidationError_IntroducedByChanges(), theSymmetricPackage.getChange(), null, "introducedByChanges", null, 0, -1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getValidationError_ResolvedByChanges(), theSymmetricPackage.getChange(), null, "resolvedByChanges", null, 0, -1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getValidationError_ResolvedByUndo(), ecorePackage.getEBoolean(), "resolvedByUndo", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getValidationError_PositivSideEffects(), this.getValidationError(), null, "positivSideEffects", null, 0, -1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getValidationError_NegativSideEffects(), this.getValidationError(), null, "negativSideEffects", null, 0, -1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getValidationError_ChangeSets(), this.getChangeSet(), null, "changeSets", null, 0, -1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(changeSetEClass, ChangeSet.class, "ChangeSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getChangeSet_Changes(), theSymmetricPackage.getChange(), null, "changes", null, 0, -1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getChangeSet_Name(), theEcorePackage.getEString(), "name", null, 0, 1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(validationSeverityEEnum, ValidationSeverity.class, "ValidationSeverity");

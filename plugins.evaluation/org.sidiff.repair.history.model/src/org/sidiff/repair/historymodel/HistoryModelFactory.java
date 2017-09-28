@@ -49,6 +49,15 @@ public interface HistoryModelFactory extends EFactory {
 	ValidationError createValidationError();
 
 	/**
+	 * Returns a new object of class '<em>Change Set</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Change Set</em>'.
+	 * @generated
+	 */
+	ChangeSet createChangeSet();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
