@@ -139,6 +139,29 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.repair.historymodel.ChangeSet} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ChangeSetItemProvider changeSetItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.repair.historymodel.ChangeSet}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createChangeSetAdapter() {
+		if (changeSetItemProvider == null) {
+			changeSetItemProvider = new ChangeSetItemProvider(this);
+		}
+
+		return changeSetItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -240,6 +263,7 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 		if (historyItemProvider != null) historyItemProvider.dispose();
 		if (versionItemProvider != null) versionItemProvider.dispose();
 		if (validationErrorItemProvider != null) validationErrorItemProvider.dispose();
+		if (changeSetItemProvider != null) changeSetItemProvider.dispose();
 	}
 
 }

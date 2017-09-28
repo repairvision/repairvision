@@ -60,7 +60,6 @@ public class HistoryItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addTechnicalDifferencesPropertyDescriptor(object);
 			addAllValidationErrorsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
@@ -84,28 +83,6 @@ public class HistoryItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Technical Differences feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addTechnicalDifferencesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_History_technicalDifferences_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_History_technicalDifferences_feature", "_UI_History_type"),
-				 HistoryModelPackage.Literals.HISTORY__TECHNICAL_DIFFERENCES,
-				 true,
-				 false,
-				 true,
-				 null,
 				 null,
 				 null));
 	}

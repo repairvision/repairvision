@@ -60,7 +60,6 @@ public class VersionItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addId2ElementPropertyDescriptor(object);
 			addModelURIPropertyDescriptor(object);
 			addModelPropertyDescriptor(object);
 			addStatusPropertyDescriptor(object);
@@ -82,28 +81,6 @@ public class VersionItemProvider
 				 getString("_UI_Version_name_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Version_name_feature", "_UI_Version_type"),
 				 HistoryModelPackage.Literals.VERSION__NAME,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Id2 Element feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addId2ElementPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Version_id2Element_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Version_id2Element_feature", "_UI_Version_type"),
-				 HistoryModelPackage.Literals.VERSION__ID2_ELEMENT,
 				 true,
 				 false,
 				 false,
@@ -247,7 +224,6 @@ public class VersionItemProvider
 
 		switch (notification.getFeatureID(Version.class)) {
 			case HistoryModelPackage.VERSION__NAME:
-			case HistoryModelPackage.VERSION__ID2_ELEMENT:
 			case HistoryModelPackage.VERSION__MODEL_URI:
 			case HistoryModelPackage.VERSION__MODEL:
 			case HistoryModelPackage.VERSION__STATUS:
