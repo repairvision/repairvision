@@ -24,8 +24,6 @@ import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.consistency.common.storage.UUIDResource;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.technical.api.TechnicalDifferenceFacade;
 import org.sidiff.matching.api.MatchingFacade;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.Matching;
@@ -41,8 +39,6 @@ import org.sidiff.repair.historymodel.Version;
 public class HistoryModelGenerator {
 	
 	//----
-	
-	public boolean WRITE_DIFFERENCES = false;
 	
 	public boolean PRINT_IDS = false;
 	
@@ -142,20 +138,6 @@ public class HistoryModelGenerator {
 			}
 		}
 		
-		// Save Differences:
-		if (WRITE_DIFFERENCES) {
-			IFolder diffFolder = project.getFolder(DIFF_FOLDER);
-			diffFolder.create(false, true, null);
-			
-			for (SymmetricDifference diff : history.getTechnicalDifferences()) {
-				TechnicalDifferenceFacade.serializeTechnicalDifference(diff,
-						project.getLocation().toOSString() + File.separator + DIFF_FOLDER,
-						diff.getModelA().getURI().lastSegment() + "_x_" + diff.getModelB().getURI().lastSegment());
-			}
-		} else {
-			history.getTechnicalDifferences().clear();
-		}
-		
 		// Save history:
 		URI historyURI = EMFStorage.pathToUri(project.getLocation().toOSString() 
 				+ File.separator + history.getName() + "." + HISTORY_FILE_EXTENSION);
@@ -221,15 +203,9 @@ public class HistoryModelGenerator {
 						|| versionB.getStatus().equals(ModelStatus.DEFECT)) {
 					continue;
 				}
-				
-				if (WRITE_DIFFERENCES) {
-					SymmetricDifference diff = generateTechnicalDifference(versionA, versionB, settings);
-					generateUUIDs(diff.getMatching());
-					history.getTechnicalDifferences().add(diff);
-				} else {
-					Matching matching = generateMatching(versionA, versionB, settings);
-					generateUUIDs(matching);
-				}
+
+				Matching matching = generateMatching(versionA, versionB, settings);
+				generateUUIDs(matching);
 			} catch (InvalidModelException e) {
 				e.printStackTrace();
 			} catch (NoCorrespondencesException e) {
@@ -264,18 +240,6 @@ public class HistoryModelGenerator {
 		version.setName(String.format("%03d", revision) + " - " + ModelNamingUtil.getModelName(model.getURI().toString()));
 		
 		return version;
-	}
-	
-	private SymmetricDifference generateTechnicalDifference(Version versionA, Version versionB,
-			EvaluationSettings settings) throws InvalidModelException, NoCorrespondencesException {
-		
-		Resource resourceA = versionA.getModel();
-		Resource resourceB = versionB.getModel();
-		
-		SymmetricDifference diff = TechnicalDifferenceFacade.deriveTechnicalDifference(
-				resourceA, resourceB, settings.getDifferenceSettings());
-
-		return diff;
 	}
 	
 	private Matching generateMatching(Version versionA, Version versionB,
