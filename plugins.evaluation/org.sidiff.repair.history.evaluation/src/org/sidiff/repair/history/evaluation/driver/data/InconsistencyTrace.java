@@ -87,7 +87,10 @@ public class InconsistencyTrace {
 	// historical:
 
 	public Resource getModelHistorical() {
-		return modelVersionHistorical.getModel();
+		if (modelVersionHistorical != null) {
+			return modelVersionHistorical.getModel();
+		}
+		return null;
 	}
 	
 	public Version getModelVersionHistorical() {
@@ -101,7 +104,10 @@ public class InconsistencyTrace {
 	// introduced:
 	
 	public Resource getModelIntroduced() {
-		return modelVersionIntroduced.getModel();
+		if (modelVersionIntroduced != null) {
+			return modelVersionIntroduced.getModel();
+		}
+		return null;
 	}
 	
 	public Version getModelVersionIntroduced() {
@@ -123,7 +129,10 @@ public class InconsistencyTrace {
 	// current:
 	
 	public Resource getModelCurrent() {
-		return modelVersionCurrent.getModel();
+		if (modelVersionCurrent != null) {
+			return modelVersionCurrent.getModel();
+		}
+		return null;
 	}
 	
 	public Version getModelVersionCurrent() {
@@ -143,7 +152,10 @@ public class InconsistencyTrace {
 	// resolved:
 	
 	public Resource getModelResolved() {
-		return modelVersionResolved.getModel();
+		if (modelVersionResolved != null) {
+			return modelVersionResolved.getModel();
+		}
+		return null;
 	}
 
 	public Version getModelVersionResolved() {
