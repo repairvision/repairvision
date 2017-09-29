@@ -1,7 +1,9 @@
 package org.sidiff.consistency.common.ui.util;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.PartInitException;
@@ -52,5 +54,28 @@ public class WorkbenchUtil {
 						message);
 		    }
 		});
+	}
+	
+	public static boolean showQuestion(String question) {
+		Boolean[] result = new Boolean[1];
+		
+		Display.getDefault().syncExec(new Runnable() {
+		    @Override
+		    public void run() {
+		    	MessageBox messageBox = new MessageBox(
+		    			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+		    			SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+		    	
+		    	messageBox.setText(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+		    			.getActivePage().getActivePart().getTitle());
+		        messageBox.setMessage(question);
+		        
+		        if (messageBox.open() == SWT.YES) {
+		        	result[0] = true;
+		        }
+		    }
+		});
+		
+		return result[0];
 	}
 }
