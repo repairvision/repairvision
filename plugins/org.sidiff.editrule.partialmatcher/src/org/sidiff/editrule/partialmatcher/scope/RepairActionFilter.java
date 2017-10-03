@@ -19,6 +19,8 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
+import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
+import org.sidiff.editrule.partialmatcher.util.MatchingHelper;
 import org.sidiff.validation.constraint.api.util.IValidationFilter;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
@@ -30,7 +32,10 @@ import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairTy
 
 public class RepairActionFilter {
 
-	private Map<EClass, Map<EObject, List<RepairAction>>> repairs = new HashMap<>();
+	/**
+	 * Type -> Context -> Repairs
+	 */
+	private Map<EStructuralFeature, Map<EObject, List<RepairAction>>> repairs = new HashMap<>();
 	
 	private List<RepairValidation> validations = new ArrayList<>();
 	
@@ -68,13 +73,14 @@ public class RepairActionFilter {
 	private void addRepair(IDecisionNode repairDecision) {
 		if (repairDecision instanceof RepairAction) {
 			EObject context = ((RepairAction) repairDecision).getContext();
+			EStructuralFeature type = ((RepairAction) repairDecision).getFeature();
 
 			// Per meta-class:
-			Map<EObject, List<RepairAction>> repairsPerMetaClass = repairs.get(context.eClass());
+			Map<EObject, List<RepairAction>> repairsPerMetaClass = repairs.get(type);
 
 			if (repairsPerMetaClass == null) {
 				repairsPerMetaClass = new HashMap<>();
-				repairs.put(context.eClass(), repairsPerMetaClass);
+				repairs.put(type, repairsPerMetaClass);
 			}
 
 			// Per repair:
@@ -94,121 +100,48 @@ public class RepairActionFilter {
 	}
 	
 	public boolean isRepair(RepairType type, EObject context, EStructuralFeature feature) {
-		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairs.get(context.eClass());
+		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairs.get(feature);
 
 		if (repairsPerMetaClass != null) {
 			List<RepairAction> repairsPerObject = repairsPerMetaClass.get(context);
 			
 			if (repairsPerObject != null) {
 				for (RepairAction repair : repairsPerObject) {
-					if ((repair.getType().equals(RepairType.MODIFY) || repair.getType().equals(type)) 
-							&& (repair.getFeature().equals(feature))) {
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
-
-	public boolean isRepair(RepairType type, EClass contextType, EStructuralFeature feature) {
-		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairs.get(contextType);
-
-		if (repairsPerMetaClass != null) {
-			for (List<RepairAction> repairsPerObject : repairsPerMetaClass.values()) {
-				for (RepairAction repair : repairsPerObject) {
-					if ((repair.getType().equals(RepairType.MODIFY) || repair.getType().equals(type))
-							&& (repair.getFeature().equals(feature))) {
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
-
-	public boolean isRepair(
-			RepairType type, EClass contextType, EStructuralFeature feature, 
-			GraphElement change, RepairScope scope) {
-		
-		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairs.get(contextType);
-		boolean isRepair = false;
-		
-		if (repairsPerMetaClass != null) {
-			for (List<RepairAction> repairsPerObject : repairsPerMetaClass.values()) {
-				for (RepairAction repair : repairsPerObject) {
-					if ((repair.getType().equals(RepairType.MODIFY) || repair.getType().equals(type))
-							&& (repair.getFeature().equals(feature))) {
-						isRepair = true;
-						scope.add(change, repair.getContext());
-					}
-				}
-			}
-		}
-
-		return isRepair;
-	}
-	
-	/**
-	 * Checks if the set of changes contains at least one abstract repair.
-	 * 
-	 * @param changes
-	 *            The set of changes to test
-	 * @return <code>true</code> if the complement rule is a potential repair;
-	 *         <code>false</code> otherwise.
-	 */
-	public boolean filter(Collection<GraphElement> changes) {
-
-		for (GraphElement change : changes) {
-
-			// Abstract repairs consider only edges and attributes:
-			if (change instanceof Edge) {
-				EClass sourceContextType = ((Edge) change).getSource().getType();
-				EReference referenceType = ((Edge) change).getType();
-
-				// Delete:
-				if (change.getGraph().isLhs()) {
-					if (isRepair(RepairType.DELETE, sourceContextType, referenceType)) {
-						return true;
-					}
-					
-					// Repair which deletes the root element of a validation:
-					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
-						EClass targetContextType = ((Edge) change).getTarget().getType();
-						
-						if (isRepair(RepairType.DELETE, targetContextType, referenceType)) {
+					if (repair.getType().equals(RepairType.MODIFY) || repair.getType().equals(type)) {
+						if (repair.getFeature().equals(feature)) {
 							return true;
 						}
 					}
 				}
-
-				// Create:
-				else if (change.getGraph().isRhs()) {
-					if (isRepair(RepairType.CREATE, sourceContextType, referenceType)) {
-						return true;
-					}
-				}
-
-				else {
-					assert false : "We should never get here...!";
-				}
-			}
-			
-			else if (change instanceof Attribute) {
-				EClass contextType = ((Attribute) change).getNode().getType();
-				EAttribute attributeType = ((Attribute) change).getType();
-				
-				if (isRepair(RepairType.MODIFY, contextType, attributeType)) {
-					return true;
-				}
 			}
 		}
 
 		return false;
 	}
 
+	public boolean isRepair(RepairType type, EStructuralFeature feature, EClass contextType, boolean strict) {
+		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairs.get(feature);
+
+		if (repairsPerMetaClass != null) {
+			for (List<RepairAction> repairsPerObject : repairsPerMetaClass.values()) {
+				for (RepairAction repair : repairsPerObject) {
+					if (repair.getType().equals(RepairType.MODIFY) || repair.getType().equals(type)) {
+						if (repair.getFeature().equals(feature)) {
+							EClass repairContextType = repair.getContext().eClass();
+							
+							if (!strict || contextType.equals(repairContextType)) {
+								if (strict || MatchingHelper.isAssignableTo(repairContextType, contextType)) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return false;
+	}
 	
 	/**
 	 * Checks if the set of changes contains at least one abstract repair.
@@ -281,31 +214,47 @@ public class RepairActionFilter {
 
 		return false;
 	}
-	
-	public RepairScope getScope(Collection<GraphElement> changes) {
-		RepairScope scope = new RepairScope();
+
+	/**
+	 * Checks if the set of changes contains at least one abstract repair.
+	 * 
+	 * @param changes
+	 *            The set of changes to test
+	 * @return <code>true</code> if the complement rule is a potential repair;
+	 *         <code>false</code> otherwise.
+	 */
+	public boolean filter(Collection<GraphElement> changes) {
 
 		for (GraphElement change : changes) {
 
 			// Abstract repairs consider only edges and attributes:
 			if (change instanceof Edge) {
-				EClass sourceContextType = ((Edge) change).getSource().getType();
 				EReference referenceType = ((Edge) change).getType();
-
+				EClass sourceContextType = ((Edge) change).getSource().getType();
+				boolean strictContextType = isStrictMatchingType(((Edge) change).getSource());
+					
 				// Delete:
 				if (change.getGraph().isLhs()) {
-					isRepair(RepairType.DELETE, sourceContextType, referenceType, change, scope);
-					
+					if (isRepair(RepairType.DELETE, referenceType, sourceContextType, strictContextType)) {
+						return true;
+					}
+
 					// Repair which deletes the root element of a validation:
 					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
 						EClass targetContextType = ((Edge) change).getTarget().getType();
-						isRepair(RepairType.DELETE, targetContextType, referenceType, change, scope);
+						boolean strictTargetContextType = isStrictMatchingType(((Edge) change).getTarget());
+
+						if (isRepair(RepairType.DELETE, referenceType, targetContextType, strictTargetContextType)) {
+							return true;
+						}
 					}
 				}
 
 				// Create:
 				else if (change.getGraph().isRhs()) {
-					isRepair(RepairType.CREATE, sourceContextType, referenceType, change, scope);
+					if (isRepair(RepairType.CREATE, referenceType, sourceContextType, strictContextType)) {
+						return true;
+					}
 				}
 
 				else {
@@ -314,12 +263,91 @@ public class RepairActionFilter {
 			}
 			
 			else if (change instanceof Attribute) {
-				EClass contextType = ((Attribute) change).getNode().getType();
 				EAttribute attributeType = ((Attribute) change).getType();
-				isRepair(RepairType.MODIFY, contextType, attributeType, change, scope);
+				EClass contextType = ((Attribute) change).getNode().getType();
+				boolean strictContextType = isStrictMatchingType(((Attribute) change).getNode());
+				
+				if (isRepair(RepairType.MODIFY, attributeType, contextType, strictContextType)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+	
+	public RepairScope getScope(Collection<GraphElement> changes) {
+		RepairScope scope = new RepairScope();
+
+		for (GraphElement change : changes) {
+
+			// Abstract repairs consider only edges and attributes:
+			if (change instanceof Edge) {
+				EReference referenceType = ((Edge) change).getType();
+				EClass sourceContextType = ((Edge) change).getSource().getType();
+				boolean strictContextType = isStrictMatchingType(((Edge) change).getSource());
+
+				// Delete:
+				if (change.getGraph().isLhs()) {
+					buildScope(RepairType.DELETE, referenceType, sourceContextType, strictContextType, change, scope);
+					
+					// Repair which deletes the root element of a validation:
+					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
+						EClass targetContextType = ((Edge) change).getTarget().getType();
+						boolean strictTargetContextType = isStrictMatchingType(((Edge) change).getTarget());
+						
+						buildScope(RepairType.DELETE, referenceType, targetContextType, strictTargetContextType, change, scope);
+					}
+				}
+
+				// Create:
+				else if (change.getGraph().isRhs()) {
+					buildScope(RepairType.CREATE, referenceType, sourceContextType, strictContextType, change, scope);
+				}
+
+				else {
+					assert false : "We should never get here...!";
+				}
+			}
+			
+			else if (change instanceof Attribute) {
+				EAttribute attributeType = ((Attribute) change).getType();
+				EClass contextType = ((Attribute) change).getNode().getType();
+				boolean strictContextType = isStrictMatchingType(((Attribute) change).getNode());
+				
+				buildScope(RepairType.MODIFY, attributeType, contextType, strictContextType, change, scope);
 			}
 		}
 
 		return scope;
+	}
+	
+	private void buildScope(
+			RepairType type, EStructuralFeature feature, EClass contextType, boolean strict,
+			GraphElement change, RepairScope scope) {
+		
+		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairs.get(feature);
+
+		if (repairsPerMetaClass != null) {
+			for (List<RepairAction> repairsPerObject : repairsPerMetaClass.values()) {
+				for (RepairAction repair : repairsPerObject) {
+					if (repair.getType().equals(RepairType.MODIFY) || repair.getType().equals(type)) {
+						if (repair.getFeature().equals(feature)) {
+							EClass repairContextType = repair.getContext().eClass();
+							
+							if (!strict || contextType.equals(repairContextType)) {
+								if (strict || MatchingHelper.isAssignableTo(repairContextType, contextType)) {
+									scope.add(change, repair.getContext());
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private boolean isStrictMatchingType(Node node) {
+		return HenshinRuleAnalysisUtilEx.isCreationNode(node);
 	}
 }
