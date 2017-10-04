@@ -77,11 +77,11 @@ public class InconsistencyTrace {
 	}
 	
 	public String getName() {
-		return EvaluationUtil.getValidationID(validationErrorCurrentModel);
+		return EvaluationUtil.getValidationID(validationErrorIntroducedModel);
 	}
 	
 	public IConstraint getConsistencyRule(List<IConstraint> consistencyRules) {
-		return EvaluationUtil.getConsistencyRule(validationErrorCurrentModel, consistencyRules);
+		return EvaluationUtil.getConsistencyRule(validationErrorIntroducedModel, consistencyRules);
 	}
 	
 	// historical:
