@@ -53,6 +53,8 @@ public class Get extends Function {
 			if (context.getValue() != null) {
 				value = getFeature(context.getValue(), feature);
 				scope.addElement(value);
+			} else {
+				value = null;
 			}
 		}
 
