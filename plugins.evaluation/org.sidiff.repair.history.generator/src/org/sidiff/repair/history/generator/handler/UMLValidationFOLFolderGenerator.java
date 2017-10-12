@@ -43,7 +43,7 @@ public class UMLValidationFOLFolderGenerator extends AbstractHandler implements 
 						
 						DifferenceSettings differenceSettings = SettingsUtil.getDefaultDifferenceSettings();
 						
-						IMatcher matcher = MatchingUtils.getMatcherByKey("org.sidiff.matcher.adapter.emfcompare.EMFCompareMatcherAdapter");
+						IMatcher matcher = MatchingUtils.getMatcherByKey("EMFCompareMatcherAdapter");
 						ITechnicalDifferenceBuilder builder = TechnicalDifferenceUtils.getTechnicalDifferenceBuilder("org.sidiff.uml2v4.difference.technical.TechnicalDifferenceBuilderUML");
 						
 						differenceSettings.setCorrespondencesService(new MatchingModelCorrespondences());
