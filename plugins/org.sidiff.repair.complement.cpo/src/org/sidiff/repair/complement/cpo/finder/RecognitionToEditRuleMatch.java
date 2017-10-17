@@ -27,10 +27,10 @@ import org.sidiff.difference.rulebase.RecognitionRule;
 import org.sidiff.difference.rulebase.Trace;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.rulebase.EditRule;
-import org.sidiff.repair.api.matching.EOAttributeMatch;
-import org.sidiff.repair.api.matching.EOEdgeMatch;
-import org.sidiff.repair.api.matching.EOMatch;
-import org.sidiff.repair.api.matching.EONodeSingleMatch;
+import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
+import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
+import org.sidiff.repair.complement.matching.RecognitionMatch;
+import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
 
 public class RecognitionToEditRuleMatch {
 
@@ -40,11 +40,11 @@ public class RecognitionToEditRuleMatch {
 		this.difference = difference;
 	}
 
-	public List<EOMatch> createEditRuleMatch(EditRule editRule, Rule editRuleUnit, Match rrMatch) {
+	public List<RecognitionMatch> createEditRuleMatch(EditRule editRule, Rule editRuleUnit, Match rrMatch) {
 		// NOTE: Since this is complete match we can derive the edge matchings from the node matchings!
 		
 		// Create edit-operation match:
-		List<EOMatch> editRuleMatch = new ArrayList<>();
+		List<RecognitionMatch> editRuleMatch = new ArrayList<>();
 		Set<Node> donePreserveNodes = new HashSet<>();
 		
 		Map<Node, Node> eo2rrTraceA = getEdit2RecognitionTraceA(editRule);
@@ -103,22 +103,22 @@ public class RecognitionToEditRuleMatch {
 	}
 	
 	private void createDeleteNodeMatch(
-			List<EOMatch> eoMatch, Node eoNode, 
+			List<RecognitionMatch> eoMatch, Node eoNode, 
 			Match rrMatch, Map<Node, Node> eo2rrTraceA, Map<Node, Node> eo2rrTraceB) {
 		
 		EObject matchA = rrMatch.getNodeTarget(eo2rrTraceA.get(eoNode));
-		EONodeSingleMatch deleteMatch = new EONodeSingleMatch(Type.DELETE, eoNode);
+		RecognitionNodeSingleMatch deleteMatch = new RecognitionNodeSingleMatch(Type.DELETE, eoNode);
 		deleteMatch.setModelAElement(matchA);
 		eoMatch.add(deleteMatch);
 		
 		// EO-Delete-Edges:
 		for (Edge outgoing : eoNode.getOutgoing()) {
-			EOEdgeMatch eoEdgeMatch = createDeleteEdgeMatch(rrMatch, outgoing, eo2rrTraceA);
+			RecognitionEdgeMatch eoEdgeMatch = createDeleteEdgeMatch(rrMatch, outgoing, eo2rrTraceA);
 			eoMatch.add(eoEdgeMatch);
 		}
 	}
 	
-	private EOEdgeMatch createDeleteEdgeMatch(Match rrMatch, Edge eoEdge, Map<Node, Node> eo2rrTraceA) {
+	private RecognitionEdgeMatch createDeleteEdgeMatch(Match rrMatch, Edge eoEdge, Map<Node, Node> eo2rrTraceA) {
 		EObject srcMatchA = rrMatch.getNodeTarget(eo2rrTraceA.get(eoEdge.getSource()));
 		EObject tgtMatchA = rrMatch.getNodeTarget(eo2rrTraceA.get(eoEdge.getTarget()));
 		
@@ -127,7 +127,7 @@ public class RecognitionToEditRuleMatch {
 		EObject srcMatchB = difference.getCorrespondingObjectInB(srcMatchA);
 		EObject tgtMatchB = difference.getCorrespondingObjectInB(tgtMatchA);
 
-		EOEdgeMatch deleteMatch = new EOEdgeMatch(Type.DELETE, eoEdge);
+		RecognitionEdgeMatch deleteMatch = new RecognitionEdgeMatch(Type.DELETE, eoEdge);
 		deleteMatch.setSrcModelAElement(srcMatchA);
 		deleteMatch.setTgtModelAElement(tgtMatchA);
 		deleteMatch.setSrcModelBElement(srcMatchB);
@@ -137,22 +137,22 @@ public class RecognitionToEditRuleMatch {
 	}
 	
 	private void createCreateNodeMatch(
-			List<EOMatch> eoMatch, Node eoNode, 
+			List<RecognitionMatch> eoMatch, Node eoNode, 
 			Match rrMatch, Map<Node, Node> eo2rrTraceA, Map<Node, Node> eo2rrTraceB) {
 		
 		EObject matchB = rrMatch.getNodeTarget(eo2rrTraceB.get(eoNode));
-		EONodeSingleMatch createMatch = new EONodeSingleMatch(Type.CREATE, eoNode);
+		RecognitionNodeSingleMatch createMatch = new RecognitionNodeSingleMatch(Type.CREATE, eoNode);
 		createMatch.setModelBElement(matchB);
 		eoMatch.add(createMatch);
 		
 		// EO-Create-Edges:
 		for (Edge outgoing : eoNode.getOutgoing()) {
-			EOEdgeMatch eoEdgeMatch = createCreateEdgeMatch(rrMatch, outgoing, eo2rrTraceB);
+			RecognitionEdgeMatch eoEdgeMatch = createCreateEdgeMatch(rrMatch, outgoing, eo2rrTraceB);
 			eoMatch.add(eoEdgeMatch);
 		}
 	}
 	
-	private EOEdgeMatch createCreateEdgeMatch(Match rrMatch, Edge eoEdge, Map<Node, Node> eo2rrTraceB) {
+	private RecognitionEdgeMatch createCreateEdgeMatch(Match rrMatch, Edge eoEdge, Map<Node, Node> eo2rrTraceB) {
 		EObject srcMatchB = rrMatch.getNodeTarget(eo2rrTraceB.get(tryLHS(eoEdge.getSource())));
 		EObject tgtMatchB = rrMatch.getNodeTarget(eo2rrTraceB.get(tryLHS(eoEdge.getTarget())));
 		
@@ -161,7 +161,7 @@ public class RecognitionToEditRuleMatch {
 		EObject srcMatchA = difference.getCorrespondingObjectInA(srcMatchB);
 		EObject tgtMatchA = difference.getCorrespondingObjectInA(tgtMatchB);
 		
-		EOEdgeMatch createMatch = new EOEdgeMatch(Type.CREATE, eoEdge);
+		RecognitionEdgeMatch createMatch = new RecognitionEdgeMatch(Type.CREATE, eoEdge);
 		createMatch.setSrcModelAElement(srcMatchA);
 		createMatch.setTgtModelAElement(tgtMatchA);
 		createMatch.setSrcModelBElement(srcMatchB);
@@ -181,7 +181,7 @@ public class RecognitionToEditRuleMatch {
 	}
 	
 	private void createPreserveNodeMatch(
-			List<EOMatch> eoMatch, Node eoNode, 
+			List<RecognitionMatch> eoMatch, Node eoNode, 
 			Match rrMatch, Map<Node, Node> eo2rrTraceA, Map<Node, Node> eo2rrTraceB) {
 		
 		// NOTE: The trace of a preserve node is (normally) be saved as LHS node trace.
@@ -199,7 +199,7 @@ public class RecognitionToEditRuleMatch {
 		}
 		
 		// Matching in model B found:
-		EONodeSingleMatch preserveMatch = new EONodeSingleMatch(Type.PRESERVE, eoNode); 
+		RecognitionNodeSingleMatch preserveMatch = new RecognitionNodeSingleMatch(Type.PRESERVE, eoNode); 
 		preserveMatch.setModelAElement(matchA);
 		preserveMatch.setModelBElement(matchB);
 		eoMatch.add(preserveMatch);
@@ -207,13 +207,13 @@ public class RecognitionToEditRuleMatch {
 		// Create-Attribute:
 		for (Attribute attribute : getChangingAttributes(getLHS(eoNode), getRHS(eoNode))) {
 			Object value = matchB.eGet(attribute.getType());
-			eoMatch.add(new EOAttributeMatch(attribute, matchB, value));
+			eoMatch.add(new RecognitionAttributeMatch(attribute, matchB, value));
 		}
 		
 		// EO-Delete-Edges:
 		for (Edge outgoingLHS : getLHS(eoNode).getOutgoing()) {
 			if (isDeletionEdge(outgoingLHS)) {
-				EOEdgeMatch eoEdgeMatch = createDeleteEdgeMatch(rrMatch, outgoingLHS, eo2rrTraceA);
+				RecognitionEdgeMatch eoEdgeMatch = createDeleteEdgeMatch(rrMatch, outgoingLHS, eo2rrTraceA);
 				
 				if (eoEdgeMatch != null) {
 					eoMatch.add(eoEdgeMatch);
@@ -224,7 +224,7 @@ public class RecognitionToEditRuleMatch {
 		// EO-Create-Edges:
 		for (Edge outgoingRHS : getRHS(eoNode).getOutgoing()) {
 			if (isCreationEdge(outgoingRHS)) {
-				EOEdgeMatch eoEdgeMatch = createCreateEdgeMatch(rrMatch, outgoingRHS, eo2rrTraceB);
+				RecognitionEdgeMatch eoEdgeMatch = createCreateEdgeMatch(rrMatch, outgoingRHS, eo2rrTraceB);
 				
 				if (eoEdgeMatch != null) {
 					eoMatch.add(eoEdgeMatch);
