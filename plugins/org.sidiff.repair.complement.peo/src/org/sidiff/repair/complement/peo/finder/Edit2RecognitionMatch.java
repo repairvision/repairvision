@@ -27,11 +27,11 @@ import org.sidiff.editrule.partialmatcher.pattern.graph.ChangePatternRemoveObjec
 import org.sidiff.editrule.partialmatcher.pattern.graph.ChangePatternRemoveReference;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.IMatching;
-import org.sidiff.repair.api.matching.EOAttributeMatch;
-import org.sidiff.repair.api.matching.EOEdgeMatch;
-import org.sidiff.repair.api.matching.EOMatch;
-import org.sidiff.repair.api.matching.EONodeSingleMatch;
-import org.sidiff.repair.api.matching.EOParameterMatch;
+import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
+import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
+import org.sidiff.repair.complement.matching.RecognitionMatch;
+import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
+import org.sidiff.repair.complement.matching.RecognitionParameterMatch;
 
 public class Edit2RecognitionMatch {
 
@@ -44,12 +44,12 @@ public class Edit2RecognitionMatch {
 		this.difference = difference;
 	}
 	
-	public List<EOMatch> createEditRuleMatch(RecognitionPattern recognitionPattern, IMatching matching) {
+	public List<RecognitionMatch> createEditRuleMatch(RecognitionPattern recognitionPattern, IMatching matching) {
 		Rule editRule = recognitionPattern.getEditRule();
 		
 		// Create edit-operation match:
-		List<EOMatch> editRuleMatch = new ArrayList<>();
-		Map<Parameter, EOParameterMatch> parameters = new HashMap<>();
+		List<RecognitionMatch> editRuleMatch = new ArrayList<>();
+		Map<Parameter, RecognitionParameterMatch> parameters = new HashMap<>();
 		
 		// TODO: EO-Preserve-Nodes:
 
@@ -63,7 +63,7 @@ public class Edit2RecognitionMatch {
 
 				if (change != null) {
 					Node eoHenshinNode = ((ChangePatternAddObject) changePattern).getNode().getEditRuleNode();
-					EONodeSingleMatch createMatch = new EONodeSingleMatch(Type.CREATE, eoHenshinNode);
+					RecognitionNodeSingleMatch createMatch = new RecognitionNodeSingleMatch(Type.CREATE, eoHenshinNode);
 					createMatch.setModelBElement(change.getObj());
 					editRuleMatch.add(createMatch);
 					
@@ -77,7 +77,7 @@ public class Edit2RecognitionMatch {
 
 				if (change != null) {
 					Node eoHenshinNode = ((ChangePatternRemoveObject) changePattern).getNode().getEditRuleNode();
-					EONodeSingleMatch deleteMatch = new EONodeSingleMatch(Type.DELETE, eoHenshinNode);
+					RecognitionNodeSingleMatch deleteMatch = new RecognitionNodeSingleMatch(Type.DELETE, eoHenshinNode);
 					deleteMatch.setModelBElement(change.getObj());
 					editRuleMatch.add(deleteMatch);
 					
@@ -91,7 +91,7 @@ public class Edit2RecognitionMatch {
 				AddReference change = (AddReference) matching.getFirstMatch(changePattern.getChangeNodePattern());
 				
 				if (change != null) {
-					EOEdgeMatch createMatch = new EOEdgeMatch(Type.CREATE, eoHenshinEdge);
+					RecognitionEdgeMatch createMatch = new RecognitionEdgeMatch(Type.CREATE, eoHenshinEdge);
 					createMatch.setSrcModelBElement(change.getSrc());
 					createMatch.setTgtModelBElement(change.getTgt());
 					editRuleMatch.add(createMatch);
@@ -112,7 +112,7 @@ public class Edit2RecognitionMatch {
 				RemoveReference change = (RemoveReference) matching.getFirstMatch(changePattern.getChangeNodePattern());
 
 				if (change != null) {
-					EOEdgeMatch deleteMatch = new EOEdgeMatch(Type.DELETE, eoHenshinEdge);
+					RecognitionEdgeMatch deleteMatch = new RecognitionEdgeMatch(Type.DELETE, eoHenshinEdge);
 					deleteMatch.setSrcModelAElement(change.getSrc());
 					deleteMatch.setTgtModelAElement(change.getTgt());
 					editRuleMatch.add(deleteMatch);
@@ -134,7 +134,7 @@ public class Edit2RecognitionMatch {
 						.getFirstMatch(attributeChange.getChangeNodePattern());
 				
 				if (avc != null) {
-					EOAttributeMatch attributeMatch = new EOAttributeMatch(
+					RecognitionAttributeMatch attributeMatch = new RecognitionAttributeMatch(
 							attributeChange.getAttribute().getRhsAttribute(), 
 							avc.getObjB(), avc.getObjB().eGet(avc.getType()));
 					
@@ -150,7 +150,7 @@ public class Edit2RecognitionMatch {
 		return editRuleMatch;
 	}
 	
-	private void findParameters(Map<Parameter, EOParameterMatch> parameters, Rule editRule, Node node, EObject match) {
+	private void findParameters(Map<Parameter, RecognitionParameterMatch> parameters, Rule editRule, Node node, EObject match) {
 		for (Attribute attribute : node.getAttributes()) {
 			Parameter parameter = editRule.getParameter(attribute.getValue());
 			
@@ -159,7 +159,7 @@ public class Edit2RecognitionMatch {
 				
 				// TODO: Check attribute value mappings here?
 				if (!parameters.containsKey(parameter)) {
-					EOParameterMatch parameterMatch = new EOParameterMatch(parameter, value);
+					RecognitionParameterMatch parameterMatch = new RecognitionParameterMatch(parameter, value);
 					parameters.put(parameter, parameterMatch);
 				}
 			}

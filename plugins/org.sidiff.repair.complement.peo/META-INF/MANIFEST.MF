@@ -13,9 +13,8 @@ Require-Bundle: org.eclipse.ui,
  org.sidiff.common.henshin;bundle-version="1.0.1",
  org.sidiff.graphpattern.common,
  org.sidiff.editrule.partialmatcher,
- org.sidiff.consistency.common,
+ org.sidiff.consistency.common;visibility:=reexport,
  org.sidiff.graphpattern.matcher
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.sidiff.repair.complement.peo.construction,
- org.sidiff.repair.complement.peo.finder
+Export-Package: org.sidiff.repair.complement.peo.finder
