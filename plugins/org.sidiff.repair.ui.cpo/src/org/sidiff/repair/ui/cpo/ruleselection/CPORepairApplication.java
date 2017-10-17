@@ -2,14 +2,13 @@ package org.sidiff.repair.ui.cpo.ruleselection;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.henshin.interpreter.RuleApplication;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
@@ -121,24 +120,24 @@ public class CPORepairApplication extends EclipseResourceRepairApplication<CPORe
 	}
 
 	@Override
-	public boolean applyRepairs(List<IRepairPlan> repair) {
-		return (repairJob.applyRepairs(repair) != null);
+	public boolean applyRepair(IRepairPlan repair, Match match) {
+		return repairJob.applyRepair(repair, match);
 	}
 	
 	@Override
-	public List<RuleApplication> undoLastRepairs() {
+	public boolean undoRepair() {
 		
 		if (repairJob == null) {
 			WorkbenchUtil.showMessage("Please start the repair calculation!");
-			return null;
+			return false;
 		}
 		
 		if (repairCalculation.getState() == Job.RUNNING) {
 			WorkbenchUtil.showMessage("Please wait for the repair calculation!");
-			return null;
+			return false;
 		}
 		
-		return repairJob.undoLastRepairs();
+		return repairJob.undoRepair();
 	}
 
 	public IResource removeSubEditRule(IResource selection) {
