@@ -6,14 +6,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
@@ -26,12 +25,10 @@ import org.sidiff.editrule.partialmatcher.scope.RepairActionFilter;
 import org.sidiff.editrule.partialmatcher.scope.RepairScope;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
-import org.sidiff.repair.api.matching.EditOperationMatching;
 import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.construction.ComplementRule;
-import org.sidiff.repair.complement.peo.construction.SettingAttributeFilter;
 import org.sidiff.repair.complement.peo.finder.ComplementFinder;
-import org.sidiff.repair.complement.repair.RepairOperation;
+import org.sidiff.repair.complement.repair.RepairPlan;
 
 /**
  * API for the repair engine functions.
@@ -143,7 +140,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		complementFinder.setSaveRecognitionRule(settings.saveRecognitionRules());
 		complementFinder.start();
 		
-		Map<Rule, List<IRepairPlan>> repairs = new LinkedHashMap<>();
+		List<IRepairPlan> repairs = new ArrayList<>();
 		
 		LogTime complementMatchingTimer = new LogTime();
 		int potentialEditRules = 0;
@@ -156,39 +153,36 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 			RepairScope scope = repairFilter.getScope(ChangePatternUtil.getPotentialChanges(editRule));
 			
 			if (!scope.isEmpty()) {
-				List<ComplementRule> complements = complementFinder.searchComplementRules(
+				List<ComplementRule> complements = complementFinder.findComplementRules(
 						settings.getMonitor(), settings.getRuntimeComlexityLog(), editRule, scope);
 				++potentialEditRules;
 				
 				for(ComplementRule complement : complements) {
-					List<IRepairPlan> repairsPerComplementRule = new ArrayList<>();
 
 					// Filter complements by abstract repairs:
 					if (complement.getComplementingChanges().size() > 0) {
 						if (repairFilter.filter(complement.getComplementingChanges())) {
 							complementMatchingTimer.start();
-							List<EditOperationMatching> preMatches = complement.getComplementMatches();
+							List<Match> complementMatches = complementFinder.findComplementMatches(complement, Collections.emptyList());
 							complementMatchingTimer.stop();
 							
-							for (EditOperationMatching preMatch : preMatches) {
-								
-								// Filter setting attributes that do not overlap with an repair action:
-								filterSettingAttributes(complement, preMatch, repairFilter);
-								
-								// Filter complement with pre-match by abstract repairs:
-								if (repairFilter.filter(complement.getComplementingChanges(), preMatch.getMatch())) {
-									repairsPerComplementRule.add(new RepairOperation(complement, preMatch));
-									++repairCount;
+							List<Match> repairMatches = new ArrayList<>(complementMatches.size());
+							
+							// Filter complement with pre-match by abstract repairs:
+							for (Match complementMatch : complementMatches) {
+								if (repairFilter.filter(complement.getComplementingChanges(), complementMatch)) {
+									repairMatches.add(complementMatch);
 								}
 							}
+							
+							if (!repairMatches.isEmpty()) {
+								repairs.add(new RepairPlan(complement, repairMatches));
+								
+								// Report complements:
+								repairCount += repairMatches.size();
+								++complementingEditRules;
+							}
 						}
-					}
-					
-					if (!repairsPerComplementRule.isEmpty()) {
-						repairs.put(complement.getComplementRule(), repairsPerComplementRule);
-						
-						// Report complements:
-						++complementingEditRules;
 					}
 				}
 			}
@@ -216,18 +210,6 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		repairJob.setValidations(repairFilter.getValidations());
 		
 		return repairJob;
-	}
-	
-	public void filterSettingAttributes(ComplementRule complementRule, 
-			EditOperationMatching prematch, RepairActionFilter repairActionFilter) {
-		
-		// Filter setting attributes that do not overlap with an repair action:
-		SettingAttributeFilter.filterSettingAttributes(
-				complementRule.getComplementRule(), prematch, repairActionFilter);
-		
-		// Clear cache:
-		complementRule.setHistoricChanges(null);
-		complementRule.setComplementingChanges(null);
 	}
 	
 	protected ComplementFinder createComplementFinder(
