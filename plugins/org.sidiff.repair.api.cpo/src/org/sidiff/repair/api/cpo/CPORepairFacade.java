@@ -136,10 +136,10 @@ public class CPORepairFacade implements IRepairFacade<CPORepairJob, CPORepairSet
 		// Calculate repairs:
 		List<IRepairPlan> repairs = new ArrayList<>();
 		
+		// Use the graph of the recognition engine or with merged imports!
+		EGraph modelBGraph = recognitionEngine.getGraphModelB();
+		
 		if (difference.getChangeSets().size() > 0) {
-			
-			// Use the graph of the recognition engine or with merged imports!
-			EGraph modelBGraph = recognitionEngine.getGraphModelB();
 			
 			// Calculate repairs:
 			long calculateComplements = System.currentTimeMillis();
@@ -176,12 +176,7 @@ public class CPORepairFacade implements IRepairFacade<CPORepairJob, CPORepairSet
 		}
 			
 		// Create repair job:
-		CPORepairJob repairJob = new CPORepairJob();
-		repairJob.setDifference(differenceResource);
-		repairJob.setModelA(modelA);
-		repairJob.setModelB(modelB);
-		repairJob.setRepairs(repairs);
-
+		CPORepairJob repairJob = new CPORepairJob(repairs, difference, modelBGraph);
 		return repairJob;
 	}
 }
