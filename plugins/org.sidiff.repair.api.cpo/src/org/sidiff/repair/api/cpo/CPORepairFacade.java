@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import org.eclipse.emf.common.util.URI;
@@ -14,7 +12,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.interpreter.EGraph;
-import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
@@ -22,16 +20,15 @@ import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.difference.lifting.recognitionengine.IRecognitionEngine;
 import org.sidiff.difference.rulebase.view.ILiftingRuleBase;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.cpo.lifting.BasicCPOLifting;
 import org.sidiff.repair.api.cpo.util.StatisticUtil;
-import org.sidiff.repair.api.matching.EditOperationMatching;
 import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.cpo.embedding.EmbeddingRulebase;
 import org.sidiff.repair.complement.cpo.finder.ComplementFinder;
-import org.sidiff.repair.complement.repair.RepairOperation;
+import org.sidiff.repair.complement.repair.RepairPlan;
 
 /**
  * API for the repair engine functions.
@@ -137,12 +134,9 @@ public class CPORepairFacade implements IRepairFacade<CPORepairJob, CPORepairSet
 		}
 		
 		// Calculate repairs:
-		Map<Rule, List<IRepairPlan>> repairs = new LinkedHashMap<>();
+		List<IRepairPlan> repairs = new ArrayList<>();
 		
 		if (difference.getChangeSets().size() > 0) {
-			
-			// Repair application:
-			EngineImpl henshinEngine = new EngineImpl();
 			
 			// Use the graph of the recognition engine or with merged imports!
 			EGraph modelBGraph = recognitionEngine.getGraphModelB();
@@ -162,19 +156,14 @@ public class CPORepairFacade implements IRepairFacade<CPORepairJob, CPORepairSet
 			long calculateRepairs = System.currentTimeMillis();
 			
 			for (Rule cpEditRule : complementFinder.getSourceRules()) {
-				List<IRepairPlan> repairsPerRule = new ArrayList<>();
-
 				for(ComplementRule complement : complementFinder.getComplementRules(cpEditRule)) {
 					if (complement.getComplementingChanges().size() > 0) {
-						for (EditOperationMatching preMatch : complement.getComplementMatches()) {
-							repairsPerRule.add(new RepairOperation(complement, preMatch));
+						List<Match> complementMatches = complementFinder.findComplementMatches(complement);
+						
+						if (!complementMatches.isEmpty()) {
+							repairs.add(new RepairPlan(complement, complementMatches));
 						}
-						complement.initialize(henshinEngine, modelBGraph);
 					}
-				}
-
-				if (!repairsPerRule.isEmpty()) {
-					repairs.put(cpEditRule, repairsPerRule);
 				}
 			}
 			
