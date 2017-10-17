@@ -24,102 +24,92 @@ import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
 import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.common.emf.ModelingUtil;
-import org.sidiff.repair.api.matching.EOAttributeMatch;
-import org.sidiff.repair.api.matching.EOEdgeMatch;
-import org.sidiff.repair.api.matching.EOMatch;
-import org.sidiff.repair.api.matching.EONodeMatch;
-import org.sidiff.repair.api.matching.EONodeMultiMatch;
-import org.sidiff.repair.api.matching.EONodeSingleMatch;
+import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
+import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
+import org.sidiff.repair.complement.matching.RecognitionMatch;
+import org.sidiff.repair.complement.matching.RecognitionNodeMatch;
+import org.sidiff.repair.complement.matching.RecognitionNodeMultiMatch;
+import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
 import org.sidiff.repair.complement.util.ComplementUtil;
 
 /**
- * Constructs the complement-rule = source-rule (-) partial-edit-rule-match
+ * Constructs the complement-rule = recognized-rule (-) partial-edit-rule-match
  * 
  * @author Manuel Ohrndorf
  */
-public abstract class ComplementConstructor {
-
-	protected Rule sourceRule;
-	
-	public ComplementConstructor(Rule sourceRule) {
-		this.sourceRule = sourceRule;
-	}
+public class ComplementConstructor {
 	
 	/**
-	 * @param sourceRuleMatching
+	 * @param recognitionMatch
 	 *            A partial (edit-rule) matching of the partially executed
 	 *            source-rule.
 	 * @return The rule which complements the partial partially executed
 	 *         source-rule or <code>null</code> if the complement-rule could not
 	 *         be constructed (e.g. dangling edges, no remaining changes).
 	 */
-	public ComplementRule createComplementRule(List<EOMatch> sourceRuleMatching) {
+	public ComplementRule createComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch) {
 
 		long deriveComplements = System.currentTimeMillis();
 		
 		// Derive complement rule:
-		ComplementRule complement = deriveComplementRule(sourceRuleMatching); 
+		ComplementRule complement = deriveComplementRule(recognizedRule, recognitionMatch); 
 		
 		if (DebugUtil.statistic) {
 			System.out.println("########## Derive Complement: " + (System.currentTimeMillis() - deriveComplements) + "ms");
 		}
 		
-		if (complement != null) {
-			complement.setSourceMatch(sourceRuleMatching);
-		}
-		
 		return complement;
 	}
 	
-	protected ComplementRule deriveComplementRule(Collection<EOMatch> sourceRuleMatching) {
+	protected ComplementRule deriveComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch) {
 
 		// Create copy of the source rule:
-		Map<EObject, EObject> copyTrace = ModelingUtil.deepCopy(sourceRule);
-		Rule complementRule = (Rule) copyTrace.get(sourceRule);
+		Map<EObject, EObject> copyTrace = ModelingUtil.deepCopy(recognizedRule);
+		Rule complementRule = (Rule) copyTrace.get(recognizedRule);
 
 		// Initialize complement rule:
-		ComplementRule complement = createComplementRule(sourceRule, complementRule);
+		ComplementRule complement = new ComplementRule(recognizedRule, recognitionMatch, complementRule);
 
 		// Save trace [Source -> Complement]:
-		for (Node sourceNode : sourceRule.getLhs().getNodes()) {
+		for (Node sourceNode : recognizedRule.getLhs().getNodes()) {
 			complement.addTrace(sourceNode, (Node) copyTrace.get(sourceNode));
 		}
 		
-		for (Node sourceNode : sourceRule.getRhs().getNodes()) {
+		for (Node sourceNode : recognizedRule.getRhs().getNodes()) {
 			complement.addTrace(sourceNode, (Node) copyTrace.get(sourceNode));
 		}
 		
 		// Substitute already executed edges << delete >> edges:
-		if (!substituteDeleteEdges(sourceRuleMatching, copyTrace)) {
+		if (!substituteDeleteEdges(recognitionMatch, copyTrace)) {
 			return null;
 		}
 		
 		// Substitute already executed << delete >> nodes:
 		// NOTE: Remove << delete >> edges before removing << delete >> nodes!
-		if (!substituteDeleteNodes(sourceRuleMatching, copyTrace, complement)) {
+		if (!substituteDeleteNodes(recognitionMatch, copyTrace, complement)) {
 			return null;
 		}
 		
 		// Substitute already executed << create >> nodes:
-		if (!substituteCreateNodes(sourceRuleMatching, copyTrace)) {
+		if (!substituteCreateNodes(recognitionMatch, copyTrace)) {
 			return null;
 		}
 		
 		// Substitute already executed edges << create >> edges:
 		// NOTE: Make << create >> nodes << preserve >> before making << create >> edges << preserve >>!
 		// NOTE: << create >> target/source nodes are implicitly set to << preserve >> 
-		if (!substituteCreateEdges(sourceRuleMatching, copyTrace)) {
+		if (!substituteCreateEdges(recognitionMatch, copyTrace)) {
 			return null;
 		}
 		
 		// Substitute already executed << create >> attributes:
-		if (!substituteAttributeValueChanges(sourceRuleMatching, copyTrace)) {
+		if (!substituteAttributeValueChanges(recognitionMatch, copyTrace)) {
 			return null;
 		}
 		
 		// Check for << preserve >> nodes matched in A / not matched in B:
 		// NOTE: Sub: Remove Transition Target - Source: Remove-Transition vs. Remove-Transition-Loop
-		if (!reduceContext(sourceRuleMatching, copyTrace, complement)) {
+		if (!reduceContext(recognitionMatch, copyTrace, complement)) {
 			return null;
 		}
 		
@@ -131,12 +121,12 @@ public abstract class ComplementConstructor {
 		return complement;
 	}
 
-	protected boolean substituteDeleteEdges(Collection<EOMatch> sourceRuleMatching, Map<EObject, EObject> copyTrace) {
+	protected boolean substituteDeleteEdges(Collection<RecognitionMatch> recognitionMatch, Map<EObject, EObject> copyTrace) {
 		
 		// Substitute already executed edges << delete >> edges:
-		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
-			if (sourceRuleMatch instanceof EOEdgeMatch) {
-				EOEdgeMatch sourceEdgeMatch = (EOEdgeMatch) sourceRuleMatch;
+		for (RecognitionMatch sourceRuleMatch : recognitionMatch) {
+			if (sourceRuleMatch instanceof RecognitionEdgeMatch) {
+				RecognitionEdgeMatch sourceEdgeMatch = (RecognitionEdgeMatch) sourceRuleMatch;
 				
 				Edge sourceEdge = sourceEdgeMatch.getEdge();
 				Edge complementEdge = (Edge) copyTrace.get(sourceEdge);
@@ -154,12 +144,12 @@ public abstract class ComplementConstructor {
 		return true;
 	}
 
-	protected boolean substituteCreateNodes(Collection<EOMatch> sourceRuleMatching,  Map<EObject, EObject> copyTrace) {
+	protected boolean substituteCreateNodes(Collection<RecognitionMatch> recognitionMatch,  Map<EObject, EObject> copyTrace) {
 		
 		// Substitute already executed << create >> nodes:
-		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
-			if (sourceRuleMatch instanceof EONodeMatch) {
-				EONodeMatch sourceNodeMatch = (EONodeMatch) sourceRuleMatch;
+		for (RecognitionMatch sourceRuleMatch : recognitionMatch) {
+			if (sourceRuleMatch instanceof RecognitionNodeMatch) {
+				RecognitionNodeMatch sourceNodeMatch = (RecognitionNodeMatch) sourceRuleMatch;
 				
 				Node sourceNode = sourceNodeMatch.getNode();
 				Node complementNode = (Node) copyTrace.get(sourceNode);
@@ -181,13 +171,13 @@ public abstract class ComplementConstructor {
 		return true;
 	}
 
-	protected boolean substituteDeleteNodes(Collection<EOMatch> sourceRuleMatching, 
+	protected boolean substituteDeleteNodes(Collection<RecognitionMatch> recognitionMatch, 
 			Map<EObject, EObject> copyTrace, ComplementRule complement) {
 		
 		// Substitute already executed << delete >> nodes:
-		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
-			if (sourceRuleMatch instanceof EONodeMatch) {
-				EONodeMatch sourceNodeMatch = (EONodeMatch) sourceRuleMatch;
+		for (RecognitionMatch sourceRuleMatch : recognitionMatch) {
+			if (sourceRuleMatch instanceof RecognitionNodeMatch) {
+				RecognitionNodeMatch sourceNodeMatch = (RecognitionNodeMatch) sourceRuleMatch;
 				
 				Node sourceNode = sourceNodeMatch.getNode();
 				Node complementNode = (Node) copyTrace.get(sourceNode);
@@ -200,7 +190,8 @@ public abstract class ComplementConstructor {
 					if (!complementNode.getIncoming().isEmpty() || !complementNode.getOutgoing().isEmpty()) {
 						
 						if (DebugUtil.isActive) {
-							LogUtil.log(LogEvent.NOTICE, "Dangling Edges: " + complementNode + "\n  (" + sourceRule + ")");
+							LogUtil.log(LogEvent.NOTICE, "Dangling Edges: " + complementNode 
+									+ "\n  (" + complementNode.getGraph().getRule() + ")");
 						}
 						
 						return false;
@@ -216,12 +207,12 @@ public abstract class ComplementConstructor {
 		return true;
 	}
 
-	protected boolean substituteCreateEdges(Collection<EOMatch> sourceRuleMatching, Map<EObject, EObject> copyTrace) {
+	protected boolean substituteCreateEdges(Collection<RecognitionMatch> recognitionMatch, Map<EObject, EObject> copyTrace) {
 		
 		// Substitute already executed edges << create >> edges:
-		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
-			if (sourceRuleMatch instanceof EOEdgeMatch) {
-				EOEdgeMatch sourceEdgeMatch = (EOEdgeMatch) sourceRuleMatch;
+		for (RecognitionMatch sourceRuleMatch : recognitionMatch) {
+			if (sourceRuleMatch instanceof RecognitionEdgeMatch) {
+				RecognitionEdgeMatch sourceEdgeMatch = (RecognitionEdgeMatch) sourceRuleMatch;
 				
 				Edge sourceEdge = sourceEdgeMatch.getEdge();
 				Edge complementEdge = (Edge) copyTrace.get(sourceEdge);
@@ -242,12 +233,12 @@ public abstract class ComplementConstructor {
 		return true;
 	}
 	
-	protected boolean substituteAttributeValueChanges(Collection<EOMatch> sourceRuleMatching, Map<EObject, EObject> copyTrace) {
+	protected boolean substituteAttributeValueChanges(Collection<RecognitionMatch> recognitionMatch, Map<EObject, EObject> copyTrace) {
 		
 		// Substitute already executed << create >> attributes:
-		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
-			if (sourceRuleMatch instanceof EOAttributeMatch) {
-				Attribute sourceAttribute = ((EOAttributeMatch) sourceRuleMatch).getAttribute();
+		for (RecognitionMatch sourceRuleMatch : recognitionMatch) {
+			if (sourceRuleMatch instanceof RecognitionAttributeMatch) {
+				Attribute sourceAttribute = ((RecognitionAttributeMatch) sourceRuleMatch).getAttribute();
 				Attribute complementAttribute = (Attribute) copyTrace.get(sourceAttribute);
 				
 				// Transform create-attribute to preserve-attribute:
@@ -259,18 +250,18 @@ public abstract class ComplementConstructor {
 		return true;
 	}
 
-	protected boolean reduceContext(Collection<EOMatch> sourceRuleMatching, 
+	protected boolean reduceContext(Collection<RecognitionMatch> recognitionMatch, 
 			Map<EObject, EObject> copyTrace, ComplementRule complement) {
 		
 		// Check for << preserve >> nodes matched in A / not matched in B:
 		// NOTE: Sub: Remove Transition Target - Source: Remove-Transition vs. Remove-Transition-Loop
-		for (EOMatch sourceRuleMatch : sourceRuleMatching) {
+		for (RecognitionMatch sourceRuleMatch : recognitionMatch) {
 			
 			// Node matching: No matching in model B?
-			if (((sourceRuleMatch instanceof EONodeSingleMatch) && (((EONodeSingleMatch) sourceRuleMatch).getModelBElement() == null))
-				|| ((sourceRuleMatch instanceof EONodeMultiMatch) && (((EONodeMultiMatch) sourceRuleMatch).getModelBElements().isEmpty()))) {
+			if (((sourceRuleMatch instanceof RecognitionNodeSingleMatch) && (((RecognitionNodeSingleMatch) sourceRuleMatch).getModelBElement() == null))
+				|| ((sourceRuleMatch instanceof RecognitionNodeMultiMatch) && (((RecognitionNodeMultiMatch) sourceRuleMatch).getModelBElements().isEmpty()))) {
 
-				EONodeMatch sourceNodeMatch = (EONodeMatch) sourceRuleMatch;
+				RecognitionNodeMatch sourceNodeMatch = (RecognitionNodeMatch) sourceRuleMatch;
 				
 				Node sourceNode = sourceNodeMatch.getNode();
 				Node complementNode = (Node) copyTrace.get(sourceNode);
@@ -293,8 +284,8 @@ public abstract class ComplementConstructor {
 			}
 			
 			// Edge matching (source, target): No matching in model B?
-			else if (sourceRuleMatch instanceof EOEdgeMatch) {
-				EOEdgeMatch sourceEdgeMatch = (EOEdgeMatch) sourceRuleMatch;
+			else if (sourceRuleMatch instanceof RecognitionEdgeMatch) {
+				RecognitionEdgeMatch sourceEdgeMatch = (RecognitionEdgeMatch) sourceRuleMatch;
 				
 				if (sourceEdgeMatch.getSrcModelBElement() == null) {
 					Node sourceSrcNode = sourceEdgeMatch.getEdge().getSource();
@@ -387,6 +378,4 @@ public abstract class ComplementConstructor {
 		
 		return false;
 	}
-	
-	protected abstract ComplementRule createComplementRule(Rule sourceRule, Rule complementRule);
 }

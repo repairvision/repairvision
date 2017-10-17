@@ -16,10 +16,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.henshin.interpreter.EGraph;
-import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
-import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
@@ -29,29 +25,40 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
-import org.sidiff.repair.api.matching.EOActionMatch;
-import org.sidiff.repair.api.matching.EOAttributeMatch;
-import org.sidiff.repair.api.matching.EOEdgeMatch;
-import org.sidiff.repair.api.matching.EOMatch;
-import org.sidiff.repair.api.matching.EONodeMatch;
-import org.sidiff.repair.api.matching.EditOperationMatching;
+import org.sidiff.repair.complement.matching.RecognitionActionMatch;
+import org.sidiff.repair.complement.matching.RecognitionMatch;
 
 /**
- * Wraps a complement rule for a given partially executed source rule.
+ * Stores the trace of a complement rule for a given partially executed edit rule.
  * 
  * @author Manuel Ohrndorf
  */
-public abstract class ComplementRule {
+public class ComplementRule {
 
 	/**
-	 * The origin of the complement-rule.
+	 * The recognized partially executed edit rule.
 	 */
-	protected Rule sourceRule;
+	protected Rule recognizedRule;
 	
 	/**
-	 * The complement rule for the partially executed source rule.
+	 * All already executed changes of the source rule.
+	 */
+	private List<GraphElement> recognizedChanges;
+	
+	/**
+	 * The (partial) match of the recognition rule.
+	 */
+	private List<RecognitionMatch> recognitionMatch;
+	
+	/**
+	 * The complement rule for the partially executed edit rule.
 	 */
 	protected Rule complementRule;
+	
+	/**
+	 * All changes that will be executed by the complementing rule.
+	 */
+	private List<GraphElement> complementingChanges;
 	
 	/**
 	 * LHS-Source -> LHS-Complement (forbid, require)
@@ -63,49 +70,51 @@ public abstract class ComplementRule {
 	 */
 	private Map<Node, Node> rhsTrace = new HashMap<>();
 	
-	/**
-	 * All already executed changes of the source rule.
-	 */
-	private List<GraphElement> historicChanges;
-	
-	/**
-	 * All changes that will be executed by the complementing rule.
-	 */
-	private List<GraphElement> complementingChanges;
-	
-	//// Evaluation ////
-	
-	/**
-	 * The (partial) match of the source rule.
-	 */
-	private List<EOMatch> sourceMatch;
-	
-	/**
-	 * All possible (full) pre-matches for the complement rule.
-	 */
-	private List<EditOperationMatching> complementMatches;
-	
-	/**
-	 * The (Henshin) engine which applies the rules.
-	 */
-	private EngineImpl engine;
-	
-	/**
-	 * The working graph, i.e. the actual version of the model.
-	 */
-	private EGraph graph;
-	
-	public ComplementRule(Rule sourceRule, Rule complementRule) {
-		super();
-		this.sourceRule = sourceRule;
+	public ComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch, Rule complementRule) {
+		this.recognizedRule = recognizedRule;
+		this.recognitionMatch = recognitionMatch;
 		this.complementRule = complementRule;
+	}
+	
+	public Rule getRecognizedRule() {
+		return recognizedRule;
+	}
+	
+	public List<GraphElement> getRecognizedChanges() {
+		
+		if (recognizedChanges == null) {
+			recognizedChanges = recognitionMatch.stream()
+					.filter(sm -> sm instanceof RecognitionActionMatch)
+					.map(sm -> (RecognitionActionMatch) sm)
+					.map(RecognitionActionMatch::getGraphElement)
+					.collect(Collectors.toList());
+		}
+		
+		return recognizedChanges;
+	}
+	
+	public List<RecognitionMatch> getRecognitionMatch() {
+		return recognitionMatch;
+	}
+	
+	public Rule getComplementRule() {
+		return complementRule;
+	}
+	
+	public List<GraphElement> getComplementingChanges() {
+		
+		if (complementingChanges == null) {
+			complementingChanges = ChangePatternUtil.getPotentialChanges(complementRule);
+		}
+		
+		return complementingChanges;
 	}
 	
 	/**
 	 * Saves the complement-rule in the same path as the source-rule + '_complement'.
 	 */
 	public void saveComplementRule() {
-		String sourceRuleURI = EcoreUtil.getURI(sourceRule).trimFragment().trimFileExtension().toString();
+		String sourceRuleURI = EcoreUtil.getURI(recognizedRule).trimFragment().trimFileExtension().toString();
 		URI complementURI = URI.createURI(sourceRuleURI + "_complement").appendFileExtension("henshin");
 		saveComplementRule(complementURI);
 	}
@@ -118,7 +127,7 @@ public abstract class ComplementRule {
 		Resource complementResource = new ResourceSetImpl().createResource(uri);
 		
 		Module complementModule = HenshinFactory.eINSTANCE.createModule();
-		complementModule.setName(sourceRule.getModule().getName());
+		complementModule.setName(recognizedRule.getModule().getName());
 		complementModule.getUnits().add(complementRule);
 		complementResource.getContents().add(complementModule);
 		
@@ -129,184 +138,10 @@ public abstract class ComplementRule {
 		}
 	}
 	
-	/**
-	 * @param engine
-	 *            The (Henshin) engine which applies the rules.
-	 * @param graph
-	 *            The working graph, i.e. the actual version of the model.
-	 */
-	public void initialize(EngineImpl engine, EGraph graph) {
-		this.engine = engine;
-		this.graph = graph;
-	}
-	
-	/**
-	 * @return All already applied changes of the corresponding edit-rule.
-	 */
-	public List<GraphElement> getHistoricChanges() {
-		
-		if (historicChanges == null) {
-			historicChanges = sourceMatch.stream()
-					.filter(sm -> sm instanceof EOActionMatch)
-					.map(sm -> (EOActionMatch) sm)
-					.map(EOActionMatch::getGraphElement)
-					.collect(Collectors.toList());
-		}
-		
-		return historicChanges;
-	}
-	
-	/**
-	 * @param historicChanges
-	 *            All already applied changes of the corresponding edit-rule.
-	 */
-	public void setHistoricChanges(List<GraphElement> historicChanges) {
-		this.historicChanges = historicChanges;
-	}
-	
-	/**
-	 * @return All complementing changes of the corresponding edit-rule.
-	 */
-	public List<GraphElement> getComplementingChanges() {
-		
-		if (complementingChanges == null) {
-			complementingChanges = ChangePatternUtil.getPotentialChanges(complementRule);
-		}
-		
-		return complementingChanges;
-	}
-	
-	/**
-	 * @param complementingChanges
-	 *            All complementing changes of the corresponding edit-rule.
-	 */
-	public void setComplementingChanges(List<GraphElement> complementingChanges) {
-		this.complementingChanges = complementingChanges;
-	}
-	
-
-	/**
-	 * @param complementPreMatch
-	 *            The concrete complement pre-match.
-	 * 
-	 * @return <code>true</code> if the rule was successfully applied;
-	 *         <code>false</code> otherwise.
-	 */
-	public RuleApplication apply(EditOperationMatching complementPreMatch) {
-		
-		if ((engine == null) || (graph == null)) {
-			throw new RuntimeException("Initialize graph transformation engine!");
-		}
-		
-		// Apply complement rule:
-		RuleApplication application = new RuleApplicationImpl(engine);
-		application.setRule(complementRule);
-		application.setEGraph(graph);
-		application.setCompleteMatch(complementPreMatch.getMatch());
-
-		if (application.execute(null)) {
-			return application;
-		} else {
-			return null;
-		}
-	}
-	
-	//// Getter / Setter /////
-	
-	public Rule getSourceRule() {
-		return sourceRule;
-	}
-
-	public void setSourceRule(Rule sourceRule) {
-		this.sourceRule = sourceRule;
-	}
-	
-	public EOMatch getSourceMatch(GraphElement graphElement) {
-		
-		if (graphElement instanceof Node) {
-			for (EOMatch editRuleMatch : sourceMatch) {
-				if (editRuleMatch instanceof EONodeMatch) {
-					if (((EONodeMatch) editRuleMatch).getNode() == graphElement) {
-						return editRuleMatch;
-					}
-				}
-			}
-		}
-		
-		else if (graphElement instanceof Edge) {
-			for (EOMatch editRuleMatch : sourceMatch) {
-				if (editRuleMatch instanceof EOEdgeMatch) {
-					if (((EOEdgeMatch) editRuleMatch).getEdge() == graphElement) {
-						return editRuleMatch;
-					}
-				}
-			}
-		}
-		
-		else if (graphElement instanceof Attribute) {
-			for (EOMatch editRuleMatch : sourceMatch) {
-				if (editRuleMatch instanceof EOAttributeMatch) {
-					if (((EOAttributeMatch) editRuleMatch).getAttribute() == graphElement) {
-						return editRuleMatch;
-					}
-				}
-			}
-		}
-		
-		return null;
-	}
-
-	protected void setSourceMatch(List<EOMatch> sourceMatch) {
-		this.sourceMatch = sourceMatch;
-	}
-
-	public Rule getComplementRule() {
-		return complementRule;
-	}
-
-	public void setComplementRule(Rule complementRule) {
-		this.complementRule = complementRule;
-	}
-
-	/**
-	 * Calculates all possible complement match (called lazy), i.e. the
-	 * parameter values for the complementing changes.
-	 */
-	protected abstract List<EditOperationMatching> createComplementMatches(List<EOMatch> partialSourceMatch);
-
-	/**
-	 * @return all possible complement match (called lazy), i.e. the parameter
-	 *         values for the complementing changes.
-	 */
-	public List<EditOperationMatching> getComplementMatches() {
-
-		if (complementMatches == null) {
-			complementMatches = createComplementMatches(sourceMatch);
-		}
-		
-		return complementMatches;
-	}
-	
-	public EngineImpl getEngine() {
-		return engine;
-	}
-
-	public void setEngine(EngineImpl engine) {
-		this.engine = engine;
-	}
-
-	public EGraph getGraph() {
-		return graph;
-	}
-
-	public void setGraph(EGraph graph) {
-		this.graph = graph;
-	}
-	
 	//// Trace ////
 	
 	public void addTrace(Node sourceNode, Node complementNode) {
-		assert (sourceNode.getGraph().getRule() == sourceRule);
+		assert (sourceNode.getGraph().getRule() == recognizedRule);
 		assert (complementNode.getGraph().getRule() == complementRule);
 		
 		if (isRHSNode(sourceNode)) {
@@ -333,7 +168,7 @@ public abstract class ComplementRule {
 	}
 	
 	public void removeTrace(Node sourceNode) {
-		assert (sourceNode.getGraph().getRule() == sourceRule);
+		assert (sourceNode.getGraph().getRule() == recognizedRule);
 		
 		if (isRHSNode(sourceNode)) {
 			rhsTrace.remove(sourceNode);
@@ -354,7 +189,7 @@ public abstract class ComplementRule {
 	}
 	
 	public Node getTrace(Node sourceNode) {
-		assert ((sourceNode == null) ||(sourceNode.getGraph().getRule() == sourceRule));
+		assert ((sourceNode == null) ||(sourceNode.getGraph().getRule() == recognizedRule));
 		Node lhsNodeTrace = lhsTrace.get(sourceNode);
 		
 		if (lhsNodeTrace == null) {
@@ -365,7 +200,7 @@ public abstract class ComplementRule {
 	}
 	
 	public Attribute getTrace(Attribute sourceAttribute) {
-		assert ((sourceAttribute == null) ||(sourceAttribute.getGraph().getRule() == sourceRule));
+		assert ((sourceAttribute == null) ||(sourceAttribute.getGraph().getRule() == recognizedRule));
 		Node complementNode = getTrace(sourceAttribute.getNode());
 		
 		if (complementNode != null) {
@@ -376,7 +211,7 @@ public abstract class ComplementRule {
 	}
 	
 	public Edge getTrace(Edge sourceEdge) {
-		assert ((sourceEdge == null) ||(sourceEdge.getGraph().getRule() == sourceRule));
+		assert ((sourceEdge == null) ||(sourceEdge.getGraph().getRule() == recognizedRule));
 		
 		Node srcNodeTrace = null;
 		Node tgtNodeTrace = null;
