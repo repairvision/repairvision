@@ -10,6 +10,7 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
+import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.repair.api.ranking.RepairRankingComparator;
 
 /**
@@ -38,19 +39,9 @@ public class RepairJob<R extends IRepairPlan> {
 	protected RepairRankingComparator ranking;
 
 	/**
-	 * The historic model version.
-	 */
-	protected Resource modelA;
-
-	/**
-	 * The actual model version which have to be repaired.
-	 */
-	protected Resource modelB;
-
-	/**
 	 * The difference between model A and model B.
 	 */
-	protected Resource difference;
+	protected SymmetricDifference difference;
 	
 	/**
 	 * The (Henshin) engine which applies the rules.
@@ -60,14 +51,21 @@ public class RepairJob<R extends IRepairPlan> {
 	/**
 	 * The working graph, i.e. the actual version of the model.
 	 */
-	protected EGraph graph;
+	protected EGraph graphModelB;
 
 	/**
 	 * Initializes an empty repair job.
 	 */
-	public RepairJob() {
+	public RepairJob(List<R> repairs, SymmetricDifference difference, EGraph graphModelB) {
+		this.repairs = repairs;
+		this.difference = difference;
+		this.graphModelB = graphModelB;
+		
+		this.engine = new EngineImpl();
 		this.ranking = new RepairRankingComparator(this);
 	}
+
+
 
 	/**
 	 * Copies the history of applied repairs from the given repair job.
@@ -83,7 +81,7 @@ public class RepairJob<R extends IRepairPlan> {
 
 		// Apply repair:
 		RuleApplication application = new RuleApplicationImpl(engine);
-		application.setEGraph(graph);
+		application.setEGraph(graphModelB);
 		application.setRule(repair.getComplementingEditRule());
 		application.setCompleteMatch(match);
 		
@@ -141,26 +139,18 @@ public class RepairJob<R extends IRepairPlan> {
 	}
 	
 	public Resource getModelA() {
-		return modelA;
-	}
-
-	public void setModelA(Resource modelA) {
-		this.modelA = modelA;
+		return difference.getModelA();
 	}
 
 	public Resource getModelB() {
-		return modelB;
+		return difference.getModelB();
 	}
 
-	public void setModelB(Resource modelB) {
-		this.modelB = modelB;
-	}
-
-	public Resource getDifference() {
+	public SymmetricDifference getDifference() {
 		return difference;
 	}
 
-	public void setDifference(Resource difference) {
+	public void setDifference(SymmetricDifference difference) {
 		this.difference = difference;
 	}
 	
@@ -173,10 +163,10 @@ public class RepairJob<R extends IRepairPlan> {
 	}
 	
 	public EGraph getGraph() {
-		return graph;
+		return graphModelB;
 	}
 	
 	public void setGraph(EGraph graph) {
-		this.graph = graph;
+		this.graphModelB = graph;
 	}
 }
