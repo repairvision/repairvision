@@ -163,7 +163,7 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 						List<Match> matches = repair.getComplementMatches();
 						
 						if (matches.size() == 1) {
-							if (application.applyRepair(repair, matches.get(1))) {
+							if (application.applyRepair(repair, matches.get(0))) {
 								
 								// Recalculate repairs:
 								application.recalculateRepairs();
