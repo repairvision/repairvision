@@ -1,0 +1,47 @@
+package org.sidiff.repair.ui.provider.model;
+
+import org.eclipse.emf.henshin.model.GraphElement;
+
+public abstract class ActionItem implements IItemProvider {
+
+	protected Object parent;
+	
+	protected GraphElement changeAction;
+	
+	public ActionItem(Object parent, GraphElement changeAction) {
+		this.changeAction = changeAction;
+		this.parent = parent;
+	}
+
+	@Override
+	public String getText() {
+		return changeAction.toString();
+	}
+	
+	@Override
+	public Object getParent() {
+		return parent;
+	}
+
+	@Override
+	public void actionDoubleClick() {
+	}
+
+	@Override
+	public void actionSelection() {
+	}
+
+	public ChangeSetItem getChangeSetItem() {
+		Object parent = getParent(); 
+		
+		while ((parent != null) && (parent instanceof IItemProvider)) {
+			if (parent instanceof ChangeSetItem) {
+				return (ChangeSetItem) parent;
+			} else {
+				parent = ((IItemProvider) parent).getParent();
+			}
+		}
+		
+		return null;
+	}
+}

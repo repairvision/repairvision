@@ -1,10 +1,8 @@
 package org.sidiff.repair.ui.app;
 
-import java.util.List;
-
-import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.sidiff.repair.api.IRepairPlan;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.IRepairSettings;
 import org.sidiff.repair.api.RepairJob;
 
@@ -62,14 +60,16 @@ public interface IRepairApplication<J extends RepairJob<?>, F extends IRepairSet
 	/**
 	 * @param repair
 	 *            The repairs which will be applied in the given order.
+	 * @param match
+	 *            The (full) match of the complement rule.
 	 * @return <code>true</code> if everything was fine; <code>false</code> otherwise.
 	 */
-	boolean applyRepairs(List<IRepairPlan> repair);
+	boolean applyRepair(IRepairPlan repair, Match match);
 	
 	/**
-	 * @return The reverted repairs.
+	 * Reverts the last repairs.
 	 */
-	List<RuleApplication> undoLastRepairs();
+	boolean undoRepair();
 	
 	/**
 	 * Clear application state.

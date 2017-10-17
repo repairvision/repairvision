@@ -4,31 +4,11 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.ui.util.NameUtil;
-import org.sidiff.repair.api.IRepairPlan;
-import org.sidiff.repair.ui.Activator;
-import org.sidiff.repair.ui.provider.model.AttributeChange;
-import org.sidiff.repair.ui.provider.model.Change;
-import org.sidiff.repair.ui.provider.model.Container;
-import org.sidiff.repair.ui.provider.model.ContextContainer;
+import org.sidiff.repair.ui.provider.model.IItemProvider;
 
 public class RepairLabelProvider extends LabelProvider {
-
-	public static Image IMG_CHECK_MARK = Activator.getImageDescriptor("icons/check_mark.png").createImage();
-	
-	public static Image IMG_QUESTION_MARK = Activator.getImageDescriptor("icons/question_mark.png").createImage();
-	
-	public static Image IMG_REPAIR_RULE = Activator.getImageDescriptor("icons/repair_rule.png").createImage();
-	
-	public static Image IMG_MODULE = Activator.getImageDescriptor("icons/module.gif").createImage();
-	
-	public static Image IMG_ADD = Activator.getImageDescriptor("icons/add_reference.png").createImage();
-	
-	public static Image IMG_REMOVE = Activator.getImageDescriptor("icons/remove_reference.png").createImage();
 	
 	protected AdapterFactoryLabelProvider emfLabelProvider;
 	
@@ -50,32 +30,8 @@ public class RepairLabelProvider extends LabelProvider {
 	@Override
 	public Image getImage(Object element) {
 		
-		if (element instanceof Rule) {
-			return IMG_MODULE;
-		}
-		
-		else if (element instanceof ContextContainer) {
-			return emfLabelProvider.getImage(((ContextContainer) element).conext);
-		}
-		
-		if (element instanceof IRepairPlan) {
-			return IMG_REPAIR_RULE;
-		}
-		
-		else if (element instanceof Container) {
-			return ((Container) element).icon;
-		}
-		
-		else if (element instanceof Change) {
-			Change change = (Change) element;
-			
-			if (change.graphElement.getGraph().isLhs()) {
-				return IMG_REMOVE;
-			}
-			
-			else if (change.graphElement.getGraph().isRhs()) {
-				return IMG_ADD;
-			}
+		if (element instanceof IItemProvider) {
+			return ((IItemProvider) element).getIcon();
 		}
 		
 		return emfLabelProvider.getImage(element);
@@ -84,33 +40,8 @@ public class RepairLabelProvider extends LabelProvider {
 	@Override
 	public String getText(Object element) {
 		
-		if (element instanceof Rule) {
-			return NameUtil.beautifyName(((Rule) element).getName());
-		}
-		
-		else if (element instanceof ContextContainer) {
-			return "Repair Context: " + emfLabelProvider.getText(((ContextContainer) element).conext);
-		}
-		
-		else if (element instanceof IRepairPlan) {
-			IRepairPlan repair = (IRepairPlan) element;
-			
-			return "Repair "
-					+ "[" + repair.getHistoricChanges().size() + "/" + 
-					+ repair.getComplementingChanges().size() + "]";
-		}
-		
-		else if (element instanceof Container) {
-			return ((Container) element).label;
-		}
-		
-		else if (element instanceof AttributeChange) {
-			Attribute attr = ((Attribute) ((AttributeChange) element).graphElement);
-			return "Set Attribute (type: " + attr.getType().getName() + ")";
-		}
-		
-		else if (element instanceof Change) {
-			return ((Change) element).graphElement.toString();
+		if (element instanceof IItemProvider) {
+			return ((IItemProvider) element).getText();
 		}
 		
 		return emfLabelProvider.getText(element);

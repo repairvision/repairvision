@@ -1,12 +1,10 @@
 package org.sidiff.repair.ui.controls.basic;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.interpreter.RuleApplication;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -25,7 +23,6 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
-import org.sidiff.consistency.common.ui.util.NameUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
@@ -36,7 +33,7 @@ import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
 import org.sidiff.repair.ui.provider.RepairContentProvider;
 import org.sidiff.repair.ui.provider.RepairLabelProvider;
-import org.sidiff.repair.ui.provider.model.Change;
+import org.sidiff.repair.ui.provider.model.RepairPlanItem;
 
 public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends BasicRepairUI<A> {
 
@@ -76,14 +73,9 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 			public Iterator<? extends EObject> getElements(ISelection selection) {
 				Object selectedElement = ISelectionHighlightingAdapter.getFirstElement(selection);
 				
-				if (selectedElement instanceof IRepairPlan) {
-					return ((IRepairPlan) selectedElement).getRepairPreMatch()
-							.getMatch().getNodeTargets().iterator();
-				}
-				
-				else if (selectedElement instanceof Change) {
-					// FIXME: Needs a XMI-ID copy for the complement-rule!
-					return Collections.singletonList(((Change) selectedElement).graphElement).iterator();
+				if (selectedElement instanceof RepairPlanItem) {
+					return ((RepairPlanItem) selectedElement).getRepairPlan().getComplementMatches()
+							.stream().map(Match::getNodeTargets).flatMap(List::stream).iterator();
 				}
 				
 				return ISelectionHighlightingAdapter.EMPTY_ITERATOR;
@@ -116,7 +108,7 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 					} else {
 						
 						// Expand:
-						if (item instanceof IRepairPlan) {
+						if (item instanceof RepairPlanItem) {
 							viewer_repairs.expandToLevel(item, 3);
 						} else {
 							viewer_repairs.expandToLevel(item, 1);
@@ -159,30 +151,31 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		
 		// Apply repair:
 		applyRepairs = new Action() {
-			@SuppressWarnings("unchecked")
+
 			public void run() {
 				ISelection selection = viewer_repairs.getSelection();
 				
 				if (selection instanceof IStructuredSelection) {
-					List<IRepairPlan> selectedRepairs = new ArrayList<>();
-					
-					((IStructuredSelection)selection).iterator().forEachRemaining(o -> {
-						if (o instanceof IRepairPlan) {
-							selectedRepairs.add((IRepairPlan) o);
-						}
-					});
-					
-					if (!selectedRepairs.isEmpty()) {
-						if (application.applyRepairs(selectedRepairs)) {
-							
-							// TODO: Ask the user what to do!
-							// Recalculate repairs:
-							application.recalculateRepairs();
-							
-							WorkbenchUtil.showMessage("Repair successfully applied!");
+					Object selected = ((IStructuredSelection) selection).getFirstElement();
+
+					if (selected instanceof RepairPlanItem) {
+						IRepairPlan repair = ((RepairPlanItem) selected).getRepairPlan();
+						List<Match> matches = repair.getComplementMatches();
+						
+						if (matches.size() == 1) {
+							if (application.applyRepair(repair, matches.get(1))) {
+								
+								// Recalculate repairs:
+								application.recalculateRepairs();
+								
+								WorkbenchUtil.showMessage("Repair successfully applied!");
+							} else {
+								WorkbenchUtil.showMessage("Repair could not be applied!");
+							}
 						} else {
-							WorkbenchUtil.showMessage("Repair could not be applied!");
+							WorkbenchUtil.showMessage("Please specify all parameters!");
 						}
+						
 						return;
 					}
 				}
@@ -197,22 +190,13 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		// Undo repair:
 		undoRepairs = new Action() {
 			public void run() {
-				List<RuleApplication> lastRepairs = application.undoLastRepairs();
 				
-				if (lastRepairs != null) {
+				if (application.undoRepair()) {
 					
-					// TODO: Ask the user what to do!
 					// Recalculate repairs:
 					application.recalculateRepairs();
-					
-					// Show user message:
-					String rules = "";
-					
-					for (RuleApplication lastRepair : lastRepairs) {
-						rules += NameUtil.beautifyName(lastRepair.getRule().getName());
-					}
-					
-					WorkbenchUtil.showMessage("Repair ("+ rules +") successfully undone!");
+
+					WorkbenchUtil.showMessage("Repair successfully undone!");
 				} else {
 					WorkbenchUtil.showMessage("Repair could not be undone!");
 				}
