@@ -6,14 +6,13 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.sidiff.repair.Activator
 Export-Package: org.sidiff.repair.api,
  org.sidiff.repair.api.extensions,
- org.sidiff.repair.api.matching,
  org.sidiff.repair.api.ranking,
  org.sidiff.repair.api.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.henshin.interpreter;visibility:=reexport,
  org.eclipse.emf.henshin.model;visibility:=reexport,
  org.eclipse.ui,
- org.sidiff.difference.technical.api;visibility:=reexport,
- org.sidiff.consistency.common
+ org.sidiff.consistency.common,
+ org.sidiff.difference.technical.api;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

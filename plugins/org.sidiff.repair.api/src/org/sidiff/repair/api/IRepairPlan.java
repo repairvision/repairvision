@@ -2,56 +2,88 @@ package org.sidiff.repair.api;
 
 import java.util.List;
 
-import org.eclipse.emf.henshin.interpreter.RuleApplication;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.GraphElement;
+import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.repair.api.matching.EOMatch;
-import org.sidiff.repair.api.matching.EditOperationMatching;
 
 /**
- * Represents a single repair operation.
+ * Represents a single history-based repair operation.
  * 
  * @author Manuel Ohrndorf
  */
 public interface IRepairPlan {
 
 	/**
-	 * @return The corresponding partially executed edit-rule.
+	 * @return The corresponding partially executed edit rule.
 	 */
-	Rule getEditRule();
+	Rule getRecognizedEditRule();
 
 	/**
-	 * @return All already applied changes of the corresponding edit-rule.
+	 * @return All already applied changes of the corresponding edit rule.
 	 */
-	List<GraphElement> getHistoricChanges();
-
+	List<GraphElement> getRecognizedChanges();
+	
 	/**
-	 * @return All missing changes of the corresponding edit-rule.
+	 * @param node
+	 *            A LHS node of the recognized rule.
+	 * @return All recognized matchings for the given node.
 	 */
-	List<GraphElement> getComplementingChanges();
-
+	List<EObject[]> getRecognitionDomain(Node node);
+	
 	/**
-	 * @param editRuleGraphElement
-	 *            A node/edge of the edit rule.
+	 * @param recognizedGraphElement
+	 *            A node/edge of the recognized edit rule.
 	 * @return The corresponding node/edge of the complement rule.
 	 */
-	<G extends GraphElement> G getTrace(G editRuleGraphElement);
-
+	<G extends GraphElement> G getTrace(G recognizedGraphElement);
+	
 	/**
-	 * @param graphElement
-	 *            A << delete / create >> edge or a node of the source rule.
-	 * @return The corresponding edit-rule match or <code>null</code> if the
-	 *         given node/edge is a change that need to be complemented.
+	 * @return The edit rule which complements the partially executed edit rule.
 	 */
-	EOMatch getSourceMatch(GraphElement graphElement);
-
+	Rule getComplementingEditRule();
+	
 	/**
-	 * @return The pre-match of the complementing repair-rule.
+	 * @return All missing changes of the corresponding edit rule.
 	 */
-	EditOperationMatching getRepairPreMatch();
-
+	List<GraphElement> getComplementingChanges();
+	
 	/**
-	 * @return The successfully applied repair application or <code>null</code>.
+	 * @return All matchings based on the current parameter assignment.
 	 */
-	RuleApplication apply();
+	List<Match> getComplementMatches();
+	
+	/**
+	 * @param node
+	 *            A LHS node of the complement rule.
+	 * @return All possible matchings based on the current parameter assignment.
+	 */
+	List<EObject> getComplementDomain(Node node);
+	
+	/**
+	 * @return All parameters of the complement rule.
+	 */
+	List<Parameter> getParameters();
+	
+	/**
+	 * @param parameter
+	 *            The parameter of the complement rule.
+	 * @return All possible parameter values based on the current parameter assignment.
+	 */
+	List<Object> getParameterDomain(Parameter parameter);
+	
+	/**
+	 * @param parameter
+	 *            A parameter of the complement rule.
+	 * @param value
+	 *            An input value of the complement rule.
+	 */
+	void setParameterValue(Parameter parameter, Object value);
+	
+	/**
+	 * @return The parameter input.
+	 */
+	Object getParameterValue(Parameter parameter);
 }

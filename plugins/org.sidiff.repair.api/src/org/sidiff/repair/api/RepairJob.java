@@ -1,14 +1,15 @@
 package org.sidiff.repair.api;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.henshin.interpreter.EGraph;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.sidiff.repair.api.ranking.RepairRankingComparator;
 
 /**
@@ -24,12 +25,12 @@ public class RepairJob<R extends IRepairPlan> {
 	/**
 	 * History of applied repairs.
 	 */
-	protected Stack<List<RuleApplication>> repairStack = new Stack<>();
+	protected Stack<RuleApplication> repairStack = new Stack<>();
 
 	/**
-	 * All applicable repairs per CPO.
+	 * All applicable repair plans
 	 */
-	protected Map<Rule, List<R>> repairs;
+	protected List<R> repairs;
 	
 	/**
 	 * Ranking for complement rules and repairs.
@@ -50,6 +51,16 @@ public class RepairJob<R extends IRepairPlan> {
 	 * The difference between model A and model B.
 	 */
 	protected Resource difference;
+	
+	/**
+	 * The (Henshin) engine which applies the rules.
+	 */
+	protected EngineImpl engine;
+	
+	/**
+	 * The working graph, i.e. the actual version of the model.
+	 */
+	protected EGraph graph;
 
 	/**
 	 * Initializes an empty repair job.
@@ -68,60 +79,56 @@ public class RepairJob<R extends IRepairPlan> {
 		this.repairStack = repairJob.repairStack;
 	}
 
-	public List<RuleApplication> applyRepairs(List<IRepairPlan> repairs) {
-		List<RuleApplication> appliedRepairs = new LinkedList<>();
+	public boolean applyRepair(IRepairPlan repair, Match match) {
 
 		// Apply repair:
-		for (IRepairPlan repair : repairs) {
-			RuleApplication repairApplication = repair.apply();
-			appliedRepairs.add(repairApplication);
+		RuleApplication application = new RuleApplicationImpl(engine);
+		application.setEGraph(graph);
+		application.setRule(repair.getComplementingEditRule());
+		application.setCompleteMatch(match);
+		
+		if (application.execute(null)) {
+			repairStack.push(application);
+			
+			// Save model
+			try {
+				getModelB().save(null);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean undoRepair() {
+
+		// Undo repair:
+		if (!repairStack.isEmpty()) {
+			RuleApplication lastRepairs = repairStack.pop();
 
 			// Save model
-			if (repairApplication != null) {
+			if (lastRepairs.undo(null)) {
 				try {
 					getModelB().save(null);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-		}
 
-		if (!appliedRepairs.isEmpty()) {
-			repairStack.push(appliedRepairs);
-			return appliedRepairs;
+			return true;
 		} else {
-			return null;
+			return false;
 		}
 	}
 
-	public List<RuleApplication> undoLastRepairs() {
-
-		// Undo repair:
-		if (!repairStack.isEmpty()) {
-			List<RuleApplication> lastRepairs = repairStack.pop();
-
-			// Save model
-			for (RuleApplication ruleApplication : lastRepairs) {
-				if (ruleApplication.undo(null)) {
-					try {
-						getModelB().save(null);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-
-			return lastRepairs;
-		} else {
-			return null;
-		}
-	}
-
-	public Map<Rule, List<R>> getRepairs() {
+	public List<R> getRepairs() {
 		return repairs;
 	}
 
-	public void setRepairs(Map<Rule, List<R>> repairs) {
+	public void setRepairs(List<R> repairs) {
 		this.repairs = repairs;
 	}
 	
@@ -155,5 +162,21 @@ public class RepairJob<R extends IRepairPlan> {
 
 	public void setDifference(Resource difference) {
 		this.difference = difference;
+	}
+	
+	public EngineImpl getEngine() {
+		return engine;
+	}
+	
+	public void setEngine(EngineImpl engine) {
+		this.engine = engine;
+	}
+	
+	public EGraph getGraph() {
+		return graph;
+	}
+	
+	public void setGraph(EGraph graph) {
+		this.graph = graph;
 	}
 }

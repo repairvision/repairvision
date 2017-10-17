@@ -2,7 +2,6 @@ package org.sidiff.repair.api.ranking;
 
 import java.util.Comparator;
 
-import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.api.util.RepairAPIUtil;
@@ -19,11 +18,7 @@ public class RepairRankingComparator implements Comparator<Object> {
 	@Override
 	public int compare(Object o1, Object o2) {
 		
-		if ((o1 instanceof Rule) && (o2 instanceof Rule)) {
-			compare((Rule) o1, (Rule) o2);
-		}
-		
-		else if ((o1 instanceof IRepairPlan) && (o2 instanceof IRepairPlan)) {
+		if ((o1 instanceof IRepairPlan) && (o2 instanceof IRepairPlan)) {
 			compare((IRepairPlan) o1, (IRepairPlan) o2);
 		} 
 		
@@ -31,8 +26,8 @@ public class RepairRankingComparator implements Comparator<Object> {
 	}
 	
 	protected int compare(IRepairPlan repairA, IRepairPlan repairB) {
-		double ratioA = (double) repairA.getHistoricChanges().size() / repairA.getComplementingChanges().size();
-		double ratioB = (double) repairB.getHistoricChanges().size() / repairB.getComplementingChanges().size();
+		double ratioA = (double) repairA.getRecognizedChanges().size() / repairA.getComplementingChanges().size();
+		double ratioB = (double) repairB.getRecognizedChanges().size() / repairB.getComplementingChanges().size();
 		double diff = (ratioA - ratioB);
 
 		if (diff != 0) {
@@ -68,21 +63,5 @@ public class RepairRankingComparator implements Comparator<Object> {
 		}
 		
 		return 0;
-	}
-	
-	protected int compare(Rule complementA, Rule complementB) {
-		
-		// Show the element with the greater ratio on top of the viewer:
-		IRepairPlan repairA = repairJob.getRepairs().get(complementA).get(0);
-		IRepairPlan repairB = repairJob.getRepairs().get(complementB).get(0);
-		
-		int repairRating = compare(repairA, repairB);
-		
-		if (repairRating == 0) {
-			// By count of repair alternatives:
-			return repairJob.getRepairs().get(complementA).size() - repairJob.getRepairs().get(complementB).size();
-		} else {
-			return repairRating;
-		}
 	}
 }
