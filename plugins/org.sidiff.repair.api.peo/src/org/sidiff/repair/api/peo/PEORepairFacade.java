@@ -12,7 +12,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
+import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
@@ -136,7 +138,9 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		}
 		
 		// Calculate repairs:
-		ComplementFinder complementFinder = createComplementFinder(modelA, modelB, difference);
+		EGraph graphModelB = new EGraphImpl(modelB);
+		
+		ComplementFinder complementFinder = new ComplementFinder(difference, modelA, modelB, graphModelB);
 		complementFinder.setSaveRecognitionRule(settings.saveRecognitionRules());
 		complementFinder.start();
 		
@@ -202,18 +206,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		}
 		
 		// Create repair job:
-		PEORepairJob repairJob = new PEORepairJob();
-		repairJob.setDifference(difference.eResource());
-		repairJob.setModelA(modelA);
-		repairJob.setModelB(modelB);
-		repairJob.setRepairs(repairs);
-		repairJob.setValidations(repairFilter.getValidations());
-		
+		PEORepairJob repairJob = new PEORepairJob(repairFilter.getValidations(), repairs, difference, graphModelB);
 		return repairJob;
-	}
-	
-	protected ComplementFinder createComplementFinder(
-			Resource modelAResource, Resource modelBResource, SymmetricDifference difference) {
-		return new ComplementFinder(modelAResource, modelBResource, difference);
 	}
 }
