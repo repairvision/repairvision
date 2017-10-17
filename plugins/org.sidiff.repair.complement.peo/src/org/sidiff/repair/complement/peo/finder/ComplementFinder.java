@@ -11,7 +11,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
-import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.model.Action.Type;
@@ -100,13 +99,17 @@ public class ComplementFinder {
 	 * @param difference
 	 *            The difference between model A and B.
 	 */
-	public ComplementFinder(Resource modelAResource, Resource modelBResource, SymmetricDifference difference) {
+	public ComplementFinder(SymmetricDifference difference, 
+			Resource modelAResource, Resource modelBResource, 
+			EGraph graphModelB) {
+		
 		assert (modelAResource.getResourceSet() == modelBResource.getResourceSet()) 
 		&& (modelBResource.getResourceSet() == difference.eResource().getResourceSet());
 		
+		this.difference = difference;
 		this.modelAResource = modelAResource;
 		this.modelBResource = modelBResource;
-		this.difference = difference;
+		this.graphModelB = graphModelB;
 	}
 	
 	public void start() {
@@ -118,7 +121,6 @@ public class ComplementFinder {
 		
 		this.complementConstructor = new ComplementConstructor();
 		this.engine = new EngineImpl();
-		this.graphModelB = new EGraphImpl(modelBResource);
 	}
 
 	public void finish() {
