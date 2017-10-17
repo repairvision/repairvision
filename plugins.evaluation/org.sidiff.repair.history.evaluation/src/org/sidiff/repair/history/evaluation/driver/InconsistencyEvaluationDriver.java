@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogMonitor;
 import org.sidiff.consistency.common.monitor.LogTable;
@@ -16,7 +17,6 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
-import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
 import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
@@ -93,21 +93,20 @@ public class InconsistencyEvaluationDriver {
 		// search historical observable repair:
 		List<IRepairPlan> observable = DeveloperIntentionOracleDriver.getHistoricallyObservable(
 				repaired, repairJob, matchingSettings);
-		Object[] rankingOfBestObservable = findBestObservableRepair(observable, repairJob);
+		Object[] bestObservable = findBestObservableRepair(observable, repairJob);
+		int bestPositionOfObservable = (int) bestObservable[0];
+		IRepairPlan bestObservableRepair = (IRepairPlan) bestObservable[1];
 		
 		InfoConsole.printInfo("Historically Observable Repairs: " + observable.size());
 		
 		log.append(COLUMN_OBSERVABLE, observable.size() > 0);
-		log.append("Ranking of HOR", rankingOfBestObservable[0]);
+		log.append("Ranking of HOR", bestPositionOfObservable);
 		
-		if (rankingOfBestObservable[1] instanceof Rule) {
-			Rule bestObservableComplementRule = (Rule) rankingOfBestObservable[1];
-			List<IRepairPlan> repairs = repairJob.getRepairs().get(bestObservableComplementRule);
-			
-			log.append("Repair Matchings for HOR", repairs.size());
-			log.append("Historic Changes of HOR", repairs.get(0).getHistoricChanges().size());
-			log.append("Complementing Changes of HOR", repairs.get(0).getComplementingChanges().size());
-		}
+		List<Match> complementMatches = bestObservableRepair.getComplementMatches();
+
+		log.append("Repair Matchings for HOR", complementMatches.size());
+		log.append("Historic Changes of HOR", bestObservableRepair.getRecognizedChanges().size());
+		log.append("Complementing Changes of HOR", bestObservableRepair.getComplementingChanges().size());
 		
 		// evaluate repair tree:
 		log.append("Count of Repair Trees", repairJob.getValidations().size());
@@ -118,25 +117,24 @@ public class InconsistencyEvaluationDriver {
 	private static Object[] findBestObservableRepair(List<IRepairPlan> observable, PEORepairJob repairJob) {
 		
 		// Calculate Ranking:
-		List<Rule> complements = new LinkedList<>(repairJob.getRepairs().keySet());
-		complements.sort(repairJob.getRanking());
+		List<IRepairPlan> repairRanking = new LinkedList<>(repairJob.getRepairs());
+		repairRanking.sort(repairJob.getRanking());
 		
 		// Find best observable:
-		int position = Integer.MAX_VALUE;
-		Rule bestObservableComplement =  null;
+		int bestPositionOfObservable = Integer.MAX_VALUE;
+		IRepairPlan bestObservableRepair =  null;
 		
 		for (IRepairPlan observableRepair : observable) {
-			Rule observableComplement = RepairAPIUtil.getComplement(repairJob, observableRepair);
-			int positionOfObservable = complements.indexOf(observableComplement);
+			int positionOfObservable = repairRanking.indexOf(observableRepair);
 			
-			if (positionOfObservable < position) {
-				position = positionOfObservable;
-				bestObservableComplement = observableComplement;
+			if (positionOfObservable < bestPositionOfObservable) {
+				bestPositionOfObservable = positionOfObservable;
+				bestObservableRepair = observableRepair;
 			}
 		}
 		
-		if (bestObservableComplement != null) {
-			return new Object[] {position, bestObservableComplement};
+		if (bestObservableRepair != null) {
+			return new Object[] {bestPositionOfObservable, bestObservableRepair};
 		} else {
 			return new Object[] {-1, LogTable.NA};
 		}

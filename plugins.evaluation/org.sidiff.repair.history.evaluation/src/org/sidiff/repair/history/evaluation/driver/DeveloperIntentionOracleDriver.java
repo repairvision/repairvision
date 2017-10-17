@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.Match;
-import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.difference.symmetric.SymmetricDifference;
@@ -29,15 +28,12 @@ public class DeveloperIntentionOracleDriver {
 			SymmetricDifference currentToResolved = deriveTechnicalDifference(
 					modelCurrent, modelResolved, settings);
 			
-			for (Rule complementRule : repairJob.getRepairs().keySet()) {
-				for (IRepairPlan repair : repairJob.getRepairs().get(complementRule)) {
-					
-					// The preMatch turning the complement rule into a repair operation.
-					Match preMatch = repair.getRepairPreMatch().getMatch();
-					
-					// Mode
-					DeveloperIntentionOracle oracle = new DeveloperIntentionOracle();
+			for (IRepairPlan repair : repairJob.getRepairs()) {
 
+				// The preMatch turning the complement rule into a repair operation.
+				for (Match preMatch : repair.getComplementMatches()) {
+					DeveloperIntentionOracle oracle = new DeveloperIntentionOracle();
+					
 					if (oracle.isHistoricallyObservable(
 							preMatch, currentToResolved, 
 							repairJob.getValidations())) {

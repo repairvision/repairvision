@@ -10,7 +10,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.henshin.interpreter.RuleApplication;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.consistency.common.monitor.LogTable;
@@ -208,24 +208,24 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	}
 	
 	@Override
-	public boolean applyRepairs(List<IRepairPlan> repair) {
-		return (repairJob.applyRepairs(repair) != null);
+	public boolean applyRepair(IRepairPlan repair, Match match) {
+		return repairJob.applyRepair(repair, match);
 	}
 	
 	@Override
-	public List<RuleApplication> undoLastRepairs() {
+	public boolean undoRepair() {
 		
 		if (repairJob == null) {
 			WorkbenchUtil.showMessage("Please start the repair calculation!");
-			return null;
+			return true;
 		}
 		
 		if (calculation.getState() == Job.RUNNING) {
 			WorkbenchUtil.showMessage("Please wait for the repair calculation!");
-			return null;
+			return true;
 		}
 		
-		return repairJob.undoLastRepairs();
+		return repairJob.undoRepair();
 	}
 
 	public IResource removeEditRule(IResource selection) {
