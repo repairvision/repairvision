@@ -238,6 +238,8 @@ public class RepairPlan implements IRepairPlan {
 		} else {
 			throw new NoSuchElementException(parameter.toString());
 		}
+		
+		autoSetParameterValues();
 	}
 
 	@Override
@@ -260,7 +262,7 @@ public class RepairPlan implements IRepairPlan {
 		return null;
 	}
 	
-	private List<ParameterBinding> getParameterBindings() {
+	protected List<ParameterBinding> getParameterBindings() {
 		
 		if (parameters == null) {
 			parameters = new ArrayList<>(complementRule.getComplementRule().getParameters().size());
@@ -270,6 +272,20 @@ public class RepairPlan implements IRepairPlan {
 			}
 		}
 		
+		autoSetParameterValues();
 		return parameters;
+	}
+	
+	protected void autoSetParameterValues() {
+		
+		for (ParameterBinding binding : parameters) {
+			if (binding.getValue() == null) {
+				List<Object> domain = getParameterDomain(binding.getParameter());
+				
+				if (domain.size() == 1) {
+					binding.setValue(domain.get(0));
+				}
+			}
+		}
 	}
 }
