@@ -6,15 +6,11 @@ public interface IItemProvider {
 
 	String getText();
 	
-	Image getIcon();
+	Image getImage();
 	
 	boolean hasChildren(Object element);
 	
 	Object[] getChildren();
 	
 	Object getParent();
-	
-	void actionDoubleClick();
-	
-	void actionSelection();
 }

@@ -31,7 +31,7 @@ public class RepairJobItem implements IItemProvider {
 	}
 
 	@Override
-	public Image getIcon() {
+	public Image getImage() {
 		return ICON_REPAIR_JOB;
 	}
 	
@@ -58,14 +58,6 @@ public class RepairJobItem implements IItemProvider {
 	@Override
 	public Object getParent() {
 		return null;
-	}
-
-	@Override
-	public void actionDoubleClick() {
-	}
-
-	@Override
-	public void actionSelection() {
 	}
 	
 	public TreeViewer getTreeViewer() {

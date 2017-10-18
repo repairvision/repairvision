@@ -23,14 +23,6 @@ public abstract class ActionItem implements IItemProvider {
 		return parent;
 	}
 
-	@Override
-	public void actionDoubleClick() {
-	}
-
-	@Override
-	public void actionSelection() {
-	}
-
 	public ChangeSetItem getChangeSetItem() {
 		Object parent = getParent(); 
 		

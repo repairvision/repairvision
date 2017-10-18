@@ -26,7 +26,7 @@ public class ParametersItem implements IItemProvider  {
 	}
 
 	@Override
-	public Image getIcon() {
+	public Image getImage() {
 		return ICON_PARAMETERS;
 	}
 	
@@ -53,14 +53,6 @@ public class ParametersItem implements IItemProvider  {
 	@Override
 	public Object getParent() {
 		return repairPlan;
-	}
-
-	@Override
-	public void actionDoubleClick() {
-	}
-
-	@Override
-	public void actionSelection() {
 	}
 
 	public RepairPlanItem getRepairPlanItem() {

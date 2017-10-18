@@ -23,7 +23,7 @@ public class ChangeSetRecognized extends ChangeSetItem {
 	}
 
 	@Override
-	public Image getIcon() {
+	public Image getImage() {
 		return ICON_CHANGE_ACTIONS_HISTORIC;
 	}
 	
@@ -41,14 +41,6 @@ public class ChangeSetRecognized extends ChangeSetItem {
 		}
 		
 		return changes;
-	}
-
-	@Override
-	public void actionDoubleClick() {
-	}
-
-	@Override
-	public void actionSelection() {
 	}
 	
 	@Override

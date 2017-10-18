@@ -36,7 +36,7 @@ public class RepairPlanItem implements IItemProvider {
 	}
 
 	@Override
-	public Image getIcon() {
+	public Image getImage() {
 		return ICON_REPAIR_PLAN;
 	}
 	
@@ -53,14 +53,6 @@ public class RepairPlanItem implements IItemProvider {
 	@Override
 	public Object getParent() {
 		return repairJob;
-	}
-
-	@Override
-	public void actionDoubleClick() {
-	}
-
-	@Override
-	public void actionSelection() {
 	}
 	
 	public IRepairPlan getRepairPlan() {

@@ -1,7 +1,10 @@
 package org.sidiff.repair.ui.provider.model;
 
+import java.util.List;
+
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.swt.graphics.Image;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.ui.Activator;
 
 public class ParameterItem implements IItemProvider {
@@ -31,7 +34,7 @@ public class ParameterItem implements IItemProvider {
 	}
 
 	@Override
-	public Image getIcon() {
+	public Image getImage() {
 		Object value = parent.getRepairPlanItem().getRepairPlan().getParameterValue(parameter);
 		
 		if (value != null) {
@@ -48,19 +51,30 @@ public class ParameterItem implements IItemProvider {
 	
 	@Override
 	public Object[] getChildren() {
-		return parent.getRepairPlanItem().getRepairPlan().getParameterDomain(parameter).toArray();
+		List<Object> parameterDomain = parent.getRepairPlanItem().getRepairPlan().getParameterDomain(parameter);
+		ParameterValueItem[] parameterValueItems = new ParameterValueItem[parameterDomain.size()];
+		
+		for (int i = 0; i < parameterValueItems.length; i++) {
+			parameterValueItems[i] = new ParameterValueItem(parameterDomain.get(i), this);
+		}
+		
+		return parameterValueItems;
 	}
 
 	@Override
 	public Object getParent() {
 		return parent;
 	}
-
-	@Override
-	public void actionDoubleClick() {
+	
+	public Parameter getParameter() {
+		return parameter;
 	}
-
-	@Override
-	public void actionSelection() {
+	
+	public IRepairPlan getRepairPlan() {
+		return parent.getRepairPlanItem().getRepairPlan();
+	}
+	
+	public void unsetParameter() {
+		getRepairPlan().setParameterValue(getParameter(), null);
 	}
 }

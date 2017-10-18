@@ -7,6 +7,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.repair.ui.provider.model.IItemProvider;
+import org.sidiff.repair.ui.provider.model.ParameterValueItem;
 
 public class RepairLabelProvider extends LabelProvider {
 	
@@ -31,7 +32,11 @@ public class RepairLabelProvider extends LabelProvider {
 	public Image getImage(Object element) {
 		
 		if (element instanceof IItemProvider) {
-			return ((IItemProvider) element).getIcon();
+			return ((IItemProvider) element).getImage();
+		}
+		
+		else if (element instanceof ParameterValueItem) {
+			return emfLabelProvider.getImage(((ParameterValueItem) element).getValue());
 		}
 		
 		return emfLabelProvider.getImage(element);
@@ -42,6 +47,10 @@ public class RepairLabelProvider extends LabelProvider {
 		
 		if (element instanceof IItemProvider) {
 			return ((IItemProvider) element).getText();
+		}
+		
+		else if (element instanceof ParameterValueItem) {
+			return emfLabelProvider.getText(((ParameterValueItem) element).getValue());
 		}
 		
 		return emfLabelProvider.getText(element);

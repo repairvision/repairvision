@@ -15,7 +15,7 @@ public class ActionEdgeItem extends ActionItem {
 	}
 	
 	@Override
-	public Image getIcon() {
+	public Image getImage() {
 		if (changeAction.getGraph().isLhs()) {
 			return IMG_REMOVE_REFERENCE;
 		} else {

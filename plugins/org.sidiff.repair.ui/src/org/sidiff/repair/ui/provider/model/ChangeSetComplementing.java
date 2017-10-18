@@ -21,7 +21,7 @@ public class ChangeSetComplementing extends ChangeSetItem {
 	}
 
 	@Override
-	public Image getIcon() {
+	public Image getImage() {
 		return ICON_CHANGE_ACTIONS_COMPLEMENTING;
 	}
 	
@@ -39,14 +39,6 @@ public class ChangeSetComplementing extends ChangeSetItem {
 		}
 		
 		return changes;
-	}
-
-	@Override
-	public void actionDoubleClick() {
-	}
-
-	@Override
-	public void actionSelection() {
 	}
 	
 	@Override

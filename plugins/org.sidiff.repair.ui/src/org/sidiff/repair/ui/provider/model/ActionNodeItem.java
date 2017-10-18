@@ -19,7 +19,7 @@ public class ActionNodeItem extends ActionItem  {
 	}
 	
 	@Override
-	public Image getIcon() {
+	public Image getImage() {
 		if (HenshinRuleAnalysisUtilEx.isPreservedNode((Node) changeAction)) {
 			return IMG_PRESERVE_OBJECT;
 		} else {

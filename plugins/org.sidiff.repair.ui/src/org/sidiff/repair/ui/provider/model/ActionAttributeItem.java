@@ -23,7 +23,7 @@ public class ActionAttributeItem extends ActionItem {
 	}
 	
 	@Override
-	public Image getIcon() {
+	public Image getImage() {
 		return IMG_SET_ATTRIBUTE;
 	}
 	
