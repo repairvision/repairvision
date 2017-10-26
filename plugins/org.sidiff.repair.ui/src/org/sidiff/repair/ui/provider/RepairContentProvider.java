@@ -19,6 +19,8 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	
 	protected TreeViewer viewer;
 	
+	protected RepairJobItem input;
+	
 	public RepairContentProvider() {
 		
 		// EMF Adapter (Item-Provider) Registry:
@@ -41,6 +43,12 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		this.viewer = (TreeViewer) viewer;
+		
+		// Initialize repair model:
+		if (newInput instanceof RepairJob) {
+			RepairJob<?> repairJob = (RepairJob<?>) newInput;
+			this.input = new RepairJobItem(this.viewer, repairJob);
+		}
 	}
 
 	@Override
@@ -88,11 +96,9 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	@Override
 	public Object[] getElements(Object inputElement) {
 		
-		// Repair-Rules:
+		// Repairs:
 		if (inputElement instanceof RepairJob) {
-			RepairJob<?> repairJob = (RepairJob<?>) inputElement;
-			RepairJobItem repairJobItem = new RepairJobItem(viewer, repairJob);
-			return repairJobItem.getChildren();
+			return input.getChildren();
 		}
 		
 		return getChildren(inputElement);

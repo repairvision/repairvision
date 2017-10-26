@@ -19,6 +19,8 @@ public class RepairPlanItem implements IItemProvider {
 	
 	protected ChangeSetComplementing complementing;
 	
+	protected IItemProvider[] children;
+	
 	public RepairPlanItem(RepairJobItem repairJob, IRepairPlan repairPlan) {
 		this.repairJob = repairJob;
 		this.repairPlan = repairPlan;
@@ -47,7 +49,12 @@ public class RepairPlanItem implements IItemProvider {
 
 	@Override
 	public Object[] getChildren() {
-		return new IItemProvider[] {parameters, historic, complementing};
+		
+		if (children == null) {
+			this.children = new IItemProvider[] {parameters, historic, complementing};
+		}
+		
+		return children;
 	}
 	
 	@Override

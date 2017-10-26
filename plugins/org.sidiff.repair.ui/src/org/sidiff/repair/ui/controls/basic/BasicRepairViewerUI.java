@@ -11,9 +11,10 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.preference.PreferenceDialog;
-import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelection;import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
@@ -33,6 +34,8 @@ import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
 import org.sidiff.repair.ui.provider.RepairContentProvider;
 import org.sidiff.repair.ui.provider.RepairLabelProvider;
+import org.sidiff.repair.ui.provider.model.ParameterItem;
+import org.sidiff.repair.ui.provider.model.ParameterValueItem;
 import org.sidiff.repair.ui.provider.model.RepairPlanItem;
 
 public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends BasicRepairUI<A> {
@@ -52,6 +55,10 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 	protected Action undoRepairs;
 	
 	protected Action clearSetup;
+	
+	protected Action setParameter;
+	
+	protected Action unsetParameter;
 	
 	@Override
 	public void createPartControls(Composite parent, IWorkbenchPartSite site) {
@@ -118,6 +125,21 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 				}
 			}
 		});
+		
+		// Enable/Disable actions:
+		viewer_repairs.addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				openConfiguration.isEnabled();
+				calculateRepairs.isEnabled();
+				applyRepairs.isEnabled();
+				undoRepairs.isEnabled();
+				clearSetup.isEnabled();
+				setParameter.isEnabled();
+				unsetParameter.isEnabled();
+			}
+		});
 	}
 	
 	protected void makeActions(IWorkbenchPartSite site) {
@@ -148,6 +170,72 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		calculateRepairs.setText("Search Repairs");
 		calculateRepairs.setToolTipText("Search Repairs");
 		calculateRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/bulb.png"));
+		
+		// Set parameter value:
+		setParameter = new Action() {
+			public void run() {
+				IStructuredSelection selection = (IStructuredSelection) viewer_repairs.getSelection();
+				
+				if (selection.getFirstElement() instanceof ParameterValueItem) {
+					ParameterValueItem valueItem = (ParameterValueItem) selection.getFirstElement();
+					valueItem.setParameterValue();
+					
+					viewer_repairs.refresh();
+					return;
+				}
+				
+				WorkbenchUtil.showMessage("Please select a parameter value!");
+			}
+			
+			@Override
+			public boolean isEnabled() {
+				IStructuredSelection selection = (IStructuredSelection) viewer_repairs.getSelection();
+				
+				if (selection.getFirstElement() instanceof ParameterValueItem) {
+					setParameter.setEnabled(true);
+				} else {
+					setParameter.setEnabled(false);
+				}
+				
+				return super.isEnabled();
+			}
+		};
+		setParameter.setText("Set Parameter");
+		setParameter.setToolTipText("Set Parameter");
+		setParameter.setImageDescriptor(Activator.getImageDescriptor("icons/parameter_unassigned.gif"));
+		
+		// Set parameter value:
+		unsetParameter = new Action() {
+			public void run() {
+				IStructuredSelection selection = (IStructuredSelection) viewer_repairs.getSelection();
+				
+				if (selection.getFirstElement() instanceof ParameterItem) {
+					ParameterItem parameterItem = (ParameterItem) selection.getFirstElement();
+					parameterItem.unsetParameter();
+					
+					viewer_repairs.refresh();
+					return;
+				}
+				
+				WorkbenchUtil.showMessage("Please select a parameter value!");
+			}
+			
+			@Override
+			public boolean isEnabled() {
+				IStructuredSelection selection = (IStructuredSelection) viewer_repairs.getSelection();
+				
+				if (selection.getFirstElement() instanceof ParameterItem) {
+					unsetParameter.setEnabled(true);
+				} else {
+					unsetParameter.setEnabled(false);
+				}
+				
+				return super.isEnabled();
+			}
+		};
+		unsetParameter.setText("Unset Parameter");
+		unsetParameter.setToolTipText("Unset Parameter");
+		unsetParameter.setImageDescriptor(Activator.getImageDescriptor("icons/parameters.gif"));
 		
 		// Apply repair:
 		applyRepairs = new Action() {
@@ -181,6 +269,19 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 				}
 				
 				WorkbenchUtil.showMessage("Please select a repair operation!");
+			}
+			
+			@Override
+			public boolean isEnabled() {
+				IStructuredSelection selection = (IStructuredSelection) viewer_repairs.getSelection();
+				
+				if (selection.getFirstElement() instanceof RepairPlanItem) {
+					applyRepairs.setEnabled(true);
+				} else {
+					applyRepairs.setEnabled(false);
+				}
+				
+				return super.isEnabled();
 			}
 		};
 		applyRepairs.setText("Apply Repair");
@@ -225,6 +326,9 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		manager.add(applyRepairs);
 		manager.add(undoRepairs);
 		manager.add(new Separator());
+		manager.add(setParameter);
+		manager.add(unsetParameter);
+		manager.add(new Separator());
 		manager.add(clearSetup);
 		manager.add(openConfiguration);
 		manager.add(new Separator());
@@ -244,6 +348,8 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		
 		manager.add(new Separator());
 		manager.add(applyRepairs);
+		manager.add(setParameter);
+		manager.add(unsetParameter);
 		manager.add(new Separator());
 
 		drillDownAdapter.addNavigationActions(manager);
