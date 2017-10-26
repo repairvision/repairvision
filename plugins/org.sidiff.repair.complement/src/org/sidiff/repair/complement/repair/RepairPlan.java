@@ -221,7 +221,7 @@ public class RepairPlan implements IRepairPlan {
 		for (Match complementMatch : getComplementMatches()) {
 			Object parameterValue = complementMatch.getParameterValue(parameter);
 			
-			if (parameterValue != null) {
+			if ((parameterValue != null) && (!domain.contains(parameterValue))) {
 				domain.add(parameterValue);
 			}
 		}
