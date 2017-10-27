@@ -23,4 +23,8 @@ public class ParameterBinding {
 	public void setValue(Object value) {
 		this.value = value;
 	}
+	
+	public boolean isSet() {
+		return (value != null);
+	}
 }

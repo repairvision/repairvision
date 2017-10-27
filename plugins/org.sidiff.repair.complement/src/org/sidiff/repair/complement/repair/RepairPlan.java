@@ -178,7 +178,7 @@ public class RepairPlan implements IRepairPlan {
 			}
 		}
 		
-		return complementMatches;
+		return selectedComplementMatches;
 	}
 	
 	@Override
@@ -199,10 +199,12 @@ public class RepairPlan implements IRepairPlan {
 	private boolean matchesParameterBindings(Match complementMatch) {
 		for (ParameterBinding binding : parameters) {
 			if (binding != null) {
-				Object matchBinding = complementMatch.getParameterValue(binding.getParameter());
-				
-				if (!matchBinding.equals(binding.getValue())) {
-					return false;
+				if (binding.isSet()) {
+					Object matchBinding = complementMatch.getParameterValue(binding.getParameter());
+					
+					if (!matchBinding.equals(binding.getValue())) {
+						return false;
+					}
 				}
 			}
 		}
@@ -217,10 +219,10 @@ public class RepairPlan implements IRepairPlan {
 	@Override
 	public List<Object> getParameterDomain(Parameter parameter) {
 		List<Object> domain = new ArrayList<>(); 
-		 
+
 		for (Match complementMatch : getComplementMatches()) {
 			Object parameterValue = complementMatch.getParameterValue(parameter);
-			
+
 			if ((parameterValue != null) && (!domain.contains(parameterValue))) {
 				domain.add(parameterValue);
 			}
