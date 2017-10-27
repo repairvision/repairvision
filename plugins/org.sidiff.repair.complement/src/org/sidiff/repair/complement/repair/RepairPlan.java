@@ -217,6 +217,11 @@ public class RepairPlan implements IRepairPlan {
 	}
 	
 	@Override
+	public boolean isSetParameter(Parameter parameter) {
+		return getParameterBinding(parameter).isSet();
+	}
+	
+	@Override
 	public List<Object> getParameterDomain(Parameter parameter) {
 		List<Object> domain = new ArrayList<>(); 
 
