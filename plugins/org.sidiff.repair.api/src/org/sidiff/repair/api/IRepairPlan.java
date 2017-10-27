@@ -70,6 +70,14 @@ public interface IRepairPlan {
 	/**
 	 * @param parameter
 	 *            The parameter of the complement rule.
+	 * @return <code>true</code> if a value is assigned to the parameter;
+	 *         <code>false</code> otherwise.
+	 */
+	boolean isSetParameter(Parameter parameter);
+	
+	/**
+	 * @param parameter
+	 *            The parameter of the complement rule.
 	 * @return All possible parameter values based on the current parameter assignment.
 	 */
 	List<Object> getParameterDomain(Parameter parameter);
