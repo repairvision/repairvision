@@ -17,19 +17,23 @@ public class ParameterItem implements IItemProvider {
 	
 	protected Parameter parameter;
 	
+	protected int domainSize;
+	
 	public ParameterItem(ParametersItem parent, Parameter parameter) {
 		this.parent = parent;
 		this.parameter = parameter;
+		this.domainSize = parent.getRepairPlanItem().getRepairPlan().getParameterDomain(parameter).size();
 	}
 
 	@Override
 	public String getText() {
-		Object value = parent.getRepairPlanItem().getRepairPlan().getParameterValue(parameter);
+		IRepairPlan repairPlan = parent.getRepairPlanItem().getRepairPlan();
+		int currentDomainSize = parent.getRepairPlanItem().getRepairPlan().getParameterDomain(parameter).size();
 		
-		if (value != null) {
-			return "Assigned Parameter: " + " " + parameter.getName();
+		if (repairPlan.isSetParameter(parameter)) {
+			return "Assigned Parameter [" + currentDomainSize + " out of " + domainSize + "]: " + parameter.getName();
 		} else {
-			return "Unassigned Parameter: " + " " + parameter.getName();
+			return "Unassigned Parameter [" + currentDomainSize + " out of " +  domainSize + "]: " + parameter.getName();
 		}
 	}
 
