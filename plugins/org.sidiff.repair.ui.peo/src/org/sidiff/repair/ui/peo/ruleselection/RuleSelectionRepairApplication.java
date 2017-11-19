@@ -21,7 +21,7 @@ import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
 import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 
-public class PEORepairApplication extends EclipseResourceRepairApplication<PEORepairJob, PEORepairSettings> {
+public class RuleSelectionRepairApplication extends EclipseResourceRepairApplication<PEORepairJob, PEORepairSettings> {
 
 	private IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade;
 

@@ -13,7 +13,7 @@ import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.ui.controls.basic.ModelVersionsDropWidget;
 import org.sidiff.repair.validation.ui.widgets.ValidationWidget;
 
-public class PEORepairRuleSelectionUI extends BasicRepairViewerUI<PEORepairApplication> {
+public class RuleSelectionRepairUI extends BasicRepairViewerUI<RuleSelectionRepairApplication> {
 
 	/**
 	 * Shows the abstract repairs.
