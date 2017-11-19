@@ -2,7 +2,6 @@ package org.sidiff.repair.ui.peo.integrated;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +23,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
+import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.integration.editor.access.IntegrationEditorAccess;
@@ -32,6 +32,7 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
+import org.sidiff.repair.editrules.library.RulebaseLibrary;
 import org.sidiff.repair.historymodel.History;
 import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
@@ -39,6 +40,7 @@ import org.sidiff.repair.ui.app.impl.EMFResourceRepairApplication;
 import org.sidiff.repair.ui.peo.integrated.app.FOLValidator;
 import org.sidiff.repair.ui.peo.integrated.app.HistoryModelGenerator;
 import org.sidiff.repair.ui.peo.integrated.app.SVNConnector;
+import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
@@ -52,15 +54,15 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	
 	private IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade;
 	
-	private PEORepairJob repairJob;
-	
 	private DifferenceSettings settings;
+	
+	private Collection<Rule> editRules;
 	
 	private Validation inconsistency;
 	
 	private List<Validation> validations;
 	
-	private Collection<Rule> editRules = new ArrayList<>();
+	private PEORepairJob repairJob;
 	
 	@Override
 	public void initialize(IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade) {
@@ -69,6 +71,12 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	
 	@Override
 	public void calculateRepairs() {
+		
+		// Clear old repair job:
+		inconsistency = null;
+		validations = null;
+		repairJob = null;
+		
 		
 		// Model validation:
 		modelValidation = new Job("Model Validation") {
@@ -131,6 +139,12 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				
 				// Search last consistent model version:
 				setModelA(getHistoricModel());
+				
+				// Load edit rules:
+				if (editRules == null) {
+					editRules = EditRuleUtil.eLoadEditRules(
+							RulebaseLibrary.getEditRules(DocumentType.getDocumentType(getModelB())), false);
+				}
 				
 				// Calculate repairs:
 				repairCalculation.setName("Calculate Repairs");
