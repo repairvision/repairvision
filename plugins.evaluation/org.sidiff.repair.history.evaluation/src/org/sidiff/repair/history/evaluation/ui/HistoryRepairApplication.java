@@ -243,7 +243,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	}
 	
 	public void populateSettings(Resource modelA, Resource modelB) {
-		RepairPreferencePage.populateSettings(modelA, modelB);
+		RepairPreferencePage.populateSettings(modelB);
 	}
 	
 	public DifferenceSettings getMatchingSettings() {
