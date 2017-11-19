@@ -410,13 +410,12 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		return repairEngine;
 	}
 	
-	public static void populateSettings(Resource modelA, Resource modelB) {
+	public static void populateSettings(Resource model) {
 		
-		if ((modelA != null) && (modelB != null))  {
+		if (model != null)  {
 			
 			// Document type:
-//			documentType = EMFModelAccess.getCharacteristicDocumentType(modelARes);
-			String newDocumentType = DocumentType.getDocumentType(modelA.getContents().get(0));
+			String newDocumentType = DocumentType.getDocumentType(model.getContents().get(0));
 			
 			if (!newDocumentType.equals(documentType)) {
 				documentType = newDocumentType;
@@ -429,13 +428,11 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 						TechnicalDifferenceBuilderUtil.getAvailableTechnicalDifferenceBuilders(getDoumentTypes()));
 			}
 		} else {
-			if ((modelA == null) && (modelB == null)) {
-				setAvailableMatcher(null);
-				differenceBuilder = null;
-				
-				setAvailableTechnicalDifferenceBuilder(null);
-				documentType = null;
-			}
+			setAvailableMatcher(null);
+			differenceBuilder = null;
+
+			setAvailableTechnicalDifferenceBuilder(null);
+			documentType = null;
 		}
 	}
 	

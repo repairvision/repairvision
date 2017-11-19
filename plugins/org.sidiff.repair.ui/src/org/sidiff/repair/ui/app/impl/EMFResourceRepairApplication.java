@@ -71,7 +71,11 @@ public abstract class EMFResourceRepairApplication<J extends RepairJob<?>, F ext
 	}
 
 	protected void populateSettings() {
-		RepairPreferencePage.populateSettings(getModelA(), getModelB());
+		if (getModelA() != null) {
+			RepairPreferencePage.populateSettings(getModelA());
+		} else if (getModelB() != null) {
+			RepairPreferencePage.populateSettings(getModelB());
+		}
 	}
 	
 	protected DifferenceSettings getMatchingSettings() {

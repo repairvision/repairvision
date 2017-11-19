@@ -109,7 +109,11 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 	}
 
 	protected void populateSettings() {
-		RepairPreferencePage.populateSettings(getModelA(), getModelB());
+		if (getModelA() != null) {
+			RepairPreferencePage.populateSettings(getModelA());
+		} else if (getModelB() != null) {
+			RepairPreferencePage.populateSettings(getModelB());
+		}
 	}
 	
 	protected DifferenceSettings getMatchingSettings() {
