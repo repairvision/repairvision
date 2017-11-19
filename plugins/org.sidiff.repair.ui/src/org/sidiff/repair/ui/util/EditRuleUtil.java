@@ -41,7 +41,7 @@ public class EditRuleUtil {
 			URI uriEditRule = ModelDropWidget.getURI(editRuleFile);
 			Resource editRuleRes = editRulesRSS.getResource(uriEditRule, true);
 			
-			if (!validate || editRuleValidation(editRuleFile, editRuleRes)) {
+			if (!validate || editRuleValidation(editRuleFile.getLocation().toFile().toString(), editRuleRes)) {
 				editRules.add(getEditRule(editRuleRes));
 			}
 		}
@@ -49,7 +49,24 @@ public class EditRuleUtil {
 		return editRules;
 	}
 	
-	public static boolean editRuleValidation(IResource editRuleFile, Resource editRuleRes) {
+	public static Collection<Rule> eLoadEditRules(Collection<URI> editRuleFiles, boolean validate) {
+		
+		// Load edit-rules:
+		Collection<Rule> editRules = new ArrayList<>();
+		ResourceSet editRulesRSS = new ResourceSetImpl();
+		
+		for (URI editRuleURI : editRuleFiles) {
+			Resource editRuleRes = editRulesRSS.getResource(editRuleURI, true);
+			
+			if (!validate || editRuleValidation(editRuleURI.toFileString(), editRuleRes)) {
+				editRules.add(getEditRule(editRuleRes));
+			}
+		}
+		
+		return editRules;
+	}
+	
+	public static boolean editRuleValidation(String editRuleFile, Resource editRuleRes) {
 		List<EditRuleValidation> validation = EditRuleValidator.calculateEditRuleValidations(
 				(Module) editRuleRes.getContents().get(0));
 
@@ -57,7 +74,7 @@ public class EditRuleUtil {
 			return true;
 		} else {
 			MultiStatus info = new MultiStatus(Activator.ID, 1, "Edit-Rule Validation Failed:\n\n" 
-					+ editRuleFile.getLocation().toFile(), null);
+					+ editRuleFile, null);
 
 			for (EditRuleValidation editRuleValidation : validation) {
 				info.add(new Status(IStatus.ERROR, Activator.ID, 1, editRuleValidation.infoMessage, null));
