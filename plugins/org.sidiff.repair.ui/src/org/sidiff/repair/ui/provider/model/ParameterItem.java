@@ -56,13 +56,18 @@ public class ParameterItem implements IItemProvider {
 	@Override
 	public Object[] getChildren() {
 		List<Object> parameterDomain = parent.getRepairPlanItem().getRepairPlan().getParameterDomain(parameter);
-		ParameterValueItem[] parameterValueItems = new ParameterValueItem[parameterDomain.size()];
 		
-		for (int i = 0; i < parameterValueItems.length; i++) {
-			parameterValueItems[i] = new ParameterValueItem(parameterDomain.get(i), this);
+		if ((parameterDomain != null) && (!parameterDomain.isEmpty())) {
+			ParameterValueObjectItem[] parameterValueItems = new ParameterValueObjectItem[parameterDomain.size()];
+			
+			for (int i = 0; i < parameterValueItems.length; i++) {
+				parameterValueItems[i] = new ParameterValueObjectItem(parameterDomain.get(i), this);
+			}
+			
+			return parameterValueItems;
+		} else {
+			return new Object[] {new ParameterValueInputItem(this)};
 		}
-		
-		return parameterValueItems;
 	}
 
 	@Override

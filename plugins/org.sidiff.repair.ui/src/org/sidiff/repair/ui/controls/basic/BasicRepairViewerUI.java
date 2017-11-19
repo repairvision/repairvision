@@ -11,7 +11,8 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.preference.PreferenceDialog;
-import org.eclipse.jface.viewers.ISelection;import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -34,8 +35,8 @@ import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
 import org.sidiff.repair.ui.provider.RepairContentProvider;
 import org.sidiff.repair.ui.provider.RepairLabelProvider;
+import org.sidiff.repair.ui.provider.model.IParameterInput;
 import org.sidiff.repair.ui.provider.model.ParameterItem;
-import org.sidiff.repair.ui.provider.model.ParameterValueItem;
 import org.sidiff.repair.ui.provider.model.RepairPlanItem;
 
 public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends BasicRepairUI<A> {
@@ -176,8 +177,8 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 			public void run() {
 				IStructuredSelection selection = (IStructuredSelection) viewer_repairs.getSelection();
 				
-				if (selection.getFirstElement() instanceof ParameterValueItem) {
-					ParameterValueItem valueItem = (ParameterValueItem) selection.getFirstElement();
+				if (selection.getFirstElement() instanceof IParameterInput) {
+					IParameterInput valueItem = (IParameterInput) selection.getFirstElement();
 					valueItem.setParameterValue();
 					
 					viewer_repairs.refresh();
@@ -191,7 +192,7 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 			public boolean isEnabled() {
 				IStructuredSelection selection = (IStructuredSelection) viewer_repairs.getSelection();
 				
-				if (selection.getFirstElement() instanceof ParameterValueItem) {
+				if (selection.getFirstElement() instanceof IParameterInput) {
 					setParameter.setEnabled(true);
 				} else {
 					setParameter.setEnabled(false);

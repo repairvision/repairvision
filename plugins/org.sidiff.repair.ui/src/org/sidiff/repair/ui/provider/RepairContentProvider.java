@@ -10,7 +10,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.provider.model.IItemProvider;
-import org.sidiff.repair.ui.provider.model.ParameterValueItem;
+import org.sidiff.repair.ui.provider.model.ParameterValueObjectItem;
 import org.sidiff.repair.ui.provider.model.RepairJobItem;
 
 public class RepairContentProvider implements IStructuredContentProvider, ITreeContentProvider  {
@@ -58,8 +58,8 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			return ((IItemProvider) parentElement).getChildren();
 		}
 		
-		else if (parentElement instanceof ParameterValueItem) {
-			return emfContentProvider.getChildren(((ParameterValueItem) parentElement).getValue());
+		else if (parentElement instanceof ParameterValueObjectItem) {
+			return emfContentProvider.getChildren(((ParameterValueObjectItem) parentElement).getValue());
 		}
 		
 		return emfContentProvider.getChildren(parentElement);
@@ -72,8 +72,8 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			return ((IItemProvider) element).getParent();
 		}
 		
-		else if (element instanceof ParameterValueItem) {
-			return emfContentProvider.getParent(((ParameterValueItem) element).getValue());
+		else if (element instanceof ParameterValueObjectItem) {
+			return emfContentProvider.getParent(((ParameterValueObjectItem) element).getValue());
 		}
 		
 		return emfContentProvider.getParent(element);
@@ -86,8 +86,8 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 			return ((IItemProvider) element).hasChildren(element);
 		}
 		
-		else if (element instanceof ParameterValueItem) {
-			return emfContentProvider.hasChildren(((ParameterValueItem) element).getValue());
+		else if (element instanceof ParameterValueObjectItem) {
+			return emfContentProvider.hasChildren(((ParameterValueObjectItem) element).getValue());
 		}
 		
 		return emfContentProvider.hasChildren(element);
