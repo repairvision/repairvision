@@ -7,7 +7,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.repair.validation.ui.Activator;
-import org.sidiff.validation.constraint.api.util.RepairValidation;
+import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
@@ -45,8 +45,8 @@ public class RepairTreeLabelProvider extends LabelProvider {
 	@Override
 	public String getText(Object element) {
 		
-		if (element instanceof RepairValidation) {
-			RepairValidation validation = (RepairValidation) element;
+		if (element instanceof Validation) {
+			Validation validation = (Validation) element;
 			String reslut = validation.getResult() ? "[Passed]" : "[Failed]";
 			
 			return "Validation" + reslut + ": " + validation.getRule().getMessage();
@@ -73,8 +73,8 @@ public class RepairTreeLabelProvider extends LabelProvider {
 	@Override
 	public Image getImage(Object element) {
 		
-		if (element instanceof RepairValidation) {
-			RepairValidation validation = (RepairValidation) element;
+		if (element instanceof Validation) {
+			Validation validation = (Validation) element;
 			
 			return validation.getResult() ? IMG_VALIDATION_PASSED : IMG_VALIDATION_FAILED;
 		}

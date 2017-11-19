@@ -6,6 +6,7 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
+import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 
 public class RepairTreeContentProvider implements IStructuredContentProvider, ITreeContentProvider {
@@ -21,7 +22,7 @@ public class RepairTreeContentProvider implements IStructuredContentProvider, IT
 	@Override
 	public boolean hasChildren(Object element) {
 		
-		if (element instanceof RepairValidation) {
+		if (element instanceof Validation) {
 			return true;
 		}
 		
@@ -41,6 +42,14 @@ public class RepairTreeContentProvider implements IStructuredContentProvider, IT
 			return new Object[] {
 					validation.getContext(),
 					validation.getRepair()
+			};
+		}
+		
+		else if (parentElement instanceof Validation) {
+			Validation validation = (Validation) parentElement;
+			
+			return new Object[] {
+					validation.getContext()
 			};
 		}
 		

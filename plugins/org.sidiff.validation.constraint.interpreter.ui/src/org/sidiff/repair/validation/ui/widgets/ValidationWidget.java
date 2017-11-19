@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -16,7 +16,7 @@ import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
 import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
-import org.sidiff.validation.constraint.api.util.RepairValidation;
+import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 
 public class ValidationWidget implements IUnsetableControl, IDisposableControl {
@@ -24,7 +24,7 @@ public class ValidationWidget implements IUnsetableControl, IDisposableControl {
 	/**
 	 * Shows the abstract repairs.
 	 */
-	private TreeViewer viewer_validation;
+	private CheckboxTreeViewer viewer_validation;
 
 	/**
 	 * Editor decoration.
@@ -37,7 +37,7 @@ public class ValidationWidget implements IUnsetableControl, IDisposableControl {
 		Composite composite_viewer_validation = new Composite(parent, SWT.BORDER);
 		composite_viewer_validation.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		viewer_validation = new TreeViewer(composite_viewer_validation, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		viewer_validation = new CheckboxTreeViewer(composite_viewer_validation, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer_validation.setContentProvider(new RepairTreeContentProvider());
 		viewer_validation.setLabelProvider(new RepairTreeLabelProvider());
 		
@@ -50,8 +50,8 @@ public class ValidationWidget implements IUnsetableControl, IDisposableControl {
 				if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
 					Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
 					
-					if (selectedElement instanceof RepairValidation) {
-						RepairValidation validation = (RepairValidation) selectedElement;
+					if (selectedElement instanceof Validation) {
+						Validation validation = (Validation) selectedElement;
 						return Collections.singletonList(validation.getContext()).iterator();
 					}
 					
@@ -87,7 +87,7 @@ public class ValidationWidget implements IUnsetableControl, IDisposableControl {
 		});
 	}
 	
-	public TreeViewer getViewer() {
+	public CheckboxTreeViewer getViewer() {
 		return viewer_validation;
 	}
 	
