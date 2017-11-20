@@ -203,6 +203,8 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 			
 			history = (History) historyResource.getContents().get(0);
 			
+			// FIXME: Append new versions from repository!
+			
 			// Update current version:
 			Version currentModelVersion = HistoryModelGenerator.generateVersion(
 					history.getVersions().size(), getModelB(), new FOLValidator());
