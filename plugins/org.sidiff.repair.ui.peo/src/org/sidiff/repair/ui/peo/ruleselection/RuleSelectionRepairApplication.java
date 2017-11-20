@@ -134,7 +134,7 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 	
 	@Override
 	public boolean applyRepair(IRepairPlan repair, Match match) {
-		return repairJob.applyRepair(repair, match);
+		return repairJob.applyRepair(repair, match, true);
 	}
 	
 	@Override
@@ -150,7 +150,7 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 			return false;
 		}
 		
-		return repairJob.undoRepair();
+		return repairJob.undoRepair(true);
 	}
 
 	public IResource removeEditRule(IResource selection) {

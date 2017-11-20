@@ -19,6 +19,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -77,6 +80,12 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 		validations = null;
 		repairJob = null;
 		
+		
+		// Model validation:
+		modelValidation();
+	}
+	
+	private void modelValidation() {
 		
 		// Model validation:
 		modelValidation = new Job("Model Validation") {
@@ -141,10 +150,10 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				setModelA(getHistoricModel());
 				
 				// Load edit rules:
-				if (editRules == null) {
+//				if (editRules == null) {
 					editRules = EditRuleUtil.eLoadEditRules(
 							RulebaseLibrary.getEditRules(DocumentType.getDocumentType(getModelB())), false);
-				}
+//				}
 				
 				// Calculate repairs:
 				repairCalculation.setName("Calculate Repairs");
@@ -296,6 +305,11 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	
 	@Override
 	public void recalculateRepairs() {
+		
+		// Model validation:
+		modelValidation();
+		
+		// Repair calculation:
 		repairCalculation = new Job("Recalculate Repairs") {
 			
 			@Override
@@ -316,12 +330,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
-					
-					// Clean up repair-trees:
-					for (RepairValidation validation : repairJob.getValidations()) {
-						validation.cleanUpRepairTree();
-					}
-					
+
 					// Show repairs:
 					fireResultChangeListener();
 					
@@ -339,7 +348,28 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	
 	@Override
 	public boolean applyRepair(IRepairPlan repair, Match match) {
-		return repairJob.applyRepair(repair, match);
+		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(getModelB());
+		
+		if (editingDomain != null) {
+			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+
+				@Override
+				protected void doExecute() {
+					repairJob.applyRepair(repair, match, false);
+				}
+
+				@Override
+				public boolean canUndo() {
+					return true;
+				}
+
+			});
+			
+			// FIXME: Missing result!
+			return true;
+		} else {
+			return repairJob.applyRepair(repair, match, false);
+		}
 	}
 	
 	@Override
@@ -355,7 +385,28 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 			return false;
 		}
 		
-		return repairJob.undoRepair();
+		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(getModelB());
+		
+		if (editingDomain != null) {
+			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+
+				@Override
+				protected void doExecute() {
+					repairJob.undoRepair(false);
+				}
+
+				@Override
+				public boolean canUndo() {
+					return true;
+				}
+
+			});
+			
+			// FIXME: Missing result!
+			return true;
+		} else {
+			return repairJob.undoRepair(false);
+		}
 	}
 	
 	@Override
