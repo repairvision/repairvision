@@ -423,7 +423,12 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 			
 			@Override
 			public int compare(Viewer viewer, Object o1, Object o2) {
-				return repairJob.getRanking().compare(o1, o2);
+				if ((o1 instanceof RepairPlanItem) && (o1 instanceof RepairPlanItem)) {
+					return repairJob.getRanking().compare(
+							((RepairPlanItem) o1).getRepairPlan(), 
+							((RepairPlanItem) o2).getRepairPlan());
+				}
+				return 0;
 			}
 		});
 		
