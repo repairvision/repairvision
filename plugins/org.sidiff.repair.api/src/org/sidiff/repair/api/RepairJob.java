@@ -77,7 +77,7 @@ public class RepairJob<R extends IRepairPlan> {
 		this.repairStack = repairJob.repairStack;
 	}
 
-	public boolean applyRepair(IRepairPlan repair, Match match) {
+	public boolean applyRepair(IRepairPlan repair, Match match, boolean saveModel) {
 
 		// Apply repair:
 		RuleApplication application = new RuleApplicationImpl(engine);
@@ -89,10 +89,12 @@ public class RepairJob<R extends IRepairPlan> {
 			repairStack.push(application);
 			
 			// Save model
-			try {
-				getModelB().save(null);
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (saveModel) {
+				try {
+					getModelB().save(null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 
 			return true;
@@ -101,7 +103,7 @@ public class RepairJob<R extends IRepairPlan> {
 		}
 	}
 
-	public boolean undoRepair() {
+	public boolean undoRepair(boolean saveModel) {
 
 		// Undo repair:
 		if (!repairStack.isEmpty()) {
@@ -109,10 +111,12 @@ public class RepairJob<R extends IRepairPlan> {
 
 			// Save model
 			if (lastRepairs.undo(null)) {
-				try {
-					getModelB().save(null);
-				} catch (IOException e) {
-					e.printStackTrace();
+				if (saveModel) {
+					try {
+						getModelB().save(null);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 
