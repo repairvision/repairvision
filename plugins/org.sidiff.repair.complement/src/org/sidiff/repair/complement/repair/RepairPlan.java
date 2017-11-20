@@ -11,6 +11,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
+import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.repair.api.IRepairPlan;
@@ -275,7 +276,9 @@ public class RepairPlan implements IRepairPlan {
 			parameters = new ArrayList<>(complementRule.getComplementRule().getParameters().size());
 			
 			for (Parameter parameter : complementRule.getComplementRule().getParameters()) {
-				parameters.add(new ParameterBinding(parameter));
+				if (!parameter.getKind().equals(ParameterKind.VAR) && !parameter.getKind().equals(ParameterKind.OUT)) {
+					parameters.add(new ParameterBinding(parameter));
+				}
 			}
 		}
 		
