@@ -1,5 +1,6 @@
 package org.sidiff.repair.ui.controls.basic;
 
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,6 +39,8 @@ import org.sidiff.repair.ui.provider.RepairLabelProvider;
 import org.sidiff.repair.ui.provider.model.IParameterInput;
 import org.sidiff.repair.ui.provider.model.ParameterItem;
 import org.sidiff.repair.ui.provider.model.RepairPlanItem;
+import org.sidiff.common.emf.modelstorage.EMFStorage;
+import org.sidiff.common.ui.util.UIUtil;
 
 public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends BasicRepairUI<A> {
 
@@ -60,6 +63,8 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 	protected Action setParameter;
 	
 	protected Action unsetParameter;
+	
+	protected Action openHistoricModel;
 	
 	@Override
 	public void createPartControls(Composite parent, IWorkbenchPartSite site) {
@@ -132,15 +137,20 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 			
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				openConfiguration.isEnabled();
-				calculateRepairs.isEnabled();
-				applyRepairs.isEnabled();
-				undoRepairs.isEnabled();
-				clearSetup.isEnabled();
-				setParameter.isEnabled();
-				unsetParameter.isEnabled();
+				refreshActionStates();
 			}
 		});
+	}
+	
+	protected void refreshActionStates() {
+		openConfiguration.isEnabled();
+		calculateRepairs.isEnabled();
+		applyRepairs.isEnabled();
+		undoRepairs.isEnabled();
+		clearSetup.isEnabled();
+		setParameter.isEnabled();
+		unsetParameter.isEnabled();
+		openHistoricModel.isEnabled();
 	}
 	
 	protected void makeActions(IWorkbenchPartSite site) {
@@ -318,12 +328,39 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		clearSetup.setText("Clear");
 		clearSetup.setToolTipText("Clear");
 		clearSetup.setImageDescriptor(Activator.getImageDescriptor("icons/clear.png"));
+		
+		// Opens the historic model version:
+		openHistoricModel = new Action() {
+			public void run() {
+				try {
+					UIUtil.openEditor(EMFStorage.uriToPath(application.getRepairJob().getModelA().getURI()));
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			@Override
+			public boolean isEnabled() {
+				
+				if ((application.getRepairJob() != null) && (application.getRepairJob().getModelA() != null)) {
+					openHistoricModel.setEnabled(true);
+				} else {
+					openHistoricModel.setEnabled(false);
+				}
+				
+				return super.isEnabled();
+			}
+		};
+		openHistoricModel.setText("Open Historic Model Version");
+		openHistoricModel.setToolTipText("Open Historic Model Version");
+		openHistoricModel.setImageDescriptor(Activator.getImageDescriptor("icons/history.png"));
 	}
 	
 	@Override
 	public void createLocalToolBar(IToolBarManager manager) {
 		manager.add(new Separator());
 		manager.add(calculateRepairs);
+		manager.add(openHistoricModel);
 		manager.add(applyRepairs);
 		manager.add(undoRepairs);
 		manager.add(new Separator());
@@ -341,6 +378,15 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 	public void createLocalPullDown(IMenuManager manager) {
 		manager.add(new Separator());
 		manager.add(calculateRepairs);
+		manager.add(openHistoricModel);
+		manager.add(applyRepairs);
+		manager.add(undoRepairs);
+		manager.add(new Separator());
+		manager.add(setParameter);
+		manager.add(unsetParameter);
+		manager.add(new Separator());
+		manager.add(clearSetup);
+		manager.add(openConfiguration);
 		manager.add(new Separator());
 	}
 
@@ -380,6 +426,8 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 				return repairJob.getRanking().compare(o1, o2);
 			}
 		});
+		
+		refreshActionStates();
 	}
 	
 	@Override
