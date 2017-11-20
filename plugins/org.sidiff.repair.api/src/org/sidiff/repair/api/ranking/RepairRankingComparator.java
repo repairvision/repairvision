@@ -19,7 +19,7 @@ public class RepairRankingComparator implements Comparator<Object> {
 	public int compare(Object o1, Object o2) {
 		
 		if ((o1 instanceof IRepairPlan) && (o2 instanceof IRepairPlan)) {
-			compare((IRepairPlan) o1, (IRepairPlan) o2);
+			return compare((IRepairPlan) o1, (IRepairPlan) o2);
 		} 
 		
 		return 0;
