@@ -209,7 +209,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	
 	@Override
 	public boolean applyRepair(IRepairPlan repair, Match match) {
-		return repairJob.applyRepair(repair, match);
+		return repairJob.applyRepair(repair, match, true);
 	}
 	
 	@Override
@@ -225,7 +225,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 			return true;
 		}
 		
-		return repairJob.undoRepair();
+		return repairJob.undoRepair(true);
 	}
 
 	public IResource removeEditRule(IResource selection) {
