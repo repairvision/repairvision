@@ -121,7 +121,7 @@ public class CPORepairApplication extends EclipseResourceRepairApplication<CPORe
 
 	@Override
 	public boolean applyRepair(IRepairPlan repair, Match match) {
-		return repairJob.applyRepair(repair, match);
+		return repairJob.applyRepair(repair, match, true);
 	}
 	
 	@Override
@@ -137,7 +137,7 @@ public class CPORepairApplication extends EclipseResourceRepairApplication<CPORe
 			return false;
 		}
 		
-		return repairJob.undoRepair();
+		return repairJob.undoRepair(true);
 	}
 
 	public IResource removeSubEditRule(IResource selection) {
