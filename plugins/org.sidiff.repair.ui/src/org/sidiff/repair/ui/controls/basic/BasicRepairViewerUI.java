@@ -178,8 +178,8 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 				application.calculateRepairs();
 			}
 		};
-		calculateRepairs.setText("Search Repairs");
-		calculateRepairs.setToolTipText("Search Repairs");
+		calculateRepairs.setText("Validate Model");
+		calculateRepairs.setToolTipText("Validate Model");
 		calculateRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/bulb.png"));
 		
 		// Set parameter value:
