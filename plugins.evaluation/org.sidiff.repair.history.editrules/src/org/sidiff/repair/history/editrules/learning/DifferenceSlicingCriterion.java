@@ -6,9 +6,9 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.editrule.recorder.filters.IAttributeFilter;
-import org.sidiff.editrule.recorder.filters.IObjectFilter;
-import org.sidiff.editrule.recorder.filters.IReferenceFilter;
+import org.sidiff.editrule.tools.recorder.filters.IAttributeFilter;
+import org.sidiff.editrule.tools.recorder.filters.IObjectFilter;
+import org.sidiff.editrule.tools.recorder.filters.IReferenceFilter;
 
 public class DifferenceSlicingCriterion {
 

@@ -14,8 +14,8 @@ import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.editrule.recorder.filters.IObjectFilter;
-import org.sidiff.editrule.recorder.filters.IReferenceFilter;
+import org.sidiff.editrule.tools.recorder.filters.IObjectFilter;
+import org.sidiff.editrule.tools.recorder.filters.IReferenceFilter;
 import org.sidiff.matching.model.Correspondence;
 
 public class DifferenceSlicer {
