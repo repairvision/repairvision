@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="historymodel" nsURI="http://www.sidiff.org/repair/history/model"
+    nsPrefix="historymodel">
+  <eClassifiers xsi:type="ecore:EClass" name="History">
+    <eOperations name="getPrecessorRevisions" upperBound="-1" eType="#//Version">
+      <eParameters name="version" eType="#//Version"/>
+    </eOperations>
+    <eOperations name="getSuccessorRevisions" upperBound="-1" eType="#//Version">
+      <eParameters name="version" eType="#//Version"/>
+    </eOperations>
+    <eOperations name="getValidationErrors" upperBound="-1" eType="#//ValidationError">
+      <eParameters name="introduced" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eParameters name="resolved" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eOperations>
+    <eOperations name="getUniqueValidationErrors" upperBound="-1" eType="#//ValidationError"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versions" upperBound="-1"
+        eType="#//Version" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allValidationErrors" upperBound="-1"
+        eType="#//ValidationError" changeable="false" volatile="true" transient="true"
+        derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Version">
+    <eOperations name="getElement" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
+      <eParameters name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="validationErrors" upperBound="-1"
+        eType="#//ValidationError" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="model" eType="#//Resource"
+        transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//ModelStatus"
+        defaultValueLiteral="UNKNOWN"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValidationError">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="introducedIn" eType="#//Version"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="resolvedIn" eType="#//Version"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="message" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="severity" eType="#//ValidationSeverity"
+        defaultValueLiteral="UNKNOWN"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="introduced" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resolved" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="prec" eType="#//ValidationError"
+        eOpposite="#//ValidationError/succ"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="succ" eType="#//ValidationError"
+        eOpposite="#//ValidationError/prec"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="invalidElement" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" changeable="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resolvedByUndo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="changeSets" upperBound="-1"
+        eType="#//ChangeSet" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Resource" instanceClassName="org.eclipse.emf.ecore.resource.Resource"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="ValidationSeverity">
+    <eLiterals name="ERROR" value="1"/>
+    <eLiterals name="WARNING" value="2"/>
+    <eLiterals name="UNKNOWN" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ModelStatus">
+    <eLiterals name="VALID"/>
+    <eLiterals name="INVALID" value="1"/>
+    <eLiterals name="DEFECT" value="2"/>
+    <eLiterals name="UNKNOWN" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ChangeSet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="changes" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.sidiff.difference.symmetric/model/Symmetric.ecore#//Change"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

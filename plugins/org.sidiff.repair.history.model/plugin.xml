@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated model -->
+      <package
+            uri="http://www.sidiff.org/repair/history/model"
+            class="org.sidiff.repair.historymodel.HistoryModelPackage"
+            genModel="model/model.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated model -->
+      <parser
+            type="history"
+            class="org.sidiff.repair.historymodel.util.HistoryModelResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.core.expressions.definitions">
+      <definition id="org.eclipse.emf.modelhistory.fileextension">
+         <adapt type="org.eclipse.core.resources.IResource">
+            <or>
+                <test property="org.eclipse.core.resources.extension"
+                      value="history">
+                </test>
+            </or>
+         </adapt>
+      </definition>
+   </extension>
+   
+</plugin>
