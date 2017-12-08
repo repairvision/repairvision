@@ -43,16 +43,6 @@ public class HistoryModelDatabase {
 			history = (History) historyResource.getContents().get(0);
 			
 			// FIXME: Append new versions from repository!
-			
-//			// Update current version:
-//			Version currentModelVersion = HistoryModelGenerator.generateVersion(
-//					history.getVersions().size(), inconsistentModel, validator);
-//			
-//			history.getVersions().remove(history.getVersions().size() - 1);
-//			history.getVersions().add(currentModelVersion);
-//			
-//			// TODO: Make this incremental:
-//			HistoryModelGenerator.generateIntroducedAndResolved(history, validator);
 		} 
 		
 		// Create new history database:
@@ -64,10 +54,6 @@ public class HistoryModelDatabase {
 			
 			IModelVersion inconsistentModelVersion = repositoryConnector.getModelVersion(inconsistentModel);
 			List<IModelVersion> revisions = repository.getModelVersions(inconsistentModelVersion);
-			
-//			// Append current version
-//			Collections.reverse(revisions);
-//			revisions.add(inconsistentModelVersion);
 			
 			// Search inconsistency traces:
 			history = HistoryModelGenerator.generateHistory(
@@ -87,13 +73,7 @@ public class HistoryModelDatabase {
 		}
 		
 		// Add current version:
-		Version currentModelVersion = HistoryModelGenerator.generateVersion(
-		history.getVersions().size(), inconsistentModel, validator);
-
-		history.getVersions().add(currentModelVersion);
-
-		// TODO: Make this incremental:
-		HistoryModelGenerator.generateIntroducedAndResolved(history, validator);
+		HistoryModelGenerator.appendVersion(history, inconsistentModel, validator);
 		
 		// Find last consistent version:
 		if (history != null) {

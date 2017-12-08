@@ -1,9 +1,7 @@
 package org.sidiff.history.analysis.tracing;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -57,15 +55,16 @@ public class HistoryModelGenerator {
 			Version versionA = history.getVersions().get(i);
 			Version versionB = history.getVersions().get(j);
 			
-			while (versionB.getStatus().equals(ModelStatus.DEFECT) && (j < (history.getVersions().size() - 1))) {
-				versionB = history.getVersions().get(++j);
-			}
+			// TODO: Do we need this workaround!?
+//			while (versionB.getStatus().equals(ModelStatus.DEFECT) && (j < (history.getVersions().size() - 1))) {
+//				versionB = history.getVersions().get(++j);
+//			}
 			
 			try {
-				if (versionA.getStatus().equals(ModelStatus.DEFECT)
-						|| versionB.getStatus().equals(ModelStatus.DEFECT)) {
-					continue;
-				}
+//				if (versionA.getStatus().equals(ModelStatus.DEFECT)
+//						|| versionB.getStatus().equals(ModelStatus.DEFECT)) {
+//					continue;
+//				}
 
 				Matching matching = generateMatching(versionA, versionB, settings);
 				generateUUIDs(matching);
@@ -81,7 +80,19 @@ public class HistoryModelGenerator {
 		return history;
 	}
 	
-	public static Version generateVersion(int revision, Resource model, IValidator validator) {
+	public static Version appendVersion(History history, Resource model, IValidator validator) {
+		Version modelVersion = HistoryModelGenerator.generateVersion(
+				history.getVersions().size(), model, validator);
+
+		history.getVersions().add(modelVersion);
+
+		HistoryModelGenerator.generateIntroducedAndResolved(history, validator, 
+				history.getVersions().size() - 2, history.getVersions().size() - 1);
+		
+		return modelVersion;
+	}
+	
+	private static Version generateVersion(int revision, Resource model, IValidator validator) {
 
 		Collection<ValidationError> validationErrors = validator.validate(model);
 		ModelStatus modelStatus = validationErrors.isEmpty() ? ModelStatus.VALID : ModelStatus.INVALID;
@@ -124,9 +135,13 @@ public class HistoryModelGenerator {
 		}
 	}
 	
-	public static void generateIntroducedAndResolved(History history, IValidator validator) {
+	private static void generateIntroducedAndResolved(History history, IValidator validator, int firstVersion, int lastVersion) {
 		
-		for (Version versionA : history.getVersions()) {
+		
+//		for (Version versionA : history.getVersions()) {
+		for (int i = firstVersion; i <= lastVersion; i++) {
+			Version versionA = history.getVersions().get(i);
+			
 			if (!history.getSuccessorRevisions(versionA).isEmpty()) {
 				Version versionB = history.getSuccessorRevisions(versionA).get(0);
 				
@@ -148,11 +163,14 @@ public class HistoryModelGenerator {
 			}
 		}
 		
-		List<Version> reverseOrder = new ArrayList<>();
-		reverseOrder.addAll(history.getVersions());
-		Collections.reverse(reverseOrder);
+//		List<Version> reverseOrder = new ArrayList<>();
+//		reverseOrder.addAll(history.getVersions());
+//		Collections.reverse(reverseOrder);
 		
-		for (Version versionB : reverseOrder) {
+//		for (Version versionB : reverseOrder) {
+		for (int i = lastVersion; i >= firstVersion; i--) {
+			Version versionB = history.getVersions().get(i);
+			
 			if (!history.getPrecessorRevisions(versionB).isEmpty()) {
 				Version versionA = history.getPrecessorRevisions(versionB).get(0);
 				
@@ -173,5 +191,9 @@ public class HistoryModelGenerator {
 				}
 			}
 		}
+	}
+	
+	private static void generateIntroducedAndResolved(History history, IValidator validator) {
+		generateIntroducedAndResolved(history, validator, 0, history.getVersions().size() - 1);
 	}
 }
