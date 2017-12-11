@@ -2,8 +2,9 @@ package org.sidiff.history.analysis.tracing;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.Iterator;
 
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -28,7 +29,7 @@ import org.sidiff.repair.historymodel.Version;
 public class HistoryModelGenerator {
 	
 	public static History generateHistory(String historyName, 
-			IModelRepository repository, List<IModelVersion> revisions, 
+			IModelRepository repository, Iterator<IModelVersion> revisions, 
 			IValidator validator, DifferenceSettings settings) {
 		
 		History history = HistoryModelFactory.eINSTANCE.createHistory();
@@ -37,15 +38,20 @@ public class HistoryModelGenerator {
 		//// Load history ////
 		
 		// Load model data:
-		for (int i = 0; i < revisions.size(); i++) {
+		while(revisions.hasNext()) {
+			IModelVersion revision = revisions.next();
+			
 			ResourceSet rss = new ResourceSetImpl();
-			Resource resource = repository.loadModelVersion(rss, revisions.get(i));
-			Version version = generateVersion(i + 1, resource, validator);
-
+			Resource resource = repository.loadModelVersion(rss, revision);
+			
+			Version version = generateVersion(revision.getVersion(), resource, validator);
+			
 			if (version != null) {
 				history.getVersions().add(version);
 			}
 		}
+		
+		ECollections.reverse(history.getVersions());
 		
 		//// Calculate matchings ////
 		
@@ -80,10 +86,23 @@ public class HistoryModelGenerator {
 		return history;
 	}
 	
-	public static Version appendVersion(History history, Resource model, IValidator validator) {
-		Version modelVersion = HistoryModelGenerator.generateVersion(
-				history.getVersions().size(), model, validator);
+	public static Version appendVersion(History history, IModelRepository repository, IModelVersion modelVersion, IValidator validator) {
+		
+		Resource model = repository.loadModelVersion(new ResourceSetImpl(), modelVersion);
+		Version historyVersion = HistoryModelGenerator.generateVersion(
+				modelVersion.getVersion(), model, validator);
+		history.getVersions().add(historyVersion);
 
+		HistoryModelGenerator.generateIntroducedAndResolved(history, validator, 
+				history.getVersions().size() - 2, history.getVersions().size() - 1);
+		
+		return historyVersion;
+	}
+	
+	public static Version appendVersion(History history, Resource model, IValidator validator) {
+
+		Version modelVersion = HistoryModelGenerator.generateVersion(
+				"WORKING COPY", model, validator);
 		history.getVersions().add(modelVersion);
 
 		HistoryModelGenerator.generateIntroducedAndResolved(history, validator, 
@@ -92,7 +111,7 @@ public class HistoryModelGenerator {
 		return modelVersion;
 	}
 	
-	private static Version generateVersion(int revision, Resource model, IValidator validator) {
+	private static Version generateVersion(String repositoryVersion, Resource model, IValidator validator) {
 
 		Collection<ValidationError> validationErrors = validator.validate(model);
 		ModelStatus modelStatus = validationErrors.isEmpty() ? ModelStatus.VALID : ModelStatus.INVALID;
@@ -110,9 +129,25 @@ public class HistoryModelGenerator {
 		version.setModel(model);
 		version.getValidationErrors().addAll(validationErrors);
 		version.setStatus(modelStatus);
-		version.setName(String.format("%03d", revision) + " - " + model.getURI().lastSegment());
+		version.setRepositoryVersion(repositoryVersion);
+		version.setName(printVersion(repositoryVersion) + " - " + model.getURI().lastSegment());
 		
 		return version;
+	}
+	
+	private static String printVersion(String repositoryVersion) {
+		
+		if (repositoryVersion != null) {
+			try {
+				int versionNumber = Integer.parseInt(repositoryVersion);
+				return String.format("%04d", versionNumber);
+			} catch (Exception e) {
+			}
+			
+			return repositoryVersion;
+		} else {
+			return "n/a";
+		}
 	}
 	
 	private static Matching generateMatching(Version versionA, Version versionB, DifferenceSettings settings) 

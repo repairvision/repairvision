@@ -2,7 +2,9 @@ package org.sidiff.history.analysis.tracing;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
@@ -12,6 +14,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
+import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.analysis.validation.IValidator;
 import org.sidiff.history.repository.IModelRepository;
@@ -42,7 +45,44 @@ public class HistoryModelDatabase {
 			
 			history = (History) historyResource.getContents().get(0);
 			
-			// FIXME: Append new versions from repository!
+			// Append new versions from repository:
+			if (WorkbenchUtil.showQuestion("Update history log?")) {
+				IModelRepository repository = ModelRepositoryRegistry.getRepository(inconsistentModel);
+				IModelRepositoryConnector repositoryConnector = ModelRepositoryRegistry.getConnector(repository);
+				IModelVersion inconsistentModelVersion = repositoryConnector.getModelVersion(inconsistentModel);
+				
+				Version version = getHistoryVersion(repository, inconsistentModelVersion, history);
+				
+				if (version == null) {
+					Iterator<IModelVersion> revisions = repository.getModelVersions(inconsistentModelVersion);
+					int latestHistoryVersionIndex = history.getVersions().size() - 1;
+					Version latestHistoryVersion = history.getVersions().get(latestHistoryVersionIndex);
+					
+					// Read new version:
+					List<IModelVersion> newVersions = new ArrayList<>();
+					
+					while (revisions.hasNext()) {
+						IModelVersion revision = revisions.next();
+						
+						if (!latestHistoryVersion.getRepositoryVersion().equals(revision.getVersion())) {
+							newVersions.add(revision);
+						}
+					}
+					
+					// Append new version:
+					Collections.reverse(newVersions);
+					
+					for (IModelVersion newVersion : newVersions) {
+						HistoryModelGenerator.appendVersion(history, repository, newVersion, validator);
+					}
+					
+					try {
+						history.eResource().save(Collections.EMPTY_MAP);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 		} 
 		
 		// Create new history database:
@@ -51,9 +91,8 @@ public class HistoryModelDatabase {
 			// Check out revisions:
 			IModelRepository repository = ModelRepositoryRegistry.getRepository(inconsistentModel);
 			IModelRepositoryConnector repositoryConnector = ModelRepositoryRegistry.getConnector(repository);
-			
 			IModelVersion inconsistentModelVersion = repositoryConnector.getModelVersion(inconsistentModel);
-			List<IModelVersion> revisions = repository.getModelVersions(inconsistentModelVersion);
+			Iterator<IModelVersion> revisions = repository.getModelVersions(inconsistentModelVersion);
 			
 			// Search inconsistency traces:
 			history = HistoryModelGenerator.generateHistory(
@@ -86,6 +125,19 @@ public class HistoryModelDatabase {
 			}
 		}
 			
+		return null;
+	}
+	
+	public static Version getHistoryVersion(IModelRepository repository, IModelVersion modelVersion, History history) {
+		
+		for (Version version : history.getVersions()) {
+			String lastRepositoryVersion = version.getRepositoryVersion();
+		
+			if (lastRepositoryVersion.equals(modelVersion.getVersion())) {
+				return version;
+			}
+		}
+		
 		return null;
 	}
 	

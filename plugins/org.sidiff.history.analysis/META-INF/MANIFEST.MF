@@ -3,12 +3,12 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Model History Analysis
 Bundle-SymbolicName: org.sidiff.history.analysis
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.sidiff.repair.history.model,
- org.sidiff.difference.technical.api,
- org.sidiff.validation.constraint.api,
- org.sidiff.validation.constraint.interpreter,
- org.sidiff.consistency.common,
- org.sidiff.history.repository
 Export-Package: org.sidiff.history.analysis.tracing,
- org.sidiff.history.analysis.validation
+  org.sidiff.history.analysis.validation
+Require-Bundle: org.sidiff.repair.history.model,
+  org.sidiff.difference.technical.api,
+  org.sidiff.validation.constraint.api,
+  org.sidiff.validation.constraint.interpreter,
+  org.sidiff.consistency.common,
+  org.sidiff.history.repository
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
