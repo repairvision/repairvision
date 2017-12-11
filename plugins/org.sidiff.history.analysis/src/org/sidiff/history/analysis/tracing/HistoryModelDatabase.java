@@ -36,51 +36,56 @@ public class HistoryModelDatabase {
 		File historyDatabaseFile = EMFStorage.uriToFile(historyDatabaseURI);
 		History history = null;
 		
+		IModelRepository repository = ModelRepositoryRegistry.getRepository(inconsistentModel);
+		IModelRepositoryConnector repositoryConnector = ModelRepositoryRegistry.getConnector(repository);
+		IModelVersion inconsistentModelVersion = repositoryConnector.getModelVersion(inconsistentModel);
+		
 		// Update history database:
 		if (historyDatabaseFile.exists()) {
 			
 			// Load history model:
 			ResourceSet rss = new ResourceSetImpl();
 			Resource historyResource = rss.getResource(historyDatabaseURI, true);
-			
 			history = (History) historyResource.getContents().get(0);
 			
+			// Search current model version in history:
+			Version inconsistentHistoryVersion = getHistoryVersion(repository, inconsistentModelVersion, history);
+			
+			// Detached history: 
+			if (inconsistentHistoryVersion != null) {
+				while (inconsistentHistoryVersion != history.getVersions().get(history.getVersions().size() - 1)) {
+					history.getVersions().remove(history.getVersions().size() - 1);
+				}
+			}
+			
 			// Append new versions from repository:
-			if (WorkbenchUtil.showQuestion("Update history log?")) {
-				IModelRepository repository = ModelRepositoryRegistry.getRepository(inconsistentModel);
-				IModelRepositoryConnector repositoryConnector = ModelRepositoryRegistry.getConnector(repository);
-				IModelVersion inconsistentModelVersion = repositoryConnector.getModelVersion(inconsistentModel);
-				
-				Version version = getHistoryVersion(repository, inconsistentModelVersion, history);
-				
-				if (version == null) {
-					Iterator<IModelVersion> revisions = repository.getModelVersions(inconsistentModelVersion);
-					int latestHistoryVersionIndex = history.getVersions().size() - 1;
-					Version latestHistoryVersion = history.getVersions().get(latestHistoryVersionIndex);
-					
-					// Read new version:
-					List<IModelVersion> newVersions = new ArrayList<>();
-					
-					while (revisions.hasNext()) {
-						IModelVersion revision = revisions.next();
-						
-						if (!latestHistoryVersion.getRepositoryVersion().equals(revision.getVersion())) {
-							newVersions.add(revision);
-						}
+			if ((inconsistentHistoryVersion == null) && WorkbenchUtil.showQuestion("Update history log?")) {
+				Iterator<IModelVersion> revisions = repository.getModelVersions(inconsistentModelVersion);
+				int latestHistoryVersionIndex = history.getVersions().size() - 1;
+				Version latestHistoryVersion = history.getVersions().get(latestHistoryVersionIndex);
+
+				// Read new version:
+				List<IModelVersion> newVersions = new ArrayList<>();
+
+				while (revisions.hasNext()) {
+					IModelVersion revision = revisions.next();
+
+					if (!latestHistoryVersion.getRepositoryVersion().equals(revision.getVersion())) {
+						newVersions.add(revision);
 					}
-					
-					// Append new version:
-					Collections.reverse(newVersions);
-					
-					for (IModelVersion newVersion : newVersions) {
-						HistoryModelGenerator.appendVersion(history, repository, newVersion, validator);
-					}
-					
-					try {
-						history.eResource().save(Collections.EMPTY_MAP);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+				}
+
+				// Append new version:
+				Collections.reverse(newVersions);
+
+				for (IModelVersion newVersion : newVersions) {
+					HistoryModelGenerator.appendVersion(history, repository, newVersion, validator);
+				}
+
+				try {
+					history.eResource().save(Collections.EMPTY_MAP);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 		} 
@@ -89,9 +94,6 @@ public class HistoryModelDatabase {
 		else {
 			
 			// Check out revisions:
-			IModelRepository repository = ModelRepositoryRegistry.getRepository(inconsistentModel);
-			IModelRepositoryConnector repositoryConnector = ModelRepositoryRegistry.getConnector(repository);
-			IModelVersion inconsistentModelVersion = repositoryConnector.getModelVersion(inconsistentModel);
 			Iterator<IModelVersion> revisions = repository.getModelVersions(inconsistentModelVersion);
 			
 			// Search inconsistency traces:
