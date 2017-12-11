@@ -38,7 +38,7 @@ public class HistoryModelDatabase {
 		
 		IModelRepository repository = ModelRepositoryRegistry.getRepository(inconsistentModel);
 		IModelRepositoryConnector repositoryConnector = ModelRepositoryRegistry.getConnector(repository);
-		IModelVersion inconsistentModelVersion = repositoryConnector.getModelVersion(inconsistentModel);
+		IModelVersion inconsistentModelVersion = repositoryConnector.getModelVersion(inconsistentModel.getURI());
 		
 		// Update history database:
 		if (historyDatabaseFile.exists()) {
