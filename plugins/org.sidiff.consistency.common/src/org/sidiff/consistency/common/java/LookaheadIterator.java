@@ -24,7 +24,7 @@ public class LookaheadIterator<T> implements Iterator<T> {
 
 	@Override
 	public boolean hasNext() {
-		return iterator.hasNext();
+		return isCached || iterator.hasNext();
 	}
 
 	@Override
