@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.history.repository.IModelRepository;
 import org.sidiff.history.repository.IModelRepositoryConnector;
@@ -58,6 +59,10 @@ public class ModelRepositoryRegistry {
 		}
 		
 		public static IModelRepository getRepository(Resource resource) {
+			return getRepository(resource.getURI());
+		}
+		
+		public static IModelRepository getRepository(URI resource) {
 			for (Entry<IModelRepository, IModelRepositoryConnector> repositoryEntry : getRepositories().entrySet()) {
 				if (repositoryEntry.getValue().canHandle(resource)) {
 					return repositoryEntry.getKey();

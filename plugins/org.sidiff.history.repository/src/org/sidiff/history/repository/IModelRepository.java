@@ -29,7 +29,7 @@ public interface IModelRepository {
 	 *            The model version version which contains the model URI.
 	 * @param modelURI
 	 *            The model URI to be resolved.
-	 * @return The resolved model version w.r.t. the given model version.
+	 * @return The resolved model history w.r.t. the given model version.
 	 */
-	IModelVersion resolveModelVersion(IModelVersion contextModelVersion, URI modelURI);
+	Iterator<IModelVersion> resolveModelVersion(IModelVersion contextModelVersion, URI modelURI);
 }

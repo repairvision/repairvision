@@ -1,6 +1,6 @@
 package org.sidiff.history.repository;
 
-import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.common.util.URI;
 
 public interface IModelRepositoryConnector {
 
@@ -10,12 +10,12 @@ public interface IModelRepositoryConnector {
 	 * @return <code>true</code> if the resource is connected to the repository;
 	 *         <code>false</code> otherwise.
 	 */
-	boolean canHandle(Resource resource);
+	boolean canHandle(URI resource);
 	
 	/**
 	 * @param resource
 	 *            A model resource.
 	 * @return The associated repository version.
 	 */
-	IModelVersion getModelVersion(Resource resource);
+	IModelVersion getModelVersion(URI resource);
 }
