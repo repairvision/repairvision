@@ -7,12 +7,12 @@ public interface IModelVersion {
 	/**
 	 * @return The history version of the model.
 	 */
-	Object getVersion();
+	String getVersion();
 	
 	/**
 	 * @return The repository location of the model.
 	 */
-	Object getRepositoryLocation();
+	String getRepositoryLocation();
 	
 	/**
 	 * @return The workspace location of the model.

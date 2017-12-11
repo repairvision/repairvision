@@ -1,6 +1,6 @@
 package org.sidiff.history.repository;
 
-import java.util.List;
+import java.util.Iterator;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -13,7 +13,7 @@ public interface IModelRepository {
 	 *            The repository location and version of the model.
 	 * @return The model history, starting with the most recent model version.
 	 */
-	List<IModelVersion> getModelVersions(IModelVersion modelVersion);
+	Iterator<IModelVersion> getModelVersions(IModelVersion modelVersion);
 	
 	/**
 	 * @param resourceSet
