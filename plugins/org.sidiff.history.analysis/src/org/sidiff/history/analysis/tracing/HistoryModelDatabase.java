@@ -26,6 +26,8 @@ import org.sidiff.repair.historymodel.ValidationError;
 import org.sidiff.repair.historymodel.Version;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.consistency.common.emf.ModelingUtil;
+import org.sidiff.common.emf.EMFUtil;
 
 public class HistoryModelDatabase {
 	
@@ -120,14 +122,41 @@ public class HistoryModelDatabase {
 		if (history != null) {
 			Version versionModelB = history.getVersions().get(history.getVersions().size() - 1);
 			ValidationError validationError = getValidationError(inconsistency, versionModelB);
-			Version lastConsistentVersion = getPrecessorRevision(validationError.getIntroducedIn());
 			
-			if (lastConsistentVersion != null) {
-				return lastConsistentVersion.getModel();
+			if (validationError.getIntroducedIn() != null) {
+				Version lastConsistentVersion = getPrecessorRevision(validationError.getIntroducedIn());
+				
+				if (lastConsistentVersion != null) {
+					return lastConsistentVersion.getModel();
+				}
 			}
 		}
+		
+		// Fallback solution: Create an "empty model"
+		ResourceSet rss = new ResourceSetImpl();
+		Resource emptyModel = rss.createResource(inconsistentModel.getURI().trimSegments(1)
+				.appendSegment(inconsistentModel.getURI().trimFileExtension().lastSegment() + "_empty")
+				.appendFileExtension(inconsistentModel.getURI().fileExtension()));
+		
+		// Copy roots:
+		inconsistentModel.getContents().forEach(obj -> {
+			EObject copyObj = ModelingUtil.copy(obj);
+			emptyModel.getContents().add(copyObj);
 			
-		return null;
+			try {
+				String uuid = EMFUtil.getXmiId(obj);
+				EMFUtil.setXmiId(copyObj, uuid);
+			} catch (Exception e) {
+			}
+		});
+		
+		try {
+			emptyModel.save(Collections.emptyMap());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return emptyModel;
 	}
 	
 	public static Version getHistoryVersion(IModelRepository repository, IModelVersion modelVersion, History history) {
