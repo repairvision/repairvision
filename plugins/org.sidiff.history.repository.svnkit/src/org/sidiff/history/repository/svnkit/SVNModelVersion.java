@@ -28,14 +28,23 @@ public class SVNModelVersion implements IModelVersion {
 		this.version = SVNRevision.create(revisionNumber);
 		this.repositoryLocation = repositoryLocation;
 	}
-
+	
 	@Override
-	public SVNRevision getVersion() {
-		return version;
+	public String getVersion() {
+		return version.getNumber() + "";
 	}
 
+	public SVNRevision getSVNVersion() {
+		return version;
+	}
+	
+
 	@Override
-	public SVNURL getRepositoryLocation() {
+	public String getRepositoryLocation() {
+		return repositoryLocation.getPath();
+	}
+
+	public SVNURL getSVNRepositoryLocation() {
 		return repositoryLocation;
 	}
 

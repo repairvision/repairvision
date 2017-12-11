@@ -8,6 +8,7 @@ import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.wc.SVNClientManager;
 import org.tmatesoft.svn.core.wc.SVNInfo;
 import org.tmatesoft.svn.core.wc.SVNRevision;
+import org.tmatesoft.svn.core.wc.SVNStatusClient;
 import org.tmatesoft.svn.core.wc.SVNWCClient;
 
 public class SVNModelRepositoryConnector implements IModelRepositoryConnector {
@@ -15,10 +16,11 @@ public class SVNModelRepositoryConnector implements IModelRepositoryConnector {
 	@Override
 	public boolean canHandle(Resource resource) {
 		try {
-			SVNWCClient client = SVNClientManager.newInstance().getWCClient(); 
-			client.doInfo(ModelRepositoryUtil.getModelFile(resource), SVNRevision.HEAD);
+//			SVNWCClient client = SVNClientManager.newInstance().getWCClient(); 
+//			client.doInfo(ModelRepositoryUtil.getModelFile(resource), SVNRevision.HEAD);
 			
-			return true;
+			SVNStatusClient client = SVNClientManager.newInstance().getStatusClient();
+			return client.doStatus(ModelRepositoryUtil.getModelFile(resource), false).isVersioned();
 		} catch (SVNException e) {
 		}
 		return false;
