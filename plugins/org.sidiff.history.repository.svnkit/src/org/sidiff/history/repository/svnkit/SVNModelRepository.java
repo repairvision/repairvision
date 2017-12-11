@@ -7,6 +7,7 @@ import java.util.Iterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.sidiff.consistency.common.java.LookaheadIterator;
 import org.sidiff.history.repository.IModelRepository;
 import org.sidiff.history.repository.IModelRepositoryConnector;
 import org.sidiff.history.repository.IModelVersion;
@@ -53,6 +54,19 @@ public class SVNModelRepository implements IModelRepository {
 	public Iterator<IModelVersion> resolveModelVersion(IModelVersion contextModelVersion, URI modelURI) {
 		IModelRepositoryConnector connector = ModelRepositoryRegistry.getConnector(this);
 		IModelVersion modelVersion = connector.getModelVersion(modelURI);
-		return getModelVersions(modelVersion);
+		
+		// Remove all versions that are newer then the given version:
+		LookaheadIterator<IModelVersion> history = new LookaheadIterator<IModelVersion>(getModelVersions(modelVersion));
+		
+		while (history.hasNext() && isNewer(history.lookahead(), contextModelVersion)) {
+			history.next();
+		}
+		
+		return history;
 	}
+	
+	private boolean isNewer(IModelVersion v1, IModelVersion v2) {
+		return ((SVNModelVersion) v1).getSVNVersion().getDate().after(((SVNModelVersion) v2).getSVNVersion().getDate());
+	}
+	
 }
