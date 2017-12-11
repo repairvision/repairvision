@@ -279,6 +279,15 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getVersion_RepositoryVersion() {
+		return (EAttribute)versionEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getVersion__GetElement__String() {
 		return versionEClass.getEOperations().get(0);
 	}
@@ -515,6 +524,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		createEAttribute(versionEClass, VERSION__MODEL_URI);
 		createEAttribute(versionEClass, VERSION__MODEL);
 		createEAttribute(versionEClass, VERSION__STATUS);
+		createEAttribute(versionEClass, VERSION__REPOSITORY_VERSION);
 		createEOperation(versionEClass, VERSION___GET_ELEMENT__STRING);
 
 		validationErrorEClass = createEClass(VALIDATION_ERROR);
@@ -569,8 +579,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		SymmetricPackage theSymmetricPackage = (SymmetricPackage)EPackage.Registry.INSTANCE.getEPackage(SymmetricPackage.eNS_URI);
 		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+		SymmetricPackage theSymmetricPackage = (SymmetricPackage)EPackage.Registry.INSTANCE.getEPackage(SymmetricPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -602,6 +612,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		initEAttribute(getVersion_ModelURI(), ecorePackage.getEString(), "modelURI", null, 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVersion_Model(), this.getResource(), "model", null, 0, 1, Version.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVersion_Status(), this.getModelStatus(), "status", "UNKNOWN", 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getVersion_RepositoryVersion(), theEcorePackage.getEString(), "repositoryVersion", null, 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getVersion__GetElement__String(), ecorePackage.getEObject(), "getElement", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "id", 0, 1, IS_UNIQUE, IS_ORDERED);

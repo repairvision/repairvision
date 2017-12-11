@@ -36,6 +36,7 @@ import org.sidiff.repair.historymodel.Version;
  *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getModelURI <em>Model URI</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getModel <em>Model</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getStatus <em>Status</em>}</li>
+ *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getRepositoryVersion <em>Repository Version</em>}</li>
  * </ul>
  *
  * @generated
@@ -130,6 +131,26 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * @ordered
 	 */
 	protected ModelStatus status = STATUS_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getRepositoryVersion() <em>Repository Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRepositoryVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String REPOSITORY_VERSION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getRepositoryVersion() <em>Repository Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRepositoryVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected String repositoryVersion = REPOSITORY_VERSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -254,6 +275,27 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getRepositoryVersion() {
+		return repositoryVersion;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRepositoryVersion(String newRepositoryVersion) {
+		String oldRepositoryVersion = repositoryVersion;
+		repositoryVersion = newRepositoryVersion;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HistoryModelPackage.VERSION__REPOSITORY_VERSION, oldRepositoryVersion, repositoryVersion));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public EObject getElement(String id) {
@@ -298,6 +340,8 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 				return getModel();
 			case HistoryModelPackage.VERSION__STATUS:
 				return getStatus();
+			case HistoryModelPackage.VERSION__REPOSITORY_VERSION:
+				return getRepositoryVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -327,6 +371,9 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 			case HistoryModelPackage.VERSION__STATUS:
 				setStatus((ModelStatus)newValue);
 				return;
+			case HistoryModelPackage.VERSION__REPOSITORY_VERSION:
+				setRepositoryVersion((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -354,6 +401,9 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 			case HistoryModelPackage.VERSION__STATUS:
 				setStatus(STATUS_EDEFAULT);
 				return;
+			case HistoryModelPackage.VERSION__REPOSITORY_VERSION:
+				setRepositoryVersion(REPOSITORY_VERSION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -376,6 +426,8 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 				return MODEL_EDEFAULT == null ? model != null : !MODEL_EDEFAULT.equals(model);
 			case HistoryModelPackage.VERSION__STATUS:
 				return status != STATUS_EDEFAULT;
+			case HistoryModelPackage.VERSION__REPOSITORY_VERSION:
+				return REPOSITORY_VERSION_EDEFAULT == null ? repositoryVersion != null : !REPOSITORY_VERSION_EDEFAULT.equals(repositoryVersion);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -412,6 +464,8 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 		result.append(model);
 		result.append(", status: ");
 		result.append(status);
+		result.append(", repositoryVersion: ");
+		result.append(repositoryVersion);
 		result.append(')');
 		return result.toString();
 	}

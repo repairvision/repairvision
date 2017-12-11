@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
  *   <li>{@link org.sidiff.repair.historymodel.Version#getModelURI <em>Model URI</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.Version#getModel <em>Model</em>}</li>
  *   <li>{@link org.sidiff.repair.historymodel.Version#getStatus <em>Status</em>}</li>
+ *   <li>{@link org.sidiff.repair.historymodel.Version#getRepositoryVersion <em>Repository Version</em>}</li>
  * </ul>
  *
  * @see org.sidiff.repair.historymodel.HistoryModelPackage#getVersion()
@@ -148,6 +149,32 @@ public interface Version extends EObject {
 	 * @generated
 	 */
 	void setStatus(ModelStatus value);
+
+	/**
+	 * Returns the value of the '<em><b>Repository Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Repository Version</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Repository Version</em>' attribute.
+	 * @see #setRepositoryVersion(String)
+	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getVersion_RepositoryVersion()
+	 * @model
+	 * @generated
+	 */
+	String getRepositoryVersion();
+
+	/**
+	 * Sets the value of the '{@link org.sidiff.repair.historymodel.Version#getRepositoryVersion <em>Repository Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Repository Version</em>' attribute.
+	 * @see #getRepositoryVersion()
+	 * @generated
+	 */
+	void setRepositoryVersion(String value);
 
 	/**
 	 * <!-- begin-user-doc -->

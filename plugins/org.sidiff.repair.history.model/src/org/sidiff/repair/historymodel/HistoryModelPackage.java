@@ -206,13 +206,22 @@ public interface HistoryModelPackage extends EPackage {
 	int VERSION__STATUS = 4;
 
 	/**
+	 * The feature id for the '<em><b>Repository Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION__REPOSITORY_VERSION = 5;
+
+	/**
 	 * The number of structural features of the '<em>Version</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERSION_FEATURE_COUNT = 5;
+	int VERSION_FEATURE_COUNT = 6;
 
 	/**
 	 * The operation id for the '<em>Get Element</em>' operation.
@@ -611,6 +620,17 @@ public interface HistoryModelPackage extends EPackage {
 	EAttribute getVersion_Status();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.Version#getRepositoryVersion <em>Repository Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Repository Version</em>'.
+	 * @see org.sidiff.repair.historymodel.Version#getRepositoryVersion()
+	 * @see #getVersion()
+	 * @generated
+	 */
+	EAttribute getVersion_RepositoryVersion();
+
+	/**
 	 * Returns the meta object for the '{@link org.sidiff.repair.historymodel.Version#getElement(java.lang.String) <em>Get Element</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -985,6 +1005,14 @@ public interface HistoryModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute VERSION__STATUS = eINSTANCE.getVersion_Status();
+
+		/**
+		 * The meta object literal for the '<em><b>Repository Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERSION__REPOSITORY_VERSION = eINSTANCE.getVersion_RepositoryVersion();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Element</b></em>' operation.
