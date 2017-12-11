@@ -1,6 +1,6 @@
 package org.sidiff.history.repository.svnkit;
 
-import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.common.util.URI;
 import org.sidiff.history.repository.IModelRepositoryConnector;
 import org.sidiff.history.repository.IModelVersion;
 import org.sidiff.history.repository.util.ModelRepositoryUtil;
@@ -14,11 +14,8 @@ import org.tmatesoft.svn.core.wc.SVNWCClient;
 public class SVNModelRepositoryConnector implements IModelRepositoryConnector {
 
 	@Override
-	public boolean canHandle(Resource resource) {
+	public boolean canHandle(URI resource) {
 		try {
-//			SVNWCClient client = SVNClientManager.newInstance().getWCClient(); 
-//			client.doInfo(ModelRepositoryUtil.getModelFile(resource), SVNRevision.HEAD);
-			
 			SVNStatusClient client = SVNClientManager.newInstance().getStatusClient();
 			return client.doStatus(ModelRepositoryUtil.getModelFile(resource), false).isVersioned();
 		} catch (SVNException e) {
@@ -27,13 +24,13 @@ public class SVNModelRepositoryConnector implements IModelRepositoryConnector {
 	}
 	
 	@Override
-	public IModelVersion getModelVersion(Resource resource) {
+	public IModelVersion getModelVersion(URI resource) {
 		try {
 			SVNWCClient client = SVNClientManager.newInstance().getWCClient(); 
 			SVNInfo info = client.doInfo(ModelRepositoryUtil.getModelFile(resource), SVNRevision.WORKING);
 			
 			SVNModelVersion modelVersion = new SVNModelVersion(info);
-			modelVersion.setWorkspaceLocation(resource.getURI());
+			modelVersion.setWorkspaceLocation(resource);
 			
 			return modelVersion;
 		} catch (SVNException e) {

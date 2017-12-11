@@ -8,7 +8,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.sidiff.history.repository.IModelRepository;
+import org.sidiff.history.repository.IModelRepositoryConnector;
 import org.sidiff.history.repository.IModelVersion;
+import org.sidiff.history.repository.registry.ModelRepositoryRegistry;
 import org.sidiff.history.repository.util.ModelRepositoryUtil;
 import org.tmatesoft.svn.core.io.SVNRepository;
 import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
@@ -48,7 +50,9 @@ public class SVNModelRepository implements IModelRepository {
 	}
 
 	@Override
-	public IModelVersion resolveModelVersion(IModelVersion contextModelVersion, URI modelURI) {
-		throw new UnsupportedOperationException();
+	public Iterator<IModelVersion> resolveModelVersion(IModelVersion contextModelVersion, URI modelURI) {
+		IModelRepositoryConnector connector = ModelRepositoryRegistry.getConnector(this);
+		IModelVersion modelVersion = connector.getModelVersion(modelURI);
+		return getModelVersions(modelVersion);
 	}
 }
