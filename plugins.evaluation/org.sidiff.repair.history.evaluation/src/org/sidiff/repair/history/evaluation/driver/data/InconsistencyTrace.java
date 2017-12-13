@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.consistency.common.ui.util.InfoConsole;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Version;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.Version;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class InconsistencyTrace {

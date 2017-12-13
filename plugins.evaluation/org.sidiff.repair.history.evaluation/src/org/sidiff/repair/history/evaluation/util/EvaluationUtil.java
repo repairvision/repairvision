@@ -20,10 +20,10 @@ import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.historymodel.History;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Version;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
-import org.sidiff.repair.historymodel.History;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.Version;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 
