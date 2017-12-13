@@ -8,9 +8,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.uml2.uml.resource.UMLResource;
-import org.sidiff.repair.historymodel.HistoryModelFactory;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.ValidationSeverity;
+import org.sidiff.historymodel.HistoryModelFactory;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.ValidationSeverity;
 
 /**
  * Delegates the validation

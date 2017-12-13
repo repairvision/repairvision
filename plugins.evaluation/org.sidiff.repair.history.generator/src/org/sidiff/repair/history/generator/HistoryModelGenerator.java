@@ -24,17 +24,17 @@ import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.consistency.common.storage.UUIDResource;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.historymodel.History;
+import org.sidiff.historymodel.HistoryModelFactory;
+import org.sidiff.historymodel.ModelStatus;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Version;
 import org.sidiff.matching.api.MatchingFacade;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.Matching;
 import org.sidiff.repair.history.generator.repository.IHistoryRepository;
 import org.sidiff.repair.history.generator.repository.ModelNamingUtil;
 import org.sidiff.repair.history.generator.settings.EvaluationSettings;
-import org.sidiff.repair.historymodel.History;
-import org.sidiff.repair.historymodel.HistoryModelFactory;
-import org.sidiff.repair.historymodel.ModelStatus;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.Version;
 
 public class HistoryModelGenerator {
 	

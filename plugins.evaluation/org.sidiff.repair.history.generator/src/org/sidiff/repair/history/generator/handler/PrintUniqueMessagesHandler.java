@@ -10,8 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -35,9 +35,9 @@ import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
-import org.sidiff.repair.historymodel.History;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.Version;
+import org.sidiff.historymodel.History;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Version;
 
 
 
@@ -74,7 +74,7 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 				if (selection instanceof IStructuredSelection){
 					IStructuredSelection structuredSelection = (IStructuredSelection) selection;
 					Map<String,  List<ValidationError>> messages = new HashMap<String, List<ValidationError>>();
-					for (Iterator<Object> iterator = structuredSelection.iterator(); iterator.hasNext();) {
+					for (Iterator<?> iterator = structuredSelection.iterator(); iterator.hasNext();) {
 						Object obj = iterator.next();
 						if(obj instanceof IProject){
 							IProject project = (IProject)obj;

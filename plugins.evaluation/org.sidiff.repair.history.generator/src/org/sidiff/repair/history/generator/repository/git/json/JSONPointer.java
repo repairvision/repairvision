@@ -5,7 +5,9 @@ import static java.lang.String.format;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /*
 Copyright (c) 2002 JSON.org
@@ -207,7 +209,6 @@ public class JSONPointer {
      * @return the matched object. If no matching item is found a
      * JSONPointerException is thrown
      */
-    @SuppressWarnings("boxing")
     private Object readByIndexToken(Object current, String indexToken) {
         try {
             int index = Integer.parseInt(indexToken);

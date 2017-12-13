@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.repair.historymodel.HistoryModelFactory;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.ValidationSeverity;
+import org.sidiff.historymodel.HistoryModelFactory;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.ValidationSeverity;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 
 public class FOLValidator extends BasicValidation {
