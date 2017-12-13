@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.repair.historymodel.ValidationError;
+import org.sidiff.historymodel.ValidationError;
 
 /**
  * Encapsulates a concrete validation framework.

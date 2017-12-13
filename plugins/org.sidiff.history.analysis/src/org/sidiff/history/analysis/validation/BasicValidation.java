@@ -3,7 +3,7 @@ package org.sidiff.history.analysis.validation;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.common.emf.EMFUtil;
-import org.sidiff.repair.historymodel.ValidationError;
+import org.sidiff.historymodel.ValidationError;
 
 public abstract class BasicValidation implements IValidator {
 	

@@ -17,14 +17,14 @@ import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.analysis.validation.IValidator;
 import org.sidiff.history.repository.IModelRepository;
 import org.sidiff.history.repository.IModelVersion;
+import org.sidiff.historymodel.History;
+import org.sidiff.historymodel.HistoryModelFactory;
+import org.sidiff.historymodel.ModelStatus;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Version;
 import org.sidiff.matching.api.MatchingFacade;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.Matching;
-import org.sidiff.repair.historymodel.History;
-import org.sidiff.repair.historymodel.HistoryModelFactory;
-import org.sidiff.repair.historymodel.ModelStatus;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.Version;
 
 public class HistoryModelGenerator {
 	

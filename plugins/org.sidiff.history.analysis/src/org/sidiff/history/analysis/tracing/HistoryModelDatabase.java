@@ -13,7 +13,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
+import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.analysis.validation.IValidator;
@@ -21,13 +23,11 @@ import org.sidiff.history.repository.IModelRepository;
 import org.sidiff.history.repository.IModelRepositoryConnector;
 import org.sidiff.history.repository.IModelVersion;
 import org.sidiff.history.repository.registry.ModelRepositoryRegistry;
-import org.sidiff.repair.historymodel.History;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.Version;
+import org.sidiff.historymodel.History;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Version;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.consistency.common.emf.ModelingUtil;
-import org.sidiff.common.emf.EMFUtil;
 
 public class HistoryModelDatabase {
 	
