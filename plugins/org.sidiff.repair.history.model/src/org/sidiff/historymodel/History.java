@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel;
+package org.sidiff.historymodel;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -15,12 +15,12 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.repair.historymodel.History#getName <em>Name</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.History#getVersions <em>Versions</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.History#getAllValidationErrors <em>All Validation Errors</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.History#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.History#getVersions <em>Versions</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.History#getAllValidationErrors <em>All Validation Errors</em>}</li>
  * </ul>
  *
- * @see org.sidiff.repair.historymodel.HistoryModelPackage#getHistory()
+ * @see org.sidiff.historymodel.HistoryModelPackage#getHistory()
  * @model
  * @generated
  */
@@ -35,14 +35,14 @@ public interface History extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getHistory_Name()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getHistory_Name()
 	 * @model
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.History#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.History#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
@@ -53,7 +53,7 @@ public interface History extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Versions</b></em>' containment reference list.
-	 * The list contents are of type {@link org.sidiff.repair.historymodel.Version}.
+	 * The list contents are of type {@link org.sidiff.historymodel.Version}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Versions</em>' containment reference list isn't clear,
@@ -61,7 +61,7 @@ public interface History extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Versions</em>' containment reference list.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getHistory_Versions()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getHistory_Versions()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -69,7 +69,7 @@ public interface History extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>All Validation Errors</b></em>' reference list.
-	 * The list contents are of type {@link org.sidiff.repair.historymodel.ValidationError}.
+	 * The list contents are of type {@link org.sidiff.historymodel.ValidationError}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>All Validation Errors</em>' reference list isn't clear,
@@ -77,7 +77,7 @@ public interface History extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>All Validation Errors</em>' reference list.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getHistory_AllValidationErrors()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getHistory_AllValidationErrors()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */

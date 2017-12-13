@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.impl;
+package org.sidiff.historymodel.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
@@ -18,10 +18,10 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.sidiff.repair.historymodel.History;
-import org.sidiff.repair.historymodel.HistoryModelPackage;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.Version;
+import org.sidiff.historymodel.History;
+import org.sidiff.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Version;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,9 +31,9 @@ import org.sidiff.repair.historymodel.Version;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.repair.historymodel.impl.HistoryImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.HistoryImpl#getVersions <em>Versions</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.HistoryImpl#getAllValidationErrors <em>All Validation Errors</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.HistoryImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.HistoryImpl#getVersions <em>Versions</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.HistoryImpl#getAllValidationErrors <em>All Validation Errors</em>}</li>
  * </ul>
  *
  * @generated

@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel;
+package org.sidiff.historymodel;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -17,11 +17,11 @@ import org.sidiff.difference.symmetric.Change;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.repair.historymodel.ChangeSet#getChanges <em>Changes</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ChangeSet#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ChangeSet#getChanges <em>Changes</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ChangeSet#getName <em>Name</em>}</li>
  * </ul>
  *
- * @see org.sidiff.repair.historymodel.HistoryModelPackage#getChangeSet()
+ * @see org.sidiff.historymodel.HistoryModelPackage#getChangeSet()
  * @model
  * @generated
  */
@@ -36,7 +36,7 @@ public interface ChangeSet extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Changes</em>' containment reference list.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getChangeSet_Changes()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getChangeSet_Changes()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -52,14 +52,14 @@ public interface ChangeSet extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getChangeSet_Name()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getChangeSet_Name()
 	 * @model
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ChangeSet#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.ChangeSet#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.

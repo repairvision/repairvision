@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.impl;
+package org.sidiff.historymodel.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.repair.historymodel.*;
+import org.sidiff.historymodel.*;
 
 /**
  * <!-- begin-user-doc -->

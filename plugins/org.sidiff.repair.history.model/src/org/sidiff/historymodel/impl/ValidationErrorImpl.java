@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.impl;
+package org.sidiff.historymodel.impl;
 
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
@@ -14,11 +14,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.sidiff.repair.historymodel.ChangeSet;
-import org.sidiff.repair.historymodel.HistoryModelPackage;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.ValidationSeverity;
-import org.sidiff.repair.historymodel.Version;
+import org.sidiff.historymodel.ChangeSet;
+import org.sidiff.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.ValidationSeverity;
+import org.sidiff.historymodel.Version;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,20 +28,20 @@ import org.sidiff.repair.historymodel.Version;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getIntroducedIn <em>Introduced In</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getResolvedIn <em>Resolved In</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getMessage <em>Message</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getSource <em>Source</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getSeverity <em>Severity</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#isIntroduced <em>Introduced</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#isResolved <em>Resolved</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getPrec <em>Prec</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getSucc <em>Succ</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getInvalidElement <em>Invalid Element</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getContext <em>Context</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#isResolvedByUndo <em>Resolved By Undo</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl#getChangeSets <em>Change Sets</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#getIntroducedIn <em>Introduced In</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#getResolvedIn <em>Resolved In</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#getMessage <em>Message</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#getSource <em>Source</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#getSeverity <em>Severity</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#isIntroduced <em>Introduced</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#isResolved <em>Resolved</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#getPrec <em>Prec</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#getSucc <em>Succ</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#getInvalidElement <em>Invalid Element</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#getContext <em>Context</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#isResolvedByUndo <em>Resolved By Undo</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ValidationErrorImpl#getChangeSets <em>Change Sets</em>}</li>
  * </ul>
  *
  * @generated

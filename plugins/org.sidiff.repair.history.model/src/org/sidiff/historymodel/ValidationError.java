@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel;
+package org.sidiff.historymodel;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -15,23 +15,23 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getName <em>Name</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getIntroducedIn <em>Introduced In</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getResolvedIn <em>Resolved In</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getMessage <em>Message</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getSource <em>Source</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getSeverity <em>Severity</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#isIntroduced <em>Introduced</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#isResolved <em>Resolved</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getPrec <em>Prec</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getSucc <em>Succ</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getInvalidElement <em>Invalid Element</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getContext <em>Context</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#isResolvedByUndo <em>Resolved By Undo</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.ValidationError#getChangeSets <em>Change Sets</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#getIntroducedIn <em>Introduced In</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#getResolvedIn <em>Resolved In</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#getMessage <em>Message</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#getSource <em>Source</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#getSeverity <em>Severity</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#isIntroduced <em>Introduced</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#isResolved <em>Resolved</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#getPrec <em>Prec</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#getSucc <em>Succ</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#getInvalidElement <em>Invalid Element</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#getContext <em>Context</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#isResolvedByUndo <em>Resolved By Undo</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.ValidationError#getChangeSets <em>Change Sets</em>}</li>
  * </ul>
  *
- * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError()
+ * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError()
  * @model
  * @generated
  */
@@ -46,14 +46,14 @@ public interface ValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_Name()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_Name()
 	 * @model
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ValidationError#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.ValidationError#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
@@ -72,14 +72,14 @@ public interface ValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Introduced In</em>' reference.
 	 * @see #setIntroducedIn(Version)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_IntroducedIn()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_IntroducedIn()
 	 * @model
 	 * @generated
 	 */
 	Version getIntroducedIn();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ValidationError#getIntroducedIn <em>Introduced In</em>}' reference.
+	 * Sets the value of the '{@link org.sidiff.historymodel.ValidationError#getIntroducedIn <em>Introduced In</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Introduced In</em>' reference.
@@ -98,14 +98,14 @@ public interface ValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Resolved In</em>' reference.
 	 * @see #setResolvedIn(Version)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_ResolvedIn()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_ResolvedIn()
 	 * @model
 	 * @generated
 	 */
 	Version getResolvedIn();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ValidationError#getResolvedIn <em>Resolved In</em>}' reference.
+	 * Sets the value of the '{@link org.sidiff.historymodel.ValidationError#getResolvedIn <em>Resolved In</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Resolved In</em>' reference.
@@ -124,14 +124,14 @@ public interface ValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Message</em>' attribute.
 	 * @see #setMessage(String)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_Message()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_Message()
 	 * @model
 	 * @generated
 	 */
 	String getMessage();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ValidationError#getMessage <em>Message</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.ValidationError#getMessage <em>Message</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Message</em>' attribute.
@@ -150,14 +150,14 @@ public interface ValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Source</em>' attribute.
 	 * @see #setSource(String)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_Source()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_Source()
 	 * @model
 	 * @generated
 	 */
 	String getSource();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ValidationError#getSource <em>Source</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.ValidationError#getSource <em>Source</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Source</em>' attribute.
@@ -169,7 +169,7 @@ public interface ValidationError extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Severity</b></em>' attribute.
 	 * The default value is <code>"UNKNOWN"</code>.
-	 * The literals are from the enumeration {@link org.sidiff.repair.historymodel.ValidationSeverity}.
+	 * The literals are from the enumeration {@link org.sidiff.historymodel.ValidationSeverity}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Severity</em>' attribute isn't clear,
@@ -177,20 +177,20 @@ public interface ValidationError extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Severity</em>' attribute.
-	 * @see org.sidiff.repair.historymodel.ValidationSeverity
+	 * @see org.sidiff.historymodel.ValidationSeverity
 	 * @see #setSeverity(ValidationSeverity)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_Severity()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_Severity()
 	 * @model default="UNKNOWN"
 	 * @generated
 	 */
 	ValidationSeverity getSeverity();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ValidationError#getSeverity <em>Severity</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.ValidationError#getSeverity <em>Severity</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Severity</em>' attribute.
-	 * @see org.sidiff.repair.historymodel.ValidationSeverity
+	 * @see org.sidiff.historymodel.ValidationSeverity
 	 * @see #getSeverity()
 	 * @generated
 	 */
@@ -205,7 +205,7 @@ public interface ValidationError extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Introduced</em>' attribute.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_Introduced()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_Introduced()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
@@ -220,7 +220,7 @@ public interface ValidationError extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Resolved</em>' attribute.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_Resolved()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_Resolved()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
@@ -228,7 +228,7 @@ public interface ValidationError extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Prec</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.repair.historymodel.ValidationError#getSucc <em>Succ</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.historymodel.ValidationError#getSucc <em>Succ</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Prec</em>' reference isn't clear,
@@ -237,15 +237,15 @@ public interface ValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Prec</em>' reference.
 	 * @see #setPrec(ValidationError)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_Prec()
-	 * @see org.sidiff.repair.historymodel.ValidationError#getSucc
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_Prec()
+	 * @see org.sidiff.historymodel.ValidationError#getSucc
 	 * @model opposite="succ"
 	 * @generated
 	 */
 	ValidationError getPrec();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ValidationError#getPrec <em>Prec</em>}' reference.
+	 * Sets the value of the '{@link org.sidiff.historymodel.ValidationError#getPrec <em>Prec</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Prec</em>' reference.
@@ -256,7 +256,7 @@ public interface ValidationError extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Succ</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.repair.historymodel.ValidationError#getPrec <em>Prec</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.historymodel.ValidationError#getPrec <em>Prec</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Succ</em>' reference isn't clear,
@@ -265,15 +265,15 @@ public interface ValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Succ</em>' reference.
 	 * @see #setSucc(ValidationError)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_Succ()
-	 * @see org.sidiff.repair.historymodel.ValidationError#getPrec
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_Succ()
+	 * @see org.sidiff.historymodel.ValidationError#getPrec
 	 * @model opposite="prec"
 	 * @generated
 	 */
 	ValidationError getSucc();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ValidationError#getSucc <em>Succ</em>}' reference.
+	 * Sets the value of the '{@link org.sidiff.historymodel.ValidationError#getSucc <em>Succ</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Succ</em>' reference.
@@ -292,7 +292,7 @@ public interface ValidationError extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Invalid Element</em>' reference list.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_InvalidElement()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_InvalidElement()
 	 * @model changeable="false"
 	 * @generated
 	 */
@@ -308,14 +308,14 @@ public interface ValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Context</em>' reference.
 	 * @see #setContext(EObject)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_Context()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_Context()
 	 * @model
 	 * @generated
 	 */
 	EObject getContext();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ValidationError#getContext <em>Context</em>}' reference.
+	 * Sets the value of the '{@link org.sidiff.historymodel.ValidationError#getContext <em>Context</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Context</em>' reference.
@@ -334,14 +334,14 @@ public interface ValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Resolved By Undo</em>' attribute.
 	 * @see #setResolvedByUndo(boolean)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_ResolvedByUndo()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_ResolvedByUndo()
 	 * @model
 	 * @generated
 	 */
 	boolean isResolvedByUndo();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.ValidationError#isResolvedByUndo <em>Resolved By Undo</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.ValidationError#isResolvedByUndo <em>Resolved By Undo</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Resolved By Undo</em>' attribute.
@@ -352,7 +352,7 @@ public interface ValidationError extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Change Sets</b></em>' containment reference list.
-	 * The list contents are of type {@link org.sidiff.repair.historymodel.ChangeSet}.
+	 * The list contents are of type {@link org.sidiff.historymodel.ChangeSet}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Change Sets</em>' containment reference list isn't clear,
@@ -360,7 +360,7 @@ public interface ValidationError extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Change Sets</em>' containment reference list.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getValidationError_ChangeSets()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getValidationError_ChangeSets()
 	 * @model containment="true"
 	 * @generated
 	 */

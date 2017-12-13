@@ -1,13 +1,12 @@
 /**
  */
-package org.sidiff.repair.historymodel.util;
+package org.sidiff.historymodel.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
-
-import org.sidiff.repair.historymodel.*;
+import org.sidiff.historymodel.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,7 +18,7 @@ import org.sidiff.repair.historymodel.*;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.sidiff.repair.historymodel.HistoryModelPackage
+ * @see org.sidiff.historymodel.HistoryModelPackage
  * @generated
  */
 public class HistoryModelSwitch<T> extends Switch<T> {

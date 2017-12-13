@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel;
+package org.sidiff.historymodel;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,43 +10,33 @@ import org.eclipse.emf.common.util.Enumerator;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Model Status</b></em>',
+ * A representation of the literals of the enumeration '<em><b>Validation Severity</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see org.sidiff.repair.historymodel.HistoryModelPackage#getModelStatus()
+ * @see org.sidiff.historymodel.HistoryModelPackage#getValidationSeverity()
  * @model
  * @generated
  */
-public enum ModelStatus implements Enumerator {
+public enum ValidationSeverity implements Enumerator {
 	/**
-	 * The '<em><b>VALID</b></em>' literal object.
+	 * The '<em><b>ERROR</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #VALID_VALUE
+	 * @see #ERROR_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	VALID(0, "VALID", "VALID"),
+	ERROR(1, "ERROR", "ERROR"),
 
 	/**
-	 * The '<em><b>INVALID</b></em>' literal object.
+	 * The '<em><b>WARNING</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #INVALID_VALUE
+	 * @see #WARNING_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	INVALID(1, "INVALID", "INVALID"),
-
-	/**
-	 * The '<em><b>DEFECT</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #DEFECT_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	DEFECT(2, "DEFECT", "DEFECT"),
+	WARNING(2, "WARNING", "WARNING"),
 
 	/**
 	 * The '<em><b>UNKNOWN</b></em>' literal object.
@@ -59,49 +49,34 @@ public enum ModelStatus implements Enumerator {
 	UNKNOWN(3, "UNKNOWN", "UNKNOWN");
 
 	/**
-	 * The '<em><b>VALID</b></em>' literal value.
+	 * The '<em><b>ERROR</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>VALID</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>ERROR</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #VALID
+	 * @see #ERROR
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int VALID_VALUE = 0;
+	public static final int ERROR_VALUE = 1;
 
 	/**
-	 * The '<em><b>INVALID</b></em>' literal value.
+	 * The '<em><b>WARNING</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>INVALID</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>WARNING</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #INVALID
+	 * @see #WARNING
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int INVALID_VALUE = 1;
-
-	/**
-	 * The '<em><b>DEFECT</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>DEFECT</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #DEFECT
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
-	public static final int DEFECT_VALUE = 2;
+	public static final int WARNING_VALUE = 2;
 
 	/**
 	 * The '<em><b>UNKNOWN</b></em>' literal value.
@@ -119,38 +94,37 @@ public enum ModelStatus implements Enumerator {
 	public static final int UNKNOWN_VALUE = 3;
 
 	/**
-	 * An array of all the '<em><b>Model Status</b></em>' enumerators.
+	 * An array of all the '<em><b>Validation Severity</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final ModelStatus[] VALUES_ARRAY =
-		new ModelStatus[] {
-			VALID,
-			INVALID,
-			DEFECT,
+	private static final ValidationSeverity[] VALUES_ARRAY =
+		new ValidationSeverity[] {
+			ERROR,
+			WARNING,
 			UNKNOWN,
 		};
 
 	/**
-	 * A public read-only list of all the '<em><b>Model Status</b></em>' enumerators.
+	 * A public read-only list of all the '<em><b>Validation Severity</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final List<ModelStatus> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+	public static final List<ValidationSeverity> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
-	 * Returns the '<em><b>Model Status</b></em>' literal with the specified literal value.
+	 * Returns the '<em><b>Validation Severity</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param literal the literal.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static ModelStatus get(String literal) {
+	public static ValidationSeverity get(String literal) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			ModelStatus result = VALUES_ARRAY[i];
+			ValidationSeverity result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal)) {
 				return result;
 			}
@@ -159,16 +133,16 @@ public enum ModelStatus implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>Model Status</b></em>' literal with the specified name.
+	 * Returns the '<em><b>Validation Severity</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param name the name.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static ModelStatus getByName(String name) {
+	public static ValidationSeverity getByName(String name) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			ModelStatus result = VALUES_ARRAY[i];
+			ValidationSeverity result = VALUES_ARRAY[i];
 			if (result.getName().equals(name)) {
 				return result;
 			}
@@ -177,18 +151,17 @@ public enum ModelStatus implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>Model Status</b></em>' literal with the specified integer value.
+	 * Returns the '<em><b>Validation Severity</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the integer value.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static ModelStatus get(int value) {
+	public static ValidationSeverity get(int value) {
 		switch (value) {
-			case VALID_VALUE: return VALID;
-			case INVALID_VALUE: return INVALID;
-			case DEFECT_VALUE: return DEFECT;
+			case ERROR_VALUE: return ERROR;
+			case WARNING_VALUE: return WARNING;
 			case UNKNOWN_VALUE: return UNKNOWN;
 		}
 		return null;
@@ -221,7 +194,7 @@ public enum ModelStatus implements Enumerator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private ModelStatus(int value, String name, String literal) {
+	private ValidationSeverity(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
@@ -265,4 +238,4 @@ public enum ModelStatus implements Enumerator {
 		return literal;
 	}
 	
-} //ModelStatus
+} //ValidationSeverity

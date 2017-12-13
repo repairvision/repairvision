@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel;
+package org.sidiff.historymodel;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -13,20 +13,20 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.repair.historymodel.IValidationError#getIntroducedIn <em>Introduced In</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.IValidationError#getResolvedIn <em>Resolved In</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.IValidationError#getException <em>Exception</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.IValidationError#getMessage <em>Message</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.IValidationError#getSource <em>Source</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.IValidationError#getSeverity <em>Severity</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.IValidationError#getCharacterizingMessageFragment <em>Characterizing Message Fragment</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.IValidationError#isResolved <em>Resolved</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.IValidationError#getPrec <em>Prec</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.IValidationError#getSucc <em>Succ</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.IValidationError#getInvalidElement <em>Invalid Element</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.IValidationError#getIntroducedIn <em>Introduced In</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.IValidationError#getResolvedIn <em>Resolved In</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.IValidationError#getException <em>Exception</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.IValidationError#getMessage <em>Message</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.IValidationError#getSource <em>Source</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.IValidationError#getSeverity <em>Severity</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.IValidationError#getCharacterizingMessageFragment <em>Characterizing Message Fragment</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.IValidationError#isResolved <em>Resolved</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.IValidationError#getPrec <em>Prec</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.IValidationError#getSucc <em>Succ</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.IValidationError#getInvalidElement <em>Invalid Element</em>}</li>
  * </ul>
  *
- * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError()
+ * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError()
  * @model interface="true" abstract="true"
  * @generated
  */
@@ -41,14 +41,14 @@ public interface IValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Introduced In</em>' reference.
 	 * @see #setIntroducedIn(Version)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError_IntroducedIn()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError_IntroducedIn()
 	 * @model
 	 * @generated
 	 */
 	Version getIntroducedIn();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.IValidationError#getIntroducedIn <em>Introduced In</em>}' reference.
+	 * Sets the value of the '{@link org.sidiff.historymodel.IValidationError#getIntroducedIn <em>Introduced In</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Introduced In</em>' reference.
@@ -67,14 +67,14 @@ public interface IValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Resolved In</em>' reference.
 	 * @see #setResolvedIn(Version)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError_ResolvedIn()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError_ResolvedIn()
 	 * @model
 	 * @generated
 	 */
 	Version getResolvedIn();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.IValidationError#getResolvedIn <em>Resolved In</em>}' reference.
+	 * Sets the value of the '{@link org.sidiff.historymodel.IValidationError#getResolvedIn <em>Resolved In</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Resolved In</em>' reference.
@@ -89,14 +89,14 @@ public interface IValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Exception</em>' attribute.
 	 * @see #setException(Throwable)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError_Exception()
-	 * @model dataType="org.sidiff.repair.historymodel.Throwable"
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError_Exception()
+	 * @model dataType="org.sidiff.historymodel.Throwable"
 	 * @generated
 	 */
 	Throwable getException();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.IValidationError#getException <em>Exception</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.IValidationError#getException <em>Exception</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Exception</em>' attribute.
@@ -111,14 +111,14 @@ public interface IValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Message</em>' attribute.
 	 * @see #setMessage(String)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError_Message()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError_Message()
 	 * @model
 	 * @generated
 	 */
 	String getMessage();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.IValidationError#getMessage <em>Message</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.IValidationError#getMessage <em>Message</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Message</em>' attribute.
@@ -133,14 +133,14 @@ public interface IValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Source</em>' attribute.
 	 * @see #setSource(String)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError_Source()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError_Source()
 	 * @model
 	 * @generated
 	 */
 	String getSource();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.IValidationError#getSource <em>Source</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.IValidationError#getSource <em>Source</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Source</em>' attribute.
@@ -152,24 +152,24 @@ public interface IValidationError extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Severity</b></em>' attribute.
 	 * The default value is <code>"UNKNOWN"</code>.
-	 * The literals are from the enumeration {@link org.sidiff.repair.historymodel.ValidationSeverity}.
+	 * The literals are from the enumeration {@link org.sidiff.historymodel.ValidationSeverity}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Severity</em>' attribute.
-	 * @see org.sidiff.repair.historymodel.ValidationSeverity
+	 * @see org.sidiff.historymodel.ValidationSeverity
 	 * @see #setSeverity(ValidationSeverity)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError_Severity()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError_Severity()
 	 * @model default="UNKNOWN"
 	 * @generated
 	 */
 	ValidationSeverity getSeverity();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.IValidationError#getSeverity <em>Severity</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.IValidationError#getSeverity <em>Severity</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Severity</em>' attribute.
-	 * @see org.sidiff.repair.historymodel.ValidationSeverity
+	 * @see org.sidiff.historymodel.ValidationSeverity
 	 * @see #getSeverity()
 	 * @generated
 	 */
@@ -181,14 +181,14 @@ public interface IValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Characterizing Message Fragment</em>' attribute.
 	 * @see #setCharacterizingMessageFragment(String)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError_CharacterizingMessageFragment()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError_CharacterizingMessageFragment()
 	 * @model
 	 * @generated
 	 */
 	String getCharacterizingMessageFragment();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.IValidationError#getCharacterizingMessageFragment <em>Characterizing Message Fragment</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.historymodel.IValidationError#getCharacterizingMessageFragment <em>Characterizing Message Fragment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Characterizing Message Fragment</em>' attribute.
@@ -206,7 +206,7 @@ public interface IValidationError extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Resolved</em>' attribute.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError_Resolved()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError_Resolved()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
@@ -214,7 +214,7 @@ public interface IValidationError extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Prec</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.repair.historymodel.IValidationError#getSucc <em>Succ</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.historymodel.IValidationError#getSucc <em>Succ</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Prec</em>' reference isn't clear,
@@ -223,15 +223,15 @@ public interface IValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Prec</em>' reference.
 	 * @see #setPrec(IValidationError)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError_Prec()
-	 * @see org.sidiff.repair.historymodel.IValidationError#getSucc
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError_Prec()
+	 * @see org.sidiff.historymodel.IValidationError#getSucc
 	 * @model opposite="succ"
 	 * @generated
 	 */
 	IValidationError getPrec();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.IValidationError#getPrec <em>Prec</em>}' reference.
+	 * Sets the value of the '{@link org.sidiff.historymodel.IValidationError#getPrec <em>Prec</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Prec</em>' reference.
@@ -242,7 +242,7 @@ public interface IValidationError extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Succ</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.repair.historymodel.IValidationError#getPrec <em>Prec</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.historymodel.IValidationError#getPrec <em>Prec</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Succ</em>' reference isn't clear,
@@ -251,15 +251,15 @@ public interface IValidationError extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Succ</em>' reference.
 	 * @see #setSucc(IValidationError)
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError_Succ()
-	 * @see org.sidiff.repair.historymodel.IValidationError#getPrec
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError_Succ()
+	 * @see org.sidiff.historymodel.IValidationError#getPrec
 	 * @model opposite="prec"
 	 * @generated
 	 */
 	IValidationError getSucc();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.repair.historymodel.IValidationError#getSucc <em>Succ</em>}' reference.
+	 * Sets the value of the '{@link org.sidiff.historymodel.IValidationError#getSucc <em>Succ</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Succ</em>' reference.
@@ -277,7 +277,7 @@ public interface IValidationError extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Invalid Element</em>' reference.
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#getIValidationError_InvalidElement()
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getIValidationError_InvalidElement()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */

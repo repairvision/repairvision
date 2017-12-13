@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.impl;
+package org.sidiff.historymodel.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
@@ -18,10 +18,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.common.emf.EMFUtil;
-import org.sidiff.repair.historymodel.HistoryModelPackage;
-import org.sidiff.repair.historymodel.ModelStatus;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.Version;
+import org.sidiff.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.ModelStatus;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Version;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,12 +31,12 @@ import org.sidiff.repair.historymodel.Version;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getValidationErrors <em>Validation Errors</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getModelURI <em>Model URI</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getModel <em>Model</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getStatus <em>Status</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.VersionImpl#getRepositoryVersion <em>Repository Version</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getValidationErrors <em>Validation Errors</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getModelURI <em>Model URI</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getModel <em>Model</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getStatus <em>Status</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getRepositoryVersion <em>Repository Version</em>}</li>
  * </ul>
  *
  * @generated

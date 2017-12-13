@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel;
+package org.sidiff.historymodel;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see org.sidiff.repair.historymodel.HistoryModelFactory
+ * @see org.sidiff.historymodel.HistoryModelFactory
  * @model kind="package"
  * @generated
  */
@@ -57,14 +57,14 @@ public interface HistoryModelPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	HistoryModelPackage eINSTANCE = org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl.init();
+	HistoryModelPackage eINSTANCE = org.sidiff.historymodel.impl.HistoryModelPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.repair.historymodel.impl.HistoryImpl <em>History</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.historymodel.impl.HistoryImpl <em>History</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.repair.historymodel.impl.HistoryImpl
-	 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getHistory()
+	 * @see org.sidiff.historymodel.impl.HistoryImpl
+	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getHistory()
 	 * @generated
 	 */
 	int HISTORY = 0;
@@ -151,11 +151,11 @@ public interface HistoryModelPackage extends EPackage {
 	int HISTORY_OPERATION_COUNT = 4;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.repair.historymodel.impl.VersionImpl <em>Version</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.historymodel.impl.VersionImpl <em>Version</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.repair.historymodel.impl.VersionImpl
-	 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getVersion()
+	 * @see org.sidiff.historymodel.impl.VersionImpl
+	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getVersion()
 	 * @generated
 	 */
 	int VERSION = 1;
@@ -242,11 +242,11 @@ public interface HistoryModelPackage extends EPackage {
 	int VERSION_OPERATION_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl <em>Validation Error</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.historymodel.impl.ValidationErrorImpl <em>Validation Error</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.repair.historymodel.impl.ValidationErrorImpl
-	 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getValidationError()
+	 * @see org.sidiff.historymodel.impl.ValidationErrorImpl
+	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getValidationError()
 	 * @generated
 	 */
 	int VALIDATION_ERROR = 2;
@@ -396,11 +396,11 @@ public interface HistoryModelPackage extends EPackage {
 	int VALIDATION_ERROR_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.repair.historymodel.impl.ChangeSetImpl <em>Change Set</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.historymodel.impl.ChangeSetImpl <em>Change Set</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.repair.historymodel.impl.ChangeSetImpl
-	 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getChangeSet()
+	 * @see org.sidiff.historymodel.impl.ChangeSetImpl
+	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getChangeSet()
 	 * @generated
 	 */
 	int CHANGE_SET = 3;
@@ -442,21 +442,21 @@ public interface HistoryModelPackage extends EPackage {
 	int CHANGE_SET_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.repair.historymodel.ValidationSeverity <em>Validation Severity</em>}' enum.
+	 * The meta object id for the '{@link org.sidiff.historymodel.ValidationSeverity <em>Validation Severity</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.repair.historymodel.ValidationSeverity
-	 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getValidationSeverity()
+	 * @see org.sidiff.historymodel.ValidationSeverity
+	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getValidationSeverity()
 	 * @generated
 	 */
 	int VALIDATION_SEVERITY = 4;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.repair.historymodel.ModelStatus <em>Model Status</em>}' enum.
+	 * The meta object id for the '{@link org.sidiff.historymodel.ModelStatus <em>Model Status</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.repair.historymodel.ModelStatus
-	 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getModelStatus()
+	 * @see org.sidiff.historymodel.ModelStatus
+	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getModelStatus()
 	 * @generated
 	 */
 	int MODEL_STATUS = 5;
@@ -466,392 +466,392 @@ public interface HistoryModelPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.resource.Resource
-	 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getResource()
+	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getResource()
 	 * @generated
 	 */
 	int RESOURCE = 6;
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.repair.historymodel.History <em>History</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.historymodel.History <em>History</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>History</em>'.
-	 * @see org.sidiff.repair.historymodel.History
+	 * @see org.sidiff.historymodel.History
 	 * @generated
 	 */
 	EClass getHistory();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.History#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.History#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.sidiff.repair.historymodel.History#getName()
+	 * @see org.sidiff.historymodel.History#getName()
 	 * @see #getHistory()
 	 * @generated
 	 */
 	EAttribute getHistory_Name();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.repair.historymodel.History#getVersions <em>Versions</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.historymodel.History#getVersions <em>Versions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Versions</em>'.
-	 * @see org.sidiff.repair.historymodel.History#getVersions()
+	 * @see org.sidiff.historymodel.History#getVersions()
 	 * @see #getHistory()
 	 * @generated
 	 */
 	EReference getHistory_Versions();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.History#getAllValidationErrors <em>All Validation Errors</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.historymodel.History#getAllValidationErrors <em>All Validation Errors</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>All Validation Errors</em>'.
-	 * @see org.sidiff.repair.historymodel.History#getAllValidationErrors()
+	 * @see org.sidiff.historymodel.History#getAllValidationErrors()
 	 * @see #getHistory()
 	 * @generated
 	 */
 	EReference getHistory_AllValidationErrors();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.repair.historymodel.History#getPrecessorRevisions(org.sidiff.repair.historymodel.Version) <em>Get Precessor Revisions</em>}' operation.
+	 * Returns the meta object for the '{@link org.sidiff.historymodel.History#getPrecessorRevisions(org.sidiff.historymodel.Version) <em>Get Precessor Revisions</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Precessor Revisions</em>' operation.
-	 * @see org.sidiff.repair.historymodel.History#getPrecessorRevisions(org.sidiff.repair.historymodel.Version)
+	 * @see org.sidiff.historymodel.History#getPrecessorRevisions(org.sidiff.historymodel.Version)
 	 * @generated
 	 */
 	EOperation getHistory__GetPrecessorRevisions__Version();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.repair.historymodel.History#getSuccessorRevisions(org.sidiff.repair.historymodel.Version) <em>Get Successor Revisions</em>}' operation.
+	 * Returns the meta object for the '{@link org.sidiff.historymodel.History#getSuccessorRevisions(org.sidiff.historymodel.Version) <em>Get Successor Revisions</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Successor Revisions</em>' operation.
-	 * @see org.sidiff.repair.historymodel.History#getSuccessorRevisions(org.sidiff.repair.historymodel.Version)
+	 * @see org.sidiff.historymodel.History#getSuccessorRevisions(org.sidiff.historymodel.Version)
 	 * @generated
 	 */
 	EOperation getHistory__GetSuccessorRevisions__Version();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.repair.historymodel.History#getValidationErrors(boolean, boolean) <em>Get Validation Errors</em>}' operation.
+	 * Returns the meta object for the '{@link org.sidiff.historymodel.History#getValidationErrors(boolean, boolean) <em>Get Validation Errors</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Validation Errors</em>' operation.
-	 * @see org.sidiff.repair.historymodel.History#getValidationErrors(boolean, boolean)
+	 * @see org.sidiff.historymodel.History#getValidationErrors(boolean, boolean)
 	 * @generated
 	 */
 	EOperation getHistory__GetValidationErrors__boolean_boolean();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.repair.historymodel.History#getUniqueValidationErrors() <em>Get Unique Validation Errors</em>}' operation.
+	 * Returns the meta object for the '{@link org.sidiff.historymodel.History#getUniqueValidationErrors() <em>Get Unique Validation Errors</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Unique Validation Errors</em>' operation.
-	 * @see org.sidiff.repair.historymodel.History#getUniqueValidationErrors()
+	 * @see org.sidiff.historymodel.History#getUniqueValidationErrors()
 	 * @generated
 	 */
 	EOperation getHistory__GetUniqueValidationErrors();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.repair.historymodel.Version <em>Version</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.historymodel.Version <em>Version</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Version</em>'.
-	 * @see org.sidiff.repair.historymodel.Version
+	 * @see org.sidiff.historymodel.Version
 	 * @generated
 	 */
 	EClass getVersion();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.repair.historymodel.Version#getValidationErrors <em>Validation Errors</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.historymodel.Version#getValidationErrors <em>Validation Errors</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Validation Errors</em>'.
-	 * @see org.sidiff.repair.historymodel.Version#getValidationErrors()
+	 * @see org.sidiff.historymodel.Version#getValidationErrors()
 	 * @see #getVersion()
 	 * @generated
 	 */
 	EReference getVersion_ValidationErrors();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.Version#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.Version#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.sidiff.repair.historymodel.Version#getName()
+	 * @see org.sidiff.historymodel.Version#getName()
 	 * @see #getVersion()
 	 * @generated
 	 */
 	EAttribute getVersion_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.Version#getModelURI <em>Model URI</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.Version#getModelURI <em>Model URI</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Model URI</em>'.
-	 * @see org.sidiff.repair.historymodel.Version#getModelURI()
+	 * @see org.sidiff.historymodel.Version#getModelURI()
 	 * @see #getVersion()
 	 * @generated
 	 */
 	EAttribute getVersion_ModelURI();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.Version#getModel <em>Model</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.Version#getModel <em>Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Model</em>'.
-	 * @see org.sidiff.repair.historymodel.Version#getModel()
+	 * @see org.sidiff.historymodel.Version#getModel()
 	 * @see #getVersion()
 	 * @generated
 	 */
 	EAttribute getVersion_Model();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.Version#getStatus <em>Status</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.Version#getStatus <em>Status</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Status</em>'.
-	 * @see org.sidiff.repair.historymodel.Version#getStatus()
+	 * @see org.sidiff.historymodel.Version#getStatus()
 	 * @see #getVersion()
 	 * @generated
 	 */
 	EAttribute getVersion_Status();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.Version#getRepositoryVersion <em>Repository Version</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.Version#getRepositoryVersion <em>Repository Version</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Repository Version</em>'.
-	 * @see org.sidiff.repair.historymodel.Version#getRepositoryVersion()
+	 * @see org.sidiff.historymodel.Version#getRepositoryVersion()
 	 * @see #getVersion()
 	 * @generated
 	 */
 	EAttribute getVersion_RepositoryVersion();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.repair.historymodel.Version#getElement(java.lang.String) <em>Get Element</em>}' operation.
+	 * Returns the meta object for the '{@link org.sidiff.historymodel.Version#getElement(java.lang.String) <em>Get Element</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Element</em>' operation.
-	 * @see org.sidiff.repair.historymodel.Version#getElement(java.lang.String)
+	 * @see org.sidiff.historymodel.Version#getElement(java.lang.String)
 	 * @generated
 	 */
 	EOperation getVersion__GetElement__String();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.repair.historymodel.ValidationError <em>Validation Error</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.historymodel.ValidationError <em>Validation Error</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Validation Error</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError
+	 * @see org.sidiff.historymodel.ValidationError
 	 * @generated
 	 */
 	EClass getValidationError();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.ValidationError#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.ValidationError#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getName()
+	 * @see org.sidiff.historymodel.ValidationError#getName()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EAttribute getValidationError_Name();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.repair.historymodel.ValidationError#getIntroducedIn <em>Introduced In</em>}'.
+	 * Returns the meta object for the reference '{@link org.sidiff.historymodel.ValidationError#getIntroducedIn <em>Introduced In</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Introduced In</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getIntroducedIn()
+	 * @see org.sidiff.historymodel.ValidationError#getIntroducedIn()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EReference getValidationError_IntroducedIn();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.repair.historymodel.ValidationError#getResolvedIn <em>Resolved In</em>}'.
+	 * Returns the meta object for the reference '{@link org.sidiff.historymodel.ValidationError#getResolvedIn <em>Resolved In</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Resolved In</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getResolvedIn()
+	 * @see org.sidiff.historymodel.ValidationError#getResolvedIn()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EReference getValidationError_ResolvedIn();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.ValidationError#getMessage <em>Message</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.ValidationError#getMessage <em>Message</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Message</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getMessage()
+	 * @see org.sidiff.historymodel.ValidationError#getMessage()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EAttribute getValidationError_Message();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.ValidationError#getSource <em>Source</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.ValidationError#getSource <em>Source</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Source</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getSource()
+	 * @see org.sidiff.historymodel.ValidationError#getSource()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EAttribute getValidationError_Source();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.ValidationError#getSeverity <em>Severity</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.ValidationError#getSeverity <em>Severity</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Severity</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getSeverity()
+	 * @see org.sidiff.historymodel.ValidationError#getSeverity()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EAttribute getValidationError_Severity();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.ValidationError#isIntroduced <em>Introduced</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.ValidationError#isIntroduced <em>Introduced</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Introduced</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#isIntroduced()
+	 * @see org.sidiff.historymodel.ValidationError#isIntroduced()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EAttribute getValidationError_Introduced();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.ValidationError#isResolved <em>Resolved</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.ValidationError#isResolved <em>Resolved</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Resolved</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#isResolved()
+	 * @see org.sidiff.historymodel.ValidationError#isResolved()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EAttribute getValidationError_Resolved();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.repair.historymodel.ValidationError#getPrec <em>Prec</em>}'.
+	 * Returns the meta object for the reference '{@link org.sidiff.historymodel.ValidationError#getPrec <em>Prec</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Prec</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getPrec()
+	 * @see org.sidiff.historymodel.ValidationError#getPrec()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EReference getValidationError_Prec();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.repair.historymodel.ValidationError#getSucc <em>Succ</em>}'.
+	 * Returns the meta object for the reference '{@link org.sidiff.historymodel.ValidationError#getSucc <em>Succ</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Succ</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getSucc()
+	 * @see org.sidiff.historymodel.ValidationError#getSucc()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EReference getValidationError_Succ();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.repair.historymodel.ValidationError#getInvalidElement <em>Invalid Element</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.historymodel.ValidationError#getInvalidElement <em>Invalid Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Invalid Element</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getInvalidElement()
+	 * @see org.sidiff.historymodel.ValidationError#getInvalidElement()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EReference getValidationError_InvalidElement();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.repair.historymodel.ValidationError#getContext <em>Context</em>}'.
+	 * Returns the meta object for the reference '{@link org.sidiff.historymodel.ValidationError#getContext <em>Context</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Context</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getContext()
+	 * @see org.sidiff.historymodel.ValidationError#getContext()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EReference getValidationError_Context();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.ValidationError#isResolvedByUndo <em>Resolved By Undo</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.ValidationError#isResolvedByUndo <em>Resolved By Undo</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Resolved By Undo</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#isResolvedByUndo()
+	 * @see org.sidiff.historymodel.ValidationError#isResolvedByUndo()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EAttribute getValidationError_ResolvedByUndo();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.repair.historymodel.ValidationError#getChangeSets <em>Change Sets</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.historymodel.ValidationError#getChangeSets <em>Change Sets</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Change Sets</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationError#getChangeSets()
+	 * @see org.sidiff.historymodel.ValidationError#getChangeSets()
 	 * @see #getValidationError()
 	 * @generated
 	 */
 	EReference getValidationError_ChangeSets();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.repair.historymodel.ChangeSet <em>Change Set</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.historymodel.ChangeSet <em>Change Set</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Change Set</em>'.
-	 * @see org.sidiff.repair.historymodel.ChangeSet
+	 * @see org.sidiff.historymodel.ChangeSet
 	 * @generated
 	 */
 	EClass getChangeSet();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.repair.historymodel.ChangeSet#getChanges <em>Changes</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.historymodel.ChangeSet#getChanges <em>Changes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Changes</em>'.
-	 * @see org.sidiff.repair.historymodel.ChangeSet#getChanges()
+	 * @see org.sidiff.historymodel.ChangeSet#getChanges()
 	 * @see #getChangeSet()
 	 * @generated
 	 */
 	EReference getChangeSet_Changes();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.repair.historymodel.ChangeSet#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.ChangeSet#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.sidiff.repair.historymodel.ChangeSet#getName()
+	 * @see org.sidiff.historymodel.ChangeSet#getName()
 	 * @see #getChangeSet()
 	 * @generated
 	 */
 	EAttribute getChangeSet_Name();
 
 	/**
-	 * Returns the meta object for enum '{@link org.sidiff.repair.historymodel.ValidationSeverity <em>Validation Severity</em>}'.
+	 * Returns the meta object for enum '{@link org.sidiff.historymodel.ValidationSeverity <em>Validation Severity</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Validation Severity</em>'.
-	 * @see org.sidiff.repair.historymodel.ValidationSeverity
+	 * @see org.sidiff.historymodel.ValidationSeverity
 	 * @generated
 	 */
 	EEnum getValidationSeverity();
 
 	/**
-	 * Returns the meta object for enum '{@link org.sidiff.repair.historymodel.ModelStatus <em>Model Status</em>}'.
+	 * Returns the meta object for enum '{@link org.sidiff.historymodel.ModelStatus <em>Model Status</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Model Status</em>'.
-	 * @see org.sidiff.repair.historymodel.ModelStatus
+	 * @see org.sidiff.historymodel.ModelStatus
 	 * @generated
 	 */
 	EEnum getModelStatus();
@@ -891,11 +891,11 @@ public interface HistoryModelPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.sidiff.repair.historymodel.impl.HistoryImpl <em>History</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.historymodel.impl.HistoryImpl <em>History</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.repair.historymodel.impl.HistoryImpl
-		 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getHistory()
+		 * @see org.sidiff.historymodel.impl.HistoryImpl
+		 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getHistory()
 		 * @generated
 		 */
 		EClass HISTORY = eINSTANCE.getHistory();
@@ -957,11 +957,11 @@ public interface HistoryModelPackage extends EPackage {
 		EOperation HISTORY___GET_UNIQUE_VALIDATION_ERRORS = eINSTANCE.getHistory__GetUniqueValidationErrors();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.repair.historymodel.impl.VersionImpl <em>Version</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.historymodel.impl.VersionImpl <em>Version</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.repair.historymodel.impl.VersionImpl
-		 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getVersion()
+		 * @see org.sidiff.historymodel.impl.VersionImpl
+		 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getVersion()
 		 * @generated
 		 */
 		EClass VERSION = eINSTANCE.getVersion();
@@ -1023,11 +1023,11 @@ public interface HistoryModelPackage extends EPackage {
 		EOperation VERSION___GET_ELEMENT__STRING = eINSTANCE.getVersion__GetElement__String();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.repair.historymodel.impl.ValidationErrorImpl <em>Validation Error</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.historymodel.impl.ValidationErrorImpl <em>Validation Error</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.repair.historymodel.impl.ValidationErrorImpl
-		 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getValidationError()
+		 * @see org.sidiff.historymodel.impl.ValidationErrorImpl
+		 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getValidationError()
 		 * @generated
 		 */
 		EClass VALIDATION_ERROR = eINSTANCE.getValidationError();
@@ -1145,11 +1145,11 @@ public interface HistoryModelPackage extends EPackage {
 		EReference VALIDATION_ERROR__CHANGE_SETS = eINSTANCE.getValidationError_ChangeSets();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.repair.historymodel.impl.ChangeSetImpl <em>Change Set</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.historymodel.impl.ChangeSetImpl <em>Change Set</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.repair.historymodel.impl.ChangeSetImpl
-		 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getChangeSet()
+		 * @see org.sidiff.historymodel.impl.ChangeSetImpl
+		 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getChangeSet()
 		 * @generated
 		 */
 		EClass CHANGE_SET = eINSTANCE.getChangeSet();
@@ -1171,21 +1171,21 @@ public interface HistoryModelPackage extends EPackage {
 		EAttribute CHANGE_SET__NAME = eINSTANCE.getChangeSet_Name();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.repair.historymodel.ValidationSeverity <em>Validation Severity</em>}' enum.
+		 * The meta object literal for the '{@link org.sidiff.historymodel.ValidationSeverity <em>Validation Severity</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.repair.historymodel.ValidationSeverity
-		 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getValidationSeverity()
+		 * @see org.sidiff.historymodel.ValidationSeverity
+		 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getValidationSeverity()
 		 * @generated
 		 */
 		EEnum VALIDATION_SEVERITY = eINSTANCE.getValidationSeverity();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.repair.historymodel.ModelStatus <em>Model Status</em>}' enum.
+		 * The meta object literal for the '{@link org.sidiff.historymodel.ModelStatus <em>Model Status</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.repair.historymodel.ModelStatus
-		 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getModelStatus()
+		 * @see org.sidiff.historymodel.ModelStatus
+		 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getModelStatus()
 		 * @generated
 		 */
 		EEnum MODEL_STATUS = eINSTANCE.getModelStatus();
@@ -1195,7 +1195,7 @@ public interface HistoryModelPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.eclipse.emf.ecore.resource.Resource
-		 * @see org.sidiff.repair.historymodel.impl.HistoryModelPackageImpl#getResource()
+		 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getResource()
 		 * @generated
 		 */
 		EDataType RESOURCE = eINSTANCE.getResource();

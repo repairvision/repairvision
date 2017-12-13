@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.impl;
+package org.sidiff.historymodel.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -15,16 +15,15 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.difference.symmetric.SymmetricPackage;
-
+import org.sidiff.historymodel.ChangeSet;
+import org.sidiff.historymodel.History;
+import org.sidiff.historymodel.HistoryModelFactory;
+import org.sidiff.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.ModelStatus;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.ValidationSeverity;
+import org.sidiff.historymodel.Version;
 import org.sidiff.matching.model.MatchingModelPackage;
-import org.sidiff.repair.historymodel.ChangeSet;
-import org.sidiff.repair.historymodel.History;
-import org.sidiff.repair.historymodel.HistoryModelFactory;
-import org.sidiff.repair.historymodel.HistoryModelPackage;
-import org.sidiff.repair.historymodel.ModelStatus;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.ValidationSeverity;
-import org.sidiff.repair.historymodel.Version;
 
 /**
  * <!-- begin-user-doc -->
@@ -93,7 +92,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.sidiff.repair.historymodel.HistoryModelPackage#eNS_URI
+	 * @see org.sidiff.historymodel.HistoryModelPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */

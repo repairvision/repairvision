@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.util;
+package org.sidiff.historymodel.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -8,15 +8,14 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
-
-import org.sidiff.repair.historymodel.*;
+import org.sidiff.historymodel.*;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.sidiff.repair.historymodel.HistoryModelPackage
+ * @see org.sidiff.historymodel.HistoryModelPackage
  * @generated
  */
 public class HistoryModelAdapterFactory extends AdapterFactoryImpl {
@@ -104,13 +103,13 @@ public class HistoryModelAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.repair.historymodel.History <em>History</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.historymodel.History <em>History</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.repair.historymodel.History
+	 * @see org.sidiff.historymodel.History
 	 * @generated
 	 */
 	public Adapter createHistoryAdapter() {
@@ -118,13 +117,13 @@ public class HistoryModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.repair.historymodel.Version <em>Version</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.historymodel.Version <em>Version</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.repair.historymodel.Version
+	 * @see org.sidiff.historymodel.Version
 	 * @generated
 	 */
 	public Adapter createVersionAdapter() {
@@ -132,13 +131,13 @@ public class HistoryModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.repair.historymodel.ValidationError <em>Validation Error</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.historymodel.ValidationError <em>Validation Error</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.repair.historymodel.ValidationError
+	 * @see org.sidiff.historymodel.ValidationError
 	 * @generated
 	 */
 	public Adapter createValidationErrorAdapter() {
@@ -146,13 +145,13 @@ public class HistoryModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.repair.historymodel.ChangeSet <em>Change Set</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.historymodel.ChangeSet <em>Change Set</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.repair.historymodel.ChangeSet
+	 * @see org.sidiff.historymodel.ChangeSet
 	 * @generated
 	 */
 	public Adapter createChangeSetAdapter() {

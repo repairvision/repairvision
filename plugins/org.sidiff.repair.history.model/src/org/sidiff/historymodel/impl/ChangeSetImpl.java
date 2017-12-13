@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.impl;
+package org.sidiff.historymodel.impl;
 
 import java.util.Collection;
 
@@ -19,9 +19,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.sidiff.difference.symmetric.Change;
-
-import org.sidiff.repair.historymodel.ChangeSet;
-import org.sidiff.repair.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.ChangeSet;
+import org.sidiff.historymodel.HistoryModelPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,8 +30,8 @@ import org.sidiff.repair.historymodel.HistoryModelPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ChangeSetImpl#getChanges <em>Changes</em>}</li>
- *   <li>{@link org.sidiff.repair.historymodel.impl.ChangeSetImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ChangeSetImpl#getChanges <em>Changes</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ChangeSetImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated

@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel;
+package org.sidiff.historymodel;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see org.sidiff.repair.historymodel.HistoryModelPackage
+ * @see org.sidiff.historymodel.HistoryModelPackage
  * @generated
  */
 public interface HistoryModelFactory extends EFactory {
@@ -19,7 +19,7 @@ public interface HistoryModelFactory extends EFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	HistoryModelFactory eINSTANCE = org.sidiff.repair.historymodel.impl.HistoryModelFactoryImpl.init();
+	HistoryModelFactory eINSTANCE = org.sidiff.historymodel.impl.HistoryModelFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>History</em>'.

@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.util;
+package org.sidiff.historymodel.util;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
  * <!-- begin-user-doc -->
  * The <b>Resource </b> associated with the package.
  * <!-- end-user-doc -->
- * @see org.sidiff.repair.historymodel.util.HistoryModelResourceFactoryImpl
+ * @see org.sidiff.historymodel.util.HistoryModelResourceFactoryImpl
  * @generated
  */
 public class HistoryModelResourceImpl extends XMIResourceImpl {
