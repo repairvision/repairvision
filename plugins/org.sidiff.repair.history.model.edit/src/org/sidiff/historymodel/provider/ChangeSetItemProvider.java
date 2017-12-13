@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.provider;
+package org.sidiff.historymodel.provider;
 
 
 import java.util.Collection;
@@ -8,11 +8,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -23,14 +20,12 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
 import org.sidiff.difference.symmetric.SymmetricFactory;
-
-import org.sidiff.repair.historymodel.ChangeSet;
-import org.sidiff.repair.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.ChangeSet;
+import org.sidiff.historymodel.HistoryModelPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.repair.historymodel.ChangeSet} object.
+ * This is the item provider adapter for a {@link org.sidiff.historymodel.ChangeSet} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

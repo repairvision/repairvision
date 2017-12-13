@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.provider;
+package org.sidiff.historymodel.provider;
 
 
 import java.util.Collection;
@@ -20,17 +20,17 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.sidiff.repair.historymodel.History;
-import org.sidiff.repair.historymodel.HistoryModelFactory;
-import org.sidiff.repair.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.HistoryModelFactory;
+import org.sidiff.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.Version;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.repair.historymodel.History} object.
+ * This is the item provider adapter for a {@link org.sidiff.historymodel.Version} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class HistoryItemProvider 
+public class VersionItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -44,7 +44,7 @@ public class HistoryItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public HistoryItemProvider(AdapterFactory adapterFactory) {
+	public VersionItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,7 +60,10 @@ public class HistoryItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addAllValidationErrorsPropertyDescriptor(object);
+			addModelURIPropertyDescriptor(object);
+			addModelPropertyDescriptor(object);
+			addStatusPropertyDescriptor(object);
+			addRepositoryVersionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -76,9 +79,9 @@ public class HistoryItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_History_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_History_name_feature", "_UI_History_type"),
-				 HistoryModelPackage.Literals.HISTORY__NAME,
+				 getString("_UI_Version_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Version_name_feature", "_UI_Version_type"),
+				 HistoryModelPackage.Literals.VERSION__NAME,
 				 true,
 				 false,
 				 false,
@@ -88,23 +91,89 @@ public class HistoryItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the All Validation Errors feature.
+	 * This adds a property descriptor for the Model URI feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addAllValidationErrorsPropertyDescriptor(Object object) {
+	protected void addModelURIPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_History_allValidationErrors_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_History_allValidationErrors_feature", "_UI_History_type"),
-				 HistoryModelPackage.Literals.HISTORY__ALL_VALIDATION_ERRORS,
+				 getString("_UI_Version_modelURI_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Version_modelURI_feature", "_UI_Version_type"),
+				 HistoryModelPackage.Literals.VERSION__MODEL_URI,
 				 true,
 				 false,
-				 true,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Model feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addModelPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Version_model_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Version_model_feature", "_UI_Version_type"),
+				 HistoryModelPackage.Literals.VERSION__MODEL,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Status feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addStatusPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Version_status_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Version_status_feature", "_UI_Version_type"),
+				 HistoryModelPackage.Literals.VERSION__STATUS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Repository Version feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRepositoryVersionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Version_repositoryVersion_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Version_repositoryVersion_feature", "_UI_Version_type"),
+				 HistoryModelPackage.Literals.VERSION__REPOSITORY_VERSION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -121,7 +190,7 @@ public class HistoryItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(HistoryModelPackage.Literals.HISTORY__VERSIONS);
+			childrenFeatures.add(HistoryModelPackage.Literals.VERSION__VALIDATION_ERRORS);
 		}
 		return childrenFeatures;
 	}
@@ -140,14 +209,14 @@ public class HistoryItemProvider
 	}
 
 	/**
-	 * This returns History.gif.
+	 * This returns Version.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/History"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Version"));
 	}
 
 	/**
@@ -158,10 +227,10 @@ public class HistoryItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((History)object).getName();
+		String label = ((Version)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_History_type") :
-			getString("_UI_History_type") + " " + label;
+			getString("_UI_Version_type") :
+			getString("_UI_Version_type") + " " + label;
 	}
 	
 
@@ -176,11 +245,15 @@ public class HistoryItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(History.class)) {
-			case HistoryModelPackage.HISTORY__NAME:
+		switch (notification.getFeatureID(Version.class)) {
+			case HistoryModelPackage.VERSION__NAME:
+			case HistoryModelPackage.VERSION__MODEL_URI:
+			case HistoryModelPackage.VERSION__MODEL:
+			case HistoryModelPackage.VERSION__STATUS:
+			case HistoryModelPackage.VERSION__REPOSITORY_VERSION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case HistoryModelPackage.HISTORY__VERSIONS:
+			case HistoryModelPackage.VERSION__VALIDATION_ERRORS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -200,8 +273,8 @@ public class HistoryItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(HistoryModelPackage.Literals.HISTORY__VERSIONS,
-				 HistoryModelFactory.eINSTANCE.createVersion()));
+				(HistoryModelPackage.Literals.VERSION__VALIDATION_ERRORS,
+				 HistoryModelFactory.eINSTANCE.createValidationError()));
 	}
 
 	/**

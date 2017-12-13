@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.provider;
+package org.sidiff.historymodel.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +19,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.sidiff.repair.historymodel.util.HistoryModelAdapterFactory;
+import org.sidiff.historymodel.util.HistoryModelAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -70,7 +70,7 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.repair.historymodel.History} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.historymodel.History} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -78,7 +78,7 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	protected HistoryItemProvider historyItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.repair.historymodel.History}.
+	 * This creates an adapter for a {@link org.sidiff.historymodel.History}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -93,7 +93,7 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.repair.historymodel.Version} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.historymodel.Version} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -101,7 +101,7 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	protected VersionItemProvider versionItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.repair.historymodel.Version}.
+	 * This creates an adapter for a {@link org.sidiff.historymodel.Version}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -116,7 +116,7 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.repair.historymodel.ValidationError} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.historymodel.ValidationError} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -124,7 +124,7 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	protected ValidationErrorItemProvider validationErrorItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.repair.historymodel.ValidationError}.
+	 * This creates an adapter for a {@link org.sidiff.historymodel.ValidationError}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -139,7 +139,7 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.repair.historymodel.ChangeSet} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.historymodel.ChangeSet} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -147,7 +147,7 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	protected ChangeSetItemProvider changeSetItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.repair.historymodel.ChangeSet}.
+	 * This creates an adapter for a {@link org.sidiff.historymodel.ChangeSet}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

@@ -1,4 +1,4 @@
-package org.sidiff.repair.historymodel.provider;
+package org.sidiff.historymodel.provider;
 
 import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
 

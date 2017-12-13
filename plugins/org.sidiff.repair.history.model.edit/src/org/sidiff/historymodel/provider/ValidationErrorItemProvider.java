@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.provider;
+package org.sidiff.historymodel.provider;
 
 
 import java.util.Collection;
@@ -20,14 +20,14 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.sidiff.repair.historymodel.HistoryModelFactory;
-import org.sidiff.repair.historymodel.HistoryModelPackage;
-import org.sidiff.repair.historymodel.ValidationError;
-import org.sidiff.repair.historymodel.ValidationSeverity;
-import org.sidiff.repair.historymodel.Version;
+import org.sidiff.historymodel.HistoryModelFactory;
+import org.sidiff.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.ValidationSeverity;
+import org.sidiff.historymodel.Version;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.repair.historymodel.ValidationError} object.
+ * This is the item provider adapter for a {@link org.sidiff.historymodel.ValidationError} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -448,7 +448,7 @@ public class ValidationErrorItemProvider
 	@Override
 	public String getText(Object object) {
 		ValidationError validationError = (ValidationError)object;
-		String label = ((Version)validationError.eContainer()).getName() + "." + validationError.getName();
+		String label = ((Version) validationError.eContainer()).getName() + "." + validationError.getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ValidationError_type") :
 			getString("_UI_ValidationError_type") + " " + label;
@@ -466,7 +466,7 @@ public class ValidationErrorItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(ValidationError.class)) {
+		switch (notification.getFeatureID(org.sidiff.historymodel.ValidationError.class)) {
 			case HistoryModelPackage.VALIDATION_ERROR__NAME:
 			case HistoryModelPackage.VALIDATION_ERROR__MESSAGE:
 			case HistoryModelPackage.VALIDATION_ERROR__SOURCE:
