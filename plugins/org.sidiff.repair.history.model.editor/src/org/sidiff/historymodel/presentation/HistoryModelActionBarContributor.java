@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.presentation;
+package org.sidiff.historymodel.presentation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -173,7 +173,7 @@ public class HistoryModelActionBarContributor
 	public void contributeToMenu(IMenuManager menuManager) {
 		super.contributeToMenu(menuManager);
 
-		IMenuManager submenuManager = new MenuManager(ModelEditorPlugin.INSTANCE.getString("_UI_HistoryModelEditor_menu"), "org.sidiff.repair.historymodelMenuID");
+		IMenuManager submenuManager = new MenuManager(ModelEditorPlugin.INSTANCE.getString("_UI_HistoryModelEditor_menu"), "org.sidiff.historymodelMenuID");
 		menuManager.insertAfter("additions", submenuManager);
 		submenuManager.add(new Separator("settings"));
 		submenuManager.add(new Separator("actions"));

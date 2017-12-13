@@ -12,9 +12,9 @@
             id="org.eclipse.emf.ecore.Wizard.category.ID"
             name="%_UI_Wizard_category"/>
       <wizard
-            id="org.sidiff.repair.historymodel.presentation.HistoryModelModelWizardID"
+            id="org.sidiff.historymodel.presentation.HistoryModelModelWizardID"
             name="%_UI_HistoryModelModelWizard_label"
-            class="org.sidiff.repair.historymodel.presentation.HistoryModelModelWizard"
+            class="org.sidiff.historymodel.presentation.HistoryModelModelWizard"
             category="org.eclipse.emf.ecore.Wizard.category.ID"
             icon="icons/full/obj16/HistoryModelModelFile.gif">
          <description>%_UI_HistoryModelModelWizard_description</description>
@@ -25,13 +25,12 @@
    <extension point="org.eclipse.ui.editors">
       <!-- @generated model -->
       <editor
-            id="org.sidiff.repair.historymodel.presentation.HistoryModelEditorID"
+            id="org.sidiff.historymodel.presentation.HistoryModelEditorID"
             name="%_UI_HistoryModelEditor_label"
             icon="icons/full/obj16/HistoryModelModelFile.gif"
             extensions="history"
-            class="org.sidiff.repair.historymodel.presentation.HistoryModelEditor"
-            contributorClass="org.sidiff.repair.historymodel.presentation.HistoryModelActionBarContributor">
+            class="org.sidiff.historymodel.presentation.HistoryModelEditor"
+            contributorClass="org.sidiff.historymodel.presentation.HistoryModelActionBarContributor">
       </editor>
    </extension>
-
 </plugin>

@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.presentation;
+package org.sidiff.historymodel.presentation;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.EclipseUIPlugin;

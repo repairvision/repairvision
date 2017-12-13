@@ -1,6 +1,6 @@
 /**
  */
-package org.sidiff.repair.historymodel.presentation;
+package org.sidiff.historymodel.presentation;
 
 
 import java.util.ArrayList;
@@ -55,9 +55,9 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
-import org.sidiff.repair.historymodel.HistoryModelFactory;
-import org.sidiff.repair.historymodel.HistoryModelPackage;
-import org.sidiff.repair.historymodel.provider.ModelEditPlugin;
+import org.sidiff.historymodel.provider.ModelEditPlugin;
+import org.sidiff.historymodel.HistoryModelFactory;
+import org.sidiff.historymodel.HistoryModelPackage;
 
 
 /**
