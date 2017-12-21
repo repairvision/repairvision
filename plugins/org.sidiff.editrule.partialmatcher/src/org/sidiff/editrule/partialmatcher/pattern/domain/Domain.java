@@ -39,10 +39,18 @@ public class Domain extends DataStoreImpl {
 	
 	public enum SelectionType {
 		
-		RESTRICTED,
-		ACCEPTED,
-		MARKED,
-		SEARCHED;
+		RESTRICTED,	// A restricted object of this domain
+					// NOTE: All restricted objects are stored on the restriction stack (restriction history)
+		ACCEPTED,	// A currently available object of this domain
+		MARKED,		// A searched object (out of the accepted) of a previous path search
+		SEARCHED; 	// A searched object (out of the accepted) on a visited node in the current path search
+		
+		// NOTE: Collection of accepted objects:
+		// 1.   Search a path with a seeding object -> SEARCHED
+		//      - Use all ACCEPTED/MARKED objects -> isSelected()
+		// 2.   Remember the searched path -> MARK
+		// N.   Search the next path (1. + 2.)
+		// N+1. MARKED to ACCEPTED,  ACCEPTED (unmarked) to RESTRICTED
 		
 		public static boolean isSelected(SelectionType type) {
 			return ((type != null) && !type.equals(RESTRICTED));
