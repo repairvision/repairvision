@@ -49,10 +49,10 @@ public class Domain extends DataStoreImpl {
 		// 1.   Search a path starting with a seeding object
 		//      - Use all ACCEPTED/MARKED objects -> isSelected()
 		//		- Set all objects on the path to SEARCHED
-		// 2.   Remember the searched path -> 
+		// 2.   Remember the searched path
 		//      - Set all SEARCHED objects to MARKED
 		// N.   Search the next path (1. + 2.)
-		// N+1. Finally set all MARKED to ACCEPTED and all  ACCEPTED (unmarked) to RESTRICTED
+		// N+1. Finally set all MARKED to ACCEPTED and all ACCEPTED (unmarked) to RESTRICTED
 		
 		public static boolean isSelected(SelectionType type) {
 			return ((type != null) && !type.equals(RESTRICTED));
