@@ -46,11 +46,13 @@ public class Domain extends DataStoreImpl {
 		SEARCHED; 	// A searched object (out of the accepted) on a visited node in the current path search
 		
 		// NOTE: Collection of accepted objects:
-		// 1.   Search a path with a seeding object -> SEARCHED
+		// 1.   Search a path starting with a seeding object
 		//      - Use all ACCEPTED/MARKED objects -> isSelected()
-		// 2.   Remember the searched path -> MARK
+		//		- Set all objects on the path to SEARCHED
+		// 2.   Remember the searched path -> 
+		//      - Set all SEARCHED objects to MARKED
 		// N.   Search the next path (1. + 2.)
-		// N+1. MARKED to ACCEPTED,  ACCEPTED (unmarked) to RESTRICTED
+		// N+1. Finally set all MARKED to ACCEPTED and all  ACCEPTED (unmarked) to RESTRICTED
 		
 		public static boolean isSelected(SelectionType type) {
 			return ((type != null) && !type.equals(RESTRICTED));
