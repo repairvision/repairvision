@@ -34,12 +34,21 @@ public class HistoryModelDatabase {
 	public static Resource getHistoricConsistentModel(Resource inconsistentModel, 
 			IValidator validator, Validation inconsistency, DifferenceSettings settings) {
 		
+		// Search for history database:
 		URI historyDatabaseURI = inconsistentModel.getURI().appendFileExtension("history");
 		File historyDatabaseFile = EMFStorage.uriToFile(historyDatabaseURI);
 		History history = null;
 		
+		// Get repository:
 		IModelRepository repository = ModelRepositoryRegistry.getRepository(inconsistentModel);
 		IModelRepositoryConnector repositoryConnector = ModelRepositoryRegistry.getConnector(repository);
+		
+		if (repositoryConnector == null) {
+			// Fallback solution: Create an "empty model"
+			return createEmptyModel(inconsistentModel);
+		}
+		
+		// Search last consistent model version:
 		IModelVersion inconsistentModelVersion = repositoryConnector.getModelVersion(inconsistentModel.getURI());
 		
 		// Update history database:
@@ -133,6 +142,10 @@ public class HistoryModelDatabase {
 		}
 		
 		// Fallback solution: Create an "empty model"
+		return createEmptyModel(inconsistentModel);
+	}
+
+	private static Resource createEmptyModel(Resource inconsistentModel) {
 		ResourceSet rss = new ResourceSetImpl();
 		Resource emptyModel = rss.createResource(inconsistentModel.getURI().trimSegments(1)
 				.appendSegment(inconsistentModel.getURI().trimFileExtension().lastSegment() + "_empty")
