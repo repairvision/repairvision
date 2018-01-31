@@ -2,6 +2,8 @@ package org.sidiff.repair.ui.peo.ruleselection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -19,21 +21,29 @@ import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
 import org.sidiff.repair.ui.util.EditRuleUtil;
+import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
+import org.sidiff.validation.constraint.api.util.Validation;
 
 public class RuleSelectionRepairApplication extends EclipseResourceRepairApplication<PEORepairJob, PEORepairSettings> {
 
+	private Job modelValidation;
+	
+	private Job repairCalculation;
+	
 	private IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade;
 
 	private Collection<IResource> editRuleFiles = new ArrayList<>();
 	
-	private Job repairCalculation;
-	
-	private PEORepairJob repairJob;
-	
 	private DifferenceSettings settings;
 	
 	private Collection<Rule> editRules;
+	
+	private Validation inconsistency;
+	
+	private List<Validation> validations;
+	
+	private PEORepairJob repairJob;
 	
 	@Override
 	public void initialize(IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade) {
@@ -42,6 +52,41 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 	
 	@Override
 	public void calculateRepairs() {
+		
+		// Clear old repair job:
+		inconsistency = null;
+		validations = null;
+		repairJob = null;
+		
+		
+		// Model validation:
+		modelValidation();
+	}
+	
+	private void modelValidation() {
+		
+		// Model validation:
+		modelValidation = new Job("Model Validation") {
+			
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				
+				// Search inconsistencies:
+				validations = ValidationFacade.validate(getModelB());
+				
+				// Update UI:
+				Display.getDefault().syncExec(() -> {
+					fireResultChangeListener();
+				});
+				
+				return Status.OK_STATUS;
+			}
+		};
+		
+		modelValidation.schedule();
+	}
+	
+	public void calculateRepairProposals() {
 		
 		repairCalculation = new Job("Calculate Repairs") {
 			
@@ -55,8 +100,14 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 				editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
 				
 				// Calculate repairs:
-				repairJob = repairFacade.getRepairs(getModelA(), getModelB(),
-						new PEORepairSettings(editRules, settings));
+				repairCalculation.setName("Calculate Repairs");
+				
+				PEORepairSettings repairSettings = new PEORepairSettings(editRules, settings);
+				repairSettings.setupValidationFilter(
+						Collections.singletonList(inconsistency.getContext()),
+						Collections.singletonList(inconsistency.getRule()));
+				
+				repairJob = repairFacade.getRepairs(getModelA(), getModelB(), repairSettings);
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
@@ -163,13 +214,28 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 		return repairJob;
 	}
 	
+	public Validation getInconsistency() {
+		return inconsistency;
+	}
+	
+	public void setInconsistency(Validation inconsistency) {
+		this.inconsistency = inconsistency;
+	}
+	
+	public List<Validation> getValidations() {
+		return validations;
+	}
+	
 	@Override
 	public void clear() {
 		super.clear();
 		editRuleFiles.clear();
+		modelValidation = null;
 		repairCalculation = null;
 		repairJob = null;
 		settings = null;
 		editRules = null;
+		inconsistency = null;
+		validations = null;
 	}
 }
