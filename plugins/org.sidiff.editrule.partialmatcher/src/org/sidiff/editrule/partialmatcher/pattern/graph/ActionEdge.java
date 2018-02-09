@@ -137,26 +137,32 @@ public class ActionEdge extends ActionGraphElement {
 		return edgePatternB;
 	}
 
-	public void doEvaluationStep(ChangePattern selected, ActionNode stepSource) {
+	/**
+	 * @param selected
+	 *            The initially selected change pattern.
+	 * @param stepSource
+	 *            The start node of the step (to determine the step direction).
+	 * @param stepTarget
+	 *            The end node of the step (to determine the step direction).
+	 */
+	public void doEvaluationStep(ChangePattern selected, ActionNode stepSource, ActionNode stepTarget) {
 		
-		// evaluate edge-change:
-		if ((change != null) && (change != selected)) {
-			change.doEvaluationStep(stepSource);
-		}
-		
-		// evaluate opposite-edge-change:
-		// TODO: Opposites are filtered by the node -> better solution!?
-		if ((opposite != null) && (opposite.getChange() != null)) {
-			opposite.getChange().doEvaluationStep(stepSource);
+		// evaluate edge-changes:
+		if ((change != selected) && ((change != null))) {
+			
+			// evaluate this edge-change:
+			change.doEvaluationStep(stepSource, stepTarget);
+			
+			// evaluate opposite edge-change:
+			// TODO: Opposites are filtered by the node -> better solution!?
+			if (opposite != null) {
+				assert (opposite.getChange() != null);
+				opposite.getChange().doEvaluationStep(stepSource, stepTarget);
+			}
 		}
 
-		// evaluate context:
-		if (stepSource == source) {
-			matchContext(stepSource, target);
-		} else {
-			assert (stepSource == target);
-			matchContext(stepSource, source);
-		}
+		// evaluate context node (delete oder preserve node):
+		matchContext(stepSource, stepTarget);
 	}
 	
 	private void matchContext(ActionNode stepSource, ActionNode stepTarget) {

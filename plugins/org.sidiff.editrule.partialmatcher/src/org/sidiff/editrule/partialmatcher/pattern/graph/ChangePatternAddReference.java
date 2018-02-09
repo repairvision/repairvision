@@ -51,6 +51,15 @@ public class ChangePatternAddReference extends ChangePatternReference {
 		// mark change:
 		Domain.get(changeNodePattern).mark(change);
 		
+		// mark opposite change:
+		if (edge.getOpposite() != null) {
+			assert (edge.getOpposite().getChange() != null);
+			Change oppositeChange = changeIndex.getOppositeChange(change);
+			assert (oppositeChange != null);
+			
+			Domain.get(edge.getOpposite().getChange().getChangeNodePattern()).mark(oppositeChange);
+		}
+		
 		// search context element (source):
 		edge.getSource().addMatchContextB(((AddReference) change).getSrc());
 		
@@ -62,7 +71,7 @@ public class ChangePatternAddReference extends ChangePatternReference {
 	}
 
 	@Override
-	public void doEvaluationStep(ActionNode stepSource) {
+	public void doEvaluationStep(ActionNode stepSource, ActionNode stepTarget) {
 //		System.out.println("Match Action: " + this);
 		
 		Iterator<? extends EObject> matchedB = Domain.get(stepSource.getNodePatternB()).getSearchedMatchIterator();
@@ -72,8 +81,8 @@ public class ChangePatternAddReference extends ChangePatternReference {
 					? SymmetricPackage.eINSTANCE.getAddReference_Src()
 					: SymmetricPackage.eINSTANCE.getAddReference_Tgt();
 			
-			Iterator<AddReference> changes = changeIndex.getLocalChanges(matchedB.next(),
-					changeReference, AddReference.class);
+			Iterator<AddReference> changes = changeIndex.getLocalChanges(
+					matchedB.next(), changeReference, AddReference.class);
 			
 			while (changes.hasNext()) {
 				

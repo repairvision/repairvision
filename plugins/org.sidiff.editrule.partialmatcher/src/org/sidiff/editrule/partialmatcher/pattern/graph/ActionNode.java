@@ -266,7 +266,7 @@ public class ActionNode extends ActionGraphElement  {
 				
 				// evaluate incident edges:
 				for (ActionEdge inzident : inzidents) {
-					inzident.doEvaluationStep(selected, this);
+					inzident.doEvaluationStep(selected, this, adjacent);
 				}
 				
 				// evaluate object-change:

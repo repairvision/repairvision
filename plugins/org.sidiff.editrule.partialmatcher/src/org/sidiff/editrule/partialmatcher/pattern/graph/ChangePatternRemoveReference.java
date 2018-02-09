@@ -51,6 +51,15 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 		// mark change:
 		Domain.get(changeNodePattern).mark(change);
 		
+		// mark opposite change:
+		if (edge.getOpposite() != null) {
+			assert (edge.getOpposite().getChange() != null);
+			Change oppositeChange = changeIndex.getOppositeChange(change);
+			assert (oppositeChange != null);
+			
+			Domain.get(edge.getOpposite().getChange().getChangeNodePattern()).mark(oppositeChange);
+		}
+		
 		// search context element (source):
 		edge.getSource().addMatchContextA(((RemoveReference) change).getSrc());
 		
@@ -62,7 +71,7 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 	}
 
 	@Override
-	public void doEvaluationStep(ActionNode stepSource) {
+	public void doEvaluationStep(ActionNode stepSource, ActionNode stepTarget) {
 //		System.out.println("Match Action: " + this);
 		
 		// Model-Element (target) <- Change 
@@ -73,8 +82,8 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 					? SymmetricPackage.eINSTANCE.getRemoveReference_Src()
 					: SymmetricPackage.eINSTANCE.getRemoveReference_Tgt();
 			
-			Iterator<RemoveReference> changes = changeIndex.getLocalChanges(matchedA.next(),
-					changeReference, RemoveReference.class);
+			Iterator<RemoveReference> changes = changeIndex.getLocalChanges(
+					matchedA.next(), changeReference, RemoveReference.class);
 			
 			while (changes.hasNext()) {
 				// Model-Element -> Change 

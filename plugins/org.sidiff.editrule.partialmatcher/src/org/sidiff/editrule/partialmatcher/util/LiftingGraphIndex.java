@@ -17,6 +17,7 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.MatchingModelPackage;
 
@@ -115,6 +116,56 @@ public class LiftingGraphIndex {
 		}
 				
 		return changes;
+	}
+	
+	/**
+	 * @param change
+	 *            A reference change.
+	 * @return The opposite change or <code>null</code>.
+	 */
+	public Change getOppositeChange(Change change) {
+		
+		if (change instanceof RemoveReference) {
+			RemoveReference removeReference = (RemoveReference) change;
+			EReference oppositeType = removeReference.getType().getEOpposite();
+			
+			if (oppositeType != null) {
+				Iterator<RemoveReference> oppositeChanges = getLocalChanges(removeReference.getTgt(), 
+						SymmetricPackage.eINSTANCE.getRemoveReference_Src(), RemoveReference.class);
+				
+				while (oppositeChanges.hasNext()) {
+					RemoveReference oppositeChange = oppositeChanges.next();
+					
+					if (oppositeChange.getType() == oppositeType) {
+						if (oppositeChange.getTgt() == removeReference.getSrc()) {
+							return oppositeChange;
+						}
+					}
+				}
+			}
+		}
+		
+		else if (change instanceof AddReference) {
+			AddReference addReference = (AddReference) change;
+			EReference oppositeType = addReference.getType().getEOpposite();
+			
+			if (oppositeType != null) {
+				Iterator<AddReference> oppositeChanges = getLocalChanges(addReference.getTgt(), 
+						SymmetricPackage.eINSTANCE.getAddReference_Src(), AddReference.class);
+				
+				while (oppositeChanges.hasNext()) {
+					AddReference oppositeChange = oppositeChanges.next();
+					
+					if (oppositeChange.getType() == oppositeType) {
+						if (oppositeChange.getTgt() == addReference.getSrc()) {
+							return oppositeChange;
+						}
+					}
+				}
+			}
+		}
+		
+		return null;
 	}
 	
 	/**

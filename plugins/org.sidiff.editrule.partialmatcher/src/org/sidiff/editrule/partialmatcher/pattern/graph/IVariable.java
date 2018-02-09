@@ -8,6 +8,10 @@ import org.sidiff.difference.symmetric.Change;
 public interface IVariable {
 
 	Iterator<? extends EObject> getDomain();
-	
+
+	/**
+	 * @param change
+	 *            The selected change.
+	 */
 	void searchPaths(Change change);
 }

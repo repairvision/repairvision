@@ -15,7 +15,7 @@ public abstract class ChangePatternReference extends ChangePattern  {
 		return edge;
 	}
 	
-	public abstract void doEvaluationStep(ActionNode stepSource);
+	public abstract void doEvaluationStep(ActionNode stepSource, ActionNode stepTarget);
 	
 	@Override
 	public String toString() {
