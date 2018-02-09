@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.henshin;
+package org.sidiff.graphpattern.converter.henshin;
 
 import java.util.Collection;
 import java.util.Collections;
