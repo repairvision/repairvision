@@ -52,7 +52,7 @@ public class IntegratedRepairUI extends BasicRepairViewerUI<IntegratedRepairAppl
 						application.setInconsistency(inconsistency);
 						
 						// Search for repairs:
-						application.calculateRepairProposals();
+						application.calculateRepairs();
 					}
 				} else {
 					// Ignore other selections:

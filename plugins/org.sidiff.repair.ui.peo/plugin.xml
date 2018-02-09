@@ -14,4 +14,12 @@
             presentation="org.sidiff.repair.ui.peo.integrated.IntegratedRepairPresentation">
       </presentation>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.sidiff.repair.ui.peo.debugger.EditRuleMatcherDebugger"
+            id="org.sidiff.repair.ui.peo.debugger.EditRuleMatcherDebugger"
+            name="Edit Rule Recognition">
+      </view>
+   </extension>
 </plugin>

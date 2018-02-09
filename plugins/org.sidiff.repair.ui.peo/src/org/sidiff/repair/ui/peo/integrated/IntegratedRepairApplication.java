@@ -60,7 +60,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	}
 	
 	@Override
-	public void calculateRepairs() {
+	public void validation() {
 		
 		// Clear old repair job:
 		inconsistency = null;
@@ -121,7 +121,8 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 		return null;
 	}
 	
-	public void calculateRepairProposals() {
+	@Override
+	public void calculateRepairs() {
 		
 		repairCalculation = new Job("Calculate Repairs") {
 			

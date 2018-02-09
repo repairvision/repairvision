@@ -27,6 +27,8 @@ import org.sidiff.validation.constraint.api.util.Validation;
 
 public class RuleSelectionRepairApplication extends EclipseResourceRepairApplication<PEORepairJob, PEORepairSettings> {
 
+	private boolean debugging = false;
+	
 	private Job modelValidation;
 	
 	private Job repairCalculation;
@@ -51,7 +53,7 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 	}
 	
 	@Override
-	public void calculateRepairs() {
+	public void validation() {
 		
 		// Clear old repair job:
 		inconsistency = null;
@@ -86,7 +88,8 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 		modelValidation.schedule();
 	}
 	
-	public void calculateRepairProposals() {
+	@Override
+	public void calculateRepairs() {
 		
 		repairCalculation = new Job("Calculate Repairs") {
 			
@@ -103,6 +106,7 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 				repairCalculation.setName("Calculate Repairs");
 				
 				PEORepairSettings repairSettings = new PEORepairSettings(editRules, settings);
+				repairSettings.setSaveRecognitionRules(debugging);
 				repairSettings.setupValidationFilter(
 						Collections.singletonList(inconsistency.getContext()),
 						Collections.singletonList(inconsistency.getRule()));
@@ -113,6 +117,8 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 				Display.getDefault().syncExec(() -> {
 					
 					// Clean up repair-trees:
+					validations = new ArrayList<>(repairJob.getValidations());
+					
 					for (RepairValidation validation : repairJob.getValidations()) {
 						validation.cleanUpRepairTree();
 					}
@@ -226,9 +232,18 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 		return validations;
 	}
 	
+	public boolean isDebugging() {
+		return debugging;
+	}
+	
+	public void setDebugging(boolean debugging) {
+		this.debugging = debugging;
+	}
+	
 	@Override
 	public void clear() {
 		super.clear();
+		debugging = false;
 		editRuleFiles.clear();
 		modelValidation = null;
 		repairCalculation = null;

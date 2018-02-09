@@ -1,6 +1,9 @@
 package org.sidiff.repair.ui.peo.ruleselection;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.swt.SWT;
@@ -13,8 +16,10 @@ import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.controls.basic.BasicRepairViewerUI;
 import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.ui.controls.basic.ModelVersionsDropWidget;
+import org.sidiff.repair.ui.peo.Activator;
 import org.sidiff.repair.validation.ui.widgets.ValidationWidget;
 import org.sidiff.validation.constraint.api.util.Validation;
+import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 
 public class RuleSelectionRepairUI extends BasicRepairViewerUI<RuleSelectionRepairApplication> {
 
@@ -32,6 +37,11 @@ public class RuleSelectionRepairUI extends BasicRepairViewerUI<RuleSelectionRepa
 	 * Drop target for the model versions
 	 */
 	private ModelVersionsDropWidget modelVersions;
+	
+	/**
+	 * Debug the current session.
+	 */
+	protected Action startDebugger;
 	
 	@Override
 	public void createPartControls(Composite parent, IWorkbenchPartSite site) {
@@ -66,7 +76,7 @@ public class RuleSelectionRepairUI extends BasicRepairViewerUI<RuleSelectionRepa
 						application.setInconsistency(inconsistency);
 						
 						// Search for repairs:
-						application.calculateRepairProposals();
+						application.calculateRepairs();
 					}
 				} else {
 					// Ignore other selections:
@@ -102,11 +112,44 @@ public class RuleSelectionRepairUI extends BasicRepairViewerUI<RuleSelectionRepa
 	}
 	
 	@Override
+	protected void makeActions(IWorkbenchPartSite site) {
+		super.makeActions(site);
+		
+		// start debugging session:
+		startDebugger = new Action() {
+			public void run() {
+				WorkbenchUtil.showView("org.sidiff.repair.ui.peo.debugger.EditRuleMatcherDebugger");
+				
+				application.setDebugging(true);
+				application.calculateRepairs();
+			}
+		};
+		startDebugger.setText("Debug");
+		startDebugger.setToolTipText("Start Debugging Session");
+		startDebugger.setImageDescriptor(Activator.getImageDescriptor("icons/debug_exc.gif"));
+	}
+	
+	@Override
+	public void createLocalPullDown(IMenuManager manager) {
+		super.createLocalPullDown(manager);
+		manager.add(startDebugger);
+		manager.add(new Separator());
+	}
+	
+	@Override
+	protected void refreshActionStates() {
+		super.refreshActionStates();
+		startDebugger.isEnabled();
+	}
+	
+	@Override
 	public void resultChanged(RepairJob<?> repairJob) {
 		assert (repairJob  == application.getRepairJob());
 		
 		super.resultChanged(repairJob);
 		validationWidget.setInput(application.getValidations());
+		
+		application.setDebugging(false);
 	}
 
 	@Override
