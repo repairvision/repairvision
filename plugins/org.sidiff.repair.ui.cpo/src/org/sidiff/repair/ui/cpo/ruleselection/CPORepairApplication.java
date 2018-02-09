@@ -44,7 +44,7 @@ public class CPORepairApplication extends EclipseResourceRepairApplication<CPORe
 	}
 
 	@Override
-	public void calculateRepairs() {
+	public void validation() {
 		
 		repairCalculation = new Job("Calculate Repairs") {
 			
@@ -80,6 +80,10 @@ public class CPORepairApplication extends EclipseResourceRepairApplication<CPORe
 		};
 		
 		repairCalculation.schedule();
+	}
+	
+	@Override
+	public void calculateRepairs() {
 	}
 	
 	@Override
