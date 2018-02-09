@@ -175,7 +175,7 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		// Calculate repairs:
 		calculateRepairs = new Action() {
 			public void run() {
-				application.calculateRepairs();
+				application.validation();
 			}
 		};
 		calculateRepairs.setText("Validate Model");

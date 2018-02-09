@@ -48,6 +48,11 @@ public interface IRepairApplication<J extends RepairJob<?>, F extends IRepairSet
 	void clearResultChangeListener();
 	
 	/**
+	 * Starts the model validation.
+	 */
+	void validation();
+	
+	/**
 	 * Starts a new repair calculation.
 	 */
 	void calculateRepairs();
