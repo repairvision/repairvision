@@ -138,10 +138,18 @@ public class ComplementFinder {
 		
 		//// Lifting ////
 
-		// Matching:
+		// Create recognition rule:
 		RecognitionPattern recognitionPattern = partialEditRuleRecognizer.createRecognitionPattern(editRule);
 		DebugUtil.printEditRule(editRule);
 		
+		// Save recognition-rule:
+		if (saveRecognitionRule) {
+			ChangePatternUtil.saveGraphPattern(RepairAPIUtil.getRecognitionRuleURI(
+					editRule.eResource().getURI(), GraphPatternConstants.FILE_EXTENSION),
+					recognitionPattern.getGraphPattern());
+		}
+		
+		// Matching:
 		LogTime recognitionTimer = new LogTime();
 		Iterator<IMatching> matchIterator = partialEditRuleRecognizer.recognizePartialEditRule(recognitionPattern, scope, runtimeLog);
 		recognitionTimer.stop();
@@ -150,13 +158,6 @@ public class ComplementFinder {
 		// Report:
 		if (monitor instanceof LogMonitor) {
 			LogUtil.appendTime((LogMonitor) monitor, "[Time (ms)] Recognition Time", recognitionTimer);
-		}
-		
-		// Save recognition-rule:
-		if (saveRecognitionRule) {
-			ChangePatternUtil.saveGraphPattern(RepairAPIUtil.getRecognitionRuleURI(
-					editRule.eResource().getURI(), GraphPatternConstants.FILE_EXTENSION),
-					recognitionPattern.getGraphPattern());
 		}
 
 		//// Complement Construction ////
