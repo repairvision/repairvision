@@ -1,5 +1,5 @@
 package org.sidiff.repair.ui.peo.debugger.model;
 
-public class VariablesRemovedItem {
+public class VariablesRemovedItem extends VariablesItem {
 
 }

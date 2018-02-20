@@ -3,7 +3,7 @@ package org.sidiff.repair.ui.peo.debugger.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VariablesItem {
+public class EditRuleGraphMatchingItem {
 
-	private List<VariableItem> variables = new ArrayList<>();
+	private List<PathItem> paths = new ArrayList<>(); 
 }

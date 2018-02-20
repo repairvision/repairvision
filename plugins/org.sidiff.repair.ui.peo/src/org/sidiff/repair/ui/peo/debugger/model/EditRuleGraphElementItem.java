@@ -1,5 +1,5 @@
 package org.sidiff.repair.ui.peo.debugger.model;
 
-public class PatternNodesItem {
+public class EditRuleGraphElementItem {
 
 }
