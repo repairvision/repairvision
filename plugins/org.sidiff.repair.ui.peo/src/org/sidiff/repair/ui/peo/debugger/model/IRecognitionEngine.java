@@ -6,6 +6,10 @@ import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.NodePattern;
 
 public interface IRecognitionEngine {
+	
+	void addEventListener(IReconitionEngineEventListener listener);
+	
+	void removeEventListener(IRecognitionEngineEvent listener);
 
 	List<NodePattern> getPickedVariables();
 	
