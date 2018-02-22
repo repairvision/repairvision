@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DebuggingSession {
+	
+	private IRecognitionEngine recognitionEngine;
 
 	private List<DebuggingSnapshotItem> snapshots = new ArrayList<>();
+	
+	public DebuggingSession(IRecognitionEngine recognitionEngine) {
+		this.recognitionEngine = recognitionEngine;
+	}
 	
 	public void createSnapshot() {
 		// TODO

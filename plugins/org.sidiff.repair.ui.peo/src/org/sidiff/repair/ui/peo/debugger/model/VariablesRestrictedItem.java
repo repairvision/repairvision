@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.sidiff.graphpattern.NodePattern;
 
-public class VariablesRemovedItem extends VariablesItem {
+public class VariablesRestrictedItem extends VariablesItem {
 
-	public VariablesRemovedItem(List<NodePattern> removed) {
+	public VariablesRestrictedItem(List<NodePattern> restricted) {
 		// TODO Auto-generated constructor stub
 	}
 }
