@@ -3,7 +3,12 @@ package org.sidiff.repair.ui.peo.debugger.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DebuggingSession {
+import org.eclipse.swt.graphics.Image;
+import org.sidiff.repair.ui.peo.Activator;
+
+public class DebuggingSession implements IReconitionEngineEventListener, ITreeItem {
+	
+	private static Image icon = Activator.getImageDescriptor("icons/debug_exc.gif").createImage();
 	
 	private IRecognitionEngine recognitionEngine;
 
@@ -13,12 +18,49 @@ public class DebuggingSession {
 		this.recognitionEngine = recognitionEngine;
 	}
 	
-	public void createSnapshot() {
-		// TODO
+	public void start() {
+		recognitionEngine.addEventListener(this);
+	}
+	
+	public void clear() {
+		snapshots = new ArrayList<>();
+	}
+	
+	public void stop() {
+		recognitionEngine.removeEventListener(this);
+	}
+	
+	public void createSnapshot(IRecognitionEngineEvent trigger) {
+		snapshots.add(new DebuggingSnapshotItem(this, trigger, recognitionEngine));
 	}
 	
 	public List<DebuggingSnapshotItem> getSnapshots() {
 		return snapshots;
+	}
+	
+	@Override
+	public void notifyEvent(IRecognitionEngineEvent event) {
+		createSnapshot(event);
+	}
+	
+	@Override
+	public Image getIcon() {
+		return icon;
+	}
+
+	@Override
+	public String getText() {
+		return "Debugging Session [" + snapshots.size() + "]";
+	}
+
+	@Override
+	public ITreeItem getParent() {
+		return null;
+	}
+
+	@Override
+	public ITreeItem[] getChildren() {
+		return snapshots.toArray(new ITreeItem[0]);
 	}
 	
 	@Override

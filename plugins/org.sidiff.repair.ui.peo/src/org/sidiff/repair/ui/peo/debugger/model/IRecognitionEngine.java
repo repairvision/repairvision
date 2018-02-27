@@ -7,17 +7,19 @@ import org.sidiff.graphpattern.NodePattern;
 
 public interface IRecognitionEngine {
 	
+	List<IRecognitionEngineEvent> getAvailableEvents();
+	
 	void addEventListener(IReconitionEngineEventListener listener);
 	
-	void removeEventListener(IRecognitionEngineEvent listener);
+	void removeEventListener(IReconitionEngineEventListener listener);
+	
+	List<IRecognitionEngineVariableTag> getAvailableVariableTags();
 
-	List<NodePattern> getPickedVariables();
+	List<NodePattern> getAllVariables();
 	
-	List<NodePattern> getRemainingVariables();
+	List<NodePattern> getTaggedVariables(IRecognitionEngineVariableTag tag);
 	
-	List<NodePattern> getRestrictedVariables();
-	
-	List<NodePattern> getRemovedVariables();
+	String getEditRuleName();
 	
 	List<NodePattern> getEditRuleNodes();
 	
@@ -27,7 +29,7 @@ public interface IRecognitionEngine {
 	
 	boolean isRecordingMatching();
 	
-	void setRecordingMatching();
+	void setRecordingMatching(boolean recording);
 	
 	List<List<EdgePattern>> getMatchingPaths();
 }
