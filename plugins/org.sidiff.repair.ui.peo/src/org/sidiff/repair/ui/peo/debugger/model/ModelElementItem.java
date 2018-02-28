@@ -12,6 +12,12 @@ public class ModelElementItem implements ITreeItem {
 	
 	private EObject element;
 
+	public ModelElementItem(ITreeItem parent, String coloring, EObject element) {
+		this.parent = parent;
+		this.coloring = coloring;
+		this.element = element;
+	}
+
 	@Override
 	public Image getIcon() {
 		return (Image) ItemProviderUtil.getImageByObject(element);
