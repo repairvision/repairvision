@@ -5,9 +5,10 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
+import org.sidiff.editrule.partialmatcher.IRecognitionEngine;
 import org.sidiff.repair.ui.peo.Activator;
 
-public class DebuggingSession implements IReconitionEngineEventListener, ITreeItem {
+public class DebuggingSession implements ITreeItem {
 	
 	private static Image icon = Activator.getImageDescriptor("icons/debug_exc.gif").createImage();
 	
@@ -19,29 +20,16 @@ public class DebuggingSession implements IReconitionEngineEventListener, ITreeIt
 		this.recognitionEngine = recognitionEngine;
 	}
 	
-	public void start() {
-		recognitionEngine.addEventListener(this);
-	}
-	
 	public void clear() {
 		snapshots = new ArrayList<>();
 	}
 	
-	public void stop() {
-		recognitionEngine.removeEventListener(this);
-	}
-	
-	public void createSnapshot(IRecognitionEngineEvent trigger) {
-		snapshots.add(new DebuggingSnapshotItem(this, trigger, recognitionEngine));
+	public void createSnapshot() {
+		snapshots.add(new DebuggingSnapshotItem(this, recognitionEngine));
 	}
 	
 	public List<DebuggingSnapshotItem> getSnapshots() {
 		return snapshots;
-	}
-	
-	@Override
-	public void notifyEvent(IRecognitionEngineEvent event) {
-		createSnapshot(event);
 	}
 	
 	@Override

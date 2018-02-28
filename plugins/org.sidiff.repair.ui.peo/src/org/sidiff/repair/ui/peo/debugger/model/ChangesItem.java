@@ -4,26 +4,27 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
+import org.sidiff.editrule.partialmatcher.IRecognitionEngine.IChangeTag;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.repair.ui.peo.Activator;
 
-public class VariablesItem implements ITreeItem {
+public class ChangesItem implements ITreeItem {
 
 	private static Image icon = Activator.getImageDescriptor("icons/debug_exc.gif").createImage();
 	
 	private DebuggingSnapshotItem snapshot;
 	
-	private IRecognitionEngineVariableTag tag;
+	private IChangeTag tag;
 	
-	private VariableItem[] variables;
+	private ChangeItem[] changes;
 
-	public VariablesItem(DebuggingSnapshotItem snapshot, IRecognitionEngineVariableTag tag, List<NodePattern> variables) {
+	public ChangesItem(DebuggingSnapshotItem snapshot, IChangeTag tag, List<NodePattern> changes) {
 		this.snapshot = snapshot;
 		this.tag = tag;
-		this.variables = new VariableItem[variables.size()];
+		this.changes = new ChangeItem[changes.size()];
 		
-		for (int i = 0; i < variables.size(); i++) {
-			this.variables[i] = new VariableItem(this, variables.get(i));
+		for (int i = 0; i < changes.size(); i++) {
+			this.changes[i] = new ChangeItem(this, changes.get(i));
 		}
 	}
 
@@ -34,7 +35,7 @@ public class VariablesItem implements ITreeItem {
 
 	@Override
 	public String getText() {
-		return "Variables [" + tag.toString() + "]";
+		return "Changes [" + tag.toString() + "]";
 	}
 
 	@Override
@@ -44,20 +45,20 @@ public class VariablesItem implements ITreeItem {
 	
 	@Override
 	public boolean hasChildren() {
-		return variables.length > 0;
+		return changes.length > 0;
 	}
 
 	@Override
 	public ITreeItem[] getChildren() {
-		return variables;
+		return changes;
 	}
 	
 	@Override
 	public String toString() {
 		StringBuffer string = new StringBuffer();
 		
-		for (VariableItem variableItem : variables) {
-			string.append(variableItem.toString());
+		for (ChangeItem changeItem : changes) {
+			string.append(changeItem.toString());
 		}
 		
 		return string.toString();

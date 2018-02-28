@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
+import org.sidiff.editrule.partialmatcher.IRecognitionEngine;
+import org.sidiff.editrule.partialmatcher.IRecognitionEngine.IChangeTag;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class DebuggingSnapshotItem implements ITreeItem {
@@ -14,11 +16,8 @@ public class DebuggingSnapshotItem implements ITreeItem {
 	// Parent Session //
 	private DebuggingSession session;
 	
-	// Snapshot Trigger //
-	private IRecognitionEngineEvent trigger;
-
 	// Variables //
-	private List<VariablesItem> variableSets;
+	private List<ChangesItem> variableSets;
 	
 	// Edit Rule Graph Pattern //
 	private EditRuleGraphItem editRule;
@@ -27,23 +26,17 @@ public class DebuggingSnapshotItem implements ITreeItem {
 	
 	private EditRuleGraphMatchingItem editRuleGraphMatching;
 	
-	public DebuggingSnapshotItem(DebuggingSession session, IRecognitionEngineEvent trigger, IRecognitionEngine recognitionEngine) {
+	public DebuggingSnapshotItem(DebuggingSession session, IRecognitionEngine recognitionEngine) {
 		this.session = session;
-		this.trigger = trigger;
 		
-		for (IRecognitionEngineVariableTag variableTag : recognitionEngine.getAvailableVariableTags()) {
-			variableSets.add(new VariablesItem(this, variableTag, recognitionEngine.getTaggedVariables(variableTag)));
+		for (IChangeTag variableTag : recognitionEngine.getAvailableChangeTags()) {
+			variableSets.add(new ChangesItem(this, variableTag, recognitionEngine.getTaggedChanges(variableTag)));
 		}
 		
 		this.editRule = new EditRuleGraphItem(this, recognitionEngine.getEditRuleName(),
 				recognitionEngine.getEditRuleNodes(), recognitionEngine.getEditRuleEdges());
-		
-		if (recognitionEngine.isRecordingMatching()) {
-			this.editRuleGraphMatching = new EditRuleGraphMatchingItem(this, recognitionEngine.getMatchingPaths());
-		} else {
-			this.editRuleGraphMatching = new EditRuleGraphMatchingItem(this,
-					Collections.singletonList(recognitionEngine.getCurrentMatchingPath()));
-		}
+		this.editRuleGraphMatching = new EditRuleGraphMatchingItem(this,
+				Collections.singletonList(recognitionEngine.getCurrentMatchingPath()));
 	}
 
 	@Override
@@ -53,7 +46,7 @@ public class DebuggingSnapshotItem implements ITreeItem {
 
 	@Override
 	public String getText() {
-		return "Snapshot [" + trigger.toString() + "]";
+		return "Snapshot";
 	}
 
 	@Override
@@ -84,7 +77,7 @@ public class DebuggingSnapshotItem implements ITreeItem {
 	public String toString() {
 		StringBuffer string = new StringBuffer();
 		
-		for (VariablesItem variablesItem : variableSets) {
+		for (ChangesItem variablesItem : variableSets) {
 			string.append(variablesItem.toString() + "\n");
 		}
 		

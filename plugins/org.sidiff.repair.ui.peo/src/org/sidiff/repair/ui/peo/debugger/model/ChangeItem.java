@@ -6,21 +6,21 @@ import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.repair.ui.peo.Activator;
 
-public class VariableItem implements ITreeItem {
+public class ChangeItem implements ITreeItem {
 
 	private static Image icon = Activator.getImageDescriptor("icons/debug_exc.gif").createImage();
 	
-	private VariablesItem variableSet;
+	private ChangesItem changeSet;
 	
 	private EditRuleGraphElementItem graphElement;
 
-	public VariableItem(VariablesItem variableSet, NodePattern node) {
-		this.variableSet = variableSet;
+	public ChangeItem(ChangesItem changeSet, NodePattern node) {
+		this.changeSet = changeSet;
 		this.graphElement = new EditRuleNodeItem(this, node);
 	}
 	
-	public VariableItem(VariablesItem variableSet, EdgePattern edge) {
-		this.variableSet = variableSet;
+	public ChangeItem(ChangesItem changeSet, EdgePattern edge) {
+		this.changeSet = changeSet;
 		this.graphElement = new EditRuleEdgeItem(this, edge);
 	}
 
@@ -31,12 +31,12 @@ public class VariableItem implements ITreeItem {
 
 	@Override
 	public String getText() {
-		return "Variable: " + graphElement.getText();
+		return "Change: " + graphElement.getText();
 	}
 
 	@Override
 	public ITreeItem getParent() {
-		return variableSet;
+		return changeSet;
 	}
 	
 	@Override
