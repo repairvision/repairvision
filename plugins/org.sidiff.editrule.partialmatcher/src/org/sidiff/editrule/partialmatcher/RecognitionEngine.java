@@ -1,7 +1,10 @@
 package org.sidiff.editrule.partialmatcher;
 
 import java.util.Iterator;
+import java.util.List;
 
+import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
@@ -21,6 +24,7 @@ import org.sidiff.editrule.partialmatcher.util.IndexedCrossReferencer;
 import org.sidiff.editrule.partialmatcher.util.LiftingGraphDomainMap;
 import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.editrule.partialmatcher.util.MatchingHelper;
+import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
@@ -30,7 +34,7 @@ import org.sidiff.graphpattern.matcher.IMatching;
 /**
  * @author Manuel Ohrndorf
  */
-public class PartialEditRuleRecognizer implements IAlgorithm {
+public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 	
 	// -enableDebugUtil
 	// -DLOGCHANNEL="ConsoleLogChannel" -DLOGEVENTS="*"
@@ -47,6 +51,7 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 	
 	protected MatchingHelper matchingHelper;
 	
+	@Override
 	public void initialize(SymmetricDifference difference) {
 		this.difference = difference;
 		
@@ -62,10 +67,12 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 		matchingHelper = new MatchingHelper(crossReferencer);
 	}
 	
+	@Override
 	public RecognitionPattern createRecognitionPattern(Rule editRule) {
 		return createRecognitionPattern(editRule, GraphpatternFactory.eINSTANCE.createGraphPattern());
 	}
 	
+	@Override
 	public RecognitionPattern createRecognitionPattern(Rule editRule, GraphPattern graphPattern) {
 		
 		// Create Constraint-Satisfaction-Problem:
@@ -79,6 +86,7 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 		return recognitionPattern;
 	}
 	
+	@Override
 	public Iterator<IMatching> recognizePartialEditRule(RecognitionPattern recognitionPattern, RepairScope scope, LogTable runtimeLog) {
 		
 		if (!started) {
@@ -124,6 +132,7 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 		return matchGenerator.getResults();
 	}
 
+	@Override
 	public Iterator<IMatching> recognizePartialEditRule(RecognitionPattern recognitionPattern) {
 		
 		if (!started) {
@@ -164,5 +173,59 @@ public class PartialEditRuleRecognizer implements IAlgorithm {
 //		// Unmerge external resources into the difference:
 //		mergeImports.unmerge();
 //		started = false;
+	}
+
+	@Override
+	public List<NodePattern> getAllChanges() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IChangeTag> getAvailableChangeTags() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<NodePattern> getTaggedChanges(IChangeTag tag) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getEditRuleName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<NodePattern> getEditRuleNodes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<EdgePattern> getEditRuleEdges() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<EdgePattern> getCurrentMatchingPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Node getEditRuleTrace(NodePattern node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Edge getEditRuleTrace(EdgePattern node) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

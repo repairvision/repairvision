@@ -3,7 +3,7 @@ package org.sidiff.editrule.partialmatcher.engine;
 import java.util.Iterator;
 import java.util.List;
 
-import org.sidiff.editrule.partialmatcher.PartialEditRuleRecognizer;
+import org.sidiff.editrule.partialmatcher.RecognitionEngine;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.IMatching;
@@ -11,12 +11,12 @@ import org.sidiff.graphpattern.matcher.IPatternMatchingEngine;
 
 public class PatternMatchingEngine implements IPatternMatchingEngine<IMatching> {
 
-	protected PartialEditRuleRecognizer editRuleRecognizer;
+	protected RecognitionEngine editRuleRecognizer;
 	
 	protected RecognitionPattern recognitionPattern;
 	
 	public PatternMatchingEngine(
-			PartialEditRuleRecognizer editRuleRecognizer, 
+			RecognitionEngine editRuleRecognizer, 
 			RecognitionPattern recognitionPattern) {
 		this.editRuleRecognizer = editRuleRecognizer;
 		this.recognitionPattern = recognitionPattern;

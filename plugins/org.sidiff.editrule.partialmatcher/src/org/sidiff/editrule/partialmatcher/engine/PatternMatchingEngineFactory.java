@@ -11,7 +11,7 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.sidiff.common.henshin.HenshinUnitAnalysis;
 import org.sidiff.common.henshin.exceptions.NoMainUnitFoundException;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.editrule.partialmatcher.PartialEditRuleRecognizer;
+import org.sidiff.editrule.partialmatcher.RecognitionEngine;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.matcher.IMatching;
@@ -27,7 +27,7 @@ public class PatternMatchingEngineFactory implements IPatternMatchingEngineFacto
 		if ((graphpattern != null) && (targetModels != null)) {
 			
 			// Partial edit rule recognizer:
-			PartialEditRuleRecognizer editRuleRecognizer = new PartialEditRuleRecognizer();
+			RecognitionEngine editRuleRecognizer = new RecognitionEngine();
 			editRuleRecognizer.initialize(getSymmetricDifference(targetModels));
 			RecognitionPattern recognitionPattern = null;
 			

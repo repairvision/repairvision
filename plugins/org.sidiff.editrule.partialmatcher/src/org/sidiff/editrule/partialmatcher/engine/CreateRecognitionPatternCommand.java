@@ -3,13 +3,13 @@ package org.sidiff.editrule.partialmatcher.engine;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.sidiff.editrule.partialmatcher.PartialEditRuleRecognizer;
+import org.sidiff.editrule.partialmatcher.IRecognitionEngine;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
 import org.sidiff.graphpattern.GraphPattern;
 
 public class CreateRecognitionPatternCommand extends RecordingCommand {
 
-	private PartialEditRuleRecognizer editRuleRecognizer;
+	private IRecognitionEngine editRuleRecognizer;
 	
 	private RecognitionPattern recognitionPattern;
 	
@@ -19,7 +19,7 @@ public class CreateRecognitionPatternCommand extends RecordingCommand {
 
 	public CreateRecognitionPatternCommand(
 			TransactionalEditingDomain domain,
-			PartialEditRuleRecognizer editRuleRecognizer, 
+			IRecognitionEngine editRuleRecognizer, 
 			Rule editRule, GraphPattern graphPattern) {
 		
 		super(domain);
