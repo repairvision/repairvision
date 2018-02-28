@@ -23,4 +23,10 @@ public interface ITreeItem {
 	 * @return All children of this element in the tree.
 	 */
 	ITreeItem[] getChildren();
+	
+	/**
+	 * @return <code>true</code> if this element has children; 
+	 *         <code>false</code> otherwise.
+	 */
+	boolean hasChildren();
 }
