@@ -151,7 +151,8 @@ public class ComplementFinder {
 		
 		// Matching:
 		LogTime recognitionTimer = new LogTime();
-		Iterator<IMatching> matchIterator = partialEditRuleRecognizer.recognizePartialEditRule(recognitionPattern, scope, runtimeLog);
+		Iterator<IMatching> matchIterator = partialEditRuleRecognizer
+				.createMatcher(recognitionPattern, scope, runtimeLog).recognizeEditRule();
 		recognitionTimer.stop();
 		DebugUtil.printRecognitionTime(recognitionTimer);
 		
