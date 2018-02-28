@@ -1,6 +1,5 @@
 package org.sidiff.repair.ui.peo.debugger.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
@@ -15,14 +14,15 @@ public class VariablesItem implements ITreeItem {
 	
 	private IRecognitionEngineVariableTag tag;
 	
-	private List<VariableItem> variables = new ArrayList<>();
+	private VariableItem[] variables;
 
 	public VariablesItem(DebuggingSnapshotItem snapshot, IRecognitionEngineVariableTag tag, List<NodePattern> variables) {
 		this.snapshot = snapshot;
 		this.tag = tag;
+		this.variables = new VariableItem[variables.size()];
 		
-		for (NodePattern variable : variables) {
-			this.variables.add(new VariableItem(this, variable));
+		for (int i = 0; i < variables.size(); i++) {
+			this.variables[i] = new VariableItem(this, variables.get(i));
 		}
 	}
 
@@ -43,7 +43,7 @@ public class VariablesItem implements ITreeItem {
 
 	@Override
 	public ITreeItem[] getChildren() {
-		return variables.toArray(new ITreeItem[0]);
+		return variables;
 	}
 	
 	@Override

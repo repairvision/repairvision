@@ -1,6 +1,5 @@
 package org.sidiff.repair.ui.peo.debugger.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
@@ -13,13 +12,14 @@ public class PathItem implements ITreeItem {
 	
 	private EditRuleGraphMatchingItem matching;
 	
-	private List<EditRuleEdgeItem> path = new ArrayList<>();
+	private EditRuleEdgeItem[] path;
 	
 	public PathItem(EditRuleGraphMatchingItem matching, List<EdgePattern> path) {
 		this.matching = matching;
+		this.path = new EditRuleEdgeItem[path.size()];
 		
-		for (EdgePattern edge : path) {
-			this.path.add(new EditRuleEdgeItem(this, edge));
+		for (int i = 0; i < path.size(); i++) {
+			this.path[i] = new EditRuleEdgeItem(this, path.get(i));
 		}
 	}
 
@@ -40,7 +40,7 @@ public class PathItem implements ITreeItem {
 
 	@Override
 	public ITreeItem[] getChildren() {
-		return path.toArray(new ITreeItem[0]);
+		return path;
 	}
 	
 	@Override
