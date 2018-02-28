@@ -2,8 +2,7 @@ package org.sidiff.repair.ui.peo.debugger.model;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ChangePattern;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class ChangeItem implements ITreeItem {
@@ -12,16 +11,11 @@ public class ChangeItem implements ITreeItem {
 	
 	private ChangesItem changeSet;
 	
-	private EditRuleGraphElementItem graphElement;
+	private DomainItem domain;
 
-	public ChangeItem(ChangesItem changeSet, NodePattern node) {
+	public ChangeItem(ChangesItem changeSet, ChangePattern change) {
 		this.changeSet = changeSet;
-		this.graphElement = new EditRuleNodeItem(this, node);
-	}
-	
-	public ChangeItem(ChangesItem changeSet, EdgePattern edge) {
-		this.changeSet = changeSet;
-		this.graphElement = new EditRuleEdgeItem(this, edge);
+		this.domain = new DomainItem(this, change.getChangeNodePattern());
 	}
 
 	@Override
@@ -31,7 +25,7 @@ public class ChangeItem implements ITreeItem {
 
 	@Override
 	public String getText() {
-		return "Change: " + graphElement.getText();
+		return "Change: " + domain.getText();
 	}
 
 	@Override
@@ -46,11 +40,11 @@ public class ChangeItem implements ITreeItem {
 
 	@Override
 	public ITreeItem[] getChildren() {
-		return new ITreeItem[] {graphElement};
+		return new ITreeItem[] {domain};
 	}
 	
 	@Override
 	public String toString() {
-		return graphElement.toString() + "\n";
+		return domain.toString() + "\n";
 	}
 }

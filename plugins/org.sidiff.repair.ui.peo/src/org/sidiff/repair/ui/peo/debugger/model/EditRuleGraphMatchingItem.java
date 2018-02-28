@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class EditRuleGraphMatchingItem implements ITreeItem {
@@ -15,7 +15,7 @@ public class EditRuleGraphMatchingItem implements ITreeItem {
 	
 	private PathItem[] paths;
 	
-	public EditRuleGraphMatchingItem(DebuggingSnapshotItem snapshotItem, List<List<EdgePattern>> paths) {
+	public EditRuleGraphMatchingItem(DebuggingSnapshotItem snapshotItem, List<List<ActionNode>> paths) {
 		this.snapshotItem = snapshotItem;
 		this.paths = new PathItem[paths.size()];
 		

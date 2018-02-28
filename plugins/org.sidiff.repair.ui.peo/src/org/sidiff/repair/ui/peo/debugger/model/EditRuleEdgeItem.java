@@ -2,7 +2,7 @@ package org.sidiff.repair.ui.peo.debugger.model;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ActionEdge;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class EditRuleEdgeItem extends EditRuleGraphElementItem implements ITreeItem {
@@ -11,11 +11,11 @@ public class EditRuleEdgeItem extends EditRuleGraphElementItem implements ITreeI
 	
 	private ITreeItem parent;
 	
-	private EdgePattern edge;
+	private ActionEdge edge;
 	
 	private DomainItem difference;
 	
-	public EditRuleEdgeItem(ITreeItem parent, EdgePattern edge) {
+	public EditRuleEdgeItem(ITreeItem parent, ActionEdge edge) {
 		this.parent = parent;
 		this.edge = edge;
 	}
@@ -27,7 +27,7 @@ public class EditRuleEdgeItem extends EditRuleGraphElementItem implements ITreeI
 
 	@Override
 	public String getText() {
-		return edge.getName() + " : " + edge.getType().getName();
+		return edge.getEditRuleEdge().getType().getName();
 	}
 
 	@Override

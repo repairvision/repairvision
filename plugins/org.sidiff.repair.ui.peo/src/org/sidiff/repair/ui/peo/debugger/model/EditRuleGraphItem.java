@@ -1,12 +1,13 @@
 package org.sidiff.repair.ui.peo.debugger.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ActionEdge;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class EditRuleGraphItem implements ITreeItem {
@@ -21,16 +22,16 @@ public class EditRuleGraphItem implements ITreeItem {
 	
 	private List<EditRuleEdgeItem> edges = new ArrayList<>();
 	
-	public EditRuleGraphItem(DebuggingSnapshotItem snapshot, String editRuleName, List<NodePattern> nodes, List<EdgePattern> edges) {
+	public EditRuleGraphItem(DebuggingSnapshotItem snapshot, String editRuleName, Collection<ActionNode> nodes, Collection<ActionEdge> edges) {
 		this.snapshot = snapshot;
 		this.editRuleName = editRuleName;
 		
-		for (EdgePattern edge : edges) {
-			this.edges.add(new EditRuleEdgeItem(this, edge));
+		for (ActionNode node : nodes) {
+			this.nodes.add(new EditRuleNodeItem(this, node));
 		}
 		
-		for (NodePattern node : nodes) {
-			this.nodes.add(new EditRuleNodeItem(this, node));
+		for (ActionEdge edge : edges) {
+			this.edges.add(new EditRuleEdgeItem(this, edge));
 		}
 	}
 

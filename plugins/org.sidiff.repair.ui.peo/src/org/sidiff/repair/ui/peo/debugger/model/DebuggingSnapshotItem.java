@@ -1,12 +1,11 @@
 package org.sidiff.repair.ui.peo.debugger.model;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.editrule.partialmatcher.IRecognitionEngine;
-import org.sidiff.editrule.partialmatcher.IRecognitionEngine.IChangeTag;
+import org.sidiff.editrule.partialmatcher.IRecognitionEngineMatcher;
+import org.sidiff.editrule.partialmatcher.IRecognitionEngineMonitor.IChangeTag;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class DebuggingSnapshotItem implements ITreeItem {
@@ -26,17 +25,17 @@ public class DebuggingSnapshotItem implements ITreeItem {
 	
 	private EditRuleGraphMatchingItem editRuleGraphMatching;
 	
-	public DebuggingSnapshotItem(DebuggingSession session, IRecognitionEngine recognitionEngine) {
+	public DebuggingSnapshotItem(DebuggingSession session, IRecognitionEngineMatcher recognitionEngine) {
 		this.session = session;
 		
-		for (IChangeTag variableTag : recognitionEngine.getAvailableChangeTags()) {
-			variableSets.add(new ChangesItem(this, variableTag, recognitionEngine.getTaggedChanges(variableTag)));
+		for (IChangeTag variableTag : recognitionEngine.getMonitor().getAvailableChangeTags()) {
+			variableSets.add(new ChangesItem(this, variableTag, recognitionEngine.getMonitor().getTaggedChanges(variableTag)));
 		}
 		
 		this.editRule = new EditRuleGraphItem(this, recognitionEngine.getEditRuleName(),
 				recognitionEngine.getEditRuleNodes(), recognitionEngine.getEditRuleEdges());
-		this.editRuleGraphMatching = new EditRuleGraphMatchingItem(this,
-				Collections.singletonList(recognitionEngine.getCurrentMatchingPath()));
+		this.editRuleGraphMatching = new EditRuleGraphMatchingItem(this, 
+				recognitionEngine.getMonitor().getMatchingPathRecording());
 	}
 
 	@Override

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.editrule.partialmatcher.IRecognitionEngine.IChangeTag;
-import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.editrule.partialmatcher.IRecognitionEngineMonitor.IChangeTag;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ChangePattern;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class ChangesItem implements ITreeItem {
@@ -18,7 +18,7 @@ public class ChangesItem implements ITreeItem {
 	
 	private ChangeItem[] changes;
 
-	public ChangesItem(DebuggingSnapshotItem snapshot, IChangeTag tag, List<NodePattern> changes) {
+	public ChangesItem(DebuggingSnapshotItem snapshot, IChangeTag tag, List<ChangePattern> changes) {
 		this.snapshot = snapshot;
 		this.tag = tag;
 		this.changes = new ChangeItem[changes.size()];

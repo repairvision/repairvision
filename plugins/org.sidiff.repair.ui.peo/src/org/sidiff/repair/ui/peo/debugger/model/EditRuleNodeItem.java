@@ -2,7 +2,7 @@ package org.sidiff.repair.ui.peo.debugger.model;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class EditRuleNodeItem extends EditRuleGraphElementItem implements ITreeItem  {
@@ -11,7 +11,7 @@ public class EditRuleNodeItem extends EditRuleGraphElementItem implements ITreeI
 	
 	private ITreeItem parent;
 	
-	private NodePattern node;
+	private ActionNode node;
 	
 	private DomainItem domainA;
 	
@@ -19,7 +19,7 @@ public class EditRuleNodeItem extends EditRuleGraphElementItem implements ITreeI
 	
 	private DomainItem difference;
 	
-	public EditRuleNodeItem(ITreeItem parent, NodePattern node) {
+	public EditRuleNodeItem(ITreeItem parent, ActionNode node) {
 		this.parent = parent;
 		this.node = node;
 	}
@@ -31,7 +31,7 @@ public class EditRuleNodeItem extends EditRuleGraphElementItem implements ITreeI
 
 	@Override
 	public String getText() {
-		return node.getName() + " : " + node.getType().getName();
+		return node.getEditRuleNode().getName() + " : " + node.getEditRuleNode().getType().getName();
 	}
 
 	@Override

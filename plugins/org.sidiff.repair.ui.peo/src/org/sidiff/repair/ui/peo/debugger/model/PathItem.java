@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class PathItem implements ITreeItem {
@@ -13,14 +13,14 @@ public class PathItem implements ITreeItem {
 	
 	private EditRuleGraphMatchingItem matching;
 	
-	private EditRuleEdgeItem[] path;
+	private EditRuleNodeItem[] path;
 	
-	public PathItem(EditRuleGraphMatchingItem matching, List<EdgePattern> path) {
+	public PathItem(EditRuleGraphMatchingItem matching, List<ActionNode> path) {
 		this.matching = matching;
-		this.path = new EditRuleEdgeItem[path.size()];
+		this.path = new EditRuleNodeItem[path.size()];
 		
 		for (int i = 0; i < path.size(); i++) {
-			this.path[i] = new EditRuleEdgeItem(this, path.get(i));
+			this.path[i] = new EditRuleNodeItem(this, path.get(i));
 		}
 	}
 
@@ -53,8 +53,8 @@ public class PathItem implements ITreeItem {
 	public String toString() {
 		StringBuffer string = new StringBuffer();
 		
-		for (EditRuleEdgeItem edge : path) {
-			string.append(edge.toString() + "\n");
+		for (EditRuleNodeItem node : path) {
+			string.append(node.toString() + "\n");
 		}
 		
 		return string.toString();

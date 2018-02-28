@@ -5,18 +5,18 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.editrule.partialmatcher.IRecognitionEngine;
+import org.sidiff.editrule.partialmatcher.IRecognitionEngineMatcher;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class DebuggingSession implements ITreeItem {
 	
 	private static Image icon = Activator.getImageDescriptor("icons/debug_exc.gif").createImage();
 	
-	private IRecognitionEngine recognitionEngine;
+	private IRecognitionEngineMatcher recognitionEngine;
 
 	private List<DebuggingSnapshotItem> snapshots = new ArrayList<>();
 	
-	public DebuggingSession(IRecognitionEngine recognitionEngine) {
+	public DebuggingSession(IRecognitionEngineMatcher recognitionEngine) {
 		this.recognitionEngine = recognitionEngine;
 	}
 	
