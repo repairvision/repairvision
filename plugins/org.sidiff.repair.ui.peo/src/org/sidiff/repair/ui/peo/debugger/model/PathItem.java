@@ -3,7 +3,7 @@ package org.sidiff.repair.ui.peo.debugger.model;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.ui.widgets.ITreeItem;
+import org.sidiff.consistency.common.ui.tree.ITreeItem;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.repair.ui.peo.Activator;
 

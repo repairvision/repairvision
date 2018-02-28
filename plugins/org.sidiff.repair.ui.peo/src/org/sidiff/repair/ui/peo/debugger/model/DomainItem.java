@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.ui.widgets.ITreeItem;
+import org.sidiff.consistency.common.ui.tree.ITreeItem;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain.SelectionType;
 import org.sidiff.graphpattern.NodePattern;
