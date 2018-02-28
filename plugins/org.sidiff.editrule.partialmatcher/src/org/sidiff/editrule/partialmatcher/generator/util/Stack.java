@@ -1,6 +1,7 @@
 package org.sidiff.editrule.partialmatcher.generator.util;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class Stack<T extends Object> {
 
@@ -52,5 +53,9 @@ public class Stack<T extends Object> {
 	
 	public T[] toArray() {
 		return Arrays.copyOf(stack, pointer);
+	}
+	
+	public Iterator<T> iterator() {
+		return Arrays.stream(stack).iterator();
 	}
 }

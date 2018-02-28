@@ -3,7 +3,6 @@ package org.sidiff.editrule.partialmatcher.pattern.graph;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action;
@@ -252,7 +251,7 @@ public class ActionNode extends ActionGraphElement  {
 		}
 	}
 
-	public void searchPaths(ChangePattern selected, ActionNode start, Set<ActionNode> path) {
+	public void searchPaths(ChangePattern selected, ActionNode start, MatchingPath path) {
 		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStep(this);
 		
 		path.add(this);

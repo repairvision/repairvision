@@ -1,17 +1,34 @@
 package org.sidiff.editrule.partialmatcher.selection;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
+import org.sidiff.editrule.partialmatcher.pattern.graph.MatchingPath;
+import org.sidiff.editrule.partialmatcher.pattern.graph.MatchingPathRecorder;
 import org.sidiff.graphpattern.NodePattern;
 
 public class MatchSelector implements IMatchSelector {
 	
 	private RecognitionPattern recognitionPattern;
 	
+	private boolean recording;
+	
+	private MatchingPathRecorder pathRecording;
+	
 	public MatchSelector(RecognitionPattern recognitionPattern) {
 		this.recognitionPattern = recognitionPattern;
+	}
+	
+	public boolean isRecording() {
+		return recording;
+	}
+	
+	public void setRecording(boolean recording) {
+		this.recording = recording;
 	}
 	
 	@Override
@@ -37,7 +54,7 @@ public class MatchSelector implements IMatchSelector {
 //		System.out.println("Initial Selection: " + selectedNode);
 		
 		// Search domains from model:
-		recognitionPattern.getChangePattern(selectedNode).searchPaths((Change) selectedMatch);
+		recognitionPattern.getChangePattern(selectedNode).searchPaths(createMatchingPath(), (Change) selectedMatch);
 		
 		// Action-Graph:
 		for (NodePattern node : recognitionPattern.getGraphNodePatterns()) {
@@ -60,7 +77,7 @@ public class MatchSelector implements IMatchSelector {
 	public void selection(NodePattern selectedNode, EObject selectedMatch) {
 //		System.out.println("Selection: " + selectedNode);
 				
-		recognitionPattern.getChangePattern(selectedNode).searchPaths((Change) selectedMatch);
+		recognitionPattern.getChangePattern(selectedNode).searchPaths(createMatchingPath(), (Change) selectedMatch);
 		
 		// Restriction:
 		
@@ -87,5 +104,19 @@ public class MatchSelector implements IMatchSelector {
 			Domain domain = Domain.get(node.getEvaluation());
 			domain.undoRestriction(unselectedNode);	
 		}
+	}
+
+	public MatchingPath createMatchingPath() {
+		if (recording) {
+			pathRecording = new MatchingPathRecorder();
+			return pathRecording;
+		} else {
+			return new MatchingPath();
+		}
+	}
+
+	@Override
+	public List<List<ActionNode>> getRecording() {
+		return pathRecording.getRecording();
 	}
 }

@@ -12,8 +12,11 @@ public class ActionGraph {
 	
 	protected LiftingGraphIndex changeIndex;
 	
-	public ActionGraph(Rule editRule, MatchingHelper matchingHelper, LiftingGraphIndex changeIndex) {
+	public ActionGraph(Rule editRule) {
 		this.editRule = editRule;
+	}
+	
+	public void initialize(MatchingHelper matchingHelper, LiftingGraphIndex changeIndex) {
 		this.matchingHelper = matchingHelper;
 		this.changeIndex = changeIndex;
 	}

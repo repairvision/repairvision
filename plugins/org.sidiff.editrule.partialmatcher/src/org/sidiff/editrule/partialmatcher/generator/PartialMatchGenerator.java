@@ -47,7 +47,7 @@ public class PartialMatchGenerator {
 	
 	private Stack<Variable> removedVariables;
 	
-	private Stack<Variable> blockedVariables;
+	private Stack<Variable> dependingVariables;
 	
 	private Stack<Variable> subVariables;
 	
@@ -175,7 +175,7 @@ public class PartialMatchGenerator {
 		// variables:
 		remainingVariables = new VariableSet(variableNodes.size());
 		removedVariables = new Stack<Variable>(variableNodes.size());
-		blockedVariables = new Stack<Variable>(variableNodes.size());
+		dependingVariables = new Stack<Variable>(variableNodes.size());
 		subVariables = new Stack<Variable>(variableNodes.size());
 		
 		for (int i = 0; i < variableNodes.size(); i++) {
@@ -422,7 +422,7 @@ public class PartialMatchGenerator {
 	        removedVariables.push(atomicVariable);
 	        
 	        if (!domainIsEmpty) {
-	        	blockedVariables.push(atomicVariable);
+	        	dependingVariables.push(atomicVariable);
 	        }
 		}
 		dependencies.undoRemoveDependency();
@@ -434,7 +434,7 @@ public class PartialMatchGenerator {
 	          remainingVariables.add(atomicVariable);
 	          
 	          if (!domainIsEmpty) {
-	        	  blockedVariables.pop();
+	        	  dependingVariables.pop();
 	          }
 	     } 
 	}
@@ -507,8 +507,8 @@ public class PartialMatchGenerator {
 	
 	private boolean isMaximumAssignment() {
 		
-		for (int i = 0; i < blockedVariables.size(); ++i) {
-			NodePattern node = blockedVariables.get(i).node;
+		for (int i = 0; i < dependingVariables.size(); ++i) {
+			NodePattern node = dependingVariables.get(i).node;
 					
 			if (dependencies.canRemove(node)) {
 				Domain domain = Domain.get(node.getEvaluation());
@@ -577,6 +577,34 @@ public class PartialMatchGenerator {
 				}
 			}
 		};
+	}
+	
+	/**
+	 * @return All remaining variables to be picked.
+	 */
+	public Iterator<Variable> getRemainingVariables() {
+		return remainingVariables.iterator();
+	}
+	
+	/**
+	 * @return All currently removed variables.
+	 */
+	public Iterator<Variable> getRemovedVariables() {
+		return removedVariables.iterator();
+	}
+	
+	/**
+	 * @return Variables that are depending from a removed variable.
+	 */
+	public Iterator<Variable> getDependingVariables() {
+		return dependingVariables.iterator();
+	}
+	
+	/**
+	 * @return All picked variables.
+	 */
+	public Iterator<Variable> getSubVariables() {
+		return subVariables.iterator();
 	}
 	
 	@SuppressWarnings("unused")

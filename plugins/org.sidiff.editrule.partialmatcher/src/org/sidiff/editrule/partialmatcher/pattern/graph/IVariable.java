@@ -10,8 +10,10 @@ public interface IVariable {
 	Iterator<? extends EObject> getDomain();
 
 	/**
+	 * @param path
+	 *            The currently searched path.
 	 * @param change
 	 *            The selected change.
 	 */
-	void searchPaths(Change change);
+	void searchPaths(MatchingPath path, Change change);
 }

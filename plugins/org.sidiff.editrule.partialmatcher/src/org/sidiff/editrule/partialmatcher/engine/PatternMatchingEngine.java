@@ -24,7 +24,7 @@ public class PatternMatchingEngine implements IPatternMatchingEngine<IMatching> 
 	
 	@Override
 	public Iterator<IMatching> getResults() {
-		return editRuleRecognizer.recognizePartialEditRule(recognitionPattern);
+		return editRuleRecognizer.createMatcher(recognitionPattern).recognizeEditRule();
 	}
 
 	@Override

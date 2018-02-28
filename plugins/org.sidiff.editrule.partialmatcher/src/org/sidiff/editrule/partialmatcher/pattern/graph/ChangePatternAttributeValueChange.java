@@ -1,6 +1,5 @@
 package org.sidiff.editrule.partialmatcher.pattern.graph;
 
-import java.util.HashSet;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
@@ -52,7 +51,7 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 	}
 	
 	@Override
-	public void searchPaths(Change change) {
+	public void searchPaths(MatchingPath path, Change change) {
 		
 		// mark change:
 		Domain.get(changeNodePattern).mark(change);
@@ -64,7 +63,7 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 				changeIndex.getCorrespondenceB(((AttributeValueChange) change).getObjB()));
 		
 		// search paths:
-		node.searchPaths(this, node, new HashSet<>());
+		node.searchPaths(this, node, path);
 	}
 
 	public void doEvaluationStep() {

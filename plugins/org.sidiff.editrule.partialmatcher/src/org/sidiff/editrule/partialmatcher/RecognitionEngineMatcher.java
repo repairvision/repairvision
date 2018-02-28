@@ -1,27 +1,29 @@
 package org.sidiff.editrule.partialmatcher;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 
-import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.partialmatcher.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.partialmatcher.generator.PartialMatchGenerator;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
-import org.sidiff.editrule.partialmatcher.pattern.RecognitionPatternInitializer;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ActionEdge;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ChangePattern;
 import org.sidiff.editrule.partialmatcher.scope.RepairScope;
 import org.sidiff.editrule.partialmatcher.scope.RepairScopeConstraint;
 import org.sidiff.editrule.partialmatcher.selection.IMatchSelector;
 import org.sidiff.editrule.partialmatcher.selection.MatchSelector;
-import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.IMatching;
 
 public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 
+	private IRecognitionEngineMonitor monitor;
+	
 	private RecognitionPattern recognitionPattern; 
 	
 	private PartialMatchGenerator matchGenerator;
@@ -30,8 +32,10 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	private DependencyEvaluation dependencies;
 	
+	
 	public RecognitionEngineMatcher(RecognitionPattern recognitionPattern) {
 		this.recognitionPattern = recognitionPattern;
+		this.monitor = new RecognitionEngineMonitor(this);
 		
 		// Create matcher:
 		matchGenerator = new PartialMatchGenerator();
@@ -45,6 +49,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	public RecognitionEngineMatcher(RecognitionPattern recognitionPattern, RepairScope scope, LogTable runtimeLog) {
 		this.recognitionPattern = recognitionPattern;
+		this.monitor = new RecognitionEngineMonitor(this);
 		
 		// Log domain size:
 		int domainSize = 0;
@@ -79,63 +84,49 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		}
 	}
 	
+	public RecognitionPattern getRecognitionPattern() {
+		return recognitionPattern;
+	}
+	
+	protected PartialMatchGenerator getMatchGenerator() {
+		return matchGenerator;
+	}
+	
+	protected IMatchSelector getMatchSelector() {
+		return matchSelector;
+	}
+	
+	protected DependencyEvaluation getDependencies() {
+		return dependencies;
+	}
+	
 	@Override
 	public Iterator<IMatching> recognizeEditRule() {
 		return matchGenerator.getResults();
 	}
-
+	
 	@Override
-	public List<NodePattern> getAllChanges() {
-		// TODO Auto-generated method stub
-		return null;
+	public IRecognitionEngineMonitor getMonitor() {
+		return monitor;
 	}
 
 	@Override
-	public List<IChangeTag> getAvailableChangeTags() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<NodePattern> getTaggedChanges(IChangeTag tag) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<ChangePattern> getAllChanges() {
+		return Collections.unmodifiableCollection(recognitionPattern.getChangePatternTrace().values());
 	}
 
 	@Override
 	public String getEditRuleName() {
-		// TODO Auto-generated method stub
-		return null;
+		return recognitionPattern.getEditRule().getName();
 	}
 
 	@Override
-	public List<NodePattern> getEditRuleNodes() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<ActionNode> getEditRuleNodes() {
+		return Collections.unmodifiableCollection(recognitionPattern.getNodeTrace().values());
 	}
 
 	@Override
-	public List<EdgePattern> getEditRuleEdges() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<ActionEdge> getEditRuleEdges() {
+		return Collections.unmodifiableCollection(recognitionPattern.getEdgeTrace().values());
 	}
-
-	@Override
-	public List<EdgePattern> getCurrentMatchingPath() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Node getEditRuleTrace(NodePattern node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Edge getEditRuleTrace(EdgePattern node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

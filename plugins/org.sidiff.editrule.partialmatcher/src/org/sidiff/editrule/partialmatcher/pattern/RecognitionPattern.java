@@ -1,16 +1,21 @@
 package org.sidiff.editrule.partialmatcher.pattern;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.editrule.partialmatcher.pattern.graph.ActionEdge;
+import org.sidiff.editrule.partialmatcher.pattern.graph.ActionGraph;
 import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
 import org.sidiff.editrule.partialmatcher.pattern.graph.ChangePattern;
+import org.sidiff.editrule.partialmatcher.util.LiftingGraphDomainMap;
+import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
+import org.sidiff.editrule.partialmatcher.util.MatchingHelper;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 
@@ -18,9 +23,11 @@ public class RecognitionPattern {
 	
 	protected Rule editRule;
 	
-	protected Map<Node, ActionNode> nodeTrace = new HashMap<>();
+	protected ActionGraph actionGraph;
 	
-	protected Map<Edge, ActionEdge> edgeTrace = new HashMap<>();
+	protected Map<Node, ActionNode> nodeTrace = new LinkedHashMap<>();
+	
+	protected Map<Edge, ActionEdge> edgeTrace = new LinkedHashMap<>();
 
 	protected GraphPattern recognitionPattern;
 	
@@ -28,11 +35,103 @@ public class RecognitionPattern {
 	
 	protected List<NodePattern> graphNodePatterns = new ArrayList<>();
 	
-	protected Map<NodePattern, ChangePattern> changePatterns = new HashMap<>();
+	protected Map<NodePattern, ChangePattern> changePatterns = new LinkedHashMap<>();
 	
+	/**
+	 * @param editRule
+	 *            The edit rule.
+	 * @param recognitionPattern
+	 *            Empty graph pattern.
+	 */
 	public RecognitionPattern(Rule editRule, GraphPattern recognitionPattern) {
 		this.editRule = editRule;
 		this.recognitionPattern = recognitionPattern; 
+		
+		generateRecognitionPattern();
+	}
+	
+	/**
+	 * Initializes the matching.
+	 * 
+	 * @param matchingHelper
+	 * @param changeIndex
+	 * @param changeDomainMap
+	 */
+	public void initialize(MatchingHelper matchingHelper, LiftingGraphIndex changeIndex, LiftingGraphDomainMap changeDomainMap) {
+		actionGraph.initialize(matchingHelper, changeIndex);
+		RecognitionPatternInitializer.initializeRecognitionPattern(this, changeDomainMap, matchingHelper);
+	}
+	
+	private void generateRecognitionPattern() {
+		
+		// create action-graph:
+		actionGraph = new ActionGraph(editRule);
+		
+		// create action-graph nodes:
+		
+		// Nodes: <<delete>> / <<preserve>>:
+		for (Node lhsNode : editRule.getLhs().getNodes()) {
+			addEditRuleNode(new ActionNode(actionGraph, lhsNode, nodeTrace));
+		}
+		
+		// Nodes: <<create>>:
+		for (Node createNode : HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes(editRule)) {
+			addEditRuleNode(new ActionNode(actionGraph, createNode, nodeTrace));
+		}
+		
+		// create action-graph edges:
+		
+		// Edges: <<delete>> / <<preserve>>:
+		for (Edge lhsEdge : editRule.getLhs().getEdges()) {
+			addEditRuleEdge(new ActionEdge(lhsEdge, nodeTrace, edgeTrace));
+		}
+		
+		// Edges: <<create>>:
+		for (Edge createEdge : HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges(editRule)) {
+			addEditRuleEdge(new ActionEdge(createEdge, nodeTrace, edgeTrace));
+		}
+		
+		// connect nodes and edges:
+		for (ActionEdge actionEdge : edgeTrace.values()) {
+			actionEdge.getSource().addAdjacent(actionEdge.getTarget(), actionEdge);
+			actionEdge.getTarget().addAdjacent(actionEdge.getSource(), actionEdge);
+		}
+	}
+	
+	
+	private void addEditRuleNode(ActionNode actionNode) {
+		addGraphNodePattern(actionNode.getNodePatternA());
+		addGraphNodePattern(actionNode.getNodePatternB());
+		addGraphNodePattern(actionNode.getCorrespondence());
+		
+		if (actionNode.getChange() != null) {
+			addChangePattern(actionNode.getChange().getChangeNodePattern(), actionNode.getChange());
+		}
+		
+		if (actionNode.getAttributeChanges() != null) {
+			for (ChangePattern attributeChange : actionNode.getAttributeChanges()) {
+				addChangePattern(attributeChange.getChangeNodePattern(), attributeChange);
+			}
+		}
+	}
+	
+	private void addEditRuleEdge(ActionEdge actionEdge) {
+		if (actionEdge.getChange() != null) {
+			addChangePattern(actionEdge.getChange().getChangeNodePattern(), actionEdge.getChange());
+		}
+	}
+	
+	private void addChangePattern(NodePattern changeNodePattern, ChangePattern changePattern) {
+		changeNodePatterns.add(changeNodePattern);
+		changePatterns.put(changeNodePattern, changePattern);
+		recognitionPattern.getNodes().add(changeNodePattern);
+	}
+	
+	private void addGraphNodePattern(NodePattern graphNodePattern) {
+		if (graphNodePattern != null) {
+			graphNodePatterns.add(graphNodePattern);
+			recognitionPattern.getNodes().add(graphNodePattern);
+		}
 	}
 	
 	public Rule getEditRule() {
@@ -47,19 +146,10 @@ public class RecognitionPattern {
 		return edgeTrace;
 	}
 	
-	public void addChangePattern(NodePattern changeNodePattern, ChangePattern changePattern) {
-		changeNodePatterns.add(changeNodePattern);
-		changePatterns.put(changeNodePattern, changePattern);
-		recognitionPattern.getNodes().add(changeNodePattern);
+	public Map<NodePattern, ChangePattern> getChangePatternTrace() {
+		return changePatterns;
 	}
 	
-	public void addGraphNodePattern(NodePattern graphNodePattern) {
-		if (graphNodePattern != null) {
-			graphNodePatterns.add(graphNodePattern);
-			recognitionPattern.getNodes().add(graphNodePattern);
-		}
-	}
-
 	public GraphPattern getGraphPattern() {
 		return recognitionPattern;
 	}
