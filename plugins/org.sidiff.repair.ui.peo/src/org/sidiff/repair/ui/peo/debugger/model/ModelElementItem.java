@@ -2,6 +2,7 @@ package org.sidiff.repair.ui.peo.debugger.model;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.graphics.Image;
+import org.sidiff.consistency.common.ui.widgets.ITreeItem;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 public class ModelElementItem implements ITreeItem {

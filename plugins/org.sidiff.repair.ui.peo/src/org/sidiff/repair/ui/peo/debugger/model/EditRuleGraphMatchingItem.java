@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
+import org.sidiff.consistency.common.ui.widgets.ITreeItem;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.repair.ui.peo.Activator;
 
