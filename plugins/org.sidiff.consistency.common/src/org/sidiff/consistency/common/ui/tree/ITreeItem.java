@@ -1,4 +1,4 @@
-package org.sidiff.consistency.common.ui.widgets;
+package org.sidiff.consistency.common.ui.tree;
 
 import org.eclipse.swt.graphics.Image;
 
