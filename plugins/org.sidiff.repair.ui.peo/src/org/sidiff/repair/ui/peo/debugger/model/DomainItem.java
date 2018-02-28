@@ -47,6 +47,11 @@ public class DomainItem implements ITreeItem {
 	public ITreeItem getParent() {
 		return parent;
 	}
+	
+	@Override
+	public boolean hasChildren() {
+		return values.length > 0;
+	}
 
 	@Override
 	public ITreeItem[] getChildren() {

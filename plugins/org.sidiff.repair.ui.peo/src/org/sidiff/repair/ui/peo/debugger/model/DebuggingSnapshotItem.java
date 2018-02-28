@@ -60,6 +60,11 @@ public class DebuggingSnapshotItem implements ITreeItem {
 	public ITreeItem getParent() {
 		return session;
 	}
+	
+	@Override
+	public boolean hasChildren() {
+		return true;
+	}
 
 	@Override
 	public ITreeItem[] getChildren() {

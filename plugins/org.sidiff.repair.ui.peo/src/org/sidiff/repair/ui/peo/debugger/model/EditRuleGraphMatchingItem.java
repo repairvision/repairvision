@@ -1,6 +1,5 @@
 package org.sidiff.repair.ui.peo.debugger.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
@@ -14,13 +13,14 @@ public class EditRuleGraphMatchingItem implements ITreeItem {
 	
 	private DebuggingSnapshotItem snapshotItem;
 	
-	private List<PathItem> paths = new ArrayList<>();
+	private PathItem[] paths;
 	
 	public EditRuleGraphMatchingItem(DebuggingSnapshotItem snapshotItem, List<List<EdgePattern>> paths) {
 		this.snapshotItem = snapshotItem;
+		this.paths = new PathItem[paths.size()];
 		
-		for (List<EdgePattern> path : paths) {
-			this.paths.add(new PathItem(this, path));
+		for (int i = 0; i < paths.size(); i++) {
+			this.paths[i] =  new PathItem(this, paths.get(i));
 		}
 	}
 
@@ -31,17 +31,22 @@ public class EditRuleGraphMatchingItem implements ITreeItem {
 
 	@Override
 	public String getText() {
-		return "Matching [" + paths.size() + "]";
+		return "Matching [" + paths.length + "]";
 	}
 
 	@Override
 	public ITreeItem getParent() {
 		return snapshotItem;
 	}
+	
+	@Override
+	public boolean hasChildren() {
+		return paths.length > 0;
+	}
 
 	@Override
 	public ITreeItem[] getChildren() {
-		return paths.toArray(new ITreeItem[0]);
+		return paths;
 	}
 	
 	@Override

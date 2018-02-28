@@ -41,6 +41,11 @@ public class VariablesItem implements ITreeItem {
 	public ITreeItem getParent() {
 		return snapshot;
 	}
+	
+	@Override
+	public boolean hasChildren() {
+		return variables.length > 0;
+	}
 
 	@Override
 	public ITreeItem[] getChildren() {

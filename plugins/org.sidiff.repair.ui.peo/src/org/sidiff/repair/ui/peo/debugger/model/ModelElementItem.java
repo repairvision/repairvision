@@ -33,6 +33,11 @@ public class ModelElementItem implements ITreeItem {
 	public ITreeItem getParent() {
 		return parent;
 	}
+	
+	@Override
+	public boolean hasChildren() {
+		return false;
+	}
 
 	@Override
 	public ITreeItem[] getChildren() {

@@ -58,6 +58,11 @@ public class DebuggingSession implements IReconitionEngineEventListener, ITreeIt
 	public ITreeItem getParent() {
 		return null;
 	}
+	
+	@Override
+	public boolean hasChildren() {
+		return !snapshots.isEmpty();
+	}
 
 	@Override
 	public ITreeItem[] getChildren() {

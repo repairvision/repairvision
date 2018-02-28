@@ -38,6 +38,11 @@ public class PathItem implements ITreeItem {
 	public ITreeItem getParent() {
 		return matching;
 	}
+	
+	@Override
+	public boolean hasChildren() {
+		return path.length > 0;
+	}
 
 	@Override
 	public ITreeItem[] getChildren() {

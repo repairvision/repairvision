@@ -38,6 +38,11 @@ public class VariableItem implements ITreeItem {
 	public ITreeItem getParent() {
 		return variableSet;
 	}
+	
+	@Override
+	public boolean hasChildren() {
+		return true;
+	}
 
 	@Override
 	public ITreeItem[] getChildren() {

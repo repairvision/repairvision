@@ -50,6 +50,11 @@ public class EditRuleGraphItem implements ITreeItem {
 	}
 
 	@Override
+	public boolean hasChildren() {
+		return nodes.size() + edges.size() > 0;
+	}
+	
+	@Override
 	public ITreeItem[] getChildren() {
 		ITreeItem[] children = new ITreeItem[nodes.size() + edges.size()];
 		

@@ -34,6 +34,11 @@ public class EditRuleEdgeItem extends EditRuleGraphElementItem implements ITreeI
 	public ITreeItem getParent() {
 		return parent;
 	}
+	
+	@Override
+	public boolean hasChildren() {
+		return true;
+	}
 
 	@Override
 	public ITreeItem[] getChildren() {
