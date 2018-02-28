@@ -23,7 +23,7 @@ import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.consistency.common.monitor.LogUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.editrule.partialmatcher.PartialEditRuleRecognizer;
+import org.sidiff.editrule.partialmatcher.RecognitionEngine;
 import org.sidiff.editrule.partialmatcher.pattern.RecognitionPattern;
 import org.sidiff.editrule.partialmatcher.scope.RepairScope;
 import org.sidiff.editrule.partialmatcher.util.debug.DebugUtil;
@@ -89,7 +89,7 @@ public class ComplementFinder {
 	/**
 	 * Partial edit-rule recognition matcher.
 	 */
-	protected PartialEditRuleRecognizer partialEditRuleRecognizer;
+	protected RecognitionEngine partialEditRuleRecognizer;
 
 	/**
 	 * @param modelAResource
@@ -113,7 +113,7 @@ public class ComplementFinder {
 	}
 	
 	public void start() {
-		this.partialEditRuleRecognizer = new PartialEditRuleRecognizer();
+		this.partialEditRuleRecognizer = new RecognitionEngine();
 		this.partialEditRuleRecognizer.initialize(difference);
 		this.partialEditRuleRecognizer.start();
 		
