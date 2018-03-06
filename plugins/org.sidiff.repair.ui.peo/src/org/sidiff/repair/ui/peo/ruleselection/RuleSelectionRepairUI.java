@@ -11,17 +11,14 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.controls.basic.BasicRepairViewerUI;
 import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.ui.controls.basic.ModelVersionsDropWidget;
 import org.sidiff.repair.ui.peo.Activator;
-import org.sidiff.repair.ui.peo.debugger.EditRuleMatcherDebugger;
 import org.sidiff.repair.validation.ui.widgets.ValidationWidget;
 import org.sidiff.validation.constraint.api.util.Validation;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 
 public class RuleSelectionRepairUI extends BasicRepairViewerUI<RuleSelectionRepairApplication> {
 
@@ -120,12 +117,6 @@ public class RuleSelectionRepairUI extends BasicRepairViewerUI<RuleSelectionRepa
 		// start debugging session:
 		startDebugger = new Action() {
 			public void run() {
-				IViewPart debuggingView = WorkbenchUtil.showView("org.sidiff.repair.ui.peo.debugger.EditRuleMatcherDebugger");
-				
-				if (debuggingView instanceof EditRuleMatcherDebugger) {
-					((EditRuleMatcherDebugger) debuggingView).setRepairApplication(application);
-				}
-				
 				application.setDebugging(true);
 				application.calculateRepairs();
 			}

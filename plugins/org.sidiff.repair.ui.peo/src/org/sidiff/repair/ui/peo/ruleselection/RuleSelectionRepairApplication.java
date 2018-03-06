@@ -13,13 +13,16 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
+import org.sidiff.repair.api.peo.PEORepairCalculationEngineDebugger;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
+import org.sidiff.repair.ui.peo.debugger.EditRuleMatcherDebugger;
 import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
@@ -114,7 +117,19 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 						Collections.singletonList(inconsistency.getRule()));
 				repairSettings.setSaveDifference(true);
 				
-				repairJob = repairFacade.getRepairs(getModelA(), getModelB(), repairSettings);
+				if (debugging) {
+					PEORepairCalculationEngineDebugger debugger = new PEORepairCalculationEngineDebugger(repairSettings, getModelA(), getModelB()); 
+					
+					IViewPart debuggingView = WorkbenchUtil.showView("org.sidiff.repair.ui.peo.debugger.EditRuleMatcherDebugger");
+					
+					if (debuggingView instanceof EditRuleMatcherDebugger) {
+						((EditRuleMatcherDebugger) debuggingView).setDebugger(debugger);
+					}
+					
+					repairJob = debugger.getRepairs();
+				} else {
+					repairJob = repairFacade.getRepairs(getModelA(), getModelB(), repairSettings);
+				}
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {

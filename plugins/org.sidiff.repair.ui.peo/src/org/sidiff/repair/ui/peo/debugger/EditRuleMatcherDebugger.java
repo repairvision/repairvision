@@ -9,8 +9,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.repair.api.peo.PEORepairCalculationEngineDebugger;
 import org.sidiff.repair.ui.peo.debugger.model.DebuggingSession;
-import org.sidiff.repair.ui.peo.ruleselection.RuleSelectionRepairApplication;
 
 public class EditRuleMatcherDebugger extends ViewPart {
 
@@ -24,16 +24,13 @@ public class EditRuleMatcherDebugger extends ViewPart {
 	
 	//// Application ////
 	
-	protected RuleSelectionRepairApplication repairApplication;
-	
 	protected DebuggingSession debuggingSession;
 
 	public EditRuleMatcherDebugger() {
 	}
 	
-	public void setRepairApplication(RuleSelectionRepairApplication repairApplication) {
-		this.debuggingSession = null; // TODO
-		this.repairApplication = repairApplication;
+	public void setDebugger(PEORepairCalculationEngineDebugger debugger) {
+		this.debuggingSession = new DebuggingSession(debugger.getLastComplementMonitor());
 	}
 
 	/**
@@ -59,7 +56,7 @@ public class EditRuleMatcherDebugger extends ViewPart {
 		// Create the actions
 		{
 			actionCreateSnapshot = new Action("Create Snapshot") {				public void run() {
-					if (repairApplication != null) {
+					if (debuggingSession != null) {
 						debuggingSession.createSnapshot();
 						debuggingSnapshots.refresh();
 					} else {
