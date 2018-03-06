@@ -1,25 +1,23 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Partial Edit-Rule Matcher
-Bundle-SymbolicName: org.sidiff.editrule.partialmatcher;singleton:=true
+Bundle-SymbolicName: org.sidiff.editrule.recognition;singleton:=true
 Bundle-Version: 0.0.1.qualifier
-Bundle-Activator: org.sidiff.editrule.partialmatcher.Activator
-Export-Package: org.sidiff.editrule.partialmatcher,
- org.sidiff.editrule.partialmatcher.pattern,
- org.sidiff.editrule.partialmatcher.pattern.domain,
- org.sidiff.editrule.partialmatcher.pattern.graph,
- org.sidiff.editrule.partialmatcher.scope,
- org.sidiff.editrule.partialmatcher.util,
- org.sidiff.editrule.partialmatcher.util.debug
+Bundle-Activator: org.sidiff.editrule.recognition.Activator
+Export-Package: org.sidiff.editrule.recognition,
+ org.sidiff.editrule.recognition.pattern,
+ org.sidiff.editrule.recognition.pattern.domain,
+ org.sidiff.editrule.recognition.pattern.graph,
+ org.sidiff.editrule.recognition.scope,
+ org.sidiff.editrule.recognition.util,
+ org.sidiff.editrule.recognition.util.debug
 Require-Bundle: org.eclipse.emf.transaction,
  org.eclipse.ui,
  org.sidiff.common.henshin,
- org.sidiff.graphpattern,
- org.sidiff.repair.api,
- org.sidiff.repair.complement,
  org.sidiff.validation.constraint.interpreter,
  org.sidiff.validation.constraint.api,
  org.sidiff.graphpattern.matcher,
- org.sidiff.consistency.common;bundle-version="1.0.0"
+ org.sidiff.consistency.common,
+ org.sidiff.difference.symmetric
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
