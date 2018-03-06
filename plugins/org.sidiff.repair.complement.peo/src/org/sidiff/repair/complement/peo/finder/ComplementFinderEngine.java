@@ -73,16 +73,6 @@ public class ComplementFinderEngine {
 	protected Edit2RecognitionMatch matchConverter;
 	
 	/**
-	 * Writes the recognition rule to the location of the edit rule (e.g. debugging).
-	 */
-	protected boolean saveRecognitionRule;
-	
-	/**
-	 * Debugging of the recognition engine matching.
-	 */
-	protected boolean recognitionEnginePathRecording;
-	
-	/**
 	 * Partial edit-rule recognition matcher.
 	 */
 	protected RecognitionEngine partialEditRuleRecognizer;
@@ -243,21 +233,5 @@ public class ComplementFinderEngine {
 	
 	public Edit2RecognitionMatch getMatchConverter() {
 		return matchConverter;
-	}
-	
-	public boolean isSaveRecognitionRule() {
-		return saveRecognitionRule;
-	}
-
-	public void setSaveRecognitionRule(boolean saveRecognitionRule) {
-		this.saveRecognitionRule = saveRecognitionRule;
-	}
-	
-	public boolean isRecognitionEnginePathRecording() {
-		return recognitionEnginePathRecording;
-	}
-	
-	public void setRecognitionEnginePathRecording(boolean recognitionEnginePathRecording) {
-		this.recognitionEnginePathRecording = recognitionEnginePathRecording;
 	}
 }

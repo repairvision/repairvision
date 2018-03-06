@@ -6,70 +6,69 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.consistency.common.monitor.LogMonitor;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.consistency.common.monitor.LogUtil;
-import org.sidiff.editrule.recognition.IRecognitionEngineMatcher;
 import org.sidiff.editrule.recognition.RecognitionEngine;
+import org.sidiff.editrule.recognition.RecognitionEngineMatcher;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.scope.RepairScope;
 import org.sidiff.editrule.recognition.util.debug.DebugUtil;
 import org.sidiff.graphpattern.matcher.IMatching;
-import org.sidiff.graphpattern.util.GraphPatternConstants;
-import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.matching.RecognitionMatch;
+import org.sidiff.repair.complement.peo.finder.util.IRecognitionPatternSerializer;
 
 public class ComplementFinder {
 	
-	private ComplementFinderEngine engine;
+	protected ComplementFinderEngine engine;
 	
-	private Rule editRule;
+	protected Rule editRule;
 	
-	private RepairScope scope;
+	protected RepairScope scope;
 	
-	private IProgressMonitor monitor;
+	protected IProgressMonitor monitor;
 	
-	private LogTable runtimeLog;
+	protected LogTable runtimeLog;
 	
-	private RecognitionPattern recognitionPattern;
+	protected RecognitionEngineMatcher recognitionMatcher;
 	
-	private IRecognitionEngineMatcher recognitionMatcher;
+	protected RecognitionPattern recognitionPattern;
 	
+	protected IRecognitionPatternSerializer recognitionPatternSerializer;
+		
 	public ComplementFinder(ComplementFinderEngine engine, Rule editRule, RepairScope scope, IProgressMonitor monitor, LogTable runtimeLog) {
 		this.engine = engine;
 		this.editRule = editRule;
 		this.scope = scope;
 		this.monitor = monitor;
 		this.runtimeLog = runtimeLog;
+		
+		// Create recognition rule:
+		RecognitionEngine recognitionEngine = engine.getRecognitionEngine();
+		this.recognitionPattern = recognitionEngine.createRecognitionPattern(editRule);
+		this.recognitionMatcher = recognitionEngine.createMatcher(recognitionPattern, scope, runtimeLog);
+		
+		this.recognitionPatternSerializer = new IRecognitionPatternSerializer() {
+			public void saveRecognitionRule() {}
+		};
 	}
 
 	/**
 	 * @return All complementing operations for the given edit-rule.
 	 */
 	public List<ComplementRule> findComplementRules() {
+		DebugUtil.printEditRule(editRule);
 		
 		//// Lifting ////
 		
-		RecognitionEngine recognitionEngine = engine.getRecognitionEngine();
-
-		// Create recognition rule:
-		recognitionPattern = recognitionEngine.createRecognitionPattern(editRule);
-		DebugUtil.printEditRule(editRule);
-		
 		// Save recognition-rule:
-		if (engine.isSaveRecognitionRule()) {
-			ChangePatternUtil.saveGraphPattern(RepairAPIUtil.getRecognitionRuleURI(
-					editRule.eResource().getURI(), GraphPatternConstants.FILE_EXTENSION),
-					recognitionPattern.getGraphPattern());
-		}
+		recognitionPatternSerializer.saveRecognitionRule();
 		
 		// Matching:
 		LogTime recognitionTimer = new LogTime();
 		
-		recognitionMatcher = recognitionEngine.createMatcher(recognitionPattern, scope, runtimeLog);
 		Iterator<IMatching> matchIterator = recognitionMatcher.recognizeEditRule();
 		
 		recognitionTimer.stop();
@@ -103,13 +102,5 @@ public class ComplementFinder {
 		}
 		
 		return complements;
-	}
-	
-	public RecognitionPattern getRecognitionPattern() {
-		return recognitionPattern;
-	}
-	
-	public IRecognitionEngineMatcher getRecognitionMatcher() {
-		return recognitionMatcher;
 	}
 }
