@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.editrule.partialmatcher.IRecognitionEngineMatcher;
+import org.sidiff.editrule.recognition.IRecognitionEngineMatcher;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class DebuggingSession implements ITreeItem {

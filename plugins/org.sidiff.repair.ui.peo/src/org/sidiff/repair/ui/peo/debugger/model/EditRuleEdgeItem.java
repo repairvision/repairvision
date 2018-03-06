@@ -2,7 +2,7 @@ package org.sidiff.repair.ui.peo.debugger.model;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.editrule.partialmatcher.pattern.graph.ActionEdge;
+import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class EditRuleEdgeItem extends EditRuleGraphElementItem implements ITreeItem {

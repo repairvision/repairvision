@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.editrule.partialmatcher.IRecognitionEngineMatcher;
-import org.sidiff.editrule.partialmatcher.RecognitionEngine;
-import org.sidiff.editrule.partialmatcher.RecognitionEngineMatcher;
-import org.sidiff.editrule.partialmatcher.RecognitionEngineMonitor;
-import org.sidiff.editrule.partialmatcher.RecognitionEngineMonitor.IChangeTag;
+import org.sidiff.editrule.recognition.IRecognitionEngineMatcher;
+import org.sidiff.editrule.recognition.RecognitionEngine;
+import org.sidiff.editrule.recognition.RecognitionEngineMatcher;
+import org.sidiff.editrule.recognition.RecognitionEngineMonitor;
+import org.sidiff.editrule.recognition.RecognitionEngineMonitor.IChangeTag;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class DebuggingSnapshotItem implements ITreeItem {

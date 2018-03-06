@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
+import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class EditRuleGraphMatchingItem implements ITreeItem {
