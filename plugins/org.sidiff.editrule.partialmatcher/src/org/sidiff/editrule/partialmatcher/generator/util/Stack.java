@@ -56,6 +56,6 @@ public class Stack<T extends Object> {
 	}
 	
 	public Iterator<T> iterator() {
-		return Arrays.stream(stack).iterator();
+		return Arrays.stream(stack).filter(e -> (e != null)).iterator();
 	}
 }
