@@ -21,6 +21,8 @@ import org.sidiff.graphpattern.matcher.IMatching;
 
 public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 
+	protected RecognitionEngine engine;
+	
 	protected RecognitionPattern recognitionPattern; 
 	
 	protected PartialMatchGenerator matchGenerator;
@@ -29,8 +31,8 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	protected DependencyEvaluation dependencies;
 	
-	
-	public RecognitionEngineMatcher(RecognitionPattern recognitionPattern) {
+	public RecognitionEngineMatcher(RecognitionEngine engine, RecognitionPattern recognitionPattern) {
+		this.engine = engine;
 		this.recognitionPattern = recognitionPattern;
 		
 		// Create matcher:
@@ -77,6 +79,11 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		if (runtimeLog != null) {
 			runtimeLog.append("[Time (ms)] Matching Time", matchingTimer);
 		}
+	}
+	
+	@Override
+	public RecognitionEngine getEngine() {
+		return engine;
 	}
 	
 	@Override

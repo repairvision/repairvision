@@ -18,13 +18,13 @@ public class RecognitionEngineMonitor {
 		String getName();
 	}
 	
-	private RecognitionEngineMatcher matcher;
+	private RecognitionEngineMatcher recognitionEngineMatcher;
 	
 	private MatchSelectorMonitor matchSelectorMonitor;
 	
-	public RecognitionEngineMonitor(RecognitionEngineMatcher matcher) {
-		this.matcher = matcher;
-		this.matchSelectorMonitor = new MatchSelectorMonitor(matcher.matchSelector);
+	public RecognitionEngineMonitor(RecognitionEngineMatcher recognitionEngineMatcher) {
+		this.recognitionEngineMatcher = recognitionEngineMatcher;
+		this.matchSelectorMonitor = new MatchSelectorMonitor(recognitionEngineMatcher.matchSelector);
 	}
 
 	private IChangeTag remaining = new IChangeTag() {
@@ -60,25 +60,29 @@ public class RecognitionEngineMonitor {
 		Iterator<Variable> variableSet = null;
 		
 		if (tag == remaining) {
-			variableSet = matcher.matchGenerator.getRemainingVariables();
+			variableSet = recognitionEngineMatcher.matchGenerator.getRemainingVariables();
 		}
 		
 		else if (tag == removed) {
-			variableSet = matcher.matchGenerator.getRemovedVariables();
+			variableSet = recognitionEngineMatcher.matchGenerator.getRemovedVariables();
 		}
 		
 		else if (tag == depending) {
-			variableSet = matcher.matchGenerator.getDependingVariables();
+			variableSet = recognitionEngineMatcher.matchGenerator.getDependingVariables();
 		}
 		
 		else if (tag == sub) {
-			variableSet = matcher.matchGenerator.getSubVariables();
+			variableSet = recognitionEngineMatcher.matchGenerator.getSubVariables();
 		}
 		
-		Map<NodePattern, ChangePattern> changePattern = matcher.recognitionPattern.getChangePatternTrace();
+		Map<NodePattern, ChangePattern> changePattern = recognitionEngineMatcher.recognitionPattern.getChangePatternTrace();
 		variableSet.forEachRemaining(variable -> changes.add(changePattern.get(variable.node)));
 
 		return changes;
+	}
+	
+	public RecognitionEngineMatcher getRecognitionEngineMatcher() {
+		return recognitionEngineMatcher;
 	}
 	
 	public boolean isMatchingPathRecording() {

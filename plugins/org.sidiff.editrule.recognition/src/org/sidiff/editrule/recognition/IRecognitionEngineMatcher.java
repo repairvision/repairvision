@@ -10,6 +10,8 @@ import org.sidiff.graphpattern.matcher.IMatching;
 
 public interface IRecognitionEngineMatcher {
 
+	IRecognitionEngine getEngine();
+	
 	String getEditRuleName();
 	
 	Collection<ActionNode> getEditRuleNodes();

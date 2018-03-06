@@ -69,7 +69,7 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 	}
 	
 	@Override
-	public IRecognitionEngineMatcher createMatcher(RecognitionPattern recognitionPattern, RepairScope scope, LogTable runtimeLog) {
+	public RecognitionEngineMatcher createMatcher(RecognitionPattern recognitionPattern, RepairScope scope, LogTable runtimeLog) {
 		
 		if (!started) {
 			throw new RuntimeException("Call PartialEditRuleRecognizer start()!");
@@ -84,7 +84,7 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 	}
 
 	@Override
-	public IRecognitionEngineMatcher createMatcher(RecognitionPattern recognitionPattern) {
+	public RecognitionEngineMatcher createMatcher(RecognitionPattern recognitionPattern) {
 		
 		if (!started) {
 			throw new RuntimeException("Call PartialEditRuleRecognizer start()!");
@@ -95,7 +95,7 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 //		System.out.println("Initial Domains: \n\n" + StringUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		
 		// Create matcher:
-		return new RecognitionEngineMatcher(recognitionPattern);
+		return new RecognitionEngineMatcher(this, recognitionPattern);
 	}
 	
 	@Override
