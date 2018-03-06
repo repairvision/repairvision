@@ -2,8 +2,8 @@ package org.sidiff.graphpattern.matcher;
 
 import java.util.List;
 
+import org.sidiff.consistency.common.designpatterns.IIncrementalAlgorithm;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.common.algorithms.IIncrementalAlgorithm;
 
 /**
  * Basic interface of all pattern matching engines. This interface is used to
