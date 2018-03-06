@@ -17,6 +17,11 @@ import org.sidiff.graphpattern.NodePattern;
 public abstract class ChangePattern implements IVariable {
 
 	/**
+	 * The parent action graph.
+	 */
+	protected ActionGraph actionGraph;
+	
+	/**
 	 * The type of the change ({@link AddObject}, {@link RemoveObject},
 	 * {@link AddReference}, {@link RemoveReference},
 	 * {@link AttributeValueChange})
@@ -33,6 +38,10 @@ public abstract class ChangePattern implements IVariable {
 	 * Pattern which represents the changes.
 	 */
 	protected NodePattern changeNodePattern;
+	
+	public ActionGraph getActionGraph() {
+		return actionGraph;
+	}
 	
 	public EClass getChangeType() {
 		return changeType;

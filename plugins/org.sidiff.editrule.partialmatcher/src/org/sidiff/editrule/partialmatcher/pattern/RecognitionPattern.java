@@ -83,12 +83,12 @@ public class RecognitionPattern {
 		
 		// Edges: <<delete>> / <<preserve>>:
 		for (Edge lhsEdge : editRule.getLhs().getEdges()) {
-			addEditRuleEdge(new ActionEdge(lhsEdge, nodeTrace, edgeTrace));
+			addEditRuleEdge(new ActionEdge(actionGraph, lhsEdge, nodeTrace, edgeTrace));
 		}
 		
 		// Edges: <<create>>:
 		for (Edge createEdge : HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges(editRule)) {
-			addEditRuleEdge(new ActionEdge(createEdge, nodeTrace, edgeTrace));
+			addEditRuleEdge(new ActionEdge(actionGraph, createEdge, nodeTrace, edgeTrace));
 		}
 		
 		// connect nodes and edges:

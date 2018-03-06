@@ -10,11 +10,12 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
-import org.sidiff.editrule.partialmatcher.util.MatchingHelper;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 
 public class ActionEdge extends ActionGraphElement {
+	
+	protected ActionGraph actionGraph;
 	
 	protected Action.Type action;
 	
@@ -32,9 +33,8 @@ public class ActionEdge extends ActionGraphElement {
 	
 	protected EdgePattern edgePatternB;
 	
-	protected MatchingHelper matchingHelper;
-	
-	public ActionEdge(Edge editRuleEdge, Map<Node, ActionNode> nodeTrace, Map<Edge, ActionEdge> edgeTrace) {
+	public ActionEdge(ActionGraph actionGraph, Edge editRuleEdge, Map<Node, ActionNode> nodeTrace, Map<Edge, ActionEdge> edgeTrace) {
+		this.actionGraph = actionGraph;
 		this.editRuleEdge = editRuleEdge;
 		
 		// create action-edge:
@@ -44,9 +44,6 @@ public class ActionEdge extends ActionGraphElement {
 		
 		// update trace:
 		edgeTrace.put(editRuleEdge, this);
-		
-		// get helper:
-		this.matchingHelper = source.getActionGraph().getMatchingHelper();
 		
 		// edge-pattern:
 		if (action.equals(Type.DELETE) || action.equals(Type.PRESERVE)) {
@@ -99,6 +96,10 @@ public class ActionEdge extends ActionGraphElement {
 				}
 			}
 		}
+	}
+	
+	public ActionGraph getActionGraph() {
+		return actionGraph;
 	}
 
 	public Action.Type getAction() {
@@ -182,7 +183,7 @@ public class ActionEdge extends ActionGraphElement {
 		
 		if (stepTarget.getNodePatternA() != null) {
 			while (sourceMatches.hasNext()) {
-				Iterator<? extends EObject> targetMatches = matchingHelper
+				Iterator<? extends EObject> targetMatches = actionGraph.getMatchingHelper()
 						.getTargets(sourceMatches.next(), stepSource.getNodePatternA(), edgePatternA);
 				
 				while (targetMatches.hasNext()) {
@@ -196,7 +197,7 @@ public class ActionEdge extends ActionGraphElement {
 		
 		if (stepTarget.getNodePatternB() != null) {
 			while (sourceMatches.hasNext()) {
-				Iterator<? extends EObject> targetMatches = matchingHelper
+				Iterator<? extends EObject> targetMatches = actionGraph.getMatchingHelper()
 						.getTargets(sourceMatches.next(), stepSource.getNodePatternB(), edgePatternB);
 				
 				while (targetMatches.hasNext()) {

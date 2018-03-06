@@ -13,7 +13,6 @@ import org.sidiff.common.henshin.view.AttributePair;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain.SelectionType;
-import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.editrule.partialmatcher.util.debug.DebugUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
@@ -50,19 +49,12 @@ public class ActionNode extends ActionGraphElement  {
 	
 	protected NodePattern nodePatternB;
 	
-	// Helper:
-	
-	protected LiftingGraphIndex changeIndex;
-	
 	public ActionNode(ActionGraph actionGraph, Node editRuleNode, Map<Node, ActionNode> nodeTrace) {
 		this.action = editRuleNode.getAction().getType();
 		this.editRuleNode = editRuleNode;
 		
 		// Update trace:
 		nodeTrace.put(editRuleNode, this);
-		
-		// Get helper:
-		this.changeIndex = actionGraph.getChangeIndex();
 		
 		// Create change-pattern //
 		
@@ -198,7 +190,7 @@ public class ActionNode extends ActionGraphElement  {
 			Domain domainCorrespondence = Domain.get(correspondence);
 			Domain domainB = Domain.get(nodePatternB);
 			
-			Correspondence correspondence = changeIndex.getCorrespondenceA(matchA);
+			Correspondence correspondence = actionGraph.getChangeIndex().getCorrespondenceA(matchA);
 
 			if (correspondence != null) {
 				if (!domainCorrespondence.containsMatch(correspondence, SelectionType.SEARCHED)) {
@@ -235,7 +227,7 @@ public class ActionNode extends ActionGraphElement  {
 			Domain domainCorrespondence = Domain.get(correspondence);
 			Domain domainA = Domain.get(nodePatternA);
 			
-			Correspondence correspondence = changeIndex.getCorrespondenceB(matchB);
+			Correspondence correspondence = actionGraph.getChangeIndex().getCorrespondenceB(matchB);
 			
 			if (correspondence != null) {
 				if (!domainCorrespondence.containsMatch(correspondence, SelectionType.SEARCHED)) {

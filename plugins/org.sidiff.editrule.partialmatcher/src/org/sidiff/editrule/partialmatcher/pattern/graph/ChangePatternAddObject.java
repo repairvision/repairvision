@@ -7,14 +7,11 @@ import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
-import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 
 public class ChangePatternAddObject extends ChangePatternObject {
 
-	protected LiftingGraphIndex changeIndex;
-	
 	public ChangePatternAddObject(ActionNode node) {
 		super(node);
 		
@@ -28,7 +25,7 @@ public class ChangePatternAddObject extends ChangePatternObject {
 		objEdge.setTarget(node.getNodePatternB());
 		
 		this.metaModelType = node.getEditRuleNode().getType();
-		this.changeIndex = node.getActionGraph().getChangeIndex();
+		this.actionGraph = node.getActionGraph();
 	}
 	
 	@Override
@@ -52,8 +49,8 @@ public class ChangePatternAddObject extends ChangePatternObject {
 		Iterator<? extends EObject> matchedB = Domain.get(node.getNodePatternB()).getSearchedMatchIterator();
 		
 		while (matchedB.hasNext()) {
-			Iterator<AddObject> changes = changeIndex.getLocalChanges(matchedB.next(), 
-					SymmetricPackage.eINSTANCE.getAddObject_Obj(), AddObject.class);
+			Iterator<AddObject> changes = getActionGraph().getChangeIndex().getLocalChanges(
+					matchedB.next(), SymmetricPackage.eINSTANCE.getAddObject_Obj(), AddObject.class);
 			
 			changes.forEachRemaining(addObject -> {
 				Domain.get(changeNodePattern).mark(addObject);

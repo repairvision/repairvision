@@ -8,15 +8,12 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
-import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 
 public class ChangePatternRemoveReference extends ChangePatternReference  {
 
-	protected LiftingGraphIndex changeIndex;
-	
 	public ChangePatternRemoveReference(ActionEdge edge) {
 		super(edge);
 		
@@ -41,7 +38,7 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 		
 		// helper data:
 		this.metaModelType = edge.getEditRuleEdge().getType();
-		this.changeIndex = edge.getSource().getActionGraph().getChangeIndex();
+		this.actionGraph = edge.getActionGraph();
 	}
 	
 	@Override
@@ -53,7 +50,7 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 		// mark opposite change:
 		if (edge.getOpposite() != null) {
 			assert (edge.getOpposite().getChange() != null);
-			Change oppositeChange = changeIndex.getOppositeChange(change);
+			Change oppositeChange = getActionGraph().getChangeIndex().getOppositeChange(change);
 			assert (oppositeChange != null);
 			
 			Domain.get(edge.getOpposite().getChange().getChangeNodePattern()).mark(oppositeChange);
@@ -81,7 +78,7 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 					? SymmetricPackage.eINSTANCE.getRemoveReference_Src()
 					: SymmetricPackage.eINSTANCE.getRemoveReference_Tgt();
 			
-			Iterator<RemoveReference> changes = changeIndex.getLocalChanges(
+			Iterator<RemoveReference> changes = getActionGraph().getChangeIndex().getLocalChanges(
 					matchedA.next(), changeReference, RemoveReference.class);
 			
 			while (changes.hasNext()) {

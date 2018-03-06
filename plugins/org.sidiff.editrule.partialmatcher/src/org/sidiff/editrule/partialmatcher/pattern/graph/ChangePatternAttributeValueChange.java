@@ -8,7 +8,6 @@ import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
-import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 
@@ -17,8 +16,6 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 	protected ActionNode node;
 	
 	protected AttributePair attribute;
-	
-	protected LiftingGraphIndex changeIndex;
 	
 	// TODO: ActionAttribute!
 	public ChangePatternAttributeValueChange(ActionNode node, AttributePair attribute) {
@@ -43,7 +40,7 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 		
 		this.changeType = changeNodePattern.getType();
 		this.metaModelType = attribute.getRhsAttribute().getType();
-		this.changeIndex = node.getActionGraph().getChangeIndex();
+		this.actionGraph = node.getActionGraph();
 	}
 	
 	public AttributePair getAttribute() {
@@ -60,7 +57,7 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 		Domain.get(node.getNodePatternA()).addSearchedMatch(((AttributeValueChange) change).getObjA());
 		Domain.get(node.getNodePatternB()).addSearchedMatch(((AttributeValueChange) change).getObjB());
 		Domain.get(node.getCorrespondence()).addSearchedMatch(
-				changeIndex.getCorrespondenceB(((AttributeValueChange) change).getObjB()));
+				getActionGraph().getChangeIndex().getCorrespondenceB(((AttributeValueChange) change).getObjB()));
 		
 		// search paths:
 		node.searchPaths(this, node, path);
@@ -73,8 +70,8 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 		Iterator<? extends EObject> matchedB = Domain.get(node.getNodePatternB()).getSearchedMatchIterator();
 		
 		while (matchedB.hasNext()) {
-			Iterator<AttributeValueChange> changes = changeIndex.getLocalChanges(matchedB.next(), 
-					SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjB(), AttributeValueChange.class);
+			Iterator<AttributeValueChange> changes = getActionGraph().getChangeIndex().getLocalChanges(
+					matchedB.next(), SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjB(), AttributeValueChange.class);
 			
 			changes.forEachRemaining(attributeValueChange -> {
 				Domain.get(changeNodePattern).mark(attributeValueChange);
