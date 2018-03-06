@@ -30,7 +30,7 @@ public class EditRuleMatcherDebugger extends ViewPart {
 	}
 	
 	public void setDebugger(PEORepairCalculationEngineDebugger debugger) {
-		this.debuggingSession = new DebuggingSession(debugger.getLastComplementMonitor());
+		this.debuggingSession = new DebuggingSession(debugger.getLastComplementFinderMonitor());
 	}
 
 	/**
