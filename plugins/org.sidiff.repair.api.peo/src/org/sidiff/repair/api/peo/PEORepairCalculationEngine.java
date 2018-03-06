@@ -140,6 +140,7 @@ public class PEORepairCalculationEngine {
 			
 			if (repairCaculation.isPotentialRepair()) {
 				List<IRepairPlan> repairsForEditRule = repairCaculation.findRepairs(complementMatchingTimer);
+				repairs.addAll(repairsForEditRule);
 				
 				// Evaluation:
 				++potentialEditRules;

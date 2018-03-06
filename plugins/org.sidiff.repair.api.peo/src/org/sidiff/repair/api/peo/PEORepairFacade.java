@@ -21,11 +21,11 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		Resource modelA = differenceRSS.getResource(uriModelA, true);
 		Resource modelB = differenceRSS.getResource(uriModelB, true);
 	
-		return new PEORepairCalculationEngine(settings, modelB, modelA).getRepairs();
+		return new PEORepairCalculationEngine(settings, modelA, modelB).getRepairs();
 	}
 	
 	@Override
 	public PEORepairJob getRepairs(Resource modelA, Resource modelB, PEORepairSettings settings) {
-		return new PEORepairCalculationEngine(settings, modelB, modelA).getRepairs();
+		return new PEORepairCalculationEngine(settings, modelA, modelB).getRepairs();
 	}
 }
