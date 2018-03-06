@@ -1,8 +1,10 @@
-package org.sidiff.editrule.partialmatcher.pattern.graph;
+package org.sidiff.editrule.partialmatcher.pattern.graph.path;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
 
 public class MatchingPathRecorder extends MatchingPath {
 

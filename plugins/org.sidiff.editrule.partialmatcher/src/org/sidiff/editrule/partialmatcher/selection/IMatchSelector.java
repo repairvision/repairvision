@@ -1,9 +1,6 @@
 package org.sidiff.editrule.partialmatcher.selection;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
 import org.sidiff.graphpattern.NodePattern;
 
 public interface IMatchSelector {
@@ -37,22 +34,4 @@ public interface IMatchSelector {
 	 *            The last selected node.
 	 */
 	void undoSelection(NodePattern unselectedNode);
-
-	/**
-	 * @return <code>true</code> if the search path is recorded; <code>false</code>
-	 *         otherwise.
-	 */
-	boolean isRecording();
-
-	/**
-	 * @param recording
-	 *            <code>true</code> if the search path should be recorded;
-	 *            <code>false</code> otherwise.
-	 */
-	void setRecording(boolean recording);
-
-	/**
-	 * @return The recorded search paths.
-	 */
-	List<List<ActionNode>> getRecording();
 }

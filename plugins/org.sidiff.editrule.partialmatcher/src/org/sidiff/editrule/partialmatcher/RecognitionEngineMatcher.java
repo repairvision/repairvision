@@ -15,27 +15,23 @@ import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
 import org.sidiff.editrule.partialmatcher.pattern.graph.ChangePattern;
 import org.sidiff.editrule.partialmatcher.scope.RepairScope;
 import org.sidiff.editrule.partialmatcher.scope.RepairScopeConstraint;
-import org.sidiff.editrule.partialmatcher.selection.IMatchSelector;
 import org.sidiff.editrule.partialmatcher.selection.MatchSelector;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.matcher.IMatching;
 
 public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 
-	private IRecognitionEngineMonitor monitor;
+	protected RecognitionPattern recognitionPattern; 
 	
-	private RecognitionPattern recognitionPattern; 
+	protected PartialMatchGenerator matchGenerator;
 	
-	private PartialMatchGenerator matchGenerator;
+	protected MatchSelector matchSelector;
 	
-	private IMatchSelector matchSelector;
-	
-	private DependencyEvaluation dependencies;
+	protected DependencyEvaluation dependencies;
 	
 	
 	public RecognitionEngineMatcher(RecognitionPattern recognitionPattern) {
 		this.recognitionPattern = recognitionPattern;
-		this.monitor = new RecognitionEngineMonitor(this);
 		
 		// Create matcher:
 		matchGenerator = new PartialMatchGenerator();
@@ -49,7 +45,6 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	public RecognitionEngineMatcher(RecognitionPattern recognitionPattern, RepairScope scope, LogTable runtimeLog) {
 		this.recognitionPattern = recognitionPattern;
-		this.monitor = new RecognitionEngineMonitor(this);
 		
 		// Log domain size:
 		int domainSize = 0;
@@ -84,30 +79,9 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		}
 	}
 	
-	public RecognitionPattern getRecognitionPattern() {
-		return recognitionPattern;
-	}
-	
-	protected PartialMatchGenerator getMatchGenerator() {
-		return matchGenerator;
-	}
-	
-	protected IMatchSelector getMatchSelector() {
-		return matchSelector;
-	}
-	
-	protected DependencyEvaluation getDependencies() {
-		return dependencies;
-	}
-	
 	@Override
 	public Iterator<IMatching> recognizeEditRule() {
 		return matchGenerator.getResults();
-	}
-	
-	@Override
-	public IRecognitionEngineMonitor getMonitor() {
-		return monitor;
 	}
 
 	@Override

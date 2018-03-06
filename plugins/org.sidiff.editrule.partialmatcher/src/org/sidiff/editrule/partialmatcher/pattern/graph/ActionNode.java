@@ -14,6 +14,7 @@ import org.sidiff.common.henshin.view.AttributePair;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain;
 import org.sidiff.editrule.partialmatcher.pattern.domain.Domain.SelectionType;
+import org.sidiff.editrule.partialmatcher.pattern.graph.path.MatchingPath;
 import org.sidiff.editrule.partialmatcher.util.debug.DebugUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;

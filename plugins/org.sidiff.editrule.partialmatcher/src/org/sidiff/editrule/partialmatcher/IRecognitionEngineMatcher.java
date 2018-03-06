@@ -19,6 +19,4 @@ public interface IRecognitionEngineMatcher {
 	Collection<ChangePattern> getAllChanges();
 	
 	Iterator<IMatching> recognizeEditRule();
-	
-	IRecognitionEngineMonitor getMonitor();
 }

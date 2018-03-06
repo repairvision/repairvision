@@ -9,14 +9,22 @@ import java.util.Map;
 import org.sidiff.editrule.partialmatcher.generator.Variable;
 import org.sidiff.editrule.partialmatcher.pattern.graph.ActionNode;
 import org.sidiff.editrule.partialmatcher.pattern.graph.ChangePattern;
+import org.sidiff.editrule.partialmatcher.selection.MatchSelectorMonitor;
 import org.sidiff.graphpattern.NodePattern;
 
-public class RecognitionEngineMonitor implements IRecognitionEngineMonitor {
+public class RecognitionEngineMonitor {
 
+	public interface IChangeTag {
+		String getName();
+	}
+	
 	private RecognitionEngineMatcher matcher;
+	
+	private MatchSelectorMonitor matchSelectorMonitor;
 	
 	public RecognitionEngineMonitor(RecognitionEngineMatcher matcher) {
 		this.matcher = matcher;
+		this.matchSelectorMonitor = new MatchSelectorMonitor(matcher.matchSelector);
 	}
 
 	private IChangeTag remaining = new IChangeTag() {
@@ -43,50 +51,45 @@ public class RecognitionEngineMonitor implements IRecognitionEngineMonitor {
 		}
 	};
 	
-	@Override
 	public List<IChangeTag> getAvailableChangeTags() {
 		return Arrays.asList(new IChangeTag[] {remaining, removed, depending, sub});
 	}
 
-	@Override
 	public List<ChangePattern> getTaggedChanges(IChangeTag tag) {
 		List<ChangePattern> changes = new ArrayList<>();
 		Iterator<Variable> variableSet = null;
 		
 		if (tag == remaining) {
-			variableSet = matcher.getMatchGenerator().getRemainingVariables();
+			variableSet = matcher.matchGenerator.getRemainingVariables();
 		}
 		
 		else if (tag == removed) {
-			variableSet = matcher.getMatchGenerator().getRemovedVariables();
+			variableSet = matcher.matchGenerator.getRemovedVariables();
 		}
 		
 		else if (tag == depending) {
-			variableSet = matcher.getMatchGenerator().getDependingVariables();
+			variableSet = matcher.matchGenerator.getDependingVariables();
 		}
 		
 		else if (tag == sub) {
-			variableSet = matcher.getMatchGenerator().getSubVariables();
+			variableSet = matcher.matchGenerator.getSubVariables();
 		}
 		
-		Map<NodePattern, ChangePattern> changePattern = matcher.getRecognitionPattern().getChangePatternTrace();
+		Map<NodePattern, ChangePattern> changePattern = matcher.recognitionPattern.getChangePatternTrace();
 		variableSet.forEachRemaining(variable -> changes.add(changePattern.get(variable.node)));
 
 		return changes;
 	}
 	
-	@Override
 	public boolean isMatchingPathRecording() {
-		return matcher.getMatchSelector().isRecording();
+		return matchSelectorMonitor.isRecording();
 	}
 	
-	@Override
 	public void setMatchingPathRecording(boolean matchingPathRecording) {
-		matcher.getMatchSelector().setRecording(true);
+		matchSelectorMonitor.setRecording(true);
 	}
 	
-	@Override
 	public List<List<ActionNode>> getMatchingPathRecording() {
-		return matcher.getMatchSelector().getRecording();
+		return matchSelectorMonitor.getPathRecording().getRecording();
 	}
 }

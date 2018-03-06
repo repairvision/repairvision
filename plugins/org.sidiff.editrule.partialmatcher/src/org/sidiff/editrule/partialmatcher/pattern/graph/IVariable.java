@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.difference.symmetric.Change;
+import org.sidiff.editrule.partialmatcher.pattern.graph.path.MatchingPath;
 
 public interface IVariable {
 

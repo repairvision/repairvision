@@ -1,6 +1,7 @@
 package org.sidiff.editrule.partialmatcher;
 
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.common.designpatterns.IAlgorithm;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.partialmatcher.dependencies.ChangeDependencies;
@@ -12,7 +13,6 @@ import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
 import org.sidiff.editrule.partialmatcher.util.MatchingHelper;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
-import org.sidiff.graphpattern.common.algorithms.IAlgorithm;
 
 /**
  * @author Manuel Ohrndorf
