@@ -11,12 +11,13 @@ import org.eclipse.ui.PlatformUI;
 
 public class WorkbenchUtil {
 
-	public static void showView(String id) {
+	public static IViewPart showView(String id) {
 		try {
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(id);
+			return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(id);
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	public static IViewPart getView(String id) {
