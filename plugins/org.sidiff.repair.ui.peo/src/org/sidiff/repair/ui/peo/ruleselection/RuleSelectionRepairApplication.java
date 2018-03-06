@@ -112,7 +112,7 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 				repairSettings.setupValidationFilter(
 						Collections.singletonList(inconsistency.getContext()),
 						Collections.singletonList(inconsistency.getRule()));
-				repairSettings.getRepairMonitor().setEnabled(debugging);
+				repairSettings.setSaveDifference(true);
 				
 				repairJob = repairFacade.getRepairs(getModelA(), getModelB(), repairSettings);
 				

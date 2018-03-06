@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.editrule.recognition.IRecognitionEngineMatcher;
-import org.sidiff.editrule.recognition.RecognitionEngine;
 import org.sidiff.editrule.recognition.RecognitionEngineMatcher;
 import org.sidiff.editrule.recognition.RecognitionEngineMonitor;
 import org.sidiff.editrule.recognition.RecognitionEngineMonitor.IChangeTag;
@@ -29,23 +27,21 @@ public class DebuggingSnapshotItem implements ITreeItem {
 	
 	private EditRuleGraphMatchingItem editRuleGraphMatching;
 	
-	public DebuggingSnapshotItem(DebuggingSession session, IRecognitionEngineMatcher recognitionEngine) {
+	public DebuggingSnapshotItem(DebuggingSession session, RecognitionEngineMonitor monitor) {
 		this.session = session;
 		
 		// Monitor recognition engine:
-		if (recognitionEngine instanceof RecognitionEngine) {
-			RecognitionEngineMonitor recognitionEngineMonitor = new RecognitionEngineMonitor((RecognitionEngineMatcher) recognitionEngine);
-			
-			for (IChangeTag variableTag : recognitionEngineMonitor.getAvailableChangeTags()) {
-				variableSets.add(new ChangesItem(this, variableTag, recognitionEngineMonitor.getTaggedChanges(variableTag)));
-			}
-			
-			this.editRuleGraphMatching = new EditRuleGraphMatchingItem(this, 
-					recognitionEngineMonitor.getMatchingPathRecording());
+		for (IChangeTag variableTag : monitor.getAvailableChangeTags()) {
+			variableSets.add(new ChangesItem(this, variableTag, monitor.getTaggedChanges(variableTag)));
 		}
+
+		this.editRuleGraphMatching = new EditRuleGraphMatchingItem(
+				this, monitor.getMatchingPathRecording());
 		
-		this.editRule = new EditRuleGraphItem(this, recognitionEngine.getEditRuleName(),
-				recognitionEngine.getEditRuleNodes(), recognitionEngine.getEditRuleEdges());
+		RecognitionEngineMatcher recognitionEngineMatcher = monitor.getRecognitionEngineMatcher();
+		
+		this.editRule = new EditRuleGraphItem(this, recognitionEngineMatcher.getEditRuleName(),
+				recognitionEngineMatcher.getEditRuleNodes(), recognitionEngineMatcher.getEditRuleEdges());
 	}
 
 	@Override
