@@ -70,7 +70,6 @@ public class ComplementFinder {
 		LogTime recognitionTimer = new LogTime();
 		
 		recognitionMatcher = recognitionEngine.createMatcher(recognitionPattern, scope, runtimeLog);
-		recognitionMatcher.getMonitor().setMatchingPathRecording(engine.isRecognitionEnginePathRecording());
 		Iterator<IMatching> matchIterator = recognitionMatcher.recognizeEditRule();
 		
 		recognitionTimer.stop();
