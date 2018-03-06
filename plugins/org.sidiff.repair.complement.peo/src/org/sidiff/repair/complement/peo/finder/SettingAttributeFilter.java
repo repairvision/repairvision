@@ -11,7 +11,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.common.henshin.view.AttributePair;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
-import org.sidiff.editrule.partialmatcher.scope.RepairActionFilter;
+import org.sidiff.editrule.recognition.scope.RepairActionFilter;
 import org.sidiff.repair.complement.util.ComplementUtil;
 
 public class SettingAttributeFilter {
