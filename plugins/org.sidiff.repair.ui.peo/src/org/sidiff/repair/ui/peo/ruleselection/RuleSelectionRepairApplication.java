@@ -47,6 +47,8 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 	
 	private PEORepairJob repairJob;
 	
+	private PEORepairSettings repairSettings;
+	
 	@Override
 	public void initialize(IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade) {
 		this.repairFacade = repairFacade;
@@ -105,11 +107,12 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 				// Calculate repairs:
 				repairCalculation.setName("Calculate Repairs");
 				
-				PEORepairSettings repairSettings = new PEORepairSettings(editRules, settings);
+				repairSettings = new PEORepairSettings(editRules, settings);
 				repairSettings.setSaveRecognitionRules(debugging);
 				repairSettings.setupValidationFilter(
 						Collections.singletonList(inconsistency.getContext()),
 						Collections.singletonList(inconsistency.getRule()));
+				repairSettings.getRepairMonitor().setEnabled(debugging);
 				
 				repairJob = repairFacade.getRepairs(getModelA(), getModelB(), repairSettings);
 				
@@ -176,6 +179,10 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 		};
 		
 		repairCalculation.schedule();
+	}
+	
+	public PEORepairSettings getRepairSettings() {
+		return repairSettings;
 	}
 	
 	public IResource addEditRule(IResource element) {

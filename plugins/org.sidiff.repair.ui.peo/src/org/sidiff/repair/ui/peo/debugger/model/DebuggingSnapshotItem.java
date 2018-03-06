@@ -1,5 +1,6 @@
 package org.sidiff.repair.ui.peo.debugger.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
@@ -16,7 +17,7 @@ public class DebuggingSnapshotItem implements ITreeItem {
 	private DebuggingSession session;
 	
 	// Variables //
-	private List<ChangesItem> variableSets;
+	private List<ChangesItem> variableSets = new ArrayList<>();
 	
 	// Edit Rule Graph Pattern //
 	private EditRuleGraphItem editRule;
