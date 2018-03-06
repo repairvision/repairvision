@@ -1,6 +1,7 @@
 package org.sidiff.editrule.partialmatcher.pattern.graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -149,24 +150,17 @@ public class ActionNode extends ActionGraphElement  {
 	}
 
 	public void addAdjacent(ActionNode adjacent, ActionEdge incident) {
-		
-		if (!isIncomingOpposite(incident)) {
-			int index = adjacents.indexOf(adjacent);
-			
-			if (index == -1) {
-				index = adjacents.size();
-				adjacents.add(adjacent);
-				inzidentsPerAdjacent.add(new ArrayList<>());
-			}
-			
-			if (!inzidentsPerAdjacent.get(index).contains(incident)) {
-				inzidentsPerAdjacent.get(index).add(incident);
-			}
+		int index = adjacents.indexOf(adjacent);
+
+		if (index == -1) {
+			index = adjacents.size();
+			adjacents.add(adjacent);
+			inzidentsPerAdjacent.add(new ArrayList<>());
 		}
-	}
-	
-	private boolean isIncomingOpposite(ActionEdge incident) {
-		return (incident.getTarget() == this) && (incident.getOpposite() != null);
+
+		if (!inzidentsPerAdjacent.get(index).contains(incident)) {
+			inzidentsPerAdjacent.get(index).add(incident);
+		}
 	}
 	
 	public void addMatchContextA(EObject matchA) {
@@ -242,47 +236,59 @@ public class ActionNode extends ActionGraphElement  {
 			}
 		}
 	}
+	
+	public List<ActionEdge> getIncident(ActionNode adjacent) {
+		int inzidentIndex = adjacents.indexOf(adjacent);
+		
+		if (inzidentIndex != -1) {
+			return inzidentsPerAdjacent.get(inzidentIndex);
+		} else {
+			return Collections.emptyList();
+		}
+	}
 
-	public void searchPaths(ChangePattern selected, ActionNode start, MatchingPath path) {
+	public void searchPaths(ChangePattern selected, MatchingPath path) {
 		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStep(this);
 		
+		// evaluate object-change:
+		if ((change != null) && (change != selected)) {
+			change.doEvaluationStep();
+		}
+		
+		// evaluate attribute-changes:
+		if (attributeChanges != null) {
+			for (ChangePatternAttributeValueChange attributeChange : attributeChanges) {
+				if (attributeChanges != selected) {
+					attributeChange.doEvaluationStep();
+				}
+			}
+		}
+		
+		// DFS-Matching:
 		path.add(this);
 		
 		for (int i = 0; i < adjacents.size(); i++) {
-			List<ActionEdge> inzidents = inzidentsPerAdjacent.get(i);
 			ActionNode adjacent = adjacents.get(i);
 			
 			// do evaluation step to adjacent node:
 			if (!path.contains(adjacent)) {
 				
 				// evaluate incident edges:
+				List<ActionEdge> inzidents = inzidentsPerAdjacent.get(i);
+				
 				for (ActionEdge inzident : inzidents) {
-					inzident.doEvaluationStep(selected, this, adjacent);
-				}
-				
-				// evaluate object-change:
-				if ((change != null) && (change != selected)) {
-					change.doEvaluationStep();
-				}
-				
-				// evaluate attribute-changes:
-				if (attributeChanges != null) {
-					for (ChangePatternAttributeValueChange attributeChange : attributeChanges) {
-						if (attributeChanges != selected) {
-							attributeChange.doEvaluationStep();
-						}
-					}
+					inzident.doEvaluationStep(this, adjacent);
 				}
 				
 				// DFS: evaluate next node:
 				// (Only if the path could be extended.)
 				if (hasNewMatches(adjacent)) {
-					adjacent.searchPaths(selected, start, path);
+					adjacent.searchPaths(selected, path);
 				}
 			}
 		}
 		
-		// DFS: backtracking:
+		// DFS-Backtracking:
 		path.remove(this);
 		
 		// Commit searched path to domain:

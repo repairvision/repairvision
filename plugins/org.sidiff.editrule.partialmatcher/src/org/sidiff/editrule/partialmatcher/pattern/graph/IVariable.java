@@ -10,6 +10,8 @@ public interface IVariable {
 	Iterator<? extends EObject> getDomain();
 
 	/**
+	 * Starts a new search.
+	 * 
 	 * @param path
 	 *            The currently searched path.
 	 * @param change

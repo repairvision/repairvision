@@ -31,14 +31,18 @@ public class ChangePatternRemoveObject extends ChangePatternObject {
 	@Override
 	public void searchPaths(MatchingPath path, Change change) {
 		
+		//// Match Remove-Object-Pattern ////
+		
 		// mark change:
 		Domain.get(changeNodePattern).mark(change);
 		
 		// search context element:
 		node.addMatchContextA(((RemoveObject) change).getObj());
 		
+		///// Match remaining graph pattern ////
+		
 		// search paths:
-		node.searchPaths(this, node, path);
+		node.searchPaths(this, path);
 	}
 
 	@Override

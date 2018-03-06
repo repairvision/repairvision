@@ -44,6 +44,8 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 	@Override
 	public void searchPaths(MatchingPath path, Change change) {
 		
+		//// Match Remove-Reference-Pattern /////
+		
 		// mark change:
 		Domain.get(changeNodePattern).mark(change);
 		
@@ -56,14 +58,28 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 			Domain.get(edge.getOpposite().getChange().getChangeNodePattern()).mark(oppositeChange);
 		}
 		
+		// TODO: Optionally: Check <<preserve>> edges between source and target!
+		
+		// evaluate parallel edge changes:
+		for (ActionEdge parallelEdge : edge.getSource().getIncident(edge.getTarget())) {
+			if ((parallelEdge != edge) && (parallelEdge != edge.getOpposite())) {
+				edge.getChange().doEvaluationStep(edge.getSource(), edge.getTarget());
+			}
+		}
+		
+		///// Match remaining graph pattern ////
+		
 		// search context element (source):
 		edge.getSource().addMatchContextA(((RemoveReference) change).getSrc());
+		path.add(edge.getSource());
 		
 		// search context element (target):
 		edge.getTarget().addMatchContextA(((RemoveReference) change).getTgt());
+		path.add(edge.getTarget());
 		
 		// search paths (source):
-		edge.getSource().searchPaths(this, edge.getSource(), path);
+		edge.getSource().searchPaths(this, path);
+		edge.getTarget().searchPaths(this, path);
 	}
 
 	@Override

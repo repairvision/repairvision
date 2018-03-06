@@ -50,6 +50,8 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 	@Override
 	public void searchPaths(MatchingPath path, Change change) {
 		
+		//// Match Attribute-Value-Change-Pattern ////
+		
 		// mark change:
 		Domain.get(changeNodePattern).mark(change);
 		
@@ -59,8 +61,10 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 		Domain.get(node.getCorrespondence()).addSearchedMatch(
 				getActionGraph().getChangeIndex().getCorrespondenceB(((AttributeValueChange) change).getObjB()));
 		
+		///// Match remaining graph pattern ////
+		
 		// search paths:
-		node.searchPaths(this, node, path);
+		node.searchPaths(this, path);
 	}
 
 	public void doEvaluationStep() {
