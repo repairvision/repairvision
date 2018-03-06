@@ -30,6 +30,7 @@ import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.peo.finder.ComplementFinder;
+import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.repair.complement.repair.RepairPlan;
 
 /**
@@ -82,6 +83,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		LogTime diffTimer = new LogTime();
 		try {
 			difference = deriveTechnicalDifference(modelA, modelB, settings.getDifferenceSettings());
+			settings.getRepairMonitor().setDifference(difference);
 		} catch (InvalidModelException | NoCorrespondencesException e) {
 			e.printStackTrace();
 		}
@@ -140,9 +142,13 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		// Calculate repairs:
 		EGraph graphModelB = new EGraphImpl(modelB);
 		
-		ComplementFinder complementFinder = new ComplementFinder(difference, modelA, modelB, graphModelB);
-		complementFinder.setSaveRecognitionRule(settings.saveRecognitionRules());
-		complementFinder.start();
+		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(difference, modelA, modelB, graphModelB);
+		settings.getRepairMonitor().setComplementFinderEngine(complementFinderEngine);
+		
+		complementFinderEngine.setSaveRecognitionRule(settings.saveRecognitionRules());
+		complementFinderEngine.setRecognitionEnginePathRecording(settings.getRepairMonitor().isEnabled());
+		
+		complementFinderEngine.start();
 		
 		List<IRepairPlan> repairs = new ArrayList<>();
 		
@@ -157,17 +163,18 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 			RepairScope scope = repairFilter.getScope(ChangePatternUtil.getPotentialChanges(editRule));
 			
 			if (!scope.isEmpty()) {
-				List<ComplementRule> complements = complementFinder.findComplementRules(
-						settings.getMonitor(), settings.getRuntimeComlexityLog(), editRule, scope);
+				ComplementFinder complementFinder = complementFinderEngine.createComplementFinder(
+						editRule, scope, settings.getMonitor(), settings.getRuntimeComlexityLog());
+				settings.getRepairMonitor().setComplementFinder(complementFinder);
 				++potentialEditRules;
 				
-				for(ComplementRule complement : complements) {
+				for(ComplementRule complement : complementFinder.findComplementRules()) {
 
 					// Filter complements by abstract repairs:
 					if (complement.getComplementingChanges().size() > 0) {
 						if (repairFilter.filter(complement.getComplementingChanges())) {
 							complementMatchingTimer.start();
-							List<Match> complementMatches = complementFinder.findComplementMatches(complement, Collections.emptyList());
+							List<Match> complementMatches = complementFinderEngine.findComplementMatches(complement, Collections.emptyList());
 							complementMatchingTimer.stop();
 							
 							List<Match> repairMatches = new ArrayList<>(complementMatches.size());
@@ -192,7 +199,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 			}
 		}
 
-		complementFinder.finish();
+		complementFinderEngine.finish();
 		
 		// Report:
 		System.out.println("Re.Vision[Repair Count]: " + repairCount);

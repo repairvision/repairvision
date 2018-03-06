@@ -26,6 +26,11 @@ public class PEORepairSettings extends BasicRepairSettings {
 	private IProgressMonitor monitor = new NullProgressMonitor();
 	
 	/**
+	 * Observes intermediate results (for debugging).
+	 */
+	private PEORepairMonitor repairMonitor = new PEORepairMonitor();
+	
+	/**
 	 * Logging of processed changes to runtime.
 	 */
 	private LogTable runtimeComlexityLog = null;
@@ -67,6 +72,14 @@ public class PEORepairSettings extends BasicRepairSettings {
 	
 	public void setMonitor(IProgressMonitor monitor) {
 		this.monitor = monitor;
+	}
+	
+	public PEORepairMonitor getRepairMonitor() {
+		return repairMonitor;
+	}
+	
+	public void setRepairMonitor(PEORepairMonitor repairMonitor) {
+		this.repairMonitor = repairMonitor;
 	}
 	
 	public LogTable getRuntimeComlexityLog() {
