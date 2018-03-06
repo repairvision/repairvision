@@ -9,7 +9,7 @@ import org.sidiff.repair.complement.peo.finder.ComplementFinderMonitor;
 
 public class PEORepairCalculationEngineDebugger extends PEORepairCalculationEngine {
 
-	protected ComplementFinderMonitor lastComplementMonitor;
+	protected ComplementFinderMonitor lastComplementFinderMonitor;
 	
 	public PEORepairCalculationEngineDebugger(PEORepairSettings settings, Resource modelA, Resource modelB) {
 		super(settings, modelA, modelB);
@@ -23,13 +23,13 @@ public class PEORepairCalculationEngineDebugger extends PEORepairCalculationEngi
 	protected PEORepairCaculation createRepairCalculation(Rule editRule, RepairActionFilter repairFilter, ComplementFinderEngine complementFinderEngine) {
 		PEORepairCaculation repairCaculation = super.createRepairCalculation(editRule, repairFilter, complementFinderEngine);
 		
-		lastComplementMonitor = new ComplementFinderMonitor(repairCaculation.getComplementFinder());
-		lastComplementMonitor.setMatchingPathRecording(true);
+		lastComplementFinderMonitor = new ComplementFinderMonitor(repairCaculation.getComplementFinder());
+		lastComplementFinderMonitor.setMatchingPathRecording(true);
 		
 		return repairCaculation;
 	}
 	
-	public ComplementFinderMonitor getLastComplementMonitor() {
-		return lastComplementMonitor;
+	public ComplementFinderMonitor getLastComplementFinderMonitor() {
+		return lastComplementFinderMonitor;
 	}
 }
