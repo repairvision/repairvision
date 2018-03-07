@@ -31,6 +31,8 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	protected DependencyEvaluation dependencies;
 	
+	protected LogTable runtimeLog;
+	
 	public RecognitionEngineMatcher(RecognitionEngine engine, RecognitionPattern recognitionPattern) {
 		this.engine = engine;
 		this.recognitionPattern = recognitionPattern;
@@ -47,6 +49,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	public RecognitionEngineMatcher(RecognitionPattern recognitionPattern, RepairScope scope, LogTable runtimeLog) {
 		this.recognitionPattern = recognitionPattern;
+		this.runtimeLog = runtimeLog;
 		
 		// Log domain size:
 		int domainSize = 0;
@@ -70,15 +73,6 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		dependencies = new DependencyEvaluation(recognitionPattern.getGraphPattern());
 		matchGenerator.initialize(recognitionPattern.getChangeNodePatterns(), dependencies, matchSelector);
 		matchGenerator.setScope(repairScopeConstraint);
-		
-		LogTime matchingTimer = new LogTime();
-		matchGenerator.start();
-		matchingTimer.stop();
-		
-		// Report matching:
-		if (runtimeLog != null) {
-			runtimeLog.append("[Time (ms)] Matching Time", matchingTimer);
-		}
 	}
 	
 	@Override
@@ -88,6 +82,16 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	@Override
 	public Iterator<IMatching> recognizeEditRule() {
+		
+		LogTime matchingTimer = new LogTime();
+		matchGenerator.start();
+		matchingTimer.stop();
+		
+		// Report matching:
+		if (runtimeLog != null) {
+			runtimeLog.append("[Time (ms)] Matching Time", matchingTimer);
+		}
+		
 		return matchGenerator.getResults();
 	}
 
