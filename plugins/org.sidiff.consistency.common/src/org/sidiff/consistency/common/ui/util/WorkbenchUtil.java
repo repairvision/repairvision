@@ -12,25 +12,41 @@ import org.eclipse.ui.PlatformUI;
 public class WorkbenchUtil {
 
 	public static IViewPart showView(String id) {
-		try {
-			return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(id);
-		} catch (PartInitException e) {
-			e.printStackTrace();
-		}
-		return null;
+		IViewPart[] view = new IViewPart[1];
+		
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					view[0] = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(id);
+				} catch (PartInitException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		return view[0];
 	}
 
 	public static IViewPart getView(String id) {
-		IViewReference viewReferences[] = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().getViewReferences();
+		IViewPart[] view = new IViewPart[1];
 		
-		for (IViewReference viewReference : viewReferences) {
-			if (id.equals(viewReference.getId())) {
-				return viewReference.getView(false);
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				IViewReference viewReferences[] = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getActivePage().getViewReferences();
+				
+				for (IViewReference viewReference : viewReferences) {
+					if (id.equals(viewReference.getId())) {
+						view[0] = viewReference.getView(false);
+						break;
+					}
+				}
 			}
-		}
+		});
 
-		return null;
+		return view[0];
 	}
 
 	public static void showMessage(String message) {
