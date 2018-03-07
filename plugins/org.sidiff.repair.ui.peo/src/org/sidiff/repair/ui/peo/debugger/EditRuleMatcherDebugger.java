@@ -7,7 +7,9 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
+import org.sidiff.consistency.common.ui.tree.TreeItemProvider;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.repair.api.peo.PEORepairCalculationEngineDebugger;
 import org.sidiff.repair.ui.peo.debugger.model.DebuggingSession;
@@ -30,7 +32,13 @@ public class EditRuleMatcherDebugger extends ViewPart {
 	}
 	
 	public void setDebugger(PEORepairCalculationEngineDebugger debugger) {
-		this.debuggingSession = new DebuggingSession(debugger.getLastComplementFinderMonitor());
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				EditRuleMatcherDebugger.this.debuggingSession = new DebuggingSession(debugger);
+				EditRuleMatcherDebugger.this.debuggingSnapshots.setInput(debuggingSession);
+			}
+		});
 	}
 
 	/**
@@ -42,7 +50,11 @@ public class EditRuleMatcherDebugger extends ViewPart {
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
+		TreeItemProvider itemProvider = new TreeItemProvider();
+		
 		this.debuggingSnapshots = new TreeViewer(container, SWT.BORDER);
+		this.debuggingSnapshots.setContentProvider(itemProvider);
+		this.debuggingSnapshots.setLabelProvider(itemProvider);
 
 		createActions();
 		initializeToolBar();

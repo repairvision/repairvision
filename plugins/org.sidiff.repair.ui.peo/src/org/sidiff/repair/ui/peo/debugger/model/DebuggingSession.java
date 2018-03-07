@@ -5,19 +5,19 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.editrule.recognition.RecognitionEngineMonitor;
+import org.sidiff.repair.api.peo.PEORepairCalculationEngineDebugger;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class DebuggingSession implements ITreeItem {
 	
 	private static Image icon = Activator.getImageDescriptor("icons/debug_exc.gif").createImage();
 	
-	private RecognitionEngineMonitor monitor;
+	private PEORepairCalculationEngineDebugger debugger;
 
 	private List<DebuggingSnapshotItem> snapshots = new ArrayList<>();
 	
-	public DebuggingSession(RecognitionEngineMonitor monitor) {
-		this.monitor = monitor;
+	public DebuggingSession(PEORepairCalculationEngineDebugger debugger) {
+		this.debugger = debugger;
 	}
 	
 	public void clear() {
@@ -25,7 +25,7 @@ public class DebuggingSession implements ITreeItem {
 	}
 	
 	public void createSnapshot() {
-		snapshots.add(new DebuggingSnapshotItem(this, monitor));
+		snapshots.add(new DebuggingSnapshotItem(this, debugger.getLastComplementFinderMonitor()));
 	}
 	
 	public List<DebuggingSnapshotItem> getSnapshots() {
