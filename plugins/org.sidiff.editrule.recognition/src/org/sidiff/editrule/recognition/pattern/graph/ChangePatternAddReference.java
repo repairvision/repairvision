@@ -72,15 +72,18 @@ public class ChangePatternAddReference extends ChangePatternReference {
 		
 		// search context element (source):
 		edge.getSource().addMatchContextB(((AddReference) change).getSrc());
-		path.add(edge.getSource());
 		
 		// search context element (target):
 		edge.getTarget().addMatchContextB(((AddReference) change).getTgt());
-		path.add(edge.getTarget());
 		
 		// search paths (source):
-		edge.getSource().searchPaths(this, path);
+		path.add(edge.getSource());
 		edge.getTarget().searchPaths(this, path);
+		path.remove(edge.getSource());
+		
+		path.add(edge.getTarget());
+		edge.getSource().searchPaths(this, path);
+		path.remove(edge.getTarget());
 	}
 
 	@Override
