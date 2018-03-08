@@ -56,6 +56,23 @@ public class Stack<T extends Object> {
 	}
 	
 	public Iterator<T> iterator() {
-		return Arrays.stream(stack).filter(e -> (e != null)).iterator();
+		return new Iterator<T>() {
+
+			private int i = 0;
+			
+			@Override
+			public boolean hasNext() {
+				return (i < pointer);
+			}
+
+			@Override
+			public T next() {
+				if (hasNext()) {
+					return stack[i++];
+				} else {
+					throw new UnsupportedOperationException();
+				}
+			}
+		};
 	}
 }
