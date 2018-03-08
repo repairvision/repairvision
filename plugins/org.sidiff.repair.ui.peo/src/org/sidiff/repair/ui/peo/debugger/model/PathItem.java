@@ -31,7 +31,18 @@ public class PathItem implements ITreeItem {
 
 	@Override
 	public String getText() {
-		return "Path";
+		StringBuffer pathText = new StringBuffer("Path:");
+		
+		for (EditRuleNodeItem editRuleNodeItem : path) {
+			
+			if (editRuleNodeItem != path[0]) {
+				pathText.append(",");
+			}
+			
+			pathText.append(" " + editRuleNodeItem.getNode().getEditRuleNode().getName());
+		}
+		
+		return pathText.toString();
 	}
 
 	@Override

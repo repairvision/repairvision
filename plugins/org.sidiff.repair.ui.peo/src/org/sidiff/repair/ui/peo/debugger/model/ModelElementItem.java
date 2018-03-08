@@ -26,7 +26,7 @@ public class ModelElementItem implements ITreeItem {
 
 	@Override
 	public String getText() {
-		return "[" + coloring + "]" + ItemProviderUtil.getTextByObject(element);
+		return "[" + coloring + "] " + ItemProviderUtil.getTextByObject(element);
 	}
 
 	@Override

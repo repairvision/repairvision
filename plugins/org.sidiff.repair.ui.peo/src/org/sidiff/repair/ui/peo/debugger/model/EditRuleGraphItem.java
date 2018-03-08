@@ -1,8 +1,6 @@
 package org.sidiff.repair.ui.peo.debugger.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
@@ -18,20 +16,21 @@ public class EditRuleGraphItem implements ITreeItem {
 	
 	private String editRuleName;
 	
-	private List<EditRuleNodeItem> nodes = new ArrayList<>();
-	
-	private List<EditRuleEdgeItem> edges = new ArrayList<>();
+	private ITreeItem[] graphElements;
 	
 	public EditRuleGraphItem(DebuggingSnapshotItem snapshot, String editRuleName, Collection<ActionNode> nodes, Collection<ActionEdge> edges) {
 		this.snapshot = snapshot;
 		this.editRuleName = editRuleName;
+		this.graphElements = new ITreeItem[nodes.size() + edges.size()];
+		
+		int graphElementIndex = 0;
 		
 		for (ActionNode node : nodes) {
-			this.nodes.add(new EditRuleNodeItem(this, node));
+			graphElements[graphElementIndex++] = new EditRuleNodeItem(this, node);
 		}
 		
 		for (ActionEdge edge : edges) {
-			this.edges.add(new EditRuleEdgeItem(this, edge));
+			graphElements[graphElementIndex++] = new EditRuleEdgeItem(this, edge);
 		}
 	}
 
@@ -52,34 +51,20 @@ public class EditRuleGraphItem implements ITreeItem {
 
 	@Override
 	public boolean hasChildren() {
-		return nodes.size() + edges.size() > 0;
+		return graphElements.length > 0;
 	}
 	
 	@Override
 	public ITreeItem[] getChildren() {
-		ITreeItem[] children = new ITreeItem[nodes.size() + edges.size()];
-		
-		for (int i = 0; i < nodes.size(); i++) {
-			children[i] = nodes.get(0);
-		}
-		
-		for (int i = nodes.size(); i < edges.size() + edges.size(); i++) {
-			children[i] = edges.get(i);
-		}
-		
-		return children;
+		return graphElements;
 	}
 	
 	@Override
 	public String toString() {
 		StringBuffer string = new StringBuffer();
 		
-		for (EditRuleNodeItem node : nodes) {
-			string.append(node.toString() + "\n");
-		}
-		
-		for (EditRuleEdgeItem edge : edges) {
-			string.append(edge.toString() + "\n");
+		for (ITreeItem graphElement : graphElements) {
+			string.append(graphElement.getText() + "\n");
 		}
 		
 		return string.toString();

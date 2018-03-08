@@ -35,7 +35,7 @@ public class ChangesItem implements ITreeItem {
 
 	@Override
 	public String getText() {
-		return "Changes [" + tag.toString() + "]";
+		return "Changes [" + tag.getName() + "]";
 	}
 
 	@Override

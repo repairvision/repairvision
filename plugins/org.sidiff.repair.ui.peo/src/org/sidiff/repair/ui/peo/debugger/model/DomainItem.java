@@ -17,10 +17,13 @@ public class DomainItem implements ITreeItem {
 	
 	private ITreeItem parent;
 	
+	private NodePattern node;
+	
 	private ModelElementItem[] values;
 	
 	public DomainItem(ITreeItem parent, NodePattern node) {
 		this.parent = parent;
+		this.node = node;
 		
 		// Read domain values:
 		Map<EObject, SelectionType> domain = Domain.get(node).getDomain();
@@ -40,7 +43,7 @@ public class DomainItem implements ITreeItem {
 
 	@Override
 	public String getText() {
-		return "Domain";
+		return "Domain: " + node.getName() + " : " + node.getType().getName();
 	}
 
 	@Override

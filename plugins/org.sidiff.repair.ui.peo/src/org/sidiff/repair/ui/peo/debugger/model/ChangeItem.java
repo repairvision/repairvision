@@ -11,10 +11,13 @@ public class ChangeItem implements ITreeItem {
 	
 	private ChangesItem changeSet;
 	
+	private ChangePattern change;
+	
 	private DomainItem domain;
 
 	public ChangeItem(ChangesItem changeSet, ChangePattern change) {
 		this.changeSet = changeSet;
+		this.change = change;
 		this.domain = new DomainItem(this, change.getChangeNodePattern());
 	}
 
@@ -25,7 +28,7 @@ public class ChangeItem implements ITreeItem {
 
 	@Override
 	public String getText() {
-		return "Change: " + domain.getText();
+		return "Change: " + change.getChangeNodePattern().getName() + " : " + change.getChangeNodePattern().getType().getName();
 	}
 
 	@Override
@@ -35,12 +38,16 @@ public class ChangeItem implements ITreeItem {
 	
 	@Override
 	public boolean hasChildren() {
-		return true;
+		return domain.hasChildren();
 	}
 
 	@Override
 	public ITreeItem[] getChildren() {
-		return new ITreeItem[] {domain};
+		if (domain.hasChildren()) {
+			return new ITreeItem[] {domain};
+		} else {
+			return new ITreeItem[0];
+		}
 	}
 	
 	@Override

@@ -17,11 +17,19 @@ public class EditRuleNodeItem extends EditRuleGraphElementItem implements ITreeI
 	
 	private DomainItem domainB;
 	
-	private DomainItem difference;
+	private DomainItem domainDifference;
 	
 	public EditRuleNodeItem(ITreeItem parent, ActionNode node) {
 		this.parent = parent;
 		this.node = node;
+		
+		this.domainA = new DomainItem(this, node.getNodePatternA());
+		this.domainB = new DomainItem(this, node.getNodePatternB());
+		this.domainDifference = new DomainItem(this, node.getCorrespondence());
+	}
+	
+	public ActionNode getNode() {
+		return node;
 	}
 
 	@Override
@@ -41,12 +49,12 @@ public class EditRuleNodeItem extends EditRuleGraphElementItem implements ITreeI
 	
 	@Override
 	public boolean hasChildren() {
-		return true;
+		return domainA.hasChildren() || domainB.hasChildren() || domainDifference.hasChildren();
 	}
 
 	@Override
 	public ITreeItem[] getChildren() {
-		return new ITreeItem[] {domainA, domainB, difference};
+		return new ITreeItem[] {domainA, domainB, domainDifference};
 	}
 	
 	@Override
@@ -55,7 +63,7 @@ public class EditRuleNodeItem extends EditRuleGraphElementItem implements ITreeI
 		
 		string.append(domainA.toString() + "\n");
 		string.append(domainB.toString() + "\n");
-		string.append(difference.toString() + "\n");
+		string.append(domainDifference.toString() + "\n");
 		
 		return string.toString();
 	}
