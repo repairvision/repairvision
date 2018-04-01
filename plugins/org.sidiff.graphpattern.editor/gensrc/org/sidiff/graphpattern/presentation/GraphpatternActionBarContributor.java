@@ -178,7 +178,7 @@ public class GraphpatternActionBarContributor
 	public void contributeToMenu(IMenuManager menuManager) {
 		super.contributeToMenu(menuManager);
 
-		IMenuManager submenuManager = new MenuManager(GraphpatternEditorPlugin.INSTANCE.getString("_UI_GraphpatternEditor_menu"), "org.sidiff.consistency.graphpatternMenuID");
+		IMenuManager submenuManager = new MenuManager(GraphpatternEditorPlugin.INSTANCE.getString("_UI_GraphpatternEditor_menu"), "org.sidiff.graphpatternMenuID");
 		menuManager.insertAfter("additions", submenuManager);
 		submenuManager.add(new Separator("settings"));
 		submenuManager.add(new Separator("actions"));
