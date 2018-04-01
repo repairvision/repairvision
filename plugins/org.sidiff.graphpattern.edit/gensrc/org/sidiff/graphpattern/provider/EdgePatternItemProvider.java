@@ -17,11 +17,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.edit.commands.SetEdgePatternCrossReferenceCommand;
 import org.sidiff.graphpattern.edit.commands.SetEdgePatternTypeCommand;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 import org.sidiff.graphpattern.edit.util.LabelServices;
@@ -33,7 +30,7 @@ import org.sidiff.graphpattern.edit.util.LabelServices;
  * @generated
  */
 public class EdgePatternItemProvider 
-	extends GraphPatternElementItemProvider {
+	extends GraphElementItemProvider {
 	
 	/**
 	 * @generated NOT
@@ -64,11 +61,6 @@ public class EdgePatternItemProvider
 			return new SetEdgePatternTypeCommand(domain, owner, feature, value);
 		}
 		
-		// EdgePattern.setCrossReference(): Set consistent cross-reference opposite flag:
-		else if (feature == GraphpatternPackage.Literals.EDGE_PATTERN__CROSS_REFERENCE) {
-			return new SetEdgePatternCrossReferenceCommand(domain, owner, feature, value);
-		}
-		
 		return super.createSetCommand(domain, owner, feature, value, index);
 	}
 	
@@ -86,8 +78,6 @@ public class EdgePatternItemProvider
 			addTargetPropertyDescriptor(object);
 			addOppositePropertyDescriptor(object);
 			addTypePropertyDescriptor(object);
-			addCrossReferencePropertyDescriptor(object);
-			addAssociationsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -150,50 +140,6 @@ public class EdgePatternItemProvider
 				 getString("_UI_EdgePattern_type_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_EdgePattern_type_feature", "_UI_EdgePattern_type"),
 				 GraphpatternPackage.Literals.EDGE_PATTERN__TYPE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Cross Reference feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addCrossReferencePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_EdgePattern_crossReference_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EdgePattern_crossReference_feature", "_UI_EdgePattern_type"),
-				 GraphpatternPackage.Literals.EDGE_PATTERN__CROSS_REFERENCE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Associations feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addAssociationsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_EdgePattern_associations_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EdgePattern_associations_feature", "_UI_EdgePattern_type"),
-				 GraphpatternPackage.Literals.EDGE_PATTERN__ASSOCIATIONS,
 				 true,
 				 false,
 				 true,
@@ -286,12 +232,6 @@ public class EdgePatternItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
-
-		switch (notification.getFeatureID(EdgePattern.class)) {
-			case GraphpatternPackage.EDGE_PATTERN__CROSS_REFERENCE:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
 		super.notifyChanged(notification);
 	}
 

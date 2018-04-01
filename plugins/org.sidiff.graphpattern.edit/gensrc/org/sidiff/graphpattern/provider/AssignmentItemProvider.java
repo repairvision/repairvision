@@ -11,26 +11,28 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.sidiff.graphpattern.GraphPatternElement;
+
+import org.sidiff.graphpattern.Assignment;
+import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.graphpattern.GraphPatternElement} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.Assignment} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class GraphPatternElementItemProvider 
+public class AssignmentItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -44,7 +46,7 @@ public class GraphPatternElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphPatternElementItemProvider(AdapterFactory adapterFactory) {
+	public AssignmentItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -59,31 +61,49 @@ public class GraphPatternElementItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_GraphPatternElement_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPatternElement_name_feature", "_UI_GraphPatternElement_type"),
-				 GraphpatternPackage.Literals.GRAPH_PATTERN_ELEMENT__NAME,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
+			super.getChildrenFeatures(object);
+			childrenFeatures.add(GraphpatternPackage.Literals.ASSIGNMENT__ASSIGNMENT);
+		}
+		return childrenFeatures;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
+	}
+
+	/**
+	 * This returns Assignment.gif.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Assignment"));
 	}
 
 	/**
@@ -94,10 +114,7 @@ public class GraphPatternElementItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((GraphPatternElement)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_GraphPatternElement_type") :
-			getString("_UI_GraphPatternElement_type") + " " + label;
+		return getString("_UI_Assignment_type");
 	}
 	
 
@@ -112,9 +129,9 @@ public class GraphPatternElementItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(GraphPatternElement.class)) {
-			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT__NAME:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+		switch (notification.getFeatureID(Assignment.class)) {
+			case GraphpatternPackage.ASSIGNMENT__ASSIGNMENT:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -130,6 +147,16 @@ public class GraphPatternElementItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+				 GraphpatternFactory.eINSTANCE.createObjectBinding()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+				 GraphpatternFactory.eINSTANCE.createValueBinding()));
 	}
 
 	/**

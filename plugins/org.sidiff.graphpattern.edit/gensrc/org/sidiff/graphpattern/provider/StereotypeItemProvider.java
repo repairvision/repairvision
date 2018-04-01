@@ -11,8 +11,6 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -20,16 +18,20 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ViewerNotification;
+
 import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.Stereotype;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.graphpattern.Evaluation} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.Stereotype} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class EvaluationItemProvider 
+public class StereotypeItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -43,7 +45,7 @@ public class EvaluationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EvaluationItemProvider(AdapterFactory adapterFactory) {
+	public StereotypeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -58,95 +60,42 @@ public class EvaluationItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addMatchesPropertyDescriptor(object);
-			addStorePropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Matches feature.
+	 * This adds a property descriptor for the Name feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addMatchesPropertyDescriptor(Object object) {
+	protected void addNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Evaluation_matches_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Evaluation_matches_feature", "_UI_Evaluation_type"),
-				 GraphpatternPackage.Literals.EVALUATION__MATCHES,
+				 getString("_UI_Stereotype_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Stereotype_name_feature", "_UI_Stereotype_type"),
+				 GraphpatternPackage.Literals.STEREOTYPE__NAME,
 				 true,
 				 false,
-				 true,
-				 null,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}
 
 	/**
-	 * This adds a property descriptor for the Store feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addStorePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Evaluation_store_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Evaluation_store_feature", "_UI_Evaluation_type"),
-				 GraphpatternPackage.Literals.EVALUATION__STORE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(GraphpatternPackage.Literals.EVALUATION__MATCHES);
-		}
-		return childrenFeatures;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
-	}
-
-	/**
-	 * This returns Evaluation.gif.
+	 * This returns Stereotype.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Evaluation"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Stereotype"));
 	}
 
 	/**
@@ -157,7 +106,10 @@ public class EvaluationItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_Evaluation_type");
+		String label = ((Stereotype)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_Stereotype_type") :
+			getString("_UI_Stereotype_type") + " " + label;
 	}
 	
 
@@ -171,6 +123,12 @@ public class EvaluationItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(Stereotype.class)) {
+			case GraphpatternPackage.STEREOTYPE__NAME:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 

@@ -8,24 +8,27 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.sidiff.graphpattern.Parameter;
+
+import org.sidiff.graphpattern.GraphElement;
+import org.sidiff.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.graphpattern.Parameter} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.GraphElement} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ParameterItemProvider 
-	extends PatternElementItemProvider {
+public class GraphElementItemProvider extends PatternElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ParameterItemProvider(AdapterFactory adapterFactory) {
+	public GraphElementItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -40,19 +43,54 @@ public class ParameterItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addSubgraphPropertyDescriptor(object);
+			addStereotypesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This returns Parameter.gif.
+	 * This adds a property descriptor for the Subgraph feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Parameter"));
+	protected void addSubgraphPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_GraphElement_subgraph_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_GraphElement_subgraph_feature", "_UI_GraphElement_type"),
+				 GraphpatternPackage.Literals.GRAPH_ELEMENT__SUBGRAPH,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Stereotypes feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addStereotypesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_GraphElement_stereotypes_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_GraphElement_stereotypes_feature", "_UI_GraphElement_type"),
+				 GraphpatternPackage.Literals.GRAPH_ELEMENT__STEREOTYPES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -63,10 +101,10 @@ public class ParameterItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Parameter)object).getName();
+		String label = ((GraphElement)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Parameter_type") :
-			getString("_UI_Parameter_type") + " " + label;
+			getString("_UI_GraphElement_type") :
+			getString("_UI_GraphElement_type") + " " + label;
 	}
 	
 

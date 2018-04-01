@@ -40,11 +40,7 @@ public class LabelServices {
 		String endNode = getLabel(edgePattern.getTarget());
 		String endLabel = getEdgeEndLabel(edgePattern);
 		
-		if (edgePattern.isCrossReference()) {
-			return "Edge: [" + beginNode + "." +  "^" + beginLabel + "]";
-		}
-		
-		else if (!endLabel.equals("")) {
+		if (!endLabel.equals("")) {
 			return "Edge: [" + beginNode + "." + beginLabel + "] -> [" + endNode + "." + endLabel + "]";
 		} 
 		
@@ -66,7 +62,7 @@ public class LabelServices {
 	public static String getEdgeEndLabel(EdgePattern edgePattern) {
 		EdgePattern opposite = edgePattern.getOpposite();
 		
-		if ((opposite != null) && (!opposite.isCrossReference())) {
+		if (opposite != null) {
 			EReference type = edgePattern.getOpposite().getType();
 			
 			if (type == null) {

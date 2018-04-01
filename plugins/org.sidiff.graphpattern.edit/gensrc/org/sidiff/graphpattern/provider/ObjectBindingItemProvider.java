@@ -8,24 +8,26 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.sidiff.graphpattern.Parameter;
+
+import org.sidiff.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.graphpattern.Parameter} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.ObjectBinding} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ParameterItemProvider 
-	extends PatternElementItemProvider {
+public class ObjectBindingItemProvider extends ParameterBindingItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ParameterItemProvider(AdapterFactory adapterFactory) {
+	public ObjectBindingItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -40,19 +42,42 @@ public class ParameterItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addValuePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This returns Parameter.gif.
+	 * This adds a property descriptor for the Value feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addValuePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ObjectBinding_value_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ObjectBinding_value_feature", "_UI_ObjectBinding_type"),
+				 GraphpatternPackage.Literals.OBJECT_BINDING__VALUE,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This returns ObjectBinding.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Parameter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ObjectBinding"));
 	}
 
 	/**
@@ -63,10 +88,7 @@ public class ParameterItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Parameter)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Parameter_type") :
-			getString("_UI_Parameter_type") + " " + label;
+		return getString("_UI_ObjectBinding_type");
 	}
 	
 

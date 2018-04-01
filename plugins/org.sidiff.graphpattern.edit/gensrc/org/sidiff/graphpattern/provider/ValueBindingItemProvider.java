@@ -8,24 +8,29 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.sidiff.graphpattern.Parameter;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ViewerNotification;
+
+import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.ValueBinding;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.graphpattern.Parameter} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.ValueBinding} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ParameterItemProvider 
-	extends PatternElementItemProvider {
+public class ValueBindingItemProvider extends ParameterBindingItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ParameterItemProvider(AdapterFactory adapterFactory) {
+	public ValueBindingItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -40,19 +45,42 @@ public class ParameterItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addValuePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This returns Parameter.gif.
+	 * This adds a property descriptor for the Value feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addValuePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ValueBinding_value_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueBinding_value_feature", "_UI_ValueBinding_type"),
+				 GraphpatternPackage.Literals.VALUE_BINDING__VALUE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This returns ValueBinding.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Parameter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ValueBinding"));
 	}
 
 	/**
@@ -63,10 +91,10 @@ public class ParameterItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Parameter)object).getName();
+		String label = ((ValueBinding)object).getValue();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Parameter_type") :
-			getString("_UI_Parameter_type") + " " + label;
+			getString("_UI_ValueBinding_type") :
+			getString("_UI_ValueBinding_type") + " " + label;
 	}
 	
 
@@ -80,6 +108,12 @@ public class ParameterItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(ValueBinding.class)) {
+			case GraphpatternPackage.VALUE_BINDING__VALUE:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 

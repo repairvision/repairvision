@@ -13,25 +13,28 @@ import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.RuleBase;
+import org.sidiff.graphpattern.Profile;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.graphpattern.RuleBase} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.Profile} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class RuleBaseItemProvider 
+public class ProfileItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -45,7 +48,7 @@ public class RuleBaseItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RuleBaseItemProvider(AdapterFactory adapterFactory) {
+	public ProfileItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,8 +63,77 @@ public class RuleBaseItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addNamePropertyDescriptor(object);
+			addDescriptionPropertyDescriptor(object);
+			addIdPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Profile_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Profile_name_feature", "_UI_Profile_type"),
+				 GraphpatternPackage.Literals.PROFILE__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Description feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDescriptionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Profile_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Profile_description_feature", "_UI_Profile_type"),
+				 GraphpatternPackage.Literals.PROFILE__DESCRIPTION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Id feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addIdPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Profile_id_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Profile_id_feature", "_UI_Profile_type"),
+				 GraphpatternPackage.Literals.PROFILE__ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -76,7 +148,7 @@ public class RuleBaseItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(GraphpatternPackage.Literals.RULE_BASE__PATTERNS);
+			childrenFeatures.add(GraphpatternPackage.Literals.PROFILE__STEREOTYPES);
 		}
 		return childrenFeatures;
 	}
@@ -95,14 +167,14 @@ public class RuleBaseItemProvider
 	}
 
 	/**
-	 * This returns RuleBase.gif.
+	 * This returns Profile.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/RuleBase"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Profile"));
 	}
 
 	/**
@@ -113,7 +185,10 @@ public class RuleBaseItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_RuleBase_type");
+		String label = ((Profile)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_Profile_type") :
+			getString("_UI_Profile_type") + " " + label;
 	}
 	
 
@@ -128,8 +203,13 @@ public class RuleBaseItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(RuleBase.class)) {
-			case GraphpatternPackage.RULE_BASE__PATTERNS:
+		switch (notification.getFeatureID(Profile.class)) {
+			case GraphpatternPackage.PROFILE__NAME:
+			case GraphpatternPackage.PROFILE__DESCRIPTION:
+			case GraphpatternPackage.PROFILE__ID:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case GraphpatternPackage.PROFILE__STEREOTYPES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -149,8 +229,8 @@ public class RuleBaseItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(GraphpatternPackage.Literals.RULE_BASE__PATTERNS,
-				 GraphpatternFactory.eINSTANCE.createPattern()));
+				(GraphpatternPackage.Literals.PROFILE__STEREOTYPES,
+				 GraphpatternFactory.eINSTANCE.createStereotype()));
 	}
 
 	/**

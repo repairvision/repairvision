@@ -9,22 +9,40 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.ResourceLocator;
+
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+
+import org.sidiff.graphpattern.GraphpatternPackage;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.graphpattern.NavigableDataStore} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.Matching} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class NavigableDataStoreItemProvider extends DataStoreItemProvider {
+public class MatchingItemProvider 
+	extends ItemProviderAdapter
+	implements
+		IEditingDomainItemProvider,
+		IStructuredItemContentProvider,
+		ITreeItemContentProvider,
+		IItemLabelProvider,
+		IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NavigableDataStoreItemProvider(AdapterFactory adapterFactory) {
+	public MatchingItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -39,8 +57,31 @@ public class NavigableDataStoreItemProvider extends DataStoreItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addMatchesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Matches feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addMatchesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Matching_matches_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Matching_matches_feature", "_UI_Matching_type"),
+				 GraphpatternPackage.Literals.MATCHING__MATCHES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -51,7 +92,7 @@ public class NavigableDataStoreItemProvider extends DataStoreItemProvider {
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_NavigableDataStore_type");
+		return getString("_UI_Matching_type");
 	}
 	
 
@@ -78,6 +119,17 @@ public class NavigableDataStoreItemProvider extends DataStoreItemProvider {
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+	}
+
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return GraphpatternEditPlugin.INSTANCE;
 	}
 
 }

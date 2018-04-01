@@ -9,9 +9,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
@@ -24,7 +22,7 @@ import org.sidiff.graphpattern.GraphpatternPackage;
  * @generated
  */
 public class GraphPatternItemProvider 
-	extends GraphPatternElementItemProvider {
+	extends PatternElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -46,31 +44,8 @@ public class GraphPatternItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addMultiPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Multi feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addMultiPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_GraphPattern_multi_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GraphPattern_multi_feature", "_UI_GraphPattern_type"),
-				 GraphpatternPackage.Literals.GRAPH_PATTERN__MULTI,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
 	}
 
 	/**
@@ -87,6 +62,7 @@ public class GraphPatternItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(GraphpatternPackage.Literals.GRAPH_PATTERN__NODES);
 			childrenFeatures.add(GraphpatternPackage.Literals.GRAPH_PATTERN__DEPENDENCY_GRAPH);
+			childrenFeatures.add(GraphpatternPackage.Literals.GRAPH_PATTERN__SUBGRAPHS);
 		}
 		return childrenFeatures;
 	}
@@ -142,11 +118,9 @@ public class GraphPatternItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(GraphPattern.class)) {
-			case GraphpatternPackage.GRAPH_PATTERN__MULTI:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
 			case GraphpatternPackage.GRAPH_PATTERN__NODES:
 			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
+			case GraphpatternPackage.GRAPH_PATTERN__SUBGRAPHS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -173,6 +147,11 @@ public class GraphPatternItemProvider
 			(createChildParameter
 				(GraphpatternPackage.Literals.GRAPH_PATTERN__DEPENDENCY_GRAPH,
 				 GraphpatternFactory.eINSTANCE.createDependencyGraph()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.GRAPH_PATTERN__SUBGRAPHS,
+				 GraphpatternFactory.eINSTANCE.createSubGraph()));
 	}
 
 }

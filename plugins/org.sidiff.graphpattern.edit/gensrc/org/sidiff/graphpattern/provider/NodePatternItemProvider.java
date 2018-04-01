@@ -28,7 +28,7 @@ import org.sidiff.graphpattern.edit.util.LabelServices;
  * @generated
  */
 public class NodePatternItemProvider 
-	extends GraphPatternElementItemProvider {
+	extends GraphElementItemProvider {
 	
 	/**
 	 * @generated NOT
@@ -120,7 +120,7 @@ public class NodePatternItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(GraphpatternPackage.Literals.NODE_PATTERN__OUTGOINGS);
 			childrenFeatures.add(GraphpatternPackage.Literals.NODE_PATTERN__ATTRIBUTES);
-			childrenFeatures.add(GraphpatternPackage.Literals.NODE_PATTERN__EVALUATION);
+			childrenFeatures.add(GraphpatternPackage.Literals.NODE_PATTERN__MATCHING);
 			childrenFeatures.add(GraphpatternPackage.Literals.NODE_PATTERN__ASSOCIATIONS);
 		}
 		return childrenFeatures;
@@ -196,7 +196,7 @@ public class NodePatternItemProvider
 		switch (notification.getFeatureID(NodePattern.class)) {
 			case GraphpatternPackage.NODE_PATTERN__OUTGOINGS:
 			case GraphpatternPackage.NODE_PATTERN__ATTRIBUTES:
-			case GraphpatternPackage.NODE_PATTERN__EVALUATION:
+			case GraphpatternPackage.NODE_PATTERN__MATCHING:
 			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -224,11 +224,6 @@ public class NodePatternItemProvider
 			(createChildParameter
 				(GraphpatternPackage.Literals.NODE_PATTERN__ATTRIBUTES,
 				 GraphpatternFactory.eINSTANCE.createAttributePattern()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(GraphpatternPackage.Literals.NODE_PATTERN__EVALUATION,
-				 GraphpatternFactory.eINSTANCE.createEvaluation()));
 
 		newChildDescriptors.add
 			(createChildParameter

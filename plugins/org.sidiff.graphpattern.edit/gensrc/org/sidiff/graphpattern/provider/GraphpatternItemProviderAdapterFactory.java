@@ -163,51 +163,26 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.Evaluation} instances.
-	 * <!-- begin-user-doc -->
-	 * Item provider for abstract class Evaluation.
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected EvaluationItemProvider evaluationItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.sidiff.graphpattern.Evaluation}.
-	 * <!-- begin-user-doc -->
-	 * Item provider for abstract class Evaluation.
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createEvaluationAdapter() {
-		if (evaluationItemProvider == null) {
-			evaluationItemProvider = new EvaluationItemProvider(this);
-		}
-
-		return evaluationItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.RuleBase} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.Bundle} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected RuleBaseItemProvider ruleBaseItemProvider;
+	protected BundleItemProvider bundleItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.graphpattern.RuleBase}.
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.Bundle}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createRuleBaseAdapter() {
-		if (ruleBaseItemProvider == null) {
-			ruleBaseItemProvider = new RuleBaseItemProvider(this);
+	public Adapter createBundleAdapter() {
+		if (bundleItemProvider == null) {
+			bundleItemProvider = new BundleItemProvider(this);
 		}
 
-		return ruleBaseItemProvider;
+		return bundleItemProvider;
 	}
 
 	/**
@@ -323,6 +298,144 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 		}
 
 		return associationItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.Stereotype} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected StereotypeItemProvider stereotypeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.Stereotype}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createStereotypeAdapter() {
+		if (stereotypeItemProvider == null) {
+			stereotypeItemProvider = new StereotypeItemProvider(this);
+		}
+
+		return stereotypeItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.Assignment} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected AssignmentItemProvider assignmentItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.Assignment}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createAssignmentAdapter() {
+		if (assignmentItemProvider == null) {
+			assignmentItemProvider = new AssignmentItemProvider(this);
+		}
+
+		return assignmentItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.ObjectBinding} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ObjectBindingItemProvider objectBindingItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.ObjectBinding}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createObjectBindingAdapter() {
+		if (objectBindingItemProvider == null) {
+			objectBindingItemProvider = new ObjectBindingItemProvider(this);
+		}
+
+		return objectBindingItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.ValueBinding} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ValueBindingItemProvider valueBindingItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.ValueBinding}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createValueBindingAdapter() {
+		if (valueBindingItemProvider == null) {
+			valueBindingItemProvider = new ValueBindingItemProvider(this);
+		}
+
+		return valueBindingItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.SubGraph} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected SubGraphItemProvider subGraphItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.SubGraph}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createSubGraphAdapter() {
+		if (subGraphItemProvider == null) {
+			subGraphItemProvider = new SubGraphItemProvider(this);
+		}
+
+		return subGraphItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.graphpattern.Profile} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ProfileItemProvider profileItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.graphpattern.Profile}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createProfileAdapter() {
+		if (profileItemProvider == null) {
+			profileItemProvider = new ProfileItemProvider(this);
+		}
+
+		return profileItemProvider;
 	}
 
 	/**
@@ -474,8 +587,7 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 		if (nodePatternItemProvider != null) nodePatternItemProvider.dispose();
 		if (edgePatternItemProvider != null) edgePatternItemProvider.dispose();
 		if (attributePatternItemProvider != null) attributePatternItemProvider.dispose();
-		if (evaluationItemProvider != null) evaluationItemProvider.dispose();
-		if (ruleBaseItemProvider != null) ruleBaseItemProvider.dispose();
+		if (bundleItemProvider != null) bundleItemProvider.dispose();
 		if (patternItemProvider != null) patternItemProvider.dispose();
 		if (parameterItemProvider != null) parameterItemProvider.dispose();
 		if (eObjectListItemProvider != null) eObjectListItemProvider.dispose();
@@ -483,6 +595,12 @@ public class GraphpatternItemProviderAdapterFactory extends GraphpatternAdapterF
 		if (dependencyNodeItemProvider != null) dependencyNodeItemProvider.dispose();
 		if (dependencyEdgeItemProvider != null) dependencyEdgeItemProvider.dispose();
 		if (associationItemProvider != null) associationItemProvider.dispose();
+		if (stereotypeItemProvider != null) stereotypeItemProvider.dispose();
+		if (assignmentItemProvider != null) assignmentItemProvider.dispose();
+		if (objectBindingItemProvider != null) objectBindingItemProvider.dispose();
+		if (valueBindingItemProvider != null) valueBindingItemProvider.dispose();
+		if (subGraphItemProvider != null) subGraphItemProvider.dispose();
+		if (profileItemProvider != null) profileItemProvider.dispose();
 	}
 
 }

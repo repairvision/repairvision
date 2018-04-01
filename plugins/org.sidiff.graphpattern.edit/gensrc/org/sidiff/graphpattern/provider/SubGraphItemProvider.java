@@ -11,6 +11,8 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -19,15 +21,19 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ViewerNotification;
+
+import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.SubGraph;
 
 /**
- * This is the item provider adapter for a {@link org.sidiff.graphpattern.DataStore} object.
+ * This is the item provider adapter for a {@link org.sidiff.graphpattern.SubGraph} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class DataStoreItemProvider 
+public class SubGraphItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -41,7 +47,7 @@ public class DataStoreItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DataStoreItemProvider(AdapterFactory adapterFactory) {
+	public SubGraphItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -56,31 +62,72 @@ public class DataStoreItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addEvaluationPropertyDescriptor(object);
+			addElementsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Evaluation feature.
+	 * This adds a property descriptor for the Elements feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addEvaluationPropertyDescriptor(Object object) {
+	protected void addElementsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_DataStore_evaluation_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DataStore_evaluation_feature", "_UI_DataStore_type"),
-				 GraphpatternPackage.Literals.DATA_STORE__EVALUATION,
+				 getString("_UI_SubGraph_elements_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SubGraph_elements_feature", "_UI_SubGraph_type"),
+				 GraphpatternPackage.Literals.SUB_GRAPH__ELEMENTS,
 				 true,
 				 false,
 				 true,
 				 null,
 				 null,
 				 null));
+	}
+
+	/**
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
+			super.getChildrenFeatures(object);
+			childrenFeatures.add(GraphpatternPackage.Literals.SUB_GRAPH__SUBGRAPHS);
+		}
+		return childrenFeatures;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
+	}
+
+	/**
+	 * This returns SubGraph.gif.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SubGraph"));
 	}
 
 	/**
@@ -91,7 +138,7 @@ public class DataStoreItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_DataStore_type");
+		return getString("_UI_SubGraph_type");
 	}
 	
 
@@ -105,6 +152,12 @@ public class DataStoreItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(SubGraph.class)) {
+			case GraphpatternPackage.SUB_GRAPH__SUBGRAPHS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 
@@ -118,6 +171,11 @@ public class DataStoreItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.SUB_GRAPH__SUBGRAPHS,
+				 GraphpatternFactory.eINSTANCE.createSubGraph()));
 	}
 
 	/**
