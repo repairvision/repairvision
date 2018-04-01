@@ -26,7 +26,7 @@ public class StringUtil {
 
 	public static String printSelection(NodePattern node, String indent) {
 		StringBuffer selectionPrint = new StringBuffer();
-		Domain.get(node).getMatchIterator()
+		Domain.get(node).iterator()
 		.forEachRemaining(selection -> {selectionPrint.append(indent + removeBundleNames(selection) + "\n");});
 		return selectionPrint.toString();
 	}

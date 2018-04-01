@@ -12,6 +12,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.recognition.generator.util.FilteredIterator;
 import org.sidiff.editrule.recognition.generator.util.Stack;
@@ -21,7 +22,6 @@ import org.sidiff.editrule.recognition.selection.IMatchSelector;
 import org.sidiff.editrule.recognition.util.debug.DebugUtil;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.matcher.IMatching;
 
 /**
  * Concrete implementation of {@link IMatchGenerator}. Iterates through all
@@ -210,7 +210,7 @@ public class PartialMatchGenerator {
 	 */
 	private void initializeDataStore() {
 		for (NodePattern node : variableNodes) {
-			Domain domain = Domain.get(node.getEvaluation());
+			Domain domain = Domain.get(node.getMatching());
 			domain.clearSelection();
 		}
 	}
@@ -280,7 +280,7 @@ public class PartialMatchGenerator {
 //				Variable independentVariable = nodeToVariables.get(independentNode);
 //				
 //				if (remainingVariables.contains(independentVariable)) {
-//					Domain domain = Domain.get(independentVariable.node.getEvaluation());
+//					Domain domain = Domain.get(independentVariable.node.getMatching());
 //					int unusedElements = domain.getMatchSize() - globalAssigned.get(independentVariable).size();
 //					// NOTE: approximation -> exact -> dataStore.getMatchSelection().getMatch().size()
 //					
@@ -300,7 +300,7 @@ public class PartialMatchGenerator {
 //	}
 	
 	private Iterator<EObject> getDomain(Variable variable) {
-		Domain domain = Domain.get(variable.node.getEvaluation());
+		Domain domain = Domain.get(variable.node.getMatching());
 		
 		if (matchSelector != null) {
 			
@@ -308,10 +308,10 @@ public class PartialMatchGenerator {
 			if (LOCAL_GREEDY) {
 				// [HEURISTIC]: only elements that were not assigned yet:
 				return new FilteredIterator(
-						domain.getMatchIterator(), 
+						domain.iterator(), 
 						localAssigned.get(variable));
 			} else {
-				return domain.getMatchIterator();
+				return domain.iterator();
 			}
 		} else {
 			
@@ -319,10 +319,10 @@ public class PartialMatchGenerator {
 			if (GLOBAL_GREEDY) {
 				// [HEURISTIC]: only elements that were not assigned yet:
 				return new FilteredIterator(
-						domain.getMatchIterator(), 
+						domain.iterator(), 
 						globalAssigned.get(variable));
 			} else {
-				return domain.getMatchIterator();
+				return domain.iterator();
 			}
 		}
 	}
@@ -357,7 +357,7 @@ public class PartialMatchGenerator {
 		
 		// ensure injectivity:
 		for (Variable remainingVariable : remainingVariables) {
-			Domain domain = Domain.get(remainingVariable.node.getEvaluation());
+			Domain domain = Domain.get(remainingVariable.node.getMatching());
 			domain.restriction(variable.node, value);
 		}
 		//-------------------------------------------------
@@ -404,7 +404,7 @@ public class PartialMatchGenerator {
 		
 		// ensure injectivity:
 		for (Variable remainingVariable : remainingVariables) {
-			Domain domain = Domain.get(remainingVariable.node.getEvaluation());
+			Domain domain = Domain.get(remainingVariable.node.getMatching());
 			domain.undoRestriction(variable.node);
 		}
 		
@@ -511,9 +511,9 @@ public class PartialMatchGenerator {
 			NodePattern node = dependingVariables.get(i).node;
 					
 			if (dependencies.canRemove(node)) {
-				Domain domain = Domain.get(node.getEvaluation());
+				Domain domain = Domain.get(node.getMatching());
 				
-				if (!domain.isEmptyMatch()) {
+				if (!domain.isEmpty()) {
 					return false;
 				}
 			}

@@ -17,7 +17,6 @@ import org.sidiff.editrule.recognition.scope.RepairScope;
 import org.sidiff.editrule.recognition.scope.RepairScopeConstraint;
 import org.sidiff.editrule.recognition.selection.MatchSelector;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.matcher.IMatching;
 
 public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 
@@ -55,7 +54,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		int domainSize = 0;
 		
 		for (NodePattern changeNode : recognitionPattern.getChangeNodePatterns()) {
-			domainSize += Domain.get(changeNode).getMatchSize();
+			domainSize += Domain.get(changeNode).size();
 		}
 		
 		if (runtimeLog != null) {

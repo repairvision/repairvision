@@ -24,14 +24,14 @@ public class MatchSelector implements IMatchSelector {
 		
 		// Action-Graph:
 		for (NodePattern node : recognitionPattern.getGraphNodePatterns()) {
-			Domain domain = Domain.get(node.getEvaluation());
+			Domain domain = Domain.get(node.getMatching());
 			domain.clearMatches();
 			domain.setCollecting(true);
 		}
 		
 		// Changes:
 		for (NodePattern node : recognitionPattern.getChangeNodePatterns()) {
-			Domain domain = Domain.get(node.getEvaluation());
+			Domain domain = Domain.get(node.getMatching());
 			domain.clearSelection();
 			domain.setCollecting(true);
 		}
@@ -44,14 +44,14 @@ public class MatchSelector implements IMatchSelector {
 		
 		// Action-Graph:
 		for (NodePattern node : recognitionPattern.getGraphNodePatterns()) {
-			Domain domain = Domain.get(node.getEvaluation());
+			Domain domain = Domain.get(node.getMatching());
 			domain.setCollecting(false);
 			domain.restrictUnmarked(selectedNode);
 		}
 		
 		// Changes:
 		for (NodePattern node : recognitionPattern.getChangeNodePatterns()) {
-			Domain domain = Domain.get(node.getEvaluation());
+			Domain domain = Domain.get(node.getMatching());
 			domain.setCollecting(false);
 			domain.restrictUnmarked(selectedNode);
 		}
@@ -69,13 +69,13 @@ public class MatchSelector implements IMatchSelector {
 		
 		// Action-Graph: 
 		for (NodePattern node : recognitionPattern.getGraphNodePatterns()) {
-			Domain domain = Domain.get(node.getEvaluation());
+			Domain domain = Domain.get(node.getMatching());
 			domain.restrictUnmarked(selectedNode);
 		}
 		
 		// Changes:
 		for (NodePattern node : recognitionPattern.getChangeNodePatterns()) {
-			Domain domain = Domain.get(node.getEvaluation());
+			Domain domain = Domain.get(node.getMatching());
 			domain.restrictUnmarked(selectedNode);
 		}
 		
@@ -87,7 +87,7 @@ public class MatchSelector implements IMatchSelector {
 		
 		// undo restriction on all nodes (full graph):
 		for (NodePattern node : recognitionPattern.getGraphPattern().getNodes()) {
-			Domain domain = Domain.get(node.getEvaluation());
+			Domain domain = Domain.get(node.getMatching());
 			domain.undoRestriction(unselectedNode);	
 		}
 	}

@@ -8,8 +8,6 @@ import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
 import org.sidiff.editrule.recognition.util.LiftingGraphDomainMap;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
-import org.sidiff.graphpattern.Evaluation;
-import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
 
 public class RecognitionPatternInitializer {
@@ -55,14 +53,9 @@ public class RecognitionPatternInitializer {
 	}
 	
 	private static void initializeEvaluation(NodePattern nodePattern, MatchingHelper matchingHelper) {
-		Evaluation evaluation = GraphpatternFactory.eINSTANCE.createEvaluation();
 		Domain domain = new Domain();
-
-		evaluation.setStore(domain);
-		nodePattern.setEvaluation(evaluation);
-
+		nodePattern.setMatching(domain);
 		domain.initialize(matchingHelper);
-		evaluation.initialize();
 	}
 	
 	private static void initializeChangePatterns(
@@ -73,7 +66,7 @@ public class RecognitionPatternInitializer {
 			
 			for (EObject change : changeDomainMap.getChangeDomain(
 					changePattern.getChangeType(), changePattern.getMetaModelType())) {
-				Domain.get(changeNodePattern).addMatch(change);
+				Domain.get(changeNodePattern).add(change);
 			}
 		}
 	}

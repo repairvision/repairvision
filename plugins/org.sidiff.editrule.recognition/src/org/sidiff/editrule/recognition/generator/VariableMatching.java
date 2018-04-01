@@ -8,8 +8,8 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.common.java.StringPrinter;
+import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.matcher.IMatching;
 
 public class VariableMatching implements IMatching {
 

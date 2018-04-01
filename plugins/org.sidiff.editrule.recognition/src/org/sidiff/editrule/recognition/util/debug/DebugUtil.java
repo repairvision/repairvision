@@ -3,10 +3,10 @@ package org.sidiff.editrule.recognition.util.debug;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTime;
+import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.matcher.IMatching;
 
 public class DebugUtil {
 

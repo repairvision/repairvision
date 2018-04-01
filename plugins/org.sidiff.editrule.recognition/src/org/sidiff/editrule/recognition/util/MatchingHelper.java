@@ -40,7 +40,7 @@ public class MatchingHelper {
 	public Iterator<? extends EObject> getTargets(EObject object, NodePattern sourceNode, EdgePattern edge) {
 		EReference type = edge.getType();
 		
-		if (edge.isCrossReference() || (edge.getTarget() == sourceNode)) {
+		if (edge.getTarget() == sourceNode) {
 			return crossReferencer.getInverse(object, type);
 		} else {
 			assert (edge.getSource() == sourceNode) : "The given edge is not incident with the given node!";

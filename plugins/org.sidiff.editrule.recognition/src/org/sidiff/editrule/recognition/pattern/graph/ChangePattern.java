@@ -57,6 +57,6 @@ public abstract class ChangePattern implements IVariable {
 	
 	@Override
 	public Iterator<? extends EObject> getDomain() {
-		return Domain.get(changeNodePattern).getMatchIterator();
+		return Domain.get(changeNodePattern).iterator();
 	}
 }

@@ -188,7 +188,7 @@ public class ActionNode extends ActionGraphElement  {
 			Correspondence correspondence = actionGraph.getChangeIndex().getCorrespondenceA(matchA);
 
 			if (correspondence != null) {
-				if (!domainCorrespondence.containsMatch(correspondence, SelectionType.SEARCHED)) {
+				if (!domainCorrespondence.contains(correspondence, SelectionType.SEARCHED)) {
 					if (domainCorrespondence.isCollecting()) {
 						domainCorrespondence.addSearchedMatch(correspondence);
 						domainB.addSearchedMatch(correspondence.getMatchedB());
@@ -225,7 +225,7 @@ public class ActionNode extends ActionGraphElement  {
 			Correspondence correspondence = actionGraph.getChangeIndex().getCorrespondenceB(matchB);
 			
 			if (correspondence != null) {
-				if (!domainCorrespondence.containsMatch(correspondence, SelectionType.SEARCHED)) {
+				if (!domainCorrespondence.contains(correspondence, SelectionType.SEARCHED)) {
 					if (domainCorrespondence.isCollecting()) {
 						domainCorrespondence.addSearchedMatch(correspondence);
 						domainA.addSearchedMatch(correspondence.getMatchedA());

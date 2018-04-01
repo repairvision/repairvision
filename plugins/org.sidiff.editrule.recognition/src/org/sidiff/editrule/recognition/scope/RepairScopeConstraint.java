@@ -56,7 +56,7 @@ public class RepairScopeConstraint {
 			
 			// Search for scope:
 			for (EObject scopeElement : scope.get(change)) {
-				if (domain.containsMatch(scopeElement)) {
+				if (domain.contains(scopeElement)) {
 					return true;
 				}
 			}

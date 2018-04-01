@@ -13,12 +13,11 @@ import java.util.Stack;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
-import org.sidiff.graphpattern.DataStore;
-import org.sidiff.graphpattern.Evaluation;
+import org.sidiff.graphpattern.Matching;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.impl.DataStoreImpl;
+import org.sidiff.graphpattern.impl.MatchingImpl;
 
-public class Domain extends DataStoreImpl {
+public class Domain extends MatchingImpl {
 	
 	protected EClass type;
 	
@@ -60,9 +59,8 @@ public class Domain extends DataStoreImpl {
 		}
 	}
 	
-	@Override
 	public void initialize() {
-		this.type = getEvaluation().getNode().getType();
+		this.type = getNode().getType();
 		this.domain = new LinkedHashMap<EObject, SelectionType>();
 		this.restrictions = new Stack<Restriction>();
 //		this.size = 0;
@@ -98,7 +96,7 @@ public class Domain extends DataStoreImpl {
 	}
 	
 	@Override
-	public Iterator<EObject> getMatchIterator() {
+	public Iterator<EObject> iterator() {
 //		return new LockedSelectionIterator(this);
 		return new IteratorSelection(this);
 	}
@@ -125,7 +123,7 @@ public class Domain extends DataStoreImpl {
 	}
 
 	@Override
-	public void addMatch(EObject localMatch) {
+	public void add(EObject localMatch) {
 		assert (localMatch != null) : "Null match!";
 		
 		if (ConstraintTester.check(this, localMatch)) {
@@ -166,7 +164,7 @@ public class Domain extends DataStoreImpl {
 	}
 
 	@Override
-	public boolean removeMatch(EObject localMatch) {
+	public boolean remove(EObject localMatch) {
 		
 		if (domain.remove(localMatch) != null) {
 //			modified = true;
@@ -178,11 +176,11 @@ public class Domain extends DataStoreImpl {
 	}
 
 	@Override
-	public boolean containsMatch(EObject localMatch) {
+	public boolean contains(EObject localMatch) {
 		return SelectionType.isSelected(domain.get(localMatch));
 	}
 	
-	public boolean containsMatch(EObject localMatch, SelectionType selection) {
+	public boolean contains(EObject localMatch, SelectionType selection) {
 		return (domain.get(localMatch) == selection);
 	}
 	
@@ -191,10 +189,10 @@ public class Domain extends DataStoreImpl {
 	}
 	
 	@Override
-	public int getMatchSize() {
+	public int size() {
 		int i = 0;
 		
-		for (Iterator<?> iterator = getMatchIterator(); iterator.hasNext();) {
+		for (Iterator<?> iterator = iterator(); iterator.hasNext();) {
 			iterator.next();
 			++i;
 		}
@@ -204,7 +202,7 @@ public class Domain extends DataStoreImpl {
 	}
 
 	@Override
-	public boolean isEmptyMatch() {
+	public boolean isEmpty() {
 		return !domain.containsValue(SelectionType.ACCEPTED);
 //		return (size == 0); // FIXME
 	}
@@ -298,7 +296,7 @@ public class Domain extends DataStoreImpl {
 		// Revert the selection:
 		while (!restrictions.isEmpty() && (restrictions.lastElement().getSource() == restrictionSource)) {
 			for (EObject restricted : restrictions.lastElement().getRestrictions()) {
-				addMatch(restricted);
+				add(restricted);
 			}
 			restrictions.pop();
 		}
@@ -328,9 +326,9 @@ public class Domain extends DataStoreImpl {
 	 *            An node evaluation adapter.
 	 * @return The underlying navigable data store.
 	 */
-	public static Domain get(Evaluation evaluation) {
-		if (evaluation.getStore() instanceof Domain) {
-			return (Domain) evaluation.getStore();
+	public static Domain get(Matching matching) {
+		if (matching instanceof Domain) {
+			return (Domain) matching;
 		} else {
 			throw new RuntimeException("Missing Domain!");
 		}
@@ -342,7 +340,7 @@ public class Domain extends DataStoreImpl {
 	 * @return The underlying navigable data store.
 	 */
 	public static Domain get(NodePattern node) {
-		DataStore ds = (node.getEvaluation() != null) ? node.getEvaluation().getStore() : null;
+		Matching ds = (node.getMatching() != null) ? node.getMatching() : null;
 		
 		if (ds instanceof Domain) {
 			return (Domain) ds;
@@ -354,7 +352,7 @@ public class Domain extends DataStoreImpl {
 	@Override
 	public String toString() {
 		StringBuffer string = new StringBuffer();
-		string.append("Domain: " + getEvaluation().getNode() + "\n");
+		string.append("Domain: " + getNode() + "\n");
 		
 		for (Entry<EObject, SelectionType> domainEntry : domain.entrySet()) {
 			string.append("  <" + domainEntry.getValue() + "> " + domainEntry.getKey() + "\n");
