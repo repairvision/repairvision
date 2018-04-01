@@ -6,12 +6,28 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.design.consistency.ConsistencyChecks;
 
 public class GraphServices {
+	
+	public void createAdjacentNode(NodePattern node) {
+		
+		// create node:
+		NodePattern adjacent = GraphpatternFactory.eINSTANCE.createNodePattern();
+		node.getGraph().getNodes().add(adjacent);
+		
+		// create edge:
+		EdgePattern incident = GraphpatternFactory.eINSTANCE.createEdgePattern();
+		node.getOutgoings().add(incident);
+		incident.setSource(node);
+		incident.setTarget(adjacent);
+	}
 	
 	public void reconnectEdge(EdgePattern edgePattern, NodePattern dragSource, NodePattern dropTarget) {
 		if (edgePattern.getSource() == dragSource) {
@@ -30,6 +46,18 @@ public class GraphServices {
 			}
 		}
 	}
+	
+	public void reconnectAssociation(Association association, GraphElement dragSource, GraphElement dropTarget) {
+		if (association.getSource() == dragSource) {
+			// Source move:
+			if (dropTarget instanceof NodePattern) {
+				association.setSource((NodePattern) dropTarget);
+			}
+		} else {
+			// Target move:
+			association.setTarget(dropTarget);
+		}
+	}
 
 	/**
 	 * @param graphPattern
@@ -42,16 +70,13 @@ public class GraphServices {
 		
 		for (NodePattern nodePattern : graphPattern.getNodes()) {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
-				// Filter cross-reference edges:
-				if (!ConsistencyChecks.isEdgeWithCrossReference(edgePattern)) {
-					// Check for >consistent< opposite:
-					if (ConsistencyChecks.checkOpposite(edgePattern)) {
-						if (!opposite.contains(edgePattern)) {
-							edges.add(edgePattern);
-							
-							// Filter the opposite -> as semantic candidate:
-							opposite.add(edgePattern.getOpposite());
-						}
+				// Check for >consistent< opposite:
+				if (ConsistencyChecks.checkOpposite(edgePattern)) {
+					if (!opposite.contains(edgePattern)) {
+						edges.add(edgePattern);
+
+						// Filter the opposite -> as semantic candidate:
+						opposite.add(edgePattern.getOpposite());
 					}
 				}
 			}
@@ -72,48 +97,7 @@ public class GraphServices {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
 				// Check if no (consistent) opposite is available:
 				if (!ConsistencyChecks.checkOpposite(edgePattern)) {
-					// Filter cross-reference edges:
-					if (!ConsistencyChecks.isEdgeWithCrossReference(edgePattern)) {
-						edges.add(edgePattern);
-					} else {
-						// Always show inconsistent opposite definitions as separate edges:
-						if (!edgePattern.isCrossReference()) {
-							edges.add(edgePattern);
-						}
-					}
-				}
-
-			}
-		}
-		
-		return edges;
-	}
-	
-	/**
-	 * @param graphPattern
-	 *            A graph pattern.
-	 * @return All edges of the graph pattern that will be shown as navigable edges with cross-references.
-	 */
-	public List<EdgePattern> getNonNavigableWithCrossReferenceEdgeCandidates(GraphPattern graphPattern) {
-		List<EdgePattern> edges = new ArrayList<>();
-		
-		for (NodePattern nodePattern : graphPattern.getNodes()) {
-			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
-				// Consider only edges with cross-references:
-				if (ConsistencyChecks.isEdgeWithCrossReference(edgePattern)) {
-					// Check for >consistent< edge with cross-reference:
-					if (ConsistencyChecks.checkOpposite(edgePattern)) {
-						// Filter cross-reference it-self -> as semantic candidate:
-						if (!edgePattern.isCrossReference()) {
-							edges.add(edgePattern);
-						}
-					} else {
-						// Always show inconsistent opposite cross-reference definitions as separate edges:
-						if (edgePattern.isCrossReference()) {
-							edges.add(edgePattern);
-						}
-					}
-
+					edges.add(edgePattern);
 				}
 			}
 		}
