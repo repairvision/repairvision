@@ -24,7 +24,7 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.editrule.partialmatcher.scope.RepairActionFilter;
+import org.sidiff.editrule.recognition.scope.RepairActionFilter;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 
 public class DeveloperIntentionOracle {

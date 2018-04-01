@@ -86,7 +86,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	}
 	
 	@Override
-	public void calculateRepairs() {
+	public void validation() {
 		
 		calculation = new Job("Evaluate History") {
 			
@@ -98,6 +98,10 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 		};
 		
 		calculation.schedule();
+	}
+	
+	@Override
+	public void calculateRepairs() {
 	}
 	
 	@Override
