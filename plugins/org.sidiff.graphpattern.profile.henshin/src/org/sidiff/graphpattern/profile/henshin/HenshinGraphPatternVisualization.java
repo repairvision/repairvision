@@ -3,6 +3,7 @@ package org.sidiff.graphpattern.profile.henshin;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.profile.IGraphPatternVisualization;
+import org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.STEREOTYPE;
 
 public class HenshinGraphPatternVisualization implements IGraphPatternVisualization {
 
@@ -12,27 +13,23 @@ public class HenshinGraphPatternVisualization implements IGraphPatternVisualizat
 		if (!node.getStereotypes().isEmpty()) {
 			Stereotype stereotype = node.getStereotypes().get(0);
 			
-			if (HenshinGraphPatternProfile.CREATE == stereotype) {
+			switch (STEREOTYPE.valueOf(stereotype.getName())) {
+			case create:
 				return new int[] {221, 255, 221};
-			}
 			
-			else if (HenshinGraphPatternProfile.DELETE == stereotype) {
+			case delete:
 				return new int[] {255, 221, 221};
-			}
-			
-			if (HenshinGraphPatternProfile.PRESERVE == stereotype) {
+				
+			case preserve:
 				return new int[] {238, 238, 238};
-			}
-			
-			if (HenshinGraphPatternProfile.FORBID == stereotype) {
+				
+			case require:
 				return new int[] {221, 221, 255};
-			}
-			
-			if (HenshinGraphPatternProfile.REQUIRE == stereotype) {
+				
+			case forbid:
 				return new int[] {255, 238, 221};
 			}
 		}
-		
 		return new int[] {0, 0, 0};
 	}
 }

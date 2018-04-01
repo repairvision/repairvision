@@ -1,51 +1,94 @@
 package org.sidiff.graphpattern.profile.henshin;
+import java.io.IOException;
+import java.util.Collections;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.Profile;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.profile.IGraphPatternProfile;
 import org.sidiff.graphpattern.profile.IGraphPatternVisualization;
+import org.sidiff.graphpattern.util.GraphpatternResourceImpl;
 
 public class HenshinGraphPatternProfile implements IGraphPatternProfile {
 	
-	protected static final String ID = "org.sidiff.graphpattern.profile.henshin.profile";
+	public static enum STEREOTYPE {
+		create, delete, preserve, forbid, require
+	};
 	
-	protected static final Profile PROFILE = createProfile("Henshin", "Henshin Graph Actions");
+	protected static final String PULGIN = "org.sidiff.graphpattern.profile.henshin";
 	
-	protected static final Stereotype CREATE = createStereotype("create");
+	protected static final String PROFILE_PATH = "model/profile.graphpattern";
 	
-	protected static final Stereotype DELETE = createStereotype("delete"); 
+	protected static final String PROFILE_ID = "org.sidiff.graphpattern.profile.henshin.profile";
 	
-	protected static final Stereotype PRESERVE = createStereotype("preserve"); 
+	protected static final String PROFILE_NAME = "Henshin Action Profile";
 	
-	protected static final Stereotype FORBID = createStereotype("forbid"); 
+	protected static final String PROFILE_DESCRIPTION = "e.g. create, delete, forbid";
 	
-	protected static final Stereotype REQUIRE = createStereotype("require"); 
-
+	protected Profile profile;
+	
+	protected IGraphPatternVisualization visualization;
+	
 	@Override
 	public Profile getProfile() {
-		return PROFILE;
+		if (profile == null) {
+			try {
+				profile = (Profile) new ResourceSetImpl().getResource(URI.createPlatformPluginURI(PULGIN + "/" + PROFILE_PATH, true), true).getContents().get(0);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return profile;
 	}
 
 	@Override
 	public IGraphPatternVisualization getVisualization() {
-		return new HenshinGraphPatternVisualization();
+		if (visualization == null) {
+			this.visualization = new HenshinGraphPatternVisualization();
+		}
+		
+		return visualization;
 	}
 	
-	protected static Profile createProfile(String name, String decription) {
+	/*
+	 * Profile Generator:
+	 */
+	
+	public static void main(String[] args) {
+		
+		// create profile:
+		Profile profile = createProfile(PROFILE_ID, PROFILE_NAME, PROFILE_DESCRIPTION);
+		
+		for (STEREOTYPE stereotype : STEREOTYPE.values()) {
+			createStereotype(profile, stereotype.toString());
+		}
+		
+		// save profile:
+		try {
+			Resource profileResource = new GraphpatternResourceImpl(URI.createFileURI(PROFILE_PATH));
+			profileResource.getContents().add(profile);
+			profileResource.save(Collections.EMPTY_MAP);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected static Profile createProfile(String id, String name, String decription) {
 		Profile profile = GraphpatternFactory.eINSTANCE.createProfile();
 		profile.setName(name);
+		profile.setId(id);
 		profile.setDescription(decription);
-		
-		profile.setId(ID);
 		
 		return profile;
 	}
 	
-	protected static Stereotype createStereotype(String name) {
+	protected static Stereotype createStereotype(Profile profile, String name) {
 		Stereotype stereotype = GraphpatternFactory.eINSTANCE.createStereotype();
 		stereotype.setName(name);
-		
-		PROFILE.getStereotypes().add(stereotype);
+		profile.getStereotypes().add(stereotype);
 		
 		return stereotype;
 	}
