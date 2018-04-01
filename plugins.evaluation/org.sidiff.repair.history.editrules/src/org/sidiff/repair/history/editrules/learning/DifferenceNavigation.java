@@ -14,8 +14,8 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.editrule.partialmatcher.util.IndexedCrossReferencer;
-import org.sidiff.editrule.partialmatcher.util.LiftingGraphIndex;
+import org.sidiff.editrule.recognition.util.IndexedCrossReferencer;
+import org.sidiff.editrule.recognition.util.LiftingGraphIndex;
 import org.sidiff.matching.model.Correspondence;
 
 public class DifferenceNavigation {
