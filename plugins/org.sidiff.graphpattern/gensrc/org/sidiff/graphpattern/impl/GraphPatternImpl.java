@@ -10,6 +10,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -18,6 +19,7 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.SubGraph;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,13 +31,13 @@ import org.sidiff.graphpattern.Pattern;
  * <ul>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getPattern <em>Pattern</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#isMulti <em>Multi</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getDependencyGraph <em>Dependency Graph</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getSubgraphs <em>Subgraphs</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPattern {
+public class GraphPatternImpl extends PatternElementImpl implements GraphPattern {
 	/**
 	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -47,25 +49,6 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 	protected EList<NodePattern> nodes;
 
 	/**
-	 * The default value of the '{@link #isMulti() <em>Multi</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isMulti()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean MULTI_EDEFAULT = false;
-	/**
-	 * The cached value of the '{@link #isMulti() <em>Multi</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isMulti()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean multi = MULTI_EDEFAULT;
-
-	/**
 	 * The cached value of the '{@link #getDependencyGraph() <em>Dependency Graph</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -74,6 +57,16 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 	 * @ordered
 	 */
 	protected DependencyGraph dependencyGraph;
+
+	/**
+	 * The cached value of the '{@link #getSubgraphs() <em>Subgraphs</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSubgraphs()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<SubGraph> subgraphs;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -152,27 +145,6 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isMulti() {
-		return multi;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setMulti(boolean newMulti) {
-		boolean oldMulti = multi;
-		multi = newMulti;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.GRAPH_PATTERN__MULTI, oldMulti, multi));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public DependencyGraph getDependencyGraph() {
 		return dependencyGraph;
 	}
@@ -216,6 +188,18 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<SubGraph> getSubgraphs() {
+		if (subgraphs == null) {
+			subgraphs = new EObjectContainmentEList<SubGraph>(SubGraph.class, this, GraphpatternPackage.GRAPH_PATTERN__SUBGRAPHS);
+		}
+		return subgraphs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -248,6 +232,8 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 				return basicSetPattern(null, msgs);
 			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
 				return basicSetDependencyGraph(null, msgs);
+			case GraphpatternPackage.GRAPH_PATTERN__SUBGRAPHS:
+				return ((InternalEList<?>)getSubgraphs()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -278,10 +264,10 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 				return getNodes();
 			case GraphpatternPackage.GRAPH_PATTERN__PATTERN:
 				return getPattern();
-			case GraphpatternPackage.GRAPH_PATTERN__MULTI:
-				return isMulti();
 			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
 				return getDependencyGraph();
+			case GraphpatternPackage.GRAPH_PATTERN__SUBGRAPHS:
+				return getSubgraphs();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -302,11 +288,12 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 			case GraphpatternPackage.GRAPH_PATTERN__PATTERN:
 				setPattern((Pattern)newValue);
 				return;
-			case GraphpatternPackage.GRAPH_PATTERN__MULTI:
-				setMulti((Boolean)newValue);
-				return;
 			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
 				setDependencyGraph((DependencyGraph)newValue);
+				return;
+			case GraphpatternPackage.GRAPH_PATTERN__SUBGRAPHS:
+				getSubgraphs().clear();
+				getSubgraphs().addAll((Collection<? extends SubGraph>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -326,11 +313,11 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 			case GraphpatternPackage.GRAPH_PATTERN__PATTERN:
 				setPattern((Pattern)null);
 				return;
-			case GraphpatternPackage.GRAPH_PATTERN__MULTI:
-				setMulti(MULTI_EDEFAULT);
-				return;
 			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
 				setDependencyGraph((DependencyGraph)null);
+				return;
+			case GraphpatternPackage.GRAPH_PATTERN__SUBGRAPHS:
+				getSubgraphs().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -348,28 +335,12 @@ public class GraphPatternImpl extends GraphPatternElementImpl implements GraphPa
 				return nodes != null && !nodes.isEmpty();
 			case GraphpatternPackage.GRAPH_PATTERN__PATTERN:
 				return getPattern() != null;
-			case GraphpatternPackage.GRAPH_PATTERN__MULTI:
-				return multi != MULTI_EDEFAULT;
 			case GraphpatternPackage.GRAPH_PATTERN__DEPENDENCY_GRAPH:
 				return dependencyGraph != null;
+			case GraphpatternPackage.GRAPH_PATTERN__SUBGRAPHS:
+				return subgraphs != null && !subgraphs.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (multi: ");
-		result.append(multi);
-		result.append(')');
-		return result.toString();
 	}
 
 } //GraphPatternImpl

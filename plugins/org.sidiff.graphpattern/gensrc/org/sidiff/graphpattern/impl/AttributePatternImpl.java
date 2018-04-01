@@ -8,7 +8,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
@@ -29,7 +28,7 @@ import org.sidiff.graphpattern.NodePattern;
  *
  * @generated
  */
-public class AttributePatternImpl extends MinimalEObjectImpl.Container implements AttributePattern {
+public class AttributePatternImpl extends GraphElementImpl implements AttributePattern {
 	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->

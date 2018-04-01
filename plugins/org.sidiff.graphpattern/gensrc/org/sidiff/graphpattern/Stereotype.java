@@ -6,21 +6,21 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Graph Pattern Element</b></em>'.
+ * A representation of the model object '<em><b>Stereotype</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.GraphPatternElement#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.Stereotype#getName <em>Name</em>}</li>
  * </ul>
  *
- * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphPatternElement()
- * @model abstract="true"
+ * @see org.sidiff.graphpattern.GraphpatternPackage#getStereotype()
+ * @model
  * @generated
  */
-public interface GraphPatternElement extends EObject {
+public interface Stereotype extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -31,14 +31,14 @@ public interface GraphPatternElement extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphPatternElement_Name()
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getStereotype_Name()
 	 * @model
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.graphpattern.GraphPatternElement#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.graphpattern.Stereotype#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
@@ -47,4 +47,4 @@ public interface GraphPatternElement extends EObject {
 	 */
 	void setName(String value);
 
-} // GraphPatternElement
+} // Stereotype

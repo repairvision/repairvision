@@ -2,8 +2,6 @@
  */
 package org.sidiff.graphpattern;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Parameter</b></em>'.
@@ -13,38 +11,40 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.Parameter#getName <em>Name</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.Parameter#getPattern <em>Pattern</em>}</li>
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getParameter()
  * @model
  * @generated
  */
-public interface Parameter extends EObject {
+public interface Parameter extends PatternElement {
 	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * Returns the value of the '<em><b>Pattern</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.Pattern#getParameters <em>Parameters</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Pattern</em>' container reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see org.sidiff.graphpattern.GraphpatternPackage#getParameter_Name()
-	 * @model
+	 * @return the value of the '<em>Pattern</em>' container reference.
+	 * @see #setPattern(Pattern)
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getParameter_Pattern()
+	 * @see org.sidiff.graphpattern.Pattern#getParameters
+	 * @model opposite="parameters" transient="false"
 	 * @generated
 	 */
-	String getName();
+	Pattern getPattern();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.graphpattern.Parameter#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.sidiff.graphpattern.Parameter#getPattern <em>Pattern</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
+	 * @param value the new value of the '<em>Pattern</em>' container reference.
+	 * @see #getPattern()
 	 * @generated
 	 */
-	void setName(String value);
+	void setPattern(Pattern value);
 
 } // Parameter

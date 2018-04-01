@@ -3,7 +3,6 @@
 package org.sidiff.graphpattern;
 
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface AttributePattern extends EObject {
+public interface AttributePattern extends GraphElement {
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -35,7 +34,7 @@ public interface AttributePattern extends EObject {
 	 * @return the value of the '<em>Value</em>' attribute.
 	 * @see #setValue(String)
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getAttributePattern_Value()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model
 	 * @generated
 	 */
 	String getValue();

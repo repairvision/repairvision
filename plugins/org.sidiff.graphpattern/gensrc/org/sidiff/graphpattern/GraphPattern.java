@@ -15,15 +15,15 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.sidiff.graphpattern.GraphPattern#getNodes <em>Nodes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.GraphPattern#getPattern <em>Pattern</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.GraphPattern#isMulti <em>Multi</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.GraphPattern#getDependencyGraph <em>Dependency Graph</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.GraphPattern#getSubgraphs <em>Subgraphs</em>}</li>
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphPattern()
  * @model
  * @generated
  */
-public interface GraphPattern extends GraphPatternElement {
+public interface GraphPattern extends PatternElement {
 	/**
 	 * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.graphpattern.NodePattern}.
@@ -71,32 +71,6 @@ public interface GraphPattern extends GraphPatternElement {
 	void setPattern(Pattern value);
 
 	/**
-	 * Returns the value of the '<em><b>Multi</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Multi</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Multi</em>' attribute.
-	 * @see #setMulti(boolean)
-	 * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphPattern_Multi()
-	 * @model
-	 * @generated
-	 */
-	boolean isMulti();
-
-	/**
-	 * Sets the value of the '{@link org.sidiff.graphpattern.GraphPattern#isMulti <em>Multi</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Multi</em>' attribute.
-	 * @see #isMulti()
-	 * @generated
-	 */
-	void setMulti(boolean value);
-
-	/**
 	 * Returns the value of the '<em><b>Dependency Graph</b></em>' containment reference.
 	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.DependencyGraph#getGraph <em>Graph</em>}'.
 	 * <!-- begin-user-doc -->
@@ -123,5 +97,21 @@ public interface GraphPattern extends GraphPatternElement {
 	 * @generated
 	 */
 	void setDependencyGraph(DependencyGraph value);
+
+	/**
+	 * Returns the value of the '<em><b>Subgraphs</b></em>' containment reference list.
+	 * The list contents are of type {@link org.sidiff.graphpattern.SubGraph}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Subgraphs</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Subgraphs</em>' containment reference list.
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphPattern_Subgraphs()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<SubGraph> getSubgraphs();
 
 } // GraphPattern

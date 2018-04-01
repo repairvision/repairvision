@@ -2,36 +2,59 @@
  */
 package org.sidiff.graphpattern.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
+
+import org.sidiff.graphpattern.Assignment;
 import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.Parameter;
+import org.sidiff.graphpattern.ParameterBinding;
 import org.sidiff.graphpattern.Pattern;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Parameter</b></em>'.
+ * An implementation of the model object '<em><b>Assignment</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.impl.ParameterImpl#getPattern <em>Pattern</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.AssignmentImpl#getAssignment <em>Assignment</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.AssignmentImpl#getPattern <em>Pattern</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ParameterImpl extends PatternElementImpl implements Parameter {
+public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assignment {
+	/**
+	 * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssignment()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ParameterBinding> assignment;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ParameterImpl() {
+	protected AssignmentImpl() {
 		super();
 	}
 
@@ -42,7 +65,19 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return GraphpatternPackage.Literals.PARAMETER;
+		return GraphpatternPackage.Literals.ASSIGNMENT;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<ParameterBinding> getAssignment() {
+		if (assignment == null) {
+			assignment = new EObjectContainmentEList<ParameterBinding>(ParameterBinding.class, this, GraphpatternPackage.ASSIGNMENT__ASSIGNMENT);
+		}
+		return assignment;
 	}
 
 	/**
@@ -51,7 +86,7 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	 * @generated
 	 */
 	public Pattern getPattern() {
-		if (eContainerFeatureID() != GraphpatternPackage.PARAMETER__PATTERN) return null;
+		if (eContainerFeatureID() != GraphpatternPackage.ASSIGNMENT__PATTERN) return null;
 		return (Pattern)eInternalContainer();
 	}
 
@@ -61,7 +96,7 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	 * @generated
 	 */
 	public NotificationChain basicSetPattern(Pattern newPattern, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newPattern, GraphpatternPackage.PARAMETER__PATTERN, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newPattern, GraphpatternPackage.ASSIGNMENT__PATTERN, msgs);
 		return msgs;
 	}
 
@@ -71,19 +106,19 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	 * @generated
 	 */
 	public void setPattern(Pattern newPattern) {
-		if (newPattern != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.PARAMETER__PATTERN && newPattern != null)) {
+		if (newPattern != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.ASSIGNMENT__PATTERN && newPattern != null)) {
 			if (EcoreUtil.isAncestor(this, newPattern))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newPattern != null)
-				msgs = ((InternalEObject)newPattern).eInverseAdd(this, GraphpatternPackage.PATTERN__PARAMETERS, Pattern.class, msgs);
+				msgs = ((InternalEObject)newPattern).eInverseAdd(this, GraphpatternPackage.PATTERN__ASSIGNMENTS, Pattern.class, msgs);
 			msgs = basicSetPattern(newPattern, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.PARAMETER__PATTERN, newPattern, newPattern));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.ASSIGNMENT__PATTERN, newPattern, newPattern));
 	}
 
 	/**
@@ -94,7 +129,7 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case GraphpatternPackage.PARAMETER__PATTERN:
+			case GraphpatternPackage.ASSIGNMENT__PATTERN:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetPattern((Pattern)otherEnd, msgs);
@@ -110,7 +145,9 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case GraphpatternPackage.PARAMETER__PATTERN:
+			case GraphpatternPackage.ASSIGNMENT__ASSIGNMENT:
+				return ((InternalEList<?>)getAssignment()).basicRemove(otherEnd, msgs);
+			case GraphpatternPackage.ASSIGNMENT__PATTERN:
 				return basicSetPattern(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -124,8 +161,8 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case GraphpatternPackage.PARAMETER__PATTERN:
-				return eInternalContainer().eInverseRemove(this, GraphpatternPackage.PATTERN__PARAMETERS, Pattern.class, msgs);
+			case GraphpatternPackage.ASSIGNMENT__PATTERN:
+				return eInternalContainer().eInverseRemove(this, GraphpatternPackage.PATTERN__ASSIGNMENTS, Pattern.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -138,7 +175,9 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GraphpatternPackage.PARAMETER__PATTERN:
+			case GraphpatternPackage.ASSIGNMENT__ASSIGNMENT:
+				return getAssignment();
+			case GraphpatternPackage.ASSIGNMENT__PATTERN:
 				return getPattern();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -149,10 +188,15 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GraphpatternPackage.PARAMETER__PATTERN:
+			case GraphpatternPackage.ASSIGNMENT__ASSIGNMENT:
+				getAssignment().clear();
+				getAssignment().addAll((Collection<? extends ParameterBinding>)newValue);
+				return;
+			case GraphpatternPackage.ASSIGNMENT__PATTERN:
 				setPattern((Pattern)newValue);
 				return;
 		}
@@ -167,7 +211,10 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.PARAMETER__PATTERN:
+			case GraphpatternPackage.ASSIGNMENT__ASSIGNMENT:
+				getAssignment().clear();
+				return;
+			case GraphpatternPackage.ASSIGNMENT__PATTERN:
 				setPattern((Pattern)null);
 				return;
 		}
@@ -182,10 +229,12 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.PARAMETER__PATTERN:
+			case GraphpatternPackage.ASSIGNMENT__ASSIGNMENT:
+				return assignment != null && !assignment.isEmpty();
+			case GraphpatternPackage.ASSIGNMENT__PATTERN:
 				return getPattern() != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //ParameterImpl
+} //AssignmentImpl

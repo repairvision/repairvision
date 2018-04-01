@@ -2,7 +2,6 @@
  */
 package org.sidiff.graphpattern.impl;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -12,26 +11,30 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
+import org.sidiff.graphpattern.Assignment;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.AttributePattern;
-import org.sidiff.graphpattern.DataStore;
+import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.DependencyEdge;
 import org.sidiff.graphpattern.DependencyGraph;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.Evaluation;
+import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
-import org.sidiff.graphpattern.GraphPatternElement;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.NavigableDataStore;
+import org.sidiff.graphpattern.Matching;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.ObjectBinding;
 import org.sidiff.graphpattern.Parameter;
+import org.sidiff.graphpattern.ParameterBinding;
 import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.RuleBase;
-import org.sidiff.graphpattern.Visitor;
+import org.sidiff.graphpattern.PatternElement;
+import org.sidiff.graphpattern.Profile;
+import org.sidiff.graphpattern.Stereotype;
+import org.sidiff.graphpattern.SubGraph;
+import org.sidiff.graphpattern.ValueBinding;
 
 /**
  * <!-- begin-user-doc -->
@@ -73,35 +76,14 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass evaluationEClass = null;
+	private EClass matchingEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass visitorEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass dataStoreEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass navigableDataStoreEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass ruleBaseEClass = null;
+	private EClass bundleEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -143,6 +125,62 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass stereotypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass parameterBindingEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass assignmentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass objectBindingEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass valueBindingEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass subGraphEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass graphElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass profileEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass patternEClass = null;
 
 	/**
@@ -150,7 +188,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass graphPatternElementEClass = null;
+	private EClass patternElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -158,13 +196,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	private EClass parameterEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EDataType eCollectionEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -219,9 +250,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		isInited = true;
 
-		// Initialize simple dependencies
-		XMLTypePackage.eINSTANCE.eClass();
-
 		// Create package meta-data objects
 		theGraphpatternPackage.createPackageContents();
 
@@ -269,8 +297,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGraphPattern_Multi() {
-		return (EAttribute)graphPatternEClass.getEStructuralFeatures().get(2);
+	public EReference getGraphPattern_DependencyGraph() {
+		return (EReference)graphPatternEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -278,7 +306,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGraphPattern_DependencyGraph() {
+	public EReference getGraphPattern_Subgraphs() {
 		return (EReference)graphPatternEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -323,7 +351,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNodePattern_Evaluation() {
+	public EReference getNodePattern_Matching() {
 		return (EReference)nodePatternEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -476,24 +504,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getEdgePattern_CrossReference() {
-		return (EAttribute)edgePatternEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getEdgePattern_Associations() {
-		return (EReference)edgePatternEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getAttributePattern() {
 		return attributePatternEClass;
 	}
@@ -530,8 +540,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getEvaluation() {
-		return evaluationEClass;
+	public EClass getMatching() {
+		return matchingEClass;
 	}
 
 	/**
@@ -539,8 +549,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getEvaluation_Node() {
-		return (EReference)evaluationEClass.getEStructuralFeatures().get(0);
+	public EReference getMatching_Matches() {
+		return (EReference)matchingEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -548,8 +558,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getEvaluation_Matches() {
-		return (EReference)evaluationEClass.getEStructuralFeatures().get(1);
+	public EReference getMatching_Node() {
+		return (EReference)matchingEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -557,8 +567,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getEvaluation_Store() {
-		return (EReference)evaluationEClass.getEStructuralFeatures().get(2);
+	public EOperation getMatching__Iterator() {
+		return matchingEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -566,8 +576,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getEvaluation__Initialize() {
-		return evaluationEClass.getEOperations().get(0);
+	public EOperation getMatching__Size() {
+		return matchingEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -575,8 +585,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getEvaluation__Accept__Visitor() {
-		return evaluationEClass.getEOperations().get(1);
+	public EOperation getMatching__IsEmpty() {
+		return matchingEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -584,8 +594,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getVisitor() {
-		return visitorEClass;
+	public EOperation getMatching__Add__EObject() {
+		return matchingEClass.getEOperations().get(3);
 	}
 
 	/**
@@ -593,8 +603,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getVisitor__Visit__Evaluation() {
-		return visitorEClass.getEOperations().get(0);
+	public EOperation getMatching__Remove__EObject() {
+		return matchingEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -602,8 +612,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getDataStore() {
-		return dataStoreEClass;
+	public EOperation getMatching__Contains__EObject() {
+		return matchingEClass.getEOperations().get(5);
 	}
 
 	/**
@@ -611,8 +621,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDataStore_Evaluation() {
-		return (EReference)dataStoreEClass.getEStructuralFeatures().get(0);
+	public EOperation getMatching__Clear() {
+		return matchingEClass.getEOperations().get(6);
 	}
 
 	/**
@@ -620,8 +630,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getDataStore__Initialize() {
-		return dataStoreEClass.getEOperations().get(0);
+	public EClass getBundle() {
+		return bundleEClass;
 	}
 
 	/**
@@ -629,8 +639,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getDataStore__GetMatchIterator() {
-		return dataStoreEClass.getEOperations().get(1);
+	public EReference getBundle_Patterns() {
+		return (EReference)bundleEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -638,143 +648,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getDataStore__GetMatchSize() {
-		return dataStoreEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataStore__IsEmptyMatch() {
-		return dataStoreEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataStore__AddMatch__EObject() {
-		return dataStoreEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataStore__RemoveMatch__EObject() {
-		return dataStoreEClass.getEOperations().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataStore__ContainsMatch__EObject() {
-		return dataStoreEClass.getEOperations().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataStore__ClearMatches() {
-		return dataStoreEClass.getEOperations().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getNavigableDataStore() {
-		return navigableDataStoreEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getNavigableDataStore__GetRemoteMatchIterator__EObject_EdgePattern() {
-		return navigableDataStoreEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getNavigableDataStore__GetRemoteMatchSize__EObject_EdgePattern() {
-		return navigableDataStoreEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getNavigableDataStore__IsEmptyRemoteMatch__EObject_EdgePattern() {
-		return navigableDataStoreEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getNavigableDataStore__AddRemoteMatch__EObject_EObject_EdgePattern() {
-		return navigableDataStoreEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getNavigableDataStore__RemoveRemoteMatch__EObject_EObject_EdgePattern() {
-		return navigableDataStoreEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getNavigableDataStore__ContainsRemoteMatch__EObject_EObject_EdgePattern() {
-		return navigableDataStoreEClass.getEOperations().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getNavigableDataStore__CleanRemoteMatches__EObject_EdgePattern() {
-		return navigableDataStoreEClass.getEOperations().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getRuleBase() {
-		return ruleBaseEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRuleBase_Patterns() {
-		return (EReference)ruleBaseEClass.getEStructuralFeatures().get(0);
+	public EReference getBundle_Profiles() {
+		return (EReference)bundleEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -944,6 +819,204 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStereotype() {
+		return stereotypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStereotype_Name() {
+		return (EAttribute)stereotypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getParameterBinding() {
+		return parameterBindingEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getParameterBinding_Parameter() {
+		return (EReference)parameterBindingEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAssignment() {
+		return assignmentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAssignment_Assignment() {
+		return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAssignment_Pattern() {
+		return (EReference)assignmentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getObjectBinding() {
+		return objectBindingEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getObjectBinding_Value() {
+		return (EReference)objectBindingEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getValueBinding() {
+		return valueBindingEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getValueBinding_Value() {
+		return (EAttribute)valueBindingEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSubGraph() {
+		return subGraphEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSubGraph_Elements() {
+		return (EReference)subGraphEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSubGraph_Subgraphs() {
+		return (EReference)subGraphEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGraphElement() {
+		return graphElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphElement_Subgraph() {
+		return (EReference)graphElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphElement_Stereotypes() {
+		return (EReference)graphElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getProfile() {
+		return profileEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProfile_Stereotypes() {
+		return (EReference)profileEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProfile_Name() {
+		return (EAttribute)profileEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProfile_Description() {
+		return (EAttribute)profileEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProfile_Id() {
+		return (EAttribute)profileEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPattern() {
 		return patternEClass;
 	}
@@ -971,8 +1044,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getGraphPatternElement() {
-		return graphPatternElementEClass;
+	public EReference getPattern_Assignments() {
+		return (EReference)patternEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -980,8 +1053,35 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGraphPatternElement_Name() {
-		return (EAttribute)graphPatternElementEClass.getEStructuralFeatures().get(0);
+	public EReference getPattern_Bundle() {
+		return (EReference)patternEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPatternElement() {
+		return patternElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPatternElement_Name() {
+		return (EAttribute)patternElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPatternElement_Description() {
+		return (EAttribute)patternElementEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -998,17 +1098,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameter_Name() {
-		return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EDataType getECollection() {
-		return eCollectionEDataType;
+	public EReference getParameter_Pattern() {
+		return (EReference)parameterEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1051,14 +1142,14 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		graphPatternEClass = createEClass(GRAPH_PATTERN);
 		createEReference(graphPatternEClass, GRAPH_PATTERN__NODES);
 		createEReference(graphPatternEClass, GRAPH_PATTERN__PATTERN);
-		createEAttribute(graphPatternEClass, GRAPH_PATTERN__MULTI);
 		createEReference(graphPatternEClass, GRAPH_PATTERN__DEPENDENCY_GRAPH);
+		createEReference(graphPatternEClass, GRAPH_PATTERN__SUBGRAPHS);
 
 		nodePatternEClass = createEClass(NODE_PATTERN);
 		createEReference(nodePatternEClass, NODE_PATTERN__OUTGOINGS);
 		createEReference(nodePatternEClass, NODE_PATTERN__TYPE);
 		createEReference(nodePatternEClass, NODE_PATTERN__ATTRIBUTES);
-		createEReference(nodePatternEClass, NODE_PATTERN__EVALUATION);
+		createEReference(nodePatternEClass, NODE_PATTERN__MATCHING);
 		createEReference(nodePatternEClass, NODE_PATTERN__GRAPH);
 		createEReference(nodePatternEClass, NODE_PATTERN__INCOMINGS);
 		createEReference(nodePatternEClass, NODE_PATTERN__ASSOCIATIONS);
@@ -1076,56 +1167,39 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEReference(edgePatternEClass, EDGE_PATTERN__SOURCE);
 		createEReference(edgePatternEClass, EDGE_PATTERN__OPPOSITE);
 		createEReference(edgePatternEClass, EDGE_PATTERN__TYPE);
-		createEAttribute(edgePatternEClass, EDGE_PATTERN__CROSS_REFERENCE);
-		createEReference(edgePatternEClass, EDGE_PATTERN__ASSOCIATIONS);
 
 		attributePatternEClass = createEClass(ATTRIBUTE_PATTERN);
 		createEAttribute(attributePatternEClass, ATTRIBUTE_PATTERN__VALUE);
 		createEReference(attributePatternEClass, ATTRIBUTE_PATTERN__TYPE);
 		createEReference(attributePatternEClass, ATTRIBUTE_PATTERN__NODE);
 
-		evaluationEClass = createEClass(EVALUATION);
-		createEReference(evaluationEClass, EVALUATION__NODE);
-		createEReference(evaluationEClass, EVALUATION__MATCHES);
-		createEReference(evaluationEClass, EVALUATION__STORE);
-		createEOperation(evaluationEClass, EVALUATION___INITIALIZE);
-		createEOperation(evaluationEClass, EVALUATION___ACCEPT__VISITOR);
+		matchingEClass = createEClass(MATCHING);
+		createEReference(matchingEClass, MATCHING__MATCHES);
+		createEReference(matchingEClass, MATCHING__NODE);
+		createEOperation(matchingEClass, MATCHING___ITERATOR);
+		createEOperation(matchingEClass, MATCHING___SIZE);
+		createEOperation(matchingEClass, MATCHING___IS_EMPTY);
+		createEOperation(matchingEClass, MATCHING___ADD__EOBJECT);
+		createEOperation(matchingEClass, MATCHING___REMOVE__EOBJECT);
+		createEOperation(matchingEClass, MATCHING___CONTAINS__EOBJECT);
+		createEOperation(matchingEClass, MATCHING___CLEAR);
 
-		visitorEClass = createEClass(VISITOR);
-		createEOperation(visitorEClass, VISITOR___VISIT__EVALUATION);
-
-		dataStoreEClass = createEClass(DATA_STORE);
-		createEReference(dataStoreEClass, DATA_STORE__EVALUATION);
-		createEOperation(dataStoreEClass, DATA_STORE___INITIALIZE);
-		createEOperation(dataStoreEClass, DATA_STORE___GET_MATCH_ITERATOR);
-		createEOperation(dataStoreEClass, DATA_STORE___GET_MATCH_SIZE);
-		createEOperation(dataStoreEClass, DATA_STORE___IS_EMPTY_MATCH);
-		createEOperation(dataStoreEClass, DATA_STORE___ADD_MATCH__EOBJECT);
-		createEOperation(dataStoreEClass, DATA_STORE___REMOVE_MATCH__EOBJECT);
-		createEOperation(dataStoreEClass, DATA_STORE___CONTAINS_MATCH__EOBJECT);
-		createEOperation(dataStoreEClass, DATA_STORE___CLEAR_MATCHES);
-
-		navigableDataStoreEClass = createEClass(NAVIGABLE_DATA_STORE);
-		createEOperation(navigableDataStoreEClass, NAVIGABLE_DATA_STORE___GET_REMOTE_MATCH_ITERATOR__EOBJECT_EDGEPATTERN);
-		createEOperation(navigableDataStoreEClass, NAVIGABLE_DATA_STORE___GET_REMOTE_MATCH_SIZE__EOBJECT_EDGEPATTERN);
-		createEOperation(navigableDataStoreEClass, NAVIGABLE_DATA_STORE___IS_EMPTY_REMOTE_MATCH__EOBJECT_EDGEPATTERN);
-		createEOperation(navigableDataStoreEClass, NAVIGABLE_DATA_STORE___ADD_REMOTE_MATCH__EOBJECT_EOBJECT_EDGEPATTERN);
-		createEOperation(navigableDataStoreEClass, NAVIGABLE_DATA_STORE___REMOVE_REMOTE_MATCH__EOBJECT_EOBJECT_EDGEPATTERN);
-		createEOperation(navigableDataStoreEClass, NAVIGABLE_DATA_STORE___CONTAINS_REMOTE_MATCH__EOBJECT_EOBJECT_EDGEPATTERN);
-		createEOperation(navigableDataStoreEClass, NAVIGABLE_DATA_STORE___CLEAN_REMOTE_MATCHES__EOBJECT_EDGEPATTERN);
-
-		ruleBaseEClass = createEClass(RULE_BASE);
-		createEReference(ruleBaseEClass, RULE_BASE__PATTERNS);
+		bundleEClass = createEClass(BUNDLE);
+		createEReference(bundleEClass, BUNDLE__PATTERNS);
+		createEReference(bundleEClass, BUNDLE__PROFILES);
 
 		patternEClass = createEClass(PATTERN);
 		createEReference(patternEClass, PATTERN__GRAPHS);
 		createEReference(patternEClass, PATTERN__PARAMETERS);
+		createEReference(patternEClass, PATTERN__ASSIGNMENTS);
+		createEReference(patternEClass, PATTERN__BUNDLE);
 
-		graphPatternElementEClass = createEClass(GRAPH_PATTERN_ELEMENT);
-		createEAttribute(graphPatternElementEClass, GRAPH_PATTERN_ELEMENT__NAME);
+		patternElementEClass = createEClass(PATTERN_ELEMENT);
+		createEAttribute(patternElementEClass, PATTERN_ELEMENT__NAME);
+		createEAttribute(patternElementEClass, PATTERN_ELEMENT__DESCRIPTION);
 
 		parameterEClass = createEClass(PARAMETER);
-		createEAttribute(parameterEClass, PARAMETER__NAME);
+		createEReference(parameterEClass, PARAMETER__PATTERN);
 
 		eObjectListEClass = createEClass(EOBJECT_LIST);
 		createEReference(eObjectListEClass, EOBJECT_LIST__CONTENT);
@@ -1150,8 +1224,37 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEReference(associationEClass, ASSOCIATION__SOURCE);
 		createEReference(associationEClass, ASSOCIATION__TARGET);
 
+		stereotypeEClass = createEClass(STEREOTYPE);
+		createEAttribute(stereotypeEClass, STEREOTYPE__NAME);
+
+		parameterBindingEClass = createEClass(PARAMETER_BINDING);
+		createEReference(parameterBindingEClass, PARAMETER_BINDING__PARAMETER);
+
+		assignmentEClass = createEClass(ASSIGNMENT);
+		createEReference(assignmentEClass, ASSIGNMENT__ASSIGNMENT);
+		createEReference(assignmentEClass, ASSIGNMENT__PATTERN);
+
+		objectBindingEClass = createEClass(OBJECT_BINDING);
+		createEReference(objectBindingEClass, OBJECT_BINDING__VALUE);
+
+		valueBindingEClass = createEClass(VALUE_BINDING);
+		createEAttribute(valueBindingEClass, VALUE_BINDING__VALUE);
+
+		subGraphEClass = createEClass(SUB_GRAPH);
+		createEReference(subGraphEClass, SUB_GRAPH__ELEMENTS);
+		createEReference(subGraphEClass, SUB_GRAPH__SUBGRAPHS);
+
+		graphElementEClass = createEClass(GRAPH_ELEMENT);
+		createEReference(graphElementEClass, GRAPH_ELEMENT__SUBGRAPH);
+		createEReference(graphElementEClass, GRAPH_ELEMENT__STEREOTYPES);
+
+		profileEClass = createEClass(PROFILE);
+		createEReference(profileEClass, PROFILE__STEREOTYPES);
+		createEAttribute(profileEClass, PROFILE__NAME);
+		createEAttribute(profileEClass, PROFILE__DESCRIPTION);
+		createEAttribute(profileEClass, PROFILE__ID);
+
 		// Create data types
-		eCollectionEDataType = createEDataType(ECOLLECTION);
 		eIteratorEDataType = createEDataType(EITERATOR);
 	}
 
@@ -1178,31 +1281,35 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
-		// Obtain other dependent packages
-		XMLTypePackage theXMLTypePackage = (XMLTypePackage)EPackage.Registry.INSTANCE.getEPackage(XMLTypePackage.eNS_URI);
-
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		graphPatternEClass.getESuperTypes().add(this.getGraphPatternElement());
-		nodePatternEClass.getESuperTypes().add(this.getGraphPatternElement());
-		edgePatternEClass.getESuperTypes().add(this.getGraphPatternElement());
-		navigableDataStoreEClass.getESuperTypes().add(this.getDataStore());
+		graphPatternEClass.getESuperTypes().add(this.getPatternElement());
+		nodePatternEClass.getESuperTypes().add(this.getGraphElement());
+		edgePatternEClass.getESuperTypes().add(this.getGraphElement());
+		attributePatternEClass.getESuperTypes().add(this.getGraphElement());
+		bundleEClass.getESuperTypes().add(this.getPatternElement());
+		patternEClass.getESuperTypes().add(this.getPatternElement());
+		parameterEClass.getESuperTypes().add(this.getPatternElement());
+		associationEClass.getESuperTypes().add(this.getPatternElement());
+		objectBindingEClass.getESuperTypes().add(this.getParameterBinding());
+		valueBindingEClass.getESuperTypes().add(this.getParameterBinding());
+		graphElementEClass.getESuperTypes().add(this.getPatternElement());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(graphPatternEClass, GraphPattern.class, "GraphPattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getGraphPattern_Nodes(), this.getNodePattern(), this.getNodePattern_Graph(), "nodes", null, 0, -1, GraphPattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGraphPattern_Pattern(), this.getPattern(), this.getPattern_Graphs(), "pattern", null, 1, 1, GraphPattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGraphPattern_Multi(), ecorePackage.getEBoolean(), "multi", null, 0, 1, GraphPattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGraphPattern_DependencyGraph(), this.getDependencyGraph(), this.getDependencyGraph_Graph(), "dependencyGraph", null, 0, 1, GraphPattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGraphPattern_Subgraphs(), this.getSubGraph(), null, "subgraphs", null, 0, -1, GraphPattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nodePatternEClass, NodePattern.class, "NodePattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNodePattern_Outgoings(), this.getEdgePattern(), this.getEdgePattern_Source(), "outgoings", null, 0, -1, NodePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNodePattern_Type(), ecorePackage.getEClass(), null, "type", null, 1, 1, NodePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNodePattern_Type(), ecorePackage.getEClass(), null, "type", null, 0, 1, NodePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNodePattern_Attributes(), this.getAttributePattern(), this.getAttributePattern_Node(), "attributes", null, 0, -1, NodePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNodePattern_Evaluation(), this.getEvaluation(), this.getEvaluation_Node(), "evaluation", null, 0, 1, NodePattern.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNodePattern_Matching(), this.getMatching(), this.getMatching_Node(), "matching", null, 0, 1, NodePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNodePattern_Graph(), this.getGraphPattern(), this.getGraphPattern_Nodes(), "graph", null, 1, 1, NodePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNodePattern_Incomings(), this.getEdgePattern(), this.getEdgePattern_Target(), "incomings", null, 0, -1, NodePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNodePattern_Associations(), this.getAssociation(), this.getAssociation_Source(), "associations", null, 0, -1, NodePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1234,96 +1341,49 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		initEReference(getEdgePattern_Source(), this.getNodePattern(), this.getNodePattern_Outgoings(), "source", null, 1, 1, EdgePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getEdgePattern_Opposite(), this.getEdgePattern(), null, "opposite", null, 0, 1, EdgePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getEdgePattern_Type(), ecorePackage.getEReference(), null, "type", null, 1, 1, EdgePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getEdgePattern_CrossReference(), ecorePackage.getEBoolean(), "crossReference", null, 0, 1, EdgePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getEdgePattern_Associations(), this.getAssociation(), this.getAssociation_Target(), "associations", null, 0, -1, EdgePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(attributePatternEClass, AttributePattern.class, "AttributePattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getAttributePattern_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, AttributePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAttributePattern_Value(), ecorePackage.getEString(), "value", null, 0, 1, AttributePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAttributePattern_Type(), ecorePackage.getEAttribute(), null, "type", null, 1, 1, AttributePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAttributePattern_Node(), this.getNodePattern(), this.getNodePattern_Attributes(), "node", null, 0, 1, AttributePattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(evaluationEClass, Evaluation.class, "Evaluation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getEvaluation_Node(), this.getNodePattern(), this.getNodePattern_Evaluation(), "node", null, 1, 1, Evaluation.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getEvaluation_Matches(), ecorePackage.getEObject(), null, "matches", null, 0, -1, Evaluation.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getEvaluation_Store(), this.getDataStore(), this.getDataStore_Evaluation(), "store", null, 1, 1, Evaluation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(matchingEClass, Matching.class, "Matching", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getMatching_Matches(), ecorePackage.getEObject(), null, "matches", null, 0, -1, Matching.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getMatching_Node(), this.getNodePattern(), this.getNodePattern_Matching(), "node", null, 0, 1, Matching.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEOperation(getEvaluation__Initialize(), null, "initialize", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getMatching__Iterator(), this.getEIterator(), "iterator", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getEvaluation__Accept__Visitor(), null, "accept", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getVisitor(), "visitor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getMatching__Size(), ecorePackage.getEInt(), "size", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEClass(visitorEClass, Visitor.class, "Visitor", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEOperation(getMatching__IsEmpty(), ecorePackage.getEBoolean(), "isEmpty", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getVisitor__Visit__Evaluation(), null, "visit", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEvaluation(), "evaluation", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getMatching__Add__EObject(), null, "add", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEObject(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEClass(dataStoreEClass, DataStore.class, "DataStore", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDataStore_Evaluation(), this.getEvaluation(), this.getEvaluation_Store(), "evaluation", null, 1, 1, DataStore.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		op = initEOperation(getMatching__Remove__EObject(), ecorePackage.getEBoolean(), "remove", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEObject(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getDataStore__Initialize(), null, "initialize", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getMatching__Contains__EObject(), ecorePackage.getEBoolean(), "contains", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEObject(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getDataStore__GetMatchIterator(), this.getEIterator(), "getMatchIterator", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getMatching__Clear(), null, "clear", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getDataStore__GetMatchSize(), ecorePackage.getEInt(), "getMatchSize", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEOperation(getDataStore__IsEmptyMatch(), ecorePackage.getEBoolean(), "isEmptyMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getDataStore__AddMatch__EObject(), null, "addMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "localMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getDataStore__RemoveMatch__EObject(), ecorePackage.getEBoolean(), "removeMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "localMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getDataStore__ContainsMatch__EObject(), ecorePackage.getEBoolean(), "containsMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "localMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEOperation(getDataStore__ClearMatches(), null, "clearMatches", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(navigableDataStoreEClass, NavigableDataStore.class, "NavigableDataStore", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		op = initEOperation(getNavigableDataStore__GetRemoteMatchIterator__EObject_EdgePattern(), this.getEIterator(), "getRemoteMatchIterator", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "localMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgePattern(), "edge", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getNavigableDataStore__GetRemoteMatchSize__EObject_EdgePattern(), ecorePackage.getEInt(), "getRemoteMatchSize", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "localMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgePattern(), "edge", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getNavigableDataStore__IsEmptyRemoteMatch__EObject_EdgePattern(), ecorePackage.getEBoolean(), "isEmptyRemoteMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "localMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgePattern(), "edge", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getNavigableDataStore__AddRemoteMatch__EObject_EObject_EdgePattern(), null, "addRemoteMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "localMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "remoteMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgePattern(), "edge", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getNavigableDataStore__RemoveRemoteMatch__EObject_EObject_EdgePattern(), ecorePackage.getEBoolean(), "removeRemoteMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "localMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "remoteMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgePattern(), "edge", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getNavigableDataStore__ContainsRemoteMatch__EObject_EObject_EdgePattern(), ecorePackage.getEBoolean(), "containsRemoteMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "localMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "remoteMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgePattern(), "edge", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getNavigableDataStore__CleanRemoteMatches__EObject_EdgePattern(), null, "cleanRemoteMatches", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEObject(), "localMatch", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgePattern(), "edge", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(ruleBaseEClass, RuleBase.class, "RuleBase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRuleBase_Patterns(), this.getPattern(), null, "patterns", null, 0, -1, RuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(bundleEClass, Bundle.class, "Bundle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getBundle_Patterns(), this.getPattern(), this.getPattern_Bundle(), "patterns", null, 0, -1, Bundle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBundle_Profiles(), this.getProfile(), null, "profiles", null, 0, -1, Bundle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(patternEClass, Pattern.class, "Pattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getPattern_Graphs(), this.getGraphPattern(), this.getGraphPattern_Pattern(), "graphs", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getPattern_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPattern_Parameters(), this.getParameter(), this.getParameter_Pattern(), "parameters", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPattern_Assignments(), this.getAssignment(), this.getAssignment_Pattern(), "assignments", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPattern_Bundle(), this.getBundle(), this.getBundle_Patterns(), "bundle", null, 0, 1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(graphPatternElementEClass, GraphPatternElement.class, "GraphPatternElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getGraphPatternElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, GraphPatternElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(patternElementEClass, PatternElement.class, "PatternElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getPatternElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, PatternElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPatternElement_Description(), ecorePackage.getEString(), "description", null, 0, 1, PatternElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getParameter_Pattern(), this.getPattern(), this.getPattern_Parameters(), "pattern", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(eObjectListEClass, EObjectList.class, "EObjectList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEObjectList_Content(), ecorePackage.getEObject(), null, "content", null, 0, -1, EObjectList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1346,10 +1406,39 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		initEClass(associationEClass, Association.class, "Association", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAssociation_Source(), this.getNodePattern(), this.getNodePattern_Associations(), "source", null, 1, 1, Association.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAssociation_Target(), this.getEdgePattern(), this.getEdgePattern_Associations(), "target", null, 1, 1, Association.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAssociation_Target(), this.getGraphElement(), null, "target", null, 1, 1, Association.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stereotypeEClass, Stereotype.class, "Stereotype", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStereotype_Name(), ecorePackage.getEString(), "name", null, 0, 1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(parameterBindingEClass, ParameterBinding.class, "ParameterBinding", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getParameterBinding_Parameter(), this.getParameter(), null, "parameter", null, 1, 1, ParameterBinding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getAssignment_Assignment(), this.getParameterBinding(), null, "assignment", null, 0, -1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAssignment_Pattern(), this.getPattern(), this.getPattern_Assignments(), "pattern", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(objectBindingEClass, ObjectBinding.class, "ObjectBinding", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getObjectBinding_Value(), ecorePackage.getEObject(), null, "value", null, 0, 1, ObjectBinding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(valueBindingEClass, ValueBinding.class, "ValueBinding", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getValueBinding_Value(), ecorePackage.getEString(), "value", null, 0, 1, ValueBinding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(subGraphEClass, SubGraph.class, "SubGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSubGraph_Elements(), this.getGraphElement(), this.getGraphElement_Subgraph(), "elements", null, 0, -1, SubGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSubGraph_Subgraphs(), this.getSubGraph(), null, "subgraphs", null, 0, -1, SubGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(graphElementEClass, GraphElement.class, "GraphElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getGraphElement_Subgraph(), this.getSubGraph(), this.getSubGraph_Elements(), "subgraph", null, 0, 1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGraphElement_Stereotypes(), this.getStereotype(), null, "stereotypes", null, 0, -1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(profileEClass, Profile.class, "Profile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProfile_Stereotypes(), this.getStereotype(), null, "stereotypes", null, 0, -1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProfile_Name(), ecorePackage.getEString(), "name", null, 0, 1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProfile_Description(), ecorePackage.getEString(), "description", null, 0, 1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProfile_Id(), ecorePackage.getEString(), "id", null, 0, 1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
-		initEDataType(eCollectionEDataType, Collection.class, "ECollection", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Collection<? extends org.eclipse.emf.ecore.EObject>");
 		initEDataType(eIteratorEDataType, Iterator.class, "EIterator", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Iterator<org.eclipse.emf.ecore.EObject>");
 
 		// Create resource

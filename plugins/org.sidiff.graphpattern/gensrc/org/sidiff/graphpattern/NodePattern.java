@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getOutgoings <em>Outgoings</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getType <em>Type</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getAttributes <em>Attributes</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.NodePattern#getEvaluation <em>Evaluation</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.NodePattern#getMatching <em>Matching</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getGraph <em>Graph</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getIncomings <em>Incomings</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getAssociations <em>Associations</em>}</li>
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model
  * @generated
  */
-public interface NodePattern extends GraphPatternElement {
+public interface NodePattern extends GraphElement {
 	/**
 	 * Returns the value of the '<em><b>Outgoings</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.graphpattern.EdgePattern}.
@@ -59,7 +59,7 @@ public interface NodePattern extends GraphPatternElement {
 	 * @return the value of the '<em>Type</em>' reference.
 	 * @see #setType(EClass)
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getNodePattern_Type()
-	 * @model required="true"
+	 * @model
 	 * @generated
 	 */
 	EClass getType();
@@ -93,32 +93,32 @@ public interface NodePattern extends GraphPatternElement {
 	EList<AttributePattern> getAttributes();
 
 	/**
-	 * Returns the value of the '<em><b>Evaluation</b></em>' containment reference.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.Evaluation#getNode <em>Node</em>}'.
+	 * Returns the value of the '<em><b>Matching</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.Matching#getNode <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Evaluation</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Matching</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Evaluation</em>' containment reference.
-	 * @see #setEvaluation(Evaluation)
-	 * @see org.sidiff.graphpattern.GraphpatternPackage#getNodePattern_Evaluation()
-	 * @see org.sidiff.graphpattern.Evaluation#getNode
-	 * @model opposite="node" containment="true" transient="true"
+	 * @return the value of the '<em>Matching</em>' containment reference.
+	 * @see #setMatching(Matching)
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getNodePattern_Matching()
+	 * @see org.sidiff.graphpattern.Matching#getNode
+	 * @model opposite="node" containment="true"
 	 * @generated
 	 */
-	Evaluation getEvaluation();
+	Matching getMatching();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.graphpattern.NodePattern#getEvaluation <em>Evaluation</em>}' containment reference.
+	 * Sets the value of the '{@link org.sidiff.graphpattern.NodePattern#getMatching <em>Matching</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Evaluation</em>' containment reference.
-	 * @see #getEvaluation()
+	 * @param value the new value of the '<em>Matching</em>' containment reference.
+	 * @see #getMatching()
 	 * @generated
 	 */
-	void setEvaluation(Evaluation value);
+	void setMatching(Matching value);
 
 	/**
 	 * Returns the value of the '<em><b>Graph</b></em>' container reference.

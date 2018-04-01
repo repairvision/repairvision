@@ -5,24 +5,7 @@ package org.sidiff.graphpattern.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.sidiff.graphpattern.Association;
-import org.sidiff.graphpattern.AttributePattern;
-import org.sidiff.graphpattern.DataStore;
-import org.sidiff.graphpattern.DependencyEdge;
-import org.sidiff.graphpattern.DependencyGraph;
-import org.sidiff.graphpattern.DependencyNode;
-import org.sidiff.graphpattern.EObjectList;
-import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.Evaluation;
-import org.sidiff.graphpattern.GraphPattern;
-import org.sidiff.graphpattern.GraphPatternElement;
-import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.NavigableDataStore;
-import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.Parameter;
-import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.RuleBase;
-import org.sidiff.graphpattern.Visitor;
+import org.sidiff.graphpattern.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -84,76 +67,64 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 			case GraphpatternPackage.GRAPH_PATTERN: {
 				GraphPattern graphPattern = (GraphPattern)theEObject;
 				T result = caseGraphPattern(graphPattern);
-				if (result == null) result = caseGraphPatternElement(graphPattern);
+				if (result == null) result = casePatternElement(graphPattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphpatternPackage.NODE_PATTERN: {
 				NodePattern nodePattern = (NodePattern)theEObject;
 				T result = caseNodePattern(nodePattern);
-				if (result == null) result = caseGraphPatternElement(nodePattern);
+				if (result == null) result = caseGraphElement(nodePattern);
+				if (result == null) result = casePatternElement(nodePattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphpatternPackage.EDGE_PATTERN: {
 				EdgePattern edgePattern = (EdgePattern)theEObject;
 				T result = caseEdgePattern(edgePattern);
-				if (result == null) result = caseGraphPatternElement(edgePattern);
+				if (result == null) result = caseGraphElement(edgePattern);
+				if (result == null) result = casePatternElement(edgePattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphpatternPackage.ATTRIBUTE_PATTERN: {
 				AttributePattern attributePattern = (AttributePattern)theEObject;
 				T result = caseAttributePattern(attributePattern);
+				if (result == null) result = caseGraphElement(attributePattern);
+				if (result == null) result = casePatternElement(attributePattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GraphpatternPackage.EVALUATION: {
-				Evaluation evaluation = (Evaluation)theEObject;
-				T result = caseEvaluation(evaluation);
+			case GraphpatternPackage.MATCHING: {
+				Matching matching = (Matching)theEObject;
+				T result = caseMatching(matching);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GraphpatternPackage.VISITOR: {
-				Visitor visitor = (Visitor)theEObject;
-				T result = caseVisitor(visitor);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.DATA_STORE: {
-				DataStore dataStore = (DataStore)theEObject;
-				T result = caseDataStore(dataStore);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.NAVIGABLE_DATA_STORE: {
-				NavigableDataStore navigableDataStore = (NavigableDataStore)theEObject;
-				T result = caseNavigableDataStore(navigableDataStore);
-				if (result == null) result = caseDataStore(navigableDataStore);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case GraphpatternPackage.RULE_BASE: {
-				RuleBase ruleBase = (RuleBase)theEObject;
-				T result = caseRuleBase(ruleBase);
+			case GraphpatternPackage.BUNDLE: {
+				Bundle bundle = (Bundle)theEObject;
+				T result = caseBundle(bundle);
+				if (result == null) result = casePatternElement(bundle);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphpatternPackage.PATTERN: {
 				Pattern pattern = (Pattern)theEObject;
 				T result = casePattern(pattern);
+				if (result == null) result = casePatternElement(pattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GraphpatternPackage.GRAPH_PATTERN_ELEMENT: {
-				GraphPatternElement graphPatternElement = (GraphPatternElement)theEObject;
-				T result = caseGraphPatternElement(graphPatternElement);
+			case GraphpatternPackage.PATTERN_ELEMENT: {
+				PatternElement patternElement = (PatternElement)theEObject;
+				T result = casePatternElement(patternElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphpatternPackage.PARAMETER: {
 				Parameter parameter = (Parameter)theEObject;
 				T result = caseParameter(parameter);
+				if (result == null) result = casePatternElement(parameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -184,6 +155,58 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 			case GraphpatternPackage.ASSOCIATION: {
 				Association association = (Association)theEObject;
 				T result = caseAssociation(association);
+				if (result == null) result = casePatternElement(association);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.STEREOTYPE: {
+				Stereotype stereotype = (Stereotype)theEObject;
+				T result = caseStereotype(stereotype);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.PARAMETER_BINDING: {
+				ParameterBinding parameterBinding = (ParameterBinding)theEObject;
+				T result = caseParameterBinding(parameterBinding);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.ASSIGNMENT: {
+				Assignment assignment = (Assignment)theEObject;
+				T result = caseAssignment(assignment);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.OBJECT_BINDING: {
+				ObjectBinding objectBinding = (ObjectBinding)theEObject;
+				T result = caseObjectBinding(objectBinding);
+				if (result == null) result = caseParameterBinding(objectBinding);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.VALUE_BINDING: {
+				ValueBinding valueBinding = (ValueBinding)theEObject;
+				T result = caseValueBinding(valueBinding);
+				if (result == null) result = caseParameterBinding(valueBinding);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.SUB_GRAPH: {
+				SubGraph subGraph = (SubGraph)theEObject;
+				T result = caseSubGraph(subGraph);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.GRAPH_ELEMENT: {
+				GraphElement graphElement = (GraphElement)theEObject;
+				T result = caseGraphElement(graphElement);
+				if (result == null) result = casePatternElement(graphElement);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.PROFILE: {
+				Profile profile = (Profile)theEObject;
+				T result = caseProfile(profile);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -252,77 +275,32 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Evaluation</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Matching</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Evaluation</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Matching</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEvaluation(Evaluation object) {
+	public T caseMatching(Matching object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Bundle</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Visitor</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Bundle</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVisitor(Visitor object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Data Store</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Data Store</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseDataStore(DataStore object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Navigable Data Store</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Navigable Data Store</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseNavigableDataStore(NavigableDataStore object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Rule Base</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Rule Base</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseRuleBase(RuleBase object) {
+	public T caseBundle(Bundle object) {
 		return null;
 	}
 
@@ -402,6 +380,126 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stereotype</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stereotype</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStereotype(Stereotype object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Parameter Binding</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Parameter Binding</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseParameterBinding(ParameterBinding object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAssignment(Assignment object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Object Binding</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Object Binding</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseObjectBinding(ObjectBinding object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Value Binding</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Value Binding</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseValueBinding(ValueBinding object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Sub Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Sub Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSubGraph(SubGraph object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Graph Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Graph Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGraphElement(GraphElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Profile</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Profile</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseProfile(Profile object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Pattern</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -417,17 +515,17 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Graph Pattern Element</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Pattern Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Graph Pattern Element</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Pattern Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseGraphPatternElement(GraphPatternElement object) {
+	public T casePatternElement(PatternElement object) {
 		return null;
 	}
 

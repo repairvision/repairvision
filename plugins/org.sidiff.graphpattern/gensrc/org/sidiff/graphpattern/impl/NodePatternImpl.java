@@ -23,9 +23,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.Evaluation;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.Matching;
 import org.sidiff.graphpattern.NodePattern;
 
 /**
@@ -39,7 +39,7 @@ import org.sidiff.graphpattern.NodePattern;
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getOutgoings <em>Outgoings</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getAttributes <em>Attributes</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getEvaluation <em>Evaluation</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getMatching <em>Matching</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getGraph <em>Graph</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getIncomings <em>Incomings</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getAssociations <em>Associations</em>}</li>
@@ -47,7 +47,7 @@ import org.sidiff.graphpattern.NodePattern;
  *
  * @generated
  */
-public class NodePatternImpl extends GraphPatternElementImpl implements NodePattern {
+public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	
 	/**
 	 * All incident edges per adjacent node.
@@ -94,14 +94,14 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 	protected EList<AttributePattern> attributes;
 
 	/**
-	 * The cached value of the '{@link #getEvaluation() <em>Evaluation</em>}' containment reference.
+	 * The cached value of the '{@link #getMatching() <em>Matching</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getEvaluation()
+	 * @see #getMatching()
 	 * @generated
 	 * @ordered
 	 */
-	protected Evaluation evaluation;
+	protected Matching matching;
 
 	/**
 	 * The cached value of the '{@link #getIncomings() <em>Incomings</em>}' reference list.
@@ -342,8 +342,8 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Evaluation getEvaluation() {
-		return evaluation;
+	public Matching getMatching() {
+		return matching;
 	}
 
 	/**
@@ -351,11 +351,11 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetEvaluation(Evaluation newEvaluation, NotificationChain msgs) {
-		Evaluation oldEvaluation = evaluation;
-		evaluation = newEvaluation;
+	public NotificationChain basicSetMatching(Matching newMatching, NotificationChain msgs) {
+		Matching oldMatching = matching;
+		matching = newMatching;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GraphpatternPackage.NODE_PATTERN__EVALUATION, oldEvaluation, newEvaluation);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GraphpatternPackage.NODE_PATTERN__MATCHING, oldMatching, newMatching);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -366,18 +366,18 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setEvaluation(Evaluation newEvaluation) {
-		if (newEvaluation != evaluation) {
+	public void setMatching(Matching newMatching) {
+		if (newMatching != matching) {
 			NotificationChain msgs = null;
-			if (evaluation != null)
-				msgs = ((InternalEObject)evaluation).eInverseRemove(this, GraphpatternPackage.EVALUATION__NODE, Evaluation.class, msgs);
-			if (newEvaluation != null)
-				msgs = ((InternalEObject)newEvaluation).eInverseAdd(this, GraphpatternPackage.EVALUATION__NODE, Evaluation.class, msgs);
-			msgs = basicSetEvaluation(newEvaluation, msgs);
+			if (matching != null)
+				msgs = ((InternalEObject)matching).eInverseRemove(this, GraphpatternPackage.MATCHING__NODE, Matching.class, msgs);
+			if (newMatching != null)
+				msgs = ((InternalEObject)newMatching).eInverseAdd(this, GraphpatternPackage.MATCHING__NODE, Matching.class, msgs);
+			msgs = basicSetMatching(newMatching, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.NODE_PATTERN__EVALUATION, newEvaluation, newEvaluation));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.NODE_PATTERN__MATCHING, newMatching, newMatching));
 	}
 
 	/**
@@ -474,10 +474,10 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoings()).basicAdd(otherEnd, msgs);
 			case GraphpatternPackage.NODE_PATTERN__ATTRIBUTES:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAttributes()).basicAdd(otherEnd, msgs);
-			case GraphpatternPackage.NODE_PATTERN__EVALUATION:
-				if (evaluation != null)
-					msgs = ((InternalEObject)evaluation).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GraphpatternPackage.NODE_PATTERN__EVALUATION, null, msgs);
-				return basicSetEvaluation((Evaluation)otherEnd, msgs);
+			case GraphpatternPackage.NODE_PATTERN__MATCHING:
+				if (matching != null)
+					msgs = ((InternalEObject)matching).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GraphpatternPackage.NODE_PATTERN__MATCHING, null, msgs);
+				return basicSetMatching((Matching)otherEnd, msgs);
 			case GraphpatternPackage.NODE_PATTERN__GRAPH:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
@@ -502,8 +502,8 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 				return ((InternalEList<?>)getOutgoings()).basicRemove(otherEnd, msgs);
 			case GraphpatternPackage.NODE_PATTERN__ATTRIBUTES:
 				return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
-			case GraphpatternPackage.NODE_PATTERN__EVALUATION:
-				return basicSetEvaluation(null, msgs);
+			case GraphpatternPackage.NODE_PATTERN__MATCHING:
+				return basicSetMatching(null, msgs);
 			case GraphpatternPackage.NODE_PATTERN__GRAPH:
 				return basicSetGraph(null, msgs);
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
@@ -543,8 +543,8 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 				return basicGetType();
 			case GraphpatternPackage.NODE_PATTERN__ATTRIBUTES:
 				return getAttributes();
-			case GraphpatternPackage.NODE_PATTERN__EVALUATION:
-				return getEvaluation();
+			case GraphpatternPackage.NODE_PATTERN__MATCHING:
+				return getMatching();
 			case GraphpatternPackage.NODE_PATTERN__GRAPH:
 				return getGraph();
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
@@ -575,8 +575,8 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 				getAttributes().clear();
 				getAttributes().addAll((Collection<? extends AttributePattern>)newValue);
 				return;
-			case GraphpatternPackage.NODE_PATTERN__EVALUATION:
-				setEvaluation((Evaluation)newValue);
+			case GraphpatternPackage.NODE_PATTERN__MATCHING:
+				setMatching((Matching)newValue);
 				return;
 			case GraphpatternPackage.NODE_PATTERN__GRAPH:
 				setGraph((GraphPattern)newValue);
@@ -610,8 +610,8 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 			case GraphpatternPackage.NODE_PATTERN__ATTRIBUTES:
 				getAttributes().clear();
 				return;
-			case GraphpatternPackage.NODE_PATTERN__EVALUATION:
-				setEvaluation((Evaluation)null);
+			case GraphpatternPackage.NODE_PATTERN__MATCHING:
+				setMatching((Matching)null);
 				return;
 			case GraphpatternPackage.NODE_PATTERN__GRAPH:
 				setGraph((GraphPattern)null);
@@ -640,8 +640,8 @@ public class NodePatternImpl extends GraphPatternElementImpl implements NodePatt
 				return type != null;
 			case GraphpatternPackage.NODE_PATTERN__ATTRIBUTES:
 				return attributes != null && !attributes.isEmpty();
-			case GraphpatternPackage.NODE_PATTERN__EVALUATION:
-				return evaluation != null;
+			case GraphpatternPackage.NODE_PATTERN__MATCHING:
+				return matching != null;
 			case GraphpatternPackage.NODE_PATTERN__GRAPH:
 				return getGraph() != null;
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:

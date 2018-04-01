@@ -8,21 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.sidiff.graphpattern.Association;
-import org.sidiff.graphpattern.AttributePattern;
-import org.sidiff.graphpattern.DependencyEdge;
-import org.sidiff.graphpattern.DependencyGraph;
-import org.sidiff.graphpattern.DependencyNode;
-import org.sidiff.graphpattern.EObjectList;
-import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.Evaluation;
-import org.sidiff.graphpattern.GraphPattern;
-import org.sidiff.graphpattern.GraphpatternFactory;
-import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.Parameter;
-import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.RuleBase;
+import org.sidiff.graphpattern.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -72,8 +58,7 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 			case GraphpatternPackage.NODE_PATTERN: return createNodePattern();
 			case GraphpatternPackage.EDGE_PATTERN: return createEdgePattern();
 			case GraphpatternPackage.ATTRIBUTE_PATTERN: return createAttributePattern();
-			case GraphpatternPackage.EVALUATION: return createEvaluation();
-			case GraphpatternPackage.RULE_BASE: return createRuleBase();
+			case GraphpatternPackage.BUNDLE: return createBundle();
 			case GraphpatternPackage.PATTERN: return createPattern();
 			case GraphpatternPackage.PARAMETER: return createParameter();
 			case GraphpatternPackage.EOBJECT_LIST: return createEObjectList();
@@ -81,6 +66,12 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 			case GraphpatternPackage.DEPENDENCY_NODE: return createDependencyNode();
 			case GraphpatternPackage.DEPENDENCY_EDGE: return createDependencyEdge();
 			case GraphpatternPackage.ASSOCIATION: return createAssociation();
+			case GraphpatternPackage.STEREOTYPE: return createStereotype();
+			case GraphpatternPackage.ASSIGNMENT: return createAssignment();
+			case GraphpatternPackage.OBJECT_BINDING: return createObjectBinding();
+			case GraphpatternPackage.VALUE_BINDING: return createValueBinding();
+			case GraphpatternPackage.SUB_GRAPH: return createSubGraph();
+			case GraphpatternPackage.PROFILE: return createProfile();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -157,19 +148,9 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Evaluation createEvaluation() {
-		EvaluationImpl evaluation = new EvaluationImpl();
-		return evaluation;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public RuleBase createRuleBase() {
-		RuleBaseImpl ruleBase = new RuleBaseImpl();
-		return ruleBase;
+	public Bundle createBundle() {
+		BundleImpl bundle = new BundleImpl();
+		return bundle;
 	}
 
 	/**
@@ -220,6 +201,66 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	public Association createAssociation() {
 		AssociationImpl association = new AssociationImpl();
 		return association;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Stereotype createStereotype() {
+		StereotypeImpl stereotype = new StereotypeImpl();
+		return stereotype;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Assignment createAssignment() {
+		AssignmentImpl assignment = new AssignmentImpl();
+		return assignment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ObjectBinding createObjectBinding() {
+		ObjectBindingImpl objectBinding = new ObjectBindingImpl();
+		return objectBinding;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ValueBinding createValueBinding() {
+		ValueBindingImpl valueBinding = new ValueBindingImpl();
+		return valueBinding;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SubGraph createSubGraph() {
+		SubGraphImpl subGraph = new SubGraphImpl();
+		return subGraph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Profile createProfile() {
+		ProfileImpl profile = new ProfileImpl();
+		return profile;
 	}
 
 	/**

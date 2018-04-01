@@ -58,22 +58,13 @@ public interface GraphpatternFactory extends EFactory {
 	AttributePattern createAttributePattern();
 
 	/**
-	 * Returns a new object of class '<em>Evaluation</em>'.
+	 * Returns a new object of class '<em>Bundle</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Evaluation</em>'.
+	 * @return a new object of class '<em>Bundle</em>'.
 	 * @generated
 	 */
-	Evaluation createEvaluation();
-
-	/**
-	 * Returns a new object of class '<em>Rule Base</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Rule Base</em>'.
-	 * @generated
-	 */
-	RuleBase createRuleBase();
+	Bundle createBundle();
 
 	/**
 	 * Returns a new object of class '<em>EObject List</em>'.
@@ -119,6 +110,60 @@ public interface GraphpatternFactory extends EFactory {
 	 * @generated
 	 */
 	Association createAssociation();
+
+	/**
+	 * Returns a new object of class '<em>Stereotype</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stereotype</em>'.
+	 * @generated
+	 */
+	Stereotype createStereotype();
+
+	/**
+	 * Returns a new object of class '<em>Assignment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Assignment</em>'.
+	 * @generated
+	 */
+	Assignment createAssignment();
+
+	/**
+	 * Returns a new object of class '<em>Object Binding</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Object Binding</em>'.
+	 * @generated
+	 */
+	ObjectBinding createObjectBinding();
+
+	/**
+	 * Returns a new object of class '<em>Value Binding</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Value Binding</em>'.
+	 * @generated
+	 */
+	ValueBinding createValueBinding();
+
+	/**
+	 * Returns a new object of class '<em>Sub Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Sub Graph</em>'.
+	 * @generated
+	 */
+	SubGraph createSubGraph();
+
+	/**
+	 * Returns a new object of class '<em>Profile</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Profile</em>'.
+	 * @generated
+	 */
+	Profile createProfile();
 
 	/**
 	 * Returns a new object of class '<em>Pattern</em>'.

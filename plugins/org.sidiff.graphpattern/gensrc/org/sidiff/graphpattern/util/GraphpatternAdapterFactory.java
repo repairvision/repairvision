@@ -6,24 +6,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.graphpattern.Association;
-import org.sidiff.graphpattern.AttributePattern;
-import org.sidiff.graphpattern.DataStore;
-import org.sidiff.graphpattern.DependencyEdge;
-import org.sidiff.graphpattern.DependencyGraph;
-import org.sidiff.graphpattern.DependencyNode;
-import org.sidiff.graphpattern.EObjectList;
-import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.Evaluation;
-import org.sidiff.graphpattern.GraphPattern;
-import org.sidiff.graphpattern.GraphPatternElement;
-import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.NavigableDataStore;
-import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.Parameter;
-import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.RuleBase;
-import org.sidiff.graphpattern.Visitor;
+import org.sidiff.graphpattern.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -98,32 +81,20 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 				return createAttributePatternAdapter();
 			}
 			@Override
-			public Adapter caseEvaluation(Evaluation object) {
-				return createEvaluationAdapter();
+			public Adapter caseMatching(Matching object) {
+				return createMatchingAdapter();
 			}
 			@Override
-			public Adapter caseVisitor(Visitor object) {
-				return createVisitorAdapter();
-			}
-			@Override
-			public Adapter caseDataStore(DataStore object) {
-				return createDataStoreAdapter();
-			}
-			@Override
-			public Adapter caseNavigableDataStore(NavigableDataStore object) {
-				return createNavigableDataStoreAdapter();
-			}
-			@Override
-			public Adapter caseRuleBase(RuleBase object) {
-				return createRuleBaseAdapter();
+			public Adapter caseBundle(Bundle object) {
+				return createBundleAdapter();
 			}
 			@Override
 			public Adapter casePattern(Pattern object) {
 				return createPatternAdapter();
 			}
 			@Override
-			public Adapter caseGraphPatternElement(GraphPatternElement object) {
-				return createGraphPatternElementAdapter();
+			public Adapter casePatternElement(PatternElement object) {
+				return createPatternElementAdapter();
 			}
 			@Override
 			public Adapter caseParameter(Parameter object) {
@@ -148,6 +119,38 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseAssociation(Association object) {
 				return createAssociationAdapter();
+			}
+			@Override
+			public Adapter caseStereotype(Stereotype object) {
+				return createStereotypeAdapter();
+			}
+			@Override
+			public Adapter caseParameterBinding(ParameterBinding object) {
+				return createParameterBindingAdapter();
+			}
+			@Override
+			public Adapter caseAssignment(Assignment object) {
+				return createAssignmentAdapter();
+			}
+			@Override
+			public Adapter caseObjectBinding(ObjectBinding object) {
+				return createObjectBindingAdapter();
+			}
+			@Override
+			public Adapter caseValueBinding(ValueBinding object) {
+				return createValueBindingAdapter();
+			}
+			@Override
+			public Adapter caseSubGraph(SubGraph object) {
+				return createSubGraphAdapter();
+			}
+			@Override
+			public Adapter caseGraphElement(GraphElement object) {
+				return createGraphElementAdapter();
+			}
+			@Override
+			public Adapter caseProfile(Profile object) {
+				return createProfileAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -226,72 +229,30 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Evaluation <em>Evaluation</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Matching <em>Matching</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.graphpattern.Evaluation
+	 * @see org.sidiff.graphpattern.Matching
 	 * @generated
 	 */
-	public Adapter createEvaluationAdapter() {
+	public Adapter createMatchingAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Visitor <em>Visitor</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Bundle <em>Bundle</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.graphpattern.Visitor
+	 * @see org.sidiff.graphpattern.Bundle
 	 * @generated
 	 */
-	public Adapter createVisitorAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.DataStore <em>Data Store</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.graphpattern.DataStore
-	 * @generated
-	 */
-	public Adapter createDataStoreAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.NavigableDataStore <em>Navigable Data Store</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.graphpattern.NavigableDataStore
-	 * @generated
-	 */
-	public Adapter createNavigableDataStoreAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.RuleBase <em>Rule Base</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.graphpattern.RuleBase
-	 * @generated
-	 */
-	public Adapter createRuleBaseAdapter() {
+	public Adapter createBundleAdapter() {
 		return null;
 	}
 
@@ -366,6 +327,118 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Stereotype <em>Stereotype</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.Stereotype
+	 * @generated
+	 */
+	public Adapter createStereotypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.ParameterBinding <em>Parameter Binding</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.ParameterBinding
+	 * @generated
+	 */
+	public Adapter createParameterBindingAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Assignment <em>Assignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.Assignment
+	 * @generated
+	 */
+	public Adapter createAssignmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.ObjectBinding <em>Object Binding</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.ObjectBinding
+	 * @generated
+	 */
+	public Adapter createObjectBindingAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.ValueBinding <em>Value Binding</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.ValueBinding
+	 * @generated
+	 */
+	public Adapter createValueBindingAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.SubGraph <em>Sub Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.SubGraph
+	 * @generated
+	 */
+	public Adapter createSubGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.GraphElement <em>Graph Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.GraphElement
+	 * @generated
+	 */
+	public Adapter createGraphElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Profile <em>Profile</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.Profile
+	 * @generated
+	 */
+	public Adapter createProfileAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Pattern <em>Pattern</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -380,16 +453,16 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.GraphPatternElement <em>Graph Pattern Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.PatternElement <em>Pattern Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.graphpattern.GraphPatternElement
+	 * @see org.sidiff.graphpattern.PatternElement
 	 * @generated
 	 */
-	public Adapter createGraphPatternElementAdapter() {
+	public Adapter createPatternElementAdapter() {
 		return null;
 	}
 

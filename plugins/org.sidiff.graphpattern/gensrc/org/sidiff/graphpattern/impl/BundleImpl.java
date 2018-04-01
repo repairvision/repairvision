@@ -5,30 +5,36 @@ package org.sidiff.graphpattern.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.RuleBase;
+import org.sidiff.graphpattern.Profile;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Rule Base</b></em>'.
+ * An implementation of the model object '<em><b>Bundle</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.impl.RuleBaseImpl#getPatterns <em>Patterns</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.BundleImpl#getPatterns <em>Patterns</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.BundleImpl#getProfiles <em>Profiles</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class RuleBaseImpl extends MinimalEObjectImpl.Container implements RuleBase {
+public class BundleImpl extends PatternElementImpl implements Bundle {
 	/**
 	 * The cached value of the '{@link #getPatterns() <em>Patterns</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -40,11 +46,21 @@ public class RuleBaseImpl extends MinimalEObjectImpl.Container implements RuleBa
 	protected EList<Pattern> patterns;
 
 	/**
+	 * The cached value of the '{@link #getProfiles() <em>Profiles</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProfiles()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Profile> profiles;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected RuleBaseImpl() {
+	protected BundleImpl() {
 		super();
 	}
 
@@ -55,7 +71,7 @@ public class RuleBaseImpl extends MinimalEObjectImpl.Container implements RuleBa
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return GraphpatternPackage.Literals.RULE_BASE;
+		return GraphpatternPackage.Literals.BUNDLE;
 	}
 
 	/**
@@ -65,9 +81,36 @@ public class RuleBaseImpl extends MinimalEObjectImpl.Container implements RuleBa
 	 */
 	public EList<Pattern> getPatterns() {
 		if (patterns == null) {
-			patterns = new EObjectContainmentEList<Pattern>(Pattern.class, this, GraphpatternPackage.RULE_BASE__PATTERNS);
+			patterns = new EObjectContainmentWithInverseEList<Pattern>(Pattern.class, this, GraphpatternPackage.BUNDLE__PATTERNS, GraphpatternPackage.PATTERN__BUNDLE);
 		}
 		return patterns;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Profile> getProfiles() {
+		if (profiles == null) {
+			profiles = new EObjectResolvingEList<Profile>(Profile.class, this, GraphpatternPackage.BUNDLE__PROFILES);
+		}
+		return profiles;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case GraphpatternPackage.BUNDLE__PATTERNS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getPatterns()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -78,7 +121,7 @@ public class RuleBaseImpl extends MinimalEObjectImpl.Container implements RuleBa
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case GraphpatternPackage.RULE_BASE__PATTERNS:
+			case GraphpatternPackage.BUNDLE__PATTERNS:
 				return ((InternalEList<?>)getPatterns()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -92,8 +135,10 @@ public class RuleBaseImpl extends MinimalEObjectImpl.Container implements RuleBa
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GraphpatternPackage.RULE_BASE__PATTERNS:
+			case GraphpatternPackage.BUNDLE__PATTERNS:
 				return getPatterns();
+			case GraphpatternPackage.BUNDLE__PROFILES:
+				return getProfiles();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -107,9 +152,13 @@ public class RuleBaseImpl extends MinimalEObjectImpl.Container implements RuleBa
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GraphpatternPackage.RULE_BASE__PATTERNS:
+			case GraphpatternPackage.BUNDLE__PATTERNS:
 				getPatterns().clear();
 				getPatterns().addAll((Collection<? extends Pattern>)newValue);
+				return;
+			case GraphpatternPackage.BUNDLE__PROFILES:
+				getProfiles().clear();
+				getProfiles().addAll((Collection<? extends Profile>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -123,8 +172,11 @@ public class RuleBaseImpl extends MinimalEObjectImpl.Container implements RuleBa
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.RULE_BASE__PATTERNS:
+			case GraphpatternPackage.BUNDLE__PATTERNS:
 				getPatterns().clear();
+				return;
+			case GraphpatternPackage.BUNDLE__PROFILES:
+				getProfiles().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -138,10 +190,12 @@ public class RuleBaseImpl extends MinimalEObjectImpl.Container implements RuleBa
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.RULE_BASE__PATTERNS:
+			case GraphpatternPackage.BUNDLE__PATTERNS:
 				return patterns != null && !patterns.isEmpty();
+			case GraphpatternPackage.BUNDLE__PROFILES:
+				return profiles != null && !profiles.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //RuleBaseImpl
+} //BundleImpl

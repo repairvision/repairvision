@@ -2,8 +2,6 @@
  */
 package org.sidiff.graphpattern;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Association</b></em>'.
@@ -21,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Association extends EObject {
+public interface Association extends PatternElement {
 	/**
 	 * Returns the value of the '<em><b>Source</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.NodePattern#getAssociations <em>Associations</em>}'.
@@ -52,7 +50,6 @@ public interface Association extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Target</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.EdgePattern#getAssociations <em>Associations</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Target</em>' reference isn't clear,
@@ -60,13 +57,12 @@ public interface Association extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target</em>' reference.
-	 * @see #setTarget(EdgePattern)
+	 * @see #setTarget(GraphElement)
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getAssociation_Target()
-	 * @see org.sidiff.graphpattern.EdgePattern#getAssociations
-	 * @model opposite="associations" required="true"
+	 * @model required="true"
 	 * @generated
 	 */
-	EdgePattern getTarget();
+	GraphElement getTarget();
 
 	/**
 	 * Sets the value of the '{@link org.sidiff.graphpattern.Association#getTarget <em>Target</em>}' reference.
@@ -76,6 +72,6 @@ public interface Association extends EObject {
 	 * @see #getTarget()
 	 * @generated
 	 */
-	void setTarget(EdgePattern value);
+	void setTarget(GraphElement value);
 
 } // Association

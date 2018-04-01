@@ -7,10 +7,9 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.graphpattern.Association;
-import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 
@@ -28,7 +27,7 @@ import org.sidiff.graphpattern.NodePattern;
  *
  * @generated
  */
-public class AssociationImpl extends MinimalEObjectImpl.Container implements Association {
+public class AssociationImpl extends PatternElementImpl implements Association {
 	/**
 	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -37,7 +36,7 @@ public class AssociationImpl extends MinimalEObjectImpl.Container implements Ass
 	 * @generated
 	 * @ordered
 	 */
-	protected EdgePattern target;
+	protected GraphElement target;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -104,10 +103,10 @@ public class AssociationImpl extends MinimalEObjectImpl.Container implements Ass
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EdgePattern getTarget() {
+	public GraphElement getTarget() {
 		if (target != null && target.eIsProxy()) {
 			InternalEObject oldTarget = (InternalEObject)target;
-			target = (EdgePattern)eResolveProxy(oldTarget);
+			target = (GraphElement)eResolveProxy(oldTarget);
 			if (target != oldTarget) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphpatternPackage.ASSOCIATION__TARGET, oldTarget, target));
@@ -121,7 +120,7 @@ public class AssociationImpl extends MinimalEObjectImpl.Container implements Ass
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EdgePattern basicGetTarget() {
+	public GraphElement basicGetTarget() {
 		return target;
 	}
 
@@ -130,33 +129,11 @@ public class AssociationImpl extends MinimalEObjectImpl.Container implements Ass
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetTarget(EdgePattern newTarget, NotificationChain msgs) {
-		EdgePattern oldTarget = target;
+	public void setTarget(GraphElement newTarget) {
+		GraphElement oldTarget = target;
 		target = newTarget;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GraphpatternPackage.ASSOCIATION__TARGET, oldTarget, newTarget);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTarget(EdgePattern newTarget) {
-		if (newTarget != target) {
-			NotificationChain msgs = null;
-			if (target != null)
-				msgs = ((InternalEObject)target).eInverseRemove(this, GraphpatternPackage.EDGE_PATTERN__ASSOCIATIONS, EdgePattern.class, msgs);
-			if (newTarget != null)
-				msgs = ((InternalEObject)newTarget).eInverseAdd(this, GraphpatternPackage.EDGE_PATTERN__ASSOCIATIONS, EdgePattern.class, msgs);
-			msgs = basicSetTarget(newTarget, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.ASSOCIATION__TARGET, newTarget, newTarget));
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.ASSOCIATION__TARGET, oldTarget, target));
 	}
 
 	/**
@@ -171,10 +148,6 @@ public class AssociationImpl extends MinimalEObjectImpl.Container implements Ass
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetSource((NodePattern)otherEnd, msgs);
-			case GraphpatternPackage.ASSOCIATION__TARGET:
-				if (target != null)
-					msgs = ((InternalEObject)target).eInverseRemove(this, GraphpatternPackage.EDGE_PATTERN__ASSOCIATIONS, EdgePattern.class, msgs);
-				return basicSetTarget((EdgePattern)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -189,8 +162,6 @@ public class AssociationImpl extends MinimalEObjectImpl.Container implements Ass
 		switch (featureID) {
 			case GraphpatternPackage.ASSOCIATION__SOURCE:
 				return basicSetSource(null, msgs);
-			case GraphpatternPackage.ASSOCIATION__TARGET:
-				return basicSetTarget(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -238,7 +209,7 @@ public class AssociationImpl extends MinimalEObjectImpl.Container implements Ass
 				setSource((NodePattern)newValue);
 				return;
 			case GraphpatternPackage.ASSOCIATION__TARGET:
-				setTarget((EdgePattern)newValue);
+				setTarget((GraphElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -256,7 +227,7 @@ public class AssociationImpl extends MinimalEObjectImpl.Container implements Ass
 				setSource((NodePattern)null);
 				return;
 			case GraphpatternPackage.ASSOCIATION__TARGET:
-				setTarget((EdgePattern)null);
+				setTarget((GraphElement)null);
 				return;
 		}
 		super.eUnset(featureID);
