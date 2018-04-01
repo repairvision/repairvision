@@ -18,6 +18,7 @@ import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePatternAddObject;
@@ -26,7 +27,6 @@ import org.sidiff.editrule.recognition.pattern.graph.ChangePatternAttributeValue
 import org.sidiff.editrule.recognition.pattern.graph.ChangePatternRemoveObject;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePatternRemoveReference;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.matcher.IMatching;
 import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
 import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
 import org.sidiff.repair.complement.matching.RecognitionMatch;
