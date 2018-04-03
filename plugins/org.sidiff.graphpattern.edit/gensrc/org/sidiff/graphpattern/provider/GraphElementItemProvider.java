@@ -45,6 +45,7 @@ public class GraphElementItemProvider extends PatternElementItemProvider {
 
 			addSubgraphPropertyDescriptor(object);
 			addStereotypesPropertyDescriptor(object);
+			addGraphPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -88,6 +89,28 @@ public class GraphElementItemProvider extends PatternElementItemProvider {
 				 true,
 				 false,
 				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Graph feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addGraphPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_GraphElement_graph_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_GraphElement_graph_feature", "_UI_GraphElement_type"),
+				 GraphpatternPackage.Literals.GRAPH_ELEMENT__GRAPH,
+				 false,
+				 false,
+				 false,
 				 null,
 				 null,
 				 null));
