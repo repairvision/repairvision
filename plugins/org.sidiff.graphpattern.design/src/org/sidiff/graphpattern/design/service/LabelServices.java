@@ -1,10 +1,13 @@
 package org.sidiff.graphpattern.design.service;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Profile;
 import org.sidiff.graphpattern.Stereotype;
@@ -18,18 +21,7 @@ public class LabelServices {
 				? nodePattern.getName() : "";
 		
 		if (!nodePattern.getStereotypes().isEmpty()) {
-			label.append("<<");
-			
-			for (Stereotype stereotype : nodePattern.getStereotypes()) {
-				if (stereotype == nodePattern.getStereotypes().get(0)) {
-					label.append(stereotype.getName());
-				} else {
-					label.append(", ");
-					label.append(stereotype.getName());
-				}
-			}
-			
-			label.append(">>");
+			label.append(unparseStereotypesLabel(nodePattern.getStereotypes()));
 			label.append("\n");
 		}
 		
@@ -57,26 +49,38 @@ public class LabelServices {
 	}
 	
 	public String getEdgeEndLabel(EdgePattern edgePattern) {
+		StringBuffer label = new StringBuffer();
+		
+		// meta-type:
 		EReference type = edgePattern.getType();
 		
 		if (type == null) {
-			return "?";
+			label.append("?");
 		} else {
-			return type.getName();
+			label.append(type.getName());
 		}
+		
+		return label.toString();
 	}
 	
 	public String getEdgeBeginLabel(EdgePattern edgePattern) {
 		EdgePattern opposite = edgePattern.getOpposite();
 		
 		if (opposite != null) {
-			EReference type = edgePattern.getOpposite().getType();
+			getEdgeEndLabel(opposite);	
+		}
+		return "";
+	}
+	
+	public String getEdgeCenterLabel(EdgePattern edgePattern) {
+		StringBuffer label = new StringBuffer();
+		
+		// stereotype:
+		if (!edgePattern.getStereotypes().isEmpty()) {
+			label.append(unparseStereotypesLabel(edgePattern.getStereotypes()));
+			label.append(" ");
 			
-			if (type == null) {
-				return "?";
-			} else {
-				return type.getName();
-			}	
+			return label.toString();
 		}
 		return "";
 	}
@@ -100,27 +104,8 @@ public class LabelServices {
 	public void parseNodeLabel(NodePattern node, String label) {
 		
 		// parse stereotypes:
-		if (label.contains("<<") && label.contains(">>")) {
-			String[] stereotypesAndLabel = label.split(">>");
-			label = stereotypesAndLabel[1];
-			
-			String stereotypes = stereotypesAndLabel[0];
-			stereotypes = stereotypes.replace("<<", "");
-			
-			node.getStereotypes().clear();
-			
-			if ((node.getGraph() != null) && (node.getGraph().getPattern() != null) && (node.getGraph().getPattern().getBundle() != null)) {
-				for (String stereotypeString : stereotypes.split(",")) {
-					for (Profile profile : node.getGraph().getPattern().getBundle().getProfiles()) {
-						for (Stereotype stereotype : profile.getStereotypes()) {
-							if (stereotype.getName().equalsIgnoreCase(stereotypeString.trim())) {
-								node.getStereotypes().add(stereotype);
-							}
-						}
-					}
-				}
-			}
-		}
+		node.getStereotypes().clear();
+		label = parseStereotypesLabel(node, label);
 		
 		// parse name:
 		if (label.contains(":")) {
@@ -137,17 +122,77 @@ public class LabelServices {
 		if (!label.isEmpty()) {
 			String typeName = label.trim();
 			
-			node.eResource().getResourceSet().getResources().forEach(r -> {
-				if (r != node.eResource()) {
-					r.getAllContents().forEachRemaining(e -> {
-						if (e instanceof EClass) {
-							if (((EClass) e).getName().equals(typeName)) {
-								node.setType((EClass) e);
+			if (!node.getType().getName().equals(typeName)) {
+				node.eResource().getResourceSet().getResources().forEach(r -> {
+					if (r != node.eResource()) {
+						r.getAllContents().forEachRemaining(e -> {
+							if (e instanceof EClass) {
+								if (((EClass) e).getName().equals(typeName)) {
+									node.setType((EClass) e);
+								}
+							}
+						});
+					}
+				});
+			}
+		}
+	}
+	
+	public void parseEdgeLabel(EdgePattern edge, String label) {
+		
+		// parse stereotypes:
+		edge.getStereotypes().clear();
+		label = parseStereotypesLabel(edge, label);
+		
+		// synchronize with opposite:
+		if (edge.getOpposite() != null) {
+			edge.getOpposite().getStereotypes().clear();
+			edge.getOpposite().getStereotypes().addAll(edge.getStereotypes());
+		}
+	}
+	
+	protected static String parseStereotypesLabel(GraphElement element, String label) {
+		
+		// parse stereotypes:
+		if (label.contains("<<") && label.contains(">>")) {
+			String[] stereotypesAndLabel = label.split(">>");
+			label = stereotypesAndLabel[1];
+
+			String stereotypes = stereotypesAndLabel[0];
+			stereotypes = stereotypes.replace("<<", "");
+
+			element.getStereotypes().clear();
+
+			if ((element.getGraph() != null) && (element.getGraph().getPattern() != null) && (element.getGraph().getPattern().getBundle() != null)) {
+				for (String stereotypeString : stereotypes.split(",")) {
+					for (Profile profile : element.getGraph().getPattern().getBundle().getProfiles()) {
+						for (Stereotype stereotype : profile.getStereotypes()) {
+							if (stereotype.getName().equalsIgnoreCase(stereotypeString.trim())) {
+								element.getStereotypes().add(stereotype);
 							}
 						}
-					});
+					}
 				}
-			});
+			}
 		}
+		
+		return label;
+	}
+	
+	protected static String unparseStereotypesLabel(List<Stereotype> stereotypes) {
+		StringBuffer label = new StringBuffer();
+		label.append("<<");
+		
+		for (Stereotype stereotype : stereotypes) {
+			if (stereotype == stereotypes.get(0)) {
+				label.append(stereotype.getName());
+			} else {
+				label.append(", ");
+				label.append(stereotype.getName());
+			}
+		}
+		
+		label.append(">>");
+		return label.toString();
 	}
 }
