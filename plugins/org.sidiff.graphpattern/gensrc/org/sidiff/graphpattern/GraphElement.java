@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.sidiff.graphpattern.GraphElement#getSubgraph <em>Subgraph</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.GraphElement#getStereotypes <em>Stereotypes</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.GraphElement#getGraph <em>Graph</em>}</li>
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphElement()
@@ -65,5 +66,20 @@ public interface GraphElement extends PatternElement {
 	 * @generated
 	 */
 	EList<Stereotype> getStereotypes();
+
+	/**
+	 * Returns the value of the '<em><b>Graph</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Graph</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Graph</em>' reference.
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphElement_Graph()
+	 * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
+	 * @generated
+	 */
+	GraphPattern getGraph();
 
 } // GraphElement

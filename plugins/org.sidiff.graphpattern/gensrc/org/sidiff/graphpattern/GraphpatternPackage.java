@@ -283,13 +283,22 @@ public interface GraphpatternPackage extends EPackage {
 	int GRAPH_ELEMENT__STEREOTYPES = PATTERN_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Graph</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__GRAPH = PATTERN_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Graph Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_ELEMENT_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 2;
+	int GRAPH_ELEMENT_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Graph Element</em>' class.
@@ -337,6 +346,15 @@ public interface GraphpatternPackage extends EPackage {
 	int NODE_PATTERN__STEREOTYPES = GRAPH_ELEMENT__STEREOTYPES;
 
 	/**
+	 * The feature id for the '<em><b>Graph</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_PATTERN__GRAPH = GRAPH_ELEMENT__GRAPH;
+
+	/**
 	 * The feature id for the '<em><b>Outgoings</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -373,22 +391,13 @@ public interface GraphpatternPackage extends EPackage {
 	int NODE_PATTERN__MATCHING = GRAPH_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Graph</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_PATTERN__GRAPH = GRAPH_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
 	 * The feature id for the '<em><b>Incomings</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__INCOMINGS = GRAPH_ELEMENT_FEATURE_COUNT + 5;
+	int NODE_PATTERN__INCOMINGS = GRAPH_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Associations</b></em>' containment reference list.
@@ -397,7 +406,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__ASSOCIATIONS = GRAPH_ELEMENT_FEATURE_COUNT + 6;
+	int NODE_PATTERN__ASSOCIATIONS = GRAPH_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Node Pattern</em>' class.
@@ -406,7 +415,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 7;
+	int NODE_PATTERN_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Get Attribute</em>' operation.
@@ -526,6 +535,15 @@ public interface GraphpatternPackage extends EPackage {
 	int EDGE_PATTERN__STEREOTYPES = GRAPH_ELEMENT__STEREOTYPES;
 
 	/**
+	 * The feature id for the '<em><b>Graph</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_PATTERN__GRAPH = GRAPH_ELEMENT__GRAPH;
+
+	/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -614,6 +632,15 @@ public interface GraphpatternPackage extends EPackage {
 	 * @ordered
 	 */
 	int ATTRIBUTE_PATTERN__STEREOTYPES = GRAPH_ELEMENT__STEREOTYPES;
+
+	/**
+	 * The feature id for the '<em><b>Graph</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_PATTERN__GRAPH = GRAPH_ELEMENT__GRAPH;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1666,17 +1693,6 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getNodePattern_Matching();
 
 	/**
-	 * Returns the meta object for the container reference '{@link org.sidiff.graphpattern.NodePattern#getGraph <em>Graph</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Graph</em>'.
-	 * @see org.sidiff.graphpattern.NodePattern#getGraph()
-	 * @see #getNodePattern()
-	 * @generated
-	 */
-	EReference getNodePattern_Graph();
-
-	/**
 	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.NodePattern#getIncomings <em>Incomings</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2383,6 +2399,17 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getGraphElement_Stereotypes();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.graphpattern.GraphElement#getGraph <em>Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Graph</em>'.
+	 * @see org.sidiff.graphpattern.GraphElement#getGraph()
+	 * @see #getGraphElement()
+	 * @generated
+	 */
+	EReference getGraphElement_Graph();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.Profile <em>Profile</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2660,14 +2687,6 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EReference NODE_PATTERN__MATCHING = eINSTANCE.getNodePattern_Matching();
-
-		/**
-		 * The meta object literal for the '<em><b>Graph</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference NODE_PATTERN__GRAPH = eINSTANCE.getNodePattern_Graph();
 
 		/**
 		 * The meta object literal for the '<em><b>Incomings</b></em>' reference list feature.
@@ -3236,6 +3255,14 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EReference GRAPH_ELEMENT__STEREOTYPES = eINSTANCE.getGraphElement_Stereotypes();
+
+		/**
+		 * The meta object literal for the '<em><b>Graph</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GRAPH_ELEMENT__GRAPH = eINSTANCE.getGraphElement_Graph();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.ProfileImpl <em>Profile</em>}' class.

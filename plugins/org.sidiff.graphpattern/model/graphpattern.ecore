@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    name="graphpattern" nsURI="http://www.sidiff.org/graphpattern/1.0"
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="graphpattern" nsURI="http://www.sidiff.org/graphpattern/1.0"
     nsPrefix="graphpattern">
   <eClassifiers xsi:type="ecore:EClass" name="GraphPattern" eSuperTypes="#//PatternElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
-        eType="#//NodePattern" containment="true" eOpposite="#//NodePattern/graph"/>
+        eType="#//NodePattern" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" lowerBound="1"
         eType="#//Pattern" eOpposite="#//Pattern/graphs"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencyGraph" eType="#//DependencyGraph"
@@ -40,8 +40,6 @@
         eType="#//AttributePattern" containment="true" eOpposite="#//AttributePattern/node"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="matching" eType="#//Matching"
         containment="true" eOpposite="#//Matching/node"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="graph" lowerBound="1" eType="#//GraphPattern"
-        eOpposite="#//GraphPattern/nodes"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomings" upperBound="-1"
         eType="#//EdgePattern" eOpposite="#//EdgePattern/target"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="associations" upperBound="-1"
@@ -173,6 +171,8 @@
         eOpposite="#//SubGraph/elements"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="stereotypes" upperBound="-1"
         eType="#//Stereotype"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graph" lowerBound="1" eType="#//GraphPattern"
+        changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Profile">
     <eStructuralFeatures xsi:type="ecore:EReference" name="stereotypes" upperBound="-1"

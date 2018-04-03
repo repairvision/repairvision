@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getType <em>Type</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getAttributes <em>Attributes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getMatching <em>Matching</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.NodePattern#getGraph <em>Graph</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getIncomings <em>Incomings</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.NodePattern#getAssociations <em>Associations</em>}</li>
  * </ul>
@@ -119,34 +118,6 @@ public interface NodePattern extends GraphElement {
 	 * @generated
 	 */
 	void setMatching(Matching value);
-
-	/**
-	 * Returns the value of the '<em><b>Graph</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.GraphPattern#getNodes <em>Nodes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Graph</em>' container reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Graph</em>' container reference.
-	 * @see #setGraph(GraphPattern)
-	 * @see org.sidiff.graphpattern.GraphpatternPackage#getNodePattern_Graph()
-	 * @see org.sidiff.graphpattern.GraphPattern#getNodes
-	 * @model opposite="nodes" required="true" transient="false"
-	 * @generated
-	 */
-	GraphPattern getGraph();
-
-	/**
-	 * Sets the value of the '{@link org.sidiff.graphpattern.NodePattern#getGraph <em>Graph</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Graph</em>' container reference.
-	 * @see #getGraph()
-	 * @generated
-	 */
-	void setGraph(GraphPattern value);
 
 	/**
 	 * Returns the value of the '<em><b>Incomings</b></em>' reference list.

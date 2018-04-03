@@ -11,7 +11,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.graphpattern.DependencyGraph;
@@ -94,7 +93,7 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	 */
 	public EList<NodePattern> getNodes() {
 		if (nodes == null) {
-			nodes = new EObjectContainmentWithInverseEList<NodePattern>(NodePattern.class, this, GraphpatternPackage.GRAPH_PATTERN__NODES, GraphpatternPackage.NODE_PATTERN__GRAPH);
+			nodes = new EObjectContainmentEList<NodePattern>(NodePattern.class, this, GraphpatternPackage.GRAPH_PATTERN__NODES);
 		}
 		return nodes;
 	}
@@ -200,12 +199,9 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_PATTERN__NODES:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getNodes()).basicAdd(otherEnd, msgs);
 			case GraphpatternPackage.GRAPH_PATTERN__PATTERN:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);

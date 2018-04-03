@@ -5,7 +5,6 @@ package org.sidiff.graphpattern;
 import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

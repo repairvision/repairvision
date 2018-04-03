@@ -27,7 +27,6 @@ public interface GraphPattern extends PatternElement {
 	/**
 	 * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.graphpattern.NodePattern}.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.NodePattern#getGraph <em>Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear,
@@ -36,8 +35,7 @@ public interface GraphPattern extends PatternElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Nodes</em>' containment reference list.
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphPattern_Nodes()
-	 * @see org.sidiff.graphpattern.NodePattern#getGraph
-	 * @model opposite="graph" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<NodePattern> getNodes();

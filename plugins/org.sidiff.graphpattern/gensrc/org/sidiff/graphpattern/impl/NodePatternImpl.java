@@ -18,12 +18,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.Matching;
 import org.sidiff.graphpattern.NodePattern;
@@ -40,7 +38,6 @@ import org.sidiff.graphpattern.NodePattern;
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getAttributes <em>Attributes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getMatching <em>Matching</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getGraph <em>Graph</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getIncomings <em>Incomings</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.NodePatternImpl#getAssociations <em>Associations</em>}</li>
  * </ul>
@@ -385,47 +382,6 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphPattern getGraph() {
-		if (eContainerFeatureID() != GraphpatternPackage.NODE_PATTERN__GRAPH) return null;
-		return (GraphPattern)eInternalContainer();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetGraph(GraphPattern newGraph, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newGraph, GraphpatternPackage.NODE_PATTERN__GRAPH, msgs);
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setGraph(GraphPattern newGraph) {
-		if (newGraph != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.NODE_PATTERN__GRAPH && newGraph != null)) {
-			if (EcoreUtil.isAncestor(this, newGraph))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newGraph != null)
-				msgs = ((InternalEObject)newGraph).eInverseAdd(this, GraphpatternPackage.GRAPH_PATTERN__NODES, GraphPattern.class, msgs);
-			msgs = basicSetGraph(newGraph, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.NODE_PATTERN__GRAPH, newGraph, newGraph));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<EdgePattern> getIncomings() {
 		if (incomings == null) {
 			incomings = new EObjectWithInverseResolvingEList<EdgePattern>(EdgePattern.class, this, GraphpatternPackage.NODE_PATTERN__INCOMINGS, GraphpatternPackage.EDGE_PATTERN__TARGET);
@@ -478,10 +434,6 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 				if (matching != null)
 					msgs = ((InternalEObject)matching).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GraphpatternPackage.NODE_PATTERN__MATCHING, null, msgs);
 				return basicSetMatching((Matching)otherEnd, msgs);
-			case GraphpatternPackage.NODE_PATTERN__GRAPH:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetGraph((GraphPattern)otherEnd, msgs);
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomings()).basicAdd(otherEnd, msgs);
 			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:
@@ -504,28 +456,12 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 				return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
 			case GraphpatternPackage.NODE_PATTERN__MATCHING:
 				return basicSetMatching(null, msgs);
-			case GraphpatternPackage.NODE_PATTERN__GRAPH:
-				return basicSetGraph(null, msgs);
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
 				return ((InternalEList<?>)getIncomings()).basicRemove(otherEnd, msgs);
 			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:
 				return ((InternalEList<?>)getAssociations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
-			case GraphpatternPackage.NODE_PATTERN__GRAPH:
-				return eInternalContainer().eInverseRemove(this, GraphpatternPackage.GRAPH_PATTERN__NODES, GraphPattern.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 
 	/**
@@ -545,8 +481,6 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 				return getAttributes();
 			case GraphpatternPackage.NODE_PATTERN__MATCHING:
 				return getMatching();
-			case GraphpatternPackage.NODE_PATTERN__GRAPH:
-				return getGraph();
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
 				return getIncomings();
 			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:
@@ -577,9 +511,6 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 				return;
 			case GraphpatternPackage.NODE_PATTERN__MATCHING:
 				setMatching((Matching)newValue);
-				return;
-			case GraphpatternPackage.NODE_PATTERN__GRAPH:
-				setGraph((GraphPattern)newValue);
 				return;
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
 				getIncomings().clear();
@@ -613,9 +544,6 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 			case GraphpatternPackage.NODE_PATTERN__MATCHING:
 				setMatching((Matching)null);
 				return;
-			case GraphpatternPackage.NODE_PATTERN__GRAPH:
-				setGraph((GraphPattern)null);
-				return;
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
 				getIncomings().clear();
 				return;
@@ -642,8 +570,6 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 				return attributes != null && !attributes.isEmpty();
 			case GraphpatternPackage.NODE_PATTERN__MATCHING:
 				return matching != null;
-			case GraphpatternPackage.NODE_PATTERN__GRAPH:
-				return getGraph() != null;
 			case GraphpatternPackage.NODE_PATTERN__INCOMINGS:
 				return incomings != null && !incomings.isEmpty();
 			case GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS:

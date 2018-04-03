@@ -6,17 +6,14 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
 import org.sidiff.graphpattern.GraphElement;
+import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.SubGraph;
@@ -31,6 +28,7 @@ import org.sidiff.graphpattern.SubGraph;
  * <ul>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphElementImpl#getSubgraph <em>Subgraph</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphElementImpl#getStereotypes <em>Stereotypes</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.GraphElementImpl#getGraph <em>Graph</em>}</li>
  * </ul>
  *
  * @generated
@@ -152,6 +150,36 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public GraphPattern getGraph() {
+		GraphPattern graph = basicGetGraph();
+		return graph != null && graph.eIsProxy() ? (GraphPattern)eResolveProxy((InternalEObject)graph) : graph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public GraphPattern basicGetGraph() {
+		GraphPattern graph = null;
+		EObject container = this;
+		
+		while ((graph == null) && (container.eContainer() != null)) {
+			if (container instanceof GraphPattern) {
+				graph = (GraphPattern) container;
+			} else {
+				container = container.eContainer();
+			}
+		}
+		
+		return graph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -190,6 +218,9 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 				return basicGetSubgraph();
 			case GraphpatternPackage.GRAPH_ELEMENT__STEREOTYPES:
 				return getStereotypes();
+			case GraphpatternPackage.GRAPH_ELEMENT__GRAPH:
+				if (resolve) return getGraph();
+				return basicGetGraph();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -244,6 +275,8 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 				return subgraph != null;
 			case GraphpatternPackage.GRAPH_ELEMENT__STEREOTYPES:
 				return stereotypes != null && !stereotypes.isEmpty();
+			case GraphpatternPackage.GRAPH_ELEMENT__GRAPH:
+				return basicGetGraph() != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -5,7 +5,29 @@ package org.sidiff.graphpattern.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.sidiff.graphpattern.*;
+import org.sidiff.graphpattern.Assignment;
+import org.sidiff.graphpattern.Association;
+import org.sidiff.graphpattern.AttributePattern;
+import org.sidiff.graphpattern.Bundle;
+import org.sidiff.graphpattern.DependencyEdge;
+import org.sidiff.graphpattern.DependencyGraph;
+import org.sidiff.graphpattern.DependencyNode;
+import org.sidiff.graphpattern.EObjectList;
+import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphElement;
+import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.Matching;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.ObjectBinding;
+import org.sidiff.graphpattern.Parameter;
+import org.sidiff.graphpattern.ParameterBinding;
+import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.PatternElement;
+import org.sidiff.graphpattern.Profile;
+import org.sidiff.graphpattern.Stereotype;
+import org.sidiff.graphpattern.SubGraph;
+import org.sidiff.graphpattern.ValueBinding;
 
 /**
  * <!-- begin-user-doc -->
