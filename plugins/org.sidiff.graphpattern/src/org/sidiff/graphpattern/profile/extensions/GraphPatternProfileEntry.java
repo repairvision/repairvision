@@ -22,6 +22,11 @@ public class GraphPatternProfileEntry {
 	private IConfigurationElement extension;
 	
 	/**
+	 * The profile implementation.
+	 */
+	private IGraphPatternProfile profile;
+	
+	/**
 	 * Initializes a new {@link IRepairFacade} extension wrapper.
 	 * 
 	 * @param extension
@@ -42,12 +47,14 @@ public class GraphPatternProfileEntry {
 	 * @return An instance of the repair facade.
 	 */
 	public IGraphPatternProfile getProfile() {
-		try {
-			return (IGraphPatternProfile) extension.createExecutableExtension("definition");
-		} catch (CoreException e) {
-			e.printStackTrace();
+		if (profile == null) {
+			try {
+				profile = (IGraphPatternProfile) extension.createExecutableExtension("definition");
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
 		}
 		
-		return null;
+		return profile;
 	}
 }
