@@ -1,5 +1,6 @@
 package org.sidiff.graphpattern.profile;
 
+import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.NodePattern;
 
@@ -48,4 +49,11 @@ public interface IGraphPatternVisualization {
 	 * @return The label color of the edge.
 	 */
 	int[] getEdgeLabelColor(EdgePattern edge);
+	
+	/**
+	 * @param attribute
+	 *            A attribute of a graph pattern (with stereotypes).
+	 * @return The label color of the attribute.
+	 */
+	int[] getAttributeLabelColor(AttributePattern attribute);
 }
