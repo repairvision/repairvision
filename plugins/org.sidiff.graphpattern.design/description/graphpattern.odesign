@@ -26,7 +26,7 @@
           </style>
         </edgeMappings>
         <containerMappings name="graphpattern.nodepattern" label="Node Pattern" labelDirectEdit="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.label.node']" semanticCandidatesExpression="feature:nodes" synchronizationLock="true" domainClass="graphpattern.NodePattern" dropDescriptions="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.dnd.attribute']" childrenPresentation="List">
-          <subNodeMappings name="graphpattern.attributepattern" label="Attribute Pattern" semanticCandidatesExpression="feature:eAllContents" domainClass="graphpattern.AttributePattern">
+          <subNodeMappings name="graphpattern.attributepattern" label="Attribute Pattern" labelDirectEdit="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.label.attribute']" semanticCandidatesExpression="feature:eAllContents" domainClass="graphpattern.AttributePattern">
             <style xsi:type="style:BundledImageDescription" borderColor="//@userColorsPalettes[name='Graph']/@entries[name='AttributeLabelColor']" labelExpression="service:getLabel()" labelColor="//@userColorsPalettes[name='Graph']/@entries[name='AttributeLabelColor']" labelAlignment="LEFT" sizeComputationExpression="1" color="//@userColorsPalettes[name='Graph']/@entries[name='AttributeLabelColor']"/>
           </subNodeMappings>
           <style xsi:type="style:FlatContainerStyleDescription" arcWidth="8" arcHeight="8" borderSizeComputationExpression="1" borderColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeFrameColor']" labelExpression="service:getLabel()" labelColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeLabelColor']" roundedCorner="true" widthComputationExpression="12" heightComputationExpression="5" backgroundStyle="Liquid" backgroundColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeBackgroundFromColor']" foregroundColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeBackgroundToColor']"/>
@@ -149,6 +149,12 @@
             <mask mask="{0}"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="service:parseEdgeLabel(arg0)"/>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:DirectEditLabel" name="graphpattern.section.actions.label.attribute" label="Attribute - Edit Label">
+            <mask mask="{0}"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="service:parseAttributeLabel(arg0)"/>
             </initialOperation>
           </ownedTools>
         </toolSections>

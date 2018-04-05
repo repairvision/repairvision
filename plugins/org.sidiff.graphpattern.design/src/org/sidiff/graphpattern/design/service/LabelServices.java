@@ -131,7 +131,7 @@ public class LabelServices {
 		if (!label.isEmpty()) {
 			String typeName = label.trim();
 			
-			if (!node.getType().getName().equals(typeName)) {
+			if ((node.getType() == null) || !node.getType().getName().equals(typeName)) {
 				node.eResource().getResourceSet().getResources().forEach(r -> {
 					if (r != node.eResource()) {
 						r.getAllContents().forEachRemaining(e -> {
@@ -157,6 +157,42 @@ public class LabelServices {
 		if (edge.getOpposite() != null) {
 			edge.getOpposite().getStereotypes().clear();
 			edge.getOpposite().getStereotypes().addAll(edge.getStereotypes());
+		}
+	}
+	
+	public void parseAttributeLabel(AttributePattern attribute, String label) {
+		
+		// parse stereotypes:
+		attribute.getStereotypes().clear();
+		label = parseStereotypesLabel(attribute, label);
+		
+		// parse name:
+		if (label.contains("=")) {
+			String[] typeAndLabel = label.split("=");
+			label = typeAndLabel[1];
+			
+			String typeName = typeAndLabel[0].trim();
+			
+			if ((attribute.getType() == null) || !attribute.getType().getName().equals(typeName)) {
+				if (attribute.getNode().getType() != null) {
+					for (EAttribute attributeTypes : attribute.getNode().getType().getEAllAttributes()) {
+						if (attributeTypes.getName().equals(typeName)) {
+							attribute.setType(attributeTypes);
+						}
+					}
+				}
+			}
+		}
+		
+		// parse type:
+		String value = label.trim();
+			
+		if (!value.isEmpty()) {
+			if (value.equals("null")) {
+				attribute.setValue(null);
+			} else {
+				attribute.setValue(value);
+			}
 		}
 	}
 	
