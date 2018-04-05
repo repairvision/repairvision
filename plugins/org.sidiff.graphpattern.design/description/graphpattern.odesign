@@ -27,11 +27,7 @@
         </edgeMappings>
         <containerMappings name="graphpattern.nodepattern" label="Node Pattern" labelDirectEdit="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.label.node']" semanticCandidatesExpression="feature:nodes" synchronizationLock="true" domainClass="graphpattern.NodePattern" dropDescriptions="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.dnd.attribute']" childrenPresentation="List">
           <subNodeMappings name="graphpattern.attributepattern" label="Attribute Pattern" semanticCandidatesExpression="feature:eAllContents" domainClass="graphpattern.AttributePattern">
-            <style xsi:type="style:BundledImageDescription" labelExpression="service:getLabel()" labelAlignment="LEFT" sizeComputationExpression="1">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            </style>
+            <style xsi:type="style:BundledImageDescription" borderColor="//@userColorsPalettes[name='Graph']/@entries[name='AttributeLabelColor']" labelExpression="service:getLabel()" labelColor="//@userColorsPalettes[name='Graph']/@entries[name='AttributeLabelColor']" labelAlignment="LEFT" sizeComputationExpression="1" color="//@userColorsPalettes[name='Graph']/@entries[name='AttributeLabelColor']"/>
           </subNodeMappings>
           <style xsi:type="style:FlatContainerStyleDescription" arcWidth="8" arcHeight="8" borderSizeComputationExpression="1" borderColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeFrameColor']" labelExpression="service:getLabel()" labelColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeLabelColor']" roundedCorner="true" widthComputationExpression="12" heightComputationExpression="5" backgroundStyle="Liquid" backgroundColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeBackgroundFromColor']" foregroundColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeBackgroundToColor']"/>
         </containerMappings>
@@ -171,5 +167,6 @@
     <entries xsi:type="description:ComputedColor" name="NodeLabelColor" red="service:getNodeLabelColorR()" green="service:getNodeLabelColorG()" blue="service:getNodeLabelColorB()"/>
     <entries xsi:type="description:ComputedColor" name="EdgeLineColor" red="service:getEdgeLineColorR()" green="service:getEdgeLineColorG()" blue="service:getEdgeLineColorB()"/>
     <entries xsi:type="description:ComputedColor" name="EdgeLabelColor" red="service:getEdgeLabelColorR()" green="service:getEdgeLabelColorG()" blue="service:getEdgeLabelColorB()"/>
+    <entries xsi:type="description:ComputedColor" name="AttributeLabelColor" red="service:getAttributeLabelColorR()" green="service:getAttributeLabelColorG()" blue="service:getAttributeLabelColorB()"/>
   </userColorsPalettes>
 </description:Group>

@@ -15,8 +15,9 @@ import org.sidiff.graphpattern.Stereotype;
 public class LabelServices {
 
 	public String getLabel(NodePattern nodePattern) {
-		EClass type = nodePattern.getType();
 		StringBuffer label = new StringBuffer();
+		
+		EClass type = nodePattern.getType();
 		String name = (nodePattern.getName() != null) 
 				? nodePattern.getName() : "";
 		
@@ -39,13 +40,21 @@ public class LabelServices {
 	}
 	
 	public String getLabel(AttributePattern attributePattern) {
+		StringBuffer label = new StringBuffer();
 		EAttribute type = attributePattern.getType();
 		
-		if (type == null) {
-			return "? = " + attributePattern.getValue();
-		} else {
-			return type.getName() + " = " + attributePattern.getValue();
+		if (!attributePattern.getStereotypes().isEmpty()) {
+			label.append(unparseStereotypesLabel(attributePattern.getStereotypes()));
+			label.append(" ");
 		}
+		
+		if (type == null) {
+			label.append("? = " + attributePattern.getValue());
+		} else {
+			label.append(type.getName() + " = " + attributePattern.getValue());
+		}
+		
+		return label.toString();
 	}
 	
 	public String getEdgeEndLabel(EdgePattern edgePattern) {

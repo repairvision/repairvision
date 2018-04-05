@@ -1,6 +1,7 @@
 package org.sidiff.graphpattern.design.service;
 
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.NodePattern;
@@ -53,6 +54,11 @@ public class ColorServices {
 	 * Default edge label color: black
 	 */
 	protected int[] DEFAULT_EDGE_LABEL = {0, 0, 0};
+	
+	/**
+	 * Default attribute label color: black
+	 */
+	protected int[] DEFAULT_ATTRIBUTE_LABEL = {0, 0, 0};
 	
 	public int getNodeBackgroundToColorR(EObject element) {
 		return getNodeBackgroundColor(element, Gradient.TO)[0];
@@ -227,6 +233,35 @@ public class ColorServices {
 		}
 		
 		return DEFAULT_EDGE_LABEL;
+	}
+	
+	public int getAttributeLabelColorR(EObject element) {
+		return getAttributeLabelColor(element)[0];
+	}
+	
+	public int getAttributeLabelColorG(EObject element) {
+		return getAttributeLabelColor(element)[1];
+	}
+	
+	public int getAttributeLabelColorB(EObject element) {
+		return getAttributeLabelColor(element)[2];
+	}
+	
+	protected int[] getAttributeLabelColor(EObject element) {
+		
+		if (element instanceof AttributePattern) {
+			AttributePattern attribute = (AttributePattern) element;
+
+			if (!attribute.getStereotypes().isEmpty()) {
+				IGraphPatternVisualization visualization = getProfileVisualization(attribute);
+				
+				if (visualization != null) {
+					return visualization.getAttributeLabelColor((AttributePattern) element);
+				}
+			}
+		}
+		
+		return DEFAULT_ATTRIBUTE_LABEL;
 	}
 	
 	protected static IGraphPatternVisualization getProfileVisualization(GraphElement element) {
