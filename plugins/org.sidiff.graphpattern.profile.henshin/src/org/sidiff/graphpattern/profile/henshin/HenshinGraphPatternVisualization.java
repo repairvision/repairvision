@@ -1,5 +1,6 @@
 package org.sidiff.graphpattern.profile.henshin;
 
+import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Stereotype;
@@ -145,6 +146,33 @@ public class HenshinGraphPatternVisualization implements IGraphPatternVisualizat
 		
 		if (!edge.getStereotypes().isEmpty()) {
 			Stereotype stereotype = edge.getStereotypes().get(0);
+			
+			switch (STEREOTYPE.valueOf(stereotype.getName())) {
+			case create:
+				return GREEN_FOREGROUND;
+			
+			case delete:
+				return RED_FOREGROUND;
+				
+			case preserve:
+				return GRAY_FOREGROUND;
+				
+			case require:
+				return ORANGE_FOREGROUND;
+				
+			case forbid:
+				return BLUE_FOREGROUND;
+			}
+		}
+		
+		return new int[] {0, 0, 0};
+	}
+
+	@Override
+	public int[] getAttributeLabelColor(AttributePattern attribute) {
+		
+		if (!attribute.getStereotypes().isEmpty()) {
+			Stereotype stereotype = attribute.getStereotypes().get(0);
 			
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case create:
