@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               id="org.sidiff.graphpattern.tools.menu"
+               label="Graph Pattern">
+            <command
+                  commandId="org.sidiff.graphpattern.tools.commands.modeltopattern"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.sidiff.graphpattern.tools.ConvertModelToGraphPattern"
+            commandId="org.sidiff.graphpattern.tools.commands.modeltopattern">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.sidiff.graphpattern.tools.commands.modeltopattern"
+            name="Convert Model To Graph Pattern">
+      </command>
+   </extension>
+
+</plugin>
