@@ -13,6 +13,10 @@
                   commandId="org.sidiff.graphpattern.tools.commands.modeltopattern"
                   style="push">
             </command>
+            <command
+                  commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -22,12 +26,20 @@
             class="org.sidiff.graphpattern.tools.ConvertModelToGraphPattern"
             commandId="org.sidiff.graphpattern.tools.commands.modeltopattern">
       </handler>
+      <handler
+            class="org.sidiff.graphpattern.tools.SliceGraphPattern"
+            commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
             id="org.sidiff.graphpattern.tools.commands.modeltopattern"
             name="Convert Model To Graph Pattern">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.tools.command.slicegraphpattern"
+            name="Slice Graph Pattern">
       </command>
    </extension>
 
