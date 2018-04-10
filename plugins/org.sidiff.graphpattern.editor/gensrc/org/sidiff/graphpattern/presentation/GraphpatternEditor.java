@@ -153,6 +153,9 @@ import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
+import org.eclipse.emf.transaction.TransactionalCommandStack;
+import org.eclipse.emf.transaction.impl.TransactionalCommandStackImpl;
+import org.eclipse.emf.transaction.impl.TransactionalEditingDomainImpl;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 
@@ -171,7 +174,7 @@ public class GraphpatternEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected AdapterFactoryEditingDomain editingDomain;
+	protected TransactionalEditingDomainImpl editingDomain;
 
 	/**
 	 * This is the one adapter factory used for providing views of the model.
@@ -700,7 +703,7 @@ public class GraphpatternEditor
 
 		// Create the command stack that will notify this editor as commands are executed.
 		//
-		BasicCommandStack commandStack = new BasicCommandStack();
+		TransactionalCommandStack commandStack = new TransactionalCommandStackImpl();
 
 		// Add a listener to set the most recent command's affected objects to be the selection of the viewer with focus.
 		//
@@ -734,7 +737,7 @@ public class GraphpatternEditor
 
 		// Create the editing domain with a special command stack.
 		//
-		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
+		editingDomain = new TransactionalEditingDomainImpl(adapterFactory, commandStack);
 	}
 
 	/**
