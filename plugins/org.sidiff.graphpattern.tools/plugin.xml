@@ -15,9 +15,28 @@
             </command>
             <command
                   commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern"
+                  icon="icons/slice.gif"
                   style="push">
             </command>
          </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.sidiff.graphpattern.presentation.GraphpatternEditorID">
+         <command
+               commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern"
+               icon="icons/slice.gif"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.sidiff.graphpattern.presentation.GraphpatternEditorID">
+         <command
+               commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern"
+               icon="icons/slice.gif"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
    <extension
@@ -42,5 +61,4 @@
             name="Slice Graph Pattern">
       </command>
    </extension>
-
 </plugin>
