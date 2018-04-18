@@ -41,15 +41,15 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 			
 			bundle.getPatterns().add(pattern);
 			pattern.getGraphs().add(graph);
-			
+
 			// convert objects to nodes:
 			modelResource.getAllContents().forEachRemaining(e -> {
 				convertToNode(trace, graph, e);
 			});
 			
-			// convert references (per object) to edges: 
+			// convert references to edges:
 			modelResource.getAllContents().forEachRemaining(e -> {
-				convertToEdges(trace, e);
+				convertToEdges(trace, graph, e);
 			});
 			
 			// save pattern:
@@ -67,7 +67,7 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 		return null;
 	}
 	
-	protected static void convertToNode(Map<EObject, NodePattern> trace, GraphPattern graph, EObject object) {
+	protected static NodePattern convertToNode(Map<EObject, NodePattern> trace, GraphPattern graph, EObject object) {
 
 		// create node pattern:
 		NodePattern node = GraphpatternFactory.eINSTANCE.createNodePattern();
@@ -77,41 +77,84 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 		graph.getNodes().add(node);
 		trace.put(object, node);
 		
-		// create attribute pattern:
+		// create attribute patterns:
+		convertToAttributes(object, node);
+		
+		return node;
+	}
+
+	protected static void convertToAttributes(EObject object, NodePattern node) {
+		
 		for (EAttribute attribute : object.eClass().getEAllAttributes()) {
-			if (attribute.getEType() instanceof EDataType) {
-				if (((EDataType) attribute.getEType()).isSerializable()) {
-					if (!attribute.isDerived() && !attribute.isTransient() && !attribute.isVolatile()) {
-						Object value = object.eGet(attribute);
-						String stringValue = EcoreUtil.convertToString((EDataType) attribute.getEType(), value);
-						
-						AttributePattern attributePattern = GraphpatternFactory.eINSTANCE.createAttributePattern();
-						attributePattern.setType(attribute);
-						attributePattern.setValue("\"" + stringValue + "\"");
-						
-						node.getAttributes().add(attributePattern);
+			if (isConsideredAttribute(attribute)) {
+				Object value = object.eGet(attribute);
+				String stringValue = EcoreUtil.convertToString((EDataType) attribute.getEType(), value);
+
+				AttributePattern attributePattern = GraphpatternFactory.eINSTANCE.createAttributePattern();
+				attributePattern.setType(attribute);
+				attributePattern.setValue("\"" + stringValue + "\"");
+
+				node.getAttributes().add(attributePattern);
+			}
+		}
+	}
+	
+	protected static boolean isConsideredAttribute(EAttribute attribute) {
+		if (attribute.getEType() instanceof EDataType) {
+			if (((EDataType) attribute.getEType()).isSerializable()) {
+				if (!attribute.isDerived() && !attribute.isTransient()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	protected static void convertToEdges(Map<EObject, NodePattern> trace, GraphPattern graph, EObject object) {
+		
+		for (EReference reference : object.eClass().getEAllReferences()) {
+			if (isConsideredReference(reference)) {
+				if (reference.isMany()) {
+					for (Object target : (Collection<?>) object.eGet(reference)) {
+						if (target instanceof EObject) {
+							createEdge(trace, graph, object, (EObject) target, reference);
+						}
+					}
+				} else {
+					Object target = object.eGet(reference);
+					
+					if (target instanceof EObject) {
+						createEdge(trace, graph, object, (EObject) target, reference);
 					}
 				}
 			}
 		}
 	}
 	
-	protected static void convertToEdges(Map<EObject, NodePattern> trace, EObject object) {
-		
-		for (EReference reference : object.eClass().getEAllReferences()) {
-			if (reference.isMany()) {
-				for (Object target : (Collection<?>) object.eGet(reference)) {
-					createEdge(trace.get(object), trace.get(target), reference);
-				}
-			} else {
-				NodePattern target = trace.get(object.eGet(reference));
-				createEdge(trace.get(object), target, reference);
-			}
+	protected static boolean isConsideredReference(EReference reference) {
+		if (!reference.isDerived() && !reference.isTransient()) {
+			return true;
 		}
+		return false;
 	}
 	
-	protected static void createEdge(NodePattern source, NodePattern target, EReference type) {
-		if ((source != null) && (target != null)) {
+	protected static void createEdge(
+			Map<EObject, NodePattern> trace, GraphPattern graph, 
+			EObject sourceObj, EObject targetObj, EReference type) {
+		
+		if ((sourceObj != null) && (targetObj != null)) {
+			
+			// get source and target node:
+			NodePattern source = trace.get(sourceObj);
+			NodePattern target = trace.get(targetObj);
+			
+			if (source == null) {
+				source = convertToNode(trace, graph, sourceObj);
+			}
+			
+			if (target == null) {
+				target = convertToNode(trace, graph, targetObj);
+			}
 			
 			// create edge:
 			EdgePattern edge = GraphpatternFactory.eINSTANCE.createEdgePattern();
