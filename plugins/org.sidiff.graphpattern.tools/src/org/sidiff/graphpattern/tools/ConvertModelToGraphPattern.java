@@ -102,7 +102,7 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 	protected static boolean isConsideredAttribute(EAttribute attribute) {
 		if (attribute.getEType() instanceof EDataType) {
 			if (((EDataType) attribute.getEType()).isSerializable()) {
-				if (!attribute.isDerived() && !attribute.isTransient()) {
+				if (!attribute.isDerived()) {
 					return true;
 				}
 			}
@@ -132,7 +132,7 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 	}
 	
 	protected static boolean isConsideredReference(EReference reference) {
-		if (!reference.isDerived() && !reference.isTransient()) {
+		if (!reference.isDerived()) {
 			return true;
 		}
 		return false;

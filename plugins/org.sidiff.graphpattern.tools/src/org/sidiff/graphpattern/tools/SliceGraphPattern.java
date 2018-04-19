@@ -44,25 +44,20 @@ public class SliceGraphPattern extends AbstractHandler  {
 
 			// initialize the slice:
 			List<NodePattern> fragment = new ArrayList<>();
-			Set<EdgePattern> trace = new HashSet<>();
+			NodePattern initialNode = null;
 
 			if (selected instanceof NodePattern) {
-				fragment.add((NodePattern) selected);
+				initialNode = (NodePattern) selected;
 			} else if (selected instanceof EdgePattern) {
 				EdgePattern edge = (EdgePattern) selected;
-
-				fragment.add(edge.getTarget());
-				trace.add(edge);
-
-				if (edge.getOpposite() != null) {
-					trace.add(edge.getOpposite());
-				}
+				fragment.add(edge.getSource());
+				initialNode = edge.getTarget();
 			}  else if (selected instanceof AttributePattern) {
-				fragment.add(((AttributePattern) selected).getNode());
+				initialNode = ((AttributePattern) selected).getNode();
 			}
 
 			// calculate the slice:
-			slice(fragment, trace);
+			slice(fragment, initialNode);
 
 			// extract the slice:
 			Pattern fullPattern = ((GraphElement) selected).getGraph().getPattern();
@@ -74,17 +69,6 @@ public class SliceGraphPattern extends AbstractHandler  {
 				@Override
 				protected void doExecute() {
 
-					// complete the slice: 
-					if (selected instanceof EdgePattern) {
-						EdgePattern edge = (EdgePattern) selected;
-
-						NodePattern source = EcoreUtil.copy(edge.getSource());
-						source.getOutgoings().clear();
-						source.getOutgoings().add(edge);
-
-						fragment.add(0, source);
-					}
-
 					// create new graph pattern:
 					Pattern pattern = GraphpatternFactory.eINSTANCE.createPattern();
 					int position = bundle.getPatterns().indexOf(fullPattern) + 1;
@@ -94,15 +78,62 @@ public class SliceGraphPattern extends AbstractHandler  {
 					pattern.getGraphs().add(slicedGraph);
 
 					// move the sliced nodes:
-					slicedGraph.getNodes().addAll(fragment);
+					Set<NodePattern> fragmentSet = new HashSet<>(fragment);
+					
+					for (NodePattern node : fragment) {
+						
+						// is node completely contained in the fragment?
+						if (isComplete(fragmentSet, node)) {
+							slicedGraph.getNodes().add(node);
+						} else {
+							
+							// replace node (in fragment) with copy:
+							NodePattern node_copy = EcoreUtil.copy(node);
+							node_copy.getOutgoings().clear();
+ 							
+							// move node to fragment:
+							slicedGraph.getNodes().add(node_copy);
+							
+							fragmentSet.remove(node);
+							fragmentSet.add(node_copy);
+							
+							// move edges to fragment:
+							for (EdgePattern outgoing : new ArrayList<>(node.getOutgoings())) {
+								if (fragmentSet.contains(outgoing.getTarget())) {
+									node_copy.getOutgoings().add(outgoing);
+								}
+							}
+							
+							for (NodePattern fragmentNode : fragmentSet) {
+								for (EdgePattern outgoing : fragmentNode.getOutgoings()) {
+									if (outgoing.getTarget() == node) {
+										outgoing.setTarget(node_copy);
+									}
+								}
+							}
+						}
+					}
 				}
-
 			};
 
 			editingDomain.getCommandStack().execute(command);
 		}
 		
 		return null;
+	}
+	
+	protected static boolean isComplete(Set<NodePattern> fragment, NodePattern node) {
+		for (EdgePattern edge : node.getIncomings()) {
+			if (!fragment.contains(edge.getSource())) {
+				return false;
+			}
+		}
+		for (EdgePattern edge : node.getOutgoings()) {
+			if (!fragment.contains(edge.getTarget())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	protected Object getSelection(ExecutionEvent event) {
@@ -114,7 +145,7 @@ public class SliceGraphPattern extends AbstractHandler  {
 			if (elements.size() > 0) {
 				
 				// selection dialog:
-				if (!elements.isEmpty()) {
+				if (elements.size() > 1) {
 					ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
 							ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 					adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
@@ -133,6 +164,8 @@ public class SliceGraphPattern extends AbstractHandler  {
 							return dialog.getResult()[0];
 						}
 					}
+				} else {
+					return elements.get(0);
 				}
 			}
 		}
@@ -164,28 +197,12 @@ public class SliceGraphPattern extends AbstractHandler  {
 		return elements;
 	}
 	
-	protected static void slice(List<NodePattern> fragment, Set<EdgePattern> trace) {
-		List<NodePattern> next = new ArrayList<>();
-		
-		for (NodePattern node : fragment) {
-			for (EdgePattern outgoing : node.getOutgoings()) {
-				if (!trace.contains(outgoing) && (outgoing.getTarget() != null)) {
-					next.add(outgoing.getTarget());
-					trace.add(outgoing);
-				}
-			}
-			for (EdgePattern incoming : node.getIncomings()) {
-				if (!trace.contains(incoming) && (incoming.getSource() != null)) {
-					next.add(incoming.getSource());
-					trace.add(incoming);
-				}
+	protected static void slice(List<NodePattern> fragment, NodePattern next) {
+		for (EdgePattern outgoing : next.getOutgoings()) {
+			if ((outgoing.getTarget() != null) && !fragment.contains(outgoing.getTarget())) {
+				fragment.add(outgoing.getTarget());
+				slice(fragment, outgoing.getTarget());
 			}
 		}
-		
-		if (!next.isEmpty()) {
-			slice(fragment, trace);
-		}
-		
-		fragment.addAll(next);
 	}
 }
