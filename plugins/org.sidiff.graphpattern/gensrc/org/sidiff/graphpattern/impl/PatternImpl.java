@@ -3,15 +3,13 @@
 package org.sidiff.graphpattern.impl;
 
 import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.graphpattern.Assignment;
 import org.sidiff.graphpattern.Bundle;
@@ -32,6 +30,7 @@ import org.sidiff.graphpattern.Pattern;
  *   <li>{@link org.sidiff.graphpattern.impl.PatternImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.PatternImpl#getAssignments <em>Assignments</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.PatternImpl#getBundle <em>Bundle</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.PatternImpl#getSubpatterns <em>Subpatterns</em>}</li>
  * </ul>
  *
  * @generated
@@ -66,6 +65,16 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 	 * @ordered
 	 */
 	protected EList<Assignment> assignments;
+
+	/**
+	 * The cached value of the '{@link #getSubpatterns() <em>Subpatterns</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSubpatterns()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Pattern> subpatterns;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -128,39 +137,39 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 	 * @generated
 	 */
 	public Bundle getBundle() {
-		if (eContainerFeatureID() != GraphpatternPackage.PATTERN__BUNDLE) return null;
-		return (Bundle)eInternalContainer();
+		Bundle bundle = basicGetBundle();
+		return bundle != null && bundle.eIsProxy() ? (Bundle)eResolveProxy((InternalEObject)bundle) : bundle;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
-	public NotificationChain basicSetBundle(Bundle newBundle, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newBundle, GraphpatternPackage.PATTERN__BUNDLE, msgs);
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setBundle(Bundle newBundle) {
-		if (newBundle != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.PATTERN__BUNDLE && newBundle != null)) {
-			if (EcoreUtil.isAncestor(this, newBundle))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newBundle != null)
-				msgs = ((InternalEObject)newBundle).eInverseAdd(this, GraphpatternPackage.BUNDLE__PATTERNS, Bundle.class, msgs);
-			msgs = basicSetBundle(newBundle, msgs);
-			if (msgs != null) msgs.dispatch();
+	public Bundle basicGetBundle() {
+		EObject container = eContainer();
+		
+		while ((container != null) && !(container instanceof Bundle)) {
+			container = container.eContainer();
 		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.PATTERN__BUNDLE, newBundle, newBundle));
+		
+		if (container instanceof Bundle) {
+			return (Bundle) container;
+		}
+		
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Pattern> getSubpatterns() {
+		if (subpatterns == null) {
+			subpatterns = new EObjectContainmentEList<Pattern>(Pattern.class, this, GraphpatternPackage.PATTERN__SUBPATTERNS);
+		}
+		return subpatterns;
 	}
 
 	/**
@@ -178,10 +187,6 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getParameters()).basicAdd(otherEnd, msgs);
 			case GraphpatternPackage.PATTERN__ASSIGNMENTS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAssignments()).basicAdd(otherEnd, msgs);
-			case GraphpatternPackage.PATTERN__BUNDLE:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetBundle((Bundle)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -200,24 +205,10 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
 			case GraphpatternPackage.PATTERN__ASSIGNMENTS:
 				return ((InternalEList<?>)getAssignments()).basicRemove(otherEnd, msgs);
-			case GraphpatternPackage.PATTERN__BUNDLE:
-				return basicSetBundle(null, msgs);
+			case GraphpatternPackage.PATTERN__SUBPATTERNS:
+				return ((InternalEList<?>)getSubpatterns()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
-			case GraphpatternPackage.PATTERN__BUNDLE:
-				return eInternalContainer().eInverseRemove(this, GraphpatternPackage.BUNDLE__PATTERNS, Bundle.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 
 	/**
@@ -235,7 +226,10 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 			case GraphpatternPackage.PATTERN__ASSIGNMENTS:
 				return getAssignments();
 			case GraphpatternPackage.PATTERN__BUNDLE:
-				return getBundle();
+				if (resolve) return getBundle();
+				return basicGetBundle();
+			case GraphpatternPackage.PATTERN__SUBPATTERNS:
+				return getSubpatterns();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -261,8 +255,9 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 				getAssignments().clear();
 				getAssignments().addAll((Collection<? extends Assignment>)newValue);
 				return;
-			case GraphpatternPackage.PATTERN__BUNDLE:
-				setBundle((Bundle)newValue);
+			case GraphpatternPackage.PATTERN__SUBPATTERNS:
+				getSubpatterns().clear();
+				getSubpatterns().addAll((Collection<? extends Pattern>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -285,8 +280,8 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 			case GraphpatternPackage.PATTERN__ASSIGNMENTS:
 				getAssignments().clear();
 				return;
-			case GraphpatternPackage.PATTERN__BUNDLE:
-				setBundle((Bundle)null);
+			case GraphpatternPackage.PATTERN__SUBPATTERNS:
+				getSubpatterns().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -307,7 +302,9 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 			case GraphpatternPackage.PATTERN__ASSIGNMENTS:
 				return assignments != null && !assignments.isEmpty();
 			case GraphpatternPackage.PATTERN__BUNDLE:
-				return getBundle() != null;
+				return basicGetBundle() != null;
+			case GraphpatternPackage.PATTERN__SUBPATTERNS:
+				return subpatterns != null && !subpatterns.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

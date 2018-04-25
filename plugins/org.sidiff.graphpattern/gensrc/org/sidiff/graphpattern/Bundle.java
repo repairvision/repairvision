@@ -25,7 +25,6 @@ public interface Bundle extends PatternElement {
 	/**
 	 * Returns the value of the '<em><b>Patterns</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.graphpattern.Pattern}.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.Pattern#getBundle <em>Bundle</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Patterns</em>' containment reference list isn't clear,
@@ -34,8 +33,7 @@ public interface Bundle extends PatternElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Patterns</em>' containment reference list.
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getBundle_Patterns()
-	 * @see org.sidiff.graphpattern.Pattern#getBundle
-	 * @model opposite="bundle" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<Pattern> getPatterns();

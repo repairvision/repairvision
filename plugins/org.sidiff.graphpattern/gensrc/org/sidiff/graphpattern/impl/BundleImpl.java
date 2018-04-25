@@ -8,7 +8,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.graphpattern.Bundle;
@@ -77,7 +77,7 @@ public class BundleImpl extends PatternElementImpl implements Bundle {
 	 */
 	public EList<Pattern> getPatterns() {
 		if (patterns == null) {
-			patterns = new EObjectContainmentWithInverseEList<Pattern>(Pattern.class, this, GraphpatternPackage.BUNDLE__PATTERNS, GraphpatternPackage.PATTERN__BUNDLE);
+			patterns = new EObjectContainmentEList<Pattern>(Pattern.class, this, GraphpatternPackage.BUNDLE__PATTERNS);
 		}
 		return patterns;
 	}
@@ -92,21 +92,6 @@ public class BundleImpl extends PatternElementImpl implements Bundle {
 			profiles = new EObjectResolvingEList<Profile>(Profile.class, this, GraphpatternPackage.BUNDLE__PROFILES);
 		}
 		return profiles;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case GraphpatternPackage.BUNDLE__PATTERNS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getPatterns()).basicAdd(otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**

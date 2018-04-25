@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.sidiff.graphpattern.Pattern#getParameters <em>Parameters</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.Pattern#getAssignments <em>Assignments</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.Pattern#getBundle <em>Bundle</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.Pattern#getSubpatterns <em>Subpatterns</em>}</li>
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getPattern()
@@ -79,31 +80,34 @@ public interface Pattern extends PatternElement {
 	EList<Assignment> getAssignments();
 
 	/**
-	 * Returns the value of the '<em><b>Bundle</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.Bundle#getPatterns <em>Patterns</em>}'.
+	 * Returns the value of the '<em><b>Bundle</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Bundle</em>' container reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Bundle</em>' container reference.
-	 * @see #setBundle(Bundle)
+	 * @return the value of the '<em>Bundle</em>' reference.
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getPattern_Bundle()
-	 * @see org.sidiff.graphpattern.Bundle#getPatterns
-	 * @model opposite="patterns" transient="false"
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
 	Bundle getBundle();
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.graphpattern.Pattern#getBundle <em>Bundle</em>}' container reference.
+	 * Returns the value of the '<em><b>Subpatterns</b></em>' containment reference list.
+	 * The list contents are of type {@link org.sidiff.graphpattern.Pattern}.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Subpatterns</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Bundle</em>' container reference.
-	 * @see #getBundle()
+	 * @return the value of the '<em>Subpatterns</em>' containment reference list.
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getPattern_Subpatterns()
+	 * @model containment="true"
 	 * @generated
 	 */
-	void setBundle(Bundle value);
+	EList<Pattern> getSubpatterns();
 
 } // Pattern

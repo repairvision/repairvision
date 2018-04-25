@@ -906,7 +906,7 @@ public interface GraphpatternPackage extends EPackage {
 	int PATTERN__ASSIGNMENTS = PATTERN_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Bundle</b></em>' container reference.
+	 * The feature id for the '<em><b>Bundle</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -915,13 +915,22 @@ public interface GraphpatternPackage extends EPackage {
 	int PATTERN__BUNDLE = PATTERN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Subpatterns</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATTERN__SUBPATTERNS = PATTERN_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Pattern</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PATTERN_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 4;
+	int PATTERN_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Pattern</em>' class.
@@ -2507,15 +2516,26 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getPattern_Assignments();
 
 	/**
-	 * Returns the meta object for the container reference '{@link org.sidiff.graphpattern.Pattern#getBundle <em>Bundle</em>}'.
+	 * Returns the meta object for the reference '{@link org.sidiff.graphpattern.Pattern#getBundle <em>Bundle</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Bundle</em>'.
+	 * @return the meta object for the reference '<em>Bundle</em>'.
 	 * @see org.sidiff.graphpattern.Pattern#getBundle()
 	 * @see #getPattern()
 	 * @generated
 	 */
 	EReference getPattern_Bundle();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.graphpattern.Pattern#getSubpatterns <em>Subpatterns</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Subpatterns</em>'.
+	 * @see org.sidiff.graphpattern.Pattern#getSubpatterns()
+	 * @see #getPattern()
+	 * @generated
+	 */
+	EReference getPattern_Subpatterns();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.PatternElement <em>Pattern Element</em>}'.
@@ -3341,12 +3361,20 @@ public interface GraphpatternPackage extends EPackage {
 		EReference PATTERN__ASSIGNMENTS = eINSTANCE.getPattern_Assignments();
 
 		/**
-		 * The meta object literal for the '<em><b>Bundle</b></em>' container reference feature.
+		 * The meta object literal for the '<em><b>Bundle</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference PATTERN__BUNDLE = eINSTANCE.getPattern_Bundle();
+
+		/**
+		 * The meta object literal for the '<em><b>Subpatterns</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PATTERN__SUBPATTERNS = eINSTANCE.getPattern_Subpatterns();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.PatternElementImpl <em>Pattern Element</em>}' class.
