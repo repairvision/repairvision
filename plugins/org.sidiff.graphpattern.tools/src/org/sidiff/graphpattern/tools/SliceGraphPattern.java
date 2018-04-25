@@ -198,9 +198,10 @@ public class SliceGraphPattern extends AbstractHandler  {
 	}
 	
 	protected static void slice(List<NodePattern> fragment, NodePattern next) {
+		fragment.add(next);
+		
 		for (EdgePattern outgoing : next.getOutgoings()) {
 			if ((outgoing.getTarget() != null) && !fragment.contains(outgoing.getTarget())) {
-				fragment.add(outgoing.getTarget());
 				slice(fragment, outgoing.getTarget());
 			}
 		}
