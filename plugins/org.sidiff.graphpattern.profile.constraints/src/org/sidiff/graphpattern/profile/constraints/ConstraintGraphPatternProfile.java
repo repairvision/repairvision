@@ -18,11 +18,11 @@ public class ConstraintGraphPatternProfile implements IGraphPatternProfile {
 		not
 	};
 	
-	protected static final String PULGIN = "org.sidiff.graphpattern.profile.constraint";
+	protected static final String PULGIN = "org.sidiff.graphpattern.profile.constraints";
 	
 	protected static final String PROFILE_PATH = "model/profile.graphpattern";
 	
-	protected static final String PROFILE_ID = "org.sidiff.graphpattern.profile.constraint";
+	protected static final String PROFILE_ID = "org.sidiff.graphpattern.profile.constraints";
 	
 	protected static final String PROFILE_NAME = "Graph Constraint Profile";
 	
