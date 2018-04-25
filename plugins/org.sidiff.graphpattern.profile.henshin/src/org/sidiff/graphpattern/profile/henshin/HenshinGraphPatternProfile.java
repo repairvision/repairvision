@@ -22,7 +22,7 @@ public class HenshinGraphPatternProfile implements IGraphPatternProfile {
 	
 	protected static final String PROFILE_PATH = "model/profile.graphpattern";
 	
-	protected static final String PROFILE_ID = "org.sidiff.graphpattern.profile.henshin.profile";
+	protected static final String PROFILE_ID = "org.sidiff.graphpattern.profile.henshin";
 	
 	protected static final String PROFILE_NAME = "Henshin Action Profile";
 	
