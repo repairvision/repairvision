@@ -9,6 +9,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.sidiff.graphpattern.GraphpatternFactory;
@@ -44,8 +45,31 @@ public class PatternItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addBundlePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Bundle feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addBundlePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Pattern_bundle_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Pattern_bundle_feature", "_UI_Pattern_type"),
+				 GraphpatternPackage.Literals.PATTERN__BUNDLE,
+				 false,
+				 false,
+				 false,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -63,6 +87,7 @@ public class PatternItemProvider
 			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__GRAPHS);
 			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__PARAMETERS);
 			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__ASSIGNMENTS);
+			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__SUBPATTERNS);
 		}
 		return childrenFeatures;
 	}
@@ -121,6 +146,7 @@ public class PatternItemProvider
 			case GraphpatternPackage.PATTERN__GRAPHS:
 			case GraphpatternPackage.PATTERN__PARAMETERS:
 			case GraphpatternPackage.PATTERN__ASSIGNMENTS:
+			case GraphpatternPackage.PATTERN__SUBPATTERNS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -152,6 +178,11 @@ public class PatternItemProvider
 			(createChildParameter
 				(GraphpatternPackage.Literals.PATTERN__ASSIGNMENTS,
 				 GraphpatternFactory.eINSTANCE.createAssignment()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.PATTERN__SUBPATTERNS,
+				 GraphpatternFactory.eINSTANCE.createPattern()));
 	}
 
 }
