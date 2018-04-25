@@ -51,7 +51,7 @@ public class DialogService {
 				Object[] elements = new Object[extensions.size()];
 				
 				for (int i = 0; i < elements.length; i++) {
-					elements[i] = extensions.get(0).getProfile().getProfile();
+					elements[i] = extensions.get(i).getProfile().getProfile();
 				}
 				
 				// open dialog:
