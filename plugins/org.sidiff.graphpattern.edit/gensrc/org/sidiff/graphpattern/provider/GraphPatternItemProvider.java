@@ -100,9 +100,11 @@ public class GraphPatternItemProvider
 	@Override
 	public String getText(Object object) {
 		String label = ((GraphPattern)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_GraphPattern_type") :
-			getString("_UI_GraphPattern_type") + " " + label;
+		return label;
+		
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_GraphPattern_type") :
+//			getString("_UI_GraphPattern_type") + " " + label;
 	}
 	
 

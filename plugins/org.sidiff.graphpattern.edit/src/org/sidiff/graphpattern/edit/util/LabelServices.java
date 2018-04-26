@@ -11,7 +11,7 @@ public class LabelServices {
 
 	public static String getLabel(NodePattern nodePattern) {
 		if (nodePattern != null) {
-			String name = "Node" + getStereotypesLabel(nodePattern.getStereotypes()) + ": " + getNodeName(nodePattern);
+			String name = getStereotypesLabel(nodePattern.getStereotypes()) + " " + getNodeName(nodePattern);
 			
 			if (nodePattern.getType() == null) {
 				return name + " : " + "?";
@@ -46,7 +46,7 @@ public class LabelServices {
 	}
 	
 	public static String getLabel(AttributePattern attributePattern) {
-		String name = "Attribute" + getStereotypesLabel(attributePattern.getStereotypes()) + ": ";
+		String name = getStereotypesLabel(attributePattern.getStereotypes());
 		
 		if (attributePattern.getType() == null) {
 			return name + "? = " + attributePattern.getValue();
@@ -56,7 +56,7 @@ public class LabelServices {
 	}
 	
 	public static String getLabel(EdgePattern edgePattern) {
-		String name = "Edge" + getStereotypesLabel(edgePattern.getStereotypes()) + ": ";
+		String name = getStereotypesLabel(edgePattern.getStereotypes());
 		
 		String beginNode = getShortLabel(edgePattern.getSource()); 
 		String endNode = getShortLabel(edgePattern.getTarget());
@@ -81,7 +81,7 @@ public class LabelServices {
 			}
 			
 			label.append(">>");
-			return label.toString();
+			return label.toString() + " ";
 		} else {
 			return "";
 		}
