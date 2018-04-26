@@ -11,6 +11,7 @@ import java.util.Map;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -20,6 +21,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.edit.commands.SetEdgePatternTypeCommand;
+import org.sidiff.graphpattern.edit.util.ColorServices;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 import org.sidiff.graphpattern.edit.util.LabelServices;
 
@@ -217,10 +219,23 @@ public class EdgePatternItemProvider
 	public String getText(Object object) {
 		EdgePattern edgePattern = (EdgePattern) object;
 		return LabelServices.getLabel(edgePattern);
-		
 //		return getString("_UI_EdgePattern_type") + " " + edgePattern.isCrossReference();
 	}
 	
+	/**
+	 * @generated NOT
+	 */
+	@Override
+	public Object getForeground(Object object) {
+		int[] color = ColorServices.getEdgeLabelColor(object);
+		
+		if (color != null) {
+			URI foreground = URI.createURI("color://rgb/" + color[0] + "/" + color[1] + "/" + color[2]);
+			return foreground;
+		} else {
+			return super.getForeground(object);
+		}
+	}
 
 	/**
 	 * This handles model notifications by calling {@link #updateChildren} to update any cached

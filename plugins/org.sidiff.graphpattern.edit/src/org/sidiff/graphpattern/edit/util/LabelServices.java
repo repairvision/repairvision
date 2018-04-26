@@ -10,22 +10,30 @@ import org.sidiff.graphpattern.Stereotype;
 public class LabelServices {
 
 	public static String getLabel(NodePattern nodePattern) {
-		String name = "Node" + getStereotypesLabel(nodePattern.getStereotypes()) + ": " + getNodeName(nodePattern);
-
-		if (nodePattern.getType() == null) {
-			return name + " : " + "?";
+		if (nodePattern != null) {
+			String name = "Node" + getStereotypesLabel(nodePattern.getStereotypes()) + ": " + getNodeName(nodePattern);
+			
+			if (nodePattern.getType() == null) {
+				return name + " : " + "?";
+			} else {
+				return name + " : " + nodePattern.getType().getName();
+			}
 		} else {
-			return name + " : " + nodePattern.getType().getName();
+			return "?";
 		}
 	}
 	
 	public static String getShortLabel(NodePattern nodePattern) {
-		String name = getNodeName(nodePattern);
-
-		if (nodePattern.getType() == null) {
-			return name + " : " + "?";
+		if (nodePattern != null) {
+			String name = getNodeName(nodePattern);
+			
+			if (nodePattern.getType() == null) {
+				return name + " : " + "?";
+			} else {
+				return name + " : " + nodePattern.getType().getName();
+			}
 		} else {
-			return name + " : " + nodePattern.getType().getName();
+			return "?";
 		}
 	}
 	

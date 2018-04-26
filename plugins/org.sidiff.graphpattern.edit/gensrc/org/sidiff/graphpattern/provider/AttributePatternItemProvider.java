@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -17,6 +18,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.edit.util.ColorServices;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 import org.sidiff.graphpattern.edit.util.LabelServices;
 
@@ -152,6 +154,20 @@ public class AttributePatternItemProvider
 //			getString("_UI_AttributePattern_type") + " " + label;
 	}
 	
+	/**
+	 * @generated NOT
+	 */
+	@Override
+	public Object getForeground(Object object) {
+		int[] color = ColorServices.getAttributeLabelColor(object);
+		
+		if (color != null) {
+			URI foreground = URI.createURI("color://rgb/" + color[0] + "/" + color[1] + "/" + color[2]);
+			return foreground;
+		} else {
+			return super.getForeground(object);
+		}
+	}
 
 	/**
 	 * This handles model notifications by calling {@link #updateChildren} to update any cached
