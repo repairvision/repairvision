@@ -1,76 +1,81 @@
 package org.sidiff.graphpattern.edit.util;
 
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EReference;
+import java.util.List;
+
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Stereotype;
 
 public class LabelServices {
 
 	public static String getLabel(NodePattern nodePattern) {
-		if ((nodePattern == null) || (nodePattern.getType() == null)) {
-			return getNodeName(nodePattern) + ": " + "?";
+		String name = "Node" + getStereotypesLabel(nodePattern.getStereotypes()) + ": " + getNodeName(nodePattern);
+
+		if (nodePattern.getType() == null) {
+			return name + " : " + "?";
 		} else {
-			return getNodeName(nodePattern) + ": " + nodePattern.getType().getName();
+			return name + " : " + nodePattern.getType().getName();
+		}
+	}
+	
+	public static String getShortLabel(NodePattern nodePattern) {
+		String name = getNodeName(nodePattern);
+
+		if (nodePattern.getType() == null) {
+			return name + " : " + "?";
+		} else {
+			return name + " : " + nodePattern.getType().getName();
 		}
 	}
 	
 	private static String getNodeName(NodePattern nodePattern) {
 		if ((nodePattern != null) && (nodePattern.getName() != null)) {
-			return nodePattern.getName() + " ";
+			return nodePattern.getName();
 		} else {
 			return "";
 		}
 	}
 	
 	public static String getLabel(AttributePattern attributePattern) {
-		EAttribute type = attributePattern.getType();
+		String name = "Attribute" + getStereotypesLabel(attributePattern.getStereotypes()) + ": ";
 		
-		if (type == null) {
-			return "Attribute: " + "? = " + attributePattern.getValue();
+		if (attributePattern.getType() == null) {
+			return name + "? = " + attributePattern.getValue();
 		} else {
-			return "Attribute: " + type.getName() + " = " + attributePattern.getValue();
+			return name + attributePattern.getType().getName() + " = " + attributePattern.getValue();
 		}
 	}
 	
 	public static String getLabel(EdgePattern edgePattern) {
-		String beginNode = getLabel(edgePattern.getSource()); 
-		String beginLabel = getEdgeBeginLabel(edgePattern);
-		String endNode = getLabel(edgePattern.getTarget());
-		String endLabel = getEdgeEndLabel(edgePattern);
+		String name = "Edge" + getStereotypesLabel(edgePattern.getStereotypes()) + ": ";
 		
-		if (!endLabel.equals("")) {
-			return "Edge: [" + beginNode + "." + beginLabel + "] -> [" + endNode + "." + endLabel + "]";
-		} 
+		String beginNode = getShortLabel(edgePattern.getSource()); 
+		String endNode = getShortLabel(edgePattern.getTarget());
+		String type = (edgePattern.getType() != null) ? edgePattern.getType().getName() : "?";
 		
-		else {
-			return "Edge: [" + beginNode + "." +  beginLabel + "]";
-		}
+		return name + "[" + beginNode + "] - " + type + " -> [" + endNode + "]";
 	}
 	
-	public static String getEdgeBeginLabel(EdgePattern edgePattern) {
-		EReference type = edgePattern.getType();
+	public static String getStereotypesLabel(List<Stereotype> stereotypes) {
 		
-		if (type == null) {
-			return "?";
-		} else {
-			return type.getName();
-		}
-	}
-	
-	public static String getEdgeEndLabel(EdgePattern edgePattern) {
-		EdgePattern opposite = edgePattern.getOpposite();
-		
-		if (opposite != null) {
-			EReference type = edgePattern.getOpposite().getType();
+		if (!stereotypes.isEmpty()) {
+			StringBuffer label = new StringBuffer();
+			label.append("<<");
 			
-			if (type == null) {
-				return "?";
-			} else {
-				return type.getName();
-			}	
+			for (Stereotype stereotype : stereotypes) {
+				if (stereotype == stereotypes.get(0)) {
+					label.append(stereotype.getName());
+				} else {
+					label.append(", ");
+					label.append(stereotype.getName());
+				}
+			}
+			
+			label.append(">>");
+			return label.toString();
+		} else {
+			return "";
 		}
-		return "";
 	}
 }
