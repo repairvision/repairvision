@@ -76,9 +76,10 @@ public class LabelServices {
 		EdgePattern opposite = edgePattern.getOpposite();
 		
 		if (opposite != null) {
-			getEdgeEndLabel(opposite);	
+			return getEdgeEndLabel(opposite);	
+		} else {
+			return "";
 		}
-		return "";
 	}
 	
 	public String getEdgeCenterLabel(EdgePattern edgePattern) {
