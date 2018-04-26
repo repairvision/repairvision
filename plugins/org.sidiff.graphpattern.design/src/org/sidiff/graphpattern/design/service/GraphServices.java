@@ -64,7 +64,7 @@ public class GraphServices {
 	 *            A graph pattern.
 	 * @return All edges of the graph pattern that will be shown as navigable edges.
 	 */
-	public List<EdgePattern> getNavigableEdgeCandidates(GraphPattern graphPattern) {
+	public List<EdgePattern> getUndirectedEdgeCandidates(GraphPattern graphPattern) {
 		List<EdgePattern> edges = new ArrayList<>();
 		Set<EdgePattern> opposite = new HashSet<>();
 		
@@ -90,7 +90,7 @@ public class GraphServices {
 	 *            A graph pattern.
 	 * @return All edges of the graph pattern that will be shown as none navigable edges.
 	 */
-	public List<EdgePattern> getNonNavigableEdgeCandidates(GraphPattern graphPattern) {
+	public List<EdgePattern> getDirectedEdgeCandidates(GraphPattern graphPattern) {
 		List<EdgePattern> edges = new ArrayList<>();
 		
 		for (NodePattern nodePattern : graphPattern.getNodes()) {

@@ -17,7 +17,7 @@ import org.sidiff.graphpattern.profile.extensions.GraphPatternProfileLibrary;
 
 public class DialogService {
 
-	public void applyProfile(EObject element) {
+	public void importProfile(EObject element) {
 		GraphPattern graphPattern = null;
 		
 		while(graphPattern == null) {
