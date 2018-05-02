@@ -18,6 +18,11 @@
                   icon="icons/slice.gif"
                   style="push">
             </command>
+            <command
+                  commandId="org.sidiff.graphpattern.tools.command.creatediagram"
+                  icon="icons/Sirius.gif"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -28,6 +33,11 @@
                icon="icons/slice.gif"
                style="push">
          </command>
+         <command
+               commandId="org.sidiff.graphpattern.tools.command.creatediagram"
+               icon="icons/Sirius.gif"
+               style="push">
+         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -35,6 +45,11 @@
          <command
                commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern"
                icon="icons/slice.gif"
+               style="push">
+         </command>
+         <command
+               commandId="org.sidiff.graphpattern.tools.command.creatediagram"
+               icon="icons/Sirius.gif"
                style="push">
          </command>
       </menuContribution>
@@ -49,6 +64,10 @@
             class="org.sidiff.graphpattern.tools.SliceGraphPattern"
             commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern">
       </handler>
+      <handler
+            class="org.sidiff.graphpattern.tools.CreateDiagram"
+            commandId="org.sidiff.graphpattern.tools.command.creatediagram">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -59,6 +78,10 @@
       <command
             id="org.sidiff.graphpattern.tools.command.slicegraphpattern"
             name="Slice Graph Pattern">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.tools.command.creatediagram"
+            name="Create Diagram">
       </command>
    </extension>
 </plugin>
