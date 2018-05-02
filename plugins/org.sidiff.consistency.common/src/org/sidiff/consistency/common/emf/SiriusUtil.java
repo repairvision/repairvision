@@ -25,6 +25,26 @@ import org.sidiff.graphpattern.GraphPattern;
 
 @SuppressWarnings({ "restriction", "deprecation" })
 public class SiriusUtil {
+	
+	public static void edit(TransactionalEditingDomain editingDomain, Runnable runnable) {
+		if (editingDomain != null) {
+			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+
+				@Override
+				protected void doExecute() {
+					runnable.run();
+				}
+
+				@Override
+				public boolean canUndo() {
+					return false;
+				}
+
+			});	
+		} else {
+			runnable.run();
+		}
+	}
 
 	public static void edit(EObject modelElement, Runnable runnable) {
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(modelElement);
