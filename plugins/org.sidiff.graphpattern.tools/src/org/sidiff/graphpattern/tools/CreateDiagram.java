@@ -10,6 +10,7 @@ import java.util.Set;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
@@ -34,6 +35,8 @@ import org.eclipse.sirius.viewpoint.description.Viewpoint;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.consistency.common.emf.SiriusUtil;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 
 @SuppressWarnings("restriction")
 public class CreateDiagram extends AbstractHandler  {
@@ -41,6 +44,14 @@ public class CreateDiagram extends AbstractHandler  {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Object selected = getSelection(event);
+		
+		if (selected instanceof IFile) {
+			Resource resource = EMFHandlerUtil.getSelection(event);
+			
+			if (!resource.getContents().isEmpty()) {
+				selected = resource.getContents().get(0);
+			}
+		}
 		
 		if (selected instanceof EObject) {
 			IProgressMonitor monitor = new NullProgressMonitor();
