@@ -21,4 +21,16 @@
             type="graphpattern"
             class="org.sidiff.graphpattern.util.GraphpatternResourceFactoryImpl"/>
    </extension>
+   
+   <extension point="org.eclipse.core.expressions.definitions">
+      <definition id="org.sidiff.graphpattern.fileextension">
+         <adapt type="org.eclipse.core.resources.IResource">
+            <or>
+                <test property="org.eclipse.core.resources.extension"
+                      value="graphpattern">
+                </test>
+            </or>
+         </adapt>
+      </definition>
+   </extension>
 </plugin>
