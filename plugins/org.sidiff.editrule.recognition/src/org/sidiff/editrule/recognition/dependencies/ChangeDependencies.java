@@ -136,24 +136,27 @@ public class ChangeDependencies {
 			}
 		}
 		
-		for (Edge edge : deletionEdges) {
-			EReference type = edge.getType();
+		for (Edge containmentEdge : deletionEdges) {
+			EReference type = containmentEdge.getType();
 			
 			if (type.isContainment()) {
-				Node containerNode = edge.getSource();
-				Node containedNode = edge.getTarget();
+				Node containerNode = containmentEdge.getSource();
+				Node containedNode = containmentEdge.getTarget();
 				DependencyNode containedNodeDependency = dependencyTrace.get(containedNode);
 				
-				// C: Every << delete >> node conjunction [A] has a direct dependency to its incident << delete >> edges:
-				for (Edge outgoing : containedNode.getOutgoing()) {
-					if (!(outgoing.getType().isContainment() || outgoing.getType().isContainer())) {
-						createDependencyEdge(containedNodeDependency, dependencyTrace.get(outgoing));
+				if (isDeletionNode(containedNode)) {
+
+					// C: Every << delete >> node conjunction [A] has a direct dependency to its incident << delete >> edges:
+					for (Edge outgoing : containedNode.getOutgoing()) {
+						if (!(outgoing.getType().isContainment() || outgoing.getType().isContainer())) {
+							createDependencyEdge(containedNodeDependency, dependencyTrace.get(outgoing));
+						}
 					}
-				}
-				for (Edge incoming : containedNode.getIncoming()) {
-					if (!(incoming.getType().isContainment() || incoming.getType().isContainer())) {
-						if (incoming.getType().getEOpposite() == null) {
-							createDependencyEdge(containedNodeDependency, dependencyTrace.get(incoming));
+					for (Edge incoming : containedNode.getIncoming()) {
+						if (!(incoming.getType().isContainment() || incoming.getType().isContainer())) {
+							if (incoming.getType().getEOpposite() == null) {
+								createDependencyEdge(containedNodeDependency, dependencyTrace.get(incoming));
+							}
 						}
 					}
 				}
@@ -183,10 +186,12 @@ public class ChangeDependencies {
 					dependencyTrace.put(containedNode, dependency);
 				} else {
 					// move node => container/containment edges as opposites:
-					DependencyNode dependency = createDependencyNode(containmentEdge, containerEdge);
-					
-					dependencyTrace.put(containmentEdge, dependency);
-					dependencyTrace.put(containerEdge, dependency);
+					if (containerEdge != null) {
+						DependencyNode dependency = createDependencyNode(containmentEdge, containerEdge);
+						
+						dependencyTrace.put(containmentEdge, dependency);
+						dependencyTrace.put(containerEdge, dependency);
+					}
 				}
 			}
 		}
@@ -260,6 +265,9 @@ public class ChangeDependencies {
 	}
 	
 	private DependencyEdge createDependencyEdge(DependencyNode source, DependencyNode target) {
+		assert source != null;
+		assert target != null;
+		
 		DependencyEdge dependency = GraphpatternFactory.eINSTANCE.createDependencyEdge();
 		
 		dependency.setSource(source);
