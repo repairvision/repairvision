@@ -163,10 +163,6 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 					
 					// Show repairs:
 					fireResultChangeListener();
-					
-					if (repairJob.getRepairs().isEmpty()) {
-						WorkbenchUtil.showMessage("No repairs found!");
-					}
 				});
 				
 				return Status.OK_STATUS;
@@ -210,10 +206,6 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 
 					// Show repairs:
 					fireResultChangeListener();
-					
-					if (repairJob.getRepairs().isEmpty()) {
-						WorkbenchUtil.showMessage("No repairs found!");
-					}
 				});
 				
 				return Status.OK_STATUS;
