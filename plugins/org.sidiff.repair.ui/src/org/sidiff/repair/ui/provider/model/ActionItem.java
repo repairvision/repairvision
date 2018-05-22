@@ -1,8 +1,9 @@
 package org.sidiff.repair.ui.provider.model;
 
 import org.eclipse.emf.henshin.model.GraphElement;
+import org.sidiff.repair.ui.provider.IHighlightableElement;
 
-public abstract class ActionItem implements IItemProvider {
+public abstract class ActionItem implements IItemProvider, IHighlightableElement {
 
 	protected Object parent;
 	

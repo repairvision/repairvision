@@ -1,14 +1,18 @@
 package org.sidiff.repair.ui.provider.model;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
+import org.sidiff.repair.ui.provider.IHighlightableElement;
 
-public abstract class ChangeSetItem implements IItemProvider {
+public abstract class ChangeSetItem implements IItemProvider, IHighlightableElement {
 
 	protected RepairPlanItem repairPlan;
 	
@@ -44,4 +48,16 @@ public abstract class ChangeSetItem implements IItemProvider {
 	}
 	
 	public abstract EObject[] getDomain(Node node);
+	
+	@Override
+	public Iterator<? extends EObject> getModelElements() {
+		Set<EObject> elements = new HashSet<>();
+		getChildren(); // initialize changes!
+		
+		for (int i = 0; i < changes.length; i++) {
+			changes[i].getModelElements().forEachRemaining(elements::add);
+		}
+		
+		return elements.iterator();
+	}
 }

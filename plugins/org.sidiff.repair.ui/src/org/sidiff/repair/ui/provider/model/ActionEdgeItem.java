@@ -1,5 +1,11 @@
 package org.sidiff.repair.ui.provider.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.repair.ui.Activator;
@@ -36,5 +42,16 @@ public class ActionEdgeItem extends ActionItem {
 		ActionNodeItem tgtMatch = new ActionNodeItem(this, changeEdge.getTarget());
 		
 		return new Object[] {srcMatch, tgtMatch};
+	}
+
+	@Override
+	public Iterator<? extends EObject> getModelElements() {
+		Edge changeEdge = (Edge) changeAction;
+		List<EObject> elements = new ArrayList<>();
+		
+		Arrays.asList(getChangeSetItem().getDomain(changeEdge.getSource())).forEach(elements::add);
+		Arrays.asList(getChangeSetItem().getDomain(changeEdge.getTarget())).forEach(elements::add);
+		
+		return elements.iterator();
 	}
 }

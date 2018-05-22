@@ -55,5 +55,4 @@ public class ParameterValueInputItem implements IItemProvider, IParameterInput {
 			parameter.getRepairPlan().setParameterValue(parameter.getParameter(), setValueDialog.getValue());
 		}
 	}
-
 }

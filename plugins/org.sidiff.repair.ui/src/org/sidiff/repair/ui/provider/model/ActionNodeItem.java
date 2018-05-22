@@ -1,12 +1,16 @@
 package org.sidiff.repair.ui.provider.model;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.repair.ui.Activator;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.repair.ui.Activator;
 
-public class ActionNodeItem extends ActionItem  {
+public class ActionNodeItem extends ActionItem {
 
 	protected static Image IMG_ADD_OBJECT = Activator.getImageDescriptor("icons/add_object.png").createImage();
 	
@@ -40,5 +44,11 @@ public class ActionNodeItem extends ActionItem  {
 	public Object[] getChildren() {
 		Node changeNode = (Node) changeAction;
 		return getChangeSetItem().getDomain(changeNode);
+	}
+
+	@Override
+	public Iterator<? extends EObject> getModelElements() {
+		Node changeNode = (Node) changeAction;
+		return Arrays.asList(getChangeSetItem().getDomain(changeNode)).iterator();
 	}
 }

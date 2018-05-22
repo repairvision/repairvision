@@ -1,13 +1,17 @@
 package org.sidiff.repair.ui.provider.model;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.ui.Activator;
+import org.sidiff.repair.ui.provider.IHighlightableElement;
 
-public class ParameterItem implements IItemProvider {
+public class ParameterItem implements IItemProvider, IHighlightableElement {
 
 	protected static Image ICON_PARAMETER_UNASSIGNED = Activator.getImageDescriptor("icons/parameter_unassigned.gif").createImage();
 	
@@ -85,5 +89,19 @@ public class ParameterItem implements IItemProvider {
 	
 	public void unsetParameter() {
 		getRepairPlan().setParameterValue(getParameter(), null);
+	}
+
+	@Override
+	public Iterator<? extends EObject> getModelElements() {
+		List<EObject> elements = new ArrayList<>();
+		List<Object> parameterDomain = parent.getRepairPlanItem().getRepairPlan().getParameterDomain(parameter);
+
+		for (Object element : parameterDomain) {
+			if (element instanceof EObject) {
+				elements.add((EObject) element);
+			}
+		}
+
+		return elements.iterator();
 	}
 }

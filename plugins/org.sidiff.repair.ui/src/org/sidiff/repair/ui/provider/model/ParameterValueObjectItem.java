@@ -1,6 +1,12 @@
 package org.sidiff.repair.ui.provider.model;
 
-public class ParameterValueObjectItem implements IParameterInput {
+import java.util.Iterator;
+
+import org.eclipse.emf.ecore.EObject;
+import org.sidiff.consistency.common.java.JUtil;
+import org.sidiff.repair.ui.provider.IHighlightableElement;
+
+public class ParameterValueObjectItem implements IParameterInput, IHighlightableElement {
 
 	protected Object value;
 	
@@ -22,5 +28,14 @@ public class ParameterValueObjectItem implements IParameterInput {
 	@Override
 	public void setParameterValue() {
 		parameter.getRepairPlan().setParameterValue(parameter.getParameter(), value);
+	}
+
+	@Override
+	public Iterator<? extends EObject> getModelElements() {
+		if (value instanceof EObject) {
+			return JUtil.singeltonIterator((EObject) value);
+		} else {
+			return JUtil.emptyIterator();
+		}
 	}
 }

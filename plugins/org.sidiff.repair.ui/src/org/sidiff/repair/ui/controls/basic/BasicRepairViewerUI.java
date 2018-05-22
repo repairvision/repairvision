@@ -26,6 +26,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
+import org.sidiff.common.emf.modelstorage.EMFStorage;
+import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
@@ -34,13 +36,12 @@ import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.Activator;
 import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
+import org.sidiff.repair.ui.provider.IHighlightableElement;
 import org.sidiff.repair.ui.provider.RepairContentProvider;
 import org.sidiff.repair.ui.provider.RepairLabelProvider;
 import org.sidiff.repair.ui.provider.model.IParameterInput;
 import org.sidiff.repair.ui.provider.model.ParameterItem;
 import org.sidiff.repair.ui.provider.model.RepairPlanItem;
-import org.sidiff.common.emf.modelstorage.EMFStorage;
-import org.sidiff.common.ui.util.UIUtil;
 
 public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends BasicRepairUI<A> {
 
@@ -86,9 +87,8 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 			public Iterator<? extends EObject> getElements(ISelection selection) {
 				Object selectedElement = ISelectionHighlightingAdapter.getFirstElement(selection);
 				
-				if (selectedElement instanceof RepairPlanItem) {
-					return ((RepairPlanItem) selectedElement).getRepairPlan().getComplementMatches()
-							.stream().map(Match::getNodeTargets).flatMap(List::stream).iterator();
+				if (selectedElement instanceof IHighlightableElement) {
+					return ((IHighlightableElement) selectedElement).getModelElements();
 				}
 				
 				return ISelectionHighlightingAdapter.EMPTY_ITERATOR;

@@ -1,11 +1,17 @@
 package org.sidiff.repair.ui.provider.model;
 
+import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.swt.graphics.Image;
+import org.sidiff.consistency.common.ui.util.NameUtil;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.ui.Activator;
-import org.sidiff.consistency.common.ui.util.NameUtil;
+import org.sidiff.repair.ui.provider.IHighlightableElement;
 
-public class RepairPlanItem implements IItemProvider {
+public class RepairPlanItem implements IItemProvider, IHighlightableElement {
 
 	protected static final Image ICON_REPAIR_PLAN = Activator.getImageDescriptor("icons/repair_rule.png").createImage();
 	
@@ -64,5 +70,10 @@ public class RepairPlanItem implements IItemProvider {
 	
 	public IRepairPlan getRepairPlan() {
 		return repairPlan;
+	}
+
+	@Override
+	public Iterator<? extends EObject> getModelElements() {
+		return getRepairPlan().getComplementMatches().stream().map(Match::getNodeTargets).flatMap(List::stream).iterator();
 	}
 }
