@@ -41,7 +41,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.sidiff.org/repair/history/model";
+	String eNS_URI = "http://www.sidiff.org/history/model";
 
 	/**
 	 * The package namespace name.
