@@ -67,8 +67,11 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 		// Clear old repair job:
 		inconsistency = null;
 		validations = null;
-		repairJob = null;
 		
+		// TODO: Manage repair stack by the application not the repair job!
+		if ((repairJob != null) && getCurrentModelVersion() != repairJob.getModelB()) {
+			repairJob = null;
+		}
 		
 		// Model validation:
 		modelValidation();
@@ -191,38 +194,40 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 		modelValidation();
 		
 		// Repair calculation:
-		repairCalculation = new Job("Recalculate Repairs") {
-			
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				PEORepairJob lastRepairJob = repairJob;
-				
-				// Calculate repairs:
-				PEORepairSettings repairSettings = new PEORepairSettings(editRules, settings);
-				repairSettings.setupValidationFilter(
-						Collections.singletonList(inconsistency.getContext()),
-						Collections.singletonList(inconsistency.getRule()));
-				
-				repairJob = repairFacade.getRepairs(
-						repairJob.getModelA(), repairJob.getModelB(), repairSettings);
-				
-				// Copy undo history:
-				if (lastRepairJob != null) {
-					repairJob.copyHistory(lastRepairJob);
-				}
-				
-				// Update UI:
-				Display.getDefault().syncExec(() -> {
+		if (inconsistency != null) {
+			repairCalculation = new Job("Recalculate Repairs") {
 
-					// Show repairs:
-					fireResultChangeListener();
-				});
-				
-				return Status.OK_STATUS;
-			}
-		};
-		
-		repairCalculation.schedule();
+				@Override
+				protected IStatus run(IProgressMonitor monitor) {
+					PEORepairJob lastRepairJob = repairJob;
+
+					// Calculate repairs:
+					PEORepairSettings repairSettings = new PEORepairSettings(editRules, settings);
+					repairSettings.setupValidationFilter(
+							Collections.singletonList(inconsistency.getContext()),
+							Collections.singletonList(inconsistency.getRule()));
+
+					repairJob = repairFacade.getRepairs(
+							repairJob.getModelA(), repairJob.getModelB(), repairSettings);
+
+					// Copy undo history:
+					if (lastRepairJob != null) {
+						repairJob.copyHistory(lastRepairJob);
+					}
+
+					// Update UI:
+					Display.getDefault().syncExec(() -> {
+
+						// Show repairs:
+						fireResultChangeListener();
+					});
+
+					return Status.OK_STATUS;
+				}
+			};
+
+			repairCalculation.schedule();
+		}
 	}
 	
 	@Override

@@ -63,8 +63,11 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 		// Clear old repair job:
 		inconsistency = null;
 		validations = null;
-//		repairJob = null; // TODO: Manage repair stack by the application not the repair job!
 		
+		// TODO: Manage repair stack by the application not the repair job!
+		if ((repairJob != null) && getModelB() != repairJob.getModelB()) {
+			repairJob = null;
+		}
 		
 		// Model validation:
 		modelValidation();
