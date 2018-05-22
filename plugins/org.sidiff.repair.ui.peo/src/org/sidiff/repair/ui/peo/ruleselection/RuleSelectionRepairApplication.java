@@ -100,6 +100,7 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 			
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
+				PEORepairJob lastRepairJob = repairJob;
 				
 				// Matching-Settings:
 				settings = getMatchingSettings();
@@ -129,6 +130,11 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 					repairJob = debugger.getRepairs();
 				} else {
 					repairJob = repairFacade.getRepairs(getModelA(), getModelB(), repairSettings);
+				}
+				
+				// Copy undo history:
+				if (lastRepairJob != null) {
+					repairJob.copyHistory(lastRepairJob);
 				}
 				
 				// Update UI:
@@ -171,7 +177,9 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 						new PEORepairSettings(editRules, settings));
 				
 				// Copy undo history:
-				repairJob.copyHistory(lastRepairJob);
+				if (lastRepairJob != null) {
+					repairJob.copyHistory(lastRepairJob);
+				}
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {

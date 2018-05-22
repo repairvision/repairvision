@@ -128,8 +128,8 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 			
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				
 				repairCalculation.setName("Analyze Model History");
+				PEORepairJob lastRepairJob = repairJob;
 				
 				// Matching-Settings:
 				settings = getMatchingSettings();
@@ -153,6 +153,11 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 						Collections.singletonList(inconsistency.getRule()));
 				
 				repairJob = repairFacade.getRepairs(getModelA(), getModelB(), repairSettings);
+				
+				// Copy undo history:
+				if (lastRepairJob != null) {
+					repairJob.copyHistory(lastRepairJob);
+				}
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
@@ -200,7 +205,9 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 						repairJob.getModelA(), repairJob.getModelB(), repairSettings);
 				
 				// Copy undo history:
-				repairJob.copyHistory(lastRepairJob);
+				if (lastRepairJob != null) {
+					repairJob.copyHistory(lastRepairJob);
+				}
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
@@ -235,7 +242,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 
 			});
 			
-			// FIXME: Missing result!
+			// FIXME: Missing return result! Check if command was executed correctly!
 			return true;
 		} else {
 			return repairJob.applyRepair(repair, match, false);
@@ -272,7 +279,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 
 			});
 			
-			// FIXME: Missing result!
+			// FIXME: Missing return result! Check if command was executed correctly!
 			return true;
 		} else {
 			return repairJob.undoRepair(false);
