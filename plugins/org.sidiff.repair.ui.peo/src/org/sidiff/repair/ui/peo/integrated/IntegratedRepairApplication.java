@@ -8,7 +8,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
@@ -225,10 +227,10 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	
 	@Override
 	public boolean applyRepair(IRepairPlan repair, Match match) {
-		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(getModelB());
+		TransactionalEditingDomain transactionalEditingDomain = TransactionUtil.getEditingDomain(getModelB());
 		
-		if (editingDomain != null) {
-			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+		if (transactionalEditingDomain != null) {
+			transactionalEditingDomain.getCommandStack().execute(new RecordingCommand(transactionalEditingDomain) {
 
 				@Override
 				protected void doExecute() {
@@ -245,7 +247,36 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 			// FIXME: Missing return result! Check if command was executed correctly!
 			return true;
 		} else {
-			return repairJob.applyRepair(repair, match, false);
+			EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getModelB().getContents().get(0));
+			
+			if (editingDomain != null) {
+				editingDomain.getCommandStack().execute(new AbstractCommand() {
+					
+					@Override
+					public void redo() {
+					}
+					
+					@Override
+					public boolean canUndo() {
+						return false;
+					}
+					
+					@Override
+					public void execute() {
+						repairJob.applyRepair(repair, match, false);
+					}
+					
+					@Override
+					public boolean canExecute() {
+						return true;
+					}
+				});
+				
+				// FIXME: Missing return result! Check if command was executed correctly!
+				return true;
+			} else {
+				return repairJob.applyRepair(repair, match, false);
+			}
 		}
 	}
 	
