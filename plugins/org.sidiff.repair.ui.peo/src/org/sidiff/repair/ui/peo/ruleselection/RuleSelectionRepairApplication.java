@@ -105,7 +105,7 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 				settings = getMatchingSettings();
 				
 				// Load edit-rules:
-				editRules = EditRuleUtil.loadEditRules(editRuleFiles, false);
+				editRules = EditRuleUtil.loadEditRules(editRuleFiles, true, false);
 				
 				// Calculate repairs:
 				repairCalculation.setName("Calculate Repairs");

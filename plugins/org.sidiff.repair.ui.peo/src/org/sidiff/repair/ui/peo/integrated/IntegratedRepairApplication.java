@@ -138,6 +138,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				setModelA(getHistoricModel());
 				
 				// Load edit rules:
+				// TODO: cache edit rules?
 //				if (editRules == null) {
 					editRules = EditRuleUtil.eLoadEditRules(
 							RulebaseLibrary.getEditRules(DocumentType.getDocumentType(getModelB())), false);
