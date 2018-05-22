@@ -203,7 +203,7 @@ public class RepairPlan implements IRepairPlan {
 				if (binding.isSet()) {
 					Object matchBinding = complementMatch.getParameterValue(binding.getParameter());
 					
-					if (!matchBinding.equals(binding.getValue())) {
+					if ((matchBinding != null) && !matchBinding.equals(binding.getValue())) {
 						return false;
 					}
 				}
