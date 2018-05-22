@@ -4,14 +4,14 @@ Bundle-Name: SiLift Repair API
 Bundle-SymbolicName: org.sidiff.repair.api.peo;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.sidiff.common.henshin,
+Require-Bundle: org.eclipse.equinox.registry,
+ org.sidiff.common.henshin,
  org.sidiff.consistency.common,
  org.sidiff.editrule.recognition,
  org.sidiff.graphpattern,
  org.sidiff.repair.api;visibility:=reexport,
  org.sidiff.repair.complement,
+ org.sidiff.repair.complement.peo,
  org.sidiff.validation.constraint.api,
- org.sidiff.validation.constraint.interpreter,
- org.eclipse.equinox.registry,
- org.sidiff.repair.complement.peo;bundle-version="1.0.0"
+ org.sidiff.validation.constraint.interpreter
 Export-Package: org.sidiff.repair.api.peo
