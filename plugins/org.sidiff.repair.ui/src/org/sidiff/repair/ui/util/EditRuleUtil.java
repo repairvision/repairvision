@@ -31,7 +31,7 @@ import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 
 public class EditRuleUtil {
 
-	public static Collection<Rule> loadEditRules(Collection<IResource> editRuleFiles, boolean validate) {
+	public static Collection<Rule> loadEditRules(Collection<IResource> editRuleFiles, boolean validate, boolean onlyValid) {
 		
 		// Load edit-rules:
 		Collection<Rule> editRules = new ArrayList<>();
@@ -41,7 +41,9 @@ public class EditRuleUtil {
 			URI uriEditRule = ModelDropWidget.getURI(editRuleFile);
 			Resource editRuleRes = editRulesRSS.getResource(uriEditRule, true);
 			
-			if (!validate || editRuleValidation(editRuleFile.getLocation().toFile().toString(), editRuleRes)) {
+			boolean isValid = validate ? editRuleValidation(editRuleFile.getLocation().toFile().toString(), editRuleRes) : true;
+			
+			if (!onlyValid || isValid) {
 				editRules.add(getEditRule(editRuleRes));
 			}
 		}
