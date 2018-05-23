@@ -1,11 +1,25 @@
 package org.sidiff.repair.ui.provider.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Parameter;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.repair.ui.Activator;
+import org.sidiff.repair.ui.provider.IHighlightableElement;
+import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 
-public class ParameterValueInputItem implements IItemProvider, IParameterInput {
+public class ParameterValueInputItem implements IItemProvider, IParameterInput, IHighlightableElement {
 
 	protected static Image IMG_VALUE_INPUT = Activator.getImageDescriptor("icons/question_mark.png").createImage();
 	
@@ -54,5 +68,47 @@ public class ParameterValueInputItem implements IItemProvider, IParameterInput {
 		if (setValueDialog.getValue() != null) {
 			parameter.getRepairPlan().setParameterValue(parameter.getParameter(), setValueDialog.getValue());
 		}
+	}
+
+	@Override
+	public Iterator<? extends EObject> getModelElements() {
+		Parameter parameter = this.parameter.getParameter();
+		Rule rule = ((Rule) parameter.getUnit());
+		List<Node> attributeTargets = new ArrayList<>();
+		
+		for (Node node : rule.getRhs().getNodes()) {
+			for (Attribute attribute : node.getAttributes()) {
+				if (attribute.getValue().equals(parameter.getName())) {
+					attributeTargets.add(node);
+				}
+			}
+		}
+		
+		Set<EObject> elements = new HashSet<>();
+		
+		for (Node attributeTarget : attributeTargets) {
+			List<EObject> domain = this.parameter.getRepairPlan().getComplementDomain(attributeTarget);
+			
+			// check container:
+			while (domain.isEmpty() && (attributeTarget != null)) {
+				Node lastAttributeTaget = attributeTarget;
+				attributeTarget = null;
+				
+				for (Edge incoming : lastAttributeTaget.getIncoming()) {
+					if (incoming.getType().isContainment()) {
+						attributeTarget = incoming.getSource();
+						break;
+					}
+				}
+				
+				if (attributeTarget != null) {
+					domain = this.parameter.getRepairPlan().getComplementDomain(ChangePatternUtil.tryLHS(attributeTarget));
+				}
+			}
+			
+			elements.addAll(domain);
+		}
+		
+		return elements.iterator();
 	}
 }
