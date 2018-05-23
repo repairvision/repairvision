@@ -242,7 +242,16 @@ public class RepairPlan implements IRepairPlan {
 		ParameterBinding binding = getParameterBinding(parameter);
 		
 		if (binding != null) {
+			
+			// store binding:
 			binding.setValue(value);
+			
+			// set string input values:
+			for (Match match : complementMatches) {
+				if (match.getParameterValue(parameter) == null) {
+					match.setParameterValue(parameter, value);
+				}
+			}
 		} else {
 			throw new NoSuchElementException(parameter.toString());
 		}
