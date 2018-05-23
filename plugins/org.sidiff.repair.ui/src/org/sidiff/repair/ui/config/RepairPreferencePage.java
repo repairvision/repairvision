@@ -412,7 +412,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	
 	public static void populateSettings(Resource model) {
 		
-		if (model != null)  {
+		if ((model != null) && !model.getContents().isEmpty())  {
 			
 			// Document type:
 			String newDocumentType = DocumentType.getDocumentType(model.getContents().get(0));
