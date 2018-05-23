@@ -1,6 +1,7 @@
 package org.sidiff.repair.ui.provider.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,7 +9,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.repair.ui.Activator;
 
 public class ActionAttributeItem extends ActionItem {
@@ -54,6 +54,8 @@ public class ActionAttributeItem extends ActionItem {
 
 	@Override
 	public Iterator<? extends EObject> getModelElements() {
-		return JUtil.emptyIterator();
+		Attribute changeAttribute = (Attribute) changeAction;
+		Node containingNode = changeAttribute.getNode();
+		return Arrays.asList(getChangeSetItem().getDomain(containingNode)).iterator();
 	}
 }
