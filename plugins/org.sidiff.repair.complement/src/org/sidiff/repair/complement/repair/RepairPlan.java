@@ -246,9 +246,9 @@ public class RepairPlan implements IRepairPlan {
 			// store binding:
 			binding.setValue(value);
 			
-			// set string input values:
+			// set/unset string input values:
 			for (Match match : complementMatches) {
-				if (match.getParameterValue(parameter) == null) {
+				if ((value instanceof String) || (match.getParameterValue(parameter) instanceof String)) {
 					match.setParameterValue(parameter, value);
 				}
 			}
