@@ -67,6 +67,8 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 		// TODO: Manage repair stack by the application not the repair job!
 		if ((repairJob != null) && getModelB() != repairJob.getModelB()) {
 			repairJob = null;
+		} else {
+			repairJob.setRepairs(new ArrayList<>());
 		}
 		
 		// Model validation:

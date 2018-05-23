@@ -1,5 +1,6 @@
 package org.sidiff.repair.ui.peo.integrated;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -71,6 +72,8 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 		// TODO: Manage repair stack by the application not the repair job!
 		if ((repairJob != null) && getCurrentModelVersion() != repairJob.getModelB()) {
 			repairJob = null;
+		} else {
+			repairJob.setRepairs(new ArrayList<>());
 		}
 		
 		// Model validation:
