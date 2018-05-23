@@ -68,7 +68,9 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 		if ((repairJob != null) && getModelB() != repairJob.getModelB()) {
 			repairJob = null;
 		} else {
-			repairJob.setRepairs(new ArrayList<>());
+			if (repairJob != null) {
+				repairJob.setRepairs(new ArrayList<>());
+			}
 		}
 		
 		// Model validation:

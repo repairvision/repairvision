@@ -73,7 +73,9 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 		if ((repairJob != null) && getCurrentModelVersion() != repairJob.getModelB()) {
 			repairJob = null;
 		} else {
-			repairJob.setRepairs(new ArrayList<>());
+			if (repairJob != null) {
+				repairJob.setRepairs(new ArrayList<>());
+			}
 		}
 		
 		// Model validation:
