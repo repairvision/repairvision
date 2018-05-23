@@ -74,6 +74,8 @@ public class ParameterValueInputItem implements IItemProvider, IParameterInput, 
 	public Iterator<? extends EObject> getModelElements() {
 		Parameter parameter = this.parameter.getParameter();
 		Rule rule = ((Rule) parameter.getUnit());
+		
+		// search parameter targets:
 		List<Node> attributeTargets = new ArrayList<>();
 		
 		for (Node node : rule.getRhs().getNodes()) {
@@ -89,7 +91,7 @@ public class ParameterValueInputItem implements IItemProvider, IParameterInput, 
 		for (Node attributeTarget : attributeTargets) {
 			List<EObject> domain = this.parameter.getRepairPlan().getComplementDomain(attributeTarget);
 			
-			// check container:
+			// check container for new created nodes which have no match:
 			while (domain.isEmpty() && (attributeTarget != null)) {
 				Node lastAttributeTaget = attributeTarget;
 				attributeTarget = null;
