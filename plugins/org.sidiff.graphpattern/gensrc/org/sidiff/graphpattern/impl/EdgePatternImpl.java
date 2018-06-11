@@ -408,10 +408,10 @@ public class EdgePatternImpl extends GraphElementImpl implements EdgePattern {
 
 		StringBuffer result = new StringBuffer(super.toString());
 	
-		String sourceName = getSource().getName() != null ? getSource().getName() : "";
-		String sourceType = getSource().getType() != null ? getSource().getType().getName() : "?";
-		String targetName = getTarget().getName() != null ? getTarget().getName() : "";
-		String targetType = getTarget().getType() != null ? getTarget().getType().getName() : "?";
+		String sourceName = getSource() != null ? getSource().getName() != null ? getSource().getName() : "" : "";
+		String sourceType = getSource() != null ? getSource().getType() != null ? getSource().getType().getName() : "?" : "?";
+		String targetName = getTarget() != null ? getTarget().getName() != null ? getTarget().getName() : "" : "";
+		String targetType = getTarget() != null ? getTarget().getType() != null ? getTarget().getType().getName() : "?" : "?";
 		
 		String edgeType = getType() != null ? getType().getName() : "?";
 		
