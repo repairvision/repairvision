@@ -1,6 +1,8 @@
 package org.sidiff.graphpattern.tools;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
@@ -65,7 +67,11 @@ public class CreateDocumentation extends AbstractHandler {
 	            	
 	            	// map diagram an graph pattern:
 	            	String htmlDocLink = null;
+	            	String svgDocLink = null;
 	            	GraphPattern graphPattern = null;
+	            	
+	            	BufferedReader htmlDocReaderBuffer = null;
+	            	FileWriter htmlDocWriter = null;
 	            	
 					try {
 						
@@ -74,6 +80,30 @@ public class CreateDocumentation extends AbstractHandler {
 								.filter(r -> r.getFileExtension().equals("html")).findFirst().get();
 						htmlDocLink = htmlDoc.getLocation().makeRelativeTo(project.getFolder(FOLDER).getLocation())
 								.toPortableString();
+						
+						// get SVG path:
+						IResource svgDoc = Arrays.asList(project.getFolder(localPath).members()).stream()
+								.filter(r -> r.getFileExtension().equals("svg")).findFirst().get();
+						svgDocLink = svgDoc.getLocation().makeRelativeTo(project.getFolder(localPath).getLocation())
+								.toPortableString();
+						
+						// >> fix: make HTML hyperlinks relative <<
+						FileReader htmlDocReader = new FileReader(htmlDoc.getLocation().toFile());
+						htmlDocReaderBuffer = new BufferedReader(htmlDocReader);
+						
+						StringBuffer newHtmlDoc = new StringBuffer(); 
+						String line = htmlDocReaderBuffer.readLine();
+						
+						while (line != null) {
+							line = line.replaceAll("data=\".*?\"", "data=\"" + svgDocLink + "\"");
+							line = line.replaceAll("src=\".*?\"", "data=\"" + svgDocLink + "\"");
+							
+							newHtmlDoc.append(line + "\n");
+							line = htmlDocReaderBuffer.readLine();
+						}
+						
+						htmlDocWriter = new FileWriter(htmlDoc.getLocation().toFile());
+						htmlDocWriter.write(newHtmlDoc.toString());
 
 						// get Graph Pattern of diagram:
 						graphPattern = ((NodePattern) dRepresentation.getRepresentationElements().stream()
@@ -82,6 +112,21 @@ public class CreateDocumentation extends AbstractHandler {
 
 					} catch (Exception e) {
 						e.printStackTrace();
+					} finally {
+						if (htmlDocReaderBuffer != null) {
+							try {
+								htmlDocReaderBuffer.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+						if (htmlDocWriter != null) {
+							try {
+								htmlDocWriter.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
 					}
 					
 					if ((htmlDocLink != null) && (graphPattern != null)) {
