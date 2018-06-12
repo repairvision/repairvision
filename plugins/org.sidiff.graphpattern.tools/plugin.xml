@@ -23,6 +23,10 @@
                   icon="icons/Sirius.gif"
                   style="push">
             </command>
+            <command
+                  commandId="org.sidiff.graphpattern.tools.command.createdocumentation"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -68,6 +72,10 @@
             class="org.sidiff.graphpattern.tools.CreateDiagram"
             commandId="org.sidiff.graphpattern.tools.command.creatediagram">
       </handler>
+      <handler
+            class="org.sidiff.graphpattern.tools.CreateDocumentation"
+            commandId="org.sidiff.graphpattern.tools.command.createdocumentation">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -82,6 +90,10 @@
       <command
             id="org.sidiff.graphpattern.tools.command.creatediagram"
             name="Create Diagram">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.tools.command.createdocumentation"
+            name="Create Documentation">
       </command>
    </extension>
 </plugin>
