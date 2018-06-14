@@ -51,7 +51,6 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Size
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
-// FIXME: Support scopes for variable names -> otherwise variable names have to be unique!
 class FirstOrderLogicGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
@@ -129,7 +128,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 					«ENDFOR»
 				
 					«FOR getTerm : constraint.eAllContents.filter(typeof(VariableRef)).toIterable»
-						«if (getTerm.get != null) compileVariableRef(getTerm, pathCounter++, names)»
+						«if (getTerm.get !== null) compileVariableRef(getTerm, pathCounter++, names)»
 					«ENDFOR»
 				
 					«compileConstraint(constraint, constraintCounter++, names)»
@@ -156,17 +155,30 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	def ConstraintLibrary getRuleBase(Resource resource) {
 		return (resource.contents.get(0) as ConstraintLibrary)
 	}
+	
+	def String newName(HashMap<Object, String> names, Object astNode, String name) {
+		var newName = name
+		var i = 0
+		
+		while (names.containsKey(newName)) {
+			i++
+			newName = name + i
+		}
+		
+		names.put(astNode, newName)
+		return name
+	}
 		
 	def String compileConstraint(Constraint constraint, int constraintCounter, HashMap<Object, String> names) {
 		var name = 'constraint' + constraintCounter + '_' + constraint.name
-		names.put(constraint, name)
+		name = newName(names, constraint, name);
 		
  		return 'Formula ' + name + ' = ' + compileFormula(constraint.formula, names) + ';'
 	}
 	
 	def String compileVariable(Variable variable, int counter, HashMap<Object, String> names) {
 		var name = 'v' + counter + '_' + variable.name;
-		names.put(variable, name)
+		name = newName(names, variable, name);
 		
 		return '''Variable «name» = new Variable("«variable.name»");'''
 	}
@@ -175,8 +187,9 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		
 		// Term t1_m_receiveEvent_covered =
 		var name = '''t«counter»_«path.eAllContents.filter(typeof(Get)).map[name.name].join('_')»'''
+		name = newName(names, path, name);
+
 		var getVariable = 'Term ' + name + ' = '
-		names.put(path, name)
 		
 		//new Get(new Get(m, DOMAIN.getMessage_ReceiveEvent()), DOMAIN.getInteractionFragment_Covered());
 		var code = new StringBuffer('new Get(' + names.get(path.name) + ', ' + compileFeature(path.get.name) + ')')
@@ -187,7 +200,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	
 	def void compileGet(Get get, StringBuffer code) {
 		
-		if (get != null) {
+		if (get !== null) {
 			code.insert(0, 'new Get(')
 			code.append(', ' + compileFeature(get.name) + ')')
 		
@@ -308,7 +321,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	}
 	
 	def dispatch String compileFormula(VariableRef variable, HashMap<Object, String> names) {
-		if (variable.get != null) {
+		if (variable.get !== null) {
 			return names.get(variable)
 		} else {
 			return names.get(variable.name)			
