@@ -163,6 +163,13 @@ public class ChangeDependencies {
 				
 				// D: Every << delete >> node conjunction [A] have direct dependency to its contained child << delete >> nodes:
 				if (isDeletionNode(containerNode)) {
+					
+					// is root container node?
+					if (!dependencyTrace.containsKey(containerNode)) {
+						DependencyNode dependency = createDependencyNode(containerNode);
+						dependencyTrace.put(containerNode, dependency);
+					}
+					
 					createDependencyEdge(dependencyTrace.get(containerNode), containedNodeDependency);
 				}
 			}
@@ -244,6 +251,13 @@ public class ChangeDependencies {
 				Node containedNode = edge.getTarget();
 				
 				if (isCreationNode(containerNode)) {
+					
+					// is root container node?
+					if (!dependencyTrace.containsKey(containerNode)) {
+						DependencyNode dependency = createDependencyNode(containerNode);
+						dependencyTrace.put(containerNode, dependency);
+					}
+					
 					createDependencyEdge(dependencyTrace.get(containedNode), dependencyTrace.get(containerNode));
 				}
 			}
