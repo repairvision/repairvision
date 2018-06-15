@@ -15,7 +15,7 @@ import org.sidiff.graphpattern.NodePattern;
 
 public class RepairScopeConstraint {
 
-	private Map<GraphElement, Domain> domains = new HashMap<>();
+	private Map<Domain, GraphElement> domains = new HashMap<>();
 	
 	private RepairScope scope;
 	
@@ -26,33 +26,28 @@ public class RepairScopeConstraint {
 		for (GraphElement change : scope.getChanges()) {
 			if (change instanceof Node) {
 				NodePattern repairContext = recognitionPattern.getNodeTrace().get(change).getNodePatternB();
-				domains.put(change, Domain.get(repairContext));
+				domains.put(Domain.get(repairContext), change);
 			} else if (change instanceof Edge) {
-				Edge edge = (Edge) change;
 				
-				if (edge.getType().isContainment() && (edge.getType().getEOpposite() == null)) {
-					NodePattern repairContext = recognitionPattern.getEdgeTrace().get(change).getEdgePatternB().getTarget();
-					domains.put(change, Domain.get(repairContext));
-				} else {
-					NodePattern repairContext = recognitionPattern.getEdgeTrace().get(change).getEdgePatternB().getSource();
-					domains.put(change, Domain.get(repairContext));
-				}
+				// Source:
+				NodePattern repairSourceContext = recognitionPattern.getEdgeTrace().get(change).getEdgePatternB().getSource();
+				domains.put(Domain.get(repairSourceContext), change);
+				
+				// Target (repair which deletes the context element of a validation):
+				NodePattern repairTargetContext = recognitionPattern.getEdgeTrace().get(change).getEdgePatternB().getTarget();
+				domains.put(Domain.get(repairTargetContext), change);
 			} else if (change instanceof Attribute) {
 				Node node = ChangePatternUtil.tryLHS(((Attribute) change).getNode());
 				NodePattern repairContext = recognitionPattern.getNodeTrace().get(node).getNodePatternB();
-				domains.put(change, Domain.get(repairContext));
+				domains.put(Domain.get(repairContext), change);
 			}
 		}
-	}
-
-	public void addDomain(GraphElement change, Domain domain) {
-		domains.put(change, domain);
 	}
 	
 	public boolean test() {
 		
-		for (GraphElement change : domains.keySet()) {
-			Domain domain = domains.get(change);
+		for (Domain domain : domains.keySet()) {
+			GraphElement change = domains.get(domain);
 			
 			// Search for scope:
 			for (EObject scopeElement : scope.get(change)) {

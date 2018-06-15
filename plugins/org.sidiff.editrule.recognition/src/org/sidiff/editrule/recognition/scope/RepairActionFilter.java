@@ -291,7 +291,7 @@ public class RepairActionFilter {
 				if (change.getGraph().isLhs()) {
 					buildScope(RepairType.DELETE, referenceType, sourceContextType, strictContextType, change, scope);
 					
-					// Repair which deletes the root element of a validation:
+					// Repair which deletes the context element of a validation:
 					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
 						EClass targetContextType = ((Edge) change).getTarget().getType();
 						boolean strictTargetContextType = isStrictMatchingType(((Edge) change).getTarget());
