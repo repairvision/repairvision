@@ -1,16 +1,21 @@
 package org.sidiff.repair.ui.peo.integrated;
 
+import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.command.AbstractCommand;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.henshin.interpreter.Match;
@@ -21,6 +26,7 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
@@ -56,6 +62,8 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	private List<Validation> validations;
 	
 	private PEORepairJob repairJob;
+	
+	private boolean autoSaveModel = false;
 	
 	@Override
 	public void initialize(IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade) {
@@ -113,6 +121,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	private Resource getCurrentModelVersion() {
 		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		
+		// check for editor integration extension (supported models):
 		for (IEditorIntegration editorIntegration : IntegrationEditorAccess.getInstance().getIntegrationEditors()) {
 			try {
 				EditingDomain editingDomain = editorIntegration.getEditingDomain(editor);
@@ -120,9 +129,57 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				if (editingDomain != null) {
 					for (Resource resource : editingDomain.getResourceSet().getResources()) {
 						if (editorIntegration.supportsModel(resource.getURI())) {
+							autoSaveModel = false;
 							return resource;
 						}
 					}
+				}
+			} catch (Exception e) {
+			}
+		}
+		
+		// check for editor integration extension:
+		for (IEditorIntegration editorIntegration : IntegrationEditorAccess.getInstance().getIntegrationEditors()) {
+			try {
+				EditingDomain editingDomain = editorIntegration.getEditingDomain(editor);
+				
+				if (editingDomain != null) {
+					if (!editingDomain.getResourceSet().getResources().isEmpty()) {
+						autoSaveModel = false;
+						return editingDomain.getResourceSet().getResources().get(0);
+					}
+				}
+			} catch (Exception e) {
+			}
+		}
+		
+		// get by reflection:
+		for (Method method : editor.getClass().getMethods()) {
+			if (method.getName().equals("getEditingDomain") && method.getReturnType().equals(EditingDomain.class)) {
+				try {
+					EditingDomain editingDomain = (EditingDomain) method.invoke(editor);
+					
+					if (editingDomain != null) {
+						for (Resource resource : editingDomain.getResourceSet().getResources()) {
+							autoSaveModel = false;
+							return resource;
+						}
+					}
+				} catch (Exception e) {
+				}
+			}
+		}
+	
+		// get editor file input:
+		if (editor.getEditorInput() instanceof FileEditorInput) {
+			try {
+				IFile file = ((FileEditorInput) editor.getEditorInput()).getFile();
+				URI fileURI = URI.createFileURI(file.getLocation().toFile().getAbsolutePath());
+				Resource resource = new ResourceSetImpl().getResource(fileURI, true);
+				
+				if ((resource != null) && (!resource.getContents().isEmpty())) {
+					autoSaveModel = true;
+					return resource;
 				}
 			} catch (Exception e) {
 			}
@@ -237,6 +294,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	
 	@Override
 	public boolean applyRepair(IRepairPlan repair, Match match) {
+		boolean[] result = new boolean[1];
 		TransactionalEditingDomain transactionalEditingDomain = TransactionUtil.getEditingDomain(getModelB());
 		
 		if (transactionalEditingDomain != null) {
@@ -244,7 +302,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 
 				@Override
 				protected void doExecute() {
-					repairJob.applyRepair(repair, match, false);
+					result[0] = repairJob.applyRepair(repair, match, false);
 				}
 
 				@Override
@@ -253,9 +311,6 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				}
 
 			});
-			
-			// FIXME: Missing return result! Check if command was executed correctly!
-			return true;
 		} else {
 			EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getModelB().getContents().get(0));
 			
@@ -273,7 +328,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 					
 					@Override
 					public void execute() {
-						repairJob.applyRepair(repair, match, false);
+						result[0] = repairJob.applyRepair(repair, match, false);
 					}
 					
 					@Override
@@ -281,36 +336,44 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 						return true;
 					}
 				});
-				
-				// FIXME: Missing return result! Check if command was executed correctly!
-				return true;
 			} else {
-				return repairJob.applyRepair(repair, match, false);
+				result[0] = repairJob.applyRepair(repair, match, false);
 			}
 		}
+		
+		// save the applied repair?
+		if (autoSaveModel) {
+			try {
+				repairJob.getModelB().save(Collections.emptyMap());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result[0];
 	}
 	
 	@Override
 	public boolean undoRepair() {
+		boolean[] result = new boolean[1];
+		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(getModelB());
 		
 		if (repairJob == null) {
 			WorkbenchUtil.showMessage("Please start the repair calculation!");
-			return false;
+			result[0] = false;
 		}
 		
-		if (repairCalculation.getState() == Job.RUNNING) {
+		else if (repairCalculation.getState() == Job.RUNNING) {
 			WorkbenchUtil.showMessage("Please wait for the repair calculation!");
-			return false;
+			result[0] = false;
 		}
 		
-		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(getModelB());
-		
-		if (editingDomain != null) {
+		else if (editingDomain != null) {
 			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 
 				@Override
 				protected void doExecute() {
-					repairJob.undoRepair(false);
+					result[0] = repairJob.undoRepair(false);
 				}
 
 				@Override
@@ -319,12 +382,22 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				}
 
 			});
-			
-			// FIXME: Missing return result! Check if command was executed correctly!
-			return true;
-		} else {
-			return repairJob.undoRepair(false);
+		} 
+		
+		else {
+			result[0] =  repairJob.undoRepair(false);
 		}
+		
+		// save the applied repair?
+		if (autoSaveModel) {
+			try {
+				repairJob.getModelB().save(Collections.emptyMap());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result[0];
 	}
 	
 	@Override
