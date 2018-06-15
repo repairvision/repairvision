@@ -18,7 +18,9 @@ import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.common.monitor.LogMonitor;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
+import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.difference.symmetric.SymmetricFactory;
 import org.sidiff.editrule.recognition.scope.RepairActionFilter;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.util.RepairAPIUtil;
@@ -80,6 +82,15 @@ public class PEORepairCalculationEngine {
 			log.append("Change Count (Historical->Actual)", difference.getChanges().size());
 		}
 		
+		// TODO/FIXME[Workaround]: Handle "real" empty historic models, i.e. without root element!
+		if (difference.getChanges().isEmpty()) {
+			if (difference.getModelA().getContents().size() == 1) {
+				AddObject addRoot = SymmetricFactory.eINSTANCE.createAddObject();
+				addRoot.setObj(difference.getModelB().getContents().get(0));
+				difference.getChanges().add(addRoot);
+			}
+		}
+		
 		// Create difference resource:
 		Resource differenceResource = differenceRSS.createResource(
 				RepairAPIUtil.getDifferenceURI(modelA.getURI(), modelB.getURI()));
@@ -92,7 +103,7 @@ public class PEORepairCalculationEngine {
 //				e.printStackTrace();
 			}
 		}
-		
+			
 		return difference;
 	}
 	
