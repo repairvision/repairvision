@@ -27,6 +27,10 @@
                   commandId="org.sidiff.graphpattern.tools.command.createdocumentation"
                   style="push">
             </command>
+            <command
+                  commandId="org.sidiff.graphpattern.tools.command.batchgenerateeditrules"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -76,6 +80,10 @@
             class="org.sidiff.graphpattern.tools.CreateDocumentation"
             commandId="org.sidiff.graphpattern.tools.command.createdocumentation">
       </handler>
+      <handler
+            class="org.sidiff.graphpattern.tools.editrules.GenerateEditRulesBatch"
+            commandId="org.sidiff.graphpattern.tools.command.batchgenerateeditrules">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -94,6 +102,10 @@
       <command
             id="org.sidiff.graphpattern.tools.command.createdocumentation"
             name="Create Documentation">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.tools.command.batchgenerateeditrules"
+            name="Generate Edit Rules">
       </command>
    </extension>
 </plugin>
