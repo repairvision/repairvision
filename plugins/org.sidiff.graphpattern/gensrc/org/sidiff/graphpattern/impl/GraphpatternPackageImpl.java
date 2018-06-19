@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.sidiff.graphpattern.Assignment;
 import org.sidiff.graphpattern.Association;
@@ -35,6 +36,7 @@ import org.sidiff.graphpattern.Profile;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.SubGraph;
 import org.sidiff.graphpattern.ValueBinding;
+import org.sidiff.graphpattern.util.GraphpatternValidator;
 
 /**
  * <!-- begin-user-doc -->
@@ -255,6 +257,15 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		// Initialize created meta-data
 		theGraphpatternPackage.initializePackageContents();
+
+		// Register package validator
+		EValidator.Registry.INSTANCE.put
+			(theGraphpatternPackage, 
+			 new EValidator.Descriptor() {
+				 public EValidator getEValidator() {
+					 return GraphpatternValidator.INSTANCE;
+				 }
+			 });
 
 		// Mark meta-data to indicate it can't be changed
 		theGraphpatternPackage.freeze();
@@ -828,6 +839,15 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getStereotype_Profile() {
+		return (EReference)stereotypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getParameterBinding() {
 		return parameterBindingEClass;
 	}
@@ -1010,6 +1030,15 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 */
 	public EAttribute getProfile_Id() {
 		return (EAttribute)profileEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getProfile__GetStereotype__String() {
+		return profileEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -1235,6 +1264,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		stereotypeEClass = createEClass(STEREOTYPE);
 		createEAttribute(stereotypeEClass, STEREOTYPE__NAME);
+		createEReference(stereotypeEClass, STEREOTYPE__PROFILE);
 
 		parameterBindingEClass = createEClass(PARAMETER_BINDING);
 		createEReference(parameterBindingEClass, PARAMETER_BINDING__PARAMETER);
@@ -1263,6 +1293,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEAttribute(profileEClass, PROFILE__NAME);
 		createEAttribute(profileEClass, PROFILE__DESCRIPTION);
 		createEAttribute(profileEClass, PROFILE__ID);
+		createEOperation(profileEClass, PROFILE___GET_STEREOTYPE__STRING);
 
 		// Create data types
 		eIteratorEDataType = createEDataType(EITERATOR);
@@ -1420,6 +1451,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		initEClass(stereotypeEClass, Stereotype.class, "Stereotype", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStereotype_Name(), ecorePackage.getEString(), "name", null, 0, 1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStereotype_Profile(), this.getProfile(), this.getProfile_Stereotypes(), "profile", null, 1, 1, Stereotype.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterBindingEClass, ParameterBinding.class, "ParameterBinding", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getParameterBinding_Parameter(), this.getParameter(), null, "parameter", null, 1, 1, ParameterBinding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1444,16 +1476,39 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		initEReference(getGraphElement_Graph(), this.getGraphPattern(), null, "graph", null, 1, 1, GraphElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(profileEClass, Profile.class, "Profile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getProfile_Stereotypes(), this.getStereotype(), null, "stereotypes", null, 0, -1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProfile_Stereotypes(), this.getStereotype(), this.getStereotype_Profile(), "stereotypes", null, 0, -1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProfile_Name(), ecorePackage.getEString(), "name", null, 0, 1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProfile_Description(), ecorePackage.getEString(), "description", null, 0, 1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProfile_Id(), ecorePackage.getEString(), "id", null, 0, 1, Profile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		op = initEOperation(getProfile__GetStereotype__String(), this.getStereotype(), "getStereotype", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(eIteratorEDataType, Iterator.class, "EIterator", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Iterator<org.eclipse.emf.ecore.EObject>");
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore";	
+		addAnnotation
+		  (edgePatternEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne\r\nTheOppositeMayNotBeItsOwnOpposite"
+		   });
 	}
 
 } //GraphpatternPackageImpl

@@ -44,8 +44,7 @@
       <genOperations ecoreOperation="graphpattern.ecore#//NodePattern/getAdjacent"/>
     </genClasses>
     <genClasses ecoreClass="graphpattern.ecore#//EdgePattern">
-      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
-          ecoreFeature="ecore:EReference graphpattern.ecore#//EdgePattern/target"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//EdgePattern/target"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference graphpattern.ecore#//EdgePattern/source"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//EdgePattern/opposite"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//EdgePattern/type"/>
@@ -145,6 +144,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//Profile/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//Profile/description"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//Profile/id"/>
+      <genOperations ecoreOperation="graphpattern.ecore#//Profile/getStereotype">
+        <genParameters ecoreParameter="graphpattern.ecore#//Profile/getStereotype/name"/>
+      </genOperations>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

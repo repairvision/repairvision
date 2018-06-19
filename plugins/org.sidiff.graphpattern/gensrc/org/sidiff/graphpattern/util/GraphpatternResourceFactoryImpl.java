@@ -5,6 +5,7 @@ package org.sidiff.graphpattern.util;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,6 +24,17 @@ public class GraphpatternResourceFactoryImpl extends ResourceFactoryImpl {
 	public GraphpatternResourceFactoryImpl() {
 		super();
 	}
+	
+	/**
+	 * Do nothing while saving the URI.
+	 */
+	@SuppressWarnings("unused")
+	private static class DoNotDeresolve extends URIHandlerImpl {
+		@Override
+		public URI deresolve(URI uri) {
+			return uri;
+		}
+	}	
 
 	/**
 	 * Creates an instance of the resource.
@@ -32,7 +44,7 @@ public class GraphpatternResourceFactoryImpl extends ResourceFactoryImpl {
 	 */
 	@Override
 	public Resource createResource(URI uri) {
-		Resource result = new GraphpatternResourceImpl(uri);
+		GraphpatternResourceImpl result = new GraphpatternResourceImpl(uri);
 		return result;
 	}
 

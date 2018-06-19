@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EReference;
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getEdgePattern()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne\r\nTheOppositeMayNotBeItsOwnOpposite'"
  * @generated
  */
 public interface EdgePattern extends GraphElement {

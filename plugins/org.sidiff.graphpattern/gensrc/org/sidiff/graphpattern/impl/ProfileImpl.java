@@ -2,6 +2,7 @@
  */
 package org.sidiff.graphpattern.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -11,7 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.Profile;
@@ -130,7 +131,7 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 */
 	public EList<Stereotype> getStereotypes() {
 		if (stereotypes == null) {
-			stereotypes = new EObjectContainmentEList<Stereotype>(Stereotype.class, this, GraphpatternPackage.PROFILE__STEREOTYPES);
+			stereotypes = new EObjectContainmentWithInverseEList<Stereotype>(Stereotype.class, this, GraphpatternPackage.PROFILE__STEREOTYPES, GraphpatternPackage.STEREOTYPE__PROFILE);
 		}
 		return stereotypes;
 	}
@@ -196,6 +197,37 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 		id = newId;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.PROFILE__ID, oldId, id));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Stereotype getStereotype(String name) {
+		
+		for (Stereotype stereotype : stereotypes) {
+			if (stereotype.getName().equals(name)) {
+				return stereotype;
+			}
+		}
+		
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case GraphpatternPackage.PROFILE__STEREOTYPES:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getStereotypes()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -308,6 +340,20 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 * @generated
 	 */
 	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case GraphpatternPackage.PROFILE___GET_STEREOTYPE__STRING:
+				return getStereotype((String)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -322,4 +368,22 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 		return result.toString();
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (obj instanceof Profile) {
+			Profile profile = (Profile) obj;
+			
+			if (profile.getId().equals(getId())) {
+				return true;
+			}
+		}
+		
+		return super.equals(obj);
+	}
 } //ProfileImpl

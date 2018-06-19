@@ -28,6 +28,7 @@ public interface Profile extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Stereotypes</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.graphpattern.Stereotype}.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.Stereotype#getProfile <em>Profile</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Stereotypes</em>' containment reference list isn't clear,
@@ -36,7 +37,8 @@ public interface Profile extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Stereotypes</em>' containment reference list.
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getProfile_Stereotypes()
-	 * @model containment="true"
+	 * @see org.sidiff.graphpattern.Stereotype#getProfile
+	 * @model opposite="profile" containment="true"
 	 * @generated
 	 */
 	EList<Stereotype> getStereotypes();
@@ -118,5 +120,13 @@ public interface Profile extends EObject {
 	 * @generated
 	 */
 	void setId(String value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Stereotype getStereotype(String name);
 
 } // Profile

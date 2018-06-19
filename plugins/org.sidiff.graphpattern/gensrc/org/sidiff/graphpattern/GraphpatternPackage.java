@@ -1281,13 +1281,22 @@ public interface GraphpatternPackage extends EPackage {
 	int STEREOTYPE__NAME = 0;
 
 	/**
+	 * The feature id for the '<em><b>Profile</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STEREOTYPE__PROFILE = 1;
+
+	/**
 	 * The number of structural features of the '<em>Stereotype</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STEREOTYPE_FEATURE_COUNT = 1;
+	int STEREOTYPE_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Stereotype</em>' class.
@@ -1575,13 +1584,22 @@ public interface GraphpatternPackage extends EPackage {
 	int PROFILE_FEATURE_COUNT = 4;
 
 	/**
+	 * The operation id for the '<em>Get Stereotype</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROFILE___GET_STEREOTYPE__STRING = 0;
+
+	/**
 	 * The number of operations of the '<em>Profile</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROFILE_OPERATION_COUNT = 0;
+	int PROFILE_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '<em>EIterator</em>' data type.
@@ -2249,6 +2267,17 @@ public interface GraphpatternPackage extends EPackage {
 	EAttribute getStereotype_Name();
 
 	/**
+	 * Returns the meta object for the container reference '{@link org.sidiff.graphpattern.Stereotype#getProfile <em>Profile</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Profile</em>'.
+	 * @see org.sidiff.graphpattern.Stereotype#getProfile()
+	 * @see #getStereotype()
+	 * @generated
+	 */
+	EReference getStereotype_Profile();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.ParameterBinding <em>Parameter Binding</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2471,6 +2500,16 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getProfile_Id();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.Profile#getStereotype(java.lang.String) <em>Get Stereotype</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Stereotype</em>' operation.
+	 * @see org.sidiff.graphpattern.Profile#getStereotype(java.lang.String)
+	 * @generated
+	 */
+	EOperation getProfile__GetStereotype__String();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.Pattern <em>Pattern</em>}'.
@@ -3145,6 +3184,14 @@ public interface GraphpatternPackage extends EPackage {
 		EAttribute STEREOTYPE__NAME = eINSTANCE.getStereotype_Name();
 
 		/**
+		 * The meta object literal for the '<em><b>Profile</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STEREOTYPE__PROFILE = eINSTANCE.getStereotype_Profile();
+
+		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.ParameterBindingImpl <em>Parameter Binding</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3325,6 +3372,14 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PROFILE__ID = eINSTANCE.getProfile_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Stereotype</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PROFILE___GET_STEREOTYPE__STRING = eINSTANCE.getProfile__GetStereotype__String();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.PatternImpl <em>Pattern</em>}' class.

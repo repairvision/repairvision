@@ -33,4 +33,11 @@
          </adapt>
       </definition>
    </extension>
+   <extension
+         point="org.eclipse.emf.ecore.protocol_parser">
+      <parser
+            class="org.sidiff.graphpattern.profile.GraphPatternProfileFactory"
+            protocolName="graphpatternprofile">
+      </parser>
+   </extension>
 </plugin>
