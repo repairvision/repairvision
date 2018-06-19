@@ -125,11 +125,9 @@ public class PatternItemProvider
 	@Override
 	public String getText(Object object) {
 		String label = ((Pattern)object).getName();
-		return label;
-		
-//		return label == null || label.length() == 0 ?
-//			getString("_UI_Pattern_type") :
-//			getString("_UI_Pattern_type") + " " + label;
+		return label == null || label.length() == 0 ?
+			getString("_UI_Pattern_type") :
+			getString("_UI_Pattern_type") + " " + label;
 	}
 	
 

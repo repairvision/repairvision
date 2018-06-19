@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Stereotype;
 
@@ -11,12 +12,12 @@ public class LabelServices {
 
 	public static String getLabel(NodePattern nodePattern) {
 		if (nodePattern != null) {
-			String name = getStereotypesLabel(nodePattern.getStereotypes()) + " " + getNodeName(nodePattern);
+			String name = getStereotypedGraphElementName(nodePattern);
 			
 			if (nodePattern.getType() == null) {
-				return name + " : " + "?";
+				return name + "?";
 			} else {
-				return name + " : " + nodePattern.getType().getName();
+				return name + nodePattern.getType().getName();
 			}
 		} else {
 			return "?";
@@ -25,28 +26,20 @@ public class LabelServices {
 	
 	public static String getShortLabel(NodePattern nodePattern) {
 		if (nodePattern != null) {
-			String name = getNodeName(nodePattern);
+			String name = getGraphElementName(nodePattern);
 			
 			if (nodePattern.getType() == null) {
-				return name + " : " + "?";
+				return name + "?";
 			} else {
-				return name + " : " + nodePattern.getType().getName();
+				return name + nodePattern.getType().getName();
 			}
 		} else {
 			return "?";
 		}
 	}
 	
-	private static String getNodeName(NodePattern nodePattern) {
-		if ((nodePattern != null) && (nodePattern.getName() != null)) {
-			return nodePattern.getName();
-		} else {
-			return "";
-		}
-	}
-	
 	public static String getLabel(AttributePattern attributePattern) {
-		String name = getStereotypesLabel(attributePattern.getStereotypes());
+		String name = getStereotypedGraphElementName(attributePattern);
 		
 		if (attributePattern.getType() == null) {
 			return name + "? = " + attributePattern.getValue();
@@ -56,7 +49,7 @@ public class LabelServices {
 	}
 	
 	public static String getLabel(EdgePattern edgePattern) {
-		String name = getStereotypesLabel(edgePattern.getStereotypes());
+		String name = getStereotypedGraphElementName(edgePattern);
 		
 		String beginNode = getShortLabel(edgePattern.getSource()); 
 		String endNode = getShortLabel(edgePattern.getTarget());
@@ -82,6 +75,20 @@ public class LabelServices {
 			
 			label.append(">>");
 			return label.toString() + " ";
+		} else {
+			return "";
+		}
+	}
+	
+	private static String getStereotypedGraphElementName(GraphElement graphElement) {
+		return graphElement.getStereotypes().isEmpty() ?
+				getGraphElementName(graphElement)
+				: getStereotypesLabel(graphElement.getStereotypes()) + " " + getGraphElementName(graphElement);
+	}
+	
+	private static String getGraphElementName(GraphElement graphElement) {
+		if ((graphElement != null) && (graphElement.getName() != null) && (graphElement.getName() != "")) {
+			return graphElement.getName() + " : ";
 		} else {
 			return "";
 		}
