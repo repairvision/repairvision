@@ -4,10 +4,10 @@ import java.util.Collections;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.Profile;
 import org.sidiff.graphpattern.Stereotype;
+import org.sidiff.graphpattern.profile.GraphPatternProfileFactory;
 import org.sidiff.graphpattern.profile.IGraphPatternProfile;
 import org.sidiff.graphpattern.profile.IGraphPatternVisualization;
 import org.sidiff.graphpattern.util.GraphpatternResourceImpl;
@@ -35,11 +35,7 @@ public class HenshinGraphPatternProfile implements IGraphPatternProfile {
 	@Override
 	public Profile getProfile() {
 		if (profile == null) {
-			try {
-				profile = (Profile) new ResourceSetImpl().getResource(URI.createPlatformPluginURI(PULGIN + "/" + PROFILE_PATH, true), true).getContents().get(0);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			profile = GraphPatternProfileFactory.loadProfile(PULGIN, PROFILE_PATH);
 		}
 		return profile;
 	}
