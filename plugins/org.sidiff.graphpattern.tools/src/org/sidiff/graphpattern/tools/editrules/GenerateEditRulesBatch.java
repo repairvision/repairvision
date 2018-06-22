@@ -11,12 +11,14 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Profile;
@@ -29,9 +31,10 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	
 	private static Profile constraintsProfile = GraphPatternProfileLibrary.getEntry("org.sidiff.graphpattern.profile.constraints").getProfile().getProfile();
 	
+	private static EClass representingResourceClass = GraphpatternPackage.eINSTANCE.getResource();
+	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		
 		Bundle patternBundle = EMFHandlerUtil.getSelection(event, Bundle.class);
 		
 		if (patternBundle != null) {
@@ -88,23 +91,13 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			editRule.setName("delete - " + graphPattern.getName());
 			deletionRules.add(editRule);
 			
-			// Filter negative graph constraints:
+			// Remove negative graph constraints:
 			for (Iterator<NodePattern> iterator = editRule.getNodes().iterator(); iterator.hasNext();) {
 				NodePattern node = iterator.next();
+				
 				if (!node.getStereotypes().isEmpty()) {
-					
 					if (node.getStereotypes().contains(notST)) {
-						
-						// Remove incoming edges:
-						for (EdgePattern incoming : node.getIncomings()) {
-
-							// Ignore self-references:
-							if (incoming.getTarget() != node) {
-								incoming.getTarget().getOutgoings().remove(incoming);
-							}
-						}
-						
-						// Remove node and outgoing edges:  
+						removeIncidentEdges(node);
 						iterator.remove();
 					}
 				}
@@ -114,7 +107,6 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			for (NodePattern node : editRule.getNodes()) {
 				
 				// Is contained node?
-				// TODO: consider root element!
 				if (node.getIncomings().stream().anyMatch(e -> e.getType().isContainment())) {
 					node.getStereotypes().add(constructionST);
 					
@@ -147,6 +139,17 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 				}
 			}
 			
+			// Remove (pseudo) resource node:
+			for (Iterator<NodePattern> iterator = editRule.getNodes().iterator(); iterator.hasNext();) {
+				NodePattern node = iterator.next();
+				
+				if (node.getType().equals(representingResourceClass)) {
+					removeIncidentEdges(node);
+					iterator.remove();
+				}
+			}
+			
+			// Add new edit rule for graph pattern:
 			editRules.merge(graphPattern, deletionRules, (v1, v2) -> {v1.addAll(v2); return v1;});
 		}
 		
@@ -158,5 +161,20 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	
 	public static void generateStructuralTransformationRules(Pattern pattern, Map<GraphPattern, List<GraphPattern>> editRules) {
 		
+	}
+	
+	private static void removeIncidentEdges(NodePattern node) {
+		
+		// Remove outgoing edges:
+		node.getOutgoings().clear();
+		
+		// Remove incoming edges:
+		for (EdgePattern incoming : node.getIncomings()) {
+
+			// Ignore self-references:
+			if (incoming.getTarget() != node) {
+				incoming.getTarget().getOutgoings().remove(incoming);
+			}
+		}
 	}
 }
