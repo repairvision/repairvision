@@ -32,6 +32,10 @@
     <eOperations name="getIncident" upperBound="-1" eType="#//EdgePattern">
       <eParameters name="adjacent" eType="#//NodePattern"/>
     </eOperations>
+    <eOperations name="removeIncident" upperBound="-1" eType="#//EdgePattern"/>
+    <eOperations name="removeIncident" upperBound="-1" eType="#//EdgePattern">
+      <eParameters name="node" eType="#//NodePattern"/>
+    </eOperations>
     <eOperations name="getAdjacent" upperBound="-1" eType="#//NodePattern"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoings" upperBound="-1"
         eType="#//EdgePattern" containment="true" eOpposite="#//EdgePattern/source"/>
@@ -91,6 +95,7 @@
         eType="#//Profile"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pattern" eSuperTypes="#//PatternElement">
+    <eOperations name="getAllGraphPatterns" upperBound="-1" eType="#//GraphPattern"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="graphs" upperBound="-1"
         eType="#//GraphPattern" containment="true" eOpposite="#//GraphPattern/pattern"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"

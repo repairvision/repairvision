@@ -460,8 +460,26 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getNodePattern__GetAdjacent() {
+	public EOperation getNodePattern__RemoveIncident() {
 		return nodePatternEClass.getEOperations().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getNodePattern__RemoveIncident__NodePattern() {
+		return nodePatternEClass.getEOperations().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getNodePattern__GetAdjacent() {
+		return nodePatternEClass.getEOperations().get(9);
 	}
 
 	/**
@@ -1126,6 +1144,15 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getPattern__GetAllGraphPatterns() {
+		return patternEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPatternElement() {
 		return patternElementEClass;
 	}
@@ -1223,6 +1250,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEOperation(nodePatternEClass, NODE_PATTERN___GET_INCOMINGS__EREFERENCE);
 		createEOperation(nodePatternEClass, NODE_PATTERN___GET_INCIDENT);
 		createEOperation(nodePatternEClass, NODE_PATTERN___GET_INCIDENT__NODEPATTERN);
+		createEOperation(nodePatternEClass, NODE_PATTERN___REMOVE_INCIDENT);
+		createEOperation(nodePatternEClass, NODE_PATTERN___REMOVE_INCIDENT__NODEPATTERN);
 		createEOperation(nodePatternEClass, NODE_PATTERN___GET_ADJACENT);
 
 		edgePatternEClass = createEClass(EDGE_PATTERN);
@@ -1257,6 +1286,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEReference(patternEClass, PATTERN__ASSIGNMENTS);
 		createEReference(patternEClass, PATTERN__BUNDLE);
 		createEReference(patternEClass, PATTERN__SUBPATTERNS);
+		createEOperation(patternEClass, PATTERN___GET_ALL_GRAPH_PATTERNS);
 
 		patternElementEClass = createEClass(PATTERN_ELEMENT);
 		createEAttribute(patternElementEClass, PATTERN_ELEMENT__NAME);
@@ -1403,6 +1433,11 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		op = initEOperation(getNodePattern__GetIncident__NodePattern(), this.getEdgePattern(), "getIncident", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getNodePattern(), "adjacent", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		initEOperation(getNodePattern__RemoveIncident(), this.getEdgePattern(), "removeIncident", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getNodePattern__RemoveIncident__NodePattern(), this.getEdgePattern(), "removeIncident", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getNodePattern(), "node", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEOperation(getNodePattern__GetAdjacent(), this.getNodePattern(), "getAdjacent", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(edgePatternEClass, EdgePattern.class, "EdgePattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1447,6 +1482,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		initEReference(getPattern_Assignments(), this.getAssignment(), this.getAssignment_Pattern(), "assignments", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPattern_Bundle(), this.getBundle(), null, "bundle", null, 0, 1, Pattern.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getPattern_Subpatterns(), this.getPattern(), null, "subpatterns", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getPattern__GetAllGraphPatterns(), this.getGraphPattern(), "getAllGraphPatterns", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(patternElementEClass, PatternElement.class, "PatternElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPatternElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, PatternElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

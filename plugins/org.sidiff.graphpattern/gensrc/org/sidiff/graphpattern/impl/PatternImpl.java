@@ -2,8 +2,11 @@
  */
 package org.sidiff.graphpattern.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -175,6 +178,30 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<GraphPattern> getAllGraphPatterns() {
+		EList<GraphPattern> graphPatterns = new BasicEList<>();
+		collectAllGraphPatterns(graphPatterns);
+		return graphPatterns;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	protected void collectAllGraphPatterns(EList<GraphPattern> graphPatterns) {
+		graphPatterns.addAll(getGraphs());
+		
+		for (Pattern subPattern : getSubpatterns()) {
+			((PatternImpl) subPattern).collectAllGraphPatterns(graphPatterns);
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -307,6 +334,20 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 				return subpatterns != null && !subpatterns.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case GraphpatternPackage.PATTERN___GET_ALL_GRAPH_PATTERNS:
+				return getAllGraphPatterns();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //PatternImpl

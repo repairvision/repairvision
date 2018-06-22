@@ -266,6 +266,28 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	public EList<EdgePattern> removeIncident() {
+		EList<EdgePattern> edges = getIncident();
+		edges.forEach(e -> e.getSource().getOutgoings().remove(e));
+		return edges;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<EdgePattern> removeIncident(NodePattern node) {
+		EList<EdgePattern> edges = getIncident(node);
+		edges.forEach(e -> e.getSource().getOutgoings().remove(e));
+		return edges;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	public EList<NodePattern> getAdjacent() {
 		
 		if (adjacent == null) {
@@ -600,6 +622,10 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 				return getIncident();
 			case GraphpatternPackage.NODE_PATTERN___GET_INCIDENT__NODEPATTERN:
 				return getIncident((NodePattern)arguments.get(0));
+			case GraphpatternPackage.NODE_PATTERN___REMOVE_INCIDENT:
+				return removeIncident();
+			case GraphpatternPackage.NODE_PATTERN___REMOVE_INCIDENT__NODEPATTERN:
+				return removeIncident((NodePattern)arguments.get(0));
 			case GraphpatternPackage.NODE_PATTERN___GET_ADJACENT:
 				return getAdjacent();
 		}

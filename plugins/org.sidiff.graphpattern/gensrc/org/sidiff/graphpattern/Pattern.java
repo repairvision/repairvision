@@ -110,4 +110,12 @@ public interface Pattern extends PatternElement {
 	 */
 	EList<Pattern> getSubpatterns();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<GraphPattern> getAllGraphPatterns();
+
 } // Pattern

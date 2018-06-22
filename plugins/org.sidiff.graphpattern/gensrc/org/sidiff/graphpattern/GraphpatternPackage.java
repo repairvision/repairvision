@@ -481,13 +481,31 @@ public interface GraphpatternPackage extends EPackage {
 	int NODE_PATTERN___GET_INCIDENT__NODEPATTERN = GRAPH_ELEMENT_OPERATION_COUNT + 6;
 
 	/**
+	 * The operation id for the '<em>Remove Incident</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_PATTERN___REMOVE_INCIDENT = GRAPH_ELEMENT_OPERATION_COUNT + 7;
+
+	/**
+	 * The operation id for the '<em>Remove Incident</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_PATTERN___REMOVE_INCIDENT__NODEPATTERN = GRAPH_ELEMENT_OPERATION_COUNT + 8;
+
+	/**
 	 * The operation id for the '<em>Get Adjacent</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_ADJACENT = GRAPH_ELEMENT_OPERATION_COUNT + 7;
+	int NODE_PATTERN___GET_ADJACENT = GRAPH_ELEMENT_OPERATION_COUNT + 9;
 
 	/**
 	 * The number of operations of the '<em>Node Pattern</em>' class.
@@ -496,7 +514,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_OPERATION_COUNT = GRAPH_ELEMENT_OPERATION_COUNT + 8;
+	int NODE_PATTERN_OPERATION_COUNT = GRAPH_ELEMENT_OPERATION_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -933,13 +951,22 @@ public interface GraphpatternPackage extends EPackage {
 	int PATTERN_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
+	 * The operation id for the '<em>Get All Graph Patterns</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATTERN___GET_ALL_GRAPH_PATTERNS = PATTERN_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Pattern</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PATTERN_OPERATION_COUNT = PATTERN_ELEMENT_OPERATION_COUNT + 0;
+	int PATTERN_OPERATION_COUNT = PATTERN_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1849,6 +1876,26 @@ public interface GraphpatternPackage extends EPackage {
 	EOperation getNodePattern__GetIncident__NodePattern();
 
 	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.NodePattern#removeIncident() <em>Remove Incident</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Remove Incident</em>' operation.
+	 * @see org.sidiff.graphpattern.NodePattern#removeIncident()
+	 * @generated
+	 */
+	EOperation getNodePattern__RemoveIncident();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.NodePattern#removeIncident(org.sidiff.graphpattern.NodePattern) <em>Remove Incident</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Remove Incident</em>' operation.
+	 * @see org.sidiff.graphpattern.NodePattern#removeIncident(org.sidiff.graphpattern.NodePattern)
+	 * @generated
+	 */
+	EOperation getNodePattern__RemoveIncident__NodePattern();
+
+	/**
 	 * Returns the meta object for the '{@link org.sidiff.graphpattern.NodePattern#getAdjacent() <em>Get Adjacent</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2635,6 +2682,16 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getPattern_Subpatterns();
 
 	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.Pattern#getAllGraphPatterns() <em>Get All Graph Patterns</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get All Graph Patterns</em>' operation.
+	 * @see org.sidiff.graphpattern.Pattern#getAllGraphPatterns()
+	 * @generated
+	 */
+	EOperation getPattern__GetAllGraphPatterns();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.PatternElement <em>Pattern Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2876,6 +2933,22 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation NODE_PATTERN___GET_INCIDENT__NODEPATTERN = eINSTANCE.getNodePattern__GetIncident__NodePattern();
+
+		/**
+		 * The meta object literal for the '<em><b>Remove Incident</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation NODE_PATTERN___REMOVE_INCIDENT = eINSTANCE.getNodePattern__RemoveIncident();
+
+		/**
+		 * The meta object literal for the '<em><b>Remove Incident</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation NODE_PATTERN___REMOVE_INCIDENT__NODEPATTERN = eINSTANCE.getNodePattern__RemoveIncident__NodePattern();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Adjacent</b></em>' operation.
@@ -3506,6 +3579,14 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EReference PATTERN__SUBPATTERNS = eINSTANCE.getPattern_Subpatterns();
+
+		/**
+		 * The meta object literal for the '<em><b>Get All Graph Patterns</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PATTERN___GET_ALL_GRAPH_PATTERNS = eINSTANCE.getPattern__GetAllGraphPatterns();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.PatternElementImpl <em>Pattern Element</em>}' class.
