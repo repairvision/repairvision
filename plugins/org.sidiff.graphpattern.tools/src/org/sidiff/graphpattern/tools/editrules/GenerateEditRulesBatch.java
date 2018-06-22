@@ -70,16 +70,31 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	
 	public static void generateCreationRules(Pattern pattern, Map<GraphPattern, List<GraphPattern>> editRules) {
 		Stereotype createST = editRuleProfile.getStereotype("create");
-		generateConstructionRules(pattern, editRules, createST);
+		
+		// Generate edit rules:
+		for (GraphPattern graphPattern : pattern.getGraphs()) {
+			List<GraphPattern> creationRules = new ArrayList<>(1);
+			
+			// Copy graph constraints:
+			GraphPattern editRule = (GraphPattern) ModelingUtil.deepCopy(graphPattern).get(graphPattern);
+			editRule.setName("create: " + graphPattern.getName());
+			creationRules.add(editRule);
+			
+			// Set edit rule actions:
+			setConstructionAction(editRule, createST);
+			
+			// Add new edit rule for graph pattern:
+			editRules.merge(graphPattern, creationRules, (v1, v2) -> {v1.addAll(v2); return v1;});
+		}
+		
+		// Generate sub-patterns:
+		for (Pattern subPattern : pattern.getSubpatterns()) {
+			generateCreationRules(subPattern, editRules);
+		}
 	}
 	
 	public static void generateDeletionRules(Pattern pattern, Map<GraphPattern, List<GraphPattern>> editRules) {
-		Stereotype createST = editRuleProfile.getStereotype("delete");
-		generateConstructionRules(pattern, editRules, createST);
-	}
-	
-	public static void generateConstructionRules(Pattern pattern, Map<GraphPattern, List<GraphPattern>> editRules, Stereotype constructionST) {
-		Stereotype preserveST = editRuleProfile.getStereotype("preserve");
+		Stereotype deleteST = editRuleProfile.getStereotype("delete");
 		Stereotype notST = constraintsProfile.getStereotype("not");
 		
 		// Generate edit rules:
@@ -88,7 +103,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			
 			// Copy graph constraints:
 			GraphPattern editRule = (GraphPattern) ModelingUtil.deepCopy(graphPattern).get(graphPattern);
-			editRule.setName("delete - " + graphPattern.getName());
+			editRule.setName("delete: " + graphPattern.getName());
 			deletionRules.add(editRule);
 			
 			// Remove negative graph constraints:
@@ -97,14 +112,34 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 				
 				if (!node.getStereotypes().isEmpty()) {
 					if (node.getStereotypes().contains(notST)) {
-						removeIncidentEdges(node);
+						node.removeIncident();
 						iterator.remove();
 					}
 				}
 			}
 			
-			// Set node actions:
-			for (NodePattern node : editRule.getNodes()) {
+			// Set edit rule actions:
+			setConstructionAction(editRule, deleteST);
+			
+			// Add new edit rule for graph pattern:
+			editRules.merge(graphPattern, deletionRules, (v1, v2) -> {v1.addAll(v2); return v1;});
+		}
+		
+		// Generate sub-patterns:
+		for (Pattern subPattern : pattern.getSubpatterns()) {
+			generateDeletionRules(subPattern, editRules);
+		}
+	}
+
+	protected static void setConstructionAction(GraphPattern editRule, Stereotype constructionST) {
+		Stereotype preserveST = editRuleProfile.getStereotype("preserve");
+		Stereotype notST = constraintsProfile.getStereotype("not");
+		
+		// Set node actions:
+		for (NodePattern node : editRule.getNodes()) {
+			
+			// Filter negative application conditions:
+			if (!node.getStereotypes().contains(notST)) {
 				
 				// Is contained node?
 				if (node.getIncomings().stream().anyMatch(e -> e.getType().isContainment())) {
@@ -138,42 +173,29 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 					}
 				}
 			}
-			
-			// Remove (pseudo) resource node:
-			for (Iterator<NodePattern> iterator = editRule.getNodes().iterator(); iterator.hasNext();) {
-				NodePattern node = iterator.next();
-				
-				if (node.getType().equals(pseudoResourceClass)) {
-					removeIncidentEdges(node);
-					iterator.remove();
-				}
-			}
-			
-			// Add new edit rule for graph pattern:
-			editRules.merge(graphPattern, deletionRules, (v1, v2) -> {v1.addAll(v2); return v1;});
 		}
 		
-		// Generate sub-patterns:
-		for (Pattern subPattern : pattern.getSubpatterns()) {
-			generateConstructionRules(subPattern, editRules, constructionST);
+		// Remove (pseudo) resource node:
+		for (Iterator<NodePattern> iterator = editRule.getNodes().iterator(); iterator.hasNext();) {
+			NodePattern node = iterator.next();
+			
+			if (node.getType().equals(pseudoResourceClass)) {
+				node.removeIncident();
+				iterator.remove();
+			}
 		}
 	}
 	
 	public static void generateStructuralTransformationRules(Pattern pattern, Map<GraphPattern, List<GraphPattern>> editRules) {
+		List<GraphPattern> allGraphPatterns = pattern.getAllGraphPatterns();
 		
-	}
-	
-	private static void removeIncidentEdges(NodePattern node) {
-		
-		// Remove outgoing edges:
-		node.getOutgoings().clear();
-		
-		// Remove incoming edges:
-		for (EdgePattern incoming : node.getIncomings()) {
-
-			// Ignore self-references:
-			if (incoming.getTarget() != node) {
-				incoming.getTarget().getOutgoings().remove(incoming);
+		// Generate edit rules:
+		// Consider cross-product of all graph patterns
+		for (GraphPattern fromPattern : allGraphPatterns) {
+			for (GraphPattern toPattern : allGraphPatterns) {
+				if (fromPattern != toPattern) {
+					
+				}
 			}
 		}
 	}
