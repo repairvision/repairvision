@@ -3,9 +3,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -190,13 +192,45 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		List<GraphPattern> allGraphPatterns = pattern.getAllGraphPatterns();
 		
 		// Generate edit rules:
-		// Consider cross-product of all graph patterns
+		// Consider cross-product of all graph patterns:
 		for (GraphPattern fromPattern : allGraphPatterns) {
 			for (GraphPattern toPattern : allGraphPatterns) {
 				if (fromPattern != toPattern) {
 					
+					// Check if there is a (full) node matching between the graph patterns:
+					// Compare the nodes by their assigned class types:
+					if (isTypeEqual(fromPattern.getNodes(), toPattern.getNodes())) {
+						System.out.println("transform: " + fromPattern.getName() + " - to - " + toPattern.getName());
+					}
 				}
 			}
+		}
+	}
+	
+	private static boolean isTypeEqual(List<NodePattern> nodesA, List<NodePattern> nodesB) {
+		if (nodesA.size() != nodesB.size()) {
+			Set<NodePattern> remainingB = new HashSet<>(nodesB);
+			
+			for (NodePattern nodePatternA : nodesA) {
+				NodePattern match = null;
+				
+				for (NodePattern nodePatternB : remainingB) {
+					if (nodePatternA.getType().equals(nodePatternB.getType())) {
+						match = nodePatternB;
+						break;
+					}
+				}
+				
+				if (match != null) {
+					remainingB.remove(match);
+				} else {
+					return false;
+				}
+			}
+			
+			return true;
+		} else {
+			return false;
 		}
 	}
 }
