@@ -6,6 +6,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.graphpattern.*;
 import org.sidiff.graphpattern.Assignment;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.AttributePattern;
@@ -173,6 +174,10 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseProfile(Profile object) {
 				return createProfileAdapter();
+			}
+			@Override
+			public Adapter caseResource(Resource object) {
+				return createResourceAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -457,6 +462,20 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createProfileAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Resource <em>Resource</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.Resource
+	 * @generated
+	 */
+	public Adapter createResourceAdapter() {
 		return null;
 	}
 

@@ -44,7 +44,7 @@ public class GraphpatternResourceFactoryImpl extends ResourceFactoryImpl {
 	 */
 	@Override
 	public Resource createResource(URI uri) {
-		GraphpatternResourceImpl result = new GraphpatternResourceImpl(uri);
+		Resource result = new GraphpatternResourceImpl(uri);
 		return result;
 	}
 

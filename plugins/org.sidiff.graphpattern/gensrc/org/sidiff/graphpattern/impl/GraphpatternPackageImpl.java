@@ -33,6 +33,7 @@ import org.sidiff.graphpattern.ParameterBinding;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.PatternElement;
 import org.sidiff.graphpattern.Profile;
+import org.sidiff.graphpattern.Resource;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.SubGraph;
 import org.sidiff.graphpattern.ValueBinding;
@@ -177,6 +178,13 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	private EClass profileEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass resourceEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1046,6 +1054,24 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getResource() {
+		return resourceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getResource_Contents() {
+		return (EReference)resourceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPattern() {
 		return patternEClass;
 	}
@@ -1295,6 +1321,9 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEAttribute(profileEClass, PROFILE__ID);
 		createEOperation(profileEClass, PROFILE___GET_STEREOTYPE__STRING);
 
+		resourceEClass = createEClass(RESOURCE);
+		createEReference(resourceEClass, RESOURCE__CONTENTS);
+
 		// Create data types
 		eIteratorEDataType = createEDataType(EITERATOR);
 	}
@@ -1483,6 +1512,9 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		op = initEOperation(getProfile__GetStereotype__String(), this.getStereotype(), "getStereotype", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(resourceEClass, Resource.class, "Resource", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getResource_Contents(), ecorePackage.getEObject(), null, "contents", null, 0, -1, Resource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(eIteratorEDataType, Iterator.class, "EIterator", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Iterator<org.eclipse.emf.ecore.EObject>");

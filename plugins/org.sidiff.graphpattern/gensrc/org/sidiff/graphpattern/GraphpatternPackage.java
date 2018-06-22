@@ -1602,6 +1602,43 @@ public interface GraphpatternPackage extends EPackage {
 	int PROFILE_OPERATION_COUNT = 1;
 
 	/**
+	 * The meta object id for the '{@link org.sidiff.graphpattern.Resource <em>Resource</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.graphpattern.Resource
+	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getResource()
+	 * @generated
+	 */
+	int RESOURCE = 22;
+
+	/**
+	 * The feature id for the '<em><b>Contents</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOURCE__CONTENTS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Resource</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOURCE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Resource</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOURCE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '<em>EIterator</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1609,7 +1646,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getEIterator()
 	 * @generated
 	 */
-	int EITERATOR = 22;
+	int EITERATOR = 23;
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.GraphPattern <em>Graph Pattern</em>}'.
@@ -2512,6 +2549,27 @@ public interface GraphpatternPackage extends EPackage {
 	EOperation getProfile__GetStereotype__String();
 
 	/**
+	 * Returns the meta object for class '{@link org.sidiff.graphpattern.Resource <em>Resource</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Resource</em>'.
+	 * @see org.sidiff.graphpattern.Resource
+	 * @generated
+	 */
+	EClass getResource();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.graphpattern.Resource#getContents <em>Contents</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Contents</em>'.
+	 * @see org.sidiff.graphpattern.Resource#getContents()
+	 * @see #getResource()
+	 * @generated
+	 */
+	EReference getResource_Contents();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.Pattern <em>Pattern</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3380,6 +3438,24 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation PROFILE___GET_STEREOTYPE__STRING = eINSTANCE.getProfile__GetStereotype__String();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.graphpattern.Resource <em>Resource</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.graphpattern.Resource
+		 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getResource()
+		 * @generated
+		 */
+		EClass RESOURCE = eINSTANCE.getResource();
+
+		/**
+		 * The meta object literal for the '<em><b>Contents</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RESOURCE__CONTENTS = eINSTANCE.getResource_Contents();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.PatternImpl <em>Pattern</em>}' class.

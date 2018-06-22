@@ -133,6 +133,8 @@ public class GraphpatternValidator extends EObjectValidator {
 				return validateGraphElement((GraphElement)value, diagnostics, context);
 			case GraphpatternPackage.PROFILE:
 				return validateProfile((Profile)value, diagnostics, context);
+			case GraphpatternPackage.RESOURCE:
+				return validateResource((Resource)value, diagnostics, context);
 			case GraphpatternPackage.EITERATOR:
 				return validateEIterator((Iterator<EObject>)value, diagnostics, context);
 			default:
@@ -398,6 +400,15 @@ public class GraphpatternValidator extends EObjectValidator {
 	 */
 	public boolean validateProfile(Profile profile, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(profile, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateResource(Resource resource, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(resource, diagnostics, context);
 	}
 
 	/**
