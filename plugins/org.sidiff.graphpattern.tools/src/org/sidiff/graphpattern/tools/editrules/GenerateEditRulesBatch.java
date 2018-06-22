@@ -31,7 +31,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	
 	private static Profile constraintsProfile = GraphPatternProfileLibrary.getEntry("org.sidiff.graphpattern.profile.constraints").getProfile().getProfile();
 	
-	private static EClass representingResourceClass = GraphpatternPackage.eINSTANCE.getResource();
+	private static EClass pseudoResourceClass = GraphpatternPackage.eINSTANCE.getResource();
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -143,7 +143,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			for (Iterator<NodePattern> iterator = editRule.getNodes().iterator(); iterator.hasNext();) {
 				NodePattern node = iterator.next();
 				
-				if (node.getType().equals(representingResourceClass)) {
+				if (node.getType().equals(pseudoResourceClass)) {
 					removeIncidentEdges(node);
 					iterator.remove();
 				}
