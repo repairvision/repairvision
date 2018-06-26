@@ -268,7 +268,14 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 */
 	public EList<EdgePattern> removeIncident() {
 		EList<EdgePattern> edges = getIncident();
-		edges.forEach(e -> e.getSource().getOutgoings().remove(e));
+		edges.forEach(e -> {
+			if (e.getSource() != null) {
+				e.getSource().getOutgoings().remove(e);
+			}
+			if (e.getTarget() != null) {
+				e.getTarget().getIncomings().remove(e);
+			}
+		});
 		return edges;
 	}
 
@@ -279,7 +286,14 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 */
 	public EList<EdgePattern> removeIncident(NodePattern node) {
 		EList<EdgePattern> edges = getIncident(node);
-		edges.forEach(e -> e.getSource().getOutgoings().remove(e));
+		edges.forEach(e -> {
+			if (e.getSource() != null) {
+				e.getSource().getOutgoings().remove(e);
+			}
+			if (e.getTarget() != null) {
+				e.getTarget().getIncomings().remove(e);
+			}
+		});
 		return edges;
 	}
 
