@@ -33,6 +33,14 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	
 	private static Profile constraintsProfile = GraphPatternProfileLibrary.getEntry("org.sidiff.graphpattern.profile.constraints").getProfile().getProfile();
 	
+	private static Stereotype preserveST = editRuleProfile.getStereotype("preserve");
+	
+	private static Stereotype createST = editRuleProfile.getStereotype("create");
+	
+	private static Stereotype deleteST = editRuleProfile.getStereotype("delete");
+	
+	private static Stereotype notST = constraintsProfile.getStereotype("not");
+	
 	private static EClass pseudoResourceClass = GraphpatternPackage.eINSTANCE.getResource();
 	
 	@Override
@@ -71,7 +79,6 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	}
 	
 	public static void generateCreationRules(Pattern pattern, Map<GraphPattern, List<GraphPattern>> editRules) {
-		Stereotype createST = editRuleProfile.getStereotype("create");
 		
 		// Generate edit rules:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
@@ -96,8 +103,6 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	}
 	
 	public static void generateDeletionRules(Pattern pattern, Map<GraphPattern, List<GraphPattern>> editRules) {
-		Stereotype deleteST = editRuleProfile.getStereotype("delete");
-		Stereotype notST = constraintsProfile.getStereotype("not");
 		
 		// Generate edit rules:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
@@ -134,8 +139,6 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	}
 
 	protected static void setConstructionAction(GraphPattern editRule, Stereotype constructionST) {
-		Stereotype preserveST = editRuleProfile.getStereotype("preserve");
-		Stereotype notST = constraintsProfile.getStereotype("not");
 		
 		// Set node actions:
 		for (NodePattern node : editRule.getNodes()) {
@@ -194,13 +197,22 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		// Generate edit rules:
 		// Consider cross-product of all graph patterns:
 		for (GraphPattern fromPattern : allGraphPatterns) {
+			
+//			if (fromPattern.getName().contains("Unique Named Structural Feature in Super-Class")) {
+//				System.out.println(fromPattern.getName());
+//			}
+			
 			for (GraphPattern toPattern : allGraphPatterns) {
 				if (fromPattern != toPattern) {
+					
+//					if (fromPattern.getName().contains("Unique Named Structural Feature in Sub-Class")) {
+//						System.out.println(fromPattern.getName());
+//					}
 					
 					// Check if there is a (full) node matching between the graph patterns:
 					// Compare the nodes by their assigned class types:
 					if (isTypeEqual(fromPattern.getNodes(), toPattern.getNodes())) {
-						System.out.println("transform: " + fromPattern.getName() + " - to - " + toPattern.getName());
+						System.out.println("transform (structural only, same negative constraints): " + fromPattern.getName() + " - to - " + toPattern.getName());
 					}
 				}
 			}
@@ -208,7 +220,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	}
 	
 	private static boolean isTypeEqual(List<NodePattern> nodesA, List<NodePattern> nodesB) {
-		if (nodesA.size() != nodesB.size()) {
+		if (nodesA.size() == nodesB.size()) {
 			Set<NodePattern> remainingB = new HashSet<>(nodesB);
 			
 			for (NodePattern nodePatternA : nodesA) {
@@ -216,8 +228,11 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 				
 				for (NodePattern nodePatternB : remainingB) {
 					if (nodePatternA.getType().equals(nodePatternB.getType())) {
-						match = nodePatternB;
-						break;
+						if ((nodePatternA.getStereotypes().contains(notST) && nodePatternB.getStereotypes().contains(notST)) 
+								|| (!nodePatternA.getStereotypes().contains(notST) && !nodePatternB.getStereotypes().contains(notST))) {
+							match = nodePatternB;
+							break;
+						}
 					}
 				}
 				
