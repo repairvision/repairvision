@@ -1,37 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
-
-   <extension
-         id="ReportGeneratorUML"
-         name="ReportGeneratorUML"
-         point="org.eclipse.core.runtime.applications">
-      <application
-            cardinality="singleton-global"
-            thread="main"
-            visible="true">
-         <run
-               class="org.sidiff.repair.history.generator.reports.ReportGeneratorUML">
-         </run>
-      </application>
-   </extension>
-
-   <extension
-         id="ReportGeneratorEcore"
-         name="ReportGeneratorEcore"
-         point="org.eclipse.core.runtime.applications">
-      <application
-            cardinality="singleton-global"
-            thread="main"
-            visible="true">
-         <run
-               class="org.sidiff.repair.history.generator.reports.ReportGeneratorEcore">
-         </run>
-      </application>
-   </extension>
-
-
    <extension
          point="org.eclipse.ui.handlers">
       <handler
@@ -103,5 +72,4 @@
             name="Print Unique Validation Error Messages">
       </command>
    </extension>
-
 </plugin>
