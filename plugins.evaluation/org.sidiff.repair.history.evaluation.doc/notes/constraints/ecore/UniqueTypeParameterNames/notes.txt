@@ -1,0 +1,14 @@
+Constraint
+_UI_EOperationUniqueParameterNames_diagnostic = There may not be two parameters named ''{0}''
+
+Editierschritte
+
+example 01:
+- set eParameter01.name=VAR2->VAR1 && eParameter02.name=VAR1->VAR2
+
+example 02:
+- create eParameter01 with name=VAR && delete eParameter02 with name=VAR
+
+example 03:
+- create eParameter01 with name=VAR1 && set eParameter02.name=VAR1->VAR2
+- delete eParameter01 with name=VAR1 && set eParameter02.name=VAR2->VAR1
