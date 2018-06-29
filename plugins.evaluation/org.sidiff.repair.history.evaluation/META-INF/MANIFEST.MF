@@ -3,8 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Evaluation
 Bundle-SymbolicName: org.sidiff.repair.history.evaluation;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-ClassPath: .,
- commons-csv-1.4/commons-csv-1.4.jar
+Bundle-ClassPath: .
 Bundle-Activator: org.sidiff.repair.history.evaluation.Activator
 Export-Package: org.sidiff.repair.history.evaluation.driver,
  org.sidiff.repair.history.evaluation.driver.data,
@@ -13,15 +12,14 @@ Export-Package: org.sidiff.repair.history.evaluation.driver,
 Require-Bundle: org.eclipse.core.resources,
  org.eclipse.core.runtime,
  org.eclipse.emf.edit.ui,
+ org.sidiff.common.henshin,
  org.sidiff.common.ui,
  org.sidiff.consistency.common,
- org.sidiff.correspondences.matchingmodel,
  org.sidiff.editrule.recognition,
  org.sidiff.graphpattern,
- org.sidiff.patching,
+ org.sidiff.history.model,
  org.sidiff.repair.api.peo,
  org.sidiff.repair.history.editrules,
- org.sidiff.history.model,
  org.sidiff.repair.ui,
  org.sidiff.validation.constraint.api,
  org.sidiff.validation.constraint.interpreter,

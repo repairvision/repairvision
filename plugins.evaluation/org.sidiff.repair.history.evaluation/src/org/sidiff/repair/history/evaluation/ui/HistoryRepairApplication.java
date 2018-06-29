@@ -238,7 +238,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	}
 	
 	public Collection<Rule> getEditRules() {
-		return EditRuleUtil.loadEditRules(editRuleFiles, false);
+		return EditRuleUtil.loadEditRules(editRuleFiles, false, false);
 	}
 
 	@Override
