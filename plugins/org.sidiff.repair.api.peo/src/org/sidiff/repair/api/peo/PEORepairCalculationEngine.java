@@ -134,6 +134,7 @@ public class PEORepairCalculationEngine {
 		}
 		
 		// Calculate repairs:
+		System.out.println("Re.Vision[CPEOs]: " + settings.getEditRules().size());
 		EGraph graphModelB = new EGraphImpl(modelB);
 		
 		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(difference, modelA, modelB, graphModelB);
