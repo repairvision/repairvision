@@ -121,6 +121,10 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	private Resource getCurrentModelVersion() {
 		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		
+		if (editor == null) {
+			return null;
+		}
+		
 		// check for editor integration extension (supported models):
 		for (IEditorIntegration editorIntegration : IntegrationEditorAccess.getInstance().getIntegrationEditors()) {
 			try {
