@@ -55,8 +55,8 @@ public class CPORepairApplication extends EclipseResourceRepairApplication<CPORe
 				settings = getMatchingSettings();
 				
 				// Load edit-rules:
-				subEditRules = EditRuleUtil.loadEditRules(subEditRuleFiles, true);
-				cpEditRules = EditRuleUtil.loadEditRules(cpEditRuleFiles, true);
+				subEditRules = EditRuleUtil.loadEditRules(subEditRuleFiles, true, true);
+				cpEditRules = EditRuleUtil.loadEditRules(cpEditRuleFiles, true, true);
 				
 				// Calculate repairs:
 				if (!subEditRules.isEmpty() && !cpEditRules.isEmpty()) {
