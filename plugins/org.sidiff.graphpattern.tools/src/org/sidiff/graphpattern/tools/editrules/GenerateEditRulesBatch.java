@@ -3,11 +3,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -16,6 +14,14 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.consistency.common.emf.ModelingUtil;
+import org.sidiff.csp.solver.CSPSolver;
+import org.sidiff.csp.solver.ConstraintSatisfactionProblem;
+import org.sidiff.csp.solver.Domain;
+import org.sidiff.csp.solver.Variable;
+import org.sidiff.csp.solver.impl.CSPSolverImpl;
+import org.sidiff.csp.solver.impl.ConstraintSatisfactionProblemImpl;
+import org.sidiff.csp.solver.impl.VariableImpl;
+import org.sidiff.csp.solver.impl.solution.SolutionsList;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
@@ -198,54 +204,49 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		// Consider cross-product of all graph patterns:
 		for (GraphPattern fromPattern : allGraphPatterns) {
 			
-//			if (fromPattern.getName().contains("Unique Named Structural Feature in Super-Class")) {
+//			if (fromPattern.getName().contains("Two Containment Self-References")) {
 //				System.out.println(fromPattern.getName());
+//			} else {
+//				continue;
 //			}
 			
 			for (GraphPattern toPattern : allGraphPatterns) {
 				if (fromPattern != toPattern) {
 					
-//					if (fromPattern.getName().contains("Unique Named Structural Feature in Sub-Class")) {
-//						System.out.println(fromPattern.getName());
+//					if (toPattern.getName().contains("Two Containment-Container Self-References")) {
+//						System.out.println(toPattern.getName());
+//					} else {
+//						continue;
 //					}
 					
 					// Check if there is a (full) node matching between the graph patterns:
 					// Compare the nodes by their assigned class types:
-					if (isTypeEqual(fromPattern.getNodes(), toPattern.getNodes())) {
-						System.out.println("transform (structural only, same negative constraints): " + fromPattern.getName() + " - to - " + toPattern.getName());
-					}
-				}
-			}
-		}
-	}
-	
-	private static boolean isTypeEqual(List<NodePattern> nodesA, List<NodePattern> nodesB) {
-		if (nodesA.size() == nodesB.size()) {
-			Set<NodePattern> remainingB = new HashSet<>(nodesB);
-			
-			for (NodePattern nodePatternA : nodesA) {
-				NodePattern match = null;
-				
-				for (NodePattern nodePatternB : remainingB) {
-					if (nodePatternA.getType().equals(nodePatternB.getType())) {
-						if ((nodePatternA.getStereotypes().contains(notST) && nodePatternB.getStereotypes().contains(notST)) 
-								|| (!nodePatternA.getStereotypes().contains(notST) && !nodePatternB.getStereotypes().contains(notST))) {
-							match = nodePatternB;
-							break;
+					if (EditRuleGeneratorUtil.isTypeEqual(fromPattern.getNodes(), toPattern.getNodes())) {
+						ConstraintSatisfactionProblem<NodePattern> problem = new ConstraintSatisfactionProblemImpl<>(fromPattern.getNodes().size());
+						problem.setMinimumSolutionSize(fromPattern.getNodes().size());
+						problem.setMaximumSolutionSize(fromPattern.getNodes().size());
+						problem.setSearchMaximumSolutions(true);
+						
+						for (NodePattern fromNode : fromPattern.getNodes()) {
+							Domain<NodePattern> domain = EditRuleGeneratorUtil.getDomain(fromNode, toPattern.getNodes());
+							Variable<NodePattern> variable = new VariableImpl<NodePattern>(domain);
+							problem.addVariable(variable);
 						}
+						
+						SolutionsList<NodePattern> solutions = new SolutionsList<>();
+						CSPSolver<NodePattern> solver = new CSPSolverImpl<>(problem, solutions);
+						solver.run();
+						
+						System.out.println("transform (structural only, same negative constraints)["
+								+ solutions.getSolutions().size() + "]: " + fromPattern.getName() + " - to - "
+								+ toPattern.getName());
+
+//						for (Solution<NodePattern> solution : solutions.getSolutions()) {
+//							
+//						}
 					}
 				}
-				
-				if (match != null) {
-					remainingB.remove(match);
-				} else {
-					return false;
-				}
 			}
-			
-			return true;
-		} else {
-			return false;
 		}
 	}
 }
