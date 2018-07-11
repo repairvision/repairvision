@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.sidiff.csp.solver.impl.domain.DomainImpl;
 import org.sidiff.graphpattern.NodePattern;
 
 public class EditRuleGeneratorUtil {
@@ -34,17 +33,5 @@ public class EditRuleGeneratorUtil {
 		} else {
 			return false;
 		}
-	}
-	
-	public static DomainImpl<NodePattern> getDomain(NodePattern node, List<NodePattern> values) {
-		DomainImpl<NodePattern> domain = new DomainImpl<NodePattern>();
-		
-		for (NodePattern value : values) {
-			if (node.getType().equals(value.getType())) {
-				domain.add(value);
-			}
-		}
-		
-		return domain;
 	}
 }

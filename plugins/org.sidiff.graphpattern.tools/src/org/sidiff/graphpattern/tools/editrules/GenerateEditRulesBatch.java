@@ -21,7 +21,6 @@ import org.sidiff.csp.solver.Variable;
 import org.sidiff.csp.solver.impl.CSPSolverImpl;
 import org.sidiff.csp.solver.impl.ConstraintSatisfactionProblemImpl;
 import org.sidiff.csp.solver.impl.VariableImpl;
-import org.sidiff.csp.solver.impl.solution.SolutionsList;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
@@ -32,6 +31,7 @@ import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Profile;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.profile.extensions.GraphPatternProfileLibrary;
+import org.sidiff.graphpattern.tools.editrules.csp.GraphPatternMatchings;
 
 public class GenerateEditRulesBatch extends AbstractHandler {
 
@@ -222,28 +222,24 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 					// Check if there is a (full) node matching between the graph patterns:
 					// Compare the nodes by their assigned class types:
 					if (EditRuleGeneratorUtil.isTypeEqual(fromPattern.getNodes(), toPattern.getNodes())) {
-						ConstraintSatisfactionProblem<NodePattern> problem = new ConstraintSatisfactionProblemImpl<>(fromPattern.getNodes().size());
+						ConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblemImpl<>(fromPattern.getNodes().size());
 						problem.setMinimumSolutionSize(fromPattern.getNodes().size());
 						problem.setMaximumSolutionSize(fromPattern.getNodes().size());
 						problem.setSearchMaximumSolutions(true);
 						
 						for (NodePattern fromNode : fromPattern.getNodes()) {
-							Domain<NodePattern> domain = EditRuleGeneratorUtil.getDomain(fromNode, toPattern.getNodes());
-							Variable<NodePattern> variable = new VariableImpl<NodePattern>(domain);
+							Domain<NodePattern> domain = GraphPatternMatchings.getDomain(fromNode, toPattern.getNodes());
+							Variable<NodePattern, NodePattern> variable = new VariableImpl<>(fromNode, domain);
 							problem.addVariable(variable);
 						}
 						
-						SolutionsList<NodePattern> solutions = new SolutionsList<>();
-						CSPSolver<NodePattern> solver = new CSPSolverImpl<>(problem, solutions);
+						GraphPatternMatchings matchings = new GraphPatternMatchings(fromPattern, toPattern);
+						CSPSolver<NodePattern, NodePattern> solver = new CSPSolverImpl<>(problem, matchings);
 						solver.run();
 						
 						System.out.println("transform (structural only, same negative constraints)["
-								+ solutions.getSolutions().size() + "]: " + fromPattern.getName() + " - to - "
+								+ matchings.getMatches().size() + "]: " + fromPattern.getName() + " - to - "
 								+ toPattern.getName());
-
-//						for (Solution<NodePattern> solution : solutions.getSolutions()) {
-//							
-//						}
 					}
 				}
 			}
