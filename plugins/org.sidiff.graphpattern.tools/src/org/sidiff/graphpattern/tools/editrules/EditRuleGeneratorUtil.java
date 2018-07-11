@@ -1,8 +1,10 @@
 package org.sidiff.graphpattern.tools.editrules;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.sidiff.graphpattern.AttributePattern;
@@ -49,11 +51,11 @@ public class EditRuleGeneratorUtil {
 		return null;
 	}
 	
-	public static EdgePattern getEdgeMatch(Map<NodePattern, NodePattern> preToRhsMatch, EdgePattern preEdge) {
+	public static EdgePattern getEdgeMatch(Map<NodePattern, NodePattern> preToPostMatch, EdgePattern preEdge) {
 		NodePattern preSourceNode = preEdge.getSource();
 		NodePattern preTargetNode = preEdge.getTarget();
-		NodePattern postSourceNode = preToRhsMatch.get(preSourceNode);
-		NodePattern postTargetNode = preToRhsMatch.get(preTargetNode);
+		NodePattern postSourceNode = preToPostMatch.get(preSourceNode);
+		NodePattern postTargetNode = preToPostMatch.get(preTargetNode);
 		
 		if ((postSourceNode != null) && (postTargetNode != null)) {
 			for (EdgePattern postEdge : postSourceNode.getOutgoings(preEdge.getType())) {
@@ -64,5 +66,32 @@ public class EditRuleGeneratorUtil {
 		}
 		
 		return null;
+	}
+	
+	public static Map<EdgePattern, EdgePattern> getEdgeMatching(Map<NodePattern, NodePattern> preToPostNodeMatch) {
+		Map<EdgePattern, EdgePattern> preToPostEdgeMatch = new HashMap<>();
+		
+		for (Entry<NodePattern, NodePattern> matched : preToPostNodeMatch.entrySet()) {
+			NodePattern preSourceNode = matched.getKey();
+			NodePattern postSourceNode = matched.getValue();
+			
+			for (EdgePattern preOutgoing : preSourceNode.getOutgoings()) {
+				NodePattern preTargetNode = preOutgoing.getTarget();
+				NodePattern postTargetNode = preToPostNodeMatch.get(preTargetNode);
+				
+				if (postTargetNode != null) {
+					for (EdgePattern postOutgoing : postSourceNode.getOutgoings()) {
+						if (postOutgoing.getType() == preOutgoing.getType()) {
+							if (postOutgoing.getTarget() == postTargetNode) {
+								preToPostEdgeMatch.put(preOutgoing, postOutgoing);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return preToPostEdgeMatch;
 	}
 }
