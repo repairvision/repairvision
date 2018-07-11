@@ -13,51 +13,51 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.tools.editrules.EditRuleGeneratorUtil;
 
-public class GraphPatternMatch implements ISolution<NodePattern, NodePattern> {
+public class GraphConstraintMatch implements ISolution<NodePattern, NodePattern> {
 
-	protected GraphPattern lhsGraph;
+	protected GraphPattern preConstraint;
 	
-	protected GraphPattern rhsGraph;
+	protected GraphPattern postConstraint;
 	
-	protected Map<NodePattern, NodePattern> lhsToRhsMatch;
+	protected Map<NodePattern, NodePattern> preToPostMatch;
 	
-	public GraphPatternMatch(GraphPattern lhsGraph, GraphPattern rhsGraph, int size) {
-		this.lhsGraph = lhsGraph;
-		this.rhsGraph = rhsGraph;
-		this.lhsToRhsMatch = new HashMap<NodePattern, NodePattern>((int) ((float) size / 0.75f + 1.0f));
+	public GraphConstraintMatch(GraphPattern preConstraint, GraphPattern postConstraint, int size) {
+		this.preConstraint = preConstraint;
+		this.postConstraint = postConstraint;
+		this.preToPostMatch = new HashMap<NodePattern, NodePattern>((int) ((float) size / 0.75f + 1.0f));
 	}
 	
-	public GraphPattern getLhsGraph() {
-		return lhsGraph;
+	public GraphPattern getPreConstraint() {
+		return preConstraint;
 	}
 	
-	public GraphPattern getRhsGraph() {
-		return rhsGraph;
+	public GraphPattern getPostConstraint() {
+		return postConstraint;
 	}
 	
 	@Override
 	public void store(NodePattern subject, NodePattern value) {
-		lhsToRhsMatch.put(subject, value);
+		preToPostMatch.put(subject, value);
 	}
 	
 	public int getGraphEditDistance() {
 		
 		// nodes:
-		int deletedNodes = Math.abs(lhsGraph.getNodes().size() - size());
-		int createdNodes = Math.abs(rhsGraph.getNodes().size() - size());
+		int deletedNodes = Math.abs(preConstraint.getNodes().size() - size());
+		int createdNodes = Math.abs(postConstraint.getNodes().size() - size());
 		
 		// edges:
 		int deletedEdges = 0;
 		int createdEdges = 0;
 		
-		for (Entry<NodePattern, NodePattern> lhsToRhsMatched : lhsToRhsMatch.entrySet()) {
+		for (Entry<NodePattern, NodePattern> lhsToRhsMatched : preToPostMatch.entrySet()) {
 			NodePattern lhsNode = lhsToRhsMatched.getKey();
 			NodePattern rhsNode = lhsToRhsMatched.getValue();
 			
 			List<EdgePattern> rhsMatchedEdges = new ArrayList<>();
 			
 			for (EdgePattern lhsEdge : lhsNode.getOutgoings()) {
-				EdgePattern rhsEdge = EditRuleGeneratorUtil.getEdgeMatch(lhsToRhsMatch, lhsEdge);
+				EdgePattern rhsEdge = EditRuleGeneratorUtil.getEdgeMatch(preToPostMatch, lhsEdge);
 				
 				if (rhsEdge != null) {
 					rhsMatchedEdges.add(rhsEdge);
@@ -76,11 +76,11 @@ public class GraphPatternMatch implements ISolution<NodePattern, NodePattern> {
 		// attributes:
 		int attributeValueChanges = 0;
 		
-		for (Entry<NodePattern, NodePattern> lhsToRhsMatched : lhsToRhsMatch.entrySet()) {
+		for (Entry<NodePattern, NodePattern> lhsToRhsMatched : preToPostMatch.entrySet()) {
 			NodePattern lhsNode = lhsToRhsMatched.getKey();
 		
 			for (AttributePattern lhsAttribute : lhsNode.getAttributes()) {
-				AttributePattern rhsAttribute = EditRuleGeneratorUtil.getAttributeMatch(lhsToRhsMatch, lhsAttribute);
+				AttributePattern rhsAttribute = EditRuleGeneratorUtil.getAttributeMatch(preToPostMatch, lhsAttribute);
 				
 				if (rhsAttribute != null) {
 					if (!lhsAttribute.getValue().equals(rhsAttribute.getValue())) {
@@ -94,11 +94,11 @@ public class GraphPatternMatch implements ISolution<NodePattern, NodePattern> {
 		return editDistance;
 	}
 	
-	public Map<NodePattern, NodePattern> getLhsToRhsMatch() {
-		return lhsToRhsMatch;
+	public Map<NodePattern, NodePattern> getMatch() {
+		return preToPostMatch;
 	}
 
 	public int size() {
-		return lhsToRhsMatch.size();
+		return preToPostMatch.size();
 	}
 }

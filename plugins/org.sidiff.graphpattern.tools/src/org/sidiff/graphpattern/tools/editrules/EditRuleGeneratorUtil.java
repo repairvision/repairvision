@@ -38,27 +38,27 @@ public class EditRuleGeneratorUtil {
 		}
 	}
 	
-	public static AttributePattern getAttributeMatch(Map<NodePattern, NodePattern> lhsToRhsMatch, AttributePattern lhsAttribute) {
-		NodePattern lhsNode = lhsAttribute.getNode();
-		NodePattern rhsNode = lhsToRhsMatch.get(lhsNode);
+	public static AttributePattern getAttributeMatch(Map<NodePattern, NodePattern> proToPostMatch, AttributePattern postAttribute) {
+		NodePattern preNode = postAttribute.getNode();
+		NodePattern postNode = proToPostMatch.get(preNode);
 		
-		if (rhsNode != null) {
-			return rhsNode.getAttribute(lhsAttribute.getType());
+		if (postNode != null) {
+			return postNode.getAttribute(postAttribute.getType());
 		}
 		
 		return null;
 	}
 	
-	public static EdgePattern getEdgeMatch(Map<NodePattern, NodePattern> lhsToRhsMatch, EdgePattern lhsEdge) {
-		NodePattern lhsSourceNode = lhsEdge.getSource();
-		NodePattern lhsTargetNode = lhsEdge.getTarget();
-		NodePattern rhsSourceNode = lhsToRhsMatch.get(lhsSourceNode);
-		NodePattern rhsTargetNode = lhsToRhsMatch.get(lhsTargetNode);
+	public static EdgePattern getEdgeMatch(Map<NodePattern, NodePattern> preToRhsMatch, EdgePattern preEdge) {
+		NodePattern preSourceNode = preEdge.getSource();
+		NodePattern preTargetNode = preEdge.getTarget();
+		NodePattern postSourceNode = preToRhsMatch.get(preSourceNode);
+		NodePattern postTargetNode = preToRhsMatch.get(preTargetNode);
 		
-		if ((rhsSourceNode != null) && (rhsTargetNode != null)) {
-			for (EdgePattern rhsEdge : rhsSourceNode.getOutgoings(lhsEdge.getType())) {
-				if (rhsEdge.getTarget() == rhsTargetNode) {
-					return rhsEdge;
+		if ((postSourceNode != null) && (postTargetNode != null)) {
+			for (EdgePattern postEdge : postSourceNode.getOutgoings(preEdge.getType())) {
+				if (postEdge.getTarget() == postTargetNode) {
+					return postEdge;
 				}
 			}
 		}

@@ -7,7 +7,7 @@ import org.sidiff.graphpattern.NodePattern;
 
 public class EditRuleGenerator {
 
-	public static GraphPattern generate(GraphPattern lhsGraph, GraphPattern rhsGraph, Map<NodePattern, NodePattern> mapping) {
+	public static GraphPattern generate(GraphPattern preConstraint, GraphPattern postConstraint, Map<NodePattern, NodePattern> matching) {
 		return null;
 	}
 }

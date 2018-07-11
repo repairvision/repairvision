@@ -31,8 +31,8 @@ import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Profile;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.profile.extensions.GraphPatternProfileLibrary;
-import org.sidiff.graphpattern.tools.editrules.csp.GraphPatternMatch;
-import org.sidiff.graphpattern.tools.editrules.csp.GraphPatternMatchings;
+import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatch;
+import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatchings;
 
 public class GenerateEditRulesBatch extends AbstractHandler {
 
@@ -199,54 +199,54 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	}
 	
 	public static void generateStructuralTransformationRules(Pattern pattern, Map<GraphPattern, List<GraphPattern>> editRules) {
-		List<GraphPattern> allGraphPatterns = pattern.getAllGraphPatterns();
+		List<GraphPattern> allConstraints = pattern.getAllGraphPatterns();
 		
 		// Generate edit rules:
 		// Consider cross-product of all graph patterns:
-		for (GraphPattern fromPattern : allGraphPatterns) {
+		for (GraphPattern preConstraint : allConstraints) {
 			
-//			if (fromPattern.getName().contains("Two Containment Self-References")) {
-//				System.out.println(fromPattern.getName());
-//			} else {
-//				continue;
-//			}
+			if (preConstraint.getName().contains("Two Containment Self-References")) {
+				System.out.println(preConstraint.getName());
+			} else {
+				continue;
+			}
 			
-			for (GraphPattern toPattern : allGraphPatterns) {
-				if (fromPattern != toPattern) {
+			for (GraphPattern postConstraint : allConstraints) {
+				if (preConstraint != postConstraint) {
 					
-//					if (toPattern.getName().contains("Two Containment-Container Self-References")) {
-//						System.out.println(toPattern.getName());
-//					} else {
-//						continue;
-//					}
+					if (postConstraint.getName().contains("Two Containment-Container Self-References")) {
+						System.out.println(postConstraint.getName());
+					} else {
+						continue;
+					}
 					
 					// Check if there is a (full) node matching between the graph patterns:
 					// Compare the nodes by their assigned class types:
-					if (EditRuleGeneratorUtil.isTypeEqual(fromPattern.getNodes(), toPattern.getNodes())) {
-						IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(fromPattern.getNodes().size());
-						problem.setMinimumSolutionSize(fromPattern.getNodes().size());
-						problem.setMaximumSolutionSize(fromPattern.getNodes().size());
+					if (EditRuleGeneratorUtil.isTypeEqual(preConstraint.getNodes(), postConstraint.getNodes())) {
+						IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(preConstraint.getNodes().size());
+						problem.setMinimumSolutionSize(preConstraint.getNodes().size());
+						problem.setMaximumSolutionSize(preConstraint.getNodes().size());
 						problem.setSearchMaximumSolutions(true);
 						
-						for (NodePattern fromNode : fromPattern.getNodes()) {
-							IDomain<NodePattern> domain = GraphPatternMatchings.getDomain(fromNode, toPattern.getNodes());
+						for (NodePattern fromNode : preConstraint.getNodes()) {
+							IDomain<NodePattern> domain = GraphConstraintMatchings.getDomain(fromNode, postConstraint.getNodes());
 							IVariable<NodePattern, NodePattern> variable = new Variable<>(fromNode, domain);
 							problem.addVariable(variable);
 						}
 						
-						GraphPatternMatchings matchings = new GraphPatternMatchings(fromPattern, toPattern);
+						GraphConstraintMatchings matchings = new GraphConstraintMatchings(preConstraint, postConstraint);
 						ICSPSolver<NodePattern, NodePattern> solver = new CSPSolver<>(problem, matchings);
 						solver.run();
 						
 						System.out.println("structural transform["
-								+ matchings.getMatches().size() + "]: " + fromPattern.getName() + " - to - "
-								+ toPattern.getName());
+								+ matchings.getMatches().size() + "]: " + preConstraint.getName() + " - to - "
+								+ postConstraint.getName());
 						
-						for (GraphPatternMatch match : matchings.getMatches()) {
+						for (GraphConstraintMatch match : matchings.getMatches()) {
 							GraphPattern editRule = EditRuleGenerator.generate(
-									match.getLhsGraph(), 
-									match.getRhsGraph(),
-									match.getLhsToRhsMatch());
+									match.getPreConstraint(), 
+									match.getPostConstraint(),
+									match.getMatch());
 						}
 					}
 				}

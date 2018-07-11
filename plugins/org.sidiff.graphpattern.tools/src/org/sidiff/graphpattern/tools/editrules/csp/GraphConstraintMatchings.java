@@ -8,25 +8,25 @@ import org.sidiff.csp.solver.impl.domain.Domain;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 
-public class GraphPatternMatchings implements ISolutions<NodePattern, NodePattern, GraphPatternMatch> {
+public class GraphConstraintMatchings implements ISolutions<NodePattern, NodePattern, GraphConstraintMatch> {
 
-	protected GraphPattern lhsGraph;
+	protected GraphPattern preConstraint;
 	
-	protected GraphPattern rhsGraph;
+	protected GraphPattern postConstraint;
 	
 	protected int minimumGraphEditDistance; 
 	
-	protected List<GraphPatternMatch> matches = new ArrayList<>();
+	protected List<GraphConstraintMatch> matches = new ArrayList<>();
 	
-	public GraphPatternMatchings(GraphPattern lhsGraph, GraphPattern rhsGraph) {
+	public GraphConstraintMatchings(GraphPattern preConstraint, GraphPattern postConstraint) {
 		super();
-		this.lhsGraph = lhsGraph;
-		this.rhsGraph = rhsGraph;
+		this.preConstraint = preConstraint;
+		this.postConstraint = postConstraint;
 		reset();
 	}
 
 	@Override
-	public void add(GraphPatternMatch match) {
+	public void add(GraphConstraintMatch match) {
 		int graphEditDistance = match.getGraphEditDistance();
 		
 		if (graphEditDistance <= 0) {
@@ -50,11 +50,11 @@ public class GraphPatternMatchings implements ISolutions<NodePattern, NodePatter
 	}
 
 	@Override
-	public GraphPatternMatch createSolution(int size) {
-		return new GraphPatternMatch(lhsGraph, rhsGraph, size);
+	public GraphConstraintMatch createSolution(int size) {
+		return new GraphConstraintMatch(preConstraint, postConstraint, size);
 	}
 	
-	public List<GraphPatternMatch> getMatches() {
+	public List<GraphConstraintMatch> getMatches() {
 		return matches;
 	}
 	
