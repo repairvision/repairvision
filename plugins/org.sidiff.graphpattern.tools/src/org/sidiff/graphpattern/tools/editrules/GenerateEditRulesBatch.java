@@ -204,21 +204,22 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		// Generate edit rules:
 		// Consider cross-product of all graph patterns:
 		for (GraphPattern preConstraint : allConstraints) {
+			List<GraphPattern> transformationRules = new ArrayList<>();
 			
-			if (preConstraint.getName().contains("Two Containment Self-References")) {
-				System.out.println(preConstraint.getName());
-			} else {
-				continue;
-			}
+//			if (preConstraint.getName().contains("Two Containment Self-References")) {
+//				System.out.println(preConstraint.getName());
+//			} else {
+//				continue;
+//			}
 			
 			for (GraphPattern postConstraint : allConstraints) {
 				if (preConstraint != postConstraint) {
 					
-					if (postConstraint.getName().contains("Two Containment-Container Self-References")) {
-						System.out.println(postConstraint.getName());
-					} else {
-						continue;
-					}
+//					if (postConstraint.getName().contains("Two Containment-Container Self-References")) {
+//						System.out.println(postConstraint.getName());
+//					} else {
+//						continue;
+//					}
 					
 					// Check if there is a (full) node matching between the graph patterns:
 					// Compare the nodes by their assigned class types:
@@ -242,15 +243,21 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 								+ matchings.getMatches().size() + "]: " + preConstraint.getName() + " - to - "
 								+ postConstraint.getName());
 						
+						// Generate edit rules:
 						for (GraphConstraintMatch match : matchings.getMatches()) {
-							GraphPattern editRule = EditRuleGenerator.generate(
+							GraphPattern transformationRule = EditRuleGenerator.generate(
 									match.getPreConstraint(), 
 									match.getPostConstraint(),
 									match.getMatch());
+							
+							transformationRules.add(transformationRule);
 						}
 					}
 				}
 			}
+			
+			// Add new edit rule for graph pattern:
+			editRules.merge(preConstraint, transformationRules, (v1, v2) -> {v1.addAll(v2); return v1;});
 		}
 	}
 }
