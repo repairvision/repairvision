@@ -31,6 +31,7 @@ import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Profile;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.profile.extensions.GraphPatternProfileLibrary;
+import org.sidiff.graphpattern.tools.editrules.csp.GraphPatternMatch;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphPatternMatchings;
 
 public class GenerateEditRulesBatch extends AbstractHandler {
@@ -240,6 +241,13 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 						System.out.println("structural transform["
 								+ matchings.getMatches().size() + "]: " + fromPattern.getName() + " - to - "
 								+ toPattern.getName());
+						
+						for (GraphPatternMatch match : matchings.getMatches()) {
+							GraphPattern editRule = EditRuleGenerator.generate(
+									match.getLhsGraph(), 
+									match.getRhsGraph(),
+									match.getLhsToRhsMatch());
+						}
 					}
 				}
 			}
