@@ -3,12 +3,12 @@ package org.sidiff.graphpattern.tools.editrules.csp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sidiff.csp.solver.Solutions;
-import org.sidiff.csp.solver.impl.domain.DomainImpl;
+import org.sidiff.csp.solver.ISolutions;
+import org.sidiff.csp.solver.impl.domain.Domain;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 
-public class GraphPatternMatchings implements Solutions<NodePattern, NodePattern, GraphPatternMatch> {
+public class GraphPatternMatchings implements ISolutions<NodePattern, NodePattern, GraphPatternMatch> {
 
 	protected GraphPattern lhsGraph;
 	
@@ -58,8 +58,8 @@ public class GraphPatternMatchings implements Solutions<NodePattern, NodePattern
 		return matches;
 	}
 	
-	public static DomainImpl<NodePattern> getDomain(NodePattern node, List<NodePattern> values) {
-		DomainImpl<NodePattern> domain = new DomainImpl<NodePattern>();
+	public static Domain<NodePattern> getDomain(NodePattern node, List<NodePattern> values) {
+		Domain<NodePattern> domain = new Domain<NodePattern>();
 		
 		for (NodePattern value : values) {
 			if (node.getType().equals(value.getType())) {
