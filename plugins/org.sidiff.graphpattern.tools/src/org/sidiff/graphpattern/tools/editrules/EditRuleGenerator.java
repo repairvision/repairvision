@@ -3,7 +3,9 @@ package org.sidiff.graphpattern.tools.editrules;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
+import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
@@ -22,72 +24,94 @@ public class EditRuleGenerator {
 	
 	private static Stereotype deleteST = editRuleProfile.getStereotype("delete");
 	
-	public static GraphPattern generate(
+	public static GraphPattern generate(String name,
 			GraphPattern preConstraint, GraphPattern postConstraint, 
 			Map<NodePattern, NodePattern> nodeMatching) {
 		
-		Map<EdgePattern,EdgePattern> edgeMatching = EditRuleGeneratorUtil.getEdgeMatching(nodeMatching);
+		Map<EdgePattern, EdgePattern> edgeMatching = EditRuleGeneratorUtil.getEdgeMatching(nodeMatching);
+		Copier copier = createCopier();
 		
+		// (1.) Merge pre- and post-constraint based on the given matching:
+		// (2.) Assign edit rule actions to the merge graph.
 		GraphPattern editRule = GraphpatternFactory.eINSTANCE.createGraphPattern();
-		Copier copier = new Copier();
+		editRule.setName(name);
 		
-		// << create/preserve >> nodes/edges:
-		// NOTE: Edges will be copied implicitly.
+		// << create/preserve >>:
 		for (NodePattern postNode : postConstraint.getNodes()) {
 			if (nodeMatching.containsValue(postNode)) {
-				
-				// << preserve >> node/edges:
-				NodePattern contextNode = (NodePattern) copier.copy(postNode);
+				NodePattern contextNode = copyNode(postNode, copier);
 				contextNode.getStereotypes().add(preserveST);
 				editRule.getNodes().add(contextNode);
 				
-				for (EdgePattern createOrContextEdge : contextNode.getOutgoings()) {
-					EdgePattern postEdge = (EdgePattern) copier.get(createOrContextEdge);
-					
+				for (EdgePattern postEdge : postNode.getOutgoings()) {
 					if (edgeMatching.containsValue(postEdge)) {
-						createOrContextEdge.getStereotypes().add(preserveST);
+						EdgePattern createEdge = copyEdge(postEdge, copier);
+						createEdge.getStereotypes().add(preserveST);
+						contextNode.getOutgoings().add(createEdge);
 					} else {
-						createOrContextEdge.getStereotypes().add(createST);
+						EdgePattern contextEdge = copyEdge(postEdge, copier);
+						contextEdge.getStereotypes().add(createST);
+						contextNode.getOutgoings().add(contextEdge);
+					}
+				}
+				
+				for (AttributePattern postAttribute : postNode.getAttributes()) {
+					if (EditRuleGeneratorUtil.getAttributeMatch(nodeMatching, postAttribute) != null) {
+						AttributePattern contextAttribute = copyAttribute(postAttribute, copier);
+						contextAttribute.getStereotypes().add(preserveST);
+						contextNode.getAttributes().add(contextAttribute);
+					} else {
+						AttributePattern createAttribute = copyAttribute(postAttribute, copier);
+						createAttribute.getStereotypes().add(createST);
+						contextNode.getAttributes().add(createAttribute);
 					}
 				}
 			} else {
-				
-				// << create >> node/edges:
-				NodePattern createNode = (NodePattern) copier.copy(postNode);
+				NodePattern createNode = copyNode(postNode, copier);
 				createNode.getStereotypes().add(createST);
 				editRule.getNodes().add(createNode);
 				
-				for (EdgePattern createEdge : createNode.getOutgoings()) {
+				for (EdgePattern postEdge : postNode.getOutgoings()) {
+					EdgePattern createEdge = copyEdge(postEdge, copier);
 					createEdge.getStereotypes().add(createST);
+					createNode.getOutgoings().add(createEdge);
+				}
+				
+				for (AttributePattern postAttribute : postNode.getAttributes()) {
+					AttributePattern createAttribute = copyAttribute(postAttribute, copier);
+					createAttribute.getStereotypes().add(createST);
+					createNode.getAttributes().add(createAttribute);
 				}
 			}
 		}
 		
-		// << delete >> nodes/edges:
-		// NOTE: Edges of create-nodes will be copied implicitly.
+		// << delete >>:
 		for (NodePattern preNode : preConstraint.getNodes()) {
-			
 			if (nodeMatching.containsKey(preNode)) {
-				
-				// << delete >> edges
 				NodePattern contextNode = (NodePattern) copier.get(nodeMatching.get(preNode));
 						
 				for (EdgePattern preEdge : preNode.getOutgoings()) {
 					if (!edgeMatching.containsKey(preEdge)) {
-						EdgePattern deleteEdge = (EdgePattern) copier.copy(preEdge);
+						EdgePattern deleteEdge = copyEdge(preEdge, copier);
 						deleteEdge.getStereotypes().add(deleteST);
 						contextNode.getOutgoings().add(deleteEdge);
 					}
 				}
 			} else {
-				
-				// << delete >> node/edges:
-				NodePattern deleteNode = (NodePattern) copier.copy(preNode);
+				NodePattern deleteNode = copyNode(preNode, copier);
 				deleteNode.getStereotypes().add(deleteST);
 				editRule.getNodes().add(deleteNode);
 				
-				for (EdgePattern deleteEdge : deleteNode.getOutgoings()) {
+				for (EdgePattern preEdge : preNode.getOutgoings()) {
+					EdgePattern deleteEdge = copyEdge(preEdge, copier);
 					deleteEdge.getStereotypes().add(deleteST);
+					deleteNode.getOutgoings().add(deleteEdge);
+				}
+				
+				for (AttributePattern preAttribute : preNode.getAttributes()) {
+					AttributePattern deleteAttribute = copyAttribute(preAttribute, copier);
+					deleteAttribute.getStereotypes().add(deleteST);
+					deleteNode.getAttributes().add(deleteAttribute);
 				}
 			}
 		}
@@ -112,5 +136,35 @@ public class EditRuleGenerator {
 		}
 		
 		return editRule;
+	}
+	
+	@SuppressWarnings("serial")
+	private static Copier createCopier() {
+		return new Copier() {
+			@Override
+			protected void copyContainment(EReference eReference, EObject eObject, EObject copyEObject) {
+			}
+		};
+	}
+	
+	private static NodePattern copyNode(NodePattern node, Copier copier) {
+		NodePattern copy = (NodePattern) copier.copy(node);
+		copy.setType(node.getType());
+		copy.getStereotypes().addAll(node.getStereotypes());
+		return copy;
+	}
+	
+	private static EdgePattern copyEdge(EdgePattern edge, Copier copier) {
+		EdgePattern copy = (EdgePattern) copier.copy(edge);
+		copy.setType(edge.getType());
+		copy.getStereotypes().addAll(edge.getStereotypes());
+		return copy;
+	}
+	
+	private static AttributePattern copyAttribute(AttributePattern attribute, Copier copier) {
+		AttributePattern copy = (AttributePattern) copier.copy(attribute);
+		copy.setType(attribute.getType());
+		copy.getStereotypes().addAll(attribute.getStereotypes());
+		return copy;
 	}
 }

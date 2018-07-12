@@ -239,13 +239,15 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 						ICSPSolver<NodePattern, NodePattern> solver = new CSPSolver<>(problem, matchings);
 						solver.run();
 						
-						System.out.println("structural transform["
+						String name = "structural transform["
 								+ matchings.getMatches().size() + "]: " + preConstraint.getName() + " - to - "
-								+ postConstraint.getName());
+								+ postConstraint.getName();
+						
+						System.out.println(name);
 						
 						// Generate edit rules:
 						for (GraphConstraintMatch match : matchings.getMatches()) {
-							GraphPattern transformationRule = EditRuleGenerator.generate(
+							GraphPattern transformationRule = EditRuleGenerator.generate(name,
 									match.getPreConstraint(), 
 									match.getPostConstraint(),
 									match.getMatch());
