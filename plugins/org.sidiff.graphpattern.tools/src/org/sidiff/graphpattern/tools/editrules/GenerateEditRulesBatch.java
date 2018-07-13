@@ -70,6 +70,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			}
 			
 			editRules.forEach((pattern, rules) -> pattern.getPattern().getGraphs().addAll(rules));
+//			System.out.println("Edit Rules: " + editRules.values().stream().mapToInt(List::size).sum());
 			
 			// Save edit rules:
 			URI originalURI = patternBundle.eResource().getURI();
