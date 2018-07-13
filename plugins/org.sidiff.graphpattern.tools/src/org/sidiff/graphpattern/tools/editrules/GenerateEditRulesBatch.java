@@ -247,7 +247,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 								+ preConstraint.getName() + " - to - "
 								+ postConstraint.getName();
 						
-						System.out.println("[" + matchings.getMatches().size() + "]: " + name);
+//						System.out.println("[" + matchings.getMatches().size() + "]: " + name);
 						
 						// Generate edit rules:
 						int counter = 0;
@@ -268,11 +268,6 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 							} else {
 								transformationRule.setName(name);
 							}
-									
-//							EditRuleGenerator.generate(name + "(" + ++counter + ")" ,
-//									match.getPreConstraint(), 
-//									match.getPostConstraint(),
-//									match.getMatch());
 							
 							transformationRules.add(transformationRule);
 						}
