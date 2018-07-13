@@ -2,6 +2,7 @@ package org.sidiff.graphpattern.tools.editrules.csp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.sidiff.csp.solver.ISolutions;
 import org.sidiff.csp.solver.impl.domain.Domain;
@@ -59,10 +60,14 @@ public class GraphConstraintMatchings implements ISolutions<NodePattern, NodePat
 	}
 	
 	public static Domain<NodePattern> getDomain(NodePattern node, List<NodePattern> values) {
+		return getDomain(node, values, n -> true);
+	}
+	
+	public static Domain<NodePattern> getDomain(NodePattern node, List<NodePattern> values, Predicate<NodePattern> predicate) {
 		Domain<NodePattern> domain = new Domain<NodePattern>();
 		
-		for (NodePattern value : values) {
-			if (node.getType().equals(value.getType())) {
+		for (NodePattern  value : values) {
+			if (predicate.test(value) && node.getType().equals(value.getType())) {
 				domain.add(value);
 			}
 		}

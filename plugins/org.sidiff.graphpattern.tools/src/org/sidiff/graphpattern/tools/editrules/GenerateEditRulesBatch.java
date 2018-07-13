@@ -33,6 +33,7 @@ import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.profile.extensions.GraphPatternProfileLibrary;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatch;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatchings;
+import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
 
 public class GenerateEditRulesBatch extends AbstractHandler {
 
@@ -206,20 +207,20 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		for (GraphPattern preConstraint : allConstraints) {
 			List<GraphPattern> transformationRules = new ArrayList<>();
 			
-			if (preConstraint.getName().contains("Unique Named Structural Feature in Sub-Class")) {
-				System.out.println(preConstraint.getName());
-			} else {
-				continue;
-			}
+//			if (preConstraint.getName().contains("Concrete Class")) {
+//				System.out.println(preConstraint.getName());
+//			} else {
+//				continue;
+//			}
 			
 			for (GraphPattern postConstraint : allConstraints) {
 				if (preConstraint != postConstraint) {
 					
-					if (postConstraint.getName().contains("Unique Named Structural Feature in Super-Class")) {
-						System.out.println(postConstraint.getName());
-					} else {
-						continue;
-					}
+//					if (postConstraint.getName().contains("Abstract Class")) {
+//						System.out.println(postConstraint.getName());
+//					} else {
+//						continue;
+//					}
 					
 					// Check if there is a (full) node matching between the graph patterns:
 					// Compare the nodes by their assigned class types:
@@ -231,7 +232,9 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 						problem.setSearchInjectiveSolutions(true);
 						
 						for (NodePattern fromNode : preConstraint.getNodes()) {
-							IDomain<NodePattern> domain = GraphConstraintMatchings.getDomain(fromNode, postConstraint.getNodes());
+							IDomain<NodePattern> domain = GraphConstraintMatchings.getDomain(fromNode, 
+									postConstraint.getNodes(), 
+									n -> !n.getStereotypes().contains(notST));
 							IVariable<NodePattern, NodePattern> variable = new Variable<>(fromNode, domain, false);
 							problem.addVariable(variable);
 						}
@@ -240,18 +243,36 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 						ICSPSolver<NodePattern, NodePattern> solver = new CSPSolver<>(problem, matchings);
 						solver.run();
 						
-						String name = "structural transform["
-								+ matchings.getMatches().size() + "]: " + preConstraint.getName() + " - to - "
+						String name = "structural transform: "
+								+ preConstraint.getName() + " - to - "
 								+ postConstraint.getName();
 						
-						System.out.println(name);
+						System.out.println("[" + matchings.getMatches().size() + "]: " + name);
 						
 						// Generate edit rules:
+						int counter = 0;
+						int count = matchings.getMatches().size();
+						
 						for (GraphConstraintMatch match : matchings.getMatches()) {
-							GraphPattern transformationRule = EditRuleGenerator.generate(name,
+							GraphPatternEditRuleGenerator editRuleGenerator = new GraphPatternEditRuleGenerator(
 									match.getPreConstraint(), 
 									match.getPostConstraint(),
 									match.getMatch());
+							editRuleGenerator.generate(
+									match.getPreConstraint().getNodes(), 
+									match.getPostConstraint().getNodes());
+							GraphPattern transformationRule = editRuleGenerator.getEditRule();
+							
+							if (count > 1) {
+								transformationRule.setName(name + " (" + ++counter + ")");
+							} else {
+								transformationRule.setName(name);
+							}
+									
+//							EditRuleGenerator.generate(name + "(" + ++counter + ")" ,
+//									match.getPreConstraint(), 
+//									match.getPostConstraint(),
+//									match.getMatch());
 							
 							transformationRules.add(transformationRule);
 						}
