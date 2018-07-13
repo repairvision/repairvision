@@ -206,20 +206,20 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		for (GraphPattern preConstraint : allConstraints) {
 			List<GraphPattern> transformationRules = new ArrayList<>();
 			
-//			if (preConstraint.getName().contains("Two Containment Self-References")) {
-//				System.out.println(preConstraint.getName());
-//			} else {
-//				continue;
-//			}
+			if (preConstraint.getName().contains("Unique Named Structural Feature in Sub-Class")) {
+				System.out.println(preConstraint.getName());
+			} else {
+				continue;
+			}
 			
 			for (GraphPattern postConstraint : allConstraints) {
 				if (preConstraint != postConstraint) {
 					
-//					if (postConstraint.getName().contains("Two Containment-Container Self-References")) {
-//						System.out.println(postConstraint.getName());
-//					} else {
-//						continue;
-//					}
+					if (postConstraint.getName().contains("Unique Named Structural Feature in Super-Class")) {
+						System.out.println(postConstraint.getName());
+					} else {
+						continue;
+					}
 					
 					// Check if there is a (full) node matching between the graph patterns:
 					// Compare the nodes by their assigned class types:
@@ -228,10 +228,11 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 						problem.setMinimumSolutionSize(preConstraint.getNodes().size());
 						problem.setMaximumSolutionSize(preConstraint.getNodes().size());
 						problem.setSearchMaximumSolutions(true);
+						problem.setSearchInjectiveSolutions(true);
 						
 						for (NodePattern fromNode : preConstraint.getNodes()) {
 							IDomain<NodePattern> domain = GraphConstraintMatchings.getDomain(fromNode, postConstraint.getNodes());
-							IVariable<NodePattern, NodePattern> variable = new Variable<>(fromNode, domain);
+							IVariable<NodePattern, NodePattern> variable = new Variable<>(fromNode, domain, false);
 							problem.addVariable(variable);
 						}
 						
