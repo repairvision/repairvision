@@ -1,5 +1,10 @@
 package org.sidiff.graphpattern.tools.editrules.generator;
 
+import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.create;
+import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.delete;
+import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.forbid;
+import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.preserve;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,22 +17,10 @@ import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.Profile;
 import org.sidiff.graphpattern.Stereotype;
-import org.sidiff.graphpattern.profile.extensions.GraphPatternProfileLibrary;
 
 public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 
-	protected static Profile editRuleProfile = GraphPatternProfileLibrary.getEntry("org.sidiff.graphpattern.profile.henshin").getProfile().getProfile();
-	
-	protected static Stereotype preserveST = editRuleProfile.getStereotype("preserve");
-	
-	protected static Stereotype createST = editRuleProfile.getStereotype("create");
-	
-	protected static Stereotype deleteST = editRuleProfile.getStereotype("delete");
-	
-	protected static Stereotype forbidST = editRuleProfile.getStereotype("forbid");
-	
 	protected Copier copier = createCopier();
 	
 	protected Map<NodePattern, NodePattern> contextTrace = new HashMap<>();
@@ -95,54 +88,54 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 	}
 	
 	protected void generateCreate(NodePattern toNode) {
-		generateNode(toNode, createST);
+		generateNode(toNode, create);
 	}
 	
 	protected void generateCreate(EdgePattern toEdge) {
-		generateEdge(toEdge, createST);
+		generateEdge(toEdge, create);
 	}
 	
 	protected void generateCreate(AttributePattern toAttribute) {
-		generateAttribute(toAttribute, createST);
+		generateAttribute(toAttribute, create);
 	}
 	
 	protected void generateDelete(NodePattern fromNode) {
-		generateNode(fromNode, deleteST);
+		generateNode(fromNode, delete);
 	}
 	
 	protected void generateDelete(EdgePattern fromEdge) {
-		generateEdge(fromEdge, deleteST);
+		generateEdge(fromEdge, delete);
 	}
 	
 	protected void generateDelete(AttributePattern fromAttribute) {
-		generateAttribute(fromAttribute, deleteST);
+		generateAttribute(fromAttribute, delete);
 	}
 	
 	protected void generateContext(NodePattern fromNode, NodePattern toNode) {
-		NodePattern eoNode = generateNode(toNode, preserveST);
+		NodePattern eoNode = generateNode(toNode, preserve);
 		
 		contextTrace.put(fromNode, eoNode);
 		contextTrace.put(toNode, eoNode);
 	}
 	
 	protected void generateContext(EdgePattern fromEdge, EdgePattern toEdge) {
-		generateEdge(toEdge, preserveST);
+		generateEdge(toEdge, preserve);
 	}
 	
 	protected void generateContext(AttributePattern fromAttribute, AttributePattern toAttribute) {
-		generateAttribute(fromAttribute, preserveST);
+		generateAttribute(fromAttribute, preserve);
 	}
 	
 	protected void generateForbid(NodePattern toNode) {
-		generateNode(toNode, forbidST);
+		generateNode(toNode, forbid);
 	}
 	
 	protected void generateForbid(EdgePattern toEdge) {
-		generateEdge(toEdge, forbidST);
+		generateEdge(toEdge, forbid);
 	}
 	
 	protected void generateForbid(AttributePattern toAttribute) {
-		generateAttribute(toAttribute, forbidST);
+		generateAttribute(toAttribute, forbid);
 	}
 	
 	@SuppressWarnings("serial")
