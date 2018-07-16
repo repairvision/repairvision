@@ -1,6 +1,7 @@
 package org.sidiff.graphpattern.tools.editrules;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.rule;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
@@ -90,6 +91,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			// Copy graph constraints:
 			GraphPattern editRule = (GraphPattern) ModelingUtil.deepCopy(graphPattern).get(graphPattern);
 			editRule.setName("create: " + graphPattern.getName());
+			editRule.getStereotypes().add(rule);
 			creationRules.add(editRule);
 			
 			// Set edit rule actions:
@@ -114,6 +116,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			// Copy graph constraints:
 			GraphPattern editRule = (GraphPattern) ModelingUtil.deepCopy(graphPattern).get(graphPattern);
 			editRule.setName("delete: " + graphPattern.getName());
+			editRule.getStereotypes().add(rule);
 			deletionRules.add(editRule);
 			
 			// Remove negative graph constraints:
