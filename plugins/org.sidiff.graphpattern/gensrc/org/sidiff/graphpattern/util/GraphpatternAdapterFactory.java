@@ -180,6 +180,10 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 				return createResourceAdapter();
 			}
 			@Override
+			public Adapter caseExtendable(Extendable object) {
+				return createExtendableAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -476,6 +480,20 @@ public class GraphpatternAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createResourceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.graphpattern.Extendable <em>Extendable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.graphpattern.Extendable
+	 * @generated
+	 */
+	public Adapter createExtendableAdapter() {
 		return null;
 	}
 

@@ -91,6 +91,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				GraphPattern graphPattern = (GraphPattern)theEObject;
 				T result = caseGraphPattern(graphPattern);
 				if (result == null) result = casePatternElement(graphPattern);
+				if (result == null) result = caseExtendable(graphPattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -99,6 +100,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				T result = caseNodePattern(nodePattern);
 				if (result == null) result = caseGraphElement(nodePattern);
 				if (result == null) result = casePatternElement(nodePattern);
+				if (result == null) result = caseExtendable(nodePattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -107,6 +109,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				T result = caseEdgePattern(edgePattern);
 				if (result == null) result = caseGraphElement(edgePattern);
 				if (result == null) result = casePatternElement(edgePattern);
+				if (result == null) result = caseExtendable(edgePattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -115,6 +118,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				T result = caseAttributePattern(attributePattern);
 				if (result == null) result = caseGraphElement(attributePattern);
 				if (result == null) result = casePatternElement(attributePattern);
+				if (result == null) result = caseExtendable(attributePattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -217,6 +221,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 			case GraphpatternPackage.SUB_GRAPH: {
 				SubGraph subGraph = (SubGraph)theEObject;
 				T result = caseSubGraph(subGraph);
+				if (result == null) result = caseExtendable(subGraph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -224,6 +229,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				GraphElement graphElement = (GraphElement)theEObject;
 				T result = caseGraphElement(graphElement);
 				if (result == null) result = casePatternElement(graphElement);
+				if (result == null) result = caseExtendable(graphElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -236,6 +242,12 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 			case GraphpatternPackage.RESOURCE: {
 				Resource resource = (Resource)theEObject;
 				T result = caseResource(resource);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphpatternPackage.EXTENDABLE: {
+				Extendable extendable = (Extendable)theEObject;
+				T result = caseExtendable(extendable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -540,6 +552,21 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseResource(Resource object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Extendable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Extendable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseExtendable(Extendable object) {
 		return null;
 	}
 

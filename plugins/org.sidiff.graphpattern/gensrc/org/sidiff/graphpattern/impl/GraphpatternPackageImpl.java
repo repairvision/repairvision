@@ -21,6 +21,7 @@ import org.sidiff.graphpattern.DependencyGraph;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.Extendable;
 import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
@@ -185,6 +186,13 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	private EClass resourceEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass extendableEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1000,17 +1008,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGraphElement_Stereotypes() {
-		return (EReference)graphElementEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getGraphElement_Graph() {
-		return (EReference)graphElementEClass.getEStructuralFeatures().get(2);
+		return (EReference)graphElementEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1083,6 +1082,24 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 */
 	public EReference getResource_Contents() {
 		return (EReference)resourceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getExtendable() {
+		return extendableEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getExtendable_Stereotypes() {
+		return (EReference)extendableEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1341,7 +1358,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		graphElementEClass = createEClass(GRAPH_ELEMENT);
 		createEReference(graphElementEClass, GRAPH_ELEMENT__SUBGRAPH);
-		createEReference(graphElementEClass, GRAPH_ELEMENT__STEREOTYPES);
 		createEReference(graphElementEClass, GRAPH_ELEMENT__GRAPH);
 
 		profileEClass = createEClass(PROFILE);
@@ -1353,6 +1369,9 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		resourceEClass = createEClass(RESOURCE);
 		createEReference(resourceEClass, RESOURCE__CONTENTS);
+
+		extendableEClass = createEClass(EXTENDABLE);
+		createEReference(extendableEClass, EXTENDABLE__STEREOTYPES);
 
 		// Create data types
 		eIteratorEDataType = createEDataType(EITERATOR);
@@ -1387,6 +1406,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		// Add supertypes to classes
 		graphPatternEClass.getESuperTypes().add(this.getPatternElement());
+		graphPatternEClass.getESuperTypes().add(this.getExtendable());
 		nodePatternEClass.getESuperTypes().add(this.getGraphElement());
 		edgePatternEClass.getESuperTypes().add(this.getGraphElement());
 		attributePatternEClass.getESuperTypes().add(this.getGraphElement());
@@ -1396,7 +1416,9 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		associationEClass.getESuperTypes().add(this.getPatternElement());
 		objectBindingEClass.getESuperTypes().add(this.getParameterBinding());
 		valueBindingEClass.getESuperTypes().add(this.getParameterBinding());
+		subGraphEClass.getESuperTypes().add(this.getExtendable());
 		graphElementEClass.getESuperTypes().add(this.getPatternElement());
+		graphElementEClass.getESuperTypes().add(this.getExtendable());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(graphPatternEClass, GraphPattern.class, "GraphPattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1538,7 +1560,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		initEClass(graphElementEClass, GraphElement.class, "GraphElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getGraphElement_Subgraph(), this.getSubGraph(), this.getSubGraph_Elements(), "subgraph", null, 0, 1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getGraphElement_Stereotypes(), this.getStereotype(), null, "stereotypes", null, 0, -1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGraphElement_Graph(), this.getGraphPattern(), null, "graph", null, 1, 1, GraphElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(profileEClass, Profile.class, "Profile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1552,6 +1573,9 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		initEClass(resourceEClass, Resource.class, "Resource", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getResource_Contents(), ecorePackage.getEObject(), null, "contents", null, 0, -1, Resource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(extendableEClass, Extendable.class, "Extendable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getExtendable_Stereotypes(), this.getStereotype(), null, "stereotypes", null, 0, -1, Extendable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(eIteratorEDataType, Iterator.class, "EIterator", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS, "java.util.Iterator<org.eclipse.emf.ecore.EObject>");

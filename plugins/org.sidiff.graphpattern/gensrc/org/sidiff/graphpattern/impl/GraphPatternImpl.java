@@ -11,13 +11,16 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.graphpattern.DependencyGraph;
+import org.sidiff.graphpattern.Extendable;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.SubGraph;
 
 /**
@@ -28,6 +31,7 @@ import org.sidiff.graphpattern.SubGraph;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getStereotypes <em>Stereotypes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getPattern <em>Pattern</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphPatternImpl#getDependencyGraph <em>Dependency Graph</em>}</li>
@@ -37,6 +41,16 @@ import org.sidiff.graphpattern.SubGraph;
  * @generated
  */
 public class GraphPatternImpl extends PatternElementImpl implements GraphPattern {
+	/**
+	 * The cached value of the '{@link #getStereotypes() <em>Stereotypes</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStereotypes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Stereotype> stereotypes;
+
 	/**
 	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -84,6 +98,18 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	@Override
 	protected EClass eStaticClass() {
 		return GraphpatternPackage.Literals.GRAPH_PATTERN;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Stereotype> getStereotypes() {
+		if (stereotypes == null) {
+			stereotypes = new EObjectResolvingEList<Stereotype>(Stereotype.class, this, GraphpatternPackage.GRAPH_PATTERN__STEREOTYPES);
+		}
+		return stereotypes;
 	}
 
 	/**
@@ -256,6 +282,8 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case GraphpatternPackage.GRAPH_PATTERN__STEREOTYPES:
+				return getStereotypes();
 			case GraphpatternPackage.GRAPH_PATTERN__NODES:
 				return getNodes();
 			case GraphpatternPackage.GRAPH_PATTERN__PATTERN:
@@ -277,6 +305,10 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case GraphpatternPackage.GRAPH_PATTERN__STEREOTYPES:
+				getStereotypes().clear();
+				getStereotypes().addAll((Collection<? extends Stereotype>)newValue);
+				return;
 			case GraphpatternPackage.GRAPH_PATTERN__NODES:
 				getNodes().clear();
 				getNodes().addAll((Collection<? extends NodePattern>)newValue);
@@ -303,6 +335,9 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case GraphpatternPackage.GRAPH_PATTERN__STEREOTYPES:
+				getStereotypes().clear();
+				return;
 			case GraphpatternPackage.GRAPH_PATTERN__NODES:
 				getNodes().clear();
 				return;
@@ -327,6 +362,8 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case GraphpatternPackage.GRAPH_PATTERN__STEREOTYPES:
+				return stereotypes != null && !stereotypes.isEmpty();
 			case GraphpatternPackage.GRAPH_PATTERN__NODES:
 				return nodes != null && !nodes.isEmpty();
 			case GraphpatternPackage.GRAPH_PATTERN__PATTERN:
@@ -337,6 +374,38 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 				return subgraphs != null && !subgraphs.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == Extendable.class) {
+			switch (derivedFeatureID) {
+				case GraphpatternPackage.GRAPH_PATTERN__STEREOTYPES: return GraphpatternPackage.EXTENDABLE__STEREOTYPES;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == Extendable.class) {
+			switch (baseFeatureID) {
+				case GraphpatternPackage.EXTENDABLE__STEREOTYPES: return GraphpatternPackage.GRAPH_PATTERN__STEREOTYPES;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 } //GraphPatternImpl

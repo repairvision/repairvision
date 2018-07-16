@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="graphpattern" nsURI="http://www.sidiff.org/graphpattern/1.0"
     nsPrefix="graphpattern">
-  <eClassifiers xsi:type="ecore:EClass" name="GraphPattern" eSuperTypes="#//PatternElement">
+  <eClassifiers xsi:type="ecore:EClass" name="GraphPattern" eSuperTypes="#//PatternElement #//Extendable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="#//NodePattern" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" lowerBound="1"
@@ -172,17 +172,15 @@
   <eClassifiers xsi:type="ecore:EClass" name="ValueBinding" eSuperTypes="#//ParameterBinding">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SubGraph">
+  <eClassifiers xsi:type="ecore:EClass" name="SubGraph" eSuperTypes="#//Extendable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
         eType="#//GraphElement" eOpposite="#//GraphElement/subgraph"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subgraphs" upperBound="-1"
         eType="#//SubGraph" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GraphElement" abstract="true" eSuperTypes="#//PatternElement">
+  <eClassifiers xsi:type="ecore:EClass" name="GraphElement" abstract="true" eSuperTypes="#//PatternElement #//Extendable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subgraph" eType="#//SubGraph"
         eOpposite="#//SubGraph/elements"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="stereotypes" upperBound="-1"
-        eType="#//Stereotype"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="graph" lowerBound="1" eType="#//GraphPattern"
         changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
@@ -199,5 +197,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="Resource" abstract="true" interface="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Extendable" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stereotypes" upperBound="-1"
+        eType="#//Stereotype"/>
   </eClassifiers>
 </ecore:EPackage>

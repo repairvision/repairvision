@@ -2,8 +2,6 @@
  */
 package org.sidiff.graphpattern;
 
-import org.eclipse.emf.common.util.EList;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Graph Element</b></em>'.
@@ -14,7 +12,6 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.graphpattern.GraphElement#getSubgraph <em>Subgraph</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.GraphElement#getStereotypes <em>Stereotypes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.GraphElement#getGraph <em>Graph</em>}</li>
  * </ul>
  *
@@ -22,7 +19,7 @@ import org.eclipse.emf.common.util.EList;
  * @model abstract="true"
  * @generated
  */
-public interface GraphElement extends PatternElement {
+public interface GraphElement extends PatternElement, Extendable {
 	/**
 	 * Returns the value of the '<em><b>Subgraph</b></em>' reference.
 	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.SubGraph#getElements <em>Elements</em>}'.
@@ -50,22 +47,6 @@ public interface GraphElement extends PatternElement {
 	 * @generated
 	 */
 	void setSubgraph(SubGraph value);
-
-	/**
-	 * Returns the value of the '<em><b>Stereotypes</b></em>' reference list.
-	 * The list contents are of type {@link org.sidiff.graphpattern.Stereotype}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Stereotypes</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Stereotypes</em>' reference list.
-	 * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphElement_Stereotypes()
-	 * @model
-	 * @generated
-	 */
-	EList<Stereotype> getStereotypes();
 
 	/**
 	 * Returns the value of the '<em><b>Graph</b></em>' reference.

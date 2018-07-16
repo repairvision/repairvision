@@ -183,13 +183,22 @@ public interface GraphpatternPackage extends EPackage {
 	int GRAPH_PATTERN__DESCRIPTION = PATTERN_ELEMENT__DESCRIPTION;
 
 	/**
+	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PATTERN__STEREOTYPES = PATTERN_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN__NODES = PATTERN_ELEMENT_FEATURE_COUNT + 0;
+	int GRAPH_PATTERN__NODES = PATTERN_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Pattern</b></em>' container reference.
@@ -198,7 +207,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN__PATTERN = PATTERN_ELEMENT_FEATURE_COUNT + 1;
+	int GRAPH_PATTERN__PATTERN = PATTERN_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Dependency Graph</b></em>' containment reference.
@@ -207,7 +216,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN__DEPENDENCY_GRAPH = PATTERN_ELEMENT_FEATURE_COUNT + 2;
+	int GRAPH_PATTERN__DEPENDENCY_GRAPH = PATTERN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Subgraphs</b></em>' containment reference list.
@@ -216,7 +225,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN__SUBGRAPHS = PATTERN_ELEMENT_FEATURE_COUNT + 3;
+	int GRAPH_PATTERN__SUBGRAPHS = PATTERN_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Graph Pattern</em>' class.
@@ -225,7 +234,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 4;
+	int GRAPH_PATTERN_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Graph Pattern</em>' class.
@@ -265,22 +274,22 @@ public interface GraphpatternPackage extends EPackage {
 	int GRAPH_ELEMENT__DESCRIPTION = PATTERN_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__SUBGRAPH = PATTERN_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_ELEMENT__STEREOTYPES = PATTERN_ELEMENT_FEATURE_COUNT + 1;
+	int GRAPH_ELEMENT__STEREOTYPES = PATTERN_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__SUBGRAPH = PATTERN_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' reference.
@@ -328,15 +337,6 @@ public interface GraphpatternPackage extends EPackage {
 	int NODE_PATTERN__DESCRIPTION = GRAPH_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_PATTERN__SUBGRAPH = GRAPH_ELEMENT__SUBGRAPH;
-
-	/**
 	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -344,6 +344,15 @@ public interface GraphpatternPackage extends EPackage {
 	 * @ordered
 	 */
 	int NODE_PATTERN__STEREOTYPES = GRAPH_ELEMENT__STEREOTYPES;
+
+	/**
+	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_PATTERN__SUBGRAPH = GRAPH_ELEMENT__SUBGRAPH;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' reference.
@@ -535,15 +544,6 @@ public interface GraphpatternPackage extends EPackage {
 	int EDGE_PATTERN__DESCRIPTION = GRAPH_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_PATTERN__SUBGRAPH = GRAPH_ELEMENT__SUBGRAPH;
-
-	/**
 	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -551,6 +551,15 @@ public interface GraphpatternPackage extends EPackage {
 	 * @ordered
 	 */
 	int EDGE_PATTERN__STEREOTYPES = GRAPH_ELEMENT__STEREOTYPES;
+
+	/**
+	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_PATTERN__SUBGRAPH = GRAPH_ELEMENT__SUBGRAPH;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' reference.
@@ -634,15 +643,6 @@ public interface GraphpatternPackage extends EPackage {
 	int ATTRIBUTE_PATTERN__DESCRIPTION = GRAPH_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_PATTERN__SUBGRAPH = GRAPH_ELEMENT__SUBGRAPH;
-
-	/**
 	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -650,6 +650,15 @@ public interface GraphpatternPackage extends EPackage {
 	 * @ordered
 	 */
 	int ATTRIBUTE_PATTERN__STEREOTYPES = GRAPH_ELEMENT__STEREOTYPES;
+
+	/**
+	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_PATTERN__SUBGRAPH = GRAPH_ELEMENT__SUBGRAPH;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' reference.
@@ -1510,6 +1519,43 @@ public interface GraphpatternPackage extends EPackage {
 	int VALUE_BINDING_OPERATION_COUNT = PARAMETER_BINDING_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.sidiff.graphpattern.Extendable <em>Extendable</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.graphpattern.Extendable
+	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getExtendable()
+	 * @generated
+	 */
+	int EXTENDABLE = 23;
+
+	/**
+	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENDABLE__STEREOTYPES = 0;
+
+	/**
+	 * The number of structural features of the '<em>Extendable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENDABLE_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Extendable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENDABLE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.sidiff.graphpattern.impl.SubGraphImpl <em>Sub Graph</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1520,13 +1566,22 @@ public interface GraphpatternPackage extends EPackage {
 	int SUB_GRAPH = 19;
 
 	/**
+	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_GRAPH__STEREOTYPES = EXTENDABLE__STEREOTYPES;
+
+	/**
 	 * The feature id for the '<em><b>Elements</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SUB_GRAPH__ELEMENTS = 0;
+	int SUB_GRAPH__ELEMENTS = EXTENDABLE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Subgraphs</b></em>' containment reference list.
@@ -1535,7 +1590,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SUB_GRAPH__SUBGRAPHS = 1;
+	int SUB_GRAPH__SUBGRAPHS = EXTENDABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Sub Graph</em>' class.
@@ -1544,7 +1599,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SUB_GRAPH_FEATURE_COUNT = 2;
+	int SUB_GRAPH_FEATURE_COUNT = EXTENDABLE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Sub Graph</em>' class.
@@ -1553,7 +1608,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SUB_GRAPH_OPERATION_COUNT = 0;
+	int SUB_GRAPH_OPERATION_COUNT = EXTENDABLE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.graphpattern.impl.ProfileImpl <em>Profile</em>}' class.
@@ -1673,7 +1728,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getEIterator()
 	 * @generated
 	 */
-	int EITERATOR = 23;
+	int EITERATOR = 24;
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.GraphPattern <em>Graph Pattern</em>}'.
@@ -2510,17 +2565,6 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getGraphElement_Subgraph();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.GraphElement#getStereotypes <em>Stereotypes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Stereotypes</em>'.
-	 * @see org.sidiff.graphpattern.GraphElement#getStereotypes()
-	 * @see #getGraphElement()
-	 * @generated
-	 */
-	EReference getGraphElement_Stereotypes();
-
-	/**
 	 * Returns the meta object for the reference '{@link org.sidiff.graphpattern.GraphElement#getGraph <em>Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2615,6 +2659,27 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getResource_Contents();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.graphpattern.Extendable <em>Extendable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Extendable</em>'.
+	 * @see org.sidiff.graphpattern.Extendable
+	 * @generated
+	 */
+	EClass getExtendable();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.Extendable#getStereotypes <em>Stereotypes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Stereotypes</em>'.
+	 * @see org.sidiff.graphpattern.Extendable#getStereotypes()
+	 * @see #getExtendable()
+	 * @generated
+	 */
+	EReference getExtendable_Stereotypes();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.Pattern <em>Pattern</em>}'.
@@ -3447,14 +3512,6 @@ public interface GraphpatternPackage extends EPackage {
 		EReference GRAPH_ELEMENT__SUBGRAPH = eINSTANCE.getGraphElement_Subgraph();
 
 		/**
-		 * The meta object literal for the '<em><b>Stereotypes</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference GRAPH_ELEMENT__STEREOTYPES = eINSTANCE.getGraphElement_Stereotypes();
-
-		/**
 		 * The meta object literal for the '<em><b>Graph</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3529,6 +3586,24 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RESOURCE__CONTENTS = eINSTANCE.getResource_Contents();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.graphpattern.Extendable <em>Extendable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.graphpattern.Extendable
+		 * @see org.sidiff.graphpattern.impl.GraphpatternPackageImpl#getExtendable()
+		 * @generated
+		 */
+		EClass EXTENDABLE = eINSTANCE.getExtendable();
+
+		/**
+		 * The meta object literal for the '<em><b>Stereotypes</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EXTENDABLE__STEREOTYPES = eINSTANCE.getExtendable_Stereotypes();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.PatternImpl <em>Pattern</em>}' class.
