@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -23,6 +24,8 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 
 public class GraphPatternToHenshinConverter {
+	
+	protected Rule rule = HenshinFactory.eINSTANCE.createRule();
 
 	protected Map<NodePattern, Node> lhsTrace = new HashMap<>();
 	
@@ -31,7 +34,6 @@ public class GraphPatternToHenshinConverter {
 	protected Map<NodePattern, Node> acTrace = new HashMap<>(); 
 	
 	public Rule convert(GraphPattern graph) {
-		Rule rule =  HenshinFactory.eINSTANCE.createRule();
 		NestedCondition nac = rule.getLhs().createNAC(null);
 		
 		for (NodePattern pNode : graph.getNodes()) {
@@ -65,9 +67,17 @@ public class GraphPatternToHenshinConverter {
 		return rule;
 	}
 	
-	public Resource createResource(Rule rule, URI uri) {
+	public Rule getRule() {
+		return rule;
+	}
+	
+	public Resource getResource(URI uri) {
+		Module module = HenshinFactory.eINSTANCE.createModule();
+		module.getUnits().add(rule);
+		
 		Resource resource = new HenshinResource(uri);
-		resource.getContents().add(rule);
+		resource.getContents().add(module);
+		
 		return resource;
 	}
 	
