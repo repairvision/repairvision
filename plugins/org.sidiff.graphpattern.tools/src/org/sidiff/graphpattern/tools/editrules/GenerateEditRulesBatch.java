@@ -1,4 +1,10 @@
 package org.sidiff.graphpattern.tools.editrules;
+
+import static org.sidiff.graphpattern.profile.constraints.ConstraintGraphPatternProfile.not;
+import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.create;
+import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.delete;
+import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.preserve;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,26 +34,13 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.Profile;
 import org.sidiff.graphpattern.Stereotype;
-import org.sidiff.graphpattern.profile.extensions.GraphPatternProfileLibrary;
+import org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatch;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatchings;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
 
 public class GenerateEditRulesBatch extends AbstractHandler {
-
-	private static Profile editRuleProfile = GraphPatternProfileLibrary.getEntry("org.sidiff.graphpattern.profile.henshin").getProfile().getProfile();
-	
-	private static Profile constraintsProfile = GraphPatternProfileLibrary.getEntry("org.sidiff.graphpattern.profile.constraints").getProfile().getProfile();
-	
-	private static Stereotype preserveST = editRuleProfile.getStereotype("preserve");
-	
-	private static Stereotype createST = editRuleProfile.getStereotype("create");
-	
-	private static Stereotype deleteST = editRuleProfile.getStereotype("delete");
-	
-	private static Stereotype notST = constraintsProfile.getStereotype("not");
 	
 	private static EClass pseudoResourceClass = GraphpatternPackage.eINSTANCE.getResource();
 	
@@ -58,7 +51,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		if (patternBundle != null) {
 			
 			// Setup edit rule profile:
-			patternBundle.getProfiles().add(editRuleProfile);
+			patternBundle.getProfiles().add(HenshinGraphPatternProfile.instance);
 			
 			// Generate edit rules:
 			Map<GraphPattern, List<GraphPattern>> editRules = new HashMap<>();
@@ -99,7 +92,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			creationRules.add(editRule);
 			
 			// Set edit rule actions:
-			setConstructionAction(editRule, createST);
+			setConstructionAction(editRule, create);
 			
 			// Add new edit rule for graph pattern:
 			editRules.merge(graphPattern, creationRules, (v1, v2) -> {v1.addAll(v2); return v1;});
@@ -127,7 +120,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 				NodePattern node = iterator.next();
 				
 				if (!node.getStereotypes().isEmpty()) {
-					if (node.getStereotypes().contains(notST)) {
+					if (node.getStereotypes().contains(not)) {
 						node.removeIncident();
 						iterator.remove();
 					}
@@ -135,7 +128,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			}
 			
 			// Set edit rule actions:
-			setConstructionAction(editRule, deleteST);
+			setConstructionAction(editRule, delete);
 			
 			// Add new edit rule for graph pattern:
 			editRules.merge(graphPattern, deletionRules, (v1, v2) -> {v1.addAll(v2); return v1;});
@@ -153,7 +146,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		for (NodePattern node : editRule.getNodes()) {
 			
 			// Filter negative application conditions:
-			if (!node.getStereotypes().contains(notST)) {
+			if (!node.getStereotypes().contains(not)) {
 				
 				// Is contained node?
 				if (node.getIncomings().stream().anyMatch(e -> e.getType().isContainment())) {
@@ -166,11 +159,11 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 				} else {
 					
 					// Context element:
-					node.getStereotypes().add(preserveST);
+					node.getStereotypes().add(preserve);
 					
 					// Set attribute actions:
 					for (AttributePattern attribute : node.getAttributes()) {
-						attribute.getStereotypes().add(preserveST);
+						attribute.getStereotypes().add(preserve);
 					}
 				}
 				
@@ -179,9 +172,9 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 				for (EdgePattern edge : node.getOutgoings()) {
 					
 					// Edge between context nodes?
-					if (edge.getSource().getStereotypes().contains(preserveST)
-							&& edge.getTarget().getStereotypes().contains(preserveST)) {
-						edge.getStereotypes().add(preserveST);
+					if (edge.getSource().getStereotypes().contains(preserve)
+							&& edge.getTarget().getStereotypes().contains(preserve)) {
+						edge.getStereotypes().add(preserve);
 					} else {
 						edge.getStereotypes().add(constructionST);
 					}
@@ -208,20 +201,20 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		for (GraphPattern preConstraint : allConstraints) {
 			List<GraphPattern> transformationRules = new ArrayList<>();
 			
-//			if (preConstraint.getName().contains("Concrete Class")) {
-//				System.out.println(preConstraint.getName());
-//			} else {
-//				continue;
-//			}
+			if (preConstraint.getName().contains("Class with Unbound Generic Type Parameter")) {
+				System.out.println(preConstraint.getName());
+			} else {
+				continue;
+			}
 			
 			for (GraphPattern postConstraint : allConstraints) {
 				if (preConstraint != postConstraint) {
 					
-//					if (postConstraint.getName().contains("Abstract Class")) {
-//						System.out.println(postConstraint.getName());
-//					} else {
-//						continue;
-//					}
+					if (postConstraint.getName().contains("Class with Bound Generic Type Parameter")) {
+						System.out.println(postConstraint.getName());
+					} else {
+						continue;
+					}
 					
 					// Check if there is a (full) node matching between the graph patterns:
 					// Compare the nodes by their assigned class types:
@@ -233,11 +226,13 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 						problem.setSearchInjectiveSolutions(true);
 						
 						for (NodePattern fromNode : preConstraint.getNodes()) {
-							IDomain<NodePattern> domain = GraphConstraintMatchings.getDomain(fromNode, 
-									postConstraint.getNodes(), 
-									n -> !n.getStereotypes().contains(notST));
-							IVariable<NodePattern, NodePattern> variable = new Variable<>(fromNode, domain, false);
-							problem.addVariable(variable);
+							if (!fromNode.getStereotypes().contains(not)) {
+								IDomain<NodePattern> domain = GraphConstraintMatchings.getDomain(fromNode, 
+										postConstraint.getNodes(), 
+										n -> !n.getStereotypes().contains(not));
+								IVariable<NodePattern, NodePattern> variable = new Variable<>(fromNode, domain, false);
+								problem.addVariable(variable);
+							}
 						}
 						
 						GraphConstraintMatchings matchings = new GraphConstraintMatchings(preConstraint, postConstraint);
