@@ -4,6 +4,7 @@ import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.forbid;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.rule;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,10 +26,13 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 	
 	protected Map<NodePattern, NodePattern> contextTrace = new HashMap<>();
 	
-	protected GraphPattern editRule = GraphpatternFactory.eINSTANCE.createGraphPattern();
+	protected GraphPattern editRule;
 	
 	public GraphPatternEditRuleGenerator(GraphPattern fromGraph, GraphPattern toGraph, Map<NodePattern, NodePattern> match) {
 		super(fromGraph, toGraph, match);
+		
+		this.editRule = GraphpatternFactory.eINSTANCE.createGraphPattern();
+		this.editRule.getStereotypes().add(rule);
 	}
 	
 	public GraphPattern getEditRule() {
