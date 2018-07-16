@@ -1,5 +1,7 @@
 package org.sidiff.graphpattern.tools.editrules.generator;
 
+import static org.sidiff.graphpattern.profile.constraints.ConstraintGraphPatternProfile.not;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,15 +11,8 @@ import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.Profile;
-import org.sidiff.graphpattern.Stereotype;
-import org.sidiff.graphpattern.profile.extensions.GraphPatternProfileLibrary;
 
 public class BasicEditRuleGenerator {
-	
-	protected static Profile constraintsProfile = GraphPatternProfileLibrary.getEntry("org.sidiff.graphpattern.profile.constraints").getProfile().getProfile();
-	
-	protected static Stereotype notST = constraintsProfile.getStereotype("not");
 	
 	protected Map<NodePattern, NodePattern> match;
 	
@@ -39,7 +34,7 @@ public class BasicEditRuleGenerator {
 		
 		// << create/preserve/forbid >>:
 		for (NodePattern toNode : toFragment) {
-			if (toNode.getStereotypes().contains(notST)) {
+			if (toNode.getStereotypes().contains(not)) {
 				generateForbid(toNode);
 			} else {
 				NodePattern fromNode = getNodeMatch(toNode);
@@ -82,7 +77,7 @@ public class BasicEditRuleGenerator {
 		
 		// << delete >>:
 		for (NodePattern fromNode : fromFragment) {
-			if (!fromNode.getStereotypes().contains(notST)) {
+			if (!fromNode.getStereotypes().contains(not)) {
 				NodePattern toNode = getNodeMatch(fromNode);
 				
 				if (toNode != null) {
