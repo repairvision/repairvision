@@ -54,6 +54,8 @@ public class HenshinGraphPatternVisualization implements IGraphPatternVisualizat
 				
 			case forbid:
 				return BLUE_BACKGROUND;
+			default:
+				break;
 			}
 		}
 		
@@ -81,6 +83,8 @@ public class HenshinGraphPatternVisualization implements IGraphPatternVisualizat
 				
 			case forbid:
 				return BLUE_FOREGROUND;
+			default:
+				break;
 			}
 		}
 		
@@ -108,6 +112,8 @@ public class HenshinGraphPatternVisualization implements IGraphPatternVisualizat
 				
 			case forbid:
 				return BLUE_FOREGROUND;
+			default:
+				break;
 			}
 		}
 		
@@ -135,6 +141,8 @@ public class HenshinGraphPatternVisualization implements IGraphPatternVisualizat
 				
 			case forbid:
 				return BLUE_FOREGROUND;
+			default:
+				break;
 			}
 		}
 		
@@ -162,6 +170,8 @@ public class HenshinGraphPatternVisualization implements IGraphPatternVisualizat
 				
 			case forbid:
 				return BLUE_FOREGROUND;
+			default:
+				break;
 			}
 		}
 		
@@ -189,6 +199,8 @@ public class HenshinGraphPatternVisualization implements IGraphPatternVisualizat
 				
 			case forbid:
 				return BLUE_FOREGROUND;
+			default:
+				break;
 			}
 		}
 		

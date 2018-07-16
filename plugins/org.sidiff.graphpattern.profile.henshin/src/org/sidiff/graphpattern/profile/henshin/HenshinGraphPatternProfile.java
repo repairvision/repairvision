@@ -10,25 +10,12 @@ import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.profile.GraphPatternProfileFactory;
 import org.sidiff.graphpattern.profile.IGraphPatternProfile;
 import org.sidiff.graphpattern.profile.IGraphPatternVisualization;
-import org.sidiff.graphpattern.profile.extensions.GraphPatternProfileLibrary;
 import org.sidiff.graphpattern.util.GraphpatternResourceImpl;
 
 public class HenshinGraphPatternProfile implements IGraphPatternProfile {
 	
-	public static Profile instance = GraphPatternProfileLibrary.getEntry("org.sidiff.graphpattern.profile.henshin").getProfile().getProfile();
-	
-	public static Stereotype preserve = instance.getStereotype(STEREOTYPE.preserve.name());
-	
-	public static Stereotype create = instance.getStereotype(STEREOTYPE.create.name());
-	
-	public static Stereotype delete = instance.getStereotype(STEREOTYPE.delete.name());
-	
-	public static Stereotype forbid = instance.getStereotype(STEREOTYPE.forbid.name());
-	
-	public static Stereotype require = instance.getStereotype(STEREOTYPE.require.name());
-	
 	protected static enum STEREOTYPE {
-		create, delete, preserve, forbid, require
+		rule, create, delete, preserve, forbid, require
 	};
 	
 	protected static final String PULGIN = "org.sidiff.graphpattern.profile.henshin";

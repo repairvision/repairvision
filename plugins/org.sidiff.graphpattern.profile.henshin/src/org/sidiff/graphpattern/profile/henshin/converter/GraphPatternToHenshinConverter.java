@@ -1,9 +1,9 @@
 package org.sidiff.graphpattern.profile.henshin.converter;
 
-import static org.sidiff.graphpattern.profile.constraints.ConstraintGraphPatternProfile.not;
-import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.create;
-import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.delete;
-import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.preserve;
+import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 
 import java.util.HashMap;
 import java.util.Map;
