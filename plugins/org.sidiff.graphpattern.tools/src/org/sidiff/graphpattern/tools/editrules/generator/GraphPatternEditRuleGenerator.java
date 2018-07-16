@@ -1,9 +1,9 @@
 package org.sidiff.graphpattern.tools.editrules.generator;
 
-import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.create;
-import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.delete;
-import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.forbid;
-import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.preserve;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.forbid;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 
 import java.util.HashMap;
 import java.util.List;

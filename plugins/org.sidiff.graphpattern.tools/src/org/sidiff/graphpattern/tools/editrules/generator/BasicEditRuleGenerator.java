@@ -1,6 +1,6 @@
 package org.sidiff.graphpattern.tools.editrules.generator;
 
-import static org.sidiff.graphpattern.profile.constraints.ConstraintGraphPatternProfile.not;
+import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
 
 import java.util.List;
 import java.util.Map;

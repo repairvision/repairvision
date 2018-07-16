@@ -1,9 +1,9 @@
 package org.sidiff.graphpattern.tools.editrules;
 
-import static org.sidiff.graphpattern.profile.constraints.ConstraintGraphPatternProfile.not;
-import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.create;
-import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.delete;
-import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.preserve;
+import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Stereotype;
-import org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile;
+import org.sidiff.graphpattern.profile.henshin.HenshinStereotypes;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatch;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatchings;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
@@ -52,7 +52,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		if (patternBundle != null) {
 			
 			// Setup edit rule profile:
-			patternBundle.getProfiles().add(HenshinGraphPatternProfile.instance);
+			patternBundle.getProfiles().add(HenshinStereotypes.profile_model);
 			
 			// Generate edit rules:
 			Map<GraphPattern, List<GraphPattern>> editRules = new HashMap<>();
