@@ -37,6 +37,7 @@ import org.sidiff.consistency.common.emf.SiriusUtil;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
+import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 
 @SuppressWarnings("restriction")
 public class CreateDiagram extends AbstractHandler  {
@@ -61,7 +62,8 @@ public class CreateDiagram extends AbstractHandler  {
 			URI sessionResourceURI = modelElementURI.trimFragment().trimFileExtension().appendFileExtension("aird");
 			
 			createViewpoint(modelElementURI, sessionResourceURI, monitor);
-			createRepresentation((EObject) selected, monitor, modelElementURI);
+			createRepresentation((EObject) selected, monitor, modelElementURI, 
+					WorkbenchUtil.showQuestion("Open diagram editors?"));
 		}
 		
 		return null;
@@ -104,12 +106,12 @@ public class CreateDiagram extends AbstractHandler  {
 		session.open(monitor);
 	}
 
-	protected void createRepresentation(EObject element, IProgressMonitor monitor, URI modelElementURI) {
+	protected void createRepresentation(EObject element, IProgressMonitor monitor, URI modelElementURI, boolean openEditor) {
 		Session session = SessionManager.INSTANCE.getSession(modelElementURI.trimFragment().trimFileExtension().appendFileExtension("aird"), monitor);
 		EObject modelElement = session.getSemanticResources().iterator().next().getEObject(modelElementURI.fragment());
 		
 		Map<EObject, RepresentationDescription> representations = getRepresentations(session, modelElement);
-		
+
 		for (Entry<EObject, RepresentationDescription> representation : representations.entrySet()) {
 			RepresentationDescription description = representation.getValue();
 			EObject nextModelElement = representation.getKey();
@@ -122,10 +124,13 @@ public class CreateDiagram extends AbstractHandler  {
 			SessionManager.INSTANCE.notifyRepresentationCreated(session);
 			
 			// open editor:
-			for (DRepresentation diagramRepresentation : DialectManager.INSTANCE.getRepresentations(description, session)) {
-				if (diagramRepresentation.getName().equals(name)) {
-					DialectUIManager dialectUIManager = DialectUIManager.INSTANCE;
-					dialectUIManager.openEditor(session, diagramRepresentation, monitor);
+			if (openEditor) {
+				for (DRepresentation diagramRepresentation : DialectManager.INSTANCE.getRepresentations(description, session)) {
+					if (diagramRepresentation.getName().equals(name)) {
+						DialectUIManager dialectUIManager = DialectUIManager.INSTANCE;
+
+						dialectUIManager.openEditor(session, diagramRepresentation, monitor);
+					}
 				}
 			}
 		}
