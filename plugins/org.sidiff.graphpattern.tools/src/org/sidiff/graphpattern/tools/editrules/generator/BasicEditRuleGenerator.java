@@ -4,6 +4,7 @@ import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.EList;
 import org.sidiff.graphpattern.AttributePattern;
@@ -183,9 +184,13 @@ public class BasicEditRuleGenerator {
 		if (graphContains(fromGraph, node)) {
 			return match.get(node);
 		} else {
-			return match.entrySet().stream()
-					.filter(e -> e.getValue() == node)
-					.findFirst().get().getKey();
+			for (Entry<NodePattern, NodePattern> entry : match.entrySet()) {
+				if (entry.getValue() == node) {
+					return entry.getKey();
+				}
+			}
 		}
+		
+		return null;
 	}
 }
