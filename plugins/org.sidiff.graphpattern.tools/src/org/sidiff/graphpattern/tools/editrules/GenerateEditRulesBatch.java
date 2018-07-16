@@ -201,20 +201,20 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		for (GraphPattern preConstraint : allConstraints) {
 			List<GraphPattern> transformationRules = new ArrayList<>();
 			
-			if (preConstraint.getName().contains("Class with Unbound Generic Type Parameter")) {
-				System.out.println(preConstraint.getName());
-			} else {
-				continue;
-			}
+//			if (preConstraint.getName().contains("Class with Unbound Generic Type Parameter")) {
+//				System.out.println(preConstraint.getName());
+//			} else {
+//				continue;
+//			}
 			
 			for (GraphPattern postConstraint : allConstraints) {
 				if (preConstraint != postConstraint) {
 					
-					if (postConstraint.getName().contains("Class with Bound Generic Type Parameter")) {
-						System.out.println(postConstraint.getName());
-					} else {
-						continue;
-					}
+//					if (postConstraint.getName().contains("Class with Bound Generic Type Parameter")) {
+//						System.out.println(postConstraint.getName());
+//					} else {
+//						continue;
+//					}
 					
 					// Check if there is a (full) node matching between the graph patterns:
 					// Compare the nodes by their assigned class types:
