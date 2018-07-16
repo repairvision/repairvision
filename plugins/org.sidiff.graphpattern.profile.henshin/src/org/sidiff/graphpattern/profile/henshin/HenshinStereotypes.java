@@ -9,6 +9,8 @@ public class HenshinStereotypes {
 
 	public static Profile profile_model = GraphPatternProfileLibrary.getEntry("org.sidiff.graphpattern.profile.henshin").getProfile().getProfile();
 	
+	public static Stereotype rule = profile_model.getStereotype(STEREOTYPE.rule.name());
+	
 	public static Stereotype preserve = profile_model.getStereotype(STEREOTYPE.preserve.name());
 	
 	public static Stereotype create = profile_model.getStereotype(STEREOTYPE.create.name());
