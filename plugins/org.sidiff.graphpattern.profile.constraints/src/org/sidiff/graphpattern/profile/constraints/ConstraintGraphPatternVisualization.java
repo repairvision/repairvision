@@ -22,6 +22,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_BACKGROUND;
+			default:
+				break;
 			}
 		}
 		
@@ -37,6 +39,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {	
 			case not:
 				return BLUE_FOREGROUND;
+			default:
+				break;
 			}
 		}
 		
@@ -52,6 +56,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
+			default:
+				break;
 			}
 		}
 		
@@ -67,6 +73,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
+			default:
+				break;
 			}
 		}
 		
@@ -82,6 +90,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
+			default:
+				break;
 			}
 		}
 		
@@ -97,6 +107,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
+			default:
+				break;
 			}
 		}
 		
