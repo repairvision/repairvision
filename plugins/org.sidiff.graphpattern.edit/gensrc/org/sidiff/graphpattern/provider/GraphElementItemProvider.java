@@ -43,8 +43,8 @@ public class GraphElementItemProvider extends PatternElementItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addSubgraphPropertyDescriptor(object);
 			addStereotypesPropertyDescriptor(object);
+			addSubgraphPropertyDescriptor(object);
 			addGraphPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
@@ -83,9 +83,9 @@ public class GraphElementItemProvider extends PatternElementItemProvider {
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_GraphElement_stereotypes_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GraphElement_stereotypes_feature", "_UI_GraphElement_type"),
-				 GraphpatternPackage.Literals.GRAPH_ELEMENT__STEREOTYPES,
+				 getString("_UI_Extendable_stereotypes_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Extendable_stereotypes_feature", "_UI_Extendable_type"),
+				 GraphpatternPackage.Literals.EXTENDABLE__STEREOTYPES,
 				 true,
 				 false,
 				 true,

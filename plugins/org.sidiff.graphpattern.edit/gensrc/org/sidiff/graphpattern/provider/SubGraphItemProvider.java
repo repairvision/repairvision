@@ -59,9 +59,32 @@ public class SubGraphItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addStereotypesPropertyDescriptor(object);
 			addElementsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Stereotypes feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addStereotypesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Extendable_stereotypes_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Extendable_stereotypes_feature", "_UI_Extendable_type"),
+				 GraphpatternPackage.Literals.EXTENDABLE__STEREOTYPES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
