@@ -89,6 +89,8 @@ public class WorkbenchUtil {
 		        
 		        if (messageBox.open() == SWT.YES) {
 		        	result[0] = true;
+		        } else {
+		        	result[0] = false;
 		        }
 		    }
 		});
