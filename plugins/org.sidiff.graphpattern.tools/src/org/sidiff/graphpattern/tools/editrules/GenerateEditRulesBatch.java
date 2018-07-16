@@ -39,6 +39,7 @@ import org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatch;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatchings;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
+import org.sidiff.graphpattern.util.GraphPatternUtil;
 
 public class GenerateEditRulesBatch extends AbstractHandler {
 	
@@ -63,7 +64,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			}
 			
 			editRules.forEach((pattern, rules) -> pattern.getPattern().getGraphs().addAll(rules));
-//			System.out.println("Edit Rules: " + editRules.values().stream().mapToInt(List::size).sum());
+			System.out.println("Edit Rules: " + editRules.values().stream().mapToInt(List::size).sum());
 			
 			// Save edit rules:
 			URI originalURI = patternBundle.eResource().getURI();
@@ -215,16 +216,19 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 //					} else {
 //						continue;
 //					}
-					
+
+					int preSize = GraphPatternUtil.getPatternSize(preConstraint.getNodes());
+					int postSize = GraphPatternUtil.getPatternSize(postConstraint.getNodes());
+
 					// Check if there is a (full) node matching between the graph patterns:
 					// Compare the nodes by their assigned class types:
-					if (EditRuleGeneratorUtil.isTypeEqual(preConstraint.getNodes(), postConstraint.getNodes())) {
+					if ((preSize == postSize) && GraphPatternUtil.isTypeEqual(preConstraint.getNodes(), postConstraint.getNodes())) {
 						IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(preConstraint.getNodes().size());
-						problem.setMinimumSolutionSize(preConstraint.getNodes().size());
-						problem.setMaximumSolutionSize(preConstraint.getNodes().size());
+						problem.setMinimumSolutionSize(preSize);
+						problem.setMaximumSolutionSize(preSize);
 						problem.setSearchMaximumSolutions(true);
 						problem.setSearchInjectiveSolutions(true);
-						
+
 						for (NodePattern fromNode : preConstraint.getNodes()) {
 							if (!fromNode.getStereotypes().contains(not)) {
 								IDomain<NodePattern> domain = GraphConstraintMatchings.getDomain(fromNode, 
@@ -234,21 +238,21 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 								problem.addVariable(variable);
 							}
 						}
-						
+
 						GraphConstraintMatchings matchings = new GraphConstraintMatchings(preConstraint, postConstraint);
 						ICSPSolver<NodePattern, NodePattern> solver = new CSPSolver<>(problem, matchings);
 						solver.run();
-						
+
 						String name = "structural transform: "
 								+ preConstraint.getName() + " - to - "
 								+ postConstraint.getName();
-						
+
 //						System.out.println("[" + matchings.getMatches().size() + "]: " + name);
-						
+
 						// Generate edit rules:
 						int counter = 0;
 						int count = matchings.getMatches().size();
-						
+
 						for (GraphConstraintMatch match : matchings.getMatches()) {
 							GraphPatternEditRuleGenerator editRuleGenerator = new GraphPatternEditRuleGenerator(
 									match.getPreConstraint(), 
@@ -258,13 +262,13 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 									match.getPreConstraint().getNodes(), 
 									match.getPostConstraint().getNodes());
 							GraphPattern transformationRule = editRuleGenerator.getEditRule();
-							
+
 							if (count > 1) {
 								transformationRule.setName(name + " (" + ++counter + ")");
 							} else {
 								transformationRule.setName(name);
 							}
-							
+
 							transformationRules.add(transformationRule);
 						}
 					}
