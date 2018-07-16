@@ -1,5 +1,6 @@
 package org.sidiff.graphpattern.profile.henshin.converter;
 
+import static org.sidiff.graphpattern.profile.constraints.ConstraintGraphPatternProfile.not;
 import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinGraphPatternProfile.preserve;
@@ -12,6 +13,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.resource.HenshinResource;
@@ -26,22 +28,37 @@ public class GraphPatternToHenshinConverter {
 	
 	protected Map<NodePattern, Node> rhsTrace = new HashMap<>();
 	
+	protected Map<NodePattern, Node> acTrace = new HashMap<>(); 
+	
 	public Rule convert(GraphPattern graph) {
 		Rule rule =  HenshinFactory.eINSTANCE.createRule();
+		NestedCondition nac = rule.getLhs().createNAC(null);
 		
 		for (NodePattern pNode : graph.getNodes()) {
-			convert(rule, pNode);
+			if (pNode.getStereotypes().contains(not)) {
+				convert(nac, pNode);
+			} else {
+				convert(rule, pNode);
+			}
 		}
 		
 		for (NodePattern pNode : graph.getNodes()) {
 			for (AttributePattern pAttribute : pNode.getAttributes()) {
-				convert(rule, pAttribute);
+				if (pAttribute.getStereotypes().contains(not)) {
+					convert(nac, pAttribute);
+				} else {
+					convert(rule, pAttribute);
+				}
 			}
 		}
 		
 		for (NodePattern pNode : graph.getNodes()) {
 			for (EdgePattern pEdge : pNode.getOutgoings()) {
-				convert(rule, pEdge);
+				if (pEdge.getStereotypes().contains(not)) {
+					convert(nac, pEdge);
+				} else {
+					convert(rule, pEdge);
+				}
 			}
 		}
 		
@@ -123,4 +140,58 @@ public class GraphPatternToHenshinConverter {
 			rule.getRhs().getEdges().add(edge);
 		}
 	}
+	
+	protected void convert(NestedCondition ac, NodePattern pNode) {
+		Node node = HenshinFactory.eINSTANCE.createNode();
+		node.setName(pNode.getName());
+		node.setDescription(pNode.getDescription());
+		node.setType(pNode.getType());
+		
+		ac.getConclusion().getNodes().add(node);
+	}
+	
+	protected void convert(NestedCondition ac, AttributePattern pAttribute) {
+		Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
+		attribute.setType(pAttribute.getType());
+		attribute.setValue(pAttribute.getValue());
+		
+		Node node = acTrace.get(pAttribute.getNode());
+		
+		if (node == null) {
+			node = createApplicationConditionContextNode(ac, pAttribute.getNode());
+		}
+		
+		node.getAttributes().add(attribute);
+	}
+	
+	protected void convert(NestedCondition ac, EdgePattern pEdge) {
+		Edge edge = HenshinFactory.eINSTANCE.createEdge();
+		edge.setType(pEdge.getType());
+		
+		Node sourceNode = acTrace.get(pEdge.getSource());
+		
+		if (sourceNode == null) {
+			sourceNode = createApplicationConditionContextNode(ac, pEdge.getSource());
+		}
+		
+		Node targetNode = acTrace.get(pEdge.getTarget());
+		
+		if (targetNode == null) {
+			targetNode = createApplicationConditionContextNode(ac, pEdge.getTarget());
+		}
+		
+		edge.setSource(sourceNode);
+		edge.setTarget(targetNode);
+		
+		ac.getConclusion().getEdges().add(edge);
+	}
+	
+	protected Node createApplicationConditionContextNode(NestedCondition ac, NodePattern pNode) {
+		convert(ac, pNode);
+		Node node = acTrace.get(pNode);
+		ac.getMappings().add(lhsTrace.get(pNode), node);
+		
+		return node;
+	}
+	
 }
