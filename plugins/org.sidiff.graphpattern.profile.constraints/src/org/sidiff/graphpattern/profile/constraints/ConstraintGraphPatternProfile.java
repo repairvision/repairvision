@@ -11,11 +11,16 @@ import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.profile.GraphPatternProfileFactory;
 import org.sidiff.graphpattern.profile.IGraphPatternProfile;
 import org.sidiff.graphpattern.profile.IGraphPatternVisualization;
+import org.sidiff.graphpattern.profile.extensions.GraphPatternProfileLibrary;
 import org.sidiff.graphpattern.util.GraphpatternResourceImpl;
 
 public class ConstraintGraphPatternProfile implements IGraphPatternProfile {
 	
-	public static enum STEREOTYPE {
+	public static Profile instance = GraphPatternProfileLibrary.getEntry("org.sidiff.graphpattern.profile.constraints").getProfile().getProfile();
+	
+	public static Stereotype not = instance.getStereotype("not");
+	
+	protected static enum STEREOTYPE {
 		not
 	};
 	
