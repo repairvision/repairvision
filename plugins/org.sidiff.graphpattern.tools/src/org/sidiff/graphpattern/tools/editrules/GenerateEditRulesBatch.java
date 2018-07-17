@@ -37,7 +37,9 @@ import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Stereotype;
+import org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil;
 import org.sidiff.graphpattern.profile.henshin.HenshinStereotypes;
+import org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatch;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatchings;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
@@ -95,6 +97,10 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
 			List<Pattern> creationRules = new ArrayList<>(1);
 			
+//			if (editRule.getName().contains("Containment-Container and Containment Reference")) {
+//				System.out.println(editRule.getName());
+//			}
+			
 			// Copy graph constraints:
 			String name = "create: " + graphPattern.getName();
 			
@@ -111,6 +117,12 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			// Set edit rule actions:
 			setConstructionAction(editRule, create);
 			
+			// Remove negative graph postcondition constraints:
+			// (NAC incident to create node.)
+			if (HenshinProfileUtil.hasPostCondition(editRule)) {
+				ConstraintProfileUtil.removeNAC(editRule);
+			}
+			
 			// Generate parameters:
 			GraphPatternGeneratorUtil.generateParameters(editOperation);
 			
@@ -123,12 +135,16 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			generateCreationRules(subPattern, editRules);
 		}
 	}
-	
+
 	public static void generateDeletionRules(Pattern pattern, Map<GraphPattern, List<Pattern>> editRules) {
 		
 		// Generate edit rules:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
 			List<Pattern> deletionRules = new ArrayList<>(1);
+			
+//			if (editRule.getName().contains("Containment-Container and Containment Reference")) {
+//				System.out.println(editRule.getName());
+//			}
 			
 			// Copy graph constraints:
 			String name = "delete: " + graphPattern.getName();
@@ -144,16 +160,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			deletionRules.add(editOperation);
 			
 			// Remove negative graph constraints:
-			for (Iterator<NodePattern> iterator = editRule.getNodes().iterator(); iterator.hasNext();) {
-				NodePattern node = iterator.next();
-				
-				if (!node.getStereotypes().isEmpty()) {
-					if (node.getStereotypes().contains(not)) {
-						node.removeIncident();
-						iterator.remove();
-					}
-				}
-			}
+			ConstraintProfileUtil.removeNAC(editRule);
 			
 			// Set edit rule actions:
 			setConstructionAction(editRule, delete);
@@ -170,7 +177,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			generateDeletionRules(subPattern, editRules);
 		}
 	}
-
+	
 	protected static void setConstructionAction(GraphPattern editRule, Stereotype constructionST) {
 		
 		// Set node actions:
