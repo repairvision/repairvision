@@ -6,6 +6,7 @@ import java.util.Collections;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.graphpattern.Bundle;
@@ -28,8 +29,10 @@ public class GraphPatternToHenshinConverterHandler extends AbstractHandler {
 						GraphPatternToHenshinConverter converter = new GraphPatternToHenshinConverter();
 						converter.convert(graphPattern);
 						
-						Resource resource = converter.getResource(bundle.eResource().getURI().trimFileExtension()
-								.appendSegment(graphPattern.getName()).appendFileExtension("henshin"));
+						URI uri = bundle.eResource().getURI().trimFileExtension()
+								.appendSegment(graphPattern.getName().replaceAll("\\W", "")).appendFileExtension("henshin");
+						
+						Resource resource = converter.getResource(uri);
 						
 						try {
 							resource.save(Collections.emptyMap());

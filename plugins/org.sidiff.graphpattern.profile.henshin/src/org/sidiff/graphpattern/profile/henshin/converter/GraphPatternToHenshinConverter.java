@@ -158,6 +158,7 @@ public class GraphPatternToHenshinConverter {
 		node.setType(pNode.getType());
 		
 		ac.getConclusion().getNodes().add(node);
+		acTrace.put(pNode, node);
 	}
 	
 	protected void convert(NestedCondition ac, AttributePattern pAttribute) {
