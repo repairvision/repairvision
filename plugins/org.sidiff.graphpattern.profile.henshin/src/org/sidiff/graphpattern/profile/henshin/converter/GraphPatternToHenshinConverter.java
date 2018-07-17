@@ -32,10 +32,12 @@ import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 
 public class GraphPatternToHenshinConverter {
-	
-	protected Rule rule;
+
+	protected Module module;
 	
 	protected Unit unit;
+	
+	protected Rule rule;
 
 	protected Map<NodePattern, Node> lhsTrace = new HashMap<>();
 	
@@ -69,7 +71,13 @@ public class GraphPatternToHenshinConverter {
 		}
 		
 		this.unit = mainUnit;
-		this.unit.setName(editOperation.getName());
+		
+		// create module:
+		this.module = HenshinFactory.eINSTANCE.createModule();
+		this.module.getUnits().add(getMainUnit());
+		this.module.getUnits().add(getRule());
+		this.module.setName(editOperation.getName());
+		this.module.setDescription((editOperation.getDescription() != null) ? editOperation.getDescription() : editOperation.getName());
 	}
 	
 	protected Rule convert(GraphPattern graph) {
@@ -121,10 +129,6 @@ public class GraphPatternToHenshinConverter {
 	}
 	
 	public Module getModule() {
-		Module module = HenshinFactory.eINSTANCE.createModule();
-		module.getUnits().add(getMainUnit());
-		module.getUnits().add(getRule());
-		
 		return module;
 	}
 	
