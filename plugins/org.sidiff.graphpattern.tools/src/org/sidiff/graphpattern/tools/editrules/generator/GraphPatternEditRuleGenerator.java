@@ -41,6 +41,11 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		this.editOperation.getGraphs().add(editRule);
 	}
 	
+	public void setName(String name) {
+		editOperation.setName(name);
+		editRule.setName(name);
+	}
+	
 	public Pattern getEditOperation() {
 		return editOperation;
 	}

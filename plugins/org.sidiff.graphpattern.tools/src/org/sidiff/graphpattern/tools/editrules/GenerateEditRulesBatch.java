@@ -291,15 +291,14 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 							editRuleGenerator.generate(
 									match.getPreConstraint().getNodes(), 
 									match.getPostConstraint().getNodes());
-							Pattern editOperation = editRuleGenerator.getEditOperation();
 
 							if (count > 1) {
-								editOperation.setName(name + " (" + ++counter + ")");
+								editRuleGenerator.setName(name + " (" + ++counter + ")");
 							} else {
-								editOperation.setName(name);
+								editRuleGenerator.setName(name);
 							}
 
-							transformationRules.add(editOperation);
+							transformationRules.add(editRuleGenerator.getEditOperation());
 						}
 					}
 				}
