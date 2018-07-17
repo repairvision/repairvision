@@ -2,11 +2,13 @@ package org.sidiff.graphpattern.tools.editrules.generator;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphElement;
@@ -32,11 +34,24 @@ public class BasicEditRuleGenerator {
 	}
 	
 	public void generate(List<NodePattern> fromFragment, List<NodePattern> toFragment) {
+		boolean postCondition = false;
+		List<GraphElement> nac = new ArrayList<>();
 		
 		// << create/preserve/forbid >>:
 		for (NodePattern toNode : toFragment) {
 			if (toNode.getStereotypes().contains(not)) {
 				generateForbid(toNode);
+				nac.add(toNode);
+				
+				for (EdgePattern toEdge : toNode.getOutgoings()) {
+					generateForbid(toEdge);
+					nac.add(toEdge);
+				}
+				
+				for (AttributePattern toAttribute : toNode.getAttributes()) {
+					generateForbid(toAttribute);
+					nac.add(toAttribute);
+				}
 			} else {
 				NodePattern fromNode = getNodeMatch(toNode);
 				
@@ -44,35 +59,60 @@ public class BasicEditRuleGenerator {
 					generateContext(fromNode, toNode);
 					
 					for (EdgePattern toEdge : toNode.getOutgoings()) {
-						EdgePattern fromEdge = getEdgeMatch(toEdge, fromNode.getOutgoings());
-						
-						if (fromEdge != null) {
-							generateContext(fromEdge, toEdge);
+						if (toEdge.getStereotypes().contains(not)) {
+							generateForbid(toEdge);
+							nac.add(toEdge);
 						} else {
-							generateCreate(toEdge);
+							EdgePattern fromEdge = getEdgeMatch(toEdge, fromNode.getOutgoings());
+							
+							if (fromEdge != null) {
+								generateContext(fromEdge, toEdge);
+							} else {
+								generateCreate(toEdge);
+							}
 						}
 					}
 					
 					for (AttributePattern toAttribute : toNode.getAttributes()) {
-						AttributePattern fromAttribute = getAttributeMatch(toAttribute, fromNode.getAttributes());
-						
-						if (fromAttribute != null) {
-							generateContext(fromAttribute, toAttribute);
+						if (toAttribute.getStereotypes().contains(not)) {
+							generateForbid(toAttribute);
+							nac.add(toAttribute);
 						} else {
-							generateCreate(toAttribute);
+							AttributePattern fromAttribute = getAttributeMatch(toAttribute, fromNode.getAttributes());
+							
+							if (fromAttribute != null) {
+								generateContext(fromAttribute, toAttribute);
+							} else {
+								generateCreate(toAttribute);
+							}
 						}
 					}
 				} else {
 					generateCreate(toNode);
 					
 					for (EdgePattern toEdge : toNode.getOutgoings()) {
-						generateCreate(toEdge);
+						if (toEdge.getStereotypes().contains(not)) {
+							postCondition = true;
+						} else {
+							generateCreate(toEdge);
+						}
 					}
 					
 					for (AttributePattern toAttribute : toNode.getAttributes()) {
-						generateCreate(toAttribute);
+						if (toAttribute.getStereotypes().contains(not)) {
+							postCondition = true;
+						} else {
+							generateCreate(toAttribute);
+						}
 					}
 				}
+			}
+		}
+		
+		// remove post condition:
+		if (postCondition) {
+			for (GraphElement nacGraphElement : nac) {
+				EcoreUtil.remove(nacGraphElement);
 			}
 		}
 		
@@ -83,25 +123,33 @@ public class BasicEditRuleGenerator {
 				
 				if (toNode != null) {
 					for (EdgePattern fromEdge : fromNode.getOutgoings()) {
-						if (getEdgeMatch(fromEdge, toNode.getOutgoings()) == null) {
-							generateDelete(fromEdge);
+						if (!fromEdge.getStereotypes().contains(not)) {
+							if (getEdgeMatch(fromEdge, toNode.getOutgoings()) == null) {
+								generateDelete(fromEdge);
+							}
 						}
 					}
 					
 					for (AttributePattern fromAttribute : fromNode.getAttributes()) {
-						if (getAttributeMatch(fromAttribute, toNode.getAttributes()) == null) {
-							generateDelete(fromAttribute);
+						if (!fromAttribute.getStereotypes().contains(not)) {
+							if (getAttributeMatch(fromAttribute, toNode.getAttributes()) == null) {
+								generateDelete(fromAttribute);
+							}
 						}
 					}
 				} else {
 					generateDelete(fromNode);
 					
 					for (EdgePattern fromEdge : fromNode.getOutgoings()) {
-						generateDelete(fromEdge);
+						if (!fromEdge.getStereotypes().contains(not)) {
+							generateDelete(fromEdge);
+						}
 					}
 					
 					for (AttributePattern fromAttribute : fromNode.getAttributes()) {
-						generateDelete(fromAttribute);
+						if (!fromAttribute.getStereotypes().contains(not)) {
+							generateDelete(fromAttribute);
+						}
 					}
 				}
 			}

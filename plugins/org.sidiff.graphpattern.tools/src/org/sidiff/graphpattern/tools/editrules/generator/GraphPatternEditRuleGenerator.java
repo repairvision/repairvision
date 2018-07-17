@@ -72,7 +72,11 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 	}
 	
 	protected EdgePattern generateEdge(EdgePattern edge, Stereotype action) {
-		NodePattern eoSourceNode = contextTrace.get(edge.getSource());
+		NodePattern eoSourceNode = (NodePattern) copier.get(edge.getSource());
+		
+		if (eoSourceNode == null) {
+			eoSourceNode = contextTrace.get(edge.getSource());
+		}
 		
 		EdgePattern eoEdge = copyEdge(edge, copier);
 		eoEdge.getStereotypes().add(action);
@@ -82,7 +86,11 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 	}
 	
 	protected AttributePattern generateAttribute(AttributePattern attribute, Stereotype action) {
-		NodePattern eoNode = contextTrace.get(attribute.getNode());
+		NodePattern eoNode = (NodePattern) copier.get(attribute.getNode());
+		
+		if (eoNode == null) {
+			eoNode = contextTrace.get(attribute.getNode());
+		}
 		
 		AttributePattern eoAttribute = copyAttribute(attribute, copier);
 		eoAttribute.getStereotypes().add(action);
