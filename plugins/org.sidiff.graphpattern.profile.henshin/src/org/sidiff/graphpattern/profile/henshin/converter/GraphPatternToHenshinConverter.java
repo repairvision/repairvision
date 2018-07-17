@@ -29,10 +29,11 @@ import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Pattern;
 
 public class GraphPatternToHenshinConverter {
 	
-	protected Rule rule = HenshinFactory.eINSTANCE.createRule();
+	protected Rule rule;
 	
 	protected Unit unit;
 
@@ -42,7 +43,36 @@ public class GraphPatternToHenshinConverter {
 	
 	protected Map<NodePattern, Node> acTrace = new HashMap<>(); 
 	
-	public Rule convert(GraphPattern graph) {
+	public GraphPatternToHenshinConverter(Pattern editOperation) {
+		
+		// create rule:
+		this.rule = HenshinFactory.eINSTANCE.createRule();
+		this.rule.setName(editOperation.getName());
+		
+		for (GraphPattern editRule : editOperation.getGraphs()) {
+			convert(editRule);
+		}
+		
+		// create main unit:
+		SequentialUnit mainUnit = HenshinFactory.eINSTANCE.createSequentialUnit();
+		mainUnit.setName(INamingConventions.MAIN_UNIT);
+		mainUnit.getSubUnits().add(rule);
+		
+		for (Parameter ruleParameter : rule.getParameters()) {
+			Parameter unitParameter = EcoreUtil.copy(ruleParameter);
+			mainUnit.getParameters().add(unitParameter);
+			
+			ParameterMapping mapping = HenshinFactory.eINSTANCE.createParameterMapping();
+			mapping.setSource(unitParameter);
+			mapping.setTarget(ruleParameter);
+			mainUnit.getParameterMappings().add(mapping);
+		}
+		
+		this.unit = mainUnit;
+		this.unit.setName(editOperation.getName());
+	}
+	
+	protected Rule convert(GraphPattern graph) {
 		NestedCondition nac = rule.getLhs().createNAC(null);
 		
 		for (NodePattern pNode : graph.getNodes()) {
@@ -87,25 +117,6 @@ public class GraphPatternToHenshinConverter {
 	}
 	
 	public Unit getMainUnit() {
-		
-		if (unit ==  null) {
-			SequentialUnit mainUnit = HenshinFactory.eINSTANCE.createSequentialUnit();
-			mainUnit.setName(INamingConventions.MAIN_UNIT);
-			mainUnit.getSubUnits().add(rule);
-			
-			for (Parameter ruleParameter : rule.getParameters()) {
-				Parameter unitParameter = EcoreUtil.copy(ruleParameter);
-				mainUnit.getParameters().add(unitParameter);
-				
-				ParameterMapping mapping = HenshinFactory.eINSTANCE.createParameterMapping();
-				mapping.setSource(unitParameter);
-				mapping.setTarget(ruleParameter);
-				mainUnit.getParameterMappings().add(mapping);
-			}
-			
-			this.unit = mainUnit;
-		}
-		
 		return unit;
 	}
 	

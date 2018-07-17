@@ -26,8 +26,7 @@ public class GraphPatternToHenshinConverterHandler extends AbstractHandler {
 					GraphPattern graphPattern = (GraphPattern) e;
 					
 					if (graphPattern.getStereotypes().contains(HenshinStereotypes.rule)) {
-						GraphPatternToHenshinConverter converter = new GraphPatternToHenshinConverter();
-						converter.convert(graphPattern);
+						GraphPatternToHenshinConverter converter = new GraphPatternToHenshinConverter(graphPattern.getPattern());
 						
 						URI uri = bundle.eResource().getURI().trimFileExtension()
 								.appendSegment(graphPattern.getName().replaceAll("\\W", "")).appendFileExtension("henshin");
