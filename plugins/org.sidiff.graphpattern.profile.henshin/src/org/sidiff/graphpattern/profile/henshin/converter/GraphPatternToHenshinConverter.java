@@ -10,14 +10,21 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Parameter;
+import org.eclipse.emf.henshin.model.ParameterKind;
+import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.SequentialUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.emf.henshin.model.resource.HenshinResource;
+import org.sidiff.common.henshin.INamingConventions;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
@@ -26,6 +33,8 @@ import org.sidiff.graphpattern.NodePattern;
 public class GraphPatternToHenshinConverter {
 	
 	protected Rule rule = HenshinFactory.eINSTANCE.createRule();
+	
+	protected Unit unit;
 
 	protected Map<NodePattern, Node> lhsTrace = new HashMap<>();
 	
@@ -64,6 +73,12 @@ public class GraphPatternToHenshinConverter {
 			}
 		}
 		
+		if (graph.getPattern() != null) {
+			for (org.sidiff.graphpattern.Parameter pParameter : graph.getPattern().getParameters()) {
+				convert(pParameter);
+			}
+		}
+		
 		return rule;
 	}
 	
@@ -71,12 +86,40 @@ public class GraphPatternToHenshinConverter {
 		return rule;
 	}
 	
-	public Resource getResource(URI uri) {
-		Module module = HenshinFactory.eINSTANCE.createModule();
-		module.getUnits().add(rule);
+	public Unit getMainUnit() {
 		
+		if (unit ==  null) {
+			SequentialUnit mainUnit = HenshinFactory.eINSTANCE.createSequentialUnit();
+			mainUnit.setName(INamingConventions.MAIN_UNIT);
+			mainUnit.getSubUnits().add(rule);
+			
+			for (Parameter ruleParameter : rule.getParameters()) {
+				Parameter unitParameter = EcoreUtil.copy(ruleParameter);
+				mainUnit.getParameters().add(unitParameter);
+				
+				ParameterMapping mapping = HenshinFactory.eINSTANCE.createParameterMapping();
+				mapping.setSource(unitParameter);
+				mapping.setTarget(ruleParameter);
+				mainUnit.getParameterMappings().add(mapping);
+			}
+			
+			this.unit = mainUnit;
+		}
+		
+		return unit;
+	}
+	
+	public Module getModule() {
+		Module module = HenshinFactory.eINSTANCE.createModule();
+		module.getUnits().add(getMainUnit());
+		module.getUnits().add(getRule());
+		
+		return module;
+	}
+	
+	public Resource getResource(URI uri) {
 		Resource resource = new HenshinResource(uri);
-		resource.getContents().add(module);
+		resource.getContents().add(getModule());
 		
 		return resource;
 	}
@@ -203,6 +246,15 @@ public class GraphPatternToHenshinConverter {
 		ac.getMappings().add(lhsTrace.get(pNode), node);
 		
 		return node;
+	}
+	
+	protected void convert(org.sidiff.graphpattern.Parameter pParameter) {
+		Parameter parameter = HenshinFactory.eINSTANCE.createParameter();
+		parameter.setName(pParameter.getName());
+		parameter.setDescription(pParameter.getDescription());
+		parameter.setKind(ParameterKind.IN);
+		
+		rule.getParameters().add(parameter);
 	}
 	
 }
