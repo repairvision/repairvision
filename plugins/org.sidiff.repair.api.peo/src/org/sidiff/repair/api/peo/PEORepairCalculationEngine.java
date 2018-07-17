@@ -164,6 +164,7 @@ public class PEORepairCalculationEngine {
 		complementFinderEngine.finish();
 		
 		// Report:
+		System.out.println("Re.Vision[Potential CPEOs]: " + potentialEditRules);
 		System.out.println("Re.Vision[Repair Count]: " + repairCount);
 		
 		if (settings.getMonitor() instanceof LogMonitor) {
