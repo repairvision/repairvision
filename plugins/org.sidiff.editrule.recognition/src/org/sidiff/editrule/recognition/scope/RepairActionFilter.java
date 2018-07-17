@@ -348,6 +348,6 @@ public class RepairActionFilter {
 	}
 	
 	private boolean isStrictMatchingType(Node node) {
-		return HenshinRuleAnalysisUtilEx.isCreationNode(node);
+		return !(node.getType().isAbstract() || node.getType().isInterface()) && HenshinRuleAnalysisUtilEx.isCreationNode(node);
 	}
 }

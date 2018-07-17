@@ -154,6 +154,9 @@ public class LiftingGraphDomainMap {
 			if (change instanceof AddObject) {
 				EClass type = ((AddObject) change).getObj().eClass();
 				addObjects.getModifiable(type).add((AddObject) change);
+				
+				// Generic AddObject pattern needs inheritance map:
+				packages.add(type.getEPackage());
 			}
 
 			else if (change instanceof RemoveObject) {
@@ -299,7 +302,16 @@ public class LiftingGraphDomainMap {
 	 * @return A set of candidates compatible with the type.
 	 */
 	public List<EObject> getAddObjectDomain(EClass type) {
-		return new ArrayList<EObject>(addObjects.get(type));
+		List<EObject> domain = new ArrayList<EObject>(addObjects.get(type));
+		
+		// Support for generic creation edit rules:
+		if (type.isAbstract() || type.isInterface()) {
+			for (EClass subtype : getSubTypes(type)) {
+				domain.addAll(addObjects.get(subtype));
+			}
+		}
+		
+		return domain;
 	}
 
 	/**
@@ -313,7 +325,16 @@ public class LiftingGraphDomainMap {
 	 * @return The count of candidates compatible with the change type.
 	 */
 	public int getAddObjectDomainSize(EClass type) {
-		return addObjects.get(type).size();
+		int domainSize = addObjects.get(type).size();
+		
+		// Support for generic creation edit rules:
+		if (type.isAbstract() || type.isInterface()) {
+			for (EClass subtype : getSubTypes(type)) {
+				domainSize += addObjects.get(subtype).size();
+			}
+		}
+		
+		return domainSize;
 	}
 
 	/**
@@ -327,11 +348,10 @@ public class LiftingGraphDomainMap {
 	public List<EObject> getRemoveObjectDomain(EClass type) {
 		List<EObject> domain = new ArrayList<EObject>(removeObjects.get(type));
 
-		if (subTypes != null) {
-			for (EClass subtype : getSubTypes(type)) {
-				domain.addAll(removeObjects.get(subtype));
-			}
+		for (EClass subtype : getSubTypes(type)) {
+			domain.addAll(removeObjects.get(subtype));
 		}
+
 		return domain;
 	}
 
@@ -348,11 +368,10 @@ public class LiftingGraphDomainMap {
 	public int getRemoveObjectDomainSize(EClass type) {
 		int domainSize = removeObjects.get(type).size();
 
-		if (subTypes != null) {
-			for (EClass subtype : getSubTypes(type)) {
-				domainSize += removeObjects.get(subtype).size();
-			}
+		for (EClass subtype : getSubTypes(type)) {
+			domainSize += removeObjects.get(subtype).size();
 		}
+
 		return domainSize;
 	}
 
