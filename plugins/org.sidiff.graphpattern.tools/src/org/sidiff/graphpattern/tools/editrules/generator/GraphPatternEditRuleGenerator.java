@@ -18,6 +18,7 @@ import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Stereotype;
 
 public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
@@ -26,6 +27,8 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 	
 	protected Map<NodePattern, NodePattern> contextTrace = new HashMap<>();
 	
+	protected Pattern editOperation;
+	
 	protected GraphPattern editRule;
 	
 	public GraphPatternEditRuleGenerator(GraphPattern fromGraph, GraphPattern toGraph, Map<NodePattern, NodePattern> match) {
@@ -33,6 +36,13 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		
 		this.editRule = GraphpatternFactory.eINSTANCE.createGraphPattern();
 		this.editRule.getStereotypes().add(rule);
+		
+		this.editOperation = GraphpatternFactory.eINSTANCE.createPattern();
+		this.editOperation.getGraphs().add(editRule);
+	}
+	
+	public Pattern getEditOperation() {
+		return editOperation;
 	}
 	
 	public GraphPattern getEditRule() {
@@ -61,6 +71,9 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 				editRuleEdge.setTarget(editRuleTargetNode);
 			}
 		}
+		
+		// Generate parameters:
+		GraphPatternGeneratorUtil.generateParameters(editOperation);
 	}
 	
 	protected NodePattern generateNode(NodePattern node, Stereotype action) {
@@ -162,21 +175,21 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 	protected NodePattern copyNode(NodePattern node, Copier copier) {
 		NodePattern copy = (NodePattern) copier.copy(node);
 		copy.setType(node.getType());
-		copy.getStereotypes().addAll(node.getStereotypes());
+//		copy.getStereotypes().addAll(node.getStereotypes());
 		return copy;
 	}
 	
 	protected EdgePattern copyEdge(EdgePattern edge, Copier copier) {
 		EdgePattern copy = (EdgePattern) copier.copy(edge);
 		copy.setType(edge.getType());
-		copy.getStereotypes().addAll(edge.getStereotypes());
+//		copy.getStereotypes().addAll(edge.getStereotypes());
 		return copy;
 	}
 	
 	protected AttributePattern copyAttribute(AttributePattern attribute, Copier copier) {
 		AttributePattern copy = (AttributePattern) copier.copy(attribute);
 		copy.setType(attribute.getType());
-		copy.getStereotypes().addAll(attribute.getStereotypes());
+//		copy.getStereotypes().addAll(attribute.getStereotypes());
 		return copy;
 	}
 }

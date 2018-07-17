@@ -1,10 +1,10 @@
 package org.sidiff.graphpattern.tools.editrules;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
-import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.rule;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.rule;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +32,7 @@ import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
@@ -40,6 +41,7 @@ import org.sidiff.graphpattern.profile.henshin.HenshinStereotypes;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatch;
 import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatchings;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
+import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternGeneratorUtil;
 import org.sidiff.graphpattern.util.GraphPatternUtil;
 
 public class GenerateEditRulesBatch extends AbstractHandler {
@@ -56,16 +58,21 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			patternBundle.getProfiles().add(HenshinStereotypes.profile_model);
 			
 			// Generate edit rules:
-			Map<GraphPattern, List<GraphPattern>> editRules = new HashMap<>();
+			Map<GraphPattern, List<Pattern>> editOperations = new HashMap<>();
 			
 			for (Pattern pattern : patternBundle.getPatterns()) {
-				generateCreationRules(pattern, editRules);
-				generateDeletionRules(pattern, editRules);
-				generateStructuralTransformationRules(pattern, editRules);
+				generateCreationRules(pattern, editOperations);
+				generateDeletionRules(pattern, editOperations);
+				generateStructuralTransformationRules(pattern, editOperations);
 			}
 			
-			editRules.forEach((pattern, rules) -> pattern.getPattern().getGraphs().addAll(rules));
-			System.out.println("Edit Rules: " + editRules.values().stream().mapToInt(List::size).sum());
+			System.out.println("Edit Operations: " + editOperations.values().stream().mapToInt(List::size).sum());
+			
+			editOperations.forEach((preConstraint, operations) -> {
+				for (Pattern editOperation : operations) {
+					preConstraint.getPattern().getSubpatterns().add(editOperation);
+				}
+			});
 			
 			// Save edit rules:
 			URI originalURI = patternBundle.eResource().getURI();
@@ -82,20 +89,30 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		return null;
 	}
 	
-	public static void generateCreationRules(Pattern pattern, Map<GraphPattern, List<GraphPattern>> editRules) {
+	public static void generateCreationRules(Pattern pattern, Map<GraphPattern, List<Pattern>> editRules) {
 		
 		// Generate edit rules:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
-			List<GraphPattern> creationRules = new ArrayList<>(1);
+			List<Pattern> creationRules = new ArrayList<>(1);
 			
 			// Copy graph constraints:
+			String name = "create: " + graphPattern.getName();
+			
 			GraphPattern editRule = (GraphPattern) ModelingUtil.deepCopy(graphPattern).get(graphPattern);
-			editRule.setName("create: " + graphPattern.getName());
+			editRule.setName(name);
 			editRule.getStereotypes().add(rule);
-			creationRules.add(editRule);
+			
+			Pattern editOperation = GraphpatternFactory.eINSTANCE.createPattern();
+			editOperation.setName(name);
+			editOperation.getGraphs().add(editRule);
+			
+			creationRules.add(editOperation);
 			
 			// Set edit rule actions:
 			setConstructionAction(editRule, create);
+			
+			// Generate parameters:
+			GraphPatternGeneratorUtil.generateParameters(editOperation);
 			
 			// Add new edit rule for graph pattern:
 			editRules.merge(graphPattern, creationRules, (v1, v2) -> {v1.addAll(v2); return v1;});
@@ -107,17 +124,24 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		}
 	}
 	
-	public static void generateDeletionRules(Pattern pattern, Map<GraphPattern, List<GraphPattern>> editRules) {
+	public static void generateDeletionRules(Pattern pattern, Map<GraphPattern, List<Pattern>> editRules) {
 		
 		// Generate edit rules:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
-			List<GraphPattern> deletionRules = new ArrayList<>(1);
+			List<Pattern> deletionRules = new ArrayList<>(1);
 			
 			// Copy graph constraints:
+			String name = "delete: " + graphPattern.getName();
+			
 			GraphPattern editRule = (GraphPattern) ModelingUtil.deepCopy(graphPattern).get(graphPattern);
-			editRule.setName("delete: " + graphPattern.getName());
+			editRule.setName(name);
 			editRule.getStereotypes().add(rule);
-			deletionRules.add(editRule);
+			
+			Pattern editOperation = GraphpatternFactory.eINSTANCE.createPattern();
+			editOperation.setName(name);
+			editOperation.getGraphs().add(editRule);
+			
+			deletionRules.add(editOperation);
 			
 			// Remove negative graph constraints:
 			for (Iterator<NodePattern> iterator = editRule.getNodes().iterator(); iterator.hasNext();) {
@@ -133,6 +157,9 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			
 			// Set edit rule actions:
 			setConstructionAction(editRule, delete);
+			
+			// Generate parameters:
+			GraphPatternGeneratorUtil.generateParameters(editOperation);
 			
 			// Add new edit rule for graph pattern:
 			editRules.merge(graphPattern, deletionRules, (v1, v2) -> {v1.addAll(v2); return v1;});
@@ -197,13 +224,13 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		}
 	}
 	
-	public static void generateStructuralTransformationRules(Pattern pattern, Map<GraphPattern, List<GraphPattern>> editRules) {
+	public static void generateStructuralTransformationRules(Pattern pattern, Map<GraphPattern, List<Pattern>> editRules) {
 		List<GraphPattern> allConstraints = pattern.getAllGraphPatterns();
 		
 		// Generate edit rules:
 		// Consider cross-product of all graph patterns:
 		for (GraphPattern preConstraint : allConstraints) {
-			List<GraphPattern> transformationRules = new ArrayList<>();
+			List<Pattern> transformationRules = new ArrayList<>();
 			
 //			if (preConstraint.getName().contains("Class with Unbound Generic Type Parameter")) {
 //				System.out.println(preConstraint.getName());
@@ -264,15 +291,15 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 							editRuleGenerator.generate(
 									match.getPreConstraint().getNodes(), 
 									match.getPostConstraint().getNodes());
-							GraphPattern transformationRule = editRuleGenerator.getEditRule();
+							Pattern editOperation = editRuleGenerator.getEditOperation();
 
 							if (count > 1) {
-								transformationRule.setName(name + " (" + ++counter + ")");
+								editOperation.setName(name + " (" + ++counter + ")");
 							} else {
-								transformationRule.setName(name);
+								editOperation.setName(name);
 							}
 
-							transformationRules.add(transformationRule);
+							transformationRules.add(editOperation);
 						}
 					}
 				}
