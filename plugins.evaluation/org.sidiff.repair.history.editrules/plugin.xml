@@ -32,28 +32,24 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               label="Edit-Rule Generator">
-            <command
-                  commandId="org.sidiff.repair.history.editrules.generator"
-                  style="push">
-            </command>
+            locationURI="popup:org.sidiff.repair.history.menu?after=org.sidiff.repair.history.generator.separator.tools">
+         <command
+               commandId="org.sidiff.repair.history.editrules.generator"
+               style="push">
             <visibleWhen
-                  checkEnabled="false">
-               <or>
-                  <with
-                        variable="selection">
-                     <iterate
-                           ifEmpty="false">
-                        <adapt
-                              type="org.eclipse.core.resources.IResource">
-                        </adapt>
-                     </iterate>
-                  </with>
-               </or>
+                  checkEnabled="true">
+                           <with
+               variable="selection">
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+               <instanceof
+                     value="org.eclipse.core.resources.IResource">
+               </instanceof>
+            </iterate>
+         </with>
             </visibleWhen>
-         </menu>
+         </command>
       </menuContribution>
    </extension>
 </plugin>
