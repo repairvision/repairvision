@@ -12,7 +12,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.sidiff.configuration.IConfigurable;
 import org.sidiff.consistency.common.settings.SettingsUtil;
 import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
@@ -47,15 +46,20 @@ public class EcoreValidationEMFRepositoryGenerator extends AbstractHandler imple
 						
 						DifferenceSettings differenceSettings = SettingsUtil.getDefaultDifferenceSettings();
 						
-						IMatcher matcher = MatchingUtils.getMatcherByKey("org.sidiff.matcher.signature.name.NamedElementMatcher");
+						IMatcher matcher = MatchingUtils.getMatcherByKey("org.sidiff.ecore.repair.history.matcher.EcoreMatcher");
+						
+//						IMatcher matcher = MatchingUtils.getMatcherByKey("org.sidiff.matcher.signature.name.NamedElementMatcher");
+//						IConfigurable configurable = (IConfigurable) matcher;
+//						configurable.getConfigurationOptions();
+//						configurable.setConfigurationOption("Use Qualified Names", true);
+//						configurable.setConfigurationOption("Allow Ambiguous Names", true);
+						
 //						IMatcher matcher = MatchingUtils.getMatcherByKey("EMFCompareMatcherAdapter");
+						
 //						IMatcher matcher = MatchingUtils.getMatcherByKey("SimilarityFloodingMatcher");
+						
 						ITechnicalDifferenceBuilder builder = TechnicalDifferenceUtils.getTechnicalDifferenceBuilder("org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations");
 						
-						IConfigurable configurable = (IConfigurable) matcher;
-						configurable.getConfigurationOptions();
-						configurable.setConfigurationOption("Use Qualified Names", true);
-						configurable.setConfigurationOption("Allow Ambiguous Names", true);
 						
 						differenceSettings.setMatcher(matcher);
 						differenceSettings.setTechBuilder(builder);
