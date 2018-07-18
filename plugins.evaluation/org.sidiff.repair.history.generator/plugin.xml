@@ -24,7 +24,7 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+            locationURI="popup:org.silift.menu">
          <menu
                id="org.sidiff.repair.history.menu"
                label="Model History">
@@ -40,6 +40,10 @@
                   commandId="org.sidiff.repair.evaluation.command.generatehistorymodel.uml.fol.folder"
                   style="push">
             </command>
+            <separator
+                  name="org.sidiff.repair.history.generator.separator.tools"
+                  visible="true">
+            </separator>
             <command
                   commandId="org.sidiff.repair.evaluation.command.printmessages"
                   style="push">
@@ -53,19 +57,19 @@
             categoryId="org.sidiff.difference.ui.category.silift"
             description="Generates an History Model for a list of model versions"
             id="org.sidiff.repair.evaluation.command.generatehistorymodel.ecore.emf.folder"
-            name="Generate History (Folder, Ecore, EMF-Validation)">
+            name="Generate History (Ecore, Resource, EMF-Validation)">
       </command>
       <command
             categoryId="org.sidiff.difference.ui.category.silift"
             description="Generates an History Model for a list of model versions"
             id="org.sidiff.repair.evaluation.command.generatehistorymodel.ecore.emf.repository"
-            name="Generate History (Project, Ecore, EMF-Validation)">
+            name="Generate History (Ecore, Resource-Set, EMF-Validation)">
       </command>
       <command
             categoryId="org.sidiff.difference.ui.category.silift"
             description="Generates an History Model for a list of model versions"
             id="org.sidiff.repair.evaluation.command.generatehistorymodel.uml.fol.folder"
-            name="Generate History (Folder, UML, FOL-Validation)">
+            name="Generate History (UML, Resource, FOL-Validation)">
       </command>
       <command
             id="org.sidiff.repair.evaluation.command.printmessages"
