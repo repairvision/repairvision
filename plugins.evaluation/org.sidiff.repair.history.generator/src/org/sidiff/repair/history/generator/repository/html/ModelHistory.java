@@ -1,34 +1,49 @@
 package org.sidiff.repair.history.generator.repository.html;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ModelHistory {
 	
-	private String htmlURL;
+	private ModelingProject modelingProject;
 	
-	private String gitURL;
+	private String file;
 	
-	private List<ModelVersion> versions = new ArrayList<>();
+	private List<ModelVersion> versions;
 	
-	public ModelHistory(String htmlURL) {
-		this.htmlURL = htmlURL;
-	}
-
-	public String getHtmlURL() {
-		return htmlURL;
+	public ModelHistory(ModelingProject modelingProject, String file) {
+		this.modelingProject = modelingProject;
+		this.file = file;
 	}
 	
-	public void setHtmlURL(String htmlURL) {
-		this.htmlURL = htmlURL;
+	public void mine() {
+		HTMLRepositoryMiner miner = new HTMLRepositoryMiner(modelingProject.getRepository(), file);
+		this.versions = miner.mine();
+		
 	}
 	
-	public String getGitURL() {
-		return gitURL;
+	public void mine(List<ModelVersion> otherModels) {
+		Set<String> commits = versions.stream().map(ModelVersion::getCommit).collect(Collectors.toSet());
+		
+		for (ModelVersion otherModel : otherModels) {
+			if (!commits.contains(otherModel.getCommit())) {
+				ModelVersion otherModelVersion = new ModelVersion(file, otherModel);
+				
+				HTMLRepositoryMiner miner = new HTMLRepositoryMiner(modelingProject.getRepository(), file);
+				miner.mine(otherModel);
+				
+				versions.add(otherModelVersion);
+			}
+		}
 	}
 	
-	public void setGitURL(String gitURL) {
-		this.gitURL = gitURL;
+	public String getFile() {
+		return file;
+	}
+	
+	public void setFile(String file) {
+		this.file = file;
 	}
 	
 	public List<ModelVersion> getVersions() {
@@ -38,5 +53,4 @@ public class ModelHistory {
 	public void setVersions(List<ModelVersion> versions) {
 		this.versions = versions;
 	}
-	
 }

@@ -7,6 +7,8 @@ public class ModelingProject {
 	
 	private String name;
 	
+	private String repository;
+	
 	private List<ModelHistory> modelHistories = new ArrayList<>();
 	
 	public ModelingProject(String name, List<ModelHistory> modelHistories) {
@@ -14,19 +16,27 @@ public class ModelingProject {
 		this.modelHistories = modelHistories;
 	}
 	
-	public void mine() {
-		for (ModelHistory modelHistory : modelHistories) {
-			new Thread(() -> {
-			    new HTMLRepositoryMiner().mine(modelHistory);
-			}).start();
+	public ModelingProject(String name, String repository, String... files) {
+		this.name = name;
+		this.repository = repository;
+		
+		for (String file : files) {
+			this.modelHistories.add(new ModelHistory(this, file));
 		}
 	}
 	
-	public ModelingProject(String name, String... htmlURLs) {
-		this.name = name;
+	public void mine() {
 		
-		for (String htmlURL : htmlURLs) {
-			this.modelHistories.add(new ModelHistory(htmlURL));
+		// mine model revisions:
+		for (ModelHistory modelHistory : modelHistories) {
+			modelHistory.mine();
+		}
+		
+		// mine revisions relative to other models:
+		for (ModelHistory modelHistory : modelHistories) {
+			for (ModelHistory otherModelHistory : modelHistories) {
+				otherModelHistory.mine(modelHistory.getVersions());
+			}
 		}
 	}
 	
@@ -36,6 +46,14 @@ public class ModelingProject {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getRepository() {
+		return repository;
+	}
+	
+	public void setRepository(String repository) {
+		this.repository = repository;
 	}
 	
 	public List<ModelHistory> getModelHistories() {

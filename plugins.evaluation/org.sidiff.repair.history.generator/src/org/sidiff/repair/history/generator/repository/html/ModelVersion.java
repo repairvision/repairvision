@@ -2,9 +2,7 @@ package org.sidiff.repair.history.generator.repository.html;
 
 public class ModelVersion {
 	
-	private String htmlURL;
-	
-	private String gitURL;
+	private String gitPath;
 	
 	private String commit;
 	
@@ -12,31 +10,30 @@ public class ModelVersion {
 	
 	private String message;
 	
-	private String autor;
+	private String author;
 	
-	public ModelVersion(String htmlURL, String gitURL, String commit, String date, String message, String autor) {
-		this.htmlURL = htmlURL;
-		this.gitURL = gitURL;
+	public ModelVersion(String gitPath, String commit, String date, String message, String author) {
+		this.gitPath = gitPath;
 		this.commit = commit;
 		this.date = date;
 		this.message = message;
-		this.autor = autor;
-	}
-
-	public String getHtmlURL() {
-		return htmlURL;
+		this.author = author;
 	}
 	
-	public void setHtmlURL(String htmlURL) {
-		this.htmlURL = htmlURL;
+	public ModelVersion(String gitPath, ModelVersion otherVersion) {
+		this.gitPath = gitPath;
+		this.commit = otherVersion.commit;
+		this.date = otherVersion.date;
+		this.message = otherVersion.message;
+		this.author = otherVersion.author;
 	}
 	
-	public String getGitURL() {
-		return gitURL;
+	public String getGitPath() {
+		return gitPath;
 	}
 	
-	public void setGitURL(String gitURL) {
-		this.gitURL = gitURL;
+	public void setGitPath(String gitPath) {
+		this.gitPath = gitPath;
 	}
 	
 	public String getCommit() {
@@ -63,11 +60,16 @@ public class ModelVersion {
 		this.message = message;
 	}
 	
-	public String getAutor() {
-		return autor;
+	public String getAuthor() {
+		return author;
 	}
 	
-	public void setAutor(String autor) {
-		this.autor = autor;
+	public void setAuthor(String autor) {
+		this.author = autor;
+	}
+	
+	@Override
+	public String toString() {
+		return date + " : " + commit + " : " + message + " : " + author + " : " + gitPath;
 	}
 }

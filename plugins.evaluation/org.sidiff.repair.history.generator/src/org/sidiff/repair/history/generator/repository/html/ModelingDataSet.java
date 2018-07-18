@@ -7,25 +7,28 @@ public class ModelingDataSet {
 	
 	private List<ModelingProject> projects = new ArrayList<>();
 	
-	public ModelingDataSet() {
+	public static void main(String[] args) {
+		ModelingDataSet dataSet = new ModelingDataSet();
 		
-		addProject("emf-store",
-				"http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git/log/bundles/org.eclipse.emf.emfstore.client/model/client.ecore",
-				"http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git/log/bundles/org.eclipse.emf.emfstore.client/model/client.ecore",
-				"http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git/log/bundles/org.eclipse.emf.emfstore.common.model/model/common.ecore",
-				"http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git/log/bundles/org.eclipse.emf.emfstore.fuzzy.emf/model/config.ecore",
-				"http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git/log/bundles/org.eclipse.emf.emfstore.server.model/model/server.ecore");
+		dataSet.addProject("emf-store", "http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git",
+				"/bundles/org.eclipse.emf.emfstore.client/model/client.ecore",
+				"/bundles/org.eclipse.emf.emfstore.common.model/model/common.ecore",
+				"/bundles/org.eclipse.emf.emfstore.fuzzy.emf/model/config.ecore",
+				"/bundles/org.eclipse.emf.emfstore.server.model/model/server.ecore");
 		
+		dataSet.mine();
 	}
 	
 	public void mine() {
 		for (ModelingProject modelingProject : projects) {
-			modelingProject.mine();
+			new Thread(() -> {
+				modelingProject.mine();
+			}).start();
 		}
 	}
 	
-	public void addProject(String name, String... htmlURLs) {
-		projects.add(new ModelingProject(name, htmlURLs));
+	public void addProject(String name, String repository, String... files) {
+		projects.add(new ModelingProject(name, repository, files));
 	}
 	
 	public List<ModelingProject> getProjects() {
