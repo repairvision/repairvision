@@ -28,6 +28,8 @@ public class HTMLRepositoryMiner {
 	private String file;
 	
 	public static void main(String[] args) {
+		
+		// TEST:
 		HTMLRepositoryMiner miner = new HTMLRepositoryMiner(
 				"http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git",
 				"/bundles/org.eclipse.emf.emfstore.client/model/client.ecore");
