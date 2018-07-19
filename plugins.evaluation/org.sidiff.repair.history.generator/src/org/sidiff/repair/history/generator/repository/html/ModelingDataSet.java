@@ -8,9 +8,10 @@ public class ModelingDataSet {
 	private List<ModelingProject> projects = new ArrayList<>();
 	
 	public static void main(String[] args) {
+		String localPateh = "C:\\evaluation\\";
 		ModelingDataSet dataSet = new ModelingDataSet();
 		
-		dataSet.addProject("emf-store", "http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git",
+		dataSet.addProject(localPateh, "emf-store", "http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git",
 				"/bundles/org.eclipse.emf.emfstore.client/model/client.ecore",
 				"/bundles/org.eclipse.emf.emfstore.common.model/model/common.ecore",
 				"/bundles/org.eclipse.emf.emfstore.fuzzy.emf/model/config.ecore",
@@ -27,8 +28,8 @@ public class ModelingDataSet {
 		}
 	}
 	
-	public void addProject(String name, String repository, String... files) {
-		projects.add(new ModelingProject(name, repository, files));
+	public void addProject(String localPath, String name, String repository, String... files) {
+		projects.add(new ModelingProject(localPath, name, repository, files));
 	}
 	
 	public List<ModelingProject> getProjects() {

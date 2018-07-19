@@ -1,8 +1,10 @@
 package org.sidiff.repair.history.generator.repository.html;
 
+import java.io.File;
+
 public class ModelVersion {
 	
-	private String gitPath;
+	private String file;
 	
 	private String commit;
 	
@@ -13,7 +15,7 @@ public class ModelVersion {
 	private String author;
 	
 	public ModelVersion(String gitPath, String commit, String date, String message, String author) {
-		this.gitPath = gitPath;
+		this.file = gitPath;
 		this.commit = commit;
 		this.date = date;
 		this.message = message;
@@ -21,19 +23,27 @@ public class ModelVersion {
 	}
 	
 	public ModelVersion(String gitPath, ModelVersion otherVersion) {
-		this.gitPath = gitPath;
+		this.file = gitPath;
 		this.commit = otherVersion.commit;
 		this.date = otherVersion.date;
 		this.message = otherVersion.message;
 		this.author = otherVersion.author;
 	}
 	
-	public String getGitPath() {
-		return gitPath;
+	public String getLocalPath() {
+		return "/" + getDate().replace(":", "-") + " " + getCommit() + "/";
+	}
+	
+	public String getFileName() {
+		return new File(file).getName();
+	}
+	
+	public String getFile() {
+		return file;
 	}
 	
 	public void setGitPath(String gitPath) {
-		this.gitPath = gitPath;
+		this.file = gitPath;
 	}
 	
 	public String getCommit() {
@@ -70,6 +80,6 @@ public class ModelVersion {
 	
 	@Override
 	public String toString() {
-		return date + " : " + commit + " : " + message + " : " + author + " : " + gitPath;
+		return date + " : " + commit + " : " + message + " : " + author + " : " + file;
 	}
 }

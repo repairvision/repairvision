@@ -1,8 +1,13 @@
 package org.sidiff.repair.history.generator.repository.html;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.sidiff.repair.history.generator.repository.git.json.JSONObject;
 
 public class ModelHistory {
 	
@@ -17,25 +22,96 @@ public class ModelHistory {
 		this.file = file;
 	}
 	
-	public void mine() {
+	public void writeMetadate() {
+		
+		// write meta data per model:
+		JSONObject history = new JSONObject();
+		
+		for (ModelVersion modelVersion : versions) {
+			JSONObject version = new JSONObject();
+			version.put("data", modelVersion.getDate());
+			version.put("commit", modelVersion.getCommit());
+			version.put("gitFileName", modelVersion.getFile());
+			version.put("localFileName", modelVersion.getLocalPath() + modelVersion.getFileName());
+			version.put("author", modelVersion.getAuthor());
+			version.put("message", modelVersion.getMessage());
+			
+			history.append("commits", version);
+		}
+		
+		FileWriter fileWriter = null;
+		
+		try {
+			File metafilePath = new File(modelingProject.getLocalPath());
+			metafilePath.mkdirs();
+			
+			File metafile = new File(metafilePath.getAbsolutePath() + "/" +  getFileName() + ".json");
+			metafile.createNewFile();
+			
+			fileWriter = new FileWriter(metafile);
+			fileWriter.write(history.toString(4));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (fileWriter != null) {
+				try {
+					fileWriter.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public void mineVersions() {
 		HTMLRepositoryMiner miner = new HTMLRepositoryMiner(modelingProject.getRepository(), file);
 		this.versions = miner.mine();
 		
 	}
 	
-	public void mine(List<ModelVersion> otherModels) {
+	public void addVersionsFromOtherModel(List<ModelVersion> otherModels) {
 		Set<String> commits = versions.stream().map(ModelVersion::getCommit).collect(Collectors.toSet());
 		
 		for (ModelVersion otherModel : otherModels) {
 			if (!commits.contains(otherModel.getCommit())) {
 				ModelVersion otherModelVersion = new ModelVersion(file, otherModel);
-				
-				HTMLRepositoryMiner miner = new HTMLRepositoryMiner(modelingProject.getRepository(), file);
-				miner.mine(otherModel);
-				
 				versions.add(otherModelVersion);
 			}
 		}
+	}
+	
+	public void mineVersionFiles() {
+		HTMLRepositoryMiner miner = new HTMLRepositoryMiner(modelingProject.getRepository(), file);
+		FileWriter writer = null;
+		
+		for (ModelVersion modelVersion : versions) {
+			String fileContent = miner.mine(modelVersion);
+			
+			if (fileContent != null) {
+				try {
+					File outputPath = new File(modelingProject.getLocalPath() + modelVersion.getLocalPath());
+					outputPath.mkdirs();
+					
+					writer = new FileWriter(new File(outputPath + "/" + modelVersion.getFileName()));
+					writer.write(fileContent);
+					writer.close();
+				} catch(IOException e) {
+					e.printStackTrace();
+				} finally {
+					if (writer != null) {
+						try {
+							writer.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public String getFileName() {
+		return new File(file).getName();
 	}
 	
 	public String getFile() {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -26,15 +27,6 @@ public class HTMLRepositoryMiner {
 	
 	private String file;
 	
-	public HTMLRepositoryMiner(String repository, String file) {
-		this.repository = repository;
-		this.file = file;
-		
-		if (!(repository.startsWith("http://" + PROTOCOL) || repository.startsWith("https://" + PROTOCOL))) {
-			throw new RuntimeException("Unsupported Repository: " + repository);
-		}
-	}
-
 	public static void main(String[] args) {
 		HTMLRepositoryMiner miner = new HTMLRepositoryMiner(
 				"http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git",
@@ -53,6 +45,15 @@ public class HTMLRepositoryMiner {
 		}
 	}
 	
+	public HTMLRepositoryMiner(String repository, String file) {
+		this.repository = repository;
+		this.file = file;
+		
+		if (!(repository.startsWith("http://" + PROTOCOL) || repository.startsWith("https://" + PROTOCOL))) {
+			throw new RuntimeException("Unsupported Repository: " + repository);
+		}
+	}
+
 	public List<ModelVersion> mine() {
 		List<ModelVersion> versions = new ArrayList<>();
 		
@@ -99,13 +100,15 @@ public class HTMLRepositoryMiner {
 
 	public String mine(ModelVersion modelVersion) {
 		try {
-			String plainTextVersionURL = repository + URL_PLAIN + modelVersion.getGitPath() + URL_ATTRIBUTE_ID + modelVersion.getCommit();
+			String plainTextVersionURL = repository + URL_PLAIN + modelVersion.getFile() + URL_ATTRIBUTE_ID + modelVersion.getCommit();
 //			System.out.println(plainTextVersionURL);
 			
 			Document versionDoc = Jsoup.connect(plainTextVersionURL).parser(Parser.xmlParser()).get();
 //			System.out.println(versionDoc.toString());
 			return versionDoc.toString();
-		} catch (IOException e) {
+		} catch (HttpStatusException hse) {
+			System.err.println("Http Status Exception: " + hse.getStatusCode() + ", URL=" + hse.getUrl());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
