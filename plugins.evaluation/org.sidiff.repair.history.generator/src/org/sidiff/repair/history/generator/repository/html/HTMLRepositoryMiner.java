@@ -27,7 +27,7 @@ public class HTMLRepositoryMiner {
 	
 	private String file;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws HttpStatusException {
 		
 		// TEST:
 		HTMLRepositoryMiner miner = new HTMLRepositoryMiner(
@@ -100,7 +100,7 @@ public class HTMLRepositoryMiner {
 		return versions;
 	}
 
-	public String mine(ModelVersion modelVersion) {
+	public String mine(ModelVersion modelVersion) throws HttpStatusException {
 		String plainTextVersionURL = "n/a";
 		
 		try {
@@ -111,7 +111,7 @@ public class HTMLRepositoryMiner {
 //			System.out.println(versionDoc.toString());
 			return versionDoc.toString();
 		} catch (HttpStatusException hse) {
-			System.err.println("Http Status Exception: " + hse.getStatusCode() + ", URL=" + hse.getUrl());
+			throw hse;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Exception: " + plainTextVersionURL);

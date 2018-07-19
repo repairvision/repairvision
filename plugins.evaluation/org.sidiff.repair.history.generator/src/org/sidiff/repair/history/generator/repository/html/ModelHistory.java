@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.jsoup.HttpStatusException;
 import org.sidiff.repair.history.generator.repository.git.json.JSONObject;
 
 public class ModelHistory {
@@ -89,7 +90,15 @@ public class ModelHistory {
 		FileWriter writer = null;
 		
 		for (ModelVersion modelVersion : versions) {
-			String fileContent = miner.mine(modelVersion);
+			String fileContent =  null;
+			
+			try {
+				fileContent = miner.mine(modelVersion);
+			} catch (HttpStatusException hse) {
+				if (!additionalVersions.contains(modelVersion)) {
+					System.err.println("Http Status Exception: " + hse.getStatusCode() + ", URL=" + hse.getUrl());
+				}
+			}
 			
 			if (fileContent != null) {
 				try {
@@ -109,12 +118,6 @@ public class ModelHistory {
 							e.printStackTrace();
 						}
 					}
-				}
-			} else {
-				if (additionalVersions.contains(modelVersion)) {
-					System.err.flush();
-					System.err.println("-> OK, Version does not exist.");
-					System.err.flush();
 				}
 			}
 		}
