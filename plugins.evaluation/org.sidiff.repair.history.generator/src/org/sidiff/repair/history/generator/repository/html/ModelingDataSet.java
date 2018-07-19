@@ -34,7 +34,6 @@ public class ModelingDataSet {
 		
 		// https://projects.eclipse.org/projects/modeling.mdt.ocl/developer
 		dataSet.addProject(localPath, "modeling.mdt.ocl", "http://git.eclipse.org/c/ocl/org.eclipse.ocl.git",
-				"/plugins/org.eclipse.ocl.ecore/model",
 				"/plugins/org.eclipse.ocl.pivot.uml/model/OCLforUML.ecore",
 				"/plugins/org.eclipse.ocl.pivot/model/Lookup.ecore",
 				"/plugins/org.eclipse.ocl.pivot/model/Pivot.ecore",

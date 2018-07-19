@@ -101,8 +101,10 @@ public class HTMLRepositoryMiner {
 	}
 
 	public String mine(ModelVersion modelVersion) {
+		String plainTextVersionURL = "n/a";
+		
 		try {
-			String plainTextVersionURL = repository + URL_PLAIN + modelVersion.getFile() + URL_ATTRIBUTE_ID + modelVersion.getCommit();
+			plainTextVersionURL = repository + URL_PLAIN + modelVersion.getFile() + URL_ATTRIBUTE_ID + modelVersion.getCommit();
 //			System.out.println(plainTextVersionURL);
 			
 			Document versionDoc = Jsoup.connect(plainTextVersionURL).parser(Parser.xmlParser()).get();
@@ -112,6 +114,7 @@ public class HTMLRepositoryMiner {
 			System.err.println("Http Status Exception: " + hse.getStatusCode() + ", URL=" + hse.getUrl());
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.err.println("Exception: " + plainTextVersionURL);
 		}
 		
 		return null;
