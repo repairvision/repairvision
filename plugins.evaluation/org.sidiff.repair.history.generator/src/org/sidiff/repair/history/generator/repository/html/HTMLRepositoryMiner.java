@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jsoup.Connection.Response;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
 public class HTMLRepositoryMiner {
@@ -107,9 +107,13 @@ public class HTMLRepositoryMiner {
 			plainTextVersionURL = repository + URL_PLAIN + modelVersion.getFile() + URL_ATTRIBUTE_ID + modelVersion.getCommit();
 //			System.out.println(plainTextVersionURL);
 			
-			Document versionDoc = Jsoup.connect(plainTextVersionURL).parser(Parser.xmlParser()).get();
+			//Open a URL Stream
+			Response response = Jsoup.connect(plainTextVersionURL).ignoreContentType(true).execute();
+			return new String(response.bodyAsBytes());
+			
+//			Document versionDoc = Jsoup.connect(plainTextVersionURL).parser(Parser.xmlParser()).get();
 //			System.out.println(versionDoc.toString());
-			return versionDoc.toString();
+//			return versionDoc.toString();
 		} catch (HttpStatusException hse) {
 			throw hse;
 		} catch (Exception e) {
