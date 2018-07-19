@@ -3,6 +3,7 @@ package org.sidiff.repair.history.generator.repository.html;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,6 +17,8 @@ public class ModelHistory {
 	private String file;
 	
 	private List<ModelVersion> versions;
+	
+	private List<ModelVersion> additionalVersions = new ArrayList<>();
 	
 	public ModelHistory(ModelingProject modelingProject, String file) {
 		this.modelingProject = modelingProject;
@@ -76,6 +79,7 @@ public class ModelHistory {
 			if (!commits.contains(otherModel.getCommit())) {
 				ModelVersion otherModelVersion = new ModelVersion(file, otherModel);
 				versions.add(otherModelVersion);
+				additionalVersions.add(otherModelVersion);
 			}
 		}
 	}
@@ -105,6 +109,12 @@ public class ModelHistory {
 							e.printStackTrace();
 						}
 					}
+				}
+			} else {
+				if (additionalVersions.contains(modelVersion)) {
+					System.err.flush();
+					System.err.println("-> OK, Version does not exist.");
+					System.err.flush();
 				}
 			}
 		}

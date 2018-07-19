@@ -427,9 +427,10 @@ public class ModelingDataSet {
 	
 	public void mine() {
 		for (ModelingProject modelingProject : projects) {
-			new Thread(() -> {
+//			new Thread(() -> {
 				modelingProject.mine();
-			}).start();
+				System.out.println("FINISHED: " + modelingProject.getRepository());
+//			}).start();
 		}
 	}
 	
