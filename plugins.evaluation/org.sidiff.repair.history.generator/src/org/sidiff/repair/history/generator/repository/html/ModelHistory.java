@@ -30,15 +30,17 @@ public class ModelHistory {
 		
 		// write meta data per model:
 		JSONObject history = new JSONObject();
+		history.put("project", modelingProject.getName());
+		history.put("repository", modelingProject.getRepository());
 		
 		for (ModelVersion modelVersion : versions) {
 			JSONObject version = new JSONObject();
 			version.put("data", modelVersion.getDate());
 			version.put("commit", modelVersion.getCommit());
-			version.put("gitFileName", modelVersion.getFile());
-			version.put("localFileName", modelVersion.getLocalPath() + modelVersion.getFileName());
 			version.put("author", modelVersion.getAuthor());
 			version.put("message", modelVersion.getMessage());
+			version.put("gitFileName", modelVersion.getFile());
+			version.put("localFileName", modelVersion.getLocalPath() + modelVersion.getFileName());
 			
 			history.append("commits", version);
 		}
