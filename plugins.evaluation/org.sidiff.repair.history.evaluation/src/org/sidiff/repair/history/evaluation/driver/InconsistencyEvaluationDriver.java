@@ -93,20 +93,30 @@ public class InconsistencyEvaluationDriver {
 		// search historical observable repair:
 		List<IRepairPlan> observable = DeveloperIntentionOracleDriver.getHistoricallyObservable(
 				repaired, repairJob, matchingSettings);
-		Object[] bestObservable = findBestObservableRepair(observable, repairJob);
-		int bestPositionOfObservable = (int) bestObservable[0];
-		IRepairPlan bestObservableRepair = (IRepairPlan) bestObservable[1];
 		
 		InfoConsole.printInfo("Historically Observable Repairs: " + observable.size());
 		
 		log.append(COLUMN_OBSERVABLE, observable.size() > 0);
-		log.append("Ranking of HOR", bestPositionOfObservable);
 		
-		List<Match> complementMatches = bestObservableRepair.getComplementMatches();
-
-		log.append("Repair Matchings for HOR", complementMatches.size());
-		log.append("Historic Changes of HOR", bestObservableRepair.getRecognizedChanges().size());
-		log.append("Complementing Changes of HOR", bestObservableRepair.getComplementingChanges().size());
+		Object[] bestObservable = findBestObservableRepair(observable, repairJob);
+		int bestPositionOfObservable = (int) bestObservable[0];
+		
+		if (bestPositionOfObservable != -1) {
+			IRepairPlan bestObservableRepair = (IRepairPlan) bestObservable[1];
+			
+			log.append("Ranking of HOR", bestPositionOfObservable);
+			
+			List<Match> complementMatches = bestObservableRepair.getComplementMatches();
+			
+			log.append("Repair Matchings for HOR", complementMatches.size());
+			log.append("Historic Changes of HOR", bestObservableRepair.getRecognizedChanges().size());
+			log.append("Complementing Changes of HOR", bestObservableRepair.getComplementingChanges().size());
+		} else {
+			log.append("Ranking of HOR", LogTable.NA);
+			log.append("Repair Matchings for HOR", LogTable.NA);
+			log.append("Historic Changes of HOR", LogTable.NA);
+			log.append("Complementing Changes of HOR", LogTable.NA);
+		}
 		
 		// evaluate repair tree:
 		log.append("Count of Repair Trees", repairJob.getValidations().size());
