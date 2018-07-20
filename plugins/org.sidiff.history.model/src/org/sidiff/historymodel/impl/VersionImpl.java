@@ -5,6 +5,7 @@ package org.sidiff.historymodel.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -210,7 +211,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * @generated
 	 */
 	public String getModelURI() {
-		return modelURI;
+		return eResource().getURI().trimSegments(1).appendFragment(modelURI).toString();
 	}
 
 	/**
@@ -221,6 +222,10 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	public void setModelURI(String newModelURI) {
 		String oldModelURI = modelURI;
 		modelURI = newModelURI;
+				
+		if (eResource() != null) {
+			modelURI =  URI.createURI(modelURI).deresolve(eResource().getURI()).toString();
+		}
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, HistoryModelPackage.VERSION__MODEL_URI, oldModelURI, modelURI));
 	}
@@ -232,7 +237,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 */
 	public Resource getModel() {
 		if(model == null){
-			model = eResource().getResourceSet().getResource(URI.createURI(modelURI), true);
+			model = eResource().getResourceSet().getResource(URI.createURI(getModelURI()), true);
 		}
 		return model;
 	}
