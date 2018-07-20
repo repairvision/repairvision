@@ -128,7 +128,6 @@ public class ModelingDataSet {
 //		dataSet.addProject(localPath, "modeling.elk", "https://github.com/eclipse/elk",
 //				"/plugins/org.eclipse.elk.graph/model/elkgraph.ecore");
 		
-		// TODO
 		// https://projects.eclipse.org/projects/modeling.mdt.papyrus/developer
 		dataSet.addProject(localPath, "modeling.mdt.papyrus", "http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git",
 				"/plugins/facet/org.eclipse.papyrus.emf.facet.custom.metamodel/model/catalog-0.2.0.ecore",
@@ -338,7 +337,7 @@ public class ModelingDataSet {
 		// https://projects.eclipse.org/projects/modeling.gendoc/developer
 		
 		// https://projects.eclipse.org/projects/technology.camf/developer
-		dataSet.addProject(localPath, "technology.camf", "http://git.eclipse.org/c/camf/org.eclipse.camf.git",
+		dataSet.addProject(localPath, "technology.camf", "http://git.eclipse.org/c/camf/org.eclipse.camf.git", // TODO
 				"/plugins/org.eclipse.camf.infosystem.model/model/infosystem.ecore",
 				"/plugins/org.eclipse.camf.tosca/model/extension.ecore",
 				"/plugins/org.eclipse.camf.tosca/model/hrequirements.ecore",
