@@ -1,6 +1,5 @@
 package org.sidiff.repair.history.generator.repository.html;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,9 +57,9 @@ public class HTMLRepositoryMiner {
 
 	public List<ModelVersion> mine() {
 		List<ModelVersion> versions = new ArrayList<>();
+		String url = repository + URL_LOG + file;
 		
 		try {
-			String url = repository + URL_LOG + file;
 			Document doc = Jsoup.connect(url).get();
 			Elements links = doc.body().select("a[href]");
 			
@@ -93,8 +92,9 @@ public class HTMLRepositoryMiner {
 					versions.add(modelVersion);
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			System.err.println("Exception while reading history log: " + url);
 		}
 		
 		return versions;

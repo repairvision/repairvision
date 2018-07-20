@@ -128,6 +128,7 @@ public class ModelingDataSet {
 //		dataSet.addProject(localPath, "modeling.elk", "https://github.com/eclipse/elk",
 //				"/plugins/org.eclipse.elk.graph/model/elkgraph.ecore");
 		
+		// TODO
 		// https://projects.eclipse.org/projects/modeling.mdt.papyrus/developer
 		dataSet.addProject(localPath, "modeling.mdt.papyrus", "http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git",
 				"/plugins/facet/org.eclipse.papyrus.emf.facet.custom.metamodel/model/catalog-0.2.0.ecore",
