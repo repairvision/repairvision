@@ -15,6 +15,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.storage.UUIDMatcher;
+import org.sidiff.consistency.common.ui.util.InfoConsole;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.util.TechnicalDifferenceBuilderUtil;
@@ -92,7 +93,9 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 			
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
+				InfoConsole.printInfo("#################### Evaluation Startet ####################");
 				HistoryEvaluationDriver.calculateRepairs(repairFacade, history, getEditRules(), getMatchingSettings());
+				InfoConsole.printInfo("#################### Evaluation Finished ####################");
 				return Status.OK_STATUS;
 			}
 		};
