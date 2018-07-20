@@ -14,6 +14,36 @@ public class RulebaseLibrary {
 
 	public static final String EXTENSION_POINT_ID = "org.sidiff.repair.editrules.rulebase";
 	
+	public static List<URI> getRulebase(String rulebaseName) {
+		List<URI> editRules = new ArrayList<>();
+		
+		for (IConfigurationElement configurationElement : Platform.getExtensionRegistry()
+				.getConfigurationElementsFor(EXTENSION_POINT_ID)) {
+
+			String name = configurationElement.getAttribute("name");
+			
+			if ((name != null) && name.equals(rulebaseName)) {
+				String folderValue = configurationElement.getAttribute( "folder");
+				
+				String projectName = configurationElement.getContributor().getName();
+				Bundle bundle = Platform.getBundle(projectName);
+				
+				Enumeration<URL> urls = bundle.findEntries("/" + folderValue, "*", false);
+				
+				while(urls.hasMoreElements()) {
+					URL url = urls.nextElement();
+					String localFilePath = url.getFile();
+
+					if (localFilePath.endsWith(".henshin")) {
+						editRules.add(URI.createPlatformPluginURI(projectName + localFilePath, true));
+					}
+				}
+			}
+		}
+		
+		return editRules;
+	}
+	
 	public static List<URI> getEditRules(String documentType) {
 		List<URI> editRules = new ArrayList<>();
 		
