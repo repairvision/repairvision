@@ -109,14 +109,17 @@ public class HistoryModelGenerator {
 		IFolder versionFolder = project.getFolder(VERSIONS_FOLDER);
 		versionFolder.create(false, true, new NullProgressMonitor());
 		
-		URI versionFolderURI = URI.createPlatformResourceURI(
+		URI platformVersionFolderURI = URI.createPlatformResourceURI(
+				project.getName() + "/" + VERSIONS_FOLDER, true);
+		
+		URI relativeVersionFolderURI = URI.createURI(
 				project.getName() + "/" + VERSIONS_FOLDER, true);
 		
 		// Save referenced models:
 		for (String uriString : repository.getReferencedModels()) {
 			URI resolvedURI = URI.createURI(uriString);
 			
-			URI subModelCopy = versionFolderURI
+			URI subModelCopy = platformVersionFolderURI
 					.appendSegment(ModelNamingUtil.getModelName(resolvedURI.lastSegment()))
 					.appendSegment(repository.formatModelFileName(resolvedURI));
 			
@@ -127,9 +130,11 @@ public class HistoryModelGenerator {
 		
 		// Save versions:
 		for (Version version : history.getVersions()) {
-			URI targetURI = versionFolderURI.appendSegment(getModelFileName(version));
-			version.getModel().setURI(targetURI);
-			version.setModelURI(targetURI.toString());
+			URI platformTargetURI = platformVersionFolderURI.appendSegment(getModelFileName(version));
+			version.getModel().setURI(platformTargetURI);
+			
+			URI relativeTargetURI = relativeVersionFolderURI.appendSegment(getModelFileName(version));
+			version.setModelURI(relativeTargetURI.toString());
 			
 			try {
 				version.getModel().save(Collections.EMPTY_MAP);
