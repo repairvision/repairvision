@@ -8,6 +8,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogUtil;
+import org.sidiff.consistency.common.ui.util.InfoConsole;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.peo.PEORepairJob;
@@ -23,6 +24,8 @@ public class HistoryEvaluationDriver {
 			HistoryInfo history,  
 			Collection<Rule> editRules, 
 			DifferenceSettings matchingSettings) {
+		
+		InfoConsole.printInfo("#################### Evaluation Startet ####################");
 		
 		// Warm up run:
 		if (history.getRepairedInconsistencies().size() > 0) {
@@ -53,6 +56,8 @@ public class HistoryEvaluationDriver {
 		EvaluationUtil.saveLog(history, historyLog, timestamp, "history");
 		EvaluationUtil.saveLog(history, editRuleLog, timestamp, "editrules");
 		EvaluationUtil.updateProject(history);
+		
+		InfoConsole.printInfo("#################### Evaluation Finished ####################");
 	}
 
 	private static LogTable evaluateHistory(HistoryInfo history, LogTable inconsistenciesLog) {

@@ -41,7 +41,7 @@ public class HistoryEvaluationApplication implements IApplication {
 	
 	private static String DIFFERENCE_BUILDER = "org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations";
 	
-	private static String HISTORY = "org.sidiff.ecore.testdata.history.uml2.uml/UML.ecore.history";
+	private static String HISTORY = "org.sidiff.ecore.testdata.history.atl.atl-0.2/ATL-0.2.ecore.history";
 	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
