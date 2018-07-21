@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.jface.util.LocalSelectionTransfer;
@@ -171,13 +170,4 @@ public abstract class ModelDropWidget {
 	protected abstract IResource addModel(IResource element);
 
 	protected abstract IResource removeModel(IResource selection);
-	
-	public static URI getURI(IResource workbenchResource) {
-
-		String projectName = workbenchResource.getProject().getName();
-		String filePath = workbenchResource.getProjectRelativePath().toOSString();
-		String platformPath = projectName + "/" + filePath;
-
-		return URI.createPlatformResourceURI(platformPath, true);
-	}
 }

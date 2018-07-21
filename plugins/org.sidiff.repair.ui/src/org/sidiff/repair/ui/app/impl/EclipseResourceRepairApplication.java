@@ -7,13 +7,13 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.IRepairSettings;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
-import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 
 public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F extends IRepairSettings> implements IRepairApplication<J, F> {
 
@@ -61,7 +61,7 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 	public Resource getModelA() {
 		
 		if ((modelA == null) && (modelAFile != null)) {
-			modelA = differenceRSS.getResource(ModelDropWidget.getURI(modelAFile), true);
+			modelA = differenceRSS.getResource(WorkbenchUtil.getURI(modelAFile), true);
 		}
 		return modelA;
 	}
@@ -91,7 +91,7 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 	public Resource getModelB() {
 		
 		if ((modelB == null) && (modelBFile != null)) {
-			modelB = differenceRSS.getResource(ModelDropWidget.getURI(modelBFile), true);
+			modelB = differenceRSS.getResource(WorkbenchUtil.getURI(modelBFile), true);
 		}
 		return modelB;
 	}
