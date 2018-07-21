@@ -34,7 +34,11 @@ public class InfoConsole {
 	}
 	
 	public static void printInfos(Collection<? extends Object> elements, String emptyMessage) {
-		Display.getDefault().syncExec(() -> internal_printInfos(elements, emptyMessage));
+		try {
+			Display.getDefault().syncExec(() -> internal_printInfos(elements, emptyMessage));
+		} catch(Exception e) {
+			elements.forEach(System.out::println);
+		}
 	}
 
 	private static void internal_printInfos(Collection<? extends Object> elements, String emptyMessage) {

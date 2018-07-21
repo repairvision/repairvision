@@ -1,5 +1,7 @@
 package org.sidiff.consistency.common.ui.util;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -96,5 +98,14 @@ public class WorkbenchUtil {
 		});
 		
 		return result[0];
+	}
+
+	public static URI getURI(IResource workbenchResource) {
+	
+		String projectName = workbenchResource.getProject().getName();
+		String filePath = workbenchResource.getProjectRelativePath().toOSString();
+		String platformPath = projectName + "/" + filePath;
+	
+		return URI.createPlatformResourceURI(platformPath, true);
 	}
 }
