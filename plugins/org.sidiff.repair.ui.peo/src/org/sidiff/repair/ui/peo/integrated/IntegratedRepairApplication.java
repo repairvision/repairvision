@@ -39,8 +39,8 @@ import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
 import org.sidiff.repair.editrules.library.RulebaseLibrary;
+import org.sidiff.repair.editrules.library.RulebaseUtil;
 import org.sidiff.repair.ui.app.impl.EMFResourceRepairApplication;
-import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
@@ -211,7 +211,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				// Load edit rules:
 				// TODO: cache edit rules?
 //				if (editRules == null) {
-					editRules = EditRuleUtil.eLoadEditRules(
+					editRules = RulebaseUtil.eLoadEditRules(
 							RulebaseLibrary.getEditRules(DocumentType.getDocumentType(getModelB())), false);
 //				}
 				

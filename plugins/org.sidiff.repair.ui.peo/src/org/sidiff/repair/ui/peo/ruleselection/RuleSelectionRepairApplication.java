@@ -21,9 +21,9 @@ import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairCalculationEngineDebugger;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
+import org.sidiff.repair.editrules.library.RulebaseUtil;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
 import org.sidiff.repair.ui.peo.debugger.EditRuleMatcherDebugger;
-import org.sidiff.repair.ui.util.EditRuleUtil;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
@@ -113,7 +113,7 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 				settings = getMatchingSettings();
 				
 				// Load edit-rules:
-				editRules = EditRuleUtil.loadEditRules(editRuleFiles, true, false);
+				editRules = RulebaseUtil.loadEditRules(editRuleFiles, true, false);
 				
 				// Calculate repairs:
 				repairCalculation.setName("Calculate Repairs");
@@ -216,7 +216,7 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 	}
 	
 	public IResource addEditRule(IResource element) {
-		element = EditRuleUtil.getEditRule(element);
+		element = RulebaseUtil.getEditRule(element);
 		
 		if ((element != null) && !editRuleFiles.contains(element)) {
 			editRuleFiles.add(element);
