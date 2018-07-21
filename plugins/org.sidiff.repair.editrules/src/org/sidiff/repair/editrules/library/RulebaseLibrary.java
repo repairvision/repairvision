@@ -30,7 +30,7 @@ public class RulebaseLibrary {
 				
 				Enumeration<URL> urls = bundle.findEntries("/" + folderValue, "*", false);
 				
-				while(urls.hasMoreElements()) {
+				while((urls != null) && urls.hasMoreElements()) {
 					URL url = urls.nextElement();
 					String localFilePath = url.getFile();
 
