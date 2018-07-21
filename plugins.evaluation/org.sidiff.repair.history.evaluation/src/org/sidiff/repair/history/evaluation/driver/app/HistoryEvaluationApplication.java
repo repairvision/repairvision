@@ -1,6 +1,6 @@
 package org.sidiff.repair.history.evaluation.driver.app;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
@@ -21,6 +21,8 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.peo.PEORepairFacade;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
+import org.sidiff.repair.editrules.library.RulebaseLibrary;
+import org.sidiff.repair.editrules.library.RulebaseUtil;
 import org.sidiff.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
 
@@ -43,6 +45,8 @@ public class HistoryEvaluationApplication implements IApplication {
 	
 	private static String HISTORY = "org.sidiff.ecore.testdata.history.atl.atl-0.2/ATL-0.2.ecore.history";
 	
+	private static String RULEBASE = "Ecore Evaluation Edit Rules";
+	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
 		System.out.println("LOADIND EVALUATION");
@@ -61,7 +65,10 @@ public class HistoryEvaluationApplication implements IApplication {
 		HistoryInfo historyInfo = new HistoryInfo(history);
 		
 		// load edit rules:
-		List<Rule> editRules = new ArrayList<>();
+		List<URI> rulebase = RulebaseLibrary.getRulebase(RULEBASE);
+		Collection<Rule> editRules = RulebaseUtil.eLoadEditRules(rulebase, false);
+		
+		System.out.println("EDIT RULES: " + editRules.size());
 		
 		// repair algorithm:
 		IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade = new PEORepairFacade();

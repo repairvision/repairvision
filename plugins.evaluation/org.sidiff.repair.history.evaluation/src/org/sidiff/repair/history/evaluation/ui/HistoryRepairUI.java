@@ -159,7 +159,7 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 				HistoryRepairUI.this.clear();
 				
 				ResourceSet resourceSet = new ResourceSetImpl();
-				Resource historyResource = resourceSet.getResource(ModelDropWidget.getURI(element), true);
+				Resource historyResource = resourceSet.getResource(WorkbenchUtil.getURI(element), true);
 				
 				if (historyResource.getContents().get(0) instanceof History) {
 					History history = (History) historyResource.getContents().get(0);

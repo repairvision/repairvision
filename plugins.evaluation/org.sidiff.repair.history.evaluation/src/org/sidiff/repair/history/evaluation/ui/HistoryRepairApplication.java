@@ -24,6 +24,7 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.PEORepairSettings;
+import org.sidiff.repair.editrules.library.RulebaseUtil;
 import org.sidiff.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.InconsistencyEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.LearnEditRuleDriver;
@@ -34,7 +35,6 @@ import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
-import org.sidiff.repair.ui.util.EditRuleUtil;
 
 public class HistoryRepairApplication implements IRepairApplication<PEORepairJob, PEORepairSettings> {
 
@@ -201,7 +201,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	}
 	
 	public IResource addEditRule(IResource element) {
-		element = EditRuleUtil.getEditRule(element);
+		element = RulebaseUtil.getEditRule(element);
 		
 		if ((element != null) && !editRuleFiles.contains(element)) {
 			editRuleFiles.add(element);
@@ -238,7 +238,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	}
 	
 	public Collection<Rule> getEditRules() {
-		return EditRuleUtil.loadEditRules(editRuleFiles, false, false);
+		return RulebaseUtil.loadEditRules(editRuleFiles, false, false);
 	}
 
 	@Override
