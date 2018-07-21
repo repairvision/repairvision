@@ -291,7 +291,7 @@ public class ComplementConstructor {
 					Node sourceSrcNode = sourceEdgeMatch.getEdge().getSource();
 					Node complementSrcNode = (Node) copyTrace.get(sourceSrcNode);
 					
-					if ((complementSrcNode != null) && isPreservedNode(complementSrcNode)) {
+					if ((complementSrcNode != null) && (complementSrcNode.eContainer() != null) && isPreservedNode(complementSrcNode)) {
 						if (isSeparatedContextNode(complementSrcNode)) {
 							// Remove separated context node:
 							complement.removeTrace(getLHS(complementSrcNode));
@@ -307,7 +307,7 @@ public class ComplementConstructor {
 					Node sourceTgtNode = sourceEdgeMatch.getEdge().getTarget();
 					Node complementTgtNode = (Node) copyTrace.get(sourceTgtNode);
 					
-					if ((complementTgtNode != null) && isPreservedNode(complementTgtNode)) {
+					if ((complementTgtNode != null) && (complementTgtNode.eContainer() != null) && isPreservedNode(complementTgtNode)) {
 						if (isSeparatedContextNode(complementTgtNode)) {
 							// Remove separated context node:
 							complement.removeTrace(getLHS(complementTgtNode));
