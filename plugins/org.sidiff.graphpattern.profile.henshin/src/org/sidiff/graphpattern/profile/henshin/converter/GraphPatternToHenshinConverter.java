@@ -117,6 +117,12 @@ public class GraphPatternToHenshinConverter {
 			}
 		}
 		
+		// remove empty NACs:
+		if (nac.getConclusion().getNodes().size() == 0) {
+			// TODO: Remove NAC only!
+			rule.getLhs().getNestedConditions().clear();
+		}
+		
 		return rule;
 	}
 	
