@@ -25,7 +25,7 @@ public class HistoryEvaluationDriver {
 			Collection<Rule> editRules, 
 			DifferenceSettings matchingSettings) {
 		
-		InfoConsole.printInfo("#################### Evaluation Startet ####################");
+		InfoConsole.printInfo("#################### Evaluation Started ####################");
 		
 		// Warm up run:
 		if (history.getRepairedInconsistencies().size() > 0) {
