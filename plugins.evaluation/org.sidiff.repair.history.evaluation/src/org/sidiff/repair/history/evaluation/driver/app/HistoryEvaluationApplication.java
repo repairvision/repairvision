@@ -11,9 +11,9 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.consistency.common.settings.SettingsUtil;
+import org.sidiff.difference.technical.GenericTechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
 import org.sidiff.historymodel.History;
 import org.sidiff.matcher.IMatcher;
 import org.sidiff.matching.api.util.MatchingUtils;
@@ -41,9 +41,10 @@ public class HistoryEvaluationApplication implements IApplication {
 	
 	private static String MATCHER = "org.sidiff.matcher.id.xmiid.XMIIDMatcher";
 	
-	private static String DIFFERENCE_BUILDER = "org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations";
+//	private static String DIFFERENCE_BUILDER = "org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations";
 	
-	private static String HISTORY = "org.sidiff.ecore.testdata.history.atl.atl-0.2/ATL-0.2.ecore.history";
+//	private static String HISTORY = "org.sidiff.ecore.testdata.history.atl.atl-0.2/ATL-0.2.ecore.history";
+	private static String HISTORY = "org.sidiff.ecore.testdata.history.uml2.uml/UML.ecore.history";
 	
 	private static String RULEBASE = "Ecore Evaluation Edit Rules";
 	
@@ -54,9 +55,14 @@ public class HistoryEvaluationApplication implements IApplication {
 		// difference settings:
 		DifferenceSettings differenceSettings = SettingsUtil.getDefaultDifferenceSettings();
 		IMatcher matcher = MatchingUtils.getMatcherByKey(MATCHER);
-		ITechnicalDifferenceBuilder builder = TechnicalDifferenceUtils.getTechnicalDifferenceBuilder(DIFFERENCE_BUILDER);
+		ITechnicalDifferenceBuilder builder = new GenericTechnicalDifferenceBuilder();
+//		ITechnicalDifferenceBuilder builder = TechnicalDifferenceUtils.getTechnicalDifferenceBuilder(DIFFERENCE_BUILDER);
 		differenceSettings.setMatcher(matcher);
 		differenceSettings.setTechBuilder(builder);
+		
+		if ((matcher == null) || (builder == null)) {
+			throw new RuntimeException("Invalid difference settings!");
+		}
 		
 		// load history:
 		ResourceSet resourceSet = new ResourceSetImpl();
