@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.henshin.interpreter.Match;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.difference.symmetric.SymmetricDifference;
@@ -29,16 +28,10 @@ public class DeveloperIntentionOracleDriver {
 					modelCurrent, modelResolved, settings);
 			
 			for (IRepairPlan repair : repairJob.getRepairs()) {
-
-				// The preMatch turning the complement rule into a repair operation.
-				for (Match preMatch : repair.getComplementMatches()) {
-					DeveloperIntentionOracle oracle = new DeveloperIntentionOracle();
-					
-					if (oracle.isHistoricallyObservable(
-							preMatch, currentToResolved, 
-							repairJob.getValidations())) {
-						observable.add(repair);
-					}
+				DeveloperIntentionOracle oracle = new DeveloperIntentionOracle();
+				
+				if (oracle.isHistoricallyObservable(repair, currentToResolved, repairJob.getValidations())) {
+					observable.add(repair);
 				}
 			}
 		} catch (InvalidModelException | NoCorrespondencesException e) {

@@ -25,15 +25,14 @@ import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.scope.RepairActionFilter;
+import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 
 public class DeveloperIntentionOracle {
 
-	private Match preMatch;
+	private IRepairPlan repair;
 	private SymmetricDifference evolutionStep;
 	private Collection<RepairValidation> repairTrees;
-	
-	private Rule complementRule;
 
 	private HashSet<String> changeSignatures;
 	private HashSet<String> xmiIDs;
@@ -52,14 +51,14 @@ public class DeveloperIntentionOracle {
 	 *         repair trees; <code>false</code> otherwise.
 	 */
 	public boolean isHistoricallyObservable(
-			Match preMatch, SymmetricDifference evolutionStep, 
+			IRepairPlan repair,
+			SymmetricDifference evolutionStep, 
 			Collection<RepairValidation> repairTrees) {
 		
-		this.preMatch = preMatch;
+		this.repair = repair;
 		this.evolutionStep = evolutionStep;
 		this.repairTrees = repairTrees;
 		
-		this.complementRule = preMatch.getRule();
 		this.changeSignatures = new HashSet<String>();
 		this.xmiIDs = new HashSet<String>();
 
@@ -122,14 +121,15 @@ public class DeveloperIntentionOracle {
 	}
 
 	private boolean checkChangeSignatures() {
-		List<GraphElement> foundChanges = new ArrayList<>();
+		List<GraphElement> observableChanges = new ArrayList<>();
+		Rule complementRule = repair.getComplementingEditRule();
 		
 		// Create nodes
 		for (Node node : HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes(complementRule)) {
 			String signature = "AddObject_" + node.getType().getName();
 			
 			if (changeSignatures.contains(signature)) {
-				foundChanges.add(node);
+				observableChanges.add(node);
 			} else {
 				return false;
 			}
@@ -140,7 +140,7 @@ public class DeveloperIntentionOracle {
 			String signature = "RemoveObject_" + node.getType().getName();
 			
 			if (changeSignatures.contains(signature)) {
-				foundChanges.add(node);
+				observableChanges.add(node);
 			} else {
 				return false;
 			}
@@ -151,7 +151,7 @@ public class DeveloperIntentionOracle {
 			String signature = "AddReference_" + edge.getType().getName();
 			
 			if (changeSignatures.contains(signature)) {
-				foundChanges.add(edge);
+				observableChanges.add(edge);
 			} else {
 				return false;
 			}
@@ -162,7 +162,7 @@ public class DeveloperIntentionOracle {
 			String signature = "RemoveReference_" + edge.getType().getName();
 			
 			if (changeSignatures.contains(signature)) {
-				foundChanges.add(edge);
+				observableChanges.add(edge);
 			} else {
 				return false;
 			}
@@ -181,14 +181,21 @@ public class DeveloperIntentionOracle {
 					}
 				}
 				
-				foundChanges.add(attribute.getRhsAttribute());
+				observableChanges.add(attribute.getRhsAttribute());
 			}
 		}
 		
 		// => We found all change actions in the low-level difference!
 
-		// NOTE: Since attribute changes are optional -> re-check repair tree overlapping:
+		// NOTE: Since attribute changes are optional -> re-check repair tree overlapping for observable changes:
 		RepairActionFilter repairFilter = new RepairActionFilter(repairTrees);
-		return repairFilter.filter(foundChanges, preMatch);
+		
+		for (Match preMatch : repair.getComplementMatches()) {
+			if (repairFilter.filter(observableChanges, preMatch)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }
