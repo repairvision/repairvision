@@ -4,9 +4,11 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
@@ -68,6 +70,19 @@ public class HistoryEvaluationApplication implements IApplication {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		Resource historyResource = resourceSet.getResource(URI.createPlatformResourceURI(HISTORY, true), true);
 		History history = (History) historyResource.getContents().get(0);
+		
+		// load all resources:
+		EcoreUtil.resolveAll(historyResource);
+		
+		// freeze ecore models e.g. generic types:
+		for (Resource resource : resourceSet.getResources()) {
+			if ((resource.getContents() != null) && (resource.getContents().get(0) instanceof EPackageImpl)) {
+				EPackageImpl ePackage = (EPackageImpl) resource.getContents().get(0);
+				ePackage.freeze();
+			}
+		}
+		
+		// initialize history analyzer:
 		HistoryInfo historyInfo = new HistoryInfo(history);
 		
 		// load edit rules:
