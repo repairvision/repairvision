@@ -113,7 +113,7 @@ public class HistoryModelGenerator {
 				project.getName() + "/" + VERSIONS_FOLDER, true);
 		
 		URI relativeVersionFolderURI = URI.createURI(
-				project.getName() + "/" + VERSIONS_FOLDER, true);
+				VERSIONS_FOLDER, true);
 		
 		// Save referenced models:
 		for (String uriString : repository.getReferencedModels()) {
