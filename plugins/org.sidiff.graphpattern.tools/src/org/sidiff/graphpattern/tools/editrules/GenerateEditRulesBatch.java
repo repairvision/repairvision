@@ -13,12 +13,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.sidiff.csp.solver.ICSPSolver;
@@ -31,6 +33,7 @@ import org.sidiff.csp.solver.impl.Variable;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.GraphpatternPackage;
@@ -95,10 +98,10 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		
 		// Generate edit rules:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
-			List<Pattern> creationRules = new ArrayList<>(1);
+			List<Pattern> creationRules = new ArrayList<>();
 			
-//			if (editRule.getName().contains("Containment-Container and Containment Reference")) {
-//				System.out.println(editRule.getName());
+//			if (graphPattern.getName().contains("Class with Bound Generic Type Parameter")) {
+//				System.out.println(graphPattern.getName());
 //			}
 			
 			// Copy graph constraints:
@@ -123,6 +126,9 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 				ConstraintProfileUtil.removeNAC(editRule);
 			}
 			
+			// Generate rules with connected fragments:
+			generateFragmentRules(create, graphPattern, editRule, editRules);
+			
 			// Generate parameters:
 			GraphPatternGeneratorUtil.generateParameters(editOperation);
 			
@@ -140,10 +146,10 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		
 		// Generate edit rules:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
-			List<Pattern> deletionRules = new ArrayList<>(1);
+			List<Pattern> deletionRules = new ArrayList<>();
 			
-//			if (editRule.getName().contains("Containment-Container and Containment Reference")) {
-//				System.out.println(editRule.getName());
+//			if (graphPattern.getName().contains("Containment-Container and Containment Reference")) {
+//				System.out.println(graphPattern.getName());
 //			}
 			
 			// Copy graph constraints:
@@ -165,6 +171,9 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			// Set edit rule actions:
 			setConstructionAction(editRule, delete);
 			
+			// Generate rules with connected fragments:
+			generateFragmentRules(delete, graphPattern, editRule, editRules);
+			
 			// Generate parameters:
 			GraphPatternGeneratorUtil.generateParameters(editOperation);
 			
@@ -178,6 +187,81 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		}
 	}
 	
+	protected static void generateFragmentRules(Stereotype action, GraphPattern graphPattern, GraphPattern editRule, Map<GraphPattern, List<Pattern>> editRules) {
+
+		// Get all changed graph elements:
+		Stack<GraphElement> allChanges = new Stack<>();
+		
+		for (GraphElement graphElement : editRule.getGraphElements()) {
+			if (graphElement.getStereotypes().contains(action)) {
+				allChanges.add(graphElement);
+			}
+		}
+		
+		// Search fragments:
+		List<List<GraphElement>> fragments = new ArrayList<>(); 
+		findFragments(action, fragments, allChanges);
+		
+		// No fragments?
+		if (fragments.size() == 1) {
+			return;
+		}
+		
+		// Generate fragments:
+		List<Pattern> fragmentRules = new ArrayList<>();
+		
+		for (int i = 0; i < fragments.size(); i++) {
+			String name = editRule.getName() + " (" + (i + 1) + ")";
+			
+			Map<EObject, EObject> copyTrace = ModelingUtil.deepCopy(editRule);
+			GraphPattern fragmentEditRule = (GraphPattern) copyTrace.get(editRule);
+			fragmentEditRule.setName(name);
+			fragmentEditRule.getStereotypes().add(rule);
+			
+			Pattern fragmentEditOperation = GraphpatternFactory.eINSTANCE.createPattern();
+			fragmentEditOperation.setName(name);
+			fragmentEditOperation.getGraphs().add(fragmentEditRule);
+			
+			fragmentRules.add(fragmentEditOperation);
+			
+			// Remove action that are not included in the fragment:
+			List<GraphElement> fragment = fragments.get(i);
+			
+			for (GraphElement graphElement : fragmentEditRule.getGraphElements()) {
+				if (graphElement.getStereotypes().contains(action) && !isContainedInFragment(fragment, graphElement, copyTrace)) {
+					graphElement.getStereotypes().remove(action);
+					graphElement.getStereotypes().add(preserve);
+				}
+			}
+			
+			// Generate parameters:
+			GraphPatternGeneratorUtil.generateParameters(fragmentEditOperation);
+		}
+		
+		// Add new edit rule for graph pattern:
+		editRules.merge(graphPattern, fragmentRules, (v1, v2) -> {v1.addAll(v2); return v1;});
+	}
+	
+	protected static boolean isContainedInFragment(List<GraphElement> fragment,  GraphElement element, Map<EObject, EObject> copyTrace) {
+		for (GraphElement fragmentElement : fragment) {
+			if (copyTrace.get(fragmentElement) == element) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	protected static void findFragments(Stereotype action, List<List<GraphElement>> fragments, Stack<GraphElement> remainingChanges) {
+		
+		while (!remainingChanges.isEmpty()) {
+			GraphElement firstElement = remainingChanges.pop();
+			List<GraphElement> fragment = new ArrayList<>();
+			firstElement.getClosure(e -> e.getStereotypes().contains(action)).forEach(fragment::add);
+			remainingChanges.removeAll(fragment);
+			fragments.add(fragment);
+		}
+	}
+
 	protected static void setConstructionAction(GraphPattern editRule, Stereotype constructionST) {
 		
 		// Set node actions:
@@ -204,7 +288,14 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 						attribute.getStereotypes().add(preserve);
 					}
 				}
-				
+			}
+		}
+		
+		// Set edge actions:
+		for (NodePattern node : editRule.getNodes()) {
+			
+			// Filter negative application conditions:
+			if (!node.getStereotypes().contains(not)) {
 				
 				// Set edge actions:
 				for (EdgePattern edge : node.getOutgoings()) {
