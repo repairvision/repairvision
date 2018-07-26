@@ -15,8 +15,10 @@ public class ConstraintProfileUtil {
 	public static void removeNAC(GraphPattern constraint) {
 		for (NodePattern node : new ArrayList<>(constraint.getNodes())) {
 			
-			if (node.getStereotypes().contains(not)) {
-				EcoreUtil.remove(node);
+			for (EdgePattern edge : new ArrayList<>(node.getOutgoings())) {
+				if (edge.getStereotypes().contains(not)) {
+					node.removeEdge(edge);
+				}
 			}
 			
 			for (AttributePattern attribute : new ArrayList<>(node.getAttributes())) {
@@ -25,10 +27,8 @@ public class ConstraintProfileUtil {
 				}
 			}
 			
-			for (EdgePattern edge : new ArrayList<>(node.getOutgoings())) {
-				if (edge.getStereotypes().contains(not)) {
-					EcoreUtil.delete(edge);
-				}
+			if (node.getStereotypes().contains(not)) {
+				EcoreUtil.remove(node);
 			}
 		}
 	}
