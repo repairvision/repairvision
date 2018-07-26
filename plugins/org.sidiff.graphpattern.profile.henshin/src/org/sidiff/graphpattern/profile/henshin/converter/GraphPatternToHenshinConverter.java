@@ -30,8 +30,6 @@ import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
-import org.eclipse.emf.henshin.model.Formula;
-import org.eclipse.emf.henshin.model.util.HenshinModelCleaner;
 
 public class GraphPatternToHenshinConverter {
 
