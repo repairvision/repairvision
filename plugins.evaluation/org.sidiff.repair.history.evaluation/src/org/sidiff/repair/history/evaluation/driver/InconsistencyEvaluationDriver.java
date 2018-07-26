@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogMonitor;
 import org.sidiff.consistency.common.monitor.LogTable;
@@ -66,15 +65,15 @@ public class InconsistencyEvaluationDriver {
 		
 		LogMonitor monitor = new LogMonitor(log);
 		
-		log.append("Inconsistency", repaired.getValidationErrorCurrentModel().getName() + " - " 
-				+ EcoreUtil.getURI(repaired.getValidationErrorCurrentModel().getContext()));
+		log.append("Inconsistency", repaired.getValidationErrorCurrentModel().getName());
+		log.append("Context Element", EcoreUtil.getURI(repaired.getValidationErrorCurrentModel().getContext()));
 		log.append("Context Type", repaired.getValidationErrorCurrentModel().getContext().eClass().getName());
 		log.append("History", history.getHistory().getName());
 		log.append("Historical Version (consistent)", history.getHistory().getVersions().indexOf(
 				repaired.getModelVersionHistorical()));
 		log.append("Introduced Version (inconsistent)", history.getHistory().getVersions().indexOf(
 				repaired.getModelVersionIntroduced()));
-		log.append("Actual Version (inconsistent)", history.getHistory().getVersions().indexOf(
+		log.append("Current Version (inconsistent)", history.getHistory().getVersions().indexOf(
 				repaired.getModelVersionCurrent()));
 		log.append("Resolved Version (consistent)", history.getHistory().getVersions().indexOf(
 				repaired.getModelVersionResolved()));
@@ -104,23 +103,20 @@ public class InconsistencyEvaluationDriver {
 		if (bestPositionOfObservable != -1) {
 			IRepairPlan bestObservableRepair = (IRepairPlan) bestObservable[1];
 			
-			log.append("Ranking of HOR", bestPositionOfObservable);
-			
-			List<Match> complementMatches = bestObservableRepair.getComplementMatches();
-			
-			log.append("Repair Matchings for HOR", complementMatches.size());
-			log.append("Historic Changes of HOR", bestObservableRepair.getRecognizedChanges().size());
-			log.append("Complementing Changes of HOR", bestObservableRepair.getComplementingChanges().size());
+			log.append("Ranking of Best HOR", bestPositionOfObservable);
+			log.append("Repair Matchings for Best HOR", bestObservableRepair.getComplementMatches().size());
+			log.append("Historic Changes of Best HOR", bestObservableRepair.getRecognizedChanges().size());
+			log.append("Complementing Changes of Best HOR", bestObservableRepair.getComplementingChanges().size());
 		} else {
-			log.append("Ranking of HOR", LogTable.NA);
-			log.append("Repair Matchings for HOR", LogTable.NA);
-			log.append("Historic Changes of HOR", LogTable.NA);
-			log.append("Complementing Changes of HOR", LogTable.NA);
+			log.append("Ranking of Best HOR", LogTable.NA);
+			log.append("Repair Matchings for Best HOR", LogTable.NA);
+			log.append("Historic Changes of Best HOR", LogTable.NA);
+			log.append("Complementing Changes of Best HOR", LogTable.NA);
 		}
 		
 		// evaluate repair tree:
 		log.append("Count of Repair Trees", repairJob.getValidations().size());
-		log.append("Count of Repair Tree Actions/Paths", countRepairTreeAction(repairJob.getValidations()));
+		log.append("Count of Repair Actions", countRepairTreeActions(repairJob.getValidations()));
 //		log.append("Count of Repair Tree Combinations", countRepairTreeCombinations(repairJob.getValidations()));
 	}
 
@@ -150,7 +146,7 @@ public class InconsistencyEvaluationDriver {
 		}
 	}
 	
-	private static int countRepairTreeAction(Collection<RepairValidation> validations) {
+	private static int countRepairTreeActions(Collection<RepairValidation> validations) {
 		int repairActions = 0;
 		
 		for (RepairValidation validation : validations) {

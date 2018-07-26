@@ -70,10 +70,10 @@ public class HistoryEvaluationDriver {
 		historyLog.append("Inconsistency Traces", history.getAllUniqueInconsistencies().size());
 		historyLog.append("Resolved Inconsistency Traces", history.getIntroducedAndResolvedUniqueInconsistencies().size());
 		historyLog.append("Supported Resolved Inconsistency Traces", history.getSupportedIntroducedAndResolvedUniqueInconsistencies().size());
-		historyLog.append("Complex Repairs", history.getComplexChangeAnnotations().size());
-		historyLog.append("Observable Complex Repairs", inconsistenciesLog.count(InconsistencyEvaluationDriver.COLUMN_OBSERVABLE, "true"));
-		historyLog.append("Sinle Change Repairs", history.getSingleChangeAnnotations().size());
-		historyLog.append("Undo Repairs", history.getUndoAnnotations().size());
+		historyLog.append("[Annotation] Complex Repairs", history.getComplexChangeAnnotations().size());
+		historyLog.append("[Annotation] Observable Complex Repairs", inconsistenciesLog.count(InconsistencyEvaluationDriver.COLUMN_OBSERVABLE, "true"));
+		historyLog.append("[Annotation] Single Change Repairs", history.getSingleChangeAnnotations().size());
+		historyLog.append("[Annotation] Undo Repairs", history.getUndoAnnotations().size());
 		
 		return historyLog;
 	}
