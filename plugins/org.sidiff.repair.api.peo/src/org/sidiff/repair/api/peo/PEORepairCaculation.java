@@ -60,13 +60,12 @@ public class PEORepairCaculation {
 			List<IRepairPlan> repairs = new ArrayList<>();
 			
 			for(ComplementRule complement : complementFinder.findComplementRules()) {
+				complementMatchingTimer.start();
 
 				// Filter complements by abstract repairs:
 				if (complement.getComplementingChanges().size() > 0) {
 					if (repairFilter.filter(complement.getComplementingChanges())) {
-						complementMatchingTimer.start();
 						List<Match> complementMatches = complementFinderEngine.findComplementMatches(complement, Collections.emptyList());
-						complementMatchingTimer.stop();
 
 						List<Match> repairMatches = new ArrayList<>(complementMatches.size());
 
@@ -83,6 +82,8 @@ public class PEORepairCaculation {
 						}
 					}
 				}
+				
+				complementMatchingTimer.stop();
 			}
 			
 			return repairs;
