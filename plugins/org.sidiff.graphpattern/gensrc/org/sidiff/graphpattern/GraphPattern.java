@@ -112,4 +112,11 @@ public interface GraphPattern extends PatternElement, Extendable {
 	 */
 	EList<SubGraph> getSubgraphs();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	Iterable<GraphElement> getGraphElements();
+
 } // GraphPattern

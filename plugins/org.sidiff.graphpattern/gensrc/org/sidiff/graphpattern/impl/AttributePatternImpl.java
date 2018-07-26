@@ -2,6 +2,8 @@
  */
 package org.sidiff.graphpattern.impl;
 
+import java.util.Collections;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EAttribute;
@@ -315,6 +317,11 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 		result.append(value);
 		result.append(')');
 		return result.toString();
+	}
+
+	@Override
+	public Iterable<NodePattern> getConnected() {
+		return Collections.singletonList(getNode());
 	}
 
 } //AttributePatternImpl

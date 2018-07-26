@@ -235,4 +235,11 @@ public interface NodePattern extends GraphElement {
 	 */
 	EdgePattern getOutgoing(EReference type);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	void removeEdge(EdgePattern edge);
+
 } // NodePattern

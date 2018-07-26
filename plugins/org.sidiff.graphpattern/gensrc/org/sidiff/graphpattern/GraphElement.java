@@ -2,6 +2,8 @@
  */
 package org.sidiff.graphpattern;
 
+import java.util.function.Predicate;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Graph Element</b></em>'.
@@ -62,5 +64,19 @@ public interface GraphElement extends PatternElement, Extendable {
 	 * @generated
 	 */
 	GraphPattern getGraph();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	Iterable<GraphElement> getClosure(Predicate<GraphElement> condition);
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	Iterable<? extends GraphElement> getConnected();
 
 } // GraphElement

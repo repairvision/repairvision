@@ -3,8 +3,10 @@
 package org.sidiff.graphpattern.impl;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -22,6 +24,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.Matching;
 import org.sidiff.graphpattern.NodePattern;
@@ -269,12 +272,7 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	public EList<EdgePattern> removeIncident() {
 		EList<EdgePattern> edges = getIncident();
 		edges.forEach(e -> {
-			if (e.getSource() != null) {
-				e.getSource().getOutgoings().remove(e);
-			}
-			if (e.getTarget() != null) {
-				e.getTarget().getIncomings().remove(e);
-			}
+			removeEdge(e);
 		});
 		return edges;
 	}
@@ -287,14 +285,24 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	public EList<EdgePattern> removeIncident(NodePattern node) {
 		EList<EdgePattern> edges = getIncident(node);
 		edges.forEach(e -> {
-			if (e.getSource() != null) {
-				e.getSource().getOutgoings().remove(e);
-			}
-			if (e.getTarget() != null) {
-				e.getTarget().getIncomings().remove(e);
-			}
+			removeEdge(e);
 		});
 		return edges;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public void removeEdge(EdgePattern edge) {
+		if (edge.getSource() != null) {
+			edge.getSource().getOutgoings().remove(edge);
+		}
+		if (edge.getTarget() != null) {
+			edge.getTarget().getIncomings().remove(edge);
+		}
 	}
 
 	/**
@@ -664,6 +672,18 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 		result.append(')');
 		
 		return result.toString();
+	}
+
+	@Override
+	public Iterable<GraphElement> getConnected() {
+		List<GraphElement> connected = new ArrayList<>(
+				getOutgoings().size() + getIncomings().size() + getAttributes().size());
+
+		connected.addAll(getIncomings());
+		connected.addAll(getOutgoings());
+		connected.addAll(getAttributes());
+
+		return connected;
 	}
 
 } //NodePatternImpl

@@ -3,11 +3,13 @@
 package org.sidiff.graphpattern.impl;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -16,6 +18,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.graphpattern.DependencyGraph;
 import org.sidiff.graphpattern.Extendable;
+import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
@@ -408,4 +411,51 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public Iterable<GraphElement> getGraphElements() {
+		return new Iterable<GraphElement>() {
+			
+			@Override
+			public Iterator<GraphElement> iterator() {
+				return new Iterator<GraphElement>() {
+					
+					Iterator<EObject> content = eAllContents();
+					
+					EObject next = null;
+					
+					@Override
+					public GraphElement next() {
+						GraphElement nextElement = (GraphElement) next;
+						next = null;
+						
+						while (content.hasNext() && (next == null)) {
+							next = content.next();
+
+							if (!(next instanceof GraphElement)) {
+								next = null;
+							}
+						}
+
+						return nextElement;
+					}
+					
+					@Override
+					public boolean hasNext() {
+						
+						if (next == null) {
+							next();
+						}
+							
+						return next != null;
+					}
+				};
+			}
+		};
+	}
+	
 } //GraphPatternImpl

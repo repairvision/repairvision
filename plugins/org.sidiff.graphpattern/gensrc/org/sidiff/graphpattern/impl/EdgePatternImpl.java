@@ -2,6 +2,9 @@
  */
 package org.sidiff.graphpattern.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -422,6 +425,21 @@ public class EdgePatternImpl extends GraphElementImpl implements EdgePattern {
 				+ ")");
 		
 		return result.toString();
+	}
+
+	@Override
+	public Iterable<NodePattern> getConnected() {
+		List<NodePattern> connected = new ArrayList<>(2);
+		
+		if (getSource() != null) {
+			connected.add(getSource());
+		}
+		
+		if (getTarget() != null) {
+			connected.add(getTarget());
+		}
+		
+		return connected;
 	}
 
 } //EdgePatternImpl

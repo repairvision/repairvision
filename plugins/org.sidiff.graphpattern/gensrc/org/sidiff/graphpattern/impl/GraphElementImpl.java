@@ -3,6 +3,12 @@
 package org.sidiff.graphpattern.impl;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.Stack;
+import java.util.function.Predicate;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -313,5 +319,66 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
-
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	@Override
+	public Iterable<GraphElement> getClosure(Predicate<GraphElement> condition) {
+		return new Iterable<GraphElement>() {
+			
+			@Override
+			public Iterator<GraphElement> iterator() {
+				return new Iterator<GraphElement>() {
+					
+					Set<GraphElement> visited = new HashSet<>();
+					
+					Stack<GraphElement> connected = new Stack<>();
+					
+					GraphElement next = null;
+					
+					@Override
+					public GraphElement next() {
+						
+						if (visited.isEmpty()) {
+							next = GraphElementImpl.this;
+							visited.add(next);
+							return next;
+						} else {
+							if (next != null) {
+								GraphElement current = next;
+								visited.add(current);
+								
+								for (GraphElement connectedElement : next.getConnected()) {
+									if (!visited.contains(connectedElement)) {
+										if (condition.test(connectedElement)) {
+											connected.push(connectedElement);
+										}
+									}
+								}
+								
+								if (!connected.isEmpty()) {
+									next = connected.pop();
+								} else {
+									next = null;
+								}
+								
+								return current;
+							} else {
+								throw new NoSuchElementException();
+							}
+						}
+					}
+					
+					@Override
+					public boolean hasNext() {
+						return (next != null) || visited.isEmpty();
+					}
+				};
+			}
+		};
+	}
+	
 } //GraphElementImpl
