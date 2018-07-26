@@ -3,11 +3,9 @@ package org.sidiff.repair.history.evaluation.oracle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
@@ -30,58 +28,49 @@ import org.sidiff.validation.constraint.api.util.RepairValidation;
 
 public class DeveloperIntentionOracle {
 
-	private IRepairPlan repair;
-	private SymmetricDifference evolutionStep;
 	private Collection<RepairValidation> repairTrees;
 
-	private HashSet<String> changeSignatures;
-	private HashSet<String> xmiIDs;
+	private Set<String> currentToResolvedSignatures;
+	
+	public DeveloperIntentionOracle(
+			SymmetricDifference currentToResolvedDifference, 
+			Collection<RepairValidation> repairTrees) {
+		
+		this.repairTrees = repairTrees;
+		this.currentToResolvedSignatures = toChangeSignatures(currentToResolvedDifference);
+	}
 
 	/**
-	 * @param preMatch
-	 *            the pre-match turning the complement rule into a repair
-	 *            operation.
-	 * @param evolutionStep
-	 *            the evolution step in which the inconsistency addressed by the
-	 *            repair operation has been historically resolved.
-	 * @param repairTrees
-	 *            Trees of abstract repairs.
 	 * @return <code>true</code> if the complementing changes can be observed in
 	 *         the difference and if the the changes overlap with the given
 	 *         repair trees; <code>false</code> otherwise.
 	 */
-	public boolean isHistoricallyObservable(
-			IRepairPlan repair,
-			SymmetricDifference evolutionStep, 
-			Collection<RepairValidation> repairTrees) {
-		
-		this.repair = repair;
-		this.evolutionStep = evolutionStep;
-		this.repairTrees = repairTrees;
-		
-		this.changeSignatures = new HashSet<String>();
-		this.xmiIDs = new HashSet<String>();
+	public boolean isHistoricallyObservableRepair(IRepairPlan repair) {
 
-		// Collect these data once for performance reasons
-		gatherChangeSignatures();
-		gatherXmiIDs();
-
-		// We always check if all action-induced low level changes can be
-		// observed
-		if (!checkChangeSignatures()) {
+		// We check if all action-induced low level changes can be observed
+		List<GraphElement> observableChanges = findObservableChanges(repair.getComplementingEditRule(), currentToResolvedSignatures);
+		
+		if (observableChanges == null) {
 			return false;
+		}
+
+		// NOTE: Since attribute changes are optional -> re-check repair tree overlapping for observable changes:
+		RepairActionFilter repairFilter = new RepairActionFilter(repairTrees);
+		
+		for (Match preMatch : repair.getComplementMatches()) {
+			if (repairFilter.filter(observableChanges, preMatch)) {
+				return true;
+			}
 		}
 
 		// All right, observable
 		return true;
 	}
-
-	/**
-	 * Collect all signatures <ChangeType>_<Element_Type> of low-level changes
-	 * in evolutionStep.
-	 */
-	private void gatherChangeSignatures() {
-		for (Change change : evolutionStep.getChanges()) {
+	
+	private Set<String> toChangeSignatures(SymmetricDifference difference) {
+		Set<String> changeSignatures = new HashSet<>();
+		
+		for (Change change : difference.getChanges()) {
 			String signature = null;
 			
 			if (change instanceof AddObject) {
@@ -109,93 +98,76 @@ public class DeveloperIntentionOracle {
 				changeSignatures.add(signature);
 			}
 		}
+		
+		return changeSignatures;
 	}
 
-	/**
-	 * Collect all XMI IDs of model elements in evolutionStep.modelA.
-	 */
-	private void gatherXmiIDs() {
-		for (Iterator<EObject> iterator = evolutionStep.getModelA().getAllContents(); iterator.hasNext();) {
-			xmiIDs.add(EcoreUtil.getURI(iterator.next()).fragment());
-		}
-	}
-
-	private boolean checkChangeSignatures() {
+	private List<GraphElement> findObservableChanges(Rule editRule, Set<String> difference) {
 		List<GraphElement> observableChanges = new ArrayList<>();
-		Rule complementRule = repair.getComplementingEditRule();
 		
 		// Create nodes
-		for (Node node : HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes(complementRule)) {
+		for (Node node : HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes(editRule)) {
 			String signature = "AddObject_" + node.getType().getName();
 			
-			if (changeSignatures.contains(signature)) {
+			if (difference.contains(signature)) {
 				observableChanges.add(node);
 			} else {
-				return false;
+				return null;
 			}
 		}
 
 		// Delete nodes
-		for (Node node : HenshinRuleAnalysisUtilEx.getLHSMinusRHSNodes(complementRule)) {
+		for (Node node : HenshinRuleAnalysisUtilEx.getLHSMinusRHSNodes(editRule)) {
 			String signature = "RemoveObject_" + node.getType().getName();
 			
-			if (changeSignatures.contains(signature)) {
+			if (difference.contains(signature)) {
 				observableChanges.add(node);
 			} else {
-				return false;
+				return null;
 			}
 		}
 
 		// Create edges
-		for (Edge edge : HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges(complementRule)) {
+		for (Edge edge : HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges(editRule)) {
 			String signature = "AddReference_" + edge.getType().getName();
 			
-			if (changeSignatures.contains(signature)) {
+			if (difference.contains(signature)) {
 				observableChanges.add(edge);
 			} else {
-				return false;
+				return null;
 			}
 		}
 
 		// Delete edges
-		for (Edge edge : HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges(complementRule)) {
+		for (Edge edge : HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges(editRule)) {
 			String signature = "RemoveReference_" + edge.getType().getName();
 			
-			if (changeSignatures.contains(signature)) {
+			if (difference.contains(signature)) {
 				observableChanges.add(edge);
 			} else {
-				return false;
+				return null;
 			}
 		}
 		
 		// Set attributes:
-		for (Node node : HenshinRuleAnalysisUtilEx.getLHSIntersectRHSNodes(complementRule)) {
+		for (Node node : HenshinRuleAnalysisUtilEx.getLHSIntersectRHSNodes(editRule)) {
 			for (AttributePair attribute : ChangePatternUtil.getChangingAttributes(node)) {
 				
-				// NOTE: Variable attribute changes are optional.
-				if (complementRule.getParameter(attribute.getRhsAttribute().getValue()) == null) {
+				// Is fix value change?
+				if (editRule.getParameter(attribute.getRhsAttribute().getValue()) == null) {
 					String signature = "AttributeValueChange_" + attribute.getType().getName();
 					
-					if (!changeSignatures.contains(signature)) {
-						return false;
+					if (!difference.contains(signature)) {
+						return null;
 					}
 				}
 				
+				// NOTE: Variable attribute changes are optional.
 				observableChanges.add(attribute.getRhsAttribute());
 			}
 		}
 		
 		// => We found all change actions in the low-level difference!
-
-		// NOTE: Since attribute changes are optional -> re-check repair tree overlapping for observable changes:
-		RepairActionFilter repairFilter = new RepairActionFilter(repairTrees);
-		
-		for (Match preMatch : repair.getComplementMatches()) {
-			if (repairFilter.filter(observableChanges, preMatch)) {
-				return true;
-			}
-		}
-		
-		return false;
+		return observableChanges;
 	}
 }

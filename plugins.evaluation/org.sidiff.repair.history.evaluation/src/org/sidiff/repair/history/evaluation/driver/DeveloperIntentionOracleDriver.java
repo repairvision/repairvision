@@ -24,13 +24,15 @@ public class DeveloperIntentionOracleDriver {
 		
 		// The evolutionStep in which inconsistency has been resolved historically
 		try {
-			SymmetricDifference currentToResolved = deriveTechnicalDifference(
+			SymmetricDifference currentToResolvedDifference = deriveTechnicalDifference(
 					modelCurrent, modelResolved, settings);
 			
 			for (IRepairPlan repair : repairJob.getRepairs()) {
-				DeveloperIntentionOracle oracle = new DeveloperIntentionOracle();
+				DeveloperIntentionOracle oracle = new DeveloperIntentionOracle(
+						currentToResolvedDifference,
+						repairJob.getValidations());
 				
-				if (oracle.isHistoricallyObservable(repair, currentToResolved, repairJob.getValidations())) {
+				if (oracle.isHistoricallyObservableRepair(repair)) {
 					observable.add(repair);
 				}
 			}
