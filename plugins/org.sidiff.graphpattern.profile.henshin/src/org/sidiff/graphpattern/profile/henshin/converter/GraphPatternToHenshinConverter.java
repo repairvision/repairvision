@@ -30,6 +30,8 @@ import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
+import org.eclipse.emf.henshin.model.Formula;
+import org.eclipse.emf.henshin.model.util.HenshinModelCleaner;
 
 public class GraphPatternToHenshinConverter {
 
@@ -119,8 +121,7 @@ public class GraphPatternToHenshinConverter {
 		
 		// remove empty NACs:
 		if (nac.getConclusion().getNodes().size() == 0) {
-			// TODO: Remove NAC only!
-			rule.getLhs().getNestedConditions().clear();
+			EcoreUtil.remove(nac.eContainer());
 		}
 		
 		return rule;
