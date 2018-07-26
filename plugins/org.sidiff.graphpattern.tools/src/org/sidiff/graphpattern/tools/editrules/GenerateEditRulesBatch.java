@@ -71,7 +71,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 				generateStructuralTransformationRules(pattern, editOperations);
 			}
 			
-			System.out.println("Edit Operations: " + editOperations.values().stream().mapToInt(List::size).sum());
+//			System.out.println("Edit Operations: " + editOperations.values().stream().mapToInt(List::size).sum());
 			
 			editOperations.forEach((preConstraint, operations) -> {
 				for (Pattern editOperation : operations) {
