@@ -35,9 +35,11 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 		// TEST:
 		IRepositoryMiner miner = new EclipseGitOrgMiner();
 		
+//		String repositoryURL = "http://git.eclipse.org/c/mmt/org.eclipse.atl.git";
+//		String fileURL = "/deprecated/org.atl.eclipse.engine/src/org/atl/eclipse/engine/resources/ATL-0.2.ecore?id=859c1cb272110595f9d8dd29e04d9b82bd52ab8b";
+		
 		String repositoryURL = "http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git";
 		String fileURL = "/bundles/org.eclipse.emf.emfstore.client/model/client.ecore";
-		
 		
 		 List<ModelVersion> versions = miner.mineHistory(repositoryURL, fileURL);
 		 
@@ -64,13 +66,17 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 		
 		try {
 			Document doc = Jsoup.connect(url).get();
-			Elements links = doc.body().select("a[href]");
+			Elements links = doc.body().select("div[class='content']").select("a[href]");
 			
 			for (Element link : links) {
 				String versionURL = link.attr("href");
 				
-				if (versionURL.contains(URL_ID)) {
+				if (versionURL.contains(URL_ID) && !link.parentNode().nodeName().equals("th")) {
 //					System.out.println(versionURL);
+					
+//					for (Element tableCell : link.parent().parent().children()) {
+//						System.out.println(tableCell);
+//					}
 					
 					String commit = versionURL.substring(versionURL.lastIndexOf(URL_ID) + URL_ID.length());
 //					System.out.println("commit: " + commit);
@@ -84,10 +90,6 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 					
 					String author = link.parent().parent().children().get(2).text();
 //					System.out.println("author: " + author);
-					
-//					for (Element tableCell : link.parent().parent().children()) {
-//						System.out.println(tableCell);
-//					}
 					
 					String file = versionURL.replace(URL_ID + commit, "");
 					file =  file.substring(file.lastIndexOf(URL_COMMIT) + URL_COMMIT.length() - 1);

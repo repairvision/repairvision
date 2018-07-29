@@ -43,7 +43,39 @@ public class MiningApplication {
 				"/plugins/org.eclipse.ocl.ecore/model/OCLEcore.ecore",
 				"/plugins/org.eclipse.ocl.ecore/model/oclstdlib.ecore",
 				"/plugins/org.eclipse.ocl/model/OCL.ecore",
-				"/plugins/org.eclipse.ocl/model/OCLCST.ecore");
+				"/plugins/org.eclipse.ocl/model/OCLCST.ecore"
+				
+				// TODO:
+//				/tests/org.eclipse.ocl.ecore.tests/model/Company.ecore,
+//				/tests/org.eclipse.ocl.ecore.tests/model/HiddenOpposites.ecore,
+//				/tests/org.eclipse.ocl.ecore.tests/model/ModelWithErrors.ecore,
+//				/tests/org.eclipse.ocl.ecore.tests/model/NamesTest.ecore,
+//				/tests/org.eclipse.ocl.ecore.tests/model/NoReflectionCompany.ecore,
+//				/tests/org.eclipse.ocl.ecore.tests/model/OCLTest.ecore,
+//				/tests/org.eclipse.ocl.ecore.tests/model/VoidCollectionTypes.ecore,
+//				/tests/org.eclipse.ocl.ecore.tests/model/extlibrary.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.company/model/company.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.company/model/primitivetypes.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/abapmapping.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/ap_runtime_constraints.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/behavioral.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/configuration.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/data.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/dataaccess.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/deployment.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/integration.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/localization.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/modelmanagement.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/ngpm.genmodel,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/persistence.ecore,
+//				/tests/org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm/model/ui.ecore,
+//				/tests/org.eclipse.ocl.examples.validity.test/model/ecoreTest.ecore,
+//				/tests/org.eclipse.ocl.examples.validity.test/model/ecoreTest2.ecore,
+//				/tests/org.eclipse.ocl.uml.tests/model/DummyRegistration.ecore,
+//				/tests/org.eclipse.ocl.examples.xtext.tests/models...
+//				...
+								
+				);
 		
 		// https://projects.eclipse.org/projects/modeling.mmt.qvt-oml/developer
 		dataSet.addProject(localPath, "modeling.mmt.qvt-oml", "http://git.eclipse.org/c/mmt/org.eclipse.qvto.git",
@@ -108,7 +140,11 @@ public class MiningApplication {
 				"/plugins/org.eclipse.m2m.atl.emftvm/model/emftvm.ecore",
 				"/plugins/org.eclipse.m2m.atl.emftvm.trace/model/trace.ecore",
 				"/plugins/org.eclipse.m2m.atl.profiler.exportmodel/model/exportmodel.ecore",
-				"/plugins/org.eclipse.m2m.atl.profiler.model/model/ATL-Profiler.ecore");
+				"/plugins/org.eclipse.m2m.atl.profiler.model/model/ATL-Profiler.ecore",
+				
+				"/deprecated/org.atl.eclipse.engine/src/org/atl/eclipse/engine/resources/ATL-0.2.ecore?id=859c1cb272110595f9d8dd29e04d9b82bd52ab8b"
+				
+				);
 		
 		// https://projects.eclipse.org/projects/modeling.emf.diffmerge/developer
 		dataSet.addProject(localPath, "modeling.emf.diffmerge.patch", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patch.git",
@@ -208,7 +244,9 @@ public class MiningApplication {
 		dataSet.addProject(localPath, "modeling.fmc", "http://git.eclipse.org/c/fmc/org.eclipse.fmc.core.git",
 				"/org.eclipse.fmc.mm/model/Blockdiagram.ecore");
 		
-		// https://projects.eclipse.org/projects/modeling.tmf.xtext/developer
+		// TODO: https://projects.eclipse.org/projects/modeling.tmf.xtext/developer
+		dataSet.addProject(localPath, "modeling.tmf.xtext", "https://github.com/eclipse/xtext-core/",
+				"org.eclipse.xtext.tests/src/org/eclipse/xtext/linking/lazy/LazyLinkingTestLanguage.ecore");
 		
 		// https://projects.eclipse.org/projects/soa.bpmn2-modeler/developer
 		
@@ -317,7 +355,12 @@ public class MiningApplication {
 				"/plugins/org.eclipse.epsilon.hutn.model.antlrAst/model/org/eclipse/epsilon/hutn/model/hutnAntlrAst/AntlrAst.ecore",
 				"/plugins/org.eclipse.epsilon.hutn.model.antlrAst/model/org/eclipse/epsilon/hutn/model/hutnAntlrAst/HutnAntlrAst.ecore",
 				"/plugins/org.eclipse.epsilon.hutn.model.config/model/org/eclipse/epsilon/hutn/model/config/HUTNConfig.ecore",
-				"/plugins/org.eclipse.epsilon.hutn.model/model/org/eclipse/epsilon/hutn/model/HUTN.ecore");
+				"/plugins/org.eclipse.epsilon.hutn.model/model/org/eclipse/epsilon/hutn/model/HUTN.ecore"
+				
+				// TODO
+//				"/examples/..."
+				
+				);
 		
 		// https://projects.eclipse.org/projects/modeling.emft.henshin/developer
 		dataSet.addProject(localPath, "modeling.emft.henshin", "http://git.eclipse.org/c/henshin/org.eclipse.emft.henshin.git",
@@ -338,7 +381,7 @@ public class MiningApplication {
 		// https://projects.eclipse.org/projects/modeling.gendoc/developer
 		
 		// https://projects.eclipse.org/projects/technology.camf/developer
-		dataSet.addProject(localPath, "technology.camf", "http://git.eclipse.org/c/camf/org.eclipse.camf.git", // TODO
+		dataSet.addProject(localPath, "technology.camf", "http://git.eclipse.org/c/camf/org.eclipse.camf.git",
 				"/plugins/org.eclipse.camf.infosystem.model/model/infosystem.ecore",
 				"/plugins/org.eclipse.camf.tosca/model/extension.ecore",
 				"/plugins/org.eclipse.camf.tosca/model/hrequirements.ecore",
@@ -365,8 +408,11 @@ public class MiningApplication {
 		dataSet.addProject(localPath, "technology.cbi", "https://github.com/eclipse/b3",
 				"/org.eclipse.b3.aggregator.legacy/models/aggregator_0.9.0.ecore",
 				"/org.eclipse.b3.aggregator.legacy/models/aggregator_1.1.0.ecore",
-				"/org.eclipse.b3.aggregator/model/Aggregator.ecore", "/org.eclipse.b3.build/model/B3Build.ecore",
-				"/org.eclipse.b3.p2.maven/model/maven-metadata.ecore", "/org.eclipse.b3.p2/model/p2.ecore");
+				"/org.eclipse.b3.aggregator/model/Aggregator.ecore",
+				"/org.eclipse.b3.backend/model/B3Backend.ecore",
+				"/org.eclipse.b3.build/model/B3Build.ecore",
+				"/org.eclipse.b3.p2.maven/model/maven-metadata.ecore", 
+				"/org.eclipse.b3.p2/model/p2.ecore");
 		
 		// https://projects.eclipse.org/projects/birt/developer
 		dataSet.addProject(localPath, "birt", "https://github.com/eclipse/birt",
@@ -402,7 +448,15 @@ public class MiningApplication {
 				"/plugins/org.eclipse.emf.edit/model/Tree.ecore",
 				"/plugins/org.eclipse.emf.mapping.ecore2ecore/model/Ecore2Ecore.ecore",
 				"/plugins/org.eclipse.emf.mapping.ecore2xml/model/Ecore2XML.ecore",
-				"/plugins/org.eclipse.emf.mapping/model/Mapping.ecore");
+				"/plugins/org.eclipse.emf.mapping/model/Mapping.ecore"
+				
+				// TODO
+//				/examples/...
+				
+				// TODO
+//				/tests/org.eclipse.emf.test.core/data/Bad.ecore
+				
+				);
 		
 		// https://projects.eclipse.org/projects/technology.dltk/developer
 		dataSet.addProject(localPath, "technology.dltk.javascript", "https://github.com/eclipse/dltk.javascript",
@@ -421,6 +475,35 @@ public class MiningApplication {
 		// https://projects.eclipse.org/projects/modeling.gmp.graphiti/developer
 		dataSet.addProject(localPath, "modeling.gmp.graphiti", "https://github.com/eclipse/gmp.graphiti",
 				"/plugins/org.eclipse.graphiti.mm/model/graphiti.ecore");
+		
+		// https://projects.eclipse.org/projects/tools.buckminster/developer
+		dataSet.addProject(localPath, "tools.buckminster", "http://git.eclipse.org/c/buckminster/buckminster.git",
+				"/org.eclipse.buckminster.cspec/model/cspec.ecore",
+				"/org.eclipse.buckminster.model.common/model/common.ecore",
+				"/org.eclipse.buckminster.rmap/model/rmap.ecore",
+				"/org.eclipse.buckminster.mspec/model/mspec.ecore");
+		
+		// https://projects.eclipse.org/projects/modeling.emf.cdo/developer
+		dataSet.addProject(localPath, "modeling.emf.cdo", "http://git.eclipse.org/c/cdo/cdo.git",
+				"/plugins/org.eclipse.emf.cdo.examples.company/model/company.ecore",
+				"/plugins/org.eclipse.emf.cdo.expressions/model/expressions.ecore",
+				"/plugins/org.eclipse.emf.cdo.security/model/security.ecore",
+				"/plugins/org.gastro.business/model/business.ecore", 
+				"/plugins/org.gastro.inventory/model/inventory.ecore");
+		
+		// https://projects.eclipse.org/projects/eclipse.e4/developer
+		dataSet.addProject(localPath, "eclipse.e4", "http://git.eclipse.org/c/platform/eclipse.platform.ui.git",
+				"/bundles/org.eclipse.e4.ui.model.workbench/model/UIElements.ecore");
+		
+		// TODO
+//	    "file": "./model/ProjectInfrastructure.ecore", 
+//	    "projectName": "www.eclipse.org", 
+//	    "repositoryName": "projects.git",
+		
+		// TODO
+//	    "file": "./games/murdercase/murdercase.ecore", 
+//	    "projectName": "www.eclipse.org", 
+//	    "repositoryName": "epsilon.git", 
 		
 		dataSet.mine();
 	}
