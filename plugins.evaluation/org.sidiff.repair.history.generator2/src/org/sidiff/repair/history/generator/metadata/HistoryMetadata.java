@@ -5,12 +5,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.sidiff.repair.history.generator.json.JSONObject;
 
 public class HistoryMetadata {
+	
+	private static final DateFormat DATE_ISO8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+	
+	private static final String key_date = "date";
 	
 	private static final String key_projectName = "projectName";
 	
@@ -41,6 +48,7 @@ public class HistoryMetadata {
 	public void write() {
 		
 		// write meta data per model:
+		history.put(key_date, DATE_ISO8601.format(Instant.now()));
 		history.put(key_versions, versions.size());
 		
 		for (VersionMetadata modelVersion : versions) {
