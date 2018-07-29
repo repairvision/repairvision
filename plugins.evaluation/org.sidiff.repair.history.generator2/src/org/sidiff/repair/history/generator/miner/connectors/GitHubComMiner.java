@@ -14,29 +14,25 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.sidiff.repair.history.generator.miner.data.ModelVersion;
 
-public class EclipseGitOrgMiner implements IRepositoryMiner {
+public class GitHubComMiner implements IRepositoryMiner {
 	
-	private static final String PROTOCOL = "git.eclipse.org";
+	private static final String PROTOCOL = "github.com";
 	
-	private static final String URL_LOG = "/log/";
+	private static final String URL_LOG = "/commits/master/";
 	
-	private static final String URL_ID = "?id=";
+	private static final String URL_ID = "/tree/";
 	
-	private static final String URL_COMMIT = "/commit/";
-	
-	private static final String URL_PLAIN = "/plain/";
-	
-	private static final DateFormat DATE_RFC822 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+	private static final String URL_PLAIN = "raw.githubusercontent.com";
 	
 	private static final DateFormat DATE_ISO8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
 	public static void main(String[] args) throws HttpStatusException {
 		
 		// TEST:
-		IRepositoryMiner miner = new EclipseGitOrgMiner();
+		IRepositoryMiner miner = new GitHubComMiner();
 		
-		String repositoryURL = "http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git";
-		String fileURL = "/bundles/org.eclipse.emf.emfstore.client/model/client.ecore";
+		String repositoryURL = "https://github.com/eclipse/elk";
+		String fileURL = "/plugins/org.eclipse.elk.graph/model/elkgraph.ecore";
 		
 		
 		 List<ModelVersion> versions = miner.mineHistory(repositoryURL, fileURL);
@@ -75,24 +71,17 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 					String commit = versionURL.substring(versionURL.lastIndexOf(URL_ID) + URL_ID.length());
 //					System.out.println("commit: " + commit);
 
-					Date parsedDate = DATE_RFC822.parse(link.parent().parent().children().get(0).children().get(0).attr("title"));
+					Date parsedDate = DATE_ISO8601.parse(link.parent().parent().selectFirst("relative-time").attr("datetime"));
 					String date = DATE_ISO8601.format(parsedDate);
 //					System.out.println("date: " + date);
 					
-					String message = link.parent().parent().children().get(1).text();
+					String message = link.parent().parent().children().get(0).children().get(0).selectFirst("a[title]").attr("title");
 //					System.out.println("message: " + message);
 					
-					String author = link.parent().parent().children().get(2).text();
+					String author = link.parent().parent().selectFirst("relative-time").parent().children().get(0).text();
 //					System.out.println("author: " + author);
 					
-//					for (Element tableCell : link.parent().parent().children()) {
-//						System.out.println(tableCell);
-//					}
-					
-					String file = versionURL.replace(URL_ID + commit, "");
-					file =  file.substring(file.lastIndexOf(URL_COMMIT) + URL_COMMIT.length() - 1);
-					
-					ModelVersion modelVersion = new ModelVersion(file, commit, date, message, author);
+					ModelVersion modelVersion = new ModelVersion(fileURL, commit, date, message, author);
 					versions.add(modelVersion);
 				}
 			}
@@ -109,7 +98,7 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 		String plainTextVersionURL = "n/a";
 		
 		try {
-			plainTextVersionURL = repositoryURL + URL_PLAIN + modelVersion.getFile() + URL_ID + modelVersion.getCommit();
+			plainTextVersionURL = repositoryURL.replaceFirst(PROTOCOL, URL_PLAIN) + "/" + modelVersion.getCommit() + modelVersion.getFile();
 //			System.out.println(plainTextVersionURL);
 			
 			//Open a URL Stream
