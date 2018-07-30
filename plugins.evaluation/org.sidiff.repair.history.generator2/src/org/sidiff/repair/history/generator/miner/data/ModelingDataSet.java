@@ -31,8 +31,8 @@ public class ModelingDataSet {
 		throw new RuntimeException("Unsupported Repository: " + repositoryURL);
 	}
 	
-	public void addProject(String localPath, String name, String repository, String... files) {
-		projects.add(new ModelingProject(localPath, name, repository, files));
+	public void addProject(String localPath, String name, String repository, String info, String... files) {
+		projects.add(new ModelingProject(localPath, name, repository, info, files));
 	}
 	
 	public List<ModelingProject> getProjects() {

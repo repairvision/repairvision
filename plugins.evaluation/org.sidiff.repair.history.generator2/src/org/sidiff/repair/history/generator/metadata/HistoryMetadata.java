@@ -23,6 +23,8 @@ public class HistoryMetadata {
 	
 	private static final String key_repositoryURL = "repositoryURL";
 	
+	private static final String key_info = "info";
+	
 	private static final String key_versions = "versions";
 	
 	private static final String key_commits = "commits";
@@ -34,6 +36,14 @@ public class HistoryMetadata {
 	private List<VersionMetadata> versions = new ArrayList<>();
 	
 	public HistoryMetadata(File datafile) {
+		this.datafile = datafile;
+	}
+	
+	public File getDatafile() {
+		return datafile;
+	}
+	
+	public void setDatafile(File datafile) {
 		this.datafile = datafile;
 	}
 	
@@ -99,6 +109,14 @@ public class HistoryMetadata {
 	
 	public void setRepositoryURL(String repositoryURL) {
 		history.put(key_repositoryURL, repositoryURL);
+	}
+	
+	public String getInfo() {
+		return history.getString(key_info);
+	}
+	
+	public void setInfo(String info) {
+		history.put(key_info, info);
 	}
 	
 	public List<VersionMetadata> getVersions() {

@@ -4,13 +4,13 @@ import org.sidiff.repair.history.generator.miner.connectors.EclipseGitOrgMiner;
 import org.sidiff.repair.history.generator.miner.connectors.GitHubComMiner;
 import org.sidiff.repair.history.generator.miner.data.ModelingDataSet;
 
-public class EcoreMiningApplication {
+public class EcoreHistoryMiningApplication {
 	
 	public static void main(String[] args) {
-		new EcoreMiningApplication("C:\\evaluation\\");
+		new EcoreHistoryMiningApplication("C:\\evaluation\\");
 	}
 	
-	public EcoreMiningApplication(String localPath) {
+	public EcoreHistoryMiningApplication(String localPath) {
 		
 //		####################################################################################################
 //		2017-09-18
@@ -26,17 +26,23 @@ public class EcoreMiningApplication {
 //		####################################################################################################
 		
 		ModelingDataSet dataSet = new ModelingDataSet();
-		dataSet.addMiners(new EclipseGitOrgMiner(), new GitHubComMiner());
+		dataSet.addMiners(new EclipseGitOrgMiner("</ecore:EPackage>"), new GitHubComMiner());
 		
 		// https://projects.eclipse.org/projects/modeling.emft.emf-store/developer
-		dataSet.addProject(localPath, "modeling.emft.emf-store", "http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git",
+		dataSet.addProject(localPath, "modeling.emft.emf-store", 
+				"http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git",
+				"https://projects.eclipse.org/projects/modeling.emft.emf-store",
+				
 				"/bundles/org.eclipse.emf.emfstore.client/model/client.ecore",
 				"/bundles/org.eclipse.emf.emfstore.common.model/model/common.ecore",
 				"/bundles/org.eclipse.emf.emfstore.fuzzy.emf/model/config.ecore",
 				"/bundles/org.eclipse.emf.emfstore.server.model/model/server.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.mdt.ocl/developer
-		dataSet.addProject(localPath, "modeling.mdt.ocl", "http://git.eclipse.org/c/ocl/org.eclipse.ocl.git",
+		dataSet.addProject(localPath, "modeling.mdt.ocl", 
+				"http://git.eclipse.org/c/ocl/org.eclipse.ocl.git",
+				"https://projects.eclipse.org/projects/modeling.mdt.ocl",
+				
 				"/plugins/org.eclipse.ocl.pivot.uml/model/OCLforUML.ecore",
 				"/plugins/org.eclipse.ocl.pivot/model/Lookup.ecore",
 				"/plugins/org.eclipse.ocl.pivot/model/Pivot.ecore",
@@ -80,18 +86,27 @@ public class EcoreMiningApplication {
 				);
 		
 		// https://projects.eclipse.org/projects/modeling.mmt.qvt-oml/developer
-		dataSet.addProject(localPath, "modeling.mmt.qvt-oml", "http://git.eclipse.org/c/mmt/org.eclipse.qvto.git",
+		dataSet.addProject(localPath, "modeling.mmt.qvt-oml", 
+				"http://git.eclipse.org/c/mmt/org.eclipse.qvto.git",
+				"https://projects.eclipse.org/projects/modeling.mmt.qvt-oml",
+				
 				"/plugins/org.eclipse.m2m.qvt.oml.ecore.imperativeocl/model/ImperativeOCL.ecore",
 				"/plugins/org.eclipse.m2m.qvt.oml.emf.util/model/MModelURIMap.ecore",
 				"/plugins/org.eclipse.m2m.qvt.oml/model/QVTOperational.ecore",
 				"/plugins/org.eclipse.m2m.qvt.oml/model/trace.ecore");
 		
 		// https://projects.eclipse.org/projects/technology.ogee/developer
-		dataSet.addProject(localPath, "technology.ogee", "http://git.eclipse.org/c/ogee/org.eclipse.ogee.git",
+		dataSet.addProject(localPath, "technology.ogee", 
+				"http://git.eclipse.org/c/ogee/org.eclipse.ogee.git",
+				"https://projects.eclipse.org/projects/technology.ogee",
+				
 				"/org.eclipse.ogee.model/model/OData.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.m2t.acceleo/developer
-		dataSet.addProject(localPath, "modeling.m2t.acceleo", "http://git.eclipse.org/c/acceleo/org.eclipse.acceleo.git",
+		dataSet.addProject(localPath, "modeling.m2t.acceleo", 
+				"http://git.eclipse.org/c/acceleo/org.eclipse.acceleo.git",
+				"https://projects.eclipse.org/projects/modeling.m2t.acceleo",
+				
 				"/plugins/org.eclipse.acceleo.model/model/mtl.ecore",
 				"/plugins/org.eclipse.acceleo.model/model/mtlnonstdlib.ecore",
 				"/plugins/org.eclipse.acceleo.model/model/mtlstdlib.ecore",
@@ -99,7 +114,10 @@ public class EcoreMiningApplication {
 				"/plugins/org.eclipse.acceleo.ui.interpreter.completeocl/model/evaluation_result.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.emft.emf-client/developer
-		dataSet.addProject(localPath, "modeling.emft.emf-client", "http://git.eclipse.org/c/emfclient/org.eclipse.emf.ecp.core.git",
+		dataSet.addProject(localPath, "modeling.emft.emf-client", 
+				"http://git.eclipse.org/c/emfclient/org.eclipse.emf.ecp.core.git",
+				"https://projects.eclipse.org/projects/modeling.emft.emf-client",
+				
 				"/bundles/org.eclipse.emf.ecp.diffmerge.model/model/diffmerge.ecore",
 				"/bundles/org.eclipse.emf.ecp.core/model/ecp.ecore",
 				"/bundles/org.eclipse.emf.ecp.view.categorization.model/model/categorization.ecore",
@@ -138,7 +156,10 @@ public class EcoreMiningApplication {
 				"/bundles/org.eclipse.emfforms.view.controlgrid.model/model/controlgrid.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.mmt.atl/developer
-		dataSet.addProject(localPath, "modeling.mmt.atl", "http://git.eclipse.org/c/mmt/org.eclipse.atl.git",
+		dataSet.addProject(localPath, "modeling.mmt.atl", 
+				"http://git.eclipse.org/c/mmt/org.eclipse.atl.git",
+				"https://projects.eclipse.org/projects/modeling.mmt.atl",
+				
 				"/plugins/org.eclipse.m2m.atl.emftvm/model/emftvm.ecore",
 				"/plugins/org.eclipse.m2m.atl.emftvm.trace/model/trace.ecore",
 				"/plugins/org.eclipse.m2m.atl.profiler.exportmodel/model/exportmodel.ecore",
@@ -149,26 +170,44 @@ public class EcoreMiningApplication {
 				);
 		
 		// https://projects.eclipse.org/projects/modeling.emf.diffmerge/developer
-		dataSet.addProject(localPath, "modeling.emf.diffmerge.patch", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patch.git",
+		dataSet.addProject(localPath, "modeling.emf.diffmerge.patch", 
+				"http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patch.git",
+				"https://projects.eclipse.org/projects/modeling.emf.diffmerge",
+				
 				"/plugins/org.eclipse.emf.diffmerge.patch.persistence.emf/model/modelpatch.ecore");
 		
-		dataSet.addProject(localPath, "modeling.emf.diffmerge.coevolution", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.coevolution.git",
+		dataSet.addProject(localPath, "modeling.emf.diffmerge.coevolution", 
+				"http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.coevolution.git",
+				"https://projects.eclipse.org/projects/modeling.emf.diffmerge",
+				
 				"/core/plugins/org.eclipse.emf.diffmerge.bridge.traces.gen/model/BridgeTraces.ecore");
 		
-		dataSet.addProject(localPath, "modeling.emf.diffmerge.patterns", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patterns.git",
+		dataSet.addProject(localPath, "modeling.emf.diffmerge.patterns", 
+				"http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patterns.git",
+				"https://projects.eclipse.org/projects/modeling.emf.diffmerge",
+				
 				"/core/plugins/org.eclipse.emf.diffmerge.patterns.core.gen/model/CorePatterns.ecore",
 				"/core/plugins/org.eclipse.emf.diffmerge.patterns.support.gen/model/CommonPatternSupport.ecore",
 				"/core/plugins/org.eclipse.emf.diffmerge.patterns.templates.gen/model/TemplatePatterns.ecore");
 		
-		dataSet.addProject(localPath, "modeling.emf.diffmerge.core", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.core.git",
+		dataSet.addProject(localPath, "modeling.emf.diffmerge.core", 
+				"http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.core.git",
+				"https://projects.eclipse.org/projects/modeling.emf.diffmerge",
+				
 				"/plugins/org.eclipse.emf.diffmerge/model/DiffData.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.elk/developer
-		dataSet.addProject(localPath, "modeling.elk", "https://github.com/eclipse/elk",
+		dataSet.addProject(localPath, "modeling.elk", 
+				"https://github.com/eclipse/elk",
+				"https://projects.eclipse.org/projects/modeling.elk",
+				
 				"/plugins/org.eclipse.elk.graph/model/elkgraph.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.mdt.papyrus/developer
-		dataSet.addProject(localPath, "modeling.mdt.papyrus", "http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git",
+		dataSet.addProject(localPath, "modeling.mdt.papyrus", 
+				"http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git",
+				"https://projects.eclipse.org/projects/modeling.mdt.papyrus",
+				
 				"/plugins/facet/org.eclipse.papyrus.emf.facet.custom.metamodel/model/catalog-0.2.0.ecore",
 				"/plugins/facet/org.eclipse.papyrus.emf.facet.custom.metamodel/model/custom-0.2.0.ecore",
 				"/plugins/facet/org.eclipse.papyrus.emf.facet.custom.metamodel/model/custom_primitive_types-0.2.0.ecore",
@@ -180,7 +219,10 @@ public class EcoreMiningApplication {
 				"/plugins/uml/org.eclipse.papyrus.uml.filters/model/umlfilters.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.mmt.qvtd/developer
-		dataSet.addProject(localPath, "modeling.mmt.qvtd", "http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git",
+		dataSet.addProject(localPath, "modeling.mmt.qvtd", 
+				"http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git",
+				"https://projects.eclipse.org/projects/modeling.mmt.qvtd",
+				
 				"/plugins/org.eclipse.qvt/model/ecore/EMOF.ecore",
 				"/plugins/org.eclipse.qvt/model/ecore/EssentialOCL.ecore",
 				"/plugins/org.eclipse.qvt/model/ecore/FlatQVT.ecore",
@@ -207,26 +249,39 @@ public class EcoreMiningApplication {
 				"/plugins/org.eclipse.qvtd.umlx/model/UMLX.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.sirius/developer
-		dataSet.addProject(localPath, "modeling.sirius", "http://git.eclipse.org/c/sirius/org.eclipse.sirius.git",
+		dataSet.addProject(localPath, "modeling.sirius", 
+				"http://git.eclipse.org/c/sirius/org.eclipse.sirius.git",
+				"https://projects.eclipse.org/projects/modeling.sirius",
+				
 				"/plugins/org.eclipse.sirius.diagram.sequence/model/sequence.ecore",
 				"/plugins/org.eclipse.sirius.properties.ext.widgets.reference/model/properties-ext-widgets-reference.ecore",
 				"/plugins/org.eclipse.sirius.properties/model/properties.ecore",
-				"/plugins/org.eclipse.sirius.sample.interactions/model/interactions.ecore");
+				"/plugins/org.eclipse.sirius.sample.interactions/model/interactions.ecore",
+				"/plugins/org.eclipse.sirius/model/viewpoint.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.mdt.sphinx/developer
-		dataSet.addProject(localPath, "modeling.mdt.sphinx", "http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git",
+		dataSet.addProject(localPath, "modeling.mdt.sphinx", 
+				"http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git",
+				"https://projects.eclipse.org/projects/modeling.mdt.sphinx",
+				
 				"plugins/org.eclipse.sphinx.emf.check.catalog/model/CheckCatalog.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.upr/developer
 		
 		// https://projects.eclipse.org/projects/modeling.mdht/developer
-		dataSet.addProject(localPath, "modeling.mdht", "http://git.eclipse.org/c/mdht/org.eclipse.mdht.git",
+		dataSet.addProject(localPath, "modeling.mdht", 
+				"http://git.eclipse.org/c/mdht/org.eclipse.mdht.git",
+				"https://projects.eclipse.org/projects/modeling.mdht",
+				
 				"/core/plugins/org.eclipse.mdht.metamodel.traceability/model/traceability.ecore");
 		
 		// https://projects.eclipse.org/projects/technology.handly/developer
 		
 		// https://projects.eclipse.org/projects/modeling.emf.egf/developer
-		dataSet.addProject(localPath, "modeling.emf.egf", "http://git.eclipse.org/c/egf/org.eclipse.emf.egf.git",
+		dataSet.addProject(localPath, "modeling.emf.egf", 
+				"http://git.eclipse.org/c/egf/org.eclipse.emf.egf.git",
+				"https://projects.eclipse.org/projects/modeling.emf.egf",
+				
 				"/plugins/org.eclipse.egf.model.fprod/model/Fprod.ecore",
 				"/plugins/org.eclipse.egf.model.ftask/model/Ftask.ecore",
 				"/plugins/org.eclipse.egf.model.javapattern/model/JavaPattern.ecore",
@@ -243,22 +298,34 @@ public class EcoreMiningApplication {
 		// https://projects.eclipse.org/projects/modeling.viatra/developer
 		
 		// https://projects.eclipse.org/projects/modeling.fmc/developer
-		dataSet.addProject(localPath, "modeling.fmc", "http://git.eclipse.org/c/fmc/org.eclipse.fmc.core.git",
+		dataSet.addProject(localPath, "modeling.fmc", 
+				"http://git.eclipse.org/c/fmc/org.eclipse.fmc.core.git",
+				"https://projects.eclipse.org/projects/modeling.fmc",
+				
 				"/org.eclipse.fmc.mm/model/Blockdiagram.ecore");
 		
 		// TODO: https://projects.eclipse.org/projects/modeling.tmf.xtext/developer
-		dataSet.addProject(localPath, "modeling.tmf.xtext", "https://github.com/eclipse/xtext-core/",
+		dataSet.addProject(localPath, "modeling.tmf.xtext", 
+				"https://github.com/eclipse/xtext-core/",
+				"https://projects.eclipse.org/projects/modeling.tmf.xtext",
+				
 				"org.eclipse.xtext.tests/src/org/eclipse/xtext/linking/lazy/LazyLinkingTestLanguage.ecore");
 		
 		// https://projects.eclipse.org/projects/soa.bpmn2-modeler/developer
 		
 		// https://projects.eclipse.org/projects/modeling.mdt.bpmn2/developer
-		dataSet.addProject(localPath, "modeling.mdt.bpmn2", "http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git",
+		dataSet.addProject(localPath, "modeling.mdt.bpmn2", 
+				"http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git",
+				"https://projects.eclipse.org/projects/modeling.mdt.bpmn2",
+				
 				"/org.eclipse.bpmn2/model/BPMN20.ecore", "/org.eclipse.bpmn2/model/BPMNDI.ecore",
 				"/org.eclipse.bpmn2/model/DC.ecore", "/org.eclipse.bpmn2/model/DI.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.emfcompare/developer
-		dataSet.addProject(localPath, "modeling.emfcompare", "http://git.eclipse.org/c/emfcompare/org.eclipse.emf.compare.git",
+		dataSet.addProject(localPath, "modeling.emfcompare", 
+				"http://git.eclipse.org/c/emfcompare/org.eclipse.emf.compare.git",
+				"https://projects.eclipse.org/projects/modeling.emfcompare",
+				
 				"/plugins/org.eclipse.emf.compare.diagram/model/diagramCompare.ecore",
 				"/plugins/org.eclipse.emf.compare/model/compare.ecore",
 				"/plugins/org.eclipse.emf.compare.uml2/model/uml2compare.ecore");
@@ -266,7 +333,10 @@ public class EcoreMiningApplication {
 		// https://projects.eclipse.org/projects/modeling.papyrus-rt/developer
 		
 		// https://projects.eclipse.org/projects/modeling.emft.edapt/developer
-		dataSet.addProject(localPath, "modeling.emft.edapt", "http://git.eclipse.org/c/edapt/org.eclipse.emf.edapt.git",
+		dataSet.addProject(localPath, "modeling.emft.edapt", 
+				"http://git.eclipse.org/c/edapt/org.eclipse.emf.edapt.git",
+				"https://projects.eclipse.org/projects/modeling.emft.edapt",
+				
 				"/plugins/org.eclipse.emf.edapt.declaration/model/declaration.ecore",
 				"/plugins/org.eclipse.emf.edapt.history/model/history.ecore");
 		
@@ -279,30 +349,46 @@ public class EcoreMiningApplication {
 		// https://projects.eclipse.org/projects/modeling.mdt.etrice/developer
 		
 		// https://projects.eclipse.org/projects/modeling.eef/developer
-		dataSet.addProject(localPath, "modeling.eef", "http://git.eclipse.org/c/eef/org.eclipse.eef.git",
+		dataSet.addProject(localPath, "modeling.eef", 
+				"http://git.eclipse.org/c/eef/org.eclipse.eef.git",
+				"https://projects.eclipse.org/projects/modeling.eef",
+				
 				"/plugins/org.eclipse.eef/model/eef.ecore",
 				"/plugins/org.eclipse.emf.eef.components/model/components.ecore",
 				"/plugins/org.eclipse.emf.eef.eefgen/model/EEFGen.ecore",
 				"/plugins/org.eclipse.emf.eef.mapping/model/mapping.ecore",
 				"/plugins/org.eclipse.emf.eef.modelingbot/model/mbot.ecore",
-				"/plugins/org.eclipse.emf.eef.views/model/views.ecore");
+				"/plugins/org.eclipse.emf.eef.views/model/views.ecore",
+				"/plugins/org.eclipse.emf.eef.editor.model/model/extended.ecore",
+				"/prototypes/org.eclipse.sirius.expression/model/expression.ecore",
+				"/prototypes/org.eclipse.sirius.contentassist/model/contentassist.ecore",
+				"/prototypes/org.eclipse.sirius.validation/model/validation.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.amalgam/developer
 		
 		// https://projects.eclipse.org/projects/modeling.eatop/developer
-		dataSet.addProject(localPath, "modeling.eatop", "http://git.eclipse.org/c/eatop/org.eclipse.eatop.git",
+		dataSet.addProject(localPath, "modeling.eatop", 
+				"http://git.eclipse.org/c/eatop/org.eclipse.eatop.git",
+				"https://projects.eclipse.org/projects/modeling.eatop",
+				
 				"/plugins/org.eclipse.eatop.eastadl2112/model/eastadl2112.ecore",
 				"/plugins/org.eclipse.eatop.eastadl2112/model/geastadl.ecore",
 				"/plugins/org.eclipse.eatop.geastadl/model/geastadl.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.gmp.gmf-notation/developer
-		dataSet.addProject(localPath, "modeling.gmp.gmf-notation", "http://git.eclipse.org/c/gmf-notation/org.eclipse.gmf.notation.git",
+		dataSet.addProject(localPath, "modeling.gmp.gmf-notation", 
+				"http://git.eclipse.org/c/gmf-notation/org.eclipse.gmf.notation.git",
+				"https://projects.eclipse.org/projects/modeling.gmp.gmf-notation",
+				
 				"/org.eclipse.gmf.runtime.notation/model/notation.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.gmf-runtime/developer
 		
 		// https://projects.eclipse.org/projects/modeling.gmp.gmf-tooling/developer
-		dataSet.addProject(localPath, "modeling.gmp.gmf-tooling", "http://git.eclipse.org/c/gmf-tooling/org.eclipse.gmf-tooling.git",
+		dataSet.addProject(localPath, "modeling.gmp.gmf-tooling", 
+				"http://git.eclipse.org/c/gmf-tooling/org.eclipse.gmf-tooling.git",
+				"https://projects.eclipse.org/projects/modeling.gmp.gmf-tooling",
+				
 				"/plugins/org.eclipse.gmf.graphdef/models/gmfgraph.ecore",
 				"/plugins/org.eclipse.gmf.graphdef/models/gmfgraph_2006.ecore",
 				"/plugins/org.eclipse.gmf.map/models/gmfmap.ecore",
@@ -311,13 +397,19 @@ public class EcoreMiningApplication {
 				"/plugins/org.eclipse.gmf.tooling.simplemap.model/model/simplemap.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.gmp.graphiti/developer
-		dataSet.addProject(localPath, "modeling.gmp.graphiti", "http://git.eclipse.org/c/graphiti/org.eclipse.graphiti.git",
+		dataSet.addProject(localPath, "modeling.gmp.graphiti", 
+				"http://git.eclipse.org/c/graphiti/org.eclipse.graphiti.git",
+				"https://projects.eclipse.org/projects/modeling.gmp.graphiti",
+				
 				"/plugins/org.eclipse.graphiti.mm/model/graphiti.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.emf.mwe/developer
 		
 		// https://projects.eclipse.org/projects/modeling.mdt.modisco/developer
-		dataSet.addProject(localPath, "modeling.mdt.modisco", "http://git.eclipse.org/c/modisco/org.eclipse.modisco.git",
+		dataSet.addProject(localPath, "modeling.mdt.modisco", 
+				"http://git.eclipse.org/c/modisco/org.eclipse.modisco.git",
+				"https://projects.eclipse.org/projects/modeling.mdt.modisco",
+				
 				"/org.eclipse.gmt.modisco.infra.browser.custom/models/uiCustom.ecore",
 				"/org.eclipse.gmt.modisco.infra.facet/model/facet.ecore",
 				"/org.eclipse.gmt.modisco.infra.query/model/query.ecore",
@@ -326,7 +418,10 @@ public class EcoreMiningApplication {
 		// https://projects.eclipse.org/projects/technology.sapphire/developer
 		
 		// https://projects.eclipse.org/projects/technology.stem/developer
-		dataSet.addProject(localPath, "technology.stem", "http://git.eclipse.org/c/stem/org.eclipse.stem.git",
+		dataSet.addProject(localPath, "technology.stem", 
+				"http://git.eclipse.org/c/stem/org.eclipse.stem.git",
+				"https://projects.eclipse.org/projects/technology.stem",
+				
 				"/models/populations/org.eclipse.stem.populationmodels/model/standard.ecore",
 				"/models/foodproduction/org.eclipse.stem.foodproduction/model/foodproduction.ecore",
 				"/models/populations/org.eclipse.stem.populationmodels/model/standard.ecore",
@@ -340,11 +435,17 @@ public class EcoreMiningApplication {
 		// https://projects.eclipse.org/projects/soa.stardust/developer
 		
 		// https://projects.eclipse.org/projects/modeling.m2t.xpand/developer
-		dataSet.addProject(localPath, "modeling.m2t.xpand", "http://git.eclipse.org/c/m2t/org.eclipse.xpand.git",
+		dataSet.addProject(localPath, "modeling.m2t.xpand", 
+				"http://git.eclipse.org/c/m2t/org.eclipse.xpand.git",
+				"https://projects.eclipse.org/projects/modeling.m2t.xpand",
+				
 				"/plugins/org.eclipse.xpand.incremental/model/trace.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.emft.texo/developer
-		dataSet.addProject(localPath, "modeling.emft.texo", "http://git.eclipse.org/c/texo/org.eclipse.emf.texo.git",
+		dataSet.addProject(localPath, "modeling.emft.texo", 
+				"http://git.eclipse.org/c/texo/org.eclipse.emf.texo.git",
+				"https://projects.eclipse.org/projects/modeling.emft.texo",
+				
 				"/core/org.eclipse.emf.texo.json/model/request.ecore",
 				"/generator/org.eclipse.emf.texo.annotations.model/model/texo-annotations-model.ecore",
 				"/generator/org.eclipse.emf.texo.modelgenerator/model/texo-annotations-modelgenerator.ecore",
@@ -352,7 +453,10 @@ public class EcoreMiningApplication {
 				"/generator/org.eclipse.emf.texo.orm/model/texo-annotations-orm.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.epsilon/developer
-		dataSet.addProject(localPath, "modeling.epsilon", "http://git.eclipse.org/c/epsilon/org.eclipse.epsilon.git",
+		dataSet.addProject(localPath, "modeling.epsilon", 
+				"http://git.eclipse.org/c/epsilon/org.eclipse.epsilon.git",
+				"https://projects.eclipse.org/projects/modeling.epsilon",
+				
 				"/plugins/org.eclipse.epsilon.antlr.postprocessor.model/model/org/eclipse/epsilon/antlr/postprocessor/model/AntlrAst.ecore",
 				"/plugins/org.eclipse.epsilon.hutn.model.antlrAst/model/org/eclipse/epsilon/hutn/model/hutnAntlrAst/AntlrAst.ecore",
 				"/plugins/org.eclipse.epsilon.hutn.model.antlrAst/model/org/eclipse/epsilon/hutn/model/hutnAntlrAst/HutnAntlrAst.ecore",
@@ -365,13 +469,19 @@ public class EcoreMiningApplication {
 				);
 		
 		// https://projects.eclipse.org/projects/modeling.emft.henshin/developer
-		dataSet.addProject(localPath, "modeling.emft.henshin", "http://git.eclipse.org/c/henshin/org.eclipse.emft.henshin.git",
+		dataSet.addProject(localPath, "modeling.emft.henshin", 
+				"http://git.eclipse.org/c/henshin/org.eclipse.emft.henshin.git",
+				"https://projects.eclipse.org/projects/modeling.emft.henshin",
+				
 				"/plugins/org.eclipse.emf.henshin.model/model/henshin.ecore");
 		
 		// https://projects.eclipse.org/projects/technology.osee/developer
 		
 		// https://projects.eclipse.org/projects/modeling.mdt.rmf/developer
-		dataSet.addProject(localPath, "modeling.mdt.rmf", "http://git.eclipse.org/c/rmf/org.eclipse.rmf.git",
+		dataSet.addProject(localPath, "modeling.mdt.rmf", 
+				"http://git.eclipse.org/c/rmf/org.eclipse.rmf.git",
+				"https://projects.eclipse.org/projects/modeling.mdt.rmf",
+				
 				"/org.eclipse.rmf.reqif10/model/reqif10.ecore",
 				"/org.eclipse.rmf.reqif10.pror/model/configuration.ecore",
 				"/org.eclipse.rmf.reqif10.search/model/criteria.ecore",
@@ -383,7 +493,10 @@ public class EcoreMiningApplication {
 		// https://projects.eclipse.org/projects/modeling.gendoc/developer
 		
 		// https://projects.eclipse.org/projects/technology.camf/developer
-		dataSet.addProject(localPath, "technology.camf", "http://git.eclipse.org/c/camf/org.eclipse.camf.git",
+		dataSet.addProject(localPath, "technology.camf", 
+				"http://git.eclipse.org/c/camf/org.eclipse.camf.git",
+				"https://projects.eclipse.org/projects/technology.camf",
+				
 				"/plugins/org.eclipse.camf.infosystem.model/model/infosystem.ecore",
 				"/plugins/org.eclipse.camf.tosca/model/extension.ecore",
 				"/plugins/org.eclipse.camf.tosca/model/hrequirements.ecore",
@@ -399,7 +512,10 @@ public class EcoreMiningApplication {
 		// https://projects.eclipse.org/projects/modeling.papyrus-xtuml/developer
 		
 		// https://projects.eclipse.org/projects/modeling.pmf/developer
-		dataSet.addProject(localPath, "modeling.pmf", "http://git.eclipse.org/c/pmf/org.eclipse.pmf.git",
+		dataSet.addProject(localPath, "modeling.pmf", 
+				"http://git.eclipse.org/c/pmf/org.eclipse.pmf.git",
+				"https://projects.eclipse.org/projects/modeling.pmf",
+				
 				"/org.eclipse.pmf.pim/model/emf.ecore", "/org.eclipse.pmf.pim/model/pmf.ecore");
 		
 		// https://projects.eclipse.org/projects/soa.winery/developer
@@ -407,7 +523,10 @@ public class EcoreMiningApplication {
 		// https://projects.eclipse.org/projects/mylyn.context.mft/developer
 		
 		// https://projects.eclipse.org/projects/technology.cbi/developer
-		dataSet.addProject(localPath, "technology.cbi", "https://github.com/eclipse/b3",
+		dataSet.addProject(localPath, "technology.cbi", 
+				"https://github.com/eclipse/b3",
+				"https://projects.eclipse.org/projects/technology.cbi",
+				
 				"/org.eclipse.b3.aggregator.legacy/models/aggregator_0.9.0.ecore",
 				"/org.eclipse.b3.aggregator.legacy/models/aggregator_1.1.0.ecore",
 				"/org.eclipse.b3.aggregator/model/Aggregator.ecore",
@@ -417,7 +536,10 @@ public class EcoreMiningApplication {
 				"/org.eclipse.b3.p2/model/p2.ecore");
 		
 		// https://projects.eclipse.org/projects/birt/developer
-		dataSet.addProject(localPath, "birt", "https://github.com/eclipse/birt",
+		dataSet.addProject(localPath, "birt", 
+				"https://github.com/eclipse/birt",
+				"https://projects.eclipse.org/projects/birt",
+				
 				"/chart/org.eclipse.birt.chart.engine/src/model/org.eclipse.birt.chart.model.attribute.ecore",
 				"/chart/org.eclipse.birt.chart.engine/src/model/org.eclipse.birt.chart.model.component.ecore",
 				"/chart/org.eclipse.birt.chart.engine/src/model/org.eclipse.birt.chart.model.ecore",
@@ -427,17 +549,26 @@ public class EcoreMiningApplication {
 				"/model/org.eclipse.birt.report.model.adapter.oda/schema/model.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.emft.wazaabi/developer
-		dataSet.addProject(localPath, "modeling.emft.wazaabi", "https://github.com/eclipse/wazaabi",
+		dataSet.addProject(localPath, "modeling.emft.wazaabi", 
+				"https://github.com/eclipse/wazaabi",
+				"https://projects.eclipse.org/projects/modeling.emft.wazaabi",
+				
 				"/plugins/org.eclipse.wazaabi.mm.core/model/core.ecore",
 				"/plugins/org.eclipse.wazaabi.mm.edp/model/EDP.ecore",
 				"/plugins/org.eclipse.wazaabi.mm.swt/model/SWTComponents.ecore");
 		
 		// https://projects.eclipse.org/projects/science.eavp/developer
-		dataSet.addProject(localPath, "science.eavp", "https://github.com/eclipse/eavp",
+		dataSet.addProject(localPath, "science.eavp", 
+				"https://github.com/eclipse/eavp",
+				"https://projects.eclipse.org/projects/science.eavp",
+				
 				"/org.eclipse.eavp.geometry.view.model/model/org.eclipse.eavp.geometry.view.model.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.emf.emf/developer
-		dataSet.addProject(localPath, "modeling.emf.emf", "https://git.eclipse.org/c/emf/org.eclipse.emf.git",
+		dataSet.addProject(localPath, "modeling.emf.emf", 
+				"https://git.eclipse.org/c/emf/org.eclipse.emf.git",
+				"https://projects.eclipse.org/projects/modeling.emf.emf",
+				
 				"/plugins/org.eclipse.emf.ecore.change/model/Change.ecore",
 				"/plugins/org.eclipse.emf.ecore/model/Ecore.ecore",
 				"/plugins/org.eclipse.emf.ecore/model/XMLNamespace.ecore",
@@ -449,7 +580,8 @@ public class EcoreMiningApplication {
 				"/plugins/org.eclipse.emf.edit/model/Tree.ecore",
 				"/plugins/org.eclipse.emf.mapping.ecore2ecore/model/Ecore2Ecore.ecore",
 				"/plugins/org.eclipse.emf.mapping.ecore2xml/model/Ecore2XML.ecore",
-				"/plugins/org.eclipse.emf.mapping/model/Mapping.ecore"
+				"/plugins/org.eclipse.emf.mapping/model/Mapping.ecore",
+				"/plugins/org.eclipse.emf.codegen.ecore/model/GenModel.ecore"
 				
 				// TODO
 //				/examples/...
@@ -460,40 +592,63 @@ public class EcoreMiningApplication {
 				);
 		
 		// https://projects.eclipse.org/projects/technology.dltk/developer
-		dataSet.addProject(localPath, "technology.dltk.javascript", "https://github.com/eclipse/dltk.javascript",
+		dataSet.addProject(localPath, "technology.dltk.javascript", 
+				"https://github.com/eclipse/dltk.javascript",
+				"https://projects.eclipse.org/projects/technology.dltk",
+				
 				"/plugins/org.eclipse.dltk.javascript.core.manipulation/model/dom.ecore",
 				"/plugins/org.eclipse.dltk.javascript.core/model/references.ecore");
 		
-		dataSet.addProject(localPath, "technology.dltk.core", "http://git.eclipse.org/c/dltk/org.eclipse.dltk.core.git",
+		dataSet.addProject(localPath, "technology.dltk.core", 
+				"http://git.eclipse.org/c/dltk/org.eclipse.dltk.core.git",
+				"https://projects.eclipse.org/projects/technology.dltk",
+				
 				"/core/plugins/org.eclipse.dltk.core/models/cache_model.ecore",
 				"/core/plugins/org.eclipse.dltk.validators.core/models/validators.ecore",
 				"/core/plugins/org.eclipse.dltk.launching/model/launching.ecore");
 		
 		// https://projects.eclipse.org/projects/datatools/developer
-		dataSet.addProject(localPath, "datatools", "http://git.eclipse.org/c/datatools/org.eclipse.datatools.git",
+		dataSet.addProject(localPath, "datatools", 
+				"http://git.eclipse.org/c/datatools/org.eclipse.datatools.git",
+				"https://projects.eclipse.org/projects/datatools",
+				
 				"/plugins/connectivity/org.eclipse.datatools.connectivity.oda.design/model/org.eclipse.datatools.connectivity.oda.design.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.gmp.graphiti/developer
-		dataSet.addProject(localPath, "modeling.gmp.graphiti", "https://github.com/eclipse/gmp.graphiti",
+		dataSet.addProject(localPath, "modeling.gmp.graphiti", 
+				"https://github.com/eclipse/gmp.graphiti",
+				"https://projects.eclipse.org/projects/modeling.gmp.graphiti",
+				
 				"/plugins/org.eclipse.graphiti.mm/model/graphiti.ecore");
 		
 		// https://projects.eclipse.org/projects/tools.buckminster/developer
-		dataSet.addProject(localPath, "tools.buckminster", "http://git.eclipse.org/c/buckminster/buckminster.git",
+		dataSet.addProject(localPath, "tools.buckminster", 
+				"http://git.eclipse.org/c/buckminster/buckminster.git",
+				"https://projects.eclipse.org/projects/tools.buckminster",
+				
 				"/org.eclipse.buckminster.cspec/model/cspec.ecore",
 				"/org.eclipse.buckminster.model.common/model/common.ecore",
 				"/org.eclipse.buckminster.rmap/model/rmap.ecore",
 				"/org.eclipse.buckminster.mspec/model/mspec.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.emf.cdo/developer
-		dataSet.addProject(localPath, "modeling.emf.cdo", "http://git.eclipse.org/c/cdo/cdo.git",
+		dataSet.addProject(localPath, "modeling.emf.cdo", 
+				"http://git.eclipse.org/c/cdo/cdo.git",
+				"https://projects.eclipse.org/projects/modeling.emf.cdo",
+				
 				"/plugins/org.eclipse.emf.cdo.examples.company/model/company.ecore",
 				"/plugins/org.eclipse.emf.cdo.expressions/model/expressions.ecore",
 				"/plugins/org.eclipse.emf.cdo.security/model/security.ecore",
 				"/plugins/org.gastro.business/model/business.ecore", 
-				"/plugins/org.gastro.inventory/model/inventory.ecore");
+				"/plugins/org.gastro.inventory/model/inventory.ecore",
+				"/plugins/org.eclipse.emf.cdo/model/eresource.ecore",
+				"/plugins/org.eclipse.emf.cdo/model/etypes.ecore");
 		
 		// https://projects.eclipse.org/projects/eclipse.e4/developer
-		dataSet.addProject(localPath, "eclipse.e4", "http://git.eclipse.org/c/platform/eclipse.platform.ui.git",
+		dataSet.addProject(localPath, "eclipse.e4", 
+				"http://git.eclipse.org/c/platform/eclipse.platform.ui.git",
+				"https://projects.eclipse.org/projects/eclipse.e4",
+				
 				"/bundles/org.eclipse.e4.ui.model.workbench/model/UIElements.ecore");
 		
 		// TODO

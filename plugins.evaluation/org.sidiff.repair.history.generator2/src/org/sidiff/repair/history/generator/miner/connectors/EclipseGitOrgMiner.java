@@ -29,6 +29,8 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 	
 	private static final DateFormat DATE_RFC822 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
 	
+	private String trimTo;
+	
 	public static void main(String[] args) throws HttpStatusException {
 		
 		// TEST:
@@ -51,6 +53,13 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 			
 			System.out.println();
 		}
+	}
+	
+	public EclipseGitOrgMiner() {
+	}
+	
+	public EclipseGitOrgMiner(String trimTo) {
+		this.trimTo = trimTo;
 	}
 	
 	@Override
@@ -117,7 +126,14 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 			
 			//Open a URL Stream
 			Response response = Jsoup.connect(plainTextVersionURL).ignoreContentType(true).execute();
-			return new String(response.bodyAsBytes());
+			String model = new String(response.bodyAsBytes());
+			
+			// FIXME: Unknown appended HTML!?
+			if (!model.trim().endsWith(trimTo)) {
+				model = model.substring(0, model.lastIndexOf(trimTo) + trimTo.length());
+			}
+			
+			return model;
 			
 //			Document versionDoc = Jsoup.connect(plainTextVersionURL).parser(Parser.xmlParser()).get();
 //			System.out.println(versionDoc.toString());

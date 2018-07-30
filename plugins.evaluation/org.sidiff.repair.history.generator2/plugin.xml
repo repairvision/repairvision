@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="org.sidiff.repair.history.generator.analyzer.ecore"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            thread="main"
+            visible="true">
+         <run
+               class="org.sidiff.repair.history.generator.analyzer.EcoreHistoryAnalyzerApplication">
+         </run>
+      </application>
+   </extension>
+
+</plugin>

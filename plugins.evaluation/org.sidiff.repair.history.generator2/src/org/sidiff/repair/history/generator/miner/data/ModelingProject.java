@@ -15,19 +15,23 @@ public class ModelingProject {
 	
 	private String repository;
 	
+	private String info;
+	
 	private List<ModelHistory> modelHistories = new ArrayList<>();
 	
-	public ModelingProject(String localPath, String name, String repository, List<ModelHistory> modelHistories) {
+	public ModelingProject(String localPath, String name, String repository, String info, List<ModelHistory> modelHistories) {
 		this.localPath = localPath;
 		this.name = name;
 		this.repository = repository;
+		this.info = info;
 		this.modelHistories = modelHistories;
 	}
 	
-	public ModelingProject(String localPath, String name, String repository, String... files) {
+	public ModelingProject(String localPath, String name, String repository, String info, String... files) {
 		this.localPath = localPath + name + "/";
 		this.name = name;
 		this.repository = repository;
+		this.info = info;
 		
 		for (String file : files) {
 			this.modelHistories.add(new ModelHistory(this, file));
@@ -75,6 +79,14 @@ public class ModelingProject {
 	
 	public void setRepository(String repository) {
 		this.repository = repository;
+	}
+	
+	public String getInfo() {
+		return info;
+	}
+	
+	public void setInfo(String info) {
+		this.info = info;
 	}
 	
 	public List<ModelHistory> getModelHistories() {

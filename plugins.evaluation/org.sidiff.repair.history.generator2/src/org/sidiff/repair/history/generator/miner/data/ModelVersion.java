@@ -31,7 +31,7 @@ public class ModelVersion {
 	}
 	
 	public String getLocalPath() {
-		return "/" + getDate().replace(":", "-") + " " + getCommit() + "/";
+		return "/" + getDate().replace(":", "-") + "_" + getCommit() + "/";
 	}
 	
 	public String getFileName() {

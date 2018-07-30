@@ -36,6 +36,7 @@ public class ModelHistory {
 		HistoryMetadata history = new HistoryMetadata(metafile);
 		history.setProjectName(modelingProject.getName());
 		history.setRepositoryURL(modelingProject.getRepository());
+		history.setInfo(modelingProject.getInfo());
 		
 		for (ModelVersion modelVersion : versions) {
 			VersionMetadata version = new VersionMetadata();
