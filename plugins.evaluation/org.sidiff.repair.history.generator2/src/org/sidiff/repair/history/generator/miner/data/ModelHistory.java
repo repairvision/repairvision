@@ -80,6 +80,11 @@ public class ModelHistory {
 				fileContent = miner.mineVersion(modelingProject.getRepository(), modelVersion);
 			} catch (HttpStatusException hse) {
 				if (!additionalVersions.contains(modelVersion)) {
+					if (hse.getStatusCode() == 500) {
+						System.err.print("(Error! ) ");
+					} else if (hse.getStatusCode() == 404) {
+						System.err.print("(Warning! ) ");
+					}
 					System.err.println("Http Status Exception: " + hse.getStatusCode() + ", URL=" + hse.getUrl());
 				}
 			}

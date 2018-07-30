@@ -128,7 +128,7 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 			Response response = Jsoup.connect(plainTextVersionURL).ignoreContentType(true).execute();
 			String model = new String(response.bodyAsBytes());
 			
-			// FIXME: Unknown appended HTML!?
+			// FIXME: Server side bug -> unknown appended HTML!
 			if (!model.trim().endsWith(trimTo)) {
 				model = model.substring(0, model.lastIndexOf(trimTo) + trimTo.length());
 			}

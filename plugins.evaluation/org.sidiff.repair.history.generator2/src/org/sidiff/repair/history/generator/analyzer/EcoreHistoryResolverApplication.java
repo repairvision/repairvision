@@ -47,7 +47,6 @@ public class EcoreHistoryResolverApplication implements IApplication {
 				repositories.add(history.getDatafile().getParent());
 				
 				System.out.println(history.getProjectName() + " : " + history.getRepositoryURL());
-				System.out.println("FILTER: repositories.add(\"" +  history.getRepositoryURL()  + "\");");
 				
 				for (File commitFolder : history.getDatafile().getParentFile().listFiles()) {
 					if (commitFolder.isDirectory() && !commitFolder.getName().contains("_resolved")) {
@@ -59,6 +58,8 @@ public class EcoreHistoryResolverApplication implements IApplication {
 						}
 					}
 				}
+				
+				System.out.println("FILTER: repositories.add(\"" +  history.getRepositoryURL()  + "\");");
 			}
 		}
 		
