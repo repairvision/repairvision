@@ -7,8 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.sidiff.repair.history.generator.json.JSONObject;
@@ -48,7 +48,7 @@ public class HistoryMetadata {
 	public void write() {
 		
 		// write meta data per model:
-		history.put(key_date, DATE_ISO8601.format(Instant.now()));
+		history.put(key_date, DATE_ISO8601.format(new Date()));
 		history.put(key_versions, versions.size());
 		
 		for (VersionMetadata modelVersion : versions) {
