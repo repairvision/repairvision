@@ -80,15 +80,17 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 					
 					String commit = versionURL.substring(versionURL.lastIndexOf(URL_ID) + URL_ID.length());
 //					System.out.println("commit: " + commit);
+					
+					Element tableRow = RepositoryMinerUtil.getParentNode(link, "tr");
 
-					Date parsedDate = DATE_RFC822.parse(link.parent().parent().children().get(0).children().get(0).attr("title"));
+					Date parsedDate = DATE_RFC822.parse(tableRow.select("span[title]").attr("title"));
 					String date = DATE_ISO8601.format(parsedDate);
 //					System.out.println("date: " + date);
 					
-					String message = link.parent().parent().children().get(1).text();
+					String message = tableRow.children().get(1).text();
 //					System.out.println("message: " + message);
 					
-					String author = link.parent().parent().children().get(2).text();
+					String author = tableRow.children().get(2).text();
 //					System.out.println("author: " + author);
 					
 					String file = versionURL.replace(URL_ID + commit, "");

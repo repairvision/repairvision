@@ -426,13 +426,12 @@ public class MiningApplication {
 		
 		// https://projects.eclipse.org/projects/modeling.emft.wazaabi/developer
 		dataSet.addProject(localPath, "modeling.emft.wazaabi", "https://github.com/eclipse/wazaabi",
-				"/commits/master/plugins/org.eclipse.wazaabi.mm.core/model/core.ecore",
-				"/commits/master/plugins/org.eclipse.wazaabi.mm.edp/model/EDP.ecore",
-				"/commits/master/plugins/org.eclipse.wazaabi.mm.swt/model/SWTComponents.ecore");
+				"/plugins/org.eclipse.wazaabi.mm.core/model/core.ecore",
+				"/plugins/org.eclipse.wazaabi.mm.edp/model/EDP.ecore",
+				"/plugins/org.eclipse.wazaabi.mm.swt/model/SWTComponents.ecore");
 		
 		// https://projects.eclipse.org/projects/science.eavp/developer
 		dataSet.addProject(localPath, "science.eavp", "https://github.com/eclipse/eavp",
-				"/org.eclipse.january.geometry.xtext.iges/model/generated/IGES.ecore",
 				"/org.eclipse.eavp.geometry.view.model/model/org.eclipse.eavp.geometry.view.model.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.emf.emf/developer
@@ -469,8 +468,8 @@ public class MiningApplication {
 				"/core/plugins/org.eclipse.dltk.launching/model/launching.ecore");
 		
 		// https://projects.eclipse.org/projects/datatools/developer
-		dataSet.addProject(localPath, "datatools", "https://github.com/eclipse/datatools.connectivity",
-				"/plugins/org.eclipse.datatools.connectivity.oda.design/model/org.eclipse.datatools.connectivity.oda.design.ecore");
+		dataSet.addProject(localPath, "datatools", "http://git.eclipse.org/c/datatools/org.eclipse.datatools.git",
+				"/plugins/connectivity/org.eclipse.datatools.connectivity.oda.design/model/org.eclipse.datatools.connectivity.oda.design.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.gmp.graphiti/developer
 		dataSet.addProject(localPath, "modeling.gmp.graphiti", "https://github.com/eclipse/gmp.graphiti",
