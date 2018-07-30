@@ -12,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.miner.data.ModelVersion;
 
 public class GitHubComMiner implements IRepositoryMiner {
@@ -72,7 +73,7 @@ public class GitHubComMiner implements IRepositoryMiner {
 //					System.out.println("commit: " + commit);
 
 					Date parsedDate = DATE_ISO8601.parse(link.parent().parent().selectFirst("relative-time").attr("datetime"));
-					String date = DATE_ISO8601.format(parsedDate);
+					String date = HistoryMetadata.DATE_ISO8601.format(parsedDate);
 //					System.out.println("date: " + date);
 					
 					String message = link.parent().parent().children().get(0).children().get(0).selectFirst("a[title]").attr("title");

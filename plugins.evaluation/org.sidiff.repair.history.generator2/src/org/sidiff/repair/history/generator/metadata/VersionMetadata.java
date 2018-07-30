@@ -1,5 +1,8 @@
 package org.sidiff.repair.history.generator.metadata;
 
+import java.text.ParseException;
+import java.util.Date;
+
 import org.sidiff.repair.history.generator.json.JSONObject;
 
 public class VersionMetadata {
@@ -20,6 +23,15 @@ public class VersionMetadata {
 
 	public String getDate() {
 		return version.getString(key_date);
+	}
+	
+	public Date getParsedDate() {
+		try {
+			return HistoryMetadata.DATE_ISO8601.parse(getDate());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public void setDate(String date) {
@@ -68,5 +80,9 @@ public class VersionMetadata {
 
 	protected JSONObject getJSON() {
 		return version;
+	}
+	
+	protected void setJSON(JSONObject version) {
+		this.version = version;
 	}
 }

@@ -12,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.miner.data.ModelVersion;
 
 public class EclipseGitOrgMiner implements IRepositoryMiner {
@@ -27,8 +28,6 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 	private static final String URL_PLAIN = "/plain/";
 	
 	private static final DateFormat DATE_RFC822 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-	
-	private static final DateFormat DATE_ISO8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
 	public static void main(String[] args) throws HttpStatusException {
 		
@@ -84,7 +83,7 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 					Element tableRow = RepositoryMinerUtil.getParentNode(link, "tr");
 
 					Date parsedDate = DATE_RFC822.parse(tableRow.select("span[title]").attr("title"));
-					String date = DATE_ISO8601.format(parsedDate);
+					String date = HistoryMetadata.DATE_ISO8601.format(parsedDate);
 //					System.out.println("date: " + date);
 					
 					String message = tableRow.children().get(1).text();

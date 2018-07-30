@@ -15,7 +15,7 @@ import org.sidiff.repair.history.generator.json.JSONObject;
 
 public class HistoryMetadata {
 	
-	private static final DateFormat DATE_ISO8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+	public static final DateFormat DATE_ISO8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
 	private static final String key_date = "date";
 	
@@ -40,6 +40,15 @@ public class HistoryMetadata {
 	public void read() {
 		try {
 			history = new JSONObject(new String(Files.readAllBytes(Paths.get(datafile.getAbsolutePath()))));
+			
+			for (Object versionObj : history.getJSONArray(key_commits)) {
+				if (versionObj instanceof JSONObject) {
+					JSONObject versionJSON = (JSONObject) versionObj;
+					VersionMetadata version = new VersionMetadata();
+					version.setJSON(versionJSON);
+					versions.add(version);
+				}
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -94,6 +103,10 @@ public class HistoryMetadata {
 	
 	public List<VersionMetadata> getVersions() {
 		return versions;
+	}
+	
+	public String getLatestFilePath() {
+		return versions.get(versions.size() - 1).getRemoteFilePath();
 	}
 	
 	protected JSONObject getJSON() {

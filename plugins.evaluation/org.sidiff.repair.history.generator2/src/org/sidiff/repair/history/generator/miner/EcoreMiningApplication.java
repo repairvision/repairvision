@@ -4,11 +4,13 @@ import org.sidiff.repair.history.generator.miner.connectors.EclipseGitOrgMiner;
 import org.sidiff.repair.history.generator.miner.connectors.GitHubComMiner;
 import org.sidiff.repair.history.generator.miner.data.ModelingDataSet;
 
-public class MiningApplication {
+public class EcoreMiningApplication {
 	
-	private static String localPath = "C:\\evaluation\\";
-
 	public static void main(String[] args) {
+		new EcoreMiningApplication("C:\\evaluation\\");
+	}
+	
+	public EcoreMiningApplication(String localPath) {
 		
 //		####################################################################################################
 //		2017-09-18
