@@ -2,13 +2,13 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         id="org.sidiff.repair.history.generator.analyzer.ecore"
+         id="org.sidiff.repair.history.generator.resolver.ecore"
          point="org.eclipse.core.runtime.applications">
       <application
             thread="main"
             visible="true">
          <run
-               class="org.sidiff.repair.history.generator.analyzer.EcoreHistoryAnalyzerApplication">
+               class="org.sidiff.repair.history.generator.analyzer.EcoreHistoryResolverApplication">
          </run>
       </application>
    </extension>

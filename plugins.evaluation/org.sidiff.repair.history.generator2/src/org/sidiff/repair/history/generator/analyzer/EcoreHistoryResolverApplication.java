@@ -25,7 +25,7 @@ import org.sidiff.repair.history.generator.metadata.DataSetMetadata;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 
-public class EcoreHistoryAnalyzerApplication implements IApplication {
+public class EcoreHistoryResolverApplication implements IApplication {
 	
 	Map<String, HistoryMetadata> modelFiles = new HashMap<>();
 
@@ -47,7 +47,7 @@ public class EcoreHistoryAnalyzerApplication implements IApplication {
 				repositories.add(history.getDatafile().getParent());
 				
 				System.out.println(history.getProjectName() + " : " + history.getRepositoryURL());
-				System.out.println("repositories.add(\"" +  history.getRepositoryURL()  + "\")");
+				System.out.println("FILTER: repositories.add(\"" +  history.getRepositoryURL()  + "\");");
 				
 				for (File commitFolder : history.getDatafile().getParentFile().listFiles()) {
 					if (commitFolder.isDirectory() && !commitFolder.getName().contains("_resolved")) {
