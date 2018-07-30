@@ -150,15 +150,15 @@ public class MiningApplication {
 		dataSet.addProject(localPath, "modeling.emf.diffmerge.patch", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patch.git",
 				"/plugins/org.eclipse.emf.diffmerge.patch.persistence.emf/model/modelpatch.ecore");
 		
-		dataSet.addProject(localPath, "org.eclipse.emf.diffmerge.coevolution", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.coevolution.git",
+		dataSet.addProject(localPath, "modeling.emf.diffmerge.coevolution", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.coevolution.git",
 				"/core/plugins/org.eclipse.emf.diffmerge.bridge.traces.gen/model/BridgeTraces.ecore");
 		
-		dataSet.addProject(localPath, "org.eclipse.emf.diffmerge.patterns", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patterns.git",
+		dataSet.addProject(localPath, "modeling.emf.diffmerge.patterns", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patterns.git",
 				"/core/plugins/org.eclipse.emf.diffmerge.patterns.core.gen/model/CorePatterns.ecore",
 				"/core/plugins/org.eclipse.emf.diffmerge.patterns.support.gen/model/CommonPatternSupport.ecore",
 				"/core/plugins/org.eclipse.emf.diffmerge.patterns.templates.gen/model/TemplatePatterns.ecore");
 		
-		dataSet.addProject(localPath, "org.eclipse.emf.diffmerge.core", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.core.git",
+		dataSet.addProject(localPath, "modeling.emf.diffmerge.core", "http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.core.git",
 				"/plugins/org.eclipse.emf.diffmerge/model/DiffData.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.elk/developer
