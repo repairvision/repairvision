@@ -7,6 +7,8 @@ import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
 
 public class ModelingProject {
 	
+	private static final boolean MINE_MODEL_FILES = true;
+	
 	private String localPath;
 	
 	private String name;
@@ -42,16 +44,20 @@ public class ModelingProject {
 			modelHistory.writeMetadate();
 		}
 		
-		// mine revisions relative to other models:
-		for (ModelHistory modelHistory : modelHistories) {
-			for (ModelHistory otherModelHistory : modelHistories) {
-				otherModelHistory.addVersionsFromOtherModel(modelHistory.getVersions());
+		// mine model files:
+		if (MINE_MODEL_FILES) {
+			
+			// mine revisions relative to other models:
+			for (ModelHistory modelHistory : modelHistories) {
+				for (ModelHistory otherModelHistory : modelHistories) {
+					otherModelHistory.addVersionsFromOtherModel(modelHistory.getVersions());
+				}
 			}
-		}
-		
-		// mine files:
-		for (ModelHistory modelHistory : modelHistories) {
-			modelHistory.mineVersionFiles(miner);
+			
+			// mine files:
+			for (ModelHistory modelHistory : modelHistories) {
+				modelHistory.mineVersionFiles(miner);
+			}
 		}
 	}
 	

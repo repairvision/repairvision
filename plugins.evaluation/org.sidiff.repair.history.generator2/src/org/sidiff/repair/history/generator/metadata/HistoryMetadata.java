@@ -52,7 +52,7 @@ public class HistoryMetadata {
 		history.put(key_versions, versions.size());
 		
 		for (VersionMetadata modelVersion : versions) {
-			history.append(key_commits, modelVersion);
+			history.append(key_commits, modelVersion.getJSON());
 		}
 		
 		FileWriter fileWriter = null;
