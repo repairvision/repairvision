@@ -107,7 +107,14 @@ public class ModelHistory {
 	}
 	
 	public String getFileName() {
-		return new File(file).getName();
+		int parameters = file.lastIndexOf("?");
+		
+		if (parameters == -1) {
+			return new File(file).getName();
+		} else {
+			return new File(file.substring(0, parameters)).getName();
+		}
+			
 	}
 	
 	public String getFile() {
