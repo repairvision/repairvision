@@ -20,7 +20,7 @@ public class EcoreHistorySettings {
 		return instance;
 	}
 			
-	List<IRepositoryMiner> getMiner() {
+	public List<IRepositoryMiner> getMiners() {
 		return miners;
 	}
 }

@@ -17,7 +17,7 @@ public class DataSetMetadata {
 		for (HistoryMetadata history : dataset.getHistories()) {
 			System.out.println(history.getProjectName() 
 					+ " : " + history.getRepositoryURL() 
-					+ " : " + history.getLatestFilePath() 
+					+ " : " + history.getLatestRemoteFilePath() 
 					+ " : " + history.getVersions().size());
 		}
 	}

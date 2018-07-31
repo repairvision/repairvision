@@ -39,7 +39,7 @@ public class ModelHistory {
 		history.setInfo(modelingProject.getInfo());
 		
 		for (ModelVersion modelVersion : versions) {
-			VersionMetadata version = new VersionMetadata();
+			VersionMetadata version = new VersionMetadata(history);
 			version.setDate(modelVersion.getDate());
 			version.setCommit(modelVersion.getCommit());
 			version.setAuthor(modelVersion.getAuthor());
@@ -96,7 +96,6 @@ public class ModelHistory {
 					
 					writer = new FileWriter(new File(outputPath + "/" + modelVersion.getFileName()));
 					writer.write(fileContent);
-					writer.close();
 				} catch(IOException e) {
 					e.printStackTrace();
 				} finally {

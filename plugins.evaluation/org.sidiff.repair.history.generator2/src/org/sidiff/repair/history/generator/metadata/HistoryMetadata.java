@@ -54,7 +54,7 @@ public class HistoryMetadata {
 			for (Object versionObj : history.getJSONArray(key_commits)) {
 				if (versionObj instanceof JSONObject) {
 					JSONObject versionJSON = (JSONObject) versionObj;
-					VersionMetadata version = new VersionMetadata();
+					VersionMetadata version = new VersionMetadata(this);
 					version.setJSON(versionJSON);
 					versions.add(version);
 				}
@@ -123,7 +123,16 @@ public class HistoryMetadata {
 		return versions;
 	}
 	
-	public String getLatestFilePath() {
+	public VersionMetadata getVersion(String commit) {
+		for (VersionMetadata versionMetadata : versions) {
+			if (versionMetadata.getCommit().equals(commit)) {
+				return versionMetadata;
+			}
+		}
+		return null;
+	}
+	
+	public String getLatestRemoteFilePath() {
 		return versions.get(0).getRemoteFilePath();
 	}
 	

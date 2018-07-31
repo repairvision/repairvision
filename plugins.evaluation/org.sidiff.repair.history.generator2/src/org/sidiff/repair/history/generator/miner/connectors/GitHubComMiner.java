@@ -53,11 +53,16 @@ public class GitHubComMiner implements IRepositoryMiner {
 	public boolean supports(String repositoryURL) {
 		return (repositoryURL.startsWith("http://" + PROTOCOL) || repositoryURL.startsWith("https://" + PROTOCOL));
 	}
+	
+	@Override
+	public String getHistoryURL(String repositoryURL, String fileURL) {
+		return repositoryURL + URL_LOG + fileURL;
+	}
 
 	@Override
 	public List<ModelVersion> mineHistory(String repositoryURL, String fileURL) {
 		List<ModelVersion> versions = new ArrayList<>();
-		String url = repositoryURL + URL_LOG + fileURL;
+		String url = getHistoryURL(repositoryURL, fileURL);
 		
 		try {
 			Document doc = Jsoup.connect(url).get();
@@ -93,13 +98,18 @@ public class GitHubComMiner implements IRepositoryMiner {
 		
 		return versions;
 	}
+	
+	@Override
+	public String getVersionURL(String repositoryURL, String fileURL, String commit) {
+		return repositoryURL.replaceFirst(PROTOCOL, URL_PLAIN) + "/" + commit + "/" + fileURL;
+	}
 
 	@Override
 	public String mineVersion(String repositoryURL, String fileURL, String commit) throws HttpStatusException {
 		String plainTextVersionURL = "n/a";
 		
 		try {
-			plainTextVersionURL = repositoryURL.replaceFirst(PROTOCOL, URL_PLAIN) + "/" + commit + "/" + fileURL;
+			plainTextVersionURL = getVersionURL(repositoryURL, fileURL, commit);
 //			System.out.println(plainTextVersionURL);
 			
 			//Open a URL Stream

@@ -66,11 +66,16 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 	public boolean supports(String repositoryURL) {
 		return (repositoryURL.startsWith("http://" + PROTOCOL) || repositoryURL.startsWith("https://" + PROTOCOL));
 	}
+	
+	@Override
+	public String getHistoryURL(String repositoryURL, String fileURL) {
+		return repositoryURL + URL_LOG + fileURL;
+	}
 
 	@Override
 	public List<ModelVersion> mineHistory(String repositoryURL, String fileURL) {
 		List<ModelVersion> versions = new ArrayList<>();
-		String url = repositoryURL + URL_LOG + fileURL;
+		String url = getHistoryURL(repositoryURL, fileURL);
 		
 		try {
 			Document doc = Jsoup.connect(url).get();
@@ -115,13 +120,18 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 		
 		return versions;
 	}
+	
+	@Override
+	public String getVersionURL(String repositoryURL, String fileURL, String commit) {
+		return repositoryURL + URL_PLAIN + fileURL + URL_ID + commit;
+	}
 
 	@Override
 	public String mineVersion(String repositoryURL, String fileURL, String commit) throws HttpStatusException {
 		String plainTextVersionURL = "n/a";
 		
 		try {
-			plainTextVersionURL = repositoryURL + URL_PLAIN + fileURL + URL_ID + commit;
+			plainTextVersionURL = getVersionURL(repositoryURL, fileURL, commit);
 //			System.out.println(plainTextVersionURL);
 			
 			//Open a URL Stream
@@ -129,7 +139,7 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 			String model = new String(response.bodyAsBytes());
 			
 			// FIXME: Server side bug -> unknown appended HTML!
-			if (!model.trim().endsWith(trimTo)) {
+			if ((trimTo != null) && !model.trim().endsWith(trimTo)) {
 				model = model.substring(0, model.lastIndexOf(trimTo) + trimTo.length());
 			}
 			

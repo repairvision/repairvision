@@ -21,6 +21,12 @@ public class VersionMetadata {
 	private static final String key_localFilePath = "localFilePath";
 	
 	private JSONObject version = new JSONObject();
+	
+	private HistoryMetadata history;
+	
+	public VersionMetadata(HistoryMetadata history) {
+		this.history = history;
+	}
 
 	public String getDate() {
 		return version.getString(key_date);
@@ -81,6 +87,14 @@ public class VersionMetadata {
 	
 	public String getFileName() {
 		return new File(getRemoteFilePath()).getName();
+	}
+	
+	public HistoryMetadata getHistory() {
+		return history;
+	}
+	
+	public void setHistory(HistoryMetadata history) {
+		this.history = history;
 	}
 
 	protected JSONObject getJSON() {

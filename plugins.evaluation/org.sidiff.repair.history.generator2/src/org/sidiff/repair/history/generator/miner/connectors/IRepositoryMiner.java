@@ -10,6 +10,10 @@ public interface IRepositoryMiner {
 	boolean supports(String repositoryURL);
 
 	List<ModelVersion> mineHistory(String repositoryURL, String fileURL);
+	
+	String getHistoryURL(String repositoryURL, String fileURL);
 
 	String mineVersion(String repositoryURL, String fileURL, String commit) throws HttpStatusException;
+	
+	String getVersionURL(String repositoryURL, String fileURL, String commit);
 }

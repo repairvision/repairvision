@@ -1,7 +1,6 @@
 package org.sidiff.repair.history.generator.miner;
 
-import org.sidiff.repair.history.generator.miner.connectors.EclipseGitOrgMiner;
-import org.sidiff.repair.history.generator.miner.connectors.GitHubComMiner;
+import org.sidiff.repair.history.generator.analyzer.EcoreHistorySettings;
 import org.sidiff.repair.history.generator.miner.data.ModelingDataSet;
 
 public class EcoreHistoryMiningApplication {
@@ -26,7 +25,7 @@ public class EcoreHistoryMiningApplication {
 //		####################################################################################################
 		
 		ModelingDataSet dataSet = new ModelingDataSet();
-		dataSet.addMiners(new EclipseGitOrgMiner("</ecore:EPackage>"), new GitHubComMiner());
+		dataSet.setMiners(EcoreHistorySettings.getInstance().getMiners());
 		
 //		// https://projects.eclipse.org/projects/modeling.emft.emf-store/developer
 //		dataSet.addProject(localPath, "modeling.emft.emf-store", 
@@ -155,19 +154,19 @@ public class EcoreHistoryMiningApplication {
 //				"/bundles/org.eclipse.emfforms.view.annotation.model/model/annotation.ecore",
 //				"/bundles/org.eclipse.emfforms.view.controlgrid.model/model/controlgrid.ecore");
 //		
-//		// https://projects.eclipse.org/projects/modeling.mmt.atl/developer
-//		dataSet.addProject(localPath, "modeling.mmt.atl", 
-//				"http://git.eclipse.org/c/mmt/org.eclipse.atl.git",
-//				"https://projects.eclipse.org/projects/modeling.mmt.atl",
-//				
-//				"/plugins/org.eclipse.m2m.atl.emftvm/model/emftvm.ecore",
-//				"/plugins/org.eclipse.m2m.atl.emftvm.trace/model/trace.ecore",
-//				"/plugins/org.eclipse.m2m.atl.profiler.exportmodel/model/exportmodel.ecore",
-//				"/plugins/org.eclipse.m2m.atl.profiler.model/model/ATL-Profiler.ecore",
-//				
-//				"/deprecated/org.atl.eclipse.engine/src/org/atl/eclipse/engine/resources/ATL-0.2.ecore?id=859c1cb272110595f9d8dd29e04d9b82bd52ab8b"
-//				
-//				);
+		// https://projects.eclipse.org/projects/modeling.mmt.atl/developer
+		dataSet.addProject(localPath, "modeling.mmt.atl", 
+				"http://git.eclipse.org/c/mmt/org.eclipse.atl.git",
+				"https://projects.eclipse.org/projects/modeling.mmt.atl",
+				
+				"/plugins/org.eclipse.m2m.atl.emftvm/model/emftvm.ecore",
+				"/plugins/org.eclipse.m2m.atl.emftvm.trace/model/trace.ecore",
+				"/plugins/org.eclipse.m2m.atl.profiler.exportmodel/model/exportmodel.ecore",
+				"/plugins/org.eclipse.m2m.atl.profiler.model/model/ATL-Profiler.ecore",
+				
+				"/deprecated/org.atl.eclipse.engine/src/org/atl/eclipse/engine/resources/ATL-0.2.ecore"
+				
+				);
 //		
 //		// https://projects.eclipse.org/projects/modeling.emf.diffmerge/developer
 //		dataSet.addProject(localPath, "modeling.emf.diffmerge.patch", 
@@ -360,6 +359,7 @@ public class EcoreHistoryMiningApplication {
 //				"/plugins/org.eclipse.emf.eef.modelingbot/model/mbot.ecore",
 //				"/plugins/org.eclipse.emf.eef.views/model/views.ecore",
 //				"/plugins/org.eclipse.emf.eef.editor.model/model/extended.ecore",
+//				"/plugins/org.eclipse.sirius.context/model/context.ecore",
 //				"/prototypes/org.eclipse.sirius.expression/model/expression.ecore",
 //				"/prototypes/org.eclipse.sirius.contentassist/model/contentassist.ecore",
 //				"/prototypes/org.eclipse.sirius.validation/model/validation.ecore");
