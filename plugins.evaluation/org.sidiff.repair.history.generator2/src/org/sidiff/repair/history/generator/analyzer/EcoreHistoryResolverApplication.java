@@ -45,9 +45,9 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		repositoryFilter.add("http://git.eclipse.org/c/mdht/org.eclipse.mdht.git");
 		repositoryFilter.add("http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git");
 		repositoryFilter.add("http://git.eclipse.org/c/modisco/org.eclipse.modisco.git");
-		repositoryFilter.add("http://git.eclipse.org/c/sirius/org.eclipse.sirius.git"); // TODO
+		repositoryFilter.add("http://git.eclipse.org/c/sirius/org.eclipse.sirius.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git"); // TODO
-//		repositoryFilter.add("http://git.eclipse.org/c/stem/org.eclipse.stem.git"); // TODO
+		repositoryFilter.add("http://git.eclipse.org/c/stem/org.eclipse.stem.git"); // TODO
 		repositoryFilter.add("https://github.com/eclipse/birt");
 		repositoryFilter.add("http://git.eclipse.org/c/datatools/org.eclipse.datatools.git");
 		repositoryFilter.add("http://git.eclipse.org/c/platform/eclipse.platform.ui.git");
@@ -93,12 +93,12 @@ public class EcoreHistoryResolverApplication implements IApplication {
 
 				// NOTE: Technically, we have to know the plug-in relative path!
 				if (!modelPaths.contains(version.getRemoteFilePath())) {
-
-					modelPaths.add(version.getRemoteFilePath());  
+					modelPaths.add(version.getRemoteFilePath()); 
+					
 					if (!modelFiles.containsKey(modelName)) {
-						List<VersionMetadata> modelNames = new ArrayList<>();
-						modelNames.add(version);
-						modelFiles.put(modelName, modelNames);
+						List<VersionMetadata> versions = new ArrayList<>();
+						versions.add(version);
+						modelFiles.put(modelName, versions);
 					} else {
 						modelFiles.get(modelName).add(version);
 					}

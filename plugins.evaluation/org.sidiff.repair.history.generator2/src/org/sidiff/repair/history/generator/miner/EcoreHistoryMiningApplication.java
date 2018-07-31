@@ -28,7 +28,7 @@ public class EcoreHistoryMiningApplication {
 		dataSet.setMiners(EcoreHistorySettings.getInstance().getMiners());
 		dataSet.setMineModelFiles(true); // download model files
 		dataSet.setUpdate(true); // ignore already existing versions
-/*
+
 		// https://projects.eclipse.org/projects/modeling.mdt.uml2/developer
 		dataSet.addProject(localPath, "modeling.mdt.uml2",
 				"http://git.eclipse.org/c/uml2/org.eclipse.uml2.git",
@@ -263,7 +263,7 @@ public class EcoreHistoryMiningApplication {
 				"/plugins/org.eclipse.qvtd.xtext.qvtimperative/model/QVTimperativeCS.ecore",
 				"/plugins/org.eclipse.qvtd.xtext.qvtrelation/model/QVTrelationCS.ecore",
 				"/plugins/org.eclipse.qvtd.umlx/model/UMLX.ecore");
-		
+
 		// https://projects.eclipse.org/projects/modeling.sirius/developer
 		dataSet.addProject(localPath, "modeling.sirius", 
 				"http://git.eclipse.org/c/sirius/org.eclipse.sirius.git",
@@ -273,8 +273,10 @@ public class EcoreHistoryMiningApplication {
 				"/plugins/org.eclipse.sirius.properties.ext.widgets.reference/model/properties-ext-widgets-reference.ecore",
 				"/plugins/org.eclipse.sirius.properties/model/properties.ecore",
 				"/plugins/org.eclipse.sirius.sample.interactions/model/interactions.ecore",
-				"/plugins/org.eclipse.sirius/model/viewpoint.ecore");
-		
+				"/plugins/org.eclipse.sirius/model/viewpoint.ecore",
+				"/plugins/org.eclipse.sirius.diagram/model/diagram.ecore",
+				"/plugins/org.eclipse.sirius/model/contribution.ecore");
+
 		// https://projects.eclipse.org/projects/modeling.mdt.sphinx/developer
 		dataSet.addProject(localPath, "modeling.mdt.sphinx", 
 				"http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git",
@@ -433,7 +435,7 @@ public class EcoreHistoryMiningApplication {
 				"/org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore", "/org.eclipse.gmt.modisco.omg.smm/model/SMM.ecore");
 		
 		// https://projects.eclipse.org/projects/technology.sapphire/developer
-	*/
+
 		// https://projects.eclipse.org/projects/technology.stem/developer
 		dataSet.addProject(localPath, "technology.stem", 
 				"http://git.eclipse.org/c/stem/org.eclipse.stem.git",
@@ -457,7 +459,7 @@ public class EcoreHistoryMiningApplication {
 				"/core/org.eclipse.stem.definitions/model/labels.ecore",
 				"/core/org.eclipse.stem.definitions/model/nodes.ecore",
 				"/core/org.eclipse.stem.definitions/model/types.ecore");
-		/*
+
 		// https://projects.eclipse.org/projects/soa.stardust/developer
 		
 		// https://projects.eclipse.org/projects/modeling.m2t.xpand/developer
@@ -676,7 +678,7 @@ public class EcoreHistoryMiningApplication {
 				"https://projects.eclipse.org/projects/eclipse.e4",
 				
 				"/bundles/org.eclipse.e4.ui.model.workbench/model/UIElements.ecore");
-		*/	
+
 		// TODO
 //	    "file": "./model/ProjectInfrastructure.ecore", 
 //	    "projectName": "www.eclipse.org", 
