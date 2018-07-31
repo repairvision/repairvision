@@ -32,6 +32,7 @@ public abstract class AbstractRepositoryMiner implements IRepositoryMiner {
 				fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				fos.close();
 				
+				exception = null;
 				break;
 			} catch (FileNotFoundException fnfe) {
 				throw fnfe;
