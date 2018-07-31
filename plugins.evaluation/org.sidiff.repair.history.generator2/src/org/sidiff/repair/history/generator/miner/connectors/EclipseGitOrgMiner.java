@@ -21,6 +21,8 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 	
 	private static final String URL_LOG = "/log/";
 	
+	private static final String URL_NEXT_LOG = "?ofs=";
+	
 	private static final String URL_ID = "?id=";
 	
 	private static final String URL_COMMIT = "/commit/";
@@ -123,7 +125,18 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 			for (Element logLink : logLinks) {
 				String logURL = logLink.attr("href");
 				
-				if (logURL.contains("?ofs=")) {
+				if (logURL.contains(URL_NEXT_LOG)) {
+					
+					// Filter "previous" links: 
+					if (fullURL.contains(URL_NEXT_LOG)) {
+						int currentPageCount = Integer.valueOf(fullURL.substring(fullURL.lastIndexOf(URL_NEXT_LOG) + URL_NEXT_LOG.length()));
+						int nextPageCount = Integer.valueOf(logURL.substring(logURL.lastIndexOf(URL_NEXT_LOG) + URL_NEXT_LOG.length()));
+						
+						if (currentPageCount > nextPageCount) {
+							continue;
+						}
+					}
+					
 					versions.addAll(internal_mineHistory("http://" + PROTOCOL + logURL, fileURL));
 				}
 			}

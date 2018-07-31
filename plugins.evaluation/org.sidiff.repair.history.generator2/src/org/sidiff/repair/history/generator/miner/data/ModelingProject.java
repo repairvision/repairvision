@@ -7,7 +7,7 @@ import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
 
 public class ModelingProject {
 	
-	private static final boolean MINE_MODEL_FILES = true;
+	private boolean mineModelFiles = true;
 	
 	private String localPath;
 	
@@ -38,6 +38,14 @@ public class ModelingProject {
 		}
 	}
 	
+	public boolean isMineModelFiles() {
+		return mineModelFiles;
+	}
+	
+	public void setMineModelFiles(boolean mineModelFiles) {
+		this.mineModelFiles = mineModelFiles;
+	}
+	
 	public void mine(IRepositoryMiner miner) {
 		
 		// mine model revisions:
@@ -49,7 +57,7 @@ public class ModelingProject {
 		}
 		
 		// mine model files:
-		if (MINE_MODEL_FILES) {
+		if (mineModelFiles) {
 			
 			// mine revisions relative to other models:
 			for (ModelHistory modelHistory : modelHistories) {

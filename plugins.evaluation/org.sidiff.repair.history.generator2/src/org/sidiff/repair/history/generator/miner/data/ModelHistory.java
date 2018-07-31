@@ -15,7 +15,7 @@ import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
 
 public class ModelHistory {
 	
-	private static boolean UPDATE = true;
+	private boolean update = true;
 	
 	private ModelingProject modelingProject;
 	
@@ -28,6 +28,14 @@ public class ModelHistory {
 	public ModelHistory(ModelingProject modelingProject, String file) {
 		this.modelingProject = modelingProject;
 		this.file = file;
+	}
+	
+	public boolean isUpdate() {
+		return update;
+	}
+	
+	public void setUpdate(boolean update) {
+		this.update = update;
 	}
 	
 	public void writeMetadate() {
@@ -79,7 +87,7 @@ public class ModelHistory {
 			File outputPath = new File(modelingProject.getLocalPath() + modelVersion.getLocalPath());
 			String fileContent =  null;
 			
-			if (!UPDATE || !outputPath.exists()) {
+			if (!update || !outputPath.exists()) {
 				try {
 					fileContent = miner.mineVersion(modelingProject.getRepository(), modelVersion.getRemotePath(), modelVersion.getCommit());
 				} catch (HttpStatusException hse) {

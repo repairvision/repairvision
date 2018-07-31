@@ -11,6 +11,20 @@ public class ModelingDataSet {
 	
 	private List<IRepositoryMiner> miners = new ArrayList<>();
 	
+	public void setMineModelFiles(boolean mineModelFiles) {
+		for (ModelingProject project : projects) {
+			project.setMineModelFiles(mineModelFiles);
+		}
+	}
+	
+	public void setUpdate(boolean update) {
+		for (ModelingProject project : projects) {
+			for (ModelHistory history : project.getModelHistories()) {
+				history.setUpdate(update);
+			}
+		}
+	}
+	
 	public void mine() {
 		for (ModelingProject modelingProject : projects) {
 //			new Thread(() -> {

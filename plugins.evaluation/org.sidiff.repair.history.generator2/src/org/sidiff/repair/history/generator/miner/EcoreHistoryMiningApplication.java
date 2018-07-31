@@ -26,7 +26,12 @@ public class EcoreHistoryMiningApplication {
 		
 		ModelingDataSet dataSet = new ModelingDataSet();
 		dataSet.setMiners(EcoreHistorySettings.getInstance().getMiners());
+		dataSet.setMineModelFiles(true); // download model files
+		dataSet.setUpdate(true); // ignore already existing versions
 
+		// TODO
+		// http://git.eclipse.org/c/platform/eclipse.platform.ui.git
+		/*
 		// https://projects.eclipse.org/projects/modeling.mdt.uml2/developer
 		dataSet.addProject(localPath, "modeling.mdt.uml2",
 				"http://git.eclipse.org/c/uml2/org.eclipse.uml2.git",
@@ -658,7 +663,7 @@ public class EcoreHistoryMiningApplication {
 				"/plugins/org.gastro.inventory/model/inventory.ecore",
 				"/plugins/org.eclipse.emf.cdo/model/eresource.ecore",
 				"/plugins/org.eclipse.emf.cdo/model/etypes.ecore");
-		
+		*/	
 		// https://projects.eclipse.org/projects/eclipse.e4/developer
 		dataSet.addProject(localPath, "eclipse.e4", 
 				"http://git.eclipse.org/c/platform/eclipse.platform.ui.git",
@@ -675,7 +680,7 @@ public class EcoreHistoryMiningApplication {
 //	    "file": "./games/murdercase/murdercase.ecore", 
 //	    "projectName": "www.eclipse.org", 
 //	    "repositoryName": "epsilon.git", 
-	
+
 		dataSet.mine();
 	}
 }
