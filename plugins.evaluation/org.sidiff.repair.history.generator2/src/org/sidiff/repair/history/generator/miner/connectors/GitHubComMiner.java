@@ -58,14 +58,17 @@ public class GitHubComMiner implements IRepositoryMiner {
 	public String getHistoryURL(String repositoryURL, String fileURL) {
 		return repositoryURL + URL_LOG + fileURL;
 	}
-
+	
 	@Override
 	public List<ModelVersion> mineHistory(String repositoryURL, String fileURL) {
+		return internal_mineHistory(getHistoryURL(repositoryURL, fileURL), fileURL);
+	}
+
+	private List<ModelVersion> internal_mineHistory(String fullURL, String fileURL) {
 		List<ModelVersion> versions = new ArrayList<>();
-		String url = getHistoryURL(repositoryURL, fileURL);
 		
 		try {
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(fullURL).get();
 			Elements links = doc.body().select("a[href]");
 			
 			for (Element link : links) {
@@ -91,9 +94,22 @@ public class GitHubComMiner implements IRepositoryMiner {
 					versions.add(modelVersion);
 				}
 			}
+			
+			// Lookup next log page:
+			Elements logLinks = doc.body().select("div[class='pagination']").select("a[href]");
+			
+			for (Element logLink : logLinks) {
+				String logURL = logLink.attr("href");
+				
+				if (logURL.contains("?after=")) {
+					versions.addAll(internal_mineHistory(logURL, fileURL));
+				}
+			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("Exception while reading history log: " + url);
+			System.err.println("Exception while reading history log: " + fullURL);
 		}
 		
 		return versions;

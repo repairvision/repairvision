@@ -26,7 +26,22 @@ public class EcoreHistoryMiningApplication {
 		
 		ModelingDataSet dataSet = new ModelingDataSet();
 		dataSet.setMiners(EcoreHistorySettings.getInstance().getMiners());
-		
+
+		// https://projects.eclipse.org/projects/modeling.mdt.uml2/developer
+		dataSet.addProject(localPath, "modeling.mdt.uml2",
+				"http://git.eclipse.org/c/uml2/org.eclipse.uml2.git",
+				"https://projects.eclipse.org/projects/modeling.mdt.uml2",
+				
+				"/plugins/org.eclipse.uml2.uml/model/UML.ecore",
+				"/plugins/org.eclipse.uml2.types/model/Types.ecore",
+				"/plugins/org.eclipse.uml2.codegen.ecore/model/GenModel.ecore",
+				"/plugins/org.eclipse.uml2.uml.profile.standard/model/Standard.ecore",
+				"/plugins/org.eclipse.uml2.uml/model/CMOF.ecore",
+				"/plugins/org.eclipse.uml2.uml/model/CMOF20.ecore",
+				"/plugins/org.eclipse.uml2.uml/model/CMOF24.ecore",
+				"/plugins/org.eclipse.uml2.uml/model/CMOF241.ecore",
+				"/plugins/org.eclipse.uml2.uml/model/UML30.ecore");
+
 		// https://projects.eclipse.org/projects/modeling.emft.emf-store/developer
 		dataSet.addProject(localPath, "modeling.emft.emf-store", 
 				"http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git",
@@ -660,7 +675,7 @@ public class EcoreHistoryMiningApplication {
 //	    "file": "./games/murdercase/murdercase.ecore", 
 //	    "projectName": "www.eclipse.org", 
 //	    "repositoryName": "epsilon.git", 
-		
+	
 		dataSet.mine();
 	}
 }

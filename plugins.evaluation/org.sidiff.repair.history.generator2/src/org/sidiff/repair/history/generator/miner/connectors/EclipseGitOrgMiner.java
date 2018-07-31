@@ -71,20 +71,23 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 	public String getHistoryURL(String repositoryURL, String fileURL) {
 		return repositoryURL + URL_LOG + fileURL;
 	}
-
+	
 	@Override
 	public List<ModelVersion> mineHistory(String repositoryURL, String fileURL) {
+		return internal_mineHistory(getHistoryURL(repositoryURL, fileURL), fileURL);
+	}
+
+	private List<ModelVersion> internal_mineHistory(String fullURL, String fileURL) {
 		List<ModelVersion> versions = new ArrayList<>();
-		String url = getHistoryURL(repositoryURL, fileURL);
 		
 		try {
-			Document doc = Jsoup.connect(url).get();
-			Elements links = doc.body().select("div[class='content']").select("a[href]");
+			Document doc = Jsoup.connect(fullURL).get();
+			Elements versionLinks = doc.body().select("div[class='content']").select("a[href]");
 			
-			for (Element link : links) {
-				String versionURL = link.attr("href");
+			for (Element versionLink : versionLinks) {
+				String versionURL = versionLink.attr("href");
 				
-				if (versionURL.contains(URL_ID) && !link.parentNode().nodeName().equals("th")) {
+				if (versionURL.contains(URL_ID) && !versionLink.parentNode().nodeName().equals("th")) {
 //					System.out.println(versionURL);
 					
 //					for (Element tableCell : link.parent().parent().children()) {
@@ -94,7 +97,7 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 					String commit = versionURL.substring(versionURL.lastIndexOf(URL_ID) + URL_ID.length());
 //					System.out.println("commit: " + commit);
 					
-					Element tableRow = RepositoryMinerUtil.getParentNode(link, "tr");
+					Element tableRow = RepositoryMinerUtil.getParentNode(versionLink, "tr");
 
 					Date parsedDate = DATE_RFC822.parse(tableRow.select("span[title]").attr("title"));
 					String date = HistoryMetadata.DATE_ISO8601.format(parsedDate);
@@ -113,9 +116,21 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 					versions.add(modelVersion);
 				}
 			}
+			
+			// Lookup next log page:
+			Elements logLinks = doc.body().select("ul[class='pager']").select("a[href]");
+			
+			for (Element logLink : logLinks) {
+				String logURL = logLink.attr("href");
+				
+				if (logURL.contains("?ofs=")) {
+					versions.addAll(internal_mineHistory("http://" + PROTOCOL + logURL, fileURL));
+				}
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("Exception while reading history log: " + url);
+			System.err.println("Exception while reading history log: " + fullURL);
 		}
 		
 		return versions;

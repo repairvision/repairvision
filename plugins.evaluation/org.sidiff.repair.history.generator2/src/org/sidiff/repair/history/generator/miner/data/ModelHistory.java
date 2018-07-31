@@ -15,6 +15,8 @@ import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
 
 public class ModelHistory {
 	
+	private static boolean UPDATE = true;
+	
 	private ModelingProject modelingProject;
 	
 	private String file;
@@ -74,36 +76,38 @@ public class ModelHistory {
 		FileWriter writer = null;
 		
 		for (ModelVersion modelVersion : versions) {
+			File outputPath = new File(modelingProject.getLocalPath() + modelVersion.getLocalPath());
 			String fileContent =  null;
 			
-			try {
-				fileContent = miner.mineVersion(modelingProject.getRepository(), modelVersion.getRemotePath(), modelVersion.getCommit());
-			} catch (HttpStatusException hse) {
-				if (!additionalVersions.contains(modelVersion)) {
-					if (hse.getStatusCode() == 500) {
-						System.err.print("(Error!) ");
-					} else if (hse.getStatusCode() == 404) {
-						System.err.print("(Warning!) ");
-					}
-					System.err.println("Http Status Exception: " + hse.getStatusCode() + ", URL=" + hse.getUrl());
-				}
-			}
-			
-			if (fileContent != null) {
+			if (!UPDATE || !outputPath.exists()) {
 				try {
-					File outputPath = new File(modelingProject.getLocalPath() + modelVersion.getLocalPath());
-					outputPath.mkdirs();
-					
-					writer = new FileWriter(new File(outputPath + "/" + modelVersion.getFileName()));
-					writer.write(fileContent);
-				} catch(IOException e) {
-					e.printStackTrace();
-				} finally {
-					if (writer != null) {
-						try {
-							writer.close();
-						} catch (IOException e) {
-							e.printStackTrace();
+					fileContent = miner.mineVersion(modelingProject.getRepository(), modelVersion.getRemotePath(), modelVersion.getCommit());
+				} catch (HttpStatusException hse) {
+					if (!additionalVersions.contains(modelVersion)) {
+						if (hse.getStatusCode() == 500) {
+							System.err.print("(Error!) ");
+						} else if (hse.getStatusCode() == 404) {
+							System.err.print("(Warning!) ");
+						}
+						System.err.println("Http Status Exception: " + hse.getStatusCode() + ", URL=" + hse.getUrl());
+					}
+				}
+				
+				if (fileContent != null) {
+					try {
+						outputPath.mkdirs();
+						
+						writer = new FileWriter(new File(outputPath + "/" + modelVersion.getFileName()));
+						writer.write(fileContent);
+					} catch(IOException e) {
+						e.printStackTrace();
+					} finally {
+						if (writer != null) {
+							try {
+								writer.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				}
