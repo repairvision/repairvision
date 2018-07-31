@@ -1,19 +1,19 @@
 package org.sidiff.repair.history.generator.miner.connectors;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
-import org.jsoup.HttpStatusException;
 import org.sidiff.repair.history.generator.miner.data.ModelVersion;
 
 public interface IRepositoryMiner {
 
 	boolean supports(String repositoryURL);
 
-	List<ModelVersion> mineHistory(String repositoryURL, String fileURL);
+	List<ModelVersion> mineHistory(String repositoryURL, String remotePath);
 	
-	String getHistoryURL(String repositoryURL, String fileURL);
+	String getHistoryURL(String repositoryURL, String remotePath);
 
-	String mineVersion(String repositoryURL, String fileURL, String commit) throws HttpStatusException;
+	void mineVersion(String repositoryURL, String remotePath, String commit, String localPath) throws FileNotFoundException;
 	
-	String getVersionURL(String repositoryURL, String fileURL, String commit);
+	String getVersionURL(String repositoryURL, String remotePath, String commit);
 }

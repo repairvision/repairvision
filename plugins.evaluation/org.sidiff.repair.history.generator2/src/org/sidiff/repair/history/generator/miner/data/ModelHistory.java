@@ -1,14 +1,12 @@
 package org.sidiff.repair.history.generator.miner.data;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.jsoup.HttpStatusException;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
@@ -81,42 +79,24 @@ public class ModelHistory {
 	}
 	
 	public void mineVersionFiles(IRepositoryMiner miner) {
-		FileWriter writer = null;
 		
 		for (ModelVersion modelVersion : versions) {
-			File outputPath = new File(modelingProject.getLocalPath() + modelVersion.getLocalPath());
-			String fileContent =  null;
+			File outputFolder = new File(modelingProject.getLocalPath() + modelVersion.getLocalPath());
+			File outputFile = new File(outputFolder + "/" + modelVersion.getFileName());
 			
-			if (!update || !outputPath.exists()) {
+			if (!update || !outputFile.exists()) {
 				try {
-					fileContent = miner.mineVersion(modelingProject.getRepository(), modelVersion.getRemotePath(), modelVersion.getCommit());
-				} catch (HttpStatusException hse) {
+					miner.mineVersion(
+							modelingProject.getRepository(), 
+							modelVersion.getRemotePath(), 
+							modelVersion.getCommit(), 
+							outputFile.getAbsolutePath());
+				} catch (FileNotFoundException fnfe) {
 					if (!additionalVersions.contains(modelVersion)) {
-						if (hse.getStatusCode() == 500) {
-							System.err.print("(Error!) ");
-						} else if (hse.getStatusCode() == 404) {
-							System.err.print("(Warning!) ");
-						}
-						System.err.println("Http Status Exception: " + hse.getStatusCode() + ", URL=" + hse.getUrl());
-					}
-				}
-				
-				if (fileContent != null) {
-					try {
-						outputPath.mkdirs();
-						
-						writer = new FileWriter(new File(outputPath + "/" + modelVersion.getFileName()));
-						writer.write(fileContent);
-					} catch(IOException e) {
-						e.printStackTrace();
-					} finally {
-						if (writer != null) {
-							try {
-								writer.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
+						System.err.println("(Warning!) File not found: " + miner.getVersionURL(
+							modelingProject.getRepository(), 
+							modelVersion.getRemotePath(), 
+							modelVersion.getCommit()));
 					}
 				}
 			}

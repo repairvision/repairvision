@@ -2,7 +2,6 @@ package org.sidiff.repair.history.generator.analyzer;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,24 +30,24 @@ public class EcoreHistoryResolverApplication implements IApplication {
 	private Set<String> repositoryFilter = new HashSet<>();
 	{
 		repositoryFilter.add("http://git.eclipse.org/c/eef/org.eclipse.eef.git");
-//		repositoryFilter.add("http://git.eclipse.org/c/emfcompare/org.eclipse.emf.compare.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/edapt/org.eclipse.emf.edapt.git"); // TODO
+		repositoryFilter.add("http://git.eclipse.org/c/emfcompare/org.eclipse.emf.compare.git");
+		repositoryFilter.add("http://git.eclipse.org/c/edapt/org.eclipse.emf.edapt.git");
 		repositoryFilter.add("https://git.eclipse.org/c/emf/org.eclipse.emf.git"); // TODO
 		repositoryFilter.add("http://git.eclipse.org/c/gmf-tooling/org.eclipse.gmf-tooling.git"); //TODO
-		repositoryFilter.add("http://git.eclipse.org/c/ocl/org.eclipse.ocl.git"); // TODO
+		repositoryFilter.add("http://git.eclipse.org/c/ocl/org.eclipse.ocl.git");
 		repositoryFilter.add("http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/rmf/org.eclipse.rmf.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git"); // TODO
+		repositoryFilter.add("http://git.eclipse.org/c/rmf/org.eclipse.rmf.git");
+		repositoryFilter.add("http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.atl.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvto.git"); // TODO
+		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvto.git");
 		repositoryFilter.add("http://git.eclipse.org/c/acceleo/org.eclipse.acceleo.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/m2t/org.eclipse.xpand.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/mdht/org.eclipse.mdht.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/modisco/org.eclipse.modisco.git"); // TODO
+		repositoryFilter.add("http://git.eclipse.org/c/m2t/org.eclipse.xpand.git");
+		repositoryFilter.add("http://git.eclipse.org/c/mdht/org.eclipse.mdht.git");
+		repositoryFilter.add("http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git");
+		repositoryFilter.add("http://git.eclipse.org/c/modisco/org.eclipse.modisco.git");
 		repositoryFilter.add("http://git.eclipse.org/c/sirius/org.eclipse.sirius.git"); // TODO
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/stem/org.eclipse.stem.git"); // TODO
+//		repositoryFilter.add("http://git.eclipse.org/c/stem/org.eclipse.stem.git"); // TODO
 		repositoryFilter.add("https://github.com/eclipse/birt");
 		repositoryFilter.add("http://git.eclipse.org/c/datatools/org.eclipse.datatools.git");
 		repositoryFilter.add("http://git.eclipse.org/c/platform/eclipse.platform.ui.git");
@@ -78,6 +77,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		repositoryFilter.add("http://git.eclipse.org/c/ogee/org.eclipse.ogee.git");
 		repositoryFilter.add("http://git.eclipse.org/c/pmf/org.eclipse.pmf.git");
 		repositoryFilter.add("http://git.eclipse.org/c/buckminster/buckminster.git");
+		repositoryFilter.add("http://git.eclipse.org/c/uml2/org.eclipse.uml2.git");
 	}
 
 	@Override
@@ -215,17 +215,8 @@ public class EcoreHistoryResolverApplication implements IApplication {
 						String commit = folder.substring(folder.lastIndexOf("_") + 1, folder.length());
 						
 						versionURL = miner.getVersionURL(history.getRepositoryURL(), history.getLatestRemoteFilePath(), commit);
-						String modelData = miner.mineVersion(history.getRepositoryURL(), history.getLatestRemoteFilePath(), commit);
+						miner.mineVersion(history.getRepositoryURL(), history.getLatestRemoteFilePath(), commit, model.getAbsolutePath());
 
-						FileWriter writer = null;
-
-						try {
-							writer = new FileWriter(model);
-							writer.write(modelData);
-						} finally {
-							writer.close();
-						}
-						
 						break;
 					}
 				}

@@ -1,13 +1,17 @@
 package org.sidiff.repair.history.generator.miner.connectors;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.jsoup.Connection.Response;
-import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -27,7 +31,7 @@ public class GitHubComMiner implements IRepositoryMiner {
 	
 	private static final DateFormat DATE_ISO8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
-	public static void main(String[] args) throws HttpStatusException {
+	public static void main(String[] args) throws FileNotFoundException {
 		
 		// TEST:
 		IRepositoryMiner miner = new GitHubComMiner();
@@ -42,8 +46,7 @@ public class GitHubComMiner implements IRepositoryMiner {
 			System.out.println(modelVersion);
 			System.out.println();
 			
-			String file = miner.mineVersion(repositoryURL, modelVersion.getRemotePath(), modelVersion.getCommit());
-			System.out.println(file.substring(0, Math.min(file.length(), 150)) + "...");
+			miner.mineVersion(repositoryURL, modelVersion.getRemotePath(), modelVersion.getCommit(), "C:\\" + fileURL);
 			
 			System.out.println();
 		}
@@ -55,13 +58,13 @@ public class GitHubComMiner implements IRepositoryMiner {
 	}
 	
 	@Override
-	public String getHistoryURL(String repositoryURL, String fileURL) {
-		return repositoryURL + URL_LOG + fileURL;
+	public String getHistoryURL(String repositoryURL, String remotePath) {
+		return repositoryURL + URL_LOG + remotePath;
 	}
 	
 	@Override
-	public List<ModelVersion> mineHistory(String repositoryURL, String fileURL) {
-		return internal_mineHistory(getHistoryURL(repositoryURL, fileURL), fileURL);
+	public List<ModelVersion> mineHistory(String repositoryURL, String remotePath) {
+		return internal_mineHistory(getHistoryURL(repositoryURL, remotePath), remotePath);
 	}
 
 	private List<ModelVersion> internal_mineHistory(String fullURL, String fileURL) {
@@ -116,32 +119,36 @@ public class GitHubComMiner implements IRepositoryMiner {
 	}
 	
 	@Override
-	public String getVersionURL(String repositoryURL, String fileURL, String commit) {
-		return repositoryURL.replaceFirst(PROTOCOL, URL_PLAIN) + "/" + commit + "/" + fileURL;
+	public String getVersionURL(String repositoryURL, String remotePath, String commit) {
+		return repositoryURL.replaceFirst(PROTOCOL, URL_PLAIN) + "/" + commit + "/" + remotePath;
 	}
 
 	@Override
-	public String mineVersion(String repositoryURL, String fileURL, String commit) throws HttpStatusException {
+	public void mineVersion(String repositoryURL, String remotePath, String commit, String localPath) throws FileNotFoundException {
 		String plainTextVersionURL = "n/a";
 		
 		try {
-			plainTextVersionURL = getVersionURL(repositoryURL, fileURL, commit);
+			plainTextVersionURL = getVersionURL(repositoryURL, remotePath, commit);
 //			System.out.println(plainTextVersionURL);
 			
 			//Open a URL Stream
-			Response response = Jsoup.connect(plainTextVersionURL).ignoreContentType(true).execute();
-			return new String(response.bodyAsBytes());
+//			Response response = Jsoup.connect(plainTextVersionURL).ignoreContentType(true).execute();
+//			return new String(response.bodyAsBytes());
 			
-//			Document versionDoc = Jsoup.connect(plainTextVersionURL).parser(Parser.xmlParser()).get();
-//			System.out.println(versionDoc.toString());
-//			return versionDoc.toString();
-		} catch (HttpStatusException hse) {
-			throw hse;
+			URL file = new URL(plainTextVersionURL);
+			ReadableByteChannel rbc = Channels.newChannel(file.openStream());
+			File outputFile = new File(localPath);
+			outputFile.getParentFile().mkdirs();
+			outputFile.createNewFile();
+
+			FileOutputStream fos = new FileOutputStream(outputFile);
+			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+			fos.close();
+		} catch (FileNotFoundException fnfe) {
+			throw fnfe;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Exception: " + plainTextVersionURL);
 		}
-		
-		return null;
 	}
 }

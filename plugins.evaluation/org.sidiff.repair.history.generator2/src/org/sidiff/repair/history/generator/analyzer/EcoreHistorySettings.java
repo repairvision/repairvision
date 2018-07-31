@@ -11,7 +11,7 @@ public class EcoreHistorySettings {
 	
 	private static EcoreHistorySettings instance;
 	
-	private List<IRepositoryMiner> miners = Arrays.asList(new EclipseGitOrgMiner("</ecore:EPackage>"), new GitHubComMiner());
+	private List<IRepositoryMiner> miners = Arrays.asList(new EclipseGitOrgMiner(), new GitHubComMiner());
 	
 	public static EcoreHistorySettings getInstance() {
 		if (instance == null) {

@@ -28,10 +28,7 @@ public class EcoreHistoryMiningApplication {
 		dataSet.setMiners(EcoreHistorySettings.getInstance().getMiners());
 		dataSet.setMineModelFiles(true); // download model files
 		dataSet.setUpdate(true); // ignore already existing versions
-
-		// TODO
-		// http://git.eclipse.org/c/platform/eclipse.platform.ui.git
-		/*
+/*
 		// https://projects.eclipse.org/projects/modeling.mdt.uml2/developer
 		dataSet.addProject(localPath, "modeling.mdt.uml2",
 				"http://git.eclipse.org/c/uml2/org.eclipse.uml2.git",
@@ -46,7 +43,7 @@ public class EcoreHistoryMiningApplication {
 				"/plugins/org.eclipse.uml2.uml/model/CMOF24.ecore",
 				"/plugins/org.eclipse.uml2.uml/model/CMOF241.ecore",
 				"/plugins/org.eclipse.uml2.uml/model/UML30.ecore");
-
+		
 		// https://projects.eclipse.org/projects/modeling.emft.emf-store/developer
 		dataSet.addProject(localPath, "modeling.emft.emf-store", 
 				"http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git",
@@ -436,7 +433,7 @@ public class EcoreHistoryMiningApplication {
 				"/org.eclipse.gmt.modisco.omg.kdm/model/kdm.ecore", "/org.eclipse.gmt.modisco.omg.smm/model/SMM.ecore");
 		
 		// https://projects.eclipse.org/projects/technology.sapphire/developer
-		
+	*/
 		// https://projects.eclipse.org/projects/technology.stem/developer
 		dataSet.addProject(localPath, "technology.stem", 
 				"http://git.eclipse.org/c/stem/org.eclipse.stem.git",
@@ -445,13 +442,22 @@ public class EcoreHistoryMiningApplication {
 				"/models/populations/org.eclipse.stem.populationmodels/model/standard.ecore",
 				"/models/foodproduction/org.eclipse.stem.foodproduction/model/foodproduction.ecore",
 				"/models/populations/org.eclipse.stem.populationmodels/model/standard.ecore",
-				"/core/org.eclipse.stem.core/model/common.ecore", "/core/org.eclipse.stem.core/model/experiment.ecore",
-				"/core/org.eclipse.stem.core/model/graph.ecore", "/core/org.eclipse.stem.core/model/logger.ecore",
-				"/core/org.eclipse.stem.core/model/model.ecore", "/core/org.eclipse.stem.core/model/modifier.ecore",
-				"/core/org.eclipse.stem.core/model/predicate.ecore", "/core/org.eclipse.stem.core/model/scenario.ecore",
-				"/core/org.eclipse.stem.core/model/sequencer.ecore", "/core/org.eclipse.stem.core/model/solver.ecore",
-				"/core/org.eclipse.stem.core/model/trigger.ecore");
-		
+				"/core/org.eclipse.stem.core/model/common.ecore", 
+				"/core/org.eclipse.stem.core/model/experiment.ecore",
+				"/core/org.eclipse.stem.core/model/graph.ecore", 
+				"/core/org.eclipse.stem.core/model/logger.ecore",
+				"/core/org.eclipse.stem.core/model/model.ecore", 
+				"/core/org.eclipse.stem.core/model/modifier.ecore",
+				"/core/org.eclipse.stem.core/model/predicate.ecore", 
+				"/core/org.eclipse.stem.core/model/scenario.ecore",
+				"/core/org.eclipse.stem.core/model/sequencer.ecore", 
+				"/core/org.eclipse.stem.core/model/solver.ecore",
+				"/core/org.eclipse.stem.core/model/trigger.ecore",
+				"/core/org.eclipse.stem.definitions/model/edges.ecore",
+				"/core/org.eclipse.stem.definitions/model/labels.ecore",
+				"/core/org.eclipse.stem.definitions/model/nodes.ecore",
+				"/core/org.eclipse.stem.definitions/model/types.ecore");
+		/*
 		// https://projects.eclipse.org/projects/soa.stardust/developer
 		
 		// https://projects.eclipse.org/projects/modeling.m2t.xpand/developer
@@ -663,14 +669,14 @@ public class EcoreHistoryMiningApplication {
 				"/plugins/org.gastro.inventory/model/inventory.ecore",
 				"/plugins/org.eclipse.emf.cdo/model/eresource.ecore",
 				"/plugins/org.eclipse.emf.cdo/model/etypes.ecore");
-		*/	
+
 		// https://projects.eclipse.org/projects/eclipse.e4/developer
 		dataSet.addProject(localPath, "eclipse.e4", 
 				"http://git.eclipse.org/c/platform/eclipse.platform.ui.git",
 				"https://projects.eclipse.org/projects/eclipse.e4",
 				
 				"/bundles/org.eclipse.e4.ui.model.workbench/model/UIElements.ecore");
-		
+		*/	
 		// TODO
 //	    "file": "./model/ProjectInfrastructure.ecore", 
 //	    "projectName": "www.eclipse.org", 
