@@ -1,11 +1,6 @@
 package org.sidiff.repair.history.generator.miner.connectors;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,7 +14,7 @@ import org.jsoup.select.Elements;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.miner.data.ModelVersion;
 
-public class GitHubComMiner implements IRepositoryMiner {
+public class GitHubComMiner extends AbstractRepositoryMiner  {
 	
 	private static final String PROTOCOL = "github.com";
 	
@@ -121,34 +116,5 @@ public class GitHubComMiner implements IRepositoryMiner {
 	@Override
 	public String getVersionURL(String repositoryURL, String remotePath, String commit) {
 		return repositoryURL.replaceFirst(PROTOCOL, URL_PLAIN) + "/" + commit + "/" + remotePath;
-	}
-
-	@Override
-	public void mineVersion(String repositoryURL, String remotePath, String commit, String localPath) throws FileNotFoundException {
-		String plainTextVersionURL = "n/a";
-		
-		try {
-			plainTextVersionURL = getVersionURL(repositoryURL, remotePath, commit);
-//			System.out.println(plainTextVersionURL);
-			
-			//Open a URL Stream
-//			Response response = Jsoup.connect(plainTextVersionURL).ignoreContentType(true).execute();
-//			return new String(response.bodyAsBytes());
-			
-			URL file = new URL(plainTextVersionURL);
-			ReadableByteChannel rbc = Channels.newChannel(file.openStream());
-			File outputFile = new File(localPath);
-			outputFile.getParentFile().mkdirs();
-			outputFile.createNewFile();
-
-			FileOutputStream fos = new FileOutputStream(outputFile);
-			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-			fos.close();
-		} catch (FileNotFoundException fnfe) {
-			throw fnfe;
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("Exception: " + plainTextVersionURL);
-		}
 	}
 }

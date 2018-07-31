@@ -1,12 +1,8 @@
 package org.sidiff.repair.history.generator.miner.connectors;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,7 +18,7 @@ import org.jsoup.select.Elements;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.miner.data.ModelVersion;
 
-public class EclipseGitOrgMiner implements IRepositoryMiner {
+public class EclipseGitOrgMiner extends AbstractRepositoryMiner {
 	
 	private static final String PROTOCOL = "git.eclipse.org";
 	
@@ -149,35 +145,6 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 	@Override
 	public String getVersionURL(String repositoryURL, String remotePath, String commit) {
 		return repositoryURL + URL_PLAIN + remotePath + URL_ID + commit;
-	}
-
-	@Override
-	public void mineVersion(String repositoryURL, String remotePath, String commit, String localPath) throws FileNotFoundException {
-		String plainTextVersionURL = "n/a";
-		
-		try {
-			plainTextVersionURL = getVersionURL(repositoryURL, remotePath, commit);
-//			System.out.println(plainTextVersionURL);
-			
-			//Open a URL Stream
-//			Response response = Jsoup.connect(plainTextVersionURL).ignoreContentType(true).execute();
-//			String model = new String(response.bodyAsBytes());
-	        
-			URL file = new URL(plainTextVersionURL);
-			ReadableByteChannel rbc = Channels.newChannel(file.openStream());
-			File outputFile = new File(localPath);
-			outputFile.getParentFile().mkdirs();
-			outputFile.createNewFile();
-
-			FileOutputStream fos = new FileOutputStream(outputFile);
-			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-			fos.close();
-		} catch (FileNotFoundException fnfe) {
-			throw fnfe;
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("Exception: " + plainTextVersionURL);
-		}
 	}
 
 	public static String readStringFromURL(String requestURL) throws IOException {
