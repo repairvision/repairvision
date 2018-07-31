@@ -11,5 +11,5 @@ public interface IRepositoryMiner {
 
 	List<ModelVersion> mineHistory(String repositoryURL, String fileURL);
 
-	String mineVersion(String repositoryURL, ModelVersion modelVersion) throws HttpStatusException;
+	String mineVersion(String repositoryURL, String fileURL, String commit) throws HttpStatusException;
 }

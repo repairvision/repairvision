@@ -12,5 +12,16 @@
          </run>
       </application>
    </extension>
+   <extension
+         id="org.sidiff.repair.history.generator.validation.ecore"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            thread="main"
+            visible="true">
+         <run
+               class="org.sidiff.repair.history.generator.analyzer.EcoreHistoryValidationApplication">
+         </run>
+      </application>
+   </extension>
 
 </plugin>

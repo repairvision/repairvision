@@ -1,5 +1,6 @@
 package org.sidiff.repair.history.generator.metadata;
 
+import java.io.File;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -76,6 +77,10 @@ public class VersionMetadata {
 	
 	public void setLocalFilePath(String localFilePath) {
 		version.put(key_localFilePath, localFilePath);
+	}
+	
+	public String getFileName() {
+		return new File(getRemoteFilePath()).getName();
 	}
 
 	protected JSONObject getJSON() {

@@ -38,7 +38,7 @@ public class ModelVersion {
 		return new File(file).getName();
 	}
 	
-	public String getFile() {
+	public String getRemotePath() {
 		return file;
 	}
 	

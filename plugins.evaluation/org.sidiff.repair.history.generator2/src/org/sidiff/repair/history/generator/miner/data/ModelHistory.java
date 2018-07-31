@@ -44,7 +44,7 @@ public class ModelHistory {
 			version.setCommit(modelVersion.getCommit());
 			version.setAuthor(modelVersion.getAuthor());
 			version.setMessage(modelVersion.getMessage());
-			version.setRemoteFilePath(modelVersion.getFile());
+			version.setRemoteFilePath(modelVersion.getRemotePath());
 			version.setLocalFilePath(modelVersion.getLocalPath() + modelVersion.getFileName());
 			
 			history.getVersions().add(version);
@@ -77,13 +77,13 @@ public class ModelHistory {
 			String fileContent =  null;
 			
 			try {
-				fileContent = miner.mineVersion(modelingProject.getRepository(), modelVersion);
+				fileContent = miner.mineVersion(modelingProject.getRepository(), modelVersion.getRemotePath(), modelVersion.getCommit());
 			} catch (HttpStatusException hse) {
 				if (!additionalVersions.contains(modelVersion)) {
 					if (hse.getStatusCode() == 500) {
-						System.err.print("(Error! ) ");
+						System.err.print("(Error!) ");
 					} else if (hse.getStatusCode() == 404) {
-						System.err.print("(Warning! ) ");
+						System.err.print("(Warning!) ");
 					}
 					System.err.println("Http Status Exception: " + hse.getStatusCode() + ", URL=" + hse.getUrl());
 				}

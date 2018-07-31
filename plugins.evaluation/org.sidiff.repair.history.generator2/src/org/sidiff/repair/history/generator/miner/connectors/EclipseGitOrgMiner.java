@@ -48,7 +48,7 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 			System.out.println(modelVersion);
 			System.out.println();
 			
-			String file = miner.mineVersion(repositoryURL, modelVersion);
+			String file = miner.mineVersion(repositoryURL, modelVersion.getRemotePath(), modelVersion.getCommit());
 			System.out.println(file.substring(0, Math.min(file.length(), 150)) + "...");
 			
 			System.out.println();
@@ -117,11 +117,11 @@ public class EclipseGitOrgMiner implements IRepositoryMiner {
 	}
 
 	@Override
-	public String mineVersion(String repositoryURL, ModelVersion modelVersion) throws HttpStatusException {
+	public String mineVersion(String repositoryURL, String fileURL, String commit) throws HttpStatusException {
 		String plainTextVersionURL = "n/a";
 		
 		try {
-			plainTextVersionURL = repositoryURL + URL_PLAIN + modelVersion.getFile() + URL_ID + modelVersion.getCommit();
+			plainTextVersionURL = repositoryURL + URL_PLAIN + fileURL + URL_ID + commit;
 //			System.out.println(plainTextVersionURL);
 			
 			//Open a URL Stream

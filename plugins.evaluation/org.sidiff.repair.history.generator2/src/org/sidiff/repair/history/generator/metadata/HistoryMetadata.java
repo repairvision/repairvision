@@ -124,7 +124,7 @@ public class HistoryMetadata {
 	}
 	
 	public String getLatestFilePath() {
-		return versions.get(versions.size() - 1).getRemoteFilePath();
+		return versions.get(0).getRemoteFilePath();
 	}
 	
 	protected JSONObject getJSON() {
