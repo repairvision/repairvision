@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
 import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 
-public class URIHandler extends URIHandlerImpl {
+public class EcoreHistoryResolverURIHandler extends URIHandlerImpl {
 
 	private  ResourceSetImpl resourceSet;
 
@@ -25,7 +25,7 @@ public class URIHandler extends URIHandlerImpl {
 
 	private Set<String> missingURIs = new HashSet<>();
 
-	public URIHandler(ResourceSetImpl resourceSet, List<File> models, Map<String, List<VersionMetadata>> modelFiles) {
+	public EcoreHistoryResolverURIHandler(ResourceSetImpl resourceSet, List<File> models, Map<String, List<VersionMetadata>> modelFiles) {
 		this.resourceSet = resourceSet;
 		this.modelFiles = modelFiles;
 		this.modelNames = models.stream().map(File::getName).collect(Collectors.toSet()); 
@@ -58,6 +58,11 @@ public class URIHandler extends URIHandlerImpl {
 	private URI findModel(URI uri) {
 		String modelName = uri.lastSegment();
 		URI newURI = uri;
+		
+		// Try to resolve package URIs:
+		if ((modelName != null) && !modelName.endsWith(".ecore")) {
+			modelName += ".ecore";
+		}
 
 		// Find model in other repository:
 		if (modelFiles.containsKey(modelName)) {

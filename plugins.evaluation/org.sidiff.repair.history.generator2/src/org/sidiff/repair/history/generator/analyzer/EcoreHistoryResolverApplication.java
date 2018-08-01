@@ -29,55 +29,56 @@ public class EcoreHistoryResolverApplication implements IApplication {
 	
 	private Set<String> repositoryFilter = new HashSet<>();
 	{
-		repositoryFilter.add("http://git.eclipse.org/c/eef/org.eclipse.eef.git");
-		repositoryFilter.add("http://git.eclipse.org/c/emfcompare/org.eclipse.emf.compare.git");
-		repositoryFilter.add("http://git.eclipse.org/c/edapt/org.eclipse.emf.edapt.git");
-		repositoryFilter.add("https://git.eclipse.org/c/emf/org.eclipse.emf.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/gmf-tooling/org.eclipse.gmf-tooling.git"); //TODO
-		repositoryFilter.add("http://git.eclipse.org/c/ocl/org.eclipse.ocl.git");
-		repositoryFilter.add("http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/rmf/org.eclipse.rmf.git");
-		repositoryFilter.add("http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git");
-		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.atl.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvto.git");
-		repositoryFilter.add("http://git.eclipse.org/c/acceleo/org.eclipse.acceleo.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/m2t/org.eclipse.xpand.git");
-		repositoryFilter.add("http://git.eclipse.org/c/mdht/org.eclipse.mdht.git");
-		repositoryFilter.add("http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git");
-		repositoryFilter.add("http://git.eclipse.org/c/modisco/org.eclipse.modisco.git");
-		repositoryFilter.add("http://git.eclipse.org/c/sirius/org.eclipse.sirius.git");
-		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git"); // TODO
-		repositoryFilter.add("http://git.eclipse.org/c/stem/org.eclipse.stem.git"); // TODO
+		repositoryFilter.add("http://git.eclipse.org/c/acceleo/org.eclipse.acceleo.git"); // NOTE: Wrong URI: http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Integers in mtlnonstdlib.ecore at 2010-03-05T17-34-08Z e7b50a9df0c58a03a56b5dea4cbe476dbc32a9f6
+		repositoryFilter.add("https://github.com/eclipse/b3");
 		repositoryFilter.add("https://github.com/eclipse/birt");
-		repositoryFilter.add("http://git.eclipse.org/c/datatools/org.eclipse.datatools.git");
-		repositoryFilter.add("http://git.eclipse.org/c/platform/eclipse.platform.ui.git");
-		repositoryFilter.add("http://git.eclipse.org/c/eatop/org.eclipse.eatop.git");
-		repositoryFilter.add("https://github.com/eclipse/elk");
-		repositoryFilter.add("http://git.eclipse.org/c/cdo/cdo.git");
+		repositoryFilter.add("http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git");
+		repositoryFilter.add("http://git.eclipse.org/c/buckminster/buckminster.git");
 		repositoryFilter.add("http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.coevolution.git");
 		repositoryFilter.add("http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.core.git");
 		repositoryFilter.add("http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patch.git");
 		repositoryFilter.add("http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patterns.git");
-		repositoryFilter.add("http://git.eclipse.org/c/egf/org.eclipse.emf.egf.git");
+		repositoryFilter.add("http://git.eclipse.org/c/datatools/org.eclipse.datatools.git");
+		repositoryFilter.add("https://github.com/eclipse/dltk.javascript");
+		repositoryFilter.add("http://git.eclipse.org/c/dltk/org.eclipse.dltk.core.git");
+		repositoryFilter.add("http://git.eclipse.org/c/camf/org.eclipse.camf.git");
+		repositoryFilter.add("http://git.eclipse.org/c/cdo/cdo.git");
+		repositoryFilter.add("https://github.com/eclipse/eavp");
+		repositoryFilter.add("http://git.eclipse.org/c/eef/org.eclipse.eef.git");
+		repositoryFilter.add("http://git.eclipse.org/c/epsilon/org.eclipse.epsilon.git");
 		repositoryFilter.add("http://git.eclipse.org/c/emfclient/org.eclipse.emf.ecp.core.git");
 		repositoryFilter.add("http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git");
-		repositoryFilter.add("http://git.eclipse.org/c/henshin/org.eclipse.emft.henshin.git");
-		repositoryFilter.add("http://git.eclipse.org/c/texo/org.eclipse.emf.texo.git");
-		repositoryFilter.add("https://github.com/eclipse/wazaabi");
-		repositoryFilter.add("http://git.eclipse.org/c/epsilon/org.eclipse.epsilon.git");
-		repositoryFilter.add("http://git.eclipse.org/c/fmc/org.eclipse.fmc.core.git");
+		repositoryFilter.add("http://git.eclipse.org/c/emfcompare/org.eclipse.emf.compare.git");
+		repositoryFilter.add("http://git.eclipse.org/c/edapt/org.eclipse.emf.edapt.git");
+		repositoryFilter.add("https://git.eclipse.org/c/emf/org.eclipse.emf.git");
+		repositoryFilter.add("https://github.com/eclipse/elk");
+		repositoryFilter.add("http://git.eclipse.org/c/eatop/org.eclipse.eatop.git");
+		repositoryFilter.add("http://git.eclipse.org/c/egf/org.eclipse.emf.egf.git");
+		repositoryFilter.add("http://git.eclipse.org/c/gmf-tooling/org.eclipse.gmf-tooling.git");
 		repositoryFilter.add("http://git.eclipse.org/c/gmf-notation/org.eclipse.gmf.notation.git");
 		repositoryFilter.add("https://github.com/eclipse/gmp.graphiti");
-		repositoryFilter.add("https://github.com/eclipse/xtext-core/");
-		repositoryFilter.add("https://github.com/eclipse/eavp");
-		repositoryFilter.add("http://git.eclipse.org/c/camf/org.eclipse.camf.git");
-		repositoryFilter.add("https://github.com/eclipse/b3");
-		repositoryFilter.add("http://git.eclipse.org/c/dltk/org.eclipse.dltk.core.git");
-		repositoryFilter.add("https://github.com/eclipse/dltk.javascript");
+		repositoryFilter.add("http://git.eclipse.org/c/fmc/org.eclipse.fmc.core.git");
+		repositoryFilter.add("http://git.eclipse.org/c/henshin/org.eclipse.emft.henshin.git");
+		repositoryFilter.add("http://git.eclipse.org/c/m2t/org.eclipse.xpand.git");
+		repositoryFilter.add("http://git.eclipse.org/c/mdht/org.eclipse.mdht.git");
+		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.atl.git");
+		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvto.git");
+		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git"); // TODO
+		repositoryFilter.add("http://git.eclipse.org/c/modisco/org.eclipse.modisco.git");
+		repositoryFilter.add("http://git.eclipse.org/c/ocl/org.eclipse.ocl.git");
 		repositoryFilter.add("http://git.eclipse.org/c/ogee/org.eclipse.ogee.git");
+		repositoryFilter.add("http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git");
+		repositoryFilter.add("http://git.eclipse.org/c/platform/eclipse.platform.ui.git");
 		repositoryFilter.add("http://git.eclipse.org/c/pmf/org.eclipse.pmf.git");
-		repositoryFilter.add("http://git.eclipse.org/c/buckminster/buckminster.git");
+		repositoryFilter.add("http://git.eclipse.org/c/rmf/org.eclipse.rmf.git");
+		repositoryFilter.add("http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git");
+		repositoryFilter.add("http://git.eclipse.org/c/sirius/org.eclipse.sirius.git");
+		repositoryFilter.add("http://git.eclipse.org/c/stem/org.eclipse.stem.git"); // NOTE: Incomplete Commit: 2011-07-15T19-30-57Z fe05cad1c20c9a3490ac2b263910dc769ac12112
+		repositoryFilter.add("http://git.eclipse.org/c/texo/org.eclipse.emf.texo.git");
 		repositoryFilter.add("http://git.eclipse.org/c/uml2/org.eclipse.uml2.git");
+		repositoryFilter.add("https://github.com/eclipse/wazaabi");
+		repositoryFilter.add("https://github.com/eclipse/xtext-core");
+		repositoryFilter.add("https://github.com/eclipse/xtext-extras");
 	}
 
 	@Override
@@ -146,7 +147,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		
 		// Make URIs to related models relative:
 		ResourceSetImpl resourceSet = new ResourceSetImpl();
-		URIHandler uriHandler = new URIHandler(resourceSet, models, modelFiles);
+		EcoreHistoryResolverURIHandler uriHandler = new EcoreHistoryResolverURIHandler(resourceSet, models, modelFiles);
 		
 		// Load models:
 		resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, uriHandler);
@@ -169,6 +170,10 @@ public class EcoreHistoryResolverApplication implements IApplication {
 			}
 		}
 		
+		if (!uriHandler.getMissingURIs().isEmpty()) {
+			System.err.println("Unresolved References: " + models.get(0).getParent());
+		}
+		 
 		// Save resolved models:
 		String folder = models.get(0).getParent() + "_resolved";
 		

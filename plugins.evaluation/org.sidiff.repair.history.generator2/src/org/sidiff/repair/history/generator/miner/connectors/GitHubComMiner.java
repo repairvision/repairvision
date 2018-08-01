@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -66,7 +65,7 @@ public class GitHubComMiner extends AbstractRepositoryMiner  {
 		List<ModelVersion> versions = new ArrayList<>();
 		
 		try {
-			Document doc = Jsoup.connect(fullURL).get();
+			Document doc = mineURL(fullURL);
 			Elements links = doc.body().select("a[href]");
 			
 			for (Element link : links) {

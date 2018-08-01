@@ -7,12 +7,38 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 public abstract class AbstractRepositoryMiner implements IRepositoryMiner {
+	
+	protected int retries = 10;
+	
+	protected Document mineURL(String url) {
+		Document doc = null;
+		Exception exception = null;
+		
+		for (int i = 0; i < retries; i++) {
+			try {
+				doc = Jsoup.connect(url).get();
+				
+				exception = null;
+				break;
+			} catch (Exception e) {
+				exception = e;
+			}
+		}
+		
+		if (exception != null) {
+			exception.printStackTrace();
+			System.err.println("Exception: " + url);
+		}
+		
+		return doc;
+	}
 
 	public void mineVersion(String repositoryURL, String remotePath, String commit, String localPath) throws FileNotFoundException {
 		String plainTextVersionURL = getVersionURL(repositoryURL, remotePath, commit);
-		
-		int retries = 10;
 		Exception exception = null;
 		
 		for (int i = 0; i < retries; i++) {

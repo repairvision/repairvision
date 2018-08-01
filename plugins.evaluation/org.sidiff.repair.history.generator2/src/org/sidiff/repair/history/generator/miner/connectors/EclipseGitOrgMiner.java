@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -76,7 +75,7 @@ public class EclipseGitOrgMiner extends AbstractRepositoryMiner {
 		List<ModelVersion> versions = new ArrayList<>();
 		
 		try {
-			Document doc = Jsoup.connect(fullURL).get();
+			Document doc = mineURL(fullURL);
 			Elements versionLinks = doc.body().select("div[class='content']").select("a[href]");
 			
 			for (Element versionLink : versionLinks) {

@@ -28,7 +28,7 @@ public class EcoreHistoryMiningApplication {
 		dataSet.setMiners(EcoreHistorySettings.getInstance().getMiners());
 		dataSet.setMineModelFiles(true); // download model files
 		dataSet.setUpdate(true); // ignore already existing versions
-
+/*
 		// https://projects.eclipse.org/projects/modeling.mdt.uml2/developer
 		dataSet.addProject(localPath, "modeling.mdt.uml2",
 				"http://git.eclipse.org/c/uml2/org.eclipse.uml2.git",
@@ -218,7 +218,7 @@ public class EcoreHistoryMiningApplication {
 				"https://projects.eclipse.org/projects/modeling.elk",
 				
 				"/plugins/org.eclipse.elk.graph/model/elkgraph.ecore");
-		
+
 		// https://projects.eclipse.org/projects/modeling.mdt.papyrus/developer
 		dataSet.addProject(localPath, "modeling.mdt.papyrus", 
 				"http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git",
@@ -229,11 +229,16 @@ public class EcoreHistoryMiningApplication {
 				"/plugins/facet/org.eclipse.papyrus.emf.facet.custom.metamodel/model/custom_primitive_types-0.2.0.ecore",
 				"/plugins/facet/org.eclipse.papyrus.emf.facet.custom.metamodel/model/query-0.3.0.ecore",
 				"/plugins/facet/org.eclipse.papyrus.emf.facet.custom.metamodel/model/treeproxy-0.2.0.ecore",
+				"/plugins/facet/org.eclipse.papyrus.emf.facet.efacet.metamodel/model/efacet-0.2.0.ecore",
+				"/plugins/facet/org.eclipse.papyrus.emf.facet.efacet.metamodel/model/efacetcatalog-0.2.0.ecore",
 				"/plugins/facet/org.eclipse.papyrus.emf.facet.efacet/model/efacet.ecore",
 				"/plugins/facet/org.eclipse.papyrus.emf.facet.widgets.celleditors/model/celleditors.ecore",
 				"/plugins/infra/core/org.eclipse.papyrus.infra.core.architecture/model/Architecture.ecore",
-				"/plugins/uml/org.eclipse.papyrus.uml.filters/model/umlfilters.ecore");
-		
+				"/plugins/uml/org.eclipse.papyrus.uml.filters/model/umlfilters.ecore",
+				"/plugins/infra/filters/org.eclipse.papyrus.infra.filters/model/filters.ecore",
+				"/plugins/infra/types/org.eclipse.papyrus.infra.types/model/ElementTypesConfigurations.ecore",
+				"/plugins/facet/org.eclipse.papyrus.emf.facet.util.emf.catalog/model/catalog.ecore");
+
 		// https://projects.eclipse.org/projects/modeling.mmt.qvtd/developer
 		dataSet.addProject(localPath, "modeling.mmt.qvtd", 
 				"http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git",
@@ -262,7 +267,9 @@ public class EcoreHistoryMiningApplication {
 				"/plugins/org.eclipse.qvtd.xtext.qvtcore/model/QVTcoreCS.ecore",
 				"/plugins/org.eclipse.qvtd.xtext.qvtimperative/model/QVTimperativeCS.ecore",
 				"/plugins/org.eclipse.qvtd.xtext.qvtrelation/model/QVTrelationCS.ecore",
-				"/plugins/org.eclipse.qvtd.umlx/model/UMLX.ecore");
+				"/plugins/org.eclipse.qvtd.umlx/model/UMLX.ecore",
+				"/plugins/org.eclipse.qvtd.xtext.qvtcorebase/model/QVTcoreBaseCS.ecore",
+				"/plugins/org.eclipse.qvtd.pivot.qvtcorebase/model/QVTcoreBase.ecore");
 
 		// https://projects.eclipse.org/projects/modeling.sirius/developer
 		dataSet.addProject(localPath, "modeling.sirius", 
@@ -321,13 +328,20 @@ public class EcoreHistoryMiningApplication {
 				"https://projects.eclipse.org/projects/modeling.fmc",
 				
 				"/org.eclipse.fmc.mm/model/Blockdiagram.ecore");
-		
+
 		// TODO: https://projects.eclipse.org/projects/modeling.tmf.xtext/developer
-		dataSet.addProject(localPath, "modeling.tmf.xtext", 
-				"https://github.com/eclipse/xtext-core/",
+		dataSet.addProject(localPath, "modeling.tmf.xtext.core", 
+				"https://github.com/eclipse/xtext-core",
 				"https://projects.eclipse.org/projects/modeling.tmf.xtext",
 				
 				"org.eclipse.xtext.tests/src/org/eclipse/xtext/linking/lazy/LazyLinkingTestLanguage.ecore");
+		
+		dataSet.addProject(localPath, "modeling.tmf.xtext.extras", 
+				"https://github.com/eclipse/xtext-extras",
+				"https://projects.eclipse.org/projects/modeling.tmf.xtext",
+				
+				"/org.eclipse.xtext.xbase/model/Xbase.ecore",
+				"/org.eclipse.xtext.common.types/model/JavaVMTypes.ecore");
 		
 		// https://projects.eclipse.org/projects/soa.bpmn2-modeler/developer
 		
@@ -413,7 +427,8 @@ public class EcoreHistoryMiningApplication {
 				"/plugins/org.eclipse.gmf.map/models/gmfmap.ecore",
 				"/plugins/org.eclipse.gmf.map/models/gmfmap_2007.ecore",
 				"/plugins/org.eclipse.gmf.tooldef/models/tooldef.ecore",
-				"/plugins/org.eclipse.gmf.tooling.simplemap.model/model/simplemap.ecore");
+				"/plugins/org.eclipse.gmf.tooling.simplemap.model/model/simplemap.ecore",
+				"/archive/org.eclipse.gmf.diadef/models/diadef.ecore");
 		
 		// https://projects.eclipse.org/projects/modeling.gmp.graphiti/developer
 		dataSet.addProject(localPath, "modeling.gmp.graphiti", 
@@ -688,7 +703,7 @@ public class EcoreHistoryMiningApplication {
 //	    "file": "./games/murdercase/murdercase.ecore", 
 //	    "projectName": "www.eclipse.org", 
 //	    "repositoryName": "epsilon.git", 
-
+*/
 		dataSet.mine();
 	}
 }
