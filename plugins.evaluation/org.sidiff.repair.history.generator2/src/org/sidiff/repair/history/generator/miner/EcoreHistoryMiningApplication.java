@@ -26,9 +26,16 @@ public class EcoreHistoryMiningApplication {
 		
 		ModelingDataSet dataSet = new ModelingDataSet();
 		dataSet.setMiners(EcoreHistorySettings.getInstance().getMiners());
+		
+		build(dataSet, localPath);
+		
 		dataSet.setMineModelFiles(true); // download model files
 		dataSet.setUpdate(true); // ignore already existing versions
-/*
+		dataSet.mine();
+	}
+	
+	private void build(ModelingDataSet dataSet, String localPath) {
+
 		// https://projects.eclipse.org/projects/modeling.mdt.uml2/developer
 		dataSet.addProject(localPath, "modeling.mdt.uml2",
 				"http://git.eclipse.org/c/uml2/org.eclipse.uml2.git",
@@ -53,7 +60,7 @@ public class EcoreHistoryMiningApplication {
 				"/bundles/org.eclipse.emf.emfstore.common.model/model/common.ecore",
 				"/bundles/org.eclipse.emf.emfstore.fuzzy.emf/model/config.ecore",
 				"/bundles/org.eclipse.emf.emfstore.server.model/model/server.ecore");
-		
+	
 		// https://projects.eclipse.org/projects/modeling.mdt.ocl/developer
 		dataSet.addProject(localPath, "modeling.mdt.ocl", 
 				"http://git.eclipse.org/c/ocl/org.eclipse.ocl.git",
@@ -67,7 +74,9 @@ public class EcoreHistoryMiningApplication {
 				"/plugins/org.eclipse.ocl.ecore/model/OCLEcore.ecore",
 				"/plugins/org.eclipse.ocl.ecore/model/oclstdlib.ecore",
 				"/plugins/org.eclipse.ocl/model/OCL.ecore",
-				"/plugins/org.eclipse.ocl/model/OCLCST.ecore"
+				"/plugins/org.eclipse.ocl/model/OCLCST.ecore",
+				"/plugins/org.eclipse.ocl.xtext.base/model/BaseCS.ecore",
+				"/plugins/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS.ecore"
 				
 				// TODO:
 //				/tests/org.eclipse.ocl.ecore.tests/model/Company.ecore,
@@ -101,6 +110,17 @@ public class EcoreHistoryMiningApplication {
 								
 				);
 		
+		dataSet.addProject(localPath, "modeling.mdt.ocl.examples", 
+				"http://git.eclipse.org/c/ocl/org.eclipse.ocl.git",
+				"https://projects.eclipse.org/projects/modeling.mdt.ocl",
+				
+				"/examples/org.eclipse.ocl.examples.pivot/model/pivot.ecore",
+				"/examples/org.eclipse.ocl.examples.pivot/model/Pivot.ecore",
+				"/examples/org.eclipse.ocl.examples.xtext.base/model/BaseCS.ecore",
+				"/examples/org.eclipse.ocl.examples.codegen/model/cgmodel.ecore",
+				"/examples/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCS.ecore");
+						
+
 		// https://projects.eclipse.org/projects/modeling.mmt.qvt-oml/developer
 		dataSet.addProject(localPath, "modeling.mmt.qvt-oml", 
 				"http://git.eclipse.org/c/mmt/org.eclipse.qvto.git",
@@ -249,7 +269,8 @@ public class EcoreHistoryMiningApplication {
 				"/plugins/org.eclipse.qvt/model/ecore/FlatQVT.ecore",
 				"/plugins/org.eclipse.qvt/model/ecore/ImperativeOCL.ecore",
 				"/plugins/org.eclipse.qvt/model/ecore/PrimitiveTypes.ecore",
-				"/plugins/org.eclipse.qvt/model/ecore/QVT.ecore", "/plugins/org.eclipse.qvt/model/ecore/QVTBase.ecore",
+				"/plugins/org.eclipse.qvt/model/ecore/QVT.ecore", 
+				"/plugins/org.eclipse.qvt/model/ecore/QVTBase.ecore",
 				"/plugins/org.eclipse.qvt/model/ecore/QVTCore.ecore",
 				"/plugins/org.eclipse.qvt/model/ecore/QVTOperational.ecore",
 				"/plugins/org.eclipse.qvt/model/ecore/QVTRelation.ecore",
@@ -559,7 +580,8 @@ public class EcoreHistoryMiningApplication {
 				"http://git.eclipse.org/c/pmf/org.eclipse.pmf.git",
 				"https://projects.eclipse.org/projects/modeling.pmf",
 				
-				"/org.eclipse.pmf.pim/model/emf.ecore", "/org.eclipse.pmf.pim/model/pmf.ecore");
+				"/org.eclipse.pmf.pim/model/emf.ecore", 
+				"/org.eclipse.pmf.pim/model/pmf.ecore");
 		
 		// https://projects.eclipse.org/projects/soa.winery/developer
 		
@@ -703,7 +725,6 @@ public class EcoreHistoryMiningApplication {
 //	    "file": "./games/murdercase/murdercase.ecore", 
 //	    "projectName": "www.eclipse.org", 
 //	    "repositoryName": "epsilon.git", 
-*/
-		dataSet.mine();
+
 	}
 }

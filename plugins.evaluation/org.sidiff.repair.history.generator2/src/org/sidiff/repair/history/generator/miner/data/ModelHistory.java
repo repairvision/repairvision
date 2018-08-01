@@ -39,7 +39,7 @@ public class ModelHistory {
 	public void writeMetadate() {
 		
 		// write meta data per model:
-		File metafile = new File(modelingProject.getLocalPath() + "/" +  getFileName() + ".json");
+		File metafile = new File(modelingProject.getLocalPath() + "/" +  getFileName() + "_" + getVersions().get(0).getCommit() + ".json");
 		
 		HistoryMetadata history = new HistoryMetadata(metafile);
 		history.setProjectName(modelingProject.getName());
@@ -79,7 +79,6 @@ public class ModelHistory {
 	}
 	
 	public void mineVersionFiles(IRepositoryMiner miner) {
-		
 		for (ModelVersion modelVersion : versions) {
 			File outputFolder = new File(modelingProject.getLocalPath() + modelVersion.getLocalPath());
 			File outputFile = new File(outputFolder + "/" + modelVersion.getFileName());

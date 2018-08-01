@@ -63,7 +63,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		repositoryFilter.add("http://git.eclipse.org/c/mdht/org.eclipse.mdht.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.atl.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvto.git");
-		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git"); // TODO
+//		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git"); // TODO
 		repositoryFilter.add("http://git.eclipse.org/c/modisco/org.eclipse.modisco.git");
 		repositoryFilter.add("http://git.eclipse.org/c/ocl/org.eclipse.ocl.git");
 		repositoryFilter.add("http://git.eclipse.org/c/ogee/org.eclipse.ogee.git");
@@ -90,18 +90,23 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		
 		for (HistoryMetadata history : dataset.getHistories()) {
 			for (VersionMetadata version : history.getVersions()) {
-				String modelName = version.getFileName();
-
-				// NOTE: Technically, we have to know the plug-in relative path!
-				if (!modelPaths.contains(version.getRemoteFilePath())) {
-					modelPaths.add(version.getRemoteFilePath()); 
+				File localFile = new File(history.getDatafile().getParent() + "/" + version.getLocalFilePath());
+				
+				// Filter versions in which the model is deleted from the repository!
+				if (localFile.exists()) {
+					String modelName = version.getFileName();
 					
-					if (!modelFiles.containsKey(modelName)) {
-						List<VersionMetadata> versions = new ArrayList<>();
-						versions.add(version);
-						modelFiles.put(modelName, versions);
-					} else {
-						modelFiles.get(modelName).add(version);
+					// NOTE: Technically, we have to know the plug-in relative path!
+					if (!modelPaths.contains(version.getRemoteFilePath())) {
+						modelPaths.add(version.getRemoteFilePath()); 
+						
+						if (!modelFiles.containsKey(modelName)) {
+							List<VersionMetadata> versions = new ArrayList<>();
+							versions.add(version);
+							modelFiles.put(modelName, versions);
+						} else {
+							modelFiles.get(modelName).add(version);
+						}
 					}
 				}
 			}
@@ -129,10 +134,25 @@ public class EcoreHistoryResolverApplication implements IApplication {
 				}
 				
 				if (!missingURIs.isEmpty()) {
+					System.err.println();
 					System.err.println("Missing referenced model elements:");
 					
 					for (String missingURI : missingURIs) {
 						System.err.println(missingURI);
+					}
+					
+					System.err.println();
+					System.err.println("Missing referenced models:");
+					Set<String> missingModelURIs = new HashSet<>();
+					
+					for (String missingURI : missingURIs) {
+						URI uri = URI.createURI(missingURI);
+						String modelURI = uri.trimFragment().toString();
+						
+						if (!missingModelURIs.contains(modelURI)) {
+							missingModelURIs.add(modelURI);
+							System.err.println(modelURI);
+						}
 					}
 				}
 				
