@@ -39,9 +39,7 @@ public class ModelHistory {
 	public void writeMetadate() {
 		
 		// write meta data per model:
-		File metafile = new File(modelingProject.getLocalPath() + "/" +  getFileName() + "_" + getVersions().get(0).getCommit() + ".json");
-		
-		HistoryMetadata history = new HistoryMetadata(metafile);
+		HistoryMetadata history = new HistoryMetadata();
 		history.setProjectName(modelingProject.getName());
 		history.setRepositoryURL(modelingProject.getRepository());
 		history.setInfo(modelingProject.getInfo());
@@ -58,6 +56,8 @@ public class ModelHistory {
 			history.getVersions().add(version);
 		}
 		
+		File metafile = new File(modelingProject.getLocalPath() + "/" +  history.generateHistoryName() + ".json");
+		history.setDatafile(metafile);
 		history.write();
 	}
 	

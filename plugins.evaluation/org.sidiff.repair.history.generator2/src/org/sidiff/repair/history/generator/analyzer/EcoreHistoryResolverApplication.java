@@ -1,19 +1,21 @@
 package org.sidiff.repair.history.generator.analyzer;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.equinox.app.IApplication;
@@ -25,12 +27,12 @@ import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
 
 public class EcoreHistoryResolverApplication implements IApplication {
 	
-	private Map<String, List<VersionMetadata>> modelFiles = new HashMap<>();
+	private Map<String, List<HistoryMetadata>> modelFiles = new HashMap<>();
 	
 	private Set<String> repositoryFilter = new HashSet<>();
 	{
 		repositoryFilter.add("http://git.eclipse.org/c/acceleo/org.eclipse.acceleo.git"); // NOTE: Wrong URI: http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Integers in mtlnonstdlib.ecore at 2010-03-05T17-34-08Z e7b50a9df0c58a03a56b5dea4cbe476dbc32a9f6
-		repositoryFilter.add("https://github.com/eclipse/b3");
+//		repositoryFilter.add("https://github.com/eclipse/b3");
 		repositoryFilter.add("https://github.com/eclipse/birt");
 		repositoryFilter.add("http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git");
 		repositoryFilter.add("http://git.eclipse.org/c/buckminster/buckminster.git");
@@ -63,7 +65,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		repositoryFilter.add("http://git.eclipse.org/c/mdht/org.eclipse.mdht.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.atl.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvto.git");
-//		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git"); // TODO
+		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git"); // TODO
 		repositoryFilter.add("http://git.eclipse.org/c/modisco/org.eclipse.modisco.git");
 		repositoryFilter.add("http://git.eclipse.org/c/ocl/org.eclipse.ocl.git");
 		repositoryFilter.add("http://git.eclipse.org/c/ogee/org.eclipse.ogee.git");
@@ -85,6 +87,25 @@ public class EcoreHistoryResolverApplication implements IApplication {
 	public Object start(IApplicationContext context) throws Exception {
 		DataSetMetadata dataset = new DataSetMetadata("C:\\evaluation\\");
 		
+		// Index model file names:
+		buildModelIndex(dataset);
+		
+		// Build model resource sets:
+		for (HistoryMetadata modelHistory : dataset.getHistories()) {
+			if (!repositoryFilter.contains(modelHistory.getRepositoryURL())) {
+				Set<String> missingURIs = buildResourceSets(modelHistory);
+				analyzeMissingURIs(missingURIs);
+				
+				System.out.println(modelHistory.getLatestRemoteFilePath());
+				System.out.println("repositoryFilter.add(\"" +  modelHistory.getRepositoryURL()  + "\");");
+			}
+		}
+		
+		return IApplication.EXIT_OK;
+	}
+
+	protected void buildModelIndex(DataSetMetadata dataset) {
+		
 		// Index model files:
 		Set<String> modelPaths = new HashSet<>();
 		
@@ -101,110 +122,165 @@ public class EcoreHistoryResolverApplication implements IApplication {
 						modelPaths.add(version.getRemoteFilePath()); 
 						
 						if (!modelFiles.containsKey(modelName)) {
-							List<VersionMetadata> versions = new ArrayList<>();
-							versions.add(version);
+							List<HistoryMetadata> versions = new ArrayList<>();
+							versions.add(history);
 							modelFiles.put(modelName, versions);
 						} else {
-							modelFiles.get(modelName).add(version);
+							modelFiles.get(modelName).add(history);
 						}
 					}
 				}
 			}
 		}
-		
-		// Resolve model resource sets:
-		for (HistoryMetadata history : dataset.getHistories()) {
-			if (!repositoryFilter.contains(history.getDatafile().getParent()) && !repositoryFilter.contains(history.getRepositoryURL())) {
-				repositoryFilter.add(history.getDatafile().getParent());
-				
-				System.out.println(history.getProjectName() + " : " + history.getRepositoryURL());
-				Set<String> missingURIs = new HashSet<>();
-				
-				for (File commitFolder : history.getDatafile().getParentFile().listFiles()) {
-					if (commitFolder.isDirectory() && !commitFolder.getName().contains("_resolved")) {
-						try {
-							Set<String> missingURIsInCommit = resolve(searchModels(commitFolder));
-							missingURIs.addAll(missingURIsInCommit);
-						} catch (Exception e) {
-							System.err.println(commitFolder);
-							System.err.println(history.getRepositoryURL());
-							throw e;
-						}
-					}
-				}
-				
-				if (!missingURIs.isEmpty()) {
-					System.err.println();
-					System.err.println("Missing referenced model elements:");
-					
-					for (String missingURI : missingURIs) {
-						System.err.println(missingURI);
-					}
-					
-					System.err.println();
-					System.err.println("Missing referenced models:");
-					Set<String> missingModelURIs = new HashSet<>();
-					
-					for (String missingURI : missingURIs) {
-						URI uri = URI.createURI(missingURI);
-						String modelURI = uri.trimFragment().toString();
-						
-						if (!missingModelURIs.contains(modelURI)) {
-							missingModelURIs.add(modelURI);
-							System.err.println(modelURI);
-						}
-					}
-				}
-				
-				System.out.println("repositoryFilter.add(\"" +  history.getRepositoryURL()  + "\");");
-			}
-		}
-		
-		return IApplication.EXIT_OK;
 	}
 	
-	protected Set<String> resolve(List<File> models) {
+	protected void analyzeMissingURIs(Set<String> missingURIs) {
 		
-		// Make URIs to related models relative:
-		ResourceSetImpl resourceSet = new ResourceSetImpl();
-		EcoreHistoryResolverURIHandler uriHandler = new EcoreHistoryResolverURIHandler(resourceSet, models, modelFiles);
-		
-		// Load models:
-		resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, uriHandler);
-		
-		for (File model : models) {
-//			System.out.println("Loading: " + model.getAbsolutePath());
+		if (!missingURIs.isEmpty()) {
+			System.err.println();
+			System.err.println("Missing referenced model elements:");
 			
-			try {
-				resourceSet.getResource(URI.createFileURI(model.getAbsolutePath()), true);
-			} catch (Exception e) {
-				// Try to reload the content:
-				try {
-					reloadModelContent(model);
-					resourceSet.getResource(URI.createFileURI(model.getAbsolutePath()), true);
-				} catch (Exception e2) {
-					e2.printStackTrace();
-					System.err.println(model.getAbsolutePath());
-					throw e;
+			for (String missingURI : missingURIs) {
+				System.err.println(missingURI);
+			}
+			
+			System.err.println();
+			System.err.println("Missing referenced models:");
+			Set<String> missingModelURIs = new HashSet<>();
+			
+			for (String missingURI : missingURIs) {
+				URI uri = URI.createURI(missingURI);
+				String modelURI = uri.trimFragment().toString();
+				
+				if (!missingModelURIs.contains(modelURI)) {
+					missingModelURIs.add(modelURI);
+					System.err.println(modelURI);
 				}
+			}
+		}
+	}
+	
+	protected Set<String> buildResourceSets(HistoryMetadata modelHistory) {
+		Set<String> missingURIs = new HashSet<>();
+		
+		File localRepositoryFolder = modelHistory.getDatafile().getParentFile();
+		File modelHistoryFolder = new File(
+				localRepositoryFolder.getAbsoluteFile()
+				+ File.separator + modelHistory.generateHistoryName());
+		modelHistoryFolder.mkdirs();
+		
+		// Build resource set for model versions: 
+		for (VersionMetadata modelVersion : modelHistory.getVersions()) {
+			buildResourceSet(modelVersion, modelHistoryFolder);
+		}
+		
+		return missingURIs;
+	}
+	
+	protected Set<String> buildResourceSet(VersionMetadata modelVersion, File modelHistoryFolder) {
+		EcoreHistoryURIHandlerResolve uriHandler = new EcoreHistoryURIHandlerResolve(modelFiles);
+		
+		// Resolve co-evolving model histories:
+		Set<HistoryMetadata> coevolvingModelHistories = new HashSet<>();
+		coevolvingModelHistories.add(modelVersion.getHistory());
+		
+		// Get co-evolving model versions:
+		// NOTE: We virtually update the resource set at the time one of the co-evolving resources changes.
+		List<Date> updateDates = new LinkedList<>();
+		updateDates.add(modelVersion.getParsedDate());
+		boolean foundMore = true;
+
+		while (foundMore) {
+			for (Date updateDate : updateDates) {
+				Set<VersionMetadata> versionSet = getRepositoryAtTime(updateDate, coevolvingModelHistories);
+				
+				// Resolve updated versions:
+				for (VersionMetadata coevolvingVersion : versionSet) {
+					resolveCoevolving(coevolvingVersion, uriHandler);
+					foundMore = coevolvingModelHistories.addAll(uriHandler.getCoevolvingHistories());
+				}
+				
+				for (HistoryMetadata coevolvingModelHistory : coevolvingModelHistories) {
+					updateDates = getCoevolvingVersions(coevolvingModelHistory, modelVersion)
+							.stream().map(VersionMetadata::getParsedDate).collect(Collectors.toList());
+				}
+			}
+		}
+		
+		// Deresolve co-evolving model histories:
+		Collections.sort(updateDates);
+		
+		for (Date updateDate : updateDates) {
+			String updateTimestamp = HistoryMetadata.DATE_ISO8601.format(updateDate).replace(":", "-");
+
+			File resourceSetVersionFolder = new File(
+					modelHistoryFolder.getAbsoluteFile() 
+					+ File.separator + modelVersion.generateVersionName() + "_update_" + updateTimestamp);
+			resourceSetVersionFolder.mkdirs();
+			
+			Set<VersionMetadata> versionSet = getRepositoryAtTime(updateDate, coevolvingModelHistories);
+			deresolveCoevolving(versionSet, resourceSetVersionFolder, uriHandler.getURIMapping());
+		} 
+		
+		return uriHandler.getMissingURIs();
+	}
+
+	protected void resolveCoevolving(VersionMetadata modelVersion, EcoreHistoryURIHandlerResolve uriHandler) {
+		
+		// Find co-evolving model histories:
+		File modelFile = modelVersion.getLocalFile();
+
+		try {
+			ResourceSetImpl resourceSet = new ResourceSetImpl();
+			resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, uriHandler);
+			resourceSet.getResource(URI.createFileURI(modelFile.getAbsolutePath()), true);
+		} catch (Exception e) {
+			// Try to reload the content:
+			try {
+				reloadModelContent(modelVersion);
+				ResourceSetImpl resourceSet = new ResourceSetImpl();
+				resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, uriHandler);
+				resourceSet.getResource(URI.createFileURI(modelFile.getAbsolutePath()), true);
+			} catch (Exception e2) {
+				e2.printStackTrace();
+				System.err.println(modelFile.getAbsolutePath());
+				throw e;
 			}
 		}
 		
 		if (!uriHandler.getMissingURIs().isEmpty()) {
-			System.err.println("Unresolved References: " + models.get(0).getParent());
+			System.err.println("Unresolved References: " + modelVersion.getLocalFilePath());
 		}
-		 
+	}
+	
+	protected void deresolveCoevolving(
+			Set<VersionMetadata> versionSet, 
+			File resourceSetVersionFolder,
+			Map<String, HistoryMetadata> uriMapping) {
+
+		// setup URI mapping:
+		EcoreHistoryURIHandlerDeresolve uriHandler = new EcoreHistoryURIHandlerDeresolve(uriMapping);
+		
+		for (VersionMetadata version : versionSet) {
+			uriHandler.getSelectedVersions().put(version.getHistory(), version);
+		}
+		
+		// Load resource set:
+		ResourceSet resourceSet = new ResourceSetImpl();
+		
+		for (VersionMetadata modelVersion : versionSet) {
+			File modelFile = modelVersion.getLocalFile();
+			
+			URI orignialURI = URI.createFileURI(modelFile.getAbsolutePath());
+			Resource modelResource = resourceSet.getResource(orignialURI, true);
+			
+			URI resolvedURI = URI.createFileURI(
+					resourceSetVersionFolder.getAbsolutePath()
+					+ "/" + modelVersion.getFileName());
+			modelResource.setURI(resolvedURI);
+		}
+		
 		// Save resolved models:
-		String folder = models.get(0).getParent() + "_resolved";
-		
-		for (Resource model : resourceSet.getResources()) {
-			if (!model.getURI().isEmpty()) {
-				String modelName = model.getURI().segment(model.getURI().segmentCount() - 1);
-				URI resolvedURI = URI.createFileURI(folder).appendSegment(modelName);
-				model.setURI(resolvedURI);
-			}
-		}
-		
 		for (Resource model : resourceSet.getResources()) {
 			try {
 				Map<String, Object> options = new HashMap<String, Object>();
@@ -220,63 +296,89 @@ public class EcoreHistoryResolverApplication implements IApplication {
 				e.printStackTrace();
 			}
 		}
-		
-		return uriHandler.getMissingURIs();
 	}
-	
-	protected void reloadModelContent(File model) throws IOException {
-		File datafile = new File(model.getParentFile().getParent() + "/" + model.getName() + ".json");
+
+	protected Set<VersionMetadata> getRepositoryAtTime(Date date, Set<HistoryMetadata> coevolvingModelHistories) {
+		Set<VersionMetadata> versionSet = new HashSet<>();
 		
-		if (datafile.exists()) {
-			HistoryMetadata history = new HistoryMetadata(datafile);
-			history.read();
-			String versionURL = null;
-
-			try {
-				// Automated reloading of content!
-				for (IRepositoryMiner miner : EcoreHistorySettings.getInstance().getMiners()) {
-					if (miner.supports(history.getRepositoryURL())) {
-						String folder = model.getParent();
-						String commit = folder.substring(folder.lastIndexOf("_") + 1, folder.length());
-						
-						versionURL = miner.getVersionURL(history.getRepositoryURL(), history.getLatestRemoteFilePath(), commit);
-						miner.mineVersion(history.getRepositoryURL(), history.getLatestRemoteFilePath(), commit, model.getAbsolutePath());
-
-						break;
-					}
-				}
-			} catch (IOException ioe) {
-				System.err.println(history.getLatestRemoteFilePath());
-				System.err.println(model.getAbsolutePath());
-				
-				if (versionURL != null) {
-					System.err.println(versionURL);
-				}
-				throw ioe;
+		for (HistoryMetadata coevolvingModelHistory : coevolvingModelHistories) {
+			VersionMetadata coevolvingVersion = coevolvingModelHistory.getVersionAtTime(date);
+			
+			if (coevolvingVersion != null) {
+				versionSet.add(coevolvingVersion);
+			} else {
+				// Fallback solution -> use oldest available version:
+				versionSet.add(coevolvingModelHistory.getVersions().get(coevolvingModelHistory.getVersions().size() - 1));
 			}
 		}
+		
+		return versionSet;
 	}
-
-	protected List<File> searchModels(File root) {
-		List<File> files = new ArrayList<>();
+	
+	protected List<VersionMetadata> getCoevolvingVersions(HistoryMetadata coevolvingModelHistory, VersionMetadata consideredModelVersion) {
+		List<VersionMetadata> coevolvingModelVersions = new ArrayList<>();
 		
-		FileFilter filter = new FileFilter() {
+		// Last co-evolving model versions:
+		VersionMetadata versionAtTime = coevolvingModelHistory.getVersionAtTime(consideredModelVersion.getParsedDate());
+		
+		if (versionAtTime != null) {
+			coevolvingModelVersions.add(versionAtTime);
+		} else {
+			// Fallback solution -> use oldest version:
+			coevolvingModelVersions.add(coevolvingModelHistory.getVersions().get(coevolvingModelHistory.getVersions().size() - 1));
+		}
+		
+		// Newer co-evolving model versions until next of considered model version:
+		VersionMetadata newerConsideredModelVersion = consideredModelVersion.getHistory().getNewerVersion(consideredModelVersion);
+		
+		Date currentConsideredDate = consideredModelVersion.getParsedDate();
+		Date newerConsideredDate = (newerConsideredModelVersion != null) ? newerConsideredModelVersion.getParsedDate() : null;
+		
+		
+		for (VersionMetadata coevolvingModelVersion : coevolvingModelHistory.getVersions()) {
+			Date coevolvingDate = coevolvingModelVersion.getParsedDate();
 			
-			@Override
-			public boolean accept(File pathname) {
-				if (!pathname.isDirectory()) {
-					if (pathname.getName().toLowerCase().endsWith(".ecore")) {
-						return true;
-					}
+			if (coevolvingDate.equals(currentConsideredDate) || coevolvingDate.after(currentConsideredDate)) {
+				if ((newerConsideredDate == null) || coevolvingDate.before(newerConsideredDate)) {
+					coevolvingModelVersions.add(coevolvingModelVersion);
 				}
-				return false;
 			}
-		};
+		}
 		
-		files.addAll(Arrays.asList(root.listFiles(filter)));
-		Collections.sort(files);
+		return coevolvingModelVersions;
+	}
+	
+	protected void reloadModelContent(VersionMetadata modelVersion) throws IOException {
+		HistoryMetadata modelHistory = modelVersion.getHistory();
+		File modelFile = modelVersion.getLocalFile();
+		String versionURL = null;
 
-		return files;
+		try {
+			// Automated reloading of content!
+			for (IRepositoryMiner miner : EcoreHistorySettings.getInstance().getMiners()) {
+				if (miner.supports(modelHistory.getRepositoryURL())) {
+					String folder = modelFile.getParent();
+					String commit = folder.substring(folder.lastIndexOf("_") + 1, folder.length());
+
+					versionURL = miner.getVersionURL(modelHistory.getRepositoryURL(), modelHistory.getLatestRemoteFilePath(), commit);
+					miner.mineVersion(
+							modelHistory.getRepositoryURL(), 
+							modelHistory.getLatestRemoteFilePath(), 
+							modelVersion.getCommit(), 
+							modelFile.getAbsolutePath());
+
+					break;
+				}
+			}
+		} catch (IOException ioe) {
+			System.err.println(modelHistory.getLatestRemoteFilePath());
+			System.err.println(modelFile.getAbsolutePath());
+
+			if (versionURL != null) {
+				System.err.println(versionURL);
+			}
+			throw ioe;
+		}
 	}
 
 	@Override

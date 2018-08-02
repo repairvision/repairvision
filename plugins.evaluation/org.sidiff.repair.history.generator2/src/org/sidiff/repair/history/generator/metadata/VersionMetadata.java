@@ -22,10 +22,16 @@ public class VersionMetadata {
 	
 	private JSONObject version = new JSONObject();
 	
+	private Date parsedDate;
+	
 	private HistoryMetadata history;
 	
 	public VersionMetadata(HistoryMetadata history) {
 		this.history = history;
+	}
+	
+	public String generateVersionName() {
+		return getDate().replace(":", "-") + "_" + getCommit();
 	}
 
 	public String getDate() {
@@ -33,12 +39,14 @@ public class VersionMetadata {
 	}
 	
 	public Date getParsedDate() {
-		try {
-			return HistoryMetadata.DATE_ISO8601.parse(getDate());
-		} catch (ParseException e) {
-			e.printStackTrace();
+		if (parsedDate == null) {
+			try {
+				this.parsedDate = HistoryMetadata.DATE_ISO8601.parse(getDate());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
-		return null;
+		return parsedDate;
 	}
 	
 	public void setDate(String date) {
@@ -83,6 +91,10 @@ public class VersionMetadata {
 	
 	public void setLocalFilePath(String localFilePath) {
 		version.put(key_localFilePath, localFilePath);
+	}
+	
+	public File getLocalFile() {
+		return new File(history.getDatafile().getParent() + File.separator + getLocalFilePath());
 	}
 	
 	public String getFileName() {

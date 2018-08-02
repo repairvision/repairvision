@@ -25,7 +25,6 @@ public class DataSetMetadata {
 	public DataSetMetadata(String localPath) {
 		for (File historyFile : searchMetadata(new File(localPath))) {
 			HistoryMetadata history = new HistoryMetadata(historyFile);
-			history.read();
 			histories.add(history);
 		}
 	}

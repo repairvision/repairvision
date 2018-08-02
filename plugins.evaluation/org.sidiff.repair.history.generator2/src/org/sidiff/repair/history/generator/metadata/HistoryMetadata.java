@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.sidiff.repair.history.generator.json.JSONObject;
 
@@ -35,8 +37,20 @@ public class HistoryMetadata {
 	
 	private List<VersionMetadata> versions = new ArrayList<>();
 	
+	public HistoryMetadata() {
+	}
+	
 	public HistoryMetadata(File datafile) {
 		this.datafile = datafile;
+		
+		if (datafile.exists()) {
+			read();
+		}
+	}
+	
+	public String generateHistoryName() {
+		VersionMetadata lastVersion = getVersions().get(0);
+		return new File(getLatestRemoteFilePath()).getName() + "_" + lastVersion.getCommit();
 	}
 	
 	public File getDatafile() {
@@ -132,8 +146,52 @@ public class HistoryMetadata {
 		return null;
 	}
 	
+	public VersionMetadata getOlderVersion(VersionMetadata version) {
+		int index = versions.indexOf(version);
+		
+		if (index != -1) {
+			if (versions.size() > (index + 1)) {
+				return versions.get(index + 1);
+			}
+		}
+		
+		return null;
+	}
+	
+	public VersionMetadata getNewerVersion(VersionMetadata version) {
+		int index = versions.indexOf(version);
+		
+		if (index != -1) {
+			if ((index - 1) >= 0) {
+				return versions.get(index - 1);
+			}
+		}
+		
+		return null;
+	}
+	
+	public VersionMetadata getVersionAtTime(Date date) {
+		VersionMetadata versionAtTime = null;
+		
+		for (VersionMetadata version : versions) {
+			Date versionDate = version.getParsedDate();
+			
+			if (versionDate.equals(date) || versionDate.before(date)) {
+				if ((versionAtTime == null) || (versionDate.after(versionAtTime.getParsedDate()))) {
+					versionAtTime = version;
+				}
+			}
+		}
+		
+		return versionAtTime;
+	}
+	
 	public String getLatestRemoteFilePath() {
 		return versions.get(0).getRemoteFilePath();
+	}
+	
+	public Set<String> getAllRemoteFilePath() {
+		return versions.stream().map(VersionMetadata::getRemoteFilePath).collect(Collectors.toSet());
 	}
 	
 	protected JSONObject getJSON() {
