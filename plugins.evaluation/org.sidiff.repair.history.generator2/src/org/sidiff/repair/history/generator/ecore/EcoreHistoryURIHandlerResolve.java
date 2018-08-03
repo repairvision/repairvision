@@ -50,13 +50,13 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 
 			for (HistoryMetadata history : modelFiles.get(modelName)) {
 				for (String remoteFilePath : history.getAllRemoteFilePath()) {
-					String searchedModel = uri.trimFragment().toString();
+					StringBuilder searchedModel = new StringBuilder(uri.trimFragment().toString()).reverse();
+					StringBuilder model = new StringBuilder(remoteFilePath).reverse();
 					
 					StringBuffer commonSubString = new StringBuffer();
-					int offset = searchedModel.length() - remoteFilePath.length();
-					
-					for (int i = searchedModel.length() - 1; (i - offset) >= 0; --i) {
-						if (searchedModel.charAt(i) == remoteFilePath.charAt(i - offset)) {
+
+					for (int i = 0; i < Math.min(searchedModel.length(), model.length()); ++i) {
+						if (searchedModel.charAt(i) == model.charAt(i)) {
 							commonSubString.append(searchedModel.charAt(i));
 						} else {
 							break;
