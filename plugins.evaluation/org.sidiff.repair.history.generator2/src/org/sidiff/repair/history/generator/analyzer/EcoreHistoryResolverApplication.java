@@ -267,6 +267,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		
 		// Load resource set:
 		ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, uriHandler);
 		
 		for (VersionMetadata modelVersion : versionSet) {
 			File modelFile = modelVersion.getLocalFile();
@@ -274,10 +275,13 @@ public class EcoreHistoryResolverApplication implements IApplication {
 			URI orignialURI = URI.createFileURI(modelFile.getAbsolutePath());
 			Resource modelResource = resourceSet.getResource(orignialURI, true);
 			
-			URI resolvedURI = URI.createFileURI(
+			URI targetURI = URI.createFileURI(
 					resourceSetVersionFolder.getAbsolutePath()
+//					+ "/" + modelVersion.getFileName() + "_" + modelVersion.getPathCompatibleDate());
 					+ "/" + modelVersion.getFileName());
-			modelResource.setURI(resolvedURI);
+			modelResource.setURI(targetURI);
+			
+			uriMapping.put(targetURI.toString(), modelVersion.getHistory());
 		}
 		
 		// Save resolved models:

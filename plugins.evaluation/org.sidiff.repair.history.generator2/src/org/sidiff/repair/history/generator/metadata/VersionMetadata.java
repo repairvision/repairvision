@@ -38,6 +38,10 @@ public class VersionMetadata {
 		return version.getString(key_date);
 	}
 	
+	public void setDate(String date) {
+		version.put(key_date, date);
+	}
+	
 	public Date getParsedDate() {
 		if (parsedDate == null) {
 			try {
@@ -49,8 +53,8 @@ public class VersionMetadata {
 		return parsedDate;
 	}
 	
-	public void setDate(String date) {
-		version.put(key_date, date);
+	public String getPathCompatibleDate() {
+		return getDate().replace(":", "-");
 	}
 
 	public String getCommit() {

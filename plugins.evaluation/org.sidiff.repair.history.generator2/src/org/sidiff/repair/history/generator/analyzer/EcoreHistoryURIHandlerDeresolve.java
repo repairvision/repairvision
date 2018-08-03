@@ -26,14 +26,26 @@ public class EcoreHistoryURIHandlerDeresolve extends URIHandlerImpl  {
 	
 	@Override
 	public URI deresolve(URI uri) {
+		URI deresolvedURI = uri.deresolve(baseURI, true, true, false);
 
+		// Local URI?
+		if (deresolvedURI.toString().startsWith("#")) {
+			return deresolvedURI;
+		}
+		
 		// Lookup URI in mapping:
-		if (uriMapping.containsKey(uri.toString())) {
-			VersionMetadata selectedVersion = selectedVersions.get(uriMapping.get(uri.toString()));
-			return URI.createURI(selectedVersion.getFileName()).appendFragment(uri.fragment());
+		if (uriMapping.containsKey(uri.trimFragment().toString())) {
+			VersionMetadata selectedVersion = selectedVersions.get(uriMapping.get(uri.trimFragment().toString()));
+			deresolvedURI = URI.createURI(selectedVersion.getFileName());
+			
+			if (uri.fragment() != null) {
+				deresolvedURI = deresolvedURI.appendFragment(uri.fragment());
+			}
+			
+			return deresolvedURI;
 		}
 
-		return super.resolve(uri);
+		return super.deresolve(uri);
 	}
 	
 	public Map<HistoryMetadata, VersionMetadata> getSelectedVersions() {

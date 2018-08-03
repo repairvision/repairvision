@@ -26,7 +26,7 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 	public URI resolve(URI uri) {
 
 		// Already resolved?:
-		if (uriMapping.containsKey(uri.toString())) {
+		if (uriMapping.containsKey(uri.trimFragment().toString())) {
 			return uri;
 		}
 		
@@ -71,7 +71,7 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 			}
 			
 			if (coevolvingHistory != null) {
-				uriMapping.put(uri.toString(), coevolvingHistory);
+				uriMapping.put(uri.trimFragment().toString(), coevolvingHistory);
 			}
 		} else {
 //			System.err.println(uri);
