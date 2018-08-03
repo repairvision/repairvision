@@ -31,7 +31,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 	private Set<String> repositoryFilter = new HashSet<>();
 	{
 		repositoryFilter.add("http://git.eclipse.org/c/acceleo/org.eclipse.acceleo.git"); // NOTE: Wrong URI: http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Integers in mtlnonstdlib.ecore at 2010-03-05T17-34-08Z e7b50a9df0c58a03a56b5dea4cbe476dbc32a9f6
-//		repositoryFilter.add("https://github.com/eclipse/b3");
+		repositoryFilter.add("https://github.com/eclipse/b3");
 		repositoryFilter.add("https://github.com/eclipse/birt");
 		repositoryFilter.add("http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git");
 		repositoryFilter.add("http://git.eclipse.org/c/buckminster/buckminster.git");
@@ -64,7 +64,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		repositoryFilter.add("http://git.eclipse.org/c/mdht/org.eclipse.mdht.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.atl.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvto.git");
-		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git"); // TODO
+//		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git"); // TODO
 		repositoryFilter.add("http://git.eclipse.org/c/modisco/org.eclipse.modisco.git");
 		repositoryFilter.add("http://git.eclipse.org/c/ocl/org.eclipse.ocl.git");
 		repositoryFilter.add("http://git.eclipse.org/c/ogee/org.eclipse.ogee.git");
@@ -187,10 +187,12 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		// NOTE: We virtually update the resource set at the time one of the co-evolving resources changes.
 		Set<Date> coevolutionDates = new HashSet<>();
 		coevolutionDates.add(modelVersion.getParsedDate());
-		boolean foundMore = true;
+		
+		List<Date> foundCoevolutionDates = new ArrayList<>();
+		foundCoevolutionDates.add(modelVersion.getParsedDate());
 
-		while (foundMore) {
-			foundMore = false;
+		while (!foundCoevolutionDates.isEmpty()) {
+			foundCoevolutionDates.clear();
 			
 			for (Date coevolutionDate : coevolutionDates) {
 				Set<VersionMetadata> coevolutionSet = getRepositoryAtTime(coevolutionDate, coevolvingModelHistories);
@@ -202,13 +204,13 @@ public class EcoreHistoryResolverApplication implements IApplication {
 					for (HistoryMetadata coevolvingModelHistory : uriHandler.getCoevolvingHistories()) {
 						if (!coevolvingModelHistories.contains(coevolvingModelHistory)) {
 							coevolvingModelHistories.add(coevolvingModelHistory);
-							foundMore = true;
-
-							coevolutionDates.addAll(getCoevolvingDates(coevolvingModelHistory, modelVersion));
+							foundCoevolutionDates.addAll(getCoevolvingDates(coevolvingModelHistory, modelVersion));
 						}
 					}
 				}
 			}
+			
+			coevolutionDates.addAll(foundCoevolutionDates);
 		}
 		
 		// Deresolve co-evolving model histories:
