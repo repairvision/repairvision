@@ -12,7 +12,7 @@ public class DataSetMetadata {
 	private List<HistoryMetadata> histories = new ArrayList<>();
 	
 	public static void main(String[] args) {
-		DataSetMetadata dataset = new DataSetMetadata("C:\\evaluation\\");
+		DataSetMetadata dataset = new DataSetMetadata("C:\\evaluation\\", true);
 		
 		for (HistoryMetadata history : dataset.getHistories()) {
 			System.out.println(history.getProjectName() 
@@ -22,9 +22,9 @@ public class DataSetMetadata {
 		}
 	}
 	
-	public DataSetMetadata(String localPath) {
+	public DataSetMetadata(String localPath, boolean onlyExistingVersions) {
 		for (File historyFile : searchMetadata(new File(localPath))) {
-			HistoryMetadata history = new HistoryMetadata(historyFile);
+			HistoryMetadata history = new HistoryMetadata(historyFile, onlyExistingVersions);
 			histories.add(history);
 		}
 	}

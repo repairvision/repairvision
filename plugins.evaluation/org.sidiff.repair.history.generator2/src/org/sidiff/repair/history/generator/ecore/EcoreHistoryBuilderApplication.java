@@ -8,7 +8,7 @@ public class EcoreHistoryBuilderApplication implements IApplication {
 
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		DataSetMetadata dataset = new DataSetMetadata("C:\\evaluation\\");
+		DataSetMetadata dataset = new DataSetMetadata("C:\\evaluation\\", true);
 		
 		return IApplication.EXIT_OK;
 	}

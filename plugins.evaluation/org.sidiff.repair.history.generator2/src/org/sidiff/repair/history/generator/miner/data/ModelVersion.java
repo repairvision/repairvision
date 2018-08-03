@@ -17,6 +17,8 @@ public class ModelVersion {
 	
 	private String author;
 	
+	private boolean exists = true;
+	
 	public ModelVersion(String gitPath, String commit, String date, String message, String author) {
 		this.file = gitPath;
 		this.commit = commit;
@@ -86,6 +88,14 @@ public class ModelVersion {
 	
 	public void setAuthor(String autor) {
 		this.author = autor;
+	}
+	
+	public boolean isExists() {
+		return exists;
+	}
+	
+	public void setExists(boolean exists) {
+		this.exists = exists;
 	}
 	
 	@Override

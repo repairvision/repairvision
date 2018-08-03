@@ -51,6 +51,7 @@ public class ModelHistory {
 			version.setCommit(modelVersion.getCommit());
 			version.setAuthor(modelVersion.getAuthor());
 			version.setMessage(modelVersion.getMessage());
+			version.setExists(modelVersion.isExists());
 			version.setRemoteFilePath(modelVersion.getRemotePath());
 			version.setLocalFilePath(modelVersion.getLocalPath() + modelVersion.getFileName());
 			
@@ -97,6 +98,8 @@ public class ModelHistory {
 							modelingProject.getRepository(), 
 							modelVersion.getRemotePath(), 
 							modelVersion.getCommit()));
+						
+						modelVersion.setExists(false);
 					}
 				}
 			}

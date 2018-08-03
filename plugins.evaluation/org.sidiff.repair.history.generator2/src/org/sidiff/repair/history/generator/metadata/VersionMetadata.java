@@ -17,6 +17,8 @@ public class VersionMetadata {
 	
 	private static final String key_message = "message";
 	
+	private static final String key_exists = "exists";
+	
 	private static final String key_remoteFilePath = "remoteFilePath";
 	
 	private static final String key_localFilePath = "localFilePath";
@@ -76,6 +78,14 @@ public class VersionMetadata {
 	
 	public void setMessage(String message) {
 		version.put(key_message, message);
+	}
+	
+	public boolean getExists() {
+		return version.getBoolean(key_exists);
+	}
+	
+	public void setExists(boolean exists) {
+		version.put(key_exists, exists);
 	}
 
 	public String getRemoteFilePath() {

@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -85,7 +84,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		DataSetMetadata dataset = new DataSetMetadata("C:\\evaluation\\");
+		DataSetMetadata dataset = new DataSetMetadata("C:\\evaluation\\", true);
 		
 		// Index model file names:
 		buildModelIndex(dataset);
@@ -186,46 +185,47 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		
 		// Get co-evolving model versions:
 		// NOTE: We virtually update the resource set at the time one of the co-evolving resources changes.
-		Set<Date> updateDates = new HashSet<>();
-		updateDates.add(modelVersion.getParsedDate());
+		Set<Date> coevolutionDates = new HashSet<>();
+		coevolutionDates.add(modelVersion.getParsedDate());
 		boolean foundMore = true;
 
 		while (foundMore) {
 			foundMore = false;
 			
-			for (Date updateDate : updateDates) {
-				Set<VersionMetadata> versionSet = getRepositoryAtTime(updateDate, coevolvingModelHistories);
+			for (Date coevolutionDate : coevolutionDates) {
+				Set<VersionMetadata> coevolutionSet = getRepositoryAtTime(coevolutionDate, coevolvingModelHistories);
 				
 				// Resolve updated versions:
-				for (VersionMetadata coevolvingVersion : versionSet) {
+				for (VersionMetadata coevolvingVersion : coevolutionSet) {
 					resolveCoevolving(coevolvingVersion, uriHandler);
-					boolean foundMoreForVersion = coevolvingModelHistories.addAll(uriHandler.getCoevolvingHistories());
-					foundMore = foundMore || foundMoreForVersion;
-				}
-				
-				for (HistoryMetadata coevolvingModelHistory : coevolvingModelHistories) {
-					updateDates = getCoevolvingVersions(coevolvingModelHistory, modelVersion)
-							.stream().map(VersionMetadata::getParsedDate).collect(Collectors.toSet());
+					
+					for (HistoryMetadata coevolvingModelHistory : uriHandler.getCoevolvingHistories()) {
+						if (!coevolvingModelHistories.contains(coevolvingModelHistory)) {
+							coevolvingModelHistories.add(coevolvingModelHistory);
+							foundMore = true;
+
+							coevolutionDates.addAll(getCoevolvingDates(coevolvingModelHistory, modelVersion));
+						}
+					}
 				}
 			}
 		}
 		
 		// Deresolve co-evolving model histories:
-		List<Date> updateDateList = new LinkedList<>(updateDates);
-		Collections.sort(updateDateList);
+		List<Date> coevolutionDateList = new LinkedList<>(coevolutionDates);
+		Collections.sort(coevolutionDateList);
 		
-		for (Date updateDate : updateDateList) {
-			String updateTimestamp = (updateDateList.size() > 1) 
-					? "_coevolution_" + EcoreHistorySettings.DATE_ISO8601.format(updateDate).replace(":", "-") 
+		for (Date coevolutionDate : coevolutionDateList) {
+			String coevolutionTimestamp = !(coevolutionDate.equals(modelVersion.getParsedDate()))
+					? "_coevolution_" + EcoreHistorySettings.DATE_ISO8601.format(coevolutionDate).replace(":", "-")
 					: "";
-			
-			File resourceSetVersionFolder = new File(
-					modelHistoryFolder.getAbsoluteFile() 
-					+ File.separator + EcoreHistorySettings.getInstance().generateVersionName(
-							modelVersion.getParsedDate(), modelVersion.getCommit()) +  updateTimestamp);
+
+			File resourceSetVersionFolder = new File(modelHistoryFolder.getAbsoluteFile() + File.separator
+					+ EcoreHistorySettings.getInstance().generateVersionName(modelVersion.getParsedDate(), modelVersion.getCommit())
+					+ coevolutionTimestamp);
 			resourceSetVersionFolder.mkdirs();
-			
-			Set<VersionMetadata> versionSet = getRepositoryAtTime(updateDate, coevolvingModelHistories);
+
+			Set<VersionMetadata> versionSet = getRepositoryAtTime(coevolutionDate, coevolvingModelHistories);
 			deresolveCoevolving(versionSet, resourceSetVersionFolder, uriHandler.getURIMapping());
 		} 
 		
@@ -326,32 +326,24 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		return versionSet;
 	}
 	
-	protected List<VersionMetadata> getCoevolvingVersions(HistoryMetadata coevolvingModelHistory, VersionMetadata consideredModelVersion) {
-		List<VersionMetadata> coevolvingModelVersions = new ArrayList<>();
+	protected List<Date> getCoevolvingDates(HistoryMetadata coevolvingModelHistory, VersionMetadata consideredModelVersion) {
+		List<Date> coevolvingModelVersions = new ArrayList<>();
 		
-		// Last co-evolving model versions:
-		VersionMetadata versionAtTime = coevolvingModelHistory.getVersionAtTime(consideredModelVersion.getParsedDate());
-		
-		if (versionAtTime != null) {
-			coevolvingModelVersions.add(versionAtTime);
-		} else {
-			// Fallback solution -> use oldest version:
-			coevolvingModelVersions.add(coevolvingModelHistory.getVersions().get(coevolvingModelHistory.getVersions().size() - 1));
-		}
-		
-		// Newer co-evolving model versions until next of considered model version:
-		VersionMetadata newerConsideredModelVersion = consideredModelVersion.getHistory().getNewerVersion(consideredModelVersion);
-		
-		Date currentConsideredDate = consideredModelVersion.getParsedDate();
-		Date newerConsideredDate = (newerConsideredModelVersion != null) ? newerConsideredModelVersion.getParsedDate() : null;
-		
-		
-		for (VersionMetadata coevolvingModelVersion : coevolvingModelHistory.getVersions()) {
-			Date coevolvingDate = coevolvingModelVersion.getParsedDate();
-			
-			if (coevolvingDate.equals(currentConsideredDate) || coevolvingDate.after(currentConsideredDate)) {
-				if ((newerConsideredDate == null) || coevolvingDate.before(newerConsideredDate)) {
-					coevolvingModelVersions.add(coevolvingModelVersion);
+		// Newer co-evolving model versions until next version of the considered model:
+		if (coevolvingModelHistory != consideredModelVersion.getHistory()) {
+			VersionMetadata newerConsideredModelVersion = consideredModelVersion.getHistory().getNewerVersion(consideredModelVersion);
+
+			Date currentConsideredDate = consideredModelVersion.getParsedDate();
+			Date newerConsideredDate = (newerConsideredModelVersion != null) ? newerConsideredModelVersion.getParsedDate() : null;
+
+			for (VersionMetadata coevolvingModelVersion : coevolvingModelHistory.getVersions()) {
+				Date coevolvingDate = coevolvingModelVersion.getParsedDate();
+
+				if (coevolvingDate.equals(currentConsideredDate) || coevolvingDate.after(currentConsideredDate)) {
+					// NOTE: null -> considered model version is the newest version.
+					if ((newerConsideredDate == null) || coevolvingDate.before(newerConsideredDate)) {
+						coevolvingModelVersions.add(coevolvingModelVersion.getParsedDate());
+					}
 				}
 			}
 		}

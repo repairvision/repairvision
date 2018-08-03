@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,11 +38,11 @@ public class HistoryMetadata {
 	public HistoryMetadata() {
 	}
 	
-	public HistoryMetadata(File datafile) {
+	public HistoryMetadata(File datafile, boolean onlyExistingVersions) {
 		this.datafile = datafile;
 		
 		if (datafile.exists()) {
-			read();
+			read(onlyExistingVersions);
 		}
 	}
 	
@@ -53,7 +54,7 @@ public class HistoryMetadata {
 		this.datafile = datafile;
 	}
 	
-	public void read() {
+	public void read(boolean onlyExistingVersions) {
 		try {
 			history = new JSONObject(new String(Files.readAllBytes(Paths.get(datafile.getAbsolutePath()))));
 			
@@ -63,6 +64,16 @@ public class HistoryMetadata {
 					VersionMetadata version = new VersionMetadata(this);
 					version.setJSON(versionJSON);
 					versions.add(version);
+				}
+			}
+			
+			if (onlyExistingVersions) {
+				for (Iterator<VersionMetadata> iterator = versions.iterator(); iterator.hasNext();) {
+					VersionMetadata version = (VersionMetadata) iterator.next();
+					
+					if (!version.getExists()) {
+						iterator.remove();
+					}
 				}
 			}
 		}catch (Exception e) {

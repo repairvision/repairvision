@@ -22,7 +22,7 @@ public class EcoreHistoryValidationApplication implements IApplication  {
 
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		DataSetMetadata dataset = new DataSetMetadata("C:\\evaluation\\");
+		DataSetMetadata dataset = new DataSetMetadata("C:\\evaluation\\", true);
 		Set<String> validationNames = new HashSet<>();
 		int inconsistencyCount = 0;
 		int inconsistentModels = 0;
