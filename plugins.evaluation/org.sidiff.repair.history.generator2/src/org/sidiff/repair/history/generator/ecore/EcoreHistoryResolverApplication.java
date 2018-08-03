@@ -1,4 +1,4 @@
-package org.sidiff.repair.history.generator.analyzer;
+package org.sidiff.repair.history.generator.ecore;
 
 import java.io.File;
 import java.io.IOException;
@@ -166,7 +166,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		File localRepositoryFolder = modelHistory.getDatafile().getParentFile();
 		File modelHistoryFolder = new File(
 				localRepositoryFolder.getAbsoluteFile()
-				+ File.separator + modelHistory.generateHistoryName());
+				+ File.separator + EcoreHistorySettings.getInstance().generateHistoryName(modelHistory.getLatestRemoteFilePath()));
 		modelHistoryFolder.mkdirs();
 		
 		// Build resource set for model versions: 
@@ -186,36 +186,43 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		
 		// Get co-evolving model versions:
 		// NOTE: We virtually update the resource set at the time one of the co-evolving resources changes.
-		List<Date> updateDates = new LinkedList<>();
+		Set<Date> updateDates = new HashSet<>();
 		updateDates.add(modelVersion.getParsedDate());
 		boolean foundMore = true;
 
 		while (foundMore) {
+			foundMore = false;
+			
 			for (Date updateDate : updateDates) {
 				Set<VersionMetadata> versionSet = getRepositoryAtTime(updateDate, coevolvingModelHistories);
 				
 				// Resolve updated versions:
 				for (VersionMetadata coevolvingVersion : versionSet) {
 					resolveCoevolving(coevolvingVersion, uriHandler);
-					foundMore = coevolvingModelHistories.addAll(uriHandler.getCoevolvingHistories());
+					boolean foundMoreForVersion = coevolvingModelHistories.addAll(uriHandler.getCoevolvingHistories());
+					foundMore = foundMore || foundMoreForVersion;
 				}
 				
 				for (HistoryMetadata coevolvingModelHistory : coevolvingModelHistories) {
 					updateDates = getCoevolvingVersions(coevolvingModelHistory, modelVersion)
-							.stream().map(VersionMetadata::getParsedDate).collect(Collectors.toList());
+							.stream().map(VersionMetadata::getParsedDate).collect(Collectors.toSet());
 				}
 			}
 		}
 		
 		// Deresolve co-evolving model histories:
-		Collections.sort(updateDates);
+		List<Date> updateDateList = new LinkedList<>(updateDates);
+		Collections.sort(updateDateList);
 		
-		for (Date updateDate : updateDates) {
-			String updateTimestamp = HistoryMetadata.DATE_ISO8601.format(updateDate).replace(":", "-");
-
+		for (Date updateDate : updateDateList) {
+			String updateTimestamp = (updateDateList.size() > 1) 
+					? "_coevolution_" + EcoreHistorySettings.DATE_ISO8601.format(updateDate).replace(":", "-") 
+					: "";
+			
 			File resourceSetVersionFolder = new File(
 					modelHistoryFolder.getAbsoluteFile() 
-					+ File.separator + modelVersion.generateVersionName() + "_update_" + updateTimestamp);
+					+ File.separator + EcoreHistorySettings.getInstance().generateVersionName(
+							modelVersion.getParsedDate(), modelVersion.getCommit()) +  updateTimestamp);
 			resourceSetVersionFolder.mkdirs();
 			
 			Set<VersionMetadata> versionSet = getRepositoryAtTime(updateDate, coevolvingModelHistories);

@@ -1,6 +1,9 @@
 package org.sidiff.repair.history.generator.miner.data;
 
 import java.io.File;
+import java.text.ParseException;
+
+import org.sidiff.repair.history.generator.ecore.EcoreHistorySettings;
 
 public class ModelVersion {
 	
@@ -31,7 +34,14 @@ public class ModelVersion {
 	}
 	
 	public String getLocalPath() {
-		return "/" + getDate().replace(":", "-") + "_" + getCommit() + "/";
+		try {
+			return EcoreHistorySettings.getInstance().generateVersionName(
+					EcoreHistorySettings.DATE_ISO8601.parse(date), commit) 
+					+ "/" + new File(file).getParent() + "/";
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public String getFileName() {

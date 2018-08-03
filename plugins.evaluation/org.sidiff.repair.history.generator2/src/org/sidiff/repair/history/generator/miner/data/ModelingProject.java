@@ -59,12 +59,12 @@ public class ModelingProject {
 		// mine model files:
 		if (mineModelFiles) {
 			
-			// mine revisions relative to other models:
-			for (ModelHistory modelHistory : modelHistories) {
-				for (ModelHistory otherModelHistory : modelHistories) {
-					otherModelHistory.addVersionsFromOtherModel(modelHistory.getVersions());
-				}
-			}
+//			// mine revisions relative to other models:
+//			for (ModelHistory modelHistory : modelHistories) {
+//				for (ModelHistory otherModelHistory : modelHistories) {
+//					otherModelHistory.addVersionsFromOtherModel(modelHistory.getVersions());
+//				}
+//			}
 			
 			// mine files:
 			for (ModelHistory modelHistory : modelHistories) {

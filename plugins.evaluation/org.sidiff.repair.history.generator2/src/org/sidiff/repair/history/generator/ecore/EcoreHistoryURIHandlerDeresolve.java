@@ -1,4 +1,4 @@
-package org.sidiff.repair.history.generator.analyzer;
+package org.sidiff.repair.history.generator.ecore;
 
 import java.util.HashMap;
 import java.util.Map;

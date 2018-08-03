@@ -1,15 +1,18 @@
-package org.sidiff.repair.history.generator.miner;
+package org.sidiff.repair.history.generator.ecore;
 
-import org.sidiff.repair.history.generator.analyzer.EcoreHistorySettings;
+import org.eclipse.equinox.app.IApplication;
+import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.repair.history.generator.miner.data.ModelingDataSet;
 
-public class EcoreHistoryMiningApplication {
+public class EcoreHistoryMiningApplication implements IApplication {
 	
-	public static void main(String[] args) {
-		new EcoreHistoryMiningApplication("C:\\evaluation\\");
+	@Override
+	public Object start(IApplicationContext context) throws Exception {
+		start("C:\\evaluation\\");
+		return IApplication.EXIT_OK;
 	}
 	
-	public EcoreHistoryMiningApplication(String localPath) {
+	public void start(String localPath) {
 		
 //		####################################################################################################
 //		2017-09-18
@@ -50,7 +53,7 @@ public class EcoreHistoryMiningApplication {
 				"/plugins/org.eclipse.uml2.uml/model/CMOF24.ecore",
 				"/plugins/org.eclipse.uml2.uml/model/CMOF241.ecore",
 				"/plugins/org.eclipse.uml2.uml/model/UML30.ecore");
-		
+	
 		// https://projects.eclipse.org/projects/modeling.emft.emf-store/developer
 		dataSet.addProject(localPath, "modeling.emft.emf-store", 
 				"http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git",
@@ -628,7 +631,7 @@ public class EcoreHistoryMiningApplication {
 				"https://projects.eclipse.org/projects/science.eavp",
 				
 				"/org.eclipse.eavp.geometry.view.model/model/org.eclipse.eavp.geometry.view.model.ecore");
-		
+	
 		// https://projects.eclipse.org/projects/modeling.emf.emf/developer
 		dataSet.addProject(localPath, "modeling.emf.emf", 
 				"https://git.eclipse.org/c/emf/org.eclipse.emf.git",
@@ -726,5 +729,10 @@ public class EcoreHistoryMiningApplication {
 //	    "projectName": "www.eclipse.org", 
 //	    "repositoryName": "epsilon.git", 
 
+	}
+
+
+	@Override
+	public void stop() {
 	}
 }

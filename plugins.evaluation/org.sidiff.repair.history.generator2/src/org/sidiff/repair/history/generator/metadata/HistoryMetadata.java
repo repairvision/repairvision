@@ -5,19 +5,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.sidiff.repair.history.generator.ecore.EcoreHistorySettings;
 import org.sidiff.repair.history.generator.json.JSONObject;
 
 public class HistoryMetadata {
-	
-	public static final DateFormat DATE_ISO8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
 	private static final String key_date = "date";
 	
@@ -48,11 +45,6 @@ public class HistoryMetadata {
 		}
 	}
 	
-	public String generateHistoryName() {
-		VersionMetadata lastVersion = getVersions().get(0);
-		return new File(getLatestRemoteFilePath()).getName() + "_" + lastVersion.getCommit();
-	}
-	
 	public File getDatafile() {
 		return datafile;
 	}
@@ -81,7 +73,7 @@ public class HistoryMetadata {
 	public void write() {
 		
 		// write meta data per model:
-		history.put(key_date, DATE_ISO8601.format(new Date()));
+		history.put(key_date, EcoreHistorySettings.DATE_ISO8601.format(new Date()));
 		history.put(key_versions, versions.size());
 		
 		for (VersionMetadata modelVersion : versions) {

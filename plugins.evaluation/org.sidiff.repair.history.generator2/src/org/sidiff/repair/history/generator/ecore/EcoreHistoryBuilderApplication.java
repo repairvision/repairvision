@@ -1,4 +1,4 @@
-package org.sidiff.repair.history.generator.analyzer;
+package org.sidiff.repair.history.generator.ecore;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;

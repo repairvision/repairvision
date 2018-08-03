@@ -2,24 +2,35 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         id="org.sidiff.repair.history.generator.resolver.ecore"
+         id="org.sidiff.repair.history.generator.ecore.resolver"
          point="org.eclipse.core.runtime.applications">
       <application
             thread="main"
             visible="true">
          <run
-               class="org.sidiff.repair.history.generator.analyzer.EcoreHistoryResolverApplication">
+               class="org.sidiff.repair.history.generator.ecore.EcoreHistoryResolverApplication">
          </run>
       </application>
    </extension>
    <extension
-         id="org.sidiff.repair.history.generator.validation.ecore"
+         id="org.sidiff.repair.history.generator.ecore.validation"
          point="org.eclipse.core.runtime.applications">
       <application
             thread="main"
             visible="true">
          <run
-               class="org.sidiff.repair.history.generator.analyzer.EcoreHistoryValidationApplication">
+               class="org.sidiff.repair.history.generator.ecore.EcoreHistoryValidationApplication">
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="org.sidiff.repair.history.generator.ecore.mining"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            thread="main"
+            visible="true">
+         <run
+               class="org.sidiff.repair.history.generator.ecore.EcoreHistoryMiningApplication">
          </run>
       </application>
    </extension>

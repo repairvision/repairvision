@@ -1,4 +1,4 @@
-package org.sidiff.repair.history.generator.analyzer;
+package org.sidiff.repair.history.generator.ecore;
 
 import java.io.File;
 import java.util.Collection;

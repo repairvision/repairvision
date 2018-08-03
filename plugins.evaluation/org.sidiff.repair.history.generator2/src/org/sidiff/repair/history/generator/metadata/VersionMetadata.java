@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.ParseException;
 import java.util.Date;
 
+import org.sidiff.repair.history.generator.ecore.EcoreHistorySettings;
 import org.sidiff.repair.history.generator.json.JSONObject;
 
 public class VersionMetadata {
@@ -30,10 +31,6 @@ public class VersionMetadata {
 		this.history = history;
 	}
 	
-	public String generateVersionName() {
-		return getDate().replace(":", "-") + "_" + getCommit();
-	}
-
 	public String getDate() {
 		return version.getString(key_date);
 	}
@@ -45,7 +42,7 @@ public class VersionMetadata {
 	public Date getParsedDate() {
 		if (parsedDate == null) {
 			try {
-				this.parsedDate = HistoryMetadata.DATE_ISO8601.parse(getDate());
+				this.parsedDate = EcoreHistorySettings.DATE_ISO8601.parse(getDate());
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}

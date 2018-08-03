@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.sidiff.repair.history.generator.ecore.EcoreHistorySettings;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
@@ -56,7 +57,7 @@ public class ModelHistory {
 			history.getVersions().add(version);
 		}
 		
-		File metafile = new File(modelingProject.getLocalPath() + "/" +  history.generateHistoryName() + ".json");
+		File metafile = new File(modelingProject.getLocalPath() + "/" +  EcoreHistorySettings.getInstance().generateHistoryName(file) + ".json");
 		history.setDatafile(metafile);
 		history.write();
 	}

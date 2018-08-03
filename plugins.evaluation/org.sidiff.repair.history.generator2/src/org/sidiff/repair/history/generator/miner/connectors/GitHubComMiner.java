@@ -10,7 +10,7 @@ import java.util.List;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
+import org.sidiff.repair.history.generator.ecore.EcoreHistorySettings;
 import org.sidiff.repair.history.generator.miner.data.ModelVersion;
 
 public class GitHubComMiner extends AbstractRepositoryMiner  {
@@ -57,11 +57,7 @@ public class GitHubComMiner extends AbstractRepositoryMiner  {
 	}
 	
 	@Override
-	public List<ModelVersion> mineHistory(String repositoryURL, String remotePath) {
-		return internal_mineHistory(getHistoryURL(repositoryURL, remotePath), remotePath);
-	}
-
-	private List<ModelVersion> internal_mineHistory(String fullURL, String fileURL) {
+	protected List<ModelVersion> internal_mineHistory(String fullURL, String fileURL) {
 		List<ModelVersion> versions = new ArrayList<>();
 		
 		try {
@@ -78,7 +74,7 @@ public class GitHubComMiner extends AbstractRepositoryMiner  {
 //					System.out.println("commit: " + commit);
 
 					Date parsedDate = DATE_ISO8601.parse(link.parent().parent().selectFirst("relative-time").attr("datetime"));
-					String date = HistoryMetadata.DATE_ISO8601.format(parsedDate);
+					String date = EcoreHistorySettings.DATE_ISO8601.format(parsedDate);
 //					System.out.println("date: " + date);
 					
 					String message = link.parent().parent().children().get(0).children().get(0).selectFirst("a[title]").attr("title");

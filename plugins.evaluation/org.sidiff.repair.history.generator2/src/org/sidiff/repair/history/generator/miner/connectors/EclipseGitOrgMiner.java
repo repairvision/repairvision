@@ -1,20 +1,16 @@
 package org.sidiff.repair.history.generator.miner.connectors;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
+import org.sidiff.repair.history.generator.ecore.EcoreHistorySettings;
 import org.sidiff.repair.history.generator.miner.data.ModelVersion;
 
 public class EclipseGitOrgMiner extends AbstractRepositoryMiner {
@@ -65,13 +61,9 @@ public class EclipseGitOrgMiner extends AbstractRepositoryMiner {
 	public String getHistoryURL(String repositoryURL, String remotePath) {
 		return repositoryURL + URL_LOG + remotePath;
 	}
-	
-	@Override
-	public List<ModelVersion> mineHistory(String repositoryURL, String remotePath) {
-		return internal_mineHistory(getHistoryURL(repositoryURL, remotePath), remotePath);
-	}
 
-	private List<ModelVersion> internal_mineHistory(String fullURL, String fileURL) {
+	@Override
+	protected List<ModelVersion> internal_mineHistory(String fullURL, String fileURL) {
 		List<ModelVersion> versions = new ArrayList<>();
 		
 		try {
@@ -94,7 +86,7 @@ public class EclipseGitOrgMiner extends AbstractRepositoryMiner {
 					Element tableRow = RepositoryMinerUtil.getParentNode(versionLink, "tr");
 
 					Date parsedDate = DATE_RFC822.parse(tableRow.select("span[title]").attr("title"));
-					String date = HistoryMetadata.DATE_ISO8601.format(parsedDate);
+					String date = EcoreHistorySettings.DATE_ISO8601.format(parsedDate);
 //					System.out.println("date: " + date);
 					
 					String message = tableRow.children().get(1).text();
@@ -144,12 +136,5 @@ public class EclipseGitOrgMiner extends AbstractRepositoryMiner {
 	@Override
 	public String getVersionURL(String repositoryURL, String remotePath, String commit) {
 		return repositoryURL + URL_PLAIN + remotePath + URL_ID + commit;
-	}
-
-	public static String readStringFromURL(String requestURL) throws IOException {
-		try (Scanner scanner = new Scanner(new URL(requestURL).openStream(), StandardCharsets.UTF_8.toString())) {
-			scanner.useDelimiter("\\A");
-			return scanner.hasNext() ? scanner.next() : "";
-		}
 	}
 }
