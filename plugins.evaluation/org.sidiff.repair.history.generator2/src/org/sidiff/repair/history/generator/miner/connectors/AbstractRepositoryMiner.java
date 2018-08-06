@@ -9,13 +9,13 @@ import java.nio.channels.ReadableByteChannel;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.XMLResource.URIHandler;
 import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.sidiff.repair.history.generator.miner.data.ModelVersion;
+import org.sidiff.repair.history.generator.util.HistoryUtil;
 
 public abstract class AbstractRepositoryMiner implements IRepositoryMiner {
 	
@@ -70,7 +70,7 @@ public abstract class AbstractRepositoryMiner implements IRepositoryMiner {
 	}
 
 	@Override
-	public void mineVersion(String repositoryURL, String remotePath, String commit, String localPath) throws FileNotFoundException {
+	public void mineVersion(String repositoryURL, String remotePath, String commit, String localPath) throws FileNotFoundException, Exception {
 		String plainTextVersionURL = getVersionURL(repositoryURL, remotePath, commit);
 		Exception exception = null;
 		
@@ -92,16 +92,16 @@ public abstract class AbstractRepositoryMiner implements IRepositoryMiner {
 				fos.close();
 				
 				// try to load model without exceptions:
-				ResourceSet resourceSet = new ResourceSetImpl();
-				resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, new URIHandlerImpl() {
+				URIHandler uriHandler = new URIHandlerImpl() {
 					public URI resolve(URI uri) {
 						return uri;
 					}
 					public URI deresolve(URI uri) {
 						return uri;
 					}
-				});
-				resourceSet.getResource(URI.createFileURI(outputFile.getAbsolutePath()), true);
+				};
+				
+				HistoryUtil.load(new ResourceSetImpl(), URI.createFileURI(outputFile.getAbsolutePath()), uriHandler);
 				
 				exception = null;
 				break;
@@ -113,8 +113,7 @@ public abstract class AbstractRepositoryMiner implements IRepositoryMiner {
 		}
 
 		if (exception != null) {
-			exception.printStackTrace();
-			System.err.println("Exception: " + plainTextVersionURL);
+			throw exception;
 		}
 	}
 	

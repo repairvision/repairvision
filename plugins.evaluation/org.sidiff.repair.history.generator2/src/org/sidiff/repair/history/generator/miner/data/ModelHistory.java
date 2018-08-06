@@ -2,10 +2,7 @@ package org.sidiff.repair.history.generator.miner.data;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.sidiff.repair.history.generator.ecore.EcoreHistorySettings;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
@@ -21,8 +18,6 @@ public class ModelHistory {
 	private String file;
 	
 	private List<ModelVersion> versions;
-	
-	private List<ModelVersion> additionalVersions = new ArrayList<>();
 	
 	public ModelHistory(ModelingProject modelingProject, String file) {
 		this.modelingProject = modelingProject;
@@ -68,39 +63,32 @@ public class ModelHistory {
 		
 	}
 	
-	public void addVersionsFromOtherModel(List<ModelVersion> otherModels) {
-		Set<String> commits = versions.stream().map(ModelVersion::getCommit).collect(Collectors.toSet());
-		
-		for (ModelVersion otherModel : otherModels) {
-			if (!commits.contains(otherModel.getCommit())) {
-				ModelVersion otherModelVersion = new ModelVersion(file, otherModel);
-				versions.add(otherModelVersion);
-				additionalVersions.add(otherModelVersion);
-			}
-		}
-	}
-	
 	public void mineVersionFiles(IRepositoryMiner miner) {
 		for (ModelVersion modelVersion : versions) {
 			File outputFolder = new File(modelingProject.getLocalPath() + modelVersion.getLocalPath());
 			File outputFile = new File(outputFolder + "/" + modelVersion.getFileName());
 			
 			if (!update || !outputFile.exists()) {
+				modelVersion.setExists(false);
+				
 				try {
 					miner.mineVersion(
 							modelingProject.getRepository(), 
 							modelVersion.getRemotePath(), 
 							modelVersion.getCommit(), 
 							outputFile.getAbsolutePath());
+					modelVersion.setExists(true);
 				} catch (FileNotFoundException fnfe) {
-					if (!additionalVersions.contains(modelVersion)) {
-						System.err.println("(Warning!) File not found: " + miner.getVersionURL(
+					System.err.println("(Warning!) File not found: " + miner.getVersionURL(
 							modelingProject.getRepository(), 
 							modelVersion.getRemotePath(), 
 							modelVersion.getCommit()));
-						
-						modelVersion.setExists(false);
-					}
+				} catch(Exception e) {
+					System.err.println("Exception: " +miner.getVersionURL(
+							modelingProject.getRepository(), 
+							modelVersion.getRemotePath(), 
+							modelVersion.getCommit()));
+					e.printStackTrace();
 				}
 			}
 		}

@@ -23,6 +23,7 @@ import org.sidiff.repair.history.generator.metadata.DataSetMetadata;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
+import org.sidiff.repair.history.generator.util.HistoryUtil;
 
 public class EcoreHistoryResolverApplication implements IApplication {
 	
@@ -30,56 +31,58 @@ public class EcoreHistoryResolverApplication implements IApplication {
 	
 	private Set<String> repositoryFilter = new HashSet<>();
 	{
-		repositoryFilter.add("http://git.eclipse.org/c/acceleo/org.eclipse.acceleo.git"); // NOTE: Wrong URI: http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Integers in mtlnonstdlib.ecore at 2010-03-05T17-34-08Z e7b50a9df0c58a03a56b5dea4cbe476dbc32a9f6
-		repositoryFilter.add("https://github.com/eclipse/b3");
 		repositoryFilter.add("https://github.com/eclipse/birt");
-		repositoryFilter.add("http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git");
-		repositoryFilter.add("http://git.eclipse.org/c/buckminster/buckminster.git");
+		repositoryFilter.add("http://git.eclipse.org/c/datatools/org.eclipse.datatools.git");
+		repositoryFilter.add("http://git.eclipse.org/c/platform/eclipse.platform.ui.git");
+		repositoryFilter.add("http://git.eclipse.org/c/eatop/org.eclipse.eatop.git");
+		repositoryFilter.add("http://git.eclipse.org/c/eef/org.eclipse.eef.git");
+		repositoryFilter.add("https://github.com/eclipse/elk");
+		repositoryFilter.add("http://git.eclipse.org/c/cdo/cdo.git");
 		repositoryFilter.add("http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.coevolution.git");
 		repositoryFilter.add("http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.core.git");
 		repositoryFilter.add("http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patch.git");
 		repositoryFilter.add("http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patterns.git");
-		repositoryFilter.add("http://git.eclipse.org/c/datatools/org.eclipse.datatools.git");
-		repositoryFilter.add("https://github.com/eclipse/dltk.javascript");
-		repositoryFilter.add("http://git.eclipse.org/c/dltk/org.eclipse.dltk.core.git");
-		repositoryFilter.add("http://git.eclipse.org/c/camf/org.eclipse.camf.git");
-		repositoryFilter.add("http://git.eclipse.org/c/cdo/cdo.git");
-		repositoryFilter.add("https://github.com/eclipse/eavp");
-		repositoryFilter.add("http://git.eclipse.org/c/eef/org.eclipse.eef.git");
-		repositoryFilter.add("http://git.eclipse.org/c/epsilon/org.eclipse.epsilon.git");
-		repositoryFilter.add("http://git.eclipse.org/c/emfclient/org.eclipse.emf.ecp.core.git");
-		repositoryFilter.add("http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git");
+		repositoryFilter.add("http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patterns.git");
+		repositoryFilter.add("http://git.eclipse.org/c/diffmerge/org.eclipse.emf.diffmerge.patterns.git");
+		repositoryFilter.add("http://git.eclipse.org/c/egf/org.eclipse.emf.egf.git");
+		repositoryFilter.add("https://git.eclipse.org/c/emf/org.eclipse.emf.git");
 		repositoryFilter.add("http://git.eclipse.org/c/emfcompare/org.eclipse.emf.compare.git");
 		repositoryFilter.add("http://git.eclipse.org/c/edapt/org.eclipse.emf.edapt.git");
-		repositoryFilter.add("https://git.eclipse.org/c/emf/org.eclipse.emf.git");
-		repositoryFilter.add("https://github.com/eclipse/elk");
-		repositoryFilter.add("http://git.eclipse.org/c/eatop/org.eclipse.eatop.git");
-		repositoryFilter.add("http://git.eclipse.org/c/egf/org.eclipse.emf.egf.git");
-		repositoryFilter.add("http://git.eclipse.org/c/gmf-tooling/org.eclipse.gmf-tooling.git");
-		repositoryFilter.add("http://git.eclipse.org/c/gmf-notation/org.eclipse.gmf.notation.git");
-		repositoryFilter.add("https://github.com/eclipse/gmp.graphiti");
-		repositoryFilter.add("http://git.eclipse.org/c/fmc/org.eclipse.fmc.core.git");
+		repositoryFilter.add("http://git.eclipse.org/c/emfclient/org.eclipse.emf.ecp.core.git");
+		repositoryFilter.add("http://git.eclipse.org/c/emf-store/org.eclipse.emf.emfstore.core.git");
 		repositoryFilter.add("http://git.eclipse.org/c/henshin/org.eclipse.emft.henshin.git");
+		repositoryFilter.add("http://git.eclipse.org/c/texo/org.eclipse.emf.texo.git");
+		repositoryFilter.add("https://github.com/eclipse/wazaabi");
+		repositoryFilter.add("http://git.eclipse.org/c/epsilon/org.eclipse.epsilon.git");
+		repositoryFilter.add("http://git.eclipse.org/c/fmc/org.eclipse.fmc.core.git");
+		repositoryFilter.add("http://git.eclipse.org/c/gmf-notation/org.eclipse.gmf.notation.git");
+		repositoryFilter.add("http://git.eclipse.org/c/gmf-tooling/org.eclipse.gmf-tooling.git");
+		repositoryFilter.add("https://github.com/eclipse/gmp.graphiti");
+		repositoryFilter.add("http://git.eclipse.org/c/acceleo/org.eclipse.acceleo.git"); // NOTE: Wrong URI: http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Integers in mtlnonstdlib.ecore at 2010-03-05T17-34-08Z e7b50a9df0c58a03a56b5dea4cbe476dbc32a9f6
 		repositoryFilter.add("http://git.eclipse.org/c/m2t/org.eclipse.xpand.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mdht/org.eclipse.mdht.git");
-		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.atl.git");
-		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvto.git");
-//		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git"); // TODO
+		repositoryFilter.add("http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git");
 		repositoryFilter.add("http://git.eclipse.org/c/modisco/org.eclipse.modisco.git");
 		repositoryFilter.add("http://git.eclipse.org/c/ocl/org.eclipse.ocl.git");
-		repositoryFilter.add("http://git.eclipse.org/c/ogee/org.eclipse.ogee.git");
 		repositoryFilter.add("http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git");
-		repositoryFilter.add("http://git.eclipse.org/c/platform/eclipse.platform.ui.git");
-		repositoryFilter.add("http://git.eclipse.org/c/pmf/org.eclipse.pmf.git");
 		repositoryFilter.add("http://git.eclipse.org/c/rmf/org.eclipse.rmf.git");
 		repositoryFilter.add("http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git");
-		repositoryFilter.add("http://git.eclipse.org/c/sirius/org.eclipse.sirius.git");
-		repositoryFilter.add("http://git.eclipse.org/c/stem/org.eclipse.stem.git"); // NOTE: Incomplete Commit: 2011-07-15T19-30-57Z fe05cad1c20c9a3490ac2b263910dc769ac12112
-		repositoryFilter.add("http://git.eclipse.org/c/texo/org.eclipse.emf.texo.git");
 		repositoryFilter.add("http://git.eclipse.org/c/uml2/org.eclipse.uml2.git");
-		repositoryFilter.add("https://github.com/eclipse/wazaabi");
+		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.atl.git");
+		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git");
+		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvto.git");
+		repositoryFilter.add("http://git.eclipse.org/c/pmf/org.eclipse.pmf.git");
+		repositoryFilter.add("http://git.eclipse.org/c/sirius/org.eclipse.sirius.git");
 		repositoryFilter.add("https://github.com/eclipse/xtext-core");
 		repositoryFilter.add("https://github.com/eclipse/xtext-extras");
+		repositoryFilter.add("https://github.com/eclipse/eavp");
+		repositoryFilter.add("http://git.eclipse.org/c/camf/org.eclipse.camf.git");
+		repositoryFilter.add("https://github.com/eclipse/b3");
+		repositoryFilter.add("http://git.eclipse.org/c/dltk/org.eclipse.dltk.core.git");
+		repositoryFilter.add("https://github.com/eclipse/dltk.javascript");
+		repositoryFilter.add("http://git.eclipse.org/c/ogee/org.eclipse.ogee.git");
+		repositoryFilter.add("http://git.eclipse.org/c/stem/org.eclipse.stem.git"); // NOTE: Incomplete Commit: 2011-07-15T19-30-57Z fe05cad1c20c9a3490ac2b263910dc769ac12112
+		repositoryFilter.add("http://git.eclipse.org/c/buckminster/buckminster.git");
 	}
 
 	@Override
@@ -170,7 +173,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		
 		// Build resource set for model versions: 
 		for (VersionMetadata modelVersion : modelHistory.getVersions()) {
-			buildResourceSet(modelVersion, modelHistoryFolder);
+			missingURIs.addAll(buildResourceSet(modelVersion, modelHistoryFolder));
 		}
 		
 		return missingURIs;
@@ -188,29 +191,35 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		Set<Date> coevolutionDates = new HashSet<>();
 		coevolutionDates.add(modelVersion.getParsedDate());
 		
-		List<Date> foundCoevolutionDates = new ArrayList<>();
-		foundCoevolutionDates.add(modelVersion.getParsedDate());
+		Set<HistoryMetadata> foundCoevolvingModelHistories = new HashSet<>();
+		foundCoevolvingModelHistories.add(modelVersion.getHistory());
 
-		while (!foundCoevolutionDates.isEmpty()) {
-			foundCoevolutionDates.clear();
+		while (!foundCoevolvingModelHistories.isEmpty()) {
+			foundCoevolvingModelHistories.clear();
 			
+			// Search referenced models:
 			for (Date coevolutionDate : coevolutionDates) {
 				Set<VersionMetadata> coevolutionSet = getRepositoryAtTime(coevolutionDate, coevolvingModelHistories);
 				
-				// Resolve updated versions:
+				// Resolve co-evolving versions:
 				for (VersionMetadata coevolvingVersion : coevolutionSet) {
 					resolveCoevolving(coevolvingVersion, uriHandler);
 					
 					for (HistoryMetadata coevolvingModelHistory : uriHandler.getCoevolvingHistories()) {
+						
+						// More co-evolving histories found?
 						if (!coevolvingModelHistories.contains(coevolvingModelHistory)) {
 							coevolvingModelHistories.add(coevolvingModelHistory);
-							foundCoevolutionDates.addAll(getCoevolvingDates(coevolvingModelHistory, modelVersion));
+							foundCoevolvingModelHistories.add(coevolvingModelHistory);
 						}
 					}
 				}
 			}
 			
-			coevolutionDates.addAll(foundCoevolutionDates);
+			// Search co-evolving dates:
+			for (HistoryMetadata foundCoevolvingModelHistory : foundCoevolvingModelHistories) {
+				coevolutionDates.addAll(getCoevolvingDates(foundCoevolvingModelHistory, modelVersion));
+			}
 		}
 		
 		// Deresolve co-evolving model histories:
@@ -241,24 +250,21 @@ public class EcoreHistoryResolverApplication implements IApplication {
 
 		try {
 			ResourceSetImpl resourceSet = new ResourceSetImpl();
-			resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, uriHandler);
-			resourceSet.getResource(URI.createFileURI(modelFile.getAbsolutePath()), true);
+			URI uri = URI.createFileURI(modelFile.getAbsolutePath());
+			HistoryUtil.load(resourceSet, uri, uriHandler);
 		} catch (Exception e) {
 			// Try to reload the content:
 			try {
 				reloadModelContent(modelVersion);
+
 				ResourceSetImpl resourceSet = new ResourceSetImpl();
-				resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, uriHandler);
-				resourceSet.getResource(URI.createFileURI(modelFile.getAbsolutePath()), true);
+				URI uri = URI.createFileURI(modelFile.getAbsolutePath());
+				HistoryUtil.load(resourceSet, uri, uriHandler);
 			} catch (Exception e2) {
-				e2.printStackTrace();
 				System.err.println(modelFile.getAbsolutePath());
+				e2.printStackTrace();
 				throw e;
 			}
-		}
-		
-		if (!uriHandler.getMissingURIs().isEmpty()) {
-			System.err.println("Unresolved References: " + modelVersion.getLocalFilePath());
 		}
 	}
 	
@@ -275,26 +281,33 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		}
 		
 		// Load resource set:
-		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, uriHandler);
+		List<Resource> deresolvedResources = new ArrayList<>();
 		
 		for (VersionMetadata modelVersion : versionSet) {
 			File modelFile = modelVersion.getLocalFile();
-			
+
 			URI orignialURI = URI.createFileURI(modelFile.getAbsolutePath());
-			Resource modelResource = resourceSet.getResource(orignialURI, true);
+			Resource modelResource = null;
 			
-			URI targetURI = URI.createFileURI(
-					resourceSetVersionFolder.getAbsolutePath()
-//					+ "/" + modelVersion.getFileName() + "_" + modelVersion.getPathCompatibleDate());
-					+ "/" + modelVersion.getFileName());
-			modelResource.setURI(targetURI);
-			
-			uriMapping.put(targetURI.toString(), modelVersion.getHistory());
+			try {
+				ResourceSet resourceSet = new ResourceSetImpl();
+				modelResource = HistoryUtil.load(resourceSet, orignialURI, uriHandler);
+			} catch (Exception e2) {
+				throw e2;
+			}
+
+			if (modelResource != null) {
+				URI targetURI = URI.createFileURI(
+						resourceSetVersionFolder.getAbsolutePath()
+//						+ "/" + modelVersion.getFileName() + "_" + modelVersion.getPathCompatibleDate());
+						+ "/" + modelVersion.getFileName());
+				modelResource.setURI(targetURI);
+				deresolvedResources.add(modelResource);
+			}
 		}
 		
 		// Save resolved models:
-		for (Resource model : resourceSet.getResources()) {
+		for (Resource model : deresolvedResources) {
 			try {
 				Map<String, Object> options = new HashMap<String, Object>();
 				options.put(XMIResource.OPTION_URI_HANDLER, uriHandler);
@@ -353,7 +366,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		return coevolvingModelVersions;
 	}
 	
-	protected void reloadModelContent(VersionMetadata modelVersion) throws IOException {
+	protected void reloadModelContent(VersionMetadata modelVersion) throws Exception {
 		HistoryMetadata modelHistory = modelVersion.getHistory();
 		File modelFile = modelVersion.getLocalFile();
 		String versionURL = null;
@@ -375,14 +388,14 @@ public class EcoreHistoryResolverApplication implements IApplication {
 					break;
 				}
 			}
-		} catch (IOException ioe) {
+		} catch (Exception e) {
 			System.err.println(modelHistory.getLatestRemoteFilePath());
 			System.err.println(modelFile.getAbsolutePath());
 
 			if (versionURL != null) {
 				System.err.println(versionURL);
 			}
-			throw ioe;
+			throw e;
 		}
 	}
 

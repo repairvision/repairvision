@@ -25,6 +25,10 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 	@Override
 	public URI resolve(URI uri) {
 
+//		if (uri.toString().contains("platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore")) {
+//			System.out.println(uri);
+//		}
+		
 		// Already resolved?:
 		if (uriMapping.containsKey(uri.trimFragment().toString())) {
 			return uri;
@@ -50,7 +54,7 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 
 			for (HistoryMetadata history : modelFiles.get(modelName)) {
 				for (String remoteFilePath : history.getAllRemoteFilePath()) {
-					StringBuilder searchedModel = new StringBuilder(uri.trimFragment().toString()).reverse();
+					StringBuilder searchedModel = new StringBuilder(uri.trimFragment().trimSegments(1).toString() + modelName).reverse();
 					StringBuilder model = new StringBuilder(remoteFilePath).reverse();
 					
 					StringBuffer commonSubString = new StringBuffer();

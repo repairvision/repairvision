@@ -40,7 +40,11 @@ public class GitHubComMiner extends AbstractRepositoryMiner  {
 			System.out.println(modelVersion);
 			System.out.println();
 			
-			miner.mineVersion(repositoryURL, modelVersion.getRemotePath(), modelVersion.getCommit(), "C:\\" + fileURL);
+			try {
+				miner.mineVersion(repositoryURL, modelVersion.getRemotePath(), modelVersion.getCommit(), "C:\\" + fileURL);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
 			System.out.println();
 		}

@@ -19,13 +19,7 @@ public class EcoreHistoryURIHandlerDeresolve extends URIHandlerImpl  {
 		this.uriMapping = uriMapping;
 	}
 	
-	@Override
-	public URI resolve(URI uri) {
-		return uri;
-	}
-	
-	@Override
-	public URI deresolve(URI uri) {
+	protected URI map(URI uri) {
 		URI deresolvedURI = uri.deresolve(baseURI, true, true, false);
 
 		// Local URI?
@@ -44,8 +38,19 @@ public class EcoreHistoryURIHandlerDeresolve extends URIHandlerImpl  {
 			
 			return deresolvedURI;
 		}
-
-		return super.deresolve(uri);
+		
+//		System.err.println(uri);
+		return uri;
+	}
+	
+	@Override
+	public URI resolve(URI uri) {
+		return uri;
+	}
+	
+	@Override
+	public URI deresolve(URI uri) {
+		return map(uri);
 	}
 	
 	public Map<HistoryMetadata, VersionMetadata> getSelectedVersions() {

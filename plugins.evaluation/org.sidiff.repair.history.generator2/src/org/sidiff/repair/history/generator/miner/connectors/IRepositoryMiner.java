@@ -13,7 +13,7 @@ public interface IRepositoryMiner {
 	
 	String getHistoryURL(String repositoryURL, String remotePath);
 
-	void mineVersion(String repositoryURL, String remotePath, String commit, String localPath) throws FileNotFoundException;
+	void mineVersion(String repositoryURL, String remotePath, String commit, String localPath) throws FileNotFoundException, Exception;
 	
 	String getVersionURL(String repositoryURL, String remotePath, String commit);
 }

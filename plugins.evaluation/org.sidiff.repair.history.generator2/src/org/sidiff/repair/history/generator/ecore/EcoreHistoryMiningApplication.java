@@ -33,7 +33,7 @@ public class EcoreHistoryMiningApplication implements IApplication {
 		build(dataSet, localPath);
 		
 		dataSet.setMineModelFiles(true); // download model files
-		dataSet.setUpdate(true); // ignore already existing versions
+		dataSet.setUpdate(false); // ignore already existing versions
 		dataSet.mine();
 	}
 	
@@ -291,6 +291,8 @@ public class EcoreHistoryMiningApplication implements IApplication {
 				"/plugins/org.eclipse.qvtd.xtext.qvtcore/model/QVTcoreCS.ecore",
 				"/plugins/org.eclipse.qvtd.xtext.qvtimperative/model/QVTimperativeCS.ecore",
 				"/plugins/org.eclipse.qvtd.xtext.qvtrelation/model/QVTrelationCS.ecore",
+				"/plugins/org.eclipse.qvtd.pivot.qvtrelation/model/QVTrelation.ecore",
+				"/plugins/org.eclipse.qvtd.pivot.qvttemplate/model/QVTtemplate.ecore",
 				"/plugins/org.eclipse.qvtd.umlx/model/UMLX.ecore",
 				"/plugins/org.eclipse.qvtd.xtext.qvtcorebase/model/QVTcoreBaseCS.ecore",
 				"/plugins/org.eclipse.qvtd.pivot.qvtcorebase/model/QVTcoreBase.ecore");

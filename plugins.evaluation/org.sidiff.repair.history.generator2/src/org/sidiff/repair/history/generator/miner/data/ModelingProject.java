@@ -51,25 +51,21 @@ public class ModelingProject {
 		// mine model revisions:
 		for (ModelHistory modelHistory : modelHistories) {
 			modelHistory.mineVersions(miner);
-			
-			// write meta date per model version:
-			modelHistory.writeMetadate();
+//			modelHistory.writeMetadate();
 		}
 		
 		// mine model files:
 		if (mineModelFiles) {
-			
-//			// mine revisions relative to other models:
-//			for (ModelHistory modelHistory : modelHistories) {
-//				for (ModelHistory otherModelHistory : modelHistories) {
-//					otherModelHistory.addVersionsFromOtherModel(modelHistory.getVersions());
-//				}
-//			}
-			
+
 			// mine files:
 			for (ModelHistory modelHistory : modelHistories) {
 				modelHistory.mineVersionFiles(miner);
 			}
+		}
+		
+		// write meta date per model version:
+		for (ModelHistory modelHistory : modelHistories) {
+			modelHistory.writeMetadate();
 		}
 	}
 	

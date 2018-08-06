@@ -37,9 +37,9 @@ public class ModelVersion {
 	
 	public String getLocalPath() {
 		try {
-			return EcoreHistorySettings.getInstance().generateVersionName(
+			return "/" + EcoreHistorySettings.getInstance().generateVersionName(
 					EcoreHistorySettings.DATE_ISO8601.parse(date), commit) 
-					+ "/" + new File(file).getParent() + "/";
+					+ "/" + new File(file).getParent().replace("\\", "/") + "/";
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
