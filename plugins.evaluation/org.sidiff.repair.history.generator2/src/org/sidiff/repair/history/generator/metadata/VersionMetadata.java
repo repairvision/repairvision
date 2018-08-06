@@ -7,7 +7,7 @@ import java.util.Date;
 import org.sidiff.repair.history.generator.ecore.EcoreHistorySettings;
 import org.sidiff.repair.history.generator.json.JSONObject;
 
-public class VersionMetadata {
+public class VersionMetadata implements Comparable<VersionMetadata> {
 	
 	private static final String key_date = "date";
 	
@@ -126,5 +126,10 @@ public class VersionMetadata {
 	
 	protected void setJSON(JSONObject version) {
 		this.version = version;
+	}
+
+	@Override
+	public int compareTo(VersionMetadata otherVersion) {
+		return getParsedDate().compareTo(otherVersion.getParsedDate());
 	}
 }

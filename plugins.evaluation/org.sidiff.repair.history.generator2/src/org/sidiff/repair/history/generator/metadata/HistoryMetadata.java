@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -76,12 +77,15 @@ public class HistoryMetadata {
 					}
 				}
 			}
+			
+			Collections.sort(versions);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void write() {
+		Collections.sort(versions);
 		
 		// write meta data per model:
 		history.put(key_date, EcoreHistorySettings.DATE_ISO8601.format(new Date()));
