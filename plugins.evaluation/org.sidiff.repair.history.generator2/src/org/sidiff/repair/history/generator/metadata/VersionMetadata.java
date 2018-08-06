@@ -130,6 +130,6 @@ public class VersionMetadata implements Comparable<VersionMetadata> {
 
 	@Override
 	public int compareTo(VersionMetadata otherVersion) {
-		return getParsedDate().compareTo(otherVersion.getParsedDate());
+		return otherVersion.getParsedDate().compareTo(getParsedDate());
 	}
 }

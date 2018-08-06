@@ -177,6 +177,14 @@ public class HistoryMetadata {
 		return null;
 	}
 	
+	public VersionMetadata getNewestVersion() {
+		return versions.get(0);
+	}
+	
+	public VersionMetadata getOldestVersion() {
+		return versions.get(versions.size() - 1);
+	}
+	
 	public VersionMetadata getVersionAtTime(Date date) {
 		VersionMetadata versionAtTime = null;
 		
