@@ -228,7 +228,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		
 		for (Date coevolutionDate : coevolutionDateList) {
 			String coevolutionTimestamp = !(coevolutionDate.equals(modelVersion.getParsedDate()))
-					? "_coevolution_" + EcoreHistorySettings.DATE_ISO8601.format(coevolutionDate).replace(":", "-")
+					? "_coevolution_" + EcoreHistorySettings.DATE_ISO8601_PATH_COMPATIBLE.format(coevolutionDate)
 					: "";
 
 			File resourceSetVersionFolder = new File(modelHistoryFolder.getAbsoluteFile() + File.separator

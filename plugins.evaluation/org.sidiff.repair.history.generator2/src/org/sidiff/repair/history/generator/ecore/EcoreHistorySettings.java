@@ -14,6 +14,8 @@ public class EcoreHistorySettings {
 
 	public static final DateFormat DATE_ISO8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
+	public static final DateFormat DATE_ISO8601_PATH_COMPATIBLE = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss'Z'");
+	
 	private static EcoreHistorySettings instance;
 	
 	private List<IRepositoryMiner> miners = Arrays.asList(new EclipseGitOrgMiner(), new GitHubComMiner());
@@ -30,7 +32,7 @@ public class EcoreHistorySettings {
 	}
 	
 	public String generateVersionName(Date date, String commit) {
-		return EcoreHistorySettings.DATE_ISO8601.format(date).replace(":", "-") + "_" + commit;
+		return EcoreHistorySettings.DATE_ISO8601_PATH_COMPATIBLE.format(date) + "_" + commit;
 	}
 	
 	public String generateHistoryName(String remoteFilePath) {
