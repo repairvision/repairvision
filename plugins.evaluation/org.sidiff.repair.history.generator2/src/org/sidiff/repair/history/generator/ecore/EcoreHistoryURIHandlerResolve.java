@@ -1,5 +1,6 @@
 package org.sidiff.repair.history.generator.ecore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -9,8 +10,11 @@ import java.util.Set;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
+import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 
 public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
+	
+	private VersionMetadata baseVersion;
 
 	private Map<String, List<HistoryMetadata>> modelFiles;
 
@@ -18,7 +22,8 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 	
 	private Set<String> missingURIs = new HashSet<>();
 
-	public EcoreHistoryURIHandlerResolve(Map<String, List<HistoryMetadata>> modelFiles) {
+	public EcoreHistoryURIHandlerResolve(VersionMetadata baseVersion, Map<String, List<HistoryMetadata>> modelFiles) {
+		this.baseVersion = baseVersion;
 		this.modelFiles = modelFiles;
 	}
 
@@ -49,12 +54,13 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 
 		// Find model in other repository:
 		if (modelFiles.containsKey(modelName)) {
-			HistoryMetadata coevolvingHistory = null;
-			String largestCommonSubstring = "";
+			List<HistoryMetadata> potentialCoevolvingHistories = new ArrayList<>();
+			String largestCommonPostfix = "";
 
 			for (HistoryMetadata history : modelFiles.get(modelName)) {
 				for (String remoteFilePath : history.getAllRemoteFilePath()) {
-					StringBuilder searchedModel = new StringBuilder(uri.trimFragment().trimSegments(1).toString() + modelName).reverse();
+					StringBuilder searchedModel = new StringBuilder(
+							uri.trimFragment().trimSegments(1).toString() + modelName).reverse();
 					StringBuilder model = new StringBuilder(remoteFilePath).reverse();
 					
 					StringBuffer commonSubString = new StringBuffer();
@@ -67,14 +73,27 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 						}
 					}
 					
-					if (commonSubString.length() > largestCommonSubstring.length()) {
-						largestCommonSubstring = commonSubString.toString();
-						coevolvingHistory = history;
+					if (commonSubString.length() >= largestCommonPostfix.length()) {
+						largestCommonPostfix = commonSubString.toString();
+						potentialCoevolvingHistories.add(history);
 					}
 				}
 			}
 			
-			if (coevolvingHistory != null) {
+			if (!potentialCoevolvingHistories.isEmpty()) {
+				HistoryMetadata coevolvingHistory = potentialCoevolvingHistories.get(0);
+				
+				// If model URI is not unique, prefer a models from the same repository:
+				if (potentialCoevolvingHistories.size() > 0) {
+					String baseRepository = baseVersion.getHistory().getRepositoryURL();
+					
+					for (HistoryMetadata historyMetadata : potentialCoevolvingHistories) {
+						if (historyMetadata.getRepositoryURL().equals(baseRepository)) {
+							coevolvingHistory = historyMetadata;
+						}
+					}
+				}
+				
 				uriMapping.put(uri.trimFragment().toString(), coevolvingHistory);
 			}
 		} else {
