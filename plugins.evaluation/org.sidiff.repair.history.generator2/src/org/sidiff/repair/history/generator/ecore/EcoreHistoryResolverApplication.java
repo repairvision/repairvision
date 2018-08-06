@@ -81,7 +81,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		repositoryFilter.add("http://git.eclipse.org/c/dltk/org.eclipse.dltk.core.git");
 		repositoryFilter.add("https://github.com/eclipse/dltk.javascript");
 		repositoryFilter.add("http://git.eclipse.org/c/ogee/org.eclipse.ogee.git");
-//		repositoryFilter.add("http://git.eclipse.org/c/stem/org.eclipse.stem.git"); // NOTE: Incomplete Commit: 2011-07-15T19-30-57Z fe05cad1c20c9a3490ac2b263910dc769ac12112
+		repositoryFilter.add("http://git.eclipse.org/c/stem/org.eclipse.stem.git"); // NOTE: Incomplete Commit: 2011-07-15T19-30-57Z fe05cad1c20c9a3490ac2b263910dc769ac12112
 		repositoryFilter.add("http://git.eclipse.org/c/buckminster/buckminster.git");
 	}
 
