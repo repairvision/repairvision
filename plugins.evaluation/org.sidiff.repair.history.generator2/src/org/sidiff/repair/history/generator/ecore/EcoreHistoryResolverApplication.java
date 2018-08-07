@@ -66,7 +66,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		repositoryFilter.add("http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git");
 		repositoryFilter.add("http://git.eclipse.org/c/modisco/org.eclipse.modisco.git");
 		repositoryFilter.add("http://git.eclipse.org/c/ocl/org.eclipse.ocl.git");
-//		repositoryFilter.add("http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git");
+		repositoryFilter.add("http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git");
 		repositoryFilter.add("http://git.eclipse.org/c/rmf/org.eclipse.rmf.git");
 		repositoryFilter.add("http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git");
 		repositoryFilter.add("http://git.eclipse.org/c/uml2/org.eclipse.uml2.git");
