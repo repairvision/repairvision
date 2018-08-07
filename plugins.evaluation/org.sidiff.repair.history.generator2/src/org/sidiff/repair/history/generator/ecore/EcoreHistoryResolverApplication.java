@@ -2,6 +2,8 @@ package org.sidiff.repair.history.generator.ecore;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -64,7 +66,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		repositoryFilter.add("http://git.eclipse.org/c/bpmn2/org.eclipse.bpmn2.git");
 		repositoryFilter.add("http://git.eclipse.org/c/modisco/org.eclipse.modisco.git");
 		repositoryFilter.add("http://git.eclipse.org/c/ocl/org.eclipse.ocl.git");
-		repositoryFilter.add("http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git");
+//		repositoryFilter.add("http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git");
 		repositoryFilter.add("http://git.eclipse.org/c/rmf/org.eclipse.rmf.git");
 		repositoryFilter.add("http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git");
 		repositoryFilter.add("http://git.eclipse.org/c/uml2/org.eclipse.uml2.git");
@@ -110,6 +112,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		
 		// Index model files:
 		Set<String> modelPaths = new HashSet<>();
+		Set<String> nsURIs = new HashSet<>();
 		
 		for (HistoryMetadata history : dataset.getHistories()) {
 			for (VersionMetadata version : history.getVersions()) {
@@ -120,8 +123,8 @@ public class EcoreHistoryResolverApplication implements IApplication {
 					String modelName = version.getFileName();
 					
 					// NOTE: Technically, we have to know the plug-in relative path!
-					if (!modelPaths.contains(version.getRemoteFilePath())) {
-						modelPaths.add(version.getRemoteFilePath()); 
+					if (!modelPaths.contains(version.getHistory().getRepositoryURL() + version.getRemoteFilePath())) {
+						modelPaths.add(version.getHistory().getRepositoryURL() + version.getRemoteFilePath()); 
 						
 						if (!modelFiles.containsKey(modelName)) {
 							List<HistoryMetadata> versions = new ArrayList<>();
@@ -129,6 +132,35 @@ public class EcoreHistoryResolverApplication implements IApplication {
 							modelFiles.put(modelName, versions);
 						} else {
 							modelFiles.get(modelName).add(history);
+						}
+					}
+					
+					// Read namespaces:
+					String nsURI = null;
+					
+					try {
+						String nsURIAttribute = "nsURI=\"";
+						String nsURILine = Files.lines(Paths.get(localFile.getAbsolutePath())).filter(line -> {
+							return line.contains(nsURIAttribute);
+						}).findFirst().get();
+						nsURILine = nsURILine.substring(
+								nsURILine.indexOf(nsURIAttribute) + nsURIAttribute.length(),
+								nsURILine.length());
+						nsURI = nsURILine.substring(0, nsURILine.indexOf("\""));
+					} catch (Exception e) {
+					}
+					
+					if (nsURI != null) {
+						if (!nsURIs.contains(version.getHistory().getRepositoryURL() + version.getRemoteFilePath() + nsURI)) {
+							nsURIs.add(version.getHistory().getRepositoryURL() + version.getRemoteFilePath() + nsURI);
+							
+							if (!modelFiles.containsKey(nsURI)) {
+								List<HistoryMetadata> versions = new ArrayList<>();
+								versions.add(history);
+								modelFiles.put(nsURI, versions);
+							} else {
+								modelFiles.get(nsURI).add(history);
+							}
 						}
 					}
 				}

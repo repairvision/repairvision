@@ -1,6 +1,7 @@
 package org.sidiff.repair.history.generator.ecore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +31,7 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 	@Override
 	public URI resolve(URI uri) {
 
-//		if (uri.toString().contains("Types.ecore")) {
+//		if (uri.toString().contains("http://www.eclipse.org/emf/2002/Ecore#//EBoolean")) {
 //			System.out.println(uri);
 //		}
 		
@@ -45,22 +46,30 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 		}
 		
 		// Search model:
+		String modelPath = uri.trimFragment().toString();
 		String modelName = uri.lastSegment();
 		
 		// Try to resolve package URIs:
-		if ((modelName != null) && !modelName.endsWith(".ecore")) {
-			modelName += ".ecore";
+		if (!modelFiles.containsKey(modelPath)) {
+			if ((modelName != null) && !modelName.endsWith(".ecore")) {
+				modelName += ".ecore";
+				modelPath += ".ecore";
+			}
 		}
 
 		// Find model in other repository:
-		if (modelFiles.containsKey(modelName)) {
+		List<HistoryMetadata> matchingHistories = 
+				  modelFiles.containsKey(modelPath) ? modelFiles.get(modelPath) 
+				: modelFiles.containsKey(modelName) ? modelFiles.get(modelName) 
+				: Collections.emptyList();
+		
+		if (!matchingHistories.isEmpty()) {
 			List<HistoryMetadata> potentialCoevolvingHistories = new ArrayList<>();
 			String largestCommonPostfix = "";
 
-			for (HistoryMetadata history : modelFiles.get(modelName)) {
+			for (HistoryMetadata history : matchingHistories) {
 				for (String remoteFilePath : history.getAllRemoteFilePath()) {
-					StringBuilder searchedModel = new StringBuilder(
-							uri.trimFragment().trimSegments(1).toString() + "/" + modelName).reverse();
+					StringBuilder searchedModel = new StringBuilder(modelPath).reverse();
 					StringBuilder model = new StringBuilder(remoteFilePath).reverse();
 					
 					StringBuffer commonSubString = new StringBuffer();

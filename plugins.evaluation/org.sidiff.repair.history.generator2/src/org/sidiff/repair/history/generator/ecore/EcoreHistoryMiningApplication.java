@@ -71,6 +71,7 @@ public class EcoreHistoryMiningApplication implements IApplication {
 				
 				"/plugins/org.eclipse.ocl.pivot.uml/model/OCLforUML.ecore",
 				"/plugins/org.eclipse.ocl.pivot/model/Lookup.ecore",
+				"/plugins/org.eclipse.ocl.pivot/model-gen/oclstdlib.ecore",
 				"/plugins/org.eclipse.ocl.pivot/model/Pivot.ecore",
 				"/plugins/org.eclipse.ocl.pivot/model/Values.ecore",
 				"/plugins/org.eclipse.ocl.uml/model/OCLUML.ecore",
@@ -80,7 +81,7 @@ public class EcoreHistoryMiningApplication implements IApplication {
 				"/plugins/org.eclipse.ocl/model/OCLCST.ecore",
 				"/plugins/org.eclipse.ocl.xtext.base/model/BaseCS.ecore",
 				"/plugins/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS.ecore"
-				
+			
 				// TODO:
 //				/tests/org.eclipse.ocl.ecore.tests/model/Company.ecore,
 //				/tests/org.eclipse.ocl.ecore.tests/model/HiddenOpposites.ecore,
