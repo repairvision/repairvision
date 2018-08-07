@@ -30,9 +30,9 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 	@Override
 	public URI resolve(URI uri) {
 
-		if (uri.toString().contains("Types.ecore")) {
-			System.out.println(uri);
-		}
+//		if (uri.toString().contains("Types.ecore")) {
+//			System.out.println(uri);
+//		}
 		
 		// Already resolved?:
 		if (uriMapping.containsKey(uri.trimFragment().toString())) {
