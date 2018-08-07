@@ -30,9 +30,9 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 	@Override
 	public URI resolve(URI uri) {
 
-//		if (uri.toString().contains("platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore")) {
-//			System.out.println(uri);
-//		}
+		if (uri.toString().contains("Types.ecore")) {
+			System.out.println(uri);
+		}
 		
 		// Already resolved?:
 		if (uriMapping.containsKey(uri.trimFragment().toString())) {
@@ -60,7 +60,7 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 			for (HistoryMetadata history : modelFiles.get(modelName)) {
 				for (String remoteFilePath : history.getAllRemoteFilePath()) {
 					StringBuilder searchedModel = new StringBuilder(
-							uri.trimFragment().trimSegments(1).toString() + modelName).reverse();
+							uri.trimFragment().trimSegments(1).toString() + "/" + modelName).reverse();
 					StringBuilder model = new StringBuilder(remoteFilePath).reverse();
 					
 					StringBuffer commonSubString = new StringBuffer();
@@ -74,7 +74,10 @@ public class EcoreHistoryURIHandlerResolve extends URIHandlerImpl {
 					}
 					
 					if (commonSubString.length() >= largestCommonPostfix.length()) {
-						largestCommonPostfix = commonSubString.toString();
+						if (commonSubString.length() > largestCommonPostfix.length()) {
+							largestCommonPostfix = commonSubString.reverse().toString();
+							potentialCoevolvingHistories.clear();
+						}
 						potentialCoevolvingHistories.add(history);
 					}
 				}
