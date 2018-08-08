@@ -8,7 +8,7 @@ public class EcoreHistoryMiningApplication implements IApplication {
 	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		start("C:\\evaluation\\");
+		start("C:\\evaluation22\\");
 		return IApplication.EXIT_OK;
 	}
 	
@@ -33,7 +33,7 @@ public class EcoreHistoryMiningApplication implements IApplication {
 		build(dataSet, localPath);
 		
 		dataSet.setMineModelFiles(true); // download model files
-		dataSet.setUpdate(false); // ignore already existing versions
+		dataSet.setUpdate(true); // ignore already existing versions
 		dataSet.mine();
 	}
 	
@@ -605,7 +605,7 @@ public class EcoreHistoryMiningApplication implements IApplication {
 				"/org.eclipse.b3.build/model/B3Build.ecore",
 				"/org.eclipse.b3.p2.maven/model/maven-metadata.ecore", 
 				"/org.eclipse.b3.p2/model/p2.ecore");
-		
+	
 		// https://projects.eclipse.org/projects/birt/developer
 		dataSet.addProject(localPath, "birt", 
 				"https://github.com/eclipse/birt",
@@ -618,7 +618,7 @@ public class EcoreHistoryMiningApplication implements IApplication {
 				"/chart/org.eclipse.birt.chart.engine/src/model/org.eclipse.birt.chart.model.type.ecore",
 				"/chart/org.eclipse.birt.chart.engine/src/model/org.eclipse.birt.chart.model.data.ecore",
 				"/model/org.eclipse.birt.report.model.adapter.oda/schema/model.ecore");
-		
+
 		// https://projects.eclipse.org/projects/modeling.emft.wazaabi/developer
 		dataSet.addProject(localPath, "modeling.emft.wazaabi", 
 				"https://github.com/eclipse/wazaabi",

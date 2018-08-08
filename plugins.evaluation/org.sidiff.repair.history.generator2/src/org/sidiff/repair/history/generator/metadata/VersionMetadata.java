@@ -33,6 +33,17 @@ public class VersionMetadata implements Comparable<VersionMetadata> {
 		this.history = history;
 	}
 	
+	public VersionMetadata(HistoryMetadata history, VersionMetadata original) {
+		this(history);
+		setAuthor(original.getAuthor());
+		setCommit(original.getCommit());
+		setDate(original.getDate());
+		setExists(original.getExists());
+		setLocalFilePath(original.getLocalFilePath());
+		setMessage(original.getMessage());
+		setRemoteFilePath(original.getRemoteFilePath());
+	}
+	
 	public String getDate() {
 		return version.getString(key_date);
 	}
@@ -131,5 +142,22 @@ public class VersionMetadata implements Comparable<VersionMetadata> {
 	@Override
 	public int compareTo(VersionMetadata otherVersion) {
 		return otherVersion.getParsedDate().compareTo(getParsedDate());
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof VersionMetadata) {
+			VersionMetadata otherVersion = (VersionMetadata) obj;
+			
+			return super.equals(obj) 
+					|| (otherVersion.getDate().equals(getDate())
+					&& otherVersion.getCommit().equals(getCommit()));
+		}
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "(Date: " + getDate() + ", Commit: " + getCommit() + ")";
 	}
 }

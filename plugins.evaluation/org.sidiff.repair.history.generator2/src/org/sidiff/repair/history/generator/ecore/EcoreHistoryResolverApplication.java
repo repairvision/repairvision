@@ -24,6 +24,7 @@ import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.repair.history.generator.metadata.DataSetMetadata;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.VersionMetadata;
+import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersionMetadata;
 import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
 import org.sidiff.repair.history.generator.util.HistoryUtil;
 
@@ -97,7 +98,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		// Build model resource sets:
 		for (HistoryMetadata modelHistory : dataset.getHistories()) {
 			if (!repositoryFilter.contains(modelHistory.getRepositoryURL())) {
-				Set<String> missingURIs = buildResourceSets(modelHistory);
+				Set<String> missingURIs = buildResourceSets(modelHistory, new File("C:\\evaluation_resolved\\"));
 				analyzeMissingURIs(missingURIs);
 				
 				System.out.println(modelHistory.getLatestRemoteFilePath());
@@ -194,24 +195,31 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		}
 	}
 	
-	protected Set<String> buildResourceSets(HistoryMetadata modelHistory) {
+	protected Set<String> buildResourceSets(HistoryMetadata modelHistory, File target) {
 		Set<String> missingURIs = new HashSet<>();
 		
-		File localRepositoryFolder = modelHistory.getDatafile().getParentFile();
-		File modelHistoryFolder = new File(
-				localRepositoryFolder.getAbsoluteFile()
-				+ File.separator + EcoreHistorySettings.getInstance().generateHistoryName(modelHistory.getLatestRemoteFilePath()));
+		File modelHistoryFolder = new File(target.getAbsoluteFile() + File.separator
+				+ modelHistory.getProjectName() + File.separator
+				+ EcoreHistorySettings.getInstance().generateHistoryName(modelHistory.getLatestRemoteFilePath()));
 		modelHistoryFolder.mkdirs();
 		
 		// Build resource set for model versions: 
+		HistoryMetadata coevolvinHistorygMetadata = new HistoryMetadata(modelHistory);
+		coevolvinHistorygMetadata.setDatafile(new File(modelHistoryFolder.getAbsolutePath() 
+				+ File.separator + modelHistory.getDatafile().getName()));
+		
 		for (VersionMetadata modelVersion : modelHistory.getVersions()) {
-			missingURIs.addAll(buildResourceSet(modelVersion, modelHistoryFolder));
+			Set<String> missingURIsInVersion = buildResourceSet(modelVersion, modelHistoryFolder, coevolvinHistorygMetadata);
+			missingURIs.addAll(missingURIsInVersion);
 		}
+		
+		// Write metadata:
+		coevolvinHistorygMetadata.write();
 		
 		return missingURIs;
 	}
 	
-	protected Set<String> buildResourceSet(VersionMetadata modelVersion, File modelHistoryFolder) {
+	protected Set<String> buildResourceSet(VersionMetadata modelVersion, File modelHistoryFolder, HistoryMetadata coevolvinHistoryMetadata) {
 		EcoreHistoryURIHandlerResolve uriHandler = new EcoreHistoryURIHandlerResolve(modelVersion, modelFiles);
 		
 		// Resolve co-evolving model histories:
@@ -259,18 +267,32 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		Collections.sort(coevolutionDateList);
 		
 		for (Date coevolutionDate : coevolutionDateList) {
-			String coevolutionTimestamp = !(coevolutionDate.equals(modelVersion.getParsedDate()))
-					? "_coevolution_" + EcoreHistorySettings.DATE_ISO8601_PATH_COMPATIBLE.format(coevolutionDate)
-					: "";
+			
+			// NOTE: Filter older models that were not update with or after this model version:
+			if (coevolutionDate.equals(modelVersion.getParsedDate()) || coevolutionDate.after(modelVersion.getParsedDate())) {
+				String coevolutionTimestamp = !(coevolutionDate.equals(modelVersion.getParsedDate()))
+						? "_coevolution_" + EcoreHistorySettings.DATE_ISO8601_PATH_COMPATIBLE.format(coevolutionDate)
+						: "";
+						
+				File resourceSetVersionFolder = new File(modelHistoryFolder.getAbsoluteFile() + File.separator
+						+ EcoreHistorySettings.getInstance().generateVersionName(modelVersion.getParsedDate(), modelVersion.getCommit())
+						+ coevolutionTimestamp);
+				resourceSetVersionFolder.mkdirs();
 
-			File resourceSetVersionFolder = new File(modelHistoryFolder.getAbsoluteFile() + File.separator
-					+ EcoreHistorySettings.getInstance().generateVersionName(modelVersion.getParsedDate(), modelVersion.getCommit())
-					+ coevolutionTimestamp);
-			resourceSetVersionFolder.mkdirs();
+				Set<VersionMetadata> versionSet = getRepositoryAtTime(coevolutionDate, coevolvingModelHistories);
+				deresolveCoevolving(versionSet, resourceSetVersionFolder, uriHandler.getURIMapping());
 
-			Set<VersionMetadata> versionSet = getRepositoryAtTime(coevolutionDate, coevolvingModelHistories);
-			deresolveCoevolving(versionSet, resourceSetVersionFolder, uriHandler.getURIMapping());
-		} 
+				// Store metadata:
+				CoevolutionVersionMetadata coevolvingVersionMetadata = new CoevolutionVersionMetadata(coevolvinHistoryMetadata, modelVersion);
+				coevolvingVersionMetadata.setLocalFilePath("/" + resourceSetVersionFolder.getName() + "/" + modelVersion.getFileName());
+
+				if (!(coevolutionDate.equals(modelVersion.getParsedDate()))) {
+					coevolvingVersionMetadata.setCoevolutionDate(EcoreHistorySettings.DATE_ISO8601.format(coevolutionDate));
+				}
+				
+				coevolvinHistoryMetadata.getVersions().add(coevolvingVersionMetadata);
+			}
+		}
 		
 		return uriHandler.getMissingURIs();
 	}

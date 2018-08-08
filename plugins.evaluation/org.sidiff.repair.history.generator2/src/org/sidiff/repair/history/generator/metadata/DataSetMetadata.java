@@ -24,9 +24,13 @@ public class DataSetMetadata {
 	
 	public DataSetMetadata(String localPath, boolean onlyExistingVersions) {
 		for (File historyFile : searchMetadata(new File(localPath))) {
-			HistoryMetadata history = new HistoryMetadata(historyFile, onlyExistingVersions);
+			HistoryMetadata history = createHistory(historyFile, onlyExistingVersions);
 			histories.add(history);
 		}
+	}
+	
+	protected HistoryMetadata createHistory(File historyFile, boolean onlyExistingVersions) {
+		return new HistoryMetadata(historyFile, onlyExistingVersions);
 	}
 	
 	protected List<File> searchMetadata(File root) {

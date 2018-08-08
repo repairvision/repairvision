@@ -34,7 +34,21 @@ public class HistoryMetadata {
 	
 	private JSONObject history = new JSONObject();
 	
-	private List<VersionMetadata> versions = new ArrayList<>();
+	private List<VersionMetadata> versions = new ArrayList<VersionMetadata>() {
+		
+		private static final long serialVersionUID = 1L;
+
+		public boolean add(VersionMetadata e) {
+			boolean result = false;
+			
+			if (!contains(e)) {
+				result = super.add(e);
+			}
+			
+			Collections.sort(this);
+			return result;
+		}
+	};
 	
 	public HistoryMetadata() {
 	}
@@ -45,6 +59,17 @@ public class HistoryMetadata {
 		if (datafile.exists()) {
 			read(onlyExistingVersions);
 		}
+	}
+	
+	public HistoryMetadata(HistoryMetadata original) {
+		this.datafile = original.datafile;
+		setInfo(original.getInfo());
+		setProjectName(original.getProjectName());
+		setRepositoryURL(original.getRepositoryURL());
+	}
+	
+	protected VersionMetadata createVersion() {
+		return new VersionMetadata(this);
 	}
 	
 	public File getDatafile() {
@@ -62,11 +87,14 @@ public class HistoryMetadata {
 			for (Object versionObj : history.getJSONArray(key_commits)) {
 				if (versionObj instanceof JSONObject) {
 					JSONObject versionJSON = (JSONObject) versionObj;
-					VersionMetadata version = new VersionMetadata(this);
+					VersionMetadata version = createVersion();
 					version.setJSON(versionJSON);
 					versions.add(version);
 				}
 			}
+			
+			// Split history and versions:
+			history.remove(key_commits);
 			
 			if (onlyExistingVersions) {
 				for (Iterator<VersionMetadata> iterator = versions.iterator(); iterator.hasNext();) {
@@ -211,5 +239,10 @@ public class HistoryMetadata {
 	
 	protected JSONObject getJSON() {
 		return history;
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + " (File: " + datafile.getAbsolutePath() + ")";
 	}
 }
