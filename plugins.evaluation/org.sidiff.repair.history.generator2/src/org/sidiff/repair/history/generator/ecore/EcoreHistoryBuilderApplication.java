@@ -1,5 +1,7 @@
 package org.sidiff.repair.history.generator.ecore;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,6 +11,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.equinox.app.IApplication;
@@ -36,12 +39,22 @@ public class EcoreHistoryBuilderApplication implements IApplication {
 	
 	private boolean PRINT_IDS = false;
 	
+	private File sourceDataSet = new File("C:\\evaluation_resolved\\");
+	
+	private String sourceDataSetURI = URI.createFileURI(sourceDataSet.getAbsolutePath()).toString();
+	
+	private File targetDataSet = new File("C:\\evaluation_matched\\"); 
+	
+	private String targetDataSetURI = URI.createFileURI(targetDataSet.getAbsolutePath()).toString();
+	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		CoevolutionDataSetMetadata dataset = new CoevolutionDataSetMetadata("C:\\evaluation_resolved\\", true);
+		CoevolutionDataSetMetadata dataset = new CoevolutionDataSetMetadata(sourceDataSet.getAbsolutePath(), true);
 
 		for (HistoryMetadata history : dataset.getHistories()) {
 			if (!EcoreHistoryValidationApplication.modelHistoryFilter.contains(EcoreHistoryValidationApplication.getFilter(history))) {
+				
+				// Collect model versions:
 				List<URI> modelVersions = new ArrayList<>();
 
 				for (VersionMetadata version : history.getVersions()) {
@@ -49,17 +62,24 @@ public class EcoreHistoryBuilderApplication implements IApplication {
 					modelVersions.add(modelVersionURI);
 				}
 
+				// Generate history:
 				String historyName = EcoreHistorySettings.getInstance().generateHistoryName(history.getLatestRemoteFilePath());
 				History validationHistory = generateHistory(historyName, modelVersions, EcoreHistorySettings.getInstance());
 
+				// Save history:
 				URI historyURI = URI.createFileURI(history.getDatafile().getParent())
 						.appendSegment(historyName).appendFileExtension(HISTORY_FILE_EXTENSION);
+				historyURI = toTargetURI(historyURI);
 				validationHistory.eResource().setURI(historyURI);
 				validationHistory.eResource().save(Collections.EMPTY_MAP);
 			}
 		}
 		
 		return IApplication.EXIT_OK;
+	}
+	
+	private URI toTargetURI(URI sourceURI) {
+		return URI.createFileURI(sourceURI.toString().replace(sourceDataSetURI, targetDataSetURI));
 	}
 
 	@Override
@@ -71,43 +91,58 @@ public class EcoreHistoryBuilderApplication implements IApplication {
 		History history = HistoryModelFactory.eINSTANCE.createHistory();
 		history.setName(historyName);
 		
-		// Load history:
-		System.out.println("############################## LOAD MODELS ##############################");
-		
-		// Load model data:
-		for (int i = 0; i < modelVersions.size(); i++) {
-			Resource resource = HistoryUtil.load(new ResourceSetImpl(), modelVersions.get(i));
-			Version version = generateVersion(i + 1, resource, settings);
-
-			if (version != null) {
-				history.getVersions().add(version);
-			}
+		if (modelVersions.isEmpty()) {
+			return history;
 		}
 		
 		// Calculate matchings:
-		System.out.println("############################## Calcualte Traces ##############################");
+		ResourceSet resourceSetVersionB = HistoryUtil.setupResourceSet(new ResourceSetImpl());
+		Resource resourceB = new UUIDResource(modelVersions.get(0), resourceSetVersionB);
+		Version versionB = generateVersion(1, resourceB, settings);
 		
-		for (int i = 0; i < (history.getVersions().size() - 1); i++) {
-			int j = i + 1;
+		history.getVersions().add(versionB);
+		saveResourceSetToTarget(resourceSetVersionB);
+		
+		for (int i = 1; i < modelVersions.size(); i++) {
+			Version versionA = versionB;
 			
-			Version versionA = history.getVersions().get(i);
-			Version versionB = history.getVersions().get(j);
-			
+			resourceSetVersionB = HistoryUtil.setupResourceSet(new ResourceSetImpl());
+			resourceB = new UUIDResource(modelVersions.get(i), resourceSetVersionB);
+			versionB = generateVersion(i + 1, resourceB, settings);
+
 			System.out.println("Versions: " + versionA.getName() + " -> " + versionB.getName());
-			
-			try {
-				Matching matching = generateMatching(versionA, versionB, settings);
-				generateUUIDs(matching);
-			} catch (InvalidModelException e) {
-				e.printStackTrace();
-			} catch (NoCorrespondencesException e) {
-				System.err.println("No correspondences found: " + versionA.getName() + " -> " + versionB.getName() );
-			}
+			appendVersion(history, versionA, versionB, settings);
+			saveResourceSetToTarget(resourceSetVersionB);
 		}
 		
-		generateIntroducedAndResolved(history, settings);
+		// Calculate inconsistency traces:
+		generateInconsistencyTraces(history, settings);
 		
 		return history;
+	}
+	
+	protected void saveResourceSetToTarget(ResourceSet resourceSet) {
+		for (Resource versionSetResource : resourceSet.getResources()) {
+			try {
+				versionSetResource.setURI(toTargetURI(versionSetResource.getURI()));
+				versionSetResource.save(Collections.EMPTY_MAP);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	protected void appendVersion(History history, Version versionA, Version versionB, EcoreHistorySettings settings) {
+		history.getVersions().add(versionB);
+		
+		try {
+			Matching matching = generateMatching(versionA, versionB, settings);
+			generateUUIDs(matching);
+		} catch (InvalidModelException e) {
+			e.printStackTrace();
+		} catch (NoCorrespondencesException e) {
+			System.err.println("No correspondences found: " + versionA.getName() + " -> " + versionB.getName() );
+		}
 	}
 	
 	protected Version generateVersion(int revision, Resource model, EcoreHistorySettings settings) {
@@ -160,7 +195,7 @@ public class EcoreHistoryBuilderApplication implements IApplication {
 		}
 	}
 	
-	private void generateIntroducedAndResolved(History history, EcoreHistorySettings settings) {
+	protected void generateInconsistencyTraces(History history, EcoreHistorySettings settings) {
 		for (Version versionA : history.getVersions()) {
 			if (!history.getSuccessorRevisions(versionA).isEmpty()) {
 				Version versionB = history.getSuccessorRevisions(versionA).get(0);

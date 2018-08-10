@@ -13,13 +13,18 @@ public class HistoryUtil {
 			if (uriHandler != null) {
 				resourceSet.getLoadOptions().put(XMIResource.OPTION_URI_HANDLER, uriHandler);
 			}
-			resourceSet.getLoadOptions().put(XMIResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
-			resourceSet.getLoadOptions().put(XMIResource.OPTION_PROCESS_DANGLING_HREF, XMIResource.OPTION_PROCESS_DANGLING_HREF_RECORD);
+			setupResourceSet(resourceSet);
 			
 			return resourceSet.getResource(uri, true);
 		} catch (Exception e) {
 			throw e;
 		}
+	}
+	
+	public static ResourceSet setupResourceSet(ResourceSet resourceSet) {
+		resourceSet.getLoadOptions().put(XMIResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
+		resourceSet.getLoadOptions().put(XMIResource.OPTION_PROCESS_DANGLING_HREF, XMIResource.OPTION_PROCESS_DANGLING_HREF_RECORD);
+		return resourceSet;
 	}
 	
 	public static Resource load(ResourceSet resourceSet, URI uri) {

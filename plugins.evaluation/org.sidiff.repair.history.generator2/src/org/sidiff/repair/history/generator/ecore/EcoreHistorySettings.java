@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.sidiff.common.emf.access.Scope;
 import org.sidiff.consistency.common.settings.SettingsUtil;
 import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
@@ -60,9 +61,12 @@ public class EcoreHistorySettings {
 
 	public DifferenceSettings getDifferenceSettings() {
 		DifferenceSettings differenceSettings = SettingsUtil.getDefaultDifferenceSettings();
+		differenceSettings.setScope(Scope.RESOURCE_SET);
+		
 		IMatcher matcher = MatchingUtils.getMatcherByKey("org.sidiff.ecore.repair.history.matcher.EcoreMatcher");
-		ITechnicalDifferenceBuilder builder = TechnicalDifferenceUtils.getTechnicalDifferenceBuilder("org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations");
 		differenceSettings.setMatcher(matcher);
+		
+		ITechnicalDifferenceBuilder builder = TechnicalDifferenceUtils.getTechnicalDifferenceBuilder("org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations");
 		differenceSettings.setTechBuilder(builder);
 		return differenceSettings;
 	}
