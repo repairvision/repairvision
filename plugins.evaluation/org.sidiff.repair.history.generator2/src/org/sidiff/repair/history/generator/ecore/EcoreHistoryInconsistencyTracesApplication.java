@@ -20,6 +20,7 @@ import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.common.storage.UUIDResource;
+import org.sidiff.consistency.common.storage.UUIDResourceFactory;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.ModelStatus;
@@ -33,7 +34,7 @@ import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionDataSetMetadata;
 import org.sidiff.repair.history.generator.util.HistoryUtil;
 
-public class EcoreHistoryBuilderApplication implements IApplication {
+public class EcoreHistoryInconsistencyTracesApplication implements IApplication {
 
 	private static String HISTORY_FILE_EXTENSION = "history";
 	
@@ -96,8 +97,8 @@ public class EcoreHistoryBuilderApplication implements IApplication {
 		}
 		
 		// Calculate matchings:
-		ResourceSet resourceSetVersionB = HistoryUtil.setupResourceSet(new ResourceSetImpl());
-		Resource resourceB = new UUIDResource(modelVersions.get(0), resourceSetVersionB);
+		ResourceSet resourceSetVersionB = createResourceSet();
+		Resource resourceB = resourceSetVersionB.getResource(modelVersions.get(0), true);
 		Version versionB = generateVersion(1, resourceB, settings);
 		
 		history.getVersions().add(versionB);
@@ -106,19 +107,31 @@ public class EcoreHistoryBuilderApplication implements IApplication {
 		for (int i = 1; i < modelVersions.size(); i++) {
 			Version versionA = versionB;
 			
-			resourceSetVersionB = HistoryUtil.setupResourceSet(new ResourceSetImpl());
-			resourceB = new UUIDResource(modelVersions.get(i), resourceSetVersionB);
+			// Load model:
+			resourceSetVersionB = createResourceSet();
+			resourceB = resourceSetVersionB.getResource(modelVersions.get(i), true);
 			versionB = generateVersion(i + 1, resourceB, settings);
-
+			
 			System.out.println("Versions: " + versionA.getName() + " -> " + versionB.getName());
-			appendVersion(history, versionA, versionB, settings);
+
+			// Calculate model element  matching:
+			appendMatchedVersion(history, versionA, versionB, settings);
 			saveResourceSetToTarget(resourceSetVersionB);
+			
+			// Calculate inconsistency traces:
+			generateInconsistencyTraces(versionA, versionB, settings);
+			
+			// Unload history model (references to inconsistent models) to save memory:
+			versionB.eResource().unload();
 		}
 		
-		// Calculate inconsistency traces:
-		generateInconsistencyTraces(history, settings);
-		
 		return history;
+	}
+	
+	protected ResourceSet createResourceSet() {
+		ResourceSet resourceSet = HistoryUtil.setupResourceSet(new ResourceSetImpl());
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new UUIDResourceFactory());
+		return resourceSet;
 	}
 	
 	protected void saveResourceSetToTarget(ResourceSet resourceSet) {
@@ -132,7 +145,7 @@ public class EcoreHistoryBuilderApplication implements IApplication {
 		}
 	}
 
-	protected void appendVersion(History history, Version versionA, Version versionB, EcoreHistorySettings settings) {
+	protected void appendMatchedVersion(History history, Version versionA, Version versionB, EcoreHistorySettings settings) {
 		history.getVersions().add(versionB);
 		
 		try {
@@ -195,52 +208,35 @@ public class EcoreHistoryBuilderApplication implements IApplication {
 		}
 	}
 	
-	protected void generateInconsistencyTraces(History history, EcoreHistorySettings settings) {
-		for (Version versionA : history.getVersions()) {
-			if (!history.getSuccessorRevisions(versionA).isEmpty()) {
-				Version versionB = history.getSuccessorRevisions(versionA).get(0);
-				
-				for (ValidationError errorB : versionB.getValidationErrors()) {
-					boolean hasCorresponding = false;
-					
-					for (ValidationError errorA : versionA.getValidationErrors()) {
-						if (settings.getValidator().matchValidationError(errorA, errorB)) {
-							errorB.setPrec(errorA);
-							hasCorresponding = true;
-							errorB.setIntroducedIn(errorA.getIntroducedIn());
-							break;
-						}
-					}
-					if (!hasCorresponding) {
-						errorB.setIntroducedIn(versionB);
-					}
-				}
+	protected void generateInconsistencyTraces(Version versionA, Version versionB, EcoreHistorySettings settings) {
+
+		for (ValidationError inconsistencyA : versionA.getValidationErrors()) {
+			ValidationError inconsistencyB = getInconsistencyMatch(inconsistencyA, versionB, settings);
+			
+			if (inconsistencyB != null) {
+				inconsistencyA.setSucc(inconsistencyB);
+				inconsistencyB.setPrec(inconsistencyA);
+				inconsistencyB.setIntroducedIn(inconsistencyA.getIntroducedIn());
+			} else {
+				inconsistencyA.setResolvedIn(versionA);
 			}
-		}
-		List<Version> reverseOrder = new ArrayList<>();
-		reverseOrder.addAll(history.getVersions());
-		Collections.reverse(reverseOrder);
-		
-		for (Version versionB : reverseOrder) {
-			if (!history.getPrecessorRevisions(versionB).isEmpty()) {
-				Version versionA = history.getPrecessorRevisions(versionB).get(0);
-				
-				for (ValidationError errorA : versionA.getValidationErrors()) {
-					boolean hasCorresponding = false;
-					
-					for (ValidationError errorB : versionB.getValidationErrors()) {
-						if (settings.getValidator().matchValidationError(errorA, errorB)) {
-							errorA.setSucc(errorB);
-							hasCorresponding = true;
-							errorA.setResolvedIn(errorB.getResolvedIn());
-							break;
-						}
-					}
-					if (!hasCorresponding) {
-						errorA.setResolvedIn(versionB);
-					}
-				}
+			
+			if (inconsistencyA.getPrec() == null) {
+				inconsistencyA.setIntroducedIn(versionA);
 			}
 		}
 	}
+	
+	protected ValidationError getInconsistencyMatch(
+			ValidationError inconsistencyA, Version versionB, EcoreHistorySettings settings) {
+		
+		for (ValidationError inconsistencyB : versionB.getValidationErrors()) {
+			if (settings.getValidator().matchValidationError(inconsistencyA, inconsistencyB)) {
+				return inconsistencyB;
+			}
+		}
+		
+		return null;
+	}
+	
 }
