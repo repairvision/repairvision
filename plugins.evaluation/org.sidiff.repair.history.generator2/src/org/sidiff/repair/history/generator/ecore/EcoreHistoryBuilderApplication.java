@@ -25,22 +25,39 @@ import org.sidiff.historymodel.Version;
 import org.sidiff.matching.api.MatchingFacade;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.Matching;
-import org.sidiff.repair.history.generator.metadata.DataSetMetadata;
+import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
+import org.sidiff.repair.history.generator.metadata.VersionMetadata;
+import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionDataSetMetadata;
 import org.sidiff.repair.history.generator.util.HistoryUtil;
 
 public class EcoreHistoryBuilderApplication implements IApplication {
 
-	//----
+	private static String HISTORY_FILE_EXTENSION = "history";
 	
-	public boolean PRINT_IDS = false;
-	
-	//----
+	private boolean PRINT_IDS = false;
 	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		DataSetMetadata dataset = new DataSetMetadata("C:\\evaluation\\", true);
-		
-		
+		CoevolutionDataSetMetadata dataset = new CoevolutionDataSetMetadata("C:\\evaluation_resolved\\", true);
+
+		for (HistoryMetadata history : dataset.getHistories()) {
+			if (!EcoreHistoryValidationApplication.modelHistoryFilter.contains(EcoreHistoryValidationApplication.getFilter(history))) {
+				List<URI> modelVersions = new ArrayList<>();
+
+				for (VersionMetadata version : history.getVersions()) {
+					URI modelVersionURI = URI.createFileURI(history.getDatafile().getParent()).appendSegment(version.getLocalFilePath());
+					modelVersions.add(modelVersionURI);
+				}
+
+				String historyName = EcoreHistorySettings.getInstance().generateHistoryName(history.getLatestRemoteFilePath());
+				History validationHistory = generateHistory(historyName, modelVersions, EcoreHistorySettings.getInstance());
+
+				URI historyURI = URI.createFileURI(history.getDatafile().getParent())
+						.appendSegment(historyName).appendFileExtension(HISTORY_FILE_EXTENSION);
+				validationHistory.eResource().setURI(historyURI);
+				validationHistory.eResource().save(Collections.EMPTY_MAP);
+			}
+		}
 		
 		return IApplication.EXIT_OK;
 	}
@@ -78,14 +95,7 @@ public class EcoreHistoryBuilderApplication implements IApplication {
 			
 			System.out.println("Versions: " + versionA.getName() + " -> " + versionB.getName());
 			
-			while (versionB.getStatus().equals(ModelStatus.DEFECT) && (j < (history.getVersions().size() - 1))) {
-				versionB = history.getVersions().get(++j);
-			}
 			try {
-				if (versionA.getStatus().equals(ModelStatus.DEFECT) || versionB.getStatus().equals(ModelStatus.DEFECT)) {
-					continue;
-				}
-
 				Matching matching = generateMatching(versionA, versionB, settings);
 				generateUUIDs(matching);
 			} catch (InvalidModelException e) {
