@@ -1,8 +1,12 @@
 package org.sidiff.repair.history.generator.miner.data;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.sidiff.repair.history.generator.ecore.EcoreHistorySettings;
 import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
 
 public class ModelingProject {
@@ -46,7 +50,7 @@ public class ModelingProject {
 		this.mineModelFiles = mineModelFiles;
 	}
 	
-	public void mine(IRepositoryMiner miner) {
+	public void mine(IRepositoryMiner miner, boolean updateHistory, boolean loadFiles) {
 		
 		// mine model revisions:
 		for (ModelHistory modelHistory : modelHistories) {
@@ -59,13 +63,26 @@ public class ModelingProject {
 
 			// mine files:
 			for (ModelHistory modelHistory : modelHistories) {
-				modelHistory.mineVersionFiles(miner);
+				modelHistory.mineVersionFiles(miner, updateHistory, loadFiles);
 			}
 		}
 		
 		// write meta date per model version:
+		Set<String> historyNames = new HashSet<>();
+		
 		for (ModelHistory modelHistory : modelHistories) {
-			modelHistory.writeMetadate();
+			String historyName = EcoreHistorySettings.getInstance().generateHistoryName(modelHistory.getFile());
+			
+			String uniqueHistoryName = historyName;
+			
+			while(historyNames.contains(uniqueHistoryName.toLowerCase())) {
+				uniqueHistoryName = uniqueHistoryName + "_";
+			}
+			
+			historyNames.add(uniqueHistoryName);
+			
+			File datafile = new File(getLocalPath() + "/" + uniqueHistoryName  + ".json");
+			modelHistory.writeMetadate(datafile);
 		}
 	}
 	

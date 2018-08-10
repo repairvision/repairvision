@@ -11,25 +11,11 @@ public class ModelingDataSet {
 	
 	private List<IRepositoryMiner> miners = new ArrayList<>();
 	
-	public void setMineModelFiles(boolean mineModelFiles) {
-		for (ModelingProject project : projects) {
-			project.setMineModelFiles(mineModelFiles);
-		}
-	}
-	
-	public void setUpdate(boolean update) {
-		for (ModelingProject project : projects) {
-			for (ModelHistory history : project.getModelHistories()) {
-				history.setUpdate(update);
-			}
-		}
-	}
-	
-	public void mine() {
+	public void mine(boolean updateHistory, boolean loadFiles) {
 		for (ModelingProject modelingProject : projects) {
 //			new Thread(() -> {
 				System.out.println("STARTING: " + modelingProject.getRepository());
-				modelingProject.mine(getMiner(modelingProject.getRepository()));
+				modelingProject.mine(getMiner(modelingProject.getRepository()), updateHistory, loadFiles);
 				System.out.println("FINISHED: " + modelingProject.getRepository());
 //			}).start();
 		}

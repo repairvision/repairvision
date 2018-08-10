@@ -4,14 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import org.sidiff.repair.history.generator.ecore.EcoreHistorySettings;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
 
 public class ModelHistory {
-	
-	private boolean update = true;
 	
 	private ModelingProject modelingProject;
 	
@@ -24,15 +21,7 @@ public class ModelHistory {
 		this.file = file;
 	}
 	
-	public boolean isUpdate() {
-		return update;
-	}
-	
-	public void setUpdate(boolean update) {
-		this.update = update;
-	}
-	
-	public void writeMetadate() {
+	public void writeMetadate(File metafile) {
 		
 		// write meta data per model:
 		HistoryMetadata history = new HistoryMetadata();
@@ -53,7 +42,6 @@ public class ModelHistory {
 			history.getVersions().add(version);
 		}
 		
-		File metafile = new File(modelingProject.getLocalPath() + "/" +  EcoreHistorySettings.getInstance().generateHistoryName(file) + ".json");
 		history.setDatafile(metafile);
 		history.write();
 	}
@@ -63,33 +51,37 @@ public class ModelHistory {
 		
 	}
 	
-	public void mineVersionFiles(IRepositoryMiner miner) {
+	public void mineVersionFiles(IRepositoryMiner miner, boolean update, boolean loadFile) {
 		for (ModelVersion modelVersion : versions) {
 			File outputFolder = new File(modelingProject.getLocalPath() + modelVersion.getLocalPath());
 			File outputFile = new File(outputFolder + "/" + modelVersion.getFileName());
 			
-			if (!update || !outputFile.exists()) {
-				modelVersion.setExists(false);
-				
-				try {
-					miner.mineVersion(
-							modelingProject.getRepository(), 
-							modelVersion.getRemotePath(), 
-							modelVersion.getCommit(), 
-							outputFile.getAbsolutePath());
-					modelVersion.setExists(true);
-				} catch (FileNotFoundException fnfe) {
-					System.err.println("(Warning!) File not found: " + miner.getVersionURL(
-							modelingProject.getRepository(), 
-							modelVersion.getRemotePath(), 
-							modelVersion.getCommit()));
-				} catch(Exception e) {
-					System.err.println("Exception: " +miner.getVersionURL(
-							modelingProject.getRepository(), 
-							modelVersion.getRemotePath(), 
-							modelVersion.getCommit()));
-					e.printStackTrace();
+			if (loadFile) {
+				if (!update || !outputFile.exists()) {
+					modelVersion.setExists(false);
+					
+					try {
+						miner.mineVersion(
+								modelingProject.getRepository(), 
+								modelVersion.getRemotePath(), 
+								modelVersion.getCommit(), 
+								outputFile.getAbsolutePath());
+						modelVersion.setExists(true);
+					} catch (FileNotFoundException fnfe) {
+						System.err.println("(Warning!) File not found: " + miner.getVersionURL(
+								modelingProject.getRepository(), 
+								modelVersion.getRemotePath(), 
+								modelVersion.getCommit()));
+					} catch(Exception e) {
+						System.err.println("Exception: " +miner.getVersionURL(
+								modelingProject.getRepository(), 
+								modelVersion.getRemotePath(), 
+								modelVersion.getCommit()));
+						e.printStackTrace();
+					}
 				}
+			} else {
+				modelVersion.setExists(outputFile.exists());
 			}
 		}
 	}

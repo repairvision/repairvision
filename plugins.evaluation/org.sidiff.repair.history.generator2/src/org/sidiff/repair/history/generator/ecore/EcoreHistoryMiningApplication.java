@@ -8,7 +8,7 @@ public class EcoreHistoryMiningApplication implements IApplication {
 	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		start("C:\\evaluation22\\");
+		start("C:\\evaluation\\");
 		return IApplication.EXIT_OK;
 	}
 	
@@ -32,9 +32,9 @@ public class EcoreHistoryMiningApplication implements IApplication {
 		
 		build(dataSet, localPath);
 		
-		dataSet.setMineModelFiles(true); // download model files
-		dataSet.setUpdate(true); // ignore already existing versions
-		dataSet.mine();
+		dataSet.mine(true, true);
+		// (ignore already existing versions)
+		// (download model files)
 	}
 	
 	private void build(ModelingDataSet dataSet, String localPath) {

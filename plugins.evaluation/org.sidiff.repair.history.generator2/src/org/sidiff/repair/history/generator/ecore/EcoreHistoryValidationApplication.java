@@ -427,6 +427,13 @@ public class EcoreHistoryValidationApplication implements IApplication  {
 		String lastProject = "";
 		
 		for (HistoryMetadata history : dataset.getHistories()) {
+			
+//			// Validate only project X:
+//			if (!history.getProjectName().contains("modeling.mmt.qvt")) {
+//				continue;
+//			} 
+			
+//			// Start validation with project X:
 //			if (history.getProjectName().contains("modeling.mmt.atl")) {
 //				start = true;
 //			} else {
