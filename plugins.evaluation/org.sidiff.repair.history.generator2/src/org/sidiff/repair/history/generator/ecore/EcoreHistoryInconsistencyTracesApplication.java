@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -59,19 +61,19 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 				List<URI> modelVersions = new ArrayList<>();
 
 				for (VersionMetadata version : history.getVersions()) {
-					URI modelVersionURI = URI.createFileURI(history.getDatafile().getParent()).appendSegment(version.getLocalFilePath());
+					URI modelVersionURI = URI.createFileURI(history.getDatafile().getParent() + "/" + version.getLocalFilePath());
 					modelVersions.add(modelVersionURI);
 				}
 
 				// Generate history:
 				String historyName = EcoreHistorySettings.getInstance().generateHistoryName(history.getLatestRemoteFilePath());
-				History validationHistory = generateHistory(historyName, modelVersions, EcoreHistorySettings.getInstance());
-
-				// Save history:
 				URI historyURI = URI.createFileURI(history.getDatafile().getParent())
 						.appendSegment(historyName).appendFileExtension(HISTORY_FILE_EXTENSION);
 				historyURI = toTargetURI(historyURI);
-				validationHistory.eResource().setURI(historyURI);
+				
+				History validationHistory = generateHistory(historyName, historyURI, modelVersions, EcoreHistorySettings.getInstance());
+
+				// Save history:
 				validationHistory.eResource().save(Collections.EMPTY_MAP);
 			}
 		}
@@ -80,52 +82,71 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 	}
 	
 	private URI toTargetURI(URI sourceURI) {
-		return URI.createFileURI(sourceURI.toString().replace(sourceDataSetURI, targetDataSetURI));
+		URI targetURI =  URI.createURI(sourceURI.toString().replace(sourceDataSetURI.toString(), targetDataSetURI.toString()));
+		new File(targetURI.devicePath()).getParentFile().mkdirs();
+		return targetURI;
 	}
 
 	@Override
 	public void stop() {
 	}
 	
-	protected History generateHistory(String historyName, List<URI> modelVersions, EcoreHistorySettings settings) {
+	protected History generateHistory(String historyName, URI historyURI, List<URI> modelVersions, EcoreHistorySettings settings) {
 		
 		History history = HistoryModelFactory.eINSTANCE.createHistory();
 		history.setName(historyName);
+		
+		Resource historyResource = createResourceSet().createResource(historyURI);
+		historyResource.getContents().add(history);
+		
+		URI baseURI = historyURI.trimSegments(1);
+		
+		try {
+			historyResource.save(Collections.EMPTY_MAP);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		
 		if (modelVersions.isEmpty()) {
 			return history;
 		}
 		
 		// Calculate matchings:
-		ResourceSet resourceSetVersionB = createResourceSet();
-		Resource resourceB = resourceSetVersionB.getResource(modelVersions.get(0), true);
+		Resource resourceB = loadResourceSet(modelVersions.get(0));
 		Version versionB = generateVersion(1, resourceB, settings);
 		
 		history.getVersions().add(versionB);
-		saveResourceSetToTarget(resourceSetVersionB);
+		saveResourceSetToTarget(resourceB.getResourceSet(), baseURI);
 		
 		for (int i = 1; i < modelVersions.size(); i++) {
 			Version versionA = versionB;
 			
 			// Load model:
-			resourceSetVersionB = createResourceSet();
-			resourceB = resourceSetVersionB.getResource(modelVersions.get(i), true);
+			resourceB = loadResourceSet(modelVersions.get(i));
 			versionB = generateVersion(i + 1, resourceB, settings);
 			
 			System.out.println("Versions: " + versionA.getName() + " -> " + versionB.getName());
 
 			// Calculate model element  matching:
 			appendMatchedVersion(history, versionA, versionB, settings);
-			saveResourceSetToTarget(resourceSetVersionB);
+			saveResourceSetToTarget(resourceB.getResourceSet(), baseURI);
 			
 			// Calculate inconsistency traces:
 			generateInconsistencyTraces(versionA, versionB, settings);
 			
 			// Unload history model (references to inconsistent models) to save memory:
-			versionB.eResource().unload();
+			historyResource.unload();
 		}
 		
 		return history;
+	}
+	
+	protected Resource loadResourceSet(URI uri) {
+		ResourceSet resourceSetVersion = createResourceSet();
+		Resource resource = resourceSetVersion.getResource(uri, true);
+		EcoreUtil.resolveAll(resourceSetVersion);
+		return resource;
 	}
 	
 	protected ResourceSet createResourceSet() {
@@ -134,11 +155,31 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		return resourceSet;
 	}
 	
-	protected void saveResourceSetToTarget(ResourceSet resourceSet) {
+	protected void saveResourceSetToTarget(ResourceSet resourceSet, URI baseURI) {
+		Map<URI, URI> uriMap = new HashMap<>();
+		
+		for (Resource versionSetResource : resourceSet.getResources()) {
+			URI targetURI = toTargetURI(versionSetResource.getURI());
+			uriMap.put(versionSetResource.getURI(), targetURI);
+			versionSetResource.setURI(targetURI);
+		}
+		
 		for (Resource versionSetResource : resourceSet.getResources()) {
 			try {
-				versionSetResource.setURI(toTargetURI(versionSetResource.getURI()));
-				versionSetResource.save(Collections.EMPTY_MAP);
+				Map<String, Object> options = new HashMap<>();
+//				URIHandlerImpl uriHandler = new URIHandlerImpl() {
+//					@Override
+//					public URI deresolve(URI uri) {
+//						if (uriMap.containsKey(uri.trimFragment())) {
+//							uri = uriMap.get(uri.trimFragment()).appendFragment(uri.fragment());
+//						}
+//						return super.deresolve(uri);
+//					}
+//				};
+//				uriHandler.setBaseURI(baseURI);
+//				
+//				options.put(XMIResource.OPTION_URI_HANDLER, uriHandler);
+				versionSetResource.save(options);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
