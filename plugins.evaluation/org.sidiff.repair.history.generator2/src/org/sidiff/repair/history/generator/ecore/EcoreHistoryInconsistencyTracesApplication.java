@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -156,30 +154,15 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 	}
 	
 	protected void saveResourceSetToTarget(ResourceSet resourceSet, URI baseURI) {
-		Map<URI, URI> uriMap = new HashMap<>();
 		
 		for (Resource versionSetResource : resourceSet.getResources()) {
 			URI targetURI = toTargetURI(versionSetResource.getURI());
-			uriMap.put(versionSetResource.getURI(), targetURI);
 			versionSetResource.setURI(targetURI);
 		}
 		
 		for (Resource versionSetResource : resourceSet.getResources()) {
 			try {
-				Map<String, Object> options = new HashMap<>();
-//				URIHandlerImpl uriHandler = new URIHandlerImpl() {
-//					@Override
-//					public URI deresolve(URI uri) {
-//						if (uriMap.containsKey(uri.trimFragment())) {
-//							uri = uriMap.get(uri.trimFragment()).appendFragment(uri.fragment());
-//						}
-//						return super.deresolve(uri);
-//					}
-//				};
-//				uriHandler.setBaseURI(baseURI);
-//				
-//				options.put(XMIResource.OPTION_URI_HANDLER, uriHandler);
-				versionSetResource.save(options);
+				versionSetResource.save(Collections.emptyMap());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
