@@ -26,7 +26,7 @@ public class EcoreHistoryValidationApplication implements IApplication  {
 
 	// Histories with no inconsistencies:
 	protected static Set<String> modelHistoryFilter = new HashSet<>();
-	{
+	static {
 		String[] modelHistoryFilterArray = {
 
 				// birt
