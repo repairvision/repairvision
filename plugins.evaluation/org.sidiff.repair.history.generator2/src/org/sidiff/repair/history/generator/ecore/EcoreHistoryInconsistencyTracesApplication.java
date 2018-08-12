@@ -59,7 +59,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 				List<URI> modelVersions = new ArrayList<>();
 
 				for (VersionMetadata version : history.getVersions()) {
-					URI modelVersionURI = URI.createFileURI(history.getDatafile().getParent() + "/" + version.getLocalFilePath());
+					URI modelVersionURI = URI.createFileURI(history.getDatafile().getParent() + version.getLocalFilePath());
 					modelVersions.add(modelVersionURI);
 				}
 
@@ -96,16 +96,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		
 		Resource historyResource = createResourceSet().createResource(historyURI);
 		historyResource.getContents().add(history);
-		
-		URI baseURI = historyURI.trimSegments(1);
-		
-		try {
-			historyResource.save(Collections.EMPTY_MAP);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
+
 		if (modelVersions.isEmpty()) {
 			return historyResource;
 		}
@@ -115,9 +106,11 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		Version versionB = generateVersion(1, resourceB, settings);
 		
 		history.getVersions().add(versionB);
-		saveResourceSetToTarget(resourceB.getResourceSet(), baseURI);
+		saveResourceSetToTarget(resourceB.getResourceSet());
+		versionB.setModelURI(getRelativeModelURI(historyResource, resourceB));
 		
 		for (int i = 1; i < modelVersions.size(); i++) {
+			Resource resourceA = resourceB;
 			Version versionA = versionB;
 			
 			// Load model:
@@ -127,17 +120,23 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 			System.out.println("Versions: " + versionA.getName() + " -> " + versionB.getName());
 
 			// Calculate model element  matching:
-			appendMatchedVersion(history, versionA, versionB, settings);
-			saveResourceSetToTarget(resourceB.getResourceSet(), baseURI);
+			matchVersions(history, resourceA, resourceB, settings);
+			saveResourceSetToTarget(resourceB.getResourceSet());
+			
+			history.getVersions().add(versionB);
+			versionB.setModelURI(getRelativeModelURI(historyResource, resourceB));
 			
 			// Calculate inconsistency traces:
 			generateInconsistencyTraces(versionA, versionB, settings);
-			
-			// Unload history model (references to inconsistent models) to save memory:
-			historyResource.unload();
 		}
 		
 		return historyResource;
+	}
+	
+	protected String getRelativeModelURI(Resource history, Resource model) {
+		String baseURI = history.getURI().trimSegments(1).toString();
+		String modelURI = model.getURI().toString();
+		return modelURI.replace(baseURI, "");
 	}
 	
 	protected Resource loadResourceSet(URI uri) {
@@ -153,7 +152,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		return resourceSet;
 	}
 	
-	protected void saveResourceSetToTarget(ResourceSet resourceSet, URI baseURI) {
+	protected void saveResourceSetToTarget(ResourceSet resourceSet) {
 		
 		for (Resource versionSetResource : resourceSet.getResources()) {
 			URI targetURI = toTargetURI(versionSetResource.getURI());
@@ -169,21 +168,18 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		}
 	}
 
-	protected void appendMatchedVersion(History history, Version versionA, Version versionB, EcoreHistorySettings settings) {
-		history.getVersions().add(versionB);
-		
+	protected void matchVersions(History history, Resource resourceA, Resource resourceB, EcoreHistorySettings settings) {
 		try {
-			Matching matching = generateMatching(versionA, versionB, settings);
+			Matching matching = generateMatching(resourceA, resourceB, settings);
 			generateUUIDs(matching);
 		} catch (InvalidModelException e) {
 			e.printStackTrace();
 		} catch (NoCorrespondencesException e) {
-			System.err.println("No correspondences found: " + versionA.getName() + " -> " + versionB.getName() );
+			System.err.println("No correspondences found: " + resourceA.getURI() + " -> " + resourceB.getURI());
 		}
 	}
 	
 	protected Version generateVersion(int revision, Resource model, EcoreHistorySettings settings) {
-		EcoreUtil.resolveAll(model);
 		Collection<ValidationError> validationErrors = settings.getValidator().validate(model);
 		
 		ModelStatus modelStatus = validationErrors.isEmpty() ? ModelStatus.VALID : ModelStatus.INVALID;
@@ -206,11 +202,8 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		return version;
 	}
 	
-	protected Matching generateMatching(Version versionA, Version versionB, EcoreHistorySettings settings) 
+	protected Matching generateMatching(Resource resourceA, Resource resourceB, EcoreHistorySettings settings) 
 			throws InvalidModelException, NoCorrespondencesException {
-		
-		Resource resourceA = versionA.getModel();
-		Resource resourceB = versionB.getModel();
 		
 		Matching matching = MatchingFacade.match(
 				Arrays.asList(resourceA, resourceB), settings.getDifferenceSettings());
