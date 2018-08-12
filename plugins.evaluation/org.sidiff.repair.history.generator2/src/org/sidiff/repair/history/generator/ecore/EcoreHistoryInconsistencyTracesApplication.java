@@ -69,10 +69,10 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 						.appendSegment(historyName).appendFileExtension(HISTORY_FILE_EXTENSION);
 				historyURI = toTargetURI(historyURI);
 				
-				History validationHistory = generateHistory(historyName, historyURI, modelVersions, EcoreHistorySettings.getInstance());
+				Resource validationHistory = generateHistory(historyName, historyURI, modelVersions, EcoreHistorySettings.getInstance());
 
 				// Save history:
-				validationHistory.eResource().save(Collections.EMPTY_MAP);
+				validationHistory.save(Collections.EMPTY_MAP);
 			}
 		}
 		
@@ -89,7 +89,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 	public void stop() {
 	}
 	
-	protected History generateHistory(String historyName, URI historyURI, List<URI> modelVersions, EcoreHistorySettings settings) {
+	protected Resource generateHistory(String historyName, URI historyURI, List<URI> modelVersions, EcoreHistorySettings settings) {
 		
 		History history = HistoryModelFactory.eINSTANCE.createHistory();
 		history.setName(historyName);
@@ -107,7 +107,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		
 		
 		if (modelVersions.isEmpty()) {
-			return history;
+			return historyResource;
 		}
 		
 		// Calculate matchings:
@@ -137,7 +137,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 			historyResource.unload();
 		}
 		
-		return history;
+		return historyResource;
 	}
 	
 	protected Resource loadResourceSet(URI uri) {
