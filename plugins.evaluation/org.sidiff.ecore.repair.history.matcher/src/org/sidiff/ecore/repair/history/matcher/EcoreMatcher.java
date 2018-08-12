@@ -9,8 +9,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
@@ -186,10 +190,89 @@ public class EcoreMatcher extends LocalSignatureMatcher {
 		}
 		
 		// No name found:
-
-		// Remove Object ID if present:
-		return element.toString().replaceFirst("@.*?\\s", "");
-
+		
+		if (element instanceof EAnnotation) {
+			StringBuilder signature = new StringBuilder();
+			signature.append("[");
+			signature.append(element.eClass().getName());
+			signature.append("]");
+			signature.append("{");
+			signature.append(((EAnnotation) element).getSource());
+			signature.append(":");
+			
+			EMap<String, String>  details = ((EAnnotation) element).getDetails();
+			
+			for (Entry<String, String> detail : details) {
+				signature.append(detail.getKey());
+				signature.append("->");
+				signature.append(detail.getValue());
+				
+				if (detail != details.get(details.size() - 1)) {
+					signature.append(",");
+				}
+			}
+			
+			signature.append("}");
+			
+			return signature.toString();
+		} else if (element instanceof EGenericType) {
+			EGenericType genericElement = (EGenericType) element;
+			
+			StringBuilder signature = new StringBuilder();
+			signature.append("[");
+			signature.append(genericElement.eClass().getName());
+			signature.append("]");
+			
+			if (genericElement.getEClassifier() != null) {
+				signature.append("EClassifier[");
+				signature.append(getLabelSignature(genericElement.getEClassifier()));
+				signature.append("]");
+			}
+			
+			if (genericElement.getELowerBound() != null) {
+				signature.append("ELowerBound[");
+				signature.append(getLabelSignature(genericElement.getELowerBound()));
+				signature.append("]");
+			}
+			
+			if (genericElement.getERawType() != null) {
+				signature.append("ERawType[");
+				signature.append(getLabelSignature(genericElement.getERawType()));
+				signature.append("]");
+			} 
+			
+			if (genericElement.getETypeParameter() != null) {
+				signature.append("ETypeParameter[");
+				signature.append(getLabelSignature(genericElement.getETypeParameter()));
+				signature.append("]");
+			}
+			
+			if (!genericElement.getETypeArguments().isEmpty()) {
+				signature.append("ETypeArguments[");
+				List<EGenericType> types = genericElement.getETypeArguments();
+				
+				for (EGenericType type : types) {
+					signature.append(getLabelSignature(type));
+					
+					if (type != types.get(types.size() - 1)) {
+						signature.append(",");
+					}
+				}
+				
+				signature.append("]");
+			}
+			
+			if (genericElement.getEUpperBound() != null) {
+				signature.append("EUpperBound[");
+				signature.append(getLabelSignature(genericElement.getEUpperBound()));
+				signature.append("]");
+			}
+			
+			return signature.toString();
+		} else {
+			// To-string signature: Remove Object ID if present:
+			return element.toString().replaceFirst("@.*?\\s", "");
+		}
 	}
 
 	private String deriveQualifiedName(EObject element) {
