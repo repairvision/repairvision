@@ -19,13 +19,20 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.collections.ValueMap;
 import org.sidiff.matcher.LocalSignatureMatcher;
 
 public class EcoreMatcher extends LocalSignatureMatcher {
+	
 	private ValueMap<String, EObject> correspondenceMap = null;
-
+	
+	@Override
+	public boolean isResourceSetCapable() {
+		return true;
+	}
+	
 	@Override
 	public String getKey() {
 		return getClass().getName();
@@ -39,9 +46,15 @@ public class EcoreMatcher extends LocalSignatureMatcher {
 
 		Iterator<Resource> iterator = getModels().iterator();
 		Resource resourceA = iterator.next();
-		unmatchedAMap.insert(getSignatures().get(resourceA));
 		Resource resourceB = iterator.next();
-		unmatchedBMap.insert(getSignatures().get(resourceB));
+		
+		for (Resource coevoluationA : resourceA.getResourceSet().getResources()) {
+			unmatchedAMap.insert(getSignatures().get(coevoluationA));
+		}
+		
+		for (Resource coevoluationB : resourceB.getResourceSet().getResources()) {
+			unmatchedBMap.insert(getSignatures().get(coevoluationB));
+		}
 
 		// match full qualified names first
 		matchSignatures(correspondenceMap, unmatchedAMap, unmatchedBMap);
@@ -154,51 +167,49 @@ public class EcoreMatcher extends LocalSignatureMatcher {
 	private String getLabelSignature(EObject element) {
 		EStructuralFeature nameFeature = element.eClass().getEStructuralFeature("name");
 		
-		if (nameFeature != null) {
-			StringBuilder name = new StringBuilder();
+		StringBuilder signature = new StringBuilder();
 
+		if (nameFeature != null) {
 			Object nameValue = element.eGet(nameFeature);
 
 			if (nameValue != null && nameValue instanceof String && !((String) nameValue).isEmpty()) {
 				
 				// elementName
-				name.append(nameValue);
+				signature.append(nameValue);
 
 				// operationName(TypeA,TypeB,...)
 				if (element instanceof EOperation) {
 					List<EParameter> parameters = ((EOperation) element).getEParameters();
-					name.append("(");
+					signature.append("(");
 
 					for (EParameter parameter : parameters) {
-						name.append(parameter.getEType().getName());
+						signature.append(parameter.getEType().getName());
 
 						if (parameter != parameters.get(parameters.size() - 1)) {
-							name.append(",");
+							signature.append(",");
 						}
 					}
 
-					name.append(")");
+					signature.append(")");
 				}
 
 				// elementName[Type]
-				name.append("[");
-				name.append(element.eClass().getName());
-				name.append("]");
+				signature.append("[");
+				signature.append(element.eClass().getName());
+				signature.append("]");
 			}
 			
-			return name.toString();
+			return signature.toString();
 		}
 		
 		// No name found:
 		
 		if (element instanceof EAnnotation) {
-			StringBuilder signature = new StringBuilder();
 			signature.append("[");
 			signature.append(element.eClass().getName());
 			signature.append("]");
-			signature.append("{");
 			signature.append(((EAnnotation) element).getSource());
-			signature.append(":");
+			signature.append("{");
 			
 			EMap<String, String>  details = ((EAnnotation) element).getDetails();
 			
@@ -215,10 +226,23 @@ public class EcoreMatcher extends LocalSignatureMatcher {
 			signature.append("}");
 			
 			return signature.toString();
+		} else if (element instanceof EStringToStringMapEntryImpl) {
+			EStringToStringMapEntryImpl entry = (EStringToStringMapEntryImpl) element;
+			
+			signature.append("[");
+			signature.append(entry.eClass().getName());
+			signature.append("]");
+			
+			signature.append("{");
+			signature.append(entry.getKey());
+			signature.append("->");
+			signature.append(entry.getValue());
+			signature.append("}");
+			
+			return signature.toString();
 		} else if (element instanceof EGenericType) {
 			EGenericType genericElement = (EGenericType) element;
 			
-			StringBuilder signature = new StringBuilder();
 			signature.append("[");
 			signature.append(genericElement.eClass().getName());
 			signature.append("]");
@@ -271,33 +295,35 @@ public class EcoreMatcher extends LocalSignatureMatcher {
 			return signature.toString();
 		} else {
 			// To-string signature: Remove Object ID if present:
-			return element.toString().replaceFirst("@.*?\\s", "");
+			signature.append(element.toString().replaceFirst("@.*?\\s", ""));
+			return signature.toString();
 		}
 	}
 
 	private String deriveQualifiedName(EObject element) {
-		String elementName = getLabelSignature(element);
+		StringBuilder elementName = new StringBuilder(getLabelSignature(element));
 
 		while (elementName != null && element.eContainer() != null) {
 			element = element.eContainer();
 			String containerName = getLabelSignature(element);
 
 			if (containerName != null) {
-				elementName = containerName + "$" + elementName;
-			} else {
-				elementName = null;
+				elementName.append("$" + containerName);
 			}
 		}
 
-		return elementName;
+		elementName.append("$" + element.eResource().getURI().lastSegment());
+		return elementName.toString();
 	}
 
 	private Map<String, Collection<EClass>> unrollQuallifiedNameOfEClasses(ValueMap<String, EObject> valueMap) {
 		Map<String, Collection<EClass>> map = new HashMap<String, Collection<EClass>>();
+		
 		for (EObject eObject : valueMap.getValuedObjects()) {
 			if (eObject instanceof EClass) {
 				EClass eClass = (EClass) eObject;
 				String idEClass = valueMap.getValue(eClass);
+				
 				while (!idEClass.isEmpty()) {
 					if (!map.containsKey(idEClass)) {
 						map.put(idEClass, new HashSet<EClass>());
@@ -309,7 +335,6 @@ public class EcoreMatcher extends LocalSignatureMatcher {
 						idEClass = "";
 					}
 				}
-				;
 			}
 		}
 		return map;
