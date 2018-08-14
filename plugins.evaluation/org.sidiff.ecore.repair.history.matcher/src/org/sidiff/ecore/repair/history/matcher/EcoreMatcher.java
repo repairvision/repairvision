@@ -222,10 +222,14 @@ public class EcoreMatcher extends BaseMatcher {
 		StringBuilder elementName = new StringBuilder(getLabelSignature(element));
 		
 		if (element instanceof EStructuralFeature) {
-			int index = ((EStructuralFeature) element).getEContainingClass().getEStructuralFeatures().indexOf(element);
-			elementName.insert(0, "#");
-			elementName.insert(0, index);
-			elementName.insert(0, "#");
+			EClass containerClass = ((EStructuralFeature) element).getEContainingClass();
+			
+			if (containerClass != null) {
+				int index = containerClass.getEStructuralFeatures().indexOf(element);
+				elementName.insert(0, "#");
+				elementName.insert(0, index);
+				elementName.insert(0, "#");
+			}
 		}
 		
 		EObject container = element;
@@ -246,10 +250,14 @@ public class EcoreMatcher extends BaseMatcher {
 				}
 				
 				if (container instanceof EStructuralFeature) {
-					int index = ((EStructuralFeature) container).getEContainingClass().getEStructuralFeatures().indexOf(container);
-					elementName.insert(0, "#");
-					elementName.insert(0, index);
-					elementName.insert(0, "#");
+					EClass containerClass = ((EStructuralFeature) container).getEContainingClass();
+					
+					if (containerClass != null) {
+						int index = containerClass.getEStructuralFeatures().indexOf(container);
+						elementName.insert(0, "#");
+						elementName.insert(0, index);
+						elementName.insert(0, "#");
+					}
 				}
 			}
 		}
