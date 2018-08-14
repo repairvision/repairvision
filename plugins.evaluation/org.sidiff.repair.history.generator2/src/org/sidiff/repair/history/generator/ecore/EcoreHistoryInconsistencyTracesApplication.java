@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -48,33 +50,60 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 	
 	private String targetDataSetURI = URI.createFileURI(targetDataSet.getAbsolutePath()).toString();
 	
+	private Set<String> projectFilter = new HashSet<>();
+	{
+		projectFilter.add("birt");
+		projectFilter.add("eclipse.e4");
+		projectFilter.add("modeling.eef");
+		projectFilter.add("modeling.emf.emf");
+		projectFilter.add("modeling.emft.edapt");
+		projectFilter.add("modeling.emft.emf-client");
+		projectFilter.add("modeling.gmp.gmf-tooling");
+		projectFilter.add("modeling.m2t.acceleo");
+		projectFilter.add("modeling.mdt.bpmn2");
+		projectFilter.add("modeling.mdt.ocl");
+		projectFilter.add("modeling.mdt.papyrus");
+		projectFilter.add("modeling.mdt.uml2");
+		projectFilter.add("modeling.mmt.atl");
+		projectFilter.add("modeling.mmt.qvt-oml");
+		projectFilter.add("modeling.mmt.qvtd");
+		projectFilter.add("modeling.pmf");
+		projectFilter.add("modeling.sirius");
+		projectFilter.add("science.eavp");
+		projectFilter.add("technology.cbi");
+		projectFilter.add("technology.stem");
+		projectFilter.add("tools.buckminster");
+	}
+	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
 		CoevolutionDataSetMetadata dataset = new CoevolutionDataSetMetadata(sourceDataSet.getAbsolutePath(), true);
-
+		
 		for (HistoryMetadata history : dataset.getHistories()) {
 			if (!EcoreHistoryValidationApplication.modelHistoryFilter.contains(EcoreHistoryValidationApplication.getFilter(history))) {
-				
-				// Collect model versions:
-				List<URI> modelVersions = new ArrayList<>();
-
-				for (VersionMetadata version : history.getVersions()) {
-					URI modelVersionURI = URI.createFileURI(history.getDatafile().getParent() + version.getLocalFilePath());
-					modelVersions.add(modelVersionURI);
+				if (!projectFilter.contains(history.getProjectName())) {
+					
+					// Collect model versions:
+					List<URI> modelVersions = new ArrayList<>();
+					
+					for (VersionMetadata version : history.getVersions()) {
+						URI modelVersionURI = URI.createFileURI(history.getDatafile().getParent() + version.getLocalFilePath());
+						modelVersions.add(modelVersionURI);
+					}
+					
+					Collections.reverse(modelVersions);
+					
+					// Generate history:
+					String historyName = EcoreHistorySettings.getInstance().generateHistoryName(history.getLatestRemoteFilePath());
+					URI historyURI = URI.createFileURI(history.getDatafile().getParent())
+							.appendSegment(historyName).appendFileExtension(HISTORY_FILE_EXTENSION);
+					historyURI = toTargetURI(historyURI);
+					
+					Resource validationHistory = generateHistory(historyName, historyURI, modelVersions, EcoreHistorySettings.getInstance());
+					
+					// Save history:
+					validationHistory.save(Collections.EMPTY_MAP);
 				}
-				
-				Collections.reverse(modelVersions);
-
-				// Generate history:
-				String historyName = EcoreHistorySettings.getInstance().generateHistoryName(history.getLatestRemoteFilePath());
-				URI historyURI = URI.createFileURI(history.getDatafile().getParent())
-						.appendSegment(historyName).appendFileExtension(HISTORY_FILE_EXTENSION);
-				historyURI = toTargetURI(historyURI);
-				
-				Resource validationHistory = generateHistory(historyName, historyURI, modelVersions, EcoreHistorySettings.getInstance());
-
-				// Save history:
-				validationHistory.save(Collections.EMPTY_MAP);
 			}
 		}
 		
