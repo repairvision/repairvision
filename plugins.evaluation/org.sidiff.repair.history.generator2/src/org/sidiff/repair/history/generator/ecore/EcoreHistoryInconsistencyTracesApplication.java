@@ -62,6 +62,8 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 					URI modelVersionURI = URI.createFileURI(history.getDatafile().getParent() + version.getLocalFilePath());
 					modelVersions.add(modelVersionURI);
 				}
+				
+				Collections.reverse(modelVersions);
 
 				// Generate history:
 				String historyName = EcoreHistorySettings.getInstance().generateHistoryName(history.getLatestRemoteFilePath());
