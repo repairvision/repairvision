@@ -305,14 +305,27 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * <!-- end-user-do c -->
+	 * @generated NOT
 	 */
 	public void setIntroducedIn(Version newIntroducedIn) {
 		Version oldIntroducedIn = introducedIn;
 		introducedIn = newIntroducedIn;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, HistoryModelPackage.VALIDATION_ERROR__INTRODUCED_IN, oldIntroducedIn, introducedIn));
+		
+		// propagate value:
+		if (getPrec() != null) {
+			if (getPrec().getIntroducedIn() != newIntroducedIn) {
+				getPrec().setIntroducedIn(newIntroducedIn);
+			}
+		}
+		
+		if (getSucc() != null) {
+			if (getSucc().getIntroducedIn() != newIntroducedIn) {
+				getSucc().setIntroducedIn(newIntroducedIn);
+			}
+		}
 	}
 
 	/**
@@ -344,13 +357,26 @@ public class ValidationErrorImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public void setResolvedIn(Version newResolvedIn) {
 		Version oldResolvedIn = resolvedIn;
 		resolvedIn = newResolvedIn;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, HistoryModelPackage.VALIDATION_ERROR__RESOLVED_IN, oldResolvedIn, resolvedIn));
+		
+		// propagate value:
+		if (getPrec() != null) {
+			if (getPrec().getResolvedIn() != newResolvedIn) {
+				getPrec().setResolvedIn(newResolvedIn);
+			}
+		}
+		
+		if (getSucc() != null) {
+			if (getSucc().getResolvedIn() != newResolvedIn) {
+				getSucc().setResolvedIn(newResolvedIn);
+			}
+		}
 	}
 
 	/**
