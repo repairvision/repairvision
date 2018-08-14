@@ -2,14 +2,14 @@ package org.sidiff.ecore.repair.history.matcher;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.function.Function;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -17,157 +17,256 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.collections.ValueMap;
-import org.sidiff.matcher.LocalSignatureMatcher;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.sidiff.common.emf.access.Scope;
+import org.sidiff.matcher.BaseMatcher;
 
-public class EcoreMatcher extends LocalSignatureMatcher {
+public class EcoreMatcher extends BaseMatcher {
 	
-	private ValueMap<String, EObject> correspondenceMap = null;
+	private Set<Resource> resourceSetA = new HashSet<>();
+	
+	private Set<Resource> resourceSetB = new HashSet<>();
+	
+	private boolean allowsAmbiguousSignature = false;
+	
+	@Override
+	public Set<String> getDocumentTypes() {
+		Set<String> docTypes = new HashSet<String>();
+		docTypes.add(EcorePackage.eNS_URI);
+		return docTypes;
+	}
+
+	@Override
+	protected void init(Collection<Resource> models, Scope scope) {
+		super.init(models, scope);	
+		
+		Iterator<Resource> iterator = getModels().iterator();
+		Resource resourceA = iterator.next();
+		Resource resourceB = iterator.next();
+		
+		if (scope.equals(Scope.RESOURCE_SET)) {
+			resourceSetA.addAll(resourceA.getResourceSet().getResources());
+			resourceSetB.addAll(resourceB.getResourceSet().getResources());
+		} else {
+			resourceSetA.add(resourceA);
+			resourceSetB.add(resourceB);
+		}
+	}	
 	
 	@Override
 	public boolean isResourceSetCapable() {
 		return true;
+	}
+
+	public boolean isAllowsAmbiguousSignature() {
+		return allowsAmbiguousSignature;
+	}
+	
+	public void setAllowsAmbiguousSignature(boolean allowsAmbiguousSignature) {
+		this.allowsAmbiguousSignature = allowsAmbiguousSignature;
 	}
 	
 	@Override
 	public String getKey() {
 		return getClass().getName();
 	}
-
+	
 	@Override
-	protected void matchSignatures() {
-		correspondenceMap = new ValueMap<String, EObject>();
-		ValueMap<String, EObject> unmatchedAMap = new ValueMap<String, EObject>();
-		ValueMap<String, EObject> unmatchedBMap = new ValueMap<String, EObject>();
-
-		Iterator<Resource> iterator = getModels().iterator();
-		Resource resourceA = iterator.next();
-		Resource resourceB = iterator.next();
+	public void match() {
+		Map<String, List<EObject>> signatures = new HashMap<>();
+		List<EObject> unmatched;
+		List<EObject> ambiguous;
 		
-		for (Resource coevoluationA : resourceA.getResourceSet().getResources()) {
-			unmatchedAMap.insert(getSignatures().get(coevoluationA));
+		// Phase 1: Full qualified
+		resourceSetA.forEach(model -> calculateSignatures(model.getAllContents(), signatures, this::qualifiedLevelSignature));
+		resourceSetB.forEach(model -> calculateSignatures(model.getAllContents(), signatures, this::qualifiedLevelSignature));
+
+		// Phase 2: Package level:
+		unmatched = extractUnmatched(signatures);
+//		signatures = new HashMap<>();
+		calculateSignatures(unmatched.iterator(), signatures, this::packageLevelSignature);
+		
+		// Phase 3: Class level:
+		if (!unmatched.isEmpty()) {
+			unmatched = extractUnmatched(signatures);
+//			signatures = new HashMap<>();
+			calculateSignatures(unmatched.iterator(), signatures, this::classLevelSignature);
 		}
 		
-		for (Resource coevoluationB : resourceB.getResourceSet().getResources()) {
-			unmatchedBMap.insert(getSignatures().get(coevoluationB));
+		// Handle ambiguous signature matchings:
+		ambiguous = extractAmbiguous(signatures);
+//		signatures = new HashMap<>();
+		calculateSignatures(ambiguous.iterator(), signatures, this::classIndexLevelSignature);
+		
+		handleAmbiguousSignature(signatures);
+		
+		// Convert signature match to correspondences:
+		createCorrespondences(signatures);
+	}
+
+	protected void calculateSignatures(
+			Iterator<EObject> unmatched, 
+			Map<String, List<EObject>> signatures, 
+			Function<EObject, String> signatureMapper) {
+		
+		unmatched.forEachRemaining(modelElement -> {
+			String signature = signatureMapper.apply(modelElement);
+
+			if (signatures.containsKey(signature)) {
+				signatures.get(signature).add(modelElement);
+			} else {
+				List<EObject> matched = new ArrayList<>(2);
+				matched.add(modelElement);
+				signatures.put(signature, matched);
+			}
+		});
+	}
+	
+	protected List<EObject> extractAmbiguous(Map<String, List<EObject>> signatures) {
+		List<EObject> unmatched = new ArrayList<>();
+		List<String> unmatchedSignatures = new ArrayList<>();
+		
+		for (Entry<String, List<EObject>> entry : signatures.entrySet()) {
+			if (entry.getValue().size() > 2) {
+				unmatched.addAll(entry.getValue());
+				unmatchedSignatures.add(entry.getKey());
+			}
+		}
+		
+		unmatchedSignatures.forEach(signatures::remove);
+		
+		return unmatched;
+	}
+	
+	protected List<EObject> extractUnmatched(Map<String, List<EObject>> signatures) {
+		List<EObject> unmatched = new ArrayList<>();
+		List<String> unmatchedSignatures = new ArrayList<>();
+		
+		for (Entry<String, List<EObject>> entry : signatures.entrySet()) {
+			if (entry.getValue().size() == 1) {
+				unmatched.addAll(entry.getValue());
+				unmatchedSignatures.add(entry.getKey());
+			}
+		}
+		
+		unmatchedSignatures.forEach(signatures::remove);
+		
+		return unmatched;
+	}
+	
+	protected String qualifiedLevelSignature(EObject element) {
+		StringBuilder elementName = new StringBuilder(getLabelSignature(element));
+
+		while (elementName != null && element.eContainer() != null) {
+			element = element.eContainer();
+			String containerName = getLabelSignature(element);
+
+			if (containerName != null) {
+				elementName.insert(0, "$" + containerName);
+			}
 		}
 
-		// match full qualified names first
-		matchSignatures(correspondenceMap, unmatchedAMap, unmatchedBMap);
+		elementName.insert(0, element.eResource().getURI().lastSegment() + "[EResource]");
+		return elementName.toString();
+	}
+	
+	protected String packageLevelSignature(EObject element) {
+		StringBuilder elementName = new StringBuilder(getLabelSignature(element));
 
-		// no we unroll the qualified names of the unmatched EClasses
-		Map<String, Collection<EClass>> unmatchedEClassesAMap = unrollQuallifiedNameOfEClasses(unmatchedAMap);
-		Map<String, Collection<EClass>> unmatchedEClassesBMap = unrollQuallifiedNameOfEClasses(unmatchedBMap);
-
-		List<String> sortedKeysA = new ArrayList<String>(unmatchedEClassesAMap.keySet());
-		Collections.sort(sortedKeysA, new Comparator<String>() {
-
-			@Override
-			public int compare(String o1, String o2) {
-				return o2.length() - o1.length();
-			}
-		});
-
-		List<String> sortedKeysB = new ArrayList<String>(unmatchedEClassesBMap.keySet());
-		Collections.sort(sortedKeysB, new Comparator<String>() {
-
-			@Override
-			public int compare(String o1, String o2) {
-				return o2.length() - o1.length();
-			}
-		});
-
-		for (String keyA : sortedKeysA) {
-			for (String keyB : sortedKeysB) {
-				if (keyA.equals(keyB)) {
-					for (EClass eClass : unmatchedEClassesAMap.get(keyA)) {
-						correspondenceMap.put(eClass, keyA);
-						for (EStructuralFeature eStructuralFeature : eClass.getEStructuralFeatures()) {
-							String key_eStructuralFeature = keyA + "$" + getLabelSignature(eStructuralFeature);
-							correspondenceMap.put(eStructuralFeature, key_eStructuralFeature);
-						}
-					}
-					for (EClass eClass : unmatchedEClassesBMap.get(keyB)) {
-						correspondenceMap.put(eClass, keyB);
-						for (EStructuralFeature eStructuralFeature : eClass.getEStructuralFeatures()) {
-							String key_eStructuralFeature = keyB + "$" + getLabelSignature(eStructuralFeature);
-							correspondenceMap.put(eStructuralFeature, key_eStructuralFeature);
-						}
-					}
-					cleanMap(unmatchedEClassesAMap);
-					cleanMap(unmatchedEClassesBMap);
+		while (elementName != null && element.eContainer() != null) {
+			element = element.eContainer();
+			
+			if (element instanceof EPackage) {
+				break;
+			} else {
+				String containerName = getLabelSignature(element);
+				
+				if (containerName != null) {
+					elementName.insert(0, "$" + containerName);
 				}
 			}
 		}
 
-		for (String id : correspondenceMap.getFilledValues(2)) {
-			if (correspondenceMap.getObjects(id).size() >= 2) {
-				getCorrespondencesService().addCorrespondence(
-						correspondenceMap.getObjects(id).toArray(new EObject[correspondenceMap.getObjects(id).size()]));
+		elementName.insert(0, element.eResource().getURI().lastSegment() + "[EResource]");
+		return elementName.toString();
+	}
+	
+	protected String classLevelSignature(EObject element) {
+		StringBuilder elementName = new StringBuilder(getLabelSignature(element));
+
+		while (elementName != null && element.eContainer() != null) {
+			element = element.eContainer();
+			
+			if (element instanceof EClass) {
+				break;
 			} else {
-				System.out.println(correspondenceMap.getObjects(id));
+				String containerName = getLabelSignature(element);
+				
+				if (containerName != null) {
+					elementName.insert(0, "$" + containerName);
+				}
 			}
 		}
 
+		elementName.insert(0, element.eResource().getURI().lastSegment() + "[EResource]");
+		return elementName.toString();
 	}
-
-	private boolean matchSignatures(ValueMap<String, EObject> correspondenceMap,
-			ValueMap<String, EObject> unmatchedAMap, ValueMap<String, EObject> unmatchedBMap) {
-
-		int i = correspondenceMap.getValues().size();
-
-		correspondenceMap.insert(unmatchedAMap);
-		correspondenceMap.insert(unmatchedBMap);
-
-		for (String id : unmatchedAMap.getValues()) {
-			if (correspondenceMap.getObjects(id).size() < 2) {
-				correspondenceMap.remove(id);
-			}
-		}
-
-		for (String id : unmatchedBMap.getValues()) {
-			if (correspondenceMap.getObjects(id).size() < 2) {
-				correspondenceMap.remove(id);
-			}
-
-		}
-
-		for (String id : correspondenceMap.getValues()) {
-			unmatchedAMap.remove(id);
-			unmatchedBMap.remove(id);
-		}
-
-		return i < correspondenceMap.getValues().size();
-	}
-
-	@Override
-	public String getName() {
-		return "Ecore Matcher";
-	}
-
-	@Override
-	public String getDescription() {
-		return "Ecore Matcher";
-	}
-
-	@Override
-	protected String getElementSignature(EObject element) {
-		return deriveQualifiedName(element);
-	}
-
-	@Override
-	protected boolean considerCandidatesOnly() {
-		return true;
-	}
-
-	private String getLabelSignature(EObject element) {
-		EStructuralFeature nameFeature = element.eClass().getEStructuralFeature("name");
+	
+	protected String classIndexLevelSignature(EObject element) {
+		StringBuilder elementName = new StringBuilder(getLabelSignature(element));
 		
+		if (element instanceof EStructuralFeature) {
+			int index = ((EStructuralFeature) element).getEContainingClass().getEStructuralFeatures().indexOf(element);
+			elementName.insert(0, "#");
+			elementName.insert(0, index);
+			elementName.insert(0, "#");
+		}
+		
+		EObject container = element;
+		
+		if (elementName != null ) {
+		
+			while (container.eContainer() != null) {
+				container = container.eContainer();
+				
+				if (container instanceof EClass) {
+					break;
+				} else {
+					String containerName = getLabelSignature(container);
+					
+					if (containerName != null) {
+						elementName.insert(0, "$" + containerName);
+					}
+				}
+				
+				if (container instanceof EStructuralFeature) {
+					int index = ((EStructuralFeature) container).getEContainingClass().getEStructuralFeatures().indexOf(container);
+					elementName.insert(0, "#");
+					elementName.insert(0, index);
+					elementName.insert(0, "#");
+				}
+			}
+		}
+
+		elementName.insert(0, container.eResource().getURI().lastSegment() + "[EResource]");
+		return elementName.toString();
+	}
+	
+	protected String getLabelSignature(EObject element) {
 		StringBuilder signature = new StringBuilder();
+
+		if (element.eIsProxy()) {
+			signature.append(EcoreUtil.getURI(element));
+			return signature.toString();
+		}
+		
+		EStructuralFeature nameFeature = element.eClass().getEStructuralFeature("name");
 
 		if (nameFeature != null) {
 			Object nameValue = element.eGet(nameFeature);
@@ -205,10 +304,8 @@ public class EcoreMatcher extends LocalSignatureMatcher {
 		// No name found:
 		
 		if (element instanceof EAnnotation) {
-			signature.append("[");
-			signature.append(element.eClass().getName());
-			signature.append("]");
 			signature.append(((EAnnotation) element).getSource());
+			signature.append("->");
 			signature.append("{");
 			
 			EMap<String, String>  details = ((EAnnotation) element).getDetails();
@@ -225,13 +322,13 @@ public class EcoreMatcher extends LocalSignatureMatcher {
 			
 			signature.append("}");
 			
+			signature.append("[");
+			signature.append(element.eClass().getName());
+			signature.append("]");
+			
 			return signature.toString();
 		} else if (element instanceof EStringToStringMapEntryImpl) {
 			EStringToStringMapEntryImpl entry = (EStringToStringMapEntryImpl) element;
-			
-			signature.append("[");
-			signature.append(entry.eClass().getName());
-			signature.append("]");
 			
 			signature.append("{");
 			signature.append(entry.getKey());
@@ -239,40 +336,40 @@ public class EcoreMatcher extends LocalSignatureMatcher {
 			signature.append(entry.getValue());
 			signature.append("}");
 			
+			signature.append("[");
+			signature.append(entry.eClass().getName());
+			signature.append("]");
+			
 			return signature.toString();
 		} else if (element instanceof EGenericType) {
 			EGenericType genericElement = (EGenericType) element;
 			
-			signature.append("[");
-			signature.append(genericElement.eClass().getName());
-			signature.append("]");
-			
 			if (genericElement.getEClassifier() != null) {
-				signature.append("EClassifier[");
+				signature.append("eClassifier->{");
 				signature.append(getLabelSignature(genericElement.getEClassifier()));
-				signature.append("]");
+				signature.append("}");
 			}
 			
 			if (genericElement.getELowerBound() != null) {
-				signature.append("ELowerBound[");
+				signature.append("eLowerBound->{");
 				signature.append(getLabelSignature(genericElement.getELowerBound()));
-				signature.append("]");
+				signature.append("}");
 			}
 			
 			if (genericElement.getERawType() != null) {
-				signature.append("ERawType[");
+				signature.append("eRawType->{");
 				signature.append(getLabelSignature(genericElement.getERawType()));
-				signature.append("]");
+				signature.append("}");
 			} 
 			
 			if (genericElement.getETypeParameter() != null) {
-				signature.append("ETypeParameter[");
+				signature.append("eTypeParameter->{");
 				signature.append(getLabelSignature(genericElement.getETypeParameter()));
-				signature.append("]");
+				signature.append("}");
 			}
 			
 			if (!genericElement.getETypeArguments().isEmpty()) {
-				signature.append("ETypeArguments[");
+				signature.append("eTypeArguments->{");
 				List<EGenericType> types = genericElement.getETypeArguments();
 				
 				for (EGenericType type : types) {
@@ -283,71 +380,209 @@ public class EcoreMatcher extends LocalSignatureMatcher {
 					}
 				}
 				
-				signature.append("]");
+				signature.append("}");
 			}
 			
 			if (genericElement.getEUpperBound() != null) {
-				signature.append("EUpperBound[");
+				signature.append("eUpperBound->{");
 				signature.append(getLabelSignature(genericElement.getEUpperBound()));
-				signature.append("]");
+				signature.append("}");
 			}
+			
+			signature.append("[");
+			signature.append(genericElement.eClass().getName());
+			signature.append("]");
 			
 			return signature.toString();
 		} else {
 			// To-string signature: Remove Object ID if present:
 			signature.append(element.toString().replaceFirst("@.*?\\s", ""));
+			
+			signature.append("[");
+			signature.append(element.eClass().getName());
+			signature.append("]");
+			
 			return signature.toString();
 		}
 	}
-
-	private String deriveQualifiedName(EObject element) {
-		StringBuilder elementName = new StringBuilder(getLabelSignature(element));
-
-		while (elementName != null && element.eContainer() != null) {
-			element = element.eContainer();
-			String containerName = getLabelSignature(element);
-
-			if (containerName != null) {
-				elementName.append("$" + containerName);
-			}
-		}
-
-		elementName.append("$" + element.eResource().getURI().lastSegment());
-		return elementName.toString();
-	}
-
-	private Map<String, Collection<EClass>> unrollQuallifiedNameOfEClasses(ValueMap<String, EObject> valueMap) {
-		Map<String, Collection<EClass>> map = new HashMap<String, Collection<EClass>>();
+	
+	protected List<EObject> getMatches(List<? extends EObject> elements, Map<String, List<EObject>> signatures) {
+		List<EObject> matches = new ArrayList<>();
 		
-		for (EObject eObject : valueMap.getValuedObjects()) {
-			if (eObject instanceof EClass) {
-				EClass eClass = (EClass) eObject;
-				String idEClass = valueMap.getValue(eClass);
-				
-				while (!idEClass.isEmpty()) {
-					if (!map.containsKey(idEClass)) {
-						map.put(idEClass, new HashSet<EClass>());
-					}
-					map.get(idEClass).add(eClass);
-					if (idEClass.indexOf("$") > 0) {
-						idEClass = idEClass.substring(idEClass.indexOf("$") + 1);
-					} else {
-						idEClass = "";
-					}
-				}
+		for (EObject element : elements) {
+			EObject match = getMatch(element, signatures);
+			
+			if (match != null) {
+				matches.add(match);
 			}
 		}
-		return map;
+		
+		return matches;
+	}
+	
+	protected EObject getMatch(EObject element, Map<String, List<EObject>> signatures) {
+		String signature = qualifiedLevelSignature(element);
+		EObject match = lookupMatch(element, signatures, signature);
+		
+		if (match == null) {
+			signature = packageLevelSignature(element);
+			lookupMatch(element, signatures, signature);
+		}
+		
+		if (match == null) {
+			signature = classLevelSignature(element);
+			lookupMatch(element, signatures, signature);
+		}
+		
+		return match;
 	}
 
-	private void cleanMap(Map<String, Collection<EClass>> map) {
-		for (String key : map.keySet()) {
-			for (Iterator<EClass> iterator = map.get(key).iterator(); iterator.hasNext();) {
-				EClass eClass = iterator.next();
-				if (correspondenceMap.containsObject(eClass)) {
-					iterator.remove();
+	protected EObject lookupMatch(EObject element, Map<String, List<EObject>> signatures, String signature) {
+		if (signatures.containsKey(signature)) {
+			List<EObject> matching = signatures.get(signature);
+			
+			if ((matching.size() == 2) || isAllowsAmbiguousSignature()){
+				for (EObject match : matching) {
+					if (match != element) {
+						return match;
+					}
 				}
 			}
 		}
+		return null;
+	}
+	
+	protected void handleAmbiguousSignature(Map<String, List<EObject>> signatures) {
+		for (Entry<String, List<EObject>> match : signatures.entrySet()) {
+			List<EObject> matched = match.getValue();
+			
+			if (matched.size() > 2) {
+				
+				// Search inheritance match for structural features:
+				matchInheritanceMovedStructuralFeatures(matched, signatures);
+
+				// Search local match for structural features:
+				matchLocallyMovedStructuralFeatures(matched, signatures);
+				
+				// Handle Ambiguous Signature:
+				if (isAllowsAmbiguousSignature()) {
+					// cut match:
+					matched.subList(2, matched.size()).clear();
+				} else {
+					// remove match:
+					matched.clear();
+				}
+			}
+		}
+	}
+
+	protected void matchInheritanceMovedStructuralFeatures(List<EObject> matched, Map<String, List<EObject>> signatures) {
+		
+		if (matched.get(0) instanceof EStructuralFeature) {
+			List<EObject[]> pairs = new ArrayList<>();
+
+			for (EObject matchElementA : matched) {
+				if (resourceSetA.contains(matchElementA.eResource())) {
+					for (EObject matchElementB : matched) {
+						if (resourceSetB.contains(matchElementB.eResource())) {
+							if (matchElementA != matchElementB) {
+								EStructuralFeature featureA = (EStructuralFeature) matchElementA;
+								EStructuralFeature featureB = (EStructuralFeature) matchElementB;
+
+								EObject classBinA = getMatch(featureB.getEContainingClass(), signatures);
+
+								if (classBinA != null) {
+									List<EClass> superTypesA = featureA.getEContainingClass().getEAllSuperTypes();
+									List<EObject> superTypesBinA = getMatches(featureB.getEContainingClass().getEAllSuperTypes(), signatures);
+
+									if (hasIntersection(superTypesA, superTypesBinA)
+											|| superTypesA.contains(classBinA)
+											|| superTypesBinA.contains(featureA.getEContainingClass())) {
+										pairs.add(new EObject[] {matchElementA, matchElementB});
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (!pairs.isEmpty()) {
+				if ((pairs.size() == 1) || isAllowsAmbiguousSignature()) {
+					matched.clear();
+					matched.add(pairs.get(0)[0]);
+					matched.add(pairs.get(0)[1]);
+				}
+			}
+		}
+	}
+
+	protected void matchLocallyMovedStructuralFeatures(List<EObject> matched, Map<String, List<EObject>> signatures) {
+		
+		if (matched.get(0) instanceof EStructuralFeature) {
+			List<EObject[]> pairs = new ArrayList<>();
+
+			for (EObject matchElementA : matched) {
+				if (resourceSetA.contains(matchElementA.eResource())) {
+					for (EObject matchElementB : matched) {
+						if (resourceSetB.contains(matchElementB.eResource())) {
+							if (matchElementA != matchElementB) {
+								EClass classA = ((EStructuralFeature) matchElementA).getEContainingClass();
+								EClass classB = ((EStructuralFeature) matchElementB).getEContainingClass();
+
+								if (classA.getEAllReferences().stream().anyMatch(r -> getMatch(r.getEReferenceType(), signatures) == classB) 
+										|| classB.getEAllReferences().stream().anyMatch(r -> getMatch(r.getEReferenceType(), signatures) == classA)) {
+									pairs.add(new EObject[] {matchElementA, matchElementB});
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (!pairs.isEmpty()) {
+				if ((pairs.size() == 1) || isAllowsAmbiguousSignature()) {
+					matched.clear();
+					matched.add(pairs.get(0)[0]);
+					matched.add(pairs.get(0)[1]);
+				}
+			}
+		}
+	}
+
+	protected boolean hasIntersection(List<?> list1, List<?> list2) {
+		for (Object t : list1) {
+			if (list2.contains(t)) {
+				return true;
+			}
+		}
+		return false;
+    }
+
+	protected void createCorrespondences(Map<String, List<EObject>> signatures) {
+		for (Entry<String, List<EObject>> match : signatures.entrySet()) {
+			List<EObject> matched = match.getValue();
+			
+			if (matched.size() == 2) {
+				Resource resource0 = matched.get(0).eResource();
+				Resource resource1 = matched.get(1).eResource();
+				
+				if (resourceSetA.contains(resource0) && resourceSetB.contains(resource1)) {
+					getCorrespondencesService().addCorrespondence(matched.get(0), matched.get(1));
+				} else if (resourceSetA.contains(resource1) && resourceSetB.contains(resource0)) {
+					getCorrespondencesService().addCorrespondence(matched.get(1), matched.get(0));
+				}
+			}
+		}
+	}
+
+	@Override
+	public String getName() {
+		return "Ecore Matcher";
+	}
+
+	@Override
+	public String getDescription() {
+		return "Matcher for Ecore Models";
 	}
 }
