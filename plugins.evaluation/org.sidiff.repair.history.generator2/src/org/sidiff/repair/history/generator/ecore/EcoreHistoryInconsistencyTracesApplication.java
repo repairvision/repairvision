@@ -266,7 +266,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 				inconsistencyB.setPrec(inconsistencyA);
 				inconsistencyB.setIntroducedIn(inconsistencyA.getIntroducedIn());
 			} else {
-				inconsistencyA.setResolvedIn(versionA);
+				inconsistencyA.setResolvedIn(versionB);
 			}
 			
 			if (inconsistencyA.getPrec() == null) {
