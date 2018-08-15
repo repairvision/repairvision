@@ -63,7 +63,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		projectFilter.add("modeling.mdt.bpmn2");
 		projectFilter.add("modeling.mdt.ocl");
 		projectFilter.add("modeling.mdt.papyrus");
-		projectFilter.add("modeling.mdt.uml2");
+//		projectFilter.add("modeling.mdt.uml2");
 		projectFilter.add("modeling.mmt.atl");
 		projectFilter.add("modeling.mmt.qvt-oml");
 		projectFilter.add("modeling.mmt.qvtd");
@@ -133,8 +133,10 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		}
 		
 		// Calculate matchings:
-		Resource resourceB = loadResourceSet(modelVersions.get(0));
-		Version versionB = generateVersion(1, resourceB, settings);
+		URI uriB = modelVersions.get(0);
+		String repositoryVersion = uriB.segment(uriB.segmentCount() - 2);
+		Resource resourceB = loadResourceSet(uriB);
+		Version versionB = generateVersion(1, resourceB, repositoryVersion, settings);
 		
 		history.getVersions().add(versionB);
 		saveResourceSetToTarget(resourceB.getResourceSet());
@@ -145,8 +147,10 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 			Version versionA = versionB;
 			
 			// Load model:
-			resourceB = loadResourceSet(modelVersions.get(i));
-			versionB = generateVersion(i + 1, resourceB, settings);
+			uriB = modelVersions.get(i);
+			repositoryVersion = uriB.segment(uriB.segmentCount() - 2);
+			resourceB = loadResourceSet(uriB);
+			versionB = generateVersion(i + 1, resourceB, repositoryVersion, settings);
 			
 			System.out.println("Versions: " + versionA.getName() + " -> " + versionB.getName());
 
@@ -210,7 +214,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		}
 	}
 	
-	protected Version generateVersion(int revision, Resource model, EcoreHistorySettings settings) {
+	protected Version generateVersion(int revision, Resource model, String repositoryVersion, EcoreHistorySettings settings) {
 		Collection<ValidationError> validationErrors = settings.getValidator().validate(model);
 		
 		ModelStatus modelStatus = validationErrors.isEmpty() ? ModelStatus.VALID : ModelStatus.INVALID;
@@ -226,6 +230,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		
 		Version version = HistoryModelFactory.eINSTANCE.createVersion();
 		version.setModel(model);
+		version.setRepositoryVersion(repositoryVersion);
 		version.getValidationErrors().addAll(validationErrors);
 		version.setStatus(modelStatus);
 		version.setName(String.format("%03d", revision) + " - " + model.getURI().lastSegment());

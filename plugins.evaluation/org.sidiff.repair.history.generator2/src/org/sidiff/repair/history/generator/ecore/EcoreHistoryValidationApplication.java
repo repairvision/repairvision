@@ -293,6 +293,7 @@ public class EcoreHistoryValidationApplication implements IApplication  {
 
 				// modeling.mdt.uml2
 
+				"http://git.eclipse.org/c/uml2/org.eclipse.uml2.git/plugins/org.eclipse.uml2.codegen.ecore/model/GenModel.ecore",
 				"http://git.eclipse.org/c/uml2/org.eclipse.uml2.git/plugins/org.eclipse.uml2.types/model/Types.ecore",
 				"http://git.eclipse.org/c/uml2/org.eclipse.uml2.git/plugins/org.eclipse.uml2.uml.profile.standard/model/Standard.ecore",
 				"http://git.eclipse.org/c/uml2/org.eclipse.uml2.git/plugins/org.eclipse.uml2.uml/model/CMOF24.ecore",

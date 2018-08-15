@@ -19,6 +19,13 @@ public class EcoreHistoryURIHandlerDeresolve extends URIHandlerImpl  {
 		this.uriMapping = uriMapping;
 	}
 	
+	public static URI getDeresolvedURI(VersionMetadata modelVersion) {
+		return URI.createURI(
+//				modelVersion.getFileName() + "_" + modelVersion.getPathCompatibleDate());
+//				modelVersion.getHistory().getProjectName() + "_" + modelVersion.getFileName());
+				EcoreHistorySettings.getInstance().generateHistoryName(modelVersion.getRemoteFilePath()));
+	}
+	
 	protected URI map(URI uri) {
 		URI deresolvedURI = uri.deresolve(baseURI, true, true, false);
 
@@ -30,7 +37,7 @@ public class EcoreHistoryURIHandlerDeresolve extends URIHandlerImpl  {
 		// Lookup URI in mapping:
 		if (uriMapping.containsKey(uri.trimFragment().toString())) {
 			VersionMetadata selectedVersion = selectedVersions.get(uriMapping.get(uri.trimFragment().toString()));
-			deresolvedURI = URI.createURI(selectedVersion.getFileName());
+			deresolvedURI = getDeresolvedURI(selectedVersion);
 			
 			if (uri.fragment() != null) {
 				deresolvedURI = deresolvedURI.appendFragment(uri.fragment());

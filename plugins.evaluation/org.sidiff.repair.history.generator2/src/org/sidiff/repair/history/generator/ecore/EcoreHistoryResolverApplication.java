@@ -70,7 +70,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		repositoryFilter.add("http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git");
 		repositoryFilter.add("http://git.eclipse.org/c/rmf/org.eclipse.rmf.git");
 		repositoryFilter.add("http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git");
-		repositoryFilter.add("http://git.eclipse.org/c/uml2/org.eclipse.uml2.git");
+//		repositoryFilter.add("http://git.eclipse.org/c/uml2/org.eclipse.uml2.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.atl.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvto.git");
@@ -284,7 +284,8 @@ public class EcoreHistoryResolverApplication implements IApplication {
 
 				// Store metadata:
 				CoevolutionVersionMetadata coevolvingVersionMetadata = new CoevolutionVersionMetadata(coevolvinHistoryMetadata, modelVersion);
-				coevolvingVersionMetadata.setLocalFilePath("/" + resourceSetVersionFolder.getName() + "/" + modelVersion.getFileName());
+				coevolvingVersionMetadata.setLocalFilePath("/" + resourceSetVersionFolder.getName() + "/"
+						+ EcoreHistoryURIHandlerDeresolve.getDeresolvedURI(coevolvingVersionMetadata));
 
 				if (!(coevolutionDate.equals(modelVersion.getParsedDate()))) {
 					coevolvingVersionMetadata.setCoevolutionDate(EcoreHistorySettings.DATE_ISO8601.format(coevolutionDate));
@@ -351,11 +352,10 @@ public class EcoreHistoryResolverApplication implements IApplication {
 			}
 
 			if (modelResource != null) {
-				URI targetURI = URI.createFileURI(
-						resourceSetVersionFolder.getAbsolutePath()
-//						+ "/" + modelVersion.getFileName() + "_" + modelVersion.getPathCompatibleDate());
-						+ "/" + modelVersion.getFileName());
-				modelResource.setURI(targetURI);
+				URI targetURI = EcoreHistoryURIHandlerDeresolve.getDeresolvedURI(modelVersion);
+				URI targetFileURI = URI.createFileURI(
+						resourceSetVersionFolder.getAbsolutePath() + "/" + targetURI.devicePath());
+				modelResource.setURI(targetFileURI);
 				deresolvedResources.add(modelResource);
 			}
 		}
