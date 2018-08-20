@@ -10,7 +10,6 @@ public class CoevolutionDataSetMetadata extends DataSetMetadata {
 	public CoevolutionDataSetMetadata(String localPath, boolean onlyExistingVersions) {
 		super(localPath, onlyExistingVersions);
 	}
-
 	
 	@Override
 	protected HistoryMetadata createHistory(File historyFile, boolean onlyExistingVersions) {

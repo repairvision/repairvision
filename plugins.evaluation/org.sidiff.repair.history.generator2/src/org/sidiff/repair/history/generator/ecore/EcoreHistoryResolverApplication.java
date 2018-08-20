@@ -70,7 +70,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		repositoryFilter.add("http://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git");
 		repositoryFilter.add("http://git.eclipse.org/c/rmf/org.eclipse.rmf.git");
 		repositoryFilter.add("http://git.eclipse.org/c/sphinx/org.eclipse.sphinx.git");
-//		repositoryFilter.add("http://git.eclipse.org/c/uml2/org.eclipse.uml2.git");
+		repositoryFilter.add("http://git.eclipse.org/c/uml2/org.eclipse.uml2.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.atl.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvtd.git");
 		repositoryFilter.add("http://git.eclipse.org/c/mmt/org.eclipse.qvto.git");
@@ -198,9 +198,10 @@ public class EcoreHistoryResolverApplication implements IApplication {
 	protected Set<String> buildResourceSets(HistoryMetadata modelHistory, File target) {
 		Set<String> missingURIs = new HashSet<>();
 		
+		String datasetName = modelHistory.getDatafile().getName();
 		File modelHistoryFolder = new File(target.getAbsoluteFile() + File.separator
 				+ modelHistory.getProjectName() + File.separator
-				+ EcoreHistorySettings.getInstance().generateHistoryName(modelHistory.getLatestRemoteFilePath()));
+				+ datasetName.substring(0, datasetName.lastIndexOf(".")));
 		modelHistoryFolder.mkdirs();
 		
 		// Build resource set for model versions: 

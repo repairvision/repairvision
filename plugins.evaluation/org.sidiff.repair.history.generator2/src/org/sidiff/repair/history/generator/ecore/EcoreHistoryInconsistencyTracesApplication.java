@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
@@ -34,6 +36,7 @@ import org.sidiff.matching.model.Matching;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionDataSetMetadata;
+import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersionMetadata;
 import org.sidiff.repair.history.generator.util.HistoryUtil;
 
 public class EcoreHistoryInconsistencyTracesApplication implements IApplication {
@@ -52,27 +55,27 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 	
 	private Set<String> projectFilter = new HashSet<>();
 	{
-		projectFilter.add("birt");
-		projectFilter.add("eclipse.e4");
-		projectFilter.add("modeling.eef");
-		projectFilter.add("modeling.emf.emf");
-		projectFilter.add("modeling.emft.edapt");
-		projectFilter.add("modeling.emft.emf-client");
-		projectFilter.add("modeling.gmp.gmf-tooling");
-		projectFilter.add("modeling.m2t.acceleo");
-		projectFilter.add("modeling.mdt.bpmn2");
-		projectFilter.add("modeling.mdt.ocl");
-		projectFilter.add("modeling.mdt.papyrus");
+//		projectFilter.add("birt");
+//		projectFilter.add("eclipse.e4");
+//		projectFilter.add("modeling.eef");
+//		projectFilter.add("modeling.emf.emf");
+//		projectFilter.add("modeling.emft.edapt");
+//		projectFilter.add("modeling.emft.emf-client");
+//		projectFilter.add("modeling.gmp.gmf-tooling");
+//		projectFilter.add("modeling.m2t.acceleo");
+//		projectFilter.add("modeling.mdt.bpmn2");
+//		projectFilter.add("modeling.mdt.ocl");
+//		projectFilter.add("modeling.mdt.papyrus");
 //		projectFilter.add("modeling.mdt.uml2");
-		projectFilter.add("modeling.mmt.atl");
-		projectFilter.add("modeling.mmt.qvt-oml");
-		projectFilter.add("modeling.mmt.qvtd");
-		projectFilter.add("modeling.pmf");
-		projectFilter.add("modeling.sirius");
-		projectFilter.add("science.eavp");
-		projectFilter.add("technology.cbi");
-		projectFilter.add("technology.stem");
-		projectFilter.add("tools.buckminster");
+//		projectFilter.add("modeling.mmt.atl");
+//		projectFilter.add("modeling.mmt.qvt-oml");
+//		projectFilter.add("modeling.mmt.qvtd");
+//		projectFilter.add("modeling.pmf");
+//		projectFilter.add("modeling.sirius");
+//		projectFilter.add("science.eavp");
+//		projectFilter.add("technology.cbi");
+//		projectFilter.add("technology.stem");
+//		projectFilter.add("tools.buckminster");
 	}
 	
 	@Override
@@ -85,21 +88,31 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 					
 					// Collect model versions:
 					List<URI> modelVersions = new ArrayList<>();
+					Map<URI, String> versionInfo = new HashMap<>();
 					
 					for (VersionMetadata version : history.getVersions()) {
+						CoevolutionVersionMetadata coevolutionVersion = (CoevolutionVersionMetadata) version;
+						
 						URI modelVersionURI = URI.createFileURI(history.getDatafile().getParent() + version.getLocalFilePath());
 						modelVersions.add(modelVersionURI);
+						
+						versionInfo.put(modelVersionURI, 
+								EcoreHistorySettings.DATE_ISO8601.format(coevolutionVersion.getWorkspaceDate()) 
+								+ " " + coevolutionVersion.getCommit());
 					}
 					
 					Collections.reverse(modelVersions);
 					
 					// Generate history:
-					String historyName = EcoreHistorySettings.getInstance().generateHistoryName(history.getLatestRemoteFilePath());
+					String datasetName = history.getDatafile().getName();
+					String historyName = datasetName.substring(0, datasetName.lastIndexOf("."));
 					URI historyURI = URI.createFileURI(history.getDatafile().getParent())
 							.appendSegment(historyName).appendFileExtension(HISTORY_FILE_EXTENSION);
-					historyURI = toTargetURI(historyURI);
+					historyURI = toTargetURI(historyURI, true);
 					
-					Resource validationHistory = generateHistory(historyName, historyURI, modelVersions, EcoreHistorySettings.getInstance());
+					Resource validationHistory = generateHistory(
+							historyName, historyURI, modelVersions, versionInfo, 
+							EcoreHistorySettings.getInstance());
 					
 					// Save history:
 					validationHistory.save(Collections.EMPTY_MAP);
@@ -110,9 +123,13 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		return IApplication.EXIT_OK;
 	}
 	
-	private URI toTargetURI(URI sourceURI) {
+	protected URI toTargetURI(URI sourceURI, boolean mkdirs) {
 		URI targetURI =  URI.createURI(sourceURI.toString().replace(sourceDataSetURI.toString(), targetDataSetURI.toString()));
-		new File(targetURI.devicePath()).getParentFile().mkdirs();
+		
+		if (mkdirs) {
+			new File(targetURI.devicePath()).getParentFile().mkdirs();
+		}
+		
 		return targetURI;
 	}
 
@@ -120,7 +137,8 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 	public void stop() {
 	}
 	
-	protected Resource generateHistory(String historyName, URI historyURI, List<URI> modelVersions, EcoreHistorySettings settings) {
+	protected Resource generateHistory(String historyName, URI historyURI, 
+			List<URI> modelVersions, Map<URI, String> versionInfo, EcoreHistorySettings settings) {
 		
 		History history = HistoryModelFactory.eINSTANCE.createHistory();
 		history.setName(historyName);
@@ -136,10 +154,10 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		URI uriB = modelVersions.get(0);
 		String repositoryVersion = uriB.segment(uriB.segmentCount() - 2);
 		Resource resourceB = loadResourceSet(uriB);
-		Version versionB = generateVersion(1, resourceB, repositoryVersion, settings);
+		Version versionB = generateVersion(1, resourceB, repositoryVersion, versionInfo.get(uriB), settings);
 		
 		history.getVersions().add(versionB);
-		saveResourceSetToTarget(resourceB.getResourceSet());
+		saveResourceSetToTarget(resourceB.getResourceSet(), 1);
 		versionB.setModelURI(getRelativeModelURI(historyResource, resourceB));
 		
 		for (int i = 1; i < modelVersions.size(); i++) {
@@ -150,13 +168,13 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 			uriB = modelVersions.get(i);
 			repositoryVersion = uriB.segment(uriB.segmentCount() - 2);
 			resourceB = loadResourceSet(uriB);
-			versionB = generateVersion(i + 1, resourceB, repositoryVersion, settings);
+			versionB = generateVersion(i + 1, resourceB, repositoryVersion, versionInfo.get(uriB), settings);
 			
 			System.out.println("Versions: " + versionA.getName() + " -> " + versionB.getName());
 
 			// Calculate model element  matching:
 			matchVersions(history, resourceA, resourceB, settings);
-			saveResourceSetToTarget(resourceB.getResourceSet());
+			saveResourceSetToTarget(resourceB.getResourceSet(), i + 1);
 			
 			history.getVersions().add(versionB);
 			versionB.setModelURI(getRelativeModelURI(historyResource, resourceB));
@@ -187,10 +205,17 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		return resourceSet;
 	}
 	
-	protected void saveResourceSetToTarget(ResourceSet resourceSet) {
+	protected void saveResourceSetToTarget(ResourceSet resourceSet, int version) {
 		
 		for (Resource versionSetResource : resourceSet.getResources()) {
-			URI targetURI = toTargetURI(versionSetResource.getURI());
+			URI sourceURI = versionSetResource.getURI();
+			URI targetURI = sourceURI.trimSegments(2)
+					.appendSegment(
+							EcoreHistorySettings.VERSION_NUMBER_FORMAT.format(version) 
+							+ "_" + sourceURI.segment(sourceURI.segmentCount() - 2))
+					.appendSegment(sourceURI.lastSegment());
+			targetURI = toTargetURI(targetURI, true);
+			
 			versionSetResource.setURI(targetURI);
 		}
 		
@@ -214,7 +239,10 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		}
 	}
 	
-	protected Version generateVersion(int revision, Resource model, String repositoryVersion, EcoreHistorySettings settings) {
+	protected Version generateVersion(
+			int revision, Resource model, String repositoryVersion,
+			String versionInfo, EcoreHistorySettings settings) {
+		
 		Collection<ValidationError> validationErrors = settings.getValidator().validate(model);
 		
 		ModelStatus modelStatus = validationErrors.isEmpty() ? ModelStatus.VALID : ModelStatus.INVALID;
@@ -232,8 +260,9 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		version.setModel(model);
 		version.setRepositoryVersion(repositoryVersion);
 		version.getValidationErrors().addAll(validationErrors);
-		version.setStatus(modelStatus);
 		version.setName(String.format("%03d", revision) + " - " + model.getURI().lastSegment());
+		version.setStatus(modelStatus);
+		version.setRepositoryVersion(versionInfo);
 		
 		return version;
 	}

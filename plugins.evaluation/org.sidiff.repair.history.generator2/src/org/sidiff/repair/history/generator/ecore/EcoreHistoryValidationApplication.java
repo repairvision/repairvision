@@ -260,6 +260,7 @@ public class EcoreHistoryValidationApplication implements IApplication  {
 
 				"http://git.eclipse.org/c/ocl/org.eclipse.ocl.git/examples/org.eclipse.ocl.examples.codegen/model/cgmodel.ecore",
 				"http://git.eclipse.org/c/ocl/org.eclipse.ocl.git/examples/org.eclipse.ocl.examples.pivot/model/pivot.ecore",
+				"http://git.eclipse.org/c/ocl/org.eclipse.ocl.git/examples/org.eclipse.ocl.examples.pivot/model/Pivot.ecore",
 				"http://git.eclipse.org/c/ocl/org.eclipse.ocl.git/examples/org.eclipse.ocl.examples.xtext.base/model/BaseCS.ecore",
 				"http://git.eclipse.org/c/ocl/org.eclipse.ocl.git/examples/org.eclipse.ocl.examples.xtext.essentialocl/model/EssentialOCLCS.ecore",
 
@@ -494,7 +495,7 @@ public class EcoreHistoryValidationApplication implements IApplication  {
 						}
 
 						for (ValidationError inconsistency : inconsistencies) {
-							if (inconsistency.getName().equals("TheFeatureOfContainsAnUnresolvedProxy")) {
+							if (inconsistency.getName().equals(EcoreHistorySettings.INCONSISTENCY_UNRESOLVED_PROXY)) {
 								unresolvedVersions.add(workspaceVersion.getLocalFilePath());
 							}
 						}

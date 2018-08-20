@@ -1,6 +1,7 @@
 package org.sidiff.repair.history.generator.ecore;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -24,6 +25,10 @@ public class EcoreHistorySettings {
 	public static final DateFormat DATE_ISO8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
 	public static final DateFormat DATE_ISO8601_PATH_COMPATIBLE = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss'Z'");
+	
+	public static final DecimalFormat VERSION_NUMBER_FORMAT = new DecimalFormat("#0000");
+	
+	public static final String INCONSISTENCY_UNRESOLVED_PROXY = "TheFeatureOfContainsAnUnresolvedProxy";
 	
 	private static EcoreHistorySettings instance;
 	
