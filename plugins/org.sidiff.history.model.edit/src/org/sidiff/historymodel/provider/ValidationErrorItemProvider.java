@@ -461,7 +461,7 @@ public class ValidationErrorItemProvider
 		String label = validationError.getMessage();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ValidationError_type") :
-			getString("_UI_ValidationError_type") + " " + label;
+			"Problem: " + label;
 	}
 	
 
