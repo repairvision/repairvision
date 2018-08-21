@@ -33,4 +33,42 @@
             contributorClass="org.sidiff.historymodel.presentation.HistoryModelActionBarContributor">
       </editor>
    </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.sidiff.historymodel.presentation.HistoryModelEditorID">
+         <command
+               commandId="org.sidiff.history.model.editor.command.editsteps.resource"
+               icon="icons/full/obj16/synch_synch.png"
+               style="push">
+         </command>
+         <menu
+               icon="icons/full/obj16/synch_synch.png"
+               label="org.sidiff.history.model.editor.command.editsteps.resourceset">
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.sidiff.history.model.editor.command.editsteps.resource"
+            name="Show Edit Steps (Resource Scope)">
+      </command>
+      <command
+            id="org.sidiff.history.model.editor.command.editsteps.resourceset"
+            name="Show Edit Steps (Resource Set Scope)">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.sidiff.historymodel.presentation.handlers.ShowEditStepsOnResourceHandler"
+            commandId="org.sidiff.history.model.editor.command.editsteps.resource">
+      </handler>
+      <handler
+            class="org.sidiff.historymodel.presentation.handlers.ShowEditStepsOnResourceSetHandler"
+            commandId="org.sidiff.history.model.editor.command.editsteps.resourceset">
+      </handler>
+   </extension>
 </plugin>
