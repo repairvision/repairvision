@@ -22,6 +22,8 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.ModelStatus;
+import org.sidiff.historymodel.ValidationSeverity;
 import org.sidiff.historymodel.Version;
 
 /**
@@ -212,10 +214,29 @@ public class VersionItemProvider
 	 * This returns Version.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public Object getImage(Object object) {
+		
+		if (object instanceof Version) {
+			Version version = (Version) object;
+			
+			if (version.getValidationErrors().isEmpty()) {
+				return overlayImage(object, getResourceLocator().getImage("full/obj16/check"));
+			} else {
+				if (version.getStatus().equals(ModelStatus.DEFECT)) {
+					return overlayImage(object, getResourceLocator().getImage("full/obj16/question"));
+				} else {
+					if (version.getValidationErrors().stream().anyMatch(e -> e.getSeverity().equals(ValidationSeverity.ERROR))) {
+						return overlayImage(object, getResourceLocator().getImage("full/obj16/error_1"));
+					} else {
+						return overlayImage(object, getResourceLocator().getImage("full/obj16/warning_1"));
+					}
+				}
+			}
+		}
+		
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/Version"));
 	}
 
@@ -223,7 +244,7 @@ public class VersionItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {

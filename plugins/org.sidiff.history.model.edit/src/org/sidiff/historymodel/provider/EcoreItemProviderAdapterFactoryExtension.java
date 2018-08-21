@@ -6,10 +6,5 @@ public class EcoreItemProviderAdapterFactoryExtension extends EcoreItemProviderA
 
 	public EcoreItemProviderAdapterFactoryExtension() {
 		super();
-		
 	}
-
-
-
-
 }

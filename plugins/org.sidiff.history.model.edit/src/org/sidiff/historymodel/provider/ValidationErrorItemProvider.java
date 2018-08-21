@@ -24,7 +24,6 @@ import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.HistoryModelPackage;
 import org.sidiff.historymodel.ValidationError;
 import org.sidiff.historymodel.ValidationSeverity;
-import org.sidiff.historymodel.Version;
 
 /**
  * This is the item provider adapter for a {@link org.sidiff.historymodel.ValidationError} object.
@@ -426,16 +425,27 @@ public class ValidationErrorItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		ValidationError validationError = (ValidationError) object;
-		if(validationError.isIntroduced() && validationError.isResolved()){
-			return overlayImage(object, getResourceLocator().getImage("full/obj16/resolved"));
+		
+		if (object instanceof ValidationError) {
+			ValidationError validationError = (ValidationError) object;
+			
+			if(validationError.getSeverity().equals(ValidationSeverity.ERROR)){
+				if(validationError.isIntroduced() && validationError.isResolved()){
+					return overlayImage(object, getResourceLocator().getImage("full/obj16/error_1"));
+				} else {
+					return overlayImage(object, getResourceLocator().getImage("full/obj16/error_2"));
+				}
+			}
+			
+			else if(validationError.getSeverity().equals(ValidationSeverity.WARNING)){
+				if(validationError.isIntroduced() && validationError.isResolved()){
+					return overlayImage(object, getResourceLocator().getImage("full/obj16/warning_1"));
+				} else {
+					return overlayImage(object, getResourceLocator().getImage("full/obj16/warning_2"));
+				}
+			}
 		}
-		if(validationError.getSeverity().equals(ValidationSeverity.ERROR)){
-			return overlayImage(object, getResourceLocator().getImage("full/obj16/error"));
-		}
-		if(validationError.getSeverity().equals(ValidationSeverity.WARNING)){
-			return overlayImage(object, getResourceLocator().getImage("full/obj16/warning"));
-		}
+		
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/ValidationError"));
 	}
 
@@ -448,7 +458,7 @@ public class ValidationErrorItemProvider
 	@Override
 	public String getText(Object object) {
 		ValidationError validationError = (ValidationError)object;
-		String label = ((Version) validationError.eContainer()).getName() + "." + validationError.getName();
+		String label = validationError.getMessage();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ValidationError_type") :
 			getString("_UI_ValidationError_type") + " " + label;
