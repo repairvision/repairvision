@@ -70,16 +70,17 @@ public class EcoreHistoryReduceApplication implements IApplication {
 					// Filter to introduced/resolved inconsistencies:
 					Version successorVersion = EvaluationUtil.getSuccessorRevision(version);
 					
-					// Preserve introduced step:
-					if (inconsistency.getIntroducedIn() == version) {
-						removedVersions.remove(EvaluationUtil.getPrecessorRevision(version));
-						removedVersions.remove(version);
-					} 
-					
-					// Preserve resolved step:
-					if (inconsistency.getResolvedIn() == successorVersion) {
-						removedVersions.remove(version);
-						removedVersions.remove(successorVersion);
+					// Preserve introduced/resolved step:
+					if ((inconsistency.getIntroducedIn() == version) || (inconsistency.getResolvedIn() == successorVersion)) {
+						if (inconsistency.getIntroducedIn() == version) {
+							removedVersions.remove(EvaluationUtil.getPrecessorRevision(version));
+							removedVersions.remove(version);
+						}
+						
+						if (inconsistency.getResolvedIn() == successorVersion) {
+							removedVersions.remove(version);
+							removedVersions.remove(successorVersion);
+						}
 					} else {
 						
 						// Remove inconsistency:
