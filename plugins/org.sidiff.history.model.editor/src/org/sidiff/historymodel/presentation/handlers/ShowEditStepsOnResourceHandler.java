@@ -23,15 +23,19 @@ public class ShowEditStepsOnResourceHandler extends AbstractHandler {
 			if (selected instanceof Problem) {
 				Problem inconsistency = (Problem) selected;
 				
-				Version beforeIntroduced = EvaluationUtil.getPredecessorRevision(inconsistency.getIntroducedIn());
-				Version introduced = inconsistency.getIntroducedIn();
+				if (inconsistency.isIntroduced()) {
+					Version beforeIntroduced = EvaluationUtil.getPredecessorRevision(inconsistency.getIntroducedIn());
+					Version introduced = inconsistency.getIntroducedIn();
+					
+					HistoryModelEditorTools.compare(beforeIntroduced.getModel(), introduced.getModel());
+				}
 				
-				HistoryModelEditorTools.compare(beforeIntroduced.getModel(), introduced.getModel());
-				
-				Version beforeResolved = EvaluationUtil.getPredecessorRevision(inconsistency.getResolvedIn());
-				Version resolved = inconsistency.getResolvedIn();
-				
-				HistoryModelEditorTools.compare(beforeResolved.getModel(), resolved.getModel());
+				if (inconsistency.isResolved()) {
+					Version beforeResolved = EvaluationUtil.getPredecessorRevision(inconsistency.getResolvedIn());
+					Version resolved = inconsistency.getResolvedIn();
+					
+					HistoryModelEditorTools.compare(beforeResolved.getModel(), resolved.getModel());
+				}
 			}
 		}
 		

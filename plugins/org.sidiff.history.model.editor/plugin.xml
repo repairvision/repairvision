@@ -52,6 +52,11 @@
                style="push">
          </command>
          <command
+               commandId="org.sidiff.history.model.editor.command.editsteps.validation"
+               icon="icons/full/obj16/synch_synch.png"
+               style="push">
+         </command>
+         <command
                commandId="org.sidiff.history.model.editor.command.open.versions"
                icon="icons/full/obj16/file.png"
                style="push">
@@ -72,6 +77,10 @@
             name="Show Edit Steps (Resource Set Scope)">
       </command>
       <command
+            id="org.sidiff.history.model.editor.command.editsteps.validation"
+            name="Show Edit Steps (Validation Scope)">
+      </command>
+      <command
             id="org.sidiff.history.model.editor.command.open.versions"
             name="Show Modified Model Versions ">
       </command>
@@ -85,6 +94,10 @@
       <handler
             class="org.sidiff.historymodel.presentation.handlers.ShowEditStepsOnResourceSetHandler"
             commandId="org.sidiff.history.model.editor.command.editsteps.resourceset">
+      </handler>
+      <handler
+            class="org.sidiff.historymodel.presentation.handlers.ShowEditStepsWithFilterHandler"
+            commandId="org.sidiff.history.model.editor.command.editsteps.validation">
       </handler>
       <handler
             class="org.sidiff.historymodel.presentation.handlers.OpenModifiedModelVersions"
