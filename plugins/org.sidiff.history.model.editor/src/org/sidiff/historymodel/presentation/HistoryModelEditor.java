@@ -5,6 +5,7 @@ package org.sidiff.historymodel.presentation;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -63,6 +64,7 @@ import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
@@ -71,6 +73,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -104,6 +107,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.ide.IGotoMarker;
+import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.views.contentoutline.ContentOutline;
@@ -114,6 +118,7 @@ import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.sidiff.difference.symmetric.provider.SymmetricItemProviderAdapterFactory;
 import org.sidiff.historymodel.provider.HistoryModelItemProviderAdapterFactory;
+import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.matching.model.provider.MatchingModelItemProviderAdapterFactory;
 
 
@@ -969,10 +974,11 @@ public class HistoryModelEditor
 	 */
 	@Override
 	public void createPages() {
+
 		// Creates the model from the editor input
 		//
 		createModel();
-
+		
 		// Only creates the other pages if there is something that can be edited
 		//
 		if (!getEditingDomain().getResourceSet().getResources().isEmpty()) {
@@ -1009,6 +1015,34 @@ public class HistoryModelEditor
 				createContextMenuFor(selectionViewer);
 				int pageIndex = addPage(viewerPane.getControl());
 				setPageText(pageIndex, getString("_UI_SelectionPage_label"));
+				
+				// Create toolbar actions
+				//
+				
+				// Highlighting:
+				Action highlighting = new Action("Model Element Highlighting", Action.AS_CHECK_BOX) {
+					public void run() {
+						if (isChecked()) {
+							addSelectionChangedListener(EditorHighlighting.getInstance().getSelectionChangedListener());
+						} else {
+							EditorHighlighting.getInstance().setSelection(Collections.emptyList());
+							removeSelectionChangedListener(EditorHighlighting.getInstance().getSelectionChangedListener());
+						}
+					}
+				};
+				highlighting.setChecked(false);
+				highlighting.setToolTipText("Model Element Highlighting");
+				highlighting.setImageDescriptor(ImageDescriptor.createFromURL((URL) ModelEditorPlugin.INSTANCE.getPluginResourceLocator().getImage("full/obj16/highlighter.png")));
+				viewerPane.getToolBarManager().add(highlighting);
+				
+				// Seperator:
+				viewerPane.getToolBarManager().add(new Separator());
+				
+				// Navigation:
+				new DrillDownAdapter(selectionViewer).addNavigationActions(viewerPane.getToolBarManager());
+
+				
+				viewerPane.getToolBarManager().update(true);
 			}
 
 //			// Create a page for the parent tree view.
