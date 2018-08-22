@@ -72,6 +72,35 @@ public class ValidationFacade {
 
 		return inconsistencies;
 	}
+	
+	/**
+	 * @param model
+	 *            The model to be validated.
+	 * @param constraints
+	 *            The constraints to be checked.
+	 * @param validationFilter
+	 *            Filters the validations by the consistency rule and the
+	 *            context element.
+	 * @param positiveResults
+	 *            Analyze successfully validated constraints.
+	 * @param negativeResults
+	 *            Analyze inconsistencies.
+	 *
+	 * @return All found inconsistencies.
+	 */
+	public static List<Validation> validate(Resource model, 
+			List<IConstraint> constraints, IValidationFilter validationFilter, 
+			boolean positiveResults, boolean negativeResults) {
+
+		ValidationIterator validationIterator = new ValidationIterator(
+				model, constraints, validationFilter, positiveResults, negativeResults);
+
+		// Collect all validations:
+		List<Validation> inconsistencies = new ArrayList<>();
+		validationIterator.forEachRemaining(inconsistencies::add);
+
+		return inconsistencies;
+	}
 
 	/**
 	 * @param model
