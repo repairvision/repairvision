@@ -3,11 +3,11 @@ package org.sidiff.history.analysis.validation;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.common.emf.EMFUtil;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 
 public abstract class BasicValidation implements IValidator {
 	
-	public boolean matchValidationError(ValidationError validationErrorA, ValidationError validationErrorB) {
+	public boolean matchValidationError(Problem validationErrorA, Problem validationErrorB) {
 
 		if  (validationErrorA.getName().equals(validationErrorB.getName())) {
 			
@@ -52,11 +52,11 @@ public abstract class BasicValidation implements IValidator {
 	}
 	
 	@Override
-	public EObject getContextElement(ValidationError validationError) {
-		if (validationError.getContext() == null) {
-			return validationError.getInvalidElement().get(0);
+	public EObject getContextElement(Problem validationError) {
+		if (validationError.getContextElement() == null) {
+			return validationError.getInvalidElements().get(0);
 		} else {
-			return validationError.getContext();
+			return validationError.getContextElement();
 		}
 	}
 }

@@ -6,25 +6,25 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.historymodel.HistoryModelFactory;
-import org.sidiff.historymodel.ValidationError;
-import org.sidiff.historymodel.ValidationSeverity;
+import org.sidiff.historymodel.Problem;
+import org.sidiff.historymodel.ProblemSeverity;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 
 public class FOLValidator extends BasicValidation {
 
 	@Override
-	public Collection<ValidationError> validate(Resource resource) {
-		List<ValidationError> inconsistencies = new ArrayList<>();
+	public Collection<Problem> validate(Resource resource) {
+		List<Problem> inconsistencies = new ArrayList<>();
 
 		// Collect all abstract repair actions:
 		ValidationFacade.validate(resource).forEach(validation -> {
 			if (!validation.getResult()) {
-				ValidationError inconsistency = HistoryModelFactory.eINSTANCE.createValidationError();
+				Problem inconsistency = HistoryModelFactory.eINSTANCE.createProblem();
 				inconsistency.setName(validation.getRule().getName());
 				inconsistency.setMessage(validation.getRule().getMessage());
-				inconsistency.setSeverity(ValidationSeverity.ERROR);
-				inconsistency.getInvalidElement().add(validation.getContext());
-				inconsistency.setContext(getContextElement(inconsistency));
+				inconsistency.setSeverity(ProblemSeverity.ERROR);
+				inconsistency.getInvalidElements().add(validation.getContext());
+				inconsistency.setContextElement(getContextElement(inconsistency));
 				
 				inconsistencies.add(inconsistency);
 			}

@@ -24,7 +24,7 @@ import org.sidiff.history.repository.IModelRepositoryConnector;
 import org.sidiff.history.repository.IModelVersion;
 import org.sidiff.history.repository.registry.ModelRepositoryRegistry;
 import org.sidiff.historymodel.History;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
@@ -130,7 +130,7 @@ public class HistoryModelDatabase {
 		// Find last consistent version:
 		if (history != null) {
 			Version versionModelB = history.getVersions().get(history.getVersions().size() - 1);
-			ValidationError validationError = getValidationError(inconsistency, versionModelB);
+			Problem validationError = getValidationError(inconsistency, versionModelB);
 			
 			if (validationError.getIntroducedIn() != null) {
 				Version lastConsistentVersion = getPrecessorRevision(validationError.getIntroducedIn());
@@ -196,9 +196,9 @@ public class HistoryModelDatabase {
 		return null;
 	}
 	
-	public static ValidationError getValidationError(Validation validation, Version model) {
+	public static Problem getValidationError(Validation validation, Version model) {
 		
-		for(ValidationError nextValidationError : model.getValidationErrors()) {
+		for(Problem nextValidationError : model.getProblems()) {
 			if (equalsValidation(validation, nextValidationError)) {
 				return nextValidationError;
 			}
@@ -207,11 +207,11 @@ public class HistoryModelDatabase {
 		return null;
 	}
 	
-	public static boolean equalsValidation(Validation validationA, ValidationError validationB) {
+	public static boolean equalsValidation(Validation validationA, Problem validationB) {
 		
 		if (getValidationID(validationA.getRule()).equalsIgnoreCase(getValidationID(validationB))) {
 			EObject invalidElementA = validationA.getContext();
-			EObject invalidElementB = validationB.getContext();
+			EObject invalidElementB = validationB.getContextElement();
 
 			if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
 				return true;
@@ -229,7 +229,7 @@ public class HistoryModelDatabase {
 		return getValidationID(validation.getName());
 	}
 	
-	public static String getValidationID(ValidationError validation) {
+	public static String getValidationID(Problem validation) {
 		return getValidationID(validation.getName());
 	}
 }

@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 
 /**
  * Encapsulates a concrete validation framework.
@@ -13,9 +13,9 @@ import org.sidiff.historymodel.ValidationError;
  */
 public interface IValidator {
 
-	Collection<ValidationError> validate(Resource resource);
+	Collection<Problem> validate(Resource resource);
 	
-	boolean matchValidationError(ValidationError validationErrorA, ValidationError validationErrorB);
+	boolean matchValidationError(Problem validationErrorA, Problem validationErrorB);
 	
-	EObject getContextElement(ValidationError validationError);
+	EObject getContextElement(Problem validationError);
 }
