@@ -116,26 +116,26 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.sidiff.historymodel.ValidationError} instances.
+	 * This keeps track of the one adapter used for all {@link org.sidiff.historymodel.Problem} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ValidationErrorItemProvider validationErrorItemProvider;
+	protected ProblemItemProvider problemItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.sidiff.historymodel.ValidationError}.
+	 * This creates an adapter for a {@link org.sidiff.historymodel.Problem}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createValidationErrorAdapter() {
-		if (validationErrorItemProvider == null) {
-			validationErrorItemProvider = new ValidationErrorItemProvider(this);
+	public Adapter createProblemAdapter() {
+		if (problemItemProvider == null) {
+			problemItemProvider = new ProblemItemProvider(this);
 		}
 
-		return validationErrorItemProvider;
+		return problemItemProvider;
 	}
 
 	/**
@@ -262,7 +262,7 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	public void dispose() {
 		if (historyItemProvider != null) historyItemProvider.dispose();
 		if (versionItemProvider != null) versionItemProvider.dispose();
-		if (validationErrorItemProvider != null) validationErrorItemProvider.dispose();
+		if (problemItemProvider != null) problemItemProvider.dispose();
 		if (changeSetItemProvider != null) changeSetItemProvider.dispose();
 	}
 

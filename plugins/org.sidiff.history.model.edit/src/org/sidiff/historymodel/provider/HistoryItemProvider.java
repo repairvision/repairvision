@@ -60,7 +60,7 @@ public class HistoryItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addAllValidationErrorsPropertyDescriptor(object);
+			addAllProblemsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -88,19 +88,19 @@ public class HistoryItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the All Validation Errors feature.
+	 * This adds a property descriptor for the All Problems feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addAllValidationErrorsPropertyDescriptor(Object object) {
+	protected void addAllProblemsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_History_allValidationErrors_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_History_allValidationErrors_feature", "_UI_History_type"),
-				 HistoryModelPackage.Literals.HISTORY__ALL_VALIDATION_ERRORS,
+				 getString("_UI_History_allProblems_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_History_allProblems_feature", "_UI_History_type"),
+				 HistoryModelPackage.Literals.HISTORY__ALL_PROBLEMS,
 				 true,
 				 false,
 				 true,

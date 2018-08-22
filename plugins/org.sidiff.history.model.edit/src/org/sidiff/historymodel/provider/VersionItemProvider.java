@@ -23,7 +23,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.HistoryModelPackage;
 import org.sidiff.historymodel.ModelStatus;
-import org.sidiff.historymodel.ValidationSeverity;
+import org.sidiff.historymodel.ProblemSeverity;
 import org.sidiff.historymodel.Version;
 
 /**
@@ -66,6 +66,7 @@ public class VersionItemProvider
 			addModelPropertyDescriptor(object);
 			addStatusPropertyDescriptor(object);
 			addRepositoryVersionPropertyDescriptor(object);
+			addHistoryPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -181,6 +182,28 @@ public class VersionItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the History feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addHistoryPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Version_history_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Version_history_feature", "_UI_Version_type"),
+				 HistoryModelPackage.Literals.VERSION__HISTORY,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -192,7 +215,7 @@ public class VersionItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(HistoryModelPackage.Literals.VERSION__VALIDATION_ERRORS);
+			childrenFeatures.add(HistoryModelPackage.Literals.VERSION__PROBLEMS);
 		}
 		return childrenFeatures;
 	}
@@ -222,13 +245,13 @@ public class VersionItemProvider
 		if (object instanceof Version) {
 			Version version = (Version) object;
 			
-			if (version.getValidationErrors().isEmpty()) {
+			if (version.getProblems().isEmpty()) {
 				return overlayImage(object, getResourceLocator().getImage("full/obj16/check"));
 			} else {
 				if (version.getStatus().equals(ModelStatus.DEFECT)) {
 					return overlayImage(object, getResourceLocator().getImage("full/obj16/question"));
 				} else {
-					if (version.getValidationErrors().stream().anyMatch(e -> e.getSeverity().equals(ValidationSeverity.ERROR))) {
+					if (version.getProblems().stream().anyMatch(e -> e.getSeverity().equals(ProblemSeverity.ERROR))) {
 						return overlayImage(object, getResourceLocator().getImage("full/obj16/error_1"));
 					} else {
 						return overlayImage(object, getResourceLocator().getImage("full/obj16/warning_1"));
@@ -274,7 +297,7 @@ public class VersionItemProvider
 			case HistoryModelPackage.VERSION__REPOSITORY_VERSION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case HistoryModelPackage.VERSION__VALIDATION_ERRORS:
+			case HistoryModelPackage.VERSION__PROBLEMS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -294,8 +317,8 @@ public class VersionItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(HistoryModelPackage.Literals.VERSION__VALIDATION_ERRORS,
-				 HistoryModelFactory.eINSTANCE.createValidationError()));
+				(HistoryModelPackage.Literals.VERSION__PROBLEMS,
+				 HistoryModelFactory.eINSTANCE.createProblem()));
 	}
 
 	/**
