@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.sidiff.historymodel.History#getName <em>Name</em>}</li>
  *   <li>{@link org.sidiff.historymodel.History#getVersions <em>Versions</em>}</li>
- *   <li>{@link org.sidiff.historymodel.History#getAllValidationErrors <em>All Validation Errors</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.History#getAllProblems <em>All Problems</em>}</li>
  * </ul>
  *
  * @see org.sidiff.historymodel.HistoryModelPackage#getHistory()
@@ -54,6 +54,7 @@ public interface History extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Versions</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.historymodel.Version}.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.historymodel.Version#getHistory <em>History</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Versions</em>' containment reference list isn't clear,
@@ -62,26 +63,27 @@ public interface History extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Versions</em>' containment reference list.
 	 * @see org.sidiff.historymodel.HistoryModelPackage#getHistory_Versions()
-	 * @model containment="true"
+	 * @see org.sidiff.historymodel.Version#getHistory
+	 * @model opposite="history" containment="true"
 	 * @generated
 	 */
 	EList<Version> getVersions();
 
 	/**
-	 * Returns the value of the '<em><b>All Validation Errors</b></em>' reference list.
-	 * The list contents are of type {@link org.sidiff.historymodel.ValidationError}.
+	 * Returns the value of the '<em><b>All Problems</b></em>' reference list.
+	 * The list contents are of type {@link org.sidiff.historymodel.Problem}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>All Validation Errors</em>' reference list isn't clear,
+	 * If the meaning of the '<em>All Problems</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>All Validation Errors</em>' reference list.
-	 * @see org.sidiff.historymodel.HistoryModelPackage#getHistory_AllValidationErrors()
+	 * @return the value of the '<em>All Problems</em>' reference list.
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getHistory_AllProblems()
 	 * @model transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
-	EList<ValidationError> getAllValidationErrors();
+	EList<Problem> getAllProblems();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -89,7 +91,7 @@ public interface History extends EObject {
 	 * @model
 	 * @generated
 	 */
-	EList<Version> getPrecessorRevisions(Version version);
+	EList<Version> getPredecessorVersions(Version version);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -97,7 +99,7 @@ public interface History extends EObject {
 	 * @model
 	 * @generated
 	 */
-	EList<Version> getSuccessorRevisions(Version version);
+	EList<Version> getSuccessorVersions(Version version);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -105,7 +107,7 @@ public interface History extends EObject {
 	 * @model
 	 * @generated
 	 */
-	EList<ValidationError> getValidationErrors(boolean introduced, boolean resolved);
+	EList<Problem> getProblems(boolean introduced, boolean resolved);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -113,6 +115,6 @@ public interface History extends EObject {
 	 * @model kind="operation"
 	 * @generated
 	 */
-	EList<ValidationError> getUniqueValidationErrors();
+	EList<Problem> getUniqueProblems();
 
 } // History

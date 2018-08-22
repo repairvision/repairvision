@@ -77,9 +77,9 @@ public class HistoryModelSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case HistoryModelPackage.VALIDATION_ERROR: {
-				ValidationError validationError = (ValidationError)theEObject;
-				T result = caseValidationError(validationError);
+			case HistoryModelPackage.PROBLEM: {
+				Problem problem = (Problem)theEObject;
+				T result = caseProblem(problem);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -124,17 +124,17 @@ public class HistoryModelSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Validation Error</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Problem</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Validation Error</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Problem</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseValidationError(ValidationError object) {
+	public T caseProblem(Problem object) {
 		return null;
 	}
 

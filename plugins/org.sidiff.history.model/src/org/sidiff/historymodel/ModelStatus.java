@@ -19,36 +19,6 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum ModelStatus implements Enumerator {
 	/**
-	 * The '<em><b>VALID</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #VALID_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	VALID(0, "VALID", "VALID"),
-
-	/**
-	 * The '<em><b>INVALID</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #INVALID_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	INVALID(1, "INVALID", "INVALID"),
-
-	/**
-	 * The '<em><b>DEFECT</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #DEFECT_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	DEFECT(2, "DEFECT", "DEFECT"),
-
-	/**
 	 * The '<em><b>UNKNOWN</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -56,52 +26,31 @@ public enum ModelStatus implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	UNKNOWN(3, "UNKNOWN", "UNKNOWN");
-
-	/**
-	 * The '<em><b>VALID</b></em>' literal value.
+	UNKNOWN(0, "UNKNOWN", "UNKNOWN"), /**
+	 * The '<em><b>VALID</b></em>' literal object.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>VALID</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #VALID
-	 * @model
+	 * @see #VALID_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int VALID_VALUE = 0;
-
-	/**
-	 * The '<em><b>INVALID</b></em>' literal value.
+	VALID(1, "VALID", "VALID"), /**
+	 * The '<em><b>INVALID</b></em>' literal object.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>INVALID</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #INVALID
-	 * @model
+	 * @see #INVALID_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int INVALID_VALUE = 1;
-
-	/**
-	 * The '<em><b>DEFECT</b></em>' literal value.
+	INVALID(2, "INVALID", "INVALID"), /**
+	 * The '<em><b>DEFECT</b></em>' literal object.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>DEFECT</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #DEFECT
-	 * @model
+	 * @see #DEFECT_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int DEFECT_VALUE = 2;
+	DEFECT(3, "DEFECT", "DEFECT");
 
 	/**
 	 * The '<em><b>UNKNOWN</b></em>' literal value.
@@ -116,7 +65,52 @@ public enum ModelStatus implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int UNKNOWN_VALUE = 3;
+	public static final int UNKNOWN_VALUE = 0;
+
+	/**
+	 * The '<em><b>VALID</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>VALID</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #VALID
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VALID_VALUE = 1;
+
+	/**
+	 * The '<em><b>INVALID</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>INVALID</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #INVALID
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int INVALID_VALUE = 2;
+
+	/**
+	 * The '<em><b>DEFECT</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>DEFECT</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #DEFECT
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DEFECT_VALUE = 3;
 
 	/**
 	 * An array of all the '<em><b>Model Status</b></em>' enumerators.
@@ -126,10 +120,10 @@ public enum ModelStatus implements Enumerator {
 	 */
 	private static final ModelStatus[] VALUES_ARRAY =
 		new ModelStatus[] {
+			UNKNOWN,
 			VALID,
 			INVALID,
 			DEFECT,
-			UNKNOWN,
 		};
 
 	/**
@@ -186,10 +180,10 @@ public enum ModelStatus implements Enumerator {
 	 */
 	public static ModelStatus get(int value) {
 		switch (value) {
+			case UNKNOWN_VALUE: return UNKNOWN;
 			case VALID_VALUE: return VALID;
 			case INVALID_VALUE: return INVALID;
 			case DEFECT_VALUE: return DEFECT;
-			case UNKNOWN_VALUE: return UNKNOWN;
 		}
 		return null;
 	}

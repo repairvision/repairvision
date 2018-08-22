@@ -20,8 +20,9 @@ import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.HistoryModelPackage;
 import org.sidiff.historymodel.ModelStatus;
-import org.sidiff.historymodel.ValidationError;
-import org.sidiff.historymodel.ValidationSeverity;
+import org.sidiff.historymodel.ModificationClassification;
+import org.sidiff.historymodel.Problem;
+import org.sidiff.historymodel.ProblemSeverity;
 import org.sidiff.historymodel.Version;
 import org.sidiff.matching.model.MatchingModelPackage;
 
@@ -51,7 +52,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass validationErrorEClass = null;
+	private EClass problemEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -65,7 +66,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EEnum validationSeverityEEnum = null;
+	private EEnum problemSeverityEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -73,6 +74,13 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * @generated
 	 */
 	private EEnum modelStatusEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum modificationClassificationEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -179,7 +187,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getHistory_AllValidationErrors() {
+	public EReference getHistory_AllProblems() {
 		return (EReference)historyEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -188,7 +196,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getHistory__GetPrecessorRevisions__Version() {
+	public EOperation getHistory__GetPredecessorVersions__Version() {
 		return historyEClass.getEOperations().get(0);
 	}
 
@@ -197,7 +205,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getHistory__GetSuccessorRevisions__Version() {
+	public EOperation getHistory__GetSuccessorVersions__Version() {
 		return historyEClass.getEOperations().get(1);
 	}
 
@@ -206,7 +214,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getHistory__GetValidationErrors__boolean_boolean() {
+	public EOperation getHistory__GetProblems__boolean_boolean() {
 		return historyEClass.getEOperations().get(2);
 	}
 
@@ -215,7 +223,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getHistory__GetUniqueValidationErrors() {
+	public EOperation getHistory__GetUniqueProblems() {
 		return historyEClass.getEOperations().get(3);
 	}
 
@@ -233,7 +241,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getVersion_ValidationErrors() {
+	public EReference getVersion_Problems() {
 		return (EReference)versionEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -287,6 +295,15 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getVersion_History() {
+		return (EReference)versionEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getVersion__GetElement__String() {
 		return versionEClass.getEOperations().get(0);
 	}
@@ -296,8 +313,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getValidationError() {
-		return validationErrorEClass;
+	public EOperation getVersion__GetPredecessor() {
+		return versionEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -305,8 +322,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getValidationError_Name() {
-		return (EAttribute)validationErrorEClass.getEStructuralFeatures().get(0);
+	public EOperation getVersion__GetSuccessor() {
+		return versionEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -314,8 +331,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getValidationError_IntroducedIn() {
-		return (EReference)validationErrorEClass.getEStructuralFeatures().get(1);
+	public EClass getProblem() {
+		return problemEClass;
 	}
 
 	/**
@@ -323,8 +340,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getValidationError_ResolvedIn() {
-		return (EReference)validationErrorEClass.getEStructuralFeatures().get(2);
+	public EReference getProblem_Version() {
+		return (EReference)problemEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -332,8 +349,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getValidationError_Message() {
-		return (EAttribute)validationErrorEClass.getEStructuralFeatures().get(3);
+	public EAttribute getProblem_Name() {
+		return (EAttribute)problemEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -341,8 +358,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getValidationError_Source() {
-		return (EAttribute)validationErrorEClass.getEStructuralFeatures().get(4);
+	public EReference getProblem_IntroducedIn() {
+		return (EReference)problemEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -350,8 +367,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getValidationError_Severity() {
-		return (EAttribute)validationErrorEClass.getEStructuralFeatures().get(5);
+	public EAttribute getProblem_Introduced() {
+		return (EAttribute)problemEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -359,8 +376,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getValidationError_Introduced() {
-		return (EAttribute)validationErrorEClass.getEStructuralFeatures().get(6);
+	public EReference getProblem_ResolvedIn() {
+		return (EReference)problemEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -368,8 +385,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getValidationError_Resolved() {
-		return (EAttribute)validationErrorEClass.getEStructuralFeatures().get(7);
+	public EAttribute getProblem_Resolved() {
+		return (EAttribute)problemEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -377,8 +394,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getValidationError_Prec() {
-		return (EReference)validationErrorEClass.getEStructuralFeatures().get(8);
+	public EAttribute getProblem_Message() {
+		return (EAttribute)problemEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -386,8 +403,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getValidationError_Succ() {
-		return (EReference)validationErrorEClass.getEStructuralFeatures().get(9);
+	public EAttribute getProblem_Severity() {
+		return (EAttribute)problemEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -395,8 +412,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getValidationError_InvalidElement() {
-		return (EReference)validationErrorEClass.getEStructuralFeatures().get(10);
+	public EReference getProblem_Predecessor() {
+		return (EReference)problemEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -404,8 +421,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getValidationError_Context() {
-		return (EReference)validationErrorEClass.getEStructuralFeatures().get(11);
+	public EReference getProblem_Successor() {
+		return (EReference)problemEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -413,8 +430,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getValidationError_ResolvedByUndo() {
-		return (EAttribute)validationErrorEClass.getEStructuralFeatures().get(12);
+	public EReference getProblem_InvalidElements() {
+		return (EReference)problemEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -422,8 +439,26 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getValidationError_ChangeSets() {
-		return (EReference)validationErrorEClass.getEStructuralFeatures().get(13);
+	public EReference getProblem_ContextElement() {
+		return (EReference)problemEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProblem_Modifications() {
+		return (EReference)problemEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProblem_ModificationClassification() {
+		return (EAttribute)problemEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -458,8 +493,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EEnum getValidationSeverity() {
-		return validationSeverityEEnum;
+	public EEnum getProblemSeverity() {
+		return problemSeverityEEnum;
 	}
 
 	/**
@@ -469,6 +504,15 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 */
 	public EEnum getModelStatus() {
 		return modelStatusEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getModificationClassification() {
+		return modificationClassificationEEnum;
 	}
 
 	/**
@@ -511,44 +555,48 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		historyEClass = createEClass(HISTORY);
 		createEAttribute(historyEClass, HISTORY__NAME);
 		createEReference(historyEClass, HISTORY__VERSIONS);
-		createEReference(historyEClass, HISTORY__ALL_VALIDATION_ERRORS);
-		createEOperation(historyEClass, HISTORY___GET_PRECESSOR_REVISIONS__VERSION);
-		createEOperation(historyEClass, HISTORY___GET_SUCCESSOR_REVISIONS__VERSION);
-		createEOperation(historyEClass, HISTORY___GET_VALIDATION_ERRORS__BOOLEAN_BOOLEAN);
-		createEOperation(historyEClass, HISTORY___GET_UNIQUE_VALIDATION_ERRORS);
+		createEReference(historyEClass, HISTORY__ALL_PROBLEMS);
+		createEOperation(historyEClass, HISTORY___GET_PREDECESSOR_VERSIONS__VERSION);
+		createEOperation(historyEClass, HISTORY___GET_SUCCESSOR_VERSIONS__VERSION);
+		createEOperation(historyEClass, HISTORY___GET_PROBLEMS__BOOLEAN_BOOLEAN);
+		createEOperation(historyEClass, HISTORY___GET_UNIQUE_PROBLEMS);
 
 		versionEClass = createEClass(VERSION);
-		createEReference(versionEClass, VERSION__VALIDATION_ERRORS);
+		createEReference(versionEClass, VERSION__PROBLEMS);
 		createEAttribute(versionEClass, VERSION__NAME);
 		createEAttribute(versionEClass, VERSION__MODEL_URI);
 		createEAttribute(versionEClass, VERSION__MODEL);
 		createEAttribute(versionEClass, VERSION__STATUS);
 		createEAttribute(versionEClass, VERSION__REPOSITORY_VERSION);
+		createEReference(versionEClass, VERSION__HISTORY);
 		createEOperation(versionEClass, VERSION___GET_ELEMENT__STRING);
+		createEOperation(versionEClass, VERSION___GET_PREDECESSOR);
+		createEOperation(versionEClass, VERSION___GET_SUCCESSOR);
 
-		validationErrorEClass = createEClass(VALIDATION_ERROR);
-		createEAttribute(validationErrorEClass, VALIDATION_ERROR__NAME);
-		createEReference(validationErrorEClass, VALIDATION_ERROR__INTRODUCED_IN);
-		createEReference(validationErrorEClass, VALIDATION_ERROR__RESOLVED_IN);
-		createEAttribute(validationErrorEClass, VALIDATION_ERROR__MESSAGE);
-		createEAttribute(validationErrorEClass, VALIDATION_ERROR__SOURCE);
-		createEAttribute(validationErrorEClass, VALIDATION_ERROR__SEVERITY);
-		createEAttribute(validationErrorEClass, VALIDATION_ERROR__INTRODUCED);
-		createEAttribute(validationErrorEClass, VALIDATION_ERROR__RESOLVED);
-		createEReference(validationErrorEClass, VALIDATION_ERROR__PREC);
-		createEReference(validationErrorEClass, VALIDATION_ERROR__SUCC);
-		createEReference(validationErrorEClass, VALIDATION_ERROR__INVALID_ELEMENT);
-		createEReference(validationErrorEClass, VALIDATION_ERROR__CONTEXT);
-		createEAttribute(validationErrorEClass, VALIDATION_ERROR__RESOLVED_BY_UNDO);
-		createEReference(validationErrorEClass, VALIDATION_ERROR__CHANGE_SETS);
+		problemEClass = createEClass(PROBLEM);
+		createEReference(problemEClass, PROBLEM__VERSION);
+		createEAttribute(problemEClass, PROBLEM__NAME);
+		createEReference(problemEClass, PROBLEM__INTRODUCED_IN);
+		createEAttribute(problemEClass, PROBLEM__INTRODUCED);
+		createEReference(problemEClass, PROBLEM__RESOLVED_IN);
+		createEAttribute(problemEClass, PROBLEM__RESOLVED);
+		createEAttribute(problemEClass, PROBLEM__MESSAGE);
+		createEAttribute(problemEClass, PROBLEM__SEVERITY);
+		createEReference(problemEClass, PROBLEM__PREDECESSOR);
+		createEReference(problemEClass, PROBLEM__SUCCESSOR);
+		createEReference(problemEClass, PROBLEM__INVALID_ELEMENTS);
+		createEReference(problemEClass, PROBLEM__CONTEXT_ELEMENT);
+		createEReference(problemEClass, PROBLEM__MODIFICATIONS);
+		createEAttribute(problemEClass, PROBLEM__MODIFICATION_CLASSIFICATION);
 
 		changeSetEClass = createEClass(CHANGE_SET);
 		createEReference(changeSetEClass, CHANGE_SET__CHANGES);
 		createEAttribute(changeSetEClass, CHANGE_SET__NAME);
 
 		// Create enums
-		validationSeverityEEnum = createEEnum(VALIDATION_SEVERITY);
+		problemSeverityEEnum = createEEnum(PROBLEM_SEVERITY);
 		modelStatusEEnum = createEEnum(MODEL_STATUS);
+		modificationClassificationEEnum = createEEnum(MODIFICATION_CLASSIFICATION);
 
 		// Create data types
 		resourceEDataType = createEDataType(RESOURCE);
@@ -590,63 +638,75 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		// Initialize classes, features, and operations; add parameters
 		initEClass(historyEClass, History.class, "History", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getHistory_Name(), ecorePackage.getEString(), "name", null, 0, 1, History.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getHistory_Versions(), this.getVersion(), null, "versions", null, 0, -1, History.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getHistory_AllValidationErrors(), this.getValidationError(), null, "allValidationErrors", null, 0, -1, History.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getHistory_Versions(), this.getVersion(), this.getVersion_History(), "versions", null, 0, -1, History.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getHistory_AllProblems(), this.getProblem(), null, "allProblems", null, 0, -1, History.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
-		EOperation op = initEOperation(getHistory__GetPrecessorRevisions__Version(), this.getVersion(), "getPrecessorRevisions", 0, -1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = initEOperation(getHistory__GetPredecessorVersions__Version(), this.getVersion(), "getPredecessorVersions", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getVersion(), "version", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getHistory__GetSuccessorRevisions__Version(), this.getVersion(), "getSuccessorRevisions", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getHistory__GetSuccessorVersions__Version(), this.getVersion(), "getSuccessorVersions", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getVersion(), "version", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getHistory__GetValidationErrors__boolean_boolean(), this.getValidationError(), "getValidationErrors", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getHistory__GetProblems__boolean_boolean(), this.getProblem(), "getProblems", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "introduced", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "resolved", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getHistory__GetUniqueValidationErrors(), this.getValidationError(), "getUniqueValidationErrors", 0, -1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getHistory__GetUniqueProblems(), this.getProblem(), "getUniqueProblems", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(versionEClass, Version.class, "Version", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getVersion_ValidationErrors(), this.getValidationError(), null, "validationErrors", null, 0, -1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getVersion_Problems(), this.getProblem(), this.getProblem_Version(), "problems", null, 0, -1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVersion_Name(), ecorePackage.getEString(), "name", null, 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVersion_ModelURI(), ecorePackage.getEString(), "modelURI", null, 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVersion_Model(), this.getResource(), "model", null, 0, 1, Version.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVersion_Status(), this.getModelStatus(), "status", "UNKNOWN", 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getVersion_RepositoryVersion(), theEcorePackage.getEString(), "repositoryVersion", null, 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getVersion_History(), this.getHistory(), this.getHistory_Versions(), "history", null, 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getVersion__GetElement__String(), ecorePackage.getEObject(), "getElement", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "id", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEClass(validationErrorEClass, ValidationError.class, "ValidationError", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getValidationError_Name(), ecorePackage.getEString(), "name", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getValidationError_IntroducedIn(), this.getVersion(), null, "introducedIn", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getValidationError_ResolvedIn(), this.getVersion(), null, "resolvedIn", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getValidationError_Message(), ecorePackage.getEString(), "message", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getValidationError_Source(), ecorePackage.getEString(), "source", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getValidationError_Severity(), this.getValidationSeverity(), "severity", "UNKNOWN", 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getValidationError_Introduced(), ecorePackage.getEBoolean(), "introduced", null, 0, 1, ValidationError.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEAttribute(getValidationError_Resolved(), ecorePackage.getEBoolean(), "resolved", null, 0, 1, ValidationError.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getValidationError_Prec(), this.getValidationError(), this.getValidationError_Succ(), "prec", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getValidationError_Succ(), this.getValidationError(), this.getValidationError_Prec(), "succ", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getValidationError_InvalidElement(), ecorePackage.getEObject(), null, "invalidElement", null, 0, -1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getValidationError_Context(), ecorePackage.getEObject(), null, "context", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getValidationError_ResolvedByUndo(), ecorePackage.getEBoolean(), "resolvedByUndo", null, 0, 1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getValidationError_ChangeSets(), this.getChangeSet(), null, "changeSets", null, 0, -1, ValidationError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEOperation(getVersion__GetPredecessor(), this.getVersion(), "getPredecessor", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getVersion__GetSuccessor(), this.getVersion(), "getSuccessor", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(problemEClass, Problem.class, "Problem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProblem_Version(), this.getVersion(), this.getVersion_Problems(), "version", null, 0, 1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProblem_Name(), ecorePackage.getEString(), "name", null, 0, 1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProblem_IntroducedIn(), this.getVersion(), null, "introducedIn", null, 0, 1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProblem_Introduced(), ecorePackage.getEBoolean(), "introduced", null, 0, 1, Problem.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getProblem_ResolvedIn(), this.getVersion(), null, "resolvedIn", null, 0, 1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProblem_Resolved(), ecorePackage.getEBoolean(), "resolved", null, 0, 1, Problem.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProblem_Message(), ecorePackage.getEString(), "message", null, 0, 1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProblem_Severity(), this.getProblemSeverity(), "severity", "UNKNOWN", 0, 1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProblem_Predecessor(), this.getProblem(), this.getProblem_Successor(), "predecessor", null, 0, 1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProblem_Successor(), this.getProblem(), this.getProblem_Predecessor(), "successor", null, 0, 1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProblem_InvalidElements(), ecorePackage.getEObject(), null, "invalidElements", null, 0, -1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProblem_ContextElement(), ecorePackage.getEObject(), null, "contextElement", null, 0, 1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProblem_Modifications(), this.getChangeSet(), null, "modifications", null, 0, -1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProblem_ModificationClassification(), this.getModificationClassification(), "modificationClassification", "UNKNOWN", 0, -1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(changeSetEClass, ChangeSet.class, "ChangeSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getChangeSet_Changes(), theSymmetricPackage.getChange(), null, "changes", null, 0, -1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getChangeSet_Name(), theEcorePackage.getEString(), "name", null, 0, 1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
-		initEEnum(validationSeverityEEnum, ValidationSeverity.class, "ValidationSeverity");
-		addEEnumLiteral(validationSeverityEEnum, ValidationSeverity.ERROR);
-		addEEnumLiteral(validationSeverityEEnum, ValidationSeverity.WARNING);
-		addEEnumLiteral(validationSeverityEEnum, ValidationSeverity.UNKNOWN);
+		initEEnum(problemSeverityEEnum, ProblemSeverity.class, "ProblemSeverity");
+		addEEnumLiteral(problemSeverityEEnum, ProblemSeverity.UNKNOWN);
+		addEEnumLiteral(problemSeverityEEnum, ProblemSeverity.ERROR);
+		addEEnumLiteral(problemSeverityEEnum, ProblemSeverity.WARNING);
 
 		initEEnum(modelStatusEEnum, ModelStatus.class, "ModelStatus");
+		addEEnumLiteral(modelStatusEEnum, ModelStatus.UNKNOWN);
 		addEEnumLiteral(modelStatusEEnum, ModelStatus.VALID);
 		addEEnumLiteral(modelStatusEEnum, ModelStatus.INVALID);
 		addEEnumLiteral(modelStatusEEnum, ModelStatus.DEFECT);
-		addEEnumLiteral(modelStatusEEnum, ModelStatus.UNKNOWN);
+
+		initEEnum(modificationClassificationEEnum, ModificationClassification.class, "ModificationClassification");
+		addEEnumLiteral(modificationClassificationEEnum, ModificationClassification.UNKNOWN);
+		addEEnumLiteral(modificationClassificationEEnum, ModificationClassification.UNDO);
+		addEEnumLiteral(modificationClassificationEEnum, ModificationClassification.COMPLETION);
+		addEEnumLiteral(modificationClassificationEEnum, ModificationClassification.CORRECTION);
+		addEEnumLiteral(modificationClassificationEEnum, ModificationClassification.OVERWRITE);
 
 		// Initialize data types
 		initEDataType(resourceEDataType, Resource.class, "Resource", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

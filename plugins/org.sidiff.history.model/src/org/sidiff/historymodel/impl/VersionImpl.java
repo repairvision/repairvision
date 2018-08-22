@@ -16,12 +16,14 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.common.emf.EMFUtil;
+import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelPackage;
 import org.sidiff.historymodel.ModelStatus;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 
 /**
@@ -32,26 +34,27 @@ import org.sidiff.historymodel.Version;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getValidationErrors <em>Validation Errors</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getProblems <em>Problems</em>}</li>
  *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getModelURI <em>Model URI</em>}</li>
  *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getModel <em>Model</em>}</li>
  *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getStatus <em>Status</em>}</li>
  *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getRepositoryVersion <em>Repository Version</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.VersionImpl#getHistory <em>History</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class VersionImpl extends MinimalEObjectImpl.Container implements Version {
 	/**
-	 * The cached value of the '{@link #getValidationErrors() <em>Validation Errors</em>}' containment reference list.
+	 * The cached value of the '{@link #getProblems() <em>Problems</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getValidationErrors()
+	 * @see #getProblems()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ValidationError> validationErrors;
+	protected EList<Problem> problems;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -177,11 +180,11 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ValidationError> getValidationErrors() {
-		if (validationErrors == null) {
-			validationErrors = new EObjectContainmentEList<ValidationError>(ValidationError.class, this, HistoryModelPackage.VERSION__VALIDATION_ERRORS);
+	public EList<Problem> getProblems() {
+		if (problems == null) {
+			problems = new EObjectContainmentWithInverseEList<Problem>(Problem.class, this, HistoryModelPackage.VERSION__PROBLEMS, HistoryModelPackage.PROBLEM__VERSION);
 		}
-		return validationErrors;
+		return problems;
 	}
 
 	/**
@@ -303,6 +306,47 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public History getHistory() {
+		if (eContainerFeatureID() != HistoryModelPackage.VERSION__HISTORY) return null;
+		return (History)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetHistory(History newHistory, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newHistory, HistoryModelPackage.VERSION__HISTORY, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHistory(History newHistory) {
+		if (newHistory != eInternalContainer() || (eContainerFeatureID() != HistoryModelPackage.VERSION__HISTORY && newHistory != null)) {
+			if (EcoreUtil.isAncestor(this, newHistory))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newHistory != null)
+				msgs = ((InternalEObject)newHistory).eInverseAdd(this, HistoryModelPackage.HISTORY__VERSIONS, History.class, msgs);
+			msgs = basicSetHistory(newHistory, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HistoryModelPackage.VERSION__HISTORY, newHistory, newHistory));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public EObject getElement(String id) {
@@ -318,13 +362,64 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Version getPredecessor() {
+		int index = getHistory().getVersions().indexOf(this);
+
+		if ((index - 1) >= 0) {
+			return getHistory().getVersions().get(index - 1);
+		}
+		
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Version getSuccessor() {
+		int index = getHistory().getVersions().indexOf(this);
+
+		if ((index + 1) < getHistory().getVersions().size()) {
+			return getHistory().getVersions().get(index + 1);
+		}
+		
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case HistoryModelPackage.VERSION__PROBLEMS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getProblems()).basicAdd(otherEnd, msgs);
+			case HistoryModelPackage.VERSION__HISTORY:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetHistory((History)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case HistoryModelPackage.VERSION__VALIDATION_ERRORS:
-				return ((InternalEList<?>)getValidationErrors()).basicRemove(otherEnd, msgs);
+			case HistoryModelPackage.VERSION__PROBLEMS:
+				return ((InternalEList<?>)getProblems()).basicRemove(otherEnd, msgs);
+			case HistoryModelPackage.VERSION__HISTORY:
+				return basicSetHistory(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -335,10 +430,24 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case HistoryModelPackage.VERSION__HISTORY:
+				return eInternalContainer().eInverseRemove(this, HistoryModelPackage.HISTORY__VERSIONS, History.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case HistoryModelPackage.VERSION__VALIDATION_ERRORS:
-				return getValidationErrors();
+			case HistoryModelPackage.VERSION__PROBLEMS:
+				return getProblems();
 			case HistoryModelPackage.VERSION__NAME:
 				return getName();
 			case HistoryModelPackage.VERSION__MODEL_URI:
@@ -349,6 +458,8 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 				return getStatus();
 			case HistoryModelPackage.VERSION__REPOSITORY_VERSION:
 				return getRepositoryVersion();
+			case HistoryModelPackage.VERSION__HISTORY:
+				return getHistory();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -362,9 +473,9 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case HistoryModelPackage.VERSION__VALIDATION_ERRORS:
-				getValidationErrors().clear();
-				getValidationErrors().addAll((Collection<? extends ValidationError>)newValue);
+			case HistoryModelPackage.VERSION__PROBLEMS:
+				getProblems().clear();
+				getProblems().addAll((Collection<? extends Problem>)newValue);
 				return;
 			case HistoryModelPackage.VERSION__NAME:
 				setName((String)newValue);
@@ -381,6 +492,9 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 			case HistoryModelPackage.VERSION__REPOSITORY_VERSION:
 				setRepositoryVersion((String)newValue);
 				return;
+			case HistoryModelPackage.VERSION__HISTORY:
+				setHistory((History)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -393,8 +507,8 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case HistoryModelPackage.VERSION__VALIDATION_ERRORS:
-				getValidationErrors().clear();
+			case HistoryModelPackage.VERSION__PROBLEMS:
+				getProblems().clear();
 				return;
 			case HistoryModelPackage.VERSION__NAME:
 				setName(NAME_EDEFAULT);
@@ -411,6 +525,9 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 			case HistoryModelPackage.VERSION__REPOSITORY_VERSION:
 				setRepositoryVersion(REPOSITORY_VERSION_EDEFAULT);
 				return;
+			case HistoryModelPackage.VERSION__HISTORY:
+				setHistory((History)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -423,8 +540,8 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case HistoryModelPackage.VERSION__VALIDATION_ERRORS:
-				return validationErrors != null && !validationErrors.isEmpty();
+			case HistoryModelPackage.VERSION__PROBLEMS:
+				return problems != null && !problems.isEmpty();
 			case HistoryModelPackage.VERSION__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case HistoryModelPackage.VERSION__MODEL_URI:
@@ -435,6 +552,8 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 				return status != STATUS_EDEFAULT;
 			case HistoryModelPackage.VERSION__REPOSITORY_VERSION:
 				return REPOSITORY_VERSION_EDEFAULT == null ? repositoryVersion != null : !REPOSITORY_VERSION_EDEFAULT.equals(repositoryVersion);
+			case HistoryModelPackage.VERSION__HISTORY:
+				return getHistory() != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -449,6 +568,10 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 		switch (operationID) {
 			case HistoryModelPackage.VERSION___GET_ELEMENT__STRING:
 				return getElement((String)arguments.get(0));
+			case HistoryModelPackage.VERSION___GET_PREDECESSOR:
+				return getPredecessor();
+			case HistoryModelPackage.VERSION___GET_SUCCESSOR:
+				return getSuccessor();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

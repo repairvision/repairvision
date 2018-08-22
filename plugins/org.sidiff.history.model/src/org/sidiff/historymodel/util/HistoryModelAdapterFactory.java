@@ -75,8 +75,8 @@ public class HistoryModelAdapterFactory extends AdapterFactoryImpl {
 				return createVersionAdapter();
 			}
 			@Override
-			public Adapter caseValidationError(ValidationError object) {
-				return createValidationErrorAdapter();
+			public Adapter caseProblem(Problem object) {
+				return createProblemAdapter();
 			}
 			@Override
 			public Adapter caseChangeSet(ChangeSet object) {
@@ -131,16 +131,16 @@ public class HistoryModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.historymodel.ValidationError <em>Validation Error</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.historymodel.Problem <em>Problem</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.historymodel.ValidationError
+	 * @see org.sidiff.historymodel.Problem
 	 * @generated
 	 */
-	public Adapter createValidationErrorAdapter() {
+	public Adapter createProblemAdapter() {
 		return null;
 	}
 

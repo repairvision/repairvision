@@ -15,12 +15,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelPackage;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 
 /**
@@ -33,7 +33,7 @@ import org.sidiff.historymodel.Version;
  * <ul>
  *   <li>{@link org.sidiff.historymodel.impl.HistoryImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.sidiff.historymodel.impl.HistoryImpl#getVersions <em>Versions</em>}</li>
- *   <li>{@link org.sidiff.historymodel.impl.HistoryImpl#getAllValidationErrors <em>All Validation Errors</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.HistoryImpl#getAllProblems <em>All Problems</em>}</li>
  * </ul>
  *
  * @generated
@@ -116,7 +116,7 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 */
 	public EList<Version> getVersions() {
 		if (versions == null) {
-			versions = new EObjectContainmentEList<Version>(Version.class, this, HistoryModelPackage.HISTORY__VERSIONS);
+			versions = new EObjectContainmentWithInverseEList<Version>(Version.class, this, HistoryModelPackage.HISTORY__VERSIONS, HistoryModelPackage.VERSION__HISTORY);
 		}
 		return versions;
 	}
@@ -126,12 +126,12 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public EList<ValidationError> getAllValidationErrors() {
-		EList<ValidationError> validationErrors = new BasicEList<ValidationError>();
+	public EList<Problem> getAllProblems() {
+		EList<Problem> Problems = new BasicEList<Problem>();
 		for(Version version : this.getVersions()){
-			validationErrors.addAll(version.getValidationErrors());
+			Problems.addAll(version.getProblems());
 		}
-		return validationErrors;
+		return Problems;
 	}
 
 	/**
@@ -139,9 +139,9 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public EList<Version> getPrecessorRevisions(Version version) {
+	public EList<Version> getPredecessorVersions(Version version) {
 		int index = versions.indexOf(version);
-		EList<Version> precessors = new EObjectResolvingEList<Version>(Version.class, this, HistoryModelPackage.HISTORY___GET_SUCCESSOR_REVISIONS__VERSION);
+		EList<Version> precessors = new EObjectResolvingEList<Version>(Version.class, this, HistoryModelPackage.HISTORY___GET_SUCCESSOR_VERSIONS__VERSION);
 		while(index > 0){
 			precessors.add(versions.get(--index));
 		}
@@ -154,9 +154,9 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public EList<Version> getSuccessorRevisions(Version version) {
+	public EList<Version> getSuccessorVersions(Version version) {
 		int index = versions.indexOf(version);
-		EList<Version> successors = new EObjectResolvingEList<Version>(Version.class, this, HistoryModelPackage.HISTORY___GET_SUCCESSOR_REVISIONS__VERSION);
+		EList<Version> successors = new EObjectResolvingEList<Version>(Version.class, this, HistoryModelPackage.HISTORY___GET_SUCCESSOR_VERSIONS__VERSION);
 		while(index < versions.size()-1){
 			successors.add(versions.get(++index));
 		}
@@ -168,10 +168,10 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public EList<ValidationError> getValidationErrors(boolean introduced, boolean resolved) {
-		EList<ValidationError> validationErrors = new BasicEList<ValidationError>();
+	public EList<Problem> getProblems(boolean introduced, boolean resolved) {
+		EList<Problem> Problems = new BasicEList<Problem>();
 		for(Version version : getVersions()){
-			for(ValidationError error : version.getValidationErrors()){
+			for(Problem error : version.getProblems()){
 				boolean toAdd = true;
 				if(introduced){
 					toAdd = error.isIntroduced();
@@ -181,11 +181,11 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 				}
 				
 				if(toAdd){
-					validationErrors.add(error);
+					Problems.add(error);
 				}
 			}
 		}
-		return validationErrors;
+		return Problems;
 	}
 
 	/**
@@ -193,14 +193,29 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public EList<ValidationError> getUniqueValidationErrors() {
-		EList<ValidationError> uniqueValidationErrors = new BasicEList<ValidationError>();
-		for(ValidationError validationError : getAllValidationErrors()){
-			if(validationError.getPrec() == null){
-				uniqueValidationErrors.add(validationError);
+	public EList<Problem> getUniqueProblems() {
+		EList<Problem> uniqueProblems = new BasicEList<Problem>();
+		for(Problem Problem : getAllProblems()){
+			if(Problem.getPredecessor() == null){
+				uniqueProblems.add(Problem);
 			}
 		}
-		return uniqueValidationErrors;
+		return uniqueProblems;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case HistoryModelPackage.HISTORY__VERSIONS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getVersions()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -229,8 +244,8 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 				return getName();
 			case HistoryModelPackage.HISTORY__VERSIONS:
 				return getVersions();
-			case HistoryModelPackage.HISTORY__ALL_VALIDATION_ERRORS:
-				return getAllValidationErrors();
+			case HistoryModelPackage.HISTORY__ALL_PROBLEMS:
+				return getAllProblems();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -285,8 +300,8 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case HistoryModelPackage.HISTORY__VERSIONS:
 				return versions != null && !versions.isEmpty();
-			case HistoryModelPackage.HISTORY__ALL_VALIDATION_ERRORS:
-				return !getAllValidationErrors().isEmpty();
+			case HistoryModelPackage.HISTORY__ALL_PROBLEMS:
+				return !getAllProblems().isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -299,14 +314,14 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case HistoryModelPackage.HISTORY___GET_PRECESSOR_REVISIONS__VERSION:
-				return getPrecessorRevisions((Version)arguments.get(0));
-			case HistoryModelPackage.HISTORY___GET_SUCCESSOR_REVISIONS__VERSION:
-				return getSuccessorRevisions((Version)arguments.get(0));
-			case HistoryModelPackage.HISTORY___GET_VALIDATION_ERRORS__BOOLEAN_BOOLEAN:
-				return getValidationErrors((Boolean)arguments.get(0), (Boolean)arguments.get(1));
-			case HistoryModelPackage.HISTORY___GET_UNIQUE_VALIDATION_ERRORS:
-				return getUniqueValidationErrors();
+			case HistoryModelPackage.HISTORY___GET_PREDECESSOR_VERSIONS__VERSION:
+				return getPredecessorVersions((Version)arguments.get(0));
+			case HistoryModelPackage.HISTORY___GET_SUCCESSOR_VERSIONS__VERSION:
+				return getSuccessorVersions((Version)arguments.get(0));
+			case HistoryModelPackage.HISTORY___GET_PROBLEMS__BOOLEAN_BOOLEAN:
+				return getProblems((Boolean)arguments.get(0), (Boolean)arguments.get(1));
+			case HistoryModelPackage.HISTORY___GET_UNIQUE_PROBLEMS:
+				return getUniqueProblems();
 		}
 		return super.eInvoke(operationID, arguments);
 	}
@@ -340,7 +355,7 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	private Map<String, Integer> getUniqueValdiationMessages(){
 		Map<String, Integer> messages = new HashMap<String, Integer>();
 		for(Version version : getVersions()){
-			for(ValidationError error : version.getValidationErrors()){
+			for(Problem error : version.getProblems()){
 				if(error.getIntroducedIn() != null && error.isResolved()){
 					if(messages.get(error.getName()) == null){
 						messages.put(error.getName(), 0);

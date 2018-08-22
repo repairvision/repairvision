@@ -40,13 +40,13 @@ public interface HistoryModelFactory extends EFactory {
 	Version createVersion();
 
 	/**
-	 * Returns a new object of class '<em>Validation Error</em>'.
+	 * Returns a new object of class '<em>Problem</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Validation Error</em>'.
+	 * @return a new object of class '<em>Problem</em>'.
 	 * @generated
 	 */
-	ValidationError createValidationError();
+	Problem createProblem();
 
 	/**
 	 * Returns a new object of class '<em>Change Set</em>'.

@@ -17,12 +17,13 @@ import org.eclipse.emf.ecore.resource.Resource;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.historymodel.Version#getValidationErrors <em>Validation Errors</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.Version#getProblems <em>Problems</em>}</li>
  *   <li>{@link org.sidiff.historymodel.Version#getName <em>Name</em>}</li>
  *   <li>{@link org.sidiff.historymodel.Version#getModelURI <em>Model URI</em>}</li>
  *   <li>{@link org.sidiff.historymodel.Version#getModel <em>Model</em>}</li>
  *   <li>{@link org.sidiff.historymodel.Version#getStatus <em>Status</em>}</li>
  *   <li>{@link org.sidiff.historymodel.Version#getRepositoryVersion <em>Repository Version</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.Version#getHistory <em>History</em>}</li>
  * </ul>
  *
  * @see org.sidiff.historymodel.HistoryModelPackage#getVersion()
@@ -31,20 +32,22 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public interface Version extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Validation Errors</b></em>' containment reference list.
-	 * The list contents are of type {@link org.sidiff.historymodel.ValidationError}.
+	 * Returns the value of the '<em><b>Problems</b></em>' containment reference list.
+	 * The list contents are of type {@link org.sidiff.historymodel.Problem}.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.historymodel.Problem#getVersion <em>Version</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Validation Errors</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Problems</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Validation Errors</em>' containment reference list.
-	 * @see org.sidiff.historymodel.HistoryModelPackage#getVersion_ValidationErrors()
-	 * @model containment="true"
+	 * @return the value of the '<em>Problems</em>' containment reference list.
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getVersion_Problems()
+	 * @see org.sidiff.historymodel.Problem#getVersion
+	 * @model opposite="version" containment="true"
 	 * @generated
 	 */
-	EList<ValidationError> getValidationErrors();
+	EList<Problem> getProblems();
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -177,11 +180,55 @@ public interface Version extends EObject {
 	void setRepositoryVersion(String value);
 
 	/**
+	 * Returns the value of the '<em><b>History</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.historymodel.History#getVersions <em>Versions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>History</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>History</em>' container reference.
+	 * @see #setHistory(History)
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getVersion_History()
+	 * @see org.sidiff.historymodel.History#getVersions
+	 * @model opposite="versions" transient="false"
+	 * @generated
+	 */
+	History getHistory();
+
+	/**
+	 * Sets the value of the '{@link org.sidiff.historymodel.Version#getHistory <em>History</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>History</em>' container reference.
+	 * @see #getHistory()
+	 * @generated
+	 */
+	void setHistory(History value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
 	 * @generated
 	 */
 	EObject getElement(String id);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	Version getPredecessor();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	Version getSuccessor();
 
 } // Version

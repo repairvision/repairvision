@@ -60,7 +60,7 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 		switch (eClass.getClassifierID()) {
 			case HistoryModelPackage.HISTORY: return createHistory();
 			case HistoryModelPackage.VERSION: return createVersion();
-			case HistoryModelPackage.VALIDATION_ERROR: return createValidationError();
+			case HistoryModelPackage.PROBLEM: return createProblem();
 			case HistoryModelPackage.CHANGE_SET: return createChangeSet();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -75,10 +75,12 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case HistoryModelPackage.VALIDATION_SEVERITY:
-				return createValidationSeverityFromString(eDataType, initialValue);
+			case HistoryModelPackage.PROBLEM_SEVERITY:
+				return createProblemSeverityFromString(eDataType, initialValue);
 			case HistoryModelPackage.MODEL_STATUS:
 				return createModelStatusFromString(eDataType, initialValue);
+			case HistoryModelPackage.MODIFICATION_CLASSIFICATION:
+				return createModificationClassificationFromString(eDataType, initialValue);
 			case HistoryModelPackage.RESOURCE:
 				return createResourceFromString(eDataType, initialValue);
 			default:
@@ -94,10 +96,12 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case HistoryModelPackage.VALIDATION_SEVERITY:
-				return convertValidationSeverityToString(eDataType, instanceValue);
+			case HistoryModelPackage.PROBLEM_SEVERITY:
+				return convertProblemSeverityToString(eDataType, instanceValue);
 			case HistoryModelPackage.MODEL_STATUS:
 				return convertModelStatusToString(eDataType, instanceValue);
+			case HistoryModelPackage.MODIFICATION_CLASSIFICATION:
+				return convertModificationClassificationToString(eDataType, instanceValue);
 			case HistoryModelPackage.RESOURCE:
 				return convertResourceToString(eDataType, instanceValue);
 			default:
@@ -130,9 +134,9 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ValidationError createValidationError() {
-		ValidationErrorImpl validationError = new ValidationErrorImpl();
-		return validationError;
+	public Problem createProblem() {
+		ProblemImpl problem = new ProblemImpl();
+		return problem;
 	}
 
 	/**
@@ -150,8 +154,8 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ValidationSeverity createValidationSeverityFromString(EDataType eDataType, String initialValue) {
-		ValidationSeverity result = ValidationSeverity.get(initialValue);
+	public ProblemSeverity createProblemSeverityFromString(EDataType eDataType, String initialValue) {
+		ProblemSeverity result = ProblemSeverity.get(initialValue);
 		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
 		return result;
 	}
@@ -161,7 +165,7 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertValidationSeverityToString(EDataType eDataType, Object instanceValue) {
+	public String convertProblemSeverityToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
@@ -182,6 +186,26 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	 * @generated
 	 */
 	public String convertModelStatusToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ModificationClassification createModificationClassificationFromString(EDataType eDataType, String initialValue) {
+		ModificationClassification result = ModificationClassification.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertModificationClassificationToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
