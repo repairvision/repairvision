@@ -17,13 +17,13 @@ import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
+import org.sidiff.history.analysis.validation.FOLValidator;
 import org.sidiff.matcher.IMatcher;
 import org.sidiff.matching.api.util.MatchingUtils;
 import org.sidiff.repair.history.generator.HistoryModelGenerator;
 import org.sidiff.repair.history.generator.repository.BasicHistoryRepository;
 import org.sidiff.repair.history.generator.repository.IHistoryRepository;
 import org.sidiff.repair.history.generator.settings.EvaluationSettings;
-import org.sidiff.repair.history.generator.validation.FOLValidator;
 
 public class UMLValidationFOLFolderGenerator extends AbstractHandler implements IHandler {
 

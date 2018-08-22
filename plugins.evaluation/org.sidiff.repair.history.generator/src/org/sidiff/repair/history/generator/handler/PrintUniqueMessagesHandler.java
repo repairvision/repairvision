@@ -36,7 +36,7 @@ import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.historymodel.History;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 
 
@@ -73,7 +73,7 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 				
 				if (selection instanceof IStructuredSelection){
 					IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-					Map<String,  List<ValidationError>> messages = new HashMap<String, List<ValidationError>>();
+					Map<String,  List<Problem>> messages = new HashMap<String, List<Problem>>();
 					for (Iterator<?> iterator = structuredSelection.iterator(); iterator.hasNext();) {
 						Object obj = iterator.next();
 						if(obj instanceof IProject){
@@ -85,9 +85,9 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 										if(file.getFileExtension().equals("history")){
 											History history = (History) EMFStorage.eLoad(EMFStorage.pathToUri(file.getLocation().toOSString()));
 											printHistoryInfo(history);
-											for(ValidationError validationError : history.getUniqueValidationErrors()){
+											for(Problem validationError : history.getUniqueProblems()){
 												if(!messages.containsKey(validationError.getName())){
-													messages.put(validationError.getName(), new ArrayList<ValidationError>());
+													messages.put(validationError.getName(), new ArrayList<Problem>());
 												}
 												messages.get(validationError.getName()).add(validationError);
 													
@@ -103,31 +103,31 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 						
 					}
 					
-					List<Entry<String, List<ValidationError>>> sortedList = new LinkedList<Entry<String,List<ValidationError>>>(messages.entrySet());
+					List<Entry<String, List<Problem>>> sortedList = new LinkedList<Entry<String,List<Problem>>>(messages.entrySet());
 					// Defined Custom Comparator here
-					Collections.sort(sortedList, new Comparator<Entry<String, List<ValidationError>>>() {
+					Collections.sort(sortedList, new Comparator<Entry<String, List<Problem>>>() {
 
 						@Override
-						public int compare(Entry<String, List<ValidationError>> o1, Entry<String, List<ValidationError>> o2) {
+						public int compare(Entry<String, List<Problem>> o1, Entry<String, List<Problem>> o2) {
 							return o1.getValue().size()- o2.getValue().size();
 						}
 					});
 					
-					HashMap<String, List<ValidationError>> sortedHashMap = new LinkedHashMap<String, List<ValidationError>>();
-					for (Iterator<Entry<String, List<ValidationError>>> iterator = sortedList.iterator(); iterator.hasNext();) {
-						Entry<String, List<ValidationError>> entry = iterator.next();
+					HashMap<String, List<Problem>> sortedHashMap = new LinkedHashMap<String, List<Problem>>();
+					for (Iterator<Entry<String, List<Problem>>> iterator = sortedList.iterator(); iterator.hasNext();) {
+						Entry<String, List<Problem>> entry = iterator.next();
 						sortedHashMap.put(entry.getKey(), entry.getValue());
 					}
 				
 					Collections.reverse(sortedList);
 					out.println("History - Overview");
 					out.println("Validation Error; Count; Location; Resolved; ");
-					for(Entry<String,List<ValidationError>> entry : sortedList){
+					for(Entry<String,List<Problem>> entry : sortedList){
 						out.print(entry.getKey());
 						out.print(";");
 						out.print(entry.getValue().size() + ";");
 						Set<String> projects = new HashSet<String>();
-						for(ValidationError error : entry.getValue()){
+						for(Problem error : entry.getValue()){
 							projects.add(((History)error.eContainer().eContainer()).getName());
 						}
 						ArrayList<String> projectsList = new ArrayList<String>(projects);
@@ -139,7 +139,7 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 						}
 						
 						int introducedAndResolved = 0;
-						for(ValidationError error : entry.getValue()){
+						for(Problem error : entry.getValue()){
 							if(error.isIntroduced() && error.isResolved()){
 								introducedAndResolved++;
 							}
@@ -161,23 +161,23 @@ public class PrintUniqueMessagesHandler extends AbstractHandler {
 		out.println(historyName);
 		String header = "Validation Error; Message; Elements; Introduced in; Resolved in; Consistency Rule; Repair Rules; fixable; fixed as observed";
 		out.println(header);
-		List<ValidationError> introducedResolvedValidationErrors = new ArrayList<ValidationError>();
+		List<Problem> introducedResolvedProblems = new ArrayList<Problem>();
 		for(Version version : history.getVersions()){
-			if(!version.getValidationErrors().isEmpty()){
-				for(ValidationError validationError : version.getValidationErrors()){
-					if(validationError.getPrec() == null && validationError.isIntroduced() && validationError.isResolved()){
-						introducedResolvedValidationErrors.add(validationError);
+			if(!version.getProblems().isEmpty()){
+				for(Problem validationError : version.getProblems()){
+					if(validationError.getPredecessor() == null && validationError.isIntroduced() && validationError.isResolved()){
+						introducedResolvedProblems.add(validationError);
 					}
 				}
 			}
 		}
-		for(ValidationError validationError : introducedResolvedValidationErrors){
+		for(Problem validationError : introducedResolvedProblems){
 			String row = validationError.getName() + "; " + validationError.getMessage() + "; ";
-			for(int i = 0; i < validationError.getInvalidElement().size(); i++){
-				EObject invalidElement = validationError.getInvalidElement().get(i);
+			for(int i = 0; i < validationError.getInvalidElements().size(); i++){
+				EObject invalidElement = validationError.getInvalidElements().get(i);
 				String signature = calculateSignature(invalidElement);
 				row += signature;
-				if(i<validationError.getInvalidElement().size()-1){
+				if(i<validationError.getInvalidElements().size()-1){
 					row += ", ";
 				}else{
 					row += "; ";

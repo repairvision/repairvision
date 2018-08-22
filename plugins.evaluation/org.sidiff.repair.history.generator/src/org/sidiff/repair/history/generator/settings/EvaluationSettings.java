@@ -1,8 +1,8 @@
 package org.sidiff.repair.history.generator.settings;
 
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.history.analysis.validation.IValidator;
 import org.sidiff.repair.history.generator.repository.IHistoryRepository;
-import org.sidiff.repair.history.generator.validation.IValidator;
 
 public class EvaluationSettings {
 	

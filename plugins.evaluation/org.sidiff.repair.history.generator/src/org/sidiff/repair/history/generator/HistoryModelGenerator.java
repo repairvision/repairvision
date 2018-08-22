@@ -27,7 +27,7 @@ import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.ModelStatus;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.matching.api.MatchingFacade;
 import org.sidiff.matching.model.Correspondence;
@@ -225,13 +225,13 @@ public class HistoryModelGenerator {
 	
 	private Version generateVersion(int revision, Resource model, EvaluationSettings settings) {
 		EcoreUtil.resolveAll(model);
-		Collection<ValidationError> validationErrors = settings.getValidator().validate(model);
+		Collection<Problem> validationErrors = settings.getValidator().validate(model);
 		
 		ModelStatus modelStatus = validationErrors.isEmpty() ? ModelStatus.VALID : ModelStatus.INVALID;
 		
 		// Mark defect models
-		for (ValidationError validationError : validationErrors) {
-			for (EObject element : validationError.getInvalidElement()) {
+		for (Problem validationError : validationErrors) {
+			for (EObject element : validationError.getInvalidElements()) {
 				if (element.eIsProxy()) {
 					modelStatus = ModelStatus.DEFECT;
 				}
@@ -240,7 +240,7 @@ public class HistoryModelGenerator {
 		
 		Version version = HistoryModelFactory.eINSTANCE.createVersion();
 		version.setModel(model);
-		version.getValidationErrors().addAll(validationErrors);
+		version.getProblems().addAll(validationErrors);
 		version.setStatus(modelStatus);
 		version.setName(String.format("%03d", revision) + " - " + ModelNamingUtil.getModelName(model.getURI().toString()));
 		
@@ -275,15 +275,15 @@ public class HistoryModelGenerator {
 	
 	private void generateIntroducedAndResolved(History history, EvaluationSettings settings) {
 		for (Version versionA : history.getVersions()) {
-			if (!history.getSuccessorRevisions(versionA).isEmpty()) {
-				Version versionB = history.getSuccessorRevisions(versionA).get(0);
+			if (!history.getSuccessorVersions(versionA).isEmpty()) {
+				Version versionB = history.getSuccessorVersions(versionA).get(0);
 				
-				for (ValidationError errorB : versionB.getValidationErrors()) {
+				for (Problem errorB : versionB.getProblems()) {
 					boolean hasCorresponding = false;
 					
-					for (ValidationError errorA : versionA.getValidationErrors()) {
+					for (Problem errorA : versionA.getProblems()) {
 						if (settings.getValidator().matchValidationError(errorA, errorB)) {
-							errorB.setPrec(errorA);
+							errorB.setPredecessor(errorA);
 							hasCorresponding = true;
 							errorB.setIntroducedIn(errorA.getIntroducedIn());
 							break;
@@ -300,15 +300,15 @@ public class HistoryModelGenerator {
 		Collections.reverse(reverseOrder);
 		
 		for (Version versionB : reverseOrder) {
-			if (!history.getPrecessorRevisions(versionB).isEmpty()) {
-				Version versionA = history.getPrecessorRevisions(versionB).get(0);
+			if (!history.getPredecessorVersions(versionB).isEmpty()) {
+				Version versionA = history.getPredecessorVersions(versionB).get(0);
 				
-				for (ValidationError errorA : versionA.getValidationErrors()) {
+				for (Problem errorA : versionA.getProblems()) {
 					boolean hasCorresponding = false;
 					
-					for (ValidationError errorB : versionB.getValidationErrors()) {
+					for (Problem errorB : versionB.getProblems()) {
 						if (settings.getValidator().matchValidationError(errorA, errorB)) {
-							errorA.setSucc(errorB);
+							errorA.setSuccessor(errorB);
 							hasCorresponding = true;
 							errorA.setResolvedIn(errorB.getResolvedIn());
 							break;

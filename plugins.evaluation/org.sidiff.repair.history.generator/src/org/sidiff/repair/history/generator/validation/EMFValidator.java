@@ -8,9 +8,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.uml2.uml.resource.UMLResource;
+import org.sidiff.history.analysis.validation.BasicValidation;
 import org.sidiff.historymodel.HistoryModelFactory;
-import org.sidiff.historymodel.ValidationError;
-import org.sidiff.historymodel.ValidationSeverity;
+import org.sidiff.historymodel.Problem;
+import org.sidiff.historymodel.ProblemSeverity;
 
 /**
  * Delegates the validation
@@ -28,11 +29,11 @@ public class EMFValidator extends BasicValidation {
 	private int docType = 0;
 	
 	@Override
-	public Collection<ValidationError> validate(Resource resource) {
+	public Collection<Problem> validate(Resource resource) {
 		docType = getDocumentTyp(resource);
 		assert (docType != 0);
 		
-		Collection<ValidationError> inconsistencies = new ArrayList<ValidationError>();
+		Collection<Problem> inconsistencies = new ArrayList<Problem>();
 
 		for (EObject rootElement : resource.getContents()) {
 			validate(rootElement, inconsistencies);
@@ -41,23 +42,22 @@ public class EMFValidator extends BasicValidation {
 		return inconsistencies;
 	}
 	
-	private void validate(EObject rootElement, Collection<ValidationError> inconsistencies) {
+	private void validate(EObject rootElement, Collection<Problem> inconsistencies) {
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(rootElement);
 		
 		for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
 			if ((childDiagnostic.getSeverity() == Diagnostic.ERROR)
 					|| (childDiagnostic.getSeverity() == Diagnostic.WARNING)) {
 				
-				ValidationError validationError = HistoryModelFactory.eINSTANCE.createValidationError();
+				Problem validationError = HistoryModelFactory.eINSTANCE.createProblem();
 				validationError.setMessage(childDiagnostic.getMessage());
-				validationError.setSource(childDiagnostic.getSource());
 				
 				if (childDiagnostic.getSeverity() == Diagnostic.ERROR) {
-					validationError.setSeverity(ValidationSeverity.ERROR);
+					validationError.setSeverity(ProblemSeverity.ERROR);
 				} else if (childDiagnostic.getSeverity() == Diagnostic.WARNING) {
-					validationError.setSeverity(ValidationSeverity.WARNING);
+					validationError.setSeverity(ProblemSeverity.WARNING);
 				} else {
-					validationError.setSeverity(ValidationSeverity.UNKNOWN);
+					validationError.setSeverity(ProblemSeverity.UNKNOWN);
 				}
 				
 				String name = childDiagnostic.getMessage().replaceAll("'.*?'", "").trim();
@@ -73,11 +73,11 @@ public class EMFValidator extends BasicValidation {
 				
 				for (Object obj : childDiagnostic.getData()) {
 					if (obj instanceof EObject) {
-						validationError.getInvalidElement().add((EObject) obj);
+						validationError.getInvalidElements().add((EObject) obj);
 					}
 				}
 				
-				validationError.setContext(getContextElement(validationError));
+				validationError.setContextElement(getContextElement(validationError));
 				inconsistencies.add(validationError);
 			}
 		}
@@ -94,20 +94,20 @@ public class EMFValidator extends BasicValidation {
 	}
 	
 	@Override
-	public boolean matchValidationError(ValidationError validationErrorA, ValidationError validationErrorB) {
+	public boolean matchValidationError(Problem validationErrorA, Problem validationErrorB) {
 		return super.matchValidationError(validationErrorA, validationErrorB);
 	}
 	
 	@Override
-	public EObject getContextElement(ValidationError validationError) {
+	public EObject getContextElement(Problem validationError) {
 		
-		if (validationError.getContext() == null) {
+		if (validationError.getContextElement() == null) {
 			
 			// Only one invalid element:
-			EObject context = validationError.getInvalidElement().get(0);
+			EObject context = validationError.getInvalidElements().get(0);
 			
 			// Filter meta-features:
-			for (EObject invalidElement : validationError.getInvalidElement()) {
+			for (EObject invalidElement : validationError.getInvalidElements()) {
 				if ((invalidElement != context) && (context.eResource() == invalidElement.eResource())) {
 					context = null;
 					break;
@@ -122,72 +122,72 @@ public class EMFValidator extends BasicValidation {
 			if (docType == DOCTYPE_ECORE) {
 				switch (validationError.getName()) {
 					case "AContainmentReferenceOfATypeWithAContainerFeaturethatRequiresInstancesToBeContainedElsewhereCannotBePopulated":
-						return validationError.getInvalidElement().get(0); // EReference containment
+						return validationError.getInvalidElements().get(0); // EReference containment
 					case "ThereMayNotBeAnOperationWithTheSameSignatureAsAnAccessorMethodForFeature":
-						return validationError.getInvalidElement().get(1); // EOperation operation
+						return validationError.getInvalidElements().get(1); // EOperation operation
 					case "ThereMayNotBeTwoClassifiersNamed":
-						return validationError.getInvalidElement().get(1); // EClassifier duplicated
+						return validationError.getInvalidElements().get(1); // EClassifier duplicated
 					case "TheGenericTypeIsNotAValidSubstitutionForTypeParameter":
-						return validationError.getInvalidElement().get(1); // EGenericType typeSubstitution
+						return validationError.getInvalidElements().get(1); // EGenericType typeSubstitution
 					case "TheFeaturesAndCannotBothBeIDs":
-						return validationError.getInvalidElement().get(1); // EAttribute duplicatedID
+						return validationError.getInvalidElements().get(1); // EAttribute duplicatedID
 					case "ThereMayNotBeTwoFeaturesNamed":
-						return validationError.getInvalidElement().get(2); // EStructuralFeature duplicated
+						return validationError.getInvalidElements().get(2); // EStructuralFeature duplicated
 					case "ThereShouldNotBeAFeatureNamedAsWellAFeatureNamed":
-						return validationError.getInvalidElement().get(1); // EStructuralFeature duplicated (e.g. a, A, A_)
+						return validationError.getInvalidElements().get(1); // EStructuralFeature duplicated (e.g. a, A, A_)
 					case "ThereMayNotBeTwoOperationsAndWithTheSameSignature":
-						return validationError.getInvalidElement().get(1); // EOperation duplicated
+						return validationError.getInvalidElements().get(1); // EOperation duplicated
 					case "ThereMayNotBeTwoEnumeratorsNamed":
-						return validationError.getInvalidElement().get(1); // EEnum duplicated
+						return validationError.getInvalidElements().get(1); // EEnum duplicated
 					case "ThereShouldNotBeAnEnumeratorNamedAsWellAnEnumeratorNamed":
-						return validationError.getInvalidElement().get(1); // EEnum duplicated (e.g. a, A, A_)
+						return validationError.getInvalidElements().get(1); // EEnum duplicated (e.g. a, A, A_)
 					case "ThereMayNotBeTwoEnumeratorsWithLiteralValue":
-						return validationError.getInvalidElement().get(1); // EEnumLiteral duplicated
+						return validationError.getInvalidElements().get(1); // EEnumLiteral duplicated
 					case "ThereMayNotBeTwoParametersNamed":
-						return validationError.getInvalidElement().get(1); // EParameter duplicated
+						return validationError.getInvalidElements().get(1); // EParameter duplicated
 					case "ThereMayNotBeTwoTypeParametersNamed":
-						return validationError.getInvalidElement().get(1); // ETypeParameter duplicated
+						return validationError.getInvalidElements().get(1); // ETypeParameter duplicated
 					case "ThereMayNotBeTwoPackagesNamed":
-						return validationError.getInvalidElement().get(1); // EPackage duplicated
+						return validationError.getInvalidElements().get(1); // EPackage duplicated
 					case "ThereMayNotBeTwoPackagesWithNamespaceURI":
-						return validationError.getInvalidElement().get(0); // EPackage duplicated
+						return validationError.getInvalidElements().get(0); // EPackage duplicated
 					case "TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne":
-						return validationError.getInvalidElement().get(0); // EReference reference
+						return validationError.getInvalidElements().get(0); // EReference reference
 					case "TheOppositeMustBeAFeatureOfTheReferencesType":
-						return validationError.getInvalidElement().get(0); // EReference reference
+						return validationError.getInvalidElements().get(0); // EReference reference
 					case "TheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolving":
-						return validationError.getInvalidElement().get(0); // EReference reference
+						return validationError.getInvalidElements().get(0); // EReference reference
 					case "TheOppositeOfAContainmentReferenceMustNotBeAContainmentReference":
-						return validationError.getInvalidElement().get(0); // EReference reference
+						return validationError.getInvalidElements().get(0); // EReference reference
 					case "TheGenericSuperTypesAtIndexAndMustNotBeDuplicates":
-						return validationError.getInvalidElement().get(1); // EGenericType duplicated
+						return validationError.getInvalidElements().get(1); // EGenericType duplicated
 					case "TheGenericSuperTypesInstantiateInconsistently":
-						return validationError.getInvalidElement().get(1); // EGenericType inconsistent
+						return validationError.getInvalidElements().get(1); // EGenericType inconsistent
 					
 					case "TheFeatureOfContainsAnUnresolvedProxy":
-						return validationError.getInvalidElement().get(0); // ?
+						return validationError.getInvalidElements().get(0); // ?
 					case "TheFeatureHasAMapEntryAtIndexWithAKeyThatCollidesWithThatOfTheMapEntryAtIndex":
-						return validationError.getInvalidElement().get(0); // ?
+						return validationError.getInvalidElements().get(0); // ?
 					case "TheKeyMustBeFeatureOfTheReferencesType":
-						return validationError.getInvalidElement().get(0); // ?
+						return validationError.getInvalidElements().get(0); // ?
 					default:
 						throw new RuntimeException(
 								"Please configure the context element of the consistency rule!\n" 
-										+ printValidationError(validationError));
+										+ printProblem(validationError));
 				}	
 			}
 			
-			return validationError.getInvalidElement().get(0);
+			return validationError.getInvalidElements().get(0);
 		} else {
-			return validationError.getContext();
+			return validationError.getContextElement();
 		}
 	}
 	
-	private String printValidationError(ValidationError validationError) {
+	private String printProblem(Problem validationError) {
 		StringBuffer string = new StringBuffer();
 		string.append(validationError.getName() + ":\n");
 		
-		for (EObject invalidElement : validationError.getInvalidElement()) {
+		for (EObject invalidElement : validationError.getInvalidElements()) {
 			string.append(getObjectID(invalidElement) + ": ");
 			string.append(invalidElement + "\n");
 		}
