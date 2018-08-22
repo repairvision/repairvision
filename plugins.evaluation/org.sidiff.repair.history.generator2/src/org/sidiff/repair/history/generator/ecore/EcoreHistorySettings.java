@@ -12,13 +12,13 @@ import org.sidiff.consistency.common.settings.SettingsUtil;
 import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
+import org.sidiff.history.analysis.validation.IValidator;
 import org.sidiff.matcher.IMatcher;
 import org.sidiff.matching.api.util.MatchingUtils;
 import org.sidiff.repair.history.generator.miner.connectors.EclipseGitOrgMiner;
 import org.sidiff.repair.history.generator.miner.connectors.GitHubComMiner;
 import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
 import org.sidiff.repair.history.generator.validation.EMFValidator;
-import org.sidiff.repair.history.generator.validation.IValidator;
 
 public class EcoreHistorySettings {
 

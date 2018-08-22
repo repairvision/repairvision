@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionDataSetMetadata;
@@ -476,7 +476,7 @@ public class EcoreHistoryValidationApplication implements IApplication  {
 					Resource model = HistoryUtil.load(resourceSet, uri);
 
 					EMFValidator validator = new EMFValidator();
-					Collection<ValidationError> inconsistencies = validator.validate(model);
+					Collection<Problem> inconsistencies = validator.validate(model);
 
 					// Analyze inconsistencies:
 					if (!inconsistencies.isEmpty()) {
@@ -485,7 +485,7 @@ public class EcoreHistoryValidationApplication implements IApplication  {
 						inconsistencyCount += inconsistencies.size();
 						++inconsistentModels;
 
-						Set<String> modelValidationNames = inconsistencies.stream().map(ValidationError::getName).collect(Collectors.toSet());
+						Set<String> modelValidationNames = inconsistencies.stream().map(Problem::getName).collect(Collectors.toSet());
 						validationNames.addAll(modelValidationNames);
 
 						if (inconsistentHistories.containsKey(history)) {
@@ -494,7 +494,7 @@ public class EcoreHistoryValidationApplication implements IApplication  {
 							inconsistentHistories.put(history, modelValidationNames);
 						}
 
-						for (ValidationError inconsistency : inconsistencies) {
+						for (Problem inconsistency : inconsistencies) {
 							if (inconsistency.getName().equals(EcoreHistorySettings.INCONSISTENCY_UNRESOLVED_PROXY)) {
 								unresolvedVersions.add(workspaceVersion.getLocalFilePath());
 							}

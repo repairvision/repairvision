@@ -28,7 +28,7 @@ import org.sidiff.consistency.common.storage.UUIDResourceFactory;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.ModelStatus;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.matching.api.MatchingFacade;
 import org.sidiff.matching.model.Correspondence;
@@ -243,13 +243,13 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 			int revision, Resource model, String repositoryVersion,
 			String versionInfo, EcoreHistorySettings settings) {
 		
-		Collection<ValidationError> validationErrors = settings.getValidator().validate(model);
+		Collection<Problem> validationErrors = settings.getValidator().validate(model);
 		
 		ModelStatus modelStatus = validationErrors.isEmpty() ? ModelStatus.VALID : ModelStatus.INVALID;
 		
 		// Mark defect models
-		for (ValidationError validationError : validationErrors) {
-			for (EObject element : validationError.getInvalidElement()) {
+		for (Problem validationError : validationErrors) {
+			for (EObject element : validationError.getInvalidElements()) {
 				if (element.eIsProxy()) {
 					modelStatus = ModelStatus.DEFECT;
 				}
@@ -259,7 +259,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		Version version = HistoryModelFactory.eINSTANCE.createVersion();
 		version.setModel(model);
 		version.setRepositoryVersion(repositoryVersion);
-		version.getValidationErrors().addAll(validationErrors);
+		version.getProblems().addAll(validationErrors);
 		version.setName(String.format("%03d", revision) + " - " + model.getURI().lastSegment());
 		version.setStatus(modelStatus);
 		version.setRepositoryVersion(versionInfo);
@@ -292,27 +292,27 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 	
 	protected void generateInconsistencyTraces(Version versionA, Version versionB, EcoreHistorySettings settings) {
 
-		for (ValidationError inconsistencyA : versionA.getValidationErrors()) {
-			ValidationError inconsistencyB = getInconsistencyMatch(inconsistencyA, versionB, settings);
+		for (Problem inconsistencyA : versionA.getProblems()) {
+			Problem inconsistencyB = getInconsistencyMatch(inconsistencyA, versionB, settings);
 			
 			if (inconsistencyB != null) {
-				inconsistencyA.setSucc(inconsistencyB);
-				inconsistencyB.setPrec(inconsistencyA);
+				inconsistencyA.setSuccessor(inconsistencyB);
+				inconsistencyB.setPredecessor(inconsistencyA);
 				inconsistencyB.setIntroducedIn(inconsistencyA.getIntroducedIn());
 			} else {
 				inconsistencyA.setResolvedIn(versionB);
 			}
 			
-			if (inconsistencyA.getPrec() == null) {
+			if (inconsistencyA.getPredecessor() == null) {
 				inconsistencyA.setIntroducedIn(versionA);
 			}
 		}
 	}
 	
-	protected ValidationError getInconsistencyMatch(
-			ValidationError inconsistencyA, Version versionB, EcoreHistorySettings settings) {
+	protected Problem getInconsistencyMatch(
+			Problem inconsistencyA, Version versionB, EcoreHistorySettings settings) {
 		
-		for (ValidationError inconsistencyB : versionB.getValidationErrors()) {
+		for (Problem inconsistencyB : versionB.getProblems()) {
 			if (settings.getValidator().matchValidationError(inconsistencyA, inconsistencyB)) {
 				return inconsistencyB;
 			}

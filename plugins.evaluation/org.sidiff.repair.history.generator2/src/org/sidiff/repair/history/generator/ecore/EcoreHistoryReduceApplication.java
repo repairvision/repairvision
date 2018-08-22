@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.historymodel.History;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.repair.history.generator.util.HistoryUtil;
@@ -57,17 +57,17 @@ public class EcoreHistoryReduceApplication implements IApplication {
 			
 			for (Version version : history.getVersions()) {
 				
-				for (ValidationError inconsistency : new ArrayList<>(version.getValidationErrors())) {
+				for (Problem inconsistency : new ArrayList<>(version.getProblems())) {
 					
 					// Remove non resolved inconsistencies:
 					if (!inconsistency.isResolved()) {
-						version.getValidationErrors().remove(inconsistency);
+						version.getProblems().remove(inconsistency);
 						continue;
 					}
 					
 					// Remove missing proxy errors:
 					if (inconsistency.getName().equals(EcoreHistorySettings.INCONSISTENCY_UNRESOLVED_PROXY)) {
-						version.getValidationErrors().remove(inconsistency);
+						version.getProblems().remove(inconsistency);
 						continue;
 					}
 					
@@ -77,7 +77,7 @@ public class EcoreHistoryReduceApplication implements IApplication {
 					// Preserve introduced/resolved step:
 					if ((inconsistency.getIntroducedIn() == version) || (inconsistency.getResolvedIn() == successorVersion)) {
 						if (inconsistency.getIntroducedIn() == version) {
-							removedVersions.remove(EvaluationUtil.getPrecessorRevision(version));
+							removedVersions.remove(EvaluationUtil.getPredecessorRevision(version));
 							removedVersions.remove(version);
 						}
 						
@@ -88,17 +88,17 @@ public class EcoreHistoryReduceApplication implements IApplication {
 					} else {
 						
 						// Remove inconsistency:
-						ValidationError predecessorInconsistency = inconsistency.getPrec();
-						ValidationError successorInconsistency =  inconsistency.getSucc();
+						Problem predecessorInconsistency = inconsistency.getPredecessor();
+						Problem successorInconsistency =  inconsistency.getSuccessor();
 						
 						if (predecessorInconsistency != null) {
-							predecessorInconsistency.setSucc(successorInconsistency);
+							predecessorInconsistency.setSuccessor(successorInconsistency);
 						}
 						if (successorInconsistency != null) {
-							successorInconsistency.setPrec(predecessorInconsistency);
+							successorInconsistency.setPredecessor(predecessorInconsistency);
 						}
 						
-						version.getValidationErrors().remove(inconsistency);
+						version.getProblems().remove(inconsistency);
 					}
 					
 				}
