@@ -38,6 +38,9 @@
       <menuContribution
             allPopups="false"
             locationURI="popup:org.sidiff.historymodel.presentation.HistoryModelEditorID">
+         <separator
+               name="org.sidiff.history.model.editor.separator.tools.start">
+         </separator>
          <command
                commandId="org.sidiff.history.model.editor.command.editsteps.resource"
                icon="icons/full/obj16/synch_synch.png"
@@ -48,6 +51,14 @@
                icon="icons/full/obj16/synch_synch.png"
                style="push">
          </command>
+         <command
+               commandId="org.sidiff.history.model.editor.command.open.versions"
+               icon="icons/full/obj16/file.png"
+               style="push">
+         </command>
+         <separator
+               name="org.sidiff.history.model.editor.separator.tools.end">
+         </separator>
       </menuContribution>
    </extension>
    <extension
@@ -60,6 +71,10 @@
             id="org.sidiff.history.model.editor.command.editsteps.resourceset"
             name="Show Edit Steps (Resource Set Scope)">
       </command>
+      <command
+            id="org.sidiff.history.model.editor.command.open.versions"
+            name="Show Modified Model Versions ">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -70,6 +85,10 @@
       <handler
             class="org.sidiff.historymodel.presentation.handlers.ShowEditStepsOnResourceSetHandler"
             commandId="org.sidiff.history.model.editor.command.editsteps.resourceset">
+      </handler>
+      <handler
+            class="org.sidiff.historymodel.presentation.handlers.OpenModifiedModelVersions"
+            commandId="org.sidiff.history.model.editor.command.open.versions">
       </handler>
    </extension>
 </plugin>
