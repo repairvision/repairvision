@@ -26,7 +26,7 @@ import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.recognition.util.LiftingGraphIndex;
 import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.HistoryModelFactory;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.matcher.IMatcher;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
@@ -50,7 +50,7 @@ public class InconsistencyAnalysis {
 
 	private InconsistencyTrace inconsistency;
 
-	public InconsistencyAnalysis(ValidationError introducedValidationError) {
+	public InconsistencyAnalysis(Problem introducedValidationError) {
 		this.inconsistency = InconsistencyTrace.createRepairedInconsistency(introducedValidationError, false);
 	}
 	
@@ -105,7 +105,7 @@ public class InconsistencyAnalysis {
 
 		// Explore repairs (undos):
 		List<Set<Change>> repairSteps = new ArrayList<>();
-		EObject context = inconsistency.getValidationErrorIntroducedModel().getContext();
+		EObject context = inconsistency.getProblemIntroducedModel().getContextElement();
 		IConstraint constraint = inconsistency.getConsistencyRule(ValidationFacade.getConstraints(introduced));
 		
 		// TODO: Initialization of attribute values!?
@@ -149,7 +149,7 @@ public class InconsistencyAnalysis {
 
 		// Explore repairs:
 		List<Set<Change>> repairSteps = new ArrayList<>();
-		EObject context = inconsistency.getValidationErrorIntroducedModel().getContext();
+		EObject context = inconsistency.getProblemIntroducedModel().getContextElement();
 		IConstraint constraint = inconsistency.getConsistencyRule(ValidationFacade.getConstraints(introduced));
 		
 		// TODO: Initialization of attribute values!?
