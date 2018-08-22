@@ -21,7 +21,7 @@ import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.historymodel.History;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
 import org.sidiff.validation.constraint.api.util.Validation;
@@ -73,11 +73,11 @@ public class EvaluationUtil {
 		return eObjectList;
 	}
 	
-	public static ValidationError getCorrespondingValidationError(ValidationError validationError, Version model) {
+	public static Problem getCorrespondingProblem(Problem validationError, Version model) {
 		
-		for(ValidationError nextValidationError : model.getValidationErrors()) {
-			if (equalsValidation(validationError, nextValidationError)) {
-				return nextValidationError;
+		for(Problem nextProblem : model.getProblems()) {
+			if (equalsValidation(validationError, nextProblem)) {
+				return nextProblem;
 			}
 		}
 		
@@ -85,7 +85,7 @@ public class EvaluationUtil {
 	}
 	
 	public static IConstraint getConsistencyRule(
-			ValidationError validationError, List<IConstraint> consistencyRules) {
+			Problem validationError, List<IConstraint> consistencyRules) {
 		
 		for (IConstraint consistencyRule : consistencyRules) {
 			if (getValidationID(consistencyRule).equalsIgnoreCase(getValidationID(validationError))) {
@@ -96,7 +96,7 @@ public class EvaluationUtil {
 		return null;
 	}
 	
-	public static <V extends Validation> V getValidation(Collection<V> validations, ValidationError inconsistency) {
+	public static <V extends Validation> V getValidation(Collection<V> validations, Problem inconsistency) {
 		for (V validation : validations) {
 			if (equalsValidation(validation, inconsistency)) {
 				return validation;
@@ -105,11 +105,11 @@ public class EvaluationUtil {
 		return null;
 	}
 	
-	public static List<ValidationError> getAllUniqueValidations(History history) {
-		List<ValidationError> validations = new ArrayList<>();
+	public static List<Problem> getAllUniqueValidations(History history) {
+		List<Problem> validations = new ArrayList<>();
 		
 		for (Version version : history.getVersions()) {
-			for (ValidationError validation : version.getValidationErrors()) {
+			for (Problem validation : version.getProblems()) {
 				
 				// Is new validation error?
 				if (!containsValidation(validations, validation)) {
@@ -121,11 +121,11 @@ public class EvaluationUtil {
 		return validations;
 	}
 	
-	public static List<ValidationError> getIntroducedAndResolvedUniqueValidations(History history) {
-		List<ValidationError> validations = new ArrayList<>();
+	public static List<Problem> getIntroducedAndResolvedUniqueValidations(History history) {
+		List<Problem> validations = new ArrayList<>();
 		
 		for (Version version : history.getVersions()) {
-			for (ValidationError validation : version.getValidationErrors()) {
+			for (Problem validation : version.getProblems()) {
 				if ((validation.getIntroducedIn() != null) && (validation.getResolvedIn() != null)) {
 					
 					// Is new validation error?
@@ -139,13 +139,13 @@ public class EvaluationUtil {
 		return validations;
 	}
 	
-	public static Set<ValidationError> getSupportedValidations(
-			List<ValidationError> inconsistenciesAll, List<IConstraint> consistencyRules) {
+	public static Set<Problem> getSupportedValidations(
+			List<Problem> inconsistenciesAll, List<IConstraint> consistencyRules) {
 		
-		Set<ValidationError> inconsistenciesSupported = new HashSet<>();
+		Set<Problem> inconsistenciesSupported = new HashSet<>();
 		
 		for (IConstraint constraint : consistencyRules) {
-			for (ValidationError validation : inconsistenciesAll) {
+			for (Problem validation : inconsistenciesAll) {
 				if (getValidationID(validation).equalsIgnoreCase(constraint.getName())) {
 					inconsistenciesSupported.add(validation);
 				}
@@ -155,8 +155,8 @@ public class EvaluationUtil {
 		return inconsistenciesSupported;
 	}
 	
-	public static ValidationError getEqualValidation(List<ValidationError> validations, ValidationError validation) {
-		for (ValidationError containedValidation : validations) {
+	public static Problem getEqualValidation(List<Problem> validations, Problem validation) {
+		for (Problem containedValidation : validations) {
 			if (equalsValidation(containedValidation, validation)) {
 				return containedValidation;
 			}
@@ -164,8 +164,8 @@ public class EvaluationUtil {
 		return null;
 	}
 	
-	public static boolean containsValidation(List<ValidationError> validations, ValidationError validation) {
-		for (ValidationError containedValidation : validations) {
+	public static boolean containsValidation(List<Problem> validations, Problem validation) {
+		for (Problem containedValidation : validations) {
 			if (equalsValidation(containedValidation, validation)) {
 				return true;
 			}
@@ -173,14 +173,14 @@ public class EvaluationUtil {
 		return false;
 	}
 	
-	public static boolean equalsValidation(ValidationError validationA, ValidationError validationB) {
+	public static boolean equalsValidation(Problem validationA, Problem validationB) {
 		
 		if ((validationA != null) && (validationB != null)) {
 			if (validationA.getIntroducedIn() == validationB.getIntroducedIn()) {
 				if (validationA.getResolvedIn() == validationB.getResolvedIn()) {
 					if (getValidationID(validationA).equalsIgnoreCase(getValidationID(validationB))) {
-						EObject invalidElementA = validationA.getContext();
-						EObject invalidElementB = validationB.getContext();
+						EObject invalidElementA = validationA.getContextElement();
+						EObject invalidElementB = validationB.getContextElement();
 						
 						if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
 							return true;
@@ -192,11 +192,11 @@ public class EvaluationUtil {
 		return false;
 	}
 	
-	public static boolean equalsValidation(Validation validationA, ValidationError validationB) {
+	public static boolean equalsValidation(Validation validationA, Problem validationB) {
 		
 		if (getValidationID(validationA.getRule()).equalsIgnoreCase(getValidationID(validationB))) {
 			EObject invalidElementA = validationA.getContext();
-			EObject invalidElementB = validationB.getContext();
+			EObject invalidElementB = validationB.getContextElement();
 
 			if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
 				return true;
@@ -214,11 +214,11 @@ public class EvaluationUtil {
 		return getValidationID(validation.getName());
 	}
 	
-	public static String getValidationID(ValidationError validation) {
+	public static String getValidationID(Problem validation) {
 		return getValidationID(validation.getName());
 	}
 	
-	public static Version getPrecessorRevision(Version version) {
+	public static Version getPredecessorRevision(Version version) {
 		History history = (History) version.eContainer();
 		int index = history.getVersions().indexOf(version);
 

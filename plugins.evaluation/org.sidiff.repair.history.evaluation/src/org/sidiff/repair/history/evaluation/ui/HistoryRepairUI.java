@@ -31,7 +31,7 @@ import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.historymodel.History;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.repair.api.RepairJob;
@@ -99,9 +99,9 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 			historyInconsistenciesViewer.addDoubleClickListener(event -> {
 				Object selection = ((StructuredSelection) event.getSelection()).getFirstElement();
 
-				if (selection instanceof ValidationError) {
+				if (selection instanceof Problem) {
 					clearResults();
-					ValidationError validationError = (ValidationError) selection;
+					Problem validationError = (Problem) selection;
 					getApplication().repairInconsistency(validationError);
 					
 					try {
@@ -213,8 +213,8 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 				
 				if (selection instanceof IStructuredSelection) {
 					for (Object selected : ((IStructuredSelection) selection).toList()) {
-						if (selected instanceof ValidationError) {
-							getApplication().learnEditRule((ValidationError) selected);
+						if (selected instanceof Problem) {
+							getApplication().learnEditRule((Problem) selected);
 						}
 					}
 				}

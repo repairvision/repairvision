@@ -19,7 +19,7 @@ import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.util.TechnicalDifferenceBuilderUtil;
 import org.sidiff.historymodel.History;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
@@ -139,7 +139,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 		calculation.schedule();
 	}
 	
-	public void repairInconsistency(ValidationError selection) {
+	public void repairInconsistency(Problem selection) {
 		
 		calculation = new Job("Calculate Repairs") {
 
@@ -185,7 +185,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 		calculation.schedule();
 	}
 	
-	public void learnEditRule(ValidationError selection) {
+	public void learnEditRule(Problem selection) {
 		
 		calculation = new Job("Learn Edit Rule") {
 			

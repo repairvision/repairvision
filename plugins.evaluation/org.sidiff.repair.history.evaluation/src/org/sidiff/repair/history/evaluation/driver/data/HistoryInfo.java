@@ -11,7 +11,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.historymodel.History;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.validation.constraint.api.ValidationFacade;
@@ -21,11 +21,11 @@ public class HistoryInfo {
 
 	protected History history;
 	
-	protected List<ValidationError> allUniqueInconsistencies;
+	protected List<Problem> allUniqueInconsistencies;
 	
-	protected List<ValidationError> introducedAndResolvedUniqueInconsistencies;
+	protected List<Problem> introducedAndResolvedUniqueInconsistencies;
 	
-	protected List<ValidationError> supportedIntroducedAndResolvedUniqueInconsistencies;
+	protected List<Problem> supportedIntroducedAndResolvedUniqueInconsistencies;
 	
 	protected List<IConstraint> supportedConsistencyRules;
 	
@@ -45,7 +45,7 @@ public class HistoryInfo {
 		return history;
 	}
 
-	public List<ValidationError> getAllUniqueInconsistencies() {
+	public List<Problem> getAllUniqueInconsistencies() {
 		
 		if (allUniqueInconsistencies == null) {
 			allUniqueInconsistencies = EvaluationUtil.getAllUniqueValidations(history);
@@ -54,7 +54,7 @@ public class HistoryInfo {
 		return allUniqueInconsistencies;
 	}
 
-	public List<ValidationError> getIntroducedAndResolvedUniqueInconsistencies() {
+	public List<Problem> getIntroducedAndResolvedUniqueInconsistencies() {
 		
 		if (introducedAndResolvedUniqueInconsistencies == null) {
 			introducedAndResolvedUniqueInconsistencies = EvaluationUtil
@@ -64,16 +64,16 @@ public class HistoryInfo {
 		return introducedAndResolvedUniqueInconsistencies;
 	}
 	
-	public List<ValidationError> getSupportedIntroducedAndResolvedUniqueInconsistencies() {
+	public List<Problem> getSupportedIntroducedAndResolvedUniqueInconsistencies() {
 		
 		if (supportedIntroducedAndResolvedUniqueInconsistencies == null) {
-			Set<ValidationError> supported = EvaluationUtil.getSupportedValidations(
+			Set<Problem> supported = EvaluationUtil.getSupportedValidations(
 					getIntroducedAndResolvedUniqueInconsistencies(), getSupportedConsistencyRules());
 			
 			// Preserve ordering:
 			supportedIntroducedAndResolvedUniqueInconsistencies = new ArrayList<>();
 			
-			for (ValidationError validationError : getIntroducedAndResolvedUniqueInconsistencies()) {
+			for (Problem validationError : getIntroducedAndResolvedUniqueInconsistencies()) {
 				if (supported.contains(validationError)) {
 					supportedIntroducedAndResolvedUniqueInconsistencies.add(validationError);
 				}
@@ -101,9 +101,9 @@ public class HistoryInfo {
 		if (repairedInconsistencies == null) {
 			repairedInconsistencies = new ArrayList<>();
 			
-			for (ValidationError introducedValidationError : getSupportedIntroducedAndResolvedUniqueInconsistencies()) {
+			for (Problem introducedProblem : getSupportedIntroducedAndResolvedUniqueInconsistencies()) {
 				InconsistencyTrace repaired = InconsistencyTrace
-						.createRepairedInconsistency(introducedValidationError, true);
+						.createRepairedInconsistency(introducedProblem, true);
 				repairedInconsistencies.add(repaired);
 			}
 			return repairedInconsistencies;
@@ -160,7 +160,7 @@ public class HistoryInfo {
 		versionsWithInconsistencies = 0;
 		
 		for (Version version : history.getVersions()) {
-			if (version.getValidationErrors().size() > 0) {
+			if (version.getProblems().size() > 0) {
 				++versionsWithInconsistencies;
 				
 				for (Iterator<EObject> iterator = version.getModel().getAllContents(); iterator.hasNext();) {

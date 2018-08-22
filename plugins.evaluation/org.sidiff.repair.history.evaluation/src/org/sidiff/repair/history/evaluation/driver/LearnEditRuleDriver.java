@@ -35,7 +35,7 @@ public class LearnEditRuleDriver {
 				repaired.getModelCurrent(), repaired.getModelHistorical(), differenceSettings);
 		
 		// Validation:
-		EObject actualInvalidContext = repaired.getValidationErrorCurrentModel().getContext();
+		EObject actualInvalidContext = repaired.getProblemCurrentModel().getContextElement();
 		IConstraint constraint = repaired.getConsistencyRule(history.getSupportedConsistencyRules());
 
 		EObject historicalInvalidContext = actualToHistorical.getCorrespondingObjectInB(actualInvalidContext);

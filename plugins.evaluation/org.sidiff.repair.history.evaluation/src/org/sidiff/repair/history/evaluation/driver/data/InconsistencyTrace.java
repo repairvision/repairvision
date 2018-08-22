@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.consistency.common.ui.util.InfoConsole;
-import org.sidiff.historymodel.ValidationError;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
@@ -21,14 +21,14 @@ public class InconsistencyTrace {
 	 */
 	private Version modelVersionIntroduced;
 	
-	private ValidationError validationErrorIntroducedModel;
+	private Problem validationErrorIntroducedModel;
 	
 	/**
 	 * The current model.
 	 */
 	private Version modelVersionCurrent;
 	
-	private ValidationError validationErrorCurrentModel;
+	private Problem validationErrorCurrentModel;
 	
 	/**
 	 * Model where the inconsistency were resolved.
@@ -36,24 +36,24 @@ public class InconsistencyTrace {
 	private Version modelVersionResolved;
 	
 	public static InconsistencyTrace createRepairedInconsistency(
-			ValidationError introducedValidationError, boolean completeOnly) {
+			Problem introducedProblem, boolean completeOnly) {
 		
 		InconsistencyTrace trace = new InconsistencyTrace();
-		trace.setValidationErrorIntroducedModel(introducedValidationError);
+		trace.setProblemIntroducedModel(introducedProblem);
 		
-		Version versionIntroduced = introducedValidationError.getIntroducedIn();
+		Version versionIntroduced = introducedProblem.getIntroducedIn();
 		trace.setModelVersionIntroduced(versionIntroduced);
 		
 		if (trace.getModelIntroduced() != null) {
-			Version versionHistorical = EvaluationUtil.getPrecessorRevision(versionIntroduced);
+			Version versionHistorical = EvaluationUtil.getPredecessorRevision(versionIntroduced);
 			trace.setModelVersionHistorical(versionHistorical);
 			
 			if (versionHistorical != null) {
-				Version versionResolved = introducedValidationError.getResolvedIn();
+				Version versionResolved = introducedProblem.getResolvedIn();
 				trace.setModelVersionResolved(versionResolved);
 				
 				if (versionResolved != null) {
-					Version versionCurrent = EvaluationUtil.getPrecessorRevision(versionResolved);
+					Version versionCurrent = EvaluationUtil.getPredecessorRevision(versionResolved);
 					trace.setModelVersionCurrent(versionCurrent);
 				}
 			}
@@ -118,11 +118,11 @@ public class InconsistencyTrace {
 		this.modelVersionIntroduced = modelVersionIntroduced;
 	}
 	
-	public ValidationError getValidationErrorIntroducedModel() {
+	public Problem getProblemIntroducedModel() {
 		return validationErrorIntroducedModel;
 	}
 	
-	public void setValidationErrorIntroducedModel(ValidationError validationErrorIntroducedModel) {
+	public void setProblemIntroducedModel(Problem validationErrorIntroducedModel) {
 		this.validationErrorIntroducedModel = validationErrorIntroducedModel;
 	}
 	
@@ -142,10 +142,10 @@ public class InconsistencyTrace {
 	public void setModelVersionCurrent(Version modelVersionCurrent) {
 		this.modelVersionCurrent = modelVersionCurrent;
 		this.validationErrorCurrentModel = EvaluationUtil.getEqualValidation(
-				modelVersionCurrent.getValidationErrors(), validationErrorIntroducedModel);
+				modelVersionCurrent.getProblems(), validationErrorIntroducedModel);
 	}
 	
-	public ValidationError getValidationErrorCurrentModel() {
+	public Problem getProblemCurrentModel() {
 		return validationErrorCurrentModel;
 	}
 	
