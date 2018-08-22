@@ -10,12 +10,16 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.historymodel.History;
@@ -113,7 +117,15 @@ public class EcoreHistoryReduceApplication implements IApplication {
 				// Store history:
 				Resource historyResource = history.eResource();
 				historyResource.setURI(toTargetURI(historyResource.getURI(), true));
-				historyResource.save(Collections.emptyMap());
+				
+				Map<String, Object> options = new HashMap<String, Object>();
+				options.put(XMIResource.OPTION_URI_HANDLER, new URIHandlerImpl() {
+					public URI deresolve(URI uri) {
+						return super.deresolve(toTargetURI(uri, false));
+					}
+				});
+				
+				historyResource.save(options);
 			}
 		}
 		
