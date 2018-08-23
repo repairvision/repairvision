@@ -404,6 +404,7 @@ public class ProblemItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(HistoryModelPackage.Literals.PROBLEM__INVALID_ELEMENTS);
 			childrenFeatures.add(HistoryModelPackage.Literals.PROBLEM__MODIFICATIONS);
+			childrenFeatures.add(HistoryModelPackage.Literals.PROBLEM__ANNOTATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -461,25 +462,10 @@ public class ProblemItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		Problem validationError = (Problem) object;
-		StringBuilder label = new StringBuilder(validationError.getMessage());
-		
-		if (label == null || label.length() == 0) {
-			label.append(getString("_UI_Version_problems_feature"));
-		} else {
-			label.insert(0, "Problem: ").toString();
-		}
-		
-		if (validationError.getIntroducedIn() == validationError.getVersion()) {
-			label.insert(0, "[Introduced] ");
-		}
-		
-		if (validationError.getResolvedIn() == validationError.getVersion().getSuccessor()) {
-			label.insert(0, "[Resolved] ");
-		}
-		
-
-		return label.toString();
+		String label = ((Problem)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_Problem_type") :
+			getString("_UI_Problem_type") + " " + label;
 	}
 	
 
@@ -504,6 +490,7 @@ public class ProblemItemProvider
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case HistoryModelPackage.PROBLEM__MODIFICATIONS:
+			case HistoryModelPackage.PROBLEM__ANNOTATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -525,6 +512,11 @@ public class ProblemItemProvider
 			(createChildParameter
 				(HistoryModelPackage.Literals.PROBLEM__MODIFICATIONS,
 				 HistoryModelFactory.eINSTANCE.createChangeSet()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(HistoryModelPackage.Literals.PROBLEM__ANNOTATIONS,
+				 HistoryModelFactory.eINSTANCE.createAnnotation()));
 	}
 
 	/**

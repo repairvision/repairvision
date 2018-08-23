@@ -162,6 +162,29 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.sidiff.historymodel.Annotation} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected AnnotationItemProvider annotationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.sidiff.historymodel.Annotation}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createAnnotationAdapter() {
+		if (annotationItemProvider == null) {
+			annotationItemProvider = new AnnotationItemProvider(this);
+		}
+
+		return annotationItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -264,6 +287,7 @@ public class HistoryModelItemProviderAdapterFactory extends HistoryModelAdapterF
 		if (versionItemProvider != null) versionItemProvider.dispose();
 		if (problemItemProvider != null) problemItemProvider.dispose();
 		if (changeSetItemProvider != null) changeSetItemProvider.dispose();
+		if (annotationItemProvider != null) annotationItemProvider.dispose();
 	}
 
 }
