@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.sidiff.historymodel.Annotation;
 import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.HistoryModelPackage;
 import org.sidiff.historymodel.ModificationClassification;
@@ -46,6 +47,7 @@ import org.sidiff.historymodel.Version;
  *   <li>{@link org.sidiff.historymodel.impl.ProblemImpl#getContextElement <em>Context Element</em>}</li>
  *   <li>{@link org.sidiff.historymodel.impl.ProblemImpl#getModifications <em>Modifications</em>}</li>
  *   <li>{@link org.sidiff.historymodel.impl.ProblemImpl#getModificationClassification <em>Modification Classification</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.impl.ProblemImpl#getAnnotations <em>Annotations</em>}</li>
  * </ul>
  *
  * @generated
@@ -210,6 +212,16 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * @ordered
 	 */
 	protected EList<ModificationClassification> modificationClassification;
+
+	/**
+	 * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAnnotations()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Annotation> annotations;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -640,6 +652,18 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Annotation> getAnnotations() {
+		if (annotations == null) {
+			annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, HistoryModelPackage.PROBLEM__ANNOTATIONS);
+		}
+		return annotations;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -675,6 +699,8 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 				return basicSetSuccessor(null, msgs);
 			case HistoryModelPackage.PROBLEM__MODIFICATIONS:
 				return ((InternalEList<?>)getModifications()).basicRemove(otherEnd, msgs);
+			case HistoryModelPackage.PROBLEM__ANNOTATIONS:
+				return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -734,6 +760,8 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 				return getModifications();
 			case HistoryModelPackage.PROBLEM__MODIFICATION_CLASSIFICATION:
 				return getModificationClassification();
+			case HistoryModelPackage.PROBLEM__ANNOTATIONS:
+				return getAnnotations();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -782,6 +810,10 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 				getModificationClassification().clear();
 				getModificationClassification().addAll((Collection<? extends ModificationClassification>)newValue);
 				return;
+			case HistoryModelPackage.PROBLEM__ANNOTATIONS:
+				getAnnotations().clear();
+				getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -827,6 +859,9 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 			case HistoryModelPackage.PROBLEM__MODIFICATION_CLASSIFICATION:
 				getModificationClassification().clear();
 				return;
+			case HistoryModelPackage.PROBLEM__ANNOTATIONS:
+				getAnnotations().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -867,6 +902,8 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 				return modifications != null && !modifications.isEmpty();
 			case HistoryModelPackage.PROBLEM__MODIFICATION_CLASSIFICATION:
 				return modificationClassification != null && !modificationClassification.isEmpty();
+			case HistoryModelPackage.PROBLEM__ANNOTATIONS:
+				return annotations != null && !annotations.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

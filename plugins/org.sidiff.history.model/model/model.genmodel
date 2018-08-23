@@ -76,10 +76,15 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Problem/contextElement"/>
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Problem/modifications"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Problem/modificationClassification"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Problem/annotations"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//ChangeSet">
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ChangeSet/changes"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ChangeSet/name"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//Annotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Annotation/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Annotation/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

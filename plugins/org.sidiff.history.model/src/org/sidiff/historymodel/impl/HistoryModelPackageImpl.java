@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.historymodel.Annotation;
 import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
@@ -60,6 +61,13 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * @generated
 	 */
 	private EClass changeSetEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass annotationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -466,6 +474,15 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getProblem_Annotations() {
+		return (EReference)problemEClass.getEStructuralFeatures().get(14);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getChangeSet() {
 		return changeSetEClass;
 	}
@@ -486,6 +503,33 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 */
 	public EAttribute getChangeSet_Name() {
 		return (EAttribute)changeSetEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAnnotation() {
+		return annotationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAnnotation_Key() {
+		return (EAttribute)annotationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAnnotation_Value() {
+		return (EAttribute)annotationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -588,10 +632,15 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		createEReference(problemEClass, PROBLEM__CONTEXT_ELEMENT);
 		createEReference(problemEClass, PROBLEM__MODIFICATIONS);
 		createEAttribute(problemEClass, PROBLEM__MODIFICATION_CLASSIFICATION);
+		createEReference(problemEClass, PROBLEM__ANNOTATIONS);
 
 		changeSetEClass = createEClass(CHANGE_SET);
 		createEReference(changeSetEClass, CHANGE_SET__CHANGES);
 		createEAttribute(changeSetEClass, CHANGE_SET__NAME);
+
+		annotationEClass = createEClass(ANNOTATION);
+		createEAttribute(annotationEClass, ANNOTATION__KEY);
+		createEAttribute(annotationEClass, ANNOTATION__VALUE);
 
 		// Create enums
 		problemSeverityEEnum = createEEnum(PROBLEM_SEVERITY);
@@ -684,10 +733,15 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		initEReference(getProblem_ContextElement(), ecorePackage.getEObject(), null, "contextElement", null, 0, 1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getProblem_Modifications(), this.getChangeSet(), null, "modifications", null, 0, -1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProblem_ModificationClassification(), this.getModificationClassification(), "modificationClassification", "UNKNOWN", 0, -1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProblem_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(changeSetEClass, ChangeSet.class, "ChangeSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getChangeSet_Changes(), theSymmetricPackage.getChange(), null, "changes", null, 0, -1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getChangeSet_Name(), theEcorePackage.getEString(), "name", null, 0, 1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAnnotation_Key(), ecorePackage.getEString(), "key", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAnnotation_Value(), theEcorePackage.getEString(), "value", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(problemSeverityEEnum, ProblemSeverity.class, "ProblemSeverity");

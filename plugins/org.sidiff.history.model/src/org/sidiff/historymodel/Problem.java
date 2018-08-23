@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.sidiff.historymodel.Problem#getContextElement <em>Context Element</em>}</li>
  *   <li>{@link org.sidiff.historymodel.Problem#getModifications <em>Modifications</em>}</li>
  *   <li>{@link org.sidiff.historymodel.Problem#getModificationClassification <em>Modification Classification</em>}</li>
+ *   <li>{@link org.sidiff.historymodel.Problem#getAnnotations <em>Annotations</em>}</li>
  * </ul>
  *
  * @see org.sidiff.historymodel.HistoryModelPackage#getProblem()
@@ -359,5 +360,21 @@ public interface Problem extends EObject {
 	 * @generated
 	 */
 	EList<ModificationClassification> getModificationClassification();
+
+	/**
+	 * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+	 * The list contents are of type {@link org.sidiff.historymodel.Annotation}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Annotations</em>' containment reference list.
+	 * @see org.sidiff.historymodel.HistoryModelPackage#getProblem_Annotations()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Annotation> getAnnotations();
 
 } // Problem

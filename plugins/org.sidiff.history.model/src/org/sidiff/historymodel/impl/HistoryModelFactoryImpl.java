@@ -62,6 +62,7 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 			case HistoryModelPackage.VERSION: return createVersion();
 			case HistoryModelPackage.PROBLEM: return createProblem();
 			case HistoryModelPackage.CHANGE_SET: return createChangeSet();
+			case HistoryModelPackage.ANNOTATION: return createAnnotation();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -147,6 +148,16 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	public ChangeSet createChangeSet() {
 		ChangeSetImpl changeSet = new ChangeSetImpl();
 		return changeSet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Annotation createAnnotation() {
+		AnnotationImpl annotation = new AnnotationImpl();
+		return annotation;
 	}
 
 	/**

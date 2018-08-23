@@ -61,6 +61,8 @@
         eType="#//ChangeSet" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="modificationClassification"
         upperBound="-1" eType="#//ModificationClassification" defaultValueLiteral="UNKNOWN"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
+        eType="#//Annotation" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ChangeSet">
     <eStructuralFeatures xsi:type="ecore:EReference" name="changes" upperBound="-1"
@@ -87,4 +89,8 @@
     <eLiterals name="OVERWRITE" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Resource" instanceClassName="org.eclipse.emf.ecore.resource.Resource"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Annotation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

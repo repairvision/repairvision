@@ -405,13 +405,22 @@ public interface HistoryModelPackage extends EPackage {
 	int PROBLEM__MODIFICATION_CLASSIFICATION = 13;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROBLEM__ANNOTATIONS = 14;
+
+	/**
 	 * The number of structural features of the '<em>Problem</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROBLEM_FEATURE_COUNT = 14;
+	int PROBLEM_FEATURE_COUNT = 15;
 
 	/**
 	 * The number of operations of the '<em>Problem</em>' class.
@@ -469,6 +478,52 @@ public interface HistoryModelPackage extends EPackage {
 	int CHANGE_SET_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.sidiff.historymodel.impl.AnnotationImpl <em>Annotation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.historymodel.impl.AnnotationImpl
+	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getAnnotation()
+	 * @generated
+	 */
+	int ANNOTATION = 4;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTATION__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTATION__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Annotation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTATION_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Annotation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTATION_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.sidiff.historymodel.ProblemSeverity <em>Problem Severity</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -476,7 +531,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getProblemSeverity()
 	 * @generated
 	 */
-	int PROBLEM_SEVERITY = 4;
+	int PROBLEM_SEVERITY = 5;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.historymodel.ModelStatus <em>Model Status</em>}' enum.
@@ -486,7 +541,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getModelStatus()
 	 * @generated
 	 */
-	int MODEL_STATUS = 5;
+	int MODEL_STATUS = 6;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.historymodel.ModificationClassification <em>Modification Classification</em>}' enum.
@@ -496,7 +551,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getModificationClassification()
 	 * @generated
 	 */
-	int MODIFICATION_CLASSIFICATION = 6;
+	int MODIFICATION_CLASSIFICATION = 7;
 
 	/**
 	 * The meta object id for the '<em>Resource</em>' data type.
@@ -506,7 +561,7 @@ public interface HistoryModelPackage extends EPackage {
 	 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getResource()
 	 * @generated
 	 */
-	int RESOURCE = 7;
+	int RESOURCE = 8;
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.historymodel.History <em>History</em>}'.
@@ -873,6 +928,17 @@ public interface HistoryModelPackage extends EPackage {
 	EAttribute getProblem_ModificationClassification();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.historymodel.Problem#getAnnotations <em>Annotations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Annotations</em>'.
+	 * @see org.sidiff.historymodel.Problem#getAnnotations()
+	 * @see #getProblem()
+	 * @generated
+	 */
+	EReference getProblem_Annotations();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.historymodel.ChangeSet <em>Change Set</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -903,6 +969,38 @@ public interface HistoryModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getChangeSet_Name();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.historymodel.Annotation <em>Annotation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Annotation</em>'.
+	 * @see org.sidiff.historymodel.Annotation
+	 * @generated
+	 */
+	EClass getAnnotation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.Annotation#getKey <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see org.sidiff.historymodel.Annotation#getKey()
+	 * @see #getAnnotation()
+	 * @generated
+	 */
+	EAttribute getAnnotation_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.historymodel.Annotation#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see org.sidiff.historymodel.Annotation#getValue()
+	 * @see #getAnnotation()
+	 * @generated
+	 */
+	EAttribute getAnnotation_Value();
 
 	/**
 	 * Returns the meta object for enum '{@link org.sidiff.historymodel.ProblemSeverity <em>Problem Severity</em>}'.
@@ -1247,6 +1345,14 @@ public interface HistoryModelPackage extends EPackage {
 		EAttribute PROBLEM__MODIFICATION_CLASSIFICATION = eINSTANCE.getProblem_ModificationClassification();
 
 		/**
+		 * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROBLEM__ANNOTATIONS = eINSTANCE.getProblem_Annotations();
+
+		/**
 		 * The meta object literal for the '{@link org.sidiff.historymodel.impl.ChangeSetImpl <em>Change Set</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1271,6 +1377,32 @@ public interface HistoryModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CHANGE_SET__NAME = eINSTANCE.getChangeSet_Name();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.historymodel.impl.AnnotationImpl <em>Annotation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.historymodel.impl.AnnotationImpl
+		 * @see org.sidiff.historymodel.impl.HistoryModelPackageImpl#getAnnotation()
+		 * @generated
+		 */
+		EClass ANNOTATION = eINSTANCE.getAnnotation();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ANNOTATION__KEY = eINSTANCE.getAnnotation_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ANNOTATION__VALUE = eINSTANCE.getAnnotation_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.historymodel.ProblemSeverity <em>Problem Severity</em>}' enum.
