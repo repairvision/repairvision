@@ -458,14 +458,29 @@ public class ProblemItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Problem)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Problem_type") :
-			getString("_UI_Problem_type") + " " + label;
+		Problem validationError = (Problem) object;
+		StringBuilder label = new StringBuilder(validationError.getMessage());
+		
+		if (label == null || label.length() == 0) {
+			label.append(getString("_UI_Version_problems_feature"));
+		} else {
+			label.insert(0, "Problem: ").toString();
+		}
+		
+		if (validationError.getIntroducedIn() == validationError.getVersion()) {
+			label.insert(0, "[Introduced] ");
+		}
+		
+		if (validationError.getResolvedIn() == validationError.getVersion().getSuccessor()) {
+			label.insert(0, "[Resolved] ");
+		}
+		
+
+		return label.toString();
 	}
 	
 
