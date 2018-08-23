@@ -12,7 +12,6 @@ import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
-import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 
 public class OpenModifiedModelVersions extends AbstractHandler {
 
@@ -26,9 +25,9 @@ public class OpenModifiedModelVersions extends AbstractHandler {
 			if (selected instanceof Problem) {
 				Problem inconsistency = (Problem) selected;
 				
-				Version beforeIntroduced = EvaluationUtil.getPredecessorRevision(inconsistency.getIntroducedIn());
+				Version beforeIntroduced = inconsistency.getIntroducedIn().getPredecessor();
 				Version introduced = inconsistency.getIntroducedIn();
-				Version beforeResolved = EvaluationUtil.getPredecessorRevision(inconsistency.getResolvedIn());
+				Version beforeResolved = inconsistency.getResolvedIn().getPredecessor();
 				Version resolved = inconsistency.getResolvedIn();
 				
 				if (beforeIntroduced != null) {

@@ -17,18 +17,17 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.historymodel.presentation.util.HistoryModelEditorTools;
-import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.api.util.ContextValidationFilter;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.common.emf.EMFUtil;
 
 public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 	
@@ -44,7 +43,7 @@ public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 				Problem inconsistency = (Problem) selected;
 				
 				if (inconsistency.isIntroduced()) {
-					Version beforeIntroduced = EvaluationUtil.getPredecessorRevision(inconsistency.getIntroducedIn());
+					Version beforeIntroduced = inconsistency.getIntroducedIn().getPredecessor();
 					Version introduced = inconsistency.getIntroducedIn();
 					
 					Resource beforeIntroducedResource = new ResourceSetImpl().getResource(getModelURI(beforeIntroduced), true);
@@ -67,7 +66,7 @@ public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 				}
 				
 				if (inconsistency.isResolved()) {
-					Version beforeResolved = EvaluationUtil.getPredecessorRevision(inconsistency.getResolvedIn());
+					Version beforeResolved = inconsistency.getResolvedIn().getPredecessor();
 					Version resolved = inconsistency.getResolvedIn();
 					
 					Resource beforeResolvedResource = new ResourceSetImpl().getResource(getModelURI(beforeResolved), true);

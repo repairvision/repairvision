@@ -9,7 +9,6 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.historymodel.presentation.util.HistoryModelEditorTools;
-import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 
 public class ShowEditStepsOnResourceHandler extends AbstractHandler {
 
@@ -24,14 +23,14 @@ public class ShowEditStepsOnResourceHandler extends AbstractHandler {
 				Problem inconsistency = (Problem) selected;
 				
 				if (inconsistency.isIntroduced()) {
-					Version beforeIntroduced = EvaluationUtil.getPredecessorRevision(inconsistency.getIntroducedIn());
+					Version beforeIntroduced = inconsistency.getIntroducedIn().getPredecessor();
 					Version introduced = inconsistency.getIntroducedIn();
 					
 					HistoryModelEditorTools.compare(beforeIntroduced.getModel(), introduced.getModel());
 				}
 				
 				if (inconsistency.isResolved()) {
-					Version beforeResolved = EvaluationUtil.getPredecessorRevision(inconsistency.getResolvedIn());
+					Version beforeResolved = inconsistency.getResolvedIn().getPredecessor();
 					Version resolved = inconsistency.getResolvedIn();
 					
 					HistoryModelEditorTools.compare(beforeResolved.getModel(), resolved.getModel());
