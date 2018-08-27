@@ -11,9 +11,7 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -87,36 +85,6 @@ public class ComplementUtil {
 		}
 		
 		return values;
-	}
-	
-	public static Map<Parameter, List<Attribute>> getParameterTargets(Rule editRule) {
-		Map<Parameter, List<Attribute>> targets = new HashMap<>();
-		
-		for (Node lhsNode : editRule.getLhs().getNodes()) {
-			for (Attribute lhsAttribute : lhsNode.getAttributes()) {
-				Parameter parameter = editRule.getParameter(lhsAttribute.getValue());
-				
-				if (parameter != null) {
-					List<Attribute> attributeTargets = targets.getOrDefault(parameter, new ArrayList<>());
-					attributeTargets.add(lhsAttribute);
-					targets.put(parameter, attributeTargets);
-				}
-			}
-		}
-		
-		for (Node rhsNode : editRule.getRhs().getNodes()) {
-			for (Attribute rhsAttribute : rhsNode.getAttributes()) {
-				Parameter parameter = editRule.getParameter(rhsAttribute.getValue());
-				
-				if (parameter != null) {
-					List<Attribute> attributeTargets = targets.getOrDefault(parameter, new ArrayList<>());
-					attributeTargets.add(rhsAttribute);
-					targets.put(parameter, attributeTargets);
-				}
-			}
-		}
-		
-		return targets;
 	}
 	
 	/**
