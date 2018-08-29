@@ -17,7 +17,6 @@ import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
@@ -27,6 +26,7 @@ import org.sidiff.editrule.recognition.pattern.graph.ChangePatternAttributeValue
 import org.sidiff.editrule.recognition.pattern.graph.ChangePatternRemoveObject;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePatternRemoveReference;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
 import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
 import org.sidiff.repair.complement.matching.RecognitionMatch;
@@ -36,12 +36,12 @@ import org.sidiff.repair.complement.matching.RecognitionParameterMatch;
 public class Edit2RecognitionMatch {
 
 	/**
-	 * The difference between model A and B.
+	 * The revision between model A and B.
 	 */
-	private SymmetricDifference difference;
+	private IRevision revision;
 	
-	public Edit2RecognitionMatch(SymmetricDifference difference) {
-		this.difference = difference;
+	public Edit2RecognitionMatch(IRevision revision) {
+		this.revision = revision;
 	}
 	
 	public List<RecognitionMatch> createEditRuleMatch(RecognitionPattern recognitionPattern, IMatching matching) {
@@ -98,8 +98,8 @@ public class Edit2RecognitionMatch {
 					
 					// Transfer context to model A if possible:
 					// NOTE: The context might have been first created in model B!
-					createMatch.setSrcModelAElement(difference.getCorrespondingObjectInA(change.getSrc()));
-					createMatch.setTgtModelAElement(difference.getCorrespondingObjectInA(change.getTgt()));
+					createMatch.setSrcModelAElement(revision.getDifference().getCorrespondingObjectInA(change.getSrc()));
+					createMatch.setTgtModelAElement(revision.getDifference().getCorrespondingObjectInA(change.getTgt()));
 					
 					findParameters(parameters, editRule, eoHenshinEdge.getSource(), change.getSrc());
 					findParameters(parameters, editRule, eoHenshinEdge.getTarget(), change.getTgt());
@@ -119,8 +119,8 @@ public class Edit2RecognitionMatch {
 					
 					// Transfer context to model B if possible:
 					// NOTE: The context might have been deleted in model B!
-					deleteMatch.setSrcModelBElement(difference.getCorrespondingObjectInB(change.getSrc()));
-					deleteMatch.setTgtModelBElement(difference.getCorrespondingObjectInB(change.getTgt()));
+					deleteMatch.setSrcModelBElement(revision.getDifference().getCorrespondingObjectInB(change.getSrc()));
+					deleteMatch.setTgtModelBElement(revision.getDifference().getCorrespondingObjectInB(change.getTgt()));
 					
 					findParameters(parameters, editRule, eoHenshinEdge.getSource(), change.getSrc());
 					findParameters(parameters, editRule, eoHenshinEdge.getTarget(), change.getTgt());

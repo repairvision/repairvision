@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
@@ -18,9 +17,9 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTable;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.RecognitionEngine;
 import org.sidiff.editrule.recognition.scope.RepairScope;
+import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.complement.construction.ComplementConstructor;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
@@ -43,24 +42,14 @@ public class ComplementFinderEngine {
 	protected ComplementConstructor complementConstructor;
 	
 	/**
-	 * The historic model.
-	 */
-	protected Resource modelAResource;
-	
-	/**
-	 * The actual model.
-	 */
-	protected Resource modelBResource;
-	
-	/**
-	 * The difference between model A and B.
-	 */
-	protected SymmetricDifference difference;
-	
-	/**
 	 * The (Henshin) engine which applies the rules.
 	 */
 	protected EngineImpl engine;
+	
+	/**
+	 * The revision which introduces an inconsistency.
+	 */
+	protected IRevision revision;
 
 	/**
 	 * The working graph, i.e. the actual version of the model.
@@ -85,25 +74,17 @@ public class ComplementFinderEngine {
 	 * @param difference
 	 *            The difference between model A and B.
 	 */
-	public ComplementFinderEngine(SymmetricDifference difference, 
-			Resource modelAResource, Resource modelBResource, 
-			EGraph graphModelB) {
-		
-		assert (modelAResource.getResourceSet() == modelBResource.getResourceSet()) 
-		&& (modelBResource.getResourceSet() == difference.eResource().getResourceSet());
-		
-		this.difference = difference;
-		this.modelAResource = modelAResource;
-		this.modelBResource = modelBResource;
+	public ComplementFinderEngine(IRevision revision, EGraph graphModelB) {
+		this.revision = revision;
 		this.graphModelB = graphModelB;
 	}
 	
 	public void start() {
 		this.partialEditRuleRecognizer = new RecognitionEngine();
-		this.partialEditRuleRecognizer.initialize(difference);
+		this.partialEditRuleRecognizer.initialize(revision);
 		this.partialEditRuleRecognizer.start();
 		
-		this.matchConverter = new Edit2RecognitionMatch(difference);
+		this.matchConverter = new Edit2RecognitionMatch(revision);
 		
 		this.complementConstructor = new ComplementConstructor();
 		this.engine = new EngineImpl();
