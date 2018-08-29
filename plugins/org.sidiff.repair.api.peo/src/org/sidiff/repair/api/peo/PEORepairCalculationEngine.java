@@ -1,125 +1,72 @@
 package org.sidiff.repair.api.peo;
 
-import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.emf.exceptions.InvalidModelException;
-import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.consistency.common.monitor.LogMonitor;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.symmetric.SymmetricFactory;
 import org.sidiff.editrule.recognition.scope.RepairActionFilter;
+import org.sidiff.history.revision.IRevision;
+import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.repair.api.IRepairPlan;
-import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
 
 public class PEORepairCalculationEngine {
 	
 	protected PEORepairSettings settings;
 	
-	protected SymmetricDifference difference;
+	protected IRevision revision;
 	
 	public PEORepairCalculationEngine(PEORepairSettings settings, Resource modelA, Resource modelB) {
 		this.settings = settings;
-		this.difference = calculateDifference(modelA, modelB);
-	}
-	
-	public PEORepairCalculationEngine(PEORepairSettings settings, SymmetricDifference difference) {
-		this.settings = settings;
-		this.difference = difference;
+		this.revision = calculateDifference(modelA, modelB);
 	}
 
-	private SymmetricDifference calculateDifference(Resource modelA, Resource modelB) {
-		
-		// Disable merge imports:
-		// FIXME: setMergeImports(true) -> Wrong technical difference for EGenericTypes!
-		settings.getDifferenceSettings().setMergeImports(false);
-//		settings.getDifferenceSettings().setScope(Scope.RESOURCE);
-		
-		// Initialize:
-		assert (modelA.getResourceSet() == modelB.getResourceSet());
-		ResourceSet differenceRSS = modelA.getResourceSet(); 
-		
-		// TODO: Create fresh resource set!?
-		// [Workaround] (Cleanup) Remove old difference:
-		for (Iterator<Resource> it = differenceRSS.getResources().iterator(); it.hasNext();) {
-			Resource res = it.next();
-			
-			if (res instanceof SymmetricDifference) {
-				it.remove();
-			}
-		}
-		
-		// Calculate difference:
-		SymmetricDifference difference = null;
+	private IRevision calculateDifference(Resource modelA, Resource modelB) {
 		
 		LogTime diffTimer = new LogTime();
-		try {
-			difference = deriveTechnicalDifference(modelA, modelB, settings.getDifferenceSettings());
-		} catch (InvalidModelException | NoCorrespondencesException e) {
-			e.printStackTrace();
-		}
+		IRevision revision = new Revision(modelA, modelB, settings.getDifferenceSettings());
 		diffTimer.stop();
-		System.out.println("Re.Vision[Difference Time]: " + diffTimer + "ms");
+		
+		System.out.println("Re.Vision[Load/Calculate Revision Time]: " + diffTimer + "ms");
 		
 		// Report:
 		if (settings.getMonitor() instanceof LogMonitor) {
 			LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
-			log.append("[Time (ms)] Calculate Difference", diffTimer);
-			log.append("Change Count (Historical->Actual)", difference.getChanges().size());
+			log.append("[Time (ms)] Load/Calculate Revision", diffTimer);
+			log.append("Change Count (Historical->Actual)", revision.getDifference().getChanges().size());
 		}
-		
-		// TODO/FIXME[Workaround]: Handle "real" empty historic models, i.e. without root element!
-		if (difference.getChanges().isEmpty()) {
-			if (difference.getModelA().getContents().size() == 1) {
-				AddObject addRoot = SymmetricFactory.eINSTANCE.createAddObject();
-				addRoot.setObj(difference.getModelB().getContents().get(0));
-				difference.getChanges().add(addRoot);
-			}
-		}
-		
-		// Create difference resource:
-		Resource differenceResource = differenceRSS.createResource(
-				RepairAPIUtil.getDifferenceURI(modelA.getURI(), modelB.getURI()));
-		differenceResource.getContents().add(difference);
-		
+
 		if (settings.saveDifference()) {
 			try {
-				differenceResource.save(Collections.EMPTY_MAP);
+				revision.getDifference().getSymmetricDifference().eResource().save(Collections.EMPTY_MAP);
 			} catch (IOException e) {
 //				e.printStackTrace();
 			}
 		}
 			
-		return difference;
+		return revision;
 	}
 	
 	public PEORepairJob getRepairs() {
-		Resource modelA = difference.getModelA();
-		Resource modelB = difference.getModelB();
 		
 		// Setup consistency rules?
 		if (settings.getConsistencyRules() == null) {
-			settings.setupConsistencyRules(difference.getModelB());
+			settings.setupConsistencyRules(revision.getVersionB().getTargetResource());
 		}
 		
 		// Validate model and calculate abstract repairs:
 		LogTime valiationTimer = new LogTime();
 		
-		RepairActionFilter repairFilter = new RepairActionFilter(modelB, 
+		RepairActionFilter repairFilter = new RepairActionFilter(
+				revision.getVersionB().getTargetResource().getAllContents(), 
 				settings.getConsistencyRules(), settings.getValidationFilter(), true);
 		
 		valiationTimer.stop();
@@ -135,9 +82,9 @@ public class PEORepairCalculationEngine {
 		
 		// Calculate repairs:
 		System.out.println("Re.Vision[CPEOs]: " + settings.getEditRules().size());
-		EGraph graphModelB = new EGraphImpl(modelB);
+		EGraph graphModelB = new EGraphImpl(revision.getVersionB().getTargetResource());
 		
-		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(difference, modelA, modelB, graphModelB);
+		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(revision, graphModelB);
 		complementFinderEngine.start();
 		
 		List<IRepairPlan> repairs = new ArrayList<>();
@@ -176,7 +123,7 @@ public class PEORepairCalculationEngine {
 		}
 		
 		// Create repair job:
-		PEORepairJob repairJob = new PEORepairJob(repairFilter.getValidations(), repairs, difference, graphModelB);
+		PEORepairJob repairJob = new PEORepairJob(repairFilter.getValidations(), repairs, revision, graphModelB);
 		return repairJob;
 	}
 	

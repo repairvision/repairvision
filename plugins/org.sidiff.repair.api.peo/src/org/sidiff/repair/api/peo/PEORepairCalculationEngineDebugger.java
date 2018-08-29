@@ -2,7 +2,6 @@ package org.sidiff.repair.api.peo;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.scope.RepairActionFilter;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderMonitor;
@@ -13,10 +12,6 @@ public class PEORepairCalculationEngineDebugger extends PEORepairCalculationEngi
 	
 	public PEORepairCalculationEngineDebugger(PEORepairSettings settings, Resource modelA, Resource modelB) {
 		super(settings, modelA, modelB);
-	}
-	
-	public PEORepairCalculationEngineDebugger(PEORepairSettings settings, SymmetricDifference difference) {
-		super(settings, difference);
 	}
 	
 	@Override
