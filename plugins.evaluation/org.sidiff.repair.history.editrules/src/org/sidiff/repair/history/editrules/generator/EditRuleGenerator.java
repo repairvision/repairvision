@@ -129,8 +129,10 @@ public class EditRuleGenerator {
 		System.out.println("Model B: " + difference.getModelB().getURI());
 		
 		// Calculate all validation scopes:
-		List<RequiredValidation> consistencyVA = ValidationFacade.analyzeRequirements(difference.getModelA());
-		List<RequiredValidation> consistencyVB = ValidationFacade.analyzeRequirements(difference.getModelB());
+		List<RequiredValidation> consistencyVA = ValidationFacade.analyzeRequirements(
+				difference.getModelA().getAllContents(), ValidationFacade.getConstraints(difference.getModelA()));
+		List<RequiredValidation> consistencyVB = ValidationFacade.analyzeRequirements(
+				difference.getModelB().getAllContents(), ValidationFacade.getConstraints(difference.getModelB()));
 		
 //		for (RequiredValidation requiredValidation : consistencyVA) {
 //			System.out.println();

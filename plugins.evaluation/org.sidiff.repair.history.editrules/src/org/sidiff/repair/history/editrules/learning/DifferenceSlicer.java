@@ -43,7 +43,7 @@ public class DifferenceSlicer {
 	public DifferenceSlice getSlice() {
 		
 		if (slice == null) {
-			slice = new DifferenceSlice(navigation.getDifference());
+			slice = new DifferenceSlice(navigation.getRevision().getDifference().getSymmetricDifference());
 			
 			sliceHistoricalModel();
 			sliceRevisedModel();
@@ -236,10 +236,7 @@ public class DifferenceSlicer {
 			// Outgoing references:
 			for (EReference reference : scopeElement.eClass().getEAllReferences()) {
 				if (!slicingCriterion.getReferenceBlacklist().contains(reference)) {
-					for (Iterator<? extends EObject> iterator 
-							= navigation.getTargets(scopeElement, reference, false); iterator.hasNext();) {
-						
-						EObject target = iterator.next();
+					for (EObject target : navigation.getTargets(scopeElement, reference, false)) {
 						
 						if (!slicingCriterion.getClassBlacklist().contains(target.eClass())) {
 							if (!objectFilter.filter(target)) {
@@ -262,13 +259,9 @@ public class DifferenceSlicer {
 			}
 
 			// Incoming references:
-			for (EReference reference : navigation.getCrossReferencer().getIncomingReferences(scopeElement.eClass())) {
+			for (EReference reference : navigation.getRevision().getMetaModel().getAllIncomingReferences(scopeElement.eClass())) {
 				if (!slicingCriterion.getReferenceBlacklist().contains(reference)) {
-					for (Iterator<? extends EObject> iterator 
-							= navigation.getTargets(scopeElement, reference, true); iterator.hasNext();) {
-						
-						EObject target = iterator.next();
-						
+					for (EObject target : navigation.getTargets(scopeElement, reference, true)) {
 						if (!slicingCriterion.getClassBlacklist().contains(target.eClass())) {
 							if (!objectFilter.filter(target)) {
 								if (!referenceFilter.filter(scopeElement, target, reference)) {

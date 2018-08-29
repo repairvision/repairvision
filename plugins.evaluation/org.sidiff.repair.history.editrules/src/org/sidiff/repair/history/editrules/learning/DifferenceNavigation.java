@@ -1,8 +1,7 @@
 package org.sidiff.repair.history.editrules.learning;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -14,41 +13,28 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.editrule.recognition.util.IndexedCrossReferencer;
-import org.sidiff.editrule.recognition.util.LiftingGraphIndex;
+import org.sidiff.history.revision.IRevision;
+import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.matching.model.Correspondence;
 
 public class DifferenceNavigation {
 	
-	protected SymmetricDifference difference;
-
-	protected LiftingGraphIndex changeIndex;
-	
-	protected IndexedCrossReferencer crossReferencer;
+	protected IRevision revision;
 
 	public DifferenceNavigation(SymmetricDifference difference) {
-		this.difference = difference;
-		
-		// Create difference navigation:
-		this.changeIndex = new LiftingGraphIndex(difference);
-		this.changeIndex.initialize();
-
-		// Create matching helper:
-		this.crossReferencer = new IndexedCrossReferencer();
-		this.crossReferencer.addResource(difference.getModelA());
-		this.crossReferencer.addResource(difference.getModelB());
+		this.revision = new Revision(difference);
 	}
 	
-	public SymmetricDifference getDifference() {
-		return difference;
+	public IRevision getRevision() {
+		return revision;
 	}
 	
 	public Correspondence getCorrespondenceOfModelA(EObject objectInA) {
-		return changeIndex.getDifference().getCorrespondenceOfModelA(objectInA);
+		return revision.getDifference().getCorrespondenceA(objectInA);
 	}
 	
 	public Correspondence getCorrespondenceOfModelB(EObject objectInB) {
-		return changeIndex.getDifference().getCorrespondenceOfModelB(objectInB);
+		return revision.getDifference().getCorrespondenceB(objectInB);
 	}
 	
 	public Correspondence getCorrespondence(EObject obj) {
@@ -62,7 +48,7 @@ public class DifferenceNavigation {
 	}
 	
 	public Collection<Change> getLocalChanges(EObject element)  {
-		return changeIndex.getLocalChanges(element);
+		return revision.getDifference().getLocalChanges(element);
 	}
 	
 	public Change getChangeObject(EObject modelElement) {
@@ -127,46 +113,18 @@ public class DifferenceNavigation {
 	 *            The type of the source object.
 	 * @return An unmodifiable list of target objects.
 	 */
-	@SuppressWarnings("unchecked")
-	public Iterator<? extends EObject> getTargets(EObject object, EReference type, boolean inverse) {
+	public List<? extends EObject> getTargets(EObject object, EReference type, boolean inverse) {
+		 List<EObject> targets = new ArrayList<>();
 		
 		if (inverse) {
-			return crossReferencer.getInverse(object, type);
+			revision.getVersionA().getSource(object, type).forEachRemaining(targets::add);
+			revision.getVersionB().getSource(object, type).forEachRemaining(targets::add);
 		} else {
-			
-			// Create reference list:
-			List<EObject> targets;
-			
-			if (type.isMany()) {
-				targets = ( List<EObject>) object.eGet(type, true);
-			} else {
-				EObject value = (EObject) object.eGet(type, true);
-				
-				if (value != null) {
-					targets = Collections.singletonList(value);
-				} else {
-					targets = Collections.emptyList();
-				}
-			}
-			
-			return targets.iterator();
+			revision.getVersionA().getTarget(object, type).forEachRemaining(targets::add);
+			revision.getVersionB().getTarget(object, type).forEachRemaining(targets::add);
 		}
-	}
-	
-	public LiftingGraphIndex getChangeIndex() {
-		return changeIndex;
-	}
-
-	public void setChangeIndex(LiftingGraphIndex changeIndex) {
-		this.changeIndex = changeIndex;
-	}
-
-	public IndexedCrossReferencer getCrossReferencer() {
-		return crossReferencer;
-	}
-
-	public void setCrossReferencer(IndexedCrossReferencer crossReferencer) {
-		this.crossReferencer = crossReferencer;
+		
+		return targets;
 	}
 	
 	public static EObject getChangeSource(Change change) {
