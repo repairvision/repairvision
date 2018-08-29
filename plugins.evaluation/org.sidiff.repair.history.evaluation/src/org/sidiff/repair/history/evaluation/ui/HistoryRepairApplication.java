@@ -48,7 +48,6 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	
 	protected HistoryInfo history;
 	
-	
 	protected PEORepairJob repairJob;
 	
 	public void setHistory(History history) {
@@ -115,7 +114,8 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 				
 				// Calculate repairs:
 				repairJob = repairFacade.getRepairs(
-						repairJob.getModelA(), repairJob.getModelB(),
+						repairJob.getRevision().getVersionA().getTargetResource(), 
+						repairJob.getRevision().getVersionB().getTargetResource(),
 						new PEORepairSettings(getEditRules(), getMatchingSettings()));
 				
 				// Copy undo history:
