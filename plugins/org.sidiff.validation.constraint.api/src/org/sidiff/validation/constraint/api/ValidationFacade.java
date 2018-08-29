@@ -1,8 +1,10 @@
 package org.sidiff.validation.constraint.api;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
@@ -27,15 +29,6 @@ import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
  * @author Manuel Ohrndorf
  */
 public class ValidationFacade {
-
-	/**
-	 * @param model
-	 *            The model to be validated.
-	 * @return All found inconsistencies.
-	 */
-	public static List<Validation> validate(Resource model) {
-		return validate(model, getConstraints(model));
-	}
 	
 	/**
 	 * @param model
@@ -45,7 +38,7 @@ public class ValidationFacade {
 	 *
 	 * @return All found inconsistencies.
 	 */
-	public static List<Validation> validate(Resource model, List<IConstraint> constraints) {
+	public static List<Validation> validate(Iterator<? extends EObject> model, List<IConstraint> constraints) {
 		return validate(model, constraints, IValidationFilter.DUMMY);
 	}
 
@@ -60,7 +53,7 @@ public class ValidationFacade {
 	 *
 	 * @return All found inconsistencies.
 	 */
-	public static List<Validation> validate(Resource model, 
+	public static List<Validation> validate(Iterator<? extends EObject> model, 
 			List<IConstraint> constraints, IValidationFilter validationFilter) {
 
 		ValidationIterator validationIterator = new ValidationIterator(
@@ -88,7 +81,7 @@ public class ValidationFacade {
 	 *
 	 * @return All found inconsistencies.
 	 */
-	public static List<Validation> validate(Resource model, 
+	public static List<Validation> validate(Iterator<? extends EObject> model, 
 			List<IConstraint> constraints, IValidationFilter validationFilter, 
 			boolean positiveResults, boolean negativeResults) {
 
@@ -100,19 +93,6 @@ public class ValidationFacade {
 		validationIterator.forEachRemaining(inconsistencies::add);
 
 		return inconsistencies;
-	}
-
-	/**
-	 * @param model
-	 *            The model to be validated.
-	 * @param positiveResults
-	 *            Analyze successfully validated constraints.
-	 * @param negativeResults
-	 *            Analyze inconsistencies.
-	 * @return The scopes of all analyzed validations.
-	 */
-	public static List<ScopeValidation> analyzeScope(Resource model, boolean positiveResults, boolean negativeResults) {
-		return analyzeScope(model, getConstraints(model), positiveResults, negativeResults);
 	}
 	
 	/**
@@ -127,7 +107,7 @@ public class ValidationFacade {
 	 * @return The scopes of all analyzed validations.
 	 */
 	public static List<ScopeValidation> analyzeScope(
-			Resource model, List<IConstraint> constraints,
+			Iterator<? extends EObject> model, List<IConstraint> constraints,
 			boolean positiveResults, boolean negativeResults) {
 		return analyzeScope(model, constraints, IValidationFilter.DUMMY, positiveResults, negativeResults);
 	}
@@ -146,7 +126,7 @@ public class ValidationFacade {
 	 *            Analyze inconsistencies.
 	 * @return The scopes of all analyzed validations.
 	 */
-	public static List<ScopeValidation> analyzeScope(Resource model, 
+	public static List<ScopeValidation> analyzeScope(Iterator<? extends EObject> model, 
 			List<IConstraint> constraints, IValidationFilter validationFilter,
 			boolean positiveResults, boolean negativeResults) {
 
@@ -183,16 +163,6 @@ public class ValidationFacade {
 		
 		return scopes;
 	}
-
-	/**
-	 * @param model
-	 *            The model to be validated.
-	 * @return A tree with elements that are required by the validated
-	 *         constraints.
-	 */
-	public static List<RequiredValidation> analyzeRequirements(Resource model) {
-		return analyzeRequirements(model, getConstraints(model));
-	}
 	
 	/**
 	 * @param model
@@ -202,7 +172,7 @@ public class ValidationFacade {
 	 * @return A tree with elements that are required by the validated
 	 *         constraints.
 	 */
-	public static List<RequiredValidation> analyzeRequirements(Resource model, List<IConstraint> constraints) {
+	public static List<RequiredValidation> analyzeRequirements(Iterator<? extends EObject> model, List<IConstraint> constraints) {
 		return analyzeRequirements(model, constraints, IValidationFilter.DUMMY);
 	}
 	
@@ -217,7 +187,7 @@ public class ValidationFacade {
 	 * @return A tree with elements that are required by the validated
 	 *         constraints.
 	 */
-	public static List<RequiredValidation> analyzeRequirements(Resource model, 
+	public static List<RequiredValidation> analyzeRequirements(Iterator<? extends EObject> model, 
 			List<IConstraint> constraints, IValidationFilter validationFilter) {
 
 		RequiredValidationIterator validationIterator = new RequiredValidationIterator(
@@ -252,15 +222,6 @@ public class ValidationFacade {
 		
 		return scopes;
 	}
-
-	/**
-	 * @param model
-	 *            The model to be validated.
-	 * @return All found inconsistencies.
-	 */
-	public static List<RepairValidation> repair(Resource model) {
-		return repair(model, getConstraints(model));
-	}
 	
 	/**
 	 * @param model
@@ -269,7 +230,7 @@ public class ValidationFacade {
 	 *            The constraints to be checked.
 	 * @return All found inconsistencies.
 	 */
-	public static List<RepairValidation> repair(Resource model, List<IConstraint> constraints) {
+	public static List<RepairValidation> repair(Iterator<? extends EObject> model, List<IConstraint> constraints) {
 		return repair(model, constraints, IValidationFilter.DUMMY);
 	}
 	
@@ -283,7 +244,7 @@ public class ValidationFacade {
 	 *            context element.
 	 * @return All found inconsistencies.
 	 */
-	public static List<RepairValidation> repair(Resource model, 
+	public static List<RepairValidation> repair(Iterator<? extends EObject> model, 
 			List<IConstraint> constraints, IValidationFilter validationFilter) {
 
 		RepairValidationIterator validationIterator = new RepairValidationIterator(

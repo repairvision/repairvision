@@ -38,7 +38,7 @@ public class TestApplication implements IApplication {
 		
 		// Check consistency:
 		if (crule != null) {
-			new ValidationIterator(modelResource, Collections.singletonList(crule), 
+			new ValidationIterator(modelResource.getAllContents(), Collections.singletonList(crule), 
 					IValidationFilter.DUMMY, true, true).forEachRemaining(validation -> {
 				System.out.print("Validation [");
 				System.out.print(validation.getResult());

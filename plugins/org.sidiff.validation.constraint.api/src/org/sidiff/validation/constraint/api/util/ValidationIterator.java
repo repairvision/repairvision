@@ -9,7 +9,6 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class ValidationIterator implements Iterator<Validation> {
@@ -25,13 +24,13 @@ public class ValidationIterator implements Iterator<Validation> {
 	protected boolean showNegativeResults = true;
 	
 	public ValidationIterator(
-			Resource modelResource, 
+			Iterator<? extends EObject> model, 
 			List<IConstraint> consistencyRules, IValidationFilter validationFilter,
 			boolean showPositiveResults, 
 			boolean showNegativeResults) {
 		
 		this(validationFilter, showPositiveResults, showNegativeResults);
-		init(modelResource, consistencyRules);
+		init(model, consistencyRules);
 	}
 	
 	protected ValidationIterator(
@@ -44,7 +43,7 @@ public class ValidationIterator implements Iterator<Validation> {
 		this.showNegativeResults = showNegativeResults;
 	}
 	
-	protected void init(Resource modelResource, List<IConstraint> consistencyRules) {
+	protected void init(Iterator<? extends EObject> model, List<IConstraint> consistencyRules) {
 		
 		// Index constraints by type:
 		for (IConstraint consistencyRule : consistencyRules) {
@@ -52,7 +51,7 @@ public class ValidationIterator implements Iterator<Validation> {
 		}
 		
 		// Search inconsistencies:
-		findAll(modelResource);
+		findAll(model);
 	}
 	
 	
@@ -89,11 +88,10 @@ public class ValidationIterator implements Iterator<Validation> {
 		}
 	}
 	
-	protected void findAll(Resource modelResource) {
-		Iterator<EObject> modelIterator = modelResource.getAllContents();
+	protected void findAll(Iterator<? extends EObject> model) {
 		
-		while (modelIterator.hasNext()) {
-			EObject modelElement = modelIterator.next();
+		while (model.hasNext()) {
+			EObject modelElement = model.next();
 			
 			evaluate(modelElement, modelElement.eClass());
 			

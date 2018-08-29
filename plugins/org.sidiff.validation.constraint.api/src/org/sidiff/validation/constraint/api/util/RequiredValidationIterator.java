@@ -1,10 +1,10 @@
 package org.sidiff.validation.constraint.api.util;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.decisiontree.DecisionTreeUtil;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
@@ -14,13 +14,13 @@ public class RequiredValidationIterator extends ValidationIterator {
 	protected boolean cleanupValidationTree = true;
 	
 	public RequiredValidationIterator(
-			Resource modelResource, 
+			Iterator<? extends EObject> model, 
 			List<IConstraint> consistencyRules, IValidationFilter validationFilter,
 			boolean cleanupValidationTree) {
 		
 		super(validationFilter, true, false);
 		this.cleanupValidationTree = cleanupValidationTree;
-		init(modelResource, consistencyRules);
+		init(model, consistencyRules);
 	}
 	
 	public boolean isCleanupValidationTree() {
