@@ -333,7 +333,7 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		openHistoricModel = new Action() {
 			public void run() {
 				try {
-					UIUtil.openEditor(EMFStorage.uriToPath(application.getRepairJob().getModelA().getURI()));
+					UIUtil.openEditor(EMFStorage.uriToPath(application.getRepairJob().getRevision().getVersionA().getTargetResource().getURI()));
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -342,7 +342,7 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 			@Override
 			public boolean isEnabled() {
 				
-				if ((application.getRepairJob() != null) && (application.getRepairJob().getModelA() != null)) {
+				if ((application.getRepairJob() != null) && (application.getRepairJob().getRevision().getVersionA().getTargetResource() != null)) {
 					openHistoricModel.setEnabled(true);
 				} else {
 					openHistoricModel.setEnabled(false);
