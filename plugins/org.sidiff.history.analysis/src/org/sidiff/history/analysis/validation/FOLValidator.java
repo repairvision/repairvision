@@ -17,7 +17,7 @@ public class FOLValidator extends BasicValidation {
 		List<Problem> inconsistencies = new ArrayList<>();
 
 		// Collect all abstract repair actions:
-		ValidationFacade.validate(resource).forEach(validation -> {
+		ValidationFacade.validate(resource.getAllContents(), ValidationFacade.getConstraints(resource)).forEach(validation -> {
 			if (!validation.getResult()) {
 				Problem inconsistency = HistoryModelFactory.eINSTANCE.createProblem();
 				inconsistency.setName(validation.getRule().getName());
