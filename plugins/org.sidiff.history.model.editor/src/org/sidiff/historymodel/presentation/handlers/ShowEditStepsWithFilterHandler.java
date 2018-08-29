@@ -19,6 +19,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.consistency.common.emf.DocumentType;
+import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.historymodel.presentation.util.HistoryModelEditorTools;
@@ -97,7 +98,8 @@ public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 		EObject context = model.getEObject(uriFragmentContext);
 		
 		IConstraint constraintRule = ConstraintLibraryUtil.getConsistencyRule(ConstraintLibraryRegistry.getLibraries(DocumentType.getDocumentType(model)), constraint);
-		List<Validation> validations = ValidationFacade.validate(model, 
+		List<Validation> validations = ValidationFacade.validate(
+				JUtil.singeltonIterator(context),
 				Collections.singletonList(constraintRule), 
 				new ContextValidationFilter(Collections.singletonList(context)),
 				true, true);
