@@ -78,7 +78,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 		validations = null;
 		
 		// TODO: Manage repair stack by the application not the repair job!
-		if ((repairJob != null) && getCurrentModelVersion() != repairJob.getModelB()) {
+		if ((repairJob != null) && getCurrentModelVersion() != repairJob.getRevision().getVersionB().getTargetResource()) {
 			repairJob = null;
 		} else {
 			if (repairJob != null) {
@@ -104,7 +104,9 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				});
 				
 				// Search inconsistencies:
-				validations = ValidationFacade.validate(getModelB());
+				validations = ValidationFacade.validate(
+						getModelB().getAllContents(), 
+						ValidationFacade.getConstraints(getModelB()));
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
@@ -274,7 +276,9 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 							Collections.singletonList(inconsistency.getRule()));
 
 					repairJob = repairFacade.getRepairs(
-							repairJob.getModelA(), repairJob.getModelB(), repairSettings);
+							repairJob.getRevision().getVersionA().getTargetResource(), 
+							repairJob.getRevision().getVersionB().getTargetResource(), 
+							repairSettings);
 
 					// Copy undo history:
 					if (lastRepairJob != null) {
@@ -348,7 +352,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 		// save the applied repair?
 		if (autoSaveModel) {
 			try {
-				repairJob.getModelB().save(Collections.emptyMap());
+				repairJob.getRevision().getVersionB().getTargetResource().save(Collections.emptyMap());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -395,7 +399,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 		// save the applied repair?
 		if (autoSaveModel) {
 			try {
-				repairJob.getModelB().save(Collections.emptyMap());
+				repairJob.getRevision().getVersionB().getTargetResource().save(Collections.emptyMap());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

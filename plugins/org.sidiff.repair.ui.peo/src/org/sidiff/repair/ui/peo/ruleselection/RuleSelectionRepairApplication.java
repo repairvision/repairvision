@@ -65,7 +65,7 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 		validations = null;
 		
 		// TODO: Manage repair stack by the application not the repair job!
-		if ((repairJob != null) && getModelB() != repairJob.getModelB()) {
+		if ((repairJob != null) && getModelB() != repairJob.getRevision().getVersionB().getTargetResource()) {
 			repairJob = null;
 		} else {
 			if (repairJob != null) {
@@ -86,7 +86,9 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 			protected IStatus run(IProgressMonitor monitor) {
 				
 				// Search inconsistencies:
-				validations = ValidationFacade.validate(getModelB());
+				validations = ValidationFacade.validate(
+						getModelB().getAllContents(),
+						ValidationFacade.getConstraints(getModelB()));
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
@@ -180,7 +182,8 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 				
 				// Calculate repairs:
 				repairJob = repairFacade.getRepairs(
-						repairJob.getModelA(), repairJob.getModelB(),
+						repairJob.getRevision().getVersionA().getTargetResource(), 
+						repairJob.getRevision().getVersionB().getTargetResource(),
 						new PEORepairSettings(editRules, settings));
 				
 				// Copy undo history:
