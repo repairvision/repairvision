@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Stack;
 
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
-import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.api.ranking.RepairRankingComparator;
 
 /**
@@ -39,9 +38,9 @@ public class RepairJob<R extends IRepairPlan> {
 	protected RepairRankingComparator ranking;
 
 	/**
-	 * The difference between model A and model B.
+	 * The revision between model A and model B.
 	 */
-	protected SymmetricDifference difference;
+	protected IRevision revision;
 	
 	/**
 	 * The (Henshin) engine which applies the rules.
@@ -51,15 +50,15 @@ public class RepairJob<R extends IRepairPlan> {
 	/**
 	 * The working graph, i.e. the actual version of the model.
 	 */
-	protected EGraph graphModelB;
+	protected EGraph targetGraph;
 
 	/**
 	 * Initializes an empty repair job.
 	 */
-	public RepairJob(List<R> repairs, SymmetricDifference difference, EGraph graphModelB) {
+	public RepairJob(List<R> repairs, IRevision revision, EGraph targetGraph) {
 		this.repairs = repairs;
-		this.difference = difference;
-		this.graphModelB = graphModelB;
+		this.revision = revision;
+		this.targetGraph = targetGraph;
 		
 		this.engine = new EngineImpl();
 		this.ranking = new RepairRankingComparator(this);
@@ -81,7 +80,7 @@ public class RepairJob<R extends IRepairPlan> {
 
 		// Apply repair:
 		RuleApplication application = new RuleApplicationImpl(engine);
-		application.setEGraph(graphModelB);
+		application.setEGraph(targetGraph);
 		application.setRule(repair.getComplementingEditRule());
 		application.setCompleteMatch(match);
 		
@@ -91,7 +90,7 @@ public class RepairJob<R extends IRepairPlan> {
 			// Save model
 			if (saveModel) {
 				try {
-					getModelB().save(null);
+					revision.getVersionB().getTargetResource().save(null);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -113,7 +112,7 @@ public class RepairJob<R extends IRepairPlan> {
 			if (lastRepairs.undo(null)) {
 				if (saveModel) {
 					try {
-						getModelB().save(null);
+						revision.getVersionB().getTargetResource().save(null);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -142,20 +141,8 @@ public class RepairJob<R extends IRepairPlan> {
 		this.ranking = ranking;
 	}
 	
-	public Resource getModelA() {
-		return difference.getModelA();
-	}
-
-	public Resource getModelB() {
-		return difference.getModelB();
-	}
-
-	public SymmetricDifference getDifference() {
-		return difference;
-	}
-
-	public void setDifference(SymmetricDifference difference) {
-		this.difference = difference;
+	public IRevision getRevision() {
+		return revision;
 	}
 	
 	public EngineImpl getEngine() {
@@ -167,10 +154,10 @@ public class RepairJob<R extends IRepairPlan> {
 	}
 	
 	public EGraph getGraph() {
-		return graphModelB;
+		return targetGraph;
 	}
 	
 	public void setGraph(EGraph graph) {
-		this.graphModelB = graph;
+		this.targetGraph = graph;
 	}
 }

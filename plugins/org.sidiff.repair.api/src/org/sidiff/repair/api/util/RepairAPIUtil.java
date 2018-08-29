@@ -10,12 +10,6 @@ import org.eclipse.emf.henshin.model.Node;
 
 public class RepairAPIUtil {
 
-	public static URI getDifferenceURI(URI modelA, URI modelB) {
-		return URI.createURI(
-				modelA.trimFileExtension().toString() + "_to_" +
-				modelB.trimFileExtension().appendFileExtension(".symmetric").lastSegment());
-	}
-	
 	public static URI getRecognitionRuleURI(URI editRule, String fileExtension) {
 		return editRule.trimSegments(1).appendSegment("rr_" + editRule.lastSegment())
 				.trimFileExtension().appendFileExtension(fileExtension);
