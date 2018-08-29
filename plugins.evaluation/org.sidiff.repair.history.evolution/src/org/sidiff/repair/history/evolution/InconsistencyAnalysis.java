@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
+import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.consistency.common.storage.UUIDMatcher;
 import org.sidiff.correspondences.CorrespondencesUtil;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
@@ -23,7 +24,8 @@ import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.TechnicalDifferenceFacade;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.editrule.recognition.util.LiftingGraphIndex;
+import org.sidiff.history.revision.IRevision;
+import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
@@ -100,8 +102,7 @@ public class InconsistencyAnalysis {
 		Resource introduced = inconsistency.getModelIntroduced();
 		SymmetricDifference difference = calculateDifference(introduced, historical, new UUIDMatcher());
 		
-		LiftingGraphIndex changeIndex = new LiftingGraphIndex(difference);
-		changeIndex.initialize();
+		IRevision revision = new Revision(difference);
 
 		// Explore repairs (undos):
 		List<Set<Change>> repairSteps = new ArrayList<>();
@@ -111,11 +112,11 @@ public class InconsistencyAnalysis {
 		// TODO: Initialization of attribute values!?
 		explore(constraint, new ArrayList<>(),
 				context, introduced, new Stack<>(),
-				difference, changeIndex, 
+				difference, revision, 
 				repairSteps, new HashSet<>());
 		
 		// Add implicit repairs:
-		addImplicitRepairs(constraint, context, introduced, changeIndex, repairSteps);
+		addImplicitRepairs(constraint, context, introduced, revision, repairSteps);
 		
 		return createChangeSets(repairSteps, true);
 	}
@@ -144,8 +145,7 @@ public class InconsistencyAnalysis {
 		Resource resolved = inconsistency.getModelResolved();
 		SymmetricDifference difference = calculateDifference(introduced, resolved, new UUIDMatcher());
 		
-		LiftingGraphIndex changeIndex = new LiftingGraphIndex(difference);
-		changeIndex.initialize();
+		IRevision changeIndex = new Revision(difference);
 
 		// Explore repairs:
 		List<Set<Change>> repairSteps = new ArrayList<>();
@@ -167,12 +167,13 @@ public class InconsistencyAnalysis {
 	protected void explore(
 			IConstraint constraint, List<RepairAction> repairFilter, 
 			EObject context, Resource inconsistent, Stack<DifferenceExecutor> exploration,
-			SymmetricDifference difference, LiftingGraphIndex changeIndex, 
+			SymmetricDifference difference, IRevision revision, 
 			List<Set<Change>> repairSteps, Set<Change> currentRepairStep) {
 		
 		// Calculate repair alternatives:
 		// TODO: Preprocessing: Filter branches with no observable repair actions.
-		List<RepairValidation> validations = ValidationFacade.repair(inconsistent, 
+		List<RepairValidation> validations = ValidationFacade.repair(
+				JUtil.singeltonIterator(context), 
 				Collections.singletonList(constraint),
 				new ContextValidationFilter(Collections.singleton(context)));
 		
@@ -200,14 +201,14 @@ public class InconsistencyAnalysis {
 				 * 
 				 */
 				if (!overlappingRepairs(repair, repairFilter)) {
-					List<List<Change>> observedRepairs = getObservable(repair, changeIndex,  currentRepairStep, exploration);
+					List<List<Change>> observedRepairs = getObservable(repair, revision,  currentRepairStep, exploration);
 					
 					// Filter combinations with missing observable repair actions:
 					if (observedRepairs != null) {
 						for (List<Change> observedRepairStep : cartesianProduct(observedRepairs)) {
 							
 							// Apply observed changes:
-							SymmetricDifferenceUtil.addOppositeChanges(changeIndex, observedRepairStep);
+							SymmetricDifferenceUtil.addOppositeChanges(revision, observedRepairStep);
 							
 							DifferenceExecutor differenceExecutor = new DifferenceExecutor(difference, observedRepairStep);
 							differenceExecutor.execute();
@@ -220,7 +221,8 @@ public class InconsistencyAnalysis {
 							
 							// NOTE: The context might be deleted!
 							if (context.eResource() != null) {
-								revalidations = ValidationFacade.validate(inconsistent,
+								revalidations = ValidationFacade.validate(
+										JUtil.singeltonIterator(context),
 										Collections.singletonList(constraint), 
 										new ContextValidationFilter(Collections.singleton(context)));
 							}
@@ -235,7 +237,7 @@ public class InconsistencyAnalysis {
 								
 								explore(constraint, repairFilter, 
 										context, inconsistent, exploration,
-										difference, changeIndex, 
+										difference, revision, 
 										repairSteps, currentRepairStep);
 								
 								// Backtracking:
@@ -255,7 +257,7 @@ public class InconsistencyAnalysis {
 	}
 	
 	private List<List<Change>> getObservable(List<? extends IDecisionNode> repair, 
-			LiftingGraphIndex changeIndex, Set<Change> changeFilter, 
+			IRevision revision, Set<Change> changeFilter, 
 			Collection<DifferenceExecutor> exploration) {
 		
 		List<List<Change>> observableRepair = new ArrayList<>();
@@ -263,7 +265,7 @@ public class InconsistencyAnalysis {
 		for (IDecisionNode node : repair) {
 			if (node instanceof RepairAction) {
 				RepairAction repairAction = (RepairAction) node; 
-				List<Change> observedRepair = getObservable(repairAction, changeIndex, changeFilter, exploration);
+				List<Change> observedRepair = getObservable(repairAction, revision, changeFilter, exploration);
 				
 				if (!observedRepair.isEmpty()) {
 					observableRepair.add(observedRepair);
@@ -279,14 +281,14 @@ public class InconsistencyAnalysis {
 	}
 	
 	private List<Change> getObservable(RepairAction repairAction, 
-			LiftingGraphIndex changeIndex, Set<Change> changeFilter, 
+			IRevision revision, Set<Change> changeFilter, 
 			Collection<DifferenceExecutor> exploration) {
 		
 		List<Change> observedRepair = new ArrayList<>();
 		
 		EObject repairContextA = repairAction.getContext();
 		
-		for (Change localChange : changeIndex.getLocalChanges(repairAction.getContext())) {
+		for (Change localChange : revision.getDifference().getLocalChanges(repairAction.getContext())) {
 			if (!changeFilter.contains(localChange)) {
 				
 				if (localChange instanceof RemoveReference) {
@@ -309,10 +311,10 @@ public class InconsistencyAnalysis {
 			}
 		}
 		
-		EObject repairContextB = getCorrespondingObjectInB(repairContextA, changeIndex, exploration);
+		EObject repairContextB = getCorrespondingObjectInB(repairContextA, revision, exploration);
 		
 		if (repairContextB != null) {
-			for (Change localChange : changeIndex.getLocalChanges(repairContextB)) {
+			for (Change localChange : revision.getDifference().getLocalChanges(repairContextB)) {
 				if (!changeFilter.contains(localChange)) {
 					
 					if (localChange instanceof AddReference) {
@@ -332,10 +334,10 @@ public class InconsistencyAnalysis {
 	}
 	
 	private EObject getCorrespondingObjectInB(EObject objA, 
-			LiftingGraphIndex changeIndex, 
+			IRevision revision, 
 			Collection<DifferenceExecutor> explorations) {
 		
-		Correspondence correspondence = changeIndex.getCorrespondenceA(objA);
+		Correspondence correspondence = revision.getDifference().getCorrespondenceA(objA);
 		
 		if (correspondence != null) {
 			return correspondence.getMatchedB();
@@ -377,9 +379,10 @@ public class InconsistencyAnalysis {
 	
 	private void addImplicitRepairs(
 			IConstraint constraint, EObject context, Resource inconsistent,
-			LiftingGraphIndex changeIndex, List<Set<Change>> introducedChangeSets) {
+			IRevision revision, List<Set<Change>> introducedChangeSets) {
 		
-		List<RepairValidation> validations = ValidationFacade.repair(inconsistent, 
+		List<RepairValidation> validations = ValidationFacade.repair(
+				JUtil.singeltonIterator(context),
 				Collections.singletonList(constraint),
 				new ContextValidationFilter(Collections.singleton(context)));
 		
@@ -388,7 +391,7 @@ public class InconsistencyAnalysis {
 		
 		for (Set<Change> changeSet : introducedChangeSets) {
 			for (Change change : changeSet.toArray(new Change[0])) {
-				for (Change subsequentChange : SymmetricDifferenceUtil.getSubsequentChanges(changeIndex, change)) {
+				for (Change subsequentChange : SymmetricDifferenceUtil.getSubsequentChanges(revision, change)) {
 					
 					if (!changeSet.contains(subsequentChange)) {
 						
@@ -401,7 +404,7 @@ public class InconsistencyAnalysis {
 								if (repairTreeNode instanceof RepairAction) {
 									List<Change> observables = getObservable(
 											(RepairAction) repairTreeNode,
-											changeIndex, Collections.emptySet(),
+											revision, Collections.emptySet(),
 											Collections.emptyList());
 									
 									for (Change observable : observables) {

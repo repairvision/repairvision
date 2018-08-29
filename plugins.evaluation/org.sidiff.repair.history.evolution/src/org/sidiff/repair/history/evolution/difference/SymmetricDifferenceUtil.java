@@ -25,7 +25,7 @@ import org.sidiff.difference.symmetric.SymmetricFactory;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.difference.technical.api.TechnicalDifferenceFacade;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.editrule.recognition.util.LiftingGraphIndex;
+import org.sidiff.history.revision.IRevision;
 import org.sidiff.matcher.IMatcher;
 
 public class SymmetricDifferenceUtil {
@@ -219,21 +219,21 @@ public class SymmetricDifferenceUtil {
 	 * @return All subsequent/depended changes of the given change. Excluding the
 	 *         given change.
 	 */
-	public static Set<Change> getSubsequentChanges(LiftingGraphIndex allChanges, Change change) {
+	public static Set<Change> getSubsequentChanges(IRevision revision, Change change) {
 		Set<Change> subsequentChanges = new HashSet<>();
 		EObject localRoot = getContained(change);
 		
 		// Tree creations/deletions:
 		if (localRoot != null) {
-			subsequentChanges.addAll(allChanges.getLocalChanges(localRoot));
+			subsequentChanges.addAll(revision.getDifference().getLocalChanges(localRoot));
 			
 			localRoot.eAllContents().forEachRemaining(e -> {
-				subsequentChanges.addAll(allChanges.getLocalChanges(e));
+				subsequentChanges.addAll(revision.getDifference().getLocalChanges(e));
 			});
 		}
 		
 		// Opposite change:
-		Change opposite = getOppositeChange(allChanges, change);
+		Change opposite = getOppositeChange(revision, change);
 		
 		if (opposite != null) {
 			subsequentChanges.add(opposite);
@@ -281,10 +281,10 @@ public class SymmetricDifferenceUtil {
 	 * @param changeSet
 	 *            The changes which should be supplemented.
 	 */
-	public static void addOppositeChanges(LiftingGraphIndex allChanges, Collection<Change> changeSet) {
+	public static void addOppositeChanges(IRevision revision, Collection<Change> changeSet) {
 		
 		for (Change change : changeSet.toArray(new Change[0])) {
-			Change opposite = getOppositeChange(allChanges, change);
+			Change opposite = getOppositeChange(revision, change);
 			
 			if ((opposite != null) && !changeSet.contains(opposite)) {
 				changeSet.add(opposite);
@@ -301,13 +301,13 @@ public class SymmetricDifferenceUtil {
 	 *            A change of a symmetric difference.
 	 * @return The opposite change or <code>null</code>.
 	 */
-	public static Change getOppositeChange(LiftingGraphIndex allChanges, Change change) {
+	public static Change getOppositeChange(IRevision revision, Change change) {
 		
 		if (change instanceof RemoveReference) {
 			RemoveReference removeReference = (RemoveReference) change;
 			
 			if (removeReference.getType().getEOpposite() != null) {
-				Iterator<RemoveReference> localChanges = allChanges.getLocalChanges(
+				Iterator<RemoveReference> localChanges = revision.getDifference().getLocalChanges(
 						removeReference.getTgt(),
 						SymmetricPackage.eINSTANCE.getRemoveReference_Src(), 
 						RemoveReference.class);
@@ -328,7 +328,7 @@ public class SymmetricDifferenceUtil {
 			AddReference addReference = (AddReference) change;
 			
 			if (addReference.getType().getEOpposite() != null) {
-				Iterator<AddReference> localChanges = allChanges.getLocalChanges(
+				Iterator<AddReference> localChanges = revision.getDifference().getLocalChanges(
 						addReference.getTgt(),
 						SymmetricPackage.eINSTANCE.getAddReference_Src(), 
 						AddReference.class);
