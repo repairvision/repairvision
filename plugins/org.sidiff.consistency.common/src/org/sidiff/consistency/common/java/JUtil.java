@@ -2,6 +2,9 @@ package org.sidiff.consistency.common.java;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class JUtil {
 
@@ -11,7 +14,34 @@ public class JUtil {
 	}
 	
 	public static <T> Iterator<T> singeltonIterator(T obj) {
-		return Collections.singletonList(obj).iterator();
+		return new Iterator<T>() {
+			private boolean hasNext = true;
+
+			public boolean hasNext() {
+				return hasNext;
+			}
+
+			public T next() {
+				if (hasNext) {
+					hasNext = false;
+					return obj;
+				}
+				throw new NoSuchElementException();
+			}
+
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void forEachRemaining(Consumer<? super T> action) {
+				Objects.requireNonNull(action);
+				if (hasNext) {
+					action.accept(obj);
+					hasNext = false;
+				}
+			}
+		};
 	}
 	
 	public static void offset(Iterator<?> it, int startIndex) {
