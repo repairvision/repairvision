@@ -1,7 +1,6 @@
 package org.sidiff.editrule.recognition.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -14,10 +13,11 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.history.revision.IRevision;
 
 public class MatchingHelper {
 
-	private ICrossReferencer crossReferencer;
+	private IRevision revision;
 	
 	/**
 	 * Initializes a new matching helper.
@@ -25,8 +25,12 @@ public class MatchingHelper {
 	 * @param crossReferencer
 	 *            The generic or domain specific cross-reference calculator.
 	 */
-	public MatchingHelper(ICrossReferencer crossReferencer) {
-		this.crossReferencer = crossReferencer;
+	public MatchingHelper(IRevision revision) {
+		this.revision = revision;
+	}
+	
+	public IRevision getRevision() {
+		return revision;
 	}
 
 	/**
@@ -36,31 +40,32 @@ public class MatchingHelper {
 	 *            The edge of the source object.
 	 * @return An unmodifiable list of target objects.
 	 */
-	@SuppressWarnings("unchecked")
-	public Iterator<? extends EObject> getTargets(EObject object, NodePattern sourceNode, EdgePattern edge) {
+	public Iterator<? extends EObject> getTargetsA(EObject object, NodePattern sourceNode, EdgePattern edge) {
 		EReference type = edge.getType();
 		
 		if (edge.getTarget() == sourceNode) {
-			return crossReferencer.getInverse(object, type);
+			return revision.getVersionA().getSource(object, type);
 		} else {
 			assert (edge.getSource() == sourceNode) : "The given edge is not incident with the given node!";
-			
-			// Create reference list:
-			List<EObject> targets;
-			
-			if (type.isMany()) {
-				targets = ( List<EObject>) object.eGet(type, true);
-			} else {
-				EObject value = (EObject) object.eGet(type, true);
-				
-				if (value != null) {
-					targets = Collections.singletonList(value);
-				} else {
-					targets = Collections.emptyList();
-				}
-			}
-			
-			return targets.iterator();
+			return revision.getVersionA().getTarget(object, type);
+		}
+	}
+	
+	/**
+	 * @param object
+	 *            The source object.
+	 * @param edge
+	 *            The edge of the source object.
+	 * @return An unmodifiable list of target objects.
+	 */
+	public Iterator<? extends EObject> getTargetsB(EObject object, NodePattern sourceNode, EdgePattern edge) {
+		EReference type = edge.getType();
+		
+		if (edge.getTarget() == sourceNode) {
+			return revision.getVersionB().getSource(object, type);
+		} else {
+			assert (edge.getSource() == sourceNode) : "The given edge is not incident with the given node!";
+			return revision.getVersionB().getTarget(object, type);
 		}
 	}
 	

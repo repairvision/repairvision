@@ -7,12 +7,10 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.dependencies.ChangeDependencies;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.scope.RepairScope;
-import org.sidiff.editrule.recognition.util.IndexedCrossReferencer;
-import org.sidiff.editrule.recognition.util.LiftingGraphDomainMap;
-import org.sidiff.editrule.recognition.util.LiftingGraphIndex;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.history.revision.IRevision;
 
 /**
  * @author Manuel Ohrndorf
@@ -27,27 +25,12 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 	protected SymmetricDifference difference;
 	
 //	protected MergeImports mergeImports;
-
-	protected LiftingGraphIndex changeIndex;
-	
-	protected LiftingGraphDomainMap changeDomainMap;
 	
 	protected MatchingHelper matchingHelper;
 	
 	@Override
-	public void initialize(SymmetricDifference difference) {
-		this.difference = difference;
-		
-		// Lifting graph optimizations:
-		changeDomainMap = new LiftingGraphDomainMap(difference);
-		changeIndex = new LiftingGraphIndex(difference);
-		
-		// Create matching helper:
-		IndexedCrossReferencer crossReferencer = new IndexedCrossReferencer();
-		crossReferencer.addResource(difference.getModelA());
-		crossReferencer.addResource(difference.getModelB());
-		
-		matchingHelper = new MatchingHelper(crossReferencer);
+	public void initialize(IRevision revision) {
+		matchingHelper = new MatchingHelper(revision);
 	}
 	
 	@Override
@@ -76,7 +59,7 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 		}
 		
 		// Initialize change domains:
-		recognitionPattern.initialize(matchingHelper, changeIndex, changeDomainMap);
+		recognitionPattern.initialize(matchingHelper);
 //		System.out.println("Initial Domains: \n\n" + StringUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		
 		// Create matcher:
@@ -91,7 +74,7 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 		}
 		
 		// Initialize change domains:
-		recognitionPattern.initialize(matchingHelper, changeIndex, changeDomainMap);
+		recognitionPattern.initialize(matchingHelper);
 //		System.out.println("Initial Domains: \n\n" + StringUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		
 		// Create matcher:
@@ -104,9 +87,6 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 //		// Merge external resources into the difference:
 //		mergeImports = new MergeImports(difference, Scope.RESOURCE, true);
 //		mergeImports.merge();
-		
-		// Initialize change/correspondence index:
-		changeIndex.initialize();
 		
 		started = true;
 	}

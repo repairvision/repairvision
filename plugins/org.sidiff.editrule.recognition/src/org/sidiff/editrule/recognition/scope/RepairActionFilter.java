@@ -5,6 +5,7 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
@@ -46,7 +46,8 @@ public class RepairActionFilter {
 		}
 	}
 	
-	public RepairActionFilter(Resource model, 
+	public RepairActionFilter(
+			Iterator<? extends EObject> model, 
 			List<IConstraint> consistencyRules, 
 			IValidationFilter validationFilter, 
 			boolean storeValidation) {

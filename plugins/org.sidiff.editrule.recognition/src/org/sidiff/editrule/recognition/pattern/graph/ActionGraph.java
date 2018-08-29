@@ -1,8 +1,8 @@
 package org.sidiff.editrule.recognition.pattern.graph;
 
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.editrule.recognition.util.LiftingGraphIndex;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
+import org.sidiff.history.revision.IRevision;
 
 public class ActionGraph {
 	
@@ -10,15 +10,12 @@ public class ActionGraph {
 
 	protected MatchingHelper matchingHelper;
 	
-	protected LiftingGraphIndex changeIndex;
-	
 	public ActionGraph(Rule editRule) {
 		this.editRule = editRule;
 	}
 	
-	public void initialize(MatchingHelper matchingHelper, LiftingGraphIndex changeIndex) {
+	public void initialize(MatchingHelper matchingHelper) {
 		this.matchingHelper = matchingHelper;
-		this.changeIndex = changeIndex;
 	}
 
 	public Rule getEditRule() {
@@ -28,8 +25,8 @@ public class ActionGraph {
 	public MatchingHelper getMatchingHelper() {
 		return matchingHelper;
 	}
-
-	public LiftingGraphIndex getChangeIndex() {
-		return changeIndex;
+	
+	public IRevision getRevision() {
+		return matchingHelper.getRevision();
 	}
 }

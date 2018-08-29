@@ -54,7 +54,7 @@ public class ChangePatternRemoveObject extends ChangePatternObject {
 		Iterator<? extends EObject> matchedA = Domain.get(node.getNodePatternA()).getSearchedMatchIterator();
 		
 		while (matchedA.hasNext()) {
-			Iterator<RemoveObject> changes = getActionGraph().getChangeIndex().getLocalChanges(
+			Iterator<RemoveObject> changes = actionGraph.getRevision().getDifference().getLocalChanges(
 					matchedA.next(), SymmetricPackage.eINSTANCE.getRemoveObject_Obj(), RemoveObject.class);
 			
 			changes.forEachRemaining(removeObject -> {

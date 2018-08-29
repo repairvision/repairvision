@@ -53,7 +53,7 @@ public class ChangePatternAddReference extends ChangePatternReference {
 		// mark opposite change:
 		if (edge.getOpposite() != null) {
 			assert (edge.getOpposite().getChange() != null);
-			Change oppositeChange = getActionGraph().getChangeIndex().getOppositeChange(change);
+			Change oppositeChange = actionGraph.getRevision().getDifference().getOppositeChange(change);
 			assert (oppositeChange != null);
 			
 			Domain.get(edge.getOpposite().getChange().getChangeNodePattern()).mark(oppositeChange);
@@ -97,7 +97,7 @@ public class ChangePatternAddReference extends ChangePatternReference {
 					? SymmetricPackage.eINSTANCE.getAddReference_Src()
 					: SymmetricPackage.eINSTANCE.getAddReference_Tgt();
 			
-			Iterator<AddReference> changes = getActionGraph().getChangeIndex().getLocalChanges(
+			Iterator<AddReference> changes = actionGraph.getRevision().getDifference().getLocalChanges(
 					matchedB.next(), changeReference, AddReference.class);
 			
 			while (changes.hasNext()) {

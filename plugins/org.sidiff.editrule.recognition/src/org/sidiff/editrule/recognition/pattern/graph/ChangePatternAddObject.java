@@ -54,7 +54,7 @@ public class ChangePatternAddObject extends ChangePatternObject {
 		Iterator<? extends EObject> matchedB = Domain.get(node.getNodePatternB()).getSearchedMatchIterator();
 		
 		while (matchedB.hasNext()) {
-			Iterator<AddObject> changes = getActionGraph().getChangeIndex().getLocalChanges(
+			Iterator<AddObject> changes = actionGraph.getRevision().getDifference().getLocalChanges(
 					matchedB.next(), SymmetricPackage.eINSTANCE.getAddObject_Obj(), AddObject.class);
 			
 			changes.forEachRemaining(addObject -> {

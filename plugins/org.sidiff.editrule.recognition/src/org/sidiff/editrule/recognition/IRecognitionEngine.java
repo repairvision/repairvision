@@ -2,14 +2,14 @@ package org.sidiff.editrule.recognition;
 
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTable;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.scope.RepairScope;
 import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.history.revision.IRevision;
 
 public interface IRecognitionEngine {
 
-	void initialize(SymmetricDifference difference);
+	void initialize(IRevision revision);
 	
 	void start();
 

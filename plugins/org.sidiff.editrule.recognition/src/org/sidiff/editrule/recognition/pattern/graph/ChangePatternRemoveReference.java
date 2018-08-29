@@ -53,7 +53,7 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 		// mark opposite change:
 		if (edge.getOpposite() != null) {
 			assert (edge.getOpposite().getChange() != null);
-			Change oppositeChange = getActionGraph().getChangeIndex().getOppositeChange(change);
+			Change oppositeChange = actionGraph.getRevision().getDifference().getOppositeChange(change);
 			assert (oppositeChange != null);
 			
 			Domain.get(edge.getOpposite().getChange().getChangeNodePattern()).mark(oppositeChange);
@@ -98,7 +98,7 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 					? SymmetricPackage.eINSTANCE.getRemoveReference_Src()
 					: SymmetricPackage.eINSTANCE.getRemoveReference_Tgt();
 			
-			Iterator<RemoveReference> changes = getActionGraph().getChangeIndex().getLocalChanges(
+			Iterator<RemoveReference> changes = actionGraph.getRevision().getDifference().getLocalChanges(
 					matchedA.next(), changeReference, RemoveReference.class);
 			
 			while (changes.hasNext()) {

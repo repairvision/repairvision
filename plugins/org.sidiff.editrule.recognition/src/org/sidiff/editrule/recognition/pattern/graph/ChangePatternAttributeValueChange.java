@@ -60,7 +60,7 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 		Domain.get(node.getNodePatternA()).addSearchedMatch(((AttributeValueChange) change).getObjA());
 		Domain.get(node.getNodePatternB()).addSearchedMatch(((AttributeValueChange) change).getObjB());
 		Domain.get(node.getCorrespondence()).addSearchedMatch(
-				getActionGraph().getChangeIndex().getCorrespondenceB(((AttributeValueChange) change).getObjB()));
+				actionGraph.getRevision().getDifference().getCorrespondenceB(((AttributeValueChange) change).getObjB()));
 		
 		///// Match remaining graph pattern ////
 		
@@ -75,7 +75,7 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 		Iterator<? extends EObject> matchedB = Domain.get(node.getNodePatternB()).getSearchedMatchIterator();
 		
 		while (matchedB.hasNext()) {
-			Iterator<AttributeValueChange> changes = getActionGraph().getChangeIndex().getLocalChanges(
+			Iterator<AttributeValueChange> changes = actionGraph.getRevision().getDifference().getLocalChanges(
 					matchedB.next(), SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjB(), AttributeValueChange.class);
 			
 			changes.forEachRemaining(attributeValueChange -> {

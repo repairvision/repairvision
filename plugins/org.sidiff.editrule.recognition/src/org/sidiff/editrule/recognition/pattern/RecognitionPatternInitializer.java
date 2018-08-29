@@ -6,26 +6,24 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
-import org.sidiff.editrule.recognition.util.LiftingGraphDomainMap;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
 import org.sidiff.graphpattern.NodePattern;
 
 public class RecognitionPatternInitializer {
 
-	public static void initializeRecognitionPattern(RecognitionPattern recognitionPattern, 
-			LiftingGraphDomainMap changeDomainMap, MatchingHelper matchingHelper) {
+	public static void initializeRecognitionPattern(RecognitionPattern recognitionPattern,  MatchingHelper matchingHelper) {
 		
 		// Initialization as command -> support for graph patterns from editors:
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(recognitionPattern.getGraphPattern());
 
 		if (editingDomain == null) {
-			internal_initializeRecognitionPattern(recognitionPattern, changeDomainMap, matchingHelper);
+			internal_initializeRecognitionPattern(recognitionPattern, matchingHelper);
 		} else {
 			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 
 				@Override
 				protected void doExecute() {
-					internal_initializeRecognitionPattern(recognitionPattern, changeDomainMap, matchingHelper);
+					internal_initializeRecognitionPattern(recognitionPattern, matchingHelper);
 				}
 
 				@Override
@@ -37,10 +35,9 @@ public class RecognitionPatternInitializer {
 		}
 	}
 	
-	private static void internal_initializeRecognitionPattern(RecognitionPattern recognitionPattern, 
-			LiftingGraphDomainMap changeDomainMap, MatchingHelper matchingHelper) {
+	private static void internal_initializeRecognitionPattern(RecognitionPattern recognitionPattern, MatchingHelper matchingHelper) {
 		initializeDomains(recognitionPattern, matchingHelper);
-		initializeChangePatterns(recognitionPattern, changeDomainMap);
+		initializeChangePatterns(recognitionPattern, matchingHelper);
 	}
 	
 	private static void initializeDomains(RecognitionPattern recognitionPattern, MatchingHelper matchingHelper) {
@@ -58,13 +55,12 @@ public class RecognitionPatternInitializer {
 		domain.initialize(matchingHelper);
 	}
 	
-	private static void initializeChangePatterns(
-			RecognitionPattern recognitionPattern, LiftingGraphDomainMap changeDomainMap) {
+	private static void initializeChangePatterns(RecognitionPattern recognitionPattern, MatchingHelper matchingHelper) {
 		
 		for (NodePattern changeNodePattern : recognitionPattern.getChangeNodePatterns()) {
 			ChangePattern changePattern = recognitionPattern.getChangePattern(changeNodePattern);
 			
-			for (EObject change : changeDomainMap.getChangeDomain(
+			for (EObject change : matchingHelper.getRevision().getDifference().getChangeDomain(
 					changePattern.getChangeType(), changePattern.getMetaModelType())) {
 				Domain.get(changeNodePattern).add(change);
 			}

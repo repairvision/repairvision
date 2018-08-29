@@ -173,7 +173,7 @@ public class ActionEdge extends ActionGraphElement {
 		if (stepTarget.getNodePatternA() != null) {
 			while (sourceMatches.hasNext()) {
 				Iterator<? extends EObject> targetMatches = actionGraph.getMatchingHelper()
-						.getTargets(sourceMatches.next(), stepSource.getNodePatternA(), edgePatternA);
+						.getTargetsA(sourceMatches.next(), stepSource.getNodePatternA(), edgePatternA);
 				
 				while (targetMatches.hasNext()) {
 					stepTarget.addMatchContextA(targetMatches.next());
@@ -187,7 +187,7 @@ public class ActionEdge extends ActionGraphElement {
 		if (stepTarget.getNodePatternB() != null) {
 			while (sourceMatches.hasNext()) {
 				Iterator<? extends EObject> targetMatches = actionGraph.getMatchingHelper()
-						.getTargets(sourceMatches.next(), stepSource.getNodePatternB(), edgePatternB);
+						.getTargetsB(sourceMatches.next(), stepSource.getNodePatternB(), edgePatternB);
 				
 				while (targetMatches.hasNext()) {
 					stepTarget.addMatchContextB(targetMatches.next());
