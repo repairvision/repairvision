@@ -30,7 +30,7 @@ public class DeveloperIntentionOracleDriver {
 			for (IRepairPlan repair : repairJob.getRepairs()) {
 				DeveloperIntentionOracle oracle = new DeveloperIntentionOracle(
 						currentToResolvedDifference,
-						repairJob.getValidations());
+						repairJob.getRepairTrees());
 				
 				if (oracle.isHistoricallyObservableRepair(repair)) {
 					observable.add(repair);

@@ -22,9 +22,11 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.editrule.recognition.scope.RepairActionFilter;
+import org.sidiff.editrule.recognition.impact.GraphActionImpactAnalysis;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
+import org.sidiff.validation.constraint.impact.PositiveImpactAnalysis;
+import org.sidiff.validation.constraint.impact.index.RepairActionIndex;
 
 public class DeveloperIntentionOracle {
 
@@ -55,10 +57,10 @@ public class DeveloperIntentionOracle {
 		}
 
 		// NOTE: Since attribute changes are optional -> re-check repair tree overlapping for observable changes:
-		RepairActionFilter repairFilter = new RepairActionFilter(repairTrees);
+		GraphActionImpactAnalysis repairFilter = new GraphActionImpactAnalysis(new PositiveImpactAnalysis(new RepairActionIndex(repairTrees)));
 		
 		for (Match preMatch : repair.getComplementMatches()) {
-			if (repairFilter.filter(observableChanges, preMatch)) {
+			if (repairFilter.check(observableChanges, preMatch)) {
 				return true;
 			}
 		}
