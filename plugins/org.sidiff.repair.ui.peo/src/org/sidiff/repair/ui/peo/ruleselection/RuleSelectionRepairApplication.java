@@ -152,8 +152,10 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 					// Clean up repair-trees:
 					validations = new ArrayList<>(repairJob.getValidations());
 					
-					for (RepairValidation validation : repairJob.getValidations()) {
-						validation.cleanUpRepairTree();
+					for (Validation validation : repairJob.getValidations()) {
+						if (validation instanceof RepairValidation) {
+							((RepairValidation) validation).cleanUpRepairTree();
+						}
 					}
 					
 					// Show repairs:
@@ -195,8 +197,10 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 				Display.getDefault().syncExec(() -> {
 					
 					// Clean up repair-trees:
-					for (RepairValidation validation : repairJob.getValidations()) {
-						validation.cleanUpRepairTree();
+					for (Validation validation : repairJob.getValidations()) {
+						if (validation instanceof RepairValidation) {
+							((RepairValidation) validation).cleanUpRepairTree();
+						}
 					}
 					
 					// Show repairs:

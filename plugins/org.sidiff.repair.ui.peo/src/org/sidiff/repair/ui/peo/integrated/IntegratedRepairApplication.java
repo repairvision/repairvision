@@ -236,8 +236,10 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				Display.getDefault().syncExec(() -> {
 					
 					// Clean up repair-trees:
-					for (RepairValidation validation : repairJob.getValidations()) {
-						validation.cleanUpRepairTree();
+					for (Validation validation : repairJob.getValidations()) {
+						if (validation instanceof RepairValidation) {
+							((RepairValidation) validation).cleanUpRepairTree();
+						}
 					}
 					
 					// Show repairs:
