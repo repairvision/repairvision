@@ -1,14 +1,14 @@
 package org.sidiff.editrule.recognition.pattern.domain;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.editrule.recognition.util.MatchingHelper;
+import org.sidiff.consistency.common.emf.MetaModelUtil;
 
 public class ConstraintTester {
 
 	public static boolean check(Domain domain, EObject object) {
 		
 		// Check types!
-		if (!MatchingHelper.isAssignableTo(object.eClass(), domain.getType())) {
+		if (!MetaModelUtil.isAssignableTo(object.eClass(), domain.getType())) {
 			return false;
 		}
 		

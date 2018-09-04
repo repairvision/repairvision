@@ -2,8 +2,8 @@ package org.sidiff.editrule.recognition;
 
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTable;
+import org.sidiff.editrule.recognition.impact.scope.RepairScope;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
-import org.sidiff.editrule.recognition.scope.RepairScope;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.history.revision.IRevision;
 

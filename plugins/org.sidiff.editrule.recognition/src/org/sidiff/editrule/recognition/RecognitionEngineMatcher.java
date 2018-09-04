@@ -8,13 +8,13 @@ import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.recognition.generator.PartialMatchGenerator;
+import org.sidiff.editrule.recognition.impact.scope.RepairScope;
+import org.sidiff.editrule.recognition.impact.scope.RepairScopeConstraint;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
-import org.sidiff.editrule.recognition.scope.RepairScope;
-import org.sidiff.editrule.recognition.scope.RepairScopeConstraint;
 import org.sidiff.editrule.recognition.selection.MatchSelector;
 import org.sidiff.graphpattern.NodePattern;
 

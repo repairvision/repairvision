@@ -6,10 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.henshin.model.Node;
+import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
@@ -31,6 +31,15 @@ public class MatchingHelper {
 	
 	public IRevision getRevision() {
 		return revision;
+	}
+	
+	/**
+	 * @param node
+	 *            A typed node.
+	 * @return <code>true</code> if the type is abstract, interface or a creation node.
+	 */
+	public static boolean isStrictMatchingType(Node node) {
+		return !(node.getType().isAbstract() || node.getType().isInterface()) && HenshinRuleAnalysisUtilEx.isCreationNode(node);
 	}
 
 	/**
@@ -67,19 +76,6 @@ public class MatchingHelper {
 			assert (edge.getSource() == sourceNode) : "The given edge is not incident with the given node!";
 			return revision.getVersionB().getTarget(object, type);
 		}
-	}
-	
-	/**
-	 * Is class A assignable to class B (B = A).
-	 * 
-	 * @param a
-	 *            From class A.
-	 * @param b
-	 *            To class B.
-	 * @return <code>true</code> if A is assignable to B; <code>false</code> otherwise.
-	 */
-	public static boolean isAssignableTo(EClass a, EClass b) {
-		return  a.equals(b) || b.equals(EcorePackage.eINSTANCE.getEObject()) || a.getEAllSuperTypes().contains(b);
 	}
 	
 	/**

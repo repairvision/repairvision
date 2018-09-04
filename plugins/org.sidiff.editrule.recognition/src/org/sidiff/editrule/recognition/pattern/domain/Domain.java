@@ -180,6 +180,15 @@ public class Domain extends MatchingImpl {
 		return SelectionType.isSelected(domain.get(localMatch));
 	}
 	
+	public boolean containsAny(Collection<? extends EObject> localMatches) {
+		for (EObject localMatch : localMatches) {
+			if (contains(localMatch)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean contains(EObject localMatch, SelectionType selection) {
 		return (domain.get(localMatch) == selection);
 	}

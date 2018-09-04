@@ -1,9 +1,9 @@
-package org.sidiff.editrule.recognition.scope;
+package org.sidiff.editrule.recognition.impact.scope;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
@@ -15,19 +15,16 @@ import org.sidiff.graphpattern.NodePattern;
 
 public class RepairScopeConstraint {
 
-	private Map<Domain, GraphElement> domains = new HashMap<>();
+	private Map<Domain, GraphElement> domains = new LinkedHashMap<>();
 	
-	private RepairScope scope;
+	private RepairScope repairScope;
 	
-	public RepairScopeConstraint(RepairScope scope, RecognitionPattern recognitionPattern) {
-		this.scope = scope;
+	public RepairScopeConstraint(RepairScope repairScope, RecognitionPattern recognitionPattern) {
+		this.repairScope = repairScope;
 		
 		// Create map from change/repair action to domain: 
-		for (GraphElement change : scope.getChanges()) {
-			if (change instanceof Node) {
-				NodePattern repairContext = recognitionPattern.getNodeTrace().get(change).getNodePatternB();
-				domains.put(Domain.get(repairContext), change);
-			} else if (change instanceof Edge) {
+		for (GraphElement change : repairScope.getChanges()) {
+			if (change instanceof Edge) {
 				
 				// Source:
 				NodePattern repairSourceContext = recognitionPattern.getEdgeTrace().get(change).getEdgePatternB().getSource();
@@ -46,14 +43,10 @@ public class RepairScopeConstraint {
 	
 	public boolean test() {
 		
-		for (Domain domain : domains.keySet()) {
-			GraphElement change = domains.get(domain);
-			
-			// Search for scope:
-			for (EObject scopeElement : scope.get(change)) {
-				if (domain.contains(scopeElement)) {
-					return true;
-				}
+		// Search for scope:
+		for (Entry<Domain, GraphElement> domain : domains.entrySet()) {
+			if (domain.getKey().containsAny(repairScope.get(domain.getValue()))) {
+				return true;
 			}
 		}
 		
