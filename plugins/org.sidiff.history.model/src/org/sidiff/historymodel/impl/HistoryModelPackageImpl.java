@@ -761,6 +761,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		addEEnumLiteral(modificationClassificationEEnum, ModificationClassification.COMPLETION);
 		addEEnumLiteral(modificationClassificationEEnum, ModificationClassification.CORRECTION);
 		addEEnumLiteral(modificationClassificationEEnum, ModificationClassification.OVERWRITE);
+		addEEnumLiteral(modificationClassificationEEnum, ModificationClassification.SET);
+		addEEnumLiteral(modificationClassificationEEnum, ModificationClassification.UNSET);
 
 		// Initialize data types
 		initEDataType(resourceEDataType, Resource.class, "Resource", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

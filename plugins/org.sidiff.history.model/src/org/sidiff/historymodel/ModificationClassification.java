@@ -66,7 +66,23 @@ public enum ModificationClassification implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	OVERWRITE(4, "OVERWRITE", "OVERWRITE");
+	OVERWRITE(4, "OVERWRITE", "OVERWRITE"), /**
+	 * The '<em><b>SET</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SET_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	SET(5, "SET", "SET"), /**
+	 * The '<em><b>UNSET</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #UNSET_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	UNSET(6, "UNSET", "UNSET");
 
 	/**
 	 * The '<em><b>UNKNOWN</b></em>' literal value.
@@ -144,6 +160,36 @@ public enum ModificationClassification implements Enumerator {
 	public static final int OVERWRITE_VALUE = 4;
 
 	/**
+	 * The '<em><b>SET</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>SET</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #SET
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SET_VALUE = 5;
+
+	/**
+	 * The '<em><b>UNSET</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>UNSET</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #UNSET
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int UNSET_VALUE = 6;
+
+	/**
 	 * An array of all the '<em><b>Modification Classification</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -156,6 +202,8 @@ public enum ModificationClassification implements Enumerator {
 			COMPLETION,
 			CORRECTION,
 			OVERWRITE,
+			SET,
+			UNSET,
 		};
 
 	/**
@@ -217,6 +265,8 @@ public enum ModificationClassification implements Enumerator {
 			case COMPLETION_VALUE: return COMPLETION;
 			case CORRECTION_VALUE: return CORRECTION;
 			case OVERWRITE_VALUE: return OVERWRITE;
+			case SET_VALUE: return SET;
+			case UNSET_VALUE: return UNSET;
 		}
 		return null;
 	}

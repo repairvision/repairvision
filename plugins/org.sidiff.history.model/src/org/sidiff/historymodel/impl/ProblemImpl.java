@@ -361,7 +361,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * @generated NOT
 	 */
 	public boolean isIntroduced() {
-		return getIntroducedIn() != null;
+		return (getIntroducedIn() != null) && (getIntroducedIn().getPredecessor() != null);
 	}
 
 	/**
