@@ -29,6 +29,7 @@ import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.api.util.ContextValidationFilter;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.common.ui.util.UIUtil;
 
 public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 	
@@ -64,6 +65,8 @@ public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 							beforeIntroducedResource.getResourceSet(),
 							introducedResource.getResourceSet(),
 							uriFragmentScope);
+				} else {
+					UIUtil.showMessage("No introducing edit step found!");
 				}
 				
 				if (inconsistency.isResolved()) {
@@ -87,6 +90,8 @@ public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 							beforeResolvedResource.getResourceSet(),
 							resolvedResource.getResourceSet(),
 							uriFragmentScope);
+				} else {
+					UIUtil.showMessage("No resolving edit step found!");
 				}
 			}
 		}

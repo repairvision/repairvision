@@ -6,6 +6,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.historymodel.presentation.util.HistoryModelEditorTools;
@@ -27,6 +28,8 @@ public class ShowEditStepsOnResourceHandler extends AbstractHandler {
 					Version introduced = inconsistency.getIntroducedIn();
 					
 					HistoryModelEditorTools.compare(beforeIntroduced.getModel(), introduced.getModel());
+				} else {
+					UIUtil.showMessage("No introducing edit step found!");
 				}
 				
 				if (inconsistency.isResolved()) {
@@ -34,6 +37,8 @@ public class ShowEditStepsOnResourceHandler extends AbstractHandler {
 					Version resolved = inconsistency.getResolvedIn();
 					
 					HistoryModelEditorTools.compare(beforeResolved.getModel(), resolved.getModel());
+				} else {
+					UIUtil.showMessage("No resolving edit step found!");
 				}
 			}
 		}
