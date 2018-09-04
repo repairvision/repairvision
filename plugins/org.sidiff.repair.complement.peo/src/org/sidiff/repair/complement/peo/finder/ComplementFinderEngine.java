@@ -18,7 +18,7 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.editrule.recognition.RecognitionEngine;
-import org.sidiff.editrule.recognition.scope.RepairScope;
+import org.sidiff.editrule.recognition.impact.scope.RepairScope;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.complement.construction.ComplementConstructor;
 import org.sidiff.repair.complement.construction.ComplementRule;

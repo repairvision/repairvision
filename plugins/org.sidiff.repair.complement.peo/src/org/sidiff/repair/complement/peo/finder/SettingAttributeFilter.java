@@ -11,13 +11,13 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.common.henshin.view.AttributePair;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
-import org.sidiff.editrule.recognition.scope.RepairActionFilter;
+import org.sidiff.editrule.recognition.impact.GraphActionImpactAnalysis;
 import org.sidiff.repair.complement.util.ComplementUtil;
 
 public class SettingAttributeFilter {
 
 	public static void filterSettingAttributes(Rule complementRule, 
-			Match prematch, RepairActionFilter repairActionFilter) {
+			Match prematch, GraphActionImpactAnalysis repairActionFilter) {
 		
 		// Keep only the given attributes in the complement rule:
 		// Get all << set >> attributes in << create >> nodes:
@@ -25,7 +25,7 @@ public class SettingAttributeFilter {
 			
 			// Remove only input parameters -> filter constant values:
 			if (complementRule.getParameter(complementAttribute.getValue()) != null) {
-				if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch)) {
+				if (!repairActionFilter.check(Collections.singletonList(complementAttribute), prematch)) {
 					complementAttribute.getNode().getAttributes().remove(complementAttribute);
 				}
 			}
@@ -37,7 +37,7 @@ public class SettingAttributeFilter {
 			
 			// Remove only input parameters -> filter constant values:
 			if (complementRule.getParameter(complementAttribute.getValue()) != null) {
-				if (!repairActionFilter.filter(Collections.singletonList(complementAttribute), prematch)) {
+				if (!repairActionFilter.check(Collections.singletonList(complementAttribute), prematch)) {
 					complementAttribute.getNode().getAttributes().remove(complementAttribute);
 				}
 			}
