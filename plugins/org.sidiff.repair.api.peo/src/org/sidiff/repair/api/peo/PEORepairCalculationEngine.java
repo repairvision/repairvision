@@ -12,11 +12,12 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogMonitor;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
-import org.sidiff.editrule.recognition.scope.RepairActionFilter;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
+import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
+import org.sidiff.validation.constraint.impact.index.RepairActionIndex;
 
 public class PEORepairCalculationEngine {
 	
@@ -65,19 +66,19 @@ public class PEORepairCalculationEngine {
 		// Validate model and calculate abstract repairs:
 		LogTime valiationTimer = new LogTime();
 		
-		RepairActionFilter repairFilter = new RepairActionFilter(
+		ImpactAnalyzes impact = new ImpactAnalyzes(new RepairActionIndex(
 				revision.getVersionB().getTargetResource().getAllContents(), 
-				settings.getConsistencyRules(), settings.getValidationFilter(), true);
+				settings.getConsistencyRules(), settings.getValidationFilter(), true));
 		
 		valiationTimer.stop();
 		System.out.println("Re.Vision[Validation Time]: " + valiationTimer + "ms");
-		System.out.println("Re.Vision[Inconsistencies]: " + repairFilter.getValidations().size());
+		System.out.println("Re.Vision[Inconsistencies]: " + impact.getValidations().size());
 
 		// Report validation:
 		if (settings.getMonitor() instanceof LogMonitor) {
 			LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
 //			log.append("[Time (ms)] Validation", valiationTimer);
-			log.append("Inconsistencies", repairFilter.getValidations().size());
+			log.append("Inconsistencies", impact.getValidations().size());
 		}
 		
 		// Calculate repairs:
@@ -95,7 +96,7 @@ public class PEORepairCalculationEngine {
 		int repairCount = 0;
 		
 		for (Rule editRule : settings.getEditRules()) {
-			PEORepairCaculation repairCaculation = createRepairCalculation(editRule, repairFilter, complementFinderEngine);
+			PEORepairCaculation repairCaculation = createRepairCalculation(editRule, impact, revision, complementFinderEngine);
 			
 			if (repairCaculation.isPotentialRepair()) {
 				List<IRepairPlan> repairsForEditRule = repairCaculation.findRepairs(complementMatchingTimer);
@@ -123,11 +124,11 @@ public class PEORepairCalculationEngine {
 		}
 		
 		// Create repair job:
-		PEORepairJob repairJob = new PEORepairJob(repairFilter.getValidations(), repairs, revision, graphModelB);
+		PEORepairJob repairJob = new PEORepairJob(impact.getValidations(), repairs, revision, graphModelB);
 		return repairJob;
 	}
 	
-	protected PEORepairCaculation createRepairCalculation(Rule editRule, RepairActionFilter repairFilter, ComplementFinderEngine complementFinderEngine) {
-		return new PEORepairCaculation(settings, editRule, repairFilter, complementFinderEngine);
+	protected PEORepairCaculation createRepairCalculation(Rule editRule, ImpactAnalyzes impact, IRevision revision, ComplementFinderEngine complementFinderEngine) {
+		return new PEORepairCaculation(settings, editRule, revision, impact, complementFinderEngine);
 	}
 }

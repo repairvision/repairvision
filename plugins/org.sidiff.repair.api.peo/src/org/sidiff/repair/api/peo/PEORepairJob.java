@@ -8,22 +8,24 @@ import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
+import org.sidiff.validation.constraint.api.util.Validation;
 
 public class PEORepairJob extends RepairJob<IRepairPlan> {
 
-	protected Collection<RepairValidation> validations;
+	protected Collection<? extends Validation> validations;
 	
-	public PEORepairJob(Collection<RepairValidation> validations, 
+	public PEORepairJob(List<? extends Validation> validations, 
 			List<IRepairPlan> repairs, IRevision revision, EGraph targetGraph) {
 		super(repairs, revision, targetGraph);
 		this.validations = validations;
 	}
 	
-	public Collection<RepairValidation> getValidations() {
+	public Collection<? extends Validation> getValidations() {
 		return validations;
 	}
 
-	public void setValidations(Collection<RepairValidation> validations) {
-		this.validations = validations;
+	@SuppressWarnings("unchecked")
+	public Collection<RepairValidation> getRepairTrees() {
+		return (Collection<RepairValidation>) validations;
 	}
 }

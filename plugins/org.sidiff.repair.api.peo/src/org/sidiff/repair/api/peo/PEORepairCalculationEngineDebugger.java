@@ -2,9 +2,10 @@ package org.sidiff.repair.api.peo;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.editrule.recognition.scope.RepairActionFilter;
+import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderMonitor;
+import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 public class PEORepairCalculationEngineDebugger extends PEORepairCalculationEngine {
 
@@ -15,8 +16,8 @@ public class PEORepairCalculationEngineDebugger extends PEORepairCalculationEngi
 	}
 	
 	@Override
-	protected PEORepairCaculation createRepairCalculation(Rule editRule, RepairActionFilter repairFilter, ComplementFinderEngine complementFinderEngine) {
-		PEORepairCaculation repairCaculation = super.createRepairCalculation(editRule, repairFilter, complementFinderEngine);
+	protected PEORepairCaculation createRepairCalculation(Rule editRule, ImpactAnalyzes impact, IRevision revision, ComplementFinderEngine complementFinderEngine) {
+		PEORepairCaculation repairCaculation = super.createRepairCalculation(editRule, impact, revision, complementFinderEngine);
 		
 		lastComplementFinderMonitor = new ComplementFinderMonitor(repairCaculation.getComplementFinder());
 		lastComplementFinderMonitor.setMatchingPathRecording(true);
