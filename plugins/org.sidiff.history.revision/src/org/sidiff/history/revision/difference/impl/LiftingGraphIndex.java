@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.consistency.common.java.StringPrinter;
@@ -203,6 +204,103 @@ public class LiftingGraphIndex {
 							if (nextLocalChange.eGet(reference) == element) {
 								next = (C) nextLocalChange;
 								return true;
+							}
+						}
+					}
+				}
+				
+				return false;
+			}
+
+			@Override
+			public C next() {
+				if (hasNext()) {
+					// Consume next:
+					C tmp_next = next;
+					next = null;
+					return tmp_next;
+				} else {
+					throw new NoSuchElementException();
+				}
+			}
+		};
+	}
+	
+	/**
+	 * @param element
+	 *            An element of the model.
+	 * @return The add/remove object annotation or <code>null</code>.
+	 */
+	public Change getObjectChange(EObject element) {
+
+		for (Change localChange : localChanges.get(element)) {
+			if ((localChange instanceof AddObject) || (localChange instanceof RemoveObject)) {
+				return localChange;
+			}
+		}
+		
+		return null;
+	}
+
+	/**
+	 * @param element
+	 *            An element of the model.
+	 * @param attributeType
+	 *            The type of the attribute.
+	 * @return The attribute value change annotation or <code>null</code>.
+	 */
+	public AttributeValueChange getAttributeChange(EObject element, EAttribute attributeType) {
+		
+		for (Change localChange : localChanges.get(element)) {
+			if (localChange instanceof AttributeValueChange) {
+				if (attributeType == ((AttributeValueChange) localChange).getType()) {
+					return (AttributeValueChange) localChange;
+				}
+			}
+		}
+		
+		return null;
+	}
+
+	/**
+	 * @param element
+	 *            An element of the model.
+	 * @param referenceType The type of the reference.
+	 * @return All add/remove reference annotation or <code>null</code>.
+	 */
+	public <C extends Change> Iterator<C> getReferenceChanges(EObject element, EReference referenceType) {
+		
+		return new Iterator<C>() {
+
+			private Iterator<Change> localChanges = getLocalChanges(element).iterator();
+			
+			private C next = null;
+			
+			@SuppressWarnings("unchecked")
+			@Override
+			public boolean hasNext() {
+				
+				if (next != null) {
+					return true;
+				} else {
+					// Get next change:
+					while (localChanges.hasNext()) {
+						Change nextLocalChange = localChanges.next();
+						
+						// Check type:
+						if (nextLocalChange instanceof RemoveReference) {
+							if (((RemoveReference) nextLocalChange).getType() == referenceType) {
+								if (nextLocalChange.eGet(SymmetricPackage.eINSTANCE.getRemoveReference_Src()) == element) {
+									next = (C) nextLocalChange;
+									return true;
+								}
+							}
+						} else if (nextLocalChange instanceof AddReference) {
+							if (((AddReference) nextLocalChange).getType() == referenceType) {
+								if (nextLocalChange.eGet(SymmetricPackage.eINSTANCE.getAddReference_Src()) == element) {
+									next = (C) nextLocalChange;
+									return true;
+								}
 							}
 						}
 					}

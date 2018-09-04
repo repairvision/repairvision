@@ -19,12 +19,13 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.difference.symmetric.AddObject;
+import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricFactory;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.revision.difference.IDifference;
-import org.sidiff.history.revision.util.RevisionUtil;
+import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.matching.model.Correspondence;
 
 public class Difference implements IDifference {
@@ -60,7 +61,7 @@ public class Difference implements IDifference {
 	}
 	
 	protected URI getDifferenceURI(URI modelA, URI modelB) {
-		return RevisionUtil.getDifferenceURI(modelA, modelB);
+		return SymmetricDifferenceUtil.getDifferenceURI(modelA, modelB);
 	}
 	
 	public Difference(SymmetricDifference symmetricDifference) {
@@ -162,6 +163,21 @@ public class Difference implements IDifference {
 	@Override
 	public <C extends Change> Iterator<C> getLocalChanges(EObject element, EReference reference, Class<C> changeType) {
 		return index.getLocalChanges(element, reference, changeType);
+	}
+	
+	@Override
+	public Change getObjectChange(EObject element) {
+		return index.getObjectChange(element);
+	}
+
+	@Override
+	public AttributeValueChange getAttributeChange(EObject element, EAttribute attributeType) {
+		return index.getAttributeChange(element, attributeType);
+	}
+
+	@Override
+	public <C extends Change> Iterator<C> getReferenceChanges(EObject element, EReference referenceType) {
+		return index.getReferenceChanges(element, referenceType);
 	}
 
 	@Override

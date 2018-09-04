@@ -26,9 +26,9 @@ public interface IDifference {
 	 * returns a fresh and modifiable list.
 	 * 
 	 * @param changeType
-	 *            The type of the change ({@link AddObject},
-	 *            {@link RemoveObject}, {@link AddReference},
-	 *            {@link RemoveReference}, {@link AttributeValueChange})
+	 *            The type of the change ({@link AddObject}, {@link RemoveObject},
+	 *            {@link AddReference}, {@link RemoveReference},
+	 *            {@link AttributeValueChange})
 	 * @param changeDomainType
 	 *            The (meta) type of the changed objects ({@link EClass},
 	 *            {@link EReference}, {@link EAttribute}).
@@ -37,15 +37,14 @@ public interface IDifference {
 	List<EObject> getChangeDomain(EClass changeType, EObject changeDomainType);
 
 	/**
-	 * Returns the size of the domain for a change type. The returned number
-	 * equals the size of the list returned by
-	 * {@link #getAddObjectDomain(EClass)}. This method should be used whenever
-	 * the actual objects are not needed.
+	 * Returns the size of the domain for a change type. The returned number equals
+	 * the size of the list returned by {@link #getAddObjectDomain(EClass)}. This
+	 * method should be used whenever the actual objects are not needed.
 	 * 
 	 * @param changeType
-	 *            The type of the change ({@link AddObject},
-	 *            {@link RemoveObject}, {@link AddReference},
-	 *            {@link RemoveReference}, {@link AttributeValueChange})
+	 *            The type of the change ({@link AddObject}, {@link RemoveObject},
+	 *            {@link AddReference}, {@link RemoveReference},
+	 *            {@link AttributeValueChange})
 	 * @param changeDomainType
 	 *            The type of the changed objects ({@link EClass},
 	 *            {@link EReference}, {@link EAttribute}).
@@ -64,10 +63,9 @@ public interface IDifference {
 	List<EObject> getAddObjectDomain(EClass type);
 
 	/**
-	 * Returns the size of the domain for a change type. The returned number
-	 * equals the size of the list returned by
-	 * {@link #getAddObjectDomain(EClass)}. This method should be used whenever
-	 * the actual objects are not needed.
+	 * Returns the size of the domain for a change type. The returned number equals
+	 * the size of the list returned by {@link #getAddObjectDomain(EClass)}. This
+	 * method should be used whenever the actual objects are not needed.
 	 * 
 	 * @param type
 	 *            The type of the added objects.
@@ -86,10 +84,9 @@ public interface IDifference {
 	List<EObject> getRemoveObjectDomain(EClass type);
 
 	/**
-	 * Returns the size of the domain for a change type. The returned number
-	 * equals the size of the list returned by
-	 * {@link #getRemoveObjectDomain(EClass)}. This method should be used
-	 * whenever the actual objects are not needed.
+	 * Returns the size of the domain for a change type. The returned number equals
+	 * the size of the list returned by {@link #getRemoveObjectDomain(EClass)}. This
+	 * method should be used whenever the actual objects are not needed.
 	 * 
 	 * @param type
 	 *            The type of the removed objects.
@@ -108,10 +105,9 @@ public interface IDifference {
 	List<EObject> getAddReferenceDomain(EReference type);
 
 	/**
-	 * Returns the size of the domain for a change type. The returned number
-	 * equals the size of the list returned by
-	 * {@link #getAddReferenceDomain(EClass)}. This method should be used
-	 * whenever the actual objects are not needed.
+	 * Returns the size of the domain for a change type. The returned number equals
+	 * the size of the list returned by {@link #getAddReferenceDomain(EClass)}. This
+	 * method should be used whenever the actual objects are not needed.
 	 * 
 	 * @param type
 	 *            The type of added references.
@@ -130,10 +126,9 @@ public interface IDifference {
 	List<EObject> getRemoveReferenceDomain(EReference type);
 
 	/**
-	 * Returns the size of the domain for a change type. The returned number
-	 * equals the size of the list returned by
-	 * {@link #getRemoveReferenceDomain(EClass)}. This method should be used
-	 * whenever the actual objects are not needed.
+	 * Returns the size of the domain for a change type. The returned number equals
+	 * the size of the list returned by {@link #getRemoveReferenceDomain(EClass)}.
+	 * This method should be used whenever the actual objects are not needed.
 	 * 
 	 * @param type
 	 *            The type of the removed references.
@@ -152,10 +147,10 @@ public interface IDifference {
 	List<EObject> getAttributeValueChangeDomain(EAttribute type);
 
 	/**
-	 * Returns the size of the domain for a change type. The returned number
-	 * equals the size of the list returned by
-	 * {@link #getAttributeValueChangeDomain(EClass)}. This method should be
-	 * used whenever the actual objects are not needed.
+	 * Returns the size of the domain for a change type. The returned number equals
+	 * the size of the list returned by
+	 * {@link #getAttributeValueChangeDomain(EClass)}. This method should be used
+	 * whenever the actual objects are not needed.
 	 * 
 	 * @param type
 	 *            The type of the changed attribute.
@@ -186,13 +181,38 @@ public interface IDifference {
 	 * @param element
 	 *            An element of the model.
 	 * @param reference
-	 *            Type of the incident (model <-> change) edge.
+	 *            Type of the incident (model <-> change) edge (e.g.
+	 *            SymmetricPackage.eINSTANCE.getAddObject_Obj()).
 	 * @param changeType
-	 *            The class type of the change.
-	 * @return All adjacent local changes to this model element which are
-	 *         incident with the given edge.
+	 *            The class type of the change (e.g.AddObject.class).
+	 * @return All adjacent local changes to this model element which are incident
+	 *         with the given edge.
 	 */
 	<C extends Change> Iterator<C> getLocalChanges(EObject element, EReference reference, Class<C> changeType);
+
+	/**
+	 * @param element
+	 *            An element of the model.
+	 * @return The add/remove object annotation or <code>null</code>.
+	 */
+	Change getObjectChange(EObject element);
+
+	/**
+	 * @param element
+	 *            An element of the model.
+	 * @param attributeType
+	 *            The type of the attribute.
+	 * @return The attribute value change annotation or <code>null</code>.
+	 */
+	AttributeValueChange getAttributeChange(EObject element, EAttribute attributeType);
+
+	/**
+	 * @param element
+	 *            An element of the model.
+	 * @param referenceType The type of the reference.
+	 * @return All add/remove reference annotation or <code>null</code>.
+	 */
+	<C extends Change> Iterator<C> getReferenceChanges(EObject element, EReference referenceType);
 
 	/**
 	 * @param modelElement
@@ -212,7 +232,7 @@ public interface IDifference {
 	 * @return The correspondence of the model A/B object or <code>null</code>.
 	 */
 	Correspondence getCorrespondenceA(EObject modelElement);
-	
+
 	/**
 	 * @param modelElement
 	 *            The element of model B.
@@ -226,7 +246,7 @@ public interface IDifference {
 	 * @return The correspondence of the model A/B object or <code>null</code>.
 	 */
 	Correspondence getCorrespondenceB(EObject modelElement);
-	
+
 	/**
 	 * @param modelElement
 	 *            The element of model A.
