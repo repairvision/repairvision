@@ -2,7 +2,6 @@
  */
 package org.sidiff.graphpattern.impl;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -12,17 +11,13 @@ import java.util.function.Predicate;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.sidiff.graphpattern.Extendable;
 import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.SubGraph;
 
 /**
@@ -33,7 +28,6 @@ import org.sidiff.graphpattern.SubGraph;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.impl.GraphElementImpl#getStereotypes <em>Stereotypes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphElementImpl#getSubgraph <em>Subgraph</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphElementImpl#getGraph <em>Graph</em>}</li>
  * </ul>
@@ -41,16 +35,6 @@ import org.sidiff.graphpattern.SubGraph;
  * @generated
  */
 public abstract class GraphElementImpl extends PatternElementImpl implements GraphElement {
-	/**
-	 * The cached value of the '{@link #getStereotypes() <em>Stereotypes</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStereotypes()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Stereotype> stereotypes;
-
 	/**
 	 * The cached value of the '{@link #getSubgraph() <em>Subgraph</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -145,18 +129,6 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Stereotype> getStereotypes() {
-		if (stereotypes == null) {
-			stereotypes = new EObjectResolvingEList<Stereotype>(Stereotype.class, this, GraphpatternPackage.GRAPH_ELEMENT__STEREOTYPES);
-		}
-		return stereotypes;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public GraphPattern getGraph() {
 		GraphPattern graph = basicGetGraph();
 		return graph != null && graph.eIsProxy() ? (GraphPattern)eResolveProxy((InternalEObject)graph) : graph;
@@ -220,8 +192,6 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_ELEMENT__STEREOTYPES:
-				return getStereotypes();
 			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH:
 				if (resolve) return getSubgraph();
 				return basicGetSubgraph();
@@ -237,14 +207,9 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_ELEMENT__STEREOTYPES:
-				getStereotypes().clear();
-				getStereotypes().addAll((Collection<? extends Stereotype>)newValue);
-				return;
 			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH:
 				setSubgraph((SubGraph)newValue);
 				return;
@@ -260,9 +225,6 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_ELEMENT__STEREOTYPES:
-				getStereotypes().clear();
-				return;
 			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH:
 				setSubgraph((SubGraph)null);
 				return;
@@ -278,8 +240,6 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_ELEMENT__STEREOTYPES:
-				return stereotypes != null && !stereotypes.isEmpty();
 			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH:
 				return subgraph != null;
 			case GraphpatternPackage.GRAPH_ELEMENT__GRAPH:
@@ -288,38 +248,6 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 		return super.eIsSet(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == Extendable.class) {
-			switch (derivedFeatureID) {
-				case GraphpatternPackage.GRAPH_ELEMENT__STEREOTYPES: return GraphpatternPackage.EXTENDABLE__STEREOTYPES;
-				default: return -1;
-			}
-		}
-		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == Extendable.class) {
-			switch (baseFeatureID) {
-				case GraphpatternPackage.EXTENDABLE__STEREOTYPES: return GraphpatternPackage.GRAPH_ELEMENT__STEREOTYPES;
-				default: return -1;
-			}
-		}
-		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

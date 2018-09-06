@@ -23,7 +23,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface GraphPattern extends PatternElement, Extendable {
+public interface GraphPattern extends PatternElement {
 	/**
 	 * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.graphpattern.NodePattern}.

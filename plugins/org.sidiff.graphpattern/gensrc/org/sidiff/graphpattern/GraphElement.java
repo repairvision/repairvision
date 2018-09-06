@@ -21,7 +21,7 @@ import java.util.function.Predicate;
  * @model abstract="true"
  * @generated
  */
-public interface GraphElement extends PatternElement, Extendable {
+public interface GraphElement extends PatternElement {
 	/**
 	 * Returns the value of the '<em><b>Subgraph</b></em>' reference.
 	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.SubGraph#getElements <em>Elements</em>}'.

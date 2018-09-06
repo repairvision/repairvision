@@ -21,7 +21,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface SubGraph extends Extendable {
+public interface SubGraph extends PatternElement {
 	/**
 	 * Returns the value of the '<em><b>Elements</b></em>' reference list.
 	 * The list contents are of type {@link org.sidiff.graphpattern.GraphElement}.

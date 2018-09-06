@@ -2,12 +2,17 @@
  */
 package org.sidiff.graphpattern.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.PatternElement;
+import org.sidiff.graphpattern.Stereotype;
 
 /**
  * <!-- begin-user-doc -->
@@ -17,6 +22,7 @@ import org.sidiff.graphpattern.PatternElement;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.sidiff.graphpattern.impl.PatternElementImpl#getStereotypes <em>Stereotypes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.PatternElementImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.PatternElementImpl#getDescription <em>Description</em>}</li>
  * </ul>
@@ -24,6 +30,16 @@ import org.sidiff.graphpattern.PatternElement;
  * @generated
  */
 public abstract class PatternElementImpl extends MinimalEObjectImpl.Container implements PatternElement {
+	/**
+	 * The cached value of the '{@link #getStereotypes() <em>Stereotypes</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStereotypes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Stereotype> stereotypes;
+
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -88,6 +104,18 @@ public abstract class PatternElementImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Stereotype> getStereotypes() {
+		if (stereotypes == null) {
+			stereotypes = new EObjectResolvingEList<Stereotype>(Stereotype.class, this, GraphpatternPackage.PATTERN_ELEMENT__STEREOTYPES);
+		}
+		return stereotypes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getName() {
 		return name;
 	}
@@ -133,6 +161,8 @@ public abstract class PatternElementImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case GraphpatternPackage.PATTERN_ELEMENT__STEREOTYPES:
+				return getStereotypes();
 			case GraphpatternPackage.PATTERN_ELEMENT__NAME:
 				return getName();
 			case GraphpatternPackage.PATTERN_ELEMENT__DESCRIPTION:
@@ -146,9 +176,14 @@ public abstract class PatternElementImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case GraphpatternPackage.PATTERN_ELEMENT__STEREOTYPES:
+				getStereotypes().clear();
+				getStereotypes().addAll((Collection<? extends Stereotype>)newValue);
+				return;
 			case GraphpatternPackage.PATTERN_ELEMENT__NAME:
 				setName((String)newValue);
 				return;
@@ -167,6 +202,9 @@ public abstract class PatternElementImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case GraphpatternPackage.PATTERN_ELEMENT__STEREOTYPES:
+				getStereotypes().clear();
+				return;
 			case GraphpatternPackage.PATTERN_ELEMENT__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -185,6 +223,8 @@ public abstract class PatternElementImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case GraphpatternPackage.PATTERN_ELEMENT__STEREOTYPES:
+				return stereotypes != null && !stereotypes.isEmpty();
 			case GraphpatternPackage.PATTERN_ELEMENT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case GraphpatternPackage.PATTERN_ELEMENT__DESCRIPTION:

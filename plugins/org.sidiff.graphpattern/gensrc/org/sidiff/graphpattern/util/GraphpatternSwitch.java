@@ -5,7 +5,6 @@ package org.sidiff.graphpattern.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.sidiff.graphpattern.*;
 import org.sidiff.graphpattern.Assignment;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.AttributePattern;
@@ -15,6 +14,7 @@ import org.sidiff.graphpattern.DependencyGraph;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.Extendable;
 import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
@@ -26,6 +26,7 @@ import org.sidiff.graphpattern.ParameterBinding;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.PatternElement;
 import org.sidiff.graphpattern.Profile;
+import org.sidiff.graphpattern.Resource;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.SubGraph;
 import org.sidiff.graphpattern.ValueBinding;
@@ -132,6 +133,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				Bundle bundle = (Bundle)theEObject;
 				T result = caseBundle(bundle);
 				if (result == null) result = casePatternElement(bundle);
+				if (result == null) result = caseExtendable(bundle);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -139,12 +141,14 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				Pattern pattern = (Pattern)theEObject;
 				T result = casePattern(pattern);
 				if (result == null) result = casePatternElement(pattern);
+				if (result == null) result = caseExtendable(pattern);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphpatternPackage.PATTERN_ELEMENT: {
 				PatternElement patternElement = (PatternElement)theEObject;
 				T result = casePatternElement(patternElement);
+				if (result == null) result = caseExtendable(patternElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -152,6 +156,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				Parameter parameter = (Parameter)theEObject;
 				T result = caseParameter(parameter);
 				if (result == null) result = casePatternElement(parameter);
+				if (result == null) result = caseExtendable(parameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -183,6 +188,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 				Association association = (Association)theEObject;
 				T result = caseAssociation(association);
 				if (result == null) result = casePatternElement(association);
+				if (result == null) result = caseExtendable(association);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -221,6 +227,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 			case GraphpatternPackage.SUB_GRAPH: {
 				SubGraph subGraph = (SubGraph)theEObject;
 				T result = caseSubGraph(subGraph);
+				if (result == null) result = casePatternElement(subGraph);
 				if (result == null) result = caseExtendable(subGraph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;

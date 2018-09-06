@@ -8,14 +8,11 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.SubGraph;
 
 /**
@@ -26,24 +23,13 @@ import org.sidiff.graphpattern.SubGraph;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.impl.SubGraphImpl#getStereotypes <em>Stereotypes</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.SubGraphImpl#getElements <em>Elements</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.SubGraphImpl#getSubgraphs <em>Subgraphs</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class SubGraphImpl extends MinimalEObjectImpl.Container implements SubGraph {
-	/**
-	 * The cached value of the '{@link #getStereotypes() <em>Stereotypes</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getStereotypes()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Stereotype> stereotypes;
-
+public class SubGraphImpl extends PatternElementImpl implements SubGraph {
 	/**
 	 * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -81,18 +67,6 @@ public class SubGraphImpl extends MinimalEObjectImpl.Container implements SubGra
 	@Override
 	protected EClass eStaticClass() {
 		return GraphpatternPackage.Literals.SUB_GRAPH;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Stereotype> getStereotypes() {
-		if (stereotypes == null) {
-			stereotypes = new EObjectResolvingEList<Stereotype>(Stereotype.class, this, GraphpatternPackage.SUB_GRAPH__STEREOTYPES);
-		}
-		return stereotypes;
 	}
 
 	/**
@@ -158,8 +132,6 @@ public class SubGraphImpl extends MinimalEObjectImpl.Container implements SubGra
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GraphpatternPackage.SUB_GRAPH__STEREOTYPES:
-				return getStereotypes();
 			case GraphpatternPackage.SUB_GRAPH__ELEMENTS:
 				return getElements();
 			case GraphpatternPackage.SUB_GRAPH__SUBGRAPHS:
@@ -177,10 +149,6 @@ public class SubGraphImpl extends MinimalEObjectImpl.Container implements SubGra
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GraphpatternPackage.SUB_GRAPH__STEREOTYPES:
-				getStereotypes().clear();
-				getStereotypes().addAll((Collection<? extends Stereotype>)newValue);
-				return;
 			case GraphpatternPackage.SUB_GRAPH__ELEMENTS:
 				getElements().clear();
 				getElements().addAll((Collection<? extends GraphElement>)newValue);
@@ -201,9 +169,6 @@ public class SubGraphImpl extends MinimalEObjectImpl.Container implements SubGra
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.SUB_GRAPH__STEREOTYPES:
-				getStereotypes().clear();
-				return;
 			case GraphpatternPackage.SUB_GRAPH__ELEMENTS:
 				getElements().clear();
 				return;
@@ -222,8 +187,6 @@ public class SubGraphImpl extends MinimalEObjectImpl.Container implements SubGra
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.SUB_GRAPH__STEREOTYPES:
-				return stereotypes != null && !stereotypes.isEmpty();
 			case GraphpatternPackage.SUB_GRAPH__ELEMENTS:
 				return elements != null && !elements.isEmpty();
 			case GraphpatternPackage.SUB_GRAPH__SUBGRAPHS:

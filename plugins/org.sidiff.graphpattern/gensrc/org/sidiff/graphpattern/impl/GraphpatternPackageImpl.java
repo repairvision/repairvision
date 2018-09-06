@@ -1406,19 +1406,18 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		// Add supertypes to classes
 		graphPatternEClass.getESuperTypes().add(this.getPatternElement());
-		graphPatternEClass.getESuperTypes().add(this.getExtendable());
 		nodePatternEClass.getESuperTypes().add(this.getGraphElement());
 		edgePatternEClass.getESuperTypes().add(this.getGraphElement());
 		attributePatternEClass.getESuperTypes().add(this.getGraphElement());
 		bundleEClass.getESuperTypes().add(this.getPatternElement());
 		patternEClass.getESuperTypes().add(this.getPatternElement());
+		patternElementEClass.getESuperTypes().add(this.getExtendable());
 		parameterEClass.getESuperTypes().add(this.getPatternElement());
 		associationEClass.getESuperTypes().add(this.getPatternElement());
 		objectBindingEClass.getESuperTypes().add(this.getParameterBinding());
 		valueBindingEClass.getESuperTypes().add(this.getParameterBinding());
-		subGraphEClass.getESuperTypes().add(this.getExtendable());
+		subGraphEClass.getESuperTypes().add(this.getPatternElement());
 		graphElementEClass.getESuperTypes().add(this.getPatternElement());
-		graphElementEClass.getESuperTypes().add(this.getExtendable());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(graphPatternEClass, GraphPattern.class, "GraphPattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
