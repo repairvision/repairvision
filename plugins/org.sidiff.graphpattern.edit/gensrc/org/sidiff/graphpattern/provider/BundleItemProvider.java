@@ -119,14 +119,15 @@ public class BundleItemProvider extends PatternElementItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		String label = ((Bundle)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Bundle_type") :
-			getString("_UI_Bundle_type") + " " + label;
+		return label;
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_Bundle_type") :
+//			getString("_UI_Bundle_type") + " " + label;
 	}
 	
 

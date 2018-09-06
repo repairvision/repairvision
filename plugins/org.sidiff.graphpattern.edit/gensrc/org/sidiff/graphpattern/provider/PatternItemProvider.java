@@ -15,6 +15,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.edit.util.LabelServices;
 
 /**
  * This is the item provider adapter for a {@link org.sidiff.graphpattern.Pattern} object.
@@ -120,14 +121,14 @@ public class PatternItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Pattern)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Pattern_type") :
-			getString("_UI_Pattern_type") + " " + label;
+		return LabelServices.getLabel((Pattern) object);
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_Pattern_type") :
+//			getString("_UI_Pattern_type") + " " + label;
 	}
 	
 

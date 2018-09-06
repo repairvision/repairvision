@@ -8,10 +8,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
 import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphpatternPackage;
 
@@ -43,7 +41,6 @@ public class GraphElementItemProvider extends PatternElementItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addStereotypesPropertyDescriptor(object);
 			addSubgraphPropertyDescriptor(object);
 			addGraphPropertyDescriptor(object);
 		}
@@ -64,28 +61,6 @@ public class GraphElementItemProvider extends PatternElementItemProvider {
 				 getString("_UI_GraphElement_subgraph_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_GraphElement_subgraph_feature", "_UI_GraphElement_type"),
 				 GraphpatternPackage.Literals.GRAPH_ELEMENT__SUBGRAPH,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Stereotypes feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addStereotypesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Extendable_stereotypes_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Extendable_stereotypes_feature", "_UI_Extendable_type"),
-				 GraphpatternPackage.Literals.EXTENDABLE__STEREOTYPES,
 				 true,
 				 false,
 				 true,
