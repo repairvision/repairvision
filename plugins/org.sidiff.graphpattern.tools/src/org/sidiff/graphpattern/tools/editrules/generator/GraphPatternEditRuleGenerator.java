@@ -20,6 +20,7 @@ import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Stereotype;
+import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil;
 
 public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 

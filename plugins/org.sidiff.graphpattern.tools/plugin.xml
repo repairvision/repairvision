@@ -35,21 +35,11 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="toolbar:org.sidiff.graphpattern.presentation.GraphpatternEditorID">
-         <command
-               commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern"
-               icon="icons/slice.gif"
-               style="push">
-         </command>
-         <command
-               commandId="org.sidiff.graphpattern.tools.command.creatediagram"
-               icon="icons/Sirius.gif"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
             locationURI="popup:org.sidiff.graphpattern.presentation.GraphpatternEditorID">
+         <separator
+               name="org.sidiff.graphpattern.tools.separator.start"
+               visible="true">
+         </separator>
          <command
                commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern"
                icon="icons/slice.gif"
@@ -60,6 +50,10 @@
                icon="icons/Sirius.gif"
                style="push">
          </command>
+         <separator
+               name="org.sidiff.graphpattern.tools.separator.end"
+               visible="true">
+         </separator>
       </menuContribution>
    </extension>
    <extension
