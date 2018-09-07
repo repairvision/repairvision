@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -20,10 +21,14 @@ import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.edit.commands.SetEdgePatternOppositeCommand;
 import org.sidiff.graphpattern.edit.commands.SetEdgePatternTypeCommand;
 import org.sidiff.graphpattern.edit.util.ColorServices;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 import org.sidiff.graphpattern.edit.util.LabelServices;
+import org.eclipse.emf.ecore.EClass;
+import org.sidiff.consistency.common.emf.MetaModelUtil;
 
 /**
  * This is the item provider adapter for a {@link org.sidiff.graphpattern.EdgePattern} object.
@@ -60,7 +65,12 @@ public class EdgePatternItemProvider
 		
 		// EdgePatter.setType(): Set consistent edge opposite types:
 		if (feature == GraphpatternPackage.Literals.EDGE_PATTERN__TYPE) {
-			return new SetEdgePatternTypeCommand(domain, owner, feature, value);
+			return new SetEdgePatternTypeCommand(domain, owner, value);
+		}
+		
+		// EdgePatter.setOpposite(): Set consistent edge opposites:
+		if (feature == GraphpatternPackage.Literals.EDGE_PATTERN__OPPOSITE) {
+			return new SetEdgePatternOppositeCommand(domain, owner, value);
 		}
 		
 		return super.createSetCommand(domain, owner, feature, value, index);
@@ -88,7 +98,7 @@ public class EdgePatternItemProvider
 	 * This adds a property descriptor for the Target feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void addTargetPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
@@ -103,14 +113,50 @@ public class EdgePatternItemProvider
 				 true,
 				 null,
 				 null,
-				 null));
+				 null,
+				 getTargetPropertyFilter()
+				));
+	}
+	
+	/**
+	 * This adds a property filter for the Target feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public BiFunction<Object, Object, Boolean> getTargetPropertyFilter() {
+		 return (element, propertyValue) -> {
+
+			 if (element instanceof EdgePattern) {
+				 EdgePattern edge = (EdgePattern) element;
+
+				 if (propertyValue instanceof NodePattern) {
+					 NodePattern node = (NodePattern) propertyValue;
+
+					 if (node.getGraph().getPattern() == edge.getGraph().getPattern()) {
+						 if ((node.getType() != null) && (edge.getType() != null)) {
+							 if (edge.getType().getEType() instanceof EClass) {
+								 if (MetaModelUtil.isAssignableTo(node.getType(), (EClass) edge.getType().getEType())) {
+									 return true;
+								 } else {
+									 return false;
+								 }
+							 }
+						 }
+						 return true;
+					 }
+				 }
+				 return false;
+			 }
+			 return true;
+		 };
 	}
 
 	/**
 	 * This adds a property descriptor for the Opposite feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void addOppositePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
@@ -125,14 +171,54 @@ public class EdgePatternItemProvider
 				 true,
 				 null,
 				 null,
-				 null));
+				 null,
+				 getOppositePropertyFilter()
+				 ));
+	}
+	
+	/**
+	 * This adds a property filter for the Opposite feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public BiFunction<Object, Object, Boolean> getOppositePropertyFilter() {
+		return (element, propertyValue) -> {
+			 
+			 if (element instanceof EdgePattern) {
+				 EdgePattern edge = (EdgePattern) element;
+
+				 if (propertyValue instanceof EdgePattern) {
+					 EdgePattern oppositeEdge = (EdgePattern) propertyValue;
+
+					 if (oppositeEdge.getGraph() == edge.getGraph()) {
+						 if ((edge.getTarget() != null) && (oppositeEdge.getTarget() != null)) {
+							 if ((edge.getTarget() == oppositeEdge.getSource()) && (edge.getSource() == oppositeEdge.getTarget())) {
+								 if ((edge.getType() != null) && (oppositeEdge.getType() != null)) {
+									 if (edge.getType().getEOpposite() != oppositeEdge.getType()) {
+										 return false;
+									 }
+								 }
+								 return true;
+							 } else {
+								 return false;
+							 }
+						 } else {
+							 return true;
+						 }
+					 }
+				 }
+				 return false;
+			 }
+			 return true;
+		 };
 	}
 
 	/**
 	 * This adds a property descriptor for the Type feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void addTypePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
@@ -147,7 +233,44 @@ public class EdgePatternItemProvider
 				 true,
 				 null,
 				 null,
-				 null));
+				 null,
+				 getTypePropertyFilter()
+				));
+	}
+	
+	/**
+	 * This adds a property filter for the Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public BiFunction<Object, Object, Boolean> getTypePropertyFilter() {
+		 return (element, propertyValue) -> {
+			 
+			 if (element instanceof EdgePattern) {
+				 EdgePattern edge = (EdgePattern) element;
+
+				 if (propertyValue instanceof EReference) {
+					 EReference type = (EReference) propertyValue;
+					 boolean sourceType = true;
+					 boolean targetType = true;
+					 
+					 if ((edge.getSource() != null) && (edge.getSource().getType() != null)) {
+						 sourceType = edge.getSource().getType().getEAllReferences().contains(type);
+					 }
+					 
+					 if ((edge.getTarget() != null) && (edge.getTarget().getType() != null)) {
+						 if (type.getEType() instanceof EClass) {
+							 targetType = MetaModelUtil.isAssignableTo(edge.getTarget().getType(), (EClass) type.getEType());
+						 }
+					 }
+					 
+					 return sourceType && targetType;
+				 }
+				 return false;
+			 }
+			 return true;
+		 };
 	}
 
 	/**

@@ -5,12 +5,13 @@ package org.sidiff.graphpattern.provider;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -22,7 +23,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.PatternElement;
 
@@ -188,4 +188,46 @@ public class PatternElementItemProvider
 		return GraphpatternEditPlugin.INSTANCE;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ItemPropertyDescriptor createItemPropertyDescriptor(
+			AdapterFactory adapterFactory,
+			ResourceLocator resourceLocator,
+			String displayName,
+			String description,
+			EStructuralFeature feature,
+			boolean isSettable,
+			boolean multiLine,
+			boolean sortChoices,
+			Object staticImage,
+			String category,
+			String[] filterFlags,
+			BiFunction<Object, Object, Boolean> elementToPropertyFilter) {
+
+	    return new ItemPropertyDescriptor(
+	    	      adapterFactory,
+	    	      resourceLocator,
+	    	      displayName,
+	    	      description,
+	    	      feature,
+	    	      isSettable,
+	    	      multiLine,
+	    	      sortChoices,
+	    	      staticImage,
+	    	      category,
+	    	      filterFlags) {
+	    	
+	    	@Override
+	    	protected Collection<?> getComboBoxObjects(Object object) {
+	    		Collection<?> results = super.getComboBoxObjects(object);
+	    		Collection<?> filteredResults =  results.stream().filter(result -> elementToPropertyFilter.apply(object, result)).collect(Collectors.toList());
+	    		filteredResults.add(null);
+	    		
+	    		return filteredResults;
+	    	}
+	    };
+	}
 }
