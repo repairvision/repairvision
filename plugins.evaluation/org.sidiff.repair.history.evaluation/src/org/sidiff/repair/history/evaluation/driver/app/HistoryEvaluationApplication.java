@@ -1,7 +1,9 @@
 package org.sidiff.repair.history.evaluation.driver.app;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -13,12 +15,12 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.consistency.common.settings.SettingsUtil;
+import org.sidiff.consistency.common.storage.UUIDMatcher;
 import org.sidiff.difference.technical.GenericTechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.historymodel.History;
 import org.sidiff.matcher.IMatcher;
-import org.sidiff.matching.api.util.MatchingUtils;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.peo.PEORepairFacade;
 import org.sidiff.repair.api.peo.PEORepairJob;
@@ -41,12 +43,11 @@ public class HistoryEvaluationApplication implements IApplication {
 	// Run headless product with launcher (system dependent):
 	// eclipse -application org.sidiff.repair.history.evaluation.driver -consoleLog -noExit first second last
 	
-	private static String MATCHER = "org.sidiff.matcher.id.xmiid.XMIIDMatcher";
-	
+//	private static String MATCHER = "org.sidiff.matcher.id.xmiid.XMIIDMatcher";
 //	private static String DIFFERENCE_BUILDER = "org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations";
 	
 //	private static String HISTORY = "org.sidiff.ecore.testdata.history.atl.atl-0.2/ATL-0.2.ecore.history";
-	private static String HISTORY = "org.sidiff.ecore.testdata.history.uml2.uml/UML.ecore.history";
+	private static String HISTORY = "C:/evaluations/org.eclipse.git_2018-08-22/org.eclipse.git.annotated/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_UML.ecore/plugins_org.eclipse.uml2.uml_model_UML.ecore.history";
 	
 	private static String RULEBASE = "Ecore Evaluation Edit Rules";
 	
@@ -56,7 +57,8 @@ public class HistoryEvaluationApplication implements IApplication {
 		
 		// difference settings:
 		DifferenceSettings differenceSettings = SettingsUtil.getDefaultDifferenceSettings();
-		IMatcher matcher = MatchingUtils.getMatcherByKey(MATCHER);
+		IMatcher matcher = new UUIDMatcher();
+//		IMatcher matcher = MatchingUtils.getMatcherByKey(MATCHER);
 		ITechnicalDifferenceBuilder builder = new GenericTechnicalDifferenceBuilder();
 //		ITechnicalDifferenceBuilder builder = TechnicalDifferenceUtils.getTechnicalDifferenceBuilder(DIFFERENCE_BUILDER);
 		differenceSettings.setMatcher(matcher);
@@ -68,11 +70,22 @@ public class HistoryEvaluationApplication implements IApplication {
 		
 		// load history:
 		ResourceSet resourceSet = new ResourceSetImpl();
-		Resource historyResource = resourceSet.getResource(URI.createPlatformResourceURI(HISTORY, true), true);
+ 		Resource historyResource = resourceSet.getResource(URI.createFileURI(HISTORY), true);
 		History history = (History) historyResource.getContents().get(0);
 		
 		// load all resources:
-		EcoreUtil.resolveAll(historyResource);
+		Set<Resource> loaded = new HashSet<>();
+		Set<Resource> newLoaded = new HashSet<>();
+		newLoaded.add(historyResource);
+		
+		while (!newLoaded.isEmpty()) {
+			for (Resource resource : newLoaded) {
+				EcoreUtil.resolveAll(resource);
+				loaded.add(resource);
+			}
+			newLoaded = new HashSet<>(resourceSet.getResources());
+			newLoaded.removeAll(loaded);
+		}
 		
 		// freeze ecore models e.g. generic types:
 		for (Resource resource : resourceSet.getResources()) {
