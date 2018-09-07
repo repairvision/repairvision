@@ -3,15 +3,15 @@ package org.sidiff.graphpattern.edit.commands;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphpatternPackage;
 
 public class SetEdgePatternTypeCommand extends CompoundCommand {
 	
-	public SetEdgePatternTypeCommand(EditingDomain domain, 
-			EObject owner, EStructuralFeature feature, Object value) {
+	public SetEdgePatternTypeCommand(EditingDomain domain, EObject owner, Object value) {
+		EReference feature = GraphpatternPackage.Literals.EDGE_PATTERN__TYPE;
 		
 		EdgePattern edge = (EdgePattern) owner;
 		EReference type = (EReference) value;
