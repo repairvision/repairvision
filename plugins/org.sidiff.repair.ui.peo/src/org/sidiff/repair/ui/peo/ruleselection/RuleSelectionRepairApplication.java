@@ -120,11 +120,10 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 				// Calculate repairs:
 				repairCalculation.setName("Calculate Repairs");
 				
-				repairSettings = new PEORepairSettings(editRules, settings);
+				repairSettings = new PEORepairSettings(
+						Collections.singletonList(inconsistency.getContext()), editRules, settings);
+				repairSettings.setConsistencyRules(Collections.singletonList(inconsistency.getRule()));
 				repairSettings.setSaveRecognitionRules(debugging);
-				repairSettings.setupValidationFilter(
-						Collections.singletonList(inconsistency.getContext()),
-						Collections.singletonList(inconsistency.getRule()));
 				repairSettings.setSaveDifference(true);
 				
 				if (debugging) {
@@ -180,36 +179,38 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 			
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				PEORepairJob lastRepairJob = repairJob;
-				
-				// Calculate repairs:
-				repairJob = repairFacade.getRepairs(
-						repairJob.getRevision().getVersionA().getTargetResource(), 
-						repairJob.getRevision().getVersionB().getTargetResource(),
-						new PEORepairSettings(editRules, settings));
-				
-				// Copy undo history:
-				if (lastRepairJob != null) {
-					repairJob.copyHistory(lastRepairJob);
-				}
-				
-				// Update UI:
-				Display.getDefault().syncExec(() -> {
+				if (inconsistency.getContext().eContainer() != null) {
+					PEORepairJob lastRepairJob = repairJob;
 					
-					// Clean up repair-trees:
-					for (Validation validation : repairJob.getValidations()) {
-						if (validation instanceof RepairValidation) {
-							((RepairValidation) validation).cleanUpRepairTree();
+					// Calculate repairs:
+					repairJob = repairFacade.getRepairs(
+							repairJob.getRevision().getVersionA().getTargetResource(), 
+							repairJob.getRevision().getVersionB().getTargetResource(),
+							repairSettings);
+					
+					// Copy undo history:
+					if (lastRepairJob != null) {
+						repairJob.copyHistory(lastRepairJob);
+					}
+					
+					// Update UI:
+					Display.getDefault().syncExec(() -> {
+						
+						// Clean up repair-trees:
+						for (Validation validation : repairJob.getValidations()) {
+							if (validation instanceof RepairValidation) {
+								((RepairValidation) validation).cleanUpRepairTree();
+							}
 						}
-					}
-					
-					// Show repairs:
-					fireResultChangeListener();
-					
-					if (repairJob.getRepairs().isEmpty()) {
-						WorkbenchUtil.showMessage("No repairs found!");
-					}
-				});
+						
+						// Show repairs:
+						fireResultChangeListener();
+						
+						if (repairJob.getRepairs().isEmpty()) {
+							WorkbenchUtil.showMessage("No repairs found!");
+						}
+					});
+				}
 				
 				return Status.OK_STATUS;
 			}

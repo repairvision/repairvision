@@ -220,10 +220,9 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				// Calculate repairs:
 				repairCalculation.setName("Calculate Repairs");
 				
-				PEORepairSettings repairSettings = new PEORepairSettings(editRules, settings);
-				repairSettings.setupValidationFilter(
-						Collections.singletonList(inconsistency.getContext()),
-						Collections.singletonList(inconsistency.getRule()));
+				PEORepairSettings repairSettings = new PEORepairSettings(
+						Collections.singletonList(inconsistency.getContext()), editRules, settings);
+				repairSettings.setConsistencyRules(Collections.singletonList(inconsistency.getRule()));
 				
 				repairJob = repairFacade.getRepairs(getModelA(), getModelB(), repairSettings);
 				
@@ -269,30 +268,31 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
-					PEORepairJob lastRepairJob = repairJob;
-
-					// Calculate repairs:
-					PEORepairSettings repairSettings = new PEORepairSettings(editRules, settings);
-					repairSettings.setupValidationFilter(
-							Collections.singletonList(inconsistency.getContext()),
-							Collections.singletonList(inconsistency.getRule()));
-
-					repairJob = repairFacade.getRepairs(
-							repairJob.getRevision().getVersionA().getTargetResource(), 
-							repairJob.getRevision().getVersionB().getTargetResource(), 
-							repairSettings);
-
-					// Copy undo history:
-					if (lastRepairJob != null) {
-						repairJob.copyHistory(lastRepairJob);
+					if (inconsistency.getContext().eContainer() != null) {
+						PEORepairJob lastRepairJob = repairJob;
+						
+						// Calculate repairs:
+						PEORepairSettings repairSettings = new PEORepairSettings(
+								Collections.singletonList(inconsistency.getContext()), editRules, settings);
+						repairSettings.setConsistencyRules(Collections.singletonList(inconsistency.getRule()));
+						
+						repairJob = repairFacade.getRepairs(
+								repairJob.getRevision().getVersionA().getTargetResource(), 
+								repairJob.getRevision().getVersionB().getTargetResource(), 
+								repairSettings);
+						
+						// Copy undo history:
+						if (lastRepairJob != null) {
+							repairJob.copyHistory(lastRepairJob);
+						}
+						
+						// Update UI:
+						Display.getDefault().syncExec(() -> {
+							
+							// Show repairs:
+							fireResultChangeListener();
+						});
 					}
-
-					// Update UI:
-					Display.getDefault().syncExec(() -> {
-
-						// Show repairs:
-						fireResultChangeListener();
-					});
 
 					return Status.OK_STATUS;
 				}
