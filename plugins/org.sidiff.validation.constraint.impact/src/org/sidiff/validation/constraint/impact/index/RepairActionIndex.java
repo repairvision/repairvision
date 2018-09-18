@@ -11,7 +11,6 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.sidiff.validation.constraint.api.util.IValidationFilter;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
@@ -45,12 +44,11 @@ public class RepairActionIndex {
 	
 	public RepairActionIndex(
 			Iterator<? extends EObject> model, 
-			List<IConstraint> consistencyRules, 
-			IValidationFilter validationFilter, 
+			List<IConstraint> consistencyRules,
 			boolean storeValidation) {
 
 		RepairValidationIterator validationIterator = new RepairValidationIterator(
-				model, consistencyRules, validationFilter, true);
+				model, consistencyRules, true);
 
 		// Collect all abstract repair actions:
 		validationIterator.forEachRemaining(validation -> {
