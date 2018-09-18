@@ -232,10 +232,13 @@ public class LiftingGraphIndex {
 	 * @return The add/remove object annotation or <code>null</code>.
 	 */
 	public Change getObjectChange(EObject element) {
-
-		for (Change localChange : localChanges.get(element)) {
-			if ((localChange instanceof AddObject) || (localChange instanceof RemoveObject)) {
-				return localChange;
+		Collection<Change> changes = localChanges.get(element);
+		
+		if (changes != null) {
+			for (Change localChange : changes) {
+				if ((localChange instanceof AddObject) || (localChange instanceof RemoveObject)) {
+					return localChange;
+				}
 			}
 		}
 		
@@ -250,11 +253,14 @@ public class LiftingGraphIndex {
 	 * @return The attribute value change annotation or <code>null</code>.
 	 */
 	public AttributeValueChange getAttributeChange(EObject element, EAttribute attributeType) {
+		Collection<Change> changes = localChanges.get(element);
 		
-		for (Change localChange : localChanges.get(element)) {
-			if (localChange instanceof AttributeValueChange) {
-				if (attributeType == ((AttributeValueChange) localChange).getType()) {
-					return (AttributeValueChange) localChange;
+		if (changes != null) {
+			for (Change localChange : changes) {
+				if (localChange instanceof AttributeValueChange) {
+					if (attributeType == ((AttributeValueChange) localChange).getType()) {
+						return (AttributeValueChange) localChange;
+					}
 				}
 			}
 		}
