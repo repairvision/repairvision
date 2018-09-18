@@ -8,7 +8,6 @@ import java.util.Map;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -88,34 +87,6 @@ public class UUIDResource extends XMIIDResourceImpl {
 		}
 		
 		return uuid;
-	}
-	
-	/**
-	 * Matches the given element (of another resource) to an element of this resource.
-	 * 
-	 * @param otherElement
-	 *            The element of another resource.
-	 * @return The matched element.
-	 */
-	@SuppressWarnings("unchecked")
-	public <T extends EObject> T getMatch(T otherElement) {
-		Resource otherResource = otherElement.eResource();
-		EObject matching = null;
-		
-		if (!isDynamic(otherElement)) {
-			if (otherResource instanceof XMLResource) {
-				String id = ((XMLResource) otherResource).getID(otherElement);
-				matching = getIDToEObjectMap().get(id);
-			}
-		} else {
-			matching = getEObject(EcoreUtil.getURI(otherElement).fragment());
-		}
-		
-		if ((matching != null) && matching.eClass().equals(otherElement.eClass())) {
-			return (T) matching;
-		} else  {
-			return null;
-		}
 	}
 	
 	/**
