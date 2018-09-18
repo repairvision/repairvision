@@ -105,38 +105,6 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	
 	@Override
 	public void recalculateRepairs() {
-		
-		calculation = new Job("Recalculate Repairs") {
-			
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				PEORepairJob lastRepairJob = repairJob;
-				
-				// Calculate repairs:
-				repairJob = repairFacade.getRepairs(
-						repairJob.getRevision().getVersionA().getTargetResource(), 
-						repairJob.getRevision().getVersionB().getTargetResource(),
-						new PEORepairSettings(getEditRules(), getMatchingSettings()));
-				
-				// Copy undo history:
-				repairJob.copyHistory(lastRepairJob);
-				
-				// Update UI:
-				Display.getDefault().syncExec(() -> {
-					
-					// Show repairs:
-					fireResultChangeListener();
-					
-					if (repairJob.getRepairs().isEmpty()) {
-						WorkbenchUtil.showMessage("No repairs found!");
-					}
-				});
-				
-				return Status.OK_STATUS;
-			}
-		};
-		
-		calculation.schedule();
 	}
 	
 	public void repairInconsistency(Problem selection) {

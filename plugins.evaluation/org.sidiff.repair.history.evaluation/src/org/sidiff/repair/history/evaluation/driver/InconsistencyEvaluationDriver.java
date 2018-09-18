@@ -42,10 +42,9 @@ public class InconsistencyEvaluationDriver {
 		LogMonitor monitor = getMonitor(history, repaired, inconsistencies);
 		
 		// Calculate repairs (filtered by validation):
-		PEORepairSettings settings = new PEORepairSettings(editRules, matchingSettings);
-		settings.setupValidationFilter(
-				Collections.singleton(repaired.getProblemCurrentModel().getContextElement()), 
-				Collections.singletonList(repaired.getConsistencyRule(history.getSupportedConsistencyRules())));
+		PEORepairSettings settings = new PEORepairSettings(
+				Collections.singleton(repaired.getProblemCurrentModel().getContextElement()), editRules, matchingSettings);
+		settings.setConsistencyRules(Collections.singletonList(repaired.getConsistencyRule(history.getSupportedConsistencyRules())));
 		settings.setSaveDifference(saveDifference);
 		settings.setMonitor(monitor);
 		settings.setRuntimeComlexityLog(runtimeComplexityLog);
