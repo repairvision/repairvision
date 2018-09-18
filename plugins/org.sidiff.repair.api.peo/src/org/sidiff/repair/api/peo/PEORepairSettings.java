@@ -14,8 +14,6 @@ import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.BasicRepairSettings;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
-import org.sidiff.validation.constraint.api.util.ContextValidationFilter;
-import org.sidiff.validation.constraint.api.util.IValidationFilter;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class PEORepairSettings extends BasicRepairSettings {
@@ -51,12 +49,13 @@ public class PEORepairSettings extends BasicRepairSettings {
 	private List<IConstraint> consistencyRules;
 	
 	/**
-	 * Filters validations based on the consistency rule and the context element.
+	 * The context elements that should be validated.
 	 */
-	private IValidationFilter validationFilter = IValidationFilter.DUMMY; 
+	private Iterable<EObject> validationScope; 
 
-	public PEORepairSettings(Collection<Rule> editRules, DifferenceSettings differenceSettings) {
+	public PEORepairSettings(Iterable<EObject> validationScope, Collection<Rule> editRules, DifferenceSettings differenceSettings) {
 		super();
+		this.validationScope = validationScope;
 		this.editRules = editRules;
 		this.differenceSettings = differenceSettings;
 	}
@@ -121,35 +120,11 @@ public class PEORepairSettings extends BasicRepairSettings {
 		return (consistencyRules != null);
 	}
 	
-	public IValidationFilter getValidationFilter() {
-		return validationFilter;
+	public Iterable<EObject> getValidationScope() {
+		return validationScope;
 	}
 	
-	public void setValidationFilter(IValidationFilter validationFilter) {
-		this.validationFilter = validationFilter;
-	}
-	
-	/**
-	 * @param contextElements
-	 *            The context elements that should be validated.
-	 * @return <code>true</code> if the setup could be performed;
-	 *         <code>false</code> otherwise.
-	 */
-	public boolean setupValidationFilter(Collection<EObject> contextElements) {
-		this.validationFilter = new ContextValidationFilter(contextElements);
-		return true;
-	}
-	
-	/**
-	 * @param contextElements
-	 *            The context elements that should be validated.
-	 * @param consistencyRules
-	 *            The consistency rules that should be validated.
-	 * @return <code>true</code> if the setup could be performed;
-	 *         <code>false</code> otherwise.
-	 */
-	public boolean setupValidationFilter(Collection<EObject> contextElements, List<IConstraint> consistencyRules) {
-		setConsistencyRules(consistencyRules);
-		return setupValidationFilter(contextElements);
+	public void setValidationScope(Iterable<EObject> validationScope) {
+		this.validationScope = validationScope;
 	}
 }

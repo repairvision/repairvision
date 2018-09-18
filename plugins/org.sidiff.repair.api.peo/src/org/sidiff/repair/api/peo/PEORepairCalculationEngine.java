@@ -67,8 +67,8 @@ public class PEORepairCalculationEngine {
 		LogTime valiationTimer = new LogTime();
 		
 		ImpactAnalyzes impact = new ImpactAnalyzes(new RepairActionIndex(
-				revision.getVersionB().getTargetResource().getAllContents(), 
-				settings.getConsistencyRules(), settings.getValidationFilter(), true));
+				settings.getValidationScope().iterator(), 
+				settings.getConsistencyRules(), true));
 		
 		valiationTimer.stop();
 		System.out.println("Re.Vision[Validation Time]: " + valiationTimer + "ms");
