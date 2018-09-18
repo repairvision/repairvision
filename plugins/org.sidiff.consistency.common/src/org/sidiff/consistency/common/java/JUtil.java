@@ -5,8 +5,19 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class JUtil {
+	
+	public static <T> Iterable<T> createIterable(Supplier<Iterator<T>> iterator) {
+		return new Iterable<T>() {
+
+			@Override
+			public Iterator<T> iterator() {
+				return iterator.get();
+			}
+		};
+	}
 
 	@SuppressWarnings("unchecked")
 	public static <T> Iterator<T> emptyIterator() {
