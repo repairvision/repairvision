@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.sidiff.common.emf.access.Scope;
 import org.sidiff.consistency.common.settings.SettingsUtil;
 import org.sidiff.consistency.common.storage.UUIDMatcher;
 import org.sidiff.difference.technical.GenericTechnicalDifferenceBuilder;
@@ -46,16 +47,41 @@ public class HistoryEvaluationApplication implements IApplication {
 //	private static String MATCHER = "org.sidiff.matcher.id.xmiid.XMIIDMatcher";
 //	private static String DIFFERENCE_BUILDER = "org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations";
 	
-//	private static String HISTORY = "org.sidiff.ecore.testdata.history.atl.atl-0.2/ATL-0.2.ecore.history";
-	private static String HISTORY = "C:/evaluations/org.eclipse.git_2018-08-22/org.eclipse.git.annotated/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_UML.ecore/plugins_org.eclipse.uml2.uml_model_UML.ecore.history";
-	
 	private static String RULEBASE = "Ecore Evaluation Edit Rules";
+	
+	private static String HISTORY = "C:/evaluations/org.eclipse.git_2018-08-22/org.eclipse.git.annotated/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_UML.ecore/plugins_org.eclipse.uml2.uml_model_UML.ecore.history";
 	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		System.out.println("LOADIND EVALUATION");
+		System.out.println("LOADIND EVALUATION: " + HISTORY);
+		System.out.println("RULEBASE: " + RULEBASE);
 		
-		// difference settings:
+		// load history:
+		History history = loadHistory(URI.createFileURI(HISTORY));
+		
+		// initialize history analyzer:
+		HistoryInfo historyInfo = new HistoryInfo(history);
+		
+		// load edit rules:
+		List<URI> rulebase = RulebaseLibrary.getRulebase(RULEBASE);
+		Collection<Rule> editRules = RulebaseUtil.eLoadEditRules(rulebase, false);
+		
+		System.out.println("EDIT RULES: " + editRules.size());
+		
+		// repair algorithm:
+		IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade = new PEORepairFacade();
+
+		// start evaluation:
+		System.out.println("STARTING EVALUATION");
+		
+		HistoryEvaluationDriver.calculateRepairs(repairFacade, historyInfo, editRules, getSettings());
+		
+		System.out.println("FINISHED EVALUATION");
+		
+		return null;
+	}
+	
+	private DifferenceSettings getSettings() {
 		DifferenceSettings differenceSettings = SettingsUtil.getDefaultDifferenceSettings();
 		IMatcher matcher = new UUIDMatcher();
 //		IMatcher matcher = MatchingUtils.getMatcherByKey(MATCHER);
@@ -63,14 +89,18 @@ public class HistoryEvaluationApplication implements IApplication {
 //		ITechnicalDifferenceBuilder builder = TechnicalDifferenceUtils.getTechnicalDifferenceBuilder(DIFFERENCE_BUILDER);
 		differenceSettings.setMatcher(matcher);
 		differenceSettings.setTechBuilder(builder);
+		differenceSettings.setScope(Scope.RESOURCE_SET);
 		
 		if ((matcher == null) || (builder == null)) {
 			throw new RuntimeException("Invalid difference settings!");
 		}
 		
-		// load history:
+		return differenceSettings;
+	}
+	
+	private History loadHistory(URI uri) {
 		ResourceSet resourceSet = new ResourceSetImpl();
- 		Resource historyResource = resourceSet.getResource(URI.createFileURI(HISTORY), true);
+ 		Resource historyResource = resourceSet.getResource(uri, true);
 		History history = (History) historyResource.getContents().get(0);
 		
 		// load all resources:
@@ -95,26 +125,7 @@ public class HistoryEvaluationApplication implements IApplication {
 			}
 		}
 		
-		// initialize history analyzer:
-		HistoryInfo historyInfo = new HistoryInfo(history);
-		
-		// load edit rules:
-		List<URI> rulebase = RulebaseLibrary.getRulebase(RULEBASE);
-		Collection<Rule> editRules = RulebaseUtil.eLoadEditRules(rulebase, false);
-		
-		System.out.println("EDIT RULES: " + editRules.size());
-		
-		// repair algorithm:
-		IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade = new PEORepairFacade();
-
-		// start evaluation:
-		System.out.println("STARTING EVALUATION");
-		
-		HistoryEvaluationDriver.calculateRepairs(repairFacade, historyInfo, editRules, differenceSettings);
-		
-		System.out.println("FINISHED EVALUATION");
-		
-		return null;
+		return history;
 	}
 
 	@Override

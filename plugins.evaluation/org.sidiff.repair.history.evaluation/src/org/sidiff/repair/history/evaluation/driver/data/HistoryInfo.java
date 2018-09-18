@@ -39,12 +39,13 @@ public class HistoryInfo {
 	
 	public HistoryInfo(History history) {
 		this.history = history;
+		EvaluationUtil.createEmptyModelVersion(history);
 	}
 	
 	public History getHistory() {
 		return history;
 	}
-
+	
 	public List<Problem> getAllUniqueInconsistencies() {
 		
 		if (allUniqueInconsistencies == null) {
@@ -87,7 +88,8 @@ public class HistoryInfo {
 		
 		if (supportedConsistencyRules == null) {
 			if (!history.getVersions().isEmpty()) {
-				supportedConsistencyRules = ValidationFacade.getConstraints(history.getVersions().get(0).getModel());
+				Version latestVersion = history.getVersions().get(history.getVersions().size() - 1);
+				supportedConsistencyRules = ValidationFacade.getConstraints(latestVersion.getModel());
 			} else {
 				supportedConsistencyRules = Collections.emptyList();
 			}
@@ -104,7 +106,12 @@ public class HistoryInfo {
 			for (Problem introducedProblem : getSupportedIntroducedAndResolvedUniqueInconsistencies()) {
 				InconsistencyTrace repaired = InconsistencyTrace
 						.createRepairedInconsistency(introducedProblem, true);
-				repairedInconsistencies.add(repaired);
+				
+				if (repaired != null) {
+					repairedInconsistencies.add(repaired);
+				} else {
+					System.err.println("Dropped Problem: " + introducedProblem);
+				}
 			}
 			return repairedInconsistencies;
 		}

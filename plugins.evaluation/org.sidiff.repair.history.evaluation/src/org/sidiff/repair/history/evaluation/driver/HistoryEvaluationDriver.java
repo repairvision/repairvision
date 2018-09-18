@@ -25,7 +25,7 @@ public class HistoryEvaluationDriver {
 			Collection<Rule> editRules, 
 			DifferenceSettings matchingSettings) {
 		
-		InfoConsole.printInfo("#################### Evaluation Started ####################");
+		InfoConsole.printInfo("#################### Initialize Evaluation ####################");
 		
 		// Warm up run:
 		if (history.getRepairedInconsistencies().size() > 0) {
@@ -34,6 +34,8 @@ public class HistoryEvaluationDriver {
 					history, repairFacade, inconsistency, editRules, matchingSettings,
 					new LogTable(), new LogTable());
 		}
+		
+		InfoConsole.printInfo("#################### Evaluation Started ####################");
 		
 		// Evaluate all inconsistencies of the actual history:
 		LogTable inconsistenciesLog = new LogTable();
