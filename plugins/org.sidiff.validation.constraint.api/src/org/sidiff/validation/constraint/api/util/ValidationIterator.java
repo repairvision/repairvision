@@ -15,8 +15,6 @@ public class ValidationIterator implements Iterator<Validation> {
 
 	protected Map<EClass, List<IConstraint>> rules = new HashMap<>();
 	
-	protected IValidationFilter validationFilter = IValidationFilter.DUMMY;
-	
 	protected LinkedList<Validation> next = new LinkedList<>();
 	
 	protected boolean showPositiveResults = true;
@@ -25,20 +23,18 @@ public class ValidationIterator implements Iterator<Validation> {
 	
 	public ValidationIterator(
 			Iterator<? extends EObject> model, 
-			List<IConstraint> consistencyRules, IValidationFilter validationFilter,
+			List<IConstraint> consistencyRules,
 			boolean showPositiveResults, 
 			boolean showNegativeResults) {
 		
-		this(validationFilter, showPositiveResults, showNegativeResults);
+		this(showPositiveResults, showNegativeResults);
 		init(model, consistencyRules);
 	}
 	
 	protected ValidationIterator(
-			IValidationFilter validationFilter,
 			boolean showPositiveResults, 
 			boolean showNegativeResults) {
 		
-		this.validationFilter = validationFilter;
 		this.showPositiveResults = showPositiveResults;
 		this.showNegativeResults = showNegativeResults;
 	}
@@ -105,18 +101,16 @@ public class ValidationIterator implements Iterator<Validation> {
 		
 		if (rules.containsKey(constraintContextType)) {
 			for (IConstraint crule : rules.get(constraintContextType)) {
-				if (validationFilter.validate(modelElement, crule)) {
-					crule.evaluate(modelElement);
-					
-					if (reportValidation(crule)) {
-						Validation newValidation = new Validation(
-								crule,
-								crule.getResult(), 
-								crule.getContextType(), 
-								crule.getContext());
-						
-						next.add(newValidation);
-					}
+				crule.evaluate(modelElement);
+
+				if (reportValidation(crule)) {
+					Validation newValidation = new Validation(
+							crule,
+							crule.getResult(), 
+							crule.getContextType(), 
+							crule.getContext());
+
+					next.add(newValidation);
 				}
 			}
 		}

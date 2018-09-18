@@ -13,30 +13,28 @@ public class ScopeValidationIterator extends ValidationIterator {
 	
 	public ScopeValidationIterator(
 			Iterator<? extends EObject> model, 
-			List<IConstraint> consistencyRules, IValidationFilter validationFilter,
+			List<IConstraint> consistencyRules,
 			boolean showPositiveResults, boolean showNegativeResults) {
 		
-		super(model, consistencyRules, validationFilter, showPositiveResults, showNegativeResults);
+		super(model, consistencyRules, showPositiveResults, showNegativeResults);
 	}
 	
 	protected void evaluate(EObject modelElement, EClass constraintContextType) {
 		
 		if (rules.containsKey(constraintContextType)) {
 			for (IConstraint crule : rules.get(constraintContextType)) {
-				if (validationFilter.validate(modelElement, crule)) {
-					IScopeRecorder scopeRecorder = new ScopeRecorder();
-					crule.evaluate(modelElement, scopeRecorder);
-					
-					if (reportValidation(crule)) {
-						ScopeValidation newValidation = new ScopeValidation(
-								crule,
-								crule.getResult(), 
-								crule.getContextType(), 
-								crule.getContext(), 
-								scopeRecorder);
-						
-						next.add(newValidation);
-					}
+				IScopeRecorder scopeRecorder = new ScopeRecorder();
+				crule.evaluate(modelElement, scopeRecorder);
+
+				if (reportValidation(crule)) {
+					ScopeValidation newValidation = new ScopeValidation(
+							crule,
+							crule.getResult(), 
+							crule.getContextType(), 
+							crule.getContext(), 
+							scopeRecorder);
+
+					next.add(newValidation);
 				}
 			}
 		}

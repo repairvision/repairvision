@@ -15,10 +15,10 @@ public class RequiredValidationIterator extends ValidationIterator {
 	
 	public RequiredValidationIterator(
 			Iterator<? extends EObject> model, 
-			List<IConstraint> consistencyRules, IValidationFilter validationFilter,
+			List<IConstraint> consistencyRules,
 			boolean cleanupValidationTree) {
 		
-		super(validationFilter, true, false);
+		super(true, false);
 		this.cleanupValidationTree = cleanupValidationTree;
 		init(model, consistencyRules);
 	}

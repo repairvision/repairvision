@@ -15,10 +15,10 @@ public class RepairValidationIterator extends ValidationIterator {
 
 	public RepairValidationIterator(
 			Iterator<? extends EObject> model, 
-			List<IConstraint> consistencyRules, IValidationFilter validationFilter,
+			List<IConstraint> consistencyRules,
 			boolean cleanupRepairTree) {
 		
-		super(validationFilter, false, true);
+		super(false, true);
 		this.cleanupRepairTree = cleanupRepairTree;
 		init(model, consistencyRules);
 	}
@@ -36,22 +36,20 @@ public class RepairValidationIterator extends ValidationIterator {
 		
 		if (rules.containsKey(constraintContextType)) {
 			for (IConstraint crule : rules.get(constraintContextType)) {
-				if (validationFilter.validate(modelElement, crule)) {
-					crule.evaluate(modelElement);
-					
-					if (reportValidation(crule)) {
-						IDecisionNode repair = (!crule.getResult()) ? crule.repair() : null;
-						repair = cleanupRepairTree ? DecisionTreeUtil.cleanup(repair) : repair;
-						
-						RepairValidation newValidation = new RepairValidation(
-								crule,
-								crule.getResult(), 
-								crule.getContextType(), 
-								crule.getContext(), 
-								repair);
-						
-						next.add(newValidation);
-					}
+				crule.evaluate(modelElement);
+
+				if (reportValidation(crule)) {
+					IDecisionNode repair = (!crule.getResult()) ? crule.repair() : null;
+					repair = cleanupRepairTree ? DecisionTreeUtil.cleanup(repair) : repair;
+
+					RepairValidation newValidation = new RepairValidation(
+							crule,
+							crule.getResult(), 
+							crule.getContextType(), 
+							crule.getContext(), 
+							repair);
+
+					next.add(newValidation);
 				}
 			}
 		}

@@ -9,7 +9,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
-import org.sidiff.validation.constraint.api.util.IValidationFilter;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
 import org.sidiff.validation.constraint.api.util.RequiredValidation;
@@ -29,7 +28,7 @@ import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
  * @author Manuel Ohrndorf
  */
 public class ValidationFacade {
-	
+
 	/**
 	 * @param model
 	 *            The model to be validated.
@@ -39,25 +38,9 @@ public class ValidationFacade {
 	 * @return All found inconsistencies.
 	 */
 	public static List<Validation> validate(Iterator<? extends EObject> model, List<IConstraint> constraints) {
-		return validate(model, constraints, IValidationFilter.DUMMY);
-	}
-
-	/**
-	 * @param model
-	 *            The model to be validated.
-	 * @param constraints
-	 *            The constraints to be checked.
-	 * @param validationFilter
-	 *            Filters the validations by the consistency rule and the
-	 *            context element.
-	 *
-	 * @return All found inconsistencies.
-	 */
-	public static List<Validation> validate(Iterator<? extends EObject> model, 
-			List<IConstraint> constraints, IValidationFilter validationFilter) {
 
 		ValidationIterator validationIterator = new ValidationIterator(
-				model, constraints, validationFilter, false, true);
+				model, constraints, false, true);
 
 		// Collect all validations:
 		List<Validation> inconsistencies = new ArrayList<>();
@@ -81,35 +64,18 @@ public class ValidationFacade {
 	 *
 	 * @return All found inconsistencies.
 	 */
-	public static List<Validation> validate(Iterator<? extends EObject> model, 
-			List<IConstraint> constraints, IValidationFilter validationFilter, 
+	public static List<Validation> validate(
+			Iterator<? extends EObject> model, List<IConstraint> constraints, 
 			boolean positiveResults, boolean negativeResults) {
 
 		ValidationIterator validationIterator = new ValidationIterator(
-				model, constraints, validationFilter, positiveResults, negativeResults);
+				model, constraints, positiveResults, negativeResults);
 
 		// Collect all validations:
 		List<Validation> inconsistencies = new ArrayList<>();
 		validationIterator.forEachRemaining(inconsistencies::add);
 
 		return inconsistencies;
-	}
-	
-	/**
-	 * @param model
-	 *            The model to be validated.
-	 * @param constraints
-	 *            The constraints to be checked.
-	 * @param positiveResults
-	 *            Analyze successfully validated constraints.
-	 * @param negativeResults
-	 *            Analyze inconsistencies.
-	 * @return The scopes of all analyzed validations.
-	 */
-	public static List<ScopeValidation> analyzeScope(
-			Iterator<? extends EObject> model, List<IConstraint> constraints,
-			boolean positiveResults, boolean negativeResults) {
-		return analyzeScope(model, constraints, IValidationFilter.DUMMY, positiveResults, negativeResults);
 	}
 	
 	/**
@@ -126,12 +92,12 @@ public class ValidationFacade {
 	 *            Analyze inconsistencies.
 	 * @return The scopes of all analyzed validations.
 	 */
-	public static List<ScopeValidation> analyzeScope(Iterator<? extends EObject> model, 
-			List<IConstraint> constraints, IValidationFilter validationFilter,
+	public static List<ScopeValidation> analyzeScope(
+			Iterator<? extends EObject> model, List<IConstraint> constraints,
 			boolean positiveResults, boolean negativeResults) {
 
 		ScopeValidationIterator validationIterator = new ScopeValidationIterator(
-				model, constraints, validationFilter, positiveResults, negativeResults);
+				model, constraints, positiveResults, negativeResults);
 
 		// Collect all validations:
 		List<ScopeValidation> analyzedConstraints = new ArrayList<>();
@@ -169,29 +135,16 @@ public class ValidationFacade {
 	 *            The model to be validated.
 	 * @param constraints
 	 *            The constraints to be checked.
-	 * @return A tree with elements that are required by the validated
-	 *         constraints.
-	 */
-	public static List<RequiredValidation> analyzeRequirements(Iterator<? extends EObject> model, List<IConstraint> constraints) {
-		return analyzeRequirements(model, constraints, IValidationFilter.DUMMY);
-	}
-	
-	/**
-	 * @param model
-	 *            The model to be validated.
-	 * @param constraints
-	 *            The constraints to be checked.
 	 * @param validationFilter
 	 *            Filters the validations by the consistency rule and the
 	 *            context element.
 	 * @return A tree with elements that are required by the validated
 	 *         constraints.
 	 */
-	public static List<RequiredValidation> analyzeRequirements(Iterator<? extends EObject> model, 
-			List<IConstraint> constraints, IValidationFilter validationFilter) {
+	public static List<RequiredValidation> analyzeRequirements(Iterator<? extends EObject> model, List<IConstraint> constraints) {
 
 		RequiredValidationIterator validationIterator = new RequiredValidationIterator(
-				model, constraints, validationFilter, true);
+				model, constraints, true);
 
 		// Collect all validations:
 		List<RequiredValidation> analyzedConstraints = new ArrayList<>();
@@ -228,27 +181,15 @@ public class ValidationFacade {
 	 *            The model to be validated.
 	 * @param constraints
 	 *            The constraints to be checked.
-	 * @return All found inconsistencies.
-	 */
-	public static List<RepairValidation> repair(Iterator<? extends EObject> model, List<IConstraint> constraints) {
-		return repair(model, constraints, IValidationFilter.DUMMY);
-	}
-	
-	/**
-	 * @param model
-	 *            The model to be validated.
-	 * @param constraints
-	 *            The constraints to be checked.
 	 * @param validationFilter
 	 *            Filters the validations by the consistency rule and the
 	 *            context element.
 	 * @return All found inconsistencies.
 	 */
-	public static List<RepairValidation> repair(Iterator<? extends EObject> model, 
-			List<IConstraint> constraints, IValidationFilter validationFilter) {
+	public static List<RepairValidation> repair(Iterator<? extends EObject> model, List<IConstraint> constraints) {
 
 		RepairValidationIterator validationIterator = new RepairValidationIterator(
-				model, constraints, validationFilter, true);
+				model, constraints, true);
 
 		// Collect all validations:
 		List<RepairValidation> inconsistencies = new ArrayList<>();
