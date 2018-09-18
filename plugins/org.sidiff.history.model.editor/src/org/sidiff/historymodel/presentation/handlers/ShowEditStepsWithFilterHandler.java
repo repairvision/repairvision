@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.EMFUtil;
+import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.historymodel.Problem;
@@ -26,10 +27,8 @@ import org.sidiff.historymodel.presentation.util.HistoryModelEditorTools;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
-import org.sidiff.validation.constraint.api.util.ContextValidationFilter;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.common.ui.util.UIUtil;
 
 public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 	
@@ -106,8 +105,7 @@ public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 			IConstraint constraintRule = ConstraintLibraryUtil.getConsistencyRule(ConstraintLibraryRegistry.getLibraries(DocumentType.getDocumentType(model)), constraint);
 			List<Validation> validations = ValidationFacade.validate(
 					JUtil.singeltonIterator(context),
-					Collections.singletonList(constraintRule), 
-					new ContextValidationFilter(Collections.singletonList(context)),
+					Collections.singletonList(constraintRule),
 					true, true);
 			
 			Set<EObject> scopes = new HashSet<>();
