@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -238,11 +239,12 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 		if(model == null) {
 			String modelURI = this.modelURI;
 			
+			// assert that model URI is relative to history model:
 			if (URI.createURI(modelURI).scheme() == null) {
 				modelURI = eResource().getURI().trimSegments(1).toString() + "/" + modelURI;
 			}
 			
-			model = eResource().getResourceSet().getResource(URI.createURI(modelURI), true);
+			model = new ResourceSetImpl().getResource(URI.createURI(modelURI), true);
 		}
 		return model;
 	}
