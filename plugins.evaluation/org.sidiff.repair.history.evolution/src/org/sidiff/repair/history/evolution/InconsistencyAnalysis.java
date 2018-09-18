@@ -35,7 +35,6 @@ import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.repair.history.evolution.difference.DifferenceExecutor;
 import org.sidiff.repair.history.evolution.difference.SymmetricDifferenceUtil;
 import org.sidiff.validation.constraint.api.ValidationFacade;
-import org.sidiff.validation.constraint.api.util.ContextValidationFilter;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
@@ -174,8 +173,7 @@ public class InconsistencyAnalysis {
 		// TODO: Preprocessing: Filter branches with no observable repair actions.
 		List<RepairValidation> validations = ValidationFacade.repair(
 				JUtil.singeltonIterator(context), 
-				Collections.singletonList(constraint),
-				new ContextValidationFilter(Collections.singleton(context)));
+				Collections.singletonList(constraint));
 		
 		// NOTE: Only one validation expected!
 		assert (validations.size() == 1);
@@ -223,8 +221,7 @@ public class InconsistencyAnalysis {
 							if (context.eResource() != null) {
 								revalidations = ValidationFacade.validate(
 										JUtil.singeltonIterator(context),
-										Collections.singletonList(constraint), 
-										new ContextValidationFilter(Collections.singleton(context)));
+										Collections.singletonList(constraint));
 							}
 							
 							if (revalidations.isEmpty()) {
@@ -383,8 +380,7 @@ public class InconsistencyAnalysis {
 		
 		List<RepairValidation> validations = ValidationFacade.repair(
 				JUtil.singeltonIterator(context),
-				Collections.singletonList(constraint),
-				new ContextValidationFilter(Collections.singleton(context)));
+				Collections.singletonList(constraint));
 		
 		// NOTE: Only one validation expected!
 		assert (validations.size() == 1);
