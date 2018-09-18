@@ -13,9 +13,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
-import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.analysis.validation.IValidator;
@@ -23,6 +21,7 @@ import org.sidiff.history.repository.IModelRepository;
 import org.sidiff.history.repository.IModelRepositoryConnector;
 import org.sidiff.history.repository.IModelVersion;
 import org.sidiff.history.repository.registry.ModelRepositoryRegistry;
+import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
@@ -45,7 +44,7 @@ public class HistoryModelDatabase {
 		
 		if (repositoryConnector == null) {
 			// Fallback solution: Create an "empty model"
-			return createEmptyModel(inconsistentModel);
+			return Revision.createEmptyModel(inconsistentModel);
 		}
 		
 		// Search last consistent model version:
@@ -142,34 +141,7 @@ public class HistoryModelDatabase {
 		}
 		
 		// Fallback solution: Create an "empty model"
-		return createEmptyModel(inconsistentModel);
-	}
-
-	private static Resource createEmptyModel(Resource inconsistentModel) {
-		ResourceSet rss = new ResourceSetImpl();
-		Resource emptyModel = rss.createResource(inconsistentModel.getURI().trimSegments(1)
-				.appendSegment(inconsistentModel.getURI().trimFileExtension().lastSegment() + "_empty")
-				.appendFileExtension(inconsistentModel.getURI().fileExtension()));
-		
-		// Copy roots:
-		inconsistentModel.getContents().forEach(obj -> {
-			EObject copyObj = ModelingUtil.copy(obj);
-			emptyModel.getContents().add(copyObj);
-			
-			try {
-				String uuid = EMFUtil.getXmiId(obj);
-				EMFUtil.setXmiId(copyObj, uuid);
-			} catch (Exception e) {
-			}
-		});
-		
-		try {
-			emptyModel.save(Collections.emptyMap());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return emptyModel;
+		return Revision.createEmptyModel(inconsistentModel);
 	}
 	
 	public static Version getHistoryVersion(IModelRepository repository, IModelVersion modelVersion, History history) {
