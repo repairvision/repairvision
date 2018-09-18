@@ -10,6 +10,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
@@ -98,7 +99,9 @@ public class Revision implements IRevision {
 									Resource referencedResource = referencedElement.eResource();
 									
 									if (!resolved.contains(referencedResource)) {
-										newResolved.add(referencedResource);
+										if (referencedResource != null) {
+											newResolved.add(referencedResource);
+										}
 									}
 								}
 							} else {
@@ -108,7 +111,9 @@ public class Revision implements IRevision {
 									Resource referencedResource = ((EObject) referencedElement).eResource();
 									
 									if (!resolved.contains(referencedResource)) {
-										newResolved.add(referencedResource);
+										if (referencedResource != null) {
+											newResolved.add(referencedResource);
+										}
 									}
 								}
 							}
@@ -138,7 +143,7 @@ public class Revision implements IRevision {
 	public IVersion getVersionB() {
 		return versionB;
 	}
-
+	
 	@Override
 	public IDifference getDifference() {
 		return difference;
@@ -147,5 +152,15 @@ public class Revision implements IRevision {
 	@Override
 	public IMetaModel getMetaModel() {
 		return metamodel;
+	}
+	
+	public static Resource createEmptyModel(Resource successorVersion) {
+		URI emptyModelVersionURI = successorVersion.getURI();
+		emptyModelVersionURI = emptyModelVersionURI.trimSegments(1).appendSegment("empty");
+		emptyModelVersionURI = emptyModelVersionURI.appendSegment(successorVersion.getURI().lastSegment());
+		
+		Resource emptyModel = new ResourceImpl(emptyModelVersionURI);
+		new ResourceSetImpl().getResources().add(emptyModel);
+		return emptyModel;
 	}
 }

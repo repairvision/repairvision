@@ -1,7 +1,6 @@
 package org.sidiff.history.revision.difference.impl;
 
-import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
-
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -16,17 +15,19 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.common.emf.exceptions.InvalidModelException;
-import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.difference.symmetric.AddObject;
+import org.sidiff.correspondences.ICorrespondences;
+import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricFactory;
+import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.revision.difference.IDifference;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
+import org.sidiff.matcher.IMatcher;
 import org.sidiff.matching.model.Correspondence;
+import org.sidiff.matching.model.Matching;
 
 public class Difference implements IDifference {
 
@@ -36,19 +37,21 @@ public class Difference implements IDifference {
 	
 	private LiftingGraphIndex index;
 	
-	public Difference(Resource resourceA, Resource resourceB, DifferenceSettings differenceSettings) {
-		
-		// Disable merge imports:
-		// FIXME: setMergeImports(true) -> Wrong technical difference for EGenericTypes!
-		differenceSettings.setMergeImports(false);
-//		settings.getDifferenceSettings().setScope(Scope.RESOURCE);
+	public Difference(Resource resourceA, Resource resourceB, DifferenceSettings settings) {
 		
 		// Calculate difference:
-		try {
-			symmetricDifference = deriveTechnicalDifference(resourceA, resourceB, differenceSettings);
-		} catch (InvalidModelException | NoCorrespondencesException e) {
-			e.printStackTrace();
-		}
+		IMatcher matcher = settings.getMatcher();
+		
+		Collection<Resource> models = Arrays.asList(new Resource[] {resourceA, resourceB});
+		matcher.startMatching(models, settings.getScope());	
+		ICorrespondences correspondences = matcher.getCorrespondencesService();
+		Matching matching = ((MatchingModelCorrespondences)correspondences).getMatching();	
+
+		SymmetricDifference symmetricDifference = SymmetricFactory.eINSTANCE.createSymmetricDifference();
+		symmetricDifference.setMatching(matching);
+		
+		ITechnicalDifferenceBuilder tdBuilder = settings.getTechBuilder();
+		tdBuilder.deriveTechDiff(symmetricDifference, settings.getScope());
 		
 		// Create difference resource:
 		ResourceSet differenceRSS = new ResourceSetImpl(); 
@@ -69,16 +72,6 @@ public class Difference implements IDifference {
 	}
 	
 	public void init(SymmetricDifference symmetricDifference) {
-		
-		// TODO/FIXME[Workaround]: Handle "real" empty historic models, i.e. without root element!
-		if (symmetricDifference.getChanges().isEmpty()) {
-			if (symmetricDifference.getModelA().getContents().size() == 1) {
-				AddObject addRoot = SymmetricFactory.eINSTANCE.createAddObject();
-				addRoot.setObj(symmetricDifference.getModelB().getContents().get(0));
-				symmetricDifference.getChanges().add(addRoot);
-			}
-		}
-		
 		this.symmetricDifference = symmetricDifference;
 		this.domainMap = new LiftingGraphDomainMap(symmetricDifference);
 		this.index = new LiftingGraphIndex(symmetricDifference);
