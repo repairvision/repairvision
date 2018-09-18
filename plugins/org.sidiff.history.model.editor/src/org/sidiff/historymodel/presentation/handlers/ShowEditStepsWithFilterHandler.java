@@ -102,17 +102,21 @@ public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 	public Set<EObject> getScope(Resource model, String uriFragmentContext, String constraint) {
 		EObject context = model.getEObject(uriFragmentContext);
 		
-		IConstraint constraintRule = ConstraintLibraryUtil.getConsistencyRule(ConstraintLibraryRegistry.getLibraries(DocumentType.getDocumentType(model)), constraint);
-		List<Validation> validations = ValidationFacade.validate(
-				JUtil.singeltonIterator(context),
-				Collections.singletonList(constraintRule), 
-				new ContextValidationFilter(Collections.singletonList(context)),
-				true, true);
-		
-		Set<EObject> scopes = new HashSet<>();
-		ValidationFacade.analyzeScope(validations).forEach(scope -> scopes.addAll(scope.getScope().getScope()));
-		
-		return scopes;
+		if (context != null) {
+			IConstraint constraintRule = ConstraintLibraryUtil.getConsistencyRule(ConstraintLibraryRegistry.getLibraries(DocumentType.getDocumentType(model)), constraint);
+			List<Validation> validations = ValidationFacade.validate(
+					JUtil.singeltonIterator(context),
+					Collections.singletonList(constraintRule), 
+					new ContextValidationFilter(Collections.singletonList(context)),
+					true, true);
+			
+			Set<EObject> scopes = new HashSet<>();
+			ValidationFacade.analyzeScope(validations).forEach(scope -> scopes.addAll(scope.getScope().getScope()));
+			
+			return scopes;
+		} else {
+			return Collections.emptySet();
+		}
 	}
 	
 	private URI getModelURI(Version version) {
