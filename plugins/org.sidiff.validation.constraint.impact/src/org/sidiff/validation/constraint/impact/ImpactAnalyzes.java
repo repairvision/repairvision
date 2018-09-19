@@ -45,4 +45,11 @@ public class ImpactAnalyzes {
 		return repairActionIndex.getValidations();
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder toString = new StringBuilder(super.toString());
+		toString.append(" -> ");
+		toString.append(repairActionIndex.toString());
+		return toString.toString();
+	}
 }

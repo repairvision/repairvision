@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -107,5 +108,32 @@ public class RepairActionIndex {
 		return scope;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder toString = new StringBuilder(super.toString());
+		toString.append("\n");
+		
+		toString.append("Repair Scope (Context Elements):\n");
+		
+		for (EObject contextElement : scope) {
+			toString.append(" ");
+			toString.append(contextElement);
+			toString.append("\n");
+		}
+		
+		toString.append("Repair Actions:\n");
+		
+		Set<RepairAction> repairSet = repairs.values().stream()
+				.flatMap((objToRepairs) -> objToRepairs.values().stream())
+				.flatMap(List::stream).collect(Collectors.toSet());
+		
+		for (RepairAction repairAction : repairSet) {
+			toString.append(" ");
+			toString.append(repairAction);
+			toString.append("\n");
+		}
+		
+		return toString.toString();
+	}
 }
 
