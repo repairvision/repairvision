@@ -1,16 +1,12 @@
 package org.sidiff.repair.history.evaluation.driver.app;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
@@ -103,27 +99,27 @@ public class HistoryEvaluationApplication implements IApplication {
  		Resource historyResource = resourceSet.getResource(uri, true);
 		History history = (History) historyResource.getContents().get(0);
 		
-		// load all resources:
-		Set<Resource> loaded = new HashSet<>();
-		Set<Resource> newLoaded = new HashSet<>();
-		newLoaded.add(historyResource);
-		
-		while (!newLoaded.isEmpty()) {
-			for (Resource resource : newLoaded) {
-				EcoreUtil.resolveAll(resource);
-				loaded.add(resource);
-			}
-			newLoaded = new HashSet<>(resourceSet.getResources());
-			newLoaded.removeAll(loaded);
-		}
-		
-		// freeze ecore models e.g. generic types:
-		for (Resource resource : resourceSet.getResources()) {
-			if ((resource.getContents() != null) && (resource.getContents().get(0) instanceof EPackageImpl)) {
-				EPackageImpl ePackage = (EPackageImpl) resource.getContents().get(0);
-				ePackage.freeze();
-			}
-		}
+//		// load all resources:
+//		Set<Resource> loaded = new HashSet<>();
+//		Set<Resource> newLoaded = new HashSet<>();
+//		newLoaded.add(historyResource);
+//		
+//		while (!newLoaded.isEmpty()) {
+//			for (Resource resource : newLoaded) {
+//				EcoreUtil.resolveAll(resource);
+//				loaded.add(resource);
+//			}
+//			newLoaded = new HashSet<>(resourceSet.getResources());
+//			newLoaded.removeAll(loaded);
+//		}
+//		
+//		// freeze ecore models e.g. generic types:
+//		for (Resource resource : resourceSet.getResources()) {
+//			if ((resource.getContents() != null) && (resource.getContents().get(0) instanceof EPackageImpl)) {
+//				EPackageImpl ePackage = (EPackageImpl) resource.getContents().get(0);
+//				ePackage.freeze();
+//			}
+//		}
 		
 		return history;
 	}

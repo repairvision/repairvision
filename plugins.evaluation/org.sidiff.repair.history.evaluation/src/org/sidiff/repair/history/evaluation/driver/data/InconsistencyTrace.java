@@ -39,7 +39,7 @@ public class InconsistencyTrace {
 			Problem introducedProblem, boolean completeOnly) {
 		
 		InconsistencyTrace trace = new InconsistencyTrace();
-		trace.setProblemIntroducedModel(introducedProblem);
+		trace.setProblemInIntroducedModel(introducedProblem);
 		
 		Version versionIntroduced = introducedProblem.getIntroducedIn();
 		trace.setModelVersionIntroduced(versionIntroduced);
@@ -118,11 +118,11 @@ public class InconsistencyTrace {
 		this.modelVersionIntroduced = modelVersionIntroduced;
 	}
 	
-	public Problem getProblemIntroducedModel() {
+	public Problem getProblemInIntroducedModel() {
 		return validationErrorIntroducedModel;
 	}
 	
-	public void setProblemIntroducedModel(Problem validationErrorIntroducedModel) {
+	public void setProblemInIntroducedModel(Problem validationErrorIntroducedModel) {
 		this.validationErrorIntroducedModel = validationErrorIntroducedModel;
 	}
 	
