@@ -105,7 +105,7 @@ public class InconsistencyAnalysis {
 
 		// Explore repairs (undos):
 		List<Set<Change>> repairSteps = new ArrayList<>();
-		EObject context = inconsistency.getProblemIntroducedModel().getContextElement();
+		EObject context = inconsistency.getProblemInIntroducedModel().getContextElement();
 		IConstraint constraint = inconsistency.getConsistencyRule(ValidationFacade.getConstraints(introduced));
 		
 		// TODO: Initialization of attribute values!?
@@ -148,7 +148,7 @@ public class InconsistencyAnalysis {
 
 		// Explore repairs:
 		List<Set<Change>> repairSteps = new ArrayList<>();
-		EObject context = inconsistency.getProblemIntroducedModel().getContextElement();
+		EObject context = inconsistency.getProblemInIntroducedModel().getContextElement();
 		IConstraint constraint = inconsistency.getConsistencyRule(ValidationFacade.getConstraints(introduced));
 		
 		// TODO: Initialization of attribute values!?
