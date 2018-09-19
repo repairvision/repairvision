@@ -5,7 +5,7 @@ package org.sidiff.historymodel;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
-
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 /**
@@ -230,5 +230,12 @@ public interface Version extends EObject {
 	 * @generated
 	 */
 	Version getSuccessor();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	EObject eResolveProxyByVersion(InternalEObject proxy);
 
 } // Version

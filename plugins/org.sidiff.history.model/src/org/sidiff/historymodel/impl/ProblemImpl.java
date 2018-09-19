@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.historymodel.Annotation;
@@ -24,6 +23,7 @@ import org.sidiff.historymodel.ModificationClassification;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.ProblemSeverity;
 import org.sidiff.historymodel.Version;
+import org.sidiff.historymodel.util.EObjectResolvingEListByVersion;
 
 /**
  * <!-- begin-user-doc -->
@@ -576,11 +576,11 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public EList<EObject> getInvalidElements() {
 		if (invalidElements == null) {
-			invalidElements = new EObjectResolvingEList<EObject>(EObject.class, this, HistoryModelPackage.PROBLEM__INVALID_ELEMENTS);
+			invalidElements = new EObjectResolvingEListByVersion<EObject>(EObject.class, this, HistoryModelPackage.PROBLEM__INVALID_ELEMENTS, getVersion());
 		}
 		return invalidElements;
 	}
@@ -588,12 +588,12 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public EObject getContextElement() {
 		if (contextElement != null && contextElement.eIsProxy()) {
 			InternalEObject oldContextElement = (InternalEObject)contextElement;
-			contextElement = eResolveProxy(oldContextElement);
+			contextElement = getVersion().eResolveProxyByVersion(oldContextElement);
 			if (contextElement != oldContextElement) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, HistoryModelPackage.PROBLEM__CONTEXT_ELEMENT, oldContextElement, contextElement));

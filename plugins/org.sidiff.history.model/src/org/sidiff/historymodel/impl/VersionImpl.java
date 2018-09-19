@@ -241,7 +241,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 			
 			// assert that model URI is relative to history model:
 			if (URI.createURI(modelURI).scheme() == null) {
-				modelURI = eResource().getURI().trimSegments(1).toString() + "/" + modelURI;
+				modelURI = eResource().getURI().trimSegments(1).toString() + modelURI;
 			}
 			
 			model = new ResourceSetImpl().getResource(URI.createURI(modelURI), true);
@@ -600,6 +600,16 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 		result.append(repositoryVersion);
 		result.append(')');
 		return result.toString();
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public EObject eResolveProxyByVersion(InternalEObject proxy) {
+		return EcoreUtil.resolve(proxy, getModel().getResourceSet());
 	}
 
 } //VersionImpl
