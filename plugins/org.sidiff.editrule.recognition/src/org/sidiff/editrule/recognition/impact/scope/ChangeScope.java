@@ -25,14 +25,8 @@ import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 public class ChangeScope {
 	
 	private Map<GraphElement, List<Change>> scope;
-	
-	private ImpactAnalysis impact;
-	
-	private IRevision revision;
 
 	public ChangeScope(Collection<GraphElement> changes, ImpactAnalysis impact, IRevision revision) {
-		this.impact = impact;
-		this.revision = revision;
 		this.scope = new HashMap<>();
 		
 		for (GraphElement change : changes) {
@@ -45,20 +39,20 @@ public class ChangeScope {
 
 				// Delete:
 				if (change.getGraph().isLhs()) {
-					buildScopeOnDelete(sourceContextType, (Edge) change, strictContextType);
+					buildScopeOnDelete(impact, revision, sourceContextType, (Edge) change, strictContextType);
 					
 					// Repair which deletes the context element of a validation:
 					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
 						EClass targetContextType = ((Edge) change).getTarget().getType();
 						boolean strictTargetContextType = MatchingHelper.isStrictMatchingType(((Edge) change).getTarget());
 						
-						buildScopeOnDelete(targetContextType, (Edge) change, strictTargetContextType);
+						buildScopeOnDelete(impact, revision, targetContextType, (Edge) change, strictTargetContextType);
 					}
 				}
 
 				// Create:
 				else if (change.getGraph().isRhs()) {
-					buildScopeOnCreate(sourceContextType, (Edge) change, strictContextType);
+					buildScopeOnCreate(impact, revision, sourceContextType, (Edge) change, strictContextType);
 				}
 
 				else {
@@ -70,13 +64,13 @@ public class ChangeScope {
 				EClass contextType = ((Attribute) change).getNode().getType();
 				boolean strictContextType = MatchingHelper.isStrictMatchingType(((Attribute) change).getNode());
 				
-				buildScopeOnModify(contextType, (Attribute) change, strictContextType);
+				buildScopeOnModify(impact, revision, contextType, (Attribute) change, strictContextType);
 			}
 		}
 	}
 	
 	
-	private void buildScopeOnCreate(EClass contextType, Edge changeAction, boolean strict) {
+	private void buildScopeOnCreate(ImpactAnalysis impact, IRevision revision, EClass contextType, Edge changeAction, boolean strict) {
 		
 		// NOTE: The impact is calculated on model B -> create changes are related to model B.
 		for (EObject contextElement : impact.getScope()) {
@@ -85,7 +79,7 @@ public class ChangeScope {
 			if (!strict || contextType.equals(repairContextType)) {
 				if (strict || MetaModelUtil.isAssignableTo(repairContextType, contextType)) {
 					if (impact.onCreate(contextElement, changeAction.getType())) {
-						
+
 						revision.getDifference()
 								.getReferenceChanges(contextElement, changeAction.getType())
 								.forEachRemaining(change -> {
@@ -99,7 +93,7 @@ public class ChangeScope {
 		}
 	}
 	
-	private void buildScopeOnDelete(EClass contextType, Edge changeAction, boolean strict) {
+	private void buildScopeOnDelete(ImpactAnalysis impact, IRevision revision, EClass contextType, Edge changeAction, boolean strict) {
 		
 		// NOTE: The impact is calculated on model B -> delete changes are related to model A.
 		for (EObject contextElement : impact.getScope()) {
@@ -125,7 +119,7 @@ public class ChangeScope {
 		}
 	}
 	
-	private void buildScopeOnModify(EClass contextType, Attribute changeAction, boolean strict) {
+	private void buildScopeOnModify(ImpactAnalysis impact, IRevision revision, EClass contextType, Attribute changeAction, boolean strict) {
 		for (EObject contextElement : impact.getScope()) {
 			EClass repairContextType = contextElement.eClass();
 			
