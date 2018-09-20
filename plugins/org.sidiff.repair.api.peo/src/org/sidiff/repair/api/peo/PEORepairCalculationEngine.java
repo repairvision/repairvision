@@ -96,6 +96,10 @@ public class PEORepairCalculationEngine {
 		int repairCount = 0;
 		
 		for (Rule editRule : settings.getEditRules()) {
+//			if (editRule.getName().contains("Create: Accessor Operation for Structural Feature")) {
+//				System.out.println(editRule.getName());
+//			}
+			
 			PEORepairCaculation repairCaculation = createRepairCalculation(editRule, impact, revision, complementFinderEngine);
 			
 			if (repairCaculation.isPotentialRepair()) {
