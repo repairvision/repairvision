@@ -1,6 +1,7 @@
 package org.sidiff.history.revision.impl;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -52,7 +53,13 @@ public class Version implements IVersion {
 		if (outgoing.isMany()) {
 			return ((Collection<EObject>) source.eGet(outgoing)).iterator();
 		} else {
-			return JUtil.singeltonIterator((EObject) source.eGet(outgoing));
+			Object target = source.eGet(outgoing);
+			
+			if (target instanceof EObject) {
+				return JUtil.singeltonIterator((EObject) target);
+			} else {
+				return Collections.emptyIterator();
+			}
 		}
 	}
 	
