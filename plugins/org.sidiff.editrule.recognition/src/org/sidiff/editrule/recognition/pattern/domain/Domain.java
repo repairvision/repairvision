@@ -12,6 +12,7 @@ import java.util.Stack;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.consistency.common.emf.MetaModelUtil;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
 import org.sidiff.graphpattern.Matching;
 import org.sidiff.graphpattern.NodePattern;
@@ -20,8 +21,6 @@ import org.sidiff.graphpattern.impl.MatchingImpl;
 public class Domain extends MatchingImpl {
 	
 	protected EClass type;
-	
-	protected List<AttributeConstant> attributes;
 	
 	protected boolean collecting = true;
 	
@@ -71,20 +70,16 @@ public class Domain extends MatchingImpl {
 		this.matchingHelper = matchingHelper;
 	}
 	
+	public boolean check(EObject object) {
+		return MetaModelUtil.isAssignableTo(object.eClass(), type);
+	}
+	
 	public Map<EObject, SelectionType> getDomain() {
 		return domain;
 	}
 	
 	public EClass getType() {
 		return type;
-	}
-	
-	public List<AttributeConstant> getAttributes() {
-		if (attributes == null) {
-			attributes = new ArrayList<>(5);
-		}
-		
-		return attributes;
 	}
 
 	public boolean isCollecting() {
@@ -126,7 +121,7 @@ public class Domain extends MatchingImpl {
 	public void add(EObject localMatch) {
 		assert (localMatch != null) : "Null match!";
 		
-		if (ConstraintTester.check(this, localMatch)) {
+		if (check(localMatch)) {
 			SelectionType selection = domain.get(localMatch);
 			
 			if ((selection == null) || !selection.equals(SelectionType.ACCEPTED)) {
@@ -149,7 +144,7 @@ public class Domain extends MatchingImpl {
 	public boolean addSearchedMatch(EObject localMatch) {
 		assert (localMatch != null) : "Null match!";
 		
-		if (ConstraintTester.check(this, localMatch)) {
+		if (check(localMatch)) {
 			SelectionType selection = domain.get(localMatch);
 			
 			if ((selection == null) || !selection.equals(SelectionType.SEARCHED)) {

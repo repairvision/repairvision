@@ -43,6 +43,8 @@ public class ActionNode extends ActionGraphElement  {
 	
 	protected List<List<ActionEdge>> inzidentsPerAdjacent = new ArrayList<>();
 	
+	protected List<ActionAttributeConstraint> attributeConstraints = new ArrayList<>();
+	
 	// Change-Pattern:
 	
 	protected NodePattern nodePatternA;
@@ -117,6 +119,20 @@ public class ActionNode extends ActionGraphElement  {
 			attributeChanges.add(new ChangePatternAttributeValueChange(this, attribute));
 		}
 	}
+	
+	public List<ActionEdge> getIncident(ActionNode adjacent) {
+		int inzidentIndex = adjacents.indexOf(adjacent);
+		
+		if (inzidentIndex != -1) {
+			return inzidentsPerAdjacent.get(inzidentIndex);
+		} else {
+			return Collections.emptyList();
+		}
+	}
+	
+	public List<ActionAttributeConstraint> getAttributeConstraints() {
+		return attributeConstraints;
+	}
 
 	public Action.Type getAction() {
 		return action;
@@ -169,11 +185,13 @@ public class ActionNode extends ActionGraphElement  {
 		
 		// Add match for model A:
 		boolean domainHasChanged = false;
+		boolean isCollecting = false;
 		
 		if (nodePatternA != null) {
 			Domain domainA = Domain.get(nodePatternA);
+			isCollecting = domainA.isCollecting();
 			
-			if (domainA.isCollecting()) {
+			if (isCollecting) {
 				domainHasChanged = domainA.addSearchedMatch(matchA);
 			} else {
 				domainHasChanged = domainA.searched(matchA);
@@ -181,21 +199,42 @@ public class ActionNode extends ActionGraphElement  {
 		}
 		
 		// Add synchronize correspondences and model B:
+		EObject matchB = null;
+		Correspondence correspondenceObj = null;
+		
 		if (domainHasChanged && (correspondence != null)) {
 			Domain domainCorrespondence = Domain.get(correspondence);
 			Domain domainB = Domain.get(nodePatternB);
 			
-			Correspondence correspondence = actionGraph.getRevision().getDifference().getCorrespondenceA(matchA);
+			correspondenceObj = actionGraph.getRevision().getDifference().getCorrespondenceA(matchA);
 
-			if (correspondence != null) {
-				if (!domainCorrespondence.contains(correspondence, SelectionType.SEARCHED)) {
-					if (domainCorrespondence.isCollecting()) {
-						domainCorrespondence.addSearchedMatch(correspondence);
-						domainB.addSearchedMatch(correspondence.getMatchedB());
+			if (correspondenceObj != null) {
+				if (!domainCorrespondence.contains(correspondenceObj, SelectionType.SEARCHED)) {
+					matchA = correspondenceObj.getMatchedB();
+					
+					if (isCollecting) {
+						domainCorrespondence.addSearchedMatch(correspondenceObj);
+						domainB.addSearchedMatch(matchA);
 					}  else {
-						domainCorrespondence.searched(correspondence);
-						domainB.searched(correspondence.getMatchedB());
+						domainCorrespondence.searched(correspondenceObj);
+						domainB.searched(matchA);
 					}
+				}
+			}
+		}
+		
+		// Check attribute constraints:
+		if (domainHasChanged && isCollecting) {
+			if (!checkAttributeConstraints(matchA, matchB)) {
+				Domain domainA = Domain.get(nodePatternA);
+				domainA.remove(matchA);
+				
+				if (correspondence != null) {
+					Domain domainCorrespondence = Domain.get(correspondence);
+					domainCorrespondence.remove(correspondenceObj);
+					
+					Domain domainB = Domain.get(nodePatternB);
+					domainB.remove(matchB);
 				}
 			}
 		}
@@ -206,11 +245,13 @@ public class ActionNode extends ActionGraphElement  {
 		
 		// Add match for model B:
 		boolean domainHasChanged = false;
+		boolean isCollecting = false;
 		
 		if (nodePatternB != null) {
 			Domain domainB = Domain.get(nodePatternB);
+			isCollecting = domainB.isCollecting();
 			
-			if (domainB.isCollecting()) {
+			if (isCollecting) {
 				domainHasChanged = domainB.addSearchedMatch(matchB);
 			} else {
 				domainHasChanged = domainB.searched(matchB);
@@ -218,36 +259,76 @@ public class ActionNode extends ActionGraphElement  {
 		}
 		
 		// Add synchronize correspondences and model B:
+		EObject matchA = null;
+		Correspondence correspondenceObj = null;
+		
 		if (domainHasChanged && (correspondence != null)) {
 			Domain domainCorrespondence = Domain.get(correspondence);
 			Domain domainA = Domain.get(nodePatternA);
 			
-			Correspondence correspondence = actionGraph.getRevision().getDifference().getCorrespondenceB(matchB);
+			correspondenceObj = actionGraph.getRevision().getDifference().getCorrespondenceB(matchB);
 			
-			if (correspondence != null) {
-				if (!domainCorrespondence.contains(correspondence, SelectionType.SEARCHED)) {
-					if (domainCorrespondence.isCollecting()) {
-						domainCorrespondence.addSearchedMatch(correspondence);
-						domainA.addSearchedMatch(correspondence.getMatchedA());
+			if (correspondenceObj != null) {
+				if (!domainCorrespondence.contains(correspondenceObj, SelectionType.SEARCHED)) {
+					matchA = correspondenceObj.getMatchedA();
+					
+					if (isCollecting) {
+						domainCorrespondence.addSearchedMatch(correspondenceObj);
+						domainA.addSearchedMatch(matchA);
 					}  else {
-						domainCorrespondence.searched(correspondence);
-						domainA.searched(correspondence.getMatchedA());
+						domainCorrespondence.searched(correspondenceObj);
+						domainA.searched(matchA);
 					}
+				}
+			}
+		}
+		
+		// Check attribute constraints:
+		if (domainHasChanged && isCollecting) {
+			if (!checkAttributeConstraints(matchA, matchB)) {
+				Domain domainB = Domain.get(nodePatternB);
+				domainB.remove(matchB);
+				
+				if (correspondence != null) {
+					Domain domainCorrespondence = Domain.get(correspondence);
+					domainCorrespondence.remove(correspondenceObj);
+					
+					Domain domainA = Domain.get(nodePatternA);
+					domainA.remove(matchA);
 				}
 			}
 		}
 	}
 	
-	public List<ActionEdge> getIncident(ActionNode adjacent) {
-		int inzidentIndex = adjacents.indexOf(adjacent);
-		
-		if (inzidentIndex != -1) {
-			return inzidentsPerAdjacent.get(inzidentIndex);
-		} else {
-			return Collections.emptyList();
+	private boolean checkAttributeConstraints(EObject matchA, EObject matchB) {
+		for (ActionAttributeConstraint attributeConstraint : attributeConstraints) {
+			boolean valid = false;
+			
+			// valid for match A OR match B?
+			if (matchA != null) {
+				Object valueA = matchA.eGet(attributeConstraint.getType());
+				
+				if (attributeConstraint.check(valueA)) {
+					valid = true;
+				}
+			}
+			
+			if (matchB != null) {
+				Object valueB = matchB.eGet(attributeConstraint.getType());
+				
+				if (attributeConstraint.check(valueB)) {
+					valid = true;
+				}
+			}
+			
+			if (!valid) {
+				return false;
+			}
 		}
+		
+		return true;
 	}
-
+	
 	public void searchPaths(ChangePattern selected, MatchingPath path) {
 		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStep(this);
 		

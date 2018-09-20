@@ -5,10 +5,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
+import org.sidiff.editrule.recognition.pattern.graph.ActionAttributeConstraint;
+import org.sidiff.editrule.recognition.pattern.graph.ActionAttributeConstraintConstant;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
 import org.sidiff.editrule.recognition.pattern.graph.ActionGraph;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
@@ -69,7 +72,18 @@ public class RecognitionPattern {
 		
 		// Nodes: <<delete>> / <<preserve>>:
 		for (Node lhsNode : editRule.getLhs().getNodes()) {
-			addEditRuleNode(new ActionNode(actionGraph, lhsNode, nodeTrace));
+			ActionNode node = new ActionNode(actionGraph, lhsNode, nodeTrace);
+			addEditRuleNode(node);
+			
+			for (Attribute attribute : lhsNode.getAttributes()) {
+				ActionAttributeConstraint attributeConstraint = generateAttributeConstraint(attribute);
+				
+				if (attributeConstraint != null) {
+					node.getAttributeConstraints().add(attributeConstraint);
+				} else {
+					System.err.println("Warning: Unknown constraint expression " + attribute.getValue());
+				}
+			}
 		}
 		
 		// Nodes: <<create>>:
@@ -94,6 +108,11 @@ public class RecognitionPattern {
 			actionEdge.getSource().addAdjacent(actionEdge.getTarget(), actionEdge);
 			actionEdge.getTarget().addAdjacent(actionEdge.getSource(), actionEdge);
 		}
+	}
+	
+	private ActionAttributeConstraint generateAttributeConstraint(Attribute attribute) {
+		ActionAttributeConstraint attributeConstraint = ActionAttributeConstraintConstant.create(attribute.getType(), attribute.getValue());
+		return attributeConstraint;
 	}
 	
 	
