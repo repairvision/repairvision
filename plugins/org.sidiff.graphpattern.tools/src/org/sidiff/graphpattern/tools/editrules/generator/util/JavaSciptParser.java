@@ -34,7 +34,9 @@ public class JavaSciptParser {
 	}
 	
 	public static List<String> getVariables(String value) {
-
+		
+		// NOTE: Intercept simple cases just for performance optimization.
+		
 		// no content:
 		if (value.isEmpty()) {
 			return Collections.emptyList();
@@ -50,6 +52,7 @@ public class JavaSciptParser {
 			return Collections.emptyList();
 		}
 		
+		// java script expression:
 		try {
 			value = value.replace("\"", "'");
 			
