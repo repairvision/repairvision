@@ -55,16 +55,12 @@ public class GraphPatternGeneratorUtil {
 				}
 				
 				for (AttributePattern attribute : eoNode.getAttributes()) {
-					if (isVariable(attribute.getValue())) {
-						generateParameter(pattern, attribute.getValue());
+					for (String variable : JavaSciptParser.getVariables(attribute.getValue())) {
+						generateParameter(pattern, variable);
 					}
 				}
 			}
 		}
-	}
-	
-	protected static boolean isVariable(String value) {
-		return !value.isEmpty() && value.matches("[0-9a-zA-Z]*");
 	}
 	
 	public static void generateParameter(Pattern pattern, String name) {
