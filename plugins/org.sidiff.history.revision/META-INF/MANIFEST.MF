@@ -1,13 +1,14 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Revision API
-Bundle-SymbolicName: org.sidiff.history.revision
+Bundle-SymbolicName: org.sidiff.history.revision;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Export-Package: org.sidiff.history.revision,
  org.sidiff.history.revision.difference,
  org.sidiff.history.revision.impl,
  org.sidiff.history.revision.metamodel,
- org.sidiff.history.revision.util
+ org.sidiff.history.revision.util,
+ org.sidiff.history.revision.uuid
 Require-Bundle: org.eclipse.emf.ecore,
  org.sidiff.consistency.common,
  org.sidiff.difference.symmetric,
