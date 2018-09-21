@@ -4,7 +4,6 @@ package org.sidiff.historymodel.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -20,7 +19,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelPackage;
 import org.sidiff.historymodel.ModelStatus;
@@ -352,13 +350,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * @generated NOT
 	 */
 	public EObject getElement(String id) {
-		for (Iterator<EObject> iterator = getModel().getAllContents(); iterator.hasNext();) {
-			EObject eObject = iterator.next();
-			if (id.equals(EMFUtil.getXmiId(eObject))){
-				return eObject;
-			}
-		}
-		return null;
+		return getModel().getEObject(id);
 	}
 
 	/**
