@@ -6,12 +6,15 @@ import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.model.Annotation;
 import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Module;
@@ -30,9 +33,12 @@ import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.attributes.JavaSciptParser;
 
 public class GraphPatternToHenshinConverter {
 
+	protected static final String SELF_VARIABLE = "value";
+	
 	protected Module module;
 	
 	protected Unit unit;
@@ -83,6 +89,7 @@ public class GraphPatternToHenshinConverter {
 	protected Rule convert(GraphPattern graph) {
 		NestedCondition nac = rule.getLhs().createNAC(null);
 		
+		// Nodes:
 		for (NodePattern pNode : graph.getNodes()) {
 			if (pNode.getStereotypes().contains(not)) {
 				convert(nac, pNode);
@@ -91,6 +98,7 @@ public class GraphPatternToHenshinConverter {
 			}
 		}
 		
+		// Attributes:
 		for (NodePattern pNode : graph.getNodes()) {
 			for (AttributePattern pAttribute : pNode.getAttributes()) {
 				if (pAttribute.getStereotypes().contains(not)) {
@@ -101,6 +109,7 @@ public class GraphPatternToHenshinConverter {
 			}
 		}
 		
+		// Edges:
 		for (NodePattern pNode : graph.getNodes()) {
 			for (EdgePattern pEdge : pNode.getOutgoings()) {
 				if (pEdge.getStereotypes().contains(not)) {
@@ -111,6 +120,7 @@ public class GraphPatternToHenshinConverter {
 			}
 		}
 		
+		// Parameters:
 		if (graph.getPattern() != null) {
 			for (org.sidiff.graphpattern.Parameter pParameter : graph.getPattern().getParameters()) {
 				convert(pParameter);
@@ -146,6 +156,7 @@ public class GraphPatternToHenshinConverter {
 	
 	protected void convert(Rule rule, NodePattern pNode) {
 		
+		// LHS:
 		if (pNode.getStereotypes().contains(delete)  || pNode.getStereotypes().contains(preserve)) {
 			Node node = HenshinFactory.eINSTANCE.createNode();
 			node.setName(pNode.getName());
@@ -156,6 +167,7 @@ public class GraphPatternToHenshinConverter {
 			lhsTrace.put(pNode, node);
 		}
 		
+		// RHS:
 		if (pNode.getStereotypes().contains(create)  || pNode.getStereotypes().contains(preserve)) {
 			Node node = HenshinFactory.eINSTANCE.createNode();
 			node.setName(pNode.getName());
@@ -173,28 +185,66 @@ public class GraphPatternToHenshinConverter {
 	
 	protected void convert(Rule rule, AttributePattern pAttribute) {
 		
+		// attribute condition:
+		if (!JavaSciptParser.isConstant(pAttribute.getValue())) {
+			List<String> variables = JavaSciptParser.getVariables(pAttribute.getValue());
+
+			if (variables.contains(SELF_VARIABLE)) {
+				Node contextNode = lhsTrace.get(pAttribute.getNode());
+				contextNode = (contextNode == null) ? rhsTrace.get(pAttribute.getNode()) : contextNode;
+
+				// create condition:
+				String selfVariable = SELF_VARIABLE + "_" + contextNode.getName() + "_" + pAttribute.getType().getName();
+				String selfCondition = pAttribute.getValue().replace(SELF_VARIABLE, selfVariable); // FIXME: refactor in AST
+
+				AttributeCondition attributeCondition = HenshinFactory.eINSTANCE.createAttributeCondition();
+				attributeCondition.setRule(getRule());
+				attributeCondition.setName(selfVariable);
+				attributeCondition.setConditionText(selfCondition);
+
+				// create variable:
+				Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
+				attribute.setType(pAttribute.getType());
+				attribute.setValue(selfVariable);
+				contextNode.getAttributes().add(attribute);
+				
+				// (additional: store in annotation):
+				Annotation attributeConditionAnnotation = HenshinFactory.eINSTANCE.createAnnotation();
+				attributeConditionAnnotation.setKey("AttributeCondition");
+				attributeConditionAnnotation.setValue(selfCondition);
+				attribute.getAnnotations().add(attributeConditionAnnotation);
+				
+				// create parameter:
+				addParameter(selfVariable, "Attribute Condition: " + attributeCondition);
+				
+				return;
+			}
+		}
+
+		// LHS:
 		if (pAttribute.getStereotypes().contains(delete) || pAttribute.getStereotypes().contains(preserve)) {
 			Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
 			attribute.setType(pAttribute.getType());
 			attribute.setValue(pAttribute.getValue());
-			
+
 			Node lhsNode = lhsTrace.get(pAttribute.getNode());
 			lhsNode.getAttributes().add(attribute);
 		}
-		
+
+		// RHS:
 		if (pAttribute.getStereotypes().contains(create) || pAttribute.getStereotypes().contains(preserve)) {
 			Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
 			attribute.setType(pAttribute.getType());
 			attribute.setValue(pAttribute.getValue());
-			
+
 			Node rhsNode = rhsTrace.get(pAttribute.getNode());
 			rhsNode.getAttributes().add(attribute);
 		}
-		
 	}
 	
 	protected void convert(Rule rule, EdgePattern pEdge) {
 		
+		// LHS:
 		if (pEdge.getStereotypes().contains(delete) || pEdge.getStereotypes().contains(preserve)) {
 			Edge edge = HenshinFactory.eINSTANCE.createEdge();
 			edge.setType(pEdge.getType());
@@ -204,6 +254,7 @@ public class GraphPatternToHenshinConverter {
 			rule.getLhs().getEdges().add(edge);
 		}
 		
+		// RHS:
 		if (pEdge.getStereotypes().contains(create) || pEdge.getStereotypes().contains(preserve)) {
 			Edge edge = HenshinFactory.eINSTANCE.createEdge();
 			edge.setType(pEdge.getType());
@@ -225,6 +276,8 @@ public class GraphPatternToHenshinConverter {
 	}
 	
 	protected void convert(NestedCondition ac, AttributePattern pAttribute) {
+		
+		// create attribute:
 		Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
 		attribute.setType(pAttribute.getType());
 		attribute.setValue(pAttribute.getValue());
@@ -269,9 +322,13 @@ public class GraphPatternToHenshinConverter {
 	}
 	
 	protected void convert(org.sidiff.graphpattern.Parameter pParameter) {
+		addParameter(pParameter.getName(), pParameter.getDescription());
+	}
+	
+	protected void addParameter(String name, String description) {
 		Parameter parameter = HenshinFactory.eINSTANCE.createParameter();
-		parameter.setName(pParameter.getName());
-		parameter.setDescription(pParameter.getDescription());
+		parameter.setName(name);
+		parameter.setDescription(description);
 		parameter.setKind(ParameterKind.IN);
 		
 		rule.getParameters().add(parameter);
