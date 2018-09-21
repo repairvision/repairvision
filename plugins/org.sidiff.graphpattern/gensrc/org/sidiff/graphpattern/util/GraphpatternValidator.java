@@ -10,6 +10,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.sidiff.graphpattern.Assignment;
 import org.sidiff.graphpattern.Association;
@@ -200,6 +201,9 @@ public class GraphpatternValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(edgePattern, diagnostics, context);
 		if (result || diagnostics != null) result &= validateEdgePattern_TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne(edgePattern, diagnostics, context);
 		if (result || diagnostics != null) result &= validateEdgePattern_TheOppositeMayNotBeItsOwnOpposite(edgePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validateEdgePattern_TheOppositeTypesAreNotMetaModelConform(edgePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validateEdgePattern_EdgeSourceAndTypeAreNotMetaModelConform(edgePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validateEdgePattern_EdgeTargetAndTypeAreNotMetaModelConform(edgePattern, diagnostics, context);
 		return result;
 	}
 
@@ -220,7 +224,7 @@ public class GraphpatternValidator extends EObjectValidator {
 								DIAGNOSTIC_SOURCE,
 								0,
 								"_UI_GenericConstraint_diagnostic",
-								new Object[] { "TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne", getObjectLabel(edgePattern, context) },
+								new Object[] { "The opposite of the opposite may not be a reference different from this one", getObjectLabel(edgePattern, context) },
 								new Object[] { edgePattern },
 								context));
 			}
@@ -245,7 +249,7 @@ public class GraphpatternValidator extends EObjectValidator {
 						 DIAGNOSTIC_SOURCE,
 						 0,
 						 "_UI_GenericConstraint_diagnostic",
-						 new Object[] { "TheOppositeMayNotBeItsOwnOpposite", getObjectLabel(edgePattern, context) },
+						 new Object[] { "The opposite may not be its own opposite", getObjectLabel(edgePattern, context) },
 						 new Object[] { edgePattern },
 						 context));
 			}
@@ -255,12 +259,136 @@ public class GraphpatternValidator extends EObjectValidator {
 	}
 
 	/**
+	 * Validates the TheOppositeTypesAreNotMetaModelConform constraint of '<em>Edge Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateEdgePattern_TheOppositeTypesAreNotMetaModelConform(EdgePattern edgePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (edgePattern.getType() != null) {
+			if ((edgePattern.getType().getEOpposite() != null) && (edgePattern.getOpposite() != null)) {
+				if (edgePattern.getType().getEOpposite() != edgePattern.getOpposite().getType()) {
+					if (diagnostics != null) {
+						diagnostics.add
+							(createDiagnostic
+								(Diagnostic.ERROR,
+								 DIAGNOSTIC_SOURCE,
+								 0,
+								 "_UI_GenericConstraint_diagnostic",
+								 new Object[] { "The opposite types are not meta-model conform", getObjectLabel(edgePattern, context) },
+								 new Object[] { edgePattern },
+								 context));
+					}
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Validates the EdgeSourceAndTypeAreNotMetaModelConform constraint of '<em>Edge Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateEdgePattern_EdgeSourceAndTypeAreNotMetaModelConform(EdgePattern edgePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if ((edgePattern.getType() != null) && (edgePattern.getSource() != null) && (edgePattern.getSource().getType() != null)) {
+			if (edgePattern.getSource().getType().getEAllReferences().contains(edgePattern.getType())) {
+				return true;
+			} else {
+				if (diagnostics != null) {
+					diagnostics.add
+					(createDiagnostic
+							(Diagnostic.ERROR,
+									DIAGNOSTIC_SOURCE,
+									0,
+									"_UI_GenericConstraint_diagnostic",
+									new Object[] { "Edge source and type are not meta-model conform", getObjectLabel(edgePattern, context) },
+									new Object[] { edgePattern },
+									context));
+				}
+				return false;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Validates the EdgeTargetAndTypeAreNotMetaModelConform constraint of '<em>Edge Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateEdgePattern_EdgeTargetAndTypeAreNotMetaModelConform(EdgePattern edgePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if ((edgePattern.getType() != null) && (edgePattern.getTarget() != null) && (edgePattern.getTarget().getType() != null)) {
+			if ((edgePattern.getType().getEType() == edgePattern.getTarget().getType()) 
+					|| (edgePattern.getTarget().getType().getEAllSuperTypes().contains(edgePattern.getType().getEType()))
+					|| (edgePattern.getType().getEType() == EcorePackage.eINSTANCE.getEObject())) {
+				return true;
+			} else {
+				if (diagnostics != null) {
+					diagnostics.add
+					(createDiagnostic
+							(Diagnostic.ERROR,
+									DIAGNOSTIC_SOURCE,
+									0,
+									"_UI_GenericConstraint_diagnostic",
+									new Object[] { "Edge target and type are not meta-model conform", getObjectLabel(edgePattern, context) },
+									new Object[] { edgePattern },
+									context));
+				}
+				return false;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean validateAttributePattern(AttributePattern attributePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(attributePattern, diagnostics, context);
+		if (!validate_NoCircularContainment(attributePattern, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(attributePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(attributePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(attributePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(attributePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(attributePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(attributePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(attributePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(attributePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validateAttributePattern_TheAttributeTypeAndTheContainingClassAreNotMetaModelConform(attributePattern, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the TheAttributeTypeAndTheContainingClassAreNotMetaModelConform constraint of '<em>Attribute Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateAttributePattern_TheAttributeTypeAndTheContainingClassAreNotMetaModelConform(AttributePattern attributePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if ((attributePattern.getType() != null) && (attributePattern.getNode() != null) && (attributePattern.getNode().getType() != null)) {
+			if (attributePattern.getNode().getType().getEAllAttributes().contains(attributePattern.getType())) {
+				return true;
+			} else {
+				if (diagnostics != null) {
+					diagnostics.add
+					(createDiagnostic
+							(Diagnostic.ERROR,
+									DIAGNOSTIC_SOURCE,
+									0,
+									"_UI_GenericConstraint_diagnostic",
+									new Object[] { "The attribute type and the containing class are not meta-model conform", getObjectLabel(attributePattern, context) },
+									new Object[] { attributePattern },
+									context));
+				}
+				return false;
+			}
+		}
+		return false;
 	}
 
 	/**

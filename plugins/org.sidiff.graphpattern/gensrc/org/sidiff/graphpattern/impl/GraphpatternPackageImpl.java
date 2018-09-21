@@ -1599,7 +1599,13 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		  (edgePatternEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne\r\nTheOppositeMayNotBeItsOwnOpposite"
+			 "constraints", "TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne\r\nTheOppositeMayNotBeItsOwnOpposite\r\nTheOppositeTypesAreNotMetaModelConform\r\nEdgeSourceAndTypeAreNotMetaModelConform\r\nEdgeTargetAndTypeAreNotMetaModelConform"
+		   });	
+		addAnnotation
+		  (attributePatternEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "TheAttributeTypeAndTheContainingClassAreNotMetaModelConform"
 		   });
 	}
 

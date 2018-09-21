@@ -1,10 +1,17 @@
 package org.sidiff.graphpattern.util;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Stereotype;
 
@@ -66,5 +73,17 @@ public class GraphPatternUtil {
 		}
 		
 		return size;
+	}
+	
+	public static void saveGraphPattern(URI uri, GraphPattern graphPattern) {
+		ResourceSet rss = new ResourceSetImpl();
+		Resource graphPatternResource = rss.createResource(uri);
+		graphPatternResource.getContents().add(graphPattern);
+
+		try {
+			graphPatternResource.save(Collections.EMPTY_MAP);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

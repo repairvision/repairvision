@@ -51,7 +51,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EdgePattern" eSuperTypes="#//GraphElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne&#xD;&#xA;TheOppositeMayNotBeItsOwnOpposite"/>
+      <details key="constraints" value="TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne&#xD;&#xA;TheOppositeMayNotBeItsOwnOpposite&#xD;&#xA;TheOppositeTypesAreNotMetaModelConform&#xD;&#xA;EdgeSourceAndTypeAreNotMetaModelConform&#xD;&#xA;EdgeTargetAndTypeAreNotMetaModelConform"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
         eType="#//NodePattern" eOpposite="#//NodePattern/incomings"/>
@@ -61,6 +61,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributePattern" eSuperTypes="#//GraphElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="TheAttributeTypeAndTheContainingClassAreNotMetaModelConform"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//NodePattern"
