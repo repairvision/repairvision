@@ -81,7 +81,7 @@ public class RecognitionPattern {
 				if (attributeConstraint != null) {
 					node.getAttributeConstraints().add(attributeConstraint);
 				} else {
-					System.err.println("Warning: Unknown constraint expression " + attribute.getValue());
+					System.err.println("Warning: Unknown constraint expression: " + attribute.getValue());
 				}
 			}
 		}
