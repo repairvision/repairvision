@@ -21,7 +21,6 @@ import org.eclipse.sirius.viewpoint.DRepresentation;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
-import org.sidiff.graphpattern.GraphPattern;
 
 @SuppressWarnings({ "restriction", "deprecation" })
 public class SiriusUtil {
@@ -68,7 +67,8 @@ public class SiriusUtil {
 		}
 	}
 	
-	public static GraphPattern getGraphPattern(IWorkbenchPart part) {
+	@SuppressWarnings("unchecked")
+	public static <T extends EObject> T getRoot(IWorkbenchPart part, Class<T> rootType) {
 
 		if (part instanceof DDiagramEditor) {
 			DDiagramEditor editor = (DDiagramEditor) part;
@@ -80,8 +80,8 @@ public class SiriusUtil {
 				if (!resource.getContents().isEmpty()) {
 					EObject content = resource.getContents().get(0);
 
-					if (content instanceof GraphPattern) {
-						return (GraphPattern) content;
+					if (rootType.isInstance(content)) {
+						return (T) content;
 					}
 				}
 			}

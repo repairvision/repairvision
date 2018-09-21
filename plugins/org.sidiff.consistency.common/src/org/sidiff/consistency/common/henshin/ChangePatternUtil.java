@@ -1,16 +1,11 @@
 package org.sidiff.consistency.common.henshin;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
@@ -19,7 +14,6 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.access.EMFMetaAccess;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.common.henshin.view.AttributePair;
-import org.sidiff.graphpattern.GraphPattern;
 
 public class ChangePatternUtil {
 
@@ -184,18 +178,6 @@ public class ChangePatternUtil {
 			} else {
 				return rhsNode;
 			}
-		}
-	}
-	
-	public static void saveGraphPattern(URI uri, GraphPattern graphPattern) {
-		ResourceSet rss = new ResourceSetImpl();
-		Resource graphPatternResource = rss.createResource(uri);
-		graphPatternResource.getContents().add(graphPattern);
-
-		try {
-			graphPatternResource.save(Collections.EMPTY_MAP);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 }

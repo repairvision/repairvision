@@ -4,33 +4,22 @@ Bundle-Name: Consistency Common
 Bundle-SymbolicName: org.sidiff.consistency.common;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore.xmi,
+Require-Bundle: org.eclipse.emf.transaction,
  org.eclipse.jface,
+ org.eclipse.sirius.diagram.ui,
  org.eclipse.ui.console,
  org.eclipse.ui.workbench,
- org.sidiff.common;visibility:=reexport,
- org.eclipse.emf.henshin.model,
  org.sidiff.common.henshin,
- org.sidiff.common.emf,
- org.sidiff.graphpattern,
- org.sidiff.matcher,
- org.sidiff.correspondences.matchingmodel,
- org.sidiff.difference.technical.api,
- org.eclipse.core.resources,
- org.eclipse.emf.transaction,
- org.eclipse.sirius.diagram.ui
+ org.sidiff.common.emf
 Export-Package: org.sidiff.consistency.common.debug,
  org.sidiff.consistency.common.designpatterns,
- org.sidiff.consistency.common.emf;uses:="org.eclipse.emf.ecore,org.eclipse.emf.ecore.resource",
- org.sidiff.consistency.common.henshin;uses:="org.sidiff.graphpattern,org.eclipse.emf.common.util,org.eclipse.emf.henshin.model",
+ org.sidiff.consistency.common.emf,
+ org.sidiff.consistency.common.henshin,
  org.sidiff.consistency.common.java,
  org.sidiff.consistency.common.monitor,
- org.sidiff.consistency.common.settings,
- org.sidiff.consistency.common.storage;uses:="org.eclipse.emf.common.util,org.eclipse.emf.ecore.resource.impl,org.eclipse.emf.ecore.resource",
  org.sidiff.consistency.common.ui.dialogs,
  org.sidiff.consistency.common.ui.tree,
- org.sidiff.consistency.common.ui.util;uses:="org.eclipse.ui",
+ org.sidiff.consistency.common.ui.util,
  org.sidiff.consistency.common.ui.widgets
 Bundle-ClassPath: .,
  commons-csv-1.4/commons-csv-1.4.jar
