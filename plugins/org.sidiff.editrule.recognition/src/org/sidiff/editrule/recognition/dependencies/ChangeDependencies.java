@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
@@ -158,18 +159,18 @@ public class ChangeDependencies {
 							}
 						}
 					}
-				}
-				
-				// D: Every << delete >> node conjunction [A] have direct dependency to its contained child << delete >> nodes:
-				if (isDeletionNode(containerNode)) {
 					
-					// is root container node?
-					if (!dependencyTrace.containsKey(containerNode)) {
-						DependencyNode dependency = createDependencyNode(containerNode);
-						dependencyTrace.put(containerNode, dependency);
+					// D: Every << delete >> node conjunction [A] have direct dependency to its contained child << delete >> nodes:
+					if (isDeletionNode(containerNode)) {
+						
+						// is root container node?
+						if (!dependencyTrace.containsKey(containerNode)) {
+							DependencyNode dependency = createDependencyNode(containerNode);
+							dependencyTrace.put(containerNode, dependency);
+						}
+						
+						createDependencyEdge(dependencyTrace.get(containerNode), containedNodeDependency);
 					}
-					
-					createDependencyEdge(dependencyTrace.get(containerNode), containedNodeDependency);
 				}
 			}
 		}
@@ -278,8 +279,8 @@ public class ChangeDependencies {
 	}
 	
 	private DependencyEdge createDependencyEdge(DependencyNode source, DependencyNode target) {
-		assert source != null;
-		assert target != null;
+		Assert.isNotNull(source);
+		Assert.isNotNull(target);
 		
 		DependencyEdge dependency = GraphpatternFactory.eINSTANCE.createDependencyEdge();
 		
