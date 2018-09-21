@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogMonitor;
@@ -38,6 +39,16 @@ public class InconsistencyEvaluationDriver {
 		
 		InfoConsole.printInfo("#################### " + repaired.getName() + " ####################");
 		repaired.printModels();
+		
+		// WORKAROUND:...
+		if (history.getHistory().getVersions().indexOf(repaired.getModelVersionIntroduced()) == 1) {
+			EObject contextElement = repaired.getProblemInIntroducedModel().getContextElement();
+			contextElement = history.getHistory().getVersions().get(0).getElement(EcoreUtil.getURI(contextElement).fragment());
+			
+			if (contextElement != null) { // could be deleted by earlier repairs...
+				EcoreUtil.delete(contextElement, true);
+			}
+		}
 		
 		LogMonitor monitor = getMonitor(history, repaired, inconsistencies);
 		

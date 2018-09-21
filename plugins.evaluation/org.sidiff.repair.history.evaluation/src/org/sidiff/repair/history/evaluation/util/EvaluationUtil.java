@@ -15,16 +15,13 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
-import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
-import org.sidiff.historymodel.ModelStatus;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
@@ -247,14 +244,15 @@ public class EvaluationUtil {
 	public static Version createEmptyModelVersion(History history) {
 		Version initialVersion = history.getVersions().get(0);
 		
-		Resource emptyModel = Revision.createEmptyModel(initialVersion.getModel());
+//		Resource emptyModel = Revision.createEmptyModel(initialVersion.getModel());
 		
 		Version emptyModelVersion = HistoryModelFactory.eINSTANCE.createVersion();
 		emptyModelVersion.setName("The Empty Model");
-		emptyModelVersion.setModelURI(emptyModel.getURI().toString());
+//		emptyModelVersion.setModelURI(emptyModel.getURI().toString()); // FIXME
+		emptyModelVersion.setModelURI(initialVersion.getModelURI());
 		emptyModelVersion.setRepositoryVersion("-1");
-		emptyModelVersion.setStatus(ModelStatus.VALID);
-		emptyModelVersion.setModel(emptyModel);
+		emptyModelVersion.setStatus(initialVersion.getStatus());
+//		emptyModelVersion.setModel(emptyModel);
 		
 		history.getVersions().add(0, emptyModelVersion);
 		return emptyModelVersion;
