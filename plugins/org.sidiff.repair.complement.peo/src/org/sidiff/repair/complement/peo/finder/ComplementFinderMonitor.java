@@ -1,8 +1,8 @@
 package org.sidiff.repair.complement.peo.finder;
 
-import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.editrule.recognition.RecognitionEngineMonitor;
 import org.sidiff.graphpattern.util.GraphPatternConstants;
+import org.sidiff.graphpattern.util.GraphPatternUtil;
 import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.peo.finder.util.IRecognitionPatternSerializer;
 
@@ -30,7 +30,7 @@ public class ComplementFinderMonitor extends RecognitionEngineMonitor {
 		if (saveRecognitionRule) {
 			complementFinder.recognitionPatternSerializer = new IRecognitionPatternSerializer() {
 				public void saveRecognitionRule() {
-					ChangePatternUtil.saveGraphPattern(RepairAPIUtil.getRecognitionRuleURI(
+					GraphPatternUtil.saveGraphPattern(RepairAPIUtil.getRecognitionRuleURI(
 							complementFinder.editRule.eResource().getURI(), GraphPatternConstants.FILE_EXTENSION),
 							complementFinder.recognitionPattern.getGraphPattern());
 				}
