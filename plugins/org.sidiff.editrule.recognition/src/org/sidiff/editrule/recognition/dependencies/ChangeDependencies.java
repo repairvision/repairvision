@@ -250,7 +250,7 @@ public class ChangeDependencies {
 				Node containerNode = edge.getSource();
 				Node containedNode = edge.getTarget();
 				
-				if (isCreationNode(containerNode)) {
+				if (isCreationNode(containerNode) && isCreationNode(containedNode)) {
 					
 					// is root container node?
 					if (!dependencyTrace.containsKey(containerNode)) {
