@@ -26,7 +26,6 @@ import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.dependencies.DependencyCalculation;
 
 public class ChangeDependencies {
 
