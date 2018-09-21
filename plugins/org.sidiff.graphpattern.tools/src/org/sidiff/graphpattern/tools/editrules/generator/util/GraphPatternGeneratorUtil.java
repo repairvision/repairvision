@@ -11,6 +11,7 @@ import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Parameter;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil;
 
 public class GraphPatternGeneratorUtil {
