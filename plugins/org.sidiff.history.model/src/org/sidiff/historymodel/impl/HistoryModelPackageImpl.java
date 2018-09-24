@@ -339,6 +339,15 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getVersion__GetIndex() {
+		return versionEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getProblem() {
 		return problemEClass;
 	}
@@ -616,6 +625,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		createEOperation(versionEClass, VERSION___GET_ELEMENT__STRING);
 		createEOperation(versionEClass, VERSION___GET_PREDECESSOR);
 		createEOperation(versionEClass, VERSION___GET_SUCCESSOR);
+		createEOperation(versionEClass, VERSION___GET_INDEX);
 
 		problemEClass = createEClass(PROBLEM);
 		createEReference(problemEClass, PROBLEM__VERSION);
@@ -717,6 +727,8 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		initEOperation(getVersion__GetPredecessor(), this.getVersion(), "getPredecessor", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getVersion__GetSuccessor(), this.getVersion(), "getSuccessor", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getVersion__GetIndex(), theEcorePackage.getEInt(), "getIndex", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(problemEClass, Problem.class, "Problem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getProblem_Version(), this.getVersion(), this.getVersion_Problems(), "version", null, 0, 1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

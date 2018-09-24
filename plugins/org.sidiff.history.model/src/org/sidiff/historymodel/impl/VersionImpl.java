@@ -386,6 +386,15 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public int getIndex() {
+		return getHistory().getVersions().indexOf(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -566,6 +575,8 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 				return getPredecessor();
 			case HistoryModelPackage.VERSION___GET_SUCCESSOR:
 				return getSuccessor();
+			case HistoryModelPackage.VERSION___GET_INDEX:
+				return getIndex();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

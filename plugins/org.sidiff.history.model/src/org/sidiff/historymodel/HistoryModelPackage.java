@@ -260,13 +260,22 @@ public interface HistoryModelPackage extends EPackage {
 	int VERSION___GET_SUCCESSOR = 2;
 
 	/**
+	 * The operation id for the '<em>Get Index</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION___GET_INDEX = 3;
+
+	/**
 	 * The number of operations of the '<em>Version</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERSION_OPERATION_COUNT = 3;
+	int VERSION_OPERATION_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.historymodel.impl.ProblemImpl <em>Problem</em>}' class.
@@ -764,6 +773,16 @@ public interface HistoryModelPackage extends EPackage {
 	EOperation getVersion__GetSuccessor();
 
 	/**
+	 * Returns the meta object for the '{@link org.sidiff.historymodel.Version#getIndex() <em>Get Index</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Index</em>' operation.
+	 * @see org.sidiff.historymodel.Version#getIndex()
+	 * @generated
+	 */
+	EOperation getVersion__GetIndex();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.historymodel.Problem <em>Problem</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1221,6 +1240,14 @@ public interface HistoryModelPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation VERSION___GET_SUCCESSOR = eINSTANCE.getVersion__GetSuccessor();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Index</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VERSION___GET_INDEX = eINSTANCE.getVersion__GetIndex();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.historymodel.impl.ProblemImpl <em>Problem</em>}' class.

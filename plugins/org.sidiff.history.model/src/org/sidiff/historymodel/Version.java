@@ -234,7 +234,15 @@ public interface Version extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model kind="operation"
 	 * @generated
+	 */
+	int getIndex();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
 	EObject eResolveProxyByVersion(InternalEObject proxy);
 
