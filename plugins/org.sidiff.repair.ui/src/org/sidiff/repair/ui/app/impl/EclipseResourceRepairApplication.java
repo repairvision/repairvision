@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
@@ -18,8 +17,6 @@ import org.sidiff.repair.ui.config.RepairPreferencePage;
 public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F extends IRepairSettings> implements IRepairApplication<J, F> {
 
 	protected List<IResultChangedListener<J>> listeners = new ArrayList<>();
-	
-	protected ResourceSet differenceRSS = new ResourceSetImpl();
 	
 	protected Resource modelA;
 	
@@ -61,15 +58,12 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 	public Resource getModelA() {
 		
 		if ((modelA == null) && (modelAFile != null)) {
-			modelA = differenceRSS.getResource(WorkbenchUtil.getURI(modelAFile), true);
+			modelA = new ResourceSetImpl().getResource(WorkbenchUtil.getURI(modelAFile), true);
 		}
 		return modelA;
 	}
 	
 	public IResource unsetModelA(IResource selection) {
-		
-		differenceRSS.getResources().remove(getModelA());
-		
 		modelAFile = null;
 		modelA = null;
 		
@@ -91,15 +85,12 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 	public Resource getModelB() {
 		
 		if ((modelB == null) && (modelBFile != null)) {
-			modelB = differenceRSS.getResource(WorkbenchUtil.getURI(modelBFile), true);
+			modelB =  new ResourceSetImpl().getResource(WorkbenchUtil.getURI(modelBFile), true);
 		}
 		return modelB;
 	}
 	
 	public IResource unsetModelB(IResource selection) {
-		
-		differenceRSS.getResources().remove(getModelB());
-		
 		modelBFile = null;
 		modelB = null;
 		
@@ -126,7 +117,6 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 	
 	@Override
 	public void clear() {
-		differenceRSS = new ResourceSetImpl();
 		unsetModelA(modelAFile);
 		unsetModelB(modelBFile);
 	}
