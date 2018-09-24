@@ -1,6 +1,7 @@
 package org.sidiff.history.revision.util;
 
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.common.emf.access.Scope;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.util.TechnicalDifferenceBuilderUtil;
@@ -10,6 +11,7 @@ public class SettingsUtil {
 
 	public static DifferenceSettings getDefaultDifferenceSettings() {
 		DifferenceSettings settings = new DifferenceSettings();
+		settings.setScope(Scope.RESOURCE_SET);
 		
 		settings.setCorrespondencesService(new MatchingModelCorrespondences() {
 			
