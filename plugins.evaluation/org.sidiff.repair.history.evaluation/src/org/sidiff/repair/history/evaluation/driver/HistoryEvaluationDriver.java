@@ -19,6 +19,8 @@ import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 
 public class HistoryEvaluationDriver {
 	
+	public static int START_WITH_VERSION = 0;
+	
 	public static void calculateRepairs(
 			IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade,
 			HistoryInfo history,  
@@ -28,11 +30,13 @@ public class HistoryEvaluationDriver {
 		InfoConsole.printInfo("#################### Initialize Evaluation ####################");
 		
 		// Warm up run:
-		if (history.getRepairedInconsistencies().size() > 0) {
-			InconsistencyTrace inconsistency = history.getRepairedInconsistencies().get(0);
-			InconsistencyEvaluationDriver.calculateRepairs(false,
-					history, repairFacade, inconsistency, editRules, matchingSettings,
-					new LogTable(), new LogTable());
+		for (InconsistencyTrace inconsistency : history.getRepairedInconsistencies()) {
+			if (inconsistency.getModelVersionIntroduced().getIndex() >= START_WITH_VERSION) {
+				InconsistencyEvaluationDriver.calculateRepairs(false,
+						history, repairFacade, inconsistency, editRules, matchingSettings,
+						new LogTable(), new LogTable());
+				break;
+			}
 		}
 		
 		InfoConsole.printInfo("#################### Evaluation Started ####################");
@@ -42,9 +46,11 @@ public class HistoryEvaluationDriver {
 		LogTable runtimeComplexityLog = new LogTable();
 		
 		for (InconsistencyTrace inconsistency : history.getRepairedInconsistencies()) {
-			InconsistencyEvaluationDriver.calculateRepairs(false,
-					history, repairFacade, inconsistency, editRules, matchingSettings,
-					inconsistenciesLog, runtimeComplexityLog);
+			if (inconsistency.getModelVersionIntroduced().getIndex() >= START_WITH_VERSION) {
+				InconsistencyEvaluationDriver.calculateRepairs(false,
+						history, repairFacade, inconsistency, editRules, matchingSettings,
+						inconsistenciesLog, runtimeComplexityLog);
+			}
 		}
 		
 		// Report history setup:

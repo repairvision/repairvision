@@ -70,6 +70,9 @@ public class HistoryEvaluationApplication implements IApplication {
 		// start evaluation:
 		System.out.println("STARTING EVALUATION");
 		
+		HistoryEvaluationDriver.START_WITH_VERSION = 0;
+		System.out.println("WITH VERSION " + 		HistoryEvaluationDriver.START_WITH_VERSION);
+				
 		HistoryEvaluationDriver.calculateRepairs(repairFacade, historyInfo, editRules, getSettings());
 		
 		System.out.println("FINISHED EVALUATION");
