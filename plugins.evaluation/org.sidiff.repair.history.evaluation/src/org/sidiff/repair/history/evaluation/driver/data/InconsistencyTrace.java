@@ -3,7 +3,6 @@ package org.sidiff.repair.history.evaluation.driver.data;
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.consistency.common.ui.util.InfoConsole;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
@@ -67,13 +66,6 @@ public class InconsistencyTrace {
 		} else {
 			return null;
 		}
-	}
-	
-	public void printModels() {
-		InfoConsole.printInfo("Historical: " + modelVersionHistorical.getName());
-		InfoConsole.printInfo("Introduced: "  + modelVersionIntroduced.getName());
-		InfoConsole.printInfo("Current: "  + modelVersionCurrent.getName());
-		InfoConsole.printInfo("Resolved: " + modelVersionResolved.getName());
 	}
 	
 	public String getName() {
@@ -164,5 +156,38 @@ public class InconsistencyTrace {
 
 	public void setModelVersionResolved(Version modelVersionResolved) {
 		this.modelVersionResolved = modelVersionResolved;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder toString = new StringBuilder();
+		
+		toString.append("Historical Version ");
+		toString.append(getModelVersionHistorical().getIndex());
+		toString.append(": ");
+		toString.append(getModelVersionHistorical().getName());
+		toString.append("\n");
+		
+		toString.append("Introduced Version ");
+		toString.append(getModelVersionIntroduced().getIndex());
+		toString.append(": ");
+		toString.append(getModelVersionIntroduced().getName());
+		toString.append("\n");
+		
+		toString.append("Current Version ");
+		toString.append(getModelVersionCurrent().getIndex());
+		toString.append(": ");
+		toString.append(getModelVersionCurrent().getName());
+		toString.append("\n");
+		
+		toString.append("Resolved Version ");
+		toString.append(getModelVersionResolved().getIndex());
+		toString.append(": ");
+		toString.append(getModelVersionResolved().getName());
+		toString.append("\n");
+		
+		toString.insert(0, super.toString() + ":\n");
+		
+		return  toString.toString();
 	}
 }
