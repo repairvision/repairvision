@@ -2,7 +2,7 @@ package org.sidiff.graphpattern.tools.editrules.generator.main;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.completeContext;
-import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.parentConstraint;
+import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +33,14 @@ public class TransformationEditRuleGenerator {
 		for (GraphPattern fromConstraint : allConstraints) {
 			List<Pattern> transformationRules = new ArrayList<>();
 			
-//			if (fromConstraint.getName().contains("Class with Bound Generic Type Parameter")) {
+//			if (fromConstraint.getName().contains("Parameter without Generic-Type")) {
 //				System.out.println(fromConstraint.getName());
 //			} else {
 //				continue;
 //			}
 			
 			for (GraphPattern toConstraint : allConstraints) {
-//				if (toConstraint.getName().contains("Class without Generic Type-Parameter")) {
+//				if (toConstraint.getName().contains("Parameter with Bound Generic-Class-Parameter Sub-Type-Argument")) {
 //					System.out.println(toConstraint.getName());
 //				} else {
 //					continue;
@@ -97,6 +97,7 @@ public class TransformationEditRuleGenerator {
 
 						Pattern editOperation = editRuleGenerator.getEditOperation();
 						completeContext(editOperation);
+						completeConditions(editOperation);
 						transformationRules.add(editOperation);
 					}
 				}
