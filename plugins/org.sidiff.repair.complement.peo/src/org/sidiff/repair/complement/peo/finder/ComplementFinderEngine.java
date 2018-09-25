@@ -184,6 +184,7 @@ public class ComplementFinderEngine {
 		Iterator<Match> matchFinder = engine.findMatches(
 				complementRule.getComplementRule(), graphModelB, complementMatche).iterator();
 		
+		// TODO: Instead of searching all matches, just filter the domain values of the parameters.
 		while (matchFinder.hasNext()) {
 			Match nextMatch = matchFinder.next();
 			
