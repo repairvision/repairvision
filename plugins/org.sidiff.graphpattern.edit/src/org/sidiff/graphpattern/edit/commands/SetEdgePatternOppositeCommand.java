@@ -14,7 +14,7 @@ public class SetEdgePatternOppositeCommand extends CompoundCommand {
 		EReference feature = GraphpatternPackage.Literals.EDGE_PATTERN__OPPOSITE;
 		EdgePattern edge = (EdgePattern) owner;
 		
-		if (value != null) {
+		if (value instanceof EdgePattern) {
 			EdgePattern oppositeEdge = (EdgePattern) value;
 			
 			// Original opposite set command:
