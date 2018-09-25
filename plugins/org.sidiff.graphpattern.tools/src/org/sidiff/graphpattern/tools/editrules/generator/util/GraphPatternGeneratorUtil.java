@@ -64,10 +64,15 @@ public class GraphPatternGeneratorUtil {
 		}
 	}
 	
-	public static void generateParameter(Pattern pattern, String name) {
+	public static boolean generateParameter(Pattern pattern, String name) {
 		Parameter parameter = GraphpatternFactory.eINSTANCE.createParameter();
 		parameter.setName(name);
 		
-		pattern.getParameters().add(parameter);
+		if (!pattern.getParameters().stream().anyMatch(p -> p.getName().equals(name))) {
+			pattern.getParameters().add(parameter);
+			return true;
+		}
+		
+		return false;
 	}
 }
