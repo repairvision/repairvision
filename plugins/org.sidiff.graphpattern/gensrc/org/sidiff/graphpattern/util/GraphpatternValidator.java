@@ -37,6 +37,7 @@ import org.sidiff.graphpattern.Resource;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.SubGraph;
 import org.sidiff.graphpattern.ValueBinding;
+import org.sidiff.graphpattern.attributes.JavaSciptParser;
 
 /**
  * <!-- begin-user-doc -->
@@ -360,6 +361,7 @@ public class GraphpatternValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(attributePattern, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(attributePattern, diagnostics, context);
 		if (result || diagnostics != null) result &= validateAttributePattern_TheAttributeTypeAndTheContainingClassAreNotMetaModelConform(attributePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validateAttributePattern_TheNameOfTheAttributeVariableIsEqualToANameOfANode(attributePattern, diagnostics, context);
 		return result;
 	}
 
@@ -367,7 +369,7 @@ public class GraphpatternValidator extends EObjectValidator {
 	 * Validates the TheAttributeTypeAndTheContainingClassAreNotMetaModelConform constraint of '<em>Attribute Pattern</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public boolean validateAttributePattern_TheAttributeTypeAndTheContainingClassAreNotMetaModelConform(AttributePattern attributePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		if ((attributePattern.getType() != null) && (attributePattern.getNode() != null) && (attributePattern.getNode().getType() != null)) {
@@ -389,6 +391,35 @@ public class GraphpatternValidator extends EObjectValidator {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Validates the TheNameOfTheAttributeVariableIsEqualToANameOfANode constraint of '<em>Attribute Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateAttributePattern_TheNameOfTheAttributeVariableIsEqualToANameOfANode(AttributePattern attributePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		String name = attributePattern.getValue();
+		
+		if (JavaSciptParser.isVariable(name) && 
+				attributePattern.getGraph().getNodes().stream()
+				.anyMatch(n -> n.getName().equals(name))) {
+			
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.WARNING,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "_UI_GenericConstraint_diagnostic",
+						 new Object[] { "The name of the attribute variable is equal to a name of a node", getObjectLabel(attributePattern, context) },
+						 new Object[] { attributePattern },
+						 context));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -433,7 +464,43 @@ public class GraphpatternValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateParameter(Parameter parameter, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(parameter, diagnostics, context);
+		if (!validate_NoCircularContainment(parameter, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(parameter, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(parameter, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(parameter, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(parameter, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(parameter, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(parameter, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(parameter, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(parameter, diagnostics, context);
+		if (result || diagnostics != null) result &= validateParameter_TheNameOfTheParameterIsNotUnique(parameter, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the TheNameOfTheParameterIsNotUnique constraint of '<em>Parameter</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateParameter_TheNameOfTheParameterIsNotUnique(Parameter parameter, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		
+		if (parameter.getPattern().getParameters().stream()
+				.anyMatch(p -> ((p != parameter) && p.getName().equals(parameter.getName())))) {
+			if (diagnostics != null) {
+				diagnostics.add
+					(createDiagnostic
+						(Diagnostic.ERROR,
+						 DIAGNOSTIC_SOURCE,
+						 0,
+						 "_UI_GenericConstraint_diagnostic",
+						 new Object[] { "The name of the parameter is not unique", getObjectLabel(parameter, context) },
+						 new Object[] { parameter },
+						 context));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**

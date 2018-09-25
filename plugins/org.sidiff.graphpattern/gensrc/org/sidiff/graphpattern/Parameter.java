@@ -15,7 +15,7 @@ package org.sidiff.graphpattern;
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getParameter()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='TheNameOfTheParameterIsNotUnique'"
  * @generated
  */
 public interface Parameter extends PatternElement {

@@ -1605,7 +1605,13 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		  (attributePatternEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "TheAttributeTypeAndTheContainingClassAreNotMetaModelConform"
+			 "constraints", "TheAttributeTypeAndTheContainingClassAreNotMetaModelConform\r\nTheNameOfTheAttributeVariableIsEqualToANameOfANode"
+		   });	
+		addAnnotation
+		  (parameterEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "TheNameOfTheParameterIsNotUnique"
 		   });
 	}
 

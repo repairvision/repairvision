@@ -62,7 +62,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributePattern" eSuperTypes="#//GraphElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="TheAttributeTypeAndTheContainingClassAreNotMetaModelConform"/>
+      <details key="constraints" value="TheAttributeTypeAndTheContainingClassAreNotMetaModelConform&#xD;&#xA;TheNameOfTheAttributeVariableIsEqualToANameOfANode"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
@@ -115,6 +115,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Parameter" eSuperTypes="#//PatternElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="TheNameOfTheParameterIsNotUnique"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//Pattern"
         eOpposite="#//Pattern/parameters"/>
   </eClassifiers>

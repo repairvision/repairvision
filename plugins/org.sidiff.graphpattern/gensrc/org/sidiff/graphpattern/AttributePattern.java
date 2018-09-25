@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EAttribute;
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getAttributePattern()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='TheAttributeTypeAndTheContainingClassAreNotMetaModelConform'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='TheAttributeTypeAndTheContainingClassAreNotMetaModelConform\r\nTheNameOfTheAttributeVariableIsEqualToANameOfANode'"
  * @generated
  */
 public interface AttributePattern extends GraphElement {
