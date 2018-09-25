@@ -174,6 +174,13 @@ public class ComplementFinderEngine {
 		
 		// Check context rule (with restricted working graph):
 		ArrayList<Match> complementPreMatches = new ArrayList<>();
+		
+		// FIXME WORKAROUND: This should be done by Henshin!
+		for (Parameter parameter : complementMatche.getRule().getParameters()) {
+			Object value = complementMatche.getParameterValue(parameter);
+			engine.getScriptEngine().put(parameter.getName(), value);
+		}
+		
 		Iterator<Match> matchFinder = engine.findMatches(
 				complementRule.getComplementRule(), graphModelB, complementMatche).iterator();
 		
