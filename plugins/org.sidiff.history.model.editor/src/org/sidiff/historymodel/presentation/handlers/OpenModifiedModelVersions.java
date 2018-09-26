@@ -27,7 +27,8 @@ public class OpenModifiedModelVersions extends AbstractHandler {
 				
 				Version beforeIntroduced = inconsistency.getIntroducedIn().getPredecessor();
 				Version introduced = inconsistency.getIntroducedIn();
-				Version beforeResolved = inconsistency.getResolvedIn().getPredecessor();
+				Version beforeResolved = (inconsistency.getResolvedIn() != null) ? 
+						inconsistency.getResolvedIn().getPredecessor() : null;
 				Version resolved = inconsistency.getResolvedIn();
 				
 				if (beforeIntroduced != null) {
