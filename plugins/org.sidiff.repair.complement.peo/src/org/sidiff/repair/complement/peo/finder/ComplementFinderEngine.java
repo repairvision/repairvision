@@ -185,6 +185,7 @@ public class ComplementFinderEngine {
 				complementRule.getComplementRule(), graphModelB, complementMatche).iterator();
 		
 		// TODO: Instead of searching all matches, just filter the domain values of the parameters.
+//		while (matchFinder.hasNext() && (complementPreMatches.size() < 1)) {
 		while (matchFinder.hasNext()) {
 			Match nextMatch = matchFinder.next();
 			
