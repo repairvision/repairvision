@@ -38,7 +38,7 @@ public class InconsistencyEvaluationDriver {
 			LogTable runtimeComplexityLog) {
 		
 		InfoConsole.printInfo("#################### " + repaired.getName() + " ####################");
-		repaired.printModels();
+		InfoConsole.printInfo(repaired);
 		
 		// WORKAROUND:...
 		if (history.getHistory().getVersions().indexOf(repaired.getModelVersionIntroduced()) == 1) {
@@ -79,14 +79,10 @@ public class InconsistencyEvaluationDriver {
 		log.append("Context Element", EcoreUtil.getURI(repaired.getProblemCurrentModel().getContextElement()));
 		log.append("Context Type", repaired.getProblemCurrentModel().getContextElement().eClass().getName());
 		log.append("History", history.getHistory().getName());
-		log.append("Historical Version (consistent)", history.getHistory().getVersions().indexOf(
-				repaired.getModelVersionHistorical()));
-		log.append("Introduced Version (inconsistent)", history.getHistory().getVersions().indexOf(
-				repaired.getModelVersionIntroduced()));
-		log.append("Current Version (inconsistent)", history.getHistory().getVersions().indexOf(
-				repaired.getModelVersionCurrent()));
-		log.append("Resolved Version (consistent)", history.getHistory().getVersions().indexOf(
-				repaired.getModelVersionResolved()));
+		log.append("Historical Version (consistent)", repaired.getModelVersionHistorical().getIndex());
+		log.append("Introduced Version (inconsistent)", repaired.getModelVersionIntroduced().getIndex());
+		log.append("Current Version (inconsistent)", repaired.getModelVersionCurrent().getIndex());
+		log.append("Resolved Version (consistent)", repaired.getModelVersionResolved().getIndex());
 		
 		return monitor;
 	}

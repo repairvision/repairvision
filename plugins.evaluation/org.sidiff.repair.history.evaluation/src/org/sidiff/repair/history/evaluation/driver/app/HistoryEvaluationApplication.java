@@ -47,6 +47,8 @@ public class HistoryEvaluationApplication implements IApplication {
 	
 	private static String HISTORY = "C:/evaluations/org.eclipse.git_2018-08-22/org.eclipse.git.annotated/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_UML.ecore/plugins_org.eclipse.uml2.uml_model_UML.ecore.history";
 	
+	private static int START_WITH_VERSION = 0;
+	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
 		System.out.println("LOADIND EVALUATION: " + HISTORY);
@@ -70,8 +72,8 @@ public class HistoryEvaluationApplication implements IApplication {
 		// start evaluation:
 		System.out.println("STARTING EVALUATION");
 		
-		HistoryEvaluationDriver.START_WITH_VERSION = 0;
-		System.out.println("WITH VERSION " + 		HistoryEvaluationDriver.START_WITH_VERSION);
+		HistoryEvaluationDriver.START_WITH_VERSION = START_WITH_VERSION;
+		System.out.println("WITH VERSION " + HistoryEvaluationDriver.START_WITH_VERSION);
 				
 		HistoryEvaluationDriver.calculateRepairs(repairFacade, historyInfo, editRules, getSettings());
 		
