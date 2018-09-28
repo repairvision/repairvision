@@ -5,7 +5,7 @@ import org.sidiff.common.emf.access.Scope;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.util.TechnicalDifferenceBuilderUtil;
-import org.sidiff.history.revision.uuid.UUIDMatcher;
+import org.sidiff.generic.matcher.uuid.UUIDMatcher;
 
 public class SettingsUtil {
 
