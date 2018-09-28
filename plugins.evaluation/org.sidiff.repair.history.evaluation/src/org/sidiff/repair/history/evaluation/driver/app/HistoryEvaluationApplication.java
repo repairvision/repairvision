@@ -1,5 +1,6 @@
 package org.sidiff.repair.history.evaluation.driver.app;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -47,71 +48,79 @@ public class HistoryEvaluationApplication implements IApplication {
 	
 	private static String LOCAL_PATH = "C:/evaluations/org.eclipse.git_2018-08-22";
 	
-	private static String HISTORY = "";
+	private static List<String> HISTORIES = new ArrayList<>();
 	static {
-		HISTORY = "/org.eclipse.git.annotated/birt/chart_org.eclipse.birt.chart.engine_src_model_org.eclipse.birt.chart.model.type.ecore/chart_org.eclipse.birt.chart.engine_src_model_org.eclipse.birt.chart.model.type.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/eclipse.e4/bundles_org.eclipse.e4.ui.model.workbench_model_UIElements.ecore/bundles_org.eclipse.e4.ui.model.workbench_model_UIElements.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.emf.emf/plugins_org.eclipse.emf.codegen.ecore_model_GenModel.ecore/plugins_org.eclipse.emf.codegen.ecore_model_GenModel.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.emf.emf/plugins_org.eclipse.emf.ecore_model_XMLType.ecore/plugins_org.eclipse.emf.ecore_model_XMLType.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.emf.emf/plugins_org.eclipse.emf.ecore.change_model_Change.ecore/plugins_org.eclipse.emf.ecore.change_model_Change.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.emft.edapt/plugins_org.eclipse.emf.edapt.history_model_history.ecore/plugins_org.eclipse.emf.edapt.history_model_history.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.gmp.gmf-tooling/plugins_org.eclipse.gmf.graphdef_models_gmfgraph.ecore/plugins_org.eclipse.gmf.graphdef_models_gmfgraph.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.gmp.gmf-tooling/plugins_org.eclipse.gmf.map_models_gmfmap.ecore/plugins_org.eclipse.gmf.map_models_gmfmap.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.gmp.gmf-tooling/plugins_org.eclipse.gmf.tooldef_models_tooldef.ecore/plugins_org.eclipse.gmf.tooldef_models_tooldef.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.m2t.acceleo/plugins_org.eclipse.acceleo.model_model_mtlnonstdlib.ecore/plugins_org.eclipse.acceleo.model_model_mtlnonstdlib.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.mdt.bpmn2/org.eclipse.bpmn2_model_BPMN20.ecore/org.eclipse.bpmn2_model_BPMN20.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.mdt.ocl/plugins_org.eclipse.ocl.ecore_model_oclstdlib.ecore/plugins_org.eclipse.ocl.ecore_model_oclstdlib.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.mdt.ocl/plugins_org.eclipse.ocl.pivot_model_Lookup.ecore/plugins_org.eclipse.ocl.pivot_model_Lookup.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.mdt.papyrus/plugins_infra_core_org.eclipse.papyrus.infra.core.architecture_model_Architecture.ecore/plugins_infra_core_org.eclipse.papyrus.infra.core.architecture_model_Architecture.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF.ecore/plugins_org.eclipse.uml2.uml_model_CMOF.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_UML.ecore/plugins_org.eclipse.uml2.uml_model_UML.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.mmt.atl/deprecated_org.atl.eclipse.engine_src_org_atl_eclipse_engine_resources_ATL-0.2.ecore/deprecated_org.atl.eclipse.engine_src_org_atl_eclipse_engine_resources_ATL-0.2.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.mmt.atl/plugins_org.eclipse.m2m.atl.emftvm_model_emftvm.ecore/plugins_org.eclipse.m2m.atl.emftvm_model_emftvm.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.mmt.qvt-oml/plugins_org.eclipse.m2m.qvt.oml_model_QVTOperational.ecore/plugins_org.eclipse.m2m.qvt.oml_model_QVTOperational.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.mmt.qvtd/plugins_org.eclipse.qvtd.pivot.qvtbase_model_QVTbase.ecore/plugins_org.eclipse.qvtd.pivot.qvtbase_model_QVTbase.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/modeling.sirius/plugins_org.eclipse.sirius_model_viewpoint.ecore/plugins_org.eclipse.sirius_model_viewpoint.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/science.eavp/org.eclipse.eavp.geometry.view.model_model_org.eclipse.eavp.geometry.view.model.ecore/org.eclipse.eavp.geometry.view.model_model_org.eclipse.eavp.geometry.view.model.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/technology.cbi/org.eclipse.b3.aggregator_model_Aggregator.ecore/org.eclipse.b3.aggregator_model_Aggregator.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/technology.cbi/org.eclipse.b3.backend_model_B3Backend.ecore/org.eclipse.b3.backend_model_B3Backend.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/technology.cbi/org.eclipse.b3.build_model_B3Build.ecore/org.eclipse.b3.build_model_B3Build.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/technology.stem/core_org.eclipse.stem.core_model_graph.ecore/core_org.eclipse.stem.core_model_graph.ecore.history";
-		HISTORY = "/org.eclipse.git.annotated/tools.buckminster/org.eclipse.buckminster.rmap_model_rmap.ecore/org.eclipse.buckminster.rmap_model_rmap.ecore.history";
+		HISTORIES.add("/org.eclipse.git.annotated/birt/chart_org.eclipse.birt.chart.engine_src_model_org.eclipse.birt.chart.model.type.ecore/chart_org.eclipse.birt.chart.engine_src_model_org.eclipse.birt.chart.model.type.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/eclipse.e4/bundles_org.eclipse.e4.ui.model.workbench_model_UIElements.ecore/bundles_org.eclipse.e4.ui.model.workbench_model_UIElements.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.emf.emf/plugins_org.eclipse.emf.codegen.ecore_model_GenModel.ecore/plugins_org.eclipse.emf.codegen.ecore_model_GenModel.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.emf.emf/plugins_org.eclipse.emf.ecore_model_XMLType.ecore/plugins_org.eclipse.emf.ecore_model_XMLType.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.emf.emf/plugins_org.eclipse.emf.ecore.change_model_Change.ecore/plugins_org.eclipse.emf.ecore.change_model_Change.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.emft.edapt/plugins_org.eclipse.emf.edapt.history_model_history.ecore/plugins_org.eclipse.emf.edapt.history_model_history.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.gmp.gmf-tooling/plugins_org.eclipse.gmf.graphdef_models_gmfgraph.ecore/plugins_org.eclipse.gmf.graphdef_models_gmfgraph.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.gmp.gmf-tooling/plugins_org.eclipse.gmf.map_models_gmfmap.ecore/plugins_org.eclipse.gmf.map_models_gmfmap.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.gmp.gmf-tooling/plugins_org.eclipse.gmf.tooldef_models_tooldef.ecore/plugins_org.eclipse.gmf.tooldef_models_tooldef.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.m2t.acceleo/plugins_org.eclipse.acceleo.model_model_mtlnonstdlib.ecore/plugins_org.eclipse.acceleo.model_model_mtlnonstdlib.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.mdt.bpmn2/org.eclipse.bpmn2_model_BPMN20.ecore/org.eclipse.bpmn2_model_BPMN20.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.mdt.ocl/plugins_org.eclipse.ocl.ecore_model_oclstdlib.ecore/plugins_org.eclipse.ocl.ecore_model_oclstdlib.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.mdt.ocl/plugins_org.eclipse.ocl.pivot_model_Lookup.ecore/plugins_org.eclipse.ocl.pivot_model_Lookup.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.mdt.papyrus/plugins_infra_core_org.eclipse.papyrus.infra.core.architecture_model_Architecture.ecore/plugins_infra_core_org.eclipse.papyrus.infra.core.architecture_model_Architecture.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF.ecore/plugins_org.eclipse.uml2.uml_model_CMOF.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_UML.ecore/plugins_org.eclipse.uml2.uml_model_UML.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.mmt.atl/deprecated_org.atl.eclipse.engine_src_org_atl_eclipse_engine_resources_ATL-0.2.ecore/deprecated_org.atl.eclipse.engine_src_org_atl_eclipse_engine_resources_ATL-0.2.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.mmt.atl/plugins_org.eclipse.m2m.atl.emftvm_model_emftvm.ecore/plugins_org.eclipse.m2m.atl.emftvm_model_emftvm.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.mmt.qvt-oml/plugins_org.eclipse.m2m.qvt.oml_model_QVTOperational.ecore/plugins_org.eclipse.m2m.qvt.oml_model_QVTOperational.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.mmt.qvtd/plugins_org.eclipse.qvtd.pivot.qvtbase_model_QVTbase.ecore/plugins_org.eclipse.qvtd.pivot.qvtbase_model_QVTbase.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/modeling.sirius/plugins_org.eclipse.sirius_model_viewpoint.ecore/plugins_org.eclipse.sirius_model_viewpoint.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/science.eavp/org.eclipse.eavp.geometry.view.model_model_org.eclipse.eavp.geometry.view.model.ecore/org.eclipse.eavp.geometry.view.model_model_org.eclipse.eavp.geometry.view.model.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/technology.cbi/org.eclipse.b3.aggregator_model_Aggregator.ecore/org.eclipse.b3.aggregator_model_Aggregator.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/technology.cbi/org.eclipse.b3.backend_model_B3Backend.ecore/org.eclipse.b3.backend_model_B3Backend.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/technology.cbi/org.eclipse.b3.build_model_B3Build.ecore/org.eclipse.b3.build_model_B3Build.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/technology.stem/core_org.eclipse.stem.core_model_graph.ecore/core_org.eclipse.stem.core_model_graph.ecore.history");
+		HISTORIES.add("/org.eclipse.git.annotated/tools.buckminster/org.eclipse.buckminster.rmap_model_rmap.ecore/org.eclipse.buckminster.rmap_model_rmap.ecore.history");
 	}
 	
 	private static int START_WITH_VERSION = 0;
 	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		System.out.println("LOADIND EVALUATION: " + HISTORY);
-		System.out.println("RULEBASE: " + RULEBASE);
 		
-		// load history:
-		History history = loadHistory(URI.createFileURI(LOCAL_PATH + HISTORY));
-		
-		// initialize history analyzer:
-		HistoryInfo historyInfo = new HistoryInfo(history);
-		
-		// load edit rules:
-		List<URI> rulebase = RulebaseLibrary.getRulebase(RULEBASE);
-		Collection<Rule> editRules = RulebaseUtil.eLoadEditRules(rulebase, false);
-		
-		System.out.println("EDIT RULES: " + editRules.size());
-		
-		// repair algorithm:
-		IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade = new PEORepairFacade();
-
-		// start evaluation:
-		System.out.println("STARTING EVALUATION");
-		
-		HistoryEvaluationDriver.START_WITH_VERSION = START_WITH_VERSION;
-		System.out.println("WITH VERSION " + HistoryEvaluationDriver.START_WITH_VERSION);
+		for (String historyPath : HISTORIES) {
+			try {
+				System.out.println("LOADIND EVALUATION: " + historyPath);
+				System.out.println("RULEBASE: " + RULEBASE);
 				
-		HistoryEvaluationDriver.calculateRepairs(repairFacade, historyInfo, editRules, getSettings());
+				// load history:
+				History history = loadHistory(URI.createFileURI(LOCAL_PATH + historyPath));
+				
+				// initialize history analyzer:
+				HistoryInfo historyInfo = new HistoryInfo(history);
+				
+				// load edit rules:
+				List<URI> rulebase = RulebaseLibrary.getRulebase(RULEBASE);
+				Collection<Rule> editRules = RulebaseUtil.eLoadEditRules(rulebase, false);
+				
+				System.out.println("EDIT RULES: " + editRules.size());
+				
+				// repair algorithm:
+				IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade = new PEORepairFacade();
+
+				// start evaluation:
+				System.out.println("STARTING EVALUATION");
+				
+				HistoryEvaluationDriver.START_WITH_VERSION = START_WITH_VERSION;
+				System.out.println("WITH VERSION " + HistoryEvaluationDriver.START_WITH_VERSION);
+						
+				HistoryEvaluationDriver.calculateRepairs(repairFacade, historyInfo, editRules, getSettings());
+				
+				System.out.println("FINISHED EVALUATION");
+				System.gc();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
-		System.out.println("FINISHED EVALUATION");
-		
-		return null;
+		return IApplication.EXIT_OK;
 	}
 	
 	private DifferenceSettings getSettings() {
