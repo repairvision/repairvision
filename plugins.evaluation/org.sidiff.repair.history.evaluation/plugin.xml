@@ -22,6 +22,18 @@
       </application>
    </extension>
    <extension
+         id="report"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="*"
+            thread="main"
+            visible="true">
+         <run
+               class="org.sidiff.repair.history.evaluation.report.generator.ReportGenerator">
+         </run>
+      </application>
+   </extension>
+   <extension
          id="product"
          point="org.eclipse.core.runtime.products">
       <product

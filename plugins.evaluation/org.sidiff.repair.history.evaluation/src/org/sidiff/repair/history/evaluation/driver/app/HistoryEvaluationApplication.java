@@ -44,11 +44,11 @@ public class HistoryEvaluationApplication implements IApplication {
 //	private static String MATCHER = "org.sidiff.matcher.id.xmiid.XMIIDMatcher";
 //	private static String DIFFERENCE_BUILDER = "org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations";
 	
-	private static String RULEBASE = "Ecore Evaluation Edit Rules";
+	public static String RULEBASE = "Ecore Evaluation Edit Rules";
 	
-	private static String LOCAL_PATH = "C:/workspaces/sidiff-build/";
+	public static String LOCAL_PATH = "C:/workspaces/sidiff-build/";
 	
-	private static List<String> HISTORIES = new ArrayList<>();
+	public static List<String> HISTORIES = new ArrayList<>();
 	static {
 		HISTORIES.add("/org.eclipse.git.evaluation/birt/chart_org.eclipse.birt.chart.engine_src_model_org.eclipse.birt.chart.model.type.ecore/chart_org.eclipse.birt.chart.engine_src_model_org.eclipse.birt.chart.model.type.ecore.history");
 		HISTORIES.add("/org.eclipse.git.evaluation/eclipse.e4/bundles_org.eclipse.e4.ui.model.workbench_model_UIElements.ecore/bundles_org.eclipse.e4.ui.model.workbench_model_UIElements.ecore.history");

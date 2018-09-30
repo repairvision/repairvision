@@ -2,6 +2,8 @@ package org.sidiff.repair.history.evaluation.report;
 
 public class HistoryLog extends AbstractLog {
 	
+	public static final String NAME = "history";
+	
 	public static final String COL_HISTORY = "History";
 	
 	public static final String COL_VERSIONS = "Versions";

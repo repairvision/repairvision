@@ -2,6 +2,8 @@ package org.sidiff.repair.history.evaluation.report;
 
 public class RecognitionLog extends AbstractLog {
 	
+	public static final String NAME = "runtime";
+	
 	public static final String COL_CHANGE_COUNT_SUM = "Change Count (Sum)";
 	
 	public static final String COL_CHANGE_NODE_COUNT = "Change Node Count";

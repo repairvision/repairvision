@@ -18,6 +18,7 @@ import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.repair.history.evaluation.report.EditRulesLog;
 import org.sidiff.repair.history.evaluation.report.HistoryLog;
 import org.sidiff.repair.history.evaluation.report.InconsistenciesLog;
+import org.sidiff.repair.history.evaluation.report.RecognitionLog;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 
 public class HistoryEvaluationDriver {
@@ -62,10 +63,10 @@ public class HistoryEvaluationDriver {
 		
 		String timestamp = EvaluationUtil.getTimestamp();
 		
-		EvaluationUtil.saveLog(history, inconsistenciesLog, timestamp, "inconsistencies");
-		EvaluationUtil.saveLog(history, runtimeComplexityLog, timestamp, "runtime");
-		EvaluationUtil.saveLog(history, historyLog, timestamp, "history");
-		EvaluationUtil.saveLog(history, editRuleLog, timestamp, "editrules");
+		EvaluationUtil.saveLog(history, inconsistenciesLog, timestamp, InconsistenciesLog.NAME);
+		EvaluationUtil.saveLog(history, runtimeComplexityLog, timestamp, RecognitionLog.NAME);
+		EvaluationUtil.saveLog(history, historyLog, timestamp, HistoryLog.NAME);
+		EvaluationUtil.saveLog(history, editRuleLog, timestamp, EditRulesLog.NAME);
 		EvaluationUtil.updateProject(history);
 		
 		InfoConsole.printInfo("#################### Evaluation Finished ####################");

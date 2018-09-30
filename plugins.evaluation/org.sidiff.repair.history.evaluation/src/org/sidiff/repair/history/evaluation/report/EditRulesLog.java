@@ -2,6 +2,8 @@ package org.sidiff.repair.history.evaluation.report;
 
 public class EditRulesLog extends AbstractLog {
 
+	public static final String NAME = "editrules";
+	
 	public static final String COL_ALL_EDIT_RULES = "Edit Rules (All)";
 
 	public static final String COL_AVG_NODE_EDGE_CHANGES = "Avg. Node/Edge Changes";

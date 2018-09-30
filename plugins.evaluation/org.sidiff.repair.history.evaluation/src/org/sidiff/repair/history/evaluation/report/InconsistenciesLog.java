@@ -2,6 +2,8 @@ package org.sidiff.repair.history.evaluation.report;
 
 public class InconsistenciesLog extends AbstractLog {
 	
+	public static final String NAME = "inconsistencies";
+	
 	public static final String COL_INCONSISTENCY = "Inconsistency";
 	
 	public static final String COL_CONTEXT_ELEMENT = "Context Element";

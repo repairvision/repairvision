@@ -1,6 +1,7 @@
 package org.sidiff.repair.history.evaluation.util;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,12 +31,13 @@ import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class EvaluationUtil {
 	
+	private static SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss");
+	
 	public static void saveLog(HistoryInfo history, LogTable log, String timestamp, String name) {
 		String projectPath = EMFStorage.uriToPath(history.getHistory().eResource().getURI().trimSegments(1));
 		
 		// generate file name:
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss");
-		String timeStamp = df.format(new Date(System.currentTimeMillis()));
+		String timeStamp = TIME_FORMAT.format(new Date(System.currentTimeMillis()));
 		String fileName = history.getHistory().getName() + "_" + timestamp + "_" + name + ".csv";
 
 		// create folder:
@@ -61,10 +63,16 @@ public class EvaluationUtil {
 		}
 	}
 	
+	public static Date getTimestamp(String timeStamp) {
+		try {
+			return TIME_FORMAT.parse(timeStamp);
+		} catch (ParseException e) {
+		}
+		return null;
+	}
+	
 	public static String getTimestamp() {
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss");
-		String timestamp = df.format(new Date(System.currentTimeMillis()));
-		return timestamp;
+		return TIME_FORMAT.format(new Date(System.currentTimeMillis()));
 	}
 	
 	public static EObjectList toEObjectList(List<? extends EObject> list, String label) {
