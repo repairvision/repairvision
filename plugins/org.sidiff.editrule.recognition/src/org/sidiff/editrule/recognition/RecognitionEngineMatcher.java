@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
-import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
+import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
 import org.sidiff.editrule.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.recognition.generator.PartialMatchGenerator;
 import org.sidiff.editrule.recognition.impact.scope.RepairScope;
@@ -30,7 +30,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	protected DependencyEvaluation dependencies;
 	
-	protected LogTable runtimeLog;
+	protected RecognitionEngineSettings settings;
 	
 	public RecognitionEngineMatcher(RecognitionEngine engine, RecognitionPattern recognitionPattern) {
 		this.engine = engine;
@@ -46,9 +46,9 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		matchGenerator.start();
 	}
 	
-	public RecognitionEngineMatcher(RecognitionPattern recognitionPattern, RepairScope scope, LogTable runtimeLog) {
+	public RecognitionEngineMatcher(RecognitionPattern recognitionPattern, RepairScope scope, RecognitionEngineSettings settings) {
 		this.recognitionPattern = recognitionPattern;
-		this.runtimeLog = runtimeLog;
+		this.settings = settings;
 		
 		// Log domain size:
 		int domainSize = 0;
@@ -57,9 +57,9 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 			domainSize += Domain.get(changeNode).size();
 		}
 		
-		if (runtimeLog != null) {
-			runtimeLog.append("Change Count (Sum)", domainSize);
-			runtimeLog.append("Change Node Count", recognitionPattern.getChangeNodePatterns().size());
+		if ((settings != null) && (settings.getMonitor().isLogging())) {
+			settings.getMonitor().logChangeCount(domainSize);
+			settings.getMonitor().logChangeActionCount(recognitionPattern.getChangeNodePatterns().size());
 		}
 		
 		// Create Scope-Constraint:
@@ -87,8 +87,8 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		matchingTimer.stop();
 		
 		// Report matching:
-		if (runtimeLog != null) {
-			runtimeLog.append("[Time (ms)] Matching Time", matchingTimer);
+		if ((settings != null) && (settings.getMonitor().isLogging())) {
+			settings.getMonitor().logMatchingTime(matchingTimer);
 		}
 		
 		return matchGenerator.getResults();

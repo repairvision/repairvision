@@ -2,8 +2,8 @@ package org.sidiff.editrule.recognition;
 
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.designpatterns.IAlgorithm;
-import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
 import org.sidiff.editrule.recognition.dependencies.ChangeDependencies;
 import org.sidiff.editrule.recognition.impact.scope.RepairScope;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
@@ -52,7 +52,7 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 	}
 	
 	@Override
-	public RecognitionEngineMatcher createMatcher(RecognitionPattern recognitionPattern, RepairScope scope, LogTable runtimeLog) {
+	public RecognitionEngineMatcher createMatcher(RecognitionPattern recognitionPattern, RepairScope scope, RecognitionEngineSettings settings) {
 		
 		if (!started) {
 			throw new RuntimeException("Call PartialEditRuleRecognizer start()!");
@@ -63,7 +63,7 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 //		System.out.println("Initial Domains: \n\n" + StringUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		
 		// Create matcher:
-		return new RecognitionEngineMatcher(recognitionPattern, scope, runtimeLog);
+		return new RecognitionEngineMatcher(recognitionPattern, scope, settings);
 	}
 
 	@Override

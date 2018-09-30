@@ -12,7 +12,7 @@ import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
 import org.sidiff.editrule.recognition.selection.MatchSelectorMonitor;
 import org.sidiff.graphpattern.NodePattern;
 
-public class RecognitionEngineMonitor {
+public class RecognitionEngineRecorder {
 
 	public interface IChangeTag {
 		String getName();
@@ -22,7 +22,7 @@ public class RecognitionEngineMonitor {
 	
 	private MatchSelectorMonitor matchSelectorMonitor;
 	
-	public RecognitionEngineMonitor(RecognitionEngineMatcher recognitionEngineMatcher) {
+	public RecognitionEngineRecorder(RecognitionEngineMatcher recognitionEngineMatcher) {
 		this.recognitionEngineMatcher = recognitionEngineMatcher;
 		this.matchSelectorMonitor = new MatchSelectorMonitor(recognitionEngineMatcher.matchSelector);
 	}
