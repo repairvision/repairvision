@@ -15,6 +15,7 @@ import org.sidiff.editrule.recognition.impact.scope.ChangeScope;
 import org.sidiff.editrule.recognition.impact.scope.RepairScope;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.api.IRepairPlan;
+import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
@@ -52,7 +53,7 @@ public class PEORepairCaculation {
 		// Create complement finder:
 		if (isPotentialRepair()) {
 			complementFinder = complementFinderEngine.createComplementFinder(
-					editRule, repairScope, settings.getMonitor(), settings.getRuntimeComlexityLog());
+					editRule, repairScope, settings.getComplementFinderSettings());
 		}
 	}
 	

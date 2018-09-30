@@ -1,17 +1,15 @@
-package org.sidiff.repair.api.peo;
+package org.sidiff.repair.api.peo.configuration;
 
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.emf.DocumentType;
-import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.BasicRepairSettings;
+import org.sidiff.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
@@ -21,12 +19,7 @@ public class PEORepairSettings extends BasicRepairSettings {
 	/**
 	 * Monitor for the repair process.
 	 */
-	private IProgressMonitor monitor = new NullProgressMonitor();
-	
-	/**
-	 * Logging of processed changes to runtime.
-	 */
-	private LogTable runtimeComlexityLog = null;
+	private PEORepairMonitor monitor = new PEORepairMonitor();
 	
 	/**
 	 * All edit-rules which are to be investigated for partial executions.
@@ -52,6 +45,11 @@ public class PEORepairSettings extends BasicRepairSettings {
 	 * The context elements that should be validated.
 	 */
 	private Iterable<EObject> validationScope; 
+	
+	/**
+	 * Settings of the complement finde.
+	 */
+	private ComplementFinderSettings complementFinderSettings = new ComplementFinderSettings();
 
 	public PEORepairSettings(Iterable<EObject> validationScope, Collection<Rule> editRules, DifferenceSettings differenceSettings) {
 		super();
@@ -60,20 +58,12 @@ public class PEORepairSettings extends BasicRepairSettings {
 		this.differenceSettings = differenceSettings;
 	}
 	
-	public IProgressMonitor getMonitor() {
+	public PEORepairMonitor getMonitor() {
 		return monitor;
 	}
 	
-	public void setMonitor(IProgressMonitor monitor) {
+	public void setMonitor(PEORepairMonitor monitor) {
 		this.monitor = monitor;
-	}
-
-	public LogTable getRuntimeComlexityLog() {
-		return runtimeComlexityLog;
-	}
-	
-	public void setRuntimeComlexityLog(LogTable runtimeComlexityLog) {
-		this.runtimeComlexityLog = runtimeComlexityLog;
 	}
 	
 	public Collection<Rule> getEditRules() {
@@ -126,5 +116,13 @@ public class PEORepairSettings extends BasicRepairSettings {
 	
 	public void setValidationScope(Iterable<EObject> validationScope) {
 		this.validationScope = validationScope;
+	}
+	
+	public ComplementFinderSettings getComplementFinderSettings() {
+		return complementFinderSettings;
+	}
+	
+	public void setComplementFinderSettings(ComplementFinderSettings complementFinderSettings) {
+		this.complementFinderSettings = complementFinderSettings;
 	}
 }

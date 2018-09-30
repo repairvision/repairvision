@@ -9,12 +9,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.monitor.LogMonitor;
-import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.repair.api.IRepairPlan;
+import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 import org.sidiff.validation.constraint.impact.index.RepairActionIndex;
@@ -36,13 +35,10 @@ public class PEORepairCalculationEngine {
 		IRevision revision = new Revision(modelA, modelB, settings.getDifferenceSettings());
 		diffTimer.stop();
 		
-		System.out.println("Re.Vision[Load/Calculate Revision Time]: " + diffTimer + "ms");
-		
 		// Report:
-		if (settings.getMonitor() instanceof LogMonitor) {
-			LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
-			log.append("[Time (ms)] Load/Calculate Revision", diffTimer);
-			log.append("Change Count (Historical->Actual)", revision.getDifference().getChanges().size());
+		if (settings.getMonitor().isLogging()) {
+			settings.getMonitor().logDifferenceTime(diffTimer);
+			settings.getMonitor().logChangeCount(revision.getDifference().getChanges().size());
 		}
 
 		if (settings.saveDifference()) {
@@ -71,20 +67,18 @@ public class PEORepairCalculationEngine {
 				settings.getConsistencyRules(), true));
 		
 		valiationTimer.stop();
-		System.out.println("Re.Vision[Validation Time]: " + valiationTimer + "ms");
-		System.out.println("Re.Vision[Inconsistencies]: " + impact.getValidations().size());
 
-		// Report validation:
-		if (settings.getMonitor() instanceof LogMonitor) {
-			LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
-//			log.append("[Time (ms)] Validation", valiationTimer);
-			log.append("Inconsistencies", impact.getValidations().size());
+		// Report:
+		if (settings.getMonitor().isLogging()) {
+			settings.getMonitor().logValidationTime(valiationTimer);
+			settings.getMonitor().logInconsistencyCount(impact.getValidations().size());
+			settings.getMonitor().logEditRuleCount(settings.getEditRules().size());
 		}
-		
-		// Calculate repairs:
-		System.out.println("Re.Vision[CPEOs]: " + settings.getEditRules().size());
+
+		// Henshin graph:
 		EGraph graphModelB = new EGraphImpl(revision.getVersionB().getTargetResource());
 		
+		// Calculate repairs:
 		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(revision, graphModelB);
 		complementFinderEngine.start();
 		
@@ -116,15 +110,11 @@ public class PEORepairCalculationEngine {
 		complementFinderEngine.finish();
 		
 		// Report:
-		System.out.println("Re.Vision[Potential CPEOs]: " + potentialEditRules);
-		System.out.println("Re.Vision[Repair Count]: " + repairCount);
-		
-		if (settings.getMonitor() instanceof LogMonitor) {
-			LogTable log = ((LogMonitor) settings.getMonitor()).getLog();
-			log.append("[Time (ms)] Complement Matching", complementMatchingTimer);
-			log.append("Potential Edit Rules", potentialEditRules);
-			log.append("Complements (Repairs)", complementingEditRules);
-			log.append("Complement Matchings", repairCount);
+		if (settings.getMonitor().isLogging()) {
+			settings.getMonitor().logComplementMatchingTime(complementMatchingTimer);
+			settings.getMonitor().logPotentialEditRuleCount(potentialEditRules);
+			settings.getMonitor().logComplementOperationCount(complementingEditRules);
+			settings.getMonitor().logComplementMatchingCount(repairCount);
 		}
 		
 		// Create repair job:

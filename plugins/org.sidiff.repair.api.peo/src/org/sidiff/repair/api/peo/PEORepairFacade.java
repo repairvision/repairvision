@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.repair.api.IRepairFacade;
+import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 
 /**
  * API for the repair engine functions.
