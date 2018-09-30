@@ -4,12 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.monitor.LogMonitor;
-import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
-import org.sidiff.consistency.common.monitor.LogUtil;
 import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.RecognitionEngine;
 import org.sidiff.editrule.recognition.RecognitionEngineMatcher;
@@ -18,6 +14,7 @@ import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.util.debug.DebugUtil;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.matching.RecognitionMatch;
+import org.sidiff.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.repair.complement.peo.finder.util.IRecognitionPatternSerializer;
 
 public class ComplementFinder {
@@ -28,9 +25,7 @@ public class ComplementFinder {
 	
 	protected RepairScope scope;
 	
-	protected IProgressMonitor monitor;
-	
-	protected LogTable runtimeLog;
+	protected ComplementFinderSettings settings;
 	
 	protected RecognitionEngineMatcher recognitionMatcher;
 	
@@ -38,17 +33,16 @@ public class ComplementFinder {
 	
 	protected IRecognitionPatternSerializer recognitionPatternSerializer;
 		
-	public ComplementFinder(ComplementFinderEngine engine, Rule editRule, RepairScope scope, IProgressMonitor monitor, LogTable runtimeLog) {
+	public ComplementFinder(ComplementFinderEngine engine, Rule editRule, RepairScope scope, ComplementFinderSettings settings) {
 		this.engine = engine;
 		this.editRule = editRule;
 		this.scope = scope;
-		this.monitor = monitor;
-		this.runtimeLog = runtimeLog;
+		this.settings = settings;
 		
 		// Create recognition rule:
 		RecognitionEngine recognitionEngine = engine.getRecognitionEngine();
 		this.recognitionPattern = recognitionEngine.createRecognitionPattern(editRule);
-		this.recognitionMatcher = recognitionEngine.createMatcher(recognitionPattern, scope, runtimeLog);
+		this.recognitionMatcher = recognitionEngine.createMatcher(recognitionPattern, scope, settings.getRecognitionEngineSettings());
 		
 		this.recognitionPatternSerializer = new IRecognitionPatternSerializer() {
 			public void saveRecognitionRule() {}
@@ -75,8 +69,8 @@ public class ComplementFinder {
 		DebugUtil.printRecognitionTime(recognitionTimer);
 		
 		// Report:
-		if (monitor instanceof LogMonitor) {
-			LogUtil.appendTime((LogMonitor) monitor, "[Time (ms)] Recognition Time", recognitionTimer);
+		if (settings.getMonitor().isLogging()) {
+			settings.getMonitor().logRecognitionTime(recognitionTimer);
 		}
 
 		//// Complement Construction ////

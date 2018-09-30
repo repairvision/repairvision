@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
@@ -16,7 +15,6 @@ import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.editrule.recognition.RecognitionEngine;
 import org.sidiff.editrule.recognition.impact.scope.RepairScope;
 import org.sidiff.history.revision.IRevision;
@@ -27,6 +25,7 @@ import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
 import org.sidiff.repair.complement.matching.RecognitionMatch;
 import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
 import org.sidiff.repair.complement.matching.RecognitionParameterMatch;
+import org.sidiff.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.repair.complement.util.ParameterBinding;
 
 /**
@@ -100,8 +99,8 @@ public class ComplementFinderEngine {
 		return partialEditRuleRecognizer;
 	}
 	
-	public ComplementFinder createComplementFinder(Rule editRule, RepairScope scope, IProgressMonitor monitor, LogTable runtimeLog) {
-		return new ComplementFinder(this, editRule, scope, monitor, runtimeLog);
+	public ComplementFinder createComplementFinder(Rule editRule, RepairScope scope, ComplementFinderSettings settings) {
+		return new ComplementFinder(this, editRule, scope, settings);
 	}
 	
 	public List<Match> findComplementMatches(

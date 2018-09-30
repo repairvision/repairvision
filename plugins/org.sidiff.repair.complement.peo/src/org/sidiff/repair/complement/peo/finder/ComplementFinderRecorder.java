@@ -1,12 +1,12 @@
 package org.sidiff.repair.complement.peo.finder;
 
-import org.sidiff.editrule.recognition.RecognitionEngineMonitor;
+import org.sidiff.editrule.recognition.RecognitionEngineRecorder;
 import org.sidiff.graphpattern.util.GraphPatternConstants;
 import org.sidiff.graphpattern.util.GraphPatternUtil;
 import org.sidiff.repair.api.util.RepairAPIUtil;
 import org.sidiff.repair.complement.peo.finder.util.IRecognitionPatternSerializer;
 
-public class ComplementFinderMonitor extends RecognitionEngineMonitor {
+public class ComplementFinderRecorder extends RecognitionEngineRecorder {
 	
 	private ComplementFinder complementFinder;
 	
@@ -15,7 +15,7 @@ public class ComplementFinderMonitor extends RecognitionEngineMonitor {
 	 */
 	private boolean saveRecognitionRule;
 	
-	public ComplementFinderMonitor(ComplementFinder complementFinder) {
+	public ComplementFinderRecorder(ComplementFinder complementFinder) {
 		super(complementFinder.recognitionMatcher);
 		this.complementFinder = complementFinder;
 	}
