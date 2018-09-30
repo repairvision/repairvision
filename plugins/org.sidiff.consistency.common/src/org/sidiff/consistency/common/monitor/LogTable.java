@@ -213,21 +213,24 @@ public class LogTable {
 		try {
 			CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator("\n");
 			csvFileFormat = csvFileFormat.withDelimiter(';');
+			csvFileFormat = csvFileFormat.withFirstRecordAsHeader();
 			
 			fileReader = new FileReader(fileName);
 			csvFileParser = new CSVParser(fileReader, csvFileFormat);
 			
-			for (String header : csvFileFormat.getHeader()) {
-				table.put(header, new ArrayList<>());
+			String[] header = csvFileParser.getHeaderMap().keySet().toArray(new String[0]);
+			
+			for (String columnName : header) {
+				table.put(columnName, new ArrayList<>());
 			}
 			
 			for (CSVRecord record : csvFileParser.getRecords()) {
 				for (int i = 0; i < record.size(); i++) {
 					String stringValue = record.get(i);
-					String header = csvFileFormat.getHeader()[i];
+					String columnName = header[i];
 					
-					Object value = stringToValue(typeDefinition.getType(header), stringValue);
-					table.get(header).add(value);
+					Object value = stringToValue(typeDefinition.getType(columnName), stringValue);
+					table.get(columnName).add(value);
 				}
 			}
 			
