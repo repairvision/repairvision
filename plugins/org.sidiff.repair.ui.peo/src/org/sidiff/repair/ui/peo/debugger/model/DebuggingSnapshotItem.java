@@ -6,8 +6,8 @@ import java.util.List;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
 import org.sidiff.editrule.recognition.RecognitionEngineMatcher;
-import org.sidiff.editrule.recognition.RecognitionEngineMonitor;
-import org.sidiff.editrule.recognition.RecognitionEngineMonitor.IChangeTag;
+import org.sidiff.editrule.recognition.RecognitionEngineRecorder;
+import org.sidiff.editrule.recognition.RecognitionEngineRecorder.IChangeTag;
 import org.sidiff.repair.ui.peo.Activator;
 
 public class DebuggingSnapshotItem implements ITreeItem {
@@ -27,7 +27,7 @@ public class DebuggingSnapshotItem implements ITreeItem {
 	
 	private EditRuleGraphMatchingItem editRuleGraphMatching;
 	
-	public DebuggingSnapshotItem(DebuggingSession session, RecognitionEngineMonitor monitor) {
+	public DebuggingSnapshotItem(DebuggingSession session, RecognitionEngineRecorder monitor) {
 		this.session = session;
 		
 		// Monitor recognition engine:

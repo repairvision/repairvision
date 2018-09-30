@@ -20,7 +20,7 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairCalculationEngineDebugger;
 import org.sidiff.repair.api.peo.PEORepairJob;
-import org.sidiff.repair.api.peo.PEORepairSettings;
+import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.editrules.library.RulebaseUtil;
 import org.sidiff.repair.ui.app.impl.EclipseResourceRepairApplication;
 import org.sidiff.repair.ui.peo.debugger.EditRuleMatcherDebugger;

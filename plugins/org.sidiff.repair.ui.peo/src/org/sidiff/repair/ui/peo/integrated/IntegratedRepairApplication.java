@@ -37,7 +37,7 @@ import org.sidiff.integration.editor.extension.IEditorIntegration;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
-import org.sidiff.repair.api.peo.PEORepairSettings;
+import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.editrules.library.RulebaseLibrary;
 import org.sidiff.repair.editrules.library.RulebaseUtil;
 import org.sidiff.repair.ui.app.impl.EMFResourceRepairApplication;
