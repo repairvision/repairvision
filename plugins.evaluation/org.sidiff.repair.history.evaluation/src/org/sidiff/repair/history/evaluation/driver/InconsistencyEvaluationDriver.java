@@ -9,23 +9,24 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.monitor.LogMonitor;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.ui.util.InfoConsole;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
-import org.sidiff.repair.api.peo.PEORepairSettings;
+import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
 import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
+import org.sidiff.repair.history.evaluation.report.InconsistenciesLog;
+import org.sidiff.repair.history.evaluation.report.monitor.ComplementFinderLogMonitor;
+import org.sidiff.repair.history.evaluation.report.monitor.PEORepairLogMonitor;
+import org.sidiff.repair.history.evaluation.report.monitor.RecognitionEngineLogMonitor;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 
 public class InconsistencyEvaluationDriver {
-	
-	public static final String COLUMN_OBSERVABLE = "Historically Observable Repairs (HOR)";
 	
 	public static PEORepairJob calculateRepairs(
 			boolean saveDifference, 
@@ -50,49 +51,46 @@ public class InconsistencyEvaluationDriver {
 			}
 		}
 		
-		LogMonitor monitor = getMonitor(history, repaired, inconsistencies);
+		logInconsistency(history, repaired, inconsistencies);
 		
 		// Calculate repairs (filtered by validation):
 		PEORepairSettings settings = new PEORepairSettings(
 				Collections.singleton(repaired.getProblemCurrentModel().getContextElement()), editRules, matchingSettings);
 		settings.setConsistencyRules(Collections.singletonList(repaired.getConsistencyRule(history.getSupportedConsistencyRules())));
 		settings.setSaveDifference(saveDifference);
-		settings.setMonitor(monitor);
-		settings.setRuntimeComlexityLog(runtimeComplexityLog);
+		
+		// Setup logging:
+		settings.setMonitor(new PEORepairLogMonitor(inconsistencies));
+		settings.getComplementFinderSettings().setMonitor(new ComplementFinderLogMonitor(inconsistencies));
+		settings.getComplementFinderSettings().getRecognitionEngineSettings().setMonitor(new RecognitionEngineLogMonitor(runtimeComplexityLog));
 		
 		PEORepairJob repairJob = repairFacade.getRepairs(
 				repaired.getModelHistorical(), repaired.getModelCurrent(), settings);
 		
 		// Evaluate repairs for inconsistency:
-		evaluateRepairs(monitor, history, repaired, repairJob, matchingSettings);
+		evaluateRepairs(inconsistencies, history, repaired, repairJob, matchingSettings);
 		
 		InfoConsole.printInfo("#################### " + repaired.getName() + " Finished ####################");
 		
 		return repairJob;
 	}
 	
-	private static LogMonitor getMonitor(HistoryInfo history, InconsistencyTrace repaired, LogTable log) {
-		
-		LogMonitor monitor = new LogMonitor(log);
-		
-		log.append("Inconsistency", repaired.getProblemCurrentModel().getName());
-		log.append("Context Element", EcoreUtil.getURI(repaired.getProblemCurrentModel().getContextElement()));
-		log.append("Context Type", repaired.getProblemCurrentModel().getContextElement().eClass().getName());
-		log.append("History", history.getHistory().getName());
-		log.append("Historical Version (consistent)", repaired.getModelVersionHistorical().getIndex());
-		log.append("Introduced Version (inconsistent)", repaired.getModelVersionIntroduced().getIndex());
-		log.append("Current Version (inconsistent)", repaired.getModelVersionCurrent().getIndex());
-		log.append("Resolved Version (consistent)", repaired.getModelVersionResolved().getIndex());
-		
-		return monitor;
+	private static void logInconsistency(HistoryInfo history, InconsistencyTrace repaired, LogTable log) {
+		log.append(InconsistenciesLog.COL_INCONSISTENCY, repaired.getProblemCurrentModel().getName());
+		log.append(InconsistenciesLog.COL_CONTEXT_ELEMENT, EcoreUtil.getURI(repaired.getProblemCurrentModel().getContextElement()));
+		log.append(InconsistenciesLog.COL_CONTEXT_TYPE, repaired.getProblemCurrentModel().getContextElement().eClass().getName());
+		log.append(InconsistenciesLog.COL_HISTORY, history.getHistory().getName());
+		log.append(InconsistenciesLog.COL_HISTORICAL_VERSION, repaired.getModelVersionHistorical().getIndex());
+		log.append(InconsistenciesLog.COL_INTRODUCED_VERSION, repaired.getModelVersionIntroduced().getIndex());
+		log.append(InconsistenciesLog.COL_CURRENT_VERSION, repaired.getModelVersionCurrent().getIndex());
+		log.append(InconsistenciesLog.COL_RESOLVED_VERSION, repaired.getModelVersionResolved().getIndex());
 	}
 	
-	private static void evaluateRepairs(LogMonitor monitor, HistoryInfo history,
+	private static void evaluateRepairs(LogTable log, HistoryInfo history,
 			InconsistencyTrace repaired, PEORepairJob repairJob,  
 			DifferenceSettings matchingSettings) {
 		
 		// evaluate repair results:
-		LogTable log = monitor.getLog();
 		InfoConsole.printInfo("Repairs Found: " + repairJob.getRepairs().size());
 		
 		// search historical observable repair:
@@ -101,7 +99,7 @@ public class InconsistencyEvaluationDriver {
 		
 		InfoConsole.printInfo("Historically Observable Repairs: " + observable.size());
 		
-		log.append(COLUMN_OBSERVABLE, observable.size() > 0);
+		log.append(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_REPAIRS, observable.size() > 0);
 		
 		Object[] bestObservable = findBestObservableRepair(observable, repairJob);
 		int bestPositionOfObservable = (int) bestObservable[0];
@@ -109,20 +107,20 @@ public class InconsistencyEvaluationDriver {
 		if (bestPositionOfObservable != -1) {
 			IRepairPlan bestObservableRepair = (IRepairPlan) bestObservable[1];
 			
-			log.append("Ranking of Best HOR", bestPositionOfObservable);
-			log.append("Repair Matchings for Best HOR", bestObservableRepair.getComplementMatches().size());
-			log.append("Historic Changes of Best HOR", bestObservableRepair.getRecognizedChanges().size());
-			log.append("Complementing Changes of Best HOR", bestObservableRepair.getComplementingChanges().size());
+			log.append(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, bestPositionOfObservable);
+			log.append(InconsistenciesLog.COL_REPAIR_MATCHINGS_FOR_BEST_HOR, bestObservableRepair.getComplementMatches().size());
+			log.append(InconsistenciesLog.COL_HISTORICAL_CHANGES_OF_BEST_HOR, bestObservableRepair.getRecognizedChanges().size());
+			log.append(InconsistenciesLog.COL_COMPLEMENTING_CHANGES_OF_BEST_HOR, bestObservableRepair.getComplementingChanges().size());
 		} else {
-			log.append("Ranking of Best HOR", LogTable.NA);
-			log.append("Repair Matchings for Best HOR", LogTable.NA);
-			log.append("Historic Changes of Best HOR", LogTable.NA);
-			log.append("Complementing Changes of Best HOR", LogTable.NA);
+			log.append(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, LogTable.NA);
+			log.append(InconsistenciesLog.COL_REPAIR_MATCHINGS_FOR_BEST_HOR, LogTable.NA);
+			log.append(InconsistenciesLog.COL_HISTORICAL_CHANGES_OF_BEST_HOR, LogTable.NA);
+			log.append(InconsistenciesLog.COL_COMPLEMENTING_CHANGES_OF_BEST_HOR, LogTable.NA);
 		}
 		
 		// evaluate repair tree:
-		log.append("Count of Repair Trees", repairJob.getValidations().size());
-		log.append("Count of Repair Actions", countRepairTreeActions(repairJob.getRepairTrees()));
+		log.append(InconsistenciesLog.COL_COUNT_OF_REPAIR_TREES, repairJob.getValidations().size());
+		log.append(InconsistenciesLog.COL_COUNT_OF_REPAIR_ACTIONS, countRepairTreeActions(repairJob.getRepairTrees()));
 //		log.append("Count of Repair Tree Combinations", countRepairTreeCombinations(repairJob.getValidations()));
 	}
 
@@ -168,16 +166,15 @@ public class InconsistencyEvaluationDriver {
 		return repairActions;
 	}
 	
-	@SuppressWarnings("unused")
-	private static int countRepairTreeCombinations(Collection<RepairValidation> validations) {
-		int repairActionCombinations = 0;
-		
-		for (RepairValidation validation : validations) {
-			for (Iterator<List<? extends IDecisionNode>> iterator = validation.getRepair().combinations(); iterator.hasNext();) {
-				++repairActionCombinations;
-			}
-		}
-		
-		return repairActionCombinations;
-	}
+//	private static int countRepairTreeCombinations(Collection<RepairValidation> validations) {
+//		int repairActionCombinations = 0;
+//		
+//		for (RepairValidation validation : validations) {
+//			for (Iterator<List<? extends IDecisionNode>> iterator = validation.getRepair().combinations(); iterator.hasNext();) {
+//				++repairActionCombinations;
+//			}
+//		}
+//		
+//		return repairActionCombinations;
+//	}
 }

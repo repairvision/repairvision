@@ -12,9 +12,12 @@ import org.sidiff.consistency.common.ui.util.InfoConsole;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.peo.PEORepairJob;
-import org.sidiff.repair.api.peo.PEORepairSettings;
+import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
 import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
+import org.sidiff.repair.history.evaluation.report.EditRulesLog;
+import org.sidiff.repair.history.evaluation.report.HistoryLog;
+import org.sidiff.repair.history.evaluation.report.InconsistenciesLog;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 
 public class HistoryEvaluationDriver {
@@ -71,17 +74,17 @@ public class HistoryEvaluationDriver {
 	private static LogTable evaluateHistory(HistoryInfo history, LogTable inconsistenciesLog) {
 		LogTable historyLog = new LogTable();
 		
-		historyLog.append("History", history.getHistory().getName());
-		historyLog.append("Versions", history.getHistory().getVersions().size());
-		historyLog.append("Inconsistent Versions", history.getVersionsWithInconsistencies());
-		historyLog.append("Avg. Elements", LogUtil.division(history.getHistoryModelElements(), history.getVersionsWithInconsistencies()));
-		historyLog.append("Inconsistency Traces", history.getAllUniqueInconsistencies().size());
-		historyLog.append("Resolved Inconsistency Traces", history.getIntroducedAndResolvedUniqueInconsistencies().size());
-		historyLog.append("Supported Resolved Inconsistency Traces", history.getSupportedIntroducedAndResolvedUniqueInconsistencies().size());
-		historyLog.append("[Annotation] Complex Repairs", history.getComplexChangeAnnotations().size());
-		historyLog.append("[Annotation] Observable Complex Repairs", inconsistenciesLog.count(InconsistencyEvaluationDriver.COLUMN_OBSERVABLE, "true"));
-		historyLog.append("[Annotation] Single Change Repairs", history.getSingleChangeAnnotations().size());
-		historyLog.append("[Annotation] Undo Repairs", history.getUndoAnnotations().size());
+		historyLog.append(HistoryLog.COL_HISTORY, history.getHistory().getName());
+		historyLog.append(HistoryLog.COL_VERSIONS, history.getHistory().getVersions().size());
+		historyLog.append(HistoryLog.COL_INCONSISTENT_VERSIONS, history.getVersionsWithInconsistencies());
+		historyLog.append(HistoryLog.COL_AVG_ELEMENTS, LogUtil.division(history.getHistoryModelElements(), history.getVersionsWithInconsistencies()));
+		historyLog.append(HistoryLog.COL_INCONSISTENCY_TRACES, history.getAllUniqueInconsistencies().size());
+		historyLog.append(HistoryLog.COL_RESOLVED_INOCONSISTENCY_TRACES, history.getIntroducedAndResolvedUniqueInconsistencies().size());
+		historyLog.append(HistoryLog.COL_SUPPORTED_RESOLEVED_INCONSISTENCY_TRACES, history.getSupportedIntroducedAndResolvedUniqueInconsistencies().size());
+		historyLog.append(HistoryLog.COL_ANNOTATION_COMPLEX_REPAIRS, history.getComplexChangeAnnotations().size());
+		historyLog.append(HistoryLog.COL_ANNOTATION_OBSERVABLE_COMPLEX_REPAIRS, inconsistenciesLog.count(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_REPAIRS, "true"));
+		historyLog.append(HistoryLog.COL_ANNOTATION_SINGLE_CHANGE_REPAIRS, history.getSingleChangeAnnotations().size());
+		historyLog.append(HistoryLog.COL_ANNOTATION_UNDO_REPAIRS, history.getUndoAnnotations().size());
 		
 		return historyLog;
 	}
@@ -99,9 +102,9 @@ public class HistoryEvaluationDriver {
 			sizeAll[1] = sizeAll[1] + size[1];
 		}
 		
-		editRuleLog.append("Edit Rules (All)", editRules.size());
-		editRuleLog.append("Avg. Node/Edge Changes", LogUtil.division(sizeAll[0], editRules.size()));
-		editRuleLog.append("Avg. Attribute Changes", LogUtil.division(sizeAll[1], editRules.size()));
+		editRuleLog.append(EditRulesLog.COL_ALL_EDIT_RULES, editRules.size());
+		editRuleLog.append(EditRulesLog.COL_AVG_NODE_EDGE_CHANGES, LogUtil.division(sizeAll[0], editRules.size()));
+		editRuleLog.append(EditRulesLog.COL_AVG_ATTRIBUTE_CHANGES, LogUtil.division(sizeAll[1], editRules.size()));
 		
 		return editRuleLog;
 	}

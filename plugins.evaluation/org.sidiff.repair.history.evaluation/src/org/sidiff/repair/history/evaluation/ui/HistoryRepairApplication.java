@@ -23,7 +23,7 @@ import org.sidiff.historymodel.Problem;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
-import org.sidiff.repair.api.peo.PEORepairSettings;
+import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.editrules.library.RulebaseUtil;
 import org.sidiff.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.InconsistencyEvaluationDriver;
