@@ -4,8 +4,7 @@ import java.util.List;
 
 public class LogUtil {
 
-	public static void appendTime(LogMonitor monitor, String name, LogTime timer) {
-		LogTable log = monitor.getLog();
+	public static void appendTime(LogTable log, String name, LogTime timer) {
 		List<Object> matchingTimerSumAll = log.getColumn(name);
 		
 		if (matchingTimerSumAll.size() <= log.getLastIndex()) {
@@ -20,6 +19,6 @@ public class LogUtil {
 		if (b != 0) {
 			return a / b;
 		}
-		return LogTable.NA;
+		return StringAdapter.NA;
 	}
 }

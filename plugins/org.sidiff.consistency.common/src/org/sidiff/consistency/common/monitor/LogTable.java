@@ -1,5 +1,6 @@
 package org.sidiff.consistency.common.monitor;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,21 +13,21 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 import org.sidiff.consistency.common.java.StringPrinter;
 
 public class LogTable {
 
-	public static final Object NA = new Object() {
-		
-		@Override
-		public String toString() {
-			return "N/A";
-		}
-	};
+	public static final Object NA = StringAdapter.NA;
+	
+	public static final StringAdapter DEFAULT_STRING_ADAPTER = new StringAdapter();
+	
+	protected LogTypeDefinition typeDefinition = new LogTypeDefinition();
 	
 	protected Map<String, List<Object>> table = new LinkedHashMap<>();
-	
+
 	protected List<Object> maxColumn = Collections.emptyList();
 	
 	protected Map<Class<?>, StringAdapter> toStringAdapters = new HashMap<>();
@@ -58,6 +59,19 @@ public class LogTable {
 		return Collections.unmodifiableList(table.get(name));
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <T> List<T> getColumn(String name, Class<? extends T> type) {
+		List<T> numbers = new ArrayList<>();
+		
+		for(Object objectValue : getColumn(name)) {
+			if (type.isInstance(objectValue)) {
+				numbers.add((T) objectValue);
+			}
+		}
+		
+		return numbers;
+	}
+	
 	public Set<String> getColumns() {
 		return Collections.unmodifiableSet(table.keySet());
 	}
@@ -84,7 +98,7 @@ public class LogTable {
 		// fill column until last row:
 		if (lastRow) {
 			for (int i = column.size(); i < (maxColumn.size() - 1); i++) {
-				column.add(NA);
+				column.add(StringAdapter.NA);
 			}
 		}
 		
@@ -99,29 +113,24 @@ public class LogTable {
 		return true;
 	}
 	
-	public int count(String column, String value) {
-		int count = 0;
-		
-		for(Object objectValue : getColumn(column)) {
-			if (valueToString(objectValue).equals(value)) {
-				++count;
-			}
+	public String valueToString(Object value) {
+		StringAdapter stringAdapter = toStringAdapters.get(value.getClass());
+
+		if (stringAdapter != null) {
+			return stringAdapter.toString(value);
+		} else {
+			return DEFAULT_STRING_ADAPTER.toString(value);
 		}
-		
-		return count;
 	}
 	
-	public String valueToString(Object value) {
-		if (value != null) {
-			StringAdapter stringAdapter = toStringAdapters.get(value.getClass());
-			
-			if (stringAdapter != null) {
-				return stringAdapter.toString(value);
-			} else {
-				return value.toString();
-			}
+	@SuppressWarnings("unchecked")
+	public <T> T stringToValue(Class<? extends T> type, String value) {
+		StringAdapter stringAdapter = toStringAdapters.get(type);
+		
+		if (stringAdapter != null) {
+			return (T) stringAdapter.toValue(value);
 		} else {
-			return "null";
+			return (T) DEFAULT_STRING_ADAPTER.toValue(value);
 		}
 	}
 	
@@ -172,7 +181,7 @@ public class LogTable {
 					if (column.size() > i) {
 						csvFilePrinter.print(valueToString(column.get(i)));
 					} else {
-						csvFilePrinter.print(NA);
+						csvFilePrinter.print(StringAdapter.NA);
 					}
 				}
 				csvFilePrinter.println();
@@ -197,7 +206,84 @@ public class LogTable {
 		}
 	}
 	
+	public void loadCSV(String fileName) {
+		CSVParser csvFileParser = null;
+		FileReader fileReader = null;
+		
+		try {
+			CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator("\n");
+			csvFileFormat = csvFileFormat.withDelimiter(';');
+			
+			fileReader = new FileReader(fileName);
+			csvFileParser = new CSVParser(fileReader, csvFileFormat);
+			
+			for (String header : csvFileFormat.getHeader()) {
+				table.put(header, new ArrayList<>());
+			}
+			
+			for (CSVRecord record : csvFileParser.getRecords()) {
+				for (int i = 0; i < record.size(); i++) {
+					String stringValue = record.get(i);
+					String header = csvFileFormat.getHeader()[i];
+					
+					Object value = stringToValue(typeDefinition.getType(header), stringValue);
+					table.get(header).add(value);
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (csvFileParser != null) {
+				try {
+					csvFileParser.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (fileReader != null) {
+				try {
+					fileReader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public LogTypeDefinition getTypeDefinition() {
+		return typeDefinition;
+	}
+	
+	public void setTypeDefinition(LogTypeDefinition typeDefinition) {
+		this.typeDefinition = typeDefinition;
+	}
+	
 	public void clearLog() {
 		table.clear();
+	}
+	
+	public int count(String column, String value) {
+		int count = 0;
+		
+		for(Object objectValue : getColumn(column)) {
+			if (valueToString(objectValue).equals(value)) {
+				++count;
+			}
+		}
+		
+		return count;
+	}
+	
+	public int size(String column) {
+		int size = 0;
+		
+		for(Object objectValue : getColumn(column)) {
+			if (!objectValue.equals(NA)) {
+				++size;
+			}
+		}
+	
+		return size;
 	}
 }
