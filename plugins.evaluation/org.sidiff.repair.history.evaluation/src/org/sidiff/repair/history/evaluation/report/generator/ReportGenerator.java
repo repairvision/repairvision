@@ -1,13 +1,18 @@
 package org.sidiff.repair.history.evaluation.report.generator;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.eclipse.equinox.app.IApplication;
@@ -22,9 +27,72 @@ import org.sidiff.repair.history.evaluation.report.RecognitionLog;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 
 public class ReportGenerator implements IApplication {
+	
+	private static final String COL_SEPERATOR = ": ";
+	
+	private static final String COL_NAME = "Name";
+	
+	private static final String COL_REVISIONS = "Revisions (all / inconsistent)";
+	
+	private static final String COL_ELEMENTS = "Elements";
+	
+	private static final String COL_REPAIRED_INCONSISTENCY = "RQ1 Repaired Inconsistencies (Inconsistency Traces / At Least One Repair)";
+	
+	private static final String COL_HOR = "RQ2 Historically Observable Repairs";
+	
+	private static final String COL_UNDO = "RQ2 Undo";
+	
+	private static final String COL_REPAIR_ACTIONS = "RQ3 Abstract Repair Actions";
+	
+	private static final String COL_REPIAR_ALTERNATIVE = "RQ3 Repair Alternatives (avg. / median)";
+	
+	private static final String COL_HOR_RANKING = "RQ3 Avg. Ranking of HOR (position / matchings)";
+	
+	private static final String COL_RUNTIME = "RQ4 Avg. Runtime [ms] (Difference / Partial Recognition / Complement Matching)";
+	
+	private static final boolean PROJECT_REPORT = true;
+	
+	private static final boolean MODEL_REPORT = false;
 
+	private class EvaluationData {
+		LogTable editRulesLog, historyLog, inconsistenciesLog, recognitionLog;
+	}
+	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
+		
+		for (Entry<String, List<EvaluationData>> evaluationDataPerProject : getEvaluationsPerProject().entrySet()) {
+			
+			if (PROJECT_REPORT) {
+				System.out.println("######################################################");
+				generateProjectReport(
+						new File(evaluationDataPerProject.getKey()).getName(),
+						evaluationDataPerProject.getValue().stream().map(data -> data.editRulesLog).collect(Collectors.toList()),
+						evaluationDataPerProject.getValue().stream().map(data -> data.historyLog).collect(Collectors.toList()),
+						evaluationDataPerProject.getValue().stream().map(data -> data.inconsistenciesLog).collect(Collectors.toList()),
+						evaluationDataPerProject.getValue().stream().map(data -> data.recognitionLog).collect(Collectors.toList()));
+				System.out.println("######################################################");
+			}
+			
+			if (MODEL_REPORT) {
+				for (EvaluationData evaluationData : evaluationDataPerProject.getValue()) {
+					System.out.println("######################################################");
+					generateModelReport(
+							evaluationData.historyLog.getColumn(HistoryLog.COL_HISTORY, String.class).get(0),
+							evaluationData.editRulesLog,
+							evaluationData.historyLog,
+							evaluationData.inconsistenciesLog,
+							evaluationData.recognitionLog);
+					System.out.println("######################################################");
+				}
+			}
+		}
+		
+		return IApplication.EXIT_OK;
+	}
+	
+	private Map<String, List<EvaluationData>> getEvaluationsPerProject() throws IOException {
+		Map<String, List<EvaluationData>> evaluationDataPerProject = new HashMap<>();
 		
 		for (String history : HistoryEvaluationApplication.HISTORIES) {
 			File historyFolder = new File(HistoryEvaluationApplication.LOCAL_PATH + history).getParentFile();
@@ -64,91 +132,90 @@ public class ReportGenerator implements IApplication {
 			LogTable recognitionLog = new LogTable();
 			recognitionLog.loadCSV(recognitionCSV.toString());
 			
-			System.out.println("######################################################");
-			generateModelReport(editRulesLog, historyLog, inconsistenciesLog, recognitionLog);
-			System.out.println("######################################################");
+			EvaluationData data = new EvaluationData();
+			data.editRulesLog = editRulesLog;
+			data.historyLog = historyLog;
+			data.inconsistenciesLog = inconsistenciesLog;
+			data.recognitionLog = recognitionLog;
+			
+			String projectFolder = historyFolder.getParentFile().getAbsolutePath();
+			List<EvaluationData> dataPerProject = evaluationDataPerProject.getOrDefault(projectFolder, new ArrayList<>());
+			evaluationDataPerProject.put(projectFolder, dataPerProject);
+			dataPerProject.add(data);
 		}
 		
-		return IApplication.EXIT_OK;
+		return evaluationDataPerProject;
 	}
-	
+
 	private void generateProjectReport(
+			String name,
 			List<LogTable> editRulesLog, 
 			List<LogTable> historyLog, 
 			List<LogTable> inconsistenciesLog, 
 			List<LogTable> recognitionLog) {
 		
-		System.out.println("Name: " 
-				+ getName(historyLog.toArray(new LogTable[0])));
-		System.out.println("Revisions (all / inconsistent): " 
+		System.out.println("Models: " + historyLog.size());
+		System.out.println(COL_NAME + COL_SEPERATOR
+				+ name);
+		System.out.println(COL_REVISIONS + COL_SEPERATOR
 				+ countAllVersions(historyLog.toArray(new LogTable[0])) + " / "
 				+ countInconsistentVersions(historyLog.toArray(new LogTable[0])));
-		System.out.println("Elements: "
+		System.out.println(COL_ELEMENTS + COL_SEPERATOR
 				+ avgModelElementCount(historyLog.toArray(new LogTable[0])));
-		System.out.println("RQ1 Repaired Inconsistencies (Inconsistency Traces / At Least One Repair): " 
-				+ countInconsistencies(historyLog.toArray(new LogTable[0]))
-				+ "/" + sumInconsistenciesWithAtLeastOneRepair(inconsistenciesLog.toArray(new LogTable[0])));
-		System.out.println("RQ2 Historically Observable Repairs: " 
+		System.out.println(COL_REPAIRED_INCONSISTENCY + COL_SEPERATOR
+				+ sumInconsistencies(historyLog.toArray(new LogTable[0]))
+				+ "/" + countInconsistenciesWithAtLeastOneRepair(inconsistenciesLog.toArray(new LogTable[0])));
+		System.out.println(COL_HOR + COL_SEPERATOR 
 				+ countHistoricallyObservableRepairs(inconsistenciesLog.toArray(new LogTable[0])));
-		System.out.println("RQ2 Undo: " 
-				+ "TODO");
-		System.out.println("RQ3 Abstract Repair Actions: " 
+		System.out.println(COL_UNDO + COL_SEPERATOR
+				+ countHistoricallyObservedUndos(inconsistenciesLog.toArray(new LogTable[0])));
+		System.out.println(COL_REPAIR_ACTIONS + COL_SEPERATOR
 				+ avgRepairActions(inconsistenciesLog.toArray(new LogTable[0])));
-		System.out.println("RQ3 Repair Alternatives (avg. / median): " 
+		System.out.println(COL_REPIAR_ALTERNATIVE + COL_SEPERATOR
 				+ avgRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0])) 
 				+ " / " + medianRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0])));
-		System.out.println("RQ3 Avg. Ranking of HOR (position / matchings): "
+		System.out.println(COL_HOR_RANKING + COL_SEPERATOR
 				+ avgHORPriority(inconsistenciesLog.toArray(new LogTable[0])) 
 				+ " / " + avgHORMatchings(inconsistenciesLog.toArray(new LogTable[0])));
-		System.out.println("RQ 4 Avg. Runtime [ms] (Difference / Partial Recognition / Complement Matching): " 
+		System.out.println(COL_RUNTIME+ COL_SEPERATOR
 				+ avgDifferenceTime(inconsistenciesLog.toArray(new LogTable[0]))
 				+ " / " + avgRecognitionTime(inconsistenciesLog.toArray(new LogTable[0]))
 				+ " / " + avgComplementMatchingTime(inconsistenciesLog.toArray(new LogTable[0])));
 	}
 	
 	private void generateModelReport(
+			String name,
 			LogTable editRulesLog, 
 			LogTable historyLog, 
 			LogTable inconsistenciesLog, 
 			LogTable recognitionLog) {
 		
-		System.out.println("Name: " 
-				+ getName(historyLog));
-		System.out.println("Revisions (all / inconsistent): " 
+		System.out.println(COL_NAME + COL_SEPERATOR
+				+ name);
+		System.out.println(COL_REVISIONS + COL_SEPERATOR
 				+ countAllVersions(historyLog) + " / "
 				+ countInconsistentVersions(historyLog));
-		System.out.println("Elements: "
+		System.out.println(COL_ELEMENTS + COL_SEPERATOR
 				+ avgModelElementCount(historyLog));
-		System.out.println("RQ1 Repaired Inconsistencies (Inconsistency Traces / At Least One Repair): " 
-				+ countInconsistencies(historyLog) + "/" 
-				+ sumInconsistenciesWithAtLeastOneRepair(inconsistenciesLog));
-		System.out.println("RQ2 Historically Observable Repairs: " 
+		System.out.println(COL_REPAIRED_INCONSISTENCY + COL_SEPERATOR
+				+ sumInconsistencies(historyLog) + "/" 
+				+ countInconsistenciesWithAtLeastOneRepair(inconsistenciesLog));
+		System.out.println(COL_HOR + COL_SEPERATOR
 				+ countHistoricallyObservableRepairs(inconsistenciesLog));
-		System.out.println("RQ2 Undo: " 
-				+ countHistoricallyObservedUndo(inconsistenciesLog));
-		System.out.println("RQ3 Abstract Repair Actions: " 
+		System.out.println(COL_UNDO + COL_SEPERATOR
+				+ countHistoricallyObservedUndos(inconsistenciesLog));
+		System.out.println(COL_REPAIR_ACTIONS + COL_SEPERATOR
 				+ avgRepairActions(inconsistenciesLog));
-		System.out.println("RQ3 Repair Alternatives (avg. / median): " 
+		System.out.println(COL_REPIAR_ALTERNATIVE + COL_SEPERATOR
 				+ avgRepairAlternatives(inconsistenciesLog) + " / "
 				+ medianRepairAlternatives(inconsistenciesLog));
-		System.out.println("RQ3 Avg. Ranking of HOR (position / matchings): "
+		System.out.println(COL_HOR_RANKING + COL_SEPERATOR
 				+ avgHORPriority(inconsistenciesLog) + " / " 
 				+ avgHORMatchings(inconsistenciesLog));
-		System.out.println("RQ 4 Avg. Runtime [ms] (Difference / Partial Recognition / Complement Matching): " 
+		System.out.println(COL_RUNTIME+ COL_SEPERATOR
 				+ avgDifferenceTime(inconsistenciesLog) + " / " 
 				+ avgRecognitionTime(inconsistenciesLog) + " / " 
 				+ avgComplementMatchingTime(inconsistenciesLog));
-	}
-	
-	private String getName(LogTable... historyLogs) {
-		String name = historyLogs[0].getColumn(HistoryLog.COL_HISTORY, String.class).get(0);
-		
-		for (LogTable historyLog : historyLogs) {
-			String nextName = historyLog.getColumn(HistoryLog.COL_HISTORY, String.class).get(0);
-			name = longestCommonPrefix(name, nextName);
-		}
-		
-		return name;
 	}
 	
 	private int countAllVersions(LogTable... historyLogs) {
@@ -163,19 +230,28 @@ public class ReportGenerator implements IApplication {
 		return sum(LogUtil.merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs));
 	}
 
-	private int countInconsistencies(LogTable... historyLogs) {
+	private int sumInconsistencies(LogTable... historyLogs) {
 		return sum(LogUtil.merge(HistoryLog.COL_INCONSISTENCY_TRACES, Integer.class, historyLogs));
 	}
 	
-	private int sumInconsistenciesWithAtLeastOneRepair(LogTable... inconsistenciesLog) {
-		return sum(LogUtil.merge(InconsistenciesLog.COL_COMPLEMENTS, Integer.class, inconsistenciesLog));
+	private int countInconsistenciesWithAtLeastOneRepair(LogTable... inconsistenciesLog) {
+		int count = 0;
+		
+		for (int complementCount : LogUtil.merge(InconsistenciesLog.COL_COMPLEMENTS, Integer.class, inconsistenciesLog)) {
+			if (complementCount > 0) {
+				++count;
+			}
+		}
+		
+		
+		return count;
 	}
 
 	private int countHistoricallyObservableRepairs(LogTable... inconsistenciesLogs) {
 		return count(LogUtil.merge(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_REPAIRS, Boolean.class, inconsistenciesLogs), true);
 	}
 	
-	private int countHistoricallyObservedUndo(LogTable... inconsistenciesLogs) {
+	private int countHistoricallyObservedUndos(LogTable... inconsistenciesLogs) {
 		return -404; // TODO
 	}
 
@@ -224,27 +300,33 @@ public class ReportGenerator implements IApplication {
 	}
 
 	private int sum(List<Integer> list) {
-		int sum = 0;
-		
-		for (int value : list) {
-			if (value > 0) {
-				++sum;
+		if (list.size() > 0) {
+			int sum = 0;
+			
+			for (int value : list) {
+				sum += value;
 			}
+			
+			return sum;
+		} else {
+			return -1;
 		}
-		
-		return sum;
 	}
 	
 	private double avg(List<Integer> list) {
-		double sum = 0.0;
-		double count = 0.0;
-		
-		for (int value : list) {
-			sum += value;
-			++count;
+		if (list.size() > 0) {
+			double sum = 0.0;
+			double count = 0.0;
+			
+			for (int value : list) {
+				sum += value;
+				++count;
+			}
+			
+			return (((double) ((int) ((sum / count) * 100))) / 100);
+		} else {
+			return -1;
 		}
-		
-		return (((double) ((int) ((sum / count) * 100))) / 100);
 	}
 	
 	private int median(List<Integer> list) {
@@ -259,18 +341,6 @@ public class ReportGenerator implements IApplication {
 		} else {
 			return -1;
 		}
-	}
-	
-	private String longestCommonPrefix(String a, String b) {
-		int minLength = Math.min(a.length(), b.length());
-		
-		for (int i = 0; i < minLength; i++) {
-			if (a.charAt(i) != b.charAt(i)) {
-				return a.substring(0, i);
-			}
-		}
-		
-		return a.substring(0, minLength);
 	}
 	
 	@Override
