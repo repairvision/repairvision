@@ -41,7 +41,6 @@ import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 // - Report: Für HOR -> CPEO x Violated Constraint
 // - Report: Kennzahlen für vollständigen Datensatz
 
-// TODO: Separate tables and output format!
 public class ReportGenerator implements IApplication {
 	
 	private static final String[] COL_NAME = {"History", "Project Name"};
@@ -73,6 +72,16 @@ public class ReportGenerator implements IApplication {
 	private class EvaluationData {
 		LogTable editRulesLog, historyLog, inconsistenciesLog, recognitionLog;
 	}
+	
+	public static final Object TODO = new Object() {
+		
+		private static final String todo = "TODO";
+		
+		@Override
+		public String toString() {
+			return todo;
+		}
+	};
 	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
@@ -192,7 +201,7 @@ public class ReportGenerator implements IApplication {
 				countAllVersions(historyLog.toArray(new LogTable[0])) + " / "
 				+ countInconsistentVersions(historyLog.toArray(new LogTable[0])));
 		report.append(COL_ELEMENTS[0],
-				Math.round(avgModelElementCount(historyLog.toArray(new LogTable[0]))));
+				round(avgModelElementCount(historyLog.toArray(new LogTable[0]))));
 		report.append(COL_REPAIRED_INCONSISTENCY[0],
 				sumInconsistencies(historyLog.toArray(new LogTable[0])) + "/" 
 				+ countInconsistenciesWithAtLeastOneRepair(inconsistenciesLog.toArray(new LogTable[0])));
@@ -201,17 +210,17 @@ public class ReportGenerator implements IApplication {
 		report.append(COL_UNDO[0],
 				countHistoricallyObservedUndos(inconsistenciesLog.toArray(new LogTable[0])));
 		report.append(COL_REPAIR_ACTIONS[0],
-				Math.round(avgRepairActions(inconsistenciesLog.toArray(new LogTable[0]))));
+				round(avgRepairActions(inconsistenciesLog.toArray(new LogTable[0]))));
 		report.append(COL_REPIAR_ALTERNATIVE[0],
-				Math.round(avgRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0]))) + " / "
+				round(avgRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0]))) + " / "
 				+ medianRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0])));
 		report.append(COL_HOR_RANKING[0],
-				Math.round(avgHORPriority(inconsistenciesLog.toArray(new LogTable[0]))) + " / " 
-				+ Math.round(avgHORMatchings(inconsistenciesLog.toArray(new LogTable[0]))));
+				round(avgHORPriority(inconsistenciesLog.toArray(new LogTable[0]))) + " / " 
+				+ round(avgHORMatchings(inconsistenciesLog.toArray(new LogTable[0]))));
 		report.append(COL_RUNTIME[0],
-				Math.round(avgDifferenceTime(inconsistenciesLog.toArray(new LogTable[0]))) + " + " 
-				+ Math.round(avgRecognitionTime(inconsistenciesLog.toArray(new LogTable[0]))) + " + " 
-				+ Math.round(avgComplementMatchingTime(inconsistenciesLog.toArray(new LogTable[0]))));
+				round(avgDifferenceTime(inconsistenciesLog.toArray(new LogTable[0]))) + " + " 
+				+ round(avgRecognitionTime(inconsistenciesLog.toArray(new LogTable[0]))) + " + " 
+				+ round(avgComplementMatchingTime(inconsistenciesLog.toArray(new LogTable[0])))); 	// FIXE
 	}
 	
 	private void generateModelReport(
@@ -229,23 +238,23 @@ public class ReportGenerator implements IApplication {
 				Collections.singletonList(recognitionLog));
 	}
 	
-	private int countAllVersions(LogTable... historyLogs) {
-		return -404; // TODO
+	private Object countAllVersions(LogTable... historyLogs) {
+		return TODO; // TODO
 	}
 
-	private int countInconsistentVersions(LogTable... historyLogs) {
+	private Object countInconsistentVersions(LogTable... historyLogs) {
 		return sum(LogUtil.merge(HistoryLog.COL_INCONSISTENT_VERSIONS, Integer.class, historyLogs));
 	}
 	
-	private int avgModelElementCount(LogTable... historyLogs) {
+	private Object avgModelElementCount(LogTable... historyLogs) {
 		return sum(LogUtil.merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs));
 	}
 
-	private int sumInconsistencies(LogTable... historyLogs) {
+	private Object sumInconsistencies(LogTable... historyLogs) {
 		return sum(LogUtil.merge(HistoryLog.COL_INCONSISTENCY_TRACES, Integer.class, historyLogs));
 	}
 	
-	private int countInconsistenciesWithAtLeastOneRepair(LogTable... inconsistenciesLog) {
+	private Object countInconsistenciesWithAtLeastOneRepair(LogTable... inconsistenciesLog) {
 		int count = 0;
 		
 		for (int complementCount : LogUtil.merge(InconsistenciesLog.COL_COMPLEMENTS, Integer.class, inconsistenciesLog)) {
@@ -258,47 +267,47 @@ public class ReportGenerator implements IApplication {
 		return count;
 	}
 
-	private int countHistoricallyObservableRepairs(LogTable... inconsistenciesLogs) {
+	private Object countHistoricallyObservableRepairs(LogTable... inconsistenciesLogs) {
 		return count(LogUtil.merge(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_REPAIRS, Boolean.class, inconsistenciesLogs), true);
 	}
 	
-	private int countHistoricallyObservedUndos(LogTable... inconsistenciesLogs) {
-		return -404; // TODO
+	private Object countHistoricallyObservedUndos(LogTable... inconsistenciesLogs) {
+		return TODO; // TODO
 	}
 
-	private double avgRepairActions(LogTable... inconsistenciesLogs) {
+	private Object avgRepairActions(LogTable... inconsistenciesLogs) {
 		return avg(LogUtil.merge(InconsistenciesLog.COL_COUNT_OF_REPAIR_ACTIONS, Integer.class, inconsistenciesLogs));
 	}
 
-	private double avgRepairAlternatives(LogTable... inconsistenciesLogs) {
+	private Object avgRepairAlternatives(LogTable... inconsistenciesLogs) {
 		return avg(LogUtil.merge(InconsistenciesLog.COL_COMPLEMENTS, Integer.class, inconsistenciesLogs));
 	}
 
-	private int medianRepairAlternatives(LogTable... inconsistenciesLogs) {
+	private Object medianRepairAlternatives(LogTable... inconsistenciesLogs) {
 		return median(LogUtil.merge(InconsistenciesLog.COL_COMPLEMENTS, Integer.class, inconsistenciesLogs));
 	}
 
-	private double avgHORPriority(LogTable... inconsistenciesLogs) {
+	private Object avgHORPriority(LogTable... inconsistenciesLogs) {
 		return avg(LogUtil.merge(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, Integer.class, inconsistenciesLogs));
 	}
 
-	private double avgHORMatchings(LogTable... inconsistenciesLogs) {
+	private Object avgHORMatchings(LogTable... inconsistenciesLogs) {
 		return avg(LogUtil.merge(InconsistenciesLog.COL_REPAIR_MATCHINGS_FOR_BEST_HOR, Integer.class, inconsistenciesLogs));
 	}
 
-	private double avgDifferenceTime(LogTable... inconsistenciesLogs) {
+	private Object avgDifferenceTime(LogTable... inconsistenciesLogs) {
 		return avg(LogUtil.merge(InconsistenciesLog.COL_TIME_LOAD_CALCULATE_REVISION, Integer.class, inconsistenciesLogs));
 	}
 
-	private double avgRecognitionTime(LogTable... inconsistenciesLogs) {
+	private Object avgRecognitionTime(LogTable... inconsistenciesLogs) {
 		return avg(LogUtil.merge(InconsistenciesLog.COL_TIME_RECOGNITION, Integer.class, inconsistenciesLogs));
 	}
 
-	private double avgComplementMatchingTime(LogTable... inconsistenciesLogs) {
+	private Object avgComplementMatchingTime(LogTable... inconsistenciesLogs) {
 		return avg(LogUtil.merge(InconsistenciesLog.COL_TIME_COMPLEMENT_MATCHING, Integer.class, inconsistenciesLogs));
 	}
 	
-	private <T> int count(List<T> list, T valueToCount) {
+	private <T> Object count(List<T> list, T valueToCount) {
 		int sum = 0;
 		
 		for (T value : list) {
@@ -310,7 +319,7 @@ public class ReportGenerator implements IApplication {
 		return sum;
 	}
 
-	private int sum(List<Integer> list) {
+	private Object sum(List<Integer> list) {
 		if (list.size() > 0) {
 			int sum = 0;
 			
@@ -320,11 +329,11 @@ public class ReportGenerator implements IApplication {
 			
 			return sum;
 		} else {
-			return -1;
+			return LogTable.NA;
 		}
 	}
 	
-	private double avg(List<Integer> list) {
+	private Object avg(List<Integer> list) {
 		if (list.size() > 0) {
 			double sum = 0.0;
 			double count = 0.0;
@@ -336,11 +345,11 @@ public class ReportGenerator implements IApplication {
 			
 			return (((double) ((int) ((sum / count) * 100))) / 100);
 		} else {
-			return -1;
+			return LogTable.NA;
 		}
 	}
 	
-	private int median(List<Integer> list) {
+	private Object median(List<Integer> list) {
 		Collections.sort(list);
 		
 		if (list.size() > 0) {
@@ -350,7 +359,15 @@ public class ReportGenerator implements IApplication {
 				return list.get(list.size() / 2);
 			}
 		} else {
-			return -1;
+			return LogTable.NA;
+		}
+	}
+	
+	private static Object round(Object value) {
+		if (value instanceof Double) {
+			return Math.round((double) value);
+		} else {
+			return value;
 		}
 	}
 	
