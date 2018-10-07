@@ -70,7 +70,7 @@ public class ReportGenerator implements IApplication {
 	private static final boolean LEGEND = true;
 	
 	
-	private static final String[] COL_NAME = {"History", "Project Name"};
+	private static final String[] COL_NAME = {"Project", "Project Name"};
 	
 	private static final String[] COL_MODELS = {"Models", "(Count of considered (inconsistent) models of the project. / Count of models in the project)"};
 	
@@ -78,7 +78,7 @@ public class ReportGenerator implements IApplication {
 	
 	private static final String[] COL_ELEMENTS = {"Elem.", "Elements (We first calculate the average of model elements of all revisions for each model. Then we sum the average model elements of all models."};
 	
-	private static final String[] COL_INCONSISTENCIES = {"Inc.", "Inconsistencies (Count of all introduced inconsistencies in the project. | Count of all resolved inconsistencies. | Count of supported resolved inconsistencies.)"}; 
+	private static final String[] COL_INCONSISTENCIES = {"Inc.", "RQ1 Inconsistencies (Count of all introduced inconsistencies in the project. | Count of all resolved inconsistencies. | Count of supported resolved inconsistencies.)"}; 
 	
 	private static final String[] COL_REPAIRED_INCONSISTENCY = {"RI", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
 	
