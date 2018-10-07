@@ -265,28 +265,4 @@ public class LogTable {
 	public void clearLog() {
 		table.clear();
 	}
-	
-	public int count(String column, String value) {
-		int count = 0;
-		
-		for(Object objectValue : getColumn(column)) {
-			if (valueToString(objectValue).equals(value)) {
-				++count;
-			}
-		}
-		
-		return count;
-	}
-	
-	public int size(String column) {
-		int size = 0;
-		
-		for(Object objectValue : getColumn(column)) {
-			if (!objectValue.equals(NA)) {
-				++size;
-			}
-		}
-	
-		return size;
-	}
 }
