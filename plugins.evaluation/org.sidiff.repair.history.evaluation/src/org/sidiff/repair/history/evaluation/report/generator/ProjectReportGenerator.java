@@ -212,7 +212,7 @@ public class ProjectReportGenerator implements IApplication {
 		// Count all unconsidered projects:
 		int unconsideredProjects = new File(ORIGINAL_DATA_SET).list().length - new File(REDUCED_DATA_SET).list().length;
 		
-		report.append(COL_NAME[0], "Others (" + unconsideredProjects + ")");
+		report.append(COL_NAME[0], unconsideredProjects + " Others");
 		report.append(COL_MODELS[0], formatFraction(0, allModels - consideredModels));
 		report.append(COL_REVISIONS[0],NA);
 		report.append(COL_ELEMENTS[0], NA);
