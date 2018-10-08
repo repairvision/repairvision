@@ -46,13 +46,7 @@ import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionHistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersionMetadata;
 
-// TODO:
-// - Report: pro Constraint -> Gleiche Spalte wie bei Projekttabelle
-//   - Anzahl der Änderungen mit potentiell negativem Impact auswerten
-//   - Constraint -> Anzahl der Verletzungen
-// - Report: Für HOR -> CPEO x Violated Constraint
-
-public class ReportGenerator implements IApplication {
+public class ProjectReportGenerator implements IApplication {
 	
 	private static List<String> HISTORIES = HistoryEvaluationApplication.HISTORIES;
 	
@@ -72,11 +66,11 @@ public class ReportGenerator implements IApplication {
 	
 	private static final String[] COL_NAME = {"Project", "Project Name"};
 	
-	private static final String[] COL_MODELS = {"Models", "(Count of inconsistent models of the project. / Count of models in the project)"};
+	private static final String[] COL_MODELS = {"Models", "(Count of model histories with inconsistencies. / Count of all model histories in the project)"};
 	
-	private static final String[] COL_REVISIONS = {"Revisions", "Revisions (Commits of the inconsistent models in the project. + Commits of other coevolving models (of the inconsistent models).)"};
+	private static final String[] COL_REVISIONS = {"Revisions", "Revisions (Revisions of the model histories with inconsistencies. + Revisions of other coevolving models (of the model histories with inconsistencie).)"};
 	
-	private static final String[] COL_ELEMENTS = {"Elem.", "Elements (We first calculate the average of model elements of all revisions for each model. Then we sum the average model elements of all models."};
+	private static final String[] COL_ELEMENTS = {"Elem.", "Elements (We first calculate the average of model elements for each revision of a model history with inconsistencies. Then we sum the average model elements."};
 	
 	private static final String[] COL_INCONSISTENCIES = {"Inconsistencies", "RQ1 Inconsistencies (Count of all introduced inconsistencies in the project. $|$ Count of all resolved inconsistencies. $|$ Count of supported resolved inconsistencies.)"}; 
 	
@@ -220,8 +214,8 @@ public class ReportGenerator implements IApplication {
 		
 		report.append(COL_NAME[0], "Others (" + unconsideredProjects + ")");
 		report.append(COL_MODELS[0], formatFraction(0, allModels - consideredModels));
-		report.append(COL_REVISIONS[0],formatSum(TODO));
-		report.append(COL_ELEMENTS[0], TODO);
+		report.append(COL_REVISIONS[0],NA);
+		report.append(COL_ELEMENTS[0], NA);
 		report.append(COL_INCONSISTENCIES[0], 0); // TODO: automatically re-check
 		report.append(COL_REPAIRED_INCONSISTENCY[0], NA);
 		report.append(COL_HOR[0], NA);
