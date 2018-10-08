@@ -380,7 +380,7 @@ public class ProjectReportGenerator implements IApplication {
 				text.append(values[i]);
 				
 				if (i < values.length - 1) {
-					text.append(" ; ");
+					text.append("; ");
 				}
 			}
 			
