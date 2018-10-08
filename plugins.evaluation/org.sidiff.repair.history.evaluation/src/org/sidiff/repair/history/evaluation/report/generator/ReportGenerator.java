@@ -98,8 +98,9 @@ public class ReportGenerator implements IApplication {
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
 		LogTable projectReport = new LogTable();
+		Map<String, List<EvaluationData>> evaluationDataPerProjects = getEvaluationsPerProject();
 		
-		for (Entry<String, List<EvaluationData>> evaluationDataPerProject : getEvaluationsPerProject().entrySet()) {
+		for (Entry<String, List<EvaluationData>> evaluationDataPerProject : evaluationDataPerProjects.entrySet()) {
 			
 			if (PROJECT_REPORT) {
 				generateProjectReport(projectReport, evaluationDataPerProject.getKey(),
@@ -128,7 +129,7 @@ public class ReportGenerator implements IApplication {
 			}
 		}
 		
-		generateConsistentModelReport(projectReport);
+		generateOtherModelsReport(projectReport, evaluationDataPerProjects);
 		
 		if (PROJECT_REPORT) {
 			System.out.println();
@@ -165,7 +166,7 @@ public class ReportGenerator implements IApplication {
 		report.append(COL_NAME[0], name);
 		report.append(COL_MODELS[0], formatFraction(
 				countConsideredModelsPerProject(modelPaths), 
-				countAllModelsPerProject(modelPaths)));
+				countAllModelsPerProject(modelPaths.get(0).getParentFile())));
 		report.append(COL_REVISIONS[0],formatSum(
 				countVersionsPerModel(modelPaths.toArray(new File[0])),
 				countCoevolutionVersionPerModel(modelPaths.toArray(new File[0]))));
@@ -196,16 +197,28 @@ public class ReportGenerator implements IApplication {
 				avgComplementMatchingTime(inconsistenciesLog.toArray(new LogTable[0]))));
 	}
 	
-	private void generateConsistentModelReport(LogTable report) throws IOException {
+	private void generateOtherModelsReport(LogTable report, Map<String, List<EvaluationData>> evaluationDataPerProjects) throws IOException {
 		
+		// Count all models:
 		// TODO: Convenient way to get metadata!?
 		long allModels = Files.find(Paths.get(ORIGINAL_DATA_SET), Integer.MAX_VALUE, 
 				(path, attribte) -> path.getFileName().toString().endsWith(".json")).count();
 		
-		long consideredModels = Files.find(Paths.get(REDUCED_DATA_SET), Integer.MAX_VALUE, 
-				(path, attribte) -> path.getFileName().toString().endsWith(".history")).count();
+		// Count all models of considered projects:
+		int consideredModels = 0;
 		
-		report.append(COL_NAME[0], "Others");
+		for (List<EvaluationData> data : evaluationDataPerProjects.values()) {
+			Object modelsPerProject = countAllModelsPerProject(data.get(0).modelPath.getParentFile());
+			
+			if (modelsPerProject instanceof Integer) {
+				consideredModels += (int) modelsPerProject;
+			}
+		}
+		
+		// Count all unconsidered projects:
+		int unconsideredProjects = new File(ORIGINAL_DATA_SET).list().length - new File(REDUCED_DATA_SET).list().length;
+		
+		report.append(COL_NAME[0], "Others (" + unconsideredProjects + ")");
 		report.append(COL_MODELS[0], formatFraction(0, allModels - consideredModels));
 		report.append(COL_REVISIONS[0],formatSum(TODO));
 		report.append(COL_ELEMENTS[0], TODO);
@@ -394,13 +407,13 @@ public class ReportGenerator implements IApplication {
 		return modelPaths.size();
 	}
 
-	private Object countAllModelsPerProject(List<File> modelPaths) {
+	private Object countAllModelsPerProject(File projectFolder) {
 		
 		// TODO: Convenient way to get metadata!?
-		File projectFolder = new File(ORIGINAL_DATA_SET + modelPaths.get(0).getPath()).getParentFile();
+		File projectPath = new File(ORIGINAL_DATA_SET + projectFolder.getPath());
 		int count = 0;
 		
-		for (File metadata : projectFolder.listFiles()) {
+		for (File metadata : projectPath.listFiles()) {
 			if (metadata.getName().endsWith(".json")) {
 				++count;
 			}
