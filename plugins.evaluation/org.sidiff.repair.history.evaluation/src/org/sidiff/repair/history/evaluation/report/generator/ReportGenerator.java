@@ -47,8 +47,6 @@ import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionHisto
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersionMetadata;
 
 // TODO:
-// - Zeile "others" mit aufnehmen, welche alle nicht betrachteten Modellhistorien summiert (Rev., Elem.,).
-
 // - Report: pro Constraint -> Gleiche Spalte wie bei Projekttabelle
 //   - Anzahl der Änderungen mit potentiell negativem Impact auswerten
 //   - Constraint -> Anzahl der Verletzungen
@@ -62,6 +60,8 @@ public class ReportGenerator implements IApplication {
 	
 	private static final String RESOLVED_DATA_SET = "C:\\evaluations\\org.eclipse.git_2018-08-22\\org.eclipse.git.resolved";
 	
+	private static final String REDUCED_DATA_SET = "C:\\evaluations\\org.eclipse.git_2018-08-22\\org.eclipse.git.reduced";
+	
 	
 	private static final boolean PROJECT_REPORT = true;
 	
@@ -72,13 +72,13 @@ public class ReportGenerator implements IApplication {
 	
 	private static final String[] COL_NAME = {"Project", "Project Name"};
 	
-	private static final String[] COL_MODELS = {"Models", "(Count of considered (inconsistent) models of the project. / Count of models in the project)"};
+	private static final String[] COL_MODELS = {"Models", "(Count of inconsistent models of the project. / Count of models in the project)"};
 	
-	private static final String[] COL_REVISIONS = {"Rev.", "Revisions (Commits of the considered models in the project. + Commits of other coevolving models.)"};
+	private static final String[] COL_REVISIONS = {"Revisions", "Revisions (Commits of the inconsistent models in the project. + Commits of other coevolving models (of the inconsistent models).)"};
 	
 	private static final String[] COL_ELEMENTS = {"Elem.", "Elements (We first calculate the average of model elements of all revisions for each model. Then we sum the average model elements of all models."};
 	
-	private static final String[] COL_INCONSISTENCIES = {"Inc.", "RQ1 Inconsistencies (Count of all introduced inconsistencies in the project. | Count of all resolved inconsistencies. | Count of supported resolved inconsistencies.)"}; 
+	private static final String[] COL_INCONSISTENCIES = {"Inconsistencies", "RQ1 Inconsistencies (Count of all introduced inconsistencies in the project. $|$ Count of all resolved inconsistencies. $|$ Count of supported resolved inconsistencies.)"}; 
 	
 	private static final String[] COL_REPAIRED_INCONSISTENCY = {"RI", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
 	
@@ -102,10 +102,7 @@ public class ReportGenerator implements IApplication {
 		for (Entry<String, List<EvaluationData>> evaluationDataPerProject : getEvaluationsPerProject().entrySet()) {
 			
 			if (PROJECT_REPORT) {
-				String name = new File(evaluationDataPerProject.getKey()).getName();
-				name = name.substring(name.lastIndexOf(".") + 1, name.length());
-				
-				generateProjectReport(projectReport, name,
+				generateProjectReport(projectReport, evaluationDataPerProject.getKey(),
 						evaluationDataPerProject.getValue().stream().map(data -> data.modelPath).collect(Collectors.toList()),
 						evaluationDataPerProject.getValue().stream().map(data -> data.editRulesLog).collect(Collectors.toList()),
 						evaluationDataPerProject.getValue().stream().map(data -> data.historyLog).collect(Collectors.toList()),
@@ -131,18 +128,26 @@ public class ReportGenerator implements IApplication {
 			}
 		}
 		
+		generateConsistentModelReport(projectReport);
+		
 		if (PROJECT_REPORT) {
 			System.out.println();
 			System.out.println(convertToLatex(projectReport));
 		}
 		
 		if (LEGEND) {
+			System.out.println("\\begin{itemize}");
+			System.out.println("\\begin{tiny}");
+			
 			for (Field columnField : this.getClass().getDeclaredFields()) {
 				if (columnField.getName().startsWith("COL_")) {
 					String[] columnDefinition = (String[]) columnField.get(this);
-					System.out.println("% " + columnDefinition[0] + " => " + columnDefinition[1]);
+					System.out.println("  \\item " + columnDefinition[0] + " $\\to$ " + columnDefinition[1]);
 				}
 			}
+			
+			System.out.println("\\end{tiny}");
+			System.out.println("\\end{itemize}");
 		}
 		
 		return IApplication.EXIT_OK;
@@ -191,6 +196,27 @@ public class ReportGenerator implements IApplication {
 				avgComplementMatchingTime(inconsistenciesLog.toArray(new LogTable[0]))));
 	}
 	
+	private void generateConsistentModelReport(LogTable report) throws IOException {
+		
+		// TODO: Convenient way to get metadata!?
+		long allModels = Files.find(Paths.get(ORIGINAL_DATA_SET), Integer.MAX_VALUE, 
+				(path, attribte) -> path.getFileName().toString().endsWith(".json")).count();
+		
+		long consideredModels = Files.find(Paths.get(REDUCED_DATA_SET), Integer.MAX_VALUE, 
+				(path, attribte) -> path.getFileName().toString().endsWith(".history")).count();
+		
+		report.append(COL_NAME[0], "Others");
+		report.append(COL_MODELS[0], formatFraction(0, allModels - consideredModels));
+		report.append(COL_REVISIONS[0],formatSum(TODO));
+		report.append(COL_ELEMENTS[0], TODO);
+		report.append(COL_INCONSISTENCIES[0], 0); // TODO: automatically re-check
+		report.append(COL_REPAIRED_INCONSISTENCY[0], NA);
+		report.append(COL_HOR[0], NA);
+		report.append(COL_REPIAR_ALTERNATIVE[0], NA);
+		report.append(COL_HOR_RANKING[0], NA);
+		report.append(COL_RUNTIME[0], NA);
+	}
+	
 	private void generateModelReport(
 			LogTable report,
 			String name,
@@ -206,6 +232,81 @@ public class ReportGenerator implements IApplication {
 				Collections.singletonList(historyLog), 
 				Collections.singletonList(inconsistenciesLog), 
 				Collections.singletonList(recognitionLog));
+	}
+	
+	private Map<String, List<EvaluationData>> getEvaluationsPerProject() throws IOException {
+		Map<String, List<EvaluationData>> evaluationDataPerProject = new LinkedHashMap<>();
+		
+		for (String history : HISTORIES) {
+			File historyFolder = new File(HistoryEvaluationApplication.LOCAL_PATH + history).getParentFile();
+			
+			List<Path> evaluations = Files.find(Paths.get(historyFolder.getAbsolutePath()), 1, 
+					(path, attributes) -> (EvaluationUtil.getTimestamp(path.getFileName().toString()) != null))
+					.collect(Collectors.toList());
+			
+			Collections.sort(evaluations, new Comparator<Path>() {
+				public int compare(Path p1, Path p2) {
+					Date d1 = EvaluationUtil.getTimestamp(p1.getFileName().toString());
+					Date d2 = EvaluationUtil.getTimestamp(p2.getFileName().toString());
+					return d1.compareTo(d2);
+				}
+			});
+			
+			Path lastEvaluation = evaluations.get(evaluations.size() - 1);
+			
+			Path editRulesCSV =  Files.find(lastEvaluation, 1,
+					(path, attributes) -> path.getFileName().toString().endsWith(EditRulesLog.NAME + ".csv")).findAny().get();
+					
+			LogTable editRulesLog = new LogTable();
+			editRulesLog.loadCSV(editRulesCSV.toString());
+			
+			Path historyCSV =  Files.find(lastEvaluation, 1,
+					(path, attributes) -> path.getFileName().toString().endsWith(HistoryLog.NAME + ".csv")).findAny().get();
+			LogTable historyLog = new LogTable();
+			historyLog.loadCSV(historyCSV.toString());
+			
+			Path inconsistenciesCSV =  Files.find(lastEvaluation, 1,
+					(path, attributes) -> path.getFileName().toString().endsWith(InconsistenciesLog.NAME + ".csv")).findAny().get();
+			LogTable inconsistenciesLog = new LogTable();
+			inconsistenciesLog.loadCSV(inconsistenciesCSV.toString());
+			
+			Path recognitionCSV =  Files.find(lastEvaluation, 1,
+					(path, attributes) -> path.getFileName().toString().endsWith(RecognitionLog.NAME + ".csv")).findAny().get();
+			LogTable recognitionLog = new LogTable();
+			recognitionLog.loadCSV(recognitionCSV.toString());
+			
+			// TODO: Better solution for getting the project relative path!?
+			String modelPath = history.substring(history.indexOf("/") + 1, history.length());
+			modelPath = modelPath.substring(modelPath.indexOf("/"), modelPath.length());
+			
+			EvaluationData data = new EvaluationData();
+			data.modelPath = new File(modelPath).getParentFile();	
+			data.editRulesLog = editRulesLog;
+			data.historyLog = historyLog;
+			data.inconsistenciesLog = inconsistenciesLog;
+			data.recognitionLog = recognitionLog;
+			
+			String projectName = getProjectName(historyFolder.getParentFile());
+			List<EvaluationData> dataPerProject = evaluationDataPerProject.getOrDefault(projectName, new ArrayList<>());
+			evaluationDataPerProject.put(projectName, dataPerProject);
+			dataPerProject.add(data);
+		}
+		
+		// sort by key:
+		evaluationDataPerProject = evaluationDataPerProject.entrySet().stream()
+				.sorted(Map.Entry.comparingByKey())
+				.collect(Collectors.toMap(
+						Entry::getKey, Entry::getValue,
+						(a, b) -> {a.addAll(b); return a;},
+						LinkedHashMap::new));
+		
+		return evaluationDataPerProject;
+	}
+	
+	private String getProjectName(File modelPath) {
+		String name = modelPath.getName();
+		name = name.substring(name.lastIndexOf(".") + 1, name.length());
+		return name;
 	}
 	
 	private String formatSum(Object... values) {
@@ -289,73 +390,23 @@ public class ReportGenerator implements IApplication {
 		return true;
 	}
 	
-	private Map<String, List<EvaluationData>> getEvaluationsPerProject() throws IOException {
-		Map<String, List<EvaluationData>> evaluationDataPerProject = new LinkedHashMap<>();
-		
-		for (String history : HISTORIES) {
-			File historyFolder = new File(HistoryEvaluationApplication.LOCAL_PATH + history).getParentFile();
-			
-			List<Path> evaluations = Files.find(Paths.get(historyFolder.getAbsolutePath()), 1, 
-					(path, attributes) -> (EvaluationUtil.getTimestamp(path.getFileName().toString()) != null))
-					.collect(Collectors.toList());
-			
-			Collections.sort(evaluations, new Comparator<Path>() {
-				public int compare(Path p1, Path p2) {
-					Date d1 = EvaluationUtil.getTimestamp(p1.getFileName().toString());
-					Date d2 = EvaluationUtil.getTimestamp(p2.getFileName().toString());
-					return d1.compareTo(d2);
-				}
-			});
-			
-			Path lastEvaluation = evaluations.get(evaluations.size() - 1);
-			
-			Path editRulesCSV =  Files.find(lastEvaluation, 1,
-					(path, attributes) -> path.getFileName().toString().endsWith(EditRulesLog.NAME + ".csv")).findAny().get();
-					
-			LogTable editRulesLog = new LogTable();
-			editRulesLog.loadCSV(editRulesCSV.toString());
-			
-			Path historyCSV =  Files.find(lastEvaluation, 1,
-					(path, attributes) -> path.getFileName().toString().endsWith(HistoryLog.NAME + ".csv")).findAny().get();
-			LogTable historyLog = new LogTable();
-			historyLog.loadCSV(historyCSV.toString());
-			
-			Path inconsistenciesCSV =  Files.find(lastEvaluation, 1,
-					(path, attributes) -> path.getFileName().toString().endsWith(InconsistenciesLog.NAME + ".csv")).findAny().get();
-			LogTable inconsistenciesLog = new LogTable();
-			inconsistenciesLog.loadCSV(inconsistenciesCSV.toString());
-			
-			Path recognitionCSV =  Files.find(lastEvaluation, 1,
-					(path, attributes) -> path.getFileName().toString().endsWith(RecognitionLog.NAME + ".csv")).findAny().get();
-			LogTable recognitionLog = new LogTable();
-			recognitionLog.loadCSV(recognitionCSV.toString());
-			
-			// TODO: Better solution for getting the project relative path!?
-			String modelPath = history.substring(history.indexOf("/") + 1, history.length());
-			modelPath = modelPath.substring(modelPath.indexOf("/"), modelPath.length());
-			
-			EvaluationData data = new EvaluationData();
-			data.modelPath = new File(modelPath).getParentFile();	
-			data.editRulesLog = editRulesLog;
-			data.historyLog = historyLog;
-			data.inconsistenciesLog = inconsistenciesLog;
-			data.recognitionLog = recognitionLog;
-			
-			String projectFolder = historyFolder.getParentFile().getAbsolutePath();
-			List<EvaluationData> dataPerProject = evaluationDataPerProject.getOrDefault(projectFolder, new ArrayList<>());
-			evaluationDataPerProject.put(projectFolder, dataPerProject);
-			dataPerProject.add(data);
-		}
-		
-		return evaluationDataPerProject;
-	}
-	
 	private Object countConsideredModelsPerProject(List<File> modelPaths) {
-		return TODO; // TODO
+		return modelPaths.size();
 	}
 
 	private Object countAllModelsPerProject(List<File> modelPaths) {
-		return TODO; // TODO
+		
+		// TODO: Convenient way to get metadata!?
+		File projectFolder = new File(ORIGINAL_DATA_SET + modelPaths.get(0).getPath()).getParentFile();
+		int count = 0;
+		
+		for (File metadata : projectFolder.listFiles()) {
+			if (metadata.getName().endsWith(".json")) {
+				++count;
+			}
+		}
+		
+		return count;
 	}
 
 	private Object countVersionsPerModel(File... modelPaths) {
