@@ -32,8 +32,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.eclipse.equinox.app.IApplication;
-import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.repair.history.evaluation.driver.app.HistoryEvaluationApplication;
 import org.sidiff.repair.history.evaluation.report.EditRulesLog;
@@ -46,7 +44,7 @@ import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionHistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersionMetadata;
 
-public class ProjectReportGenerator implements IApplication {
+public class ProjectReportGenerator {
 	
 	private static List<String> HISTORIES = HistoryEvaluationApplication.HISTORIES;
 	
@@ -89,8 +87,7 @@ public class ProjectReportGenerator implements IApplication {
 		LogTable editRulesLog, historyLog, inconsistenciesLog, recognitionLog;
 	}
 	
-	@Override
-	public Object start(IApplicationContext context) throws Exception {
+	public ProjectReportGenerator() throws IOException, IllegalArgumentException, IllegalAccessException  {
 		LogTable projectReport = new LogTable();
 		Map<String, List<EvaluationData>> evaluationDataPerProjects = getEvaluationsPerProject();
 		
@@ -144,8 +141,6 @@ public class ProjectReportGenerator implements IApplication {
 			System.out.println("\\end{tiny}");
 			System.out.println("\\end{itemize}");
 		}
-		
-		return IApplication.EXIT_OK;
 	}
 	
 	private void generateProjectReport(
@@ -548,9 +543,4 @@ public class ProjectReportGenerator implements IApplication {
 	private Object avgComplementMatchingTime(LogTable... inconsistenciesLogs) {
 		return assertPositive(round(avg(merge(InconsistenciesLog.COL_TIME_COMPLEMENT_MATCHING, Integer.class, inconsistenciesLogs))));
 	}
-	
-	@Override
-	public void stop() {
-	}
-
 }
