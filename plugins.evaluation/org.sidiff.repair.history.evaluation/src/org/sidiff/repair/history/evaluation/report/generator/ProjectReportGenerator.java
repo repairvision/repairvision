@@ -11,7 +11,6 @@ import static org.sidiff.consistency.common.monitor.LogUtil.median;
 import static org.sidiff.consistency.common.monitor.LogUtil.merge;
 import static org.sidiff.consistency.common.monitor.LogUtil.min;
 import static org.sidiff.consistency.common.monitor.LogUtil.round;
-import static org.sidiff.consistency.common.monitor.LogUtil.sum;
 import static org.sidiff.consistency.common.monitor.LogUtil.test;
 
 import java.io.File;
@@ -25,6 +24,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.sidiff.consistency.common.monitor.LogTable;
+import org.sidiff.historymodel.History;
+import org.sidiff.historymodel.Problem;
 import org.sidiff.repair.history.evaluation.report.HistoryLog;
 import org.sidiff.repair.history.evaluation.report.InconsistenciesLog;
 
@@ -120,7 +121,9 @@ public class ProjectReportGenerator {
 			List<LogTable> editRulesLog, 
 			List<LogTable> historyLog, 
 			List<LogTable> inconsistenciesLog, 
-			List<LogTable> recognitionLog) {
+			List<LogTable> recognitionLog) throws IOException {
+		
+		List<History> histories = ReportGenerator.getProjectHistory_Reduced(modelPaths.get(0).getParentFile());
 		
 		report.append(COL_NAME[0], name);
 		report.append(COL_MODELS[0], formatFraction(
@@ -135,8 +138,8 @@ public class ProjectReportGenerator {
 				medianModelElementCount(historyLog.toArray(new LogTable[0])),
 				maxModelElementCount(historyLog.toArray(new LogTable[0]))));
 		report.append(COL_INCONSISTENCIES[0], formatFilter(
-				sumAllInconsistencies(historyLog.toArray(new LogTable[0])),
-				sumResolvedInconsistencies(inconsistenciesLog.toArray(new LogTable[0])),
+				sumAllInconsistencies(histories.toArray(new History[0])),
+				sumResolvedInconsistencies(histories.toArray(new History[0])),
 				sumSupportedResolvedInconsistencies(inconsistenciesLog.toArray(new LogTable[0]))));
 		report.append(COL_REPAIRED_INCONSISTENCY[0],
 				countInconsistenciesWithAtLeastOneRepair(inconsistenciesLog.toArray(new LogTable[0])));
@@ -182,7 +185,7 @@ public class ProjectReportGenerator {
 		report.append(COL_MODELS[0], formatFraction(0, allModels - consideredModels));
 		report.append(COL_REVISIONS[0],NA);
 		report.append(COL_ELEMENTS[0], NA);
-		report.append(COL_INCONSISTENCIES[0], 0); // TODO: automatically re-check
+		report.append(COL_INCONSISTENCIES[0], TODO); // TODO: automatically re-check
 		report.append(COL_REPAIRED_INCONSISTENCY[0], NA);
 		report.append(COL_HOR[0], NA);
 		report.append(COL_REPIAR_ALTERNATIVE[0], NA);
@@ -197,7 +200,7 @@ public class ProjectReportGenerator {
 			LogTable editRulesLog, 
 			LogTable historyLog, 
 			LogTable inconsistenciesLog, 
-			LogTable recognitionLog) {
+			LogTable recognitionLog) throws IOException {
 		
 		generateProjectReport(report, name, 
 				Collections.singletonList(modelPath), 
@@ -322,16 +325,39 @@ public class ProjectReportGenerator {
 		return assertPositive(round(min(merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs))));
 	}
 
-	private Object sumAllInconsistencies(LogTable... historyLogs) {
-		return assertPositive(sum(merge(HistoryLog.COL_INCONSISTENCY_TRACES, Integer.class, historyLogs)));
+//	private Object sumAllInconsistencies(LogTable... historyLogs) 
+	private Object sumAllInconsistencies(History... histories) throws IOException {
+		
+		// TODO: Report all inconsistencies...
+//		return assertPositive(sum(merge(HistoryLog.COL_INCONSISTENCY_TRACES, Integer.class, historyLogs)));
+		
+//		int count = 0;
+//		
+//		for (History history : histories) {
+//			count += history.getUniqueProblems().size();
+//		}
+//		
+//		return count;
+		
+		return TODO;
+	}
+	
+//	private Object sumResolvedInconsistencies(LogTable... inconsistenciesLog) {
+	private Object sumResolvedInconsistencies(History... histories) {
+		
+		// TODO: Report all resolved inconsistencies...
+//		return merge(InconsistenciesLog.COL_COMPLEMENTS, Integer.class, inconsistenciesLog).size();
+		int count = 0;
+		
+		for (History history : histories) {
+			count += history.getUniqueProblems().stream().filter(Problem::isResolved).count();
+		}
+		
+		return count;
 	}
 
 	private Object sumSupportedResolvedInconsistencies(LogTable... inconsistenciesLog) {
 		return test(merge(InconsistenciesLog.COL_COUNT_OF_REPAIR_TREES, Integer.class, inconsistenciesLog), (r) -> (r > 0));
-	}
-
-	private Object sumResolvedInconsistencies(LogTable... inconsistenciesLog) {
-		return merge(InconsistenciesLog.COL_COMPLEMENTS, Integer.class, inconsistenciesLog).size();
 	}
 	
 	private Object countInconsistenciesWithAtLeastOneRepair(LogTable... inconsistenciesLog) {

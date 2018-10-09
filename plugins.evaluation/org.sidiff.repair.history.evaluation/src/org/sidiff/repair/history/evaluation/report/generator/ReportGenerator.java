@@ -18,9 +18,12 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.consistency.common.monitor.LogTable;
+import org.sidiff.historymodel.History;
 import org.sidiff.repair.history.evaluation.driver.app.HistoryEvaluationApplication;
 import org.sidiff.repair.history.evaluation.report.EditRulesLog;
 import org.sidiff.repair.history.evaluation.report.HistoryLog;
@@ -32,6 +35,7 @@ import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionHistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersionMetadata;
 
+// TODO: Convenient way to get metadata!?
 public class ReportGenerator implements IApplication {
 	
 	private static List<String> HISTORIES = HistoryEvaluationApplication.HISTORIES;
@@ -129,7 +133,6 @@ public class ReportGenerator implements IApplication {
 	public static Set<String> collectDatesPerModel(File... modelPaths) {
 		Set<String> evoluations = new HashSet<>();
 		
-		// TODO: Convenient way to get metadata!?
 		for (File file : modelPaths) {
 			File datafile = new File(ReportGenerator.ORIGINAL_DATA_SET + file.getPath() +  ".json");
 			HistoryMetadata metadata = new HistoryMetadata(datafile, true);
@@ -145,7 +148,6 @@ public class ReportGenerator implements IApplication {
 	public static Set<String> collectCoevolutionDatesPerModel(File... modelPaths) {
 		Set<String> coevoluations = new HashSet<>();
 		
-		// TODO: Convenient way to get metadata!?
 		for (File file : modelPaths) {
 			File datafile = new File(ReportGenerator.RESOLVED_DATA_SET + file.getPath() + File.separator + file.getName() +  ".json");
 			CoevolutionHistoryMetadata metadata = new CoevolutionHistoryMetadata(datafile, true);
@@ -177,8 +179,6 @@ public class ReportGenerator implements IApplication {
 	
 	public static List<File> getProjectMetadata_Original(File projectFolder) {
 		List<File> files = new ArrayList<>(); 
-		
-		// TODO: Convenient way to get metadata!?
 		File projectPath = new File(ReportGenerator.ORIGINAL_DATA_SET + projectFolder.getPath());
 		
 		for (File metadata : projectPath.listFiles()) {
@@ -188,6 +188,28 @@ public class ReportGenerator implements IApplication {
 		}
 		
 		return files;
+	}
+	
+	public static List<File> getProjectMetadata_Reduced(File projectFolder) throws IOException {
+//		return Files.find(Paths.get(REDUCED_DATA_SET + projectFolder.getPath()), Integer.MAX_VALUE, 
+//				(path, attribte) -> path.getFileName().toString().endsWith(".history"))
+//				.map(Path::toFile).collect(Collectors.toList());
+		
+		return HISTORIES.stream().map(path -> new File(path.replace("/org.eclipse.git.evaluation", REDUCED_DATA_SET)))
+				.filter(file -> file.getPath().contains(projectFolder.getPath())).collect(Collectors.toList());
+	}
+	
+	public static List<History> getProjectHistory_Reduced(File projectFolder) throws IOException {
+		List<History> histories = new ArrayList<>();
+		
+		for (File historyFile : ReportGenerator.getProjectMetadata_Reduced(projectFolder)) {
+			History history = (History) new ResourceSetImpl()
+					.getResource(URI.createFileURI(historyFile.getAbsolutePath()), true)
+					.getContents().get(0); 
+			histories.add(history);
+		}
+		
+		return histories;
 	}
 	
 	public static List<File> getProjects_Original() {
@@ -201,5 +223,4 @@ public class ReportGenerator implements IApplication {
 	@Override
 	public void stop() {
 	}
-
 }
