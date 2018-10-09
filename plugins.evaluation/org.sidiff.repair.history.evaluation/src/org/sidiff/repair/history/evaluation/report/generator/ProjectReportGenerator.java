@@ -70,7 +70,7 @@ public class ProjectReportGenerator implements IApplication {
 	
 	private static final String[] COL_REVISIONS = {"Revisions", "Revisions (Revisions of the model histories with inconsistencies. + Revisions of other coevolving models (of the model histories with inconsistencie).)"};
 	
-	private static final String[] COL_ELEMENTS = {"Elem.", "Elements (We first calculate the average of model elements for each revision of a model history with inconsistencies. Then we sum the average model elements."};
+	private static final String[] COL_ELEMENTS = {"Elem.", "Elements (We first calculate the average of model elements for each revision (wich introduced and resolved an inconsistency) of a model history. Then we calculate the min; avg; median; max model elements over all considered model histories."};
 	
 	private static final String[] COL_INCONSISTENCIES = {"Inconsistencies", "RQ1 Inconsistencies (Count of all introduced inconsistencies in the project. $|$ Count of all resolved inconsistencies. $|$ Count of supported resolved inconsistencies.)"}; 
 	
@@ -164,8 +164,11 @@ public class ProjectReportGenerator implements IApplication {
 		report.append(COL_REVISIONS[0],formatSum(
 				countVersionsPerModel(modelPaths.toArray(new File[0])),
 				countCoevolutionVersionPerModel(modelPaths.toArray(new File[0]))));
-		report.append(COL_ELEMENTS[0],
-				sumAvgModelElementCount(historyLog.toArray(new LogTable[0])));
+		report.append(COL_ELEMENTS[0], formatResults(
+				minModelElementCount(historyLog.toArray(new LogTable[0])),
+				avgModelElementCount(historyLog.toArray(new LogTable[0])),
+				medianModelElementCount(historyLog.toArray(new LogTable[0])),
+				maxModelElementCount(historyLog.toArray(new LogTable[0]))));
 		report.append(COL_INCONSISTENCIES[0], formatFilter(
 				sumAllInconsistencies(historyLog.toArray(new LogTable[0])),
 				sumResolvedInconsistencies(inconsistenciesLog.toArray(new LogTable[0])),
@@ -462,8 +465,20 @@ public class ProjectReportGenerator implements IApplication {
 		return coevoluations;
 	}
 	
-	private Object sumAvgModelElementCount(LogTable... historyLogs) {
-		return assertPositive(round(sum(merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs))));
+	private Object maxModelElementCount(LogTable... historyLogs) {
+		return assertPositive(round(max(merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs))));
+	}
+
+	private Object medianModelElementCount(LogTable... historyLogs) {
+		return assertPositive(round(median(merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs))));
+	}
+
+	private Object avgModelElementCount(LogTable... historyLogs) {
+		return assertPositive(round(avg(merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs))));
+	}
+
+	private Object minModelElementCount(LogTable... historyLogs) {
+		return assertPositive(round(min(merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs))));
 	}
 
 	private Object sumAllInconsistencies(LogTable... historyLogs) {
