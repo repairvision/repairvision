@@ -4,7 +4,7 @@ public class StringAdapter {
 
 	public static final Object NA = new Object() {
 		
-		private static final String na = "N/A";
+		private static final String na = "n.a.";
 		
 		@Override
 		public String toString() {

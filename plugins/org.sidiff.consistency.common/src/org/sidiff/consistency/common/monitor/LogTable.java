@@ -36,8 +36,16 @@ public class LogTable {
 		return maxColumn.size() - 1;
 	}
 	
+	public int getColumnSize() {
+		return maxColumn.size();
+	}
+	
 	public boolean createColumn(String name) {
 		return (table.putIfAbsent(name, new ArrayList<>()) == null);
+	}
+	
+	public boolean createColumn(String name, List<Object> values) {
+		return (table.putIfAbsent(name, values) == null);
 	}
 	
 	public boolean removeColumn(String name) {
@@ -74,6 +82,10 @@ public class LogTable {
 	
 	public Set<String> getColumns() {
 		return Collections.unmodifiableSet(table.keySet());
+	}
+	
+	public Object set(String name, int index, Object value) {
+		return table.get(name).set(index, value);
 	}
 	
 	public boolean append(String name, Object value) {

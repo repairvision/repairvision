@@ -3,6 +3,7 @@ package org.sidiff.consistency.common.monitor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -58,6 +59,18 @@ public class LogUtil {
 		}
 		
 		return mergedColumn;
+	}
+	
+	public static LogTable merge(LogTable... tables) {
+		LogTable merged = new LogTable();
+		
+		for (LogTable table : tables) {
+			for (String header : table.getColumns()) {
+				merged.createColumn(header, merge(header, Object.class, tables));
+			}
+		}
+		
+		return merged;
 	}
 	
 	public static String convertToLatex(LogTable log) {
@@ -122,15 +135,27 @@ public class LogUtil {
 	}
 	
 	public static <T> Object count(List<T> list, T valueToCount) {
-		int sum = 0;
+		int count = 0;
 		
 		for (T value : list) {
 			if (value.equals(valueToCount)) {
-				++sum;
+				++count;
 			}
 		}
 		
-		return sum;
+		return count;
+	}
+	
+	public static <T> int test(List<T> list, Predicate<T> test) {
+		int count = 0;
+		
+		for (T value : list) {
+			if (test.test(value)) {
+				++count;
+			}
+		}
+		
+		return count;
 	}
 
 	public static Object sum(List<Integer> list) {
