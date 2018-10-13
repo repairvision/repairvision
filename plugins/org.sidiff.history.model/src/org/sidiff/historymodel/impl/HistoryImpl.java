@@ -195,9 +195,9 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 */
 	public EList<Problem> getUniqueProblems() {
 		EList<Problem> uniqueProblems = new BasicEList<Problem>();
-		for(Problem Problem : getAllProblems()){
-			if(Problem.getPredecessor() == null){
-				uniqueProblems.add(Problem);
+		for(Problem problem : getAllProblems()){
+			if(problem.getPredecessor() == null){
+				uniqueProblems.add(problem);
 			}
 		}
 		return uniqueProblems;
