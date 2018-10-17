@@ -1,10 +1,9 @@
 package org.sidiff.repair.ui.controls.basic;
 
 import java.io.FileNotFoundException;
-import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
@@ -31,6 +30,7 @@ import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
+import org.sidiff.integration.editor.highlighting.StyledObject;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.ui.Activator;
@@ -84,14 +84,15 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		highlightingAdapter = new ISelectionHighlightingAdapter() {
 			
 			@Override
-			public Iterator<? extends EObject> getElements(ISelection selection) {
+			public Stream<StyledObject> getElements(ISelection selection) {
 				Object selectedElement = ISelectionHighlightingAdapter.getFirstElement(selection);
 				
 				if (selectedElement instanceof IHighlightableElement) {
-					return ((IHighlightableElement) selectedElement).getModelElements();
+					return ISelectionHighlightingAdapter.getDefaultStyle(
+							((IHighlightableElement) selectedElement).getModelElements());
 				}
 				
-				return ISelectionHighlightingAdapter.EMPTY_ITERATOR;
+				return Stream.empty();
 			}
 		};
 		
