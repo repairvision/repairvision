@@ -69,26 +69,31 @@ public class RulebaseUtil {
 	}
 	
 	public static boolean editRuleValidation(String editRuleFile, Resource editRuleRes) {
-		List<EditRuleValidation> validation = EditRuleValidator.calculateEditRuleValidations(
-				(Module) editRuleRes.getContents().get(0));
-
-		if (validation.isEmpty()) {
-			return true;
-		} else {
-			MultiStatus info = new MultiStatus(Activator.ID, 1, "Edit-Rule Validation Failed:\n\n" 
-					+ editRuleFile, null);
-
-			for (EditRuleValidation editRuleValidation : validation) {
-				info.add(new Status(IStatus.ERROR, Activator.ID, 1, editRuleValidation.infoMessage, null));
-			}
-
-			Display.getDefault().asyncExec(() -> {
-				ErrorDialog.openError(
-						Display.getDefault().getActiveShell(), 
-						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(), 
-						null, info);
-			});
+		try {
+			List<EditRuleValidation> validation = EditRuleValidator.calculateEditRuleValidations(
+					(Module) editRuleRes.getContents().get(0));
 			
+			if (validation.isEmpty()) {
+				return true;
+			} else {
+				MultiStatus info = new MultiStatus(Activator.ID, 1, "Edit-Rule Validation Failed:\n\n" 
+						+ editRuleFile, null);
+				
+				for (EditRuleValidation editRuleValidation : validation) {
+					info.add(new Status(IStatus.ERROR, Activator.ID, 1, editRuleValidation.infoMessage, null));
+				}
+				
+				Display.getDefault().asyncExec(() -> {
+					ErrorDialog.openError(
+							Display.getDefault().getActiveShell(), 
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(), 
+							null, info);
+				});
+				
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
