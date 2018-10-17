@@ -25,7 +25,6 @@ import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
-import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.repair.history.generator.util.HistoryUtil;
 
 public class EcoreHistoryReduceApplication implements IApplication {
@@ -72,12 +71,12 @@ public class EcoreHistoryReduceApplication implements IApplication {
 					}
 					
 					// Filter to introduced/resolved inconsistencies:
-					Version successorVersion = EvaluationUtil.getSuccessorRevision(version);
+					Version successorVersion = version.getSuccessor();
 					
 					// Preserve introduced/resolved step:
 					if ((inconsistency.getIntroducedIn() == version) || (inconsistency.getResolvedIn() == successorVersion)) {
 						if (inconsistency.getIntroducedIn() == version) {
-							removedVersions.remove(EvaluationUtil.getPredecessorRevision(version));
+							removedVersions.remove(version.getPredecessor());
 							removedVersions.remove(version);
 						}
 						
