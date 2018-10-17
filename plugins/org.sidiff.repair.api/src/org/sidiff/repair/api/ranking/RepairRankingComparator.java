@@ -18,6 +18,9 @@ public class RepairRankingComparator implements Comparator<Object> {
 	@Override
 	public int compare(Object o1, Object o2) {
 		
+		// -1: first repair has higher ranking to the second  -> preferred repair
+		// 0 : first repair ranking is equal to the second    -> ambiguous ranking
+		// 1 : first repair has lower ranking than the second
 		if ((o1 instanceof IRepairPlan) && (o2 instanceof IRepairPlan)) {
 			return compare((IRepairPlan) o1, (IRepairPlan) o2);
 		} 
@@ -25,43 +28,75 @@ public class RepairRankingComparator implements Comparator<Object> {
 		return 0;
 	}
 	
-	protected int compare(IRepairPlan repairA, IRepairPlan repairB) {
+	protected int compareChangeRatio(IRepairPlan repairA, IRepairPlan repairB) {
 		double ratioA = (double) repairA.getRecognizedChanges().size() / repairA.getComplementingChanges().size();
 		double ratioB = (double) repairB.getRecognizedChanges().size() / repairB.getComplementingChanges().size();
-		double diff = (ratioA - ratioB);
-
-		if (diff != 0) {
-			if (diff < 0) {
-				// Ratio of B is greater then A -> B on the top:
-				return 1;
-			} else {
-				// Ratio of A is greater then B -> A on the top:
-				return -1;
-			}
-		} else {
+		return (int) Math.signum(ratioB - ratioA);
+	}
+	
+	protected int compareSubRule(IRepairPlan repairA, IRepairPlan repairB) {
+		int subA = repairA.getRecognizedChanges().size();
+		int subB = repairB.getRecognizedChanges().size();
+		return subB - subA;
+	}
+	
+	protected int compareComplementRule(IRepairPlan repairA, IRepairPlan repairB) {
+		int subA = repairA.getComplementingChanges().size();
+		int subB = repairB.getComplementingChanges().size();
+		return subA - subB;
+	}
+	
+	protected int compareParameters(IRepairPlan repairA, IRepairPlan repairB) {
+		int unboundA = RepairAPIUtil.countUnboundParameters(repairA);
+		int unboundB = RepairAPIUtil.countUnboundParameters(repairB);
+		return unboundA - unboundB;
+	}
+	
+	protected int compareCreations(IRepairPlan repairA, IRepairPlan repairB) {
+		// TODO: Consider attribute value changes!?
+		
+		int countOfNodeCreateChangesA = RepairAPIUtil.countOfNodeCreateChanges(repairA.getComplementingChanges()); 
+		int countOfEdgeCreateChangesA = RepairAPIUtil.countOfEdgeCreateChanges(repairA.getComplementingChanges()); 
+		int countOfNodeDeleteChangesA = RepairAPIUtil.countOfNodeDeleteChanges(repairA.getComplementingChanges()); 
+		int countOfEdgeDeleteChangesA = RepairAPIUtil.countOfEdgeDeleteChanges(repairA.getComplementingChanges());
+		int creationsA = (countOfNodeCreateChangesA + countOfEdgeCreateChangesA) - (countOfNodeDeleteChangesA + countOfEdgeDeleteChangesA);
+		
+		int countOfNodeCreateChangesB = RepairAPIUtil.countOfNodeCreateChanges(repairB.getComplementingChanges()); 
+		int countOfEdgeCreateChangesB = RepairAPIUtil.countOfEdgeCreateChanges(repairB.getComplementingChanges()); 
+		int countOfNodeDeleteChangesB = RepairAPIUtil.countOfNodeDeleteChanges(repairB.getComplementingChanges());
+		int countOfEdgeDeleteChangesB = RepairAPIUtil.countOfEdgeDeleteChanges(repairB.getComplementingChanges());
+		int creationsB = (countOfNodeCreateChangesB + countOfEdgeCreateChangesB) - (countOfNodeDeleteChangesB + countOfEdgeDeleteChangesB);
+		
+		return creationsB - creationsA;
+	}
+	
+	protected int compareNames(IRepairPlan repairA, IRepairPlan repairB) {
+		return repairA.getRecognizedEditRule().getName().compareTo(repairB.getRecognizedEditRule().getName());
+	}
+	
+	protected int compare(IRepairPlan repairA, IRepairPlan repairB) {
+		int result = compareChangeRatio(repairA, repairB);
+		
+		if (result == 0) {
+			result = compareSubRule(repairA, repairB);
 			
-			// Ratio A equals Ratio B:
-			int countOfNodeDeleteChangesA = RepairAPIUtil.countOfNodeDeleteChanges(repairA.getComplementingChanges()); 
-			int countOfNodeDeleteChangesB = RepairAPIUtil.countOfNodeDeleteChanges(repairB.getComplementingChanges());
-			
-			int countOfEdgeDeleteChangesA = RepairAPIUtil.countOfEdgeDeleteChanges(repairA.getComplementingChanges()); 
-			int countOfEdgeDeleteChangesB = RepairAPIUtil.countOfEdgeDeleteChanges(repairB.getComplementingChanges());
-			
-			int morePreserving = 
-					(2 * countOfNodeDeleteChangesA + countOfEdgeDeleteChangesA)
-					- (2 * countOfNodeDeleteChangesB + countOfEdgeDeleteChangesB);
-			
-			if (morePreserving != 0) {
-				if (morePreserving > 0) {
-					// A deletes more then B -> B on the top::
-					return 1;
-				} else {
-					// B deletes more then A -> A on the top:
-					return -1;
+			if (result == 0) {
+				result = compareComplementRule(repairA, repairB);
+				
+				if (result == 0) {
+					result = compareParameters(repairA, repairB);
+					
+					if (result == 0) {
+						result = compareCreations(repairA, repairB);
+						
+						if (result == 0) {
+							result = compareNames(repairA, repairB);
+						}
+					}
 				}
 			}
 		}
 		
-		return 0;
+		return result;
 	}
 }
