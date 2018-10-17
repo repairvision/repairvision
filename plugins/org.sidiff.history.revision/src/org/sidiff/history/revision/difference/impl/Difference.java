@@ -23,6 +23,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricFactory;
 import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.history.revision.IVersion;
 import org.sidiff.history.revision.difference.IDifference;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.matcher.IMatcher;
@@ -32,45 +33,54 @@ import org.sidiff.matching.model.Matching;
 public class Difference implements IDifference {
 
 	private SymmetricDifference symmetricDifference;
-	
+
 	private LiftingGraphDomainMap domainMap;
-	
+
 	private LiftingGraphIndex index;
-	
-	public Difference(Resource resourceA, Resource resourceB, DifferenceSettings settings) {
-		
+
+	public Difference(IVersion versionA, IVersion versionB, DifferenceSettings settings) {
+		Resource resourceA = versionA.getTargetResource();
+		Resource resourceB = versionB.getTargetResource();
+
 		// Calculate difference:
 		IMatcher matcher = settings.getMatcher();
-		
-		Collection<Resource> models = Arrays.asList(new Resource[] {resourceA, resourceB});
-		matcher.startMatching(models, settings.getScope());	
+
+		Collection<Resource> models = Arrays.asList(new Resource[] { resourceA, resourceB });
+		matcher.startMatching(models, settings.getScope());
 		ICorrespondences correspondences = matcher.getCorrespondencesService();
-		Matching matching = ((MatchingModelCorrespondences)correspondences).getMatching();	
+		Matching matching = ((MatchingModelCorrespondences) correspondences).getMatching();
 
 		SymmetricDifference symmetricDifference = SymmetricFactory.eINSTANCE.createSymmetricDifference();
 		symmetricDifference.setMatching(matching);
-		
+
 		ITechnicalDifferenceBuilder tdBuilder = settings.getTechBuilder();
 		tdBuilder.deriveTechDiff(symmetricDifference, settings.getScope());
-		
+
+		// TODO: Test/Fix this...
+//		TechnicalDifferenceBuilder techDiffBuilder = new TechnicalDifferenceBuilder();
+//		SymmetricDifference symmetricDifference = techDiffBuilder.deriveTechDiff(
+//				techDiffBuilder.getModel(versionA, settings.getScope()),
+//				techDiffBuilder.getModel(versionB, settings.getScope()),
+//				new ArrayList<>(matching.getCorrespondences()).iterator());
+
 		// Create difference resource:
-		ResourceSet differenceRSS = new ResourceSetImpl(); 
-		Resource differenceResource = differenceRSS.createResource(
-				getDifferenceURI(resourceA.getURI(), resourceB.getURI()));
+		ResourceSet differenceRSS = new ResourceSetImpl();
+		Resource differenceResource = differenceRSS
+				.createResource(getDifferenceURI(resourceA.getURI(), resourceB.getURI()));
 		differenceResource.getContents().add(symmetricDifference);
-		
+
 		// Create difference indices:
 		init(symmetricDifference);
 	}
-	
+
 	protected URI getDifferenceURI(URI modelA, URI modelB) {
 		return SymmetricDifferenceUtil.getDifferenceURI(modelA, modelB);
 	}
-	
+
 	public Difference(SymmetricDifference symmetricDifference) {
 		init(symmetricDifference);
 	}
-	
+
 	public void init(SymmetricDifference symmetricDifference) {
 		this.symmetricDifference = symmetricDifference;
 		this.domainMap = new LiftingGraphDomainMap(symmetricDifference);
@@ -157,7 +167,7 @@ public class Difference implements IDifference {
 	public <C extends Change> Iterator<C> getLocalChanges(EObject element, EReference reference, Class<C> changeType) {
 		return index.getLocalChanges(element, reference, changeType);
 	}
-	
+
 	@Override
 	public Change getObjectChange(EObject element) {
 		return index.getObjectChange(element);
@@ -182,7 +192,7 @@ public class Difference implements IDifference {
 	public Correspondence getCorrespondenceA(EObject modelElement) {
 		return index.getCorrespondenceA(modelElement);
 	}
-	
+
 	@Override
 	public EObject getCorrespondingObjectInA(EObject objectInB) {
 		return symmetricDifference.getCorrespondingObjectInA(objectInB);
@@ -197,7 +207,7 @@ public class Difference implements IDifference {
 	public EObject getCorrespondingObjectInB(EObject objectInA) {
 		return symmetricDifference.getCorrespondingObjectInB(objectInA);
 	}
-	
+
 	@Override
 	public SymmetricDifference getSymmetricDifference() {
 		return symmetricDifference;

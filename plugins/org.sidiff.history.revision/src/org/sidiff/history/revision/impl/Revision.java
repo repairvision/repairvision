@@ -31,22 +31,13 @@ public class Revision implements IRevision {
 	
 	private Difference difference;
 	
-	public Revision(URI uriModelA, URI uriModelB, DifferenceSettings differenceSettings) {
-		Resource modelA = new ResourceSetImpl().getResource(uriModelA, true);
-		Resource modelB = new ResourceSetImpl().getResource(uriModelB, true);
-		
-		initMetaModel(modelA, modelB);
-		initVersions(modelA, modelB);
-		initDifference(modelA, modelB, differenceSettings);
-	}
-	
 	public Revision(Resource modelA, Resource modelB, DifferenceSettings differenceSettings) {
 		this.versionA = new Version(modelA);
 		this.versionB = new Version(modelB);
 		
 		initMetaModel(modelA, modelB);
 		initVersions(modelA, modelB);
-		initDifference(modelA, modelB, differenceSettings);
+		initDifference(versionA, versionB, differenceSettings);
 	}
 	
 	public Revision(SymmetricDifference symmetricDifference) {
@@ -126,8 +117,8 @@ public class Revision implements IRevision {
 		return resolved;
 	}
 	
-	protected void initDifference(Resource modelA, Resource modelB, DifferenceSettings differenceSettings) {
-		this.difference = new Difference(modelA, modelB, differenceSettings);
+	protected void initDifference(IVersion versionA, IVersion versionB, DifferenceSettings differenceSettings) {
+		this.difference = new Difference(versionA, versionB, differenceSettings);
 	}
 	
 	protected void initDifference(SymmetricDifference symmetricDifference) {
