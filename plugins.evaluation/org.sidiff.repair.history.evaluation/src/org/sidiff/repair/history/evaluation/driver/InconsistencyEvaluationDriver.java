@@ -16,6 +16,7 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
+import org.sidiff.repair.history.evaluation.driver.DeveloperIntentionOracleDriver.HistoricalObservable;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
 import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.repair.history.evaluation.report.InconsistenciesLog;
@@ -41,7 +42,7 @@ public class InconsistencyEvaluationDriver {
 		InfoConsole.printInfo("#################### " + repaired.getName() + " ####################");
 		InfoConsole.printInfo(repaired);
 		
-		// WORKAROUND:...
+		// TODO: WORKAROUND: Empty Model -> Just remove context element...
 		if (history.getHistory().getVersions().indexOf(repaired.getModelVersionIntroduced()) == 1) {
 			EObject contextElement = repaired.getProblemInIntroducedModel().getContextElement();
 			contextElement = history.getHistory().getVersions().get(0).getElement(EcoreUtil.getURI(contextElement).fragment());
@@ -94,12 +95,14 @@ public class InconsistencyEvaluationDriver {
 		InfoConsole.printInfo("Repairs Found: " + repairJob.getRepairs().size());
 		
 		// search historical observable repair:
-		List<IRepairPlan> observable = DeveloperIntentionOracleDriver.getHistoricallyObservable(
+		HistoricalObservable observable = DeveloperIntentionOracleDriver.getHistoricallyObservable(
 				repaired, repairJob, matchingSettings);
 		
-		InfoConsole.printInfo("Historically Observable Repairs: " + observable.size());
+		InfoConsole.printInfo("Historically Observable Repairs: " + observable.repairs.size());
+		InfoConsole.printInfo("Historically Observable Undos: " + observable.undos.size());
 		
-		log.append(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_REPAIRS, observable.size() > 0);
+		log.append(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_REPAIRS, observable.repairs.size() > 0);
+		log.append(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_UNDOS, observable.undos.size() > 0);
 		
 		Object[] bestObservable = findBestObservableRepair(observable, repairJob);
 		int bestPositionOfObservable = (int) bestObservable[0];
@@ -124,7 +127,7 @@ public class InconsistencyEvaluationDriver {
 //		log.append("Count of Repair Tree Combinations", countRepairTreeCombinations(repairJob.getValidations()));
 	}
 
-	private static Object[] findBestObservableRepair(List<IRepairPlan> observable, PEORepairJob repairJob) {
+	private static Object[] findBestObservableRepair(HistoricalObservable observable, PEORepairJob repairJob) {
 		
 		// Calculate Ranking:
 		List<IRepairPlan> repairRanking = new LinkedList<>(repairJob.getRepairs());
@@ -134,7 +137,10 @@ public class InconsistencyEvaluationDriver {
 		int bestPositionOfObservable = Integer.MAX_VALUE;
 		IRepairPlan bestObservableRepair =  null;
 		
-		for (IRepairPlan observableRepair : observable) {
+		// TODO: HOR vs. HOU!?
+		List<IRepairPlan> observables =  observable.repairs.isEmpty() ? observable.undos : observable.repairs;
+
+		for (IRepairPlan observableRepair : observables) {
 			int positionOfObservable = repairRanking.indexOf(observableRepair);
 			
 			if (positionOfObservable < bestPositionOfObservable) {

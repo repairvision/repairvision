@@ -32,6 +32,7 @@ public class InconsistencyReportGenerator {
 			
 			for (Problem problem : history.getUniqueProblems()) {
 				String inconsistency = problem.getName();
+				inconsistency = inconsistency.substring(0, Math.min(120, inconsistency.length())); // TODO
 				
 				LogTable reportForInconsistency = inconsistencyLogs.get(inconsistency);
 				

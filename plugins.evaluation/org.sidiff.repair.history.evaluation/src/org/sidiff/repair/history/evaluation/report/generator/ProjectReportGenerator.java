@@ -369,7 +369,22 @@ public class ProjectReportGenerator {
 	}
 
 	private Object countHistoricallyObservableUndos(LogTable... inconsistenciesLogs) {
-		return TODO; // TODO
+		
+		// TODO: HOR vs. HOU!?
+		List<Boolean> hou = merge(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_UNDOS, Boolean.class, inconsistenciesLogs);
+		List<Boolean> hor = merge(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_REPAIRS, Boolean.class, inconsistenciesLogs);
+		
+		assert hou.size() == hor.size();
+		
+		int count = 0;
+		
+		for (int i = 0; i < hou.size(); i++) {
+			if (hou.get(i) && !hor.get(i)) {
+				++count;
+			}
+		}
+		
+		return count;
 	}
 
 	private Object minRepairAlternatives(LogTable... inconsistenciesLogs) {

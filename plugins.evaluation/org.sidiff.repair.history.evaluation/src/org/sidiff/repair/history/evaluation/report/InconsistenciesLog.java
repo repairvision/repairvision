@@ -38,6 +38,8 @@ public class InconsistenciesLog extends AbstractLog {
 	
 	public static final String COL_HISTORICALLY_OBSERVABLE_REPAIRS = "Historically Observable Repairs (HOR)";
 	
+	public static final String COL_HISTORICALLY_OBSERVABLE_UNDOS = "Historically Observable Undos (HOU)";
+	
 	public static final String COL_RANKING_OF_BEST_HOR = "Ranking of Best HOR";
 
 	public static final String COL_REPAIR_MATCHINGS_FOR_BEST_HOR = "Repair Matchings for Best HOR";

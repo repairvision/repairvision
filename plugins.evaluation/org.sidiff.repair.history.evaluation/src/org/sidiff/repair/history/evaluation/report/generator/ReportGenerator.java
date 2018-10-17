@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
@@ -60,6 +61,12 @@ public class ReportGenerator implements IApplication {
 		
 		for (String history : HISTORIES) {
 			File historyFolder = new File(HistoryEvaluationApplication.LOCAL_PATH + history).getParentFile();
+			EvaluationData data = new EvaluationData();
+			
+			// TODO: Better solution for getting the project relative path!?
+			String modelPath = history.substring(history.indexOf("/") + 1, history.length());
+			modelPath = modelPath.substring(modelPath.indexOf("/"), modelPath.length());
+			data.modelPath = new File(modelPath).getParentFile();	
 			
 			List<Path> evaluations = Files.find(Paths.get(historyFolder.getAbsolutePath()), 1, 
 					(path, attributes) -> (EvaluationUtil.getTimestamp(path.getFileName().toString()) != null))
@@ -72,45 +79,65 @@ public class ReportGenerator implements IApplication {
 					return d1.compareTo(d2);
 				}
 			});
-			
+
 			Path lastEvaluation = evaluations.get(evaluations.size() - 1);
+
+			Optional<Path> editRulesCSVPath = Files.find(lastEvaluation, 1,
+					(path, attributes) -> path.getFileName().toString()
+					.endsWith(EditRulesLog.NAME + ".csv")).findAny();
+
+			if (editRulesCSVPath.isPresent()) {
+				Path editRulesCSV =  editRulesCSVPath.get();
+				LogTable editRulesLog = new LogTable();
+				editRulesLog.loadCSV(editRulesCSV.toString());
+				
+				data.editRulesLog = editRulesLog;
+			}
 			
-			Path editRulesCSV =  Files.find(lastEvaluation, 1,
-					(path, attributes) -> path.getFileName().toString().endsWith(EditRulesLog.NAME + ".csv")).findAny().get();
-					
-			LogTable editRulesLog = new LogTable();
-			editRulesLog.loadCSV(editRulesCSV.toString());
+			Optional<Path> historyCSVPath = Files.find(lastEvaluation, 1,
+					(path, attributes) -> path.getFileName().toString()
+					.endsWith(HistoryLog.NAME + ".csv")).findAny();
 			
-			Path historyCSV =  Files.find(lastEvaluation, 1,
-					(path, attributes) -> path.getFileName().toString().endsWith(HistoryLog.NAME + ".csv")).findAny().get();
-			LogTable historyLog = new LogTable();
-			historyLog.loadCSV(historyCSV.toString());
+			if (historyCSVPath.isPresent()) {
+				Path historyCSV =  historyCSVPath.get();
+				LogTable historyLog = new LogTable();
+				historyLog.loadCSV(historyCSV.toString());
+				
+				data.historyLog = historyLog;
+			}
 			
-			Path inconsistenciesCSV =  Files.find(lastEvaluation, 1,
-					(path, attributes) -> path.getFileName().toString().endsWith(InconsistenciesLog.NAME + ".csv")).findAny().get();
-			LogTable inconsistenciesLog = new LogTable();
-			inconsistenciesLog.loadCSV(inconsistenciesCSV.toString());
+			Optional<Path> inconsistenciesCSVPath = Files.find(lastEvaluation, 1,
+					(path, attributes) -> path.getFileName().toString()
+					.endsWith(InconsistenciesLog.NAME + ".csv")).findAny();
 			
-			Path recognitionCSV =  Files.find(lastEvaluation, 1,
-					(path, attributes) -> path.getFileName().toString().endsWith(RecognitionLog.NAME + ".csv")).findAny().get();
-			LogTable recognitionLog = new LogTable();
-			recognitionLog.loadCSV(recognitionCSV.toString());
+			if (inconsistenciesCSVPath.isPresent()) {
+				Path inconsistenciesCSV =  inconsistenciesCSVPath.get();
+				LogTable inconsistenciesLog = new LogTable();
+				inconsistenciesLog.loadCSV(inconsistenciesCSV.toString());
+				
+				data.inconsistenciesLog = inconsistenciesLog;
+			}
 			
-			// TODO: Better solution for getting the project relative path!?
-			String modelPath = history.substring(history.indexOf("/") + 1, history.length());
-			modelPath = modelPath.substring(modelPath.indexOf("/"), modelPath.length());
+			Optional<Path> recognitionCSVPath = Files.find(lastEvaluation, 1,
+					(path, attributes) -> path.getFileName().toString()
+					.endsWith(RecognitionLog.NAME + ".csv")).findAny();
 			
-			EvaluationData data = new EvaluationData();
-			data.modelPath = new File(modelPath).getParentFile();	
-			data.editRulesLog = editRulesLog;
-			data.historyLog = historyLog;
-			data.inconsistenciesLog = inconsistenciesLog;
-			data.recognitionLog = recognitionLog;
+			if (recognitionCSVPath.isPresent()) {
+				Path recognitionCSV =  recognitionCSVPath.get();
+				LogTable recognitionLog = new LogTable();
+				recognitionLog.loadCSV(recognitionCSV.toString());
+				
+				data.recognitionLog = recognitionLog;
+			}
 			
-			String projectName = getProjectName(historyFolder.getParentFile());
-			List<EvaluationData> dataPerProject = evaluationDataPerProject.getOrDefault(projectName, new ArrayList<>());
-			evaluationDataPerProject.put(projectName, dataPerProject);
-			dataPerProject.add(data);
+			if (data.isComplete()) {
+				String projectName = getProjectName(historyFolder.getParentFile());
+				List<EvaluationData> dataPerProject = evaluationDataPerProject.getOrDefault(projectName, new ArrayList<>());
+				evaluationDataPerProject.put(projectName, dataPerProject);
+				dataPerProject.add(data);
+			} else {
+				System.err.println("Incomplete Evaluation Data: " + data.modelPath);
+			}
 		}
 		
 		// sort by key:

@@ -6,15 +6,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.interpreter.Match;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Rule;
-//import org.sidiff.common.emf.EMFUtil;
-import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
-import org.sidiff.common.henshin.view.AttributePair;
-import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;
@@ -23,34 +22,38 @@ import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.impact.GraphActionImpactAnalysis;
-import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.impact.PositiveImpactAnalysis;
 import org.sidiff.validation.constraint.impact.index.RepairActionIndex;
 
 public class DeveloperIntentionOracle {
 
-	private Collection<RepairValidation> repairTrees;
-
 	private Set<String> currentToResolvedSignatures;
 	
-	public DeveloperIntentionOracle(
-			SymmetricDifference currentToResolvedDifference, 
-			Collection<RepairValidation> repairTrees) {
-		
-		this.repairTrees = repairTrees;
+	public DeveloperIntentionOracle(SymmetricDifference currentToResolvedDifference) {
 		this.currentToResolvedSignatures = toChangeSignatures(currentToResolvedDifference);
 	}
+	
+	public boolean isHistoricallyObservableUndo(
+			List<GraphElement> recognizedChanges, List<Match> matches,
+			Collection<RepairValidation> repairTrees) {
+		
+		return isHistoricallyObservable(recognizedChanges, matches, repairTrees, true);
+	}
 
-	/**
-	 * @return <code>true</code> if the complementing changes can be observed in
-	 *         the difference and if the the changes overlap with the given
-	 *         repair trees; <code>false</code> otherwise.
-	 */
-	public boolean isHistoricallyObservableRepair(IRepairPlan repair) {
+	public boolean isHistoricallyObservableRepair(
+			List<GraphElement> complementingChanges, List<Match> matches,
+			Collection<RepairValidation> repairTrees) {
+		
+		return isHistoricallyObservable(complementingChanges, matches, repairTrees, false);
+	}
+	
+	public boolean isHistoricallyObservable(
+			List<GraphElement> repair, List<Match> matches, 
+			Collection<RepairValidation> repairTrees, boolean invertActions) {
 
 		// We check if all action-induced low level changes can be observed
-		List<GraphElement> observableChanges = findObservableChanges(repair.getComplementingEditRule(), currentToResolvedSignatures);
+		List<GraphElement> observableChanges = findObservableChanges(repair, currentToResolvedSignatures, invertActions);
 		
 		if (observableChanges == null) {
 			return false;
@@ -59,7 +62,7 @@ public class DeveloperIntentionOracle {
 		// NOTE: Since attribute changes are optional -> re-check repair tree overlapping for observable changes:
 		GraphActionImpactAnalysis repairFilter = new GraphActionImpactAnalysis(new PositiveImpactAnalysis(new RepairActionIndex(repairTrees)));
 		
-		for (Match preMatch : repair.getComplementMatches()) {
+		for (Match preMatch : matches) {
 			if (repairFilter.check(observableChanges, preMatch)) {
 				return true;
 			}
@@ -77,23 +80,23 @@ public class DeveloperIntentionOracle {
 			
 			if (change instanceof AddObject) {
 				AddObject c = (AddObject) change;
-				signature = "AddObject_" + c.getObj().eClass().getName();
+				signature = getAddObjectSignature(c.getObj().eClass(), false);
 			}
 			if (change instanceof RemoveObject) {
 				RemoveObject c = (RemoveObject) change;
-				signature = "RemoveObject_" + c.getObj().eClass().getName();
+				signature = getRemoveObjectSignature(c.getObj().eClass(), false);
 			}
 			if (change instanceof AddReference) {
 				AddReference c = (AddReference) change;
-				signature = "AddReference_" + c.getType().getName();
+				signature = getAddReferenceSignature(c.getType(), false);
 			}
 			if (change instanceof RemoveReference) {
 				RemoveReference c = (RemoveReference) change;
-				signature = "RemoveReference_" + c.getType().getName();
+				signature = getRemoveReferenceSignature(c.getType(), false);
 			}
 			if (change instanceof AttributeValueChange) {
 				AttributeValueChange c = (AttributeValueChange) change;
-				signature = "AttributeValueChange_" + c.getType().getName();
+				signature = getAttributeValueChangeSignature(c.getType(), false);
 			}
 			
 			if (signature != null) {
@@ -104,60 +107,64 @@ public class DeveloperIntentionOracle {
 		return changeSignatures;
 	}
 
-	private List<GraphElement> findObservableChanges(Rule editRule, Set<String> difference) {
+	private List<GraphElement> findObservableChanges(List<GraphElement> repair, Set<String> difference, boolean invertActions) {
 		List<GraphElement> observableChanges = new ArrayList<>();
 		
-		// Create nodes
-		for (Node node : HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes(editRule)) {
-			String signature = "AddObject_" + node.getType().getName();
-			
-			if (difference.contains(signature)) {
-				observableChanges.add(node);
-			} else {
-				return null;
-			}
-		}
+		for (GraphElement repairAction : repair) {
+			if (repairAction instanceof Node) {
+				Node node = (Node) repairAction;
+				
+				if (repairAction.getGraph().isLhs()) {
 
-		// Delete nodes
-		for (Node node : HenshinRuleAnalysisUtilEx.getLHSMinusRHSNodes(editRule)) {
-			String signature = "RemoveObject_" + node.getType().getName();
-			
-			if (difference.contains(signature)) {
-				observableChanges.add(node);
-			} else {
-				return null;
-			}
-		}
+					// Delete nodes:
+					String signature = getRemoveObjectSignature(node.getType(), invertActions);
+					
+					if (difference.contains(signature)) {
+						observableChanges.add(node);
+					} else {
+						return null;
+					}
+				} else if (repairAction.getGraph().isRhs()) {
 
-		// Create edges
-		for (Edge edge : HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges(editRule)) {
-			String signature = "AddReference_" + edge.getType().getName();
-			
-			if (difference.contains(signature)) {
-				observableChanges.add(edge);
-			} else {
-				return null;
-			}
-		}
-
-		// Delete edges
-		for (Edge edge : HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges(editRule)) {
-			String signature = "RemoveReference_" + edge.getType().getName();
-			
-			if (difference.contains(signature)) {
-				observableChanges.add(edge);
-			} else {
-				return null;
-			}
-		}
-		
-		// Set attributes:
-		for (Node node : HenshinRuleAnalysisUtilEx.getLHSIntersectRHSNodes(editRule)) {
-			for (AttributePair attribute : ChangePatternUtil.getChangingAttributes(node)) {
+					// Create nodes:
+					String signature = getAddObjectSignature(node.getType(), invertActions);
+					
+					if (difference.contains(signature)) {
+						observableChanges.add(node);
+					} else {
+						return null;
+					}
+				}
+			} else if (repairAction instanceof Edge) {
+				Edge edge = (Edge) repairAction;
+				
+				if (repairAction.getGraph().isLhs()) {
+					
+					// Delete edges:
+					String signature = getRemoveReferenceSignature(edge.getType(), invertActions);
+					
+					if (difference.contains(signature)) {
+						observableChanges.add(edge);
+					} else {
+						return null;
+					}
+				} else if (repairAction.getGraph().isRhs()) {
+					
+					// Create edges:
+					String signature = getAddReferenceSignature(edge.getType(), invertActions);
+					
+					if (difference.contains(signature)) {
+						observableChanges.add(edge);
+					} else {
+						return null;
+					}
+				}
+			} else if (repairAction instanceof Attribute) {
+				Attribute attribute = (Attribute) repairAction;
 				
 				// Is fix value change?
-				if (editRule.getParameter(attribute.getRhsAttribute().getValue()) == null) {
-					String signature = "AttributeValueChange_" + attribute.getType().getName();
+				if (attribute.getGraph().getRule().getParameter(attribute.getValue()) == null) {
+					String signature = getAttributeValueChangeSignature(attribute.getType(), invertActions);
 					
 					if (!difference.contains(signature)) {
 						return null;
@@ -165,11 +172,48 @@ public class DeveloperIntentionOracle {
 				}
 				
 				// NOTE: Variable attribute changes are optional.
-				observableChanges.add(attribute.getRhsAttribute());
+				observableChanges.add(attribute);
 			}
 		}
 		
 		// => We found all change actions in the low-level difference!
 		return observableChanges;
+	}
+	
+	
+	private String getAddObjectSignature(EClass type, boolean invert) {
+		if (!invert) {
+			return  "AddObject_" + type.getName();
+		} else {
+			return getRemoveObjectSignature(type, false);
+		}
+	}
+	
+	private String getRemoveObjectSignature(EClass type, boolean invert) {
+		if (!invert) {
+			return  "RemoveObject_" + type.getName();
+		} else {
+			return getAddObjectSignature(type, false);
+		}
+	}
+	
+	private String getAddReferenceSignature(EReference type, boolean invert) {
+		if (!invert) {
+			return  "AddReference_" + type.getName();
+		} else {
+			return getRemoveReferenceSignature(type, false);
+		}
+	}
+	
+	private String getRemoveReferenceSignature(EReference type, boolean invert) {
+		if (!invert) {
+			return  "RemoveReference_" + type.getName();
+		} else {
+			return getAddReferenceSignature(type, false);
+		}
+	}
+	
+	private String getAttributeValueChangeSignature(EAttribute type, boolean invert) {
+		return "AttributeValueChange_" + type.getName();
 	}
 }

@@ -2,7 +2,7 @@ package org.sidiff.repair.history.evaluation.ui;
 
 import java.io.FileNotFoundException;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.stream.Stream;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.EObject;
@@ -34,6 +34,7 @@ import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
+import org.sidiff.integration.editor.highlighting.StyledObject;
 import org.sidiff.repair.api.RepairJob;
 import org.sidiff.repair.history.evaluation.Activator;
 import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
@@ -126,13 +127,13 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 		historyInconsistenciesViewerDecorationAdapter = new ISelectionHighlightingAdapter() {
 			
 			@Override
-			public Iterator<EObject> getElements(ISelection selection) {
+			public Stream<StyledObject> getElements(ISelection selection) {
 				
 				if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
 					Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
 					
 					if (selectedElement instanceof EObject) {
-						return Collections.singletonList((EObject) selectedElement).iterator();
+						return Collections.singletonList((EObject) selectedElement).stream().map(StyledObject::new);
 					}
 				}
 				
