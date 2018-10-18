@@ -45,6 +45,11 @@ public class LogTable {
 	}
 	
 	public boolean createColumn(String name, List<Object> values) {
+		
+		if (maxColumn.size() < values.size()) {
+			this.maxColumn = values;
+		}
+		
 		return (table.putIfAbsent(name, values) == null);
 	}
 	
