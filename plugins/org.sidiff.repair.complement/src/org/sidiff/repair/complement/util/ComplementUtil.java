@@ -201,38 +201,41 @@ public class ComplementUtil {
 	/**
 	 * @param edge
 	 *            The edge that becomes a << preserve >> edge.
+	 * @return The copied edge.
 	 */
-	public static void makePreserve(Edge edge) {
+	public static Edge makePreserve(Edge edge) {
 		MappingList mappings = edge.getGraph().getRule().getMappings();
 		Node remoteSource = getRemoteNode(mappings, edge.getSource());
 		Node remoteTarget = getRemoteNode(mappings, edge.getTarget());
 
 		if (remoteSource == null) {
-			remoteSource = makePreserve(edge.getSource());
+			remoteSource = makePreserve(edge.getSource(), false);
 		}
 
 		if (remoteTarget == null) {
-			remoteTarget = makePreserve(edge.getTarget());
+			remoteTarget = makePreserve(edge.getTarget(), false);
 		}
 
-		copyEdge(edge, remoteSource, remoteTarget);
+		return copyEdge(edge, remoteSource, remoteTarget);
 	}
 
 	/**
 	 * @param node
 	 *            The nodes that becomes a << preserve >> node.
+	 * @param attributes
+	 *            Make all attributes << preserve >>.
 	 * @return The copied nodes.
 	 */
-	public static Node makePreserve(Node node) {
+	public static Node makePreserve(Node node, boolean attributes) {
 		Rule rule = node.getGraph().getRule();
 
 		if (isRHSNode(node)) {
-			Node copiedNode = copyNode(rule.getLhs(), node, false);
+			Node copiedNode = copyNode(rule.getLhs(), node, attributes);
 			Mapping mapping = HenshinFactory.eINSTANCE.createMapping(copiedNode, node);
 			rule.getMappings().add(mapping);
 			return copiedNode;
 		} else {
-			Node copiedNode = copyNode(rule.getRhs(), node, false);
+			Node copiedNode = copyNode(rule.getRhs(), node, attributes);
 			Mapping mapping = HenshinFactory.eINSTANCE.createMapping(node, copiedNode);
 			rule.getMappings().add(mapping);
 			return copiedNode;

@@ -234,4 +234,33 @@ public class ComplementRule {
 	public Parameter getTrace(Parameter sourceParameter) {
 		return complementRule.getParameter(sourceParameter.getName());
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder complementRule = new StringBuilder();
+		
+		complementRule.append(recognizedRule.getName());
+		complementRule.append("\n");
+		complementRule.append("\n");
+		complementRule.append("Sub-Rule:");
+		complementRule.append("\n");
+
+		for (GraphElement graphElement : getRecognizedChanges()) {
+			complementRule.append(" ");
+			complementRule.append(graphElement);
+			complementRule.append("\n");
+		}
+		
+		complementRule.append("\n");
+		complementRule.append("Complement-Rule:");
+		complementRule.append("\n");
+		
+		for (GraphElement graphElement : getComplementingChanges()) {
+			complementRule.append(" ");
+			complementRule.append(graphElement);
+			complementRule.append("\n");
+		}
+		
+		return complementRule.toString();
+	}
 }

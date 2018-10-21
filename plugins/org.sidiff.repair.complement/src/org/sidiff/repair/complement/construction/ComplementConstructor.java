@@ -161,7 +161,7 @@ public class ComplementConstructor {
 					
 					// Transform create-node to preserve-node:
 					if (isCreationNode(complementNode)) {
-						ComplementUtil.makePreserve(complementNode);
+						ComplementUtil.makePreserve(complementNode, false);
 					} else {
 						return false;
 					}
