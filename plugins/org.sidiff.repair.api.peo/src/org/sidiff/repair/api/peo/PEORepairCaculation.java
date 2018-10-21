@@ -5,14 +5,14 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.henshin.interpreter.Match;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.consistency.common.monitor.LogTime;
-import org.sidiff.editrule.recognition.impact.GraphActionImpactAnalysis;
-import org.sidiff.editrule.recognition.impact.PotentialGraphActionImpactAnalysis;
-import org.sidiff.editrule.recognition.impact.scope.ChangeScope;
-import org.sidiff.editrule.recognition.impact.scope.RepairScope;
+import org.sidiff.editrule.recognition.impact.GraphActionImpactUtil;
+import org.sidiff.editrule.recognition.impact.NegativeImpactScope;
+import org.sidiff.editrule.recognition.impact.PositiveImpactScope;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
@@ -28,9 +28,9 @@ public class PEORepairCaculation {
 	
 	protected ImpactAnalyzes impact;
 	
-	protected RepairScope repairScope;
+	protected PositiveImpactScope positiveImpactScope;
 	
-	protected ChangeScope changeScope;
+	protected NegativeImpactScope negativeImpactScope;
 	
 	protected ComplementFinderEngine complementFinderEngine;
 	
@@ -45,20 +45,26 @@ public class PEORepairCaculation {
 		this.impact = impact;
 		this.complementFinderEngine = complementFinderEngine;
 		
-		// Filter edit-rules by abstract repairs:
+		// TODO: Implement RuleInfo:
 		List<GraphElement> changes = ChangePatternUtil.getPotentialChanges(editRule);
-		this.repairScope = new RepairScope(changes, impact.getPositiveImpactAnalysis());
-		this.changeScope = new ChangeScope(changes, impact.getNegativeImpactAnalysis(), revision);
+		List<Attribute> settingAttributes = ChangePatternUtil.getSettingAttributes(editRule);
+		
+		// Filter edit-rules by impact (sub-rule -> negative, complement-rule -> positive):
+		this.positiveImpactScope = new PositiveImpactScope(changes, impact.getPositiveImpactAnalysis());
+		this.negativeImpactScope = new NegativeImpactScope(changes, impact.getNegativeImpactAnalysis(), revision);
+		
+		PositiveImpactScope overwriteImpactScope = new PositiveImpactScope(settingAttributes, impact.getPositiveImpactAnalysis());
 		
 		// Create complement finder:
 		if (isPotentialRepair()) {
 			complementFinder = complementFinderEngine.createComplementFinder(
-					editRule, repairScope, settings.getComplementFinderSettings());
+					editRule, positiveImpactScope, overwriteImpactScope,
+					settings.getComplementFinderSettings());
 		}
 	}
 	
 	public boolean isPotentialRepair() {
-		return !repairScope.isEmpty() && !changeScope.isEmpty();
+		return !positiveImpactScope.isEmpty() && !negativeImpactScope.isEmpty();
 	}
 	
 	public ComplementFinder getComplementFinder() {
@@ -71,23 +77,14 @@ public class PEORepairCaculation {
 		if (isPotentialRepair()) {
 			List<IRepairPlan> repairs = new ArrayList<>();
 			
-			PotentialGraphActionImpactAnalysis positivePotentialImpact = 
-					new PotentialGraphActionImpactAnalysis(impact.getPositivePotentialImpactAnalysis());
-			GraphActionImpactAnalysis positiveImpact = 
-					new GraphActionImpactAnalysis(impact.getPositiveImpactAnalysis());
-			PotentialGraphActionImpactAnalysis negativePotentialImpact = 
-					new PotentialGraphActionImpactAnalysis(impact.getNegativePotentialImpactAnalysis());
-			GraphActionImpactAnalysis negativeImpact = 
-					new GraphActionImpactAnalysis(impact.getNegativeImpactAnalysis());
-			
 			for(ComplementRule complement : complementFinder.findComplementRules()) {
 				complementMatchingTimer.start();
 
 				// Filter complements by abstract repairs:
 				if (complement.getComplementingChanges().size() > 0) {
 					
-					if (positivePotentialImpact.check(complement.getComplementingChanges()) 
-							&& negativePotentialImpact.check(complement.getRecognizedChanges())) {
+					if (GraphActionImpactUtil.potential(impact.getPositivePotentialImpactAnalysis(), complement.getComplementingChanges()) 
+							&& GraphActionImpactUtil.potential(impact.getNegativePotentialImpactAnalysis(), complement.getRecognizedChanges())) {
 						
 						List<Match> complementMatches = complementFinderEngine.findComplementMatches(complement, Collections.emptyList());
 						List<Match> repairMatches = new ArrayList<>(complementMatches.size());
@@ -95,8 +92,8 @@ public class PEORepairCaculation {
 						// Filter complement with pre-match by abstract repairs:
 						for (Match complementMatch : complementMatches) {
 							
-							if (positiveImpact.check(complement.getComplementingChanges(), complementMatch)
-									&& negativeImpact.check(complement.getComplementingChanges(), complementMatch)) {
+							if (GraphActionImpactUtil.real(impact.getPositiveImpactAnalysis(), complement.getComplementingChanges(), complementMatch)
+									&& GraphActionImpactUtil.real(impact.getNegativeImpactAnalysis(), complement.getComplementingChanges(), complementMatch)) {
 								
 								repairMatches.add(complementMatch);
 							}
