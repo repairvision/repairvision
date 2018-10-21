@@ -1,8 +1,9 @@
 package org.sidiff.repair.validation.ui.widgets;
 
 import java.util.Collections;
-import java.util.stream.Stream;
+import java.util.Iterator;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -13,7 +14,6 @@ import org.sidiff.consistency.common.ui.widgets.IDisposableControl;
 import org.sidiff.consistency.common.ui.widgets.IUnsetableControl;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
-import org.sidiff.integration.editor.highlighting.StyledObject;
 import org.sidiff.repair.validation.ui.provider.RepairTreeContentProvider;
 import org.sidiff.repair.validation.ui.provider.RepairTreeLabelProvider;
 import org.sidiff.validation.constraint.api.util.Validation;
@@ -45,19 +45,19 @@ public class ValidationWidget implements IUnsetableControl, IDisposableControl {
 		decorationAdapter = new ISelectionHighlightingAdapter() {
 			
 			@Override
-			public Stream<StyledObject> getElements(ISelection selection) {
+			public Iterator<EObject> getElements(ISelection selection) {
 				
 				if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
 					Object selectedElement = ((IStructuredSelection) selection).getFirstElement();
 					
 					if (selectedElement instanceof Validation) {
 						Validation validation = (Validation) selectedElement;
-						return Collections.singletonList(validation.getContext()).stream().map(StyledObject::new);
+						return Collections.singletonList(validation.getContext()).iterator();
 					}
 					
 					else if (selectedElement instanceof RepairAction) {
 						RepairAction repair = (RepairAction) selectedElement;
-						return Collections.singletonList(repair.getContext()).stream().map(StyledObject::new);
+						return Collections.singletonList(repair.getContext()).iterator();
 					}
 				}
 				
