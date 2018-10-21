@@ -1,4 +1,4 @@
-package org.sidiff.editrule.recognition.impact.scope;
+package org.sidiff.editrule.recognition.impact;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,17 +17,20 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.sidiff.consistency.common.emf.MetaModelUtil;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
+import org.sidiff.validation.constraint.impact.PositiveImpactAnalysis;
 
-public class RepairScope {
+public class PositiveImpactScope {
 	
-	private Map<GraphElement, List<EObject>> scope;
+	private Map<GraphElement, List<EObject>> repairScope;
 	
 	private ImpactAnalysis impact;
 
-	public RepairScope(Collection<GraphElement> changes, ImpactAnalysis impact) {
+	public PositiveImpactScope(Collection<? extends GraphElement> changes, PositiveImpactAnalysis impact) {
+		
 		this.impact = impact;
-		this.scope = new HashMap<>();
+		this.repairScope = new HashMap<>();
 
+		// Build repair scope:
 		for (GraphElement change : changes) {
 
 			// Abstract repairs consider only edges and attributes:
@@ -111,16 +114,16 @@ public class RepairScope {
 	}
 	
 	public Set<GraphElement> getChanges() {
-		return scope.keySet();
+		return repairScope.keySet();
 	}
 	
-	public void add(GraphElement change, EObject scopeElement) {
-		if (!scope.containsKey(change)) {
-			scope.put(change, new ArrayList<>());
+	private void add(GraphElement change, EObject scopeElement) {
+		if (!repairScope.containsKey(change)) {
+			repairScope.put(change, new ArrayList<>());
 		}
 		
 		
-		List<EObject> scopeElements = scope.get(change);
+		List<EObject> scopeElements = repairScope.get(change);
 		
 		if (!scopeElements.contains(scopeElement)) {
 			scopeElements.add(scopeElement);
@@ -128,21 +131,21 @@ public class RepairScope {
 	}
 	
 	public List<EObject> get(GraphElement graphElement) {
-		return scope.getOrDefault(graphElement, Collections.emptyList());
+		return repairScope.getOrDefault(graphElement, Collections.emptyList());
 	}
 	
 	public boolean isEmpty() {
-		return (scope == null) || (scope.isEmpty());
+		return (repairScope == null) || (repairScope.isEmpty());
 	}
 	
 	@Override
 	public String toString() {
 		StringBuffer string = new StringBuffer();
 		
-		for (GraphElement change : scope.keySet()) {
+		for (GraphElement change : repairScope.keySet()) {
 			string.append("<<" + change.getAction() + ">> " + change + ":\n");
 			
-			for (EObject scopeElement : scope.get(change)) {
+			for (EObject scopeElement : repairScope.get(change)) {
 				string.append("  " + scopeElement + "\n");
 			}
 		}

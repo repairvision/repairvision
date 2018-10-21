@@ -1,4 +1,4 @@
-package org.sidiff.editrule.recognition.impact.scope;
+package org.sidiff.editrule.recognition.impact;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,12 +21,13 @@ import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
+import org.sidiff.validation.constraint.impact.NegativeImpactAnalysis;
 
-public class ChangeScope {
+public class NegativeImpactScope {
 	
 	private Map<GraphElement, List<Change>> scope;
 
-	public ChangeScope(Collection<GraphElement> changes, ImpactAnalysis impact, IRevision revision) {
+	public NegativeImpactScope(Collection<GraphElement> changes, NegativeImpactAnalysis impact, IRevision revision) {
 		this.scope = new HashMap<>();
 		
 		for (GraphElement change : changes) {

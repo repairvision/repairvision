@@ -8,8 +8,8 @@ import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
 import org.sidiff.editrule.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.recognition.generator.PartialMatchGenerator;
-import org.sidiff.editrule.recognition.impact.scope.RepairScope;
-import org.sidiff.editrule.recognition.impact.scope.RepairScopeConstraint;
+import org.sidiff.editrule.recognition.impact.PositiveImpactScope;
+import org.sidiff.editrule.recognition.impact.PositiveImpactScopeConstraint;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
@@ -41,12 +41,22 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		matchSelector = new MatchSelector(recognitionPattern);
 		
 		dependencies = new DependencyEvaluation(recognitionPattern.getGraphPattern());
-		matchGenerator.initialize(recognitionPattern.getChangeNodePatterns(), dependencies, matchSelector);
+		matchGenerator.initialize(
+				recognitionPattern.getChangeNodePatterns(),
+				matchSelector,
+				dependencies,
+				PositiveImpactScopeConstraint.DUMMY,
+				PositiveImpactScopeConstraint.DUMMY);
 		
 		matchGenerator.start();
 	}
 	
-	public RecognitionEngineMatcher(RecognitionPattern recognitionPattern, RepairScope scope, RecognitionEngineSettings settings) {
+	public RecognitionEngineMatcher(
+			RecognitionPattern recognitionPattern,
+			PositiveImpactScope repairScope,
+			PositiveImpactScope overwriteScope,
+			RecognitionEngineSettings settings) {
+		
 		this.recognitionPattern = recognitionPattern;
 		this.settings = settings;
 		
@@ -62,16 +72,25 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 			settings.getMonitor().logChangeActionCount(recognitionPattern.getChangeNodePatterns().size());
 		}
 		
-		// Create Scope-Constraint:
-		RepairScopeConstraint repairScopeConstraint = new RepairScopeConstraint(scope, recognitionPattern);
+		// Create Repair-Scope-Constraint:
+		PositiveImpactScopeConstraint repairScopeConstraint = new PositiveImpactScopeConstraint(repairScope, recognitionPattern);
+		PositiveImpactScopeConstraint overwriteScopeConstraint = new PositiveImpactScopeConstraint(overwriteScope, recognitionPattern);
 		
-		// Create matcher:
-		matchGenerator = new PartialMatchGenerator();
+		// Create Change-Dependency-Constraint: 
+		dependencies = new DependencyEvaluation(recognitionPattern.getGraphPattern());
+		
+		// Create Structural-Matcher:
 		matchSelector = new MatchSelector(recognitionPattern);
 		
-		dependencies = new DependencyEvaluation(recognitionPattern.getGraphPattern());
-		matchGenerator.initialize(recognitionPattern.getChangeNodePatterns(), dependencies, matchSelector);
-		matchGenerator.setScope(repairScopeConstraint);
+		// Create CSP-Matcher:
+		matchGenerator = new PartialMatchGenerator();
+		matchGenerator.initialize(
+				recognitionPattern.getChangeNodePatterns(),
+				matchSelector,
+				dependencies,
+				repairScopeConstraint,
+				overwriteScopeConstraint);
+		matchGenerator.setMinimumSolutionSize(settings.getMinimumSolutionSize());
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package org.sidiff.editrule.recognition.impact.scope;
+package org.sidiff.editrule.recognition.impact;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,13 +13,24 @@ import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.graphpattern.NodePattern;
 
-public class RepairScopeConstraint {
+public class PositiveImpactScopeConstraint {
 
+	public static final PositiveImpactScopeConstraint DUMMY = new PositiveImpactScopeConstraint() {
+		
+		@Override
+		public boolean test() {
+			return true;
+		}
+	};
+	
 	private Map<Domain, GraphElement> domains = new LinkedHashMap<>();
 	
-	private RepairScope repairScope;
+	private PositiveImpactScope repairScope;
 	
-	public RepairScopeConstraint(RepairScope repairScope, RecognitionPattern recognitionPattern) {
+	protected PositiveImpactScopeConstraint() {
+	}
+	
+	public PositiveImpactScopeConstraint(PositiveImpactScope repairScope, RecognitionPattern recognitionPattern) {
 		this.repairScope = repairScope;
 		
 		// Create map from change/repair action to domain: 

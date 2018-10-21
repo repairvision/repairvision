@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.sidiff.graphpattern.NodePattern;
 
 /**
- * A simple matching container interface.
+ * A matching container interface.
  * 
  * @author Manuel Ohrndorf
  */
@@ -18,9 +18,23 @@ public interface IMatching {
 	 *            A node of a matched graph pattern.
 	 * @return The corresponding matched object.
 	 */
-	public Iterator<EObject> getMatch(NodePattern node);
-	
-	public EObject getFirstMatch(NodePattern node);
-	
-	public Collection<NodePattern> getNodes();
+	Iterator<EObject> getMatch(NodePattern node);
+
+	/**
+	 * @param node
+	 *            A node of a matched graph pattern.
+	 * @return The first corresponding matched object.
+	 */
+	EObject getFirstMatch(NodePattern node);
+
+	/**
+	 * @return All nodes of the matched graph pattern.
+	 */
+	Collection<NodePattern> getNodes();
+
+	/**
+	 * @return <code>true</code> if not all nodes of the graph pattern are matched;
+	 *         <code>false</code> otherwise.
+	 */
+	boolean isPartialMatching();
 }
