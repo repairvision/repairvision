@@ -20,8 +20,8 @@ public class ChangePatternUtil {
 	/**
 	 * @param rule
 	 *            The rule from which the changes will be collected.
-	 * @return All changes (<< delete >> / << create >> nodes / edges) of the
-	 *         given rule.
+	 * @return All changes (<< delete >> / << create >> nodes / edges / << set >>
+	 *         attributes of << preserve >> nodes) of the given rule.
 	 */
 	public static List<GraphElement> getChanges(Rule rule) {
 		List<GraphElement> changes = new ArrayList<GraphElement>();
@@ -45,7 +45,7 @@ public class ChangePatternUtil {
 		for (Edge createEdge : HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges(rule)) {
 			changes.add(createEdge);
 		}
-		
+
 		// << create >> attributes (attribute value changes):
 		for (Node lhsNode : rule.getLhs().getNodes()) {
 			for (AttributePair attributePair : getChangingAttributes(lhsNode)) {
@@ -55,43 +55,49 @@ public class ChangePatternUtil {
 
 		return changes;
 	}
-	
+
+	/**
+	 * @param rule
+	 *            The rule from which the changes will be collected.
+	 * @return All changes (<< delete >> / << create >> nodes / edges / << set >>
+	 *         attributes) of the given rule.
+	 */
 	public static List<GraphElement> getPotentialChanges(Rule rule) {
 		List<GraphElement> changes = getChanges(rule);
 		changes.addAll(getSettingAttributes(rule));
 		return changes;
 	}
-	
+
 	/**
 	 * @return All << set >> attributes in << create >> nodes.
 	 */
 	public static List<Attribute> getSettingAttributes(Rule rule) {
 		List<Attribute> setAttributes = new ArrayList<>();
-		
+
 		for (Node createNode : HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes(rule)) {
 			setAttributes.addAll(createNode.getAttributes());
 		}
-		
+
 		return setAttributes;
 	}
-	
+
 	/**
-	 * @return All attributes of the form value1->value2 and << set >> value in
-	 * << preserve >> nodes.
+	 * @return All attributes of the form value1->value2 and << set >> value in <<
+	 *         preserve >> nodes.
 	 */
 	public static List<AttributePair> getChangingAttributes(Rule rule) {
 		List<AttributePair> changingAttributes = new ArrayList<>();
-		
+
 		for (Node lhsNode : rule.getLhs().getNodes()) {
 			changingAttributes.addAll(getChangingAttributes(lhsNode));
 		}
-		
+
 		return changingAttributes;
 	}
-	
+
 	/**
-	 * Returns all attributes of the form value1->value2 and << set >> value in
-	 * a << preserve >> node.
+	 * Returns all attributes of the form value1->value2 and << set >> value in a <<
+	 * preserve >> node.
 	 * 
 	 * @param node
 	 *            the Henshin node.
@@ -99,23 +105,23 @@ public class ChangePatternUtil {
 	 */
 	public static List<AttributePair> getChangingAttributes(Node node) {
 		List<AttributePair> changingAttributes = getAllChangingAttributes(node);
-	
+
 		for (Iterator<AttributePair> iterator = changingAttributes.iterator(); iterator.hasNext();) {
 			AttributePair attribute = iterator.next();
-			
+
 			// Filter unconsidered attributes:
 			if (EMFMetaAccess.isUnconsideredStructualFeature(attribute.getRhsAttribute().getType())) {
 				iterator.remove();
 			}
 		}
-		
+
 		return changingAttributes;
 	}
-	
+
 	private static List<AttributePair> getAllChangingAttributes(Node node) {
 		Node rhsNode = HenshinRuleAnalysisUtilEx.getRHS(node);
 		Node lhsNode = HenshinRuleAnalysisUtilEx.getLHS(node);
-		
+
 		if ((rhsNode != null) && (lhsNode != null)) {
 			List<AttributePair> changingAttributes = new LinkedList<AttributePair>();
 
@@ -132,12 +138,12 @@ public class ChangePatternUtil {
 					}
 				}
 			}
-			
+
 			return changingAttributes;
 		}
 		return Collections.emptyList();
 	}
-	
+
 	/**
 	 * Returns all << preserve >> attributes of a rule and also << delete >>
 	 * attributes in a << preserve >> node. A << delete >> attribute in a <<
@@ -149,7 +155,7 @@ public class ChangePatternUtil {
 	 */
 	public static List<Attribute> getPreservedAttributes(Node lhsNode) {
 		List<Attribute> res = new LinkedList<Attribute>();
-		
+
 		for (Attribute lhsAttribute : lhsNode.getAttributes()) {
 			Attribute rhsAttribute = HenshinRuleAnalysisUtilEx.getRemoteAttribute(lhsAttribute);
 
@@ -166,13 +172,13 @@ public class ChangePatternUtil {
 
 		return res;
 	}
-	
+
 	public static Node tryLHS(Node node) {
 		if (node.getGraph().isLhs()) {
 			return node;
 		} else {
 			Node rhsNode = HenshinRuleAnalysisUtilEx.getLHS(node);
-			
+
 			if (rhsNode == null) {
 				return node;
 			} else {
