@@ -16,7 +16,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.editrule.recognition.RecognitionEngine;
-import org.sidiff.editrule.recognition.impact.scope.RepairScope;
+import org.sidiff.editrule.recognition.impact.PositiveImpactScope;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.complement.construction.ComplementConstructor;
 import org.sidiff.repair.complement.construction.ComplementRule;
@@ -27,6 +27,7 @@ import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
 import org.sidiff.repair.complement.matching.RecognitionParameterMatch;
 import org.sidiff.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.repair.complement.util.ParameterBinding;
+import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 /**
  * Tries to find all complementing operation for a given edit-rule and a model difference. 
@@ -49,6 +50,11 @@ public class ComplementFinderEngine {
 	 * The revision which introduces an inconsistency.
 	 */
 	protected IRevision revision;
+	
+	/**
+	 * Inconsistency impact analysis.
+	 */
+	protected ImpactAnalyzes impact;
 
 	/**
 	 * The working graph, i.e. the actual version of the model.
@@ -73,8 +79,9 @@ public class ComplementFinderEngine {
 	 * @param difference
 	 *            The difference between model A and B.
 	 */
-	public ComplementFinderEngine(IRevision revision, EGraph graphModelB) {
+	public ComplementFinderEngine(IRevision revision, ImpactAnalyzes impact, EGraph graphModelB) {
 		this.revision = revision;
+		this.impact = impact;
 		this.graphModelB = graphModelB;
 	}
 	
@@ -83,7 +90,7 @@ public class ComplementFinderEngine {
 		this.partialEditRuleRecognizer.initialize(revision);
 		this.partialEditRuleRecognizer.start();
 		
-		this.matchConverter = new Edit2RecognitionMatch(revision);
+		this.matchConverter = new Edit2RecognitionMatch(revision, impact);
 		
 		this.complementConstructor = new ComplementConstructor();
 		this.engine = new EngineImpl();
@@ -99,8 +106,11 @@ public class ComplementFinderEngine {
 		return partialEditRuleRecognizer;
 	}
 	
-	public ComplementFinder createComplementFinder(Rule editRule, RepairScope scope, ComplementFinderSettings settings) {
-		return new ComplementFinder(this, editRule, scope, settings);
+	public ComplementFinder createComplementFinder(Rule editRule, 
+			PositiveImpactScope repairScope, PositiveImpactScope overwriteScope,
+			ComplementFinderSettings settings) {
+		
+		return new ComplementFinder(this, editRule, repairScope, overwriteScope, settings);
 	}
 	
 	public List<Match> findComplementMatches(

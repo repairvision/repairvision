@@ -9,7 +9,7 @@ import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.RecognitionEngine;
 import org.sidiff.editrule.recognition.RecognitionEngineMatcher;
-import org.sidiff.editrule.recognition.impact.scope.RepairScope;
+import org.sidiff.editrule.recognition.impact.PositiveImpactScope;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.util.debug.DebugUtil;
 import org.sidiff.repair.complement.construction.ComplementRule;
@@ -23,8 +23,6 @@ public class ComplementFinder {
 	
 	protected Rule editRule;
 	
-	protected RepairScope scope;
-	
 	protected ComplementFinderSettings settings;
 	
 	protected RecognitionEngineMatcher recognitionMatcher;
@@ -33,16 +31,20 @@ public class ComplementFinder {
 	
 	protected IRecognitionPatternSerializer recognitionPatternSerializer;
 		
-	public ComplementFinder(ComplementFinderEngine engine, Rule editRule, RepairScope scope, ComplementFinderSettings settings) {
+	public ComplementFinder(ComplementFinderEngine engine, Rule editRule,
+			PositiveImpactScope repairScope, PositiveImpactScope overwriteScope,
+			ComplementFinderSettings settings) {
+		
 		this.engine = engine;
 		this.editRule = editRule;
-		this.scope = scope;
 		this.settings = settings;
 		
 		// Create recognition rule:
 		RecognitionEngine recognitionEngine = engine.getRecognitionEngine();
 		this.recognitionPattern = recognitionEngine.createRecognitionPattern(editRule);
-		this.recognitionMatcher = recognitionEngine.createMatcher(recognitionPattern, scope, settings.getRecognitionEngineSettings());
+		this.recognitionMatcher = recognitionEngine.createMatcher(
+				recognitionPattern, repairScope, overwriteScope,
+				settings.getRecognitionEngineSettings());
 		
 		this.recognitionPatternSerializer = new IRecognitionPatternSerializer() {
 			public void saveRecognitionRule() {}

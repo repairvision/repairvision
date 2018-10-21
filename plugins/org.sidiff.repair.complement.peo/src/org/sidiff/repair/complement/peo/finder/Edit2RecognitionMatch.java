@@ -26,12 +26,14 @@ import org.sidiff.editrule.recognition.pattern.graph.ChangePatternAttributeValue
 import org.sidiff.editrule.recognition.pattern.graph.ChangePatternRemoveObject;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePatternRemoveReference;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
 import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
 import org.sidiff.repair.complement.matching.RecognitionMatch;
 import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
 import org.sidiff.repair.complement.matching.RecognitionParameterMatch;
+import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 public class Edit2RecognitionMatch {
 
@@ -40,8 +42,14 @@ public class Edit2RecognitionMatch {
 	 */
 	private IRevision revision;
 	
-	public Edit2RecognitionMatch(IRevision revision) {
+	/**
+	 * Used to check the impact of << set >> attributes of << create >> nodes.
+	 */
+	private ImpactAnalyzes impact;
+	
+	public Edit2RecognitionMatch(IRevision revision, ImpactAnalyzes impact) {
 		this.revision = revision;
+		this.impact = impact;
 	}
 	
 	public List<RecognitionMatch> createEditRuleMatch(RecognitionPattern recognitionPattern, IMatching matching) {
@@ -62,11 +70,26 @@ public class Edit2RecognitionMatch {
 				AddObject change = (AddObject) matching.getFirstMatch(changePattern.getChangeNodePattern());
 
 				if (change != null) {
+					EObject addedObj = change.getObj();  
+					
+					// Node:
 					Node eoHenshinNode = ((ChangePatternAddObject) changePattern).getNode().getEditRuleNode();
 					RecognitionNodeSingleMatch createMatch = new RecognitionNodeSingleMatch(Type.CREATE, eoHenshinNode);
-					createMatch.setModelBElement(change.getObj());
+					createMatch.setModelBElement(addedObj);
 					editRuleMatch.add(createMatch);
 					
+					// Attributes:
+					for (Attribute settingAttribute : eoHenshinNode.getAttributes()) {
+						Object value = addedObj.eGet(settingAttribute.getType());
+						
+						if (matching.isPartialMatching() || isRecognizedValueChange(settingAttribute, addedObj, value)) {
+							RecognitionAttributeMatch setAttributeMatch = new RecognitionAttributeMatch(
+									settingAttribute, addedObj, value);
+							editRuleMatch.add(setAttributeMatch);
+						}
+					}
+					
+					// Parameters:
 					findParameters(parameters, editRule, eoHenshinNode, change.getObj());
 				}
 			}
@@ -127,6 +150,7 @@ public class Edit2RecognitionMatch {
 				}
 			}
 			
+			// EO-Attribute-Value changes:
 			else if (changePattern instanceof ChangePatternAttributeValueChange) {
 				ChangePatternAttributeValueChange attributeChange = ((ChangePatternAttributeValueChange) changePattern);
 				
@@ -150,6 +174,18 @@ public class Edit2RecognitionMatch {
 		return editRuleMatch;
 	}
 	
+	private boolean isRecognizedValueChange(Attribute settingAttribute, EObject addedObj, Object value) {
+		Object constantValue = JavaSciptParser.getConstant(settingAttribute.getValue());
+		
+		if (constantValue != null) {
+			// Constant value:
+			return constantValue.equals(value);
+		} else {
+			// Variable value:
+			return !impact.getPositiveImpactAnalysis().onModify(addedObj, settingAttribute.getType());
+		}
+	}
+
 	private void findParameters(Map<Parameter, RecognitionParameterMatch> parameters, Rule editRule, Node node, EObject match) {
 		for (Attribute attribute : node.getAttributes()) {
 			Parameter parameter = editRule.getParameter(attribute.getValue());
