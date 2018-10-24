@@ -115,7 +115,7 @@ public class LogUtil {
 		}
 		table.append(" \\\\\n");
 		
-		for (int i = 0; i < log.getLastIndex(); i++) {
+		for (int i = 0; i < log.getLastIndex() + 1; i++) {
 			for (int j = 0; j < header.size(); j++) {
 				String column = header.get(j);
 				String value = log.valueToString(log.getColumn(column).get(i));
