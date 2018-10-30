@@ -126,7 +126,7 @@ public class EMFValidator extends BasicValidation {
 					case "ThereMayNotBeAnOperationWithTheSameSignatureAsAnAccessorMethodForFeature":
 						return validationError.getInvalidElements().get(1); // EOperation operation
 					case "ThereMayNotBeTwoClassifiersNamed":
-						return validationError.getInvalidElements().get(1); // EClassifier duplicated
+						return validationError.getInvalidElements().get(0); // EClassifier duplicated
 					case "TheGenericTypeIsNotAValidSubstitutionForTypeParameter":
 						return validationError.getInvalidElements().get(1); // EGenericType typeSubstitution
 					case "TheFeaturesAndCannotBothBeIDs":
