@@ -24,33 +24,52 @@ public class LogTable {
 	
 	public static final StringAdapter DEFAULT_STRING_ADAPTER = new StringAdapter();
 	
-	protected LogTypeDefinition typeDefinition = new LogTypeDefinition();
+	private String fileName;
 	
-	protected Map<String, List<Object>> table = new LinkedHashMap<>();
+	private LogTypeDefinition typeDefinition = new LogTypeDefinition();
+	
+	private Map<String, List<Object>> table = new LinkedHashMap<>();
 
-	protected List<Object> maxColumn = Collections.emptyList();
+	private List<Object> maxColumn = Collections.emptyList();
 	
-	protected Map<Class<?>, StringAdapter> toStringAdapters = new HashMap<>();
-	
-	public int getLastIndex() {
-		return maxColumn.size() - 1;
+	private Map<Class<?>, StringAdapter> toStringAdapters = new HashMap<>();
+
+	public class Row {
+		
+		private LogTable table;
+		
+		private int index;
+		
+		public Row(LogTable table, int index) {
+			this.table = table;
+			this.index = index;
+		}
+		
+		public <T> T get(String column, Class<T> type) {
+			return table.getColumn(column, type).get(index);
+		}
 	}
 	
-	public int getColumnSize() {
+	public int size() {
 		return maxColumn.size();
+	}
+	
+	public Row getRow(int index) {
+		return new Row(this, index);
 	}
 	
 	public boolean createColumn(String name) {
 		return (table.putIfAbsent(name, new ArrayList<>()) == null);
 	}
 	
-	public boolean createColumn(String name, List<Object> values) {
+	@SuppressWarnings("unchecked")
+	public boolean createColumn(String name, List<?> values) {
 		
 		if (maxColumn.size() < values.size()) {
-			this.maxColumn = values;
+			this.maxColumn = (List<Object>) values;
 		}
 		
-		return (table.putIfAbsent(name, values) == null);
+		return (table.putIfAbsent(name, (List<Object>) values) == null);
 	}
 	
 	public boolean removeColumn(String name) {
@@ -179,6 +198,8 @@ public class LogTable {
 	}
 	
 	public void toCSV(String fileName) {
+		this.fileName = fileName;
+		
 		CSVPrinter csvFilePrinter = null;
 		FileWriter fileWriter = null;
 		
@@ -224,6 +245,8 @@ public class LogTable {
 	}
 	
 	public void loadCSV(String fileName) {
+		this.fileName = fileName;
+		
 		CSVParser csvFileParser = null;
 		FileReader fileReader = null;
 		
@@ -251,6 +274,9 @@ public class LogTable {
 				}
 			}
 			
+			if (header.length > 0) {
+				this.maxColumn = table.get(header[0]);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -269,6 +295,10 @@ public class LogTable {
 				}
 			}
 		}
+	}
+	
+	public String getFileName() {
+		return fileName;
 	}
 	
 	public LogTypeDefinition getTypeDefinition() {

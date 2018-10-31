@@ -45,10 +45,10 @@ public class LogUtil {
 	public static void appendTime(LogTable log, String name, LogTime timer) {
 		List<Object> matchingTimerSumAll = log.getColumn(name);
 		
-		if (matchingTimerSumAll.size() <= log.getLastIndex()) {
+		if (matchingTimerSumAll.size() <= (log.size() - 1)) {
 			log.append(name, timer);
 		} else {
-			LogTime matchingTimerSum = (LogTime) matchingTimerSumAll.get(log.getLastIndex());
+			LogTime matchingTimerSum = (LogTime) matchingTimerSumAll.get(log.size() - 1);
 			matchingTimerSum.append(timer);
 		}
 	}
@@ -115,7 +115,7 @@ public class LogUtil {
 		}
 		table.append(" \\\\\n");
 		
-		for (int i = 0; i < log.getLastIndex() + 1; i++) {
+		for (int i = 0; i < log.size(); i++) {
 			for (int j = 0; j < header.size(); j++) {
 				String column = header.get(j);
 				String value = log.valueToString(log.getColumn(column).get(i));
