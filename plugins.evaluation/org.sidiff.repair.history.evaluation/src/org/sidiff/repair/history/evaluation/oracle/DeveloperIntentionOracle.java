@@ -22,16 +22,20 @@ import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.impact.GraphActionImpactUtil;
+import org.sidiff.history.revision.IRevision;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.impact.PositiveImpactAnalysis;
 import org.sidiff.validation.constraint.impact.index.RepairActionIndex;
 
 public class DeveloperIntentionOracle {
 
+	private IRevision currentToResolvedRevision;
+
 	private Set<String> currentToResolvedSignatures;
 	
-	public DeveloperIntentionOracle(SymmetricDifference currentToResolvedDifference) {
-		this.currentToResolvedSignatures = toChangeSignatures(currentToResolvedDifference);
+	public DeveloperIntentionOracle(IRevision currentToResolvedRevision) {
+		this.currentToResolvedSignatures = toChangeSignatures(currentToResolvedRevision.getDifference().getSymmetricDifference());
+		this.currentToResolvedRevision = currentToResolvedRevision;
 	}
 	
 	public boolean isHistoricallyObservableUndo(
@@ -117,9 +121,9 @@ public class DeveloperIntentionOracle {
 				if (repairAction.getGraph().isLhs()) {
 
 					// Delete nodes:
-					String signature = getRemoveObjectSignature(node.getType(), invertActions);
+					List<String> signatures = getRemoveObjectSignatures(node.getType(), invertActions);
 					
-					if (difference.contains(signature)) {
+					if (signatures.stream().filter(difference::contains).findAny().isPresent()) {
 						observableChanges.add(node);
 					} else {
 						return null;
@@ -127,9 +131,9 @@ public class DeveloperIntentionOracle {
 				} else if (repairAction.getGraph().isRhs()) {
 
 					// Create nodes:
-					String signature = getAddObjectSignature(node.getType(), invertActions);
+					List<String> signatures = getAddObjectSignatures(node.getType(), invertActions);
 					
-					if (difference.contains(signature)) {
+					if (signatures.stream().filter(difference::contains).findAny().isPresent()) {
 						observableChanges.add(node);
 					} else {
 						return null;
@@ -180,7 +184,6 @@ public class DeveloperIntentionOracle {
 		return observableChanges;
 	}
 	
-	
 	private String getAddObjectSignature(EClass type, boolean invert) {
 		if (!invert) {
 			return  "AddObject_" + type.getName();
@@ -189,11 +192,54 @@ public class DeveloperIntentionOracle {
 		}
 	}
 	
+	private List<String> getAddObjectSignatures(EClass type, boolean invert) {
+		if (!invert) {
+			List<String> signatures = new ArrayList<>();
+			
+			// All concrete type replacements:
+			if (type.isAbstract()) {
+				for (EClass subtype : currentToResolvedRevision.getMetaModel().getAllSubTypes(type)) {
+					if (!subtype.isAbstract()) {
+						signatures.add(getAddObjectSignature(subtype, false));
+					}
+				}
+			} else {
+				signatures.add(getAddObjectSignature(type, false));
+			}
+			
+			return signatures;
+		} else {
+			return getRemoveObjectSignatures(type, false);
+		}
+	}
+
 	private String getRemoveObjectSignature(EClass type, boolean invert) {
 		if (!invert) {
 			return  "RemoveObject_" + type.getName();
 		} else {
 			return getAddObjectSignature(type, false);
+		}
+	}
+	
+	
+	private List<String> getRemoveObjectSignatures(EClass type, boolean invert) {
+		if (!invert) {
+			List<String> signatures = new ArrayList<>();
+			
+			// All concrete type replacements:
+			if (type.isAbstract()) {
+				for (EClass subtype : currentToResolvedRevision.getMetaModel().getAllSubTypes(type)) {
+					if (!subtype.isAbstract()) {
+						signatures.add(getRemoveObjectSignature(subtype, false));
+					}
+				}
+			} else {
+				signatures.add(getRemoveObjectSignature(type, false));
+			}
+			
+			return signatures;
+		} else {
+			return getAddObjectSignatures(type, false);
 		}
 	}
 	

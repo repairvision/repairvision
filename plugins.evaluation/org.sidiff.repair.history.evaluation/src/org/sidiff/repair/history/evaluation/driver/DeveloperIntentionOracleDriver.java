@@ -26,7 +26,7 @@ public class DeveloperIntentionOracleDriver {
 		// The evolutionStep in which inconsistency has been resolved historically
 		// FIXME: Comparison a model with itself should result in an empty difference!
 		Revision currentToResolvedRevision = new Revision(modelCurrent, modelResolved, settings);
-		DeveloperIntentionOracle oracle = new DeveloperIntentionOracle(currentToResolvedRevision.getDifference().getSymmetricDifference());
+		DeveloperIntentionOracle oracle = new DeveloperIntentionOracle(currentToResolvedRevision);
 
 		observable.repairs = getHistoricallyObservableRepair(oracle, repairJob);
 		observable.undos = getHistoricallyObservableUndos(oracle, repairJob);

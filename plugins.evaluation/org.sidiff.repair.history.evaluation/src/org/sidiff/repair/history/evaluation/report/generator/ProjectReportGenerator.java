@@ -16,6 +16,7 @@ import static org.sidiff.consistency.common.monitor.LogUtil.test;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,8 @@ public class ProjectReportGenerator {
 	
 	private static final String[] COL_INCONSISTENCIES = {"Inconsistencies", "RQ1 Inconsistencies (Count of all introduced inconsistencies in the project. $|$ Count of all resolved inconsistencies. $|$ Count of supported resolved inconsistencies.)"}; 
 	
+	private static final String[] COL_WELLFORMED_CONSTRAINTS = {"NWF", "Not Well Formed Constraints"}; 
+	
 	private static final String[] COL_REPAIRED_INCONSISTENCY = {"RI", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
 	
 	private static final String[] COL_HOR = {"HOR", "RQ2 Historically Observable Repairs (Repaired by completion. + Repaired by undo.)"};
@@ -61,6 +64,11 @@ public class ProjectReportGenerator {
 	public ProjectReportGenerator() throws IOException, IllegalArgumentException, IllegalAccessException  {
 		LogTable projectReport = new LogTable();
 		Map<String, List<EvaluationData>> evaluationDataPerProjects = ReportGenerator.getEvaluationsPerProject();
+		
+		ReportGeneratorUtil.printSupportedResolvedInconsistencies(evaluationDataPerProjects.values().stream()
+				.flatMap(Collection::stream)
+				.map(data -> data.inconsistenciesLog)
+				.collect(Collectors.toList()).toArray(new LogTable[0]));
 		
 		for (Entry<String, List<EvaluationData>> evaluationDataPerProject : evaluationDataPerProjects.entrySet()) {
 			
@@ -141,6 +149,8 @@ public class ProjectReportGenerator {
 				sumAllInconsistencies(histories.toArray(new History[0])),
 				sumResolvedInconsistencies(histories.toArray(new History[0])),
 				sumSupportedResolvedInconsistencies(inconsistenciesLog.toArray(new LogTable[0]))));
+		report.append(COL_WELLFORMED_CONSTRAINTS[0], 
+				sumWellFormedConstraints(histories.toArray(new History[0])));
 		report.append(COL_REPAIRED_INCONSISTENCY[0],
 				countInconsistenciesWithAtLeastOneRepair(inconsistenciesLog.toArray(new LogTable[0])));
 		report.append(COL_HOR[0], formatSum(
@@ -186,6 +196,7 @@ public class ProjectReportGenerator {
 		report.append(COL_REVISIONS[0],NA);
 		report.append(COL_ELEMENTS[0], NA);
 		report.append(COL_INCONSISTENCIES[0], TODO); // TODO: automatically re-check
+		report.append(COL_WELLFORMED_CONSTRAINTS[0], TODO);
 		report.append(COL_REPAIRED_INCONSISTENCY[0], NA);
 		report.append(COL_HOR[0], NA);
 		report.append(COL_REPIAR_ALTERNATIVE[0], NA);
@@ -355,9 +366,23 @@ public class ProjectReportGenerator {
 		
 		return count;
 	}
-
+	
 	private Object sumSupportedResolvedInconsistencies(LogTable... inconsistenciesLog) {
-		return test(merge(InconsistenciesLog.COL_COUNT_OF_REPAIR_TREES, Integer.class, inconsistenciesLog), (r) -> (r > 0));
+		return assertPositive(test(merge(InconsistenciesLog.COL_COUNT_OF_REPAIR_TREES, Integer.class, inconsistenciesLog), (r) -> (r > 0)));
+	}
+	
+	private Object sumWellFormedConstraints(History... histories) {
+		int sumOfNotWellFormedConstraints = 0;
+		
+		for (History history : histories) {
+			for (Problem problem : history.getUniqueProblems()) {
+				if (problem.getName().contains("NotWellFormed")) {
+					++sumOfNotWellFormedConstraints;
+				}
+			}
+		}
+		
+		return sumOfNotWellFormedConstraints;
 	}
 	
 	private Object countInconsistenciesWithAtLeastOneRepair(LogTable... inconsistenciesLog) {

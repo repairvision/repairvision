@@ -65,9 +65,9 @@ public class HistoryEvaluationApplication implements IApplication {
 		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mdt.ocl/plugins_org.eclipse.ocl.ecore_model_oclstdlib.ecore/plugins_org.eclipse.ocl.ecore_model_oclstdlib.ecore.history");
 		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mdt.ocl/plugins_org.eclipse.ocl.pivot_model_Lookup.ecore/plugins_org.eclipse.ocl.pivot_model_Lookup.ecore.history");
 		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mdt.papyrus/plugins_infra_core_org.eclipse.papyrus.infra.core.architecture_model_Architecture.ecore/plugins_infra_core_org.eclipse.papyrus.infra.core.architecture_model_Architecture.ecore.history");
-//		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF.ecore/plugins_org.eclipse.uml2.uml_model_CMOF.ecore.history");
-//		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore.history");
-//		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_UML.ecore/plugins_org.eclipse.uml2.uml_model_UML.ecore.history");
+		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF.ecore/plugins_org.eclipse.uml2.uml_model_CMOF.ecore.history");
+		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore.history");
+		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_UML.ecore/plugins_org.eclipse.uml2.uml_model_UML.ecore.history");
 		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mmt.atl/deprecated_org.atl.eclipse.engine_src_org_atl_eclipse_engine_resources_ATL-0.2.ecore/deprecated_org.atl.eclipse.engine_src_org_atl_eclipse_engine_resources_ATL-0.2.ecore.history");
 		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mmt.atl/plugins_org.eclipse.m2m.atl.emftvm_model_emftvm.ecore/plugins_org.eclipse.m2m.atl.emftvm_model_emftvm.ecore.history");
 		HISTORIES.add("/org.eclipse.git.evaluation/modeling.mmt.qvt-oml/plugins_org.eclipse.m2m.qvt.oml_model_QVTOperational.ecore/plugins_org.eclipse.m2m.qvt.oml_model_QVTOperational.ecore.history");
