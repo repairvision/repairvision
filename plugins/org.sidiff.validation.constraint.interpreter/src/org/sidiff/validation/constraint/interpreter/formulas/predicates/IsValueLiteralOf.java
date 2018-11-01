@@ -1,30 +1,28 @@
 package org.sidiff.validation.constraint.interpreter.formulas.predicates;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
-public class IsInstanceOf extends Predicate {
+public class IsValueLiteralOf extends Predicate {
 
 	protected Term term;
 	
-	protected EClassifier type;
+	protected EDataType type;
 	
 	protected Term typeTerm;
 	
-	public IsInstanceOf(Term term, EClassifier type) {
-		this.name = "isInstanceOf";
+	public IsValueLiteralOf(Term term, EDataType type) {
+		this.name = "isValueLiteralOf";
 		this.term = term;
 		this.type = type;
 	}
 	
-	public IsInstanceOf(Term term, Term typeTerm) {
-		this.name = "isInstanceOf";
+	public IsValueLiteralOf(Term term, Term typeTerm) {
+		this.name = "isValueLiteralOf";
 		this.term = term;
 		this.typeTerm = typeTerm;
 	}
@@ -50,14 +48,15 @@ public class IsInstanceOf extends Predicate {
 		if (type != null) {
 			term.evaluate(scope);
 			
-			if (term.getValue() == null) {
-				result = false;
-			} else {
-				if (type instanceof EClass) {
-					result = (((EObject) term.getValue()).eClass() == type);
-				} else {
-					result = type.getInstanceClass().isInstance(term.getValue());
+			if (term.getValue() != null) {
+				try {
+					Object defaultValue = type.getEPackage().getEFactoryInstance().createFromString(type, (String) term.getValue());
+					result = Diagnostician.INSTANCE.validate(type, defaultValue, null, null);
+				} catch (Exception e) {
+					result = false;
 				}
+			} else {
+				result = true;
 			}
 		} else {
 			result = false;
