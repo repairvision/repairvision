@@ -62,7 +62,7 @@ Not returns UnaryFormula:
 // predicates (term -> boolean):
 
 Predicate returns Formula:
-	Equals | Inequality | IsEmpty | IsInstanceOf;
+	Equals | Inequality | IsEmpty | IsInstanceOf | IsValueLiteralOf;
 
 Equals:
 	"isEqual(" (left=Term) "," (right=Term) ")";
@@ -86,7 +86,29 @@ IsEmpty:
 	"isEmpty(" term=Term ")";
 	
 IsInstanceOf:
-	"isInstanceOf(" term=Term "," type=[ecore::EClassifier] ")";
+	"isInstanceOf(" term=Term "," type=Classifier ")";
+	
+IsValueLiteralOf:
+	"isValueLiteralOf(" term=Term "," type=DataType ")";
+	
+// terms as types:
+Classifier:
+	ClassifierConstant | AsClassifier;
+
+ClassifierConstant:
+	constant=[ecore::EClassifier];
+	
+AsClassifier:
+	"asClassifier(" term=Term ")";
+
+DataType: 
+	DataTypeConstant | AsDataType;
+
+DataTypeConstant:
+	constant=[ecore::EDataType];
+
+AsDataType:
+	"asDataType(" term=Term ")";
 	
 // quantifier
 
@@ -110,7 +132,7 @@ BoolConstant returns Term:
 // terms:
 
 Term:
-	Constant | VariableRef | GetContainments | GetContainer | GetClosure | Size | Concatenate | Capitalize;
+	Constant | VariableRef | GetContainments | GetContainer | GetClosure | Size | IndexOf | Concatenate | Capitalize;
 	
 VariableRef returns Term:
 	{VariableRef} name=[Variable] (get=Get)?;
@@ -131,6 +153,9 @@ GetClosure:
 	
 Size: 
 	"size(" elements=Term ")";
+	
+IndexOf:
+	"indexOf(" container=Term "," feature=[ecore::EStructuralFeature] "," element=Term ")";
 	
 Concatenate :
 	"concatenate(" left=Term "," right=Term ")";

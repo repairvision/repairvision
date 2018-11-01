@@ -28,8 +28,13 @@ class FirstOrderLogicScopeProvider extends AbstractFirstOrderLogicScopeProvider 
 		} 
 		
 		// IsInstanceOf:
-		else if (reference == FirstOrderLogicPackage.eINSTANCE.isInstanceOf_Type) {
+		else if (reference == FirstOrderLogicPackage.eINSTANCE.classifierConstant_Constant) {
 			return Scopes::scopeFor(ScopeUtil.getAllTypes(context))
+		} 
+		
+		// IsValueLiteralOf:
+		else if (reference == FirstOrderLogicPackage.eINSTANCE.dataTypeConstant_Constant) {
+			return Scopes::scopeFor(ScopeUtil.getAllDataTypes(context))
 		} 
 		
 		// Get:
@@ -41,6 +46,11 @@ class FirstOrderLogicScopeProvider extends AbstractFirstOrderLogicScopeProvider 
 		
 		// GetClosure:
 		else if (reference == FirstOrderLogicPackage.eINSTANCE.getClosure_Feature) {
+			return Scopes::scopeFor(ScopeUtil.getAllFeatures(context))
+		}
+		
+		// IndexOf:
+		else if (reference == FirstOrderLogicPackage.eINSTANCE.indexOf_Feature) {
 			return Scopes::scopeFor(ScopeUtil.getAllFeatures(context))
 		}
 		

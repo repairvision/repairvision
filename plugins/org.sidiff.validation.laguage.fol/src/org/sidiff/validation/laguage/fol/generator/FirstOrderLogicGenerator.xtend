@@ -45,6 +45,14 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Xor
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainer
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainments
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Size
+import org.sidiff.validation.laguage.fol.firstOrderLogic.IndexOf
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ClassifierConstant
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Classifier
+import org.sidiff.validation.laguage.fol.firstOrderLogic.AsClassifier
+import org.sidiff.validation.laguage.fol.firstOrderLogic.IsValueLiteralOf
+import org.sidiff.validation.laguage.fol.firstOrderLogic.DataType
+import org.sidiff.validation.laguage.fol.firstOrderLogic.AsDataType
+import org.sidiff.validation.laguage.fol.firstOrderLogic.DataTypeConstant
 
 /**
  * Generates code from your model files on save.
@@ -212,6 +220,22 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		return 'DOMAIN.get' + type.name + '()'
 	}
 	
+	def String compileType(Classifier type, HashMap<Object, String> names) {
+		if (type instanceof ClassifierConstant) {
+			return compileType(type.constant)
+		} else if (type instanceof AsClassifier) {
+			return compileFormula(type.term, names)
+		}
+	}
+	
+	def String compileType(DataType type, HashMap<Object, String> names) {
+		if (type instanceof DataTypeConstant) {
+			return compileType(type.constant)
+		} else if (type instanceof AsDataType) {
+			return compileFormula(type.term, names)
+		}
+	}
+	
 	def String compileFeature(EStructuralFeature feature) {
 		return 'DOMAIN.get' + feature.EContainingClass.name + '_' + feature.name.toFirstUpper + '()'
 	}
@@ -269,7 +293,11 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	}
 	
 	def dispatch String compileFormula(IsInstanceOf isInstanceOf, HashMap<Object, String> names) {
-		return 'new IsInstanceOf(' + compileFormula(isInstanceOf.term, names) + ', ' + compileType(isInstanceOf.type)  + ')'
+		return 'new IsInstanceOf(' + compileFormula(isInstanceOf.term, names) + ', ' + compileType(isInstanceOf.type, names)  + ')'
+	}
+	
+	def dispatch String compileFormula(IsValueLiteralOf isValueLiteralOf, HashMap<Object, String> names) {
+		return 'new IsValueLiteralOf(' + compileFormula(isValueLiteralOf.term, names) + ', ' + compileType(isValueLiteralOf.type, names)  + ')'
 	}
 	
 	def dispatch String compileFormula(ForAll forAll, HashMap<Object, String> names) {
@@ -318,6 +346,10 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	
 	def dispatch String compileFormula(Size size, HashMap<Object, String> names) {
 		return 'new Size(' + compileFormula(size.elements, names) + ')'
+	}
+	
+		def dispatch String compileFormula(IndexOf indexOf, HashMap<Object, String> names) {
+		return 'new IndexOf(' + compileFormula(indexOf.container, names) + ", " + compileFeature(indexOf.feature) + ", " + compileFormula(indexOf.element, names) + ')'
 	}
 	
 	def dispatch String compileFormula(VariableRef variable, HashMap<Object, String> names) {

@@ -3,9 +3,11 @@ package org.sidiff.validation.laguage.fol.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -14,6 +16,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.IndexOf;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef;
 
@@ -27,6 +30,20 @@ public class ScopeUtil extends DefaultTerminalConverters {
 			
 			if (domainPackage != null) {
 				return domainPackage.getEClassifiers();
+			}
+		}
+		
+		return null;
+	}
+	
+	public static Collection<EClassifier> getAllDataTypes(EObject context) {
+		ConstraintLibrary rulebase = getConstraintLibrary(context);
+
+		if (rulebase != null) {
+			EPackage domainPackage = EPackage.Registry.INSTANCE.getEPackage(rulebase.getDomain().trim());
+			
+			if (domainPackage != null) {
+				return domainPackage.getEClassifiers().stream().filter(c -> c instanceof EDataType).collect(Collectors.toList());
 			}
 		}
 		
@@ -61,6 +78,8 @@ public class ScopeUtil extends DefaultTerminalConverters {
 			return ((Quantifier) obj).getName().getType();
 		} else if (obj instanceof VariableRef) {
 			return ((VariableRef) obj).getName().getType();
+		} else if (obj instanceof IndexOf) {
+			return getBoundedType(((IndexOf) obj).getContainer());
 		} else if (obj instanceof Get) {
 			Get get = ((Get) obj);
 
