@@ -276,6 +276,9 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		return matching;
 	}
 	
+	// FIXME: Filter eGenericSuperTypes Reference! 
+	// /org.eclipse.git.evaluation/science.eavp/org.eclipse.eavp.geometry.view.model_model_org.eclipse.eavp.geometry.view.model.ecore/org.eclipse.eavp.geometry.view.model_model_org.eclipse.eavp.geometry.view.model.ecore.history
+	// 0002_2016-08-29T21-21-22Z_1520c0163c1548e615cfa279e8f39aee8cae0bc3/org.eclipse.eavp.geometry.view.model_model_org.eclipse.eavp.geometry.view.model.ecore#//ColorOption/@eGenericSuperTypes.0
 	protected void generateUUIDs(Matching matching) {
 		if (PRINT_IDS) System.out.println("HistoryModelGenerator.generateUUIDs()");
 		
