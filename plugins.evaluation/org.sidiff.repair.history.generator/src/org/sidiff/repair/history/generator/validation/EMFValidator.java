@@ -132,7 +132,7 @@ public class EMFValidator extends BasicValidation {
 					case "TheFeaturesAndCannotBothBeIDs":
 						return validationError.getInvalidElements().get(1); // EAttribute duplicatedID
 					case "ThereMayNotBeTwoFeaturesNamed":
-						return validationError.getInvalidElements().get(2); // EStructuralFeature duplicated
+						return validationError.getInvalidElements().get(1); // EStructuralFeature duplicated
 					case "ThereShouldNotBeAFeatureNamedAsWellAFeatureNamed":
 						return validationError.getInvalidElements().get(1); // EStructuralFeature duplicated (e.g. a, A, A_)
 					case "ThereMayNotBeTwoOperationsAndWithTheSameSignature":
