@@ -113,24 +113,27 @@ public class HistoryModelGenerator {
 	
 	private static Version generateVersion(String repositoryVersion, Resource model, IValidator validator) {
 
-		Collection<Problem> validationErrors = validator.validate(model);
-		ModelStatus modelStatus = validationErrors.isEmpty() ? ModelStatus.VALID : ModelStatus.INVALID;
+		// Create version:
+		Version version = HistoryModelFactory.eINSTANCE.createVersion();
+		version.setModel(model);
+		version.setRepositoryVersion(repositoryVersion);
+		version.setName(printVersion(repositoryVersion) + " - " + model.getURI().lastSegment());
+		
+		// Validate version:
+		validator.validate(version);
+		Collection<Problem> problems = version.getProblems();
+		
+		ModelStatus modelStatus = problems.isEmpty() ? ModelStatus.VALID : ModelStatus.INVALID;
+		version.setStatus(modelStatus);
 		
 		// Mark defect models
-		for (Problem validationError : validationErrors) {
+		for (Problem validationError : problems) {
 			for (EObject element : validationError.getInvalidElements()) {
 				if (element.eIsProxy()) {
 					modelStatus = ModelStatus.DEFECT;
 				}
 			}
 		}
-		
-		Version version = HistoryModelFactory.eINSTANCE.createVersion();
-		version.setModel(model);
-		version.getProblems().addAll(validationErrors);
-		version.setStatus(modelStatus);
-		version.setRepositoryVersion(repositoryVersion);
-		version.setName(printVersion(repositoryVersion) + " - " + model.getURI().lastSegment());
 		
 		return version;
 	}

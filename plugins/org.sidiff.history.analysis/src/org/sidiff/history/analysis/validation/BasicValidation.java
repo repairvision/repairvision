@@ -10,31 +10,6 @@ public abstract class BasicValidation implements IValidator {
 	public boolean matchValidationError(Problem validationErrorA, Problem validationErrorB) {
 
 		if  (validationErrorA.getName().equals(validationErrorB.getName())) {
-			
-//			Set<String> invalidElementAIDs = new HashSet<>();
-//			
-//			for (EObject invalidElementA : validationErrorA.getInvalidElement()) {
-//				String id = EMFUtil.getXmiId(invalidElementA);
-//				
-//				if (id != null) {
-//					invalidElementAIDs.add(id);
-//				} else {
-//					invalidElementAIDs.add(EcoreUtil.getURI(invalidElementA).fragment().toString());
-//				}
-//			}
-//			
-//			Set<String> invalidElementBIDs = new HashSet<>();
-//			
-//			for (EObject invalidElementB : validationErrorB.getInvalidElement()) {
-//				String id = EMFUtil.getXmiId(invalidElementB);
-//				
-//				if (id != null) {
-//					invalidElementBIDs.add(id);
-//				} else {
-//					invalidElementBIDs.add(EcoreUtil.getURI(invalidElementB).fragment().toString());
-//				}
-//			}
-			
 			return getObjectID(getContextElement(validationErrorA)).equals(getObjectID(getContextElement(validationErrorB)));
 		}
 		
