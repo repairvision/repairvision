@@ -28,9 +28,18 @@ import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersi
 import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
 import org.sidiff.repair.history.generator.util.HistoryUtil;
 
+/**
+ * Original (All extracted model versions.) -> Resolved (Finding co-evolving versions.)
+ * 
+ * @author Manuel Ohrndorf
+ */
 public class EcoreHistoryResolverApplication implements IApplication {
 	
 	private Map<String, List<HistoryMetadata>> modelFiles = new HashMap<>();
+	
+	private File sourceDataSet = new File("C:\\evaluations\\org.eclipse.git_2018-08-22\\org.eclipse.git");
+	
+	private File targetDataSet = new File("C:\\evaluation_resolved\\");
 	
 	private Set<String> repositoryFilter = new HashSet<>();
 	{
@@ -90,7 +99,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		DataSetMetadata dataset = new DataSetMetadata("C:\\evaluation\\", true);
+		DataSetMetadata dataset = new DataSetMetadata(sourceDataSet.getAbsolutePath(), true);
 		
 		// Index model file names:
 		buildModelIndex(dataset);
@@ -98,7 +107,7 @@ public class EcoreHistoryResolverApplication implements IApplication {
 		// Build model resource sets:
 		for (HistoryMetadata modelHistory : dataset.getHistories()) {
 			if (!repositoryFilter.contains(modelHistory.getRepositoryURL())) {
-				Set<String> missingURIs = buildResourceSets(modelHistory, new File("C:\\evaluation_resolved\\"));
+				Set<String> missingURIs = buildResourceSets(modelHistory, targetDataSet);
 				analyzeMissingURIs(missingURIs);
 				
 				System.out.println(modelHistory.getLatestRemoteFilePath());

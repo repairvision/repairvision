@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -39,17 +38,23 @@ import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionDataS
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersionMetadata;
 import org.sidiff.repair.history.generator.util.HistoryUtil;
 
+/**
+ * Resolved (Finding co-evolving versions) -> Matched (Calculate model element
+ * matching between resource sets of successive versions.)
+ * 
+ * @author Manuel Ohrndorf
+ */
 public class EcoreHistoryInconsistencyTracesApplication implements IApplication {
 
 	private static String HISTORY_FILE_EXTENSION = "history";
 	
 	private boolean PRINT_IDS = false;
 	
-	private File sourceDataSet = new File("C:\\evaluation_resolved\\");
+	private File sourceDataSet = new File("C:\\evaluations\\org.eclipse.git_2018-08-22\\org.eclipse.git.resolved\\");
 	
 	private String sourceDataSetURI = URI.createFileURI(sourceDataSet.getAbsolutePath()).toString();
 	
-	private File targetDataSet = new File("C:\\evaluation_matched\\"); 
+	private File targetDataSet = new File("C:\\evaluations\\org.eclipse.git_2018-11-02\\org.eclipse.git.matched\\"); 
 	
 	private String targetDataSetURI = URI.createFileURI(targetDataSet.getAbsolutePath()).toString();
 	
@@ -243,26 +248,27 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 			int revision, Resource model, String repositoryVersion,
 			String versionInfo, EcoreHistorySettings settings) {
 		
-		Collection<Problem> validationErrors = settings.getValidator().validate(model);
+		// Create version:
+		Version version = HistoryModelFactory.eINSTANCE.createVersion();
+		version.setModel(model);
+		version.setRepositoryVersion(repositoryVersion);
+		version.setName(String.format("%03d", revision) + " - " + model.getURI().lastSegment());
+		version.setRepositoryVersion(versionInfo);
 		
-		ModelStatus modelStatus = validationErrors.isEmpty() ? ModelStatus.VALID : ModelStatus.INVALID;
+		// Validate version:
+		settings.getValidator().validate(version);
 		
-		// Mark defect models
-		for (Problem validationError : validationErrors) {
+		ModelStatus modelStatus = version.getProblems().isEmpty() ? ModelStatus.VALID : ModelStatus.INVALID;
+		version.setStatus(modelStatus);
+		
+		// Mark defect versions:
+		for (Problem validationError : version.getProblems()) {
 			for (EObject element : validationError.getInvalidElements()) {
 				if (element.eIsProxy()) {
 					modelStatus = ModelStatus.DEFECT;
 				}
 			}
 		}
-		
-		Version version = HistoryModelFactory.eINSTANCE.createVersion();
-		version.setModel(model);
-		version.setRepositoryVersion(repositoryVersion);
-		version.getProblems().addAll(validationErrors);
-		version.setName(String.format("%03d", revision) + " - " + model.getURI().lastSegment());
-		version.setStatus(modelStatus);
-		version.setRepositoryVersion(versionInfo);
 		
 		return version;
 	}
@@ -276,9 +282,6 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		return matching;
 	}
 	
-	// FIXME: Filter eGenericSuperTypes Reference! 
-	// /org.eclipse.git.evaluation/science.eavp/org.eclipse.eavp.geometry.view.model_model_org.eclipse.eavp.geometry.view.model.ecore/org.eclipse.eavp.geometry.view.model_model_org.eclipse.eavp.geometry.view.model.ecore.history
-	// 0002_2016-08-29T21-21-22Z_1520c0163c1548e615cfa279e8f39aee8cae0bc3/org.eclipse.eavp.geometry.view.model_model_org.eclipse.eavp.geometry.view.model.ecore#//ColorOption/@eGenericSuperTypes.0
 	protected void generateUUIDs(Matching matching) {
 		if (PRINT_IDS) System.out.println("HistoryModelGenerator.generateUUIDs()");
 		

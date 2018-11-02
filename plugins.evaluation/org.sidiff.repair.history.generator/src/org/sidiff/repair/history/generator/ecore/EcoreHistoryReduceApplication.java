@@ -27,13 +27,23 @@ import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.repair.history.generator.util.HistoryUtil;
 
+/**
+ * Matched (Calculate model element matching between resource sets of successive
+ * versions.) -> Reduced (Save only model histories with resolved
+ * inconsistencies. Save only the minimal amount of versions necessary for the
+ * introduced/resolved inconsistency trace, i.e. the model versions before an
+ * inconsistency and the versions in which the inconsistency was introduced and
+ * resolved.)
+ * 
+ * @author Manuel Ohrndorf
+ */
 public class EcoreHistoryReduceApplication implements IApplication {
 
-	private File sourceDataSet = new File("C:\\evaluation_matched\\");
+	private File sourceDataSet = new File("C:\\evaluations\\org.eclipse.git_2018-08-22\\org.eclipse.git.matched\\");
 	
 	private String sourceDataSetURI = URI.createFileURI(sourceDataSet.getAbsolutePath()).toString();
 	
-	private File targetDataSet = new File("C:\\evaluation_reduced\\"); 
+	private File targetDataSet = new File("C:\\evaluations\\org.eclipse.git_2018-08-22\\\\org.eclipse.git.reduced\\"); 
 	
 	private String targetDataSetURI = URI.createFileURI(targetDataSet.getAbsolutePath()).toString();
 	

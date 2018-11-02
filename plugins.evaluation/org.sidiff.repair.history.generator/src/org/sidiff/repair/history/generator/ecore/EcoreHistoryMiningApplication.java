@@ -4,6 +4,11 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.repair.history.generator.miner.data.ModelingDataSet;
 
+/**
+ * Repository URL -> Original (All extracted model versions.)
+ * 
+ * @author Manuel Ohrndorf
+ */
 public class EcoreHistoryMiningApplication implements IApplication {
 	
 	@Override

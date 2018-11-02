@@ -1,8 +1,5 @@
 package org.sidiff.repair.history.generator.validation;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -12,13 +9,14 @@ import org.sidiff.history.analysis.validation.BasicValidation;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.ProblemSeverity;
+import org.sidiff.historymodel.Version;
 
 /**
  * Delegates the validation
  * 
  * to the EMF validation framework.
  * 
- * @author kehrer, cpietsch
+ * @author kehrer, cpietsch, Manuel Ohrndorf
  */
 public class EMFValidator extends BasicValidation {
 	
@@ -29,35 +27,32 @@ public class EMFValidator extends BasicValidation {
 	private int docType = 0;
 	
 	@Override
-	public Collection<Problem> validate(Resource resource) {
-		docType = getDocumentTyp(resource);
+	public void validate(Version version) {
+		docType = getDocumentTyp(version.getModel());
 		assert (docType != 0);
-		
-		Collection<Problem> inconsistencies = new ArrayList<Problem>();
 
-		for (EObject rootElement : resource.getContents()) {
-			validate(rootElement, inconsistencies);
+		for (EObject rootElement : version.getModel().getContents()) {
+			validate(version, rootElement);
 		}
-		
-		return inconsistencies;
 	}
 	
-	private void validate(EObject rootElement, Collection<Problem> inconsistencies) {
+	private void validate(Version version, EObject rootElement) {
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(rootElement);
 		
 		for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
 			if ((childDiagnostic.getSeverity() == Diagnostic.ERROR)
 					|| (childDiagnostic.getSeverity() == Diagnostic.WARNING)) {
 				
-				Problem validationError = HistoryModelFactory.eINSTANCE.createProblem();
-				validationError.setMessage(childDiagnostic.getMessage());
+				Problem problem = HistoryModelFactory.eINSTANCE.createProblem();
+				problem.setVersion(version);
+				problem.setMessage(childDiagnostic.getMessage());
 				
 				if (childDiagnostic.getSeverity() == Diagnostic.ERROR) {
-					validationError.setSeverity(ProblemSeverity.ERROR);
+					problem.setSeverity(ProblemSeverity.ERROR);
 				} else if (childDiagnostic.getSeverity() == Diagnostic.WARNING) {
-					validationError.setSeverity(ProblemSeverity.WARNING);
+					problem.setSeverity(ProblemSeverity.WARNING);
 				} else {
-					validationError.setSeverity(ProblemSeverity.UNKNOWN);
+					problem.setSeverity(ProblemSeverity.UNKNOWN);
 				}
 				
 				String name = childDiagnostic.getMessage().replaceAll("'.*?'", "").trim();
@@ -69,16 +64,15 @@ public class EMFValidator extends BasicValidation {
 							name.substring(index + 1, index + 2).toUpperCase());
 				}
 				name = name.replaceAll("[^\\p{Alpha}]", "");
-				validationError.setName(name);
+				problem.setName(name);
 				
 				for (Object obj : childDiagnostic.getData()) {
 					if (obj instanceof EObject) {
-						validationError.getInvalidElements().add((EObject) obj);
+						problem.getInvalidElements().add((EObject) obj);
 					}
 				}
 				
-				validationError.setContextElement(getContextElement(validationError));
-				inconsistencies.add(validationError);
+				problem.setContextElement(getContextElement(problem));
 			}
 		}
 	}

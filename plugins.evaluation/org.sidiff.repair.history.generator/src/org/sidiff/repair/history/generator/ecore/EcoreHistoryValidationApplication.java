@@ -14,7 +14,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
+import org.sidiff.historymodel.Version;
 import org.sidiff.repair.history.generator.metadata.HistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionDataSetMetadata;
@@ -22,6 +24,11 @@ import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersi
 import org.sidiff.repair.history.generator.util.HistoryUtil;
 import org.sidiff.repair.history.generator.validation.EMFValidator;
 
+/**
+ * Creates a filter with all model histories that contain no inconsistencies.
+ * 
+ * @author Manuel Ohrndof
+ */
 public class EcoreHistoryValidationApplication implements IApplication  {
 
 	// Histories with no inconsistencies:
@@ -474,9 +481,13 @@ public class EcoreHistoryValidationApplication implements IApplication  {
 					
 					ResourceSet resourceSet = new ResourceSetImpl();
 					Resource model = HistoryUtil.load(resourceSet, uri);
-
+					Version modelVersion = HistoryModelFactory.eINSTANCE.createVersion();
+					modelVersion.setModel(model);
+					
 					EMFValidator validator = new EMFValidator();
-					Collection<Problem> inconsistencies = validator.validate(model);
+					validator.validate(modelVersion);
+					
+					Collection<Problem> inconsistencies = modelVersion.getProblems();
 
 					// Analyze inconsistencies:
 					if (!inconsistencies.isEmpty()) {
