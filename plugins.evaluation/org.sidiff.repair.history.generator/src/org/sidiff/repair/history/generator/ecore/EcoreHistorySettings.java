@@ -11,6 +11,7 @@ import org.sidiff.common.emf.access.Scope;
 import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
+import org.sidiff.history.analysis.validation.EMFValidator;
 import org.sidiff.history.analysis.validation.IValidator;
 import org.sidiff.history.revision.util.SettingsUtil;
 import org.sidiff.matcher.IMatcher;
@@ -18,7 +19,6 @@ import org.sidiff.matching.api.util.MatchingUtils;
 import org.sidiff.repair.history.generator.miner.connectors.EclipseGitOrgMiner;
 import org.sidiff.repair.history.generator.miner.connectors.GitHubComMiner;
 import org.sidiff.repair.history.generator.miner.connectors.IRepositoryMiner;
-import org.sidiff.repair.history.generator.validation.EMFValidator;
 
 public class EcoreHistorySettings {
 

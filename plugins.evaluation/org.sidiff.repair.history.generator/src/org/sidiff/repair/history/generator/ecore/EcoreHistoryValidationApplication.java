@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.sidiff.history.analysis.validation.EMFValidator;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
@@ -22,7 +23,6 @@ import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionDataSetMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersionMetadata;
 import org.sidiff.repair.history.generator.util.HistoryUtil;
-import org.sidiff.repair.history.generator.validation.EMFValidator;
 
 /**
  * Creates a filter with all model histories that contain no inconsistencies.
