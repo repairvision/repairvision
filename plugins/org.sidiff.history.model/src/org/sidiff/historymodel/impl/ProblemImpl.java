@@ -400,6 +400,19 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 		resolvedIn = newResolvedIn;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, HistoryModelPackage.PROBLEM__RESOLVED_IN, oldResolvedIn, resolvedIn));
+		
+		// propagate value:
+		if (getPredecessor()!= null) {
+			if (getPredecessor().getResolvedIn() != newResolvedIn) {
+				getPredecessor().setResolvedIn(newResolvedIn);
+			}
+		}
+		
+		if (getSuccessor() != null) {
+			if (getSuccessor().getResolvedIn() != newResolvedIn) {
+				getSuccessor().setResolvedIn(newResolvedIn);
+			}
+		}
 	}
 
 	/**
