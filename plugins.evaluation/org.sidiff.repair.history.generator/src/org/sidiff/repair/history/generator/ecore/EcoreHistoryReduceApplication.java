@@ -39,11 +39,11 @@ import org.sidiff.repair.history.generator.util.HistoryUtil;
  */
 public class EcoreHistoryReduceApplication implements IApplication {
 
-	private File sourceDataSet = new File("C:\\evaluations\\org.eclipse.git_2018-08-22\\org.eclipse.git.matched\\");
+	private File sourceDataSet = new File("C:\\evaluations\\org.eclipse.git_2018-11-02\\org.eclipse.git.matched\\");
 	
 	private String sourceDataSetURI = URI.createFileURI(sourceDataSet.getAbsolutePath()).toString();
 	
-	private File targetDataSet = new File("C:\\evaluations\\org.eclipse.git_2018-08-22\\\\org.eclipse.git.reduced\\"); 
+	private File targetDataSet = new File("C:\\evaluations\\org.eclipse.git_2018-11-02\\org.eclipse.git.reduced\\"); 
 	
 	private String targetDataSetURI = URI.createFileURI(targetDataSet.getAbsolutePath()).toString();
 	
@@ -68,14 +68,14 @@ public class EcoreHistoryReduceApplication implements IApplication {
 				
 				for (Problem inconsistency : new ArrayList<>(version.getProblems())) {
 					
-					// Remove non resolved inconsistencies:
-					if (!inconsistency.isResolved()) {
+					// Remove missing proxy errors:
+					if (inconsistency.getName().equals(EcoreHistorySettings.INCONSISTENCY_UNRESOLVED_PROXY)) {
 						version.getProblems().remove(inconsistency);
 						continue;
 					}
 					
-					// Remove missing proxy errors:
-					if (inconsistency.getName().equals(EcoreHistorySettings.INCONSISTENCY_UNRESOLVED_PROXY)) {
+					// Remove non resolved inconsistencies:
+					if (!inconsistency.isResolved()) {
 						version.getProblems().remove(inconsistency);
 						continue;
 					}
@@ -135,6 +135,7 @@ public class EcoreHistoryReduceApplication implements IApplication {
 				});
 				
 				historyResource.save(options);
+				System.out.println(historyResource.getURI());
 			}
 		}
 		
