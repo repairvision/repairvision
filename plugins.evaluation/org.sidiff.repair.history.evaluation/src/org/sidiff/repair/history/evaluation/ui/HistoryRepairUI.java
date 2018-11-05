@@ -150,13 +150,13 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 			
 			@Override
 			protected IResource removeModel(IResource selection) {
-				HistoryRepairUI.this.clearHistory();
+				HistoryRepairUI.this.clearCalculation();
 				return selection;
 			}
 			
 			@Override
 			protected IResource addModel(IResource element) {
-				HistoryRepairUI.this.clearHistory();
+				HistoryRepairUI.this.clearCalculation();
 				
 				ResourceSet resourceSet = new ResourceSetImpl();
 				Resource historyResource = resourceSet.getResource(WorkbenchUtil.getURI(element), true);
@@ -245,19 +245,24 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 
 	@Override
 	public void clear() {
+		super.clear();
 		
-		// Clear Application:
-		clearHistory();
+		// Clear calculation:
+		getApplication().clear();	// (!)
 		
 		// Clear UI:
-		editRules.clear();
+		validationWidget.clear();
+		histroyStoreInput.clear();
+		editRules.clear();			// (!)
+		
+		historyInconsistenciesViewer.setInput(null);
 	}
 	
-	public void clearHistory() {
+	public void clearCalculation() {
 		super.clear();
 		
 		// Clear Application:
-		getApplication().clear();
+		getApplication().clearCalculation();
 		
 		// Clear UI:
 		validationWidget.clear();

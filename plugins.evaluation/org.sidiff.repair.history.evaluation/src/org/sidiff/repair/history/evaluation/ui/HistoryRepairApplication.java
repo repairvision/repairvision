@@ -233,6 +233,10 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	@Override
 	public void clear() {
 		editRuleFiles.clear();
+		clearCalculation();
+	}
+	
+	public void clearCalculation() {
 		calculation = null;
 		history = null;
 		repairJob = null;
