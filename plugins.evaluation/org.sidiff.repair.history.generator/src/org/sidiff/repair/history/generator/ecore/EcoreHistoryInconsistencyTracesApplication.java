@@ -319,7 +319,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 			Problem inconsistencyA, Version versionB, EcoreHistorySettings settings) {
 		
 		for (Problem inconsistencyB : versionB.getProblems()) {
-			if (settings.getValidator().matchValidationError(inconsistencyA, inconsistencyB)) {
+			if (settings.getValidator().matchProblems(inconsistencyA, inconsistencyB)) {
 				return inconsistencyB;
 			}
 		}
