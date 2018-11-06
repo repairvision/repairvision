@@ -14,9 +14,9 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
@@ -25,7 +25,7 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.historymodel.History;
-import org.sidiff.repair.history.evaluation.driver.app.HistoryEvaluationApplication;
+import org.sidiff.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.repair.history.evaluation.report.EditRulesLog;
 import org.sidiff.repair.history.evaluation.report.HistoryLog;
 import org.sidiff.repair.history.evaluation.report.InconsistenciesLog;
@@ -36,16 +36,7 @@ import org.sidiff.repair.history.generator.metadata.VersionMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionHistoryMetadata;
 import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersionMetadata;
 
-// TODO: Convenient way to get metadata!?
 public class ReportGenerator implements IApplication {
-	
-	private static List<String> HISTORIES = HistoryEvaluationApplication.HISTORIES;
-	
-	private static final String ORIGINAL_DATA_SET = "C:\\evaluations\\org.eclipse.git_2018-08-22\\org.eclipse.git";
-	
-	private static final String RESOLVED_DATA_SET = "C:\\evaluations\\org.eclipse.git_2018-08-22\\org.eclipse.git.resolved";
-	
-	private static final String REDUCED_DATA_SET = "C:\\evaluations\\org.eclipse.git_2018-08-22\\org.eclipse.git.reduced";
 	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
@@ -59,14 +50,10 @@ public class ReportGenerator implements IApplication {
 	public static Map<String, List<EvaluationData>> getEvaluationsPerProject() throws IOException {
 		Map<String, List<EvaluationData>> evaluationDataPerProject = new LinkedHashMap<>();
 		
-		for (String history : HISTORIES) {
-			File historyFolder = new File(HistoryEvaluationApplication.LOCAL_PATH + history).getParentFile();
+		for (String modelPath : EvaluationDataSets.HISTORIES) {
+			File historyFolder = new File(EvaluationDataSets.REDUCED_DATA_SET + modelPath).getParentFile();
 			EvaluationData data = new EvaluationData();
-			
-			// TODO: Better solution for getting the project relative path!?
-			String modelPath = history.substring(history.indexOf("/") + 1, history.length());
-			modelPath = modelPath.substring(modelPath.indexOf("/"), modelPath.length());
-			data.modelPath = new File(modelPath).getParentFile();	
+			data.modelPath = new File(modelPath).getParentFile();
 			
 			List<Path> evaluations = Files.find(Paths.get(historyFolder.getAbsolutePath()), 1, 
 					(path, attributes) -> (EvaluationUtil.getTimestamp(path.getFileName().toString()) != null))
@@ -161,7 +148,7 @@ public class ReportGenerator implements IApplication {
 		Set<String> evoluations = new HashSet<>();
 		
 		for (File file : modelPaths) {
-			File datafile = new File(ReportGenerator.ORIGINAL_DATA_SET + file.getPath() +  ".json");
+			File datafile = new File(EvaluationDataSets.ORIGINAL_DATA_SET + file.getPath() +  ".json");
 			HistoryMetadata metadata = new HistoryMetadata(datafile, true);
 			
 			for (VersionMetadata version : metadata.getVersions()) {
@@ -176,7 +163,7 @@ public class ReportGenerator implements IApplication {
 		Set<String> coevoluations = new HashSet<>();
 		
 		for (File file : modelPaths) {
-			File datafile = new File(ReportGenerator.RESOLVED_DATA_SET + file.getPath() + File.separator + file.getName() +  ".json");
+			File datafile = new File(EvaluationDataSets.RESOLVED_DATA_SET + file.getPath() + File.separator + file.getName() +  ".json");
 			CoevolutionHistoryMetadata metadata = new CoevolutionHistoryMetadata(datafile, true);
 			
 			for (VersionMetadata version : metadata.getVersions()) {
@@ -192,21 +179,18 @@ public class ReportGenerator implements IApplication {
 	}
 	
 	public static List<File> getAllMetadata_Reduced() throws IOException {
-//		return Files.find(Paths.get(ReportGenerator.REDUCED_DATA_SET), Integer.MAX_VALUE, 
-//				(path, attribte) -> path.getFileName().toString().endsWith(".history"))
-//				.map(Path::toFile).collect(Collectors.toList());
-		return HISTORIES.stream().map(path -> new File(path.replace("/org.eclipse.git.evaluation", REDUCED_DATA_SET))).collect(Collectors.toList());
+		return EvaluationDataSets.HISTORIES.stream().map(path -> new File(EvaluationDataSets.REDUCED_DATA_SET + path)).collect(Collectors.toList());
 	}
 	
 	public static List<File> getAllMetadata_Original() throws IOException {
-		return Files.find(Paths.get(ReportGenerator.ORIGINAL_DATA_SET), Integer.MAX_VALUE, 
+		return Files.find(Paths.get(EvaluationDataSets.ORIGINAL_DATA_SET), Integer.MAX_VALUE, 
 				(path, attribte) -> path.getFileName().toString().endsWith(".json"))
 				.map(Path::toFile).collect(Collectors.toList());
 	}
 	
 	public static List<File> getProjectMetadata_Original(File projectFolder) {
 		List<File> files = new ArrayList<>(); 
-		File projectPath = new File(ReportGenerator.ORIGINAL_DATA_SET + projectFolder.getPath());
+		File projectPath = new File(EvaluationDataSets.ORIGINAL_DATA_SET + projectFolder.getPath());
 		
 		for (File metadata : projectPath.listFiles()) {
 			if (metadata.getName().endsWith(".json")) {
@@ -218,11 +202,7 @@ public class ReportGenerator implements IApplication {
 	}
 	
 	public static List<File> getProjectMetadata_Reduced(File projectFolder) throws IOException {
-//		return Files.find(Paths.get(REDUCED_DATA_SET + projectFolder.getPath()), Integer.MAX_VALUE, 
-//				(path, attribte) -> path.getFileName().toString().endsWith(".history"))
-//				.map(Path::toFile).collect(Collectors.toList());
-		
-		return HISTORIES.stream().map(path -> new File(path.replace("/org.eclipse.git.evaluation", REDUCED_DATA_SET)))
+		return EvaluationDataSets.HISTORIES.stream().map(path -> new File(EvaluationDataSets.REDUCED_DATA_SET + path))
 				.filter(file -> file.getPath().contains(projectFolder.getPath())).collect(Collectors.toList());
 	}
 	
@@ -240,11 +220,11 @@ public class ReportGenerator implements IApplication {
 	}
 	
 	public static List<File> getProjects_Original() {
-		return Arrays.asList(new File(ReportGenerator.ORIGINAL_DATA_SET).listFiles());
+		return Arrays.asList(new File(EvaluationDataSets.ORIGINAL_DATA_SET).listFiles());
 	}
 	
 	public static List<File> getProjects_Reduced() {
-		return Arrays.asList(new File(ReportGenerator.REDUCED_DATA_SET).listFiles());
+		return Arrays.asList(new File(EvaluationDataSets.REDUCED_DATA_SET).listFiles());
 	}
 	
 	@Override
