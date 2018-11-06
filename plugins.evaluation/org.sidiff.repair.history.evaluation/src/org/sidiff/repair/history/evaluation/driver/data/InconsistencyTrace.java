@@ -3,9 +3,9 @@ package org.sidiff.repair.history.evaluation.driver.data;
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
+import org.sidiff.history.analysis.util.HistoryAnalysisUtil;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
-import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class InconsistencyTrace {
@@ -44,7 +44,7 @@ public class InconsistencyTrace {
 		trace.setModelVersionIntroduced(versionIntroduced);
 		
 		if (trace.getModelIntroduced() != null) {
-			Version versionHistorical = EvaluationUtil.getPredecessorRevision(versionIntroduced);
+			Version versionHistorical = versionIntroduced.getPredecessor();
 			trace.setModelVersionHistorical(versionHistorical);
 			
 			if (versionHistorical != null) {
@@ -52,7 +52,7 @@ public class InconsistencyTrace {
 				trace.setModelVersionResolved(versionResolved);
 				
 				if (versionResolved != null) {
-					Version versionCurrent = EvaluationUtil.getPredecessorRevision(versionResolved);
+					Version versionCurrent = versionResolved.getPredecessor();
 					trace.setModelVersionCurrent(versionCurrent);
 				}
 			}
@@ -69,11 +69,11 @@ public class InconsistencyTrace {
 	}
 	
 	public String getName() {
-		return EvaluationUtil.getValidationID(validationErrorIntroducedModel);
+		return HistoryAnalysisUtil.getValidationID(validationErrorIntroducedModel);
 	}
 	
 	public IConstraint getConsistencyRule(List<IConstraint> consistencyRules) {
-		return EvaluationUtil.getConsistencyRule(validationErrorIntroducedModel, consistencyRules);
+		return HistoryAnalysisUtil.getConsistencyRule(validationErrorIntroducedModel, consistencyRules);
 	}
 	
 	// historical:
@@ -133,7 +133,7 @@ public class InconsistencyTrace {
 	
 	public void setModelVersionCurrent(Version modelVersionCurrent) {
 		this.modelVersionCurrent = modelVersionCurrent;
-		this.validationErrorCurrentModel = EvaluationUtil.getEqualValidation(
+		this.validationErrorCurrentModel = HistoryAnalysisUtil.getEqualValidation(
 				modelVersionCurrent.getProblems(), validationErrorIntroducedModel);
 	}
 	

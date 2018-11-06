@@ -3,12 +3,8 @@ package org.sidiff.repair.history.evaluation.util;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -16,18 +12,14 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
-import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
-import org.sidiff.validation.constraint.api.util.Validation;
-import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class EvaluationUtil {
 	
@@ -79,173 +71,6 @@ public class EvaluationUtil {
 		eObjectList.setLabel(label);
 		eObjectList.getContent().addAll(list);
 		return eObjectList;
-	}
-	
-	public static Problem getCorrespondingProblem(Problem validationError, Version model) {
-		
-		for(Problem nextProblem : model.getProblems()) {
-			if (equalsValidation(validationError, nextProblem)) {
-				return nextProblem;
-			}
-		}
-		
-		return null;
-	}
-	
-	public static IConstraint getConsistencyRule(
-			Problem validationError, List<IConstraint> consistencyRules) {
-		
-		for (IConstraint consistencyRule : consistencyRules) {
-			if (getValidationID(consistencyRule).equalsIgnoreCase(getValidationID(validationError))) {
-				return consistencyRule;
-			}
-		}
-		
-		return null;
-	}
-	
-	public static <V extends Validation> V getValidation(Collection<V> validations, Problem inconsistency) {
-		for (V validation : validations) {
-			if (equalsValidation(validation, inconsistency)) {
-				return validation;
-			}
-		}
-		return null;
-	}
-	
-	public static List<Problem> getAllUniqueValidations(History history) {
-		List<Problem> validations = new ArrayList<>();
-		
-		for (Version version : history.getVersions()) {
-			for (Problem validation : version.getProblems()) {
-				
-				// Is new validation error?
-				if (!containsValidation(validations, validation)) {
-					validations.add(validation);
-				}
-			}
-		}
-		
-		return validations;
-	}
-	
-	public static List<Problem> getIntroducedAndResolvedUniqueValidations(History history) {
-		List<Problem> validations = new ArrayList<>();
-		
-		for (Version version : history.getVersions()) {
-			for (Problem validation : version.getProblems()) {
-				if ((validation.getIntroducedIn() != null) && (validation.getResolvedIn() != null)) {
-					
-					// Is new validation error?
-					if (!containsValidation(validations, validation)) {
-						validations.add(validation);
-					}
-				}
-			}
-		}
-		
-		return validations;
-	}
-	
-	public static Set<Problem> getSupportedValidations(
-			List<Problem> inconsistenciesAll, List<IConstraint> consistencyRules) {
-		
-		Set<Problem> inconsistenciesSupported = new HashSet<>();
-		
-		for (IConstraint constraint : consistencyRules) {
-			for (Problem validation : inconsistenciesAll) {
-				if (getValidationID(validation).equalsIgnoreCase(constraint.getName())) {
-					inconsistenciesSupported.add(validation);
-				}
-			}
-		}
-		
-		return inconsistenciesSupported;
-	}
-	
-	public static Problem getEqualValidation(List<Problem> validations, Problem validation) {
-		for (Problem containedValidation : validations) {
-			if (equalsValidation(containedValidation, validation)) {
-				return containedValidation;
-			}
-		}
-		return null;
-	}
-	
-	public static boolean containsValidation(List<Problem> validations, Problem validation) {
-		for (Problem containedValidation : validations) {
-			if (equalsValidation(containedValidation, validation)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean equalsValidation(Problem validationA, Problem validationB) {
-		
-		if ((validationA != null) && (validationB != null)) {
-			if (validationA.getIntroducedIn() == validationB.getIntroducedIn()) {
-				if (validationA.getResolvedIn() == validationB.getResolvedIn()) {
-					if (getValidationID(validationA).equalsIgnoreCase(getValidationID(validationB))) {
-						EObject invalidElementA = validationA.getContextElement();
-						EObject invalidElementB = validationB.getContextElement();
-						
-						if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static boolean equalsValidation(Validation validationA, Problem validationB) {
-		
-		if (getValidationID(validationA.getRule()).equalsIgnoreCase(getValidationID(validationB))) {
-			EObject invalidElementA = validationA.getContext();
-			EObject invalidElementB = validationB.getContextElement();
-
-			if (EcoreUtil.getURI(invalidElementA).fragment().equals(EcoreUtil.getURI(invalidElementB).fragment())) {
-				return true;
-			}
-		}
-			
-		return false;
-	}
-	
-	public static String getValidationID(String name) {
-		return name.replaceAll("[^\\p{Alpha}]", "");
-	}
-	
-	public static String getValidationID(IConstraint validation) {
-		return getValidationID(validation.getName());
-	}
-	
-	public static String getValidationID(Problem validation) {
-		return getValidationID(validation.getName());
-	}
-	
-	public static Version getPredecessorRevision(Version version) {
-		History history = (History) version.eContainer();
-		int index = history.getVersions().indexOf(version);
-
-		if ((index - 1) >= 0) {
-			return history.getVersions().get(index - 1);
-		}
-		
-		return null;
-	}
-
-	public static Version getSuccessorRevision(Version version) {
-		History history = (History) version.eContainer();
-		int index = history.getVersions().indexOf(version);
-
-		if ((index + 1) < history.getVersions().size()) {
-			return history.getVersions().get(index + 1);
-		}
-		
-		return null;
 	}
 	
 	public static Version createEmptyModelVersion(History history) {

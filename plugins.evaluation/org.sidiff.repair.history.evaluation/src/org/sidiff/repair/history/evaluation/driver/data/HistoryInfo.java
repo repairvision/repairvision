@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.history.analysis.util.HistoryAnalysisUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
@@ -49,7 +50,7 @@ public class HistoryInfo {
 	public List<Problem> getAllUniqueInconsistencies() {
 		
 		if (allUniqueInconsistencies == null) {
-			allUniqueInconsistencies = EvaluationUtil.getAllUniqueValidations(history);
+			allUniqueInconsistencies = HistoryAnalysisUtil.getAllUniqueValidations(history);
 		}
 		
 		return allUniqueInconsistencies;
@@ -58,8 +59,8 @@ public class HistoryInfo {
 	public List<Problem> getIntroducedAndResolvedUniqueInconsistencies() {
 		
 		if (introducedAndResolvedUniqueInconsistencies == null) {
-			introducedAndResolvedUniqueInconsistencies = EvaluationUtil
-					.getIntroducedAndResolvedUniqueValidations(history);
+			introducedAndResolvedUniqueInconsistencies = HistoryAnalysisUtil
+					.getResolvedUniqueValidations(history);
 		}
 		
 		return introducedAndResolvedUniqueInconsistencies;
@@ -68,7 +69,7 @@ public class HistoryInfo {
 	public List<Problem> getSupportedIntroducedAndResolvedUniqueInconsistencies() {
 		
 		if (supportedIntroducedAndResolvedUniqueInconsistencies == null) {
-			Set<Problem> supported = EvaluationUtil.getSupportedValidations(
+			Set<Problem> supported = HistoryAnalysisUtil.getSupportedValidations(
 					getIntroducedAndResolvedUniqueInconsistencies(), getSupportedConsistencyRules());
 			
 			// Preserve ordering:
