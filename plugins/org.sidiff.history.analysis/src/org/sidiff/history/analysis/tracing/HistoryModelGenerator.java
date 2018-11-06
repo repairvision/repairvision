@@ -187,7 +187,7 @@ public class HistoryModelGenerator {
 					boolean hasCorresponding = false;
 					
 					for (Problem errorA : versionA.getProblems()) {
-						if (validator.matchValidationError(errorA, errorB)) {
+						if (validator.matchProblems(errorA, errorB)) {
 							errorB.setPredecessor(errorA);
 							hasCorresponding = true;
 							errorB.setIntroducedIn(errorA.getIntroducedIn());
@@ -216,7 +216,7 @@ public class HistoryModelGenerator {
 					boolean hasCorresponding = false;
 					
 					for (Problem errorB : versionB.getProblems()) {
-						if (validator.matchValidationError(errorA, errorB)) {
+						if (validator.matchProblems(errorA, errorB)) {
 							errorA.setSuccessor(errorB);
 							hasCorresponding = true;
 							errorA.setResolvedIn(errorB.getResolvedIn());

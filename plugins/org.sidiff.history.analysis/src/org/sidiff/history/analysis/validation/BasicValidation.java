@@ -7,10 +7,11 @@ import org.sidiff.historymodel.Problem;
 
 public abstract class BasicValidation implements IValidator {
 	
-	public boolean matchValidationError(Problem validationErrorA, Problem validationErrorB) {
+	@Override
+	public boolean matchProblems(Problem problemA, Problem problemB) {
 
-		if  (validationErrorA.getName().equals(validationErrorB.getName())) {
-			return getObjectID(getContextElement(validationErrorA)).equals(getObjectID(getContextElement(validationErrorB)));
+		if  (problemA.getName().equals(problemB.getName())) {
+			return getObjectID(getContextElement(problemA)).equals(getObjectID(getContextElement(problemB)));
 		}
 		
 		return false;
@@ -27,11 +28,11 @@ public abstract class BasicValidation implements IValidator {
 	}
 	
 	@Override
-	public EObject getContextElement(Problem validationError) {
-		if (validationError.getContextElement() == null) {
-			return validationError.getInvalidElements().get(0);
+	public EObject getContextElement(Problem problem) {
+		if (problem.getContextElement() == null) {
+			return problem.getInvalidElements().get(0);
 		} else {
-			return validationError.getContextElement();
+			return problem.getContextElement();
 		}
 	}
 }

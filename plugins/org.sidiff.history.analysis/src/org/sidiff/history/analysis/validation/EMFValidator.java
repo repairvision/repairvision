@@ -86,20 +86,42 @@ public class EMFValidator extends BasicValidation {
 	}
 	
 	@Override
-	public boolean matchValidationError(Problem validationErrorA, Problem validationErrorB) {
-		return super.matchValidationError(validationErrorA, validationErrorB);
+	public boolean matchProblems(Problem problemA, Problem problemB) {
+		
+		if (problemA.getName().equalsIgnoreCase(problemB.getName())) {
+			if (docType == DOCTYPE_ECORE) {
+				switch (problemA.getName()) {
+				case "ThereMayNotBeTwoFeaturesNamed":
+					return matchInvalidElements(problemA, problemB, 0, 2);
+				}
+			}
+		}
+		
+		return super.matchProblems(problemA, problemB);
+	}
+	
+	protected boolean matchInvalidElements(Problem problemA, Problem problemB, int startIndex, int stopIndex) {
+		for (int i = startIndex; i <= stopIndex; i++) {
+			EObject invalidElementA = problemA.getInvalidElements().get(i);
+			EObject invalidElementB = problemB.getInvalidElements().get(i);
+
+			if (!getObjectID(invalidElementA).equals(getObjectID(invalidElementB))) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	@Override
-	public EObject getContextElement(Problem validationError) {
+	public EObject getContextElement(Problem problem) {
 		
-		if (validationError.getContextElement() == null) {
+		if (problem.getContextElement() == null) {
 			
 			// Only one invalid element:
-			EObject context = validationError.getInvalidElements().get(0);
+			EObject context = problem.getInvalidElements().get(0);
 			
 			// Filter meta-features:
-			for (EObject invalidElement : validationError.getInvalidElements()) {
+			for (EObject invalidElement : problem.getInvalidElements()) {
 				if ((invalidElement != context) && (context.eResource() == invalidElement.eResource())) {
 					context = null;
 					break;
@@ -112,66 +134,66 @@ public class EMFValidator extends BasicValidation {
 			
 			// Configure context element:
 			if (docType == DOCTYPE_ECORE) {
-				switch (validationError.getName()) {
+				switch (problem.getName()) {
 					case "AContainmentReferenceOfATypeWithAContainerFeaturethatRequiresInstancesToBeContainedElsewhereCannotBePopulated":
-						return validationError.getInvalidElements().get(0); // EReference containment
+						return problem.getInvalidElements().get(0); // EReference containment
 					case "ThereMayNotBeAnOperationWithTheSameSignatureAsAnAccessorMethodForFeature":
-						return validationError.getInvalidElements().get(1); // EOperation operation
+						return problem.getInvalidElements().get(1); // EOperation operation
 					case "ThereMayNotBeTwoClassifiersNamed":
-						return validationError.getInvalidElements().get(0); // EClassifier duplicated
+						return problem.getInvalidElements().get(0); // EClassifier duplicated
 					case "TheGenericTypeIsNotAValidSubstitutionForTypeParameter":
-						return validationError.getInvalidElements().get(1); // EGenericType typeSubstitution
+						return problem.getInvalidElements().get(1); // EGenericType typeSubstitution
 					case "TheFeaturesAndCannotBothBeIDs":
-						return validationError.getInvalidElements().get(1); // EAttribute duplicatedID
+						return problem.getInvalidElements().get(1); // EAttribute duplicatedID
 					case "ThereMayNotBeTwoFeaturesNamed":
-						return validationError.getInvalidElements().get(0); // EStructuralFeature duplicated
+						return problem.getInvalidElements().get(0); // EStructuralFeature duplicated
 					case "ThereShouldNotBeAFeatureNamedAsWellAFeatureNamed":
-						return validationError.getInvalidElements().get(1); // EStructuralFeature duplicated (e.g. a, A, A_)
+						return problem.getInvalidElements().get(1); // EStructuralFeature duplicated (e.g. a, A, A_)
 					case "ThereMayNotBeTwoOperationsAndWithTheSameSignature":
-						return validationError.getInvalidElements().get(1); // EOperation duplicated
+						return problem.getInvalidElements().get(1); // EOperation duplicated
 					case "ThereMayNotBeTwoEnumeratorsNamed":
-						return validationError.getInvalidElements().get(1); // EEnum duplicated
+						return problem.getInvalidElements().get(1); // EEnum duplicated
 					case "ThereShouldNotBeAnEnumeratorNamedAsWellAnEnumeratorNamed":
-						return validationError.getInvalidElements().get(1); // EEnum duplicated (e.g. a, A, A_)
+						return problem.getInvalidElements().get(1); // EEnum duplicated (e.g. a, A, A_)
 					case "ThereMayNotBeTwoEnumeratorsWithLiteralValue":
-						return validationError.getInvalidElements().get(1); // EEnumLiteral duplicated
+						return problem.getInvalidElements().get(1); // EEnumLiteral duplicated
 					case "ThereMayNotBeTwoParametersNamed":
-						return validationError.getInvalidElements().get(1); // EParameter duplicated
+						return problem.getInvalidElements().get(1); // EParameter duplicated
 					case "ThereMayNotBeTwoTypeParametersNamed":
-						return validationError.getInvalidElements().get(1); // ETypeParameter duplicated
+						return problem.getInvalidElements().get(1); // ETypeParameter duplicated
 					case "ThereMayNotBeTwoPackagesNamed":
-						return validationError.getInvalidElements().get(1); // EPackage duplicated
+						return problem.getInvalidElements().get(1); // EPackage duplicated
 					case "ThereMayNotBeTwoPackagesWithNamespaceURI":
-						return validationError.getInvalidElements().get(0); // EPackage duplicated
+						return problem.getInvalidElements().get(0); // EPackage duplicated
 					case "TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne":
-						return validationError.getInvalidElements().get(0); // EReference reference
+						return problem.getInvalidElements().get(0); // EReference reference
 					case "TheOppositeMustBeAFeatureOfTheReferencesType":
-						return validationError.getInvalidElements().get(0); // EReference reference
+						return problem.getInvalidElements().get(0); // EReference reference
 					case "TheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolving":
-						return validationError.getInvalidElements().get(0); // EReference reference
+						return problem.getInvalidElements().get(0); // EReference reference
 					case "TheOppositeOfAContainmentReferenceMustNotBeAContainmentReference":
-						return validationError.getInvalidElements().get(0); // EReference reference
+						return problem.getInvalidElements().get(0); // EReference reference
 					case "TheGenericSuperTypesAtIndexAndMustNotBeDuplicates":
-						return validationError.getInvalidElements().get(1); // EGenericType duplicated
+						return problem.getInvalidElements().get(1); // EGenericType duplicated
 					case "TheGenericSuperTypesInstantiateInconsistently":
-						return validationError.getInvalidElements().get(1); // EGenericType inconsistent
+						return problem.getInvalidElements().get(1); // EGenericType inconsistent
 					
 					case "TheFeatureOfContainsAnUnresolvedProxy":
-						return validationError.getInvalidElements().get(0); // ?
+						return problem.getInvalidElements().get(0); // ?
 					case "TheFeatureHasAMapEntryAtIndexWithAKeyThatCollidesWithThatOfTheMapEntryAtIndex":
-						return validationError.getInvalidElements().get(0); // ?
+						return problem.getInvalidElements().get(0); // ?
 					case "TheKeyMustBeFeatureOfTheReferencesType":
-						return validationError.getInvalidElements().get(0); // ?
+						return problem.getInvalidElements().get(0); // ?
 					default:
 						throw new RuntimeException(
 								"Please configure the context element of the consistency rule!\n" 
-										+ printProblem(validationError));
+										+ printProblem(problem));
 				}	
 			}
 			
-			return validationError.getInvalidElements().get(0);
+			return problem.getInvalidElements().get(0);
 		} else {
-			return validationError.getContextElement();
+			return problem.getContextElement();
 		}
 	}
 	

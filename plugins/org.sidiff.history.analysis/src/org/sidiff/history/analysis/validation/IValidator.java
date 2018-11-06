@@ -13,7 +13,7 @@ public interface IValidator {
 
 	void validate(Version version);
 	
-	boolean matchValidationError(Problem validationErrorA, Problem validationErrorB);
+	boolean matchProblems(Problem validationErrorA, Problem validationErrorB);
 	
 	EObject getContextElement(Problem validationError);
 }
