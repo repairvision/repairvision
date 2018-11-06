@@ -37,11 +37,10 @@ public class EvaluationUtil {
 		String projectPath = EMFStorage.uriToPath(history.getHistory().eResource().getURI().trimSegments(1));
 		
 		// generate file name:
-		String formatedTime = TIME_FORMAT.format(new Date(System.currentTimeMillis()));
-		String fileName = history.getHistory().getName() + "_" + formatedTime + "_" + name + ".csv";
+		String fileName = history.getHistory().getName() + "_" + timestamp + "_" + name + ".csv";
 
 		// create folder:
-		projectPath = projectPath + File.separator + formatedTime;
+		projectPath = projectPath + File.separator + timestamp;
 		File folder = new File(projectPath);
 
 		if (!folder.exists()) {
