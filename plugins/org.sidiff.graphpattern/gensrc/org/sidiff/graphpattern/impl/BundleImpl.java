@@ -3,10 +3,10 @@
 package org.sidiff.graphpattern.impl;
 
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -26,6 +26,7 @@ import org.sidiff.graphpattern.Profile;
  * <ul>
  *   <li>{@link org.sidiff.graphpattern.impl.BundleImpl#getPatterns <em>Patterns</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.BundleImpl#getProfiles <em>Profiles</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.BundleImpl#getDomains <em>Domains</em>}</li>
  * </ul>
  *
  * @generated
@@ -50,6 +51,16 @@ public class BundleImpl extends PatternElementImpl implements Bundle {
 	 * @ordered
 	 */
 	protected EList<Profile> profiles;
+
+	/**
+	 * The cached value of the '{@link #getDomains() <em>Domains</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDomains()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EPackage> domains;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -99,6 +110,18 @@ public class BundleImpl extends PatternElementImpl implements Bundle {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<EPackage> getDomains() {
+		if (domains == null) {
+			domains = new EObjectResolvingEList<EPackage>(EPackage.class, this, GraphpatternPackage.BUNDLE__DOMAINS);
+		}
+		return domains;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -120,6 +143,8 @@ public class BundleImpl extends PatternElementImpl implements Bundle {
 				return getPatterns();
 			case GraphpatternPackage.BUNDLE__PROFILES:
 				return getProfiles();
+			case GraphpatternPackage.BUNDLE__DOMAINS:
+				return getDomains();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -141,6 +166,10 @@ public class BundleImpl extends PatternElementImpl implements Bundle {
 				getProfiles().clear();
 				getProfiles().addAll((Collection<? extends Profile>)newValue);
 				return;
+			case GraphpatternPackage.BUNDLE__DOMAINS:
+				getDomains().clear();
+				getDomains().addAll((Collection<? extends EPackage>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -159,6 +188,9 @@ public class BundleImpl extends PatternElementImpl implements Bundle {
 			case GraphpatternPackage.BUNDLE__PROFILES:
 				getProfiles().clear();
 				return;
+			case GraphpatternPackage.BUNDLE__DOMAINS:
+				getDomains().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -175,6 +207,8 @@ public class BundleImpl extends PatternElementImpl implements Bundle {
 				return patterns != null && !patterns.isEmpty();
 			case GraphpatternPackage.BUNDLE__PROFILES:
 				return profiles != null && !profiles.isEmpty();
+			case GraphpatternPackage.BUNDLE__DOMAINS:
+				return domains != null && !domains.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

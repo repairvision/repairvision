@@ -96,6 +96,8 @@
         eType="#//Pattern" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="profiles" upperBound="-1"
         eType="#//Profile"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domains" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pattern" eSuperTypes="#//PatternElement">
     <eOperations name="getAllGraphPatterns" upperBound="-1" eType="#//GraphPattern"/>

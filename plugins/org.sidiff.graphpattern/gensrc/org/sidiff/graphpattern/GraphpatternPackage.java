@@ -1025,13 +1025,22 @@ public interface GraphpatternPackage extends EPackage {
 	int BUNDLE__PROFILES = PATTERN_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Domains</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE__DOMAINS = PATTERN_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Bundle</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BUNDLE_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 2;
+	int BUNDLE_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Bundle</em>' class.
@@ -2255,6 +2264,17 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getBundle_Profiles();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.Bundle#getDomains <em>Domains</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Domains</em>'.
+	 * @see org.sidiff.graphpattern.Bundle#getDomains()
+	 * @see #getBundle()
+	 * @generated
+	 */
+	EReference getBundle_Domains();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.EObjectList <em>EObject List</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3269,6 +3289,14 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EReference BUNDLE__PROFILES = eINSTANCE.getBundle_Profiles();
+
+		/**
+		 * The meta object literal for the '<em><b>Domains</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BUNDLE__DOMAINS = eINSTANCE.getBundle_Domains();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.EObjectListImpl <em>EObject List</em>}' class.
