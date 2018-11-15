@@ -191,7 +191,7 @@ public class PatternElementItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected ItemPropertyDescriptor createItemPropertyDescriptor(
 			AdapterFactory adapterFactory,

@@ -48,6 +48,7 @@ public class BundleItemProvider extends PatternElementItemProvider {
 			super.getPropertyDescriptors(object);
 
 			addProfilesPropertyDescriptor(object);
+			addDomainsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -66,6 +67,28 @@ public class BundleItemProvider extends PatternElementItemProvider {
 				 getString("_UI_Bundle_profiles_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Bundle_profiles_feature", "_UI_Bundle_type"),
 				 GraphpatternPackage.Literals.BUNDLE__PROFILES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Domains feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDomainsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Bundle_domains_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Bundle_domains_feature", "_UI_Bundle_type"),
+				 GraphpatternPackage.Literals.BUNDLE__DOMAINS,
 				 true,
 				 false,
 				 true,
