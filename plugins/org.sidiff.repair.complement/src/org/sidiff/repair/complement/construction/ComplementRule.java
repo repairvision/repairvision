@@ -88,6 +88,14 @@ public class ComplementRule {
 					.map(sm -> (RecognitionActionMatch) sm)
 					.map(RecognitionActionMatch::getGraphElement)
 					.collect(Collectors.toList());
+			
+			// NOTE: Allow the overwriting of already initially set attributes:
+			//       (for complete recognized edit rules)
+			List<Attribute> settingAttributes = ChangePatternUtil.getSettingAttributes(recognizedRule);
+			
+			if ((getComplementingChanges().size() - settingAttributes.size()) == 0) {
+				recognizedChanges.addAll(settingAttributes);
+			}
 		}
 		
 		return recognizedChanges;
