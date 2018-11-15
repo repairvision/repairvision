@@ -12,6 +12,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.ui.util.InfoConsole;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
@@ -48,7 +49,11 @@ public class InconsistencyEvaluationDriver {
 			contextElement = history.getHistory().getVersions().get(0).getElement(EcoreUtil.getURI(contextElement).fragment());
 			
 			if (contextElement != null) { // could be deleted by earlier repairs...
-				EcoreUtil.delete(contextElement, true);
+				if (UUIDResource.isDynamic(contextElement)) {
+					EcoreUtil.delete(contextElement.eContainer(), true);
+				} else {
+					EcoreUtil.delete(contextElement, true);
+				}
 			}
 		}
 		
