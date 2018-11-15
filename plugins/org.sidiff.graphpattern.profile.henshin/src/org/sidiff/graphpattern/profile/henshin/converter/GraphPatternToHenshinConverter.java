@@ -190,35 +190,53 @@ public class GraphPatternToHenshinConverter {
 			List<String> variables = JavaSciptParser.getVariables(pAttribute.getValue());
 
 			if (variables.contains(SELF_VARIABLE)) {
-				Node contextNode = lhsTrace.get(pAttribute.getNode());
-				contextNode = (contextNode == null) ? rhsTrace.get(pAttribute.getNode()) : contextNode;
-
-				// create condition:
-				String selfVariable = SELF_VARIABLE + "_" + contextNode.getName() + "_" + pAttribute.getType().getName();
-				String selfCondition = pAttribute.getValue().replace(SELF_VARIABLE, selfVariable); // FIXME: refactor in AST
-
-				AttributeCondition attributeCondition = HenshinFactory.eINSTANCE.createAttributeCondition();
-				attributeCondition.setRule(getRule());
-				attributeCondition.setName(selfVariable);
-				attributeCondition.setConditionText(selfCondition);
-
-				// create variable:
-				Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
-				attribute.setType(pAttribute.getType());
-				attribute.setValue(selfVariable);
-				contextNode.getAttributes().add(attribute);
 				
-				// (additional: store in annotation):
-				Annotation attributeConditionAnnotation = HenshinFactory.eINSTANCE.createAnnotation();
-				attributeConditionAnnotation.setKey("AttributeCondition");
-				attributeConditionAnnotation.setValue(selfCondition);
-				attribute.getAnnotations().add(attributeConditionAnnotation);
-				
-				// create parameter:
-				addParameter(selfVariable, "Attribute Condition: " + attributeCondition);
+				if ((pAttribute.getStereotypes().contains(delete) || pAttribute.getStereotypes().contains(preserve))) {
+					Node contextNode = lhsTrace.get(pAttribute.getNode());
+					
+					// create condition:
+					String selfVariable = SELF_VARIABLE + "_" + contextNode.getName() + "_" + pAttribute.getType().getName();
+					String selfCondition = pAttribute.getValue().replace(SELF_VARIABLE, selfVariable); // FIXME: refactor in AST
+					
+					AttributeCondition attributeCondition = HenshinFactory.eINSTANCE.createAttributeCondition();
+					attributeCondition.setRule(getRule());
+					attributeCondition.setName(selfVariable);
+					attributeCondition.setConditionText(selfCondition);
+					
+					// create variable:
+					Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
+					attribute.setType(pAttribute.getType());
+					attribute.setValue(selfVariable);
+					contextNode.getAttributes().add(attribute);
+					
+					// (additional: store in annotation):
+					Annotation attributeConditionAnnotation = HenshinFactory.eINSTANCE.createAnnotation();
+					attributeConditionAnnotation.setKey("AttributeCondition");
+					attributeConditionAnnotation.setValue(selfCondition);
+					attribute.getAnnotations().add(attributeConditionAnnotation);
+					
+					// create parameter:
+					addParameter(selfVariable, "Attribute Condition: " + selfCondition);
+					
+				} else if (pAttribute.getStereotypes().contains(create) || pAttribute.getStereotypes().contains(preserve)) {
+					Node contextNode = rhsTrace.get(pAttribute.getNode());
+					
+					// create condition:
+					String selfVariable = SELF_VARIABLE + "_" + contextNode.getName() + "_" + pAttribute.getType().getName();
+					String selfCondition = pAttribute.getValue().replace(SELF_VARIABLE, selfVariable); // FIXME: refactor in AST
+
+					// create variable:
+					Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
+					attribute.setType(pAttribute.getType());
+					attribute.setValue(selfVariable);
+					contextNode.getAttributes().add(attribute);
+					
+					// create parameter:
+					addParameter(selfVariable, "Attribute Condition: " + selfCondition);
+				}
 				
 				return;
-			}
+			} 
 		}
 
 		// LHS:
