@@ -30,6 +30,17 @@ public class ChangePatternRemoveObject extends ChangePatternObject {
 	}
 	
 	@Override
+	public boolean addChange(Change change) {
+		boolean context = node.addMatchContextA(((RemoveObject) change).getObj());
+		
+		if (context) {
+			return super.addChange(change);
+		}
+		
+		return false;
+	}
+	
+	@Override
 	public void searchPaths(MatchingPath path, Change change) {
 		
 		//// Match Remove-Object-Pattern ////

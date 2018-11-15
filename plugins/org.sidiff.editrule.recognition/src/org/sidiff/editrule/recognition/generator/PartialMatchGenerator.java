@@ -84,8 +84,10 @@ public class PartialMatchGenerator {
 	// Main Algorithm:
 	// -------------------------------------------------
 
+	// NOTE (Print Matching): org.sidiff.editrule.recognition.util.debug.StringUtil.printSelections(((org.sidiff.graphpattern.GraphPattern) variableNodes.get(0).eContainer()).getNodes())
+	
 	private void expandAssignment(int unassigned) {
-
+		
 		// is expandable?
 		int next = (unassigned == 0) ? pickAndAppendVariable() : unassigned;
 

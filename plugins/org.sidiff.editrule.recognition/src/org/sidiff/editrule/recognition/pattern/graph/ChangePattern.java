@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;
+import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
@@ -38,6 +39,16 @@ public abstract class ChangePattern implements IVariable {
 	 * Pattern which represents the changes.
 	 */
 	protected NodePattern changeNodePattern;
+	
+	public boolean addChange(Change change) {
+		
+		if (change.eClass() == changeType) {
+			Domain.get(changeNodePattern).add(change);
+			return true;
+		}
+		
+		return false;
+	}
 	
 	public ActionGraph getActionGraph() {
 		return actionGraph;

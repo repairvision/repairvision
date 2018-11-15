@@ -43,6 +43,18 @@ public class ChangePatternAddReference extends ChangePatternReference {
 	}
 	
 	@Override
+	public boolean addChange(Change change) {
+		boolean context = edge.getSource().addMatchContextB(((AddReference) change).getSrc());
+		context &= edge.getTarget().addMatchContextB(((AddReference) change).getTgt());
+		
+		if (context) {
+			return super.addChange(change);
+		}
+		
+		return false;
+	}
+	
+	@Override
 	public void searchPaths(MatchingPath path, Change change) {
 		
 		//// Match Add-Reference-Pattern /////
@@ -58,8 +70,6 @@ public class ChangePatternAddReference extends ChangePatternReference {
 			
 			Domain.get(edge.getOpposite().getChange().getChangeNodePattern()).mark(oppositeChange);
 		}
-		
-		// TODO: Optionally: Check <<preserve>> edges between source and target!
 		
 		// evaluate parallel edge changes:
 		for (ActionEdge parallelEdge : edge.getSource().getIncident(edge.getTarget())) {

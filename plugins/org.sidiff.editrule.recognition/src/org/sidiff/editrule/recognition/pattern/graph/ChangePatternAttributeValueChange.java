@@ -18,6 +18,18 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 	
 	protected AttributePair attribute;
 	
+	@Override
+	public boolean addChange(Change change) {
+		boolean context = node.addMatchContextA(((AttributeValueChange) change).getObjA());
+//		context &= node.addMatchContextB(((AttributeValueChange) change).getObjB()); // NOTE: Is already synchronized!
+		
+		if (context) {
+			return super.addChange(change);
+		}
+		
+		return false;
+	}
+	
 	// TODO: ActionAttribute!
 	public ChangePatternAttributeValueChange(ActionNode node, AttributePair attribute) {
 		this.node = node;
@@ -57,11 +69,9 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 		Domain.get(changeNodePattern).mark(change);
 		
 		// search context elements:
-		Domain.get(node.getNodePatternA()).addSearchedMatch(((AttributeValueChange) change).getObjA());
-		Domain.get(node.getNodePatternB()).addSearchedMatch(((AttributeValueChange) change).getObjB());
-		Domain.get(node.getCorrespondence()).addSearchedMatch(
-				actionGraph.getRevision().getDifference().getCorrespondenceB(((AttributeValueChange) change).getObjB()));
-		
+		node.addMatchContextA(((AttributeValueChange) change).getObjA());
+//		node.addMatchContextB(((AttributeValueChange) change).getObjB()); // NOTE: Is already synchronized!
+
 		///// Match remaining graph pattern ////
 		
 		// search paths:

@@ -2,15 +2,18 @@ package org.sidiff.editrule.recognition.pattern.graph;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.henshin.view.AttributePair;
+import org.sidiff.consistency.common.emf.MetaModelUtil;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.domain.Domain.SelectionType;
@@ -180,149 +183,181 @@ public class ActionNode extends ActionGraphElement  {
 		}
 	}
 	
-	public void addMatchContextA(EObject matchA) {
+	public boolean addMatchContextA(EObject matchA) {
 		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStepContextA(this, matchA);
 		
-		// Add match for model A:
-		boolean domainHasChanged = false;
-		boolean isCollecting = false;
+		// TODO: Do a full matching of preserve/delete sub-patterns!
 		
+		// Add match for model B:
 		if (nodePatternA != null) {
 			Domain domainA = Domain.get(nodePatternA);
-			isCollecting = domainA.isCollecting();
+			SelectionType selectionType = domainA.get(matchA);
 			
-			if (isCollecting) {
-				domainHasChanged = domainA.addSearchedMatch(matchA);
-			} else {
-				domainHasChanged = domainA.searched(matchA);
-			}
-		}
-		
-		// Add synchronize correspondences and model B:
-		EObject matchB = null;
-		Correspondence correspondenceObj = null;
-		
-		if (domainHasChanged && (correspondence != null)) {
-			Domain domainCorrespondence = Domain.get(correspondence);
-			Domain domainB = Domain.get(nodePatternB);
+			boolean newMatching = domainA.isCollecting() && (selectionType == null);
+			boolean selectMatching = SelectionType.isSelected(selectionType) && !selectionType.equals(SelectionType.SEARCHED);
 			
-			correspondenceObj = actionGraph.getRevision().getDifference().getCorrespondenceA(matchA);
-
-			if (correspondenceObj != null) {
-				if (!domainCorrespondence.contains(correspondenceObj, SelectionType.SEARCHED)) {
-					matchA = correspondenceObj.getMatchedB();
+			if (newMatching || selectMatching) {
+				
+				// New matching:
+				Correspondence correspondenceObj = null;
+				EObject matchB = null;
+				
+				if (correspondence != null) {
+					correspondenceObj = actionGraph.getRevision().getDifference().getCorrespondenceA(matchA);
+					matchB = (correspondenceObj != null) ? correspondenceObj.getMatchedB() : null;
+				}
+				
+				// TODO: Do a full matching of preserve/delete sub-patterns!
+				// ----> Call checkLocalContext() recursively
+				
+				// Check only for new matchings:
+				boolean isValid = 
+						   ((matchA == null) || MetaModelUtil.isAssignableTo(matchA.eClass(), nodePatternA.getType()))
+						&& ((matchB == null) || MetaModelUtil.isAssignableTo(matchB.eClass(), nodePatternB.getType()))
+						&& checkAttributeConstraints(matchA, matchB) 
+						&& checkLocalContext(matchA, matchB);
+				
+				if (selectMatching || isValid) {
+					domainA.add(matchA, SelectionType.SEARCHED);
+					selectionType = SelectionType.SEARCHED;
 					
-					if (isCollecting) {
-						domainCorrespondence.addSearchedMatch(correspondenceObj);
-						domainB.addSearchedMatch(matchA);
-					}  else {
-						domainCorrespondence.searched(correspondenceObj);
-						domainB.searched(matchA);
+					// Synchronize context:
+					if (correspondenceObj != null) {
+						Domain.get(correspondence).add(correspondenceObj, SelectionType.SEARCHED);
+						Domain.get(nodePatternB).add(matchB, SelectionType.SEARCHED);
 					}
 				}
 			}
-		}
-		
-		// Check attribute constraints:
-		if (domainHasChanged && isCollecting) {
-			if (!checkAttributeConstraints(matchA, matchB)) {
-				Domain domainA = Domain.get(nodePatternA);
-				domainA.remove(matchA);
-				
-				if (correspondence != null) {
-					Domain domainCorrespondence = Domain.get(correspondence);
-					domainCorrespondence.remove(correspondenceObj);
-					
-					Domain domainB = Domain.get(nodePatternB);
-					domainB.remove(matchB);
-				}
-			}
+			
+			return selectionType == SelectionType.SEARCHED;
+		} else {
+			return false;
 		}
 	}
 	
-	public void addMatchContextB(EObject matchB) {
+	public boolean addMatchContextB(EObject matchB) {
 		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStepContextB(this, matchB);
 		
 		// Add match for model B:
-		boolean domainHasChanged = false;
-		boolean isCollecting = false;
-		
 		if (nodePatternB != null) {
 			Domain domainB = Domain.get(nodePatternB);
-			isCollecting = domainB.isCollecting();
+			SelectionType selectionType = domainB.get(matchB);
 			
-			if (isCollecting) {
-				domainHasChanged = domainB.addSearchedMatch(matchB);
-			} else {
-				domainHasChanged = domainB.searched(matchB);
-			}
-		}
-		
-		// Add synchronize correspondences and model B:
-		EObject matchA = null;
-		Correspondence correspondenceObj = null;
-		
-		if (domainHasChanged && (correspondence != null)) {
-			Domain domainCorrespondence = Domain.get(correspondence);
-			Domain domainA = Domain.get(nodePatternA);
+			boolean newMatching = domainB.isCollecting() && (selectionType == null);
+			boolean selectMatching = SelectionType.isSelected(selectionType) && !selectionType.equals(SelectionType.SEARCHED);
 			
-			correspondenceObj = actionGraph.getRevision().getDifference().getCorrespondenceB(matchB);
-			
-			if (correspondenceObj != null) {
-				if (!domainCorrespondence.contains(correspondenceObj, SelectionType.SEARCHED)) {
-					matchA = correspondenceObj.getMatchedA();
+			if (newMatching || selectMatching) {
+				
+				// New matching:
+				Correspondence correspondenceObj = null;
+				EObject matchA = null;
+				
+				if (correspondence != null) {
+					correspondenceObj = actionGraph.getRevision().getDifference().getCorrespondenceB(matchB);
+					matchA = (correspondenceObj != null) ? correspondenceObj.getMatchedA() : null;
+				}
+				
+				// TODO: Do a full matching of preserve/delete sub-patterns!
+				// ----> Call checkLocalContext() recursively
+				
+				// Check only for new matchings:
+				boolean isValid = 
+						   ((matchA == null) || MetaModelUtil.isAssignableTo(matchA.eClass(), nodePatternA.getType()))
+						&& ((matchB == null) || MetaModelUtil.isAssignableTo(matchB.eClass(), nodePatternB.getType()))
+						&& checkAttributeConstraints(matchA, matchB) 
+						&& checkLocalContext(matchA, matchB);
+				
+				if (selectMatching || isValid) {
+					domainB.add(matchB, SelectionType.SEARCHED);
+					selectionType = SelectionType.SEARCHED;
 					
-					if (isCollecting) {
-						domainCorrespondence.addSearchedMatch(correspondenceObj);
-						domainA.addSearchedMatch(matchA);
-					}  else {
-						domainCorrespondence.searched(correspondenceObj);
-						domainA.searched(matchA);
+					// Synchronize context:
+					if (correspondenceObj != null) {
+						Domain.get(correspondence).add(correspondenceObj, SelectionType.SEARCHED);
+						Domain.get(nodePatternA).add(matchA, SelectionType.SEARCHED);
 					}
 				}
 			}
-		}
-		
-		// Check attribute constraints:
-		if (domainHasChanged && isCollecting) {
-			if (!checkAttributeConstraints(matchA, matchB)) {
-				Domain domainB = Domain.get(nodePatternB);
-				domainB.remove(matchB);
-				
-				if (correspondence != null) {
-					Domain domainCorrespondence = Domain.get(correspondence);
-					domainCorrespondence.remove(correspondenceObj);
-					
-					Domain domainA = Domain.get(nodePatternA);
-					domainA.remove(matchA);
-				}
-			}
+			
+			return selectionType == SelectionType.SEARCHED;
+		} else {
+			return false;
 		}
 	}
 	
 	private boolean checkAttributeConstraints(EObject matchA, EObject matchB) {
+		
 		for (ActionAttributeConstraint attributeConstraint : attributeConstraints) {
 			boolean valid = false;
-			
+
 			// valid for match A OR match B?
 			if (matchA != null) {
 				Object valueA = matchA.eGet(attributeConstraint.getType());
-				
+
 				if (attributeConstraint.check(valueA)) {
 					valid = true;
 				}
 			}
-			
+
 			if (matchB != null) {
 				Object valueB = matchB.eGet(attributeConstraint.getType());
-				
+
 				if (attributeConstraint.check(valueB)) {
 					valid = true;
 				}
 			}
-			
+
 			if (!valid) {
 				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private boolean checkLocalContext(EObject matchA, EObject matchB) {
+		
+		// Check for existence of the local context in the model:
+		for (List<ActionEdge> actionEdges : inzidentsPerAdjacent) {
+			for (ActionEdge actionEdge : actionEdges) {
+				if (actionEdge.getAction().equals(Type.PRESERVE) || actionEdge.getAction().equals(Type.DELETE)) {
+					EClass targetType = (actionEdge.getSource() == this) ? 
+							actionEdge.getEditRuleEdge().getTarget().getType() : 
+							actionEdge.getEditRuleEdge().getSource().getType();
+					boolean exists = false;
+
+					// Search model A:
+					if (matchA != null) {
+						Iterator<? extends EObject> iterator = actionGraph.getMatchingHelper()
+								.getTargetsA(matchA, nodePatternA, actionEdge.getEdgePatternA());
+						
+						while (iterator.hasNext()) {
+							EObject targetA = (EObject) iterator.next();
+
+							if (MetaModelUtil.isAssignableTo(targetA.eClass(), targetType)) {
+								exists = true;
+								break;
+							}
+						}
+					}
+
+					// Search model B:
+					if (!exists && (matchB != null)) {
+						for (Iterator<? extends EObject> iterator = actionGraph.getMatchingHelper()
+								.getTargetsB(matchB, nodePatternB, actionEdge.getEdgePatternB()); iterator.hasNext();) {
+							EObject targetB = (EObject) iterator.next();
+
+							if (MetaModelUtil.isAssignableTo(targetB.eClass(), targetType)) {
+								exists = true;
+								break;
+							}
+						}
+					}
+
+					if (!exists) {
+						return false;
+					}
+				}
 			}
 		}
 		

@@ -12,7 +12,6 @@ import java.util.Stack;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.common.emf.MetaModelUtil;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
 import org.sidiff.graphpattern.Matching;
 import org.sidiff.graphpattern.NodePattern;
@@ -70,8 +69,8 @@ public class Domain extends MatchingImpl {
 		this.matchingHelper = matchingHelper;
 	}
 	
-	public boolean check(EObject object) {
-		return MetaModelUtil.isAssignableTo(object.eClass(), type);
+	public void setSelectionType(EObject element, SelectionType type) {
+		domain.put(element, type);
 	}
 	
 	public Map<EObject, SelectionType> getDomain() {
@@ -116,46 +115,21 @@ public class Domain extends MatchingImpl {
 		selected.trimToSize();
 		return selected;
 	}
+	
+	public SelectionType get(EObject localMatch) {
+		assert (localMatch != null) : "Null match!";
+		return domain.get(localMatch);
+	}
+	
+	public void add(EObject localMatch, SelectionType selectionType) {
+		assert (localMatch != null) : "Null match!";
+		assert (selectionType != null) : "Null selection type!";
+		domain.put(localMatch, selectionType);
+	}
 
 	@Override
 	public void add(EObject localMatch) {
-		assert (localMatch != null) : "Null match!";
-		
-		if (check(localMatch)) {
-			SelectionType selection = domain.get(localMatch);
-			
-			if ((selection == null) || !selection.equals(SelectionType.ACCEPTED)) {
-				domain.put(localMatch, SelectionType.ACCEPTED);
-//				modified = true;
-//				++size;
-				// TODO: return true;
-			}
-		}
-		
-		// TODO: return false;
-	}
-	
-	/**
-	 * @param element
-	 *            An new element of the domain to mark as searched.
-	 * @return <code>true</code> if the domain was changed; <code>false</code>
-	 *         otherwise.
-	 */
-	public boolean addSearchedMatch(EObject localMatch) {
-		assert (localMatch != null) : "Null match!";
-		
-		if (check(localMatch)) {
-			SelectionType selection = domain.get(localMatch);
-			
-			if ((selection == null) || !selection.equals(SelectionType.SEARCHED)) {
-				domain.put(localMatch, SelectionType.SEARCHED);
-//				modified = true;
-//				++size;
-				return true;
-			}
-		}
-		
-		return false;
+		add(localMatch, SelectionType.ACCEPTED);
 	}
 
 	@Override
@@ -223,27 +197,6 @@ public class Domain extends MatchingImpl {
 			domain.put(element, SelectionType.MARKED);
 //			modified = true;
 		}
-	}
-	
-	/**
-	 * @param element
-	 *            An element of the domain to mark as searched.
-	 * @return <code>true</code> if the domain was changed; <code>false</code>
-	 *         otherwise.
-	 */
-	public boolean searched(EObject element) {
-		// mark existing (non restricted) match:
-		SelectionType selection = domain.get(element);
-		
-		if (selection != null) {
-			if (!selection.equals(SelectionType.SEARCHED) && SelectionType.isSelected(selection)) {
-				domain.put(element, SelectionType.SEARCHED);
-//				modified = true;
-				return true;
-			}
-		}
-		
-		return false;
 	}
 	
 	public void markSearched() {

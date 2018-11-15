@@ -43,6 +43,18 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 	}
 	
 	@Override
+	public boolean addChange(Change change) {
+		boolean context = edge.getSource().addMatchContextA(((RemoveReference) change).getSrc());
+		context &= edge.getTarget().addMatchContextA(((RemoveReference) change).getTgt());
+		
+		if (context) {
+			return super.addChange(change);
+		}
+		
+		return false;
+	}
+	
+	@Override
 	public void searchPaths(MatchingPath path, Change change) {
 		
 		//// Match Remove-Reference-Pattern /////

@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.sidiff.difference.symmetric.Change;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
@@ -62,7 +63,10 @@ public class RecognitionPatternInitializer {
 			
 			for (EObject change : matchingHelper.getRevision().getDifference().getChangeDomain(
 					changePattern.getChangeType(), changePattern.getMetaModelType())) {
-				Domain.get(changeNodePattern).add(change);
+				
+				if (change instanceof Change) {
+					changePattern.addChange((Change) change);
+				}
 			}
 		}
 	}
