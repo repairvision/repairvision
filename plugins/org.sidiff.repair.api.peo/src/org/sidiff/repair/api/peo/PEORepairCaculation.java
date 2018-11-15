@@ -10,7 +10,6 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.consistency.common.monitor.LogTime;
-import org.sidiff.editrule.recognition.impact.GraphActionImpactUtil;
 import org.sidiff.editrule.recognition.impact.NegativeImpactScope;
 import org.sidiff.editrule.recognition.impact.PositiveImpactScope;
 import org.sidiff.history.revision.IRevision;
@@ -19,6 +18,7 @@ import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
+import org.sidiff.repair.complement.peo.impact.GraphActionImpactUtil;
 import org.sidiff.repair.complement.repair.RepairPlan;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
@@ -83,25 +83,36 @@ public class PEORepairCaculation {
 				// Filter complements by abstract repairs:
 				if (complement.getComplementingChanges().size() > 0) {
 					
-					if (GraphActionImpactUtil.potential(impact.getPositivePotentialImpactAnalysis(), complement.getComplementingChanges()) 
-							&& GraphActionImpactUtil.potential(impact.getNegativePotentialImpactAnalysis(), complement.getRecognizedChanges())) {
-						
-						List<Match> complementMatches = complementFinderEngine.findComplementMatches(complement, Collections.emptyList());
-						List<Match> repairMatches = new ArrayList<>(complementMatches.size());
+					if (GraphActionImpactUtil.potential(
+							impact.getPositivePotentialImpactAnalysis(), 
+							complement.getComplementingChanges()) 
+					 && GraphActionImpactUtil.potential(
+							 impact.getNegativePotentialImpactAnalysis(), 
+							 complement.getRecognizedChanges())) {
 
-						// Filter complement with pre-match by abstract repairs:
-						for (Match complementMatch : complementMatches) {
+						// Filter complement with pre-match by inconsistency impact:
+						if (GraphActionImpactUtil.real(
+								impact.getNegativeImpactAnalysis(),
+								complement.getRecognizedChanges(),
+								complement.getRecognitionMatch())) {
 							
-							if (GraphActionImpactUtil.real(impact.getPositiveImpactAnalysis(), complement.getComplementingChanges(), complementMatch)
-									&& GraphActionImpactUtil.real(impact.getNegativeImpactAnalysis(), complement.getComplementingChanges(), complementMatch)) {
-								
-								repairMatches.add(complementMatch);
+							List<Match> complementMatches = complementFinderEngine.findComplementMatches(complement, Collections.emptyList());
+							List<Match> repairMatches = new ArrayList<>(complementMatches.size());
+							
+							for (Match complementMatch : complementMatches) {
+								if (GraphActionImpactUtil.real(
+										impact.getPositiveImpactAnalysis(), 
+										complement.getComplementingChanges(), 
+										complementMatch)) {
+									
+									repairMatches.add(complementMatch);
+								}
 							}
-						}
-
-						if (!repairMatches.isEmpty()) {
-							repairs.add(new RepairPlan(complement, repairMatches));
-							repairCount += repairMatches.size();
+							
+							if (!repairMatches.isEmpty()) {
+								repairs.add(new RepairPlan(complement, repairMatches));
+								repairCount += repairMatches.size();
+							}
 						}
 					}
 				}
