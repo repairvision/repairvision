@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
@@ -133,19 +135,33 @@ public class LabelServices {
 			String typeName = label.trim();
 			
 			if ((node.getType() == null) || !node.getType().getName().equals(typeName)) {
-				node.eResource().getResourceSet().getResources().forEach(r -> {
-					if (r != node.eResource()) {
-						r.getAllContents().forEachRemaining(e -> {
-							if (e instanceof EClass) {
-								if (((EClass) e).getName().equals(typeName)) {
-									node.setType((EClass) e);
-								}
-							}
-						});
+				for (EPackage domain : node.getGraph().getPattern().getBundle().getDomains()) {
+					EClass type = getType(domain, typeName);
+					
+					if (type != null) {
+						node.setType(type);
 					}
-				});
+				}
 			}
 		}
+	}
+	
+	private EClass getType(EPackage domain, String typeName) {
+		EClassifier type = domain.getEClassifier(typeName);
+		
+		if (type instanceof EClass) {
+			return (EClass) type;
+		} else {
+			for (EPackage subDomain : domain.getESubpackages()) {
+				type = getType(subDomain, typeName);
+				
+				if (type != null) {
+					return (EClass) type;
+				}
+			}
+		}
+		
+		return null;
 	}
 	
 	public void parseEdgeLabel(EdgePattern edge, String label) {
