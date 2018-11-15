@@ -33,14 +33,14 @@ public class TransformationEditRuleGenerator {
 		for (GraphPattern fromConstraint : allConstraints) {
 			List<Pattern> transformationRules = new ArrayList<>();
 			
-//			if (fromConstraint.getName().contains("Parameter without Generic-Type")) {
+//			if (fromConstraint.getName().contains("Multiplicity-One Containment-Container Reference")) {
 //				System.out.println(fromConstraint.getName());
 //			} else {
 //				continue;
 //			}
 			
 			for (GraphPattern toConstraint : allConstraints) {
-//				if (toConstraint.getName().contains("Parameter with Bound Generic-Class-Parameter Sub-Type-Argument")) {
+//				if (toConstraint.getName().contains("Multiplicity-Many Bidirectional Reference")) {
 //					System.out.println(toConstraint.getName());
 //				} else {
 //					continue;
