@@ -44,6 +44,15 @@ public class Difference implements IDifference {
 
 		// Calculate difference:
 		IMatcher matcher = settings.getMatcher();
+		matcher.reset();
+		
+		if (matcher.getCandidatesService() != null) {
+			matcher.getCandidatesService().reset();
+		}
+		
+		if (matcher.getCorrespondencesService() != null) {
+			matcher.getCorrespondencesService().reset();
+		}
 
 		Collection<Resource> models = Arrays.asList(new Resource[] { resourceA, resourceB });
 		matcher.startMatching(models, settings.getScope());
