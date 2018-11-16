@@ -1,6 +1,7 @@
 package org.sidiff.editrule.recognition.generator;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.SymmetricPackage;
@@ -65,6 +68,16 @@ public class PartialMatchGenerator {
 	private IMatchSelector matchSelector;
 
 	private DependencyEvaluation dependencies;
+	
+	private Comparator<NodePattern> domainSizeComperator = new Comparator<NodePattern>() {
+
+		@Override
+		public int compare(NodePattern n1, NodePattern n2) {
+			// TODO: Use current domain size based on current restrictions.
+			return Domain.get(n1).size() - Domain.get(n2).size();
+		}
+		
+	};
 
 	// -------------------------------------------------
 
@@ -85,6 +98,7 @@ public class PartialMatchGenerator {
 	// -------------------------------------------------
 
 	// NOTE (Print Matching): org.sidiff.editrule.recognition.util.debug.StringUtil.printSelections(((org.sidiff.graphpattern.GraphPattern) variableNodes.get(0).eContainer()).getNodes())
+	// NOTE (Debug Matching): org.sidiff.editrule.recognition.util.debug.DebugUtil.getDomains(((org.sidiff.graphpattern.GraphPattern) variableNodes.get(0).eContainer()).getNodes())
 	
 	private void expandAssignment(int unassigned) {
 		
@@ -206,7 +220,10 @@ public class PartialMatchGenerator {
 			Variable pickedVariable = pickAnyVariable();
 
 			if (pickedVariable != null) {
-				List<NodePattern> atomicNodes = dependencies.getAtomic(pickedVariable.node);
+				EList<NodePattern> atomicNodes = (EList<NodePattern>) dependencies.getAtomic(pickedVariable.node);
+				
+				// NOTE: Optimization: Start with the smallest domain size for atomic sub patterns.
+				ECollections.sort(atomicNodes, domainSizeComperator);
 
 				for (NodePattern atomicNode : atomicNodes) {
 					Variable atomicVariable = nodeToVariables.get(atomicNode);
