@@ -11,4 +11,8 @@ public interface IRepairSettings {
 	
 	void setSaveDifference(boolean saveDifference);
 	
+	boolean validateDifference();
+	
+	void setValidateDifference(boolean validateDifference);
+	
 }
