@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.revision.IRevision;
@@ -153,5 +154,17 @@ public class Revision implements IRevision {
 		Resource emptyModel = new ResourceImpl(emptyModelVersionURI);
 		new ResourceSetImpl().getResources().add(emptyModel);
 		return emptyModel;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder string = new StringBuilder();
+		
+		for (Change change : getDifference().getSymmetricDifference().getChanges()) {
+			string.append(change);
+			string.append("\n");
+		}
+		
+		return string.toString();
 	}
 }
