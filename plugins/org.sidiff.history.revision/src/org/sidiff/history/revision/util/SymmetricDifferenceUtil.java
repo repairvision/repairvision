@@ -5,7 +5,9 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;
@@ -22,6 +24,35 @@ public class SymmetricDifferenceUtil {
 		return URI.createURI(
 				modelA.trimFileExtension().toString() + "_to_" +
 				modelB.trimFileExtension().appendFileExtension(".symmetric").lastSegment());
+	}
+	
+	public static boolean validateChange(Change change) {
+		
+		if (change instanceof AddObject) {
+			return isResolvable(((AddObject) change).getObj());
+		} else if (change instanceof RemoveObject) {
+			return isResolvable(((RemoveObject) change).getObj());
+		} else if (change instanceof AddReference) {
+			return isResolvable(((AddReference) change).getSrc()) && isResolvable(((AddReference) change).getTgt());
+		} else if (change instanceof RemoveReference) {
+			return isResolvable(((RemoveReference) change).getSrc()) && isResolvable(((RemoveReference) change).getTgt());
+		} else if (change instanceof AttributeValueChange) {
+			return isResolvable(((AttributeValueChange) change).getObjA()) && isResolvable(((AttributeValueChange) change).getObjB());
+		}
+		
+		return true;
+	}
+	
+	private static boolean isResolvable(EObject obj) {
+		if (obj.eIsProxy()) {
+			if ((obj.eResource() != null) && (obj.eResource().getResourceSet() != null)) {
+				if (obj != EcoreUtil.resolve(obj, obj.eResource().getResourceSet())) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return true;
 	}
 	
 	public static boolean isChangeType(EClass type) {
