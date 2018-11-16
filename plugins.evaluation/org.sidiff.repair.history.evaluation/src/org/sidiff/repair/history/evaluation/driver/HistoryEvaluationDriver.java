@@ -36,7 +36,7 @@ public class HistoryEvaluationDriver {
 		// Warm up run:
 		for (InconsistencyTrace inconsistency : history.getRepairedInconsistencies()) {
 			if (inconsistency.getModelVersionIntroduced().getIndex() >= START_WITH_VERSION) {
-				InconsistencyEvaluationDriver.calculateRepairs(false,
+				InconsistencyEvaluationDriver.calculateRepairs(false, false,
 						history, repairFacade, inconsistency, editRules, matchingSettings,
 						new LogTable(), new LogTable());
 				break;
@@ -51,7 +51,7 @@ public class HistoryEvaluationDriver {
 		
 		for (InconsistencyTrace inconsistency : history.getRepairedInconsistencies()) {
 			if (inconsistency.getModelVersionIntroduced().getIndex() >= START_WITH_VERSION) {
-				InconsistencyEvaluationDriver.calculateRepairs(false,
+				InconsistencyEvaluationDriver.calculateRepairs(false, false,
 						history, repairFacade, inconsistency, editRules, matchingSettings,
 						inconsistenciesLog, runtimeComplexityLog);
 			}

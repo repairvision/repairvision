@@ -30,8 +30,10 @@ import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 
 public class InconsistencyEvaluationDriver {
 	
+	private static final boolean SEARCH_ONLY_FIRST_OBSERVABLE = true;
+	
 	public static PEORepairJob calculateRepairs(
-			boolean saveDifference, 
+			boolean saveDifference, boolean validateDifference,
 			HistoryInfo history, 
 			IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade,
 			InconsistencyTrace repaired, 
@@ -64,6 +66,7 @@ public class InconsistencyEvaluationDriver {
 				Collections.singleton(repaired.getProblemCurrentModel().getContextElement()), editRules, matchingSettings);
 		settings.setConsistencyRules(Collections.singletonList(repaired.getConsistencyRule(history.getSupportedConsistencyRules())));
 		settings.setSaveDifference(saveDifference);
+		settings.setValidateDifference(validateDifference);
 		
 		// Setup logging:
 		settings.setMonitor(new PEORepairLogMonitor(inconsistencies));
@@ -99,9 +102,13 @@ public class InconsistencyEvaluationDriver {
 		// evaluate repair results:
 		InfoConsole.printInfo("Repairs Found: " + repairJob.getRepairs().size());
 		
+		// calculate Ranking:
+		List<IRepairPlan> repairRanking = new LinkedList<>(repairJob.getRepairs());
+		repairRanking.sort(repairJob.getRanking());
+		
 		// search historical observable repair:
 		HistoricalObservable observable = DeveloperIntentionOracleDriver.getHistoricallyObservable(
-				repaired, repairJob, matchingSettings);
+				repaired, repairRanking, repairJob.getRepairTrees(), SEARCH_ONLY_FIRST_OBSERVABLE, matchingSettings);
 		
 		InfoConsole.printInfo("Historically Observable Repairs: " + observable.repairs.size());
 		InfoConsole.printInfo("Historically Observable Undos: " + observable.undos.size());
@@ -109,8 +116,10 @@ public class InconsistencyEvaluationDriver {
 		log.append(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_REPAIRS, observable.repairs.size() > 0);
 		log.append(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_UNDOS, observable.undos.size() > 0);
 		
-		Object[] bestObservable = findBestObservableRepair(observable, repairJob);
+		Object[] bestObservable = findBestObservableRepair(observable, repairRanking);
 		int bestPositionOfObservable = (int) bestObservable[0];
+		
+		InfoConsole.printInfo("Best Observable Repair/Undo Positions: " + bestPositionOfObservable);
 		
 		if (bestPositionOfObservable != -1) {
 			IRepairPlan bestObservableRepair = (IRepairPlan) bestObservable[1];
@@ -132,11 +141,7 @@ public class InconsistencyEvaluationDriver {
 //		log.append("Count of Repair Tree Combinations", countRepairTreeCombinations(repairJob.getValidations()));
 	}
 
-	private static Object[] findBestObservableRepair(HistoricalObservable observable, PEORepairJob repairJob) {
-		
-		// Calculate Ranking:
-		List<IRepairPlan> repairRanking = new LinkedList<>(repairJob.getRepairs());
-		repairRanking.sort(repairJob.getRanking());
+	private static Object[] findBestObservableRepair(HistoricalObservable observable, List<IRepairPlan> repairRanking) {
 		
 		// Find best observable:
 		int bestPositionOfObservable = Integer.MAX_VALUE;
