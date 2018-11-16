@@ -1,8 +1,8 @@
 package org.sidiff.repair.complement.peo.impact;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
+import static org.sidiff.consistency.common.henshin.ChangePatternUtil.tryLHS;
 
-import java.math.MathContext;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,7 +15,6 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
 import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
 import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
@@ -23,7 +22,6 @@ import org.sidiff.repair.complement.matching.RecognitionMatch;
 import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;
-import static org.sidiff.consistency.common.henshin.ChangePatternUtil.*;
 
 public class GraphActionImpactUtil {
 	
