@@ -10,9 +10,11 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.consistency.common.monitor.LogTime;
+import org.sidiff.difference.symmetric.Change;
 import org.sidiff.editrule.recognition.impact.NegativeImpactScope;
 import org.sidiff.editrule.recognition.impact.PositiveImpactScope;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.complement.construction.ComplementRule;
@@ -44,6 +46,13 @@ public class PEORepairCaculation {
 		this.editRule = editRule;
 		this.impact = impact;
 		this.complementFinderEngine = complementFinderEngine;
+		
+		// Validate difference:
+		for (Change change : revision.getDifference().getSymmetricDifference().getChanges()) {
+			if (!SymmetricDifferenceUtil.validateChange(change)) {
+				System.err.println("Unresolvable change: " + change);
+			}
+		}
 		
 		// TODO: Implement RuleInfo:
 		List<GraphElement> changes = ChangePatternUtil.getPotentialChanges(editRule);
