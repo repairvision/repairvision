@@ -33,6 +33,11 @@ public class JavaSciptParser {
 		return new ScriptEngineManager().getEngineByName("nashorn");
 	}
 	
+	/**
+	 * @param value
+	 *            An script expression.
+	 * @return The constant as primitive data type or <code>null</code>.
+	 */
 	public static Object getConstant(String value) {
 		
 		// Parse string:
