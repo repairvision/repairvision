@@ -8,6 +8,7 @@ import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
+import org.sidiff.editrule.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.editrule.recognition.pattern.graph.path.MatchingPath;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.EdgePattern;
@@ -72,9 +73,12 @@ public class ChangePatternAddReference extends ChangePatternReference {
 		}
 		
 		// evaluate parallel edge changes:
+		Domain.get(edge.getSource().getNodePatternB()).setSelectionType(((AddReference) change).getSrc(), SelectionType.SEARCHED);
+		Domain.get(edge.getTarget().getNodePatternB()).setSelectionType(((AddReference) change).getTgt(), SelectionType.SEARCHED);
+		
 		for (ActionEdge parallelEdge : edge.getSource().getIncident(edge.getTarget())) {
 			if ((parallelEdge != edge) && (parallelEdge != edge.getOpposite())) {
-				edge.getChange().doEvaluationStep(edge.getSource(), edge.getTarget());
+				parallelEdge.getChange().doEvaluationStep(parallelEdge.getSource(), parallelEdge.getTarget());
 			}
 		}
 		

@@ -8,6 +8,7 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
+import org.sidiff.editrule.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.editrule.recognition.pattern.graph.path.MatchingPath;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.EdgePattern;
@@ -74,6 +75,9 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 		// TODO: Optionally: Check <<preserve>> edges between source and target!
 		
 		// evaluate parallel edge changes:
+		Domain.get(edge.getSource().getNodePatternA()).setSelectionType(((RemoveReference) change).getSrc(), SelectionType.SEARCHED);
+		Domain.get(edge.getTarget().getNodePatternA()).setSelectionType(((RemoveReference) change).getTgt(), SelectionType.SEARCHED);
+		
 		for (ActionEdge parallelEdge : edge.getSource().getIncident(edge.getTarget())) {
 			if ((parallelEdge != edge) && (parallelEdge != edge.getOpposite())) {
 				edge.getChange().doEvaluationStep(edge.getSource(), edge.getTarget());
