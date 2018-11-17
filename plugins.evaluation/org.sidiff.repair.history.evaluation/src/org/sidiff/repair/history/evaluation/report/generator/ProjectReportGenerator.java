@@ -390,26 +390,11 @@ public class ProjectReportGenerator {
 	}
 
 	private Object countHistoricallyObservableRepairs(LogTable... inconsistenciesLogs) {
-		return assertPositive(count(merge(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_REPAIRS, Boolean.class, inconsistenciesLogs), true));
+		return assertPositive(count(merge(InconsistenciesLog.COL_BEST_HOR_IS_UNDO, Boolean.class, inconsistenciesLogs), false));
 	}
 
 	private Object countHistoricallyObservableUndos(LogTable... inconsistenciesLogs) {
-		
-		// TODO: HOR vs. HOU!?
-		List<Boolean> hou = merge(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_UNDOS, Boolean.class, inconsistenciesLogs);
-		List<Boolean> hor = merge(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_REPAIRS, Boolean.class, inconsistenciesLogs);
-		
-		assert hou.size() == hor.size();
-		
-		int count = 0;
-		
-		for (int i = 0; i < hou.size(); i++) {
-			if (hou.get(i) && !hor.get(i)) {
-				++count;
-			}
-		}
-		
-		return count;
+		return assertPositive(count(merge(InconsistenciesLog.COL_BEST_HOR_IS_UNDO, Boolean.class, inconsistenciesLogs), true));
 	}
 
 	private Object minRepairAlternatives(LogTable... inconsistenciesLogs) {

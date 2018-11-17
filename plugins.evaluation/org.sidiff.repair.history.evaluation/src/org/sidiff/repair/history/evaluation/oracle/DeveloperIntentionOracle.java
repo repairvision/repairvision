@@ -23,6 +23,7 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.api.util.ComplementMatching;
 import org.sidiff.repair.api.util.IMatching;
@@ -153,6 +154,11 @@ public class DeveloperIntentionOracle {
 				// Attribute value change:
 				if (isObservableAttributeValueChange(attribute, editRuleMatching, invertActions)) {
 					observableChanges.add(attribute);
+				} else {
+					// Check if fixed value is already set:
+					if (!isConstantAlreadySet(attribute, editRuleMatching, invertActions)) {
+						return null;
+					}
 				}
 			}
 		}
@@ -162,92 +168,204 @@ public class DeveloperIntentionOracle {
 	}
 	
 	private boolean isObservableRemoveObject(Node node, IMatching editRuleMatching, boolean invertActions) {
-		Iterator<EObject> matches = editRuleMatching.getMatches(node);
-		
-		if (!matchContext || !matches.hasNext()) {
-			List<String> signatures = getRemoveObjectSignatures(node.getType(), invertActions);
-			
-			if (exists(signatures)) {
-				return true;
-			}
-		} else {
-			for (EObject match : (Iterable<EObject>) () -> matches) {
-				List<String> signatures = getRemoveObjectSignatures(node.getType(), match, invertActions);
-				
-				if (exists(signatures)) {
-					return true;
+		List<String> signatures = getRemoveObjectSignatures(node.getType(), invertActions);
+
+		if (exists(signatures)) {
+			if (matchContext) {
+				Iterator<EObject> matches = editRuleMatching.getMatches(node);
+
+				if (matches.hasNext()) {
+					for (EObject match : (Iterable<EObject>) () -> matches) {
+						List<String> contextSignatures = getRemoveObjectSignatures(node.getType(), match, invertActions);
+
+						if (exists(contextSignatures)) {
+							return true;
+						}
+					}
+					return false;
 				}
 			}
+			return true;
 		}
 		return false;
 	}
 	
 	private boolean isObservableAddObject(Node node, IMatching editRuleMatching, boolean invertActions) {
-		Iterator<EObject> matches = editRuleMatching.getMatches(node);
-		
-		if (!matchContext || !matches.hasNext()) {
-			List<String> signatures = getAddObjectSignatures(node.getType(), invertActions);
-			
-			if (exists(signatures)) {
-				return true;
-			}
-		} else {
-			for (EObject match : (Iterable<EObject>) () -> matches) {
-				List<String> signatures = getAddObjectSignatures(node.getType(), match, invertActions);
-				
-				if (exists(signatures)) {
-					return true;
+		List<String> signatures = getAddObjectSignatures(node.getType(), invertActions);
+
+		if (exists(signatures)) {
+			if (matchContext) {
+				Iterator<EObject> matches = editRuleMatching.getMatches(node);
+
+				if (matches.hasNext()) {
+					for (EObject match : (Iterable<EObject>) () -> matches) {
+						List<String> contextSignatures = getAddObjectSignatures(node.getType(), match, invertActions);
+
+						if (exists(contextSignatures)) {
+							return true;
+						}
+					}
+					return false;
 				}
 			}
+			return true;
 		}
 		return false;
 	}
 	
 	private boolean isObservableAddReference(Edge edge, IMatching editRuleMatching, boolean invertActions) {
-		Iterator<EObject> matches = editRuleMatching.getMatches(edge.getSource());
+		String signatures = getAddReferenceSignature(edge.getType(), invertActions);
 		
-		if (!matchContext || !matches.hasNext()) {
-			String signatures = getAddReferenceSignature(edge.getType(), invertActions);
+		// Check without context:
+		if (exists(signatures)) {
 			
-			if (exists(signatures)) {
-				return true;
-			}
-		} else {
-			for (EObject match : (Iterable<EObject>) () -> matches) {
-				String signatures = getAddReferenceSignature(edge.getType(), 
-						match,
-						null,  // TODO: Consider reference target!
-						invertActions);
+			// Check context of change:
+			if (matchContext) {
 				
-				if (exists(signatures)) {
-					return true;
+				// Check source and target context of edge change:
+				Iterator<EObject> sourceMatches = editRuleMatching.getMatches(edge.getSource());
+				
+				// Check source of edge change:
+				if (sourceMatches.hasNext()) {
+					for (EObject sourceMatch : (Iterable<EObject>) () -> sourceMatches) {
+						signatures = getAddReferenceSignature(edge.getType(), 
+								sourceMatch,
+								null,
+								invertActions);
+						
+						if (exists(signatures)) {
+							Iterator<EObject> targetMatches = editRuleMatching.getMatches(edge.getTarget());
+							
+							// Check target of edge change:
+							if (targetMatches.hasNext()) {
+								for (EObject targetMatch : (Iterable<EObject>) () -> targetMatches) {
+									signatures = getAddReferenceSignature(edge.getType(), 
+											sourceMatch,
+											targetMatch,
+											invertActions);
+									
+									if (exists(signatures)) {
+										// Source and target match found:
+										return true;
+									}
+								}
+							} else {
+								// Source match found; No target matches to search:
+								return true;
+							}
+						}
+					}
+					
+					// No source and target match found:
+					return false;
+					
+				} else {
+					
+					// Check (only) target context of edge change:
+					Iterator<EObject> targetMatches = editRuleMatching.getMatches(edge.getTarget());
+					
+					if (targetMatches.hasNext()) {
+						for (EObject targetMatch : (Iterable<EObject>) () -> targetMatches) {
+							signatures = getAddReferenceSignature(edge.getType(), 
+									null,
+									targetMatch,
+									invertActions);
+							
+							if (exists(signatures)) {
+								// No Target match found:
+								return true;
+							}
+						}
+						
+						// No target match found:
+						return false;
+					}
 				}
 			}
+			
+			// No context should be matched:
+			return true;
 		}
+		
+		// Signature not found:
 		return false;
 	}
 	
 	private boolean isObservableRemoveReference(Edge edge, IMatching editRuleMatching, boolean invertActions) {
-		Iterator<EObject> matches = editRuleMatching.getMatches(edge.getSource());
+		String signatures = getRemoveReferenceSignature(edge.getType(), invertActions);
 		
-		if (!matchContext || !matches.hasNext()) {
-			String signatures = getRemoveReferenceSignature(edge.getType(), invertActions);
+		// Check without context:
+		if (exists(signatures)) {
 			
-			if (exists(signatures)) {
-				return true;
-			}
-		} else {
-			for (EObject match : (Iterable<EObject>) () -> matches) {
-				String signatures = getRemoveReferenceSignature(edge.getType(), 
-						match,
-						null,  // TODO: Consider reference target!
-						invertActions);
+			// Check context of change:
+			if (matchContext) {
 				
-				if (exists(signatures)) {
-					return true;
+				// Check source and target context of edge change:
+				Iterator<EObject> sourceMatches = editRuleMatching.getMatches(edge.getSource());
+				
+				// Check source of edge change:
+				if (sourceMatches.hasNext()) {
+					for (EObject sourceMatch : (Iterable<EObject>) () -> sourceMatches) {
+						signatures = getRemoveReferenceSignature(edge.getType(), 
+								sourceMatch,
+								null,
+								invertActions);
+						
+						if (exists(signatures)) {
+							Iterator<EObject> targetMatches = editRuleMatching.getMatches(edge.getTarget());
+							
+							// Check target of edge change:
+							if (targetMatches.hasNext()) {
+								for (EObject targetMatch : (Iterable<EObject>) () -> targetMatches) {
+									signatures = getRemoveReferenceSignature(edge.getType(), 
+											sourceMatch,
+											targetMatch,
+											invertActions);
+									
+									if (exists(signatures)) {
+										// Source and target match found:
+										return true;
+									}
+								}
+							} else {
+								// Source match found; No target matches to search:
+								return true;
+							}
+						}
+					}
+					
+					// No source and target match found:
+					return false;
+					
+				} else {
+					
+					// Check (only) target context of edge change:
+					Iterator<EObject> targetMatches = editRuleMatching.getMatches(edge.getTarget());
+					
+					if (targetMatches.hasNext()) {
+						for (EObject targetMatch : (Iterable<EObject>) () -> targetMatches) {
+							signatures = getRemoveReferenceSignature(edge.getType(), 
+									null,
+									targetMatch,
+									invertActions);
+							
+							if (exists(signatures)) {
+								// No Target match found:
+								return true;
+							}
+						}
+						
+						// No target match found:
+						return false;
+					}
 				}
 			}
+			
+			// No context should be matched:
+			return true;
 		}
+		
+		// Signature not found:
 		return false;
 	}
 	
@@ -257,29 +375,54 @@ public class DeveloperIntentionOracle {
 		if (isObservableAddObject(attribute.getNode(), editRuleMatching, invertActions)) {
 			return true;
 		} else {
-			Iterator<EObject> matches = editRuleMatching.getMatches(attribute.getNode());
-			
-			if (!matchContext || !matches.hasNext()) {
-				String signatures = getAttributeValueChangeSignature(attribute.getType(), invertActions);
-				
-				if (exists(signatures)) {
-					return true;
-				}
-			} else {
-				for (EObject match : (Iterable<EObject>) () -> matches) {
-					String signatures = getAttributeValueChangeSignature(
-							attribute.getType(), 
-							match, 
-							invertActions);
-					
-					if (exists(signatures)) {
-						return true;
+			String signatures = getAttributeValueChangeSignature(attribute.getType(), invertActions);
+
+			if (exists(signatures)) {
+				if (matchContext) {
+					Iterator<EObject> matches = editRuleMatching.getMatches(attribute.getNode());
+
+					if (matches.hasNext()) {
+						for (EObject match : (Iterable<EObject>) () -> matches) {
+							String contextSignatures = getAttributeValueChangeSignature(
+									attribute.getType(), 
+									match,
+									JavaSciptParser.getConstant(attribute.getValue()),
+									invertActions);
+
+							if (exists(contextSignatures)) {
+								return true;
+							}
+						}
+						return false;
 					}
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean isConstantAlreadySet(Attribute attribute, IMatching editRuleMatching, boolean invertActions) {
+		
+		// Check if fixed value is already set:
+		Object constant = JavaSciptParser.getConstant(attribute.getValue());
+		
+		if (constant != null) {
+			if (matchContext) {
+				Iterator<EObject> matches = editRuleMatching.getMatches(attribute.getNode());
+
+				if (matches.hasNext()) {
+					for (EObject match : (Iterable<EObject>) () -> matches) {
+						if (match.eGet(attribute.getType()) == constant) {
+							return true;
+						}
+					}
+					return false;
 				}
 			}
 		}
 		
-		return false;
+		return true;
 	}
 	
 	private boolean exists(String changeSignature) {
@@ -296,34 +439,29 @@ public class DeveloperIntentionOracle {
 		Set<String> changeSignatures = new HashSet<>();
 		
 		for (Change change : difference.getChanges()) {
-			String signature = null;
-			
 			if (change instanceof AddObject) {
 				AddObject c = (AddObject) change;
-				signature = getAddObjectSignature(c.getObj().eClass(), false);
+				changeSignatures.add(getAddObjectSignature(c.getObj().eClass(), false));
 			}
 			if (change instanceof RemoveObject) {
 				RemoveObject c = (RemoveObject) change;
-				signature = getRemoveObjectSignature(c.getObj().eClass(), false);
+				changeSignatures.add(getRemoveObjectSignature(c.getObj().eClass(), false));
 			}
 			if (change instanceof AddReference) {
 				AddReference c = (AddReference) change;
-				signature = getAddReferenceSignature(c.getType(), false);
+				changeSignatures.add(getAddReferenceSignature(c.getType(), false));
 			}
 			if (change instanceof RemoveReference) {
 				RemoveReference c = (RemoveReference) change;
-				signature = getRemoveReferenceSignature(c.getType(), false);
+				changeSignatures.add(getRemoveReferenceSignature(c.getType(), false));
 			}
 			if (change instanceof AttributeValueChange) {
 				AttributeValueChange c = (AttributeValueChange) change;
-				signature = getAttributeValueChangeSignature(c.getType(), false);
-			}
-			
-			if (signature != null) {
-				changeSignatures.add(signature);
+				changeSignatures.add(getAttributeValueChangeSignature(c.getType(), false));
 			}
 		}
 		
+		changeSignatures.remove(null);
 		return changeSignatures;
 	}
 	
@@ -332,35 +470,46 @@ public class DeveloperIntentionOracle {
 		
 		// Create change signature with context on model A: 
 		for (Change change : difference.getChanges()) {
-			String signature = null;
 
 			// NOTE: AddObject can not be observed on model A.
 			
 			if (change instanceof RemoveObject) {
 				RemoveObject c = (RemoveObject) change;
-				signature = getRemoveObjectSignature(c.getObj().eClass(), c.getObj(), false);
+				changeSignatures.add(getRemoveObjectSignature(c.getObj().eClass(), c.getObj(), false));
 			}
 			if (change instanceof AddReference) {
 				AddReference c = (AddReference) change;
-				signature = getAddReferenceSignature(c.getType(), 
+				
+				changeSignatures.add(getAddReferenceSignature(c.getType(), 
 						difference.getCorrespondingObjectInA(c.getSrc()), 
 						difference.getCorrespondingObjectInA(c.getTgt()),
-						false);
+						false));
+				
+				changeSignatures.add(getAddReferenceSignature(c.getType(), 
+						difference.getCorrespondingObjectInA(c.getSrc()), 
+						null,
+						false));
+				
+				changeSignatures.add(getAddReferenceSignature(c.getType(), 
+						null, 
+						difference.getCorrespondingObjectInA(c.getTgt()),
+						false));
 			}
 			if (change instanceof RemoveReference) {
 				RemoveReference c = (RemoveReference) change;
-				signature = getRemoveReferenceSignature(c.getType(), c.getSrc(), c.getTgt(), false);
+				
+				changeSignatures.add(getRemoveReferenceSignature(c.getType(), c.getSrc(), c.getTgt(), false));
+				changeSignatures.add(getRemoveReferenceSignature(c.getType(), c.getSrc(), null, false));
+				changeSignatures.add(getRemoveReferenceSignature(c.getType(), null, c.getTgt(), false));
 			}
 			if (change instanceof AttributeValueChange) {
 				AttributeValueChange c = (AttributeValueChange) change;
-				signature = getAttributeValueChangeSignature(c.getType(), c.getObjA(), false);
-			}
-			
-			if (signature != null) {
-				changeSignatures.add(signature);
+				changeSignatures.add(getAttributeValueChangeSignature(c.getType(), c.getObjA(), null, false));
+				changeSignatures.add(getAttributeValueChangeSignature(c.getType(), c.getObjA(), c.getObjB().eGet(c.getType()), false));
 			}
 		}
 		
+		changeSignatures.remove(null);
 		return changeSignatures;
 	}
 	
@@ -444,8 +593,7 @@ public class DeveloperIntentionOracle {
 	
 	private String getAddReferenceSignature(EReference type, EObject src, EObject tgt, boolean invert) {
 		if (!invert) {
-			return  "AddReference_" + getContext(src) + type.getName();
-//			return  "AddReference_" + getContext(src) + getContext(tgt) + type.getName(); // TODO: Consider reference target!
+			return  "AddReference_" + getContext(src) + getContext(tgt) + type.getName();
 		} else {
 			return getRemoveReferenceSignature(type, src, tgt, false);
 		}
@@ -457,26 +605,28 @@ public class DeveloperIntentionOracle {
 	
 	private String getRemoveReferenceSignature(EReference type, EObject src, EObject tgt, boolean invert) {
 		if (!invert) {
-			return  "RemoveReference_" + getContext(src) + type.getName();
-//			return  "RemoveReference_" + getContext(src) + getContext(tgt) + type.getName(); // TODO: Consider reference target!
+			return  "RemoveReference_" + getContext(src) + getContext(tgt) + type.getName();
 		} else {
 			return getAddReferenceSignature(type, src, tgt, false);
 		}
 	}
 	
 	private String getAttributeValueChangeSignature(EAttribute type, boolean invert) {
-		return getAttributeValueChangeSignature(type, null, invert);
+		return getAttributeValueChangeSignature(type, null, null, invert);
 	}
 	
-	private String getAttributeValueChangeSignature(EAttribute type, EObject obj, boolean invert) {
-		return "AttributeValueChange_" + getContext(obj) + type.getName();
+	private String getAttributeValueChangeSignature(EAttribute type, EObject obj, Object value, boolean invert) {
+		value = (value == null) ? "" : "_" + value;
+		return "AttributeValueChange_" + getContext(obj) + value + type.getName();
 	}
 	
 	private String getContext(EObject obj) {
 		if (obj != null) {
-			return obj.eResource().getURIFragment(obj) + "_";
-		} else {
-			return "";
+			if (obj.eResource() != null) {
+				return obj.eResource().getURIFragment(obj) + "_";
+			}
 		}
+		
+		return "";
 	}
 }

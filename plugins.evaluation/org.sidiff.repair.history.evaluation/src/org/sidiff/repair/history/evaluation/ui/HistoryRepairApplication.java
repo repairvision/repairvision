@@ -122,7 +122,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 
 				// Calculate repairs:
 				repairJob = InconsistencyEvaluationDriver.calculateRepairs(
-						true, true, history, repairFacade, repaired, 
+						true, true, false, history, repairFacade, repaired, 
 						getEditRules(), getMatchingSettings(),
 						inconsistenciesLog, runtimeComplexityLog);
 				
