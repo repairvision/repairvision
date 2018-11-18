@@ -11,7 +11,7 @@ public class StringUtil {
 		StringBuffer print = new StringBuffer();
 		
 		for (NodePattern node : nodes) {
-			print.append("Node: " + node.getName());
+			print.append("Node@" + Integer.toHexString(node.hashCode()) + ": " + node.getName());
 			print.append(", Type: " + node.getType().getName() + ":\n");
 			print.append(printSelection(node, "  "));
 			print.append("\n");
