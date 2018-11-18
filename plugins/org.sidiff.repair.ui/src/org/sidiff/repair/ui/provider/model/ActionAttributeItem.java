@@ -58,6 +58,6 @@ public class ActionAttributeItem extends ActionItem {
 	public Iterator<? extends EObject> getModelElements() {
 		Attribute changeAttribute = (Attribute) changeAction;
 		Node containingNode = changeAttribute.getNode();
-		return Arrays.asList(getChangeSetItem().getDomain(containingNode)).iterator();
+		return Arrays.asList(getChangeSetItem().getDomain(ChangePatternUtil.tryLHS(containingNode))).iterator();
 	}
 }
