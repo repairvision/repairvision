@@ -10,6 +10,7 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.repair.ui.Activator;
+import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 
 public class ActionAttributeItem extends ActionItem {
 
@@ -21,7 +22,7 @@ public class ActionAttributeItem extends ActionItem {
 	
 	@Override
 	public String getText() {
-		return "Set Attribute (type: " + ((Attribute) changeAction).getType().getName() + ")";
+		return "Set Attribute (type: " + ((Attribute) changeAction).getType().getName() + ", value: " + ((Attribute) changeAction).getValue() + ")";
 	}
 	
 	@Override
@@ -41,8 +42,9 @@ public class ActionAttributeItem extends ActionItem {
 		
 		List<Object> values = new ArrayList<>();
 		
-		for (EObject match : getChangeSetItem().getDomain(containingNode)) {
+		for (EObject match : getChangeSetItem().getDomain(ChangePatternUtil.tryLHS(containingNode))) {
 			Object value = match.eGet(changeAttribute.getType());
+			values.add(match);
 			
 			if (!values.contains(value)) {
 				values.add(value);
