@@ -189,14 +189,22 @@ public class Domain extends MatchingImpl {
 		return (SelectionType.isSelected(domain.get(match))) ;
 	}
 	
-	public void mark(EObject element) {
+	public boolean mark(EObject element) {
+		
 		// mark existing (non restricted) match:
 		SelectionType selection = domain.get(element);
 		
 		if ((selection != null) && selection.equals(SelectionType.ACCEPTED)) {
-			domain.put(element, SelectionType.MARKED);
-//			modified = true;
+			if (selection.equals(SelectionType.MARKED)) {
+				return true;
+			} else {
+				domain.put(element, SelectionType.MARKED);
+//				modified = true;
+				return true;
+			}
 		}
+		
+		return false;
 	}
 	
 	public void markSearched() {

@@ -184,6 +184,15 @@ public class ActionNode extends ActionGraphElement  {
 	}
 	
 	public boolean addMatchContextA(EObject matchA) {
+		return addMatchContextA(matchA, false);
+	}
+	
+	// TODO: Cache results of tests for optimization...
+	public boolean canMatchContextA(EObject matchA) {
+		return addMatchContextA(matchA, true);
+	}
+	
+	private boolean addMatchContextA(EObject matchA, boolean test) {
 		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStepContextA(this, matchA);
 		
 		// TODO: Do a full matching of preserve/delete sub-patterns!
@@ -218,13 +227,16 @@ public class ActionNode extends ActionGraphElement  {
 						&& checkLocalContext(matchA, matchB);
 				
 				if (selectMatching || isValid) {
-					domainA.add(matchA, SelectionType.SEARCHED);
 					selectionType = SelectionType.SEARCHED;
 					
-					// Synchronize context:
-					if (correspondenceObj != null) {
-						Domain.get(correspondence).add(correspondenceObj, SelectionType.SEARCHED);
-						Domain.get(nodePatternB).add(matchB, SelectionType.SEARCHED);
+					if (!test) {
+						domainA.add(matchA, selectionType);
+						
+						// Synchronize context:
+						if (correspondenceObj != null) {
+							Domain.get(correspondence).add(correspondenceObj, selectionType);
+							Domain.get(nodePatternB).add(matchB, selectionType);
+						}
 					}
 				}
 			}
@@ -236,6 +248,15 @@ public class ActionNode extends ActionGraphElement  {
 	}
 	
 	public boolean addMatchContextB(EObject matchB) {
+		return addMatchContextB(matchB, false);
+	}
+	
+	// TODO: Cache results of tests for optimization...
+	public boolean canMatchContextB(EObject matchB) {
+		return addMatchContextB(matchB, true);
+	}
+	
+	private boolean addMatchContextB(EObject matchB, boolean test) {
 		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStepContextB(this, matchB);
 		
 		// Add match for model B:
@@ -268,13 +289,16 @@ public class ActionNode extends ActionGraphElement  {
 						&& checkLocalContext(matchA, matchB);
 				
 				if (selectMatching || isValid) {
-					domainB.add(matchB, SelectionType.SEARCHED);
 					selectionType = SelectionType.SEARCHED;
 					
-					// Synchronize context:
-					if (correspondenceObj != null) {
-						Domain.get(correspondence).add(correspondenceObj, SelectionType.SEARCHED);
-						Domain.get(nodePatternA).add(matchA, SelectionType.SEARCHED);
+					if (!test) {
+						domainB.add(matchB, selectionType);
+						
+						// Synchronize context:
+						if (correspondenceObj != null) {
+							Domain.get(correspondence).add(correspondenceObj, selectionType);
+							Domain.get(nodePatternA).add(matchA, selectionType);
+						}
 					}
 				}
 			}

@@ -20,8 +20,8 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 	
 	@Override
 	public boolean addChange(Change change) {
-		boolean context = node.addMatchContextA(((AttributeValueChange) change).getObjA());
-//		context &= node.addMatchContextB(((AttributeValueChange) change).getObjB()); // NOTE: Is already synchronized!
+		boolean context = node.canMatchContextA(((AttributeValueChange) change).getObjA());
+//		context &= node.canMatchContextB(((AttributeValueChange) change).getObjB()); // NOTE: Is already synchronized!
 		
 		if (context) {
 			return super.addChange(change);

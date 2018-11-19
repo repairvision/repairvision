@@ -31,7 +31,7 @@ public class ChangePatternRemoveObject extends ChangePatternObject {
 	
 	@Override
 	public boolean addChange(Change change) {
-		boolean context = node.addMatchContextA(((RemoveObject) change).getObj());
+		boolean context = node.canMatchContextA(((RemoveObject) change).getObj());
 		
 		if (context) {
 			return super.addChange(change);

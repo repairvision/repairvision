@@ -8,7 +8,6 @@ import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
-import org.sidiff.editrule.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.editrule.recognition.pattern.graph.path.MatchingPath;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.EdgePattern;
@@ -45,8 +44,8 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 	
 	@Override
 	public boolean addChange(Change change) {
-		boolean context = edge.getSource().addMatchContextA(((RemoveReference) change).getSrc());
-		context &= edge.getTarget().addMatchContextA(((RemoveReference) change).getTgt());
+		boolean context = edge.getSource().canMatchContextA(((RemoveReference) change).getSrc());
+		context &= edge.getTarget().canMatchContextA(((RemoveReference) change).getTgt());
 		
 		if (context) {
 			return super.addChange(change);
@@ -59,38 +58,23 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 	public void searchPaths(MatchingPath path, Change change) {
 		
 		//// Match Remove-Reference-Pattern /////
+		RemoveReference removeReference = (RemoveReference) change;
 		
 		// mark change:
 		Domain.get(changeNodePattern).mark(change);
 		
-		// mark opposite change:
-		if (edge.getOpposite() != null) {
-			assert (edge.getOpposite().getChange() != null);
-			Change oppositeChange = actionGraph.getRevision().getDifference().getOppositeChange(change);
-			assert (oppositeChange != null);
-			
-			Domain.get(edge.getOpposite().getChange().getChangeNodePattern()).mark(oppositeChange);
-		}
-		
 		// TODO: Optionally: Check <<preserve>> edges between source and target!
 		
 		// evaluate parallel edge changes:
-		Domain.get(edge.getSource().getNodePatternA()).setSelectionType(((RemoveReference) change).getSrc(), SelectionType.SEARCHED);
-		Domain.get(edge.getTarget().getNodePatternA()).setSelectionType(((RemoveReference) change).getTgt(), SelectionType.SEARCHED);
-		
-		for (ActionEdge parallelEdge : edge.getSource().getIncident(edge.getTarget())) {
-			if ((parallelEdge != edge) && (parallelEdge != edge.getOpposite())) {
-				edge.getChange().doEvaluationStep(edge.getSource(), edge.getTarget());
-			}
-		}
+		searchParallelChangePatternReferences(removeReference);
 		
 		///// Match remaining graph pattern ////
 		
 		// search context element (source):
-		edge.getSource().addMatchContextA(((RemoveReference) change).getSrc());
+		edge.getSource().addMatchContextA(removeReference.getSrc());
 		
 		// search context element (target):
-		edge.getTarget().addMatchContextA(((RemoveReference) change).getTgt());
+		edge.getTarget().addMatchContextA(removeReference.getTgt());
 		
 		// search paths (source):
 		path.add(edge.getSource());
@@ -123,13 +107,17 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 //				System.out.println("    Match: " + removeReference);
 				
 				if (removeReference.getType() == edge.getEditRuleEdge().getType()) {
-					Domain.get(changeNodePattern).mark(removeReference);
+					
+					// Mark the change if it is in search space:
+					boolean isMarked = Domain.get(changeNodePattern).mark(removeReference);
 
 					// Change -> Model-Element
-					if (stepSource == edge.getSource()) {
-						edge.getTarget().addMatchContextA(removeReference.getTgt());
-					} else {
-						edge.getSource().addMatchContextA(removeReference.getSrc());
+					if (isMarked) {
+						if (stepSource == edge.getSource()) {
+							edge.getTarget().addMatchContextA(removeReference.getTgt());
+						} else {
+							edge.getSource().addMatchContextA(removeReference.getSrc());
+						}
 					}
 				}
 			}

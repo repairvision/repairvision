@@ -31,7 +31,7 @@ public class ChangePatternAddObject extends ChangePatternObject {
 	
 	@Override
 	public boolean addChange(Change change) {
-		boolean context = node.addMatchContextB(((AddObject) change).getObj());
+		boolean context = node.canMatchContextB(((AddObject) change).getObj());
 		
 		if (context) {
 			return super.addChange(change);
