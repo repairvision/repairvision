@@ -143,7 +143,7 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 		GraphPattern graph = null;
 		EObject container = this;
 		
-		while ((graph == null) && (container.eContainer() != null)) {
+		while ((graph == null) && (container != null)) {
 			if (container instanceof GraphPattern) {
 				graph = (GraphPattern) container;
 			} else {
