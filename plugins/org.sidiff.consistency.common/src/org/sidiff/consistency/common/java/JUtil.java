@@ -64,4 +64,13 @@ public class JUtil {
 			}
 		}
 	}
+	
+	public static boolean contains(Object[] array, Object value) {
+		for (Object object : array) {
+			if (object.equals(value)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
