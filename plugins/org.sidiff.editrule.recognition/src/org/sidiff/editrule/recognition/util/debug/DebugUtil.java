@@ -9,17 +9,14 @@ import java.util.Map.Entry;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.emf.provider.ItemProviderUtil;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
-import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.NodePattern;
 
 public class DebugUtil {
@@ -42,98 +39,9 @@ public class DebugUtil {
 	// }
 	// }
 	
-	public class NodePatternWithDomain {
-		
-		private NodePattern node;
-		
-		private List<EObject> domain;
-		
-		public NodePatternWithDomain(NodePattern node, List<EObject> domain) {
-			this.node = node;
-			this.domain = domain;
-		}
-		
-		@Override
-		public String toString() {
-			StringBuffer print = new StringBuffer();
-			
-			print.append("Node" + jHashCode(node) + ": " + node.getName());
-			print.append(", Type: " + node.getType().getName());
-			
-			print.append(", Outgoings: ");
-			
-			for (EdgePattern outgoing : node.getOutgoings()) {
-				if (outgoing != node.getOutgoings().get(0)) {
-					print.append(", ");
-				}
-				print.append(ItemProviderUtil.getTextByObject(outgoing));
-			}
-			
-			print.append(":\n");
-			
-			for (int i = 0; i < domain.size(); i++) {
-				EObject value = domain.get(i);
-				print.append("  [" + i + "] " 
-						+ value.getClass().getSimpleName() + jHashCode(value) + ": "
-						+ ItemProviderUtil.getTextByObject(value) + "\n");
-			}
-			
-			return print.toString();
-		}
-	}
-	
-	public class Edit2RecognitionPattern {
-		
-		private GraphElement editElement;
-		
-		private List<NodePatternWithDomain> recognitionPattern;
-		
-		public Edit2RecognitionPattern(GraphElement edit, List<NodePatternWithDomain> recognition) {
-			this.editElement = edit;
-			this.recognitionPattern = recognition;
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder string = new StringBuilder();
-			
-			string.append("--------------------------------------------------------------------------------\n");
-			string.append("<<" + editElement.getAction() + ">> " + editElement.toString() + " " + jHashCode(editElement) + "\n");
-			string.append("--------------------------------------------------------------------------------\n");
-			
-			for (NodePatternWithDomain nodes : recognitionPattern) {
-				string.append(nodes);
-				string.append("\n");
-			}
-			
-			string.append("--------------------------------------------------------------------------------\n");
-			return string.toString();
-		}
-	}
-	
-	public class Edit2RecognitionPatterns {
-		
-		private List<Edit2RecognitionPattern> patterns = new ArrayList<>();
-		
-		public List<Edit2RecognitionPattern> getPatterns() {
-			return patterns;
-		}
-		
-		@Override
-		public String toString() {
-			StringBuilder string = new StringBuilder();
-			
-			for (Edit2RecognitionPattern edit2RecognitionPattern : patterns) {
-				string.append(edit2RecognitionPattern);
-			}
-			
-			return string.toString();
-		}
-	}
-	
 	public static Edit2RecognitionPatterns getDomains(Object obj, String... fieldNamesToRecognitionPattern) {
 		RecognitionPattern pattern = (RecognitionPattern) jGet(obj, fieldNamesToRecognitionPattern);
-		Edit2RecognitionPatterns matching = new DebugUtil().new Edit2RecognitionPatterns();
+		Edit2RecognitionPatterns matching = new Edit2RecognitionPatterns();
 		
 		for (Entry<Node, ActionNode> topology : pattern.getNodeTrace().entrySet()) {
 			Node node = topology.getKey();
@@ -153,7 +61,7 @@ public class DebugUtil {
 				recognitionPattern.add(action.getCorrespondence());
 			}
 			
-			matching.getPatterns().add(new DebugUtil().new Edit2RecognitionPattern(node, getDomains(recognitionPattern)));
+			matching.getPatterns().add(new Edit2RecognitionPattern(node, getDomains(recognitionPattern)));
 		}
 		
 		for (Entry<Edge, ActionEdge> topology : pattern.getEdgeTrace().entrySet()) {
@@ -179,13 +87,13 @@ public class DebugUtil {
 				recognitionPattern.add(action.getTarget().getCorrespondence());
 			}
 			
-			matching.getPatterns().add(new DebugUtil().new Edit2RecognitionPattern(edge, getDomains(recognitionPattern)));
+			matching.getPatterns().add(new Edit2RecognitionPattern(edge, getDomains(recognitionPattern)));
 		}
 		
 		return matching;
 	}
 	
-	private static Object jGet(Object obj, String[] fieldNames) {
+	public static Object jGet(Object obj, String[] fieldNames) {
 		try {
 			Field field = obj.getClass().getDeclaredField(fieldNames[0]);
 			field.setAccessible(true);
@@ -202,7 +110,7 @@ public class DebugUtil {
 		return null;
 	}
 	
-	private static String jHashCode(Object obj) {
+	public static String jHashCode(Object obj) {
 		return "@" + Integer.toHexString(obj.hashCode());
 	}
 	
@@ -211,7 +119,7 @@ public class DebugUtil {
 		
 		for (NodePattern node : nodes) {
 			if (node != null) {
-				domains.add(new DebugUtil().new NodePatternWithDomain(node, getDomain(node)));
+				domains.add(new NodePatternWithDomain(node, getDomain(node)));
 			}
 		}
 		
