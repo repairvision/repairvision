@@ -65,7 +65,7 @@ public class DebugUtil {
 				recognitionPattern.add(action.getNodePatternA());
 			} else if (action.getAction().equals(Type.PRESERVE)) {
 				recognitionPattern.add(action.getNodePatternA());
-				recognitionPattern.add(action.getNodePatternA());
+				recognitionPattern.add(action.getNodePatternB());
 				recognitionPattern.add(action.getCorrespondence());
 			}
 			
