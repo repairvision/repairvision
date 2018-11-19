@@ -14,7 +14,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
-import org.sidiff.editrule.recognition.pattern.domain.Domain;
+import org.sidiff.editrule.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.graphpattern.NodePattern;
@@ -39,7 +39,15 @@ public class DebugUtil {
 	// }
 	// }
 	
+	public static Edit2RecognitionPatterns getSelectedDomains(Object obj, String... fieldNamesToRecognitionPattern) {
+		return getDomains(obj, new SelectionType[] {SelectionType.RESTRICTED}, fieldNamesToRecognitionPattern);
+	}
+	
 	public static Edit2RecognitionPatterns getDomains(Object obj, String... fieldNamesToRecognitionPattern) {
+		return getDomains(obj, new SelectionType[0], fieldNamesToRecognitionPattern);
+	}
+	
+	public static Edit2RecognitionPatterns getDomains(Object obj, SelectionType[] filter, String... fieldNamesToRecognitionPattern) {
 		RecognitionPattern pattern = (RecognitionPattern) jGet(obj, fieldNamesToRecognitionPattern);
 		Edit2RecognitionPatterns matching = new Edit2RecognitionPatterns();
 		
@@ -61,7 +69,7 @@ public class DebugUtil {
 				recognitionPattern.add(action.getCorrespondence());
 			}
 			
-			matching.getPatterns().add(new Edit2RecognitionPattern(node, getDomains(recognitionPattern)));
+			matching.getPatterns().add(new Edit2RecognitionPattern(node, getDomains(recognitionPattern, filter)));
 		}
 		
 		for (Entry<Edge, ActionEdge> topology : pattern.getEdgeTrace().entrySet()) {
@@ -87,7 +95,7 @@ public class DebugUtil {
 				recognitionPattern.add(action.getTarget().getCorrespondence());
 			}
 			
-			matching.getPatterns().add(new Edit2RecognitionPattern(edge, getDomains(recognitionPattern)));
+			matching.getPatterns().add(new Edit2RecognitionPattern(edge, getDomains(recognitionPattern, filter)));
 		}
 		
 		return matching;
@@ -114,22 +122,16 @@ public class DebugUtil {
 		return "@" + Integer.toHexString(obj.hashCode());
 	}
 	
-	public static List<NodePatternWithDomain> getDomains(List<NodePattern> nodes) {
+	public static List<NodePatternWithDomain> getDomains(List<NodePattern> nodes, SelectionType[] filter) {
 		List<NodePatternWithDomain> domains = new ArrayList<>();
 		
 		for (NodePattern node : nodes) {
 			if (node != null) {
-				domains.add(new NodePatternWithDomain(node, getDomain(node)));
+				domains.add(new NodePatternWithDomain(node, filter));
 			}
 		}
 		
 		return domains;
-	}
-	
-	public static List<EObject> getDomain(NodePattern node) {
-		List<EObject> domain = new ArrayList<>();
-		Domain.get(node).iterator().forEachRemaining(domain::add);
-		return domain;
 	}
 
 	public static void printEditRule(Rule editRule) {
