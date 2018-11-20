@@ -167,4 +167,64 @@ public class DependencyEvaluation {
 			actualIndependent.remove(adjacentDependency);
 		}
 	}
+	
+	public DependencyGraph getGraph() {
+		return graph;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder string = new StringBuilder();
+		
+		// Evaluation:
+		string.append("Currently Independent Dependencies:\n");
+		
+		for (DependencyNode independent : actualIndependent) {
+			string.append(independent);
+			string.append("\n");
+		}
+		
+		string.append("\n");
+		string.append("Currently Removed Dependencies:\n");
+		
+		for (DependencyNode removed : removedNodes) {
+			string.append(removed);
+			string.append("\n");
+		}
+		
+		// Dependency graph:
+		string.append("\n");
+		string.append("Dependency Graph:\n\n");
+		
+		for (DependencyNode dependencyNode : graph.getNodes()) {
+			string.append("--------------------------------------------------------------------------------\n");
+			string.append(dependencyNode);
+			string.append(":\n");
+			
+			for (NodePattern nodePattern : dependencyNode.getNodes()) {
+				string.append("  ");
+				string.append(nodePattern);
+				string.append("\n");
+			}
+			
+			string.append("Outgoings (targets):\n");
+			
+			for (DependencyEdge dependencyEdge : dependencyNode.getOutgoings()) {
+				string.append("  ");
+				string.append(dependencyEdge.getTarget());
+				string.append("\n");
+			}
+			
+			string.append("Incomings (sources):\n");
+			
+			for (DependencyEdge dependencyEdge : dependencyNode.getIncomings()) {
+				string.append("  ");
+				string.append(dependencyEdge.getSource());
+				string.append("\n");
+			}
+		}
+		
+		string.append("--------------------------------------------------------------------------------\n");
+		return string.toString();
+	}
 }
