@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.Stack;
 
 import org.eclipse.emf.ecore.EClass;
@@ -181,8 +182,23 @@ public class Domain extends MatchingImpl {
 
 	@Override
 	public boolean isEmpty() {
-		return !domain.containsValue(SelectionType.ACCEPTED);
-//		return (size == 0); // FIXME
+		for (Entry<EObject, SelectionType> coloredValue : domain.entrySet()) {
+			if (!coloredValue.getValue().equals(SelectionType.RESTRICTED)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean isEmpty(Set<EObject> ignored) {
+		for (Entry<EObject, SelectionType> coloredValue : domain.entrySet()) {
+			if (!coloredValue.getValue().equals(SelectionType.RESTRICTED)) {
+				if (!ignored.contains(coloredValue.getKey())) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 	public boolean isSelected(EObject match) {
