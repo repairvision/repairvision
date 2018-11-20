@@ -3,6 +3,7 @@ package org.sidiff.editrule.recognition.generator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Set;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.recognition.IMatching;
@@ -19,6 +21,7 @@ import org.sidiff.editrule.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.recognition.generator.util.Stack;
 import org.sidiff.editrule.recognition.impact.PositiveImpactScopeConstraint;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
+import org.sidiff.editrule.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.editrule.recognition.selection.IMatchSelector;
 import org.sidiff.editrule.recognition.util.debug.DebugUtil;
 import org.sidiff.graphpattern.DependencyNode;
@@ -53,6 +56,10 @@ public class PartialMatchGenerator {
 	private Stack<Variable> subVariables;
 
 	private Stack<EObject> assignments;
+	
+	private Set<EObject> assigned;
+	
+	private final static EObject NULL = EcoreFactory.eINSTANCE.createEObject();
 
 	// -------------------------------------------------
 
@@ -99,9 +106,10 @@ public class PartialMatchGenerator {
 
 	// NOTE (Print Matching): org.sidiff.editrule.recognition.util.debug.StringUtil.printSelections(((org.sidiff.graphpattern.GraphPattern) variableNodes.get(0).eContainer()).getNodes())
 	// NOTE (Debug Matching): org.sidiff.editrule.recognition.util.debug.DebugUtil.getDomains(((org.sidiff.graphpattern.GraphPattern) variableNodes.get(0).eContainer()).getNodes())
+	// NOTE (Debug Recognition Pattern): org.sidiff.editrule.recognition.util.debug.DebugUtil.getDomains((Object) this, "matchSelector", "recognitionPattern")
 	
 	private void expandAssignment(int unassigned) {
-		
+
 		// is expandable?
 		int next = (unassigned == 0) ? pickAndAppendVariable() : unassigned;
 
@@ -119,11 +127,12 @@ public class PartialMatchGenerator {
 			// create all sub-patterns which include the picked variable(s):
 			while (domain.hasNext()) {
 				if (assignVariable(variable, domain.next(), firstVariableOfAtomic)) {
+//					debug_checkAssignmentAndDomainConsistency();
 					expandAssignment(next - 1);
 				}
 				freeVariable(variable);
 			}
-
+			
 			// create all sub-patterns which exclude the picked variable(s):
 			if (firstVariableOfAtomic) {
 				removeVariable(next, domainIsEmpty);
@@ -146,6 +155,53 @@ public class PartialMatchGenerator {
 			}
 		}
 	}
+	
+	@SuppressWarnings("unused")
+	private boolean debug_checkAssignmentAndDomainConsistency() {
+		
+		if (assignments.size() > subVariables.size()) {
+			System.err.println(assignments.size() + " Assignments" + " > " + subVariables.size() + " Variables");
+		}
+		
+		if (assigned.size() != assignments.size()) {
+			System.err.println(assignments.size() + " Assignments"  + " != " + assigned.size() + " Assigned");
+		}
+		
+		for (int i = 0; i < assignments.size(); i++) {
+			if (!assigned.contains(assignments.get(i))) {
+				System.err.println("Missing assigned: " + assignments.get(i));
+			}
+		}
+		
+		for (EObject assignedElement : assigned) {
+			boolean found = false;
+			
+			for (int i = 0; i < assignments.size(); i++) {
+				if (assignments.get(i) == assignedElement) {
+					found = true;
+				}
+			}
+			
+			if (!found) {
+				System.err.println("Unassigned: " + assignedElement);
+			}
+		}
+		
+		for (int i = 0; i < subVariables.size(); i++) {
+			EObject assignment = (i < assignments.size()) ? assignments.get(i) : null;
+			
+			if (assignment != null) {
+				if (!SelectionType.isSelected(Domain.get(subVariables.get(i).node.getMatching()).get(assignment))) {
+					System.err.println("Variable: " + subVariables.get(i));
+					System.err.println("Assignment: " + assignment);
+					System.err.println(Domain.get(subVariables.get(i).node.getMatching()));
+					
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 
 	public void initialize(
 			List<NodePattern> variableNodes, 
@@ -164,6 +220,7 @@ public class PartialMatchGenerator {
 		this.overwriteScope = overwriteScope;
 
 		assignments = new Stack<EObject>(variableNodes.size());
+		assigned = new HashSet<>();
 
 		// dependencies:
 		dependencies.start();
@@ -252,22 +309,24 @@ public class PartialMatchGenerator {
 
 	private Iterator<EObject> getDomain(Variable variable) {
 		Domain domain = Domain.get(variable.node.getMatching());
-
-		if (matchSelector != null) {
-
-			// domain based on restricted working graph:
-			return domain.iterator();
-		} else {
-
-			// no initial selection:
-			return domain.iterator();
-		}
+		return domain.iterator();
 	}
-
+	
 	private boolean assignVariable(Variable variable, EObject value, boolean firstVariableOfAtomic) {
-
-		// store assignment:
-		assignments.push(value);
+		
+		// ensure injectivity:
+		if (assigned.add(value)) {
+			
+			// store assignment:
+			assignments.push(value);
+		} else {
+			
+			// just for correct backtracking...
+			assigned.add(NULL);
+			assignments.push(NULL);
+			
+			return false;
+		}
 
 		// -------------------------------------------------
 		// Restrict Working Graph
@@ -278,29 +337,35 @@ public class PartialMatchGenerator {
 			matchSelector.initialSelection(variable.node, value);
 		} else {
 			// select value:
-			// NOTE: No further selections needed for atomic dependent variables!
-			if (firstVariableOfAtomic) {
+			
+			// FIXME: Select atomic patterns in one step: e.g. AddObject, (containment) AddReference
+//			// NOTE: No further selections needed for atomic dependent variables!
+//			if (firstVariableOfAtomic) { 
 				matchSelector.selection(variable.node, value);
-			}
+//			}
 		}
 
+		// FIXME: Preventive restrictions might lead to broken paths in the search space.
 		// ensure injectivity:
-		for (Variable remainingVariable : remainingVariables) {
-			Domain domain = Domain.get(remainingVariable.node.getMatching());
-			domain.restriction(variable.node, value);
-		}
+//		for (Variable remainingVariable : remainingVariables) {
+//			Domain domain = Domain.get(remainingVariable.node.getMatching());
+//			domain.restriction(variable.node, value);
+//		}
+		
 		// -------------------------------------------------
 
 		// -------------------------------------------------
 		// Test for scope
 		// -------------------------------------------------
 
+		// FIXME: Select atomic patterns in one step: e.g. AddObject, (containment) AddReference
+		//        (Since the scope test is just an optimization, it would be correct anyway.)
 		// NOTE: Needs only to be checked after the selection has changed!
-		if (firstVariableOfAtomic) {
+//		if (firstVariableOfAtomic) {
 			if ((repairScope != null) && !repairScope.test()) {
 				return false;
 			}
-		}
+//		}
 
 		// -------------------------------------------------
 
@@ -317,7 +382,8 @@ public class PartialMatchGenerator {
 		}
 
 		// unset assignment:
-		assignments.pop();
+		EObject freed = assignments.pop();
+		assigned.remove(freed);
 
 		// -------------------------------------------------
 		// Restrict Working Graph
@@ -325,11 +391,12 @@ public class PartialMatchGenerator {
 
 		// NOTE: undo the restriction in reverse order (injectivity, selection)!
 
-		// ensure injectivity:
-		for (Variable remainingVariable : remainingVariables) {
-			Domain domain = Domain.get(remainingVariable.node.getMatching());
-			domain.undoRestriction(variable.node);
-		}
+		// FIXME: Preventive restrictions might lead to broken paths in the search space.
+//		// ensure injectivity:
+//		for (Variable remainingVariable : remainingVariables) {
+//			Domain domain = Domain.get(remainingVariable.node.getMatching());
+//			domain.undoRestriction(variable.node);
+//		}
 
 		// undo restriction on all nodes (full graph):
 		matchSelector.undoSelection(variable.node);
@@ -426,7 +493,8 @@ public class PartialMatchGenerator {
 			if (dependencies.canRemove(node)) {
 				Domain domain = Domain.get(node.getMatching());
 
-				if (!domain.isEmpty()) {
+				// NOTE: Already assigned values can be ignored for injective matching. 
+				if (!domain.isEmpty(assigned)) {
 					return false;
 				}
 			}
@@ -619,8 +687,16 @@ public class PartialMatchGenerator {
 		string.append("Assignments:\n");
 
 		for (int i = 0; i < subVariables.size(); i++) {
+			EObject assignment = (i < assignments.size()) ? assignments.get(i) : null;
+			
 			string.append("  " + subVariables.get(i) + ":\n");
-			string.append("    " + assignments.get(i) + "\n");
+			string.append("    " + assignment + "\n");
+		}
+		
+		string.append("\nRemoved Variables:\n");
+		
+		for (int i = 0; i < removedVariables.size(); i++) {
+			string.append("  " + removedVariables.get(i) + ":\n");
 		}
 
 		return string.toString();
