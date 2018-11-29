@@ -1,5 +1,7 @@
 package org.sidiff.repair.history.evaluation.report.generator;
 
+import static org.sidiff.consistency.common.monitor.LogUtil.NA;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -43,5 +45,86 @@ public class ReportGeneratorUtil {
 		
 		System.out.println("Unsupported:");
 		unsupported.forEach((key, value) ->  System.out.println(key + ": " + value));
+	}
+	
+	public static String formatSum(Object... values) {
+		if (isNotAvailable(values)) {
+			return NA.toString();
+		} else {
+			StringBuilder text = new StringBuilder();
+			
+			for (int i = 0; i < values.length; i++) {
+				text.append(values[i]);
+				
+				if (i < values.length - 1) {
+					text.append(" + ");
+				}
+			}
+			
+			return text.toString();
+		}
+	}
+	
+	public static String formatFraction(Object... values) {
+		if (isNotAvailable(values)) {
+			return NA.toString();
+		} else {
+			StringBuilder text = new StringBuilder();
+			
+			for (int i = 0; i < values.length; i++) {
+				text.append(values[i]);
+				
+				if (i < values.length - 1) {
+					text.append("/");
+				}
+			}
+			
+			return text.toString();
+		}
+	}
+	
+	public static String formatFilter(Object... values) {
+		if (isNotAvailable(values)) {
+			return NA.toString();
+		} else {
+			StringBuilder text = new StringBuilder();
+			
+			for (int i = 0; i < values.length; i++) {
+				text.append(values[i]);
+				
+				if (i < values.length - 1) {
+					text.append(" $\\geq$ ");
+				}
+			}
+			
+			return text.toString();
+		}
+	}
+	
+	public static String formatResults(Object... values) {
+		if (isNotAvailable(values)) {
+			return NA.toString();
+		} else {
+			StringBuilder text = new StringBuilder();
+			
+			for (int i = 0; i < values.length; i++) {
+				text.append(values[i]);
+				
+				if (i < values.length - 1) {
+					text.append("; ");
+				}
+			}
+			
+			return text.toString();
+		}
+	}
+	
+	public static boolean isNotAvailable(Object... values) {
+		for (Object value : values) {
+			if (value != NA) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

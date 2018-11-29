@@ -1,10 +1,10 @@
 package org.sidiff.repair.history.evaluation.report.generator;
 
 import static org.sidiff.consistency.common.monitor.LogUtil.NA;
-import static org.sidiff.consistency.common.monitor.LogUtil.TODO;
 import static org.sidiff.consistency.common.monitor.LogUtil.assertPositive;
 import static org.sidiff.consistency.common.monitor.LogUtil.avg;
 import static org.sidiff.consistency.common.monitor.LogUtil.convertToLatex;
+import static org.sidiff.consistency.common.monitor.LogUtil.convertToLatexHeader;
 import static org.sidiff.consistency.common.monitor.LogUtil.count;
 import static org.sidiff.consistency.common.monitor.LogUtil.max;
 import static org.sidiff.consistency.common.monitor.LogUtil.median;
@@ -38,28 +38,124 @@ public class ProjectReportGenerator {
 	
 	private static final boolean LEGEND = true;
 	
+	private static final boolean RQ1 = true;
+	private static final boolean RQ2 = true;
+	private static final boolean RQ3 = true;
+	private static final boolean RQ4 = true;
 	
-	private static final String[] COL_NAME = {"Project", "Project Name"};
+	// --------------------------------------------------------------------------------
+	// Data Columns:
+	// --------------------------------------------------------------------------------
+		
+	private static final String[] COL_NAME = {"Name", "Project Name"};
 	
-	private static final String[] COL_MODELS = {"Models", "(Count of model histories with inconsistencies. / Count of all model histories in the project)"};
+	private static final String[] COL_MODELS_ALL = {"All", "Models (Count of all model histories in the project)"};
 	
-	private static final String[] COL_REVISIONS = {"Revisions", "Revisions (Revisions of the model histories with inconsistencies. + Revisions of other coevolving models (of the model histories with inconsistencie).)"};
+	private static final String[] COL_MODELS_INCONSISTENT = {"Inc.", "Models (Count of model histories with inconsistencies)"};
 	
-	private static final String[] COL_ELEMENTS = {"Elem.", "Elements (We first calculate the average of model elements for each revision (wich introduced and resolved an inconsistency) of a model history. Then we calculate the min; avg; median; max model elements over all considered model histories."};
+	private static final String[] COL_REVISIONS_INCONSISTENT = {"Source", "Revisions (Revisions of the model histories with inconsistencies)"};
 	
-	private static final String[] COL_INCONSISTENCIES = {"Inconsistencies", "RQ1 Inconsistencies (Count of all introduced inconsistencies in the project. $|$ Count of all resolved inconsistencies. $|$ Count of supported resolved inconsistencies.)"}; 
+	private static final String[] COL_REVISIONS_COEVOLVING = {"Co-ev.", "Revisions (Revisions of other coevolving models (of the model histories with inconsistencie))"};
 	
-	private static final String[] COL_WELLFORMED_CONSTRAINTS = {"NWF", "Not Well Formed Constraints"}; 
+	private static final String[] COL_ELEMENTS = {"Avg.", "Elements (We calculated the average of model elements for each revision (wich introduced and resolved an inconsistency) of a model history."};
 	
-	private static final String[] COL_REPAIRED_INCONSISTENCY = {"RI", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
+	// --------------------------------------------------------------------------------
 	
-	private static final String[] COL_HOR = {"HOR", "RQ2 Historically Observable Repairs (Repaired by completion. + Repaired by undo.)"};
+	private static final Object[] COL_GROUP_PROJECT = {"Project", "Project Name", 
+			COL_NAME};
+	
+	private static final Object[] COL_GROUP_MODELS = {"Models", "Model histories in the project", 
+			COL_MODELS_ALL, COL_MODELS_INCONSISTENT};
+	
+	private static final Object[] COL_GROUP_REVISIONS = {"Revisions", "Revisions of the model histories in the projects", 
+			COL_REVISIONS_INCONSISTENT, COL_REVISIONS_COEVOLVING};
+	
+	private static final Object[] COL_GROUP_ELEMENTS = {"Elements", "Avg. count of model elements", 
+			COL_ELEMENTS};
+	
+	// --------------------------------------------------------------------------------
+	
+	private static final Object[] COL_RQ_SUBJECTS = {"", "Selected evaluation subjects", 
+			COL_GROUP_PROJECT, COL_GROUP_MODELS, COL_GROUP_REVISIONS, COL_GROUP_ELEMENTS};
+	
+	// --------------------------------------------------------------------------------
+	
+	private static final String[] COL_INCONSISTENCIES_RESOLVED = {"Total", "RQ1 Inconsistencies (Count of all resolved inconsistencies)"};
+	
+	private static final String[] COL_INCONSISTENCIES_RESOLVED_SUPPORTED = {"Supp.", "RQ1 Inconsistencies (Count of supported resolved inconsistencies)"}; 
+	
+	private static final String[] COL_WELLFORMED_CONSTRAINTS = {"RegEx", "Not Well Formed Constraints"}; 
+	
+	private static final String[] COL_REPAIRED_INCONSISTENCY = {"At Least One", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
+	
+	// --------------------------------------------------------------------------------
+	
+	private static final Object[] COL_GROUP_INCONSISTENCIES = {"Inconsistencies", 
+			COL_INCONSISTENCIES_RESOLVED, COL_WELLFORMED_CONSTRAINTS, COL_INCONSISTENCIES_RESOLVED_SUPPORTED};
+	
+	private static final Object[] COL_GROUP_REPAIRED_INCONSISTENCY = {"Repair", 
+			COL_REPAIRED_INCONSISTENCY};
+	
+	// --------------------------------------------------------------------------------
+	
+	private static final Object[] COL_RQ_1 = {"RQ1", "Coverage: How many inconsistencies can be resolved by our approach?",
+			COL_GROUP_INCONSISTENCIES, COL_GROUP_REPAIRED_INCONSISTENCY};
+	
+	// --------------------------------------------------------------------------------
+	
+	private static final String[] COL_HOR_COMPLETION = {"Completion", "RQ2 Historically Observable Repairs (Repaired by completion)"};
+	
+	private static final String[] COL_HOR_UNDO = {"Undo", "RQ2 Historically Observable Repairs (Repaired by undo)"};
+	
+	// --------------------------------------------------------------------------------
+	
+	private static final Object[] COL_GROUP_OBSERVABLE = {"Observable", "Observable Repairs",
+			COL_HOR_COMPLETION, COL_HOR_UNDO}; 
+	
+	// --------------------------------------------------------------------------------
+	
+	private static final Object[] COL_RQ_2 = {"RQ2", "If an inconsistency can be resolved by our approach, do we generate a repair alternative which corresponds to the changes that have been actually performed to resolve the respective inconsistency?",
+			COL_GROUP_OBSERVABLE};
+	
+	// --------------------------------------------------------------------------------
 	
 	private static final String[] COL_REPIAR_ALTERNATIVE = {"RA", "RQ3 Repair Alternatives (min; avg; median; max)"};
 	
 	private static final String[] COL_HOR_RANKING = {"Prio.", "RQ3 Ranking Position of HOR (min; avg; median; max)"};
 	
-	private static final String[] COL_RUNTIME = {"T [ms]", "RQ4 Avg. Runtime [ms] (Loading the model revision and calculate the difference. + Partial recognition of sub-rules. + Deriving and matching the complement rule.)"};
+	// --------------------------------------------------------------------------------
+	
+	private static final Object[] COL_GROUP_ALTERNATIVES = {"Alternatives", "Repair Alternatives",
+			COL_REPIAR_ALTERNATIVE, COL_HOR_RANKING};
+	
+	// --------------------------------------------------------------------------------
+	
+	private static final Object[] COL_RQ_3 = {"RQ3", "Efficiency: How many repair alternatives must be inspected by developers until they find a relevant one?",
+			COL_GROUP_ALTERNATIVES};
+	
+	// --------------------------------------------------------------------------------
+	
+	private static final String[] COL_RUNTIME_DIFF = {"Diff.", "RQ4 Avg. Runtime [ms] (Loading the model revision and calculate the difference)"};
+	
+	private static final String[] COL_RUNTIME_RECOGNITION = {"Sub-R.", "RQ4 Avg. Runtime [ms] (Partial recognition of sub-rules)"};
+	
+	private static final String[] COL_RUNTIME_COMPLEMENT = {"Compl.-R.", "RQ4 Avg. Runtime [ms] (Deriving and matching the complement rule)"};
+
+	// --------------------------------------------------------------------------------
+	
+	private static final Object[] COL_GROUP_RUNTIME = {"Runtime [ms]", "Runtimes per calculation phase",
+			COL_RUNTIME_DIFF, COL_RUNTIME_RECOGNITION, COL_RUNTIME_COMPLEMENT};
+	
+	// --------------------------------------------------------------------------------
+	
+	private static final Object[] COL_RQ_4 = {"RQ4", " Performance: How long does it take to generate the repair alternatives for a given inconsistency?",
+			COL_GROUP_RUNTIME};
+	
+	// --------------------------------------------------------------------------------
+	
+	private static final Object[] COLS = {COL_RQ_SUBJECTS, COL_RQ_1, COL_RQ_2, COL_RQ_3, COL_RQ_4};
+	
+	// --------------------------------------------------------------------------------
 	
 	public ProjectReportGenerator() throws IOException, IllegalArgumentException, IllegalAccessException  {
 		LogTable projectReport = new LogTable();
@@ -103,6 +199,7 @@ public class ProjectReportGenerator {
 		
 		if (PROJECT_REPORT) {
 			System.out.println();
+			System.out.println(convertToLatexHeader(COLS));
 			System.out.println(convertToLatex(projectReport));
 		}
 		
@@ -112,8 +209,10 @@ public class ProjectReportGenerator {
 			
 			for (Field columnField : this.getClass().getDeclaredFields()) {
 				if (columnField.getName().startsWith("COL_")) {
-					String[] columnDefinition = (String[]) columnField.get(this);
-					System.out.println("  \\item " + columnDefinition[0] + " $\\to$ " + columnDefinition[1]);
+					if (columnField.get(this) instanceof String[]) {
+						String[] columnDefinition = (String[]) columnField.get(this);
+						System.out.println("  \\item " + columnDefinition[0] + " $\\to$ " + columnDefinition[1]);
+					}
 				}
 			}
 			
@@ -133,43 +232,58 @@ public class ProjectReportGenerator {
 		
 		List<History> histories = ReportGenerator.getProjectHistory_Reduced(modelPaths.get(0).getParentFile());
 		
-		report.append(COL_NAME[0], name);
-		report.append(COL_MODELS[0], formatFraction(
-				countConsideredModelsPerProject(modelPaths), 
-				countAllModelsPerProject(modelPaths.get(0).getParentFile())));
-		report.append(COL_REVISIONS[0],formatSum(
-				countVersionsPerModel(modelPaths.toArray(new File[0])),
-				countCoevolutionVersionPerModel(modelPaths.toArray(new File[0]))));
-		report.append(COL_ELEMENTS[0], formatResults(
-				minModelElementCount(historyLog.toArray(new LogTable[0])),
-				avgModelElementCount(historyLog.toArray(new LogTable[0])),
-				medianModelElementCount(historyLog.toArray(new LogTable[0])),
-				maxModelElementCount(historyLog.toArray(new LogTable[0]))));
-		report.append(COL_INCONSISTENCIES[0], formatFilter(
-				sumAllInconsistencies(histories.toArray(new History[0])),
-				sumResolvedInconsistencies(histories.toArray(new History[0])),
-				sumSupportedResolvedInconsistencies(inconsistenciesLog.toArray(new LogTable[0]))));
-		report.append(COL_WELLFORMED_CONSTRAINTS[0], 
-				sumWellFormedConstraints(histories.toArray(new History[0])));
-		report.append(COL_REPAIRED_INCONSISTENCY[0],
-				countInconsistenciesWithAtLeastOneRepair(inconsistenciesLog.toArray(new LogTable[0])));
-		report.append(COL_HOR[0], formatSum(
-				countHistoricallyObservableRepairs(inconsistenciesLog.toArray(new LogTable[0])),
-				countHistoricallyObservableUndos(inconsistenciesLog.toArray(new LogTable[0]))));
-		report.append(COL_REPIAR_ALTERNATIVE[0], formatResults(
-				minRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0])),
-				avgRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0])),
-				medianRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0])),
-				maxRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0]))));
-		report.append(COL_HOR_RANKING[0], formatResults(
-				minHORPriority(inconsistenciesLog.toArray(new LogTable[0])),
-				avgHORPriority(inconsistenciesLog.toArray(new LogTable[0])),
-				medianHORPriority(inconsistenciesLog.toArray(new LogTable[0])),
-				maxHORPriority(inconsistenciesLog.toArray(new LogTable[0]))));
-		report.append(COL_RUNTIME[0], formatSum(
-				avgDifferenceTime(inconsistenciesLog.toArray(new LogTable[0])),
-				avgRecognitionTime(inconsistenciesLog.toArray(new LogTable[0])),
-				avgComplementMatchingTime(inconsistenciesLog.toArray(new LogTable[0]))));
+		report.append(COL_NAME[0], 
+				name);
+		report.append(COL_MODELS_ALL[0], 
+				countAllModelsPerProject(modelPaths.get(0).getParentFile()));
+		report.append(COL_MODELS_INCONSISTENT[0],
+				countConsideredModelsPerProject(modelPaths));
+		report.append(COL_REVISIONS_INCONSISTENT[0],
+				countVersionsPerModel(modelPaths.toArray(new File[0])));
+		report.append(COL_REVISIONS_COEVOLVING[0],
+				countCoevolutionVersionPerModel(modelPaths.toArray(new File[0])));
+		report.append(COL_ELEMENTS[0],
+				avgModelElementCount(historyLog.toArray(new LogTable[0])));
+		
+		if (RQ1) {
+			report.append(COL_INCONSISTENCIES_RESOLVED[0],
+					sumResolvedInconsistencies(histories.toArray(new History[0])));
+			report.append(COL_WELLFORMED_CONSTRAINTS[0], 
+					sumWellFormedConstraints(histories.toArray(new History[0])));
+			report.append(COL_INCONSISTENCIES_RESOLVED_SUPPORTED[0],
+					sumSupportedResolvedInconsistencies(inconsistenciesLog.toArray(new LogTable[0])));
+			report.append(COL_REPAIRED_INCONSISTENCY[0],
+					countInconsistenciesWithAtLeastOneRepair(inconsistenciesLog.toArray(new LogTable[0])));
+		}
+		
+		if (RQ2) {
+			report.append(COL_HOR_COMPLETION[0],
+					countHistoricallyObservableRepairs(inconsistenciesLog.toArray(new LogTable[0])));
+			report.append(COL_HOR_UNDO[0],
+					countHistoricallyObservableUndos(inconsistenciesLog.toArray(new LogTable[0])));
+		}
+		
+		if (RQ3) {
+			report.append(COL_REPIAR_ALTERNATIVE[0], ReportGeneratorUtil.formatResults(
+					minRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0])),
+					avgRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0])),
+					medianRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0])),
+					maxRepairAlternatives(inconsistenciesLog.toArray(new LogTable[0]))));
+			report.append(COL_HOR_RANKING[0], ReportGeneratorUtil.formatResults(
+					minHORPriority(inconsistenciesLog.toArray(new LogTable[0])),
+					avgHORPriority(inconsistenciesLog.toArray(new LogTable[0])),
+					medianHORPriority(inconsistenciesLog.toArray(new LogTable[0])),
+					maxHORPriority(inconsistenciesLog.toArray(new LogTable[0]))));
+		}
+		
+		if (RQ4) {
+			report.append(COL_RUNTIME_DIFF[0],
+					avgDifferenceTime(inconsistenciesLog.toArray(new LogTable[0])));
+			report.append(COL_RUNTIME_RECOGNITION[0],
+					avgRecognitionTime(inconsistenciesLog.toArray(new LogTable[0])));
+			report.append(COL_RUNTIME_COMPLEMENT[0],
+					avgComplementMatchingTime(inconsistenciesLog.toArray(new LogTable[0])));
+		}
 	}
 	
 	private void generateOtherModelsReport(LogTable report, Map<String, List<EvaluationData>> evaluationDataPerProjects) throws IOException {
@@ -192,16 +306,34 @@ public class ProjectReportGenerator {
 		int unconsideredProjects = ReportGenerator.getProjects_Original().size() - ReportGenerator.getProjects_Reduced().size();
 		
 		report.append(COL_NAME[0], unconsideredProjects + " Others");
-		report.append(COL_MODELS[0], formatFraction(0, allModels - consideredModels));
-		report.append(COL_REVISIONS[0],NA);
+		report.append(COL_MODELS_ALL[0], allModels - consideredModels);
+		report.append(COL_MODELS_INCONSISTENT[0], 0);
+		report.append(COL_REVISIONS_INCONSISTENT[0], NA);
+		report.append(COL_REVISIONS_COEVOLVING[0], NA);
 		report.append(COL_ELEMENTS[0], NA);
-		report.append(COL_INCONSISTENCIES[0], TODO); // TODO: automatically re-check
-		report.append(COL_WELLFORMED_CONSTRAINTS[0], TODO);
-		report.append(COL_REPAIRED_INCONSISTENCY[0], NA);
-		report.append(COL_HOR[0], NA);
-		report.append(COL_REPIAR_ALTERNATIVE[0], NA);
-		report.append(COL_HOR_RANKING[0], NA);
-		report.append(COL_RUNTIME[0], NA);
+		
+		if (RQ1) {
+			report.append(COL_INCONSISTENCIES_RESOLVED[0], 0); // TODO: automatically re-check
+			report.append(COL_WELLFORMED_CONSTRAINTS[0], NA);
+			report.append(COL_INCONSISTENCIES_RESOLVED_SUPPORTED[0], 0); // TODO: automatically re-check
+			report.append(COL_REPAIRED_INCONSISTENCY[0], NA);
+		}
+		
+		if (RQ2) {
+			report.append(COL_HOR_COMPLETION[0], NA);
+			report.append(COL_HOR_UNDO[0], NA);
+		}
+		
+		if (RQ3) {
+			report.append(COL_REPIAR_ALTERNATIVE[0], NA);
+			report.append(COL_HOR_RANKING[0], NA);
+		}
+		
+		if (RQ4) {
+			report.append(COL_RUNTIME_DIFF[0], NA);
+			report.append(COL_RUNTIME_RECOGNITION[0], NA);
+			report.append(COL_RUNTIME_COMPLEMENT[0], NA);
+		}
 	}
 	
 	private void generateModelReport(
@@ -221,87 +353,6 @@ public class ProjectReportGenerator {
 				Collections.singletonList(recognitionLog));
 	}
 	
-	private String formatSum(Object... values) {
-		if (isNotAvailable(values)) {
-			return NA.toString();
-		} else {
-			StringBuilder text = new StringBuilder();
-			
-			for (int i = 0; i < values.length; i++) {
-				text.append(values[i]);
-				
-				if (i < values.length - 1) {
-					text.append(" + ");
-				}
-			}
-			
-			return text.toString();
-		}
-	}
-	
-	private String formatFraction(Object... values) {
-		if (isNotAvailable(values)) {
-			return NA.toString();
-		} else {
-			StringBuilder text = new StringBuilder();
-			
-			for (int i = 0; i < values.length; i++) {
-				text.append(values[i]);
-				
-				if (i < values.length - 1) {
-					text.append("/");
-				}
-			}
-			
-			return text.toString();
-		}
-	}
-	
-	private String formatFilter(Object... values) {
-		if (isNotAvailable(values)) {
-			return NA.toString();
-		} else {
-			StringBuilder text = new StringBuilder();
-			
-			for (int i = 0; i < values.length; i++) {
-				text.append(values[i]);
-				
-				if (i < values.length - 1) {
-					text.append(" $\\geq$ ");
-				}
-			}
-			
-			return text.toString();
-		}
-	}
-	
-	private String formatResults(Object... values) {
-		if (isNotAvailable(values)) {
-			return NA.toString();
-		} else {
-			StringBuilder text = new StringBuilder();
-			
-			for (int i = 0; i < values.length; i++) {
-				text.append(values[i]);
-				
-				if (i < values.length - 1) {
-					text.append("; ");
-				}
-			}
-			
-			return text.toString();
-		}
-	}
-	
-	private boolean isNotAvailable(Object... values) {
-		for (Object value : values) {
-			if (value != NA) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	private Object countConsideredModelsPerProject(List<File> modelPaths) {
 		return modelPaths.size();
 	}
@@ -319,38 +370,9 @@ public class ProjectReportGenerator {
 		coevoluations.removeAll(ReportGenerator.collectDatesPerModel(modelPaths));
 		return assertPositive(coevoluations.size());
 	}
-	
-	private Object maxModelElementCount(LogTable... historyLogs) {
-		return assertPositive(round(max(merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs))));
-	}
-
-	private Object medianModelElementCount(LogTable... historyLogs) {
-		return assertPositive(round(median(merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs))));
-	}
 
 	private Object avgModelElementCount(LogTable... historyLogs) {
 		return assertPositive(round(avg(merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs))));
-	}
-
-	private Object minModelElementCount(LogTable... historyLogs) {
-		return assertPositive(round(min(merge(HistoryLog.COL_AVG_ELEMENTS, Integer.class, historyLogs))));
-	}
-
-//	private Object sumAllInconsistencies(LogTable... historyLogs) 
-	private Object sumAllInconsistencies(History... histories) throws IOException {
-		
-		// TODO: Report all inconsistencies...
-//		return assertPositive(sum(merge(HistoryLog.COL_INCONSISTENCY_TRACES, Integer.class, historyLogs)));
-		
-//		int count = 0;
-//		
-//		for (History history : histories) {
-//			count += history.getUniqueProblems().size();
-//		}
-//		
-//		return count;
-		
-		return TODO;
 	}
 	
 //	private Object sumResolvedInconsistencies(LogTable... inconsistenciesLog) {
