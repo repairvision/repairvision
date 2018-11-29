@@ -79,6 +79,52 @@ public class LogUtil {
 		return merged;
 	}
 	
+	public static String convertToLatexHeader(Object[] columns) {
+		StringBuilder table = new StringBuilder();
+		
+		for (Object column : columns) {
+			if (column instanceof Object[]) {
+				Object[] subColumn = (Object[]) column;
+				
+				if ((subColumn.length > 0) && (subColumn[0] instanceof String)) {
+					// \multicolumn{4}{|c|}{RQ}
+					int size = columnSize(subColumn);
+					
+					if (size > 0) {
+						table.append("& \\multicolumn{");
+						table.append(size);
+						table.append("}{|c|}{");
+						table.append(subColumn[0]);
+						table.append("}");
+						table.append("\n");
+					}
+				}
+			}
+		}
+		
+		for (Object column : columns) {
+			if (column instanceof Object[]) {
+				table.append(convertToLatexHeader((Object[]) column));
+			}
+		}
+		
+		return table.toString();
+	}
+	
+	private static int columnSize(Object[] columns) {
+		int size = 0;
+		
+		for (Object column : columns) {
+			if (column instanceof String[]) {
+				++size;
+			} else if (column instanceof Object[]) {
+				size += columnSize((Object[]) column);
+			}
+		}
+		
+		return size;
+	}
+	
 	public static String convertToLatex(LogTable log) {
 		StringBuilder table = new StringBuilder();
 		List<String> header = new ArrayList<>(log.getColumns());
