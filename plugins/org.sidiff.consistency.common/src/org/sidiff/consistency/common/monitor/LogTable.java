@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Predicate;
 import java.util.Set;
 
 import org.apache.commons.csv.CSVFormat;
@@ -56,6 +57,28 @@ public class LogTable {
 	
 	public Row getRow(int index) {
 		return new Row(this, index);
+	}
+	
+	public void filterRows(Predicate<Row> filter) {
+		List<Integer> filtered = new ArrayList<>();
+		int offset = 0;
+		
+		for (int i = 0; i < maxColumn.size(); i++) {
+			if (filter.test(getRow(i))) {
+				filtered.add(i);
+			}
+		}
+		
+		for (Integer row : filtered) {
+			for (List<Object> column : table.values()) {
+				int index = (row - offset);
+				
+				if (column.size() > index) {
+					column.remove(index);
+				}
+			}
+			++offset;
+		}
 	}
 	
 	public boolean createColumn(String name) {
@@ -112,8 +135,14 @@ public class LogTable {
 		return table.get(name).set(index, value);
 	}
 	
-	public boolean append(String name, Object value) {
-		return append(name, value, true, false);
+	public void append(String name, Object value) {
+		append(name, value, true, false);
+	}
+	
+	public void append(String name, List<?> values) {
+		for (Object value : values) {
+			append(name, value);
+		}
 	}
 	
 	public boolean append(String name, Object value, boolean lastRow, boolean unique) {

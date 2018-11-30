@@ -1,6 +1,7 @@
 package org.sidiff.consistency.common.monitor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -71,6 +72,23 @@ public class LogUtil {
 			for (String header : table.getColumns()) {
 				if (!headers.contains(header)) {
 					merged.createColumn(header, merge(header, Object.class, tables));
+					headers.add(header);
+				}
+			}
+		}
+		
+		return merged;
+	}
+	
+	public static LogTable merge(List<LogTable> tables, String... selectedHeaders) {
+		LogTable merged = new LogTable();
+		Set<String> headers = new HashSet<>();
+		Set<String> selectedHeadersSet =  new HashSet<>(Arrays.asList(selectedHeaders));
+		
+		for (LogTable table : tables) {
+			for (String header : table.getColumns()) {
+				if (!headers.contains(header) && selectedHeadersSet.contains(header)) {
+					merged.createColumn(header, merge(header, Object.class, tables.toArray(new LogTable[0])));
 					headers.add(header);
 				}
 			}
