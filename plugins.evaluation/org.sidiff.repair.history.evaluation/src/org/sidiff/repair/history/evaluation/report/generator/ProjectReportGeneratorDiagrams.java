@@ -16,8 +16,6 @@ public class ProjectReportGeneratorDiagrams {
 	
 	private static final boolean ENABLED = false;
 	
-	private static final String OUTPUT_FOLDER = "C:\\workspaces\\sidiff-build\\org.sidiff.repair.history.evaluation\\results\\";
-
 	public ProjectReportGeneratorDiagrams() throws IOException, IllegalArgumentException, IllegalAccessException  {
 		if (!ENABLED) return;
 		
@@ -35,7 +33,7 @@ public class ProjectReportGeneratorDiagrams {
 					InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_UNDOS,
 					InconsistenciesLog.COL_RANKING_OF_BEST_HOR);
 			
-			rq3_repairs.toCSV(OUTPUT_FOLDER + evaluationDataPerProject.getKey() + "_rq3_repairs.csv");
+			rq3_repairs.toCSV(ReportGenerator.OUTPUT_FOLDER + evaluationDataPerProject.getKey() + "_rq3_repairs.csv");
 			
 			LogTable rq3_repairs_hor = merge(inconsistenciesLogs,
 					InconsistenciesLog.COL_INCONSISTENCY,
@@ -49,14 +47,14 @@ public class ProjectReportGeneratorDiagrams {
 				!row.get(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_REPAIRS, Boolean.class) &&
 				!row.get(InconsistenciesLog.COL_HISTORICALLY_OBSERVABLE_UNDOS, Boolean.class));
 			
-			rq3_repairs_hor.toCSV(OUTPUT_FOLDER + evaluationDataPerProject.getKey() + "_rq3_repairs_hor.csv");
+			rq3_repairs_hor.toCSV(ReportGenerator.OUTPUT_FOLDER + evaluationDataPerProject.getKey() + "_rq3_repairs_hor.csv");
 			
 			
 			LogTable rq4_modelelements = merge(historyLogs,
 					HistoryLog.COL_HISTORY,
 					HistoryLog.COL_AVG_ELEMENTS);
 			
-			rq4_modelelements.toCSV(OUTPUT_FOLDER + evaluationDataPerProject.getKey() + "_rq4_modelelements.csv");
+			rq4_modelelements.toCSV(ReportGenerator.OUTPUT_FOLDER + evaluationDataPerProject.getKey() + "_rq4_modelelements.csv");
 			
 			LogTable rq4_repairs = merge(inconsistenciesLogs,
 					InconsistenciesLog.COL_INCONSISTENCY,
@@ -65,7 +63,7 @@ public class ProjectReportGeneratorDiagrams {
 					InconsistenciesLog.COL_TIME_RECOGNITION,
 					InconsistenciesLog.COL_TIME_COMPLEMENT_MATCHING);
 			
-			rq4_repairs.toCSV(OUTPUT_FOLDER + evaluationDataPerProject.getKey() + "_rq4_runtime.csv");
+			rq4_repairs.toCSV(ReportGenerator.OUTPUT_FOLDER + evaluationDataPerProject.getKey() + "_rq4_runtime.csv");
 		}
 	}
 }

@@ -38,6 +38,8 @@ import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersi
 
 public class ReportGenerator implements IApplication {
 	
+	public static final String OUTPUT_FOLDER = "C:\\workspaces\\sidiff-build\\org.sidiff.repair.history.evaluation\\results\\";
+	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
 		new ProjectReportGenerator();

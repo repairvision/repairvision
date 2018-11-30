@@ -201,6 +201,8 @@ public class ProjectReportGenerator {
 			System.out.println();
 			System.out.println(convertToLatexHeader(COLS));
 			System.out.println(convertToLatex(projectReport));
+			
+			projectReport.toCSV(ReportGenerator.OUTPUT_FOLDER +"rq1-4.csv");
 		}
 		
 		if (LEGEND) {
