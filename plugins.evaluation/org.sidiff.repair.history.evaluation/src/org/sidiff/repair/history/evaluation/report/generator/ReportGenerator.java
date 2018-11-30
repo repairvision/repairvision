@@ -41,6 +41,7 @@ public class ReportGenerator implements IApplication {
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
 		new ProjectReportGenerator();
+		new ProjectReportGeneratorDiagrams();
 		new InconsistencyReportGenerator();
 		new EditRuleReportGenerator();
 		
