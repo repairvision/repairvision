@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import org.apache.commons.lang3.StringUtils;
-
 public class LogUtil {
 	
 	/**
@@ -171,7 +169,7 @@ public class LogUtil {
 			String column = header.get(i);
 			
 			table.append(column);
-			table.append(StringUtils.repeat(" ", minColumnSize[i] - column.length()));
+			table.append(repeat(" ", minColumnSize[i] - column.length()));
 			
 			if (i < (header.size() - 1)) {
 				table.append(" & ");
@@ -185,7 +183,7 @@ public class LogUtil {
 				String value = log.valueToString(log.getColumn(column).get(i));
 				
 				table.append(value);
-				table.append(StringUtils.repeat(" ", minColumnSize[j] - value.length()));
+				table.append(repeat(" ", minColumnSize[j] - value.length()));
 				
 				if (j < (header.size() - 1)) {
 					table.append(" & ");
@@ -197,6 +195,16 @@ public class LogUtil {
 		return table.toString();
 	}
 	
+	public static String repeat(String string, int size) {
+		StringBuilder repeated = new StringBuilder();
+		
+		for (int i = 0; i < size; i++) {
+			repeated.append(string);
+		}
+		
+		return repeated.toString();
+	}
+
 	public static Object division(int a, int b) {
 		if (b != 0) {
 			return a / b;
