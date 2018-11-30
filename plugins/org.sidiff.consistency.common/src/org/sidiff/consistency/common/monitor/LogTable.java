@@ -1,5 +1,6 @@
 package org.sidiff.consistency.common.monitor;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -239,6 +240,7 @@ public class LogTable {
 			// print header:
 			csvFileFormat = csvFileFormat.withHeader(table.keySet().toArray(new String[0]));
 			
+			new File(fileName).getParentFile().mkdirs();
 			fileWriter = new FileWriter(fileName);
 			csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
 			
