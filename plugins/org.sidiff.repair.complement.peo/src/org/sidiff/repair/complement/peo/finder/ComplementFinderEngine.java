@@ -12,6 +12,8 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.model.Action.Type;
+import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
@@ -188,6 +190,18 @@ public class ComplementFinderEngine {
 		for (Parameter parameter : complementMatche.getRule().getParameters()) {
 			Object value = complementMatche.getParameterValue(parameter);
 			engine.getScriptEngine().put(parameter.getName(), value);
+		}
+		
+		// FIXME WORKAROUND: Allow overwriting of attributes! Find better solution!?
+		for (GraphElement complementingChange : complementRule.getComplementingChanges()) {
+			if (complementingChange instanceof Attribute) {
+				Parameter parameter = complementMatche.getRule().getParameter(((Attribute) complementingChange).getValue());
+				
+				if (parameter != null) {
+					complementMatche.setParameterValue(parameter, null);
+					engine.getScriptEngine().put(parameter.getName(), null);
+				}
+			}
 		}
 		
 		Iterator<Match> matchFinder = engine.findMatches(
