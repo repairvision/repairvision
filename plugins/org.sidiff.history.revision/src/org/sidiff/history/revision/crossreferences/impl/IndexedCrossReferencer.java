@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.history.revision.crossreferences.ICrossReferencer;
 
 public class IndexedCrossReferencer implements ICrossReferencer {
@@ -23,21 +24,36 @@ public class IndexedCrossReferencer implements ICrossReferencer {
 		return incomingReferences.get(type);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Iterator<? extends EObject> getInverse(EObject target, EReference incoming) {
 		if (incoming.isContainment()) {
 			return Collections.singletonList(target.eContainer()).iterator();
 		} else {
-			List<List<EObject>> sourceAllCrossReferences = crossReferences.get(target);
-			
-			if (sourceAllCrossReferences != null) {
-				int featureIndex = getFeatureIndex(target, incoming);
+			if (incoming.getEOpposite() == null) {
+				List<List<EObject>> sourceAllCrossReferences = crossReferences.get(target);
 				
-				if (featureIndex < sourceAllCrossReferences.size()) {
-					List<EObject> sourceCrossReferences = sourceAllCrossReferences.get(featureIndex);
+				if (sourceAllCrossReferences != null) {
+					int featureIndex = getFeatureIndex(target, incoming);
 					
-					if (sourceCrossReferences != null) {
-						return sourceCrossReferences.iterator();
+					if (featureIndex < sourceAllCrossReferences.size()) {
+						List<EObject> sourceCrossReferences = sourceAllCrossReferences.get(featureIndex);
+						
+						if (sourceCrossReferences != null) {
+							return sourceCrossReferences.iterator();
+						}
+					}
+				}
+			} else {
+				if (incoming.getEOpposite().isMany()) {
+					return ((List<EObject>) target.eGet(incoming.getEOpposite())).iterator();
+				} else {
+					EObject source = (EObject) target.eGet(incoming.getEOpposite());
+					
+					if (source != null) {
+						return JUtil.singeltonIterator(source);
+					} else {
+						return JUtil.emptyIterator();
 					}
 				}
 			}
