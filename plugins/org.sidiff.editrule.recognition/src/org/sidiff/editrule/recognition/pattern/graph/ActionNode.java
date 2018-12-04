@@ -345,41 +345,46 @@ public class ActionNode extends ActionGraphElement  {
 		for (List<ActionEdge> actionEdges : inzidentsPerAdjacent) {
 			for (ActionEdge actionEdge : actionEdges) {
 				if (actionEdge.getAction().equals(Type.PRESERVE) || actionEdge.getAction().equals(Type.DELETE)) {
-					EClass targetType = (actionEdge.getSource() == this) ? 
-							actionEdge.getEditRuleEdge().getTarget().getType() : 
-							actionEdge.getEditRuleEdge().getSource().getType();
-					boolean exists = false;
-
-					// Search model A:
-					if (matchA != null) {
-						Iterator<? extends EObject> iterator = actionGraph.getMatchingHelper()
-								.getTargetsA(matchA, nodePatternA, actionEdge.getEdgePatternA());
+					
+					// Optimization: Filter incoming opposite edges:
+					if (!((actionEdge.getOpposite() != null) && (actionEdge.getSource() != this))) {
 						
-						while (iterator.hasNext()) {
-							EObject targetA = (EObject) iterator.next();
+						EClass targetType = (actionEdge.getSource() == this) ? 
+								actionEdge.getEditRuleEdge().getTarget().getType() : 
+								actionEdge.getEditRuleEdge().getSource().getType();
+						boolean exists = false;
 
-							if (MetaModelUtil.isAssignableTo(targetA.eClass(), targetType)) {
-								exists = true;
-								break;
+						// Search model A:
+						if (matchA != null) {
+							Iterator<? extends EObject> iterator = actionGraph.getMatchingHelper()
+									.getTargetsA(matchA, nodePatternA, actionEdge.getEdgePatternA());
+							
+							while (iterator.hasNext()) {
+								EObject targetA = (EObject) iterator.next();
+
+								if (MetaModelUtil.isAssignableTo(targetA.eClass(), targetType)) {
+									exists = true;
+									break;
+								}
 							}
 						}
-					}
 
-					// Search model B:
-					if (!exists && (matchB != null)) {
-						for (Iterator<? extends EObject> iterator = actionGraph.getMatchingHelper()
-								.getTargetsB(matchB, nodePatternB, actionEdge.getEdgePatternB()); iterator.hasNext();) {
-							EObject targetB = (EObject) iterator.next();
+						// Search model B:
+						if (!exists && (matchB != null)) {
+							for (Iterator<? extends EObject> iterator = actionGraph.getMatchingHelper()
+									.getTargetsB(matchB, nodePatternB, actionEdge.getEdgePatternB()); iterator.hasNext();) {
+								EObject targetB = (EObject) iterator.next();
 
-							if (MetaModelUtil.isAssignableTo(targetB.eClass(), targetType)) {
-								exists = true;
-								break;
+								if (MetaModelUtil.isAssignableTo(targetB.eClass(), targetType)) {
+									exists = true;
+									break;
+								}
 							}
 						}
-					}
 
-					if (!exists) {
-						return false;
+						if (!exists) {
+							return false;
+						}
 					}
 				}
 			}
