@@ -62,6 +62,11 @@
                icon="icons/full/obj16/file.png"
                style="push">
          </command>
+         <command
+               commandId="org.sidiff.history.model.editor.command.findmodelelement.byuri"
+               icon="icons/full/obj16/findlocation.png"
+               style="push">
+         </command>
          <separator
                name="org.sidiff.history.model.editor.separator.tools.end"
                visible="true">
@@ -86,6 +91,10 @@
             id="org.sidiff.history.model.editor.command.open.versions"
             name="Show Modified Model Versions ">
       </command>
+      <command
+            id="org.sidiff.history.model.editor.command.findmodelelement.byuri"
+            name="Find Model Element By URI">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -104,6 +113,10 @@
       <handler
             class="org.sidiff.historymodel.presentation.handlers.OpenModifiedModelVersions"
             commandId="org.sidiff.history.model.editor.command.open.versions">
+      </handler>
+      <handler
+            class="org.sidiff.historymodel.presentation.handlers.FindModelElementByURIHandler"
+            commandId="org.sidiff.history.model.editor.command.findmodelelement.byuri">
       </handler>
    </extension>
 </plugin>
