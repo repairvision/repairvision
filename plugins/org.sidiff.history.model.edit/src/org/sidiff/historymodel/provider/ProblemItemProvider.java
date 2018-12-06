@@ -8,11 +8,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -23,7 +20,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.HistoryModelPackage;
 import org.sidiff.historymodel.Problem;
@@ -402,13 +398,13 @@ public class ProblemItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
+			childrenFeatures.add(HistoryModelPackage.Literals.PROBLEM__ANNOTATIONS);
 			childrenFeatures.add(HistoryModelPackage.Literals.PROBLEM__INVALID_ELEMENTS);
 			childrenFeatures.add(HistoryModelPackage.Literals.PROBLEM__MODIFICATIONS);
-			childrenFeatures.add(HistoryModelPackage.Literals.PROBLEM__ANNOTATIONS);
 		}
 		return childrenFeatures;
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -504,8 +500,8 @@ public class ProblemItemProvider
 			case HistoryModelPackage.PROBLEM__MODIFICATION_CLASSIFICATION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case HistoryModelPackage.PROBLEM__MODIFICATIONS:
 			case HistoryModelPackage.PROBLEM__ANNOTATIONS:
+			case HistoryModelPackage.PROBLEM__MODIFICATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -525,13 +521,13 @@ public class ProblemItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(HistoryModelPackage.Literals.PROBLEM__MODIFICATIONS,
-				 HistoryModelFactory.eINSTANCE.createChangeSet()));
+				(HistoryModelPackage.Literals.PROBLEM__ANNOTATIONS,
+				 HistoryModelFactory.eINSTANCE.createAnnotation()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(HistoryModelPackage.Literals.PROBLEM__ANNOTATIONS,
-				 HistoryModelFactory.eINSTANCE.createAnnotation()));
+				(HistoryModelPackage.Literals.PROBLEM__MODIFICATIONS,
+				 HistoryModelFactory.eINSTANCE.createChangeSet()));
 	}
 
 	/**
