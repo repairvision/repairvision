@@ -282,13 +282,13 @@ public class LogUtil {
 		}
 	}
 	
-	public static Object avg(List<Integer> list) {
+	public static Object avg(List<? extends Number> list) {
 		if (list.size() > 0) {
 			double sum = 0.0;
 			double count = 0.0;
 			
-			for (int value : list) {
-				sum += value;
+			for (Number value : list) {
+				sum += value.longValue();
 				++count;
 			}
 			
