@@ -120,7 +120,7 @@ public class ComplementFinderEngine {
 			List<ParameterBinding> parameters) {
 
 		// Create complement pre-match by partial source-rule match:
-		Match complementMatche = new MatchImpl(complementRule.getComplementRule());
+		Match complementMatch = new MatchImpl(complementRule.getComplementRule());
 
 		// Get change context as pre-match:
 		for (RecognitionMatch sourceRuleMatch : complementRule.getRecognitionMatch()) {
@@ -129,10 +129,10 @@ public class ComplementFinderEngine {
 				RecognitionEdgeMatch sourceEdgeMatch = (RecognitionEdgeMatch) sourceRuleMatch;
 				
 				if (sourceEdgeMatch.getAction().equals(Type.CREATE)) {
-					addMatch(complementRule, complementMatche,
+					addMatch(complementRule, complementMatch,
 							sourceEdgeMatch.getEdge().getSource(),
 							sourceEdgeMatch.getSrcModelBElement());
-					addMatch(complementRule, complementMatche,
+					addMatch(complementRule, complementMatch,
 							sourceEdgeMatch.getEdge().getTarget(),
 							sourceEdgeMatch.getTgtModelBElement());
 				}
@@ -141,13 +141,13 @@ public class ComplementFinderEngine {
 					EObject src = ((RecognitionEdgeMatch) sourceRuleMatch).getSrcModelBElement();
 					
 					if (src != null) {
-						addMatch(complementRule, complementMatche, sourceEdgeMatch.getEdge().getSource(), src);
+						addMatch(complementRule, complementMatch, sourceEdgeMatch.getEdge().getSource(), src);
 					}
 					
 					EObject tgt = sourceEdgeMatch.getTgtModelBElement();
 					
 					if (tgt != null) {
-						addMatch(complementRule, complementMatche, sourceEdgeMatch.getEdge().getTarget(), tgt);
+						addMatch(complementRule, complementMatch, sourceEdgeMatch.getEdge().getTarget(), tgt);
 					}
 				}
 			}
@@ -156,7 +156,7 @@ public class ComplementFinderEngine {
 				RecognitionNodeSingleMatch sourceNodeMatch = (RecognitionNodeSingleMatch) sourceRuleMatch;
 				
 				if (sourceNodeMatch.getAction().equals(Type.CREATE)) {
-					addMatch(complementRule, complementMatche,
+					addMatch(complementRule, complementMatch,
 							sourceNodeMatch.getNode(),
 							sourceNodeMatch.getModelBElement());
 				}
@@ -166,7 +166,7 @@ public class ComplementFinderEngine {
 				RecognitionAttributeMatch sourceAttributeMatch = (RecognitionAttributeMatch) sourceRuleMatch;
 				
 				if (sourceAttributeMatch.getAction().equals(Type.CREATE)) {
-					addMatch(complementRule, complementMatche,
+					addMatch(complementRule, complementMatch,
 							sourceAttributeMatch.getAttribute().getNode(),
 							sourceAttributeMatch.getObject());
 				}
@@ -175,9 +175,15 @@ public class ComplementFinderEngine {
 			else if (sourceRuleMatch instanceof RecognitionParameterMatch) {
 				RecognitionParameterMatch sourceParameterMatch = (RecognitionParameterMatch) sourceRuleMatch;
 				
-				addMatch(complementRule, complementMatche, 
-						sourceParameterMatch.getParameter(), 
-						sourceParameterMatch.getValue());
+				// FIXME WORKAROUND: Allow overwriting of attributes! Find better solution!? Filter earlier!?
+				// FIXME: Create: Accessor Operation for Structural Feature
+				// file:/users/mohrndorf/workspaces/sidiff-build/org.eclipse.git.evaluation_2018-11-02/modeling.mdt.ocl/plugins_org.eclipse.ocl.pivot_model_Lookup.ecore/0008_2015-06-27T12-53-05Z_323236adcbbf40b88d9362925b642167097bd466/plugins_org.eclipse.ocl.pivot_model_Lookup.ecore#_fMJ_eN6tEei97MD7GK1RmA
+				// ThereMayNotBeTwoOperationsAndWithTheSameSignature
+//				if (!isAttributeValueChange(complementRule, complementMatch)) {
+					addMatch(complementRule, complementMatch, 
+							sourceParameterMatch.getParameter(), 
+							sourceParameterMatch.getValue());
+//				}
 			}
 
 			// NOTE: Ignore EditRuleNodeMulitMatches... only unique context!
@@ -187,25 +193,13 @@ public class ComplementFinderEngine {
 		ArrayList<Match> complementPreMatches = new ArrayList<>();
 		
 		// FIXME WORKAROUND: This should be done by Henshin!
-		for (Parameter parameter : complementMatche.getRule().getParameters()) {
-			Object value = complementMatche.getParameterValue(parameter);
+		for (Parameter parameter : complementMatch.getRule().getParameters()) {
+			Object value = complementMatch.getParameterValue(parameter);
 			engine.getScriptEngine().put(parameter.getName(), value);
 		}
 		
-		// FIXME WORKAROUND: Allow overwriting of attributes! Find better solution!?
-		for (GraphElement complementingChange : complementRule.getComplementingChanges()) {
-			if (complementingChange instanceof Attribute) {
-				Parameter parameter = complementMatche.getRule().getParameter(((Attribute) complementingChange).getValue());
-				
-				if (parameter != null) {
-					complementMatche.setParameterValue(parameter, null);
-					engine.getScriptEngine().put(parameter.getName(), null);
-				}
-			}
-		}
-		
 		Iterator<Match> matchFinder = engine.findMatches(
-				complementRule.getComplementRule(), graphModelB, complementMatche).iterator();
+				complementRule.getComplementRule(), graphModelB, complementMatch).iterator();
 		
 		// TODO: Instead of searching all matches, just filter the domain values of the parameters.
 //		while (matchFinder.hasNext() && (complementPreMatches.size() < 1)) {
@@ -220,6 +214,19 @@ public class ComplementFinderEngine {
 		return complementPreMatches;
 	}
 	
+	private boolean isAttributeValueChange(ComplementRule complementRule, Match complementMatch) {
+		for (GraphElement complementingChange : complementRule.getComplementingChanges()) {
+			if (complementingChange instanceof Attribute) {
+				Parameter parameter = complementMatch.getRule().getParameter(((Attribute) complementingChange).getValue());
+
+				if (parameter != null) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private void addMatch(ComplementRule complementRule, Match complementPreMatches, 
 			Parameter sourceParameter, Object value) {
 		
