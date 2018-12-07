@@ -46,6 +46,7 @@ public class ReportGenerator implements IApplication {
 		new ProjectReportGeneratorDiagrams();
 		new InconsistencyReportGenerator();
 		new EditRuleReportGenerator();
+		new AnnotationReportGenerator();
 		
 		return IApplication.EXIT_OK;
 	}
