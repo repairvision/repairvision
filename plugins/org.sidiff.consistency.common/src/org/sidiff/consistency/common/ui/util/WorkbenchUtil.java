@@ -2,7 +2,10 @@ package org.sidiff.consistency.common.ui.util;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
@@ -51,6 +54,26 @@ public class WorkbenchUtil {
 		return view[0];
 	}
 
+	public static String askForValue(String message, String initialValue, IInputValidator validation) {
+		String[] result = new String[1];
+		
+		Display.getDefault().syncExec(new Runnable() {
+		    @Override
+		    public void run() {
+				InputDialog dlg = new InputDialog(
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(),
+						message, initialValue, validation);
+				
+				if (dlg.open() == Window.OK) {
+					result[0] = dlg.getValue();
+				}
+		    }
+		});
+		
+		return result[0];
+	}
+	
 	public static void showMessage(String message) {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
