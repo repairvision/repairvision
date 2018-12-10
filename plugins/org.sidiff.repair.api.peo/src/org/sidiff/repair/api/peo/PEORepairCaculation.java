@@ -105,7 +105,7 @@ public class PEORepairCaculation {
 								complement.getRecognizedChanges(),
 								complement.getRecognitionMatch())) {
 							
-							List<Match> complementMatches = complementFinderEngine.findComplementMatches(complement, Collections.emptyList());
+							List<Match> complementMatches = complementFinderEngine.findComplementMatches(complement);
 							List<Match> repairMatches = new ArrayList<>(complementMatches.size());
 							
 							for (Match complementMatch : complementMatches) {
