@@ -19,17 +19,16 @@ public class VariableMatching implements IMatching {
 	
 	private EObject[] assignment;
 	
-	private boolean isPartialMatch;
+	private Integer size;
 	
 	public VariableMatching(
-			Map<NodePattern, Variable> nodeToVariables, 
-			List<NodePattern> variableNodes,
-			EObject[] assignment, 
-			boolean isPartialMatch) {
+			Map<NodePattern, Variable> nodeToVariables, List<NodePattern> variableNodes,
+			EObject[] assignment, Integer size) {
 
 		this.nodeToVariables = nodeToVariables;
 		this.variableNodes = variableNodes;
 		this.assignment = assignment;
+		this.size = size;
 	}
 
 	@Override
@@ -99,6 +98,6 @@ public class VariableMatching implements IMatching {
 
 	@Override
 	public boolean isPartialMatching() {
-		return isPartialMatch;
+		return assignment.length != size;
 	}
 }

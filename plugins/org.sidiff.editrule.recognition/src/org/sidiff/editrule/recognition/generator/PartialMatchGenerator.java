@@ -44,6 +44,8 @@ public class PartialMatchGenerator {
 	private Map<NodePattern, Variable> nodeToVariables = new HashMap<>();
 
 	private List<EObject[]> results;
+	
+	private List<Integer> resultsSize;
 
 	// -------------------------------------------------
 
@@ -258,6 +260,7 @@ public class PartialMatchGenerator {
 
 	private void findAssignments() {
 		results = new ArrayList<>();
+		resultsSize = new ArrayList<>();
 		assignments.reset();
 
 		LogTime matchingTimer = new LogTime();
@@ -506,6 +509,9 @@ public class PartialMatchGenerator {
 	private void storeAssignment() {
 		EObject[] assignments = new EObject[variableNodes.size()];
 		results.add(assignments);
+		resultsSize.add(this.assignments.size());
+		
+		assert (results.size() == resultsSize.size());
 
 		for (int i = 0; i < this.assignments.size(); i++) {
 			Variable variable = subVariables.get(i);
@@ -520,6 +526,8 @@ public class PartialMatchGenerator {
 		return new Iterator<IMatching>() {
 
 			private Iterator<EObject[]> assignmentIterator = results.listIterator();
+			
+			private Iterator<Integer> assignmentSizeIterator = resultsSize.listIterator();
 
 			@Override
 			public boolean hasNext() {
@@ -530,7 +538,7 @@ public class PartialMatchGenerator {
 			public IMatching next() {
 				if (hasNext()) {
 					return new VariableMatching(nodeToVariables, variableNodes,
-							assignmentIterator.next(), isPartialAssignment());
+							assignmentIterator.next(), assignmentSizeIterator.next());
 				} else {
 					throw new NoSuchElementException();
 				}
