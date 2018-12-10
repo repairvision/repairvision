@@ -12,8 +12,6 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.model.Action.Type;
-import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
@@ -28,7 +26,6 @@ import org.sidiff.repair.complement.matching.RecognitionMatch;
 import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
 import org.sidiff.repair.complement.matching.RecognitionParameterMatch;
 import org.sidiff.repair.complement.peo.configuration.ComplementFinderSettings;
-import org.sidiff.repair.complement.util.ParameterBinding;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 /**
@@ -115,9 +112,7 @@ public class ComplementFinderEngine {
 		return new ComplementFinder(this, editRule, repairScope, overwriteScope, settings);
 	}
 	
-	public List<Match> findComplementMatches(
-			ComplementRule complementRule, 
-			List<ParameterBinding> parameters) {
+	public List<Match> findComplementMatches(ComplementRule complementRule) {
 
 		// Create complement pre-match by partial source-rule match:
 		Match complementMatch = new MatchImpl(complementRule.getComplementRule());
@@ -174,16 +169,9 @@ public class ComplementFinderEngine {
 			
 			else if (sourceRuleMatch instanceof RecognitionParameterMatch) {
 				RecognitionParameterMatch sourceParameterMatch = (RecognitionParameterMatch) sourceRuleMatch;
-				
-				// FIXME WORKAROUND: Allow overwriting of attributes! Find better solution!? Filter earlier!?
-				// FIXME: Create: Accessor Operation for Structural Feature
-				// file:/users/mohrndorf/workspaces/sidiff-build/org.eclipse.git.evaluation_2018-11-02/modeling.mdt.ocl/plugins_org.eclipse.ocl.pivot_model_Lookup.ecore/0008_2015-06-27T12-53-05Z_323236adcbbf40b88d9362925b642167097bd466/plugins_org.eclipse.ocl.pivot_model_Lookup.ecore#_fMJ_eN6tEei97MD7GK1RmA
-				// ThereMayNotBeTwoOperationsAndWithTheSameSignature
-//				if (!isAttributeValueChange(complementRule, complementMatch)) {
-					addMatch(complementRule, complementMatch, 
-							sourceParameterMatch.getParameter(), 
-							sourceParameterMatch.getValue());
-//				}
+				addMatch(complementRule, complementMatch, 
+						sourceParameterMatch.getParameter(), 
+						sourceParameterMatch.getValue());
 			}
 
 			// NOTE: Ignore EditRuleNodeMulitMatches... only unique context!
@@ -212,19 +200,6 @@ public class ComplementFinderEngine {
 		
 		complementPreMatches.trimToSize();
 		return complementPreMatches;
-	}
-	
-	private boolean isAttributeValueChange(ComplementRule complementRule, Match complementMatch) {
-		for (GraphElement complementingChange : complementRule.getComplementingChanges()) {
-			if (complementingChange instanceof Attribute) {
-				Parameter parameter = complementMatch.getRule().getParameter(((Attribute) complementingChange).getValue());
-
-				if (parameter != null) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	private void addMatch(ComplementRule complementRule, Match complementPreMatches, 

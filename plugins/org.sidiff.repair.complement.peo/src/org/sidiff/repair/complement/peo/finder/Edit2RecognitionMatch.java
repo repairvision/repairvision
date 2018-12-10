@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
@@ -86,6 +87,14 @@ public class Edit2RecognitionMatch {
 							RecognitionAttributeMatch setAttributeMatch = new RecognitionAttributeMatch(
 									settingAttribute, addedObj, value);
 							editRuleMatch.add(setAttributeMatch);
+						} else {
+							// NOTE: Filter the parameters that should be overwritten with user defined values:
+							Parameter parameter = editRule.getParameter(settingAttribute.getValue());
+							
+							if (parameter != null) {
+								// NOTE: Already assigned values are not assigned again by findParameters()
+								parameters.put(parameter, null);
+							}
 						}
 					}
 					
@@ -170,7 +179,7 @@ public class Edit2RecognitionMatch {
 			}
 		}
 		
-		editRuleMatch.addAll(parameters.values());
+		parameters.values().stream().filter(Objects::nonNull).forEach(editRuleMatch::add);
 		return editRuleMatch;
 	}
 	
@@ -187,6 +196,8 @@ public class Edit2RecognitionMatch {
 	}
 
 	private void findParameters(Map<Parameter, RecognitionParameterMatch> parameters, Rule editRule, Node node, EObject match) {
+		// NOTE: Parameter can be assigned with 'null' to signal a user defined value.
+		
 		for (Attribute attribute : node.getAttributes()) {
 			Parameter parameter = editRule.getParameter(attribute.getValue());
 			
