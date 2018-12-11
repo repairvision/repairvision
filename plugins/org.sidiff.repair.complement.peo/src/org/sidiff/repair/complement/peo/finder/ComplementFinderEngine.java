@@ -3,8 +3,12 @@ package org.sidiff.repair.complement.peo.finder;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EGraph;
@@ -34,6 +38,10 @@ import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
  * @author Manuel Ohrndorf
  */
 public class ComplementFinderEngine {
+	
+	protected boolean EXPERIMENTAL = false;
+	
+	protected boolean EXPERIMENTAL_COMPARE = false;
 
 	/**
 	 * Derives the (Henshin) complement rule based on a CPEO.
@@ -186,10 +194,28 @@ public class ComplementFinderEngine {
 			engine.getScriptEngine().put(parameter.getName(), value);
 		}
 		
+		// TODO: Instead of searching all matches, just filter the domain values of the parameters.
+		if (EXPERIMENTAL) {
+			findParameterMatches(complementRule, complementMatch, complementPreMatches);
+			
+			if (EXPERIMENTAL_COMPARE) {
+				complementPreMatches.clear();
+				findMatches(complementRule, complementMatch, complementPreMatches);
+			}
+		} else {
+			findMatches(complementRule, complementMatch, complementPreMatches);
+		}
+		
+		complementPreMatches.trimToSize();
+		return complementPreMatches;
+	}
+
+	private void findMatches(ComplementRule complementRule, Match complementMatch, ArrayList<Match> complementPreMatches) {
+		long startTime = System.currentTimeMillis();
+		
 		Iterator<Match> matchFinder = engine.findMatches(
 				complementRule.getComplementRule(), graphModelB, complementMatch).iterator();
 		
-		// TODO: Instead of searching all matches, just filter the domain values of the parameters.
 //		while (matchFinder.hasNext() && (complementPreMatches.size() < 1)) {
 		while (matchFinder.hasNext()) {
 			Match nextMatch = matchFinder.next();
@@ -198,8 +224,74 @@ public class ComplementFinderEngine {
 			complementPreMatches.add(nextMatch);
 		}
 		
-		complementPreMatches.trimToSize();
-		return complementPreMatches;
+		long stopTime = System.currentTimeMillis();
+		System.err.println("RUNTIME (LHS Matches): " + (stopTime - startTime) + "ms");
+	}
+
+	private void findParameterMatches(ComplementRule complementRule, Match complementMatch, ArrayList<Match> complementPreMatches) {
+		long startTime = System.currentTimeMillis();
+		
+		Rule complement = complementRule.getComplementRule();
+		Map<Node, Set<EObject>> parameterDomains = new LinkedHashMap<>();
+		
+		for (Parameter parameter : complement.getParameters()) {
+			Node lhsParameterBoundNode = complement.getLhs().getNode(parameter.getName());
+			EObject matchElement = complementMatch.getNodeTarget(lhsParameterBoundNode);
+			
+			if ((lhsParameterBoundNode != null) && (matchElement == null)) {
+				Set<EObject> parameterDomain = new HashSet<>();
+				parameterDomains.put(lhsParameterBoundNode, parameterDomain);
+				
+				// NOTE: Move the node to the end of the LHS node list to be the 
+				//       first node that will be changed after the first match is found.
+				complement.getLhs().getNodes().move(complement.getLhs().getNodes().size() - 1, lhsParameterBoundNode);
+			}
+		}
+		
+		for (Node lhsParameterBoundNode : parameterDomains.keySet()) {
+			List<EObject> nodeDomain = graphModelB.getDomain(lhsParameterBoundNode.getType(), false);
+
+			for (EObject value : nodeDomain) {
+				if (!parameterDomains.get(lhsParameterBoundNode).contains(value)) {
+					complementMatch.setNodeTarget(lhsParameterBoundNode, value);
+					
+					Iterator<Match> matchFinder = engine.findMatches(
+							complement, graphModelB, complementMatch).iterator();
+					
+					while (matchFinder.hasNext()) {
+						
+						// Create complement pre-match:
+						Match nextMatch = matchFinder.next();
+						
+						if (findNewParameterValues(parameterDomains, nextMatch)) {
+							complementPreMatches.add(nextMatch);
+						} else {
+							break;
+						}
+					}
+					
+					complementMatch.setNodeTarget(lhsParameterBoundNode, null);
+				}
+			}
+		}
+		
+		long stopTime = System.currentTimeMillis();
+		System.err.println("RUNTIME (Parameter Matches): " + (stopTime - startTime) + "ms");
+	}
+	
+	private boolean findNewParameterValues(Map<Node, Set<EObject>> parameterDomains, Match match) {
+		boolean foundNew = false;
+		
+		for (Node lhsParameterBoundNode : parameterDomains.keySet()) {
+			EObject matchedElement = match.getNodeTarget(lhsParameterBoundNode);
+			assert (matchedElement != null);
+				
+			if (parameterDomains.get(lhsParameterBoundNode).add(matchedElement)) {
+				foundNew = true;
+			}
+		}
+		
+		return foundNew;
 	}
 
 	private void addMatch(ComplementRule complementRule, Match complementPreMatches, 
