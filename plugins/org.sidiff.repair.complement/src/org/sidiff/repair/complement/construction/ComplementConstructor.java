@@ -24,12 +24,14 @@ import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
 import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.common.emf.ModelingUtil;
+import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
 import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
 import org.sidiff.repair.complement.matching.RecognitionMatch;
 import org.sidiff.repair.complement.matching.RecognitionNodeMatch;
 import org.sidiff.repair.complement.matching.RecognitionNodeMultiMatch;
 import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
+import org.sidiff.repair.complement.matching.RecognitionParameterMatch;
 import org.sidiff.repair.complement.util.ComplementUtil;
 
 /**
@@ -242,12 +244,35 @@ public class ComplementConstructor {
 				Attribute complementAttribute = (Attribute) copyTrace.get(sourceAttribute);
 				
 				// Transform create-attribute to preserve-attribute:
-				// FIXME: The attributes should also be passed as a parameter.
-				ComplementUtil.makePreserve(complementAttribute);
+				if (checkVariableBindings(recognitionMatch, complementAttribute)) {
+					ComplementUtil.makePreserve(complementAttribute);
+				} else {
+					return false;
+				}
 			}
 		}
 		
 		return true;
+	}
+	
+	protected boolean checkVariableBindings(Collection<RecognitionMatch> recognitionMatch, Attribute attribute) {
+		for(String variable : JavaSciptParser.getVariables(attribute.getValue())) {
+			if (!findVariableBinding(recognitionMatch, variable)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	protected boolean findVariableBinding(Collection<RecognitionMatch> recognitionMatch, String variable) {
+		for (RecognitionMatch sourceRuleMatch : recognitionMatch) {
+			if (sourceRuleMatch instanceof RecognitionParameterMatch) {
+				if (variable.equals(((RecognitionParameterMatch) sourceRuleMatch).getParameter().getName())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	protected boolean reduceContext(Collection<RecognitionMatch> recognitionMatch, 
