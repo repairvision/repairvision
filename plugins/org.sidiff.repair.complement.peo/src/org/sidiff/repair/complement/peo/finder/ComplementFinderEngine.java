@@ -225,12 +225,16 @@ public class ComplementFinderEngine {
 		}
 		
 		long stopTime = System.currentTimeMillis();
-		System.err.println("RUNTIME (LHS Matches): " + (stopTime - startTime) + "ms");
+		
+		if (EXPERIMENTAL_COMPARE) {
+			System.err.println("RUNTIME (LHS Matches): " + (stopTime - startTime) + "ms");
+		}
 	}
 
 	private void findParameterMatches(ComplementRule complementRule, Match complementMatch, ArrayList<Match> complementPreMatches) {
 		long startTime = System.currentTimeMillis();
 		
+		// TODO: Slower for UML: TheGenericTypeAssociatedWithTheClassifier... !?
 		Rule complement = complementRule.getComplementRule();
 		Map<Node, Set<EObject>> parameterDomains = new LinkedHashMap<>();
 		
