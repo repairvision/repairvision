@@ -20,7 +20,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.editrule.recognition.RecognitionEngine;
-import org.sidiff.editrule.recognition.impact.PositiveImpactScope;
+import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.complement.construction.ComplementConstructor;
 import org.sidiff.repair.complement.construction.ComplementRule;
@@ -114,10 +114,10 @@ public class ComplementFinderEngine {
 	}
 	
 	public ComplementFinder createComplementFinder(Rule editRule, 
-			PositiveImpactScope repairScope, PositiveImpactScope overwriteScope,
-			ComplementFinderSettings settings) {
+			ImpactScope resolvingScope, ImpactScope overwriteScope,
+			ImpactScope introducingScope, ComplementFinderSettings settings) {
 		
-		return new ComplementFinder(this, editRule, repairScope, overwriteScope, settings);
+		return new ComplementFinder(this, editRule, resolvingScope, overwriteScope, introducingScope, settings);
 	}
 	
 	public List<Match> findComplementMatches(ComplementRule complementRule) {

@@ -9,7 +9,7 @@ import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.RecognitionEngine;
 import org.sidiff.editrule.recognition.RecognitionEngineMatcher;
-import org.sidiff.editrule.recognition.impact.PositiveImpactScope;
+import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.util.debug.DebugUtil;
 import org.sidiff.repair.complement.construction.ComplementRule;
@@ -32,8 +32,8 @@ public class ComplementFinder {
 	protected IRecognitionPatternSerializer recognitionPatternSerializer;
 		
 	public ComplementFinder(ComplementFinderEngine engine, Rule editRule,
-			PositiveImpactScope repairScope, PositiveImpactScope overwriteScope,
-			ComplementFinderSettings settings) {
+			ImpactScope resolvingScope, ImpactScope overwriteScope,
+			ImpactScope introducingScope, ComplementFinderSettings settings) {
 		
 		this.engine = engine;
 		this.editRule = editRule;
@@ -43,7 +43,7 @@ public class ComplementFinder {
 		RecognitionEngine recognitionEngine = engine.getRecognitionEngine();
 		this.recognitionPattern = recognitionEngine.createRecognitionPattern(editRule);
 		this.recognitionMatcher = recognitionEngine.createMatcher(
-				recognitionPattern, repairScope, overwriteScope,
+				recognitionPattern, resolvingScope, overwriteScope, introducingScope,
 				settings.getRecognitionEngineSettings());
 		
 		this.recognitionPatternSerializer = new IRecognitionPatternSerializer() {
