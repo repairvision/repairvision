@@ -19,7 +19,7 @@ import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.recognition.generator.util.Stack;
-import org.sidiff.editrule.recognition.impact.PositiveImpactScopeConstraint;
+import org.sidiff.editrule.recognition.impact.ImpactScopeConstraint;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.editrule.recognition.selection.IMatchSelector;
@@ -98,9 +98,11 @@ public class PartialMatchGenerator {
 
 	private int minimumSolutionSize = 1;
 
-	private PositiveImpactScopeConstraint repairScope;
+	private ImpactScopeConstraint resolvingScope;
 	
-	private PositiveImpactScopeConstraint overwriteScope;
+	private ImpactScopeConstraint overwriteScope;
+	
+	private ImpactScopeConstraint introducingScope;
 
 	// -------------------------------------------------
 	// Main Algorithm:
@@ -209,8 +211,9 @@ public class PartialMatchGenerator {
 			List<NodePattern> variableNodes, 
 			IMatchSelector matchSelector,
 			DependencyEvaluation dependencies,
-			PositiveImpactScopeConstraint repairScope,
-			PositiveImpactScopeConstraint overwriteScope) {
+			ImpactScopeConstraint resolvingScope,
+			ImpactScopeConstraint overwriteScope,
+			ImpactScopeConstraint introducingScope) {
 
 		// evaluation:
 		this.variableNodes = variableNodes;
@@ -218,8 +221,9 @@ public class PartialMatchGenerator {
 		
 		// constraints:
 		this.dependencies = dependencies;
-		this.repairScope = repairScope;
+		this.resolvingScope = resolvingScope;
 		this.overwriteScope = overwriteScope;
+		this.introducingScope = introducingScope;
 
 		assignments = new Stack<EObject>(variableNodes.size());
 		assigned = new HashSet<>();
@@ -365,7 +369,11 @@ public class PartialMatchGenerator {
 		//        (Since the scope test is just an optimization, it would be correct anyway.)
 		// NOTE: Needs only to be checked after the selection has changed!
 //		if (firstVariableOfAtomic) {
-			if ((repairScope != null) && !repairScope.test()) {
+			if ((resolvingScope != null) && !resolvingScope.test()) {
+				return false;
+			}
+			
+			if ((introducingScope != null) && !introducingScope.test()) {
 				return false;
 			}
 //		}

@@ -17,9 +17,9 @@ import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.graphpattern.NodePattern;
 
-public class PositiveImpactScopeConstraint {
+public class ImpactScopeConstraint {
 
-	public static final PositiveImpactScopeConstraint DUMMY = new PositiveImpactScopeConstraint() {
+	public static final ImpactScopeConstraint DUMMY = new ImpactScopeConstraint() {
 		
 		@Override
 		public boolean test() {
@@ -30,12 +30,12 @@ public class PositiveImpactScopeConstraint {
 	private Map<Domain, Set<EObject>> domains = new LinkedHashMap<>();
 	
 	@SuppressWarnings("unused")
-	private PositiveImpactScope repairScope; // NOTE: For debugging...
+	private ImpactScope repairScope; // NOTE: For debugging...
 	
-	protected PositiveImpactScopeConstraint() {
+	protected ImpactScopeConstraint() {
 	}
 	
-	public PositiveImpactScopeConstraint(PositiveImpactScope repairScope, RecognitionPattern recognitionPattern) {
+	public ImpactScopeConstraint(ImpactScope repairScope, RecognitionPattern recognitionPattern) {
 		this.repairScope = repairScope;
 		
 		// Create map from change/repair action to domain: 

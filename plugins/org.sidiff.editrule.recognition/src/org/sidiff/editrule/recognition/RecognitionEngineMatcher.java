@@ -8,8 +8,8 @@ import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
 import org.sidiff.editrule.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.recognition.generator.PartialMatchGenerator;
-import org.sidiff.editrule.recognition.impact.PositiveImpactScope;
-import org.sidiff.editrule.recognition.impact.PositiveImpactScopeConstraint;
+import org.sidiff.editrule.recognition.impact.ImpactScope;
+import org.sidiff.editrule.recognition.impact.ImpactScopeConstraint;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
@@ -45,16 +45,18 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 				recognitionPattern.getChangeNodePatterns(),
 				matchSelector,
 				dependencies,
-				PositiveImpactScopeConstraint.DUMMY,
-				PositiveImpactScopeConstraint.DUMMY);
+				ImpactScopeConstraint.DUMMY,
+				ImpactScopeConstraint.DUMMY,
+				ImpactScopeConstraint.DUMMY);
 		
 		matchGenerator.start();
 	}
 	
 	public RecognitionEngineMatcher(
 			RecognitionPattern recognitionPattern,
-			PositiveImpactScope repairScope,
-			PositiveImpactScope overwriteScope,
+			ImpactScope resolvingScope,
+			ImpactScope overwriteScope,
+			ImpactScope introducingScope,
 			RecognitionEngineSettings settings) {
 		
 		this.recognitionPattern = recognitionPattern;
@@ -73,8 +75,9 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		}
 		
 		// Create Repair-Scope-Constraint:
-		PositiveImpactScopeConstraint repairScopeConstraint = new PositiveImpactScopeConstraint(repairScope, recognitionPattern);
-		PositiveImpactScopeConstraint overwriteScopeConstraint = new PositiveImpactScopeConstraint(overwriteScope, recognitionPattern);
+		ImpactScopeConstraint resolvingScopeConstraint = new ImpactScopeConstraint(resolvingScope, recognitionPattern);
+		ImpactScopeConstraint overwriteScopeConstraint = new ImpactScopeConstraint(overwriteScope, recognitionPattern);
+		ImpactScopeConstraint introducingScopeConstraint = new ImpactScopeConstraint(introducingScope, recognitionPattern);
 		
 		// Create Change-Dependency-Constraint: 
 		dependencies = new DependencyEvaluation(recognitionPattern.getGraphPattern());
@@ -88,8 +91,9 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 				recognitionPattern.getChangeNodePatterns(),
 				matchSelector,
 				dependencies,
-				repairScopeConstraint,
-				overwriteScopeConstraint);
+				resolvingScopeConstraint,
+				overwriteScopeConstraint,
+				introducingScopeConstraint);
 		matchGenerator.setMinimumSolutionSize(settings.getMinimumSolutionSize());
 	}
 	

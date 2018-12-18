@@ -5,7 +5,7 @@ import org.sidiff.consistency.common.designpatterns.IAlgorithm;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
 import org.sidiff.editrule.recognition.dependencies.ChangeDependencies;
-import org.sidiff.editrule.recognition.impact.PositiveImpactScope;
+import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
 import org.sidiff.graphpattern.GraphPattern;
@@ -54,8 +54,9 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 	@Override
 	public RecognitionEngineMatcher createMatcher(
 			RecognitionPattern recognitionPattern,
-			PositiveImpactScope repairScope,
-			PositiveImpactScope overwriteScope,
+			ImpactScope resolvingScope,
+			ImpactScope overwriteScope,
+			ImpactScope introducingScope,
 			RecognitionEngineSettings settings) {
 		
 		if (!started) {
@@ -67,7 +68,7 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 //		System.out.println("Initial Domains: \n\n" + StringUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		
 		// Create matcher:
-		return new RecognitionEngineMatcher(recognitionPattern, repairScope, overwriteScope, settings);
+		return new RecognitionEngineMatcher(recognitionPattern, resolvingScope, overwriteScope, introducingScope, settings);
 	}
 
 	@Override

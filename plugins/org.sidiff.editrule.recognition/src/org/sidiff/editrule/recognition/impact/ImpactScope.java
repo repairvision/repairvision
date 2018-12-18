@@ -17,20 +17,18 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.sidiff.consistency.common.emf.MetaModelUtil;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
-import org.sidiff.validation.constraint.impact.PositiveImpactAnalysis;
 
-public class PositiveImpactScope {
+public class ImpactScope {
 	
 	private Map<GraphElement, List<EObject>> repairScope;
 	
 	private ImpactAnalysis impact;
 
-	public PositiveImpactScope(Collection<? extends GraphElement> changes, PositiveImpactAnalysis impact) {
+	public ImpactScope(Collection<? extends GraphElement> changes, ImpactAnalysis impact) {
 		
 		this.impact = impact;
 		this.repairScope = new HashMap<>();
 
-		// Build repair scope:
 		for (GraphElement change : changes) {
 
 			// Abstract repairs consider only edges and attributes:
