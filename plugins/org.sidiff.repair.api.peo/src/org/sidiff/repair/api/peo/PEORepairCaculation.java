@@ -11,8 +11,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.Change;
-import org.sidiff.editrule.recognition.impact.NegativeImpactScope;
-import org.sidiff.editrule.recognition.impact.PositiveImpactScope;
+import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.repair.api.IRepairPlan;
@@ -30,9 +29,9 @@ public class PEORepairCaculation {
 	
 	protected ImpactAnalyzes impact;
 	
-	protected PositiveImpactScope positiveImpactScope;
+	protected ImpactScope positiveImpactScope;
 	
-	protected NegativeImpactScope negativeImpactScope;
+	protected ImpactScope negativeImpactScope;
 	
 	protected ComplementFinderEngine complementFinderEngine;
 	
@@ -59,16 +58,16 @@ public class PEORepairCaculation {
 		List<Attribute> settingAttributes = ChangePatternUtil.getSettingAttributes(editRule);
 		
 		// Filter edit-rules by impact (sub-rule -> negative, complement-rule -> positive):
-		this.positiveImpactScope = new PositiveImpactScope(changes, impact.getPositiveImpactAnalysis());
-		this.negativeImpactScope = new NegativeImpactScope(changes, impact.getNegativeImpactAnalysis(), revision);
+		this.positiveImpactScope = new ImpactScope(changes, impact.getPositiveImpactAnalysis());
+		this.negativeImpactScope = new ImpactScope(changes, impact.getNegativeImpactAnalysis());
 		
-		PositiveImpactScope overwriteImpactScope = new PositiveImpactScope(settingAttributes, impact.getPositiveImpactAnalysis());
+		ImpactScope overwriteImpactScope = new ImpactScope(settingAttributes, impact.getPositiveImpactAnalysis());
 		
 		// Create complement finder:
 		if (isPotentialRepair()) {
 			complementFinder = complementFinderEngine.createComplementFinder(
-					editRule, positiveImpactScope, overwriteImpactScope,
-					settings.getComplementFinderSettings());
+					editRule, positiveImpactScope, overwriteImpactScope, 
+					negativeImpactScope, settings.getComplementFinderSettings());
 		}
 	}
 	
