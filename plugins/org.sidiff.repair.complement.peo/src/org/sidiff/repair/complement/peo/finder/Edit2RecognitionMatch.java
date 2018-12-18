@@ -18,6 +18,7 @@ import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
+import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
@@ -56,6 +57,9 @@ public class Edit2RecognitionMatch {
 	public List<RecognitionMatch> createEditRuleMatch(RecognitionPattern recognitionPattern, IMatching matching) {
 		Rule editRule = recognitionPattern.getEditRule();
 		
+		// NOTE: Consider attribute value overwrites only for full structural matchings.
+		boolean considerAttributeValueOverwrites = isFullStructuralMatching(matching);
+		
 		// Create edit-operation match:
 		List<RecognitionMatch> editRuleMatch = new ArrayList<>();
 		Map<Parameter, RecognitionParameterMatch> parameters = new HashMap<>();
@@ -79,11 +83,11 @@ public class Edit2RecognitionMatch {
 					createMatch.setModelBElement(addedObj);
 					editRuleMatch.add(createMatch);
 					
-					// Attributes:
+					// <<Set> Attributes in << Create >>:
 					for (Attribute settingAttribute : eoHenshinNode.getAttributes()) {
 						Object value = addedObj.eGet(settingAttribute.getType());
 						
-						if (matching.isPartialMatching() || isRecognizedValueChange(settingAttribute, addedObj, value)) {
+						if (!considerAttributeValueOverwrites || isRecognizedAttributeValueSet(settingAttribute, addedObj, value)) {
 							RecognitionAttributeMatch setAttributeMatch = new RecognitionAttributeMatch(
 									settingAttribute, addedObj, value);
 							editRuleMatch.add(setAttributeMatch);
@@ -183,7 +187,22 @@ public class Edit2RecognitionMatch {
 		return editRuleMatch;
 	}
 	
-	private boolean isRecognizedValueChange(Attribute settingAttribute, EObject addedObj, Object value) {
+	private boolean isFullStructuralMatching(IMatching matching) {
+		if (!matching.isPartialMatching()) {
+			return true;
+		} else {
+			for (NodePattern changeNode : matching.getNodes()) {
+				if (!(changeNode.getType() == SymmetricPackage.eINSTANCE.getAttributeValueChange())) {
+					if (matching.getFirstMatch(changeNode) == null) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+	}
+	
+	private boolean isRecognizedAttributeValueSet(Attribute settingAttribute, EObject addedObj, Object value) {
 		Object constantValue = JavaSciptParser.getConstant(settingAttribute.getValue());
 		
 		if (constantValue != null) {
