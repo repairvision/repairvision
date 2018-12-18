@@ -13,8 +13,10 @@ import org.sidiff.graphpattern.NodePattern;
 
 public class VariableMatching implements IMatching {
 
+	// TODO: Store the matchings in a container and store the global information there... 
 	private Map<NodePattern, Variable> nodeToVariables;
 	
+	// TODO: Store the matchings in a container and store the global information there... 
 	private List<NodePattern> variableNodes;
 	
 	private EObject[] assignment;

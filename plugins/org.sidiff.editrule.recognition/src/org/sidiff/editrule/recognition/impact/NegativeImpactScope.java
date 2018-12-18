@@ -23,6 +23,7 @@ import org.sidiff.history.revision.IRevision;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 import org.sidiff.validation.constraint.impact.NegativeImpactAnalysis;
 
+// FIXME: Add to constraint to matcher!
 public class NegativeImpactScope {
 	
 	private Map<GraphElement, List<Change>> scope;

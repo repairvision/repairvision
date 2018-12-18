@@ -23,7 +23,7 @@ public interface IMatching {
 	/**
 	 * @param node
 	 *            A node of a matched graph pattern.
-	 * @return The first corresponding matched object.
+	 * @return The first corresponding matched object or <code>null</code>.
 	 */
 	EObject getFirstMatch(NodePattern node);
 

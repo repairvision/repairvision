@@ -13,6 +13,7 @@ import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.graphpattern.NodePattern;
 
+//FIXME: Add to constraint to matcher!
 public class NegativeImpactScopeConstraint {
 
 	public static final NegativeImpactScopeConstraint DUMMY = new NegativeImpactScopeConstraint() {
