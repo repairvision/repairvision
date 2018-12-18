@@ -31,27 +31,38 @@ public class GEDEditRuleGenerator extends BasicEditRuleGenerator {
 		return contextCount;
 	}
 	
+	@Override
 	protected void generateCreate(NodePattern toNode) {
 		++graphEditDistance;
 	}
 	
+	@Override
 	protected void generateCreate(EdgePattern toEdge) {
 		++graphEditDistance;
 	}
 	
+	@Override
 	protected void generateCreate(AttributePattern toAttribute) {
 		++graphEditDistance;
 	}
 	
+	@Override
 	protected void generateDelete(NodePattern fromNode) {
 		++graphEditDistance;
 	}
 	
+	@Override
 	protected void generateDelete(EdgePattern fromEdge) {
 		++graphEditDistance;
 	}
 	
+	@Override
 	protected void generateDelete(AttributePattern fromAttribute) {
+		++graphEditDistance;
+	}
+	
+	@Override
+	protected void generateModify(AttributePattern fromAttribute, String toAttributeValue) {
 		++graphEditDistance;
 	}
 

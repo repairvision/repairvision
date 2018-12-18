@@ -118,30 +118,37 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		return eoAttribute;
 	}
 	
+	@Override
 	protected void generateCreate(NodePattern toNode) {
 		generateNode(toNode, create);
 	}
 	
+	@Override
 	protected void generateCreate(EdgePattern toEdge) {
 		generateEdge(toEdge, create);
 	}
 	
+	@Override
 	protected void generateCreate(AttributePattern toAttribute) {
 		generateAttribute(toAttribute, create);
 	}
 	
+	@Override
 	protected void generateDelete(NodePattern fromNode) {
 		generateNode(fromNode, delete);
 	}
 	
+	@Override
 	protected void generateDelete(EdgePattern fromEdge) {
 		generateEdge(fromEdge, delete);
 	}
 	
+	@Override
 	protected void generateDelete(AttributePattern fromAttribute) {
 		generateAttribute(fromAttribute, delete);
 	}
 	
+	@Override
 	protected void generateContext(NodePattern fromNode, NodePattern toNode) {
 		NodePattern eoNode = generateNode(toNode, preserve);
 		
@@ -149,22 +156,38 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		contextTrace.put(toNode, eoNode);
 	}
 	
+	@Override
+	protected void generateModify(AttributePattern fromAttribute, String toAttributeValue) {
+		
+		// From:
+		generateAttribute(fromAttribute, delete);
+		
+		// To:
+		AttributePattern rhsAttribute = generateAttribute(fromAttribute, create);
+		rhsAttribute.setValue(toAttributeValue);
+	}
+	
+	@Override
 	protected void generateContext(EdgePattern fromEdge, EdgePattern toEdge) {
 		generateEdge(toEdge, preserve);
 	}
 	
+	@Override
 	protected void generateContext(AttributePattern fromAttribute, AttributePattern toAttribute) {
 		generateAttribute(fromAttribute, preserve);
 	}
 	
+	@Override
 	protected void generateForbid(NodePattern toNode) {
 		generateNode(toNode, forbid);
 	}
 	
+	@Override
 	protected void generateForbid(EdgePattern toEdge) {
 		generateEdge(toEdge, forbid);
 	}
 	
+	@Override
 	protected void generateForbid(AttributePattern toAttribute) {
 		generateAttribute(toAttribute, forbid);
 	}

@@ -60,7 +60,7 @@ public abstract class BasicEditRuleGenerator {
 							AttributePattern toAttribute = getAttributeMatch(fromAttribute, toNode.getAttributes());
 									
 							if (toAttribute == null) {
-								generateDelete(fromAttribute);
+								generateModify(fromAttribute, generateParameterName(fromAttribute));
 							} else {
 								generateContext(fromAttribute, toAttribute);
 							}
@@ -68,7 +68,7 @@ public abstract class BasicEditRuleGenerator {
 					}
 				} else {
 					
-					// << create >> node
+					// << delete >> node
 					generateDelete(fromNode);
 					
 					for (EdgePattern fromEdge : fromNode.getOutgoings()) {
@@ -178,6 +178,10 @@ public abstract class BasicEditRuleGenerator {
 		}
 	}
 	
+	protected String generateParameterName(AttributePattern attribute) {
+		return attribute.getNode().getName() + "_" + attribute.getType().getName();
+	}
+	
 	protected abstract void generateCreate(NodePattern toNode);
 	
 	protected abstract void generateCreate(EdgePattern toEdge);
@@ -190,6 +194,8 @@ public abstract class BasicEditRuleGenerator {
 	
 	protected abstract void generateDelete(AttributePattern fromAttribute);
 	
+	protected abstract void generateModify(AttributePattern fromAttribute, String toAttributeValue);
+	
 	protected abstract void generateContext(NodePattern fromNode, NodePattern toNode);
 	
 	protected abstract void generateContext(EdgePattern fromEdge, EdgePattern toEdge);
@@ -201,6 +207,7 @@ public abstract class BasicEditRuleGenerator {
 	protected abstract void generateForbid(EdgePattern toEdge);
 	
 	protected abstract void generateForbid(AttributePattern toAttribute);
+	
 	
 	protected AttributePattern getAttributeMatch(AttributePattern attribute, EList<AttributePattern> otherAttributes) {
 		for (AttributePattern otherAttribute : otherAttributes) {
