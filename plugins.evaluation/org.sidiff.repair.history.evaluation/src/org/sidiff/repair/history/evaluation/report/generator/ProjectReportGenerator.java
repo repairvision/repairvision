@@ -40,6 +40,8 @@ public class ProjectReportGenerator {
 	
 	private static final boolean LEGEND = true;
 	
+	private static final boolean LATEX_HEADER = true;
+	
 	private static final boolean RQ1 = true;
 	private static final boolean RQ2 = true;
 	private static final boolean RQ3 = false;
@@ -49,17 +51,17 @@ public class ProjectReportGenerator {
 	// Data Columns:
 	// --------------------------------------------------------------------------------
 		
-	private static final String[] COL_NAME = {"Name", "Project Name"};
+	private static final String[] COL_NAME = {"Name", "colProjectName", "Project Name", "Project Name"};
 	
-	private static final String[] COL_MODELS_ALL = {"All", "Models (Count of all model histories in the project)"};
+	private static final String[] COL_MODELS_ALL = {"All", "colAllInconsistencies", "All Models", "Models (Count of all model histories in the project)"};
 	
-	private static final String[] COL_MODELS_INCONSISTENT = {"Inc.", "Models (Count of model histories with inconsistencies)"};
+	private static final String[] COL_MODELS_INCONSISTENT = {"Inc.", "colInconsistentModels", "Inc. Models", "Models (Count of model histories with inconsistencies)"};
 	
-	private static final String[] COL_REVISIONS_INCONSISTENT = {"Source", "Revisions (Revisions of the model histories with inconsistencies)"};
+	private static final String[] COL_REVISIONS_INCONSISTENT = {"Source", "colSourceRevisions", "Source Revisions", "Revisions (Revisions of the model histories with inconsistencies)"};
 	
-	private static final String[] COL_REVISIONS_COEVOLVING = {"Co-ev.", "Revisions (Revisions of other coevolving models (of the model histories with inconsistencie))"};
+	private static final String[] COL_REVISIONS_COEVOLVING = {"Co-ev.", "colCoRevisions", "Co-ev. Revisions", "Revisions (Revisions of other coevolving models (of the model histories with inconsistencie))"};
 	
-	private static final String[] COL_ELEMENTS = {"Avg.", "Elements (We calculated the average of model elements for each revision (wich introduced and resolved an inconsistency) of a model history."};
+	private static final String[] COL_ELEMENTS = {"Avg.", "colAvgElements", "Avg. Elements", "Elements (We calculated the average of model elements for each revision (wich introduced and resolved an inconsistency) of a model history."};
 	
 	// --------------------------------------------------------------------------------
 	
@@ -72,30 +74,30 @@ public class ProjectReportGenerator {
 	private static final Object[] COL_GROUP_REVISIONS = {"Revisions", "Revisions of the model histories in the projects", 
 			COL_REVISIONS_INCONSISTENT, COL_REVISIONS_COEVOLVING};
 	
-	private static final Object[] COL_GROUP_ELEMENTS = {"Elements", "Avg. count of model elements", 
+	private static final Object[] COL_GROUP_ELEMENTS = {"Elements",  "Avg. count of model elements", 
 			COL_ELEMENTS};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final Object[] COL_RQ_SUBJECTS = {"", "Selected evaluation subjects", 
+	private static final Object[] COL_RQ_SUBJECTS = {"Subject", "Selected evaluation subjects", 
 			COL_GROUP_PROJECT, COL_GROUP_MODELS, COL_GROUP_REVISIONS, COL_GROUP_ELEMENTS};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final String[] COL_INCONSISTENCIES_RESOLVED = {"Total", "RQ1 Inconsistencies (Count of all resolved inconsistencies)"};
+	private static final String[] COL_INCONSISTENCIES_RESOLVED = {"Total", "colTotalInconsistencies", "Total Inconsistencies", "RQ1 Inconsistencies (Count of all resolved inconsistencies)"};
 	
-	private static final String[] COL_INCONSISTENCIES_RESOLVED_SUPPORTED = {"Supp.", "RQ1 Inconsistencies (Count of supported resolved inconsistencies)"}; 
+	private static final String[] COL_INCONSISTENCIES_RESOLVED_SUPPORTED = {"Supp.", "colSupportedInconsistencies", "Supp. Inconsistencies", "RQ1 Inconsistencies (Count of supported resolved inconsistencies)"}; 
 	
-	private static final String[] COL_WELLFORMED_CONSTRAINTS = {"RegEx", "Not Well Formed Constraints"}; 
+	private static final String[] COL_WELLFORMED_CONSTRAINTS = {"RegEx", "colRegExInconsistencies", "RegEx Inconsistencies", "Not Well Formed Constraints"}; 
 	
-	private static final String[] COL_REPAIRED_INCONSISTENCY = {"At Least Once", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
+	private static final String[] COL_REPAIRED_INCONSISTENCY = {"(At Least One)", "colRepairsFound", "Repairs Found", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
 	
 	// --------------------------------------------------------------------------------
 	
 	private static final Object[] COL_GROUP_INCONSISTENCIES = {"Inconsistencies", 
 			COL_INCONSISTENCIES_RESOLVED, COL_WELLFORMED_CONSTRAINTS, COL_INCONSISTENCIES_RESOLVED_SUPPORTED};
 	
-	private static final Object[] COL_GROUP_REPAIRED_INCONSISTENCY = {"Repaired", 
+	private static final Object[] COL_GROUP_REPAIRED_INCONSISTENCY = {"Repairs Found", 
 			COL_REPAIRED_INCONSISTENCY};
 	
 	// --------------------------------------------------------------------------------
@@ -105,11 +107,11 @@ public class ProjectReportGenerator {
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final String[] COL_HOR_COMPLETION = {"Completion", "RQ2 Historically Observable Repairs (Repaired by completion)"};
+	private static final String[] COL_HOR_COMPLETION = {"Completion", "colObservableCompletion", "Observable Completion", "RQ2 Historically Observable Repairs (Repaired by completion)"};
 	
-	private static final String[] COL_HOR_UNDO = {"Undo", "RQ2 Historically Observable Repairs (Repaired by undo)"};
+	private static final String[] COL_HOR_UNDO = {"Undo", "colObservableUndo", "Observable Undo", "RQ2 Historically Observable Repairs (Repaired by undo)"};
 	
-	private static final String[] COL_NOT_HOR_UNDO = {"Not Obs.", "RQ2 Not Historically Observable Inconsistencies"};
+	private static final String[] COL_NOT_HOR_UNDO = {"Not Obs.", "colNotObservable", "Not Observable", "RQ2 Not Historically Observable Inconsistencies"};
 	
 	// --------------------------------------------------------------------------------
 	
@@ -123,9 +125,9 @@ public class ProjectReportGenerator {
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final String[] COL_REPIAR_ALTERNATIVE = {"RA", "RQ3 Repair Alternatives (min; avg; median; max)"};
+	private static final String[] COL_REPIAR_ALTERNATIVE = {"RA", "colRepairAlternative", "Repair Alternatives", "RQ3 Repair Alternatives (min; avg; median; max)"};
 	
-	private static final String[] COL_HOR_RANKING = {"Prio.", "RQ3 Ranking Position of HOR (min; avg; median; max)"};
+	private static final String[] COL_HOR_RANKING = {"Prio.", "colHORRanking", "Prio.", "RQ3 Ranking Position of HOR (min; avg; median; max)"};
 	
 	// --------------------------------------------------------------------------------
 	
@@ -139,11 +141,11 @@ public class ProjectReportGenerator {
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final String[] COL_RUNTIME_DIFF = {"Diff.", "RQ4 Avg. Runtime [ms] (Loading the model revision and calculate the difference)"};
+	private static final String[] COL_RUNTIME_DIFF = {"Diff.", "colRuntimeDiff", "Diff.", "RQ4 Avg. Runtime [ms] (Loading the model revision and calculate the difference)"};
 	
-	private static final String[] COL_RUNTIME_RECOGNITION = {"Sub-R.", "RQ4 Avg. Runtime [ms] (Partial recognition of sub-rules)"};
+	private static final String[] COL_RUNTIME_RECOGNITION = {"Sub-R.", "colRuntimeRecognition", "Sub-R.", "RQ4 Avg. Runtime [ms] (Partial recognition of sub-rules)"};
 	
-	private static final String[] COL_RUNTIME_COMPLEMENT = {"Compl.-R.", "RQ4 Avg. Runtime [ms] (Deriving and matching the complement rule)"};
+	private static final String[] COL_RUNTIME_COMPLEMENT = {"Compl.-R.", "colRuntimeComplement", "Compl.-R.", "RQ4 Avg. Runtime [ms] (Deriving and matching the complement rule)"};
 
 	// --------------------------------------------------------------------------------
 	
@@ -209,10 +211,24 @@ public class ProjectReportGenerator {
 			System.out.println(convertToLatexHeader(COLS));
 			System.out.println(convertToLatex(projectReport));
 			
-			projectReport.toCSV(ReportGenerator.OUTPUT_FOLDER +"rq1-4.csv");
+			projectReport.toCSV(ReportGenerator.OUTPUT_FOLDER + "rq1-4.csv");
+		}
+		
+		if (LATEX_HEADER) {
+			System.out.println("% Tabellenkopf:");
+			
+			for (Field columnField : this.getClass().getDeclaredFields()) {
+				if (columnField.getName().startsWith("COL_")) {
+					if (columnField.get(this) instanceof String[]) {
+						String[] columnDefinition = (String[]) columnField.get(this);
+						System.out.println("\\newcommand{\\" + columnDefinition[1] + "}{\\textit{" + columnDefinition[2] + "}\\xspace}");
+					}
+				}
+			}
 		}
 		
 		if (LEGEND) {
+			System.out.println();
 			System.out.println("\\begin{itemize}");
 			System.out.println("\\begin{tiny}");
 			
@@ -220,7 +236,7 @@ public class ProjectReportGenerator {
 				if (columnField.getName().startsWith("COL_")) {
 					if (columnField.get(this) instanceof String[]) {
 						String[] columnDefinition = (String[]) columnField.get(this);
-						System.out.println("  \\item " + columnDefinition[0] + " $\\to$ " + columnDefinition[1]);
+						System.out.println("  \\item " + columnDefinition[0] + " $\\to$ " + columnDefinition[3]);
 					}
 				}
 			}
