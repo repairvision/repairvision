@@ -51,115 +51,115 @@ public class ProjectReportGenerator {
 	// Data Columns:
 	// --------------------------------------------------------------------------------
 		
-	private static final String[] COL_NAME = {"Name", "colProjectName", "Project Name", "Project Name"};
+	public static final String[] COL_NAME = {"Name", "colProjectName", "Project Name", "Project Name"};
 	
-	private static final String[] COL_MODELS_ALL = {"All", "colAllInconsistencies", "All Models", "Models (Count of all model histories in the project)"};
+	public static final String[] COL_MODELS_ALL = {"All", "colAllInconsistencies", "All Models", "Models (Count of all model histories in the project)"};
 	
-	private static final String[] COL_MODELS_INCONSISTENT = {"Inc.", "colInconsistentModels", "Inc. Models", "Models (Count of model histories with inconsistencies)"};
+	public static final String[] COL_MODELS_INCONSISTENT = {"Inc.", "colInconsistentModels", "Inc. Models", "Models (Count of model histories with inconsistencies)"};
 	
-	private static final String[] COL_REVISIONS_INCONSISTENT = {"Source", "colSourceRevisions", "Source Revisions", "Revisions (Revisions of the model histories with inconsistencies)"};
+	public static final String[] COL_REVISIONS_INCONSISTENT = {"Source", "colSourceRevisions", "Source Revisions", "Revisions (Revisions of the model histories with inconsistencies)"};
 	
-	private static final String[] COL_REVISIONS_COEVOLVING = {"Co-ev.", "colCoRevisions", "Co-ev. Revisions", "Revisions (Revisions of other coevolving models (of the model histories with inconsistencie))"};
+	public static final String[] COL_REVISIONS_COEVOLVING = {"Co-ev.", "colCoRevisions", "Co-ev. Revisions", "Revisions (Revisions of other coevolving models (of the model histories with inconsistencie))"};
 	
-	private static final String[] COL_ELEMENTS = {"Avg.", "colAvgElements", "Avg. Elements", "Elements (We calculated the average of model elements for each revision (wich introduced and resolved an inconsistency) of a model history."};
+	public static final String[] COL_ELEMENTS = {"Avg.", "colAvgElements", "Avg. Elements", "Elements (We calculated the average of model elements for each revision (wich introduced and resolved an inconsistency) of a model history."};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final Object[] COL_GROUP_PROJECT = {"Project", "Project Name", 
+	public static final Object[] COL_GROUP_PROJECT = {"Project", "Project Name", 
 			COL_NAME};
 	
-	private static final Object[] COL_GROUP_MODELS = {"Models", "Model histories in the project", 
+	public static final Object[] COL_GROUP_MODELS = {"Models", "Model histories in the project", 
 			COL_MODELS_ALL, COL_MODELS_INCONSISTENT};
 	
-	private static final Object[] COL_GROUP_REVISIONS = {"Revisions", "Revisions of the model histories in the projects", 
+	public static final Object[] COL_GROUP_REVISIONS = {"Revisions", "Revisions of the model histories in the projects", 
 			COL_REVISIONS_INCONSISTENT, COL_REVISIONS_COEVOLVING};
 	
-	private static final Object[] COL_GROUP_ELEMENTS = {"Elements",  "Avg. count of model elements", 
+	public static final Object[] COL_GROUP_ELEMENTS = {"Elements",  "Avg. count of model elements", 
 			COL_ELEMENTS};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final Object[] COL_RQ_SUBJECTS = {"Subject", "Selected evaluation subjects", 
+	public static final Object[] COL_RQ_SUBJECTS = {"Subject", "Selected evaluation subjects", 
 			COL_GROUP_PROJECT, COL_GROUP_MODELS, COL_GROUP_REVISIONS, COL_GROUP_ELEMENTS};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final String[] COL_INCONSISTENCIES_RESOLVED = {"Total", "colTotalInconsistencies", "Total Inconsistencies", "RQ1 Inconsistencies (Count of all resolved inconsistencies)"};
+	public static final String[] COL_INCONSISTENCIES_RESOLVED = {"Total", "colTotalInconsistencies", "Total Inconsistencies", "RQ1 Inconsistencies (Count of all resolved inconsistencies)"};
 	
-	private static final String[] COL_INCONSISTENCIES_RESOLVED_SUPPORTED = {"Supp.", "colSupportedInconsistencies", "Supp. Inconsistencies", "RQ1 Inconsistencies (Count of supported resolved inconsistencies)"}; 
+	public static final String[] COL_INCONSISTENCIES_RESOLVED_SUPPORTED = {"Supp.", "colSupportedInconsistencies", "Supp. Inconsistencies", "RQ1 Inconsistencies (Count of supported resolved inconsistencies)"}; 
 	
-	private static final String[] COL_WELLFORMED_CONSTRAINTS = {"RegEx", "colRegExInconsistencies", "RegEx Inconsistencies", "Not Well Formed Constraints"}; 
+	public static final String[] COL_WELLFORMED_CONSTRAINTS = {"RegEx", "colRegExInconsistencies", "RegEx Inconsistencies", "Not Well Formed Constraints"}; 
 	
-	private static final String[] COL_REPAIRED_INCONSISTENCY = {"(At Least One)", "colRepairsFound", "Repairs Found", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
+	public static final String[] COL_REPAIRED_INCONSISTENCY = {"(At Least One)", "colRepairsFound", "Repairs Found", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final Object[] COL_GROUP_INCONSISTENCIES = {"Inconsistencies", 
+	public static final Object[] COL_GROUP_INCONSISTENCIES = {"Inconsistencies", 
 			COL_INCONSISTENCIES_RESOLVED, COL_WELLFORMED_CONSTRAINTS, COL_INCONSISTENCIES_RESOLVED_SUPPORTED};
 	
-	private static final Object[] COL_GROUP_REPAIRED_INCONSISTENCY = {"Repairs Found", 
+	public static final Object[] COL_GROUP_REPAIRED_INCONSISTENCY = {"Repairs Found", 
 			COL_REPAIRED_INCONSISTENCY};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final Object[] COL_RQ_1 = {"RQ1", "Coverage: How many inconsistencies can be resolved by our approach?",
+	public static final Object[] COL_RQ_1 = {"RQ1", "Coverage: How many inconsistencies can be resolved by our approach?",
 			COL_GROUP_INCONSISTENCIES, COL_GROUP_REPAIRED_INCONSISTENCY};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final String[] COL_HOR_COMPLETION = {"Completion", "colObservableCompletion", "Observable Completion", "RQ2 Historically Observable Repairs (Repaired by completion)"};
+	public static final String[] COL_HOR_COMPLETION = {"Completion", "colObservableCompletion", "Observable Completion", "RQ2 Historically Observable Repairs (Repaired by completion)"};
 	
-	private static final String[] COL_HOR_UNDO = {"Undo", "colObservableUndo", "Observable Undo", "RQ2 Historically Observable Repairs (Repaired by undo)"};
+	public static final String[] COL_HOR_UNDO = {"Undo", "colObservableUndo", "Observable Undo", "RQ2 Historically Observable Repairs (Repaired by undo)"};
 	
-	private static final String[] COL_NOT_HOR_UNDO = {"Not Obs.", "colNotObservable", "Not Observable", "RQ2 Not Historically Observable Inconsistencies"};
-	
-	// --------------------------------------------------------------------------------
-	
-	private static final Object[] COL_GROUP_OBSERVABLE = {"Observable", "Observable Repairs",
-			COL_HOR_COMPLETION, COL_HOR_UNDO, COL_NOT_HOR_UNDO}; 
+	public static final String[] COL_HOR_NOT = {"Not Obs.", "colNotObservable", "Not Observable", "RQ2 Not Historically Observable Inconsistencies"};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final Object[] COL_RQ_2 = {"RQ2", "If an inconsistency can be resolved by our approach, do we generate a repair alternative which corresponds to the changes that have been actually performed to resolve the respective inconsistency?",
+	public static final Object[] COL_GROUP_OBSERVABLE = {"Observable", "Observable Repairs",
+			COL_HOR_COMPLETION, COL_HOR_UNDO, COL_HOR_NOT}; 
+	
+	// --------------------------------------------------------------------------------
+	
+	public static final Object[] COL_RQ_2 = {"RQ2", "If an inconsistency can be resolved by our approach, do we generate a repair alternative which corresponds to the changes that have been actually performed to resolve the respective inconsistency?",
 			COL_GROUP_OBSERVABLE};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final String[] COL_REPIAR_ALTERNATIVE = {"RA", "colRepairAlternative", "Repair Alternatives", "RQ3 Repair Alternatives (min; avg; median; max)"};
+	public static final String[] COL_REPIAR_ALTERNATIVE = {"RA", "colRepairAlternative", "Repair Alternatives", "RQ3 Repair Alternatives (min; avg; median; max)"};
 	
-	private static final String[] COL_HOR_RANKING = {"Prio.", "colHORRanking", "Prio.", "RQ3 Ranking Position of HOR (min; avg; median; max)"};
+	public static final String[] COL_HOR_RANKING = {"Prio.", "colHORRanking", "Prio.", "RQ3 Ranking Position of HOR (min; avg; median; max)"};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final Object[] COL_GROUP_ALTERNATIVES = {"Alternatives", "Repair Alternatives",
+	public static final Object[] COL_GROUP_ALTERNATIVES = {"Alternatives", "Repair Alternatives",
 			COL_REPIAR_ALTERNATIVE, COL_HOR_RANKING};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final Object[] COL_RQ_3 = {"RQ3", "Efficiency: How many repair alternatives must be inspected by developers until they find a relevant one?",
+	public static final Object[] COL_RQ_3 = {"RQ3", "Efficiency: How many repair alternatives must be inspected by developers until they find a relevant one?",
 			COL_GROUP_ALTERNATIVES};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final String[] COL_RUNTIME_DIFF = {"Diff.", "colRuntimeDiff", "Diff.", "RQ4 Avg. Runtime [ms] (Loading the model revision and calculate the difference)"};
+	public static final String[] COL_RUNTIME_DIFF = {"Diff.", "colRuntimeDiff", "Diff.", "RQ4 Avg. Runtime [ms] (Loading the model revision and calculate the difference)"};
 	
-	private static final String[] COL_RUNTIME_RECOGNITION = {"Sub-R.", "colRuntimeRecognition", "Sub-R.", "RQ4 Avg. Runtime [ms] (Partial recognition of sub-rules)"};
+	public static final String[] COL_RUNTIME_RECOGNITION = {"Sub-R.", "colRuntimeRecognition", "Sub-R.", "RQ4 Avg. Runtime [ms] (Partial recognition of sub-rules)"};
 	
-	private static final String[] COL_RUNTIME_COMPLEMENT = {"Compl.-R.", "colRuntimeComplement", "Compl.-R.", "RQ4 Avg. Runtime [ms] (Deriving and matching the complement rule)"};
+	public static final String[] COL_RUNTIME_COMPLEMENT = {"Compl.-R.", "colRuntimeComplement", "Compl.-R.", "RQ4 Avg. Runtime [ms] (Deriving and matching the complement rule)"};
 
 	// --------------------------------------------------------------------------------
 	
-	private static final Object[] COL_GROUP_RUNTIME = {"Runtime [ms]", "Runtimes per calculation phase",
+	public static final Object[] COL_GROUP_RUNTIME = {"Runtime [ms]", "Runtimes per calculation phase",
 			COL_RUNTIME_DIFF, COL_RUNTIME_RECOGNITION, COL_RUNTIME_COMPLEMENT};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final Object[] COL_RQ_4 = {"RQ4", " Performance: How long does it take to generate the repair alternatives for a given inconsistency?",
+	public static final Object[] COL_RQ_4 = {"RQ4", " Performance: How long does it take to generate the repair alternatives for a given inconsistency?",
 			COL_GROUP_RUNTIME};
 	
 	// --------------------------------------------------------------------------------
 	
-	private static final Object[] COLS = {COL_RQ_SUBJECTS, COL_RQ_1, COL_RQ_2, COL_RQ_3, COL_RQ_4};
+	public static final Object[] COLS = {COL_RQ_SUBJECTS, COL_RQ_1, COL_RQ_2, COL_RQ_3, COL_RQ_4};
 	
 	// --------------------------------------------------------------------------------
 	
@@ -302,7 +302,7 @@ public class ProjectReportGenerator {
 					countHistoricallyObservableRepairs(inconsistencies));
 			report.append(COL_HOR_UNDO[0],
 					countHistoricallyObservableUndos(inconsistencies));
-			report.append(COL_NOT_HOR_UNDO[0], 
+			report.append(COL_HOR_NOT[0], 
 					calculateNotHistoricallyObservables(inconsistencies));
 		}
 		
@@ -365,7 +365,7 @@ public class ProjectReportGenerator {
 		if (RQ2) {
 			report.append(COL_HOR_COMPLETION[0], NA);
 			report.append(COL_HOR_UNDO[0], NA);
-			report.append(COL_NOT_HOR_UNDO[0], NA);
+			report.append(COL_HOR_NOT[0], NA);
 		}
 		
 		if (RQ3) {
@@ -400,7 +400,7 @@ public class ProjectReportGenerator {
 		if (RQ2) {
 			report.append(COL_HOR_COMPLETION[0], sum(report.getColumn(COL_HOR_COMPLETION[0], Integer.class)));
 			report.append(COL_HOR_UNDO[0], sum(report.getColumn(COL_HOR_UNDO[0], Integer.class)));
-			report.append(COL_NOT_HOR_UNDO[0], sum(report.getColumn(COL_NOT_HOR_UNDO[0], Integer.class)));
+			report.append(COL_HOR_NOT[0], sum(report.getColumn(COL_HOR_NOT[0], Integer.class)));
 		}
 		
 		if (RQ3) {
