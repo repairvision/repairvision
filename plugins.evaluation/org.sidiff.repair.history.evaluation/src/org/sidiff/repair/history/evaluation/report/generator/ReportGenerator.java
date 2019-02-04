@@ -1,6 +1,7 @@
 package org.sidiff.repair.history.evaluation.report.generator;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,13 +41,22 @@ public class ReportGenerator implements IApplication {
 	
 	public static final String OUTPUT_FOLDER = "C:\\workspaces\\sidiff-build\\org.sidiff.repair.history.evaluation\\results\\";
 	
+	private static FileFilter FILTER_INVISIBLE = new FileFilter() {
+		
+		@Override
+		public boolean accept(File pathname) {
+			return !pathname.getName().startsWith(".");
+		}
+	};
+	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-		new ProjectReportGenerator();
-		new ProjectReportGeneratorDiagrams();
-		new InconsistencyReportGenerator();
-		new EditRuleReportGenerator();
-		new AnnotationReportGenerator();
+//		new ProjectReportGenerator();
+//		new ProjectReportGeneratorDiagrams();
+//		new InconsistencyReportGenerator();
+//		new EditRuleReportGenerator();
+//		new AnnotationReportGenerator();
+		new NumberReportGenerator();
 		
 		return IApplication.EXIT_OK;
 	}
@@ -224,11 +234,11 @@ public class ReportGenerator implements IApplication {
 	}
 	
 	public static List<File> getProjects_Original() {
-		return Arrays.asList(new File(EvaluationDataSets.ORIGINAL_DATA_SET).listFiles());
+		return Arrays.asList(new File(EvaluationDataSets.ORIGINAL_DATA_SET).listFiles(FILTER_INVISIBLE));
 	}
 	
 	public static List<File> getProjects_Reduced() {
-		return Arrays.asList(new File(EvaluationDataSets.REDUCED_DATA_SET).listFiles());
+		return Arrays.asList(new File(EvaluationDataSets.REDUCED_DATA_SET).listFiles(FILTER_INVISIBLE));
 	}
 	
 	@Override

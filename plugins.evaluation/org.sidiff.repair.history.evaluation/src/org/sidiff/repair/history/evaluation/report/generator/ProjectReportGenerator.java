@@ -17,7 +17,7 @@ import static org.sidiff.consistency.common.monitor.LogUtil.test;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -164,45 +164,18 @@ public class ProjectReportGenerator {
 	// --------------------------------------------------------------------------------
 	
 	public ProjectReportGenerator() throws IOException, IllegalArgumentException, IllegalAccessException  {
-		LogTable projectReport = new LogTable();
-		Map<String, List<EvaluationData>> evaluationDataPerProjects = ReportGenerator.getEvaluationsPerProject();
+		LogTable projectReport;
 		
-		ReportGeneratorUtil.printSupportedResolvedInconsistencies(evaluationDataPerProjects.values().stream()
-				.flatMap(Collection::stream)
-				.map(data -> data.inconsistenciesLog)
-				.collect(Collectors.toList()).toArray(new LogTable[0]));
-		
-		for (Entry<String, List<EvaluationData>> evaluationDataPerProject : evaluationDataPerProjects.entrySet()) {
-			
-			if (PROJECT_REPORT) {
-				generateProjectReport(projectReport, evaluationDataPerProject.getKey(),
-						evaluationDataPerProject.getValue().stream().map(data -> data.modelPath).collect(Collectors.toList()),
-						evaluationDataPerProject.getValue().stream().map(data -> data.editRulesLog).collect(Collectors.toList()),
-						evaluationDataPerProject.getValue().stream().map(data -> data.historyLog).collect(Collectors.toList()),
-						evaluationDataPerProject.getValue().stream().map(data -> data.inconsistenciesLog).collect(Collectors.toList()),
-						evaluationDataPerProject.getValue().stream().map(data -> data.recognitionLog).collect(Collectors.toList()));
-			}
-			
-			if (MODEL_REPORT) {
-				for (EvaluationData evaluationData : evaluationDataPerProject.getValue()) {
-					LogTable modelReport = new LogTable();
-					
-					generateModelReport(modelReport,
-							evaluationData.historyLog.getColumn(HistoryLog.COL_HISTORY, String.class).get(0),
-							evaluationData.modelPath,
-							evaluationData.editRulesLog,
-							evaluationData.historyLog,
-							evaluationData.inconsistenciesLog,
-							evaluationData.recognitionLog);
-					
-					System.out.println();
-					System.out.println(convertToLatex(modelReport));
-				}
-			}
+		if (PROJECT_REPORT) {
+			projectReport = generateProjectReport();
 		}
 		
-		generateOtherModelsReport(projectReport, evaluationDataPerProjects);
-		generateSummaryOfProjectReport(projectReport);
+		if (MODEL_REPORT) {
+			for (LogTable modelReport : generateModelReports()) {
+				System.out.println();
+				System.out.println(convertToLatex(modelReport));
+			}
+		}
 		
 		// Output:
 		
@@ -244,6 +217,48 @@ public class ProjectReportGenerator {
 			System.out.println("\\end{tiny}");
 			System.out.println("\\end{itemize}");
 		}
+	}
+	
+	public LogTable generateProjectReport() throws IOException {
+		LogTable projectReport = new LogTable();
+		Map<String, List<EvaluationData>> evaluationDataPerProjects = ReportGenerator.getEvaluationsPerProject();
+
+		for (Entry<String, List<EvaluationData>> evaluationDataPerProject : evaluationDataPerProjects.entrySet()) {
+			generateProjectReport(projectReport, evaluationDataPerProject.getKey(),
+					evaluationDataPerProject.getValue().stream().map(data -> data.modelPath).collect(Collectors.toList()),
+					evaluationDataPerProject.getValue().stream().map(data -> data.editRulesLog).collect(Collectors.toList()),
+					evaluationDataPerProject.getValue().stream().map(data -> data.historyLog).collect(Collectors.toList()),
+					evaluationDataPerProject.getValue().stream().map(data -> data.inconsistenciesLog).collect(Collectors.toList()),
+					evaluationDataPerProject.getValue().stream().map(data -> data.recognitionLog).collect(Collectors.toList()));
+		}
+		
+		generateOtherModelsReport(projectReport, evaluationDataPerProjects);
+		generateSummaryOfProjectReport(projectReport);
+
+		return projectReport;
+	}
+	
+	public List<LogTable> generateModelReports() throws IOException {
+		List<LogTable> reports = new ArrayList<>();
+		Map<String, List<EvaluationData>> evaluationDataPerProjects = ReportGenerator.getEvaluationsPerProject();
+
+		for (Entry<String, List<EvaluationData>> evaluationDataPerProject : evaluationDataPerProjects.entrySet()) {
+			for (EvaluationData evaluationData : evaluationDataPerProject.getValue()) {
+				LogTable modelReport = new LogTable();
+				
+				generateModelReport(modelReport,
+						evaluationData.historyLog.getColumn(HistoryLog.COL_HISTORY, String.class).get(0),
+						evaluationData.modelPath,
+						evaluationData.editRulesLog,
+						evaluationData.historyLog,
+						evaluationData.inconsistenciesLog,
+						evaluationData.recognitionLog);
+				
+				reports.add(modelReport);
+			}
+		}
+
+		return reports;
 	}
 	
 	private void generateProjectReport(
@@ -331,7 +346,7 @@ public class ProjectReportGenerator {
 		}
 		
 		// Count all unconsidered projects:
-		int unconsideredProjects = ReportGenerator.getProjects_Original().size() - ReportGenerator.getProjects_Reduced().size();
+		int unconsideredProjects = NumberReportGenerator.unconsideredProjectCount();
 		
 		report.append(COL_NAME[0], unconsideredProjects + " Others");
 		report.append(COL_MODELS_ALL[0], allModels - consideredModels);
