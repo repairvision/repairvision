@@ -12,8 +12,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.consistency.common.monitor.LogTable;
+import org.sidiff.consistency.common.monitor.LogUtil;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.profile.henshin.HenshinStereotypes;
+import org.sidiff.repair.history.evaluation.report.InconsistenciesLog;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 
 public class NumberReportGenerator {
@@ -24,6 +26,8 @@ public class NumberReportGenerator {
 	
 	private static Resource DOC_TYPE_RESOURCE_DUMMY = new ResourceImpl();
 	
+	private static boolean RQ3_RQ4_HOR_ONLY = false;
+	
 	static {
 		DOC_TYPE_RESOURCE_DUMMY.getContents().add(EcoreFactory.eINSTANCE.createEPackage());
 	}
@@ -32,6 +36,7 @@ public class NumberReportGenerator {
 		
 		try {
 			LogTable projectReport = new ProjectReportGenerator().generateProjectReport();
+			LogTable rq3rq4Report = ProjectReportGeneratorDiagrams.generateRQ3RQ4PerProject(RQ3_RQ4_HOR_ONLY);
 			
 			// Some plausibility tests:
 			
@@ -115,12 +120,10 @@ public class NumberReportGenerator {
 			// RQ3:
 			System.out.println();
 			System.out.println("% RQ3");
-			System.out.println("\\newcommand{\\rankingCountFirstPosition}{" + rankingCountFirstPosition() + "\\xspace}");
-			System.out.println("\\newcommand{\\rankingCountSecondPosition}{" + rankingCountSecondPosition() + "\\xspace}");
+			System.out.println("\\newcommand{\\rankingCountFirstPosition}{" + rankingCountFirstPosition(rq3rq4Report) + "\\xspace}");
+			System.out.println("\\newcommand{\\rankingCountSecondPosition}{" + rankingCountSecondPosition(rq3rq4Report) + "\\xspace}");
 			System.out.println("\\newcommand{\\inconsistenciesWithTenOrLessAlternatives}{"
-					+ inconsistenciesWithTenOrLessAlternatives() + "\\xspace}");
-			System.out.println(
-					"\\newcommand{\\numberOfClassesInTheUMLMetamodel}{" + numberOfClassesInTheUMLMetamodel() + "\\xspace}");
+					+ inconsistenciesWithTenOrLessAlternatives(rq3rq4Report) + "\\xspace}");
 			System.out
 			.println("\\newcommand{\\avgCountOfUnboundParameters}{" + avgCountOfUnboundParameters() + "\\xspace}");
 			
@@ -134,13 +137,13 @@ public class NumberReportGenerator {
 			System.out.println("\\newcommand{\\exampleCRuntimeUML}{" + exampleCRuntimeUML() + "\\xspace}");
 			System.out.println("\\newcommand{\\exampleCVersionCountUML}{" + exampleCVersionCountUML() + "\\xspace}");
 			System.out.println("\\newcommand{\\recognitionRuntimeLessThenOneSecond}{"
-					+ recognitionRuntimeLessThenOneSecond() + "\\%\\xspace}");
+					+ recognitionRuntimeLessThenOneSecond(rq3rq4Report) + "\\%\\xspace}");
 			System.out.println(
 					"\\newcommand{\\complementRuntimeLowerBorder}{" + complementRuntimeLowerBorder() + "\\xspace}");
 			System.out.println(
 					"\\newcommand{\\complementRuntimeUpperBorder}{" + complementRuntimeUpperBorder() + "\\xspace}");
 			System.out.println(
-					"\\newcommand{\\exampleDParameterClassesUML}{" + exampleDParameterSubClassesUML() + "\\xspace}");
+					"\\newcommand{\\exampleDParameterClassesUML}{" + exampleDParameterClassesUML() + "\\xspace}");
 			System.out.println(
 					"\\newcommand{\\exampleDParameterSubClassesUML}{" + exampleDParameterSubClassesUML() + "\\xspace}");
 		} catch (IllegalArgumentException | IllegalAccessException | IOException e) {
@@ -320,36 +323,27 @@ public class NumberReportGenerator {
 	
 	// RQ3:
 
-	public static String rankingCountFirstPosition() {
-		// TODO Auto-generated method stub
-		return null;
+	public static String rankingCountFirstPosition(LogTable rq3rq4Report) {
+		return "" + LogUtil.count(rq3rq4Report.getColumn(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, Integer.class), 0);
 	}
 
-	public static String rankingCountSecondPosition() {
-		// TODO Auto-generated method stub
-		return null;
+	public static String rankingCountSecondPosition(LogTable rq3rq4Report) {
+		return "" + LogUtil.count(rq3rq4Report.getColumn(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, Integer.class), 1);
 	}
 
-	public static String inconsistenciesWithTenOrLessAlternatives() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String numberOfClassesInTheUMLMetamodel() {
-		// TODO Auto-generated method stub
-		return null;
+	public static int inconsistenciesWithTenOrLessAlternatives(LogTable rq3rq4Report) {
+		return LogUtil.test(rq3rq4Report.getColumn(InconsistenciesLog.COL_COMPLEMENTS, Integer.class), a -> a <= 10);
 	}
 
 	public static String avgCountOfUnboundParameters() {
 		// TODO Auto-generated method stub
-		return null;
+		return "?";
 	}
 	
 	// RQ4:
 
 	public static String exampleARuntimeUML() {
-		// TODO Auto-generated method stub
-		return null;
+		return "300ms"; // TODO: Derive...
 	}
 
 	public static String exampleAModelSizeUML() {
@@ -358,8 +352,7 @@ public class NumberReportGenerator {
 	}
 
 	public static String exampleBRuntimeUML() {
-		// TODO Auto-generated method stub
-		return null;
+		return "2s"; // TODO: Derive...
 	}
 
 	public static String exampleBModelSizeUML() {
@@ -368,32 +361,33 @@ public class NumberReportGenerator {
 	}
 
 	public static String exampleCRuntimeUML() {
-		// TODO Auto-generated method stub
-		return null;
+		return "7s"; // TODO: Derive...
 	}
 
 	public static String exampleCVersionCountUML() {
-		// TODO Auto-generated method stub
-		return null;
+		return "20"; // TODO: Derive...
 	}
 
-	public static String recognitionRuntimeLessThenOneSecond() {
-		// TODO Auto-generated method stub
-		return null;
+	public static long recognitionRuntimeLessThenOneSecond(LogTable rq3rq4Report) {
+		List<Integer> recognitionTimes = rq3rq4Report.getColumn(InconsistenciesLog.COL_TIME_RECOGNITION, Integer.class);
+		int recognitionRuntimeLessThenOneSecond = LogUtil.test(recognitionTimes, a -> a < 1000);
+		
+		return Math.round(((double) recognitionRuntimeLessThenOneSecond / (double) recognitionTimes.size()) * 100.0);
 	}
 
 	public static String complementRuntimeLowerBorder() {
-		// TODO Auto-generated method stub
-		return null;
+		return "10s"; // TODO: Derive...
 	}
 
 	public static String complementRuntimeUpperBorder() {
-		// TODO Auto-generated method stub
-		return null;
+		return "40s"; // TODO: Derive...
+	}
+	
+	private String exampleDParameterClassesUML() {
+		return "91"; // TODO: Derive...
 	}
 
 	public static String exampleDParameterSubClassesUML() {
-		// TODO Auto-generated method stub
-		return null;
+		return "279"; // TODO: Derive...
 	}
 }
