@@ -51,11 +51,11 @@ public class ReportGenerator implements IApplication {
 	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
-//		new ProjectReportGenerator();
-//		new ProjectReportGeneratorDiagrams();
-//		new InconsistencyReportGenerator();
-//		new EditRuleReportGenerator();
-//		new AnnotationReportGenerator();
+		new ProjectReportGenerator();
+		new ProjectReportGeneratorDiagrams();
+		new InconsistencyReportGenerator();
+		new EditRuleReportGenerator();
+		new AnnotationReportGenerator();
 		new NumberReportGenerator();
 		
 		return IApplication.EXIT_OK;
