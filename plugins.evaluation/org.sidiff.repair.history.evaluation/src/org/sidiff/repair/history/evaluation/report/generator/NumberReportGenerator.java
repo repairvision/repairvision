@@ -2,6 +2,7 @@ package org.sidiff.repair.history.evaluation.report.generator;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -341,23 +342,38 @@ public class NumberReportGenerator {
 	}
 	
 	// RQ4:
+	
+	private static int getModelSize(String path) {
+		URI uri = URI.createFileURI(path);
+		Resource resource = new ResourceSetImpl().getResource(uri, true);
+		
+		int count = 0;
+		
+		for (Iterator<?> iterator = resource.getAllContents(); iterator.hasNext();) {
+			iterator.next();
+			++count;
+		}
+		
+		return count;
+	}
 
 	public static String exampleARuntimeUML() {
 		return "300ms"; // TODO: Derive...
 	}
 
-	public static String exampleAModelSizeUML() {
-		// TODO Auto-generated method stub
-		return null;
+	public static int exampleAModelSizeUML() {
+		int cmof = getModelSize("C:/workspaces/sidiff-build/org.eclipse.git.evaluation_2018-11-02/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF.ecore/0009_2011-10-06T04-05-09Z_cab66f3576c668586ce408b840cb1d3e9108423b/plugins_org.eclipse.uml2.uml_model_CMOF.ecore");
+		int cmof20 = getModelSize("C:/workspaces/sidiff-build/org.eclipse.git.evaluation_2018-11-02/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore/0004_2013-02-03T17-51-59Z_bb3ae2647564fc84f1bf5254c970e143693ef23c/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore");
+		return cmof + cmof20;
 	}
 
 	public static String exampleBRuntimeUML() {
 		return "2s"; // TODO: Derive...
 	}
 
-	public static String exampleBModelSizeUML() {
-		// TODO Auto-generated method stub
-		return null;
+	public static int exampleBModelSizeUML() {
+		int uml = getModelSize("C:/workspaces/sidiff-build/org.eclipse.git.evaluation_2018-11-02/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_UML.ecore/0083_2008-01-21T16-00-11Z_3c0e7ad91e38426f88a118f58605ea5183faeaa7/plugins_org.eclipse.uml2.uml_model_UML.ecore");
+		return uml;
 	}
 
 	public static String exampleCRuntimeUML() {
