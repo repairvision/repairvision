@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.consistency.common.monitor.LogTable;
@@ -49,7 +50,7 @@ public class InconsistencyEvaluationDriver {
 		
 		List<IConstraint> constraint = Collections.singletonList(repaired.getConsistencyRule(history.getSupportedConsistencyRules()));
 		
-		// TODO: WORKAROUND: Empty Model -> Just remove context element...
+		// TODO: WORKAROUND: Empty Model -> Just erase inconsistency scope..
 		if (history.getHistory().getVersions().indexOf(repaired.getModelVersionIntroduced()) == 1) {
 			prepareInitialModelVersion(history, repaired, constraint);
 		}
@@ -149,11 +150,14 @@ public class InconsistencyEvaluationDriver {
 			log.append(InconsistenciesLog.COL_REPAIR_MATCHINGS_FOR_BEST_HOR, bestObservableRepair.getComplementMatches().size());
 			log.append(InconsistenciesLog.COL_HISTORICAL_CHANGES_OF_BEST_HOR, bestObservableRepair.getRecognizedChanges().size());
 			log.append(InconsistenciesLog.COL_COMPLEMENTING_CHANGES_OF_BEST_HOR, bestObservableRepair.getComplementingChanges().size());
+			log.append(InconsistenciesLog.COL_UNBOUND_PARAMETERS_OF_BEST_HOR, countUnboudParameters(bestObservableRepair));
 		} else {
 			log.append(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, LogTable.NA);
+			log.append(InconsistenciesLog.COL_BEST_HOR_IS_UNDO, LogTable.NA);
 			log.append(InconsistenciesLog.COL_REPAIR_MATCHINGS_FOR_BEST_HOR, LogTable.NA);
 			log.append(InconsistenciesLog.COL_HISTORICAL_CHANGES_OF_BEST_HOR, LogTable.NA);
 			log.append(InconsistenciesLog.COL_COMPLEMENTING_CHANGES_OF_BEST_HOR, LogTable.NA);
+			log.append(InconsistenciesLog.COL_UNBOUND_PARAMETERS_OF_BEST_HOR, LogTable.NA);
 		}
 		
 		// evaluate repair tree:
@@ -208,6 +212,18 @@ public class InconsistencyEvaluationDriver {
 		} else {
 			return new Object[] {-1, LogTable.NA, LogTable.NA};
 		}
+	}
+	
+	private static int countUnboudParameters(IRepairPlan repair) {
+		int count = 0;
+
+		for (Parameter parameter : repair.getParameters()) {
+			if (repair.getParameterValue(parameter) == null) {
+				++count;
+			}
+		}
+
+		return count;
 	}
 	
 	private static int countRepairTreeActions(Collection<RepairValidation> validations) {
