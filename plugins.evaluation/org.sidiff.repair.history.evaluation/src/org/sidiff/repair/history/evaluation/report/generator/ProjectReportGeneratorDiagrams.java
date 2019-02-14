@@ -57,7 +57,8 @@ public class ProjectReportGeneratorDiagrams {
 					InconsistenciesLog.COL_RANKING_OF_BEST_HOR,
 					InconsistenciesLog.COL_TIME_LOAD_CALCULATE_REVISION,
 					InconsistenciesLog.COL_TIME_RECOGNITION,
-					InconsistenciesLog.COL_TIME_COMPLEMENT_MATCHING);
+					InconsistenciesLog.COL_TIME_COMPLEMENT_MATCHING,
+					InconsistenciesLog.COL_UNBOUND_PARAMETERS_OF_BEST_HOR);
 			
 			if (onlyHOR) {
 				rq3_repairs.filterRows(row -> 

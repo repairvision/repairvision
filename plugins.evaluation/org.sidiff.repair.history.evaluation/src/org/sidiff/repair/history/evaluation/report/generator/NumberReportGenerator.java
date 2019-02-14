@@ -107,8 +107,7 @@ public class NumberReportGenerator {
 			System.out.println();
 			System.out.println("% RQ2:");
 			System.out.println("\\newcommand{\\totalObservableRepairs}{" + totalObservableRepairs(projectReport) + "\\xspace}");
-			System.out
-			.println("\\newcommand{\\observableCompletionRepairs}{" + observableCompletionRepairs(projectReport) + "\\xspace}");
+			System.out.println("\\newcommand{\\observableCompletionRepairs}{" + observableCompletionRepairs(projectReport) + "\\xspace}");
 			System.out.println("\\newcommand{\\observableUndoRepairs}{" + observableUndoRepairs(projectReport) + "\\xspace}");
 			System.out.println("\\newcommand{\\notObservableRepairs}{" + notObservableRepairs(projectReport) + "\\xspace}");
 			System.out.println("\\newcommand{\\notObservableMissingCPEO}{" + notObservableMissingCPEO() + "\\xspace}");
@@ -125,8 +124,7 @@ public class NumberReportGenerator {
 			System.out.println("\\newcommand{\\rankingCountSecondPosition}{" + rankingCountSecondPosition(rq3rq4Report) + "\\xspace}");
 			System.out.println("\\newcommand{\\inconsistenciesWithTenOrLessAlternatives}{"
 					+ inconsistenciesWithTenOrLessAlternatives(rq3rq4Report) + "\\xspace}");
-			System.out
-			.println("\\newcommand{\\avgCountOfUnboundParameters}{" + avgCountOfUnboundParameters() + "\\xspace}");
+			System.out.println("\\newcommand{\\avgCountOfUnboundParameters}{" + avgCountOfUnboundParameters(rq3rq4Report) + "\\xspace}");
 			
 			// RQ4:
 			System.out.println();
@@ -324,21 +322,23 @@ public class NumberReportGenerator {
 	
 	// RQ3:
 
-	public static String rankingCountFirstPosition(LogTable rq3rq4Report) {
-		return "" + LogUtil.count(rq3rq4Report.getColumn(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, Integer.class), 0);
+	public static Object rankingCountFirstPosition(LogTable rq3rq4Report) {
+		return LogUtil.count(rq3rq4Report.getColumn(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, Integer.class), 0);
 	}
 
-	public static String rankingCountSecondPosition(LogTable rq3rq4Report) {
-		return "" + LogUtil.count(rq3rq4Report.getColumn(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, Integer.class), 1);
+	public static Object rankingCountSecondPosition(LogTable rq3rq4Report) {
+		return LogUtil.count(rq3rq4Report.getColumn(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, Integer.class), 1);
 	}
 
-	public static int inconsistenciesWithTenOrLessAlternatives(LogTable rq3rq4Report) {
-		return LogUtil.test(rq3rq4Report.getColumn(InconsistenciesLog.COL_COMPLEMENTS, Integer.class), a -> a <= 10);
+	public static String inconsistenciesWithTenOrLessAlternatives(LogTable rq3rq4Report) {
+		List<Integer> complementCount = rq3rq4Report.getColumn(InconsistenciesLog.COL_COMPLEMENTS, Integer.class);
+		int tenOrLess = LogUtil.test(complementCount, a -> a <= 10);
+		
+		return Math.round(((double) tenOrLess / (double) complementCount.size()) * 100.0) + "\\%";
 	}
 
-	public static String avgCountOfUnboundParameters() {
-		// TODO Auto-generated method stub
-		return "?";
+	public static Object avgCountOfUnboundParameters(LogTable rq3rq4Report) {
+		return LogUtil.avg(rq3rq4Report.getColumn(InconsistenciesLog.COL_UNBOUND_PARAMETERS_OF_BEST_HOR, Integer.class));
 	}
 	
 	// RQ4:
