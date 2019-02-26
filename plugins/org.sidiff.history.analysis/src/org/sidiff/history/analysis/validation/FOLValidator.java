@@ -1,22 +1,19 @@
 package org.sidiff.history.analysis.validation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.ProblemSeverity;
 import org.sidiff.historymodel.Version;
 import org.sidiff.validation.constraint.api.ValidationFacade;
+import org.sidiff.validation.constraint.api.util.Validation;
 
 public class FOLValidator extends BasicValidation {
 
 	@Override
 	public void validate(Version version) {
-		List<Problem> inconsistencies = new ArrayList<>();
 
 		// Collect all abstract repair actions:
-		ValidationFacade.validate(version.getModel().getAllContents(), ValidationFacade.getConstraints(version.getModel())).forEach(validation -> {
+		for (Validation validation : ValidationFacade.validate(version.getModel().getAllContents(), ValidationFacade.getConstraints(version.getModel()))) {
 			if (!validation.getResult()) {
 				Problem inconsistency = HistoryModelFactory.eINSTANCE.createProblem();
 				inconsistency.setName(validation.getRule().getName());
@@ -25,9 +22,9 @@ public class FOLValidator extends BasicValidation {
 				inconsistency.getInvalidElements().add(validation.getContext());
 				inconsistency.setContextElement(getContextElement(inconsistency));
 				
-				inconsistencies.add(inconsistency);
+				version.getProblems().add(inconsistency);
 			}
-		});
+		}
 	}
 
 }
