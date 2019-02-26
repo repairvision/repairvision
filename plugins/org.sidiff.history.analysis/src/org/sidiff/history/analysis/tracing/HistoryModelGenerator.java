@@ -175,8 +175,6 @@ public class HistoryModelGenerator {
 	
 	private static void generateIntroducedAndResolved(History history, IValidator validator, int firstVersion, int lastVersion) {
 		
-		
-//		for (Version versionA : history.getVersions()) {
 		for (int i = firstVersion; i <= lastVersion; i++) {
 			Version versionA = history.getVersions().get(i);
 			
@@ -201,11 +199,6 @@ public class HistoryModelGenerator {
 			}
 		}
 		
-//		List<Version> reverseOrder = new ArrayList<>();
-//		reverseOrder.addAll(history.getVersions());
-//		Collections.reverse(reverseOrder);
-		
-//		for (Version versionB : reverseOrder) {
 		for (int i = lastVersion; i >= firstVersion; i--) {
 			Version versionB = history.getVersions().get(i);
 			
