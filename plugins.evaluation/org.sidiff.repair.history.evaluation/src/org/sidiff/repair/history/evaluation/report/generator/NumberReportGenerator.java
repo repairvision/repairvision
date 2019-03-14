@@ -195,7 +195,11 @@ public class NumberReportGenerator {
 		for (EObject element : (Iterable<EObject>) () -> patternResource.getAllContents()) {
 			if (element instanceof GraphPattern) {
 				if (((GraphPattern) element).getStereotypes().contains(HenshinStereotypes.rule)) {
-					patternNames.add(((GraphPattern) element).getName());
+					String name = ((GraphPattern) element).getName();
+					
+					if (name.startsWith("Transform:")) {
+						patternNames.add(name);
+					}
 				}
 			}
 		}
