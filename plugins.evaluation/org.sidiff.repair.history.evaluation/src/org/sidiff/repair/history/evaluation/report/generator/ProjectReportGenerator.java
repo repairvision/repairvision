@@ -80,30 +80,27 @@ public class ProjectReportGenerator {
 	// --------------------------------------------------------------------------------
 	
 	public static final Object[] COL_RQ_SUBJECTS = {"Subject", "Selected evaluation subjects", 
-			COL_GROUP_PROJECT, COL_GROUP_MODELS, COL_GROUP_REVISIONS, COL_GROUP_ELEMENTS};
+			COL_GROUP_PROJECT, COL_GROUP_MODELS, COL_GROUP_ELEMENTS, COL_GROUP_REVISIONS};
 	
 	// --------------------------------------------------------------------------------
 	
 	public static final String[] COL_INCONSISTENCIES_RESOLVED = {"Total", "colTotalInconsistencies", "Total Inconsistencies", "RQ1 Inconsistencies (Count of all resolved inconsistencies)"};
 	
-	public static final String[] COL_INCONSISTENCIES_RESOLVED_SUPPORTED = {"Supp.", "colSupportedInconsistencies", "Supp. Inconsistencies", "RQ1 Inconsistencies (Count of supported resolved inconsistencies)"}; 
-	
 	public static final String[] COL_WELLFORMED_CONSTRAINTS = {"RegEx", "colRegExInconsistencies", "RegEx Inconsistencies", "Not Well Formed Constraints"}; 
 	
-	public static final String[] COL_REPAIRED_INCONSISTENCY = {"(At Least One)", "colRepairsFound", "Repairs Found", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
+	public static final String[] COL_INCONSISTENCIES_RESOLVED_SUPPORTED = {"Supp.", "colSupportedInconsistencies", "Supp. Inconsistencies", "RQ1 Inconsistencies (Count of supported resolved inconsistencies)"}; 
+	
+	public static final String[] COL_REPAIRED_INCONSISTENCY = {"Resolved", "colRepairsFound", "Repairs Found", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
 	
 	// --------------------------------------------------------------------------------
 	
 	public static final Object[] COL_GROUP_INCONSISTENCIES = {"Inconsistencies", 
-			COL_INCONSISTENCIES_RESOLVED, COL_WELLFORMED_CONSTRAINTS, COL_INCONSISTENCIES_RESOLVED_SUPPORTED};
-	
-	public static final Object[] COL_GROUP_REPAIRED_INCONSISTENCY = {"Repairs Found", 
-			COL_REPAIRED_INCONSISTENCY};
+			COL_INCONSISTENCIES_RESOLVED, COL_WELLFORMED_CONSTRAINTS, COL_INCONSISTENCIES_RESOLVED_SUPPORTED, COL_REPAIRED_INCONSISTENCY};
 	
 	// --------------------------------------------------------------------------------
 	
 	public static final Object[] COL_RQ_1 = {"RQ1", "Coverage: How many inconsistencies can be resolved by our approach?",
-			COL_GROUP_INCONSISTENCIES, COL_GROUP_REPAIRED_INCONSISTENCY};
+			COL_GROUP_INCONSISTENCIES};
 	
 	// --------------------------------------------------------------------------------
 	
@@ -279,12 +276,12 @@ public class ProjectReportGenerator {
 				countAllModelsPerProject(modelPaths.get(0).getParentFile()));
 		report.append(COL_MODELS_INCONSISTENT[0],
 				countConsideredModelsPerProject(modelPaths));
+		report.append(COL_ELEMENTS[0],
+				avgModelElementCount(historyLog.toArray(new LogTable[0])));
 		report.append(COL_REVISIONS_INCONSISTENT[0],
 				countVersionsPerModel(modelPaths.toArray(new File[0])));
 		report.append(COL_REVISIONS_COEVOLVING[0],
 				countCoevolutionVersionPerModel(modelPaths.toArray(new File[0])));
-		report.append(COL_ELEMENTS[0],
-				avgModelElementCount(historyLog.toArray(new LogTable[0])));
 		
 		if (RQ1) {
 			report.append(COL_INCONSISTENCIES_RESOLVED[0],
@@ -351,9 +348,9 @@ public class ProjectReportGenerator {
 		report.append(COL_NAME[0], unconsideredProjects + " Others");
 		report.append(COL_MODELS_ALL[0], allModels - consideredModels);
 		report.append(COL_MODELS_INCONSISTENT[0], 0);
+		report.append(COL_ELEMENTS[0], NA);
 		report.append(COL_REVISIONS_INCONSISTENT[0], NA);
 		report.append(COL_REVISIONS_COEVOLVING[0], NA);
-		report.append(COL_ELEMENTS[0], NA);
 		
 		if (RQ1) {
 			report.append(COL_INCONSISTENCIES_RESOLVED[0], 0); // TODO: automatically re-check
@@ -386,9 +383,9 @@ public class ProjectReportGenerator {
 		report.append(COL_NAME[0], "Summary");
 		report.append(COL_MODELS_ALL[0], sum(report.getColumn(COL_MODELS_ALL[0], Integer.class)));
 		report.append(COL_MODELS_INCONSISTENT[0], sum(report.getColumn(COL_MODELS_INCONSISTENT[0], Integer.class)));
+		report.append(COL_ELEMENTS[0], round(avg(report.getColumn(COL_ELEMENTS[0], Long.class))));
 		report.append(COL_REVISIONS_INCONSISTENT[0], sum(report.getColumn(COL_REVISIONS_INCONSISTENT[0], Integer.class)));
 		report.append(COL_REVISIONS_COEVOLVING[0], sum(report.getColumn(COL_REVISIONS_COEVOLVING[0], Integer.class)));
-		report.append(COL_ELEMENTS[0], round(avg(report.getColumn(COL_ELEMENTS[0], Long.class))));
 		
 		if (RQ1) {
 			report.append(COL_INCONSISTENCIES_RESOLVED[0], sum(report.getColumn(COL_INCONSISTENCIES_RESOLVED[0], Integer.class)));

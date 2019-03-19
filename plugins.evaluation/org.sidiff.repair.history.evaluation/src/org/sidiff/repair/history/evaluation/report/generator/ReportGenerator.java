@@ -54,7 +54,6 @@ public class ReportGenerator implements IApplication {
 		new ProjectReportGenerator();
 		new ProjectReportGeneratorDiagrams();
 		new InconsistencyReportGenerator();
-		new EditRuleReportGenerator();
 		new AnnotationReportGenerator();
 		new NumberReportGenerator();
 		

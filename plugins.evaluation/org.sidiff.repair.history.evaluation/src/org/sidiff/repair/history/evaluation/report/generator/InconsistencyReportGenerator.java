@@ -20,13 +20,9 @@ import org.sidiff.validation.constraint.api.library.IConstraintLibrary;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 
-// TODO:
-// - Report: pro Constraint -> Gleiche Spalte wie bei Projekttabelle
-// - Anzahl der Änderungen mit potentiell negativem Impact auswerten
-// - Constraint -> Anzahl der Verletzungen
 public class InconsistencyReportGenerator {
 	
-	private static final String[] COL_INCONSISTENCY = new String[] {"Inconsistency", "Inconsistency Name"};
+	private static final String[] COL_INCONSISTENCY = new String[] {"Consistency rule descriptions (with placeholders {i} for specific inconsistencies)", "Inconsistency Name"};
 	
 	private static final String[] COL_INCONSISTENCY_COUNT = new String[] {"Violations", "Inconsistency Violation Count"};
 	
@@ -42,9 +38,8 @@ public class InconsistencyReportGenerator {
 					.getContents().get(0);  
 			
 			for (Problem problem : history.getUniqueProblems()) {
-				String inconsistency = problem.getName();
-				inconsistency = inconsistency.substring(0, Math.min(120, inconsistency.length())); // TODO
-				
+				String inconsistency = "\\" + problem.getName();
+				inconsistency = inconsistency.substring(0, Math.min(120, inconsistency.length()));
 				LogTable reportForInconsistency = inconsistencyLogs.get(inconsistency);
 				
 				if (reportForInconsistency == null) {
@@ -63,7 +58,7 @@ public class InconsistencyReportGenerator {
 		LogTable inconsistencyLog = LogUtil.merge(inconsistencyLogs.values().toArray(new LogTable[0]));
 		
 		// Supported constraints:
-		List<Boolean> supportedConstraints = new ArrayList<>();
+		List<String> supportedConstraints = new ArrayList<>();
 		
 		for (String constraintName : inconsistencyLog.getColumn(COL_INCONSISTENCY[0], String.class)) {
 			List<IConstraintLibrary> libraries = ConstraintLibraryRegistry.getLibraries().values().stream()
@@ -71,9 +66,9 @@ public class InconsistencyReportGenerator {
 			IConstraint constraint = ConstraintLibraryUtil.getConsistencyRule(libraries, constraintName);
 			
 			if (constraint != null) {
-				supportedConstraints.add(true);
+				supportedConstraints.add("yes");
 			} else {
-				supportedConstraints.add(false);
+				supportedConstraints.add("no");
 			}
 		}
 		
