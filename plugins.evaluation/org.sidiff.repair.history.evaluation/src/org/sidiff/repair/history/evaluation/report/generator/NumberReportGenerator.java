@@ -1,6 +1,7 @@
 package org.sidiff.repair.history.evaluation.report.generator;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -92,6 +93,7 @@ public class NumberReportGenerator {
 			System.out.println();
 			System.out.println("\\newcommand{\\allSourceRevisions}{" + allSourceRevisions(projectReport) + "\\xspace}");
 			System.out.println("\\newcommand{\\allRevisions}{" + allRevisions(projectReport) + "\\xspace}");
+			System.out.println("\\newcommand{\\allEvolutionSteps}{" + allEvolutionSteps(projectReport) + "\\xspace}");
 			
 			// RQ1:
 			System.out.println();
@@ -102,6 +104,8 @@ public class NumberReportGenerator {
 					"\\newcommand{\\domainSpecificInconsistencies}{" + domainSpecificInconsistencies() + "\\xspace}");
 			System.out.println("\\newcommand{\\supportedInconsistencies}{" + supportedInconsistencies(projectReport) + "\\xspace}");
 			System.out.println("\\newcommand{\\atLeastOneRepairFound}{" + atLeastOneRepairFound(projectReport) + "\\xspace}");
+			System.out.println("\\newcommand{\\percentageCovered}{" + percentageCovered(projectReport) + "\\xspace}");
+			System.out.println("\\newcommand{\\percentageUncoveredRegEx}{" + percentageUncoveredRegEx(projectReport) + "\\xspace}");
 			
 			// RQ2:
 			System.out.println();
@@ -116,6 +120,8 @@ public class NumberReportGenerator {
 			System.out.println("\\newcommand{\\notObservableMissingCPEOsAndSubRuleTooLarge}{"
 					+ notObservableMissingCPEOsAndSubRuleTooLarge() + "\\xspace}");
 			System.out.println("\\newcommand{\\missingCPEOs}{" + missingCPEOs() + "\\xspace}");
+			System.out.println("\\newcommand{\\percentageTotalObservableRepairs}{" + percentageTotalObservableRepairs(projectReport) + "\\xspace}");
+			System.out.println("\\newcommand{\\percentageObservableCompletionRepairs}{" + percentageObservableCompletionRepairs(projectReport) + "\\xspace}");
 			
 			// RQ3:
 			System.out.println();
@@ -125,7 +131,8 @@ public class NumberReportGenerator {
 			System.out.println("\\newcommand{\\inconsistenciesWithTenOrLessAlternatives}{"
 					+ inconsistenciesWithTenOrLessAlternatives(rq3rq4Report) + "\\xspace}");
 			System.out.println("\\newcommand{\\avgCountOfUnboundParameters}{" + avgCountOfUnboundParameters(rq3rq4Report) + "\\xspace}");
-			
+			System.out.println("\\newcommand{\\percentageTopRanking}{" + percentageTopRanking(rq3rq4Report, projectReport) + "\\xspace}");
+						
 			// RQ4:
 			System.out.println();
 			System.out.println("% RQ4");
@@ -261,6 +268,10 @@ public class NumberReportGenerator {
 		return allSourceRevisions(projectReport) + coEvModelsCount;
 	}
 	
+	public static int allEvolutionSteps(LogTable projectReport) {
+		return allRevisions(projectReport) - (2 * inconsistentModelHistories(projectReport));
+	}
+	
 	// RQ1:
 
 	public static int totalInconsistencies(LogTable projectReport) {
@@ -285,6 +296,15 @@ public class NumberReportGenerator {
 	public static int atLeastOneRepairFound(LogTable projectReport) {
 		List<Integer> columntAtLeastOneRepairFound = projectReport.getColumn(ProjectReportGenerator.COL_REPAIRED_INCONSISTENCY[0], Integer.class);
 		return columntAtLeastOneRepairFound.get(columntAtLeastOneRepairFound.size() - 1);
+	}
+	
+	private String percentageCovered(LogTable projectReport) {
+		return percentage(atLeastOneRepairFound(projectReport), totalInconsistencies(projectReport));
+	}
+	
+	private String percentageUncoveredRegEx(LogTable projectReport) {
+		int noRepairFound = totalInconsistencies(projectReport) - atLeastOneRepairFound(projectReport);
+		return percentage(regexInconsistencies(projectReport), noRepairFound);
 	}
 	
 	// RQ2:
@@ -324,6 +344,14 @@ public class NumberReportGenerator {
 		return 8; // TODO: Derive...
 	}
 	
+	public static String percentageTotalObservableRepairs(LogTable projectReport) {
+		return percentage(totalObservableRepairs(projectReport), supportedInconsistencies(projectReport));
+	}
+	
+	public static String percentageObservableCompletionRepairs(LogTable projectReport) {
+		return percentage(observableCompletionRepairs(projectReport), totalObservableRepairs(projectReport));
+	}
+	
 	// RQ3:
 
 	public static Object rankingCountFirstPosition(LogTable rq3rq4Report) {
@@ -338,11 +366,15 @@ public class NumberReportGenerator {
 		List<Integer> complementCount = rq3rq4Report.getColumn(InconsistenciesLog.COL_COMPLEMENTS, Integer.class);
 		int tenOrLess = LogUtil.test(complementCount, a -> a <= 10);
 		
-		return Math.round(((double) tenOrLess / (double) complementCount.size()) * 100.0) + "\\%";
+		return percentage(tenOrLess, complementCount.size()) + "\\%";
 	}
 
 	public static Object avgCountOfUnboundParameters(LogTable rq3rq4Report) {
 		return LogUtil.avg(rq3rq4Report.getColumn(InconsistenciesLog.COL_UNBOUND_PARAMETERS_OF_BEST_HOR, Integer.class));
+	}
+	
+	public static String percentageTopRanking(LogTable rq3rq4Report, LogTable projectReport) {
+		return percentage((int) rankingCountFirstPosition(rq3rq4Report), totalObservableRepairs(projectReport));
 	}
 	
 	// RQ4:
@@ -388,11 +420,11 @@ public class NumberReportGenerator {
 		return "20"; // TODO: Derive...
 	}
 
-	public static long recognitionRuntimeLessThenOneSecond(LogTable rq3rq4Report) {
+	public static String recognitionRuntimeLessThenOneSecond(LogTable rq3rq4Report) {
 		List<Integer> recognitionTimes = rq3rq4Report.getColumn(InconsistenciesLog.COL_TIME_RECOGNITION, Integer.class);
 		int recognitionRuntimeLessThenOneSecond = LogUtil.test(recognitionTimes, a -> a < 1000);
 		
-		return Math.round(((double) recognitionRuntimeLessThenOneSecond / (double) recognitionTimes.size()) * 100.0);
+		return percentage(recognitionRuntimeLessThenOneSecond, recognitionTimes.size());
 	}
 
 	public static String complementRuntimeLowerBorder() {
@@ -409,5 +441,12 @@ public class NumberReportGenerator {
 
 	public static String exampleDParameterSubClassesUML() {
 		return "279"; // TODO: Derive...
+	}
+	
+	private static String percentage(int partial, int all) {
+		 double percentage = ((double) partial / (double) all) * 100.0;
+		 NumberFormat nf =  NumberFormat.getInstance();
+		 nf.setMaximumFractionDigits(1);
+		 return nf.format(percentage);
 	}
 }

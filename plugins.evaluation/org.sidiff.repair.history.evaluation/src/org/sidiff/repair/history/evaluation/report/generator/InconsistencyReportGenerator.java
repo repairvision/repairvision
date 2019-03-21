@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,37 @@ public class InconsistencyReportGenerator {
 	private static final String[] COL_INCONSISTENCY_COUNT = new String[] {"Violations", "Inconsistency Violation Count"};
 	
 	private static final String[] COL_SUPPORTED_CONSTRAINT = new String[] {"Supported", "Supported Constraint"};
+	
+	private static final String[] COL_PROJECTS = new String[] {"Projects", "Projects in which the inconsistencies occur"};
 
+	private String getProjectName(Problem problem) {
+		String projectFullName = problem.eResource().getURI().segment(3); // TODO: Depends on local path
+		
+		if (projectFullName.contains(".")) {
+			return projectFullName.substring(projectFullName.lastIndexOf(".") + 1, projectFullName.length());
+		} else {
+			return projectFullName;
+		}
+	}
+	
+	private class ProjectSet extends HashSet<String> {
+		
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public String toString() {
+			StringBuilder string = new StringBuilder();
+			
+			for (String project : this) {
+				string.append(project);
+				string.append(", ");
+			}
+			
+			string.setLength(string.length() - 2);
+			return string.toString();
+		}
+	}
+	
 	public InconsistencyReportGenerator() throws IOException {
 		Map<String, LogTable> inconsistencyLogs = new LinkedHashMap<>();
 		
@@ -38,9 +69,11 @@ public class InconsistencyReportGenerator {
 					.getContents().get(0);  
 			
 			for (Problem problem : history.getUniqueProblems()) {
-				String inconsistency = "\\" + problem.getName();
+				String inconsistency = problem.getName();
 				inconsistency = inconsistency.substring(0, Math.min(120, inconsistency.length()));
 				LogTable reportForInconsistency = inconsistencyLogs.get(inconsistency);
+				
+				String project = getProjectName(problem);
 				
 				if (reportForInconsistency == null) {
 					reportForInconsistency = new LogTable();
@@ -48,9 +81,19 @@ public class InconsistencyReportGenerator {
 					
 					reportForInconsistency.append(COL_INCONSISTENCY[0], inconsistency);
 					reportForInconsistency.append(COL_INCONSISTENCY_COUNT[0], 1);
+					
+					ProjectSet projects = new ProjectSet();
+					projects.add(project);
+					reportForInconsistency.append(COL_PROJECTS[0], projects);
 				} else {
 					int count = reportForInconsistency.getColumn(COL_INCONSISTENCY_COUNT[0], Integer.class).get(0);
 					reportForInconsistency.set(COL_INCONSISTENCY_COUNT[0], 0, count + 1);
+					
+					ProjectSet projects = reportForInconsistency.getColumn(COL_PROJECTS[0], ProjectSet.class).get(0);
+					
+					if (!projects.contains(project)) {
+						projects.add(project);
+					}
 				}
 			}
 		}
@@ -60,9 +103,10 @@ public class InconsistencyReportGenerator {
 		// Supported constraints:
 		List<String> supportedConstraints = new ArrayList<>();
 		
+		List<IConstraintLibrary> libraries = ConstraintLibraryRegistry.getLibraries().values().stream()
+				.flatMap(Collection::stream).collect(Collectors.toList());
+		
 		for (String constraintName : inconsistencyLog.getColumn(COL_INCONSISTENCY[0], String.class)) {
-			List<IConstraintLibrary> libraries = ConstraintLibraryRegistry.getLibraries().values().stream()
-					.flatMap(Collection::stream).collect(Collectors.toList());
 			IConstraint constraint = ConstraintLibraryUtil.getConsistencyRule(libraries, constraintName);
 			
 			if (constraint != null) {

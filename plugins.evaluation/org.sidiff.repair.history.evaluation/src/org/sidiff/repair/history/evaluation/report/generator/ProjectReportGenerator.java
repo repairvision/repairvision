@@ -90,7 +90,7 @@ public class ProjectReportGenerator {
 	
 	public static final String[] COL_INCONSISTENCIES_RESOLVED_SUPPORTED = {"Supp.", "colSupportedInconsistencies", "Supp. Inconsistencies", "RQ1 Inconsistencies (Count of supported resolved inconsistencies)"}; 
 	
-	public static final String[] COL_REPAIRED_INCONSISTENCY = {"Resolved", "colRepairsFound", "Repairs Found", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
+	public static final String[] COL_REPAIRED_INCONSISTENCY = {"Resolved", "colRepairsFound", "Resolved Inconsistencies", "RQ1 Repaired Inconsistencies (Supported resolved inconsistencies for wich we found at least one repair.)"};
 	
 	// --------------------------------------------------------------------------------
 	
