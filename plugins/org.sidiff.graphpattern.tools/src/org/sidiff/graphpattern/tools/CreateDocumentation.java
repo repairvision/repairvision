@@ -28,10 +28,12 @@ import org.eclipse.sirius.business.api.session.SessionManager;
 import org.eclipse.sirius.common.tools.api.resource.ImageFileFormat;
 import org.eclipse.sirius.viewpoint.DRepresentation;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.edit.util.LabelServices;
 
 public class CreateDocumentation extends AbstractHandler {
 
@@ -58,7 +60,8 @@ public class CreateDocumentation extends AbstractHandler {
 	            for (DRepresentation dRepresentation : dRepresentationsToExportAsImage) {
 	            	
 	            	// create output folder:
-	            	String localPath = FOLDER + File.separator + dRepresentation.getName();
+	            	String pathName = dRepresentation.getName().replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+	            	String localPath = FOLDER + File.separator + pathName;
 	            	new File(project.getLocation().toFile().getAbsolutePath() + File.separator + localPath).mkdirs();
 	            	IPath outputPath = project.getFolder(localPath).getLocation();
 	            	
@@ -76,19 +79,29 @@ public class CreateDocumentation extends AbstractHandler {
 					try {
 						
 						// get HTML path:
-						IResource htmlDoc = Arrays.asList(project.getFolder(localPath).members()).stream()
-								.filter(r -> r.getFileExtension().equals("html")).findFirst().get();
-						htmlDocLink = htmlDoc.getLocation().makeRelativeTo(project.getFolder(FOLDER).getLocation())
-								.toPortableString();
+						IPath htmlPath = null; 
+						{
+							IResource htmlDoc = Arrays.asList(project.getFolder(localPath).members()).stream()
+									.filter(r -> r.getFileExtension().equals("html")).findFirst().get();
+							htmlDoc.move(htmlDoc.getFullPath().removeLastSegments(1).append("diagram.html"), true, null);
+							
+							htmlPath = htmlDoc.getLocation().removeLastSegments(1).append("diagram.html");
+						}
+						htmlDocLink = htmlPath.makeRelativeTo(project.getFolder(FOLDER).getLocation()).toPortableString();
 						
 						// get SVG path:
-						IResource svgDoc = Arrays.asList(project.getFolder(localPath).members()).stream()
-								.filter(r -> r.getFileExtension().equals("svg")).findFirst().get();
-						svgDocLink = svgDoc.getLocation().makeRelativeTo(project.getFolder(localPath).getLocation())
-								.toPortableString();
+						IPath svgPath = null;
+						{
+							IResource svgDoc = Arrays.asList(project.getFolder(localPath).members()).stream()
+									.filter(r -> r.getFileExtension().equals("svg")).findFirst().get();
+							svgDoc.move(svgDoc.getFullPath().removeLastSegments(1).append("diagram.svg"), true, null);
+							
+							svgPath = svgDoc.getLocation().removeLastSegments(1).append("diagram.svg");
+						}
+						svgDocLink = svgPath.makeRelativeTo(project.getFolder(localPath).getLocation()).toPortableString();
 						
 						// >> fix: make HTML hyperlinks relative <<
-						FileReader htmlDocReader = new FileReader(htmlDoc.getLocation().toFile());
+						FileReader htmlDocReader = new FileReader(htmlPath.toFile());
 						htmlDocReaderBuffer = new BufferedReader(htmlDocReader);
 						
 						StringBuffer newHtmlDoc = new StringBuffer(); 
@@ -102,7 +115,7 @@ public class CreateDocumentation extends AbstractHandler {
 							line = htmlDocReaderBuffer.readLine();
 						}
 						
-						htmlDocWriter = new FileWriter(htmlDoc.getLocation().toFile());
+						htmlDocWriter = new FileWriter(htmlPath.toFile());
 						htmlDocWriter.write(newHtmlDoc.toString());
 
 						// get Graph Pattern of diagram:
@@ -142,7 +155,9 @@ public class CreateDocumentation extends AbstractHandler {
 	        }
 			
 			// create HTML list:
-	        if (graphPatternBundle != null) {
+	        if (graphPatternBundle == null) {
+	        	WorkbenchUtil.showError("Something went wrong. Please check if the diagram file (.aird) contains any diagrams.");
+	        } else {
 	        	StringBuffer doc = new StringBuffer();
 	        	
 	        	doc.append("<ul>");
@@ -206,9 +221,11 @@ public class CreateDocumentation extends AbstractHandler {
 		
 		// graph patterns:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
+			String stereotype = LabelServices.getStereotypesLabel(graphPattern.getStereotypes()).replace("<", "&lt;").replace(">", "&gt;");
+			
 			doc.append("<li>");
 			doc.append("<a href=\"" + diagramPaths.get(graphPattern) + "\">");
-			doc.append(graphPattern.getName());
+			doc.append(stereotype + " " + graphPattern.getName());
 			doc.append("</a>");
 			doc.append("</li>");
 		}
