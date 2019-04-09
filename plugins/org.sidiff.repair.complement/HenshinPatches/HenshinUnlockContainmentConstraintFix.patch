@@ -1,0 +1,37 @@
+diff --git a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DomainSlot.java b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DomainSlot.java
+index a9c8e4e..a0bb74c 100644
+--- a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DomainSlot.java
++++ b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DomainSlot.java
+@@ -292,12 +292,28 @@
+ 	public boolean unlock(Variable sender) {
+ 		
+ 		// Revert the changes to the temporary domain:
++		
++		// NOTE: The temporary domain is a chain of the previous values.
++		//       => The values ​​must always be reset in reverse order.
++		//       => reference constraints before containment constraints (see instantiate())
++		
++		// reference constraints:
+ 		int refCount = sender.referenceConstraints.size();
++		
++		for (int i=refCount-1; i>=0; i--) {
++			BinaryConstraint constraint = sender.referenceConstraints.get(i);
++			DomainChange change = remoteChangeMap.get(constraint);
++			if (change != null) {
++				change.slot.temporaryDomain = change.originalValues;
++				remoteChangeMap.remove(constraint);
++			}
++		}	
++		
++		// containment constraints:
+ 		int conCount = sender.containmentConstraints.size();
+-		for (int i=refCount+conCount-1; i>=0; i--) {
+-			BinaryConstraint constraint = (i>=refCount) ?
+-					sender.containmentConstraints.get(i-refCount) :
+-					sender.referenceConstraints.get(i);
++		
++		for (int i=conCount-1; i>=0; i--) {
++			BinaryConstraint constraint = sender.containmentConstraints.get(i);
+ 			DomainChange change = remoteChangeMap.get(constraint);
+ 			if (change != null) {
+ 				change.slot.temporaryDomain = change.originalValues;

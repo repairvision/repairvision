@@ -1,0 +1,37 @@
+diff --git a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java
+index fcd9a63..a15d735 100644
+--- a/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java
++++ b/henshin_1-2/org.eclipse.emf.henshin.interpreter/src/org/eclipse/emf/henshin/interpreter/matching/constraints/DanglingConstraint.java
+@@ -17,8 +17,10 @@
+ 
+ import org.eclipse.emf.ecore.EObject;
+ import org.eclipse.emf.ecore.EReference;
++import org.eclipse.emf.ecore.EStructuralFeature;
+ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+ import org.eclipse.emf.ecore.EcorePackage;
++import org.eclipse.emf.ecore.util.EcoreUtil;
+ import org.eclipse.emf.henshin.interpreter.EGraph;
+ 
+ /**
+@@ -82,6 +84,21 @@
+ 						expectedCount = 0;
+ 					}
+ 					if (actualIncomingEdges.get(ref) > expectedCount) {
++
++						// TODO: DebugUtil
++						Iterator<EStructuralFeature.Setting> it = new EcoreUtil.FilteredSettingsIterator(
++								graph.getCrossReferenceAdapter().getInverseReferences(sourceValue, true), ref, null);
++
++						while (it.hasNext()) {
++							Setting setting = (Setting) it.next();
++							System.out.println("-------------------------------------------------------------------------------------");
++							System.out.println("=> Match-Failed!");
++							System.out.println(sourceValue);
++							System.out.println(setting.getEStructuralFeature());
++							System.out.println(setting.getEObject());
++							System.out.println("-------------------------------------------------------------------------------------");
++						}
++						
+ 						return false;
+ 					}
+ 				}

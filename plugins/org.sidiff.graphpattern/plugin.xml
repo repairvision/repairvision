@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+   <extension-point id="profile" name="Graph Pattern Profile" schema="schema/profile.exsd"/>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated graphpattern -->
+      <package
+            uri="http://www.sidiff.org/graphpattern/1.0"
+            class="org.sidiff.graphpattern.GraphpatternPackage"
+            genModel="model/graphpattern.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated graphpattern -->
+      <parser
+            type="graphpattern"
+            class="org.sidiff.graphpattern.util.GraphpatternResourceFactoryImpl"/>
+   </extension>
+   
+   <extension point="org.eclipse.core.expressions.definitions">
+      <definition id="org.sidiff.graphpattern.fileextension">
+         <adapt type="org.eclipse.core.resources.IResource">
+            <or>
+                <test property="org.eclipse.core.resources.extension"
+                      value="graphpattern">
+                </test>
+            </or>
+         </adapt>
+      </definition>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.protocol_parser">
+      <parser
+            class="org.sidiff.graphpattern.profile.GraphPatternProfileFactory"
+            protocolName="graphpatternprofile">
+      </parser>
+   </extension>
+</plugin>

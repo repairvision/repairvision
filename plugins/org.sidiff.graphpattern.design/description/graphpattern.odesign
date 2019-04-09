@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="graphpattern" version="12.0.0.2017041100">
+  <ownedViewpoints name="graphpattern" label="Graph-Pattern" modelFileExtension="graphpattern">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="graphpattern.diagram" label="Graph Pattern Diagram" domainClass="graphpattern.GraphPattern" enablePopupBars="true">
+      <metamodel href="../../org.sidiff.graphpattern/model/graphpattern.ecore#/"/>
+      <defaultLayer name="Default">
+        <edgeMappings name="graphpattern.edgepattern.directed" label="Edge Pattern - Directed Edge" labelDirectEdit="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.label.edge']" semanticCandidatesExpression="service:getDirectedEdgeCandidates()" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern']" targetMapping="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="graphpattern.EdgePattern" useDomainElement="true" reconnections="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.reconnect.edge']">
+          <style strokeColor="//@userColorsPalettes[name='Graph']/@entries[name='EdgeLineColor']" routingStyle="manhattan">
+            <centerLabelStyleDescription showIcon="false" labelExpression="service:getEdgeCenterLabel()" labelColor="//@userColorsPalettes[name='Graph']/@entries[name='EdgeLabelColor']"/>
+            <endLabelStyleDescription labelExpression="service:getEdgeEndLabel()" labelColor="//@userColorsPalettes[name='Graph']/@entries[name='EdgeLabelColor']"/>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="graphpattern.edgepattern.undirected" label="Edge Pattern - Undirected Edge" labelDirectEdit="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.label.edge']" semanticCandidatesExpression="service:getUndirectedEdgeCandidates()" semanticElements="service:getOppositeEdgeCandidate()" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern']" targetMapping="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="graphpattern.EdgePattern" useDomainElement="true" reconnections="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.reconnect.edge']">
+          <style strokeColor="//@userColorsPalettes[name='Graph']/@entries[name='EdgeLineColor']" sourceArrow="InputArrow">
+            <beginLabelStyleDescription labelExpression="service:getEdgeBeginLabel()" labelColor="//@userColorsPalettes[name='Graph']/@entries[name='EdgeLabelColor']"/>
+            <centerLabelStyleDescription showIcon="false" labelExpression="service:getEdgeCenterLabel()" labelColor="//@userColorsPalettes[name='Graph']/@entries[name='EdgeLabelColor']"/>
+            <endLabelStyleDescription labelExpression="service:getEdgeEndLabel()" labelColor="//@userColorsPalettes[name='Graph']/@entries[name='EdgeLabelColor']"/>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="graphpattern.association" label="Association" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern']" targetMapping="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@edgeMappings[name='graphpattern.edgepattern.undirected'] //@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@edgeMappings[name='graphpattern.edgepattern.directed'] //@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern'] //@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern']/@subNodeMappings[name='graphpattern.attributepattern']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="graphpattern.Association" useDomainElement="true" reconnections="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.reconnect.association']">
+          <style lineStyle="dash" targetArrow="NoDecoration" sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_gray']"/>
+            <centerLabelStyleDescription>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="graphpattern.nodepattern" label="Node Pattern" labelDirectEdit="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.label.node']" semanticCandidatesExpression="feature:nodes" synchronizationLock="true" domainClass="graphpattern.NodePattern" dropDescriptions="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.dnd.attribute']" childrenPresentation="List">
+          <subNodeMappings name="graphpattern.attributepattern" label="Attribute Pattern" labelDirectEdit="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@toolSections.2/@ownedTools[name='graphpattern.section.actions.label.attribute']" semanticCandidatesExpression="feature:eAllContents" domainClass="graphpattern.AttributePattern">
+            <style xsi:type="style:BundledImageDescription" borderColor="//@userColorsPalettes[name='Graph']/@entries[name='AttributeLabelColor']" labelExpression="service:getLabel()" labelColor="//@userColorsPalettes[name='Graph']/@entries[name='AttributeLabelColor']" labelAlignment="LEFT" sizeComputationExpression="1" color="//@userColorsPalettes[name='Graph']/@entries[name='AttributeLabelColor']"/>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" arcWidth="8" arcHeight="8" borderSizeComputationExpression="1" borderColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeFrameColor']" labelExpression="service:getLabel()" labelColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeLabelColor']" roundedCorner="true" widthComputationExpression="12" heightComputationExpression="5" backgroundStyle="Liquid" backgroundColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeBackgroundFromColor']" foregroundColor="//@userColorsPalettes[name='Graph']/@entries[name='NodeBackgroundToColor']"/>
+        </containerMappings>
+        <toolSections name="graphpattern.section.graph.elements" label="Graph Elements">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="graphpattern.tool.add.node" label="Node" containerMappings="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="graphpattern.NodePattern" referenceName="nodes"/>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool_1:ToolDescription" name="graphpattern.tool.add.adjacent.node" label="Adjacent Node" precondition="service:isNodePatter()" iconPath="/org.sidiff.graphpattern.edit/icons/full/obj16/NodePattern.gif">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="service:createAdjacentNode()"/>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="graphpattern.tool.add.attribute" label="Attribute" nodeMappings="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern']/@subNodeMappings[name='graphpattern.attributepattern']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="graphpattern.AttributePattern" referenceName="attributes"/>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="graphpattern.tool.add.edge.directed" label="Directed Edge" edgeMappings="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@edgeMappings[name='graphpattern.edgepattern.directed']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="graphpattern.EdgePattern" referenceName="outgoings" variableName="instanceSource">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:source"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="graphpattern.tool.add.edge.undirected" label="Undirected Edge" edgeMappings="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@edgeMappings[name='graphpattern.edgepattern.undirected']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="graphpattern.EdgePattern" referenceName="outgoings" variableName="instanceSource">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:source"/>
+                </subModelOperations>
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression=" var:target">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="graphpattern.EdgePattern" referenceName="outgoings" variableName="instanceTarget">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:source"/>
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:target"/>
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="opposite" valueExpression="var:instanceSource"/>
+                  </subModelOperations>
+                  <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:instanceSource">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="opposite" valueExpression="var:instanceTarget"/>
+                  </subModelOperations>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="graphpattern.section.additional.elements" label="Additional Elements">
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="graphpattern.tool.add.association" label="Association" edgeMappings="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@edgeMappings[name='graphpattern.association']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="graphpattern.Association" referenceName="associations">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:source"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool_1:ToolDescription" name="graphpattern.tool.import.profile" label="Import Profile">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="service:importProfile()"/>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="graphpattern.section.actions" label="Actions">
+          <ownedTools xsi:type="tool:ReconnectEdgeDescription" name="graphpattern.section.actions.reconnect.edge" label="Edge Pattern - Reconnect" reconnectionKind="RECONNECT_BOTH">
+            <source name="source"/>
+            <target name="target"/>
+            <sourceView name="sourceView"/>
+            <targetView name="targetView"/>
+            <element name="element"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:element">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="service:reconnectEdge(source, target)"/>
+              </firstModelOperations>
+            </initialOperation>
+            <edgeView name="edgeView"/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ReconnectEdgeDescription" name="graphpattern.section.actions.reconnect.association" label="Association - Reconnect" reconnectionKind="RECONNECT_BOTH">
+            <source name="source"/>
+            <target name="target"/>
+            <sourceView name="sourceView"/>
+            <targetView name="targetView"/>
+            <element name="element"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:element">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="service:reconnectAssociation(source, target)"/>
+              </firstModelOperations>
+            </initialOperation>
+            <edgeView name="associationView"/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerDropDescription" name="graphpattern.section.actions.dnd.attribute" label="Attribute Pattern - DnD" mappings="//@ownedViewpoints[name='graphpattern']/@ownedRepresentations[name='graphpattern.diagram']/@defaultLayer/@containerMappings[name='graphpattern.nodepattern']/@subNodeMappings[name='graphpattern.attributepattern']">
+            <oldContainer name="oldSemanticContainer"/>
+            <newContainer name="newSemanticContainer"/>
+            <element name="element"/>
+            <newViewContainer name="newContainerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:newSemanticContainer">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="attributes" valueExpression="var:element"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:DirectEditLabel" name="graphpattern.section.actions.label.node" label="Node - Edit Label">
+            <mask mask="{0}"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="service:parseNodeLabel(arg0)"/>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:DirectEditLabel" name="graphpattern.section.actions.label.edge" label="Edge - Edit Label">
+            <mask mask="{0}"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="service:parseEdgeLabel(arg0)"/>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:DirectEditLabel" name="graphpattern.section.actions.label.attribute" label="Attribute - Edit Label">
+            <mask mask="{0}"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="service:parseAttributeLabel(arg0)"/>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="org.sidiff.graphpattern.design.service.LabelServices"/>
+    <ownedJavaExtensions qualifiedClassName="org.sidiff.graphpattern.design.service.ColorServices"/>
+    <ownedJavaExtensions qualifiedClassName="org.sidiff.graphpattern.design.service.GraphServices"/>
+    <ownedJavaExtensions qualifiedClassName="org.sidiff.graphpattern.design.service.ConditionService"/>
+    <ownedJavaExtensions qualifiedClassName="org.sidiff.graphpattern.design.service.DialogService"/>
+  </ownedViewpoints>
+  <userColorsPalettes name="Graph">
+    <entries xsi:type="description:ComputedColor" name="NodeBackgroundFromColor" red="service:getNodeBackgroundFromColorR()" green="service:getNodeBackgroundFromColorG()" blue="service:getNodeBackgroundFromColorB()"/>
+    <entries xsi:type="description:ComputedColor" name="NodeBackgroundToColor" red="service:getNodeBackgroundToColorR()" green="service:getNodeBackgroundToColorG()" blue="service:getNodeBackgroundToColorB()"/>
+    <entries xsi:type="description:ComputedColor" name="NodeFrameColor" red="service:getNodeFrameColorR()" green="service:getNodeFrameColorG()" blue="service:getNodeFrameColorB()"/>
+    <entries xsi:type="description:ComputedColor" name="NodeLabelColor" red="service:getNodeLabelColorR()" green="service:getNodeLabelColorG()" blue="service:getNodeLabelColorB()"/>
+    <entries xsi:type="description:ComputedColor" name="EdgeLineColor" red="service:getEdgeLineColorR()" green="service:getEdgeLineColorG()" blue="service:getEdgeLineColorB()"/>
+    <entries xsi:type="description:ComputedColor" name="EdgeLabelColor" red="service:getEdgeLabelColorR()" green="service:getEdgeLabelColorG()" blue="service:getEdgeLabelColorB()"/>
+    <entries xsi:type="description:ComputedColor" name="AttributeLabelColor" red="service:getAttributeLabelColorR()" green="service:getAttributeLabelColorG()" blue="service:getAttributeLabelColorB()"/>
+  </userColorsPalettes>
+</description:Group>

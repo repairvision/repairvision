@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.silift.menu">
+         <menu
+               id="org.sidiff.graphpattern.tools.menu"
+               label="Graph Pattern">
+            <command
+                  commandId="org.sidiff.graphpattern.tools.commands.modeltopattern"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern"
+                  icon="icons/slice.gif"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.sidiff.graphpattern.tools.command.creatediagram"
+                  icon="icons/Sirius.gif"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.sidiff.graphpattern.tools.command.createdocumentation"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.sidiff.graphpattern.tools.command.batchgenerateeditrules"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.sidiff.graphpattern.presentation.GraphpatternEditorID">
+         <separator
+               name="org.sidiff.graphpattern.tools.separator.start"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern"
+               icon="icons/slice.gif"
+               style="push">
+         </command>
+         <command
+               commandId="org.sidiff.graphpattern.tools.command.creatediagram"
+               icon="icons/Sirius.gif"
+               style="push">
+         </command>
+         <separator
+               name="org.sidiff.graphpattern.tools.separator.end"
+               visible="true">
+         </separator>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.sidiff.graphpattern.tools.ConvertModelToGraphPattern"
+            commandId="org.sidiff.graphpattern.tools.commands.modeltopattern">
+      </handler>
+      <handler
+            class="org.sidiff.graphpattern.tools.SliceGraphPattern"
+            commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern">
+      </handler>
+      <handler
+            class="org.sidiff.graphpattern.tools.CreateDiagram"
+            commandId="org.sidiff.graphpattern.tools.command.creatediagram">
+      </handler>
+      <handler
+            class="org.sidiff.graphpattern.tools.CreateDocumentation"
+            commandId="org.sidiff.graphpattern.tools.command.createdocumentation">
+      </handler>
+      <handler
+            class="org.sidiff.graphpattern.tools.editrules.GenerateEditRulesBatch"
+            commandId="org.sidiff.graphpattern.tools.command.batchgenerateeditrules">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.sidiff.graphpattern.tools.commands.modeltopattern"
+            name="Convert Model To Graph Pattern">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.tools.command.slicegraphpattern"
+            name="Slice Graph Pattern">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.tools.command.creatediagram"
+            name="Create Diagram">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.tools.command.createdocumentation"
+            name="Create Documentation">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.tools.command.batchgenerateeditrules"
+            name="Generate Edit Rules">
+      </command>
+   </extension>
+</plugin>

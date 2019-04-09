@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated model -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.sidiff.historymodel.presentation.HistoryModelModelWizardID"
+            name="%_UI_HistoryModelModelWizard_label"
+            class="org.sidiff.historymodel.presentation.HistoryModelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/HistoryModelModelFile.gif">
+         <description>%_UI_HistoryModelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated model -->
+      <editor
+            id="org.sidiff.historymodel.presentation.HistoryModelEditorID"
+            name="%_UI_HistoryModelEditor_label"
+            icon="icons/full/obj16/HistoryModelModelFile.gif"
+            extensions="history"
+            class="org.sidiff.historymodel.presentation.HistoryModelEditor"
+            contributorClass="org.sidiff.historymodel.presentation.HistoryModelActionBarContributor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.sidiff.historymodel.presentation.HistoryModelEditorID">
+         <separator
+               name="org.sidiff.history.model.editor.separator.tools.start"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.sidiff.history.model.editor.command.editsteps.resource"
+               icon="icons/full/obj16/synch_synch.png"
+               style="push">
+         </command>
+         <command
+               commandId="org.sidiff.history.model.editor.command.editsteps.resourceset"
+               icon="icons/full/obj16/synch_synch.png"
+               style="push">
+         </command>
+         <command
+               commandId="org.sidiff.history.model.editor.command.editsteps.validation"
+               icon="icons/full/obj16/synch_synch.png"
+               style="push">
+         </command>
+         <command
+               commandId="org.sidiff.history.model.editor.command.open.versions"
+               icon="icons/full/obj16/file.png"
+               style="push">
+         </command>
+         <command
+               commandId="org.sidiff.history.model.editor.command.findmodelelement.byuri"
+               icon="icons/full/obj16/findlocation.png"
+               style="push">
+         </command>
+         <separator
+               name="org.sidiff.history.model.editor.separator.tools.end"
+               visible="true">
+         </separator>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.sidiff.history.model.editor.command.editsteps.resource"
+            name="Show Edit Steps (Resource Scope)">
+      </command>
+      <command
+            id="org.sidiff.history.model.editor.command.editsteps.resourceset"
+            name="Show Edit Steps (Resource Set Scope)">
+      </command>
+      <command
+            id="org.sidiff.history.model.editor.command.editsteps.validation"
+            name="Show Edit Steps (Validation Scope)">
+      </command>
+      <command
+            id="org.sidiff.history.model.editor.command.open.versions"
+            name="Show Modified Model Versions ">
+      </command>
+      <command
+            id="org.sidiff.history.model.editor.command.findmodelelement.byuri"
+            name="Find Model Element By URI">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.sidiff.historymodel.presentation.handlers.ShowEditStepsOnResourceHandler"
+            commandId="org.sidiff.history.model.editor.command.editsteps.resource">
+      </handler>
+      <handler
+            class="org.sidiff.historymodel.presentation.handlers.ShowEditStepsOnResourceSetHandler"
+            commandId="org.sidiff.history.model.editor.command.editsteps.resourceset">
+      </handler>
+      <handler
+            class="org.sidiff.historymodel.presentation.handlers.ShowEditStepsWithFilterHandler"
+            commandId="org.sidiff.history.model.editor.command.editsteps.validation">
+      </handler>
+      <handler
+            class="org.sidiff.historymodel.presentation.handlers.OpenModifiedModelVersions"
+            commandId="org.sidiff.history.model.editor.command.open.versions">
+      </handler>
+      <handler
+            class="org.sidiff.historymodel.presentation.handlers.FindModelElementByURIHandler"
+            commandId="org.sidiff.history.model.editor.command.findmodelelement.byuri">
+      </handler>
+   </extension>
+</plugin>

@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Partial Edit-Rule Matcher
+Bundle-SymbolicName: org.sidiff.editrule.recognition;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Activator: org.sidiff.editrule.recognition.Activator
+Export-Package: org.sidiff.editrule.recognition,
+  org.sidiff.editrule.recognition.configuration,
+  org.sidiff.editrule.recognition.impact,
+  org.sidiff.editrule.recognition.pattern,
+  org.sidiff.editrule.recognition.pattern.domain,
+  org.sidiff.editrule.recognition.pattern.graph,
+  org.sidiff.editrule.recognition.util,
+  org.sidiff.editrule.recognition.util.debug
+Require-Bundle: org.eclipse.emf.transaction,
+ org.eclipse.ui,
+ org.sidiff.common.henshin,
+ org.sidiff.consistency.common,
+ org.sidiff.difference.symmetric,
+ org.sidiff.graphpattern,
+ org.sidiff.history.revision,
+ org.sidiff.validation.constraint.impact;visibility:=reexport
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
