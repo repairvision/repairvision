@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_PAZi8P3wEei3h-YotlkM8g" name="Transform: Transient Bidirectional Self-References - To - Transient and Non-Transient Non-Proxy-Resolving Bidirectional Self-References (1)" description="Transform: Transient Bidirectional Self-References - To - Transient and Non-Transient Non-Proxy-Resolving Bidirectional Self-References (1)">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_PAZi8f3wEei3h-YotlkM8g" name="mainUnit" subUnits="_PAZi9P3wEei3h-YotlkM8g">
+    <parameters xmi:id="_PAZi8v3wEei3h-YotlkM8g" name="refB_transient" kind="IN"/>
+    <parameterMappings xmi:id="_PAZi8_3wEei3h-YotlkM8g" source="_PAZi8v3wEei3h-YotlkM8g" target="_PAZi9f3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_PAZi9P3wEei3h-YotlkM8g" name="Transform: Transient Bidirectional Self-References - To - Transient and Non-Transient Non-Proxy-Resolving Bidirectional Self-References (1)">
+    <parameters xmi:id="_PAZi9f3wEei3h-YotlkM8g" name="refB_transient" kind="IN"/>
+    <lhs xmi:id="_PAZi9v3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_PAZi9_3wEei3h-YotlkM8g" name="classA" incoming="_PAZi_v3wEei3h-YotlkM8g _PAZi__3wEei3h-YotlkM8g _PAZjAf3wEei3h-YotlkM8g _PAZjAv3wEei3h-YotlkM8g" outgoing="_PAZi_P3wEei3h-YotlkM8g _PAZi_f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PAZi-P3wEei3h-YotlkM8g" name="refA" incoming="_PAZi_P3wEei3h-YotlkM8g _PAZjA_3wEei3h-YotlkM8g" outgoing="_PAZi_v3wEei3h-YotlkM8g _PAZi__3wEei3h-YotlkM8g _PAZjAP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PAZi-f3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_PAZi-v3wEei3h-YotlkM8g" name="refB" incoming="_PAZi_f3wEei3h-YotlkM8g _PAZjAP3wEei3h-YotlkM8g" outgoing="_PAZjAf3wEei3h-YotlkM8g _PAZjAv3wEei3h-YotlkM8g _PAZjA_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PAZi-_3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_PAZi_P3wEei3h-YotlkM8g" source="_PAZi9_3wEei3h-YotlkM8g" target="_PAZi-P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_PAZi_f3wEei3h-YotlkM8g" source="_PAZi9_3wEei3h-YotlkM8g" target="_PAZi-v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_PAZi_v3wEei3h-YotlkM8g" source="_PAZi-P3wEei3h-YotlkM8g" target="_PAZi9_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_PAZi__3wEei3h-YotlkM8g" source="_PAZi-P3wEei3h-YotlkM8g" target="_PAZi9_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_PAZjAP3wEei3h-YotlkM8g" source="_PAZi-P3wEei3h-YotlkM8g" target="_PAZi-v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="_PAZjAf3wEei3h-YotlkM8g" source="_PAZi-v3wEei3h-YotlkM8g" target="_PAZi9_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_PAZjAv3wEei3h-YotlkM8g" source="_PAZi-v3wEei3h-YotlkM8g" target="_PAZi9_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_PAZjA_3wEei3h-YotlkM8g" source="_PAZi-v3wEei3h-YotlkM8g" target="_PAZi-P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_PAZjBP3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_PAZjBf3wEei3h-YotlkM8g" name="classA" incoming="_PAZjDv3wEei3h-YotlkM8g _PAZjD_3wEei3h-YotlkM8g _PAZjEf3wEei3h-YotlkM8g _PAZjEv3wEei3h-YotlkM8g" outgoing="_PAZjDP3wEei3h-YotlkM8g _PAZjDf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PAZjBv3wEei3h-YotlkM8g" name="refA" incoming="_PAZjDP3wEei3h-YotlkM8g _PAZjE_3wEei3h-YotlkM8g" outgoing="_PAZjDv3wEei3h-YotlkM8g _PAZjD_3wEei3h-YotlkM8g _PAZjEP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PAZjB_3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_PAZjCP3wEei3h-YotlkM8g" name="refB" incoming="_PAZjDf3wEei3h-YotlkM8g _PAZjEP3wEei3h-YotlkM8g" outgoing="_PAZjEf3wEei3h-YotlkM8g _PAZjEv3wEei3h-YotlkM8g _PAZjE_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PAZjCf3wEei3h-YotlkM8g" value="refB_transient">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
+        </attributes>
+        <attributes xmi:id="_PAZjCv3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
+        </attributes>
+        <attributes xmi:id="_PAZjC_3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/resolveProxies"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_PAZjDP3wEei3h-YotlkM8g" source="_PAZjBf3wEei3h-YotlkM8g" target="_PAZjBv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_PAZjDf3wEei3h-YotlkM8g" source="_PAZjBf3wEei3h-YotlkM8g" target="_PAZjCP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_PAZjDv3wEei3h-YotlkM8g" source="_PAZjBv3wEei3h-YotlkM8g" target="_PAZjBf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_PAZjD_3wEei3h-YotlkM8g" source="_PAZjBv3wEei3h-YotlkM8g" target="_PAZjBf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_PAZjEP3wEei3h-YotlkM8g" source="_PAZjBv3wEei3h-YotlkM8g" target="_PAZjCP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="_PAZjEf3wEei3h-YotlkM8g" source="_PAZjCP3wEei3h-YotlkM8g" target="_PAZjBf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_PAZjEv3wEei3h-YotlkM8g" source="_PAZjCP3wEei3h-YotlkM8g" target="_PAZjBf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_PAZjE_3wEei3h-YotlkM8g" source="_PAZjCP3wEei3h-YotlkM8g" target="_PAZjBv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_PAZjFP3wEei3h-YotlkM8g" origin="_PAZi9_3wEei3h-YotlkM8g" image="_PAZjBf3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_PAZjFf3wEei3h-YotlkM8g" origin="_PAZi-P3wEei3h-YotlkM8g" image="_PAZjBv3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_PAZjFv3wEei3h-YotlkM8g" origin="_PAZi-v3wEei3h-YotlkM8g" image="_PAZjCP3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_-top8InOEei1tKXOxPvTGg" name="CreateStructuralFeatureWithNewDataType" description="Creates a Structural Feature with a new Data Type.">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_-top8YnOEei1tKXOxPvTGg" name="mainUnit" subUnits="_-top-onOEei1tKXOxPvTGg">
+    <parameters xmi:id="_fK5IAYnmEei25YxNh22dDA" name="idAttribute"/>
+    <parameters xmi:id="_fK5IBInmEei25YxNh22dDA" name="dataType"/>
+    <parameterMappings xmi:id="_fK5IAonmEei25YxNh22dDA" source="_fK5IAInmEei25YxNh22dDA" target="_fK5IAYnmEei25YxNh22dDA"/>
+    <parameterMappings xmi:id="_fK5IBYnmEei25YxNh22dDA" source="_fK5IA4nmEei25YxNh22dDA" target="_fK5IBInmEei25YxNh22dDA"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_-top-onOEei1tKXOxPvTGg" name="createStructuralFeatureWithNewDataType">
+    <parameters xmi:id="_fK5IAInmEei25YxNh22dDA" name="idAttribute"/>
+    <parameters xmi:id="_fK5IA4nmEei25YxNh22dDA" name="dataType"/>
+    <lhs xmi:id="_-top_4nOEei1tKXOxPvTGg" name="Lhs">
+      <nodes xmi:id="_-toqAInOEei1tKXOxPvTGg" name="containerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_fk1ysIneEei1tKXOxPvTGg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_-toqBYnOEei1tKXOxPvTGg" name="Rhs">
+      <nodes xmi:id="_-toqBonOEei1tKXOxPvTGg" name="containerClass" incoming="_-toqEYnOEei1tKXOxPvTGg" outgoing="_-toqDYnOEei1tKXOxPvTGg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_-toqCYnOEei1tKXOxPvTGg" name="idAttribute" incoming="_-toqDYnOEei1tKXOxPvTGg" outgoing="_-toqEInOEei1tKXOxPvTGg _-toqEYnOEei1tKXOxPvTGg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+      </nodes>
+      <nodes xmi:id="_-toqAYnOEei1tKXOxPvTGg" name="dataType" incoming="_-toqEInOEei1tKXOxPvTGg _g-jXoIneEei1tKXOxPvTGg" outgoing="_hTo20IneEei1tKXOxPvTGg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+      </nodes>
+      <nodes xmi:id="_gU1FMIneEei1tKXOxPvTGg" incoming="_hTo20IneEei1tKXOxPvTGg" outgoing="_g-jXoIneEei1tKXOxPvTGg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+      <edges xmi:id="_-toqDYnOEei1tKXOxPvTGg" source="_-toqBonOEei1tKXOxPvTGg" target="_-toqCYnOEei1tKXOxPvTGg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_-toqEInOEei1tKXOxPvTGg" source="_-toqCYnOEei1tKXOxPvTGg" target="_-toqAYnOEei1tKXOxPvTGg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_-toqEYnOEei1tKXOxPvTGg" source="_-toqCYnOEei1tKXOxPvTGg" target="_-toqBonOEei1tKXOxPvTGg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_g-jXoIneEei1tKXOxPvTGg" source="_gU1FMIneEei1tKXOxPvTGg" target="_-toqAYnOEei1tKXOxPvTGg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
+      </edges>
+      <edges xmi:id="_hTo20IneEei1tKXOxPvTGg" source="_-toqAYnOEei1tKXOxPvTGg" target="_gU1FMIneEei1tKXOxPvTGg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_-toqEonOEei1tKXOxPvTGg" origin="_-toqAInOEei1tKXOxPvTGg" image="_-toqBonOEei1tKXOxPvTGg"/>
+    <mappings xmi:id="_gU1FMYneEei1tKXOxPvTGg" origin="_fk1ysIneEei1tKXOxPvTGg" image="_gU1FMIneEei1tKXOxPvTGg"/>
+  </units>
+</henshin:Module>

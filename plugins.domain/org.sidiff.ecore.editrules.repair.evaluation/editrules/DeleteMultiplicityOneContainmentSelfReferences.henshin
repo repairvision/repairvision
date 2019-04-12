@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_PDM_UP3wEei3h-YotlkM8g" name="Delete: Multiplicity-One Containment Self-References" description="Delete: Multiplicity-One Containment Self-References">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_PDM_Uf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_PDM_Vv3wEei3h-YotlkM8g">
+    <parameters xmi:id="_PDM_Uv3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_PDM_U_3wEei3h-YotlkM8g" name="containmentReference" kind="IN"/>
+    <parameterMappings xmi:id="_PDM_VP3wEei3h-YotlkM8g" source="_PDM_Uv3wEei3h-YotlkM8g" target="_PDM_V_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PDM_Vf3wEei3h-YotlkM8g" source="_PDM_U_3wEei3h-YotlkM8g" target="_PDM_WP3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_PDM_Vv3wEei3h-YotlkM8g" name="Delete: Multiplicity-One Containment Self-References">
+    <parameters xmi:id="_PDM_V_3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_PDM_WP3wEei3h-YotlkM8g" name="containmentReference" kind="IN"/>
+    <lhs xmi:id="_PDM_Wf3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_PDM_Wv3wEei3h-YotlkM8g" name="containerClass" incoming="_PDM_X_3wEei3h-YotlkM8g _PDM_YP3wEei3h-YotlkM8g" outgoing="_PDM_Xv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PDM_W_3wEei3h-YotlkM8g" name="containmentReference" incoming="_PDM_Xv3wEei3h-YotlkM8g" outgoing="_PDM_X_3wEei3h-YotlkM8g _PDM_YP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PDM_XP3wEei3h-YotlkM8g" value="&quot;1&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
+        </attributes>
+        <attributes xmi:id="_PDM_Xf3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_PDM_Xv3wEei3h-YotlkM8g" source="_PDM_Wv3wEei3h-YotlkM8g" target="_PDM_W_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_PDM_X_3wEei3h-YotlkM8g" source="_PDM_W_3wEei3h-YotlkM8g" target="_PDM_Wv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_PDM_YP3wEei3h-YotlkM8g" source="_PDM_W_3wEei3h-YotlkM8g" target="_PDM_Wv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_PDM_Yf3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_PDM_Yv3wEei3h-YotlkM8g" name="containerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_PDM_Y_3wEei3h-YotlkM8g" origin="_PDM_Wv3wEei3h-YotlkM8g" image="_PDM_Yv3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

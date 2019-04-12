@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Oc070P3wEei3h-YotlkM8g" name="Delete: Unique Named Structural Feature in Super-Class" description="Delete: Unique Named Structural Feature in Super-Class">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Oc070f3wEei3h-YotlkM8g" name="mainUnit" subUnits="_Oc072P3wEei3h-YotlkM8g">
+    <parameters xmi:id="_Oc070v3wEei3h-YotlkM8g" name="superClass" kind="IN"/>
+    <parameters xmi:id="_Oc070_3wEei3h-YotlkM8g" name="superStructuralFeature" kind="IN"/>
+    <parameters xmi:id="_Oc071P3wEei3h-YotlkM8g" name="structuralFeatureName" kind="IN"/>
+    <parameterMappings xmi:id="_Oc071f3wEei3h-YotlkM8g" source="_Oc070v3wEei3h-YotlkM8g" target="_Oc072f3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Oc071v3wEei3h-YotlkM8g" source="_Oc070_3wEei3h-YotlkM8g" target="_Oc072v3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Oc071_3wEei3h-YotlkM8g" source="_Oc071P3wEei3h-YotlkM8g" target="_Oc072_3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Oc072P3wEei3h-YotlkM8g" name="Delete: Unique Named Structural Feature in Super-Class">
+    <parameters xmi:id="_Oc072f3wEei3h-YotlkM8g" name="superClass" kind="IN"/>
+    <parameters xmi:id="_Oc072v3wEei3h-YotlkM8g" name="superStructuralFeature" kind="IN"/>
+    <parameters xmi:id="_Oc072_3wEei3h-YotlkM8g" name="structuralFeatureName" kind="IN"/>
+    <lhs xmi:id="_Oc073P3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_Oc073f3wEei3h-YotlkM8g" name="superClass" incoming="_Oc074f3wEei3h-YotlkM8g" outgoing="_Oc074P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_Oc073v3wEei3h-YotlkM8g" name="superStructuralFeature" incoming="_Oc074P3wEei3h-YotlkM8g" outgoing="_Oc074f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+        <attributes xmi:id="_Oc073_3wEei3h-YotlkM8g" value="structuralFeatureName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_Oc074P3wEei3h-YotlkM8g" source="_Oc073f3wEei3h-YotlkM8g" target="_Oc073v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_Oc074f3wEei3h-YotlkM8g" source="_Oc073v3wEei3h-YotlkM8g" target="_Oc073f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_Oc074v3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_Oc074_3wEei3h-YotlkM8g" name="superClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_Oc075P3wEei3h-YotlkM8g" origin="_Oc073f3wEei3h-YotlkM8g" image="_Oc074_3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

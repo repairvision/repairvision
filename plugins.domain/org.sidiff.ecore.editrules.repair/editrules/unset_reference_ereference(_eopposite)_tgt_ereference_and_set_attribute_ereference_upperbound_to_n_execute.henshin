@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_TuhckCaLEeepFbklRoBR3A" name="UnsetReferenceEReference(EOpposite)TgtEReferenceAndSetAttributeEReferenceUpperBoundToN" description="Unsets EReference's reference eOpposite the target EReference and sets EReference's attribute UpperBound to n">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_TuhckSaLEeepFbklRoBR3A" name="mainUnit" subUnits="_TuhckiaLEeepFbklRoBR3A">
+    <parameters xmi:id="_ja35USaOEeepFbklRoBR3A" name="refEClassA" description="" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </parameters>
+    <parameters xmi:id="_lDmxsSaOEeepFbklRoBR3A" name="refEClassB" description="" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </parameters>
+    <parameters name="UpperBound" description="" kind="IN">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </parameters>
+    <parameterMappings xmi:id="_ja35UiaOEeepFbklRoBR3A" source="_ja35USaOEeepFbklRoBR3A" target="_ja35UCaOEeepFbklRoBR3A"/>
+    <parameterMappings xmi:id="_lDmxsiaOEeepFbklRoBR3A" source="_lDmxsSaOEeepFbklRoBR3A" target="_lDmxsCaOEeepFbklRoBR3A"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_TuhckiaLEeepFbklRoBR3A" name="unsetReferenceEReference(EOpposite)TgtEReferenceAndSetAttributeEReferenceUpperBoundToN">
+    <parameters xmi:id="_ja35UCaOEeepFbklRoBR3A" name="refEClassA" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </parameters>
+    <parameters xmi:id="_lDmxsCaOEeepFbklRoBR3A" name="refEClassB" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </parameters>
+    <parameters name="UpperBound" description="" kind="IN">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </parameters>
+    <lhs xmi:id="_TuhckyaLEeepFbklRoBR3A" name="Lhs">
+      <nodes xmi:id="_TuhclCaLEeepFbklRoBR3A" name="EClassA" incoming="_TuhcnyaLEeepFbklRoBR3A _TuhcoiaLEeepFbklRoBR3A" outgoing="_TuhcnCaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_TuhclSaLEeepFbklRoBR3A" name="EClassB" incoming="_TuhcoCaLEeepFbklRoBR3A _TuhcoSaLEeepFbklRoBR3A" outgoing="_TuhcniaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_TuhcliaLEeepFbklRoBR3A" name="refEClassA" incoming="_TuhcmiaLEeepFbklRoBR3A _TuhcniaLEeepFbklRoBR3A" outgoing="_TuhcmSaLEeepFbklRoBR3A _TuhcnyaLEeepFbklRoBR3A _TuhcoCaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_TuhclyaLEeepFbklRoBR3A" name="refEClassB" incoming="_TuhcmSaLEeepFbklRoBR3A _TuhcnCaLEeepFbklRoBR3A" outgoing="_TuhcmiaLEeepFbklRoBR3A _TuhcoSaLEeepFbklRoBR3A _TuhcoiaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <edges xmi:id="_TuhcmSaLEeepFbklRoBR3A" source="_TuhcliaLEeepFbklRoBR3A" target="_TuhclyaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="_TuhcmiaLEeepFbklRoBR3A" source="_TuhclyaLEeepFbklRoBR3A" target="_TuhcliaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="_TuhcnCaLEeepFbklRoBR3A" source="_TuhclCaLEeepFbklRoBR3A" target="_TuhclyaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_TuhcniaLEeepFbklRoBR3A" source="_TuhclSaLEeepFbklRoBR3A" target="_TuhcliaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_TuhcnyaLEeepFbklRoBR3A" source="_TuhcliaLEeepFbklRoBR3A" target="_TuhclCaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_TuhcoCaLEeepFbklRoBR3A" source="_TuhcliaLEeepFbklRoBR3A" target="_TuhclSaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_TuhcoSaLEeepFbklRoBR3A" source="_TuhclyaLEeepFbklRoBR3A" target="_TuhclSaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_TuhcoiaLEeepFbklRoBR3A" source="_TuhclyaLEeepFbklRoBR3A" target="_TuhclCaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_TuhcpSaLEeepFbklRoBR3A" name="Rhs">
+      <nodes xmi:id="_TuhcpiaLEeepFbklRoBR3A" name="EClassA" incoming="_TuhcsCaLEeepFbklRoBR3A _TuhcsyaLEeepFbklRoBR3A" outgoing="_TuhcrSaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_TuhcpyaLEeepFbklRoBR3A" name="EClassB" incoming="_TuhcsSaLEeepFbklRoBR3A _TuhcsiaLEeepFbklRoBR3A" outgoing="_TuhcryaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_TuhcqCaLEeepFbklRoBR3A" name="refEClassA" incoming="_TuhcryaLEeepFbklRoBR3A" outgoing="_TuhcsCaLEeepFbklRoBR3A _TuhcsSaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_TuhcqSaLEeepFbklRoBR3A" name="refEClassB" incoming="_TuhcrSaLEeepFbklRoBR3A" outgoing="_TuhcsiaLEeepFbklRoBR3A _TuhcsyaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_TuhcqiaLEeepFbklRoBR3A" value="UpperBound">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_TuhcrSaLEeepFbklRoBR3A" source="_TuhcpiaLEeepFbklRoBR3A" target="_TuhcqSaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_TuhcryaLEeepFbklRoBR3A" source="_TuhcpyaLEeepFbklRoBR3A" target="_TuhcqCaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_TuhcsCaLEeepFbklRoBR3A" source="_TuhcqCaLEeepFbklRoBR3A" target="_TuhcpiaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_TuhcsSaLEeepFbklRoBR3A" source="_TuhcqCaLEeepFbklRoBR3A" target="_TuhcpyaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_TuhcsiaLEeepFbklRoBR3A" source="_TuhcqSaLEeepFbklRoBR3A" target="_TuhcpyaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_TuhcsyaLEeepFbklRoBR3A" source="_TuhcqSaLEeepFbklRoBR3A" target="_TuhcpiaLEeepFbklRoBR3A">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_TuhctiaLEeepFbklRoBR3A" origin="_TuhclCaLEeepFbklRoBR3A" image="_TuhcpiaLEeepFbklRoBR3A"/>
+    <mappings xmi:id="_TuhctyaLEeepFbklRoBR3A" origin="_TuhclSaLEeepFbklRoBR3A" image="_TuhcpyaLEeepFbklRoBR3A"/>
+    <mappings xmi:id="_TuhcuCaLEeepFbklRoBR3A" origin="_TuhcliaLEeepFbklRoBR3A" image="_TuhcqCaLEeepFbklRoBR3A"/>
+    <mappings xmi:id="_TuhcuSaLEeepFbklRoBR3A" origin="_TuhclyaLEeepFbklRoBR3A" image="_TuhcqSaLEeepFbklRoBR3A"/>
+  </units>
+</henshin:Module>

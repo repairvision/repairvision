@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_PiimsP3wEei3h-YotlkM8g" name="Transform: Parameter without Generic-Type - To - Parameter with Unbound Generic-Parameter Type-Argument" description="Transform: Parameter without Generic-Type - To - Parameter with Unbound Generic-Parameter Type-Argument">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Piimsf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_Piimuv3wEei3h-YotlkM8g">
+    <parameters xmi:id="_Piimsv3wEei3h-YotlkM8g" name="classifierWithTypeParameter" kind="IN"/>
+    <parameters xmi:id="_Piims_3wEei3h-YotlkM8g" name="genericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_PiimtP3wEei3h-YotlkM8g" name="T" kind="IN"/>
+    <parameters xmi:id="_Piimtf3wEei3h-YotlkM8g" name="typeArgumentOfGenericTypeOfTypedElement" kind="IN"/>
+    <parameterMappings xmi:id="_Piimtv3wEei3h-YotlkM8g" source="_Piimsv3wEei3h-YotlkM8g" target="_Piimu_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Piimt_3wEei3h-YotlkM8g" source="_Piims_3wEei3h-YotlkM8g" target="_PiimvP3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PiimuP3wEei3h-YotlkM8g" source="_PiimtP3wEei3h-YotlkM8g" target="_Piimvf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Piimuf3wEei3h-YotlkM8g" source="_Piimtf3wEei3h-YotlkM8g" target="_Piimvv3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Piimuv3wEei3h-YotlkM8g" name="Transform: Parameter without Generic-Type - To - Parameter with Unbound Generic-Parameter Type-Argument">
+    <parameters xmi:id="_Piimu_3wEei3h-YotlkM8g" name="classifierWithTypeParameter" kind="IN"/>
+    <parameters xmi:id="_PiimvP3wEei3h-YotlkM8g" name="genericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_Piimvf3wEei3h-YotlkM8g" name="T" kind="IN"/>
+    <parameters xmi:id="_Piimvv3wEei3h-YotlkM8g" name="typeArgumentOfGenericTypeOfTypedElement" kind="IN"/>
+    <lhs xmi:id="_Piimv_3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_PiimwP3wEei3h-YotlkM8g" name="classifierWithTypeParameter" incoming="_PiimxP3wEei3h-YotlkM8g _Piimx_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+      <nodes xmi:id="_Piimwf3wEei3h-YotlkM8g" name="parameter" incoming="_PiimyP3wEei3h-YotlkM8g" outgoing="_PiimxP3wEei3h-YotlkM8g _Piimxf3wEei3h-YotlkM8g _Piimxv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
+      </nodes>
+      <nodes xmi:id="_Piimwv3wEei3h-YotlkM8g" name="genericTypeOfTypedElement" incoming="_Piimxf3wEei3h-YotlkM8g" outgoing="_Piimx_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_Piimw_3wEei3h-YotlkM8g" name="operation" incoming="_Piimxv3wEei3h-YotlkM8g" outgoing="_PiimyP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+      </nodes>
+      <edges xmi:id="_PiimxP3wEei3h-YotlkM8g" source="_Piimwf3wEei3h-YotlkM8g" target="_PiimwP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_Piimxf3wEei3h-YotlkM8g" source="_Piimwf3wEei3h-YotlkM8g" target="_Piimwv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eGenericType"/>
+      </edges>
+      <edges xmi:id="_Piimxv3wEei3h-YotlkM8g" source="_Piimwf3wEei3h-YotlkM8g" target="_Piimw_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter/eOperation"/>
+      </edges>
+      <edges xmi:id="_Piimx_3wEei3h-YotlkM8g" source="_Piimwv3wEei3h-YotlkM8g" target="_PiimwP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+      </edges>
+      <edges xmi:id="_PiimyP3wEei3h-YotlkM8g" source="_Piimw_3wEei3h-YotlkM8g" target="_Piimwf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_Piimyf3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_Piimyv3wEei3h-YotlkM8g" name="classifierWithTypeParameter" incoming="_Piim0f3wEei3h-YotlkM8g _Piim1P3wEei3h-YotlkM8g" outgoing="_Piim0P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+      <nodes xmi:id="_Piimy_3wEei3h-YotlkM8g" name="parameter" incoming="_Piim1v3wEei3h-YotlkM8g" outgoing="_Piim0f3wEei3h-YotlkM8g _Piim0v3wEei3h-YotlkM8g _Piim0_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
+      </nodes>
+      <nodes xmi:id="_PiimzP3wEei3h-YotlkM8g" name="genericTypeOfTypedElement" incoming="_Piim0v3wEei3h-YotlkM8g" outgoing="_Piim1P3wEei3h-YotlkM8g _Piim1f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_Piimzf3wEei3h-YotlkM8g" name="operation" incoming="_Piim0_3wEei3h-YotlkM8g" outgoing="_Piim1v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+      </nodes>
+      <nodes xmi:id="_Piimzv3wEei3h-YotlkM8g" name="T" incoming="_Piim0P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
+      </nodes>
+      <nodes xmi:id="_Piimz_3wEei3h-YotlkM8g" name="typeArgumentOfGenericTypeOfTypedElement" incoming="_Piim1f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <edges xmi:id="_Piim0P3wEei3h-YotlkM8g" source="_Piimyv3wEei3h-YotlkM8g" target="_Piimzv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+      </edges>
+      <edges xmi:id="_Piim0f3wEei3h-YotlkM8g" source="_Piimy_3wEei3h-YotlkM8g" target="_Piimyv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_Piim0v3wEei3h-YotlkM8g" source="_Piimy_3wEei3h-YotlkM8g" target="_PiimzP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eGenericType"/>
+      </edges>
+      <edges xmi:id="_Piim0_3wEei3h-YotlkM8g" source="_Piimy_3wEei3h-YotlkM8g" target="_Piimzf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter/eOperation"/>
+      </edges>
+      <edges xmi:id="_Piim1P3wEei3h-YotlkM8g" source="_PiimzP3wEei3h-YotlkM8g" target="_Piimyv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+      </edges>
+      <edges xmi:id="_Piim1f3wEei3h-YotlkM8g" source="_PiimzP3wEei3h-YotlkM8g" target="_Piimz_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
+      </edges>
+      <edges xmi:id="_Piim1v3wEei3h-YotlkM8g" source="_Piimzf3wEei3h-YotlkM8g" target="_Piimy_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Piim1_3wEei3h-YotlkM8g" origin="_PiimwP3wEei3h-YotlkM8g" image="_Piimyv3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_Piim2P3wEei3h-YotlkM8g" origin="_Piimwf3wEei3h-YotlkM8g" image="_Piimy_3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_Piim2f3wEei3h-YotlkM8g" origin="_Piimwv3wEei3h-YotlkM8g" image="_PiimzP3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_Piim2v3wEei3h-YotlkM8g" origin="_Piimw_3wEei3h-YotlkM8g" image="_Piimzf3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

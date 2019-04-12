@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ObA98P3wEei3h-YotlkM8g" name="Delete: Named Package" description="Delete: Named Package">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ObA98f3wEei3h-YotlkM8g" name="mainUnit" subUnits="_ObA99P3wEei3h-YotlkM8g">
+    <parameters xmi:id="_ObA98v3wEei3h-YotlkM8g" name="packageName" kind="IN"/>
+    <parameterMappings xmi:id="_ObA98_3wEei3h-YotlkM8g" source="_ObA98v3wEei3h-YotlkM8g" target="_ObA99f3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_ObA99P3wEei3h-YotlkM8g" name="Delete: Named Package">
+    <parameters xmi:id="_ObA99f3wEei3h-YotlkM8g" name="packageName" kind="IN"/>
+    <lhs xmi:id="_ObA99v3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_ObA99_3wEei3h-YotlkM8g" name="package">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+        <attributes xmi:id="_ObA9-P3wEei3h-YotlkM8g" value="packageName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_ObA9-f3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_ObA9-v3wEei3h-YotlkM8g" name="package">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+        <attributes xmi:id="_ObA9-_3wEei3h-YotlkM8g" value="packageName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_ObA9_P3wEei3h-YotlkM8g" origin="_ObA99_3wEei3h-YotlkM8g" image="_ObA9-v3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="EClassInterfaceNotAbstract(Variant0011)" description="EClassInterfaceNotAbstract">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
+    <parameters name="Class"/>
+    <parameterMappings source="//@units.0/@parameters.0" target="//@units.1/@parameters.0"/>
+  </units>
+  <units xsi:type="henshin:Rule" name="eClassInterfaceNotAbstract(Variant0011)">
+    <parameters name="Class"/>
+    <lhs name="Lhs">
+      <nodes name="Class">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        <attributes value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/abstract"/>
+        </attributes>
+        <attributes value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/interface"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs name="Rhs">
+      <nodes name="Class">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        <attributes value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/abstract"/>
+        </attributes>
+        <attributes value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/interface"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings origin="//@units.1/@lhs/@nodes.0" image="//@units.1/@rhs/@nodes.0"/>
+  </units>
+</henshin:Module>

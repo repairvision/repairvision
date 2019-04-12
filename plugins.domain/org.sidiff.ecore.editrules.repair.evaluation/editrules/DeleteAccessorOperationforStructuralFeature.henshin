@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Odg4UP3wEei3h-YotlkM8g" name="Delete: Accessor Operation for Structural Feature" description="Delete: Accessor Operation for Structural Feature">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Odg4Uf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_Odg4YP3wEei3h-YotlkM8g">
+    <parameters xmi:id="_Odg4Uv3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_Odg4U_3wEei3h-YotlkM8g" name="structuralFeature" kind="IN"/>
+    <parameters xmi:id="_Odg4VP3wEei3h-YotlkM8g" name="structuralFeatureName" kind="IN"/>
+    <parameters xmi:id="_Odg4Vf3wEei3h-YotlkM8g" name="getStructuralFeature" kind="IN"/>
+    <parameters xmi:id="_Odg4Vv3wEei3h-YotlkM8g" name="operationAnnotation" kind="IN"/>
+    <parameters xmi:id="_Odg4V_3wEei3h-YotlkM8g" name="annotationDetails" kind="IN"/>
+    <parameters xmi:id="_Odg4WP3wEei3h-YotlkM8g" name="type" kind="IN"/>
+    <parameterMappings xmi:id="_Odg4Wf3wEei3h-YotlkM8g" source="_Odg4Uv3wEei3h-YotlkM8g" target="_Odg4Yf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Odg4Wv3wEei3h-YotlkM8g" source="_Odg4U_3wEei3h-YotlkM8g" target="_Odg4Yv3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Odg4W_3wEei3h-YotlkM8g" source="_Odg4VP3wEei3h-YotlkM8g" target="_Odg4Y_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Odg4XP3wEei3h-YotlkM8g" source="_Odg4Vf3wEei3h-YotlkM8g" target="_Odg4ZP3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Odg4Xf3wEei3h-YotlkM8g" source="_Odg4Vv3wEei3h-YotlkM8g" target="_Odg4Zf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Odg4Xv3wEei3h-YotlkM8g" source="_Odg4V_3wEei3h-YotlkM8g" target="_Odg4Zv3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Odg4X_3wEei3h-YotlkM8g" source="_Odg4WP3wEei3h-YotlkM8g" target="_Odg4Z_3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Odg4YP3wEei3h-YotlkM8g" name="Delete: Accessor Operation for Structural Feature">
+    <parameters xmi:id="_Odg4Yf3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_Odg4Yv3wEei3h-YotlkM8g" name="structuralFeature" kind="IN"/>
+    <parameters xmi:id="_Odg4Y_3wEei3h-YotlkM8g" name="structuralFeatureName" kind="IN"/>
+    <parameters xmi:id="_Odg4ZP3wEei3h-YotlkM8g" name="getStructuralFeature" kind="IN"/>
+    <parameters xmi:id="_Odg4Zf3wEei3h-YotlkM8g" name="operationAnnotation" kind="IN"/>
+    <parameters xmi:id="_Odg4Zv3wEei3h-YotlkM8g" name="annotationDetails" kind="IN"/>
+    <parameters xmi:id="_Odg4Z_3wEei3h-YotlkM8g" name="type" kind="IN"/>
+    <lhs xmi:id="_Odg4aP3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_Odg4af3wEei3h-YotlkM8g" name="containerClass" incoming="_Odg4d_3wEei3h-YotlkM8g _Odg4ev3wEei3h-YotlkM8g" outgoing="_Odg4dP3wEei3h-YotlkM8g _Odg4df3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_Odg4av3wEei3h-YotlkM8g" name="structuralFeature" incoming="_Odg4df3wEei3h-YotlkM8g" outgoing="_Odg4dv3wEei3h-YotlkM8g _Odg4d_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+        <attributes xmi:id="_Odg4a_3wEei3h-YotlkM8g" value="structuralFeatureName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Odg4bP3wEei3h-YotlkM8g" name="getStructuralFeature" incoming="_Odg4dP3wEei3h-YotlkM8g _Odg4fP3wEei3h-YotlkM8g" outgoing="_Odg4eP3wEei3h-YotlkM8g _Odg4ef3wEei3h-YotlkM8g _Odg4ev3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+        <attributes xmi:id="_Odg4bf3wEei3h-YotlkM8g" value="&quot;get&quot; + structuralFeatureName.charAt(0).toUpperCase() + structuralFeatureName.slice(1)">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Odg4bv3wEei3h-YotlkM8g" name="operationAnnotation" incoming="_Odg4eP3wEei3h-YotlkM8g" outgoing="_Odg4e_3wEei3h-YotlkM8g _Odg4fP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation"/>
+        <attributes xmi:id="_Odg4b_3wEei3h-YotlkM8g" value="&quot;http://www.eclipse.org/emf/2002/GenModel&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation/source"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Odg4cP3wEei3h-YotlkM8g" name="annotationDetails" incoming="_Odg4e_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry"/>
+        <attributes xmi:id="_Odg4cf3wEei3h-YotlkM8g" value="&quot;suppressedVisibility&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry/key"/>
+        </attributes>
+        <attributes xmi:id="_Odg4cv3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry/value"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Odg4c_3wEei3h-YotlkM8g" name="type" incoming="_Odg4dv3wEei3h-YotlkM8g _Odg4ef3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+      <edges xmi:id="_Odg4dP3wEei3h-YotlkM8g" source="_Odg4af3wEei3h-YotlkM8g" target="_Odg4bP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eOperations"/>
+      </edges>
+      <edges xmi:id="_Odg4df3wEei3h-YotlkM8g" source="_Odg4af3wEei3h-YotlkM8g" target="_Odg4av3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_Odg4dv3wEei3h-YotlkM8g" source="_Odg4av3wEei3h-YotlkM8g" target="_Odg4c_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_Odg4d_3wEei3h-YotlkM8g" source="_Odg4av3wEei3h-YotlkM8g" target="_Odg4af3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_Odg4eP3wEei3h-YotlkM8g" source="_Odg4bP3wEei3h-YotlkM8g" target="_Odg4bv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EModelElement/eAnnotations"/>
+      </edges>
+      <edges xmi:id="_Odg4ef3wEei3h-YotlkM8g" source="_Odg4bP3wEei3h-YotlkM8g" target="_Odg4c_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_Odg4ev3wEei3h-YotlkM8g" source="_Odg4bP3wEei3h-YotlkM8g" target="_Odg4af3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_Odg4e_3wEei3h-YotlkM8g" source="_Odg4bv3wEei3h-YotlkM8g" target="_Odg4cP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation/details"/>
+      </edges>
+      <edges xmi:id="_Odg4fP3wEei3h-YotlkM8g" source="_Odg4bv3wEei3h-YotlkM8g" target="_Odg4bP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation/eModelElement"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_Odg4ff3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_Odg4fv3wEei3h-YotlkM8g" name="containerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_Odg4f_3wEei3h-YotlkM8g" name="type">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_Odg4gP3wEei3h-YotlkM8g" origin="_Odg4af3wEei3h-YotlkM8g" image="_Odg4fv3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_Odg4gf3wEei3h-YotlkM8g" origin="_Odg4c_3wEei3h-YotlkM8g" image="_Odg4f_3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

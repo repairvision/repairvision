@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_IzLTECa8EeepFbklRoBR3A" name="SetAttributeEReferenceContainmentToFalseAndSetAttributeEReferenceUpperBoundToN" description="Sets EReference's attribute Containment to false and sets EReference's attribute UpperBound to n">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_IzLTESa8EeepFbklRoBR3A" name="mainUnit" subUnits="_IzLTEia8EeepFbklRoBR3A">
+    <parameters xmi:id="_gOhjMSa8EeepFbklRoBR3A" name="ref" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </parameters>
+    <parameters name="UpperBound" kind="IN">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </parameters>
+    <parameterMappings xmi:id="_gOhjMia8EeepFbklRoBR3A" source="_gOhjMSa8EeepFbklRoBR3A" target="_gOhjMCa8EeepFbklRoBR3A"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_IzLTEia8EeepFbklRoBR3A" name="setAttributeEReferenceContainmentToFalseAndSetAttributeEReferenceUpperBoundToN">
+    <parameters xmi:id="_gOhjMCa8EeepFbklRoBR3A" name="ref" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </parameters>
+    <parameters name="UpperBound" kind="IN">
+      <type xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </parameters>
+    <lhs xmi:id="_IzLTEya8EeepFbklRoBR3A" name="Lhs">
+      <nodes xmi:id="_IzLTFia8EeepFbklRoBR3A" name="ref">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_IzLTHya8EeepFbklRoBR3A" name="Rhs">
+      <nodes xmi:id="_IzLTIia8EeepFbklRoBR3A" name="ref">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_IzLTIya8EeepFbklRoBR3A" value="UpperBound">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
+        </attributes>
+        <attributes xmi:id="_IzLTJCa8EeepFbklRoBR3A" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_IzLTLya8EeepFbklRoBR3A" origin="_IzLTFia8EeepFbklRoBR3A" image="_IzLTIia8EeepFbklRoBR3A"/>
+  </units>
+</henshin:Module>

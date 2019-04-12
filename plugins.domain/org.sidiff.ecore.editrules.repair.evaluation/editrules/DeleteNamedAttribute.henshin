@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_OcJmYP3wEei3h-YotlkM8g" name="Delete: Named Attribute" description="Delete: Named Attribute">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_OcJmYf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_OcJmav3wEei3h-YotlkM8g">
+    <parameters xmi:id="_OcJmYv3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_OcJmY_3wEei3h-YotlkM8g" name="attribte" kind="IN"/>
+    <parameters xmi:id="_OcJmZP3wEei3h-YotlkM8g" name="attributeName" kind="IN"/>
+    <parameters xmi:id="_OcJmZf3wEei3h-YotlkM8g" name="type" kind="IN"/>
+    <parameterMappings xmi:id="_OcJmZv3wEei3h-YotlkM8g" source="_OcJmYv3wEei3h-YotlkM8g" target="_OcJma_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_OcJmZ_3wEei3h-YotlkM8g" source="_OcJmY_3wEei3h-YotlkM8g" target="_OcJmbP3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_OcJmaP3wEei3h-YotlkM8g" source="_OcJmZP3wEei3h-YotlkM8g" target="_OcJmbf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_OcJmaf3wEei3h-YotlkM8g" source="_OcJmZf3wEei3h-YotlkM8g" target="_OcJmbv3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_OcJmav3wEei3h-YotlkM8g" name="Delete: Named Attribute">
+    <parameters xmi:id="_OcJma_3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_OcJmbP3wEei3h-YotlkM8g" name="attribte" kind="IN"/>
+    <parameters xmi:id="_OcJmbf3wEei3h-YotlkM8g" name="attributeName" kind="IN"/>
+    <parameters xmi:id="_OcJmbv3wEei3h-YotlkM8g" name="type" kind="IN"/>
+    <lhs xmi:id="_OcJmb_3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_OcJmcP3wEei3h-YotlkM8g" name="containerClass" incoming="_OcJmdf3wEei3h-YotlkM8g" outgoing="_OcJmdP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_OcJmcf3wEei3h-YotlkM8g" name="attribte" incoming="_OcJmdP3wEei3h-YotlkM8g" outgoing="_OcJmdf3wEei3h-YotlkM8g _OcJmdv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+        <attributes xmi:id="_OcJmcv3wEei3h-YotlkM8g" value="attributeName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_OcJmc_3wEei3h-YotlkM8g" name="type" incoming="_OcJmdv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+      </nodes>
+      <edges xmi:id="_OcJmdP3wEei3h-YotlkM8g" source="_OcJmcP3wEei3h-YotlkM8g" target="_OcJmcf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_OcJmdf3wEei3h-YotlkM8g" source="_OcJmcf3wEei3h-YotlkM8g" target="_OcJmcP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_OcJmdv3wEei3h-YotlkM8g" source="_OcJmcf3wEei3h-YotlkM8g" target="_OcJmc_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_OcJmd_3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_OcJmeP3wEei3h-YotlkM8g" name="containerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_OcJmef3wEei3h-YotlkM8g" name="type">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_OcJmev3wEei3h-YotlkM8g" origin="_OcJmcP3wEei3h-YotlkM8g" image="_OcJmeP3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_OcJme_3wEei3h-YotlkM8g" origin="_OcJmc_3wEei3h-YotlkM8g" image="_OcJmef3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

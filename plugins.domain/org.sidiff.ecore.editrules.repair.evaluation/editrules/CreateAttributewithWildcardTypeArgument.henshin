@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Pbim0P3wEei3h-YotlkM8g" name="Create: Attribute with Wildcard Type-Argument" description="Create: Attribute with Wildcard Type-Argument">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Pbim0f3wEei3h-YotlkM8g" name="mainUnit" subUnits="_Pbim3v3wEei3h-YotlkM8g">
+    <parameters xmi:id="_Pbim0v3wEei3h-YotlkM8g" name="dataTypeWithTypeParameter" kind="IN"/>
+    <parameters xmi:id="_Pbim0_3wEei3h-YotlkM8g" name="T" kind="IN"/>
+    <parameters xmi:id="_Pbim1P3wEei3h-YotlkM8g" name="attributeWithGenericType" kind="IN"/>
+    <parameters xmi:id="_Pbim1f3wEei3h-YotlkM8g" name="genericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_Pbim1v3wEei3h-YotlkM8g" name="typeArgumentOfGenericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_Pbim1_3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameterMappings xmi:id="_Pbim2P3wEei3h-YotlkM8g" source="_Pbim0v3wEei3h-YotlkM8g" target="_Pbim3_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pbim2f3wEei3h-YotlkM8g" source="_Pbim0_3wEei3h-YotlkM8g" target="_Pbim4P3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pbim2v3wEei3h-YotlkM8g" source="_Pbim1P3wEei3h-YotlkM8g" target="_Pbim4f3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pbim2_3wEei3h-YotlkM8g" source="_Pbim1f3wEei3h-YotlkM8g" target="_Pbim4v3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pbim3P3wEei3h-YotlkM8g" source="_Pbim1v3wEei3h-YotlkM8g" target="_Pbim4_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pbim3f3wEei3h-YotlkM8g" source="_Pbim1_3wEei3h-YotlkM8g" target="_Pbim5P3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Pbim3v3wEei3h-YotlkM8g" name="Create: Attribute with Wildcard Type-Argument">
+    <parameters xmi:id="_Pbim3_3wEei3h-YotlkM8g" name="dataTypeWithTypeParameter" kind="IN"/>
+    <parameters xmi:id="_Pbim4P3wEei3h-YotlkM8g" name="T" kind="IN"/>
+    <parameters xmi:id="_Pbim4f3wEei3h-YotlkM8g" name="attributeWithGenericType" kind="IN"/>
+    <parameters xmi:id="_Pbim4v3wEei3h-YotlkM8g" name="genericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_Pbim4_3wEei3h-YotlkM8g" name="typeArgumentOfGenericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_Pbim5P3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <lhs xmi:id="_Pbim5f3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_Pbim5v3wEei3h-YotlkM8g" name="dataTypeWithTypeParameter">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+      </nodes>
+      <nodes xmi:id="_Pbim5_3wEei3h-YotlkM8g" name="containerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_Pbim6P3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_Pbim6f3wEei3h-YotlkM8g" name="dataTypeWithTypeParameter" incoming="_Pbim8f3wEei3h-YotlkM8g _Pbim9P3wEei3h-YotlkM8g" outgoing="_Pbim7_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+      </nodes>
+      <nodes xmi:id="_Pbim6v3wEei3h-YotlkM8g" name="T" incoming="_Pbim7_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
+      </nodes>
+      <nodes xmi:id="_Pbim6_3wEei3h-YotlkM8g" name="attributeWithGenericType" incoming="_Pbim9f3wEei3h-YotlkM8g" outgoing="_Pbim8P3wEei3h-YotlkM8g _Pbim8f3wEei3h-YotlkM8g _Pbim8v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+      </nodes>
+      <nodes xmi:id="_Pbim7P3wEei3h-YotlkM8g" name="genericTypeOfTypedElement" incoming="_Pbim8v3wEei3h-YotlkM8g" outgoing="_Pbim8_3wEei3h-YotlkM8g _Pbim9P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_Pbim7f3wEei3h-YotlkM8g" name="typeArgumentOfGenericTypeOfTypedElement" incoming="_Pbim8_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_Pbim7v3wEei3h-YotlkM8g" name="containerClass" incoming="_Pbim8P3wEei3h-YotlkM8g" outgoing="_Pbim9f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <edges xmi:id="_Pbim7_3wEei3h-YotlkM8g" source="_Pbim6f3wEei3h-YotlkM8g" target="_Pbim6v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+      </edges>
+      <edges xmi:id="_Pbim8P3wEei3h-YotlkM8g" source="_Pbim6_3wEei3h-YotlkM8g" target="_Pbim7v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_Pbim8f3wEei3h-YotlkM8g" source="_Pbim6_3wEei3h-YotlkM8g" target="_Pbim6f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_Pbim8v3wEei3h-YotlkM8g" source="_Pbim6_3wEei3h-YotlkM8g" target="_Pbim7P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eGenericType"/>
+      </edges>
+      <edges xmi:id="_Pbim8_3wEei3h-YotlkM8g" source="_Pbim7P3wEei3h-YotlkM8g" target="_Pbim7f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
+      </edges>
+      <edges xmi:id="_Pbim9P3wEei3h-YotlkM8g" source="_Pbim7P3wEei3h-YotlkM8g" target="_Pbim6f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+      </edges>
+      <edges xmi:id="_Pbim9f3wEei3h-YotlkM8g" source="_Pbim7v3wEei3h-YotlkM8g" target="_Pbim6_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Pbim9v3wEei3h-YotlkM8g" origin="_Pbim5v3wEei3h-YotlkM8g" image="_Pbim6f3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_Pbim9_3wEei3h-YotlkM8g" origin="_Pbim5_3wEei3h-YotlkM8g" image="_Pbim7v3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

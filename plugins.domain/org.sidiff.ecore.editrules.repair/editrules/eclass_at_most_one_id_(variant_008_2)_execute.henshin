@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_TI5fMHx7EeeJlqelhgVOXQ" name="EClassAtMostOneID(Variant0082)" description="EClassAtMostOneID">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_TI5fMXx7EeeJlqelhgVOXQ" name="mainUnit" subUnits="_TI6GQnx7EeeJlqelhgVOXQ">
+    <parameters xmi:id="_TI5fMnx7EeeJlqelhgVOXQ" name="eAttributeSubClass"/>
+    <parameters xmi:id="_TI5fM3x7EeeJlqelhgVOXQ" name="eAttributeSuperClass"/>
+    <parameters xmi:id="_TI5fNHx7EeeJlqelhgVOXQ" name="ESubClass"/>
+    <parameters xmi:id="_TI5fNXx7EeeJlqelhgVOXQ" name="ESuperClass"/>
+    <parameterMappings xmi:id="_TI5fNnx7EeeJlqelhgVOXQ" source="_TI6GQ3x7EeeJlqelhgVOXQ" target="_TI5fMnx7EeeJlqelhgVOXQ"/>
+    <parameterMappings xmi:id="_TI5fN3x7EeeJlqelhgVOXQ" source="_TI5fM3x7EeeJlqelhgVOXQ" target="_TI6GRHx7EeeJlqelhgVOXQ"/>
+    <parameterMappings xmi:id="_TI6GQHx7EeeJlqelhgVOXQ" source="_TI5fNHx7EeeJlqelhgVOXQ" target="_TI6GRXx7EeeJlqelhgVOXQ"/>
+    <parameterMappings xmi:id="_TI6GQXx7EeeJlqelhgVOXQ" source="_TI5fNXx7EeeJlqelhgVOXQ" target="_TI6GRnx7EeeJlqelhgVOXQ"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_TI6GQnx7EeeJlqelhgVOXQ" name="eClassAtMostOneID(Variant0082)">
+    <parameters xmi:id="_TI6GQ3x7EeeJlqelhgVOXQ" name="eAttributeSubClass"/>
+    <parameters xmi:id="_TI6GRHx7EeeJlqelhgVOXQ" name="eAttributeSuperClass"/>
+    <parameters xmi:id="_TI6GRXx7EeeJlqelhgVOXQ" name="ESubClass"/>
+    <parameters xmi:id="_TI6GRnx7EeeJlqelhgVOXQ" name="ESuperClass"/>
+    <lhs xmi:id="_TI6GR3x7EeeJlqelhgVOXQ" name="Lhs">
+      <nodes xmi:id="_TI6GSHx7EeeJlqelhgVOXQ" name="eAttributeSuperClass" incoming="_TI6GTHx7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+        <attributes xmi:id="_TI6GSXx7EeeJlqelhgVOXQ" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute/iD"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_TI6GSnx7EeeJlqelhgVOXQ" name="ESubClass" outgoing="_TI6GTXx7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_TI6GS3x7EeeJlqelhgVOXQ" name="ESuperClass" incoming="_TI6GTXx7EeeJlqelhgVOXQ" outgoing="_TI6GTHx7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <edges xmi:id="_TI6GTHx7EeeJlqelhgVOXQ" source="_TI6GS3x7EeeJlqelhgVOXQ" target="_TI6GSHx7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_TI6GTXx7EeeJlqelhgVOXQ" source="_TI6GSnx7EeeJlqelhgVOXQ" target="_TI6GS3x7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_TI6GTnx7EeeJlqelhgVOXQ" name="Rhs">
+      <nodes xmi:id="_TI6GT3x7EeeJlqelhgVOXQ" name="eAttributeSuperClass" incoming="_TI6tU3x7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+        <attributes xmi:id="_TI6GUHx7EeeJlqelhgVOXQ" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute/iD"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_TI6GUXx7EeeJlqelhgVOXQ" name="ESubClass" incoming="_TI6tVXx7EeeJlqelhgVOXQ" outgoing="_TI6tVHx7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_TI6tUHx7EeeJlqelhgVOXQ" name="ESuperClass" outgoing="_TI6tU3x7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_TI6tUXx7EeeJlqelhgVOXQ" name="eAttributeSubClass" incoming="_TI6tVHx7EeeJlqelhgVOXQ" outgoing="_TI6tVXx7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+        <attributes xmi:id="_TI6tUnx7EeeJlqelhgVOXQ" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute/iD"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_TI6tU3x7EeeJlqelhgVOXQ" source="_TI6tUHx7EeeJlqelhgVOXQ" target="_TI6GT3x7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_TI6tVHx7EeeJlqelhgVOXQ" source="_TI6GUXx7EeeJlqelhgVOXQ" target="_TI6tUXx7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_TI6tVXx7EeeJlqelhgVOXQ" source="_TI6tUXx7EeeJlqelhgVOXQ" target="_TI6GUXx7EeeJlqelhgVOXQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_TI6tVnx7EeeJlqelhgVOXQ" origin="_TI6GSHx7EeeJlqelhgVOXQ" image="_TI6GT3x7EeeJlqelhgVOXQ"/>
+    <mappings xmi:id="_TI6tV3x7EeeJlqelhgVOXQ" origin="_TI6GSnx7EeeJlqelhgVOXQ" image="_TI6GUXx7EeeJlqelhgVOXQ"/>
+    <mappings xmi:id="_TI6tWHx7EeeJlqelhgVOXQ" origin="_TI6GS3x7EeeJlqelhgVOXQ" image="_TI6tUHx7EeeJlqelhgVOXQ"/>
+  </units>
+</henshin:Module>

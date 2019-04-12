@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_PEHlUP3wEei3h-YotlkM8g" name="Create: Multiplicity-Many Containment Self-References" description="Create: Multiplicity-Many Containment Self-References">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_PEHlUf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_PEHlWv3wEei3h-YotlkM8g">
+    <parameters xmi:id="_PEHlUv3wEei3h-YotlkM8g" name="value_containmentReference_upperBound" description="Attribute Condition: value_containmentReference_upperBound > 1" kind="IN"/>
+    <parameters xmi:id="_PEHlU_3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_PEHlVP3wEei3h-YotlkM8g" name="containmentReference" kind="IN"/>
+    <parameters xmi:id="_PEHlVf3wEei3h-YotlkM8g" name="value" kind="IN"/>
+    <parameterMappings xmi:id="_PEHlVv3wEei3h-YotlkM8g" source="_PEHlUv3wEei3h-YotlkM8g" target="_PEHlW_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PEHlV_3wEei3h-YotlkM8g" source="_PEHlU_3wEei3h-YotlkM8g" target="_PEHlXP3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PEHlWP3wEei3h-YotlkM8g" source="_PEHlVP3wEei3h-YotlkM8g" target="_PEHlXf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PEHlWf3wEei3h-YotlkM8g" source="_PEHlVf3wEei3h-YotlkM8g" target="_PEHlXv3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_PEHlWv3wEei3h-YotlkM8g" name="Create: Multiplicity-Many Containment Self-References">
+    <parameters xmi:id="_PEHlW_3wEei3h-YotlkM8g" name="value_containmentReference_upperBound" description="Attribute Condition: value_containmentReference_upperBound > 1" kind="IN"/>
+    <parameters xmi:id="_PEHlXP3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_PEHlXf3wEei3h-YotlkM8g" name="containmentReference" kind="IN"/>
+    <parameters xmi:id="_PEHlXv3wEei3h-YotlkM8g" name="value" kind="IN"/>
+    <lhs xmi:id="_PEHlX_3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_PEHlYP3wEei3h-YotlkM8g" name="containerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_PEHlYf3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_PEHlYv3wEei3h-YotlkM8g" name="containerClass" incoming="_PEHlaP3wEei3h-YotlkM8g _PEHlaf3wEei3h-YotlkM8g" outgoing="_PEHlZ_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PEHlY_3wEei3h-YotlkM8g" name="containmentReference" incoming="_PEHlZ_3wEei3h-YotlkM8g" outgoing="_PEHlaP3wEei3h-YotlkM8g _PEHlaf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PEHlZP3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/unique"/>
+        </attributes>
+        <attributes xmi:id="_PEHlZf3wEei3h-YotlkM8g" value="value_containmentReference_upperBound">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
+        </attributes>
+        <attributes xmi:id="_PEHlZv3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_PEHlZ_3wEei3h-YotlkM8g" source="_PEHlYv3wEei3h-YotlkM8g" target="_PEHlY_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_PEHlaP3wEei3h-YotlkM8g" source="_PEHlY_3wEei3h-YotlkM8g" target="_PEHlYv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_PEHlaf3wEei3h-YotlkM8g" source="_PEHlY_3wEei3h-YotlkM8g" target="_PEHlYv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_PEHlav3wEei3h-YotlkM8g" origin="_PEHlYP3wEei3h-YotlkM8g" image="_PEHlYv3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

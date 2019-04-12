@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_OcoukP3wEei3h-YotlkM8g" name="Delete: Named Parameter" description="Delete: Named Parameter">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Ocoukf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_Ocoumv3wEei3h-YotlkM8g">
+    <parameters xmi:id="_Ocoukv3wEei3h-YotlkM8g" name="containingOperation" kind="IN"/>
+    <parameters xmi:id="_Ocouk_3wEei3h-YotlkM8g" name="parameter" kind="IN"/>
+    <parameters xmi:id="_OcoulP3wEei3h-YotlkM8g" name="parameterName" kind="IN"/>
+    <parameters xmi:id="_Ocoulf3wEei3h-YotlkM8g" name="type" kind="IN"/>
+    <parameterMappings xmi:id="_Ocoulv3wEei3h-YotlkM8g" source="_Ocoukv3wEei3h-YotlkM8g" target="_Ocoum_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Ocoul_3wEei3h-YotlkM8g" source="_Ocouk_3wEei3h-YotlkM8g" target="_OcounP3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_OcoumP3wEei3h-YotlkM8g" source="_OcoulP3wEei3h-YotlkM8g" target="_Ocounf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Ocoumf3wEei3h-YotlkM8g" source="_Ocoulf3wEei3h-YotlkM8g" target="_Ocounv3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Ocoumv3wEei3h-YotlkM8g" name="Delete: Named Parameter">
+    <parameters xmi:id="_Ocoum_3wEei3h-YotlkM8g" name="containingOperation" kind="IN"/>
+    <parameters xmi:id="_OcounP3wEei3h-YotlkM8g" name="parameter" kind="IN"/>
+    <parameters xmi:id="_Ocounf3wEei3h-YotlkM8g" name="parameterName" kind="IN"/>
+    <parameters xmi:id="_Ocounv3wEei3h-YotlkM8g" name="type" kind="IN"/>
+    <lhs xmi:id="_Ocoun_3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_OcouoP3wEei3h-YotlkM8g" name="containingOperation" incoming="_Ocoupf3wEei3h-YotlkM8g" outgoing="_OcoupP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+      </nodes>
+      <nodes xmi:id="_Ocouof3wEei3h-YotlkM8g" name="parameter" incoming="_OcoupP3wEei3h-YotlkM8g" outgoing="_Ocoupf3wEei3h-YotlkM8g _Ocoupv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
+        <attributes xmi:id="_Ocouov3wEei3h-YotlkM8g" value="parameterName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Ocouo_3wEei3h-YotlkM8g" name="type" incoming="_Ocoupv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+      <edges xmi:id="_OcoupP3wEei3h-YotlkM8g" source="_OcouoP3wEei3h-YotlkM8g" target="_Ocouof3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+      </edges>
+      <edges xmi:id="_Ocoupf3wEei3h-YotlkM8g" source="_Ocouof3wEei3h-YotlkM8g" target="_OcouoP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter/eOperation"/>
+      </edges>
+      <edges xmi:id="_Ocoupv3wEei3h-YotlkM8g" source="_Ocouof3wEei3h-YotlkM8g" target="_Ocouo_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_Ocoup_3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_OcouqP3wEei3h-YotlkM8g" name="containingOperation">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+      </nodes>
+      <nodes xmi:id="_Ocouqf3wEei3h-YotlkM8g" name="type">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_Ocouqv3wEei3h-YotlkM8g" origin="_OcouoP3wEei3h-YotlkM8g" image="_OcouqP3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_Ocouq_3wEei3h-YotlkM8g" origin="_Ocouo_3wEei3h-YotlkM8g" image="_Ocouqf3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

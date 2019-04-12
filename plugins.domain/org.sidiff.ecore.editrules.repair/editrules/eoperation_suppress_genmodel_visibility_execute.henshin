@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_c67-QINQEeeC5ICWmYJgwg" name="EOperationSuppressGenModelVisibility" description="">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_c67-QYNQEeeC5ICWmYJgwg" name="mainUnit" subUnits="_c67-SoNQEeeC5ICWmYJgwg">
+    <parameters xmi:id="_c67-QoNQEeeC5ICWmYJgwg" name="GenModelAnnotation"/>
+    <parameters xmi:id="_c67-RINQEeeC5ICWmYJgwg" name="SuppressedVisibility"/>
+    <parameters xmi:id="_c67-RYNQEeeC5ICWmYJgwg" name="accessorOperation"/>
+    <parameterMappings xmi:id="_c67-RoNQEeeC5ICWmYJgwg" source="_c67-S4NQEeeC5ICWmYJgwg" target="_c67-QoNQEeeC5ICWmYJgwg"/>
+    <parameterMappings xmi:id="_c67-SINQEeeC5ICWmYJgwg" source="_c67-TYNQEeeC5ICWmYJgwg" target="_c67-RINQEeeC5ICWmYJgwg"/>
+    <parameterMappings xmi:id="_c67-SYNQEeeC5ICWmYJgwg" source="_c67-ToNQEeeC5ICWmYJgwg" target="_c67-RYNQEeeC5ICWmYJgwg"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_c67-SoNQEeeC5ICWmYJgwg" name="eOperationSuppressGenModelVisibility">
+    <parameters xmi:id="_c67-S4NQEeeC5ICWmYJgwg" name="GenModelAnnotation"/>
+    <parameters xmi:id="_c67-TYNQEeeC5ICWmYJgwg" name="SuppressedVisibility"/>
+    <parameters xmi:id="_c67-ToNQEeeC5ICWmYJgwg" name="accessorOperation"/>
+    <lhs xmi:id="_c67-T4NQEeeC5ICWmYJgwg" name="Lhs">
+      <nodes xmi:id="_c67-UINQEeeC5ICWmYJgwg" name="class">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_c67-UYNQEeeC5ICWmYJgwg" name="Rhs">
+      <nodes xmi:id="_c67-UoNQEeeC5ICWmYJgwg" name="class" incoming="_c67-WoNQEeeC5ICWmYJgwg" outgoing="_c67-WYNQEeeC5ICWmYJgwg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_c67-U4NQEeeC5ICWmYJgwg" name="GenModelAnnotation" incoming="_sfSc8INQEeeC5ICWmYJgwg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry"/>
+        <attributes xmi:id="_t8becINSEeeC5ICWmYJgwg" value="&quot;suppressedVisibility&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry/key"/>
+        </attributes>
+        <attributes xmi:id="_wcNTkINSEeeC5ICWmYJgwg" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry/value"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_c67-VYNQEeeC5ICWmYJgwg" name="SuppressedVisibility" incoming="_c67-V4NQEeeC5ICWmYJgwg" outgoing="_c67-WINQEeeC5ICWmYJgwg _sfSc8INQEeeC5ICWmYJgwg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation"/>
+        <attributes xmi:id="_puVGUINSEeeC5ICWmYJgwg" value="&quot;http://www.eclipse.org/emf/2002/GenModel&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation/source"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_c67-VoNQEeeC5ICWmYJgwg" name="AccessorOperation" incoming="_c67-WINQEeeC5ICWmYJgwg _c67-WYNQEeeC5ICWmYJgwg" outgoing="_c67-V4NQEeeC5ICWmYJgwg _c67-WoNQEeeC5ICWmYJgwg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+      </nodes>
+      <edges xmi:id="_c67-V4NQEeeC5ICWmYJgwg" source="_c67-VoNQEeeC5ICWmYJgwg" target="_c67-VYNQEeeC5ICWmYJgwg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EModelElement/eAnnotations"/>
+      </edges>
+      <edges xmi:id="_c67-WINQEeeC5ICWmYJgwg" source="_c67-VYNQEeeC5ICWmYJgwg" target="_c67-VoNQEeeC5ICWmYJgwg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation/eModelElement"/>
+      </edges>
+      <edges xmi:id="_c67-WYNQEeeC5ICWmYJgwg" source="_c67-UoNQEeeC5ICWmYJgwg" target="_c67-VoNQEeeC5ICWmYJgwg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eOperations"/>
+      </edges>
+      <edges xmi:id="_c67-WoNQEeeC5ICWmYJgwg" source="_c67-VoNQEeeC5ICWmYJgwg" target="_c67-UoNQEeeC5ICWmYJgwg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_sfSc8INQEeeC5ICWmYJgwg" source="_c67-VYNQEeeC5ICWmYJgwg" target="_c67-U4NQEeeC5ICWmYJgwg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation/details"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_c67-W4NQEeeC5ICWmYJgwg" origin="_c67-UINQEeeC5ICWmYJgwg" image="_c67-UoNQEeeC5ICWmYJgwg"/>
+  </units>
+</henshin:Module>

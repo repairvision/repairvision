@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Pa2DQP3wEei3h-YotlkM8g" name="Transform: Class without Generic-Super-Type - To - Class with Generic-Super-Type (Type-Parameter bounded by Type-Parameter) (2)" description="Transform: Class without Generic-Super-Type - To - Class with Generic-Super-Type (Type-Parameter bounded by Type-Parameter) (2)">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Pa2DQf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_Pa2DTv3wEei3h-YotlkM8g">
+    <parameters xmi:id="_Pa2DQv3wEei3h-YotlkM8g" name="classWithGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_Pa2DQ_3wEei3h-YotlkM8g" name="T" kind="IN"/>
+    <parameters xmi:id="_Pa2DRP3wEei3h-YotlkM8g" name="genericSuperType" kind="IN"/>
+    <parameters xmi:id="_Pa2DRf3wEei3h-YotlkM8g" name="typeArgumentOfGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_Pa2DRv3wEei3h-YotlkM8g" name="genericSuperTypeClass" kind="IN"/>
+    <parameters xmi:id="_Pa2DR_3wEei3h-YotlkM8g" name="P" kind="IN"/>
+    <parameterMappings xmi:id="_Pa2DSP3wEei3h-YotlkM8g" source="_Pa2DQv3wEei3h-YotlkM8g" target="_Pa2DT_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pa2DSf3wEei3h-YotlkM8g" source="_Pa2DQ_3wEei3h-YotlkM8g" target="_Pa2DUP3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pa2DSv3wEei3h-YotlkM8g" source="_Pa2DRP3wEei3h-YotlkM8g" target="_Pa2DUf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pa2DS_3wEei3h-YotlkM8g" source="_Pa2DRf3wEei3h-YotlkM8g" target="_Pa2DUv3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pa2DTP3wEei3h-YotlkM8g" source="_Pa2DRv3wEei3h-YotlkM8g" target="_Pa2DU_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pa2DTf3wEei3h-YotlkM8g" source="_Pa2DR_3wEei3h-YotlkM8g" target="_Pa2DVP3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Pa2DTv3wEei3h-YotlkM8g" name="Transform: Class without Generic-Super-Type - To - Class with Generic-Super-Type (Type-Parameter bounded by Type-Parameter) (2)">
+    <parameters xmi:id="_Pa2DT_3wEei3h-YotlkM8g" name="classWithGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_Pa2DUP3wEei3h-YotlkM8g" name="T" kind="IN"/>
+    <parameters xmi:id="_Pa2DUf3wEei3h-YotlkM8g" name="genericSuperType" kind="IN"/>
+    <parameters xmi:id="_Pa2DUv3wEei3h-YotlkM8g" name="typeArgumentOfGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_Pa2DU_3wEei3h-YotlkM8g" name="genericSuperTypeClass" kind="IN"/>
+    <parameters xmi:id="_Pa2DVP3wEei3h-YotlkM8g" name="P" kind="IN"/>
+    <lhs xmi:id="_Pa2DVf3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_Pa2DVv3wEei3h-YotlkM8g" name="classWithGenericSuperType">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_Pa2DV_3wEei3h-YotlkM8g" name="genericSuperTypeClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_Pa2DWP3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_Pa2DWf3wEei3h-YotlkM8g" name="classWithGenericSuperType" outgoing="_Pa2DX_3wEei3h-YotlkM8g _Pa2DYP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_Pa2DWv3wEei3h-YotlkM8g" name="T" incoming="_Pa2DYP3wEei3h-YotlkM8g _Pa2DY_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
+      </nodes>
+      <nodes xmi:id="_Pa2DW_3wEei3h-YotlkM8g" name="genericSuperType" incoming="_Pa2DX_3wEei3h-YotlkM8g" outgoing="_Pa2DYf3wEei3h-YotlkM8g _Pa2DYv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_Pa2DXP3wEei3h-YotlkM8g" name="typeArgumentOfGenericSuperType" incoming="_Pa2DYf3wEei3h-YotlkM8g" outgoing="_Pa2DY_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_Pa2DXf3wEei3h-YotlkM8g" name="genericSuperTypeClass" incoming="_Pa2DYv3wEei3h-YotlkM8g" outgoing="_Pa2DZP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_Pa2DXv3wEei3h-YotlkM8g" name="P" incoming="_Pa2DZP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
+      </nodes>
+      <edges xmi:id="_Pa2DX_3wEei3h-YotlkM8g" source="_Pa2DWf3wEei3h-YotlkM8g" target="_Pa2DW_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eGenericSuperTypes"/>
+      </edges>
+      <edges xmi:id="_Pa2DYP3wEei3h-YotlkM8g" source="_Pa2DWf3wEei3h-YotlkM8g" target="_Pa2DWv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+      </edges>
+      <edges xmi:id="_Pa2DYf3wEei3h-YotlkM8g" source="_Pa2DW_3wEei3h-YotlkM8g" target="_Pa2DXP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
+      </edges>
+      <edges xmi:id="_Pa2DYv3wEei3h-YotlkM8g" source="_Pa2DW_3wEei3h-YotlkM8g" target="_Pa2DXf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+      </edges>
+      <edges xmi:id="_Pa2DY_3wEei3h-YotlkM8g" source="_Pa2DXP3wEei3h-YotlkM8g" target="_Pa2DWv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeParameter"/>
+      </edges>
+      <edges xmi:id="_Pa2DZP3wEei3h-YotlkM8g" source="_Pa2DXf3wEei3h-YotlkM8g" target="_Pa2DXv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Pa2DZf3wEei3h-YotlkM8g" origin="_Pa2DVv3wEei3h-YotlkM8g" image="_Pa2DWf3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_Pa2DZv3wEei3h-YotlkM8g" origin="_Pa2DV_3wEei3h-YotlkM8g" image="_Pa2DXf3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

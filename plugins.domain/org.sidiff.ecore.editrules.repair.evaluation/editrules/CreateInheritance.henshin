@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Oe1G8P3wEei3h-YotlkM8g" name="Create: Inheritance" description="Create: Inheritance">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Oe1G8f3wEei3h-YotlkM8g" name="mainUnit" subUnits="_Oe1G8v3wEei3h-YotlkM8g"/>
+  <units xsi:type="henshin:Rule" xmi:id="_Oe1G8v3wEei3h-YotlkM8g" name="Create: Inheritance">
+    <lhs xmi:id="_Oe1G8_3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_Oe1G9P3wEei3h-YotlkM8g" name="subClass" incoming="_Oe1G9_3wEei3h-YotlkM8g" outgoing="_Oe1G9v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_Oe1G9f3wEei3h-YotlkM8g" name="superClass" incoming="_Oe1G9v3wEei3h-YotlkM8g" outgoing="_Oe1G9_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <edges xmi:id="_Oe1G9v3wEei3h-YotlkM8g" source="_Oe1G9P3wEei3h-YotlkM8g" target="_Oe1G9f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+      </edges>
+      <edges xmi:id="_Oe1G9_3wEei3h-YotlkM8g" source="_Oe1G9f3wEei3h-YotlkM8g" target="_Oe1G9P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_Oe1G-P3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_Oe1G-f3wEei3h-YotlkM8g" name="subClass" incoming="_Oe1G_P3wEei3h-YotlkM8g" outgoing="_Oe1G-_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_Oe1G-v3wEei3h-YotlkM8g" name="superClass" incoming="_Oe1G-_3wEei3h-YotlkM8g" outgoing="_Oe1G_P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <edges xmi:id="_Oe1G-_3wEei3h-YotlkM8g" source="_Oe1G-f3wEei3h-YotlkM8g" target="_Oe1G-v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+      </edges>
+      <edges xmi:id="_Oe1G_P3wEei3h-YotlkM8g" source="_Oe1G-v3wEei3h-YotlkM8g" target="_Oe1G-f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Oe1G_f3wEei3h-YotlkM8g" origin="_Oe1G9P3wEei3h-YotlkM8g" image="_Oe1G-f3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_Oe1G_v3wEei3h-YotlkM8g" origin="_Oe1G9f3wEei3h-YotlkM8g" image="_Oe1G-v3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

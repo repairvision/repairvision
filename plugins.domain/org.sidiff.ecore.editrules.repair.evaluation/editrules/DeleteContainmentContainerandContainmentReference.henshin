@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_O3h60P3wEei3h-YotlkM8g" name="Delete: Containment-Container and Containment Reference" description="Delete: Containment-Container and Containment Reference">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_O3h60f3wEei3h-YotlkM8g" name="mainUnit" subUnits="_O3h63v3wEei3h-YotlkM8g">
+    <parameters xmi:id="_O3h60v3wEei3h-YotlkM8g" name="containerClassA" kind="IN"/>
+    <parameters xmi:id="_O3h60_3wEei3h-YotlkM8g" name="containmentReferenceA" kind="IN"/>
+    <parameters xmi:id="_O3h61P3wEei3h-YotlkM8g" name="containerClassB" kind="IN"/>
+    <parameters xmi:id="_O3h61f3wEei3h-YotlkM8g" name="containmentReferenceB" kind="IN"/>
+    <parameters xmi:id="_O3h61v3wEei3h-YotlkM8g" name="containedClass" kind="IN"/>
+    <parameters xmi:id="_O3h61_3wEei3h-YotlkM8g" name="containerReferenceA" kind="IN"/>
+    <parameterMappings xmi:id="_O3h62P3wEei3h-YotlkM8g" source="_O3h60v3wEei3h-YotlkM8g" target="_O3h63_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_O3h62f3wEei3h-YotlkM8g" source="_O3h60_3wEei3h-YotlkM8g" target="_O3h64P3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_O3h62v3wEei3h-YotlkM8g" source="_O3h61P3wEei3h-YotlkM8g" target="_O3h64f3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_O3h62_3wEei3h-YotlkM8g" source="_O3h61f3wEei3h-YotlkM8g" target="_O3h64v3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_O3h63P3wEei3h-YotlkM8g" source="_O3h61v3wEei3h-YotlkM8g" target="_O3h64_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_O3h63f3wEei3h-YotlkM8g" source="_O3h61_3wEei3h-YotlkM8g" target="_O3h65P3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_O3h63v3wEei3h-YotlkM8g" name="Delete: Containment-Container and Containment Reference">
+    <parameters xmi:id="_O3h63_3wEei3h-YotlkM8g" name="containerClassA" kind="IN"/>
+    <parameters xmi:id="_O3h64P3wEei3h-YotlkM8g" name="containmentReferenceA" kind="IN"/>
+    <parameters xmi:id="_O3h64f3wEei3h-YotlkM8g" name="containerClassB" kind="IN"/>
+    <parameters xmi:id="_O3h64v3wEei3h-YotlkM8g" name="containmentReferenceB" kind="IN"/>
+    <parameters xmi:id="_O3h64_3wEei3h-YotlkM8g" name="containedClass" kind="IN"/>
+    <parameters xmi:id="_O3h65P3wEei3h-YotlkM8g" name="containerReferenceA" kind="IN"/>
+    <lhs xmi:id="_O3h65f3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_O3h65v3wEei3h-YotlkM8g" name="containerClassA" incoming="_O3h68v3wEei3h-YotlkM8g _O3h6-P3wEei3h-YotlkM8g" outgoing="_O3h68P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_O3h65_3wEei3h-YotlkM8g" name="containmentReferenceA" incoming="_O3h68P3wEei3h-YotlkM8g _O3h6-v3wEei3h-YotlkM8g" outgoing="_O3h68f3wEei3h-YotlkM8g _O3h68v3wEei3h-YotlkM8g _O3h68_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_O3h66P3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_O3h66f3wEei3h-YotlkM8g" name="containerClassB" incoming="_O3h69v3wEei3h-YotlkM8g" outgoing="_O3h69P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_O3h66v3wEei3h-YotlkM8g" name="containmentReferenceB" incoming="_O3h69P3wEei3h-YotlkM8g" outgoing="_O3h69f3wEei3h-YotlkM8g _O3h69v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_O3h66_3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_O3h67P3wEei3h-YotlkM8g" name="containedClass" incoming="_O3h68f3wEei3h-YotlkM8g _O3h69f3wEei3h-YotlkM8g _O3h6-f3wEei3h-YotlkM8g" outgoing="_O3h69_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_O3h67f3wEei3h-YotlkM8g" name="containerReferenceA" incoming="_O3h68_3wEei3h-YotlkM8g _O3h69_3wEei3h-YotlkM8g" outgoing="_O3h6-P3wEei3h-YotlkM8g _O3h6-f3wEei3h-YotlkM8g _O3h6-v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_O3h67v3wEei3h-YotlkM8g" value="&quot;0&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/lowerBound"/>
+        </attributes>
+        <attributes xmi:id="_O3h67_3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_O3h68P3wEei3h-YotlkM8g" source="_O3h65v3wEei3h-YotlkM8g" target="_O3h65_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_O3h68f3wEei3h-YotlkM8g" source="_O3h65_3wEei3h-YotlkM8g" target="_O3h67P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_O3h68v3wEei3h-YotlkM8g" source="_O3h65_3wEei3h-YotlkM8g" target="_O3h65v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_O3h68_3wEei3h-YotlkM8g" source="_O3h65_3wEei3h-YotlkM8g" target="_O3h67f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="_O3h69P3wEei3h-YotlkM8g" source="_O3h66f3wEei3h-YotlkM8g" target="_O3h66v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_O3h69f3wEei3h-YotlkM8g" source="_O3h66v3wEei3h-YotlkM8g" target="_O3h67P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_O3h69v3wEei3h-YotlkM8g" source="_O3h66v3wEei3h-YotlkM8g" target="_O3h66f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_O3h69_3wEei3h-YotlkM8g" source="_O3h67P3wEei3h-YotlkM8g" target="_O3h67f3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_O3h6-P3wEei3h-YotlkM8g" source="_O3h67f3wEei3h-YotlkM8g" target="_O3h65v3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_O3h6-f3wEei3h-YotlkM8g" source="_O3h67f3wEei3h-YotlkM8g" target="_O3h67P3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_O3h6-v3wEei3h-YotlkM8g" source="_O3h67f3wEei3h-YotlkM8g" target="_O3h65_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_O3h6-_3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_O3h6_P3wEei3h-YotlkM8g" name="containerClassA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_O3h6_f3wEei3h-YotlkM8g" name="containerClassB">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_O3h6_v3wEei3h-YotlkM8g" name="containedClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_O3h6__3wEei3h-YotlkM8g" origin="_O3h65v3wEei3h-YotlkM8g" image="_O3h6_P3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_O3h7AP3wEei3h-YotlkM8g" origin="_O3h66f3wEei3h-YotlkM8g" image="_O3h6_f3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_O3h7Af3wEei3h-YotlkM8g" origin="_O3h67P3wEei3h-YotlkM8g" image="_O3h6_v3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

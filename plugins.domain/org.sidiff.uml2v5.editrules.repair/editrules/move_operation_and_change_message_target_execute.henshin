@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_il_eMD47Eea0SJ9KOfvj5Q" name="MoveOperationAndChangeMessageTarget" description="Moves an Operation to a another Class and chages the target of the Message to a Lifeline of this Class.">
+  <imports href="http://www.eclipse.org/uml2/5.0.0/UML#/"/>
+  <units xsi:type="henshin:Rule" xmi:id="_jKB_YD47Eea0SJ9KOfvj5Q" name="moveOperationAndChangeMessageTarget">
+    <parameters xmi:id="_t5LNQM3cEeeRMoQWNNYKHA" name="moveOperation" kind="IN"/>
+    <parameters xmi:id="_vFCt8D49Eea0SJ9KOfvj5Q" name="opName" description="" kind="VAR"/>
+    <parameters xmi:id="_t5MbYM3cEeeRMoQWNNYKHA" name="toClass" kind="IN"/>
+    <parameters xmi:id="_o0UvIM3jEeeRMoQWNNYKHA" name="changeMessage" kind="IN"/>
+    <parameters xmi:id="_t5L0UM3cEeeRMoQWNNYKHA" name="targetEnd" kind="IN"/>
+    <parameters xmi:id="_8gQHMM3jEeeRMoQWNNYKHA" name="toLifeline" kind="IN"/>
+    <lhs xmi:id="_jKcPED47Eea0SJ9KOfvj5Q" name="Lhs">
+      <nodes xmi:id="_ppKmAD47Eea0SJ9KOfvj5Q" name="changeMessage" outgoing="_t9or4D47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+        <attributes xmi:id="_nfPaMD49Eea0SJ9KOfvj5Q" value="opName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_rXjacD47Eea0SJ9KOfvj5Q" name="targetEnd" incoming="_t9or4D47Eea0SJ9KOfvj5Q _j_YrIE8zEeavIPMQP6bXyg" outgoing="_zJNY4D47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+      </nodes>
+      <nodes xmi:id="_wswkkD47Eea0SJ9KOfvj5Q" name="toLifeline" outgoing="_6EZpYD47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_xlOdoD47Eea0SJ9KOfvj5Q" name="fromLifeline" incoming="_zJNY4D47Eea0SJ9KOfvj5Q" outgoing="_6j_IYD47Eea0SJ9KOfvj5Q _j_YrIE8zEeavIPMQP6bXyg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_2B0kwD47Eea0SJ9KOfvj5Q" name="toReceiverType" incoming="_6EZpYD47Eea0SJ9KOfvj5Q" outgoing="_VBxZUD49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <nodes xmi:id="_3aOiID47Eea0SJ9KOfvj5Q" name="fromReceiverType" incoming="_6j_IYD47Eea0SJ9KOfvj5Q" outgoing="_VdqrID49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <nodes xmi:id="_701PwD48Eea0SJ9KOfvj5Q" name="moveOperation" incoming="_ZH46ID49Eea0SJ9KOfvj5Q" outgoing="_j_ZSME8zEeavIPMQP6bXyg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+        <attributes xmi:id="_o3Y44D49Eea0SJ9KOfvj5Q" value="opName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Q7rtsD49Eea0SJ9KOfvj5Q" name="toClass" incoming="_VBxZUD49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes xmi:id="_Rk-iUD49Eea0SJ9KOfvj5Q" name="fromClass" incoming="_VdqrID49Eea0SJ9KOfvj5Q _j_ZSME8zEeavIPMQP6bXyg" outgoing="_ZH46ID49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <edges xmi:id="_t9or4D47Eea0SJ9KOfvj5Q" source="_ppKmAD47Eea0SJ9KOfvj5Q" target="_rXjacD47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/receiveEvent"/>
+      </edges>
+      <edges xmi:id="_zJNY4D47Eea0SJ9KOfvj5Q" source="_rXjacD47Eea0SJ9KOfvj5Q" target="_xlOdoD47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+      </edges>
+      <edges xmi:id="_6EZpYD47Eea0SJ9KOfvj5Q" source="_wswkkD47Eea0SJ9KOfvj5Q" target="_2B0kwD47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+      </edges>
+      <edges xmi:id="_6j_IYD47Eea0SJ9KOfvj5Q" source="_xlOdoD47Eea0SJ9KOfvj5Q" target="_3aOiID47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+      </edges>
+      <edges xmi:id="_VBxZUD49Eea0SJ9KOfvj5Q" source="_2B0kwD47Eea0SJ9KOfvj5Q" target="_Q7rtsD49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+      <edges xmi:id="_VdqrID49Eea0SJ9KOfvj5Q" source="_3aOiID47Eea0SJ9KOfvj5Q" target="_Rk-iUD49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+      <edges xmi:id="_ZH46ID49Eea0SJ9KOfvj5Q" source="_Rk-iUD49Eea0SJ9KOfvj5Q" target="_701PwD48Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+      </edges>
+      <edges xmi:id="_j_YrIE8zEeavIPMQP6bXyg" source="_xlOdoD47Eea0SJ9KOfvj5Q" target="_rXjacD47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/coveredBy"/>
+      </edges>
+      <edges xmi:id="_j_ZSME8zEeavIPMQP6bXyg" source="_701PwD48Eea0SJ9KOfvj5Q" target="_Rk-iUD49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
+      </edges>
+      <formula xsi:type="henshin:Not" xmi:id="_t5Z2wM3cEeeRMoQWNNYKHA">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_t5bE4M3cEeeRMoQWNNYKHA">
+          <conclusion xmi:id="_t5br8M3cEeeRMoQWNNYKHA">
+            <nodes xmi:id="_t5br8c3cEeeRMoQWNNYKHA" name="newClass" incoming="_t5c6Ec3cEeeRMoQWNNYKHA" outgoing="_t5c6EM3cEeeRMoQWNNYKHA">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+            </nodes>
+            <nodes xmi:id="_t5cTAM3cEeeRMoQWNNYKHA" incoming="_t5c6EM3cEeeRMoQWNNYKHA" outgoing="_t5c6Ec3cEeeRMoQWNNYKHA">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+              <attributes xmi:id="_t5cTAc3cEeeRMoQWNNYKHA" value="opName">
+                <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+              </attributes>
+            </nodes>
+            <edges xmi:id="_t5c6EM3cEeeRMoQWNNYKHA" source="_t5br8c3cEeeRMoQWNNYKHA" target="_t5cTAM3cEeeRMoQWNNYKHA">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+            </edges>
+            <edges xmi:id="_t5c6Ec3cEeeRMoQWNNYKHA" source="_t5cTAM3cEeeRMoQWNNYKHA" target="_t5br8c3cEeeRMoQWNNYKHA">
+              <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
+            </edges>
+          </conclusion>
+          <mappings xmi:id="_t5fWUM3cEeeRMoQWNNYKHA" origin="_Q7rtsD49Eea0SJ9KOfvj5Q" image="_t5br8c3cEeeRMoQWNNYKHA"/>
+        </child>
+      </formula>
+    </lhs>
+    <rhs xmi:id="_jKc2ID47Eea0SJ9KOfvj5Q" name="Rhs">
+      <nodes xmi:id="_ppKmAT47Eea0SJ9KOfvj5Q" name="changeMessage" outgoing="_t9or4T47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+        <attributes xmi:id="_nfSdgD49Eea0SJ9KOfvj5Q" value="opName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_rXjacT47Eea0SJ9KOfvj5Q" name="targetEnd" incoming="_t9or4T47Eea0SJ9KOfvj5Q _j_eKsU8zEeavIPMQP6bXyg" outgoing="_ypPfYD47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+      </nodes>
+      <nodes xmi:id="_wswkkT47Eea0SJ9KOfvj5Q" name="toLifeline" incoming="_ypPfYD47Eea0SJ9KOfvj5Q" outgoing="_6EZpYT47Eea0SJ9KOfvj5Q _j_eKsU8zEeavIPMQP6bXyg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_xlOdoT47Eea0SJ9KOfvj5Q" name="fromLifeline" outgoing="_6j_IYT47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_2B0kwT47Eea0SJ9KOfvj5Q" name="toReceiverType" incoming="_6EZpYT47Eea0SJ9KOfvj5Q" outgoing="_VBxZUT49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <nodes xmi:id="_3aOiIT47Eea0SJ9KOfvj5Q" name="fromReceiverType" incoming="_6j_IYT47Eea0SJ9KOfvj5Q" outgoing="_VdrSMD49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <nodes xmi:id="_701PwT48Eea0SJ9KOfvj5Q" name="moveOperation" incoming="_ZkFG4D49Eea0SJ9KOfvj5Q" outgoing="_j_eKsE8zEeavIPMQP6bXyg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+        <attributes xmi:id="_o3Zf8D49Eea0SJ9KOfvj5Q" value="opName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Q7rtsT49Eea0SJ9KOfvj5Q" name="toClass" incoming="_VBxZUT49Eea0SJ9KOfvj5Q _j_eKsE8zEeavIPMQP6bXyg" outgoing="_ZkFG4D49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes xmi:id="_Rk_JYD49Eea0SJ9KOfvj5Q" name="fromClass" incoming="_VdrSMD49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <edges xmi:id="_t9or4T47Eea0SJ9KOfvj5Q" source="_ppKmAT47Eea0SJ9KOfvj5Q" target="_rXjacT47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/receiveEvent"/>
+      </edges>
+      <edges xmi:id="_6EZpYT47Eea0SJ9KOfvj5Q" source="_wswkkT47Eea0SJ9KOfvj5Q" target="_2B0kwT47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+      </edges>
+      <edges xmi:id="_6j_IYT47Eea0SJ9KOfvj5Q" source="_xlOdoT47Eea0SJ9KOfvj5Q" target="_3aOiIT47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+      </edges>
+      <edges xmi:id="_VBxZUT49Eea0SJ9KOfvj5Q" source="_2B0kwT47Eea0SJ9KOfvj5Q" target="_Q7rtsT49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+      <edges xmi:id="_VdrSMD49Eea0SJ9KOfvj5Q" source="_3aOiIT47Eea0SJ9KOfvj5Q" target="_Rk_JYD49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+      </edges>
+      <edges xmi:id="_ZkFG4D49Eea0SJ9KOfvj5Q" source="_Q7rtsT49Eea0SJ9KOfvj5Q" target="_701PwT48Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+      </edges>
+      <edges xmi:id="_ypPfYD47Eea0SJ9KOfvj5Q" source="_rXjacT47Eea0SJ9KOfvj5Q" target="_wswkkT47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+      </edges>
+      <edges xmi:id="_j_eKsE8zEeavIPMQP6bXyg" source="_701PwT48Eea0SJ9KOfvj5Q" target="_Q7rtsT49Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
+      </edges>
+      <edges xmi:id="_j_eKsU8zEeavIPMQP6bXyg" source="_wswkkT47Eea0SJ9KOfvj5Q" target="_rXjacT47Eea0SJ9KOfvj5Q">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/coveredBy"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_ppL0ID47Eea0SJ9KOfvj5Q" origin="_ppKmAD47Eea0SJ9KOfvj5Q" image="_ppKmAT47Eea0SJ9KOfvj5Q"/>
+    <mappings xmi:id="_rXjacj47Eea0SJ9KOfvj5Q" origin="_rXjacD47Eea0SJ9KOfvj5Q" image="_rXjacT47Eea0SJ9KOfvj5Q"/>
+    <mappings xmi:id="_wswkkj47Eea0SJ9KOfvj5Q" origin="_wswkkD47Eea0SJ9KOfvj5Q" image="_wswkkT47Eea0SJ9KOfvj5Q"/>
+    <mappings xmi:id="_xlOdoj47Eea0SJ9KOfvj5Q" origin="_xlOdoD47Eea0SJ9KOfvj5Q" image="_xlOdoT47Eea0SJ9KOfvj5Q"/>
+    <mappings xmi:id="_2B1L0D47Eea0SJ9KOfvj5Q" origin="_2B0kwD47Eea0SJ9KOfvj5Q" image="_2B0kwT47Eea0SJ9KOfvj5Q"/>
+    <mappings xmi:id="_3aPJMD47Eea0SJ9KOfvj5Q" origin="_3aOiID47Eea0SJ9KOfvj5Q" image="_3aOiIT47Eea0SJ9KOfvj5Q"/>
+    <mappings xmi:id="_701Pwj48Eea0SJ9KOfvj5Q" origin="_701PwD48Eea0SJ9KOfvj5Q" image="_701PwT48Eea0SJ9KOfvj5Q"/>
+    <mappings xmi:id="_Q7rtsj49Eea0SJ9KOfvj5Q" origin="_Q7rtsD49Eea0SJ9KOfvj5Q" image="_Q7rtsT49Eea0SJ9KOfvj5Q"/>
+    <mappings xmi:id="_Rk_JYT49Eea0SJ9KOfvj5Q" origin="_Rk-iUD49Eea0SJ9KOfvj5Q" image="_Rk_JYD49Eea0SJ9KOfvj5Q"/>
+  </units>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_sg4IED49Eea0SJ9KOfvj5Q" name="mainUnit" subUnits="_jKB_YD47Eea0SJ9KOfvj5Q">
+    <parameters xmi:id="_t5sKoM3cEeeRMoQWNNYKHA" name="moveOperation" kind="IN"/>
+    <parameters xmi:id="_t5sxsM3cEeeRMoQWNNYKHA" name="toClass" kind="IN"/>
+    <parameters xmi:id="_LMpDIM3kEeeRMoQWNNYKHA" name="changeMessage" kind="IN"/>
+    <parameters xmi:id="_t5sKoc3cEeeRMoQWNNYKHA" name="targetEnd" kind="IN"/>
+    <parameters xmi:id="_QZQR8M3kEeeRMoQWNNYKHA" name="toLifeline" kind="IN"/>
+    <parameterMappings xmi:id="_t5tYwM3cEeeRMoQWNNYKHA" source="_t5sKoM3cEeeRMoQWNNYKHA" target="_t5LNQM3cEeeRMoQWNNYKHA"/>
+    <parameterMappings xmi:id="_t5t_0c3cEeeRMoQWNNYKHA" source="_t5sxsM3cEeeRMoQWNNYKHA" target="_t5MbYM3cEeeRMoQWNNYKHA"/>
+    <parameterMappings xmi:id="_ebjvEM3kEeeRMoQWNNYKHA" source="_LMpDIM3kEeeRMoQWNNYKHA" target="_o0UvIM3jEeeRMoQWNNYKHA"/>
+    <parameterMappings xmi:id="_t5t_0M3cEeeRMoQWNNYKHA" source="_t5sKoc3cEeeRMoQWNNYKHA" target="_t5L0UM3cEeeRMoQWNNYKHA"/>
+    <parameterMappings xmi:id="_hTKOUM3kEeeRMoQWNNYKHA" source="_QZQR8M3kEeeRMoQWNNYKHA" target="_8gQHMM3jEeeRMoQWNNYKHA"/>
+  </units>
+</henshin:Module>

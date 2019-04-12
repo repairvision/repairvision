@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Pi7BMP3wEei3h-YotlkM8g" name="Create: Attribute without Generic-Type" description="Create: Attribute without Generic-Type">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Pi7BMf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_Pi7BOv3wEei3h-YotlkM8g">
+    <parameters xmi:id="_Pi7BMv3wEei3h-YotlkM8g" name="dataTypeWithoutTypeParameter" kind="IN"/>
+    <parameters xmi:id="_Pi7BM_3wEei3h-YotlkM8g" name="attributeWithoutGenericType" kind="IN"/>
+    <parameters xmi:id="_Pi7BNP3wEei3h-YotlkM8g" name="genericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_Pi7BNf3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameterMappings xmi:id="_Pi7BNv3wEei3h-YotlkM8g" source="_Pi7BMv3wEei3h-YotlkM8g" target="_Pi7BO_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pi7BN_3wEei3h-YotlkM8g" source="_Pi7BM_3wEei3h-YotlkM8g" target="_Pi7BPP3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pi7BOP3wEei3h-YotlkM8g" source="_Pi7BNP3wEei3h-YotlkM8g" target="_Pi7BPf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_Pi7BOf3wEei3h-YotlkM8g" source="_Pi7BNf3wEei3h-YotlkM8g" target="_Pi7BPv3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Pi7BOv3wEei3h-YotlkM8g" name="Create: Attribute without Generic-Type">
+    <parameters xmi:id="_Pi7BO_3wEei3h-YotlkM8g" name="dataTypeWithoutTypeParameter" kind="IN"/>
+    <parameters xmi:id="_Pi7BPP3wEei3h-YotlkM8g" name="attributeWithoutGenericType" kind="IN"/>
+    <parameters xmi:id="_Pi7BPf3wEei3h-YotlkM8g" name="genericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_Pi7BPv3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <lhs xmi:id="_Pi7BP_3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_Pi7BQP3wEei3h-YotlkM8g" name="dataTypeWithoutTypeParameter">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+      </nodes>
+      <nodes xmi:id="_Pi7BQf3wEei3h-YotlkM8g" name="containerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_Pi7BQv3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_Pi7BQ_3wEei3h-YotlkM8g" name="dataTypeWithoutTypeParameter" incoming="_Pi7BSP3wEei3h-YotlkM8g _Pi7BSv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+      </nodes>
+      <nodes xmi:id="_Pi7BRP3wEei3h-YotlkM8g" name="attributeWithoutGenericType" incoming="_Pi7BS_3wEei3h-YotlkM8g" outgoing="_Pi7BR_3wEei3h-YotlkM8g _Pi7BSP3wEei3h-YotlkM8g _Pi7BSf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+      </nodes>
+      <nodes xmi:id="_Pi7BRf3wEei3h-YotlkM8g" name="genericTypeOfTypedElement" incoming="_Pi7BSf3wEei3h-YotlkM8g" outgoing="_Pi7BSv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_Pi7BRv3wEei3h-YotlkM8g" name="containerClass" incoming="_Pi7BR_3wEei3h-YotlkM8g" outgoing="_Pi7BS_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <edges xmi:id="_Pi7BR_3wEei3h-YotlkM8g" source="_Pi7BRP3wEei3h-YotlkM8g" target="_Pi7BRv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_Pi7BSP3wEei3h-YotlkM8g" source="_Pi7BRP3wEei3h-YotlkM8g" target="_Pi7BQ_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_Pi7BSf3wEei3h-YotlkM8g" source="_Pi7BRP3wEei3h-YotlkM8g" target="_Pi7BRf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eGenericType"/>
+      </edges>
+      <edges xmi:id="_Pi7BSv3wEei3h-YotlkM8g" source="_Pi7BRf3wEei3h-YotlkM8g" target="_Pi7BQ_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+      </edges>
+      <edges xmi:id="_Pi7BS_3wEei3h-YotlkM8g" source="_Pi7BRv3wEei3h-YotlkM8g" target="_Pi7BRP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Pi7BTP3wEei3h-YotlkM8g" origin="_Pi7BQP3wEei3h-YotlkM8g" image="_Pi7BQ_3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_Pi7BTf3wEei3h-YotlkM8g" origin="_Pi7BQf3wEei3h-YotlkM8g" image="_Pi7BRv3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

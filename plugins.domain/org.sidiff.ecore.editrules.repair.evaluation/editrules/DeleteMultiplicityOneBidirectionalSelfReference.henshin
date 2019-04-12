@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_PHvhEP3wEei3h-YotlkM8g" name="Delete: Multiplicity-One Bidirectional Self-Reference" description="Delete: Multiplicity-One Bidirectional Self-Reference">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_PHvhEf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_PHvhGP3wEei3h-YotlkM8g">
+    <parameters xmi:id="_PHvhEv3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_PHvhE_3wEei3h-YotlkM8g" name="oppositeReference" kind="IN"/>
+    <parameters xmi:id="_PHvhFP3wEei3h-YotlkM8g" name="multiplicityOneReference" kind="IN"/>
+    <parameterMappings xmi:id="_PHvhFf3wEei3h-YotlkM8g" source="_PHvhEv3wEei3h-YotlkM8g" target="_PHvhGf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PHvhFv3wEei3h-YotlkM8g" source="_PHvhE_3wEei3h-YotlkM8g" target="_PHvhGv3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PHvhF_3wEei3h-YotlkM8g" source="_PHvhFP3wEei3h-YotlkM8g" target="_PHvhG_3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_PHvhGP3wEei3h-YotlkM8g" name="Delete: Multiplicity-One Bidirectional Self-Reference">
+    <parameters xmi:id="_PHvhGf3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_PHvhGv3wEei3h-YotlkM8g" name="oppositeReference" kind="IN"/>
+    <parameters xmi:id="_PHvhG_3wEei3h-YotlkM8g" name="multiplicityOneReference" kind="IN"/>
+    <lhs xmi:id="_PHvhHP3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_PHvhHf3wEei3h-YotlkM8g" name="containerClass" incoming="_PHvhI_3wEei3h-YotlkM8g _PHvhJP3wEei3h-YotlkM8g" outgoing="_PHvhIf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PHvhHv3wEei3h-YotlkM8g" name="oppositeReference" incoming="_PHvhJf3wEei3h-YotlkM8g" outgoing="_PHvhIv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_PHvhH_3wEei3h-YotlkM8g" name="multiplicityOneReference" incoming="_PHvhIf3wEei3h-YotlkM8g _PHvhIv3wEei3h-YotlkM8g" outgoing="_PHvhI_3wEei3h-YotlkM8g _PHvhJP3wEei3h-YotlkM8g _PHvhJf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PHvhIP3wEei3h-YotlkM8g" value="&quot;1&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_PHvhIf3wEei3h-YotlkM8g" source="_PHvhHf3wEei3h-YotlkM8g" target="_PHvhH_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_PHvhIv3wEei3h-YotlkM8g" source="_PHvhHv3wEei3h-YotlkM8g" target="_PHvhH_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="_PHvhI_3wEei3h-YotlkM8g" source="_PHvhH_3wEei3h-YotlkM8g" target="_PHvhHf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_PHvhJP3wEei3h-YotlkM8g" source="_PHvhH_3wEei3h-YotlkM8g" target="_PHvhHf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_PHvhJf3wEei3h-YotlkM8g" source="_PHvhH_3wEei3h-YotlkM8g" target="_PHvhHv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_PHvhJv3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_PHvhJ_3wEei3h-YotlkM8g" name="containerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PHvhKP3wEei3h-YotlkM8g" name="oppositeReference">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_PHvhKf3wEei3h-YotlkM8g" origin="_PHvhHf3wEei3h-YotlkM8g" image="_PHvhJ_3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_PHvhKv3wEei3h-YotlkM8g" origin="_PHvhHv3wEei3h-YotlkM8g" image="_PHvhKP3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

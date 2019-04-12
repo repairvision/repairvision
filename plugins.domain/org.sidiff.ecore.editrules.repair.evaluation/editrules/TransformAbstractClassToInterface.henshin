@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Od4EsP3wEei3h-YotlkM8g" name="Transform: Abstract Class - To - Interface" description="Transform: Abstract Class - To - Interface">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Od4Esf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_Od4EtP3wEei3h-YotlkM8g">
+    <parameters xmi:id="_Od4Esv3wEei3h-YotlkM8g" name="abstractClass_interface" kind="IN"/>
+    <parameterMappings xmi:id="_Od4Es_3wEei3h-YotlkM8g" source="_Od4Esv3wEei3h-YotlkM8g" target="_Od4Etf3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Od4EtP3wEei3h-YotlkM8g" name="Transform: Abstract Class - To - Interface">
+    <parameters xmi:id="_Od4Etf3wEei3h-YotlkM8g" name="abstractClass_interface" kind="IN"/>
+    <lhs xmi:id="_Od4Etv3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_Od4Et_3wEei3h-YotlkM8g" name="package" incoming="_Od4EvP3wEei3h-YotlkM8g" outgoing="_Od4Eu_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+      <nodes xmi:id="_Od4EuP3wEei3h-YotlkM8g" name="interface" incoming="_Od4Eu_3wEei3h-YotlkM8g" outgoing="_Od4EvP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        <attributes xmi:id="_Od4Euf3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/abstract"/>
+        </attributes>
+        <attributes xmi:id="_Od4Euv3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/interface"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_Od4Eu_3wEei3h-YotlkM8g" source="_Od4Et_3wEei3h-YotlkM8g" target="_Od4EuP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
+      </edges>
+      <edges xmi:id="_Od4EvP3wEei3h-YotlkM8g" source="_Od4EuP3wEei3h-YotlkM8g" target="_Od4Et_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_Od4Evf3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_Od4Evv3wEei3h-YotlkM8g" name="package" incoming="_Od4ExP3wEei3h-YotlkM8g" outgoing="_Od4Ew_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+      <nodes xmi:id="_Od4Ev_3wEei3h-YotlkM8g" name="interface" incoming="_Od4Ew_3wEei3h-YotlkM8g" outgoing="_Od4ExP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        <attributes xmi:id="_Od4EwP3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/abstract"/>
+        </attributes>
+        <attributes xmi:id="_Od4Ewf3wEei3h-YotlkM8g" value="abstractClass_interface">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/interface"/>
+        </attributes>
+        <attributes xmi:id="_Od4Ewv3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/interface"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_Od4Ew_3wEei3h-YotlkM8g" source="_Od4Evv3wEei3h-YotlkM8g" target="_Od4Ev_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
+      </edges>
+      <edges xmi:id="_Od4ExP3wEei3h-YotlkM8g" source="_Od4Ev_3wEei3h-YotlkM8g" target="_Od4Evv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Od4Exf3wEei3h-YotlkM8g" origin="_Od4Et_3wEei3h-YotlkM8g" image="_Od4Evv3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_Od4Exv3wEei3h-YotlkM8g" origin="_Od4EuP3wEei3h-YotlkM8g" image="_Od4Ev_3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

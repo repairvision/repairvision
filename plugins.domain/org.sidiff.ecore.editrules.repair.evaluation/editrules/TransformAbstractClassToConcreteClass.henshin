@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Odx-EP3wEei3h-YotlkM8g" name="Transform: Abstract Class - To - Concrete Class" description="Transform: Abstract Class - To - Concrete Class">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Odx-Ef3wEei3h-YotlkM8g" name="mainUnit" subUnits="_Odx-FP3wEei3h-YotlkM8g">
+    <parameters xmi:id="_Odx-Ev3wEei3h-YotlkM8g" name="abstractClass_abstract" kind="IN"/>
+    <parameterMappings xmi:id="_Odx-E_3wEei3h-YotlkM8g" source="_Odx-Ev3wEei3h-YotlkM8g" target="_Odx-Ff3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Odx-FP3wEei3h-YotlkM8g" name="Transform: Abstract Class - To - Concrete Class">
+    <parameters xmi:id="_Odx-Ff3wEei3h-YotlkM8g" name="abstractClass_abstract" kind="IN"/>
+    <lhs xmi:id="_Odx-Fv3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_Odx-F_3wEei3h-YotlkM8g" name="containerPackage" incoming="_Odx-HP3wEei3h-YotlkM8g" outgoing="_Odx-G_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+      <nodes xmi:id="_Odx-GP3wEei3h-YotlkM8g" name="concreteClass" incoming="_Odx-G_3wEei3h-YotlkM8g" outgoing="_Odx-HP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        <attributes xmi:id="_Odx-Gf3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/abstract"/>
+        </attributes>
+        <attributes xmi:id="_Odx-Gv3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/interface"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_Odx-G_3wEei3h-YotlkM8g" source="_Odx-F_3wEei3h-YotlkM8g" target="_Odx-GP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
+      </edges>
+      <edges xmi:id="_Odx-HP3wEei3h-YotlkM8g" source="_Odx-GP3wEei3h-YotlkM8g" target="_Odx-F_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_Odx-Hf3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_Odx-Hv3wEei3h-YotlkM8g" name="containerPackage" incoming="_Odx-JP3wEei3h-YotlkM8g" outgoing="_Odx-I_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+      <nodes xmi:id="_Odx-H_3wEei3h-YotlkM8g" name="concreteClass" incoming="_Odx-I_3wEei3h-YotlkM8g" outgoing="_Odx-JP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        <attributes xmi:id="_Odx-IP3wEei3h-YotlkM8g" value="abstractClass_abstract">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/abstract"/>
+        </attributes>
+        <attributes xmi:id="_Odx-If3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/interface"/>
+        </attributes>
+        <attributes xmi:id="_Odx-Iv3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/abstract"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_Odx-I_3wEei3h-YotlkM8g" source="_Odx-Hv3wEei3h-YotlkM8g" target="_Odx-H_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
+      </edges>
+      <edges xmi:id="_Odx-JP3wEei3h-YotlkM8g" source="_Odx-H_3wEei3h-YotlkM8g" target="_Odx-Hv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Odx-Jf3wEei3h-YotlkM8g" origin="_Odx-F_3wEei3h-YotlkM8g" image="_Odx-Hv3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_Odx-Jv3wEei3h-YotlkM8g" origin="_Odx-GP3wEei3h-YotlkM8g" image="_Odx-H_3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

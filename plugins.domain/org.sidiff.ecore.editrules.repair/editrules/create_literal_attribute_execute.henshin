@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_PJ_XoEbbEee2k55qdslD9g" name="CreateLiteralAttribute" description="">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_PJ_XoUbbEee2k55qdslD9g" name="mainUnit" subUnits="_PJ_XpkbbEee2k55qdslD9g">
+    <parameters xmi:id="_PJ_XokbbEee2k55qdslD9g" name="attr" kind="IN"/>
+    <parameters xmi:id="_EPSSsEbdEee2k55qdslD9g" name="literal" kind="IN"/>
+    <parameterMappings xmi:id="_PJ_XpEbbEee2k55qdslD9g" source="_PJ_Xp0bbEee2k55qdslD9g" target="_PJ_XokbbEee2k55qdslD9g"/>
+    <parameterMappings xmi:id="_OUBuEEbdEee2k55qdslD9g" source="_dlaC4EbcEee2k55qdslD9g" target="_EPSSsEbdEee2k55qdslD9g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_PJ_XpkbbEee2k55qdslD9g" name="createLiteralAttribute">
+    <parameters xmi:id="_PJ_Xp0bbEee2k55qdslD9g" name="attr" kind="IN"/>
+    <parameters xmi:id="_dlaC4EbcEee2k55qdslD9g" name="literal" kind="IN"/>
+    <lhs xmi:id="_PJ_XqUbbEee2k55qdslD9g" name="Lhs">
+      <nodes xmi:id="_PJ_XqkbbEee2k55qdslD9g" name="A" incoming="_PJ_Xs0bbEee2k55qdslD9g" outgoing="_PJ_Xr0bbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral"/>
+        <attributes xmi:id="_NNYrkEbcEee2k55qdslD9g" value="literal">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_PJ_XrEbbEee2k55qdslD9g" name="Class">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PJ_XrUbbEee2k55qdslD9g" name="Enumeration" incoming="_PJ_Xr0bbEee2k55qdslD9g" outgoing="_PJ_Xs0bbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
+      </nodes>
+      <edges xmi:id="_PJ_Xr0bbEee2k55qdslD9g" source="_PJ_XqkbbEee2k55qdslD9g" target="_PJ_XrUbbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral/eEnum"/>
+      </edges>
+      <edges xmi:id="_PJ_Xs0bbEee2k55qdslD9g" source="_PJ_XrUbbEee2k55qdslD9g" target="_PJ_XqkbbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum/eLiterals"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_PJ_Xt0bbEee2k55qdslD9g" name="Rhs">
+      <nodes xmi:id="_PJ_XuEbbEee2k55qdslD9g" name="A" incoming="_PJ_X1EbbEee2k55qdslD9g" outgoing="_PJ_X0EbbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral"/>
+        <attributes xmi:id="_NNYrkUbcEee2k55qdslD9g" value="literal">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_PJ_XukbbEee2k55qdslD9g" name="Class" incoming="_PJ_XzUbbEee2k55qdslD9g" outgoing="_PJ_XzkbbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PJ_Xu0bbEee2k55qdslD9g" name="Enumeration" incoming="_PJ_Xy0bbEee2k55qdslD9g _PJ_X0EbbEee2k55qdslD9g" outgoing="_PJ_X1EbbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
+      </nodes>
+      <nodes xmi:id="_PJ_XvUbbEee2k55qdslD9g" name="attr" incoming="_PJ_XzkbbEee2k55qdslD9g" outgoing="_PJ_Xy0bbEee2k55qdslD9g _PJ_XzUbbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+        <attributes xmi:id="_zId7sEbcEee2k55qdslD9g" value="attr">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+        <attributes xmi:id="_PJ_XxkbbEee2k55qdslD9g" value="literal">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/defaultValueLiteral"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_PJ_Xy0bbEee2k55qdslD9g" source="_PJ_XvUbbEee2k55qdslD9g" target="_PJ_Xu0bbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_PJ_XzUbbEee2k55qdslD9g" source="_PJ_XvUbbEee2k55qdslD9g" target="_PJ_XukbbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_PJ_XzkbbEee2k55qdslD9g" source="_PJ_XukbbEee2k55qdslD9g" target="_PJ_XvUbbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_PJ_X0EbbEee2k55qdslD9g" source="_PJ_XuEbbEee2k55qdslD9g" target="_PJ_Xu0bbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral/eEnum"/>
+      </edges>
+      <edges xmi:id="_PJ_X1EbbEee2k55qdslD9g" source="_PJ_Xu0bbEee2k55qdslD9g" target="_PJ_XuEbbEee2k55qdslD9g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum/eLiterals"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_PJ_X2EbbEee2k55qdslD9g" origin="_PJ_XqkbbEee2k55qdslD9g" image="_PJ_XuEbbEee2k55qdslD9g"/>
+    <mappings xmi:id="_PJ_X2kbbEee2k55qdslD9g" origin="_PJ_XrEbbEee2k55qdslD9g" image="_PJ_XukbbEee2k55qdslD9g"/>
+    <mappings xmi:id="_PJ_X20bbEee2k55qdslD9g" origin="_PJ_XrUbbEee2k55qdslD9g" image="_PJ_Xu0bbEee2k55qdslD9g"/>
+  </units>
+</henshin:Module>

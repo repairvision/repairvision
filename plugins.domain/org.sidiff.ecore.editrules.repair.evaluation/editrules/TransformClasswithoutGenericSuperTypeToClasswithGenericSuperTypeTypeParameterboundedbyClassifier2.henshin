@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_PbAbeP3wEei3h-YotlkM8g" name="Transform: Class without Generic-Super-Type - To - Class with Generic-Super-Type (Type-Parameter bounded by Classifier) (2)" description="Transform: Class without Generic-Super-Type - To - Class with Generic-Super-Type (Type-Parameter bounded by Classifier) (2)">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_PbAbef3wEei3h-YotlkM8g" name="mainUnit" subUnits="_PbAbhv3wEei3h-YotlkM8g">
+    <parameters xmi:id="_PbAbev3wEei3h-YotlkM8g" name="classWithGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_PbAbe_3wEei3h-YotlkM8g" name="genericSuperType" kind="IN"/>
+    <parameters xmi:id="_PbAbfP3wEei3h-YotlkM8g" name="typeArgumentOfGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_PbAbff3wEei3h-YotlkM8g" name="genericSuperTypeClass" kind="IN"/>
+    <parameters xmi:id="_PbAbfv3wEei3h-YotlkM8g" name="P" kind="IN"/>
+    <parameters xmi:id="_PbAbf_3wEei3h-YotlkM8g" name="classifierAsTypeArgument" kind="IN"/>
+    <parameterMappings xmi:id="_PbAbgP3wEei3h-YotlkM8g" source="_PbAbev3wEei3h-YotlkM8g" target="_PbAbh_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PbAbgf3wEei3h-YotlkM8g" source="_PbAbe_3wEei3h-YotlkM8g" target="_PbAbiP3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PbAbgv3wEei3h-YotlkM8g" source="_PbAbfP3wEei3h-YotlkM8g" target="_PbAbif3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PbAbg_3wEei3h-YotlkM8g" source="_PbAbff3wEei3h-YotlkM8g" target="_PbAbiv3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PbAbhP3wEei3h-YotlkM8g" source="_PbAbfv3wEei3h-YotlkM8g" target="_PbAbi_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PbAbhf3wEei3h-YotlkM8g" source="_PbAbf_3wEei3h-YotlkM8g" target="_PbAbjP3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_PbAbhv3wEei3h-YotlkM8g" name="Transform: Class without Generic-Super-Type - To - Class with Generic-Super-Type (Type-Parameter bounded by Classifier) (2)">
+    <parameters xmi:id="_PbAbh_3wEei3h-YotlkM8g" name="classWithGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_PbAbiP3wEei3h-YotlkM8g" name="genericSuperType" kind="IN"/>
+    <parameters xmi:id="_PbAbif3wEei3h-YotlkM8g" name="typeArgumentOfGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_PbAbiv3wEei3h-YotlkM8g" name="genericSuperTypeClass" kind="IN"/>
+    <parameters xmi:id="_PbAbi_3wEei3h-YotlkM8g" name="P" kind="IN"/>
+    <parameters xmi:id="_PbAbjP3wEei3h-YotlkM8g" name="classifierAsTypeArgument" kind="IN"/>
+    <lhs xmi:id="_PbAbjf3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_PbAbjv3wEei3h-YotlkM8g" name="classWithGenericSuperType">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PbAbj_3wEei3h-YotlkM8g" name="genericSuperTypeClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PbAbkP3wEei3h-YotlkM8g" name="classifierAsTypeArgument">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_PbAbkf3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_PbAbkv3wEei3h-YotlkM8g" name="classWithGenericSuperType" outgoing="_PbAbmP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PbAbk_3wEei3h-YotlkM8g" name="genericSuperType" incoming="_PbAbmP3wEei3h-YotlkM8g" outgoing="_PbAbmf3wEei3h-YotlkM8g _PbAbmv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_PbAblP3wEei3h-YotlkM8g" name="typeArgumentOfGenericSuperType" incoming="_PbAbmf3wEei3h-YotlkM8g" outgoing="_PbAbm_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_PbAblf3wEei3h-YotlkM8g" name="genericSuperTypeClass" incoming="_PbAbmv3wEei3h-YotlkM8g" outgoing="_PbAbnP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PbAblv3wEei3h-YotlkM8g" name="P" incoming="_PbAbnP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
+      </nodes>
+      <nodes xmi:id="_PbAbl_3wEei3h-YotlkM8g" name="classifierAsTypeArgument" incoming="_PbAbm_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+      <edges xmi:id="_PbAbmP3wEei3h-YotlkM8g" source="_PbAbkv3wEei3h-YotlkM8g" target="_PbAbk_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eGenericSuperTypes"/>
+      </edges>
+      <edges xmi:id="_PbAbmf3wEei3h-YotlkM8g" source="_PbAbk_3wEei3h-YotlkM8g" target="_PbAblP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
+      </edges>
+      <edges xmi:id="_PbAbmv3wEei3h-YotlkM8g" source="_PbAbk_3wEei3h-YotlkM8g" target="_PbAblf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+      </edges>
+      <edges xmi:id="_PbAbm_3wEei3h-YotlkM8g" source="_PbAblP3wEei3h-YotlkM8g" target="_PbAbl_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+      </edges>
+      <edges xmi:id="_PbAbnP3wEei3h-YotlkM8g" source="_PbAblf3wEei3h-YotlkM8g" target="_PbAblv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_PbAbnf3wEei3h-YotlkM8g" origin="_PbAbjv3wEei3h-YotlkM8g" image="_PbAbkv3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_PbAbnv3wEei3h-YotlkM8g" origin="_PbAbj_3wEei3h-YotlkM8g" image="_PbAblf3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_PbAbn_3wEei3h-YotlkM8g" origin="_PbAbkP3wEei3h-YotlkM8g" image="_PbAbl_3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

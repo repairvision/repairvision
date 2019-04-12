@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_OfNhcP3wEei3h-YotlkM8g" name="Create: Transient (serializable) Attribute" description="Create: Transient (serializable) Attribute">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_OfNhcf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_OfNheP3wEei3h-YotlkM8g">
+    <parameters xmi:id="_OfNhcv3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_OfNhc_3wEei3h-YotlkM8g" name="attribute" kind="IN"/>
+    <parameters xmi:id="_OfNhdP3wEei3h-YotlkM8g" name="dataType" kind="IN"/>
+    <parameterMappings xmi:id="_OfNhdf3wEei3h-YotlkM8g" source="_OfNhcv3wEei3h-YotlkM8g" target="_OfNhef3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_OfNhdv3wEei3h-YotlkM8g" source="_OfNhc_3wEei3h-YotlkM8g" target="_OfNhev3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_OfNhd_3wEei3h-YotlkM8g" source="_OfNhdP3wEei3h-YotlkM8g" target="_OfNhe_3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_OfNheP3wEei3h-YotlkM8g" name="Create: Transient (serializable) Attribute">
+    <parameters xmi:id="_OfNhef3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_OfNhev3wEei3h-YotlkM8g" name="attribute" kind="IN"/>
+    <parameters xmi:id="_OfNhe_3wEei3h-YotlkM8g" name="dataType" kind="IN"/>
+    <lhs xmi:id="_OfNhfP3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_OfNhff3wEei3h-YotlkM8g" name="containerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_OfNhfv3wEei3h-YotlkM8g" name="dataType">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+        <attributes xmi:id="_OfNhf_3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType/serializable"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_OfNhgP3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_OfNhgf3wEei3h-YotlkM8g" name="containerClass" incoming="_OfNhiP3wEei3h-YotlkM8g" outgoing="_OfNhhv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_OfNhgv3wEei3h-YotlkM8g" name="attribute" incoming="_OfNhhv3wEei3h-YotlkM8g" outgoing="_OfNhh_3wEei3h-YotlkM8g _OfNhiP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+        <attributes xmi:id="_OfNhg_3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_OfNhhP3wEei3h-YotlkM8g" name="dataType" incoming="_OfNhh_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+        <attributes xmi:id="_OfNhhf3wEei3h-YotlkM8g" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType/serializable"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_OfNhhv3wEei3h-YotlkM8g" source="_OfNhgf3wEei3h-YotlkM8g" target="_OfNhgv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_OfNhh_3wEei3h-YotlkM8g" source="_OfNhgv3wEei3h-YotlkM8g" target="_OfNhhP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_OfNhiP3wEei3h-YotlkM8g" source="_OfNhgv3wEei3h-YotlkM8g" target="_OfNhgf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_OfNhif3wEei3h-YotlkM8g" origin="_OfNhff3wEei3h-YotlkM8g" image="_OfNhgf3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_OfNhiv3wEei3h-YotlkM8g" origin="_OfNhfv3wEei3h-YotlkM8g" image="_OfNhhP3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

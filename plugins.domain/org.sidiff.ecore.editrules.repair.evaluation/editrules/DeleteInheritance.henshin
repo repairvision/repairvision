@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_OfBUMP3wEei3h-YotlkM8g" name="Delete: Inheritance" description="Delete: Inheritance">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_OfBUMf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_OfBUMv3wEei3h-YotlkM8g"/>
+  <units xsi:type="henshin:Rule" xmi:id="_OfBUMv3wEei3h-YotlkM8g" name="Delete: Inheritance">
+    <lhs xmi:id="_OfBUM_3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_OfBUNP3wEei3h-YotlkM8g" name="subClass" outgoing="_OfBUNv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_OfBUNf3wEei3h-YotlkM8g" name="superClass" incoming="_OfBUNv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <edges xmi:id="_OfBUNv3wEei3h-YotlkM8g" source="_OfBUNP3wEei3h-YotlkM8g" target="_OfBUNf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_OfBUN_3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_OfBUOP3wEei3h-YotlkM8g" name="subClass" outgoing="_OfBUOv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_OfBUOf3wEei3h-YotlkM8g" name="superClass" incoming="_OfBUOv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <edges xmi:id="_OfBUOv3wEei3h-YotlkM8g" source="_OfBUOP3wEei3h-YotlkM8g" target="_OfBUOf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_OfBUO_3wEei3h-YotlkM8g" origin="_OfBUNP3wEei3h-YotlkM8g" image="_OfBUOP3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_OfBUPP3wEei3h-YotlkM8g" origin="_OfBUNf3wEei3h-YotlkM8g" image="_OfBUOf3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

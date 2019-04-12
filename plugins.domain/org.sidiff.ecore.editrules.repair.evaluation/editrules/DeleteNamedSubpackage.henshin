@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ObNyQP3wEei3h-YotlkM8g" name="Delete: Named Subpackage" description="Delete: Named Subpackage">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ObNyQf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_ObNySP3wEei3h-YotlkM8g">
+    <parameters xmi:id="_ObNyQv3wEei3h-YotlkM8g" name="containerPackage" kind="IN"/>
+    <parameters xmi:id="_ObNyQ_3wEei3h-YotlkM8g" name="subPackage" kind="IN"/>
+    <parameters xmi:id="_ObNyRP3wEei3h-YotlkM8g" name="className" kind="IN"/>
+    <parameterMappings xmi:id="_ObNyRf3wEei3h-YotlkM8g" source="_ObNyQv3wEei3h-YotlkM8g" target="_ObNySf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_ObNyRv3wEei3h-YotlkM8g" source="_ObNyQ_3wEei3h-YotlkM8g" target="_ObNySv3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_ObNyR_3wEei3h-YotlkM8g" source="_ObNyRP3wEei3h-YotlkM8g" target="_ObNyS_3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_ObNySP3wEei3h-YotlkM8g" name="Delete: Named Subpackage">
+    <parameters xmi:id="_ObNySf3wEei3h-YotlkM8g" name="containerPackage" kind="IN"/>
+    <parameters xmi:id="_ObNySv3wEei3h-YotlkM8g" name="subPackage" kind="IN"/>
+    <parameters xmi:id="_ObNyS_3wEei3h-YotlkM8g" name="className" kind="IN"/>
+    <lhs xmi:id="_ObNyTP3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_ObNyTf3wEei3h-YotlkM8g" name="containerPackage" incoming="_ObNyUf3wEei3h-YotlkM8g" outgoing="_ObNyUP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+      <nodes xmi:id="_ObNyTv3wEei3h-YotlkM8g" name="subPackage" incoming="_ObNyUP3wEei3h-YotlkM8g" outgoing="_ObNyUf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+        <attributes xmi:id="_ObNyT_3wEei3h-YotlkM8g" value="className">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_ObNyUP3wEei3h-YotlkM8g" source="_ObNyTf3wEei3h-YotlkM8g" target="_ObNyTv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eSubpackages"/>
+      </edges>
+      <edges xmi:id="_ObNyUf3wEei3h-YotlkM8g" source="_ObNyTv3wEei3h-YotlkM8g" target="_ObNyTf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eSuperPackage"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_ObNyUv3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_ObNyU_3wEei3h-YotlkM8g" name="containerPackage">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_ObNyVP3wEei3h-YotlkM8g" origin="_ObNyTf3wEei3h-YotlkM8g" image="_ObNyU_3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

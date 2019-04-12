@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_OcSJQP3wEei3h-YotlkM8g" name="Create: Named Operation" description="Create: Named Operation">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_OcSJQf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_OcSJSP3wEei3h-YotlkM8g">
+    <parameters xmi:id="_OcSJQv3wEei3h-YotlkM8g" name="containingClass" kind="IN"/>
+    <parameters xmi:id="_OcSJQ_3wEei3h-YotlkM8g" name="operation" kind="IN"/>
+    <parameters xmi:id="_OcSJRP3wEei3h-YotlkM8g" name="operationName" kind="IN"/>
+    <parameterMappings xmi:id="_OcSJRf3wEei3h-YotlkM8g" source="_OcSJQv3wEei3h-YotlkM8g" target="_OcSJSf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_OcSJRv3wEei3h-YotlkM8g" source="_OcSJQ_3wEei3h-YotlkM8g" target="_OcSJSv3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_OcSJR_3wEei3h-YotlkM8g" source="_OcSJRP3wEei3h-YotlkM8g" target="_OcSJS_3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_OcSJSP3wEei3h-YotlkM8g" name="Create: Named Operation">
+    <parameters xmi:id="_OcSJSf3wEei3h-YotlkM8g" name="containingClass" kind="IN"/>
+    <parameters xmi:id="_OcSJSv3wEei3h-YotlkM8g" name="operation" kind="IN"/>
+    <parameters xmi:id="_OcSJS_3wEei3h-YotlkM8g" name="operationName" kind="IN"/>
+    <lhs xmi:id="_OcSJTP3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_OcSJTf3wEei3h-YotlkM8g" name="containingClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_OcSJTv3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_OcSJT_3wEei3h-YotlkM8g" name="containingClass" incoming="_OcSJU_3wEei3h-YotlkM8g" outgoing="_OcSJUv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_OcSJUP3wEei3h-YotlkM8g" name="operation" incoming="_OcSJUv3wEei3h-YotlkM8g" outgoing="_OcSJU_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+        <attributes xmi:id="_OcSJUf3wEei3h-YotlkM8g" value="operationName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_OcSJUv3wEei3h-YotlkM8g" source="_OcSJT_3wEei3h-YotlkM8g" target="_OcSJUP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eOperations"/>
+      </edges>
+      <edges xmi:id="_OcSJU_3wEei3h-YotlkM8g" source="_OcSJUP3wEei3h-YotlkM8g" target="_OcSJT_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eContainingClass"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_OcSJVP3wEei3h-YotlkM8g" origin="_OcSJTf3wEei3h-YotlkM8g" image="_OcSJT_3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_5_GssCa5EeepFbklRoBR3A" name="SetAttributeEReferenceContainmentToTrueAndSetAttributeEReferenceUniqueToTrue" description="Sets EReference's attribute Containment to true and sets Ereference's attribute Unique to true">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_5_GssSa5EeepFbklRoBR3A" name="mainUnit" subUnits="_5_Gssia5EeepFbklRoBR3A">
+    <parameters xmi:id="_QMdfsSa6EeepFbklRoBR3A" name="ref" description="" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </parameters>
+    <parameterMappings xmi:id="_QMdfsia6EeepFbklRoBR3A" source="_QMdfsSa6EeepFbklRoBR3A" target="_QMdfsCa6EeepFbklRoBR3A"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_5_Gssia5EeepFbklRoBR3A" name="setAttributeEReferenceContainmentToTrueAndSetAttributeEReferenceUniqueToTrue">
+    <parameters xmi:id="_QMdfsCa6EeepFbklRoBR3A" name="ref" kind="IN">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </parameters>
+    <lhs xmi:id="_5_Gssya5EeepFbklRoBR3A" name="Lhs">
+      <nodes xmi:id="_5_Gstia5EeepFbklRoBR3A" name="ref">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_5_Gsvya5EeepFbklRoBR3A" name="Rhs">
+      <nodes xmi:id="_5_Gswia5EeepFbklRoBR3A" name="ref">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_5_Gswya5EeepFbklRoBR3A" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/unique"/>
+        </attributes>
+        <attributes xmi:id="_5_GsxCa5EeepFbklRoBR3A" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_5_Gszya5EeepFbklRoBR3A" origin="_5_Gstia5EeepFbklRoBR3A" image="_5_Gswia5EeepFbklRoBR3A"/>
+  </units>
+</henshin:Module>

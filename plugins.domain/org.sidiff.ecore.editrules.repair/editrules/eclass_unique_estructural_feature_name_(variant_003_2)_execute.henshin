@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" name="EClassUniqueEStructuralFeatureName(Variant0032)" description="EClassUniqueEStructuralFeatureName">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" name="mainUnit" subUnits="//@units.1">
+    <parameters name="eAttribute"/>
+    <parameters name="EClassA"/>
+    <parameters name="eStructuralFeature"/>
+    <parameters name="eType1"/>
+    <parameters name="eType2"/>
+    <parameters name="Name"/>
+    <parameterMappings source="//@units.1/@parameters.0" target="//@units.0/@parameters.0"/>
+    <parameterMappings source="//@units.0/@parameters.1" target="//@units.1/@parameters.1"/>
+    <parameterMappings source="//@units.0/@parameters.2" target="//@units.1/@parameters.2"/>
+    <parameterMappings source="//@units.0/@parameters.3" target="//@units.1/@parameters.3"/>
+    <parameterMappings source="//@units.0/@parameters.4" target="//@units.1/@parameters.4"/>
+    <parameterMappings source="//@units.0/@parameters.5" target="//@units.1/@parameters.5"/>
+  </units>
+  <units xsi:type="henshin:Rule" name="eClassUniqueEStructuralFeatureName(Variant0032)">
+    <parameters name="eAttribute"/>
+    <parameters name="EClassA"/>
+    <parameters name="eStructuralFeature"/>
+    <parameters name="eType1"/>
+    <parameters name="eType2"/>
+    <parameters name="Name"/>
+    <lhs name="Lhs">
+      <nodes name="EClassA" incoming="//@units.1/@lhs/@edges.1" outgoing="//@units.1/@lhs/@edges.0">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes name="eType1">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+      <nodes name="eStructuralFeature" incoming="//@units.1/@lhs/@edges.0" outgoing="//@units.1/@lhs/@edges.1 //@units.1/@lhs/@edges.2">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+        <attributes value="Name">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes name="eType2" incoming="//@units.1/@lhs/@edges.2">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+      <edges source="//@units.1/@lhs/@nodes.0" target="//@units.1/@lhs/@nodes.2">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.0">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges source="//@units.1/@lhs/@nodes.2" target="//@units.1/@lhs/@nodes.3">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+    </lhs>
+    <rhs name="Rhs">
+      <nodes name="EClassA" incoming="//@units.1/@rhs/@edges.2" outgoing="//@units.1/@rhs/@edges.1">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes name="eType1" incoming="//@units.1/@rhs/@edges.0">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+      <nodes name="eAttribute" incoming="//@units.1/@rhs/@edges.1" outgoing="//@units.1/@rhs/@edges.0 //@units.1/@rhs/@edges.2">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+        <attributes value="Name">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes name="eType2">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+      <edges source="//@units.1/@rhs/@nodes.2" target="//@units.1/@rhs/@nodes.1">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.0" target="//@units.1/@rhs/@nodes.2">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges source="//@units.1/@rhs/@nodes.2" target="//@units.1/@rhs/@nodes.0">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+    </rhs>
+    <mappings origin="//@units.1/@lhs/@nodes.0" image="//@units.1/@rhs/@nodes.0"/>
+    <mappings origin="//@units.1/@lhs/@nodes.1" image="//@units.1/@rhs/@nodes.1"/>
+    <mappings origin="//@units.1/@lhs/@nodes.3" image="//@units.1/@rhs/@nodes.3"/>
+  </units>
+</henshin:Module>

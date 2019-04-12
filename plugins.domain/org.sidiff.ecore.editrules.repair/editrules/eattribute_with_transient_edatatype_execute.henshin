@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_aSG6oIMrEeeniILjbTsvmA" name="EAttributeWithTransientEDataType" description="">
+  <imports href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_aSG6oYMrEeeniILjbTsvmA" name="mainUnit" subUnits="_aSG6ooMrEeeniILjbTsvmA"/>
+  <units xsi:type="henshin:Rule" xmi:id="_aSG6ooMrEeeniILjbTsvmA" name="eAttributeWithTransientEDataType">
+    <lhs xmi:id="_aSG6o4MrEeeniILjbTsvmA" name="Lhs">
+      <nodes xmi:id="_9uWw0IMrEeeniILjbTsvmA" name="Type">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+        <attributes xmi:id="_uvpugIN7Eee3gZ2IAfFeMg" value="false">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType/serializable"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_hF20cIMtEeeV3aYHOeiqIQ" name="Class">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_aSG6pYMrEeeniILjbTsvmA" name="Rhs">
+      <nodes xmi:id="_aSG6poMrEeeniILjbTsvmA" name="Attribute" incoming="_iRAY8IMtEeeV3aYHOeiqIQ" outgoing="_BBkOAIMsEeeniILjbTsvmA _irANUIMtEeeV3aYHOeiqIQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+        <attributes xmi:id="_aSG6p4MrEeeniILjbTsvmA" value="true">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_9uX-8IMrEeeniILjbTsvmA" name="Type" incoming="_BBkOAIMsEeeniILjbTsvmA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+        <attributes xmi:id="_uvxDQIN7Eee3gZ2IAfFeMg" value="false">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType/serializable"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_hF20cYMtEeeV3aYHOeiqIQ" name="Class" incoming="_irANUIMtEeeV3aYHOeiqIQ" outgoing="_iRAY8IMtEeeV3aYHOeiqIQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <edges xmi:id="_BBkOAIMsEeeniILjbTsvmA" source="_aSG6poMrEeeniILjbTsvmA" target="_9uX-8IMrEeeniILjbTsvmA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_iRAY8IMtEeeV3aYHOeiqIQ" source="_hF20cYMtEeeV3aYHOeiqIQ" target="_aSG6poMrEeeniILjbTsvmA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_irANUIMtEeeV3aYHOeiqIQ" source="_aSG6poMrEeeniILjbTsvmA" target="_hF20cYMtEeeV3aYHOeiqIQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_9uX-8YMrEeeniILjbTsvmA" origin="_9uWw0IMrEeeniILjbTsvmA" image="_9uX-8IMrEeeniILjbTsvmA"/>
+    <mappings xmi:id="_hF3bgIMtEeeV3aYHOeiqIQ" origin="_hF20cIMtEeeV3aYHOeiqIQ" image="_hF20cYMtEeeV3aYHOeiqIQ"/>
+  </units>
+</henshin:Module>

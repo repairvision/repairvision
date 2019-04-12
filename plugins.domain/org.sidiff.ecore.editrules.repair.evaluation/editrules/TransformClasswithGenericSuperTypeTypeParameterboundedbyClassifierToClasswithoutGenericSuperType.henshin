@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_PZ9ScP3wEei3h-YotlkM8g" name="Transform: Class with Generic-Super-Type (Type-Parameter bounded by Classifier) - To - Class without Generic-Super-Type" description="Transform: Class with Generic-Super-Type (Type-Parameter bounded by Classifier) - To - Class without Generic-Super-Type">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_PZ9Scf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_PZ9Sfv3wEei3h-YotlkM8g">
+    <parameters xmi:id="_PZ9Scv3wEei3h-YotlkM8g" name="genericSuperType" kind="IN"/>
+    <parameters xmi:id="_PZ9Sc_3wEei3h-YotlkM8g" name="typeArgumentOfGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_PZ9SdP3wEei3h-YotlkM8g" name="classWithoutGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_PZ9Sdf3wEei3h-YotlkM8g" name="classWithGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_PZ9Sdv3wEei3h-YotlkM8g" name="P" kind="IN"/>
+    <parameters xmi:id="_PZ9Sd_3wEei3h-YotlkM8g" name="classifierAsTypeArgument" kind="IN"/>
+    <parameterMappings xmi:id="_PZ9SeP3wEei3h-YotlkM8g" source="_PZ9Scv3wEei3h-YotlkM8g" target="_PZ9Sf_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PZ9Sef3wEei3h-YotlkM8g" source="_PZ9Sc_3wEei3h-YotlkM8g" target="_PZ9SgP3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PZ9Sev3wEei3h-YotlkM8g" source="_PZ9SdP3wEei3h-YotlkM8g" target="_PZ9Sgf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PZ9Se_3wEei3h-YotlkM8g" source="_PZ9Sdf3wEei3h-YotlkM8g" target="_PZ9Sgv3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PZ9SfP3wEei3h-YotlkM8g" source="_PZ9Sdv3wEei3h-YotlkM8g" target="_PZ9Sg_3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PZ9Sff3wEei3h-YotlkM8g" source="_PZ9Sd_3wEei3h-YotlkM8g" target="_PZ9ShP3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_PZ9Sfv3wEei3h-YotlkM8g" name="Transform: Class with Generic-Super-Type (Type-Parameter bounded by Classifier) - To - Class without Generic-Super-Type">
+    <parameters xmi:id="_PZ9Sf_3wEei3h-YotlkM8g" name="genericSuperType" kind="IN"/>
+    <parameters xmi:id="_PZ9SgP3wEei3h-YotlkM8g" name="typeArgumentOfGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_PZ9Sgf3wEei3h-YotlkM8g" name="classWithoutGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_PZ9Sgv3wEei3h-YotlkM8g" name="classWithGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_PZ9Sg_3wEei3h-YotlkM8g" name="P" kind="IN"/>
+    <parameters xmi:id="_PZ9ShP3wEei3h-YotlkM8g" name="classifierAsTypeArgument" kind="IN"/>
+    <lhs xmi:id="_PZ9Shf3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_PZ9Shv3wEei3h-YotlkM8g" name="genericSuperType" incoming="_PZ9SkP3wEei3h-YotlkM8g" outgoing="_PZ9SjP3wEei3h-YotlkM8g _PZ9Sjf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_PZ9Sh_3wEei3h-YotlkM8g" name="typeArgumentOfGenericSuperType" incoming="_PZ9SjP3wEei3h-YotlkM8g" outgoing="_PZ9Sjv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_PZ9SiP3wEei3h-YotlkM8g" name="classWithoutGenericSuperType" incoming="_PZ9Sjf3wEei3h-YotlkM8g" outgoing="_PZ9Sj_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PZ9Sif3wEei3h-YotlkM8g" name="classWithGenericSuperType" outgoing="_PZ9SkP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PZ9Siv3wEei3h-YotlkM8g" name="P" incoming="_PZ9Sj_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
+      </nodes>
+      <nodes xmi:id="_PZ9Si_3wEei3h-YotlkM8g" name="classifierAsTypeArgument" incoming="_PZ9Sjv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+      <edges xmi:id="_PZ9SjP3wEei3h-YotlkM8g" source="_PZ9Shv3wEei3h-YotlkM8g" target="_PZ9Sh_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
+      </edges>
+      <edges xmi:id="_PZ9Sjf3wEei3h-YotlkM8g" source="_PZ9Shv3wEei3h-YotlkM8g" target="_PZ9SiP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+      </edges>
+      <edges xmi:id="_PZ9Sjv3wEei3h-YotlkM8g" source="_PZ9Sh_3wEei3h-YotlkM8g" target="_PZ9Si_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+      </edges>
+      <edges xmi:id="_PZ9Sj_3wEei3h-YotlkM8g" source="_PZ9SiP3wEei3h-YotlkM8g" target="_PZ9Siv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+      </edges>
+      <edges xmi:id="_PZ9SkP3wEei3h-YotlkM8g" source="_PZ9Sif3wEei3h-YotlkM8g" target="_PZ9Shv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eGenericSuperTypes"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_PZ9Skf3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_PZ9Skv3wEei3h-YotlkM8g" name="classWithoutGenericSuperType">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PZ9Sk_3wEei3h-YotlkM8g" name="classWithGenericSuperType">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PZ9SlP3wEei3h-YotlkM8g" name="classifierAsTypeArgument">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_PZ9Slf3wEei3h-YotlkM8g" origin="_PZ9SiP3wEei3h-YotlkM8g" image="_PZ9Skv3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_PZ9Slv3wEei3h-YotlkM8g" origin="_PZ9Sif3wEei3h-YotlkM8g" image="_PZ9Sk_3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_PZ9Sl_3wEei3h-YotlkM8g" origin="_PZ9Si_3wEei3h-YotlkM8g" image="_PZ9SlP3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

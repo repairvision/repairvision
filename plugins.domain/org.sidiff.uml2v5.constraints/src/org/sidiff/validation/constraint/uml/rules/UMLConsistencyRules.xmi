@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="ASCII"?>
+<firstOrderLogic:ConstraintLibrary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:firstOrderLogic="http://www.sidiff.org/validation/laguage/fol/FirstOrderLogic" domain="http://www.eclipse.org/uml2/5.0.0/UML" packageImport="org.eclipse.uml2.uml.UMLPackage">
+  <constraints name="Inconsistency_MessageSignature" message="Message without operation signature in the receiving class">
+    <variable name="m">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:And">
+      <left xsi:type="firstOrderLogic:Exists">
+        <name name="o1">
+          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+        </name>
+        <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.0/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/signature"/>
+          </get>
+        </iteration>
+        <formula xsi:type="firstOrderLogic:Equals">
+          <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.0/@formula/@left/@name">
+            <get>
+              <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+            </get>
+          </left>
+          <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.0/@variable">
+            <get>
+              <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+            </get>
+          </right>
+        </formula>
+      </left>
+      <right xsi:type="firstOrderLogic:ForAll">
+        <name name="l">
+          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+        </name>
+        <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.0/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/receiveEvent"/>
+            <next>
+              <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+            </next>
+          </get>
+        </iteration>
+        <formula xsi:type="firstOrderLogic:Exists">
+          <name name="o2">
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+          </name>
+          <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.0/@formula/@right/@name">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+              <next>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+                <next>
+                  <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+                  <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+                </next>
+              </next>
+            </get>
+          </iteration>
+          <formula xsi:type="firstOrderLogic:Equals">
+            <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.0/@formula/@right/@formula/@name"/>
+            <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.0/@variable">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/signature"/>
+              </get>
+            </right>
+          </formula>
+        </formula>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="Inconsistency_MessageConnection" message="A message can only be send between lifelines which are connected by an association">
+    <variable name="m">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Exists">
+      <name name="l1">
+        <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </name>
+      <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.1/@variable">
+        <get>
+          <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/receiveEvent"/>
+          <next>
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+          </next>
+        </get>
+      </iteration>
+      <formula xsi:type="firstOrderLogic:Exists">
+        <name name="l2">
+          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+        </name>
+        <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.1/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/sendEvent"/>
+            <next>
+              <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+            </next>
+          </get>
+        </iteration>
+        <formula xsi:type="firstOrderLogic:Exists">
+          <name name="a">
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement"/>
+          </name>
+          <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.1/@formula/@formula/@name">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+              <next>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+                <next>
+                  <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuredClassifier"/>
+                  <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuredClassifier/ownedAttribute"/>
+                </next>
+              </next>
+            </get>
+          </iteration>
+          <formula xsi:type="firstOrderLogic:Equals">
+            <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.1/@formula/@formula/@formula/@name">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+              </get>
+            </left>
+            <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.1/@formula/@name">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+                <next>
+                  <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+                </next>
+              </get>
+            </right>
+          </formula>
+        </formula>
+      </formula>
+    </formula>
+  </constraints>
+  <constraints name="Inconsistency_UnimplementedRealization" message="Unimplemented realization">
+    <variable name="realization">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Realization"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:ForAll">
+      <name name="supplier">
+        <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
+      </name>
+      <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.2/@variable">
+        <get>
+          <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Dependency/supplier"/>
+        </get>
+      </iteration>
+      <formula xsi:type="firstOrderLogic:ForAll">
+        <name name="op_interface">
+          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+        </name>
+        <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.2/@formula/@name">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface/ownedOperation"/>
+          </get>
+        </iteration>
+        <formula xsi:type="firstOrderLogic:ForAll">
+          <name name="client">
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+          </name>
+          <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.2/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Dependency/client"/>
+            </get>
+          </iteration>
+          <formula xsi:type="firstOrderLogic:Exists">
+            <name name="op_class">
+              <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+            </name>
+            <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.2/@formula/@formula/@formula/@name">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+              </get>
+            </iteration>
+            <formula xsi:type="firstOrderLogic:Equals">
+              <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.2/@formula/@formula/@name">
+                <get>
+                  <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+                </get>
+              </left>
+              <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.2/@formula/@formula/@formula/@formula/@name">
+                <get>
+                  <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+                </get>
+              </right>
+            </formula>
+          </formula>
+        </formula>
+      </formula>
+    </formula>
+  </constraints>
+  <constraints name="Inconsistency_DanglingTransition" message="A transition must have a source and a target state">
+    <variable name="t">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:And">
+      <left xsi:type="firstOrderLogic:Not">
+        <not xsi:type="firstOrderLogic:IsEmpty">
+          <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.3/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+            </get>
+          </term>
+        </not>
+      </left>
+      <right xsi:type="firstOrderLogic:Not">
+        <not xsi:type="firstOrderLogic:IsEmpty">
+          <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.3/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+            </get>
+          </term>
+        </not>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="Inconsistency_TransitionWithoutTrigger" message="Transition without trigger">
+    <variable name="t">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:If">
+      <left xsi:type="firstOrderLogic:And">
+        <left xsi:type="firstOrderLogic:Not">
+          <not xsi:type="firstOrderLogic:IsInstanceOf">
+            <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@variable">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+              </get>
+            </term>
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Pseudostate"/>
+          </not>
+        </left>
+        <right xsi:type="firstOrderLogic:Not">
+          <not xsi:type="firstOrderLogic:IsInstanceOf">
+            <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@variable">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+              </get>
+            </term>
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//FinalState"/>
+          </not>
+        </right>
+      </left>
+      <right xsi:type="firstOrderLogic:Not">
+        <not xsi:type="firstOrderLogic:IsEmpty">
+          <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
+            </get>
+          </term>
+        </not>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="Inconsistency_UntypedLifeline" message="A lifeline must represent a type">
+    <variable name="l">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Not">
+      <not xsi:type="firstOrderLogic:IsEmpty">
+        <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.5/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+          </get>
+        </term>
+      </not>
+    </formula>
+  </constraints>
+  <constraints name="Inconsistency_UntypedProperty" message="A propery must have a type">
+    <variable name="p">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Not">
+      <not xsi:type="firstOrderLogic:IsEmpty">
+        <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.6/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+          </get>
+        </term>
+      </not>
+    </formula>
+  </constraints>
+  <constraints name="MissingFeature_CallEvent_Operation" message="The required feature 'operation' of &lt;Call Event> must be set">
+    <variable name="ce">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//CallEvent"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Not">
+      <not xsi:type="firstOrderLogic:IsEmpty">
+        <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.7/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//CallEvent/operation"/>
+          </get>
+        </term>
+      </not>
+    </formula>
+  </constraints>
+  <constraints name="MissingFeature_Trigger_Event" message="The required feature 'event' of &lt;Trigger> must be set">
+    <variable name="t">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Not">
+      <not xsi:type="firstOrderLogic:IsEmpty">
+        <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.8/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger/event"/>
+          </get>
+        </term>
+      </not>
+    </formula>
+  </constraints>
+</firstOrderLogic:ConstraintLibrary>

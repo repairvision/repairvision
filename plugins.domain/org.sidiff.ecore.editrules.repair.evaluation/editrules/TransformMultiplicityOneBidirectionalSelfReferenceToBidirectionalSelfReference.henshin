@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_PImcsP3wEei3h-YotlkM8g" name="Transform: Multiplicity-One Bidirectional Self-Reference - To - Bidirectional Self-Reference" description="Transform: Multiplicity-One Bidirectional Self-Reference - To - Bidirectional Self-Reference">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_PImcsf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_PImctP3wEei3h-YotlkM8g">
+    <parameters xmi:id="_PImcsv3wEei3h-YotlkM8g" name="multiplicityOneReference_upperBound" kind="IN"/>
+    <parameterMappings xmi:id="_PImcs_3wEei3h-YotlkM8g" source="_PImcsv3wEei3h-YotlkM8g" target="_PImctf3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_PImctP3wEei3h-YotlkM8g" name="Transform: Multiplicity-One Bidirectional Self-Reference - To - Bidirectional Self-Reference">
+    <parameters xmi:id="_PImctf3wEei3h-YotlkM8g" name="multiplicityOneReference_upperBound" kind="IN"/>
+    <lhs xmi:id="_PImctv3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_PImct_3wEei3h-YotlkM8g" name="containerClass" incoming="_PImcvf3wEei3h-YotlkM8g _PImcvv3wEei3h-YotlkM8g" outgoing="_PImcu_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PImcuP3wEei3h-YotlkM8g" name="oppositeReference" incoming="_PImcv_3wEei3h-YotlkM8g" outgoing="_PImcvP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_PImcuf3wEei3h-YotlkM8g" name="multiplicityManyReference" incoming="_PImcu_3wEei3h-YotlkM8g _PImcvP3wEei3h-YotlkM8g" outgoing="_PImcvf3wEei3h-YotlkM8g _PImcvv3wEei3h-YotlkM8g _PImcv_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PImcuv3wEei3h-YotlkM8g" value="&quot;1&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_PImcu_3wEei3h-YotlkM8g" source="_PImct_3wEei3h-YotlkM8g" target="_PImcuf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_PImcvP3wEei3h-YotlkM8g" source="_PImcuP3wEei3h-YotlkM8g" target="_PImcuf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="_PImcvf3wEei3h-YotlkM8g" source="_PImcuf3wEei3h-YotlkM8g" target="_PImct_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_PImcvv3wEei3h-YotlkM8g" source="_PImcuf3wEei3h-YotlkM8g" target="_PImct_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_PImcv_3wEei3h-YotlkM8g" source="_PImcuf3wEei3h-YotlkM8g" target="_PImcuP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_PImcwP3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_PImcwf3wEei3h-YotlkM8g" name="containerClass" incoming="_PImcyf3wEei3h-YotlkM8g _PImcyv3wEei3h-YotlkM8g" outgoing="_PImcx_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PImcwv3wEei3h-YotlkM8g" name="oppositeReference" incoming="_PImcy_3wEei3h-YotlkM8g" outgoing="_PImcyP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PImcw_3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_PImcxP3wEei3h-YotlkM8g" name="multiplicityManyReference" incoming="_PImcx_3wEei3h-YotlkM8g _PImcyP3wEei3h-YotlkM8g" outgoing="_PImcyf3wEei3h-YotlkM8g _PImcyv3wEei3h-YotlkM8g _PImcy_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PImcxf3wEei3h-YotlkM8g" value="multiplicityOneReference_upperBound">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
+        </attributes>
+        <attributes xmi:id="_PImcxv3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_PImcx_3wEei3h-YotlkM8g" source="_PImcwf3wEei3h-YotlkM8g" target="_PImcxP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_PImcyP3wEei3h-YotlkM8g" source="_PImcwv3wEei3h-YotlkM8g" target="_PImcxP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="_PImcyf3wEei3h-YotlkM8g" source="_PImcxP3wEei3h-YotlkM8g" target="_PImcwf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_PImcyv3wEei3h-YotlkM8g" source="_PImcxP3wEei3h-YotlkM8g" target="_PImcwf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_PImcy_3wEei3h-YotlkM8g" source="_PImcxP3wEei3h-YotlkM8g" target="_PImcwv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_PImczP3wEei3h-YotlkM8g" origin="_PImct_3wEei3h-YotlkM8g" image="_PImcwf3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_PImczf3wEei3h-YotlkM8g" origin="_PImcuP3wEei3h-YotlkM8g" image="_PImcwv3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_PImczv3wEei3h-YotlkM8g" origin="_PImcuf3wEei3h-YotlkM8g" image="_PImcxP3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

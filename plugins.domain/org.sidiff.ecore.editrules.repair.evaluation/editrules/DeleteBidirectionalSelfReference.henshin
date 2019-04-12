@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_PIsjUP3wEei3h-YotlkM8g" name="Delete: Bidirectional Self-Reference" description="Delete: Bidirectional Self-Reference">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_PIsjUf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_PIsjWP3wEei3h-YotlkM8g">
+    <parameters xmi:id="_PIsjUv3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_PIsjU_3wEei3h-YotlkM8g" name="oppositeReference" kind="IN"/>
+    <parameters xmi:id="_PIsjVP3wEei3h-YotlkM8g" name="multiplicityManyReference" kind="IN"/>
+    <parameterMappings xmi:id="_PIsjVf3wEei3h-YotlkM8g" source="_PIsjUv3wEei3h-YotlkM8g" target="_PIsjWf3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PIsjVv3wEei3h-YotlkM8g" source="_PIsjU_3wEei3h-YotlkM8g" target="_PIsjWv3wEei3h-YotlkM8g"/>
+    <parameterMappings xmi:id="_PIsjV_3wEei3h-YotlkM8g" source="_PIsjVP3wEei3h-YotlkM8g" target="_PIsjW_3wEei3h-YotlkM8g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_PIsjWP3wEei3h-YotlkM8g" name="Delete: Bidirectional Self-Reference">
+    <parameters xmi:id="_PIsjWf3wEei3h-YotlkM8g" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_PIsjWv3wEei3h-YotlkM8g" name="oppositeReference" kind="IN"/>
+    <parameters xmi:id="_PIsjW_3wEei3h-YotlkM8g" name="multiplicityManyReference" kind="IN"/>
+    <lhs xmi:id="_PIsjXP3wEei3h-YotlkM8g" name="Lhs">
+      <nodes xmi:id="_PIsjXf3wEei3h-YotlkM8g" name="containerClass" incoming="_PIsjZP3wEei3h-YotlkM8g _PIsjZf3wEei3h-YotlkM8g" outgoing="_PIsjYv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PIsjXv3wEei3h-YotlkM8g" name="oppositeReference" incoming="_PIsjZv3wEei3h-YotlkM8g" outgoing="_PIsjY_3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PIsjX_3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_PIsjYP3wEei3h-YotlkM8g" name="multiplicityManyReference" incoming="_PIsjYv3wEei3h-YotlkM8g _PIsjY_3wEei3h-YotlkM8g" outgoing="_PIsjZP3wEei3h-YotlkM8g _PIsjZf3wEei3h-YotlkM8g _PIsjZv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PIsjYf3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_PIsjYv3wEei3h-YotlkM8g" source="_PIsjXf3wEei3h-YotlkM8g" target="_PIsjYP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_PIsjY_3wEei3h-YotlkM8g" source="_PIsjXv3wEei3h-YotlkM8g" target="_PIsjYP3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="_PIsjZP3wEei3h-YotlkM8g" source="_PIsjYP3wEei3h-YotlkM8g" target="_PIsjXf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="_PIsjZf3wEei3h-YotlkM8g" source="_PIsjYP3wEei3h-YotlkM8g" target="_PIsjXf3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_PIsjZv3wEei3h-YotlkM8g" source="_PIsjYP3wEei3h-YotlkM8g" target="_PIsjXv3wEei3h-YotlkM8g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_PIsjZ_3wEei3h-YotlkM8g" name="Rhs">
+      <nodes xmi:id="_PIsjaP3wEei3h-YotlkM8g" name="containerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_PIsjaf3wEei3h-YotlkM8g" name="oppositeReference">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_PIsjav3wEei3h-YotlkM8g" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_PIsja_3wEei3h-YotlkM8g" origin="_PIsjXf3wEei3h-YotlkM8g" image="_PIsjaP3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_PIsjbP3wEei3h-YotlkM8g" origin="_PIsjXv3wEei3h-YotlkM8g" image="_PIsjaf3wEei3h-YotlkM8g"/>
+  </units>
+</henshin:Module>

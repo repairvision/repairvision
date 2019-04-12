@@ -1,0 +1,1262 @@
+<?xml version="1.0" encoding="ASCII"?>
+<firstOrderLogic:ConstraintLibrary xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:firstOrderLogic="http://www.sidiff.org/validation/laguage/fol/FirstOrderLogic" domain="http://www.eclipse.org/emf/2002/Ecore" packageImport="org.eclipse.emf.ecore.EcorePackage">
+  <constraints name="TheAttributeIsNotTransientSoItMustHaveADataTypeThatIsSerializable" message="The attribute is not transient so it must have a data type that is serializable">
+    <variable name="attribute">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:If">
+      <left xsi:type="firstOrderLogic:And">
+        <left xsi:type="firstOrderLogic:Equals">
+          <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.0/@variable">
+            <get>
+              <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
+            </get>
+          </left>
+          <right xsi:type="firstOrderLogic:BoolConstant" value="false"/>
+        </left>
+        <right xsi:type="firstOrderLogic:IsInstanceOf">
+          <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.0/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+            </get>
+          </term>
+          <type xsi:type="firstOrderLogic:ClassifierConstant">
+            <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+          </type>
+        </right>
+      </left>
+      <right xsi:type="firstOrderLogic:Equals">
+        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.0/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+            <next>
+              <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+              <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EDataType/serializable"/>
+            </next>
+          </get>
+        </left>
+        <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="AClassThatIsAnInterfaceMustAlsoBeAbstract" message="A class that is an interface must also be abstract">
+    <variable name="eClass">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:If">
+      <left xsi:type="firstOrderLogic:Equals">
+        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.1/@variable">
+          <get>
+            <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/interface"/>
+          </get>
+        </left>
+        <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+      </left>
+      <right xsi:type="firstOrderLogic:Equals">
+        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.1/@variable">
+          <get>
+            <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/abstract"/>
+          </get>
+        </left>
+        <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="AContainerReferenceMustHaveUpperBoundOfNot" message=" A container reference must have upper bound of 1">
+    <variable name="ref">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:If">
+      <left xsi:type="firstOrderLogic:Equals">
+        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.2/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+            <next>
+              <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+            </next>
+          </get>
+        </left>
+        <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+      </left>
+      <right xsi:type="firstOrderLogic:Equals">
+        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.2/@variable">
+          <get>
+            <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
+          </get>
+        </left>
+        <right xsi:type="firstOrderLogic:IntConstant" value="1"/>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="AContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom" message="A containment or bidirectional reference must be unique if its upper bound is different from 1">
+    <variable name="ref">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:If">
+      <left xsi:type="firstOrderLogic:And">
+        <left xsi:type="firstOrderLogic:Or">
+          <left xsi:type="firstOrderLogic:Equals">
+            <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.3/@variable">
+              <get>
+                <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+              </get>
+            </left>
+            <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+          </left>
+          <right xsi:type="firstOrderLogic:Not">
+            <not xsi:type="firstOrderLogic:IsEmpty">
+              <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.3/@variable">
+                <get>
+                  <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+                </get>
+              </term>
+            </not>
+          </right>
+        </left>
+        <right xsi:type="firstOrderLogic:Not">
+          <not xsi:type="firstOrderLogic:Equals">
+            <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.3/@variable">
+              <get>
+                <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
+              </get>
+            </left>
+            <right xsi:type="firstOrderLogic:IntConstant" value="1"/>
+          </not>
+        </right>
+      </left>
+      <right xsi:type="firstOrderLogic:Equals">
+        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.3/@variable">
+          <get>
+            <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/unique"/>
+          </get>
+        </left>
+        <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="AContainmentReferenceOfATypeWithAContainerFeaturethatRequiresInstancesToBeContainedElsewhereCannotBePopulated" message="A containment reference of a type with a container feature that requires instances to be contained elsewhere cannot be populated">
+    <variable name="ref">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:If">
+      <left xsi:type="firstOrderLogic:Equals">
+        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@variable">
+          <get>
+            <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+          </get>
+        </left>
+        <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+      </left>
+      <right xsi:type="firstOrderLogic:If">
+        <left xsi:type="firstOrderLogic:IsInstanceOf">
+          <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+            </get>
+          </term>
+          <type xsi:type="firstOrderLogic:ClassifierConstant">
+            <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+          </type>
+        </left>
+        <right xsi:type="firstOrderLogic:ForAll">
+          <name name="typeClosure">
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+          </name>
+          <iteration xsi:type="firstOrderLogic:GetClosure">
+            <element xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@variable">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+              </get>
+            </element>
+            <feature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+          </iteration>
+          <formula xsi:type="firstOrderLogic:ForAll">
+            <name name="feature">
+              <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+            </name>
+            <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@formula/@right/@right/@name">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+              </get>
+            </iteration>
+            <formula xsi:type="firstOrderLogic:If">
+              <left xsi:type="firstOrderLogic:And">
+                <left xsi:type="firstOrderLogic:IsInstanceOf">
+                  <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@formula/@right/@right/@formula/@name"/>
+                  <type xsi:type="firstOrderLogic:ClassifierConstant">
+                    <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+                  </type>
+                </left>
+                <right xsi:type="firstOrderLogic:Equals">
+                  <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@formula/@right/@right/@formula/@name">
+                    <get>
+                      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+                      <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+                      <next>
+                        <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+                      </next>
+                    </get>
+                  </left>
+                  <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+                </right>
+              </left>
+              <right xsi:type="firstOrderLogic:Or">
+                <left xsi:type="firstOrderLogic:Equals">
+                  <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@formula/@right/@right/@formula/@name">
+                    <get>
+                      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+                      <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/lowerBound"/>
+                    </get>
+                  </left>
+                  <right xsi:type="firstOrderLogic:IntConstant"/>
+                </left>
+                <right xsi:type="firstOrderLogic:Equals">
+                  <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@formula/@right/@right/@formula/@name">
+                    <get>
+                      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+                      <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+                    </get>
+                  </left>
+                  <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.4/@variable"/>
+                </right>
+              </right>
+            </formula>
+          </formula>
+        </right>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType" message="The default value literal must be a valid literal of the attributes type">
+    <variable name="eStructuralFeature">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:And">
+      <left xsi:type="firstOrderLogic:And">
+        <left xsi:type="firstOrderLogic:If">
+          <left xsi:type="firstOrderLogic:Not">
+            <not xsi:type="firstOrderLogic:IsInstanceOf">
+              <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.5/@variable">
+                <get>
+                  <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+                </get>
+              </term>
+              <type xsi:type="firstOrderLogic:ClassifierConstant">
+                <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+              </type>
+            </not>
+          </left>
+          <right xsi:type="firstOrderLogic:IsEmpty">
+            <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.5/@variable">
+              <get>
+                <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/defaultValueLiteral"/>
+              </get>
+            </term>
+          </right>
+        </left>
+        <right xsi:type="firstOrderLogic:If">
+          <left xsi:type="firstOrderLogic:IsInstanceOf">
+            <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.5/@variable">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+              </get>
+            </term>
+            <type xsi:type="firstOrderLogic:ClassifierConstant">
+              <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
+            </type>
+          </left>
+          <right xsi:type="firstOrderLogic:ForAll">
+            <name name="literal">
+              <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral"/>
+            </name>
+            <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.5/@variable">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+                <next>
+                  <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
+                  <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EEnum/eLiterals"/>
+                </next>
+              </get>
+            </iteration>
+            <formula xsi:type="firstOrderLogic:Equals">
+              <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.5/@variable">
+                <get>
+                  <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/defaultValueLiteral"/>
+                </get>
+              </left>
+              <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.5/@formula/@left/@right/@right/@name">
+                <get>
+                  <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                </get>
+              </right>
+            </formula>
+          </right>
+        </right>
+      </left>
+      <right xsi:type="firstOrderLogic:If">
+        <left xsi:type="firstOrderLogic:IsInstanceOf">
+          <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.5/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+            </get>
+          </term>
+          <type xsi:type="firstOrderLogic:ClassifierConstant">
+            <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+          </type>
+        </left>
+        <right xsi:type="firstOrderLogic:IsValueLiteralOf">
+          <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.5/@variable">
+            <get>
+              <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/defaultValueLiteral"/>
+            </get>
+          </term>
+          <type xsi:type="firstOrderLogic:AsDataType">
+            <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.5/@variable">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+              </get>
+            </term>
+          </type>
+        </right>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="TheOppositeOfAContainmentReferenceMustNotBeAContainmentReference" message="The opposite of a containment reference must not be a containment reference">
+    <variable name="eReference">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:If">
+      <left xsi:type="firstOrderLogic:Not">
+        <not xsi:type="firstOrderLogic:IsEmpty">
+          <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.6/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+            </get>
+          </term>
+        </not>
+      </left>
+      <right xsi:type="firstOrderLogic:Or">
+        <left xsi:type="firstOrderLogic:Equals">
+          <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.6/@variable">
+            <get>
+              <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+            </get>
+          </left>
+          <right xsi:type="firstOrderLogic:BoolConstant" value="false"/>
+        </left>
+        <right xsi:type="firstOrderLogic:Equals">
+          <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.6/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+              <next>
+                <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+              </next>
+            </get>
+          </left>
+          <right xsi:type="firstOrderLogic:BoolConstant" value="false"/>
+        </right>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="TheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolving" message="The opposite of a transient reference must be transient if it is proxy resolving">
+    <variable name="reference">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:If">
+      <left xsi:type="firstOrderLogic:Equals">
+        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.7/@variable">
+          <get>
+            <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
+          </get>
+        </left>
+        <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+      </left>
+      <right xsi:type="firstOrderLogic:Or">
+        <left xsi:type="firstOrderLogic:Equals">
+          <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.7/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+              <next>
+                <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/resolveProxies"/>
+              </next>
+            </get>
+          </left>
+          <right xsi:type="firstOrderLogic:BoolConstant" value="false"/>
+        </left>
+        <right xsi:type="firstOrderLogic:Equals">
+          <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.7/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+              <next>
+                <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
+              </next>
+            </get>
+          </left>
+          <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+        </right>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne" message="The opposite of the opposite may not be a reference different from this one">
+    <variable name="reference">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:If">
+      <left xsi:type="firstOrderLogic:Not">
+        <not xsi:type="firstOrderLogic:IsEmpty">
+          <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.8/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+            </get>
+          </term>
+        </not>
+      </left>
+      <right xsi:type="firstOrderLogic:Equals">
+        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.8/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+            <next>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+            </next>
+          </get>
+        </left>
+        <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.8/@variable"/>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="TheOppositeMayNotBeItsOwnOpposite" message="The opposite may not be its own opposite">
+    <variable name="reference">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Not">
+      <not xsi:type="firstOrderLogic:Equals">
+        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.9/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+          </get>
+        </left>
+        <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.9/@variable"/>
+      </not>
+    </formula>
+  </constraints>
+  <constraints name="ThereMayNotBeTwoOperationsAndWithTheSameSignature" message="There may not be two operations with the same signature">
+    <variable name="eOperation">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Not">
+      <not xsi:type="firstOrderLogic:Exists">
+        <name name="typeClosure">
+          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        </name>
+        <iteration xsi:type="firstOrderLogic:GetClosure">
+          <element xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eContainingClass"/>
+            </get>
+          </element>
+          <feature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+        </iteration>
+        <formula xsi:type="firstOrderLogic:Exists">
+          <name name="otherEOpperation">
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+          </name>
+          <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@name">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eOperations"/>
+            </get>
+          </iteration>
+          <formula xsi:type="firstOrderLogic:And">
+            <left xsi:type="firstOrderLogic:And">
+              <left xsi:type="firstOrderLogic:And">
+                <left xsi:type="firstOrderLogic:Not">
+                  <not xsi:type="firstOrderLogic:Equals">
+                    <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@variable"/>
+                    <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@name"/>
+                  </not>
+                </left>
+                <right xsi:type="firstOrderLogic:Equals">
+                  <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@variable">
+                    <get>
+                      <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                    </get>
+                  </left>
+                  <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@name">
+                    <get>
+                      <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                    </get>
+                  </right>
+                </right>
+              </left>
+              <right xsi:type="firstOrderLogic:Equals">
+                <left xsi:type="firstOrderLogic:Size">
+                  <elements xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@variable">
+                    <get>
+                      <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                    </get>
+                  </elements>
+                </left>
+                <right xsi:type="firstOrderLogic:Size">
+                  <elements xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@name">
+                    <get>
+                      <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                    </get>
+                  </elements>
+                </right>
+              </right>
+            </left>
+            <right xsi:type="firstOrderLogic:Or">
+              <left xsi:type="firstOrderLogic:And">
+                <left xsi:type="firstOrderLogic:IsEmpty">
+                  <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@variable">
+                    <get>
+                      <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                    </get>
+                  </term>
+                </left>
+                <right xsi:type="firstOrderLogic:IsEmpty">
+                  <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@name">
+                    <get>
+                      <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                    </get>
+                  </term>
+                </right>
+              </left>
+              <right xsi:type="firstOrderLogic:Exists">
+                <name name="eParameter">
+                  <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
+                </name>
+                <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@variable">
+                  <get>
+                    <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                  </get>
+                </iteration>
+                <formula xsi:type="firstOrderLogic:Exists">
+                  <name name="otherEParameter">
+                    <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
+                  </name>
+                  <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@name">
+                    <get>
+                      <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                    </get>
+                  </iteration>
+                  <formula xsi:type="firstOrderLogic:And">
+                    <left xsi:type="firstOrderLogic:And">
+                      <left xsi:type="firstOrderLogic:Not">
+                        <not xsi:type="firstOrderLogic:Equals">
+                          <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@formula/@right/@right/@name"/>
+                          <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@formula/@right/@right/@formula/@name"/>
+                        </not>
+                      </left>
+                      <right xsi:type="firstOrderLogic:Equals">
+                        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@formula/@right/@right/@name">
+                          <get>
+                            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+                          </get>
+                        </left>
+                        <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@formula/@right/@right/@formula/@name">
+                          <get>
+                            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+                          </get>
+                        </right>
+                      </right>
+                    </left>
+                    <right xsi:type="firstOrderLogic:Equals">
+                      <left xsi:type="firstOrderLogic:IndexOf">
+                        <container xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@variable"/>
+                        <feature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                        <element xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@formula/@right/@right/@name"/>
+                      </left>
+                      <right xsi:type="firstOrderLogic:IndexOf">
+                        <container xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@name"/>
+                        <feature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                        <element xsi:type="firstOrderLogic:VariableRef" name="//@constraints.10/@formula/@not/@formula/@formula/@right/@right/@formula/@name"/>
+                      </right>
+                    </right>
+                  </formula>
+                </formula>
+              </right>
+            </right>
+          </formula>
+        </formula>
+      </not>
+    </formula>
+  </constraints>
+  <constraints name="ThereMayNotBeTwoParametersNamed" message="There may not be two parameters with the same name">
+    <variable name="eParameter">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Not">
+      <not xsi:type="firstOrderLogic:Exists">
+        <name name="otherEParameter">
+          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
+        </name>
+        <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.11/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EParameter/eOperation"/>
+            <next>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+            </next>
+          </get>
+        </iteration>
+        <formula xsi:type="firstOrderLogic:And">
+          <left xsi:type="firstOrderLogic:Not">
+            <not xsi:type="firstOrderLogic:Equals">
+              <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.11/@variable"/>
+              <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.11/@formula/@not/@name"/>
+            </not>
+          </left>
+          <right xsi:type="firstOrderLogic:Equals">
+            <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.11/@variable">
+              <get>
+                <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+              </get>
+            </left>
+            <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.11/@formula/@not/@name">
+              <get>
+                <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+              </get>
+            </right>
+          </right>
+        </formula>
+      </not>
+    </formula>
+  </constraints>
+  <constraints name="ThereMayNotBeAnOperationWithTheSameSignatureAsAnAccessorMethodForFeature" message="There may not be an operation with the same signature as an accessor method for a feature">
+    <variable name="operation">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Or">
+      <left xsi:type="firstOrderLogic:Exists">
+        <name name="annotation">
+          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation"/>
+        </name>
+        <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EModelElement/eAnnotations"/>
+          </get>
+        </iteration>
+        <formula xsi:type="firstOrderLogic:And">
+          <left xsi:type="firstOrderLogic:Equals">
+            <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@left/@name">
+              <get>
+                <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation/source"/>
+              </get>
+            </left>
+            <right xsi:type="firstOrderLogic:StringConstant" value="http://www.eclipse.org/emf/2002/GenModel"/>
+          </left>
+          <right xsi:type="firstOrderLogic:Exists">
+            <name name="detail">
+              <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry"/>
+            </name>
+            <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@left/@name">
+              <get>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation/details"/>
+              </get>
+            </iteration>
+            <formula xsi:type="firstOrderLogic:And">
+              <left xsi:type="firstOrderLogic:Equals">
+                <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@left/@formula/@right/@name">
+                  <get>
+                    <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry/key"/>
+                  </get>
+                </left>
+                <right xsi:type="firstOrderLogic:StringConstant" value="suppressedVisibility"/>
+              </left>
+              <right xsi:type="firstOrderLogic:Equals">
+                <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@left/@formula/@right/@name">
+                  <get>
+                    <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry/value"/>
+                  </get>
+                </left>
+                <right xsi:type="firstOrderLogic:StringConstant" value="true"/>
+              </right>
+            </formula>
+          </right>
+        </formula>
+      </left>
+      <right xsi:type="firstOrderLogic:ForAll">
+        <name name="typeClosure">
+          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        </name>
+        <iteration xsi:type="firstOrderLogic:GetClosure">
+          <element xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eContainingClass"/>
+            </get>
+          </element>
+          <feature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+        </iteration>
+        <formula xsi:type="firstOrderLogic:ForAll">
+          <name name="feature">
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+          </name>
+          <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@right/@name">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+            </get>
+          </iteration>
+          <formula xsi:type="firstOrderLogic:And">
+            <left xsi:type="firstOrderLogic:And">
+              <left xsi:type="firstOrderLogic:And">
+                <left xsi:type="firstOrderLogic:And">
+                  <left xsi:type="firstOrderLogic:If">
+                    <left xsi:type="firstOrderLogic:And">
+                      <left xsi:type="firstOrderLogic:Equals">
+                        <left xsi:type="firstOrderLogic:Size">
+                          <elements xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+                            <get>
+                              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                            </get>
+                          </elements>
+                        </left>
+                        <right xsi:type="firstOrderLogic:IntConstant" value="1"/>
+                      </left>
+                      <right xsi:type="firstOrderLogic:ForAll">
+                        <name name="parameter">
+                          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
+                        </name>
+                        <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+                          <get>
+                            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                          </get>
+                        </iteration>
+                        <formula xsi:type="firstOrderLogic:Equals">
+                          <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@right/@formula/@formula/@left/@left/@left/@left/@left/@right/@name">
+                            <get>
+                              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+                            </get>
+                          </left>
+                          <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@right/@formula/@name">
+                            <get>
+                              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+                            </get>
+                          </right>
+                        </formula>
+                      </right>
+                    </left>
+                    <right xsi:type="firstOrderLogic:Not">
+                      <not xsi:type="firstOrderLogic:Equals">
+                        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+                          <get>
+                            <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                          </get>
+                        </left>
+                        <right xsi:type="firstOrderLogic:Concatenate">
+                          <left xsi:type="firstOrderLogic:StringConstant" value="set"/>
+                          <right xsi:type="firstOrderLogic:Capitalize">
+                            <string xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@right/@formula/@name">
+                              <get>
+                                <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                              </get>
+                            </string>
+                          </right>
+                        </right>
+                      </not>
+                    </right>
+                  </left>
+                  <right xsi:type="firstOrderLogic:If">
+                    <left xsi:type="firstOrderLogic:Equals">
+                      <left xsi:type="firstOrderLogic:Size">
+                        <elements xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+                          <get>
+                            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                          </get>
+                        </elements>
+                      </left>
+                      <right xsi:type="firstOrderLogic:IntConstant"/>
+                    </left>
+                    <right xsi:type="firstOrderLogic:Not">
+                      <not xsi:type="firstOrderLogic:Equals">
+                        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+                          <get>
+                            <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                          </get>
+                        </left>
+                        <right xsi:type="firstOrderLogic:Concatenate">
+                          <left xsi:type="firstOrderLogic:StringConstant" value="get"/>
+                          <right xsi:type="firstOrderLogic:Capitalize">
+                            <string xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@right/@formula/@name">
+                              <get>
+                                <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                              </get>
+                            </string>
+                          </right>
+                        </right>
+                      </not>
+                    </right>
+                  </right>
+                </left>
+                <right xsi:type="firstOrderLogic:If">
+                  <left xsi:type="firstOrderLogic:Equals">
+                    <left xsi:type="firstOrderLogic:Size">
+                      <elements xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+                        <get>
+                          <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                        </get>
+                      </elements>
+                    </left>
+                    <right xsi:type="firstOrderLogic:IntConstant"/>
+                  </left>
+                  <right xsi:type="firstOrderLogic:Not">
+                    <not xsi:type="firstOrderLogic:Equals">
+                      <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+                        <get>
+                          <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                        </get>
+                      </left>
+                      <right xsi:type="firstOrderLogic:Concatenate">
+                        <left xsi:type="firstOrderLogic:StringConstant" value="is"/>
+                        <right xsi:type="firstOrderLogic:Capitalize">
+                          <string xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@right/@formula/@name">
+                            <get>
+                              <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                            </get>
+                          </string>
+                        </right>
+                      </right>
+                    </not>
+                  </right>
+                </right>
+              </left>
+              <right xsi:type="firstOrderLogic:If">
+                <left xsi:type="firstOrderLogic:Equals">
+                  <left xsi:type="firstOrderLogic:Size">
+                    <elements xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+                      <get>
+                        <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                      </get>
+                    </elements>
+                  </left>
+                  <right xsi:type="firstOrderLogic:IntConstant"/>
+                </left>
+                <right xsi:type="firstOrderLogic:Not">
+                  <not xsi:type="firstOrderLogic:Equals">
+                    <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+                      <get>
+                        <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                      </get>
+                    </left>
+                    <right xsi:type="firstOrderLogic:Concatenate">
+                      <left xsi:type="firstOrderLogic:StringConstant" value="isSet"/>
+                      <right xsi:type="firstOrderLogic:Capitalize">
+                        <string xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@right/@formula/@name">
+                          <get>
+                            <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                          </get>
+                        </string>
+                      </right>
+                    </right>
+                  </not>
+                </right>
+              </right>
+            </left>
+            <right xsi:type="firstOrderLogic:If">
+              <left xsi:type="firstOrderLogic:Equals">
+                <left xsi:type="firstOrderLogic:Size">
+                  <elements xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+                    <get>
+                      <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+                    </get>
+                  </elements>
+                </left>
+                <right xsi:type="firstOrderLogic:IntConstant"/>
+              </left>
+              <right xsi:type="firstOrderLogic:Not">
+                <not xsi:type="firstOrderLogic:Equals">
+                  <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@variable">
+                    <get>
+                      <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                    </get>
+                  </left>
+                  <right xsi:type="firstOrderLogic:Concatenate">
+                    <left xsi:type="firstOrderLogic:StringConstant" value="unset"/>
+                    <right xsi:type="firstOrderLogic:Capitalize">
+                      <string xsi:type="firstOrderLogic:VariableRef" name="//@constraints.12/@formula/@right/@formula/@name">
+                        <get>
+                          <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                        </get>
+                      </string>
+                    </right>
+                  </right>
+                </not>
+              </right>
+            </right>
+          </formula>
+        </formula>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="ThereMayNotBeTwoFeaturesNamed" message="There may not be two features with the same name">
+    <variable name="eClass">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:And">
+      <left xsi:type="firstOrderLogic:ForAll">
+        <name name="featureA">
+          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+        </name>
+        <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+          </get>
+        </iteration>
+        <formula xsi:type="firstOrderLogic:ForAll">
+          <name name="featureB">
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+          </name>
+          <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+            </get>
+          </iteration>
+          <formula xsi:type="firstOrderLogic:If">
+            <left xsi:type="firstOrderLogic:Not">
+              <not xsi:type="firstOrderLogic:Equals">
+                <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@formula/@left/@name"/>
+                <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@formula/@left/@formula/@name"/>
+              </not>
+            </left>
+            <right xsi:type="firstOrderLogic:Not">
+              <not xsi:type="firstOrderLogic:Equals">
+                <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@formula/@left/@name">
+                  <get>
+                    <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                  </get>
+                </left>
+                <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@formula/@left/@formula/@name">
+                  <get>
+                    <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                  </get>
+                </right>
+              </not>
+            </right>
+          </formula>
+        </formula>
+      </left>
+      <right xsi:type="firstOrderLogic:ForAll">
+        <name name="eClassX">
+          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        </name>
+        <iteration xsi:type="firstOrderLogic:GetClosure">
+          <element xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@variable"/>
+          <feature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+        </iteration>
+        <formula xsi:type="firstOrderLogic:ForAll">
+          <name name="eClassY">
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+          </name>
+          <iteration xsi:type="firstOrderLogic:GetClosure">
+            <element xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@variable"/>
+            <feature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+          </iteration>
+          <formula xsi:type="firstOrderLogic:If">
+            <left xsi:type="firstOrderLogic:Not">
+              <not xsi:type="firstOrderLogic:Equals">
+                <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@formula/@right/@name"/>
+                <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@formula/@right/@formula/@name"/>
+              </not>
+            </left>
+            <right xsi:type="firstOrderLogic:ForAll">
+              <name name="featureX">
+                <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+              </name>
+              <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@formula/@right/@name">
+                <get>
+                  <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+                </get>
+              </iteration>
+              <formula xsi:type="firstOrderLogic:ForAll">
+                <name name="featureY">
+                  <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+                </name>
+                <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@formula/@right/@formula/@name">
+                  <get>
+                    <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+                  </get>
+                </iteration>
+                <formula xsi:type="firstOrderLogic:Not">
+                  <not xsi:type="firstOrderLogic:Equals">
+                    <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@formula/@right/@formula/@formula/@right/@name">
+                      <get>
+                        <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                      </get>
+                    </left>
+                    <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.13/@formula/@right/@formula/@formula/@right/@formula/@name">
+                      <get>
+                        <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                      </get>
+                    </right>
+                  </not>
+                </formula>
+              </formula>
+            </right>
+          </formula>
+        </formula>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="TwoFeaturesCannotBothBeIDs" message="The features cannot both be IDs">
+    <variable name="attribute">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:If">
+      <left xsi:type="firstOrderLogic:Equals">
+        <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.14/@variable">
+          <get>
+            <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute/iD"/>
+          </get>
+        </left>
+        <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+      </left>
+      <right xsi:type="firstOrderLogic:ForAll">
+        <name name="typeClosure">
+          <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        </name>
+        <iteration xsi:type="firstOrderLogic:GetClosure">
+          <element xsi:type="firstOrderLogic:VariableRef" name="//@constraints.14/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+            </get>
+          </element>
+          <feature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+        </iteration>
+        <formula xsi:type="firstOrderLogic:ForAll">
+          <name name="feature">
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+          </name>
+          <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.14/@formula/@right/@name">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+            </get>
+          </iteration>
+          <formula xsi:type="firstOrderLogic:If">
+            <left xsi:type="firstOrderLogic:And">
+              <left xsi:type="firstOrderLogic:IsInstanceOf">
+                <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.14/@formula/@right/@formula/@name"/>
+                <type xsi:type="firstOrderLogic:ClassifierConstant">
+                  <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+                </type>
+              </left>
+              <right xsi:type="firstOrderLogic:Not">
+                <not xsi:type="firstOrderLogic:Equals">
+                  <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.14/@formula/@right/@formula/@name"/>
+                  <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.14/@variable"/>
+                </not>
+              </right>
+            </left>
+            <right xsi:type="firstOrderLogic:Not">
+              <not xsi:type="firstOrderLogic:Equals">
+                <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.14/@formula/@right/@formula/@name">
+                  <get>
+                    <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+                    <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute/iD"/>
+                  </get>
+                </left>
+                <right xsi:type="firstOrderLogic:BoolConstant" value="true"/>
+              </not>
+            </right>
+          </formula>
+        </formula>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="ThereMayNotBeTwoClassifiersNamed" message="There may not be two classifiers with the same name">
+    <variable name="package">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:ForAll">
+      <name name="classA">
+        <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </name>
+      <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.15/@variable">
+        <get>
+          <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
+        </get>
+      </iteration>
+      <formula xsi:type="firstOrderLogic:Not">
+        <not xsi:type="firstOrderLogic:Exists">
+          <name name="classB">
+            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+          </name>
+          <iteration xsi:type="firstOrderLogic:VariableRef" name="//@constraints.15/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
+            </get>
+          </iteration>
+          <formula xsi:type="firstOrderLogic:And">
+            <left xsi:type="firstOrderLogic:Equals">
+              <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.15/@formula/@name">
+                <get>
+                  <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                </get>
+              </left>
+              <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.15/@formula/@formula/@not/@name">
+                <get>
+                  <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                </get>
+              </right>
+            </left>
+            <right xsi:type="firstOrderLogic:Not">
+              <not xsi:type="firstOrderLogic:Equals">
+                <left xsi:type="firstOrderLogic:VariableRef" name="//@constraints.15/@formula/@name"/>
+                <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.15/@formula/@formula/@not/@name"/>
+              </not>
+            </right>
+          </formula>
+        </not>
+      </formula>
+    </formula>
+  </constraints>
+  <constraints name="TheTypedElementMustHaveAType" message="The typed element must have a type">
+    <variable name="eTypedElement">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Or">
+      <left xsi:type="firstOrderLogic:IsInstanceOf">
+        <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.16/@variable"/>
+        <type xsi:type="firstOrderLogic:ClassifierConstant">
+          <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+        </type>
+      </left>
+      <right xsi:type="firstOrderLogic:Not">
+        <not xsi:type="firstOrderLogic:IsEmpty">
+          <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.16/@variable">
+            <get>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+            </get>
+          </term>
+        </not>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="TheRequiredFeatureOfMustBeSet" message="The required feature must be set">
+    <variable name="eModelElement">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:And">
+      <left xsi:type="firstOrderLogic:And">
+        <left xsi:type="firstOrderLogic:And">
+          <left xsi:type="firstOrderLogic:If">
+            <left xsi:type="firstOrderLogic:IsInstanceOf">
+              <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.17/@variable"/>
+              <type xsi:type="firstOrderLogic:ClassifierConstant">
+                <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+              </type>
+            </left>
+            <right xsi:type="firstOrderLogic:Not">
+              <not xsi:type="firstOrderLogic:IsEmpty">
+                <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.17/@variable">
+                  <get>
+                    <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+                    <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+                  </get>
+                </term>
+              </not>
+            </right>
+          </left>
+          <right xsi:type="firstOrderLogic:If">
+            <left xsi:type="firstOrderLogic:IsInstanceOf">
+              <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.17/@variable"/>
+              <type xsi:type="firstOrderLogic:ClassifierConstant">
+                <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EFactory"/>
+              </type>
+            </left>
+            <right xsi:type="firstOrderLogic:Not">
+              <not xsi:type="firstOrderLogic:IsEmpty">
+                <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.17/@variable">
+                  <get>
+                    <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EFactory"/>
+                    <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EFactory/ePackage"/>
+                  </get>
+                </term>
+              </not>
+            </right>
+          </right>
+        </left>
+        <right xsi:type="firstOrderLogic:If">
+          <left xsi:type="firstOrderLogic:IsInstanceOf">
+            <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.17/@variable"/>
+            <type xsi:type="firstOrderLogic:ClassifierConstant">
+              <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+            </type>
+          </left>
+          <right xsi:type="firstOrderLogic:Not">
+            <not xsi:type="firstOrderLogic:IsEmpty">
+              <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.17/@variable">
+                <get>
+                  <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+                  <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eFactoryInstance"/>
+                </get>
+              </term>
+            </not>
+          </right>
+        </right>
+      </left>
+      <right xsi:type="firstOrderLogic:If">
+        <left xsi:type="firstOrderLogic:IsInstanceOf">
+          <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.17/@variable"/>
+          <type xsi:type="firstOrderLogic:ClassifierConstant">
+            <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+          </type>
+        </left>
+        <right xsi:type="firstOrderLogic:Not">
+          <not xsi:type="firstOrderLogic:IsEmpty">
+            <term xsi:type="firstOrderLogic:VariableRef" name="//@constraints.17/@variable">
+              <get>
+                <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+                <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+              </get>
+            </term>
+          </not>
+        </right>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier" message="The generic type associated with the classifier is missing type arguments to match the number of type parameters of the classifier">
+    <variable name="eType">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Equals">
+      <left xsi:type="firstOrderLogic:Size">
+        <elements xsi:type="firstOrderLogic:VariableRef" name="//@constraints.18/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+            <next>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+            </next>
+          </get>
+        </elements>
+      </left>
+      <right xsi:type="firstOrderLogic:Size">
+        <elements xsi:type="firstOrderLogic:VariableRef" name="//@constraints.18/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
+          </get>
+        </elements>
+      </right>
+    </formula>
+  </constraints>
+  <constraints name="TheGenericTypeAssociatedWithTheClassifierMustNotHaveArgumentsWhenTheClassifierHasTypeParameters" message="The generic type associated with the classifier must not have more arguments then the classifier has type parameters">
+    <variable name="eType">
+      <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+    </variable>
+    <formula xsi:type="firstOrderLogic:Equals">
+      <left xsi:type="firstOrderLogic:Size">
+        <elements xsi:type="firstOrderLogic:VariableRef" name="//@constraints.19/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+            <next>
+              <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+            </next>
+          </get>
+        </elements>
+      </left>
+      <right xsi:type="firstOrderLogic:Size">
+        <elements xsi:type="firstOrderLogic:VariableRef" name="//@constraints.19/@variable">
+          <get>
+            <name xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
+          </get>
+        </elements>
+      </right>
+    </formula>
+  </constraints>
+</firstOrderLogic:ConstraintLibrary>
