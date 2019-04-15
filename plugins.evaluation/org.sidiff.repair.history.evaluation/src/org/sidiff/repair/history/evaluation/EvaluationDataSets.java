@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EvaluationDataSets {
+	
+	public static final String DATA_SET = "C:/Users/manue/git/repairvision/data.evaluation/org.eclipse.git_2018-08-22/";
 
-	public static final String ORIGINAL_DATA_SET = "C:/evaluations/org.eclipse.git_2018-08-22/org.eclipse.git/";
+	public static final String ORIGINAL_DATA_SET = DATA_SET + "org.eclipse.git_original/";
 	
-	public static final String RESOLVED_DATA_SET = "C:/evaluations/org.eclipse.git_2018-08-22/org.eclipse.git.resolved/";
+	public static final String RESOLVED_DATA_SET = DATA_SET + "org.eclipse.git_resolved/";
 	
-	public static final String MATCHED_DATA_SET = "C:/evaluations/org.eclipse.git_2018-11-02/org.eclipse.git.matched/";
+	public static final String MATCHED_DATA_SET = DATA_SET + "org.eclipse.git_matched/";
 	
-	public static final String REDUCED_DATA_SET = "C:/workspaces/sidiff-build/org.eclipse.git.evaluation_2018-11-02/";
+	public static final String REDUCED_DATA_SET = DATA_SET + "org.eclipse.git_reduced/";
 	
 	public static List<String> HISTORIES = new ArrayList<>();
 	static {

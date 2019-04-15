@@ -3,7 +3,6 @@ package org.sidiff.graphpattern.tools;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.sirius.business.api.session.Session;
@@ -20,7 +19,7 @@ public class DiagramExportAction extends ExportAction {
 		
 		try {
 			execute(new NullProgressMonitor());
-		} catch (InvocationTargetException | CoreException | InterruptedException e) {
+		} catch (InvocationTargetException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}

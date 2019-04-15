@@ -116,7 +116,6 @@ public class HenshinConverter {
 					// Create opposite cross-reference edge pattern:
 					oppositeEdgePattern = GP_FACTORY.createEdgePattern();
 					oppositeEdgePattern.setType(edgeOut.getType());
-					oppositeEdgePattern.setCrossReference(true);
 
 					oppositeEdgePattern.setTarget(sourceNodePattern);
 					targetNodePattern.getOutgoings().add(oppositeEdgePattern);

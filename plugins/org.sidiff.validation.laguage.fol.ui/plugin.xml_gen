@@ -204,6 +204,15 @@
 			</activeWhen>
 		</handler>
 	</extension>
+	<extension point="org.eclipse.core.contenttype.contentTypes">
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="fol"
+			id="org.sidiff.validation.laguage.fol.FirstOrderLogic.contenttype"
+			name="FirstOrderLogic File"
+			priority="normal">
+		</content-type>
+	</extension>
 	<!-- adding resource factories -->
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
@@ -388,12 +397,18 @@
 			class="org.sidiff.validation.laguage.fol.ui.FirstOrderLogicExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="fol">
 		</viewer>
+		<contentTypeBinding
+			contentTypeId="org.sidiff.validation.laguage.fol.FirstOrderLogic.contenttype"
+			contentViewerId="org.sidiff.validation.laguage.fol.FirstOrderLogic.compare.contentViewers" />
 	</extension>
 	<extension point="org.eclipse.compare.contentMergeViewers">
 		<viewer id="org.sidiff.validation.laguage.fol.FirstOrderLogic.compare.contentMergeViewers"
 			class="org.sidiff.validation.laguage.fol.ui.FirstOrderLogicExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="fol" label="FirstOrderLogic Compare">
 		</viewer>
+		<contentTypeBinding
+			contentTypeId="org.sidiff.validation.laguage.fol.FirstOrderLogic.contenttype"
+			contentMergeViewerId="org.sidiff.validation.laguage.fol.FirstOrderLogic.compare.contentMergeViewers" />
 	</extension>
 	<extension point="org.eclipse.ui.editors.documentProviders">
 		<provider id="org.sidiff.validation.laguage.fol.FirstOrderLogic.editors.documentProviders"
