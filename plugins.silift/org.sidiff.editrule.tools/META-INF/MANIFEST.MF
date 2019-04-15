@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Example based Edit-Rules
+Bundle-SymbolicName: org.sidiff.editrule.tools;singleton:=true
+Bundle-Version: 1.1.0.qualifier
+Bundle-Activator: org.sidiff.editrule.tools.Activator
+Export-Package: org.sidiff.editrule.tools.handlers,
+ org.sidiff.editrule.tools.util
+Require-Bundle: org.eclipse.ui,
+ org.sidiff.matching.model,
+ org.sidiff.common.henshin,
+ org.sidiff.common.ui;bundle-version="1.0.0",
+ org.eclipse.emf.henshin.diagram,
+ org.eclipse.gmf.runtime.diagram.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
