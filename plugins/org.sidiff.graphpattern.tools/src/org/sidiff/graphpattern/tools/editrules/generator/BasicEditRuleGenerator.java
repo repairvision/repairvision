@@ -33,7 +33,7 @@ public abstract class BasicEditRuleGenerator {
 	
 	public void generate(List<NodePattern> fromFragment, List<NodePattern> toFragment) {
 		
-		// << delete/preserve >>:
+		// << delete/preserve/modify >>:
 		for (NodePattern fromNode : fromFragment) {
 			if (!fromNode.getStereotypes().contains(not)) {
 				NodePattern toNode = getNodeMatch(fromNode);
@@ -57,10 +57,18 @@ public abstract class BasicEditRuleGenerator {
 					
 					for (AttributePattern fromAttribute : fromNode.getAttributes()) {
 						if (!fromAttribute.getStereotypes().contains(not)) {
-							AttributePattern toAttribute = getAttributeMatch(fromAttribute, toNode.getAttributes());
+							AttributePattern toAttribute = getAttributeMatch(fromAttribute, toNode.getAttributes(), true);
 									
 							if (toAttribute == null) {
-								generateModify(fromAttribute, generateParameterName(fromAttribute));
+								toAttribute = getAttributeMatch(fromAttribute, toNode.getAttributes(), false);
+								
+								// NOTE: If the LHS requires some attribute value and the RHS not 
+								//       then the RHS can be set to any value (x -> parameter).
+								if (toAttribute == null) {
+									generateModify(fromAttribute, generateParameterName(fromAttribute));
+								} else {
+									generateModify(fromAttribute, toAttribute.getValue());
+								}
 							} else {
 								generateContext(fromAttribute, toAttribute);
 							}
@@ -108,10 +116,18 @@ public abstract class BasicEditRuleGenerator {
 					
 					for (AttributePattern toAttribute : toNode.getAttributes()) {
 						if (!toAttribute.getStereotypes().contains(not)) {
-							AttributePattern fromAttribute = getAttributeMatch(toAttribute, fromNode.getAttributes());
+							
+							// if attribute is not preserved...
+							AttributePattern fromAttribute = getAttributeMatch(toAttribute, fromNode.getAttributes(), true);
 							
 							if (fromAttribute == null) {
-								generateCreate(toAttribute);
+								
+								// and if attribute is not modify...
+								fromAttribute = getAttributeMatch(toAttribute, fromNode.getAttributes(), false);
+								
+								if (fromAttribute == null) {
+									generateCreate(toAttribute);
+								}
 							}
 						}
 					}
@@ -209,10 +225,10 @@ public abstract class BasicEditRuleGenerator {
 	protected abstract void generateForbid(AttributePattern toAttribute);
 	
 	
-	protected AttributePattern getAttributeMatch(AttributePattern attribute, EList<AttributePattern> otherAttributes) {
+	protected AttributePattern getAttributeMatch(AttributePattern attribute, EList<AttributePattern> otherAttributes, boolean checkValue) {
 		for (AttributePattern otherAttribute : otherAttributes) {
 			if (otherAttribute.getType() == attribute.getType()) {
-				if (otherAttribute.getValue().equals(attribute.getValue())) {
+				if (!checkValue || otherAttribute.getValue().equals(attribute.getValue())) {
 					return otherAttribute;
 				}
 			}
