@@ -74,7 +74,6 @@ public class SplitBundle extends AbstractHandler {
 			}
 			
 			assert checksum == graphPatternCount;
-			WorkbenchUtil.showMessage(checksum + "==" + graphPatternCount);
 		}
 
 		return null;
