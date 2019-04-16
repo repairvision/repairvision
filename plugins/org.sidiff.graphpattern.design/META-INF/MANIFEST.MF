@@ -7,6 +7,10 @@ Bundle-Activator: org.sidiff.graphpattern.design.Activator
 Require-Bundle: org.eclipse.emf.edit.ui,
  org.eclipse.gmf.runtime.diagram.ui,
  org.eclipse.sirius.diagram.ui,
- org.sidiff.graphpattern.edit
+ org.sidiff.graphpattern.edit,
+ org.eclipse.sirius.diagram.elk;bundle-version="6.1.2",
+ org.eclipse.elk.core;bundle-version="0.4.1",
+ org.eclipse.elk.graph,
+ org.eclipse.elk.core.service;bundle-version="0.4.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

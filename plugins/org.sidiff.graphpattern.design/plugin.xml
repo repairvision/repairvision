@@ -13,4 +13,10 @@
            providerClass="org.sidiff.graphpattern.design.provider.LabelIconProvider">
      </styleConfigurationProvider>
   </extension>
+  <extension
+        point="org.eclipse.sirius.diagram.ui.customLayoutAlgorithmProvider">
+     <customLayoutProvider
+           class="org.sidiff.graphpattern.design.layout.GraphPatternAlgorithmProvider">
+     </customLayoutProvider>
+  </extension>
 </plugin>
