@@ -58,6 +58,7 @@ public class ConstructionEditRuleGenerator {
 			
 			// Add context and conditions:
 			completeEditOperation(editOperation);
+			removePseudoResourceNode(editRule);
 			
 			// Remove negative graph postcondition constraints:
 			// (NAC incident to create node.)
@@ -112,6 +113,7 @@ public class ConstructionEditRuleGenerator {
 			
 			// Add context and conditions:
 			completeEditOperation(editOperation);
+			removePseudoResourceNode(editRule);
 			
 //			// Generate rules with connected fragments:
 //			generateFragmentRules(delete, graphPattern, editRule, editRules);
@@ -235,16 +237,6 @@ public class ConstructionEditRuleGenerator {
 				}
 			}
 		}
-		
-		// Remove (pseudo) resource node:
-		for (Iterator<NodePattern> iterator = editRule.getNodes().iterator(); iterator.hasNext();) {
-			NodePattern node = iterator.next();
-			
-			if (node.getType().equals(pseudoResourceClass)) {
-				node.removeIncident();
-				iterator.remove();
-			}
-		}
 	}
 	
 	protected static void completeEditOperation(Pattern editOperation) {
@@ -264,6 +256,19 @@ public class ConstructionEditRuleGenerator {
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	protected static void removePseudoResourceNode(GraphPattern editRule) {
+		
+		// Remove (pseudo) resource node:
+		for (Iterator<NodePattern> iterator = editRule.getNodes().iterator(); iterator.hasNext();) {
+			NodePattern node = iterator.next();
+			
+			if (node.getType().equals(pseudoResourceClass)) {
+				node.removeIncident();
+				iterator.remove();
 			}
 		}
 	}
