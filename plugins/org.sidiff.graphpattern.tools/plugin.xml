@@ -5,12 +5,12 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.silift.menu">
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
                id="org.sidiff.graphpattern.tools.menu"
                label="Graph Pattern">
             <command
-                  commandId="org.sidiff.graphpattern.tools.commands.modeltopattern"
+                  commandId="org.sidiff.graphpattern.tools.command.modeltopattern"
                   style="push">
             </command>
             <command
@@ -29,6 +29,10 @@
             </command>
             <command
                   commandId="org.sidiff.graphpattern.tools.command.batchgenerateeditrules"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.sidiff.graphpattern.tools.command.splitbundle"
                   style="push">
             </command>
          </menu>
@@ -60,7 +64,7 @@
          point="org.eclipse.ui.handlers">
       <handler
             class="org.sidiff.graphpattern.tools.ConvertModelToGraphPattern"
-            commandId="org.sidiff.graphpattern.tools.commands.modeltopattern">
+            commandId="org.sidiff.graphpattern.tools.command.modeltopattern">
       </handler>
       <handler
             class="org.sidiff.graphpattern.tools.SliceGraphPattern"
@@ -78,11 +82,15 @@
             class="org.sidiff.graphpattern.tools.editrules.GenerateEditRulesBatch"
             commandId="org.sidiff.graphpattern.tools.command.batchgenerateeditrules">
       </handler>
+      <handler
+            class="org.sidiff.graphpattern.tools.SplitBundle"
+            commandId="org.sidiff.graphpattern.tools.command.splitbundle">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
-            id="org.sidiff.graphpattern.tools.commands.modeltopattern"
+            id="org.sidiff.graphpattern.tools.command.modeltopattern"
             name="Convert Model To Graph Pattern">
       </command>
       <command
@@ -100,6 +108,10 @@
       <command
             id="org.sidiff.graphpattern.tools.command.batchgenerateeditrules"
             name="Generate Edit Rules">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.tools.command.splitbundle"
+            name="Split Bundle">
       </command>
    </extension>
 </plugin>
