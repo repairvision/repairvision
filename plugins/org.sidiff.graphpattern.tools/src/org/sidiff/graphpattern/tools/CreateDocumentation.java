@@ -40,11 +40,15 @@ public class CreateDocumentation extends AbstractHandler {
 
 	protected static final String FOLDER = "doc";
 	
+	protected static boolean LIFT_LEAFS = true;
+	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Bundle graphPatternBundle = EMFHandlerUtil.getSelection(event, Bundle.class);
 
 		if (graphPatternBundle != null) {
+			LIFT_LEAFS = WorkbenchUtil.showQuestion("Hide tree levels that contain just one leaf?");
+			
 			ISelection selection = HandlerUtil.getCurrentSelection(event);
 			IResource resource = ((IResource) ((StructuredSelection) selection).getFirstElement());
 			IProject project = resource.getProject();
@@ -53,7 +57,9 @@ public class CreateDocumentation extends AbstractHandler {
 			new File(project.getLocation().toFile().getAbsolutePath() + File.separator + FOLDER).mkdirs();
 			
 			// generate SVG diagrams:
-			generateSVGDiagrams(project, resource, graphPatternBundle, WorkbenchUtil.showQuestion("Embed SVG into HTML?"));
+			if (WorkbenchUtil.showQuestion("Generate diagrams?")) {
+				generateSVGDiagrams(project, resource, graphPatternBundle, WorkbenchUtil.showQuestion("Embed SVG into HTML?"));
+			}
 			
 			// generate HTML list:
 			String docPath = project.getFolder(FOLDER).getLocation().toOSString() + File.separator + graphPatternBundle.getName().toLowerCase() + ".html";
@@ -153,6 +159,19 @@ public class CreateDocumentation extends AbstractHandler {
 						newHtmlDoc.append(
 								"<html>\r\n" + 
 								"<head>\r\n" + 
+								"<title>" + graphPattern.getName() +"</title>\r\n" + 
+								"<style>\r\n" + 
+								"body {\r\n" + 
+								"  font: 300 16px/1.2 'Roboto', Arial, sans-serif; color: #666;\r\n" + 
+								"}\r\n" + 
+								"@font-face {\r\n" + 
+								"  font-family: 'Roboto';\r\n" + 
+								"  font-style: normal;\r\n" + 
+								"  font-weight: 300;\r\n" + 
+								"  src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v15/Hgo13k-tfSpn0qi1SFdUfVtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');\r\n" + 
+								"  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;\r\n" + 
+								"}\r\n" + 
+								"</style>" +
 								"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenLite.min.js\"></script>\r\n" + 
 								"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/utils/Draggable.min.js\"></script>\r\n" + 
 								"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/plugins/CSSPlugin.min.js\"></script>\r\n" + 
@@ -160,6 +179,11 @@ public class CreateDocumentation extends AbstractHandler {
 								"<body>"
 								);
 						newHtmlDoc.append("\n");
+						
+						String graphStereotype = LabelServices.getStereotypesLabel(graphPattern.getStereotypes()).replace("<", "&lt;").replace(">", "&gt;");
+						newHtmlDoc.append("<hr style=\"border:solid #1abc9c 2px;\">");
+						newHtmlDoc.append("<p>" + graphStereotype + " " + graphPattern.getName() + "</p>");
+						newHtmlDoc.append("<hr style=\"border:solid #1abc9c 2px;\">");
 						
 						FileReader docReader = new FileReader(svgPath.toFile());
 						docReaderBuffer = new BufferedReader(docReader);
@@ -238,7 +262,24 @@ public class CreateDocumentation extends AbstractHandler {
 		doc.append(
 				"<html>\r\n" + 
 				"<head>\r\n" + 
-				"<style>\r\n" +
+				"<title>" + graphPatternBundle.getName() + " Patterns</title>\r\n" + 
+				"<style>\r\n" + 
+				"body {\r\n" + 
+				"  font: 300 16px/1.2 'Roboto', Arial, sans-serif; color: #666;\r\n" + 
+				"}\r\n" + 
+				"\r\n" + 
+				"a {\r\n" + 
+				"  color: #1abc9c;\r\n" + 
+				"}\r\n" + 
+				"\r\n" + 
+				"@font-face {\r\n" + 
+				"  font-family: 'Roboto';\r\n" + 
+				"  font-style: normal;\r\n" + 
+				"  font-weight: 300;\r\n" + 
+				"  src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v15/Hgo13k-tfSpn0qi1SFdUfVtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');\r\n" + 
+				"  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;\r\n" + 
+				"}\r\n" + 
+				"		\r\n" + 
 				"#searchBox {\r\n" + 
 				"  background-image: url('searchicon.png'); /* Add a search icon to input */\r\n" + 
 				"  background-position: 10px 12px; /* Position the search icon */\r\n" + 
@@ -248,8 +289,8 @@ public class CreateDocumentation extends AbstractHandler {
 				"  padding: 12px 20px 12px 40px; /* Add some padding */\r\n" + 
 				"  border: 1px solid #ddd; /* Add a grey border */\r\n" + 
 				"  margin-bottom: 12px; /* Add some space below the input */\r\n" + 
-				"}" +
-				"</style>\r\n" +
+				"}\r\n" + 
+				"</style>" +
 				"</head>\r\n" + 
 				"<body>"
 				);
@@ -257,11 +298,11 @@ public class CreateDocumentation extends AbstractHandler {
 		// search box:
 		doc.append("<input type=\"text\" id=\"searchBox\" onkeyup=\"search()\" placeholder=\"Search by keys..\">");
 		
-		doc.append("<div id=\"searchContent\">\n");
+		// collapse all:
+		doc.append("<a href=\"javascript:collapseAll()\">collapse all</a> &#124; <a href=\"javascript:uncollapseAll()\">expand all</a>");
 		
 		// list:
-		
-		doc.append("<ul>");
+		doc.append("<ul id=\"searchContent\">");
 		doc.append("\n");
 		
 		for (Pattern pattern : graphPatternBundle.getPatterns()) {
@@ -271,12 +312,10 @@ public class CreateDocumentation extends AbstractHandler {
 		doc.append("</ul>");
 		doc.append("\n");
 		
-		// end of searchable content:
-		doc.append("</div>\n");
-		
 		// search script:
+		doc.append("<script>\r\n");
+		
 		doc.append(
-				"<script>\r\n" + 
 				"function search() {\r\n" + 
 				"  // Declare variables\r\n" + 
 				"  var input, filter, filters, ul, li, a, i, txtValue;\r\n" + 
@@ -291,7 +330,10 @@ public class CreateDocumentation extends AbstractHandler {
 				"      li[i].style.display = \"\";\r\n" + 
 				"    }\r\n" + 
 				"	return;\r\n" + 
-				"  }" +
+				"  } else {\r\n" +
+				"    uncollapseAll();" +
+				"  }\r\n" + 
+				"\r\n" + 
 				"  // Loop through all list items, and hide those who don't match the search query\r\n" + 
 				"  for (i = 0; i < li.length; i++) {\r\n" + 
 				"    txtValue = li[i].innerText;\r\n" + 
@@ -310,9 +352,57 @@ public class CreateDocumentation extends AbstractHandler {
 				"	}\r\n" + 
 				"  }\r\n" + 
 				"  return true;\r\n" + 
-				"}\r\n" + 
-				"</script>\r\n"
+				"}\r\n"
 				);
+		
+		// collapse/uncollapse script:
+		doc.append(
+				"\r\n" + 
+				"document.addEventListener('click', function(e) {\r\n" + 
+				"  e = e || window.event;\r\n" + 
+				"  var target = e.target || e.srcElement;\r\n" + 
+				"\r\n" + 
+				"  if (target.tagName == 'A') {\r\n" + 
+				"    if (target.getAttribute('href') !== '#') {" +
+				"      return;" +
+				"    }" +
+				"    target = target.parentNode;\r\n" + 
+				"  }\r\n" + 
+				"\r\n" + 
+				"  if (target.tagName !== 'LI') {\r\n" + 
+				"    return;\r\n" + 
+				"  }\r\n" + 
+				"\r\n" + 
+				"  // set the style of the items:\r\n" + 
+				"  if (target.nextSibling.nextSibling.tagName == 'UL') {\r\n" + 
+				"    var ul = target.nextSibling.nextSibling;\r\n" + 
+				"	\r\n" + 
+				"	if (ul.style.display == 'none') {\r\n" + 
+				"	  ul.style.display = ''\r\n" + 
+				"	} else {\r\n" + 
+				"	  ul.style.display = 'none'\r\n" + 
+				"	}\r\n" + 
+				"  }}, false);\r\n" + 
+				"\r\n" + 
+				"function collapseAll() {\r\n" + 
+				"  ul = document.getElementById('searchContent');\r\n" + 
+				"  uls = ul.getElementsByTagName('ul');\r\n" + 
+				"\r\n" + 
+				"  for (i = 0; i < uls.length; i++) {\r\n" + 
+				"    uls[i].style.display = 'none';\r\n" + 
+				"  }\r\n" + 
+				"}\r\n" + 
+				"function uncollapseAll() {\r\n" + 
+				"  ul = document.getElementById('searchContent');\r\n" + 
+				"  uls = ul.getElementsByTagName('ul');\r\n" + 
+				"\r\n" + 
+				"  for (i = 0; i < uls.length; i++) {\r\n" + 
+				"    uls[i].style.display = '';\r\n" + 
+				"  }\r\n" + 
+				"}"
+				);
+		
+		doc.append("</script>\r\n");
 		
 		doc.append(
 				"</body>\r\n" + 
@@ -343,15 +433,17 @@ public class CreateDocumentation extends AbstractHandler {
 	public void generateHTMLListItem(StringBuilder doc, Pattern pattern) {
 		
 		// item:
-		// TODO: Config: Hide sub-patterns that contain only graph patterns and no other sub-patterns
-//		if (!(pattern.getSubpatterns().size() == 0)) {
+		// LIFT_LEAFS: Hide sub-patterns that contain only graph patterns and no other sub-patterns
+		if (!LIFT_LEAFS || !(pattern.getSubpatterns().size() == 0)) {
 			String patternStereotype = LabelServices.getStereotypesLabel(pattern.getStereotypes()).replace("<", "&lt;").replace(">", "&gt;");;
 			
 			doc.append("<li>");
+			doc.append("<a href=\"#\" style=\"color:#666; text-decoration: none\">");
 			doc.append(patternStereotype + " " + pattern.getName());
+			doc.append("</a>");
 			doc.append("</li>");
 			doc.append("\n");	
-//		}
+		}
 		
 		// children:
 		doc.append("<ul>");
@@ -378,10 +470,12 @@ public class CreateDocumentation extends AbstractHandler {
 			doc.append("\n");
 		}
 		
-		// TODO: Config: generate sub-pattern after (leaf) graph patterns
-//		for (Pattern subPattern : pattern.getSubpatterns()) {
-//			generateHTMLListItem(doc, subPattern);
-//		}
+		// LIFT_LEAFS: generate sub-pattern after (leaf) graph patterns
+		if (LIFT_LEAFS) {
+			for (Pattern subPattern : pattern.getSubpatterns()) {
+				generateHTMLListItem(doc, subPattern);
+			}
+		}
 		
 		doc.append("</ul>");
 		doc.append("\n");
