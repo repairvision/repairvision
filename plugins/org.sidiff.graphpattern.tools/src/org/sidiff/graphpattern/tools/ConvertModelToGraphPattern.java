@@ -34,10 +34,14 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 		
 		if (modelResource != null) {
 			Map<EObject, NodePattern> trace = new HashMap<>();
+			String name = modelResource.getURI().lastSegment();
 			
 			Bundle bundle = GraphpatternFactory.eINSTANCE.createBundle();
+			bundle.setName(name);
 			Pattern pattern = GraphpatternFactory.eINSTANCE.createPattern();
-			GraphPattern graph = GraphpatternFactory.eINSTANCE.createGraphPattern(); 
+			pattern.setName(name);
+			GraphPattern graph = GraphpatternFactory.eINSTANCE.createGraphPattern();
+			graph.setName(name);
 			
 			bundle.getPatterns().add(pattern);
 			pattern.getGraphs().add(graph);

@@ -110,6 +110,11 @@ public class CreateDiagram extends AbstractHandler  {
 		Session session = SessionManager.INSTANCE.getSession(modelElementURI.trimFragment().trimFileExtension().appendFileExtension("aird"), monitor);
 		EObject modelElement = session.getSemanticResources().iterator().next().getEObject(modelElementURI.fragment());
 		
+		if (modelElement == null) {
+			WorkbenchUtil.showError("Something went wrong. Try to delete .aird diagram and retry!");
+			return;
+		}
+		
 		Map<EObject, RepresentationDescription> representations = getRepresentations(session, modelElement);
 
 		for (Entry<EObject, RepresentationDescription> representation : representations.entrySet()) {
