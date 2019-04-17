@@ -1,0 +1,260 @@
+import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/'
+
+package ecore
+
+context EAttribute
+
+inv TheAttributeIsNotTransientSoItMustHaveADataTypeThatIsSerializable:
+self.transient and self.eType.oclIsTypeOf(EDataType) implies (self.eType.oclAsType(EDataType).serializable)
+
+inv TwoFeaturesCannotBothBeIDs: 
+self.oclIsTypeOf(EAttribute) and self.iD=true 
+    implies 
+    (  
+    self.eContainingClass.eSuperTypes->forAll(typeClosure |typeClosure .eStructuralFeatures->forAll(feature| feature.oclAsType(EAttribute)<>self 
+      implies
+      ( 
+    	 feature.oclAsType(EAttribute).iD<>true   	
+      ) 
+    ) 
+  )  
+) 
+
+
+
+context EClass
+
+inv AClassThatIsAnInterfaceMustAlsoBeAbstract:
+self.oclIsTypeOf(EClass) and self.interface implies (self.abstract)
+
+inv ThereMayNotBeTwoFeaturesNamed:
+self.oclIsTypeOf(EClass) 
+   and  
+   self.eStructuralFeatures->forAll(featureA| self.eStructuralFeatures->forAll(featureB|featureA<>featureB
+     implies
+   	 (
+   	    featureA.name<>featureB.name
+   	 )
+   )
+) 
+and 
+self.oclAsType(EClass).eAllSuperTypes->append(self.oclAsType(EClass))->forAll(eClassX |  
+self.oclAsType(EClass).eAllSuperTypes->append(self.oclAsType(EClass))->forAll(eClassY | 
+eClassX<>eClassY implies 
+                 ( 
+                     eClassX.eStructuralFeatures-> forAll(featureX |  
+                     eClassY.eStructuralFeatures-> forAll(featureY |     
+                     featureX.name<>featureY.name     
+                 )  
+             ) 
+        ) 
+    ) 
+) 
+    
+    
+
+context EReference
+
+inv AContainerReferenceMustHaveUpperBoundOfNot:
+self.container implies (self.upperBound = 1)
+
+inv AContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom:
+self.oclIsTypeOf(EReference) implies self.containment or self.eOpposite<>null and self.upperBound<>1 implies self.unique 
+
+inv AContainmentReferenceOfATypeWithAContainerFeaturethatRequiresInstancesToBeContainedElsewhereCannotBePopulated:
+(self.oclIsTypeOf(EReference) and self.containment)  
+implies  
+(  
+  self.eType.oclIsTypeOf(EClass) 
+  implies( 
+    self.eType.oclAsType(EClass).eAllSuperTypes->append(self.eType.oclAsType(EClass))->forAll(typeClosure |  
+        typeClosure.oclAsType(EClass).eStructuralFeatures->forAll(f | 
+        f.oclIsTypeOf(EReference)  
+        implies 
+        ( 
+          f.oclAsType(EReference).eOpposite.containment 
+          implies 
+          (f.oclAsType(EReference).lowerBound = 0 or f.oclAsType(EReference).eOpposite = self)  
+        ) 
+      ) 
+    ) 
+  ) 
+) 
+
+inv TheOppositeOfAContainmentReferenceMustNotBeAContainmentReference:
+self.oclIsTypeOf(EReference) and (self.eOpposite<>null) 
+implies
+( 
+   (self.containment=false) 
+   or 
+   (self.eOpposite.containment=false) 
+)
+
+inv TheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolving: 
+self.oclIsTypeOf(EReference) and self.transient=true 
+implies 
+( 
+   (self.eOpposite.resolveProxies=false) 
+   or 
+   (self.eOpposite.transient=true) 
+) 
+
+inv TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne: 
+self.oclIsTypeOf(EReference) and self.eOpposite<>null 
+implies 
+( 
+   self.eOpposite.eOpposite=self 
+) 
+
+inv TheOppositeMayNotBeItsOwnOpposite: 
+self.oclIsTypeOf(EReference) and self.eOpposite<>self 
+
+
+
+context EStructuralFeature
+
+inv TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType:
+(not(self.eType.oclIsTypeOf(EDataType)) implies self.defaultValueLiteral = null) 
+and 
+( 
+  self.eType.oclIsTypeOf(EEnum) 
+  implies  
+  ( 
+    not (self.defaultValueLiteral=null) 
+    implies  
+    ( 
+      self.eType.oclAsType(EEnum).eLiterals->forAll(literal | 
+      self.defaultValueLiteral=literal.toString() 
+      ) 
+    ) 
+  ) 
+) 
+and 
+not(self.eType.ePackage.eFactoryInstance.createFromString(self.eType.oclAsType(EDataType), self.defaultValueLiteral).oclIsInvalid()) 
+
+
+
+context EOperation 
+
+inv ThereMayNotBeTwoOperationsAndWithTheSameSignature: 
+self.oclIsTypeOf(EOperation)  
+implies  
+not( 
+  self.eContainingClass.eAllSuperTypes-> append(self.eContainingClass)-> 
+  exists(typeClosure|typeClosure.oclAsType(EClass).eOperations-> 
+    exists(otherEOperation| 
+      otherEOperation<>self  
+      and 
+         self.name=otherEOperation.name 
+      and 
+         self.eParameters->size() = otherEOperation.eParameters->size() 
+      and 
+      ( 
+        (self.eParameters->isEmpty() and otherEOperation.eParameters->isEmpty()) 
+        or 
+           self.eParameters->exists(eParameter | 
+               otherEOperation.eParameters->exists(otherEParameter | 
+               eParameter.eType=otherEParameter.eType 
+           and 
+               self.eParameters->indexOf(eParameter)=otherEOperation.eParameters->indexOf(otherEParameter) 
+          ) 
+        ) 
+      ) 
+    ) 
+  ) 
+) 
+
+inv ThereMayNotBeAnOperationWithTheSameSignatureAsAnAccessorMethodForFeature: 
+self.oclIsTypeOf(EOperation) 
+and  
+    self.eAnnotations->exists(annotation|annotation.source='http://www.eclipse.org/emf/2002/GenModel'  
+and 
+    annotation.details-> exists(detail|detail.key='suppressedVisibility' 
+and  
+    detail.value='true' 
+  ) 
+) 
+or     
+self.eContainingClass.oclAsType(EClass).eAllSuperTypes->append(self.eContainingClass.oclAsType(EClass))->forAll(typeClosure |  
+    typeClosure.oclAsType(EClass).eStructuralFeatures->forAll(feature | 
+    ( 
+      ( 
+        (self.eParameters->size() = 1 and feature.upperBound = 1 and self.eParameters->forAll(parameter | parameter.eType = feature.eType))  
+         implies (self.name <> 'set'.concat(feature.name.at(1).toUpperCase()).concat(feature.name.substring(2, feature.name.size()))) 
+        ) 
+    and 
+      (  
+        (self.eParameters->size()=0) 
+         implies (self.name <> 'get'.concat(feature.name.at(1).toUpperCase()).concat(feature.name.substring(2, feature.name.size()))) 
+        ) 
+    and 
+      ( 
+        (self.eParameters->size()=0) 
+         implies (self.name <> 'is'.concat(feature.name.at(1).toUpperCase()).concat(feature.name.substring(2, feature.name.size())))        
+        ) 
+    and 
+      ( 
+        (self.eParameters->size()=0) 
+         implies (self.name <> 'isSet'.concat(feature.name.at(1).toUpperCase()).concat(feature.name.substring(2, feature.name.size()))) 
+        ) 
+    and 
+      ( 
+        (self.eParameters->size()=0) 
+         implies (self.name <> 'unSet'.concat(feature.name.at(1).toUpperCase()).concat(feature.name.substring(2, feature.name.size())))     
+        ) 
+      ) 
+   ) 
+) 
+
+
+
+context EParameter 
+
+inv ThereMayNotBeTwoParametersNamed: 
+self.oclIsKindOf(EParameter) and 
+(self.eOperation.eParameters)->forAll(otherEparameter| 
+   not 
+   ( 
+      otherEparameter<>self and otherEparameter.toString()=self.name 
+   ) 
+) 
+
+
+
+context EPackage
+
+inv ThereMayNotBeTwoClassifiersNamed: 
+self.oclIsTypeOf(EPackage) and  
+self.eClassifiers->forAll(classA| not(self.eClassifiers-> exists(classB|classA.name=classB.name and classA<>classB))) 
+
+
+
+context ETypedElement
+
+inv TheTypedElementMustHaveAType: 
+self.oclIsKindOf(ETypedElement) and (self.oclIsTypeOf(EOperation) or self.eType<>null) 
+
+
+
+context EModelElement 
+
+inv TheRequiredFeatureOfMustBeSet:
+self.oclIsKindOf(EModelElement) and 
+(self.oclIsTypeOf(EAttribute) implies (self.oclAsType(EAttribute).eType<>null)) and 
+(self.oclIsTypeOf(EFactory) implies (self.oclAsType(EFactory).ePackage<>null)) and 
+(self.oclIsTypeOf(EPackage) implies (self.oclAsType(EPackage).eFactoryInstance<>null)) and 
+(self.oclIsTypeOf(EReference) implies (self.oclAsType(EReference).eType<>null)) 
+
+
+
+context EGenericType 
+
+inv TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier: 
+self.oclIsTypeOf(EGenericType) and (self.eClassifier.eTypeParameters->size())=(self.eTypeArguments->size()) 
+
+inv TheGenericTypeAssociatedWithTheClassifierMustNotHaveArgumentsWhenTheClassifierHasTypeParameters: 
+self.oclIsTypeOf(EGenericType) and (self.eClassifier.eTypeParameters->size())=(self.eTypeArguments->size()) 
+
+
+
+endpackage

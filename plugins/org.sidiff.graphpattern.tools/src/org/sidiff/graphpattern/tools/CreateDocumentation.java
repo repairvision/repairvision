@@ -450,8 +450,10 @@ public class CreateDocumentation extends AbstractHandler {
 		doc.append("\n");
 		
 		// sub-patterns:
-		for (Pattern subPattern : pattern.getSubpatterns()) {
-			generateHTMLListItem(doc, subPattern);
+		if (!LIFT_LEAFS) {
+			for (Pattern subPattern : pattern.getSubpatterns()) {
+				generateHTMLListItem(doc, subPattern);
+			}
 		}
 		
 		// graph patterns:

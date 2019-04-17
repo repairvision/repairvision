@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ASCII"?>
+<graphpattern:Bundle xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:graphpattern="http://www.sidiff.org/graphpattern/1.0" xmi:id="_0JIRUGESEemMMuaobz9SMA" name="example.ecore">
+  <patterns xmi:id="_0JIRUWESEemMMuaobz9SMA" name="example.ecore">
+    <graphs xmi:id="_0JIRUmESEemMMuaobz9SMA" name="example.ecore">
+      <nodes xmi:id="_0JIRXWESEemMMuaobz9SMA" name="Player" incomings="_0JIRbGESEemMMuaobz9SMA">
+        <outgoings xmi:id="_0JIRXmESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRX2ESEemMMuaobz9SMA" target="_0JIRZmESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRYGESEemMMuaobz9SMA" target="_0JIRa2ESEemMMuaobz9SMA" opposite="_0JIRbGESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eOperations"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        <attributes xmi:id="_0JIRYWESEemMMuaobz9SMA" value="&quot;Player&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_0JIRZmESEemMMuaobz9SMA" name="A" incomings="_0JIRX2ESEemMMuaobz9SMA _0JIRgWESEemMMuaobz9SMA">
+        <outgoings xmi:id="_0JIRZ2ESEemMMuaobz9SMA" target="_0JIRaWESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter/eBounds"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
+        <attributes xmi:id="_0JIRaGESEemMMuaobz9SMA" value="&quot;A&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_0JIRaWESEemMMuaobz9SMA" name="#3" incomings="_0JIRZ2ESEemMMuaobz9SMA">
+        <outgoings xmi:id="_0JIRamESEemMMuaobz9SMA" target="_0JIRomESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_0JIRa2ESEemMMuaobz9SMA" name="play" incomings="_0JIRYGESEemMMuaobz9SMA _0JIRdmESEemMMuaobz9SMA">
+        <outgoings xmi:id="_0JIRbGESEemMMuaobz9SMA" target="_0JIRXWESEemMMuaobz9SMA" opposite="_0JIRYGESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eContainingClass"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRbWESEemMMuaobz9SMA" target="_0JIRc2ESEemMMuaobz9SMA" opposite="_0JIRdmESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+        <attributes xmi:id="_0JIRbmESEemMMuaobz9SMA" value="&quot;play&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_0JIRc2ESEemMMuaobz9SMA" name="playlist" incomings="_0JIRbWESEemMMuaobz9SMA">
+        <outgoings xmi:id="_0JIRdGESEemMMuaobz9SMA" target="_0JIRhGESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRdWESEemMMuaobz9SMA" target="_0JIRfGESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eGenericType"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRdmESEemMMuaobz9SMA" target="_0JIRa2ESEemMMuaobz9SMA" opposite="_0JIRbWESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter/eOperation"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
+        <attributes xmi:id="_0JIRd2ESEemMMuaobz9SMA" value="&quot;playlist&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_0JIRfGESEemMMuaobz9SMA" name="#6" incomings="_0JIRdWESEemMMuaobz9SMA">
+        <outgoings xmi:id="_0JIRfWESEemMMuaobz9SMA" target="_0JIRgGESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRfmESEemMMuaobz9SMA" target="_0JIRgmESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRf2ESEemMMuaobz9SMA" target="_0JIRhGESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_0JIRgGESEemMMuaobz9SMA" name="#7" incomings="_0JIRfWESEemMMuaobz9SMA">
+        <outgoings xmi:id="_0JIRgWESEemMMuaobz9SMA" target="_0JIRZmESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeParameter"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_0JIRgmESEemMMuaobz9SMA" name="#8" incomings="_0JIRfmESEemMMuaobz9SMA">
+        <outgoings xmi:id="_0JIRg2ESEemMMuaobz9SMA" target="_0JIRomESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_0JIRhGESEemMMuaobz9SMA" name="List" incomings="_0JIRdGESEemMMuaobz9SMA _0JIRf2ESEemMMuaobz9SMA">
+        <outgoings xmi:id="_0JIRhWESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRhmESEemMMuaobz9SMA" target="_0JIRjWESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRh2ESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eOperations"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        <attributes xmi:id="_0JIRiGESEemMMuaobz9SMA" value="&quot;List&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_0JIRjWESEemMMuaobz9SMA" name="T" incomings="_0JIRhmESEemMMuaobz9SMA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
+        <attributes xmi:id="_0JIRjmESEemMMuaobz9SMA" value="&quot;T&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_0JIRomESEemMMuaobz9SMA" name="Audio" incomings="_0JIRamESEemMMuaobz9SMA _0JIRg2ESEemMMuaobz9SMA _0JIRq2ESEemMMuaobz9SMA _0JIRtmESEemMMuaobz9SMA">
+        <outgoings xmi:id="_0JIRo2ESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        <attributes xmi:id="_0JIRpGESEemMMuaobz9SMA" value="&quot;Audio&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_0JIRqWESEemMMuaobz9SMA" name="MP3">
+        <outgoings xmi:id="_0JIRqmESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRq2ESEemMMuaobz9SMA" target="_0JIRomESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRrGESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eGenericSuperTypes"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        <attributes xmi:id="_0JIRrWESEemMMuaobz9SMA" value="&quot;MP3&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_0JIRtGESEemMMuaobz9SMA" name="Stream">
+        <outgoings xmi:id="_0JIRtWESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRtmESEemMMuaobz9SMA" target="_0JIRomESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+        </outgoings>
+        <outgoings xmi:id="_0JIRt2ESEemMMuaobz9SMA">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eGenericSuperTypes"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+        <attributes xmi:id="_0JIRuGESEemMMuaobz9SMA" value="&quot;Stream&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+    </graphs>
+  </patterns>
+</graphpattern:Bundle>
