@@ -16,6 +16,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;
+import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
@@ -52,6 +53,21 @@ public class Edit2RecognitionMatch {
 	public Edit2RecognitionMatch(IRevision revision, ImpactAnalyzes impact) {
 		this.revision = revision;
 		this.impact = impact;
+	}
+	
+	public List<Change> getChangeSet(RecognitionPattern recognitionPattern, IMatching matching) {
+		ArrayList<Change> changeSet = new ArrayList<>();
+		
+		for (NodePattern changeNodePattern : recognitionPattern.getChangeNodePatterns()) {
+			EObject match = matching.getFirstMatch(changeNodePattern);
+			
+			if (match instanceof Change) { // i.e. no match -> null
+				changeSet.add((Change) matching.getFirstMatch(changeNodePattern));
+			}
+		}
+		
+		changeSet.trimToSize();
+		return changeSet;
 	}
 	
 	public List<RecognitionMatch> createEditRuleMatch(RecognitionPattern recognitionPattern, IMatching matching) {

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTime;
+import org.sidiff.difference.symmetric.Change;
 import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.RecognitionEngine;
 import org.sidiff.editrule.recognition.RecognitionEngineMatcher;
@@ -86,10 +87,11 @@ public class ComplementFinder {
 			
 			// Translate: Create partial edit-rule match from recognition-rule match:
 			List<RecognitionMatch> recognitionMatch = engine.getMatchConverter().createEditRuleMatch(recognitionPattern, matching);
+			List<Change> recognizedChangeSet = engine.getMatchConverter().getChangeSet(recognitionPattern, matching);
 			
 			// Store new complement rule:
 			if (!recognitionMatch.isEmpty()) {
-				ComplementRule complementRule = engine.getComplementConstructor().createComplementRule(editRule, recognitionMatch);
+				ComplementRule complementRule = engine.getComplementConstructor().createComplementRule(editRule, recognitionMatch, recognizedChangeSet);
 				
 				if (complementRule != null) {
 					complements.add(complementRule);

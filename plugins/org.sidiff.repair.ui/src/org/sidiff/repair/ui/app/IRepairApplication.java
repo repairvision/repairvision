@@ -64,7 +64,7 @@ public interface IRepairApplication<J extends RepairJob<?>, F extends IRepairSet
 	
 	/**
 	 * @param repair
-	 *            The repairs which will be applied in the given order.
+	 *            The repair which will be applied.
 	 * @param match
 	 *            The (full) match of the complement rule.
 	 * @return <code>true</code> if everything was fine; <code>false</code> otherwise.
@@ -75,6 +75,12 @@ public interface IRepairApplication<J extends RepairJob<?>, F extends IRepairSet
 	 * Reverts the last repairs.
 	 */
 	boolean undoRepair();
+	
+	/**
+	 * @param repair  The repair based on the inconsistency-inducing change to be rolled back.
+	 * @return <code>true</code> if everything was fine; <code>false</code> otherwise.
+	 */
+	boolean rollbackInconsistencyInducingChanges(IRepairPlan repair);
 	
 	/**
 	 * Clear application state.

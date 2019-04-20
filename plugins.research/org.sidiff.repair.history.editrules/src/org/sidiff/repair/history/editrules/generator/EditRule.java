@@ -16,11 +16,11 @@ import org.sidiff.editrule.tools.recorder.DifferenceToEditRule;
 import org.sidiff.editrule.tools.recorder.TransformationSetup;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.MatchingModelFactory;
-import org.sidiff.repair.history.editrules.learning.DifferenceSlice;
-import org.sidiff.repair.history.editrules.learning.LearnEditRule;
-import org.sidiff.repair.history.editrules.learning.MultiScopeReferenceFilter;
-import org.sidiff.repair.history.editrules.learning.ScopeAttributeFilter;
-import org.sidiff.repair.history.editrules.learning.ScopeReferenceFilter;
+import org.sidiff.repair.history.editrules.learn.scope.DifferenceSlice;
+import org.sidiff.repair.history.editrules.learn.scope.LearnEditRule;
+import org.sidiff.repair.history.editrules.learn.scope.MultiScopeReferenceFilter;
+import org.sidiff.repair.history.editrules.learn.scope.ScopeAttributeFilter;
+import org.sidiff.repair.history.editrules.learn.scope.ScopeReferenceFilter;
 import org.sidiff.validation.constraint.interpreter.scope.AttributeScope;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 

@@ -24,6 +24,7 @@ import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
 import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.common.emf.ModelingUtil;
+import org.sidiff.difference.symmetric.Change;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
 import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
@@ -45,16 +46,17 @@ public class ComplementConstructor {
 	 * @param recognitionMatch
 	 *            A partial (edit-rule) matching of the partially executed
 	 *            source-rule.
+	 * @param recognizedChangeSet 
 	 * @return The rule which complements the partial partially executed
 	 *         source-rule or <code>null</code> if the complement-rule could not
 	 *         be constructed (e.g. dangling edges, no remaining changes).
 	 */
-	public ComplementRule createComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch) {
+	public ComplementRule createComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch, List<Change> recognizedChangeSet) {
 
 		long deriveComplements = System.currentTimeMillis();
 		
 		// Derive complement rule:
-		ComplementRule complement = deriveComplementRule(recognizedRule, recognitionMatch); 
+		ComplementRule complement = deriveComplementRule(recognizedRule, recognitionMatch, recognizedChangeSet); 
 		
 		if (DebugUtil.statistic) {
 			System.out.println("########## Derive Complement: " + (System.currentTimeMillis() - deriveComplements) + "ms");
@@ -63,14 +65,14 @@ public class ComplementConstructor {
 		return complement;
 	}
 	
-	protected ComplementRule deriveComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch) {
+	protected ComplementRule deriveComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch, List<Change> recognizedChangeSeth) {
 
 		// Create copy of the source rule:
 		Map<EObject, EObject> copyTrace = ModelingUtil.deepCopy(recognizedRule);
 		Rule complementRule = (Rule) copyTrace.get(recognizedRule);
 
 		// Initialize complement rule:
-		ComplementRule complement = new ComplementRule(recognizedRule, recognitionMatch, complementRule);
+		ComplementRule complement = new ComplementRule(recognizedRule, recognitionMatch, recognizedChangeSeth, complementRule);
 
 		// Save trace [Source -> Complement]:
 		for (Node sourceNode : recognizedRule.getLhs().getNodes()) {

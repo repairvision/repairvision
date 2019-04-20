@@ -411,6 +411,67 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	}
 	
 	@Override
+	public boolean rollbackInconsistencyInducingChanges(IRepairPlan repair) {
+		boolean[] result = new boolean[1];
+		TransactionalEditingDomain transactionalEditingDomain = TransactionUtil.getEditingDomain(getModelB());
+		
+		if (transactionalEditingDomain != null) {
+			transactionalEditingDomain.getCommandStack().execute(new RecordingCommand(transactionalEditingDomain) {
+
+				@Override
+				protected void doExecute() {;
+					result[0] = repairJob.rollbackInconsistencyInducingChanges(repair, false);
+				}
+
+				@Override
+				public boolean canUndo() {
+					return true;
+				}
+
+			});
+		} else {
+			EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getModelB().getContents().get(0));
+			
+			if (editingDomain != null) {
+				editingDomain.getCommandStack().execute(new AbstractCommand() {
+					
+					@Override
+					public void redo() {
+					}
+					
+					@Override
+					public boolean canUndo() {
+						return false;
+					}
+					
+					@Override
+					public void execute() {
+						result[0] = repairJob.rollbackInconsistencyInducingChanges(repair, false);
+					}
+					
+					@Override
+					public boolean canExecute() {
+						return true;
+					}
+				});
+			} else {
+				result[0] = repairJob.rollbackInconsistencyInducingChanges(repair, false);
+			}
+		}
+		
+		// save the applied repair?
+		if (autoSaveModel) {
+			try {
+				repairJob.getRevision().getVersionB().getTargetResource().save(Collections.emptyMap());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result[0];
+	}
+	
+	@Override
 	public PEORepairJob getRepairJob() {
 		return repairJob;
 	}

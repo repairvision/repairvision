@@ -254,6 +254,11 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 		
 		return repairJob.undoRepair(true);
 	}
+	
+	@Override
+	public boolean rollbackInconsistencyInducingChanges(IRepairPlan repair) {
+		return repairJob.rollbackInconsistencyInducingChanges(repair, true);
+	}
 
 	public IResource removeEditRule(IResource selection) {
 		editRuleFiles.remove(selection);

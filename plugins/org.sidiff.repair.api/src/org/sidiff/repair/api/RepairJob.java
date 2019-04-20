@@ -11,6 +11,9 @@ import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.api.ranking.RepairRankingComparator;
+import org.sidiff.repair.api.undo.ComplementRepairCommand;
+import org.sidiff.repair.api.undo.IRepairCommand;
+import org.sidiff.repair.api.undo.RollbackRepairCommand;
 
 /**
  * A container for all applicable repairs.
@@ -25,7 +28,7 @@ public class RepairJob<R extends IRepairPlan> {
 	/**
 	 * History of applied repairs.
 	 */
-	protected Stack<RuleApplication> repairStack = new Stack<>();
+	protected Stack<IRepairCommand> repairStack = new Stack<>();
 
 	/**
 	 * All applicable repair plans
@@ -64,8 +67,6 @@ public class RepairJob<R extends IRepairPlan> {
 		this.ranking = new RepairRankingComparator(this);
 	}
 
-
-
 	/**
 	 * Copies the history of applied repairs from the given repair job.
 	 * 
@@ -84,8 +85,10 @@ public class RepairJob<R extends IRepairPlan> {
 		application.setRule(repair.getComplementingEditRule());
 		application.setCompleteMatch(match);
 		
-		if (application.execute(null)) {
-			repairStack.push(application);
+		ComplementRepairCommand complementRepair = new ComplementRepairCommand(application);
+		
+		if (complementRepair.apply()) {
+			repairStack.push(complementRepair);
 			
 			// Save model
 			if (saveModel) {
@@ -101,15 +104,38 @@ public class RepairJob<R extends IRepairPlan> {
 			return false;
 		}
 	}
+	
+	public boolean rollbackInconsistencyInducingChanges(IRepairPlan repair, boolean saveModel) {
+
+		// rollback inconsistency-inducing changes:
+		RollbackRepairCommand rollbackRepair = new RollbackRepairCommand(repair, revision);
+
+		if (rollbackRepair.apply()) {
+			repairStack.push(rollbackRepair);
+
+			if (saveModel) {
+				try {
+					revision.getVersionB().getTargetResource().save(null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			return false;
+		}
+
+		return true;
+
+	}
 
 	public boolean undoRepair(boolean saveModel) {
 
 		// Undo repair:
 		if (!repairStack.isEmpty()) {
-			RuleApplication lastRepairs = repairStack.pop();
+			IRepairCommand lastRepairs = repairStack.pop();
 
 			// Save model
-			if (lastRepairs.undo(null)) {
+			if (lastRepairs.undo()) {
 				if (saveModel) {
 					try {
 						revision.getVersionB().getTargetResource().save(null);

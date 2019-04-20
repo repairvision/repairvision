@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.history.analysis.util.HistoryAnalysisUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;

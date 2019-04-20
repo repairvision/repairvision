@@ -14,6 +14,7 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
+import org.sidiff.difference.symmetric.Change;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
@@ -64,6 +65,11 @@ public class RepairPlan implements IRepairPlan {
 	@Override
 	public List<GraphElement> getRecognizedChanges() {
 		return complementRule.getRecognizedChanges();
+	}
+	
+	@Override
+	public List<Change> getRecognizedChangeSet() {
+		return complementRule.getRecognizedChangeSet();
 	}
 	
 	@Override

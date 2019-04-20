@@ -8,6 +8,7 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.difference.symmetric.Change;
 
 /**
  * Represents a single history-based repair operation.
@@ -25,6 +26,11 @@ public interface IRepairPlan {
 	 * @return All already applied changes of the corresponding edit rule.
 	 */
 	List<GraphElement> getRecognizedChanges();
+	
+	/**
+	 * @return The recognized changes of the model difference.
+	 */
+	List<Change> getRecognizedChangeSet();
 	
 	/**
 	 * @param node

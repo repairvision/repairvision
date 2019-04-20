@@ -18,6 +18,7 @@ import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.util.TechnicalDifferenceBuilderUtil;
 import org.sidiff.generic.matcher.uuid.UUIDMatcher;
+import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.repair.api.IRepairFacade;
@@ -25,12 +26,11 @@ import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.editrules.library.RulebaseUtil;
+import org.sidiff.repair.history.editrules.driver.LearnEditRuleDriver;
 import org.sidiff.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.InconsistencyEvaluationDriver;
-import org.sidiff.repair.history.evaluation.driver.LearnEditRuleDriver;
 import org.sidiff.repair.history.evaluation.driver.PrintHistoryInfoDriver;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
-import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.app.IResultChangedListener;
@@ -160,7 +160,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				InconsistencyTrace repaired = InconsistencyTrace.createRepairedInconsistency(selection, true);
-				LearnEditRuleDriver.learnEditRule(history, getMatchingSettings(), repaired);
+				LearnEditRuleDriver.learnEditRule(history.getHistory(), history.getSupportedConsistencyRules(), getMatchingSettings(), repaired);
 				return Status.OK_STATUS;
 			}
 		};
@@ -198,6 +198,11 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 		}
 		
 		return repairJob.undoRepair(true);
+	}
+	
+	@Override
+	public boolean rollbackInconsistencyInducingChanges(IRepairPlan repair) {
+		return repairJob.rollbackInconsistencyInducingChanges(repair, true);
 	}
 
 	public IResource removeEditRule(IResource selection) {

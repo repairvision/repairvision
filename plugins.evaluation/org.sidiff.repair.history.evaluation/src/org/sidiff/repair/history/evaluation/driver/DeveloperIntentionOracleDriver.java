@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.util.ComplementMatching;
 import org.sidiff.repair.api.util.RecognitionMatching;
-import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.repair.history.evaluation.oracle.DeveloperIntentionOracle;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 

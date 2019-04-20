@@ -55,15 +55,18 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 	
 	protected Action calculateRepairs;
 	
+	protected Action rollbackInducingChanges;
+	
+	protected Action setParameter;
+	
+	protected Action unsetParameter;
+	
 	protected Action applyRepairs;
 	
 	protected Action undoRepairs;
 	
 	protected Action clearSetup;
 	
-	protected Action setParameter;
-	
-	protected Action unsetParameter;
 	
 	protected Action openHistoricModel;
 	
@@ -157,21 +160,6 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		
 		this.drillDownAdapter = new DrillDownAdapter(viewer_repairs);
 
-		// Open configuration:
-		openConfiguration = new Action() {
-			public void run() {
-				PreferenceDialog configurationPage = PreferencesUtil.createPreferenceDialogOn(
-						site.getShell(), RepairPreferencePage.ID, null, null);
-				
-				if (configurationPage != null) {
-					configurationPage.open();
-				}
-			}
-		};
-		openConfiguration.setText("Configuration");
-		openConfiguration.setToolTipText("Open Configuration");
-		openConfiguration.setImageDescriptor(Activator.getImageDescriptor("icons/configuration.png"));
-		
 		// Calculate repairs:
 		calculateRepairs = new Action() {
 			public void run() {
@@ -181,6 +169,88 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		calculateRepairs.setText("Validate Model");
 		calculateRepairs.setToolTipText("Validate Model");
 		calculateRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/bulb.png"));
+		
+		// Apply repair:
+		applyRepairs = new Action() {
+
+			public void run() {
+				ISelection selection = viewer_repairs.getSelection();
+				
+				if (selection instanceof IStructuredSelection) {
+					Object selected = ((IStructuredSelection) selection).getFirstElement();
+
+					if (selected instanceof RepairPlanItem) {
+						IRepairPlan repair = ((RepairPlanItem) selected).getRepairPlan();
+						List<Match> matches = repair.getComplementMatches();
+						
+						if (matches.size() == 1) {
+							if (application.applyRepair(repair, matches.get(0))) {
+								WorkbenchUtil.showMessage("Repair successfully applied!");
+								
+								// Recalculate repairs:
+								application.recalculateRepairs();
+							} else {
+								WorkbenchUtil.showMessage("Repair could not be applied!");
+							}
+						} else {
+							WorkbenchUtil.showMessage("Please specify all parameters!");
+						}
+						
+						return;
+					}
+				}
+				
+				WorkbenchUtil.showMessage("Please select a repair operation!");
+			}
+			
+			@Override
+			public boolean isEnabled() {
+				IStructuredSelection selection = (IStructuredSelection) viewer_repairs.getSelection();
+				
+				if (selection.getFirstElement() instanceof RepairPlanItem) {
+					applyRepairs.setEnabled(true);
+				} else {
+					applyRepairs.setEnabled(false);
+				}
+				
+				return super.isEnabled();
+			}
+		};
+		applyRepairs.setText("Apply Repair");
+		applyRepairs.setToolTipText("Apply Repair");
+		applyRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/apply.png"));
+		
+		// Undo repair:
+		rollbackInducingChanges = new Action() {
+			public void run() {
+				
+				ISelection selection = viewer_repairs.getSelection();
+				
+				if (selection instanceof IStructuredSelection) {
+					Object selected = ((IStructuredSelection) selection).getFirstElement();
+
+					if (selected instanceof RepairPlanItem) {
+						IRepairPlan repair = ((RepairPlanItem) selected).getRepairPlan();
+						
+						if (application.rollbackInconsistencyInducingChanges(repair)) {
+							WorkbenchUtil.showMessage("Inconsistency-inducing changes successfully undone!");
+							
+							// Recalculate repairs:
+							application.recalculateRepairs();
+						} else {
+							WorkbenchUtil.showMessage("Inconsistency-inducing changes could not be undone!");
+						}
+						
+						return;
+					}
+				}
+				
+				WorkbenchUtil.showMessage("Please select a repair operation!");
+			}
+		};
+		rollbackInducingChanges.setText("Undo Inconsistency-Inducing Changes");
+		rollbackInducingChanges.setToolTipText("Undo Inconsistency-Inducing Changes from Model History");
+		rollbackInducingChanges.setImageDescriptor(Activator.getImageDescriptor("icons/rollback_inducing.png"));
 		
 		// Set parameter value:
 		setParameter = new Action() {
@@ -248,57 +318,6 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		unsetParameter.setToolTipText("Unset Parameter");
 		unsetParameter.setImageDescriptor(Activator.getImageDescriptor("icons/parameters.gif"));
 		
-		// Apply repair:
-		applyRepairs = new Action() {
-
-			public void run() {
-				ISelection selection = viewer_repairs.getSelection();
-				
-				if (selection instanceof IStructuredSelection) {
-					Object selected = ((IStructuredSelection) selection).getFirstElement();
-
-					if (selected instanceof RepairPlanItem) {
-						IRepairPlan repair = ((RepairPlanItem) selected).getRepairPlan();
-						List<Match> matches = repair.getComplementMatches();
-						
-						if (matches.size() == 1) {
-							if (application.applyRepair(repair, matches.get(0))) {
-								
-								// Recalculate repairs:
-								application.recalculateRepairs();
-								
-								WorkbenchUtil.showMessage("Repair successfully applied!");
-							} else {
-								WorkbenchUtil.showMessage("Repair could not be applied!");
-							}
-						} else {
-							WorkbenchUtil.showMessage("Please specify all parameters!");
-						}
-						
-						return;
-					}
-				}
-				
-				WorkbenchUtil.showMessage("Please select a repair operation!");
-			}
-			
-			@Override
-			public boolean isEnabled() {
-				IStructuredSelection selection = (IStructuredSelection) viewer_repairs.getSelection();
-				
-				if (selection.getFirstElement() instanceof RepairPlanItem) {
-					applyRepairs.setEnabled(true);
-				} else {
-					applyRepairs.setEnabled(false);
-				}
-				
-				return super.isEnabled();
-			}
-		};
-		applyRepairs.setText("Apply Repair");
-		applyRepairs.setToolTipText("Apply Repair");
-		applyRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/apply.png"));
-		
 		// Undo repair:
 		undoRepairs = new Action() {
 			public void run() {
@@ -316,7 +335,7 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		};
 		undoRepairs.setText("Undo Repair");
 		undoRepairs.setToolTipText("Undo Repair");
-		undoRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/undo.png"));
+		undoRepairs.setImageDescriptor(Activator.getImageDescriptor("icons/undo_repair.png"));
 		
 		// Clear setup:
 		clearSetup = new Action() {
@@ -354,6 +373,21 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		openHistoricModel.setText("Open Historic Model Version");
 		openHistoricModel.setToolTipText("Open Historic Model Version");
 		openHistoricModel.setImageDescriptor(Activator.getImageDescriptor("icons/history.png"));
+		
+		// Open configuration:
+		openConfiguration = new Action() {
+			public void run() {
+				PreferenceDialog configurationPage = PreferencesUtil.createPreferenceDialogOn(
+						site.getShell(), RepairPreferencePage.ID, null, null);
+				
+				if (configurationPage != null) {
+					configurationPage.open();
+				}
+			}
+		};
+		openConfiguration.setText("Configuration");
+		openConfiguration.setToolTipText("Open Configuration");
+		openConfiguration.setImageDescriptor(Activator.getImageDescriptor("icons/configuration.png"));
 	}
 	
 	@Override
@@ -362,11 +396,12 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		manager.add(calculateRepairs);
 		manager.add(openHistoricModel);
 		manager.add(applyRepairs);
-		manager.add(undoRepairs);
+		manager.add(rollbackInducingChanges);
 		manager.add(new Separator());
 		manager.add(setParameter);
 		manager.add(unsetParameter);
 		manager.add(new Separator());
+		manager.add(undoRepairs);
 		manager.add(clearSetup);
 		manager.add(openConfiguration);
 		manager.add(new Separator());

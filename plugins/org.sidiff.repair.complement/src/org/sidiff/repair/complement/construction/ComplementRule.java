@@ -25,6 +25,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.difference.symmetric.Change;
 import org.sidiff.repair.complement.matching.RecognitionActionMatch;
 import org.sidiff.repair.complement.matching.RecognitionMatch;
 
@@ -51,6 +52,11 @@ public class ComplementRule {
 	private List<RecognitionMatch> recognitionMatch;
 	
 	/**
+	 * The recognized changes of the model difference.
+	 */
+	private List<Change> recognizedChangeSet;
+	
+	/**
 	 * The complement rule for the partially executed edit rule.
 	 */
 	protected Rule complementRule;
@@ -70,9 +76,10 @@ public class ComplementRule {
 	 */
 	private Map<Node, Node> rhsTrace = new HashMap<>();
 	
-	public ComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch, Rule complementRule) {
+	public ComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch, List<Change> recognizedChangeSet, Rule complementRule) {
 		this.recognizedRule = recognizedRule;
 		this.recognitionMatch = recognitionMatch;
+		this.recognizedChangeSet = recognizedChangeSet;
 		this.complementRule = complementRule;
 	}
 	
@@ -103,6 +110,10 @@ public class ComplementRule {
 	
 	public List<RecognitionMatch> getRecognitionMatch() {
 		return recognitionMatch;
+	}
+	
+	public List<Change> getRecognizedChangeSet() {
+		return recognizedChangeSet;
 	}
 	
 	public Rule getComplementRule() {

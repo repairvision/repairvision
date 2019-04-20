@@ -20,7 +20,7 @@ import org.sidiff.difference.technical.api.TechnicalDifferenceFacade;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.difference.technical.api.util.TechnicalDifferenceUtils;
 import org.sidiff.matching.api.util.MatchingUtils;
-import org.sidiff.repair.history.editrules.learning.LearnEditRule;
+import org.sidiff.repair.history.editrules.learn.scope.LearnEditRule;
 import org.sidiff.repair.history.editrules.util.IterableHistory;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RequiredValidation;

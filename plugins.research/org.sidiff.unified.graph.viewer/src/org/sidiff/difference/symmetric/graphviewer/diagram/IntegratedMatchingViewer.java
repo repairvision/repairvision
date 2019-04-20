@@ -55,10 +55,10 @@ import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
+import org.sidiff.repair.history.editrules.learn.resolved.InconsistencyAnalysis;
 import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
 import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
-import org.sidiff.repair.history.evolution.InconsistencyAnalysis;
-import org.sidiff.repair.history.evolution.difference.IncrementalDifference;
+import org.sidiff.repair.history.evolution.IncrementalDifference;
 import org.sidiff.repair.history.evolution.difference.SymmetricDifferenceUtil;
 
 public class IntegratedMatchingViewer extends ViewPart implements ISelectionProvider {
