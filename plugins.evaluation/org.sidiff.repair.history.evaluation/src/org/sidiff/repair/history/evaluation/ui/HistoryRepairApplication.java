@@ -26,7 +26,6 @@ import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.editrules.library.RulebaseUtil;
-import org.sidiff.repair.history.editrules.driver.LearnEditRuleDriver;
 import org.sidiff.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.InconsistencyEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.PrintHistoryInfoDriver;
@@ -146,21 +145,6 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 					}
 				});
 
-				return Status.OK_STATUS;
-			}
-		};
-		
-		calculation.schedule();
-	}
-	
-	public void learnEditRule(Problem selection) {
-		
-		calculation = new Job("Learn Edit Rule") {
-			
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				InconsistencyTrace repaired = InconsistencyTrace.createRepairedInconsistency(selection, true);
-				LearnEditRuleDriver.learnEditRule(history.getHistory(), history.getSupportedConsistencyRules(), getMatchingSettings(), repaired);
 				return Status.OK_STATUS;
 			}
 		};

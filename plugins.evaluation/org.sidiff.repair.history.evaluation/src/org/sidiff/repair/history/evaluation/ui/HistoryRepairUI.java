@@ -14,9 +14,6 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -36,7 +33,6 @@ import org.sidiff.historymodel.Problem;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.repair.api.RepairJob;
-import org.sidiff.repair.history.evaluation.Activator;
 import org.sidiff.repair.ui.controls.basic.BasicRepairViewerUI;
 import org.sidiff.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.repair.validation.ui.widgets.ValidationWidget;
@@ -46,27 +42,27 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 	/**
 	 * Shows the abstract repairs.
 	 */
-	private ValidationWidget validationWidget;
+	protected ValidationWidget validationWidget;
 	
 	/**
 	 * Drop target to create a rulebase.
 	 */
-	private ModelDropWidget editRules;
+	protected ModelDropWidget editRules;
 	
 	/**
 	 * Drop target for the model history.
 	 */
-	private ModelDropWidget histroyStoreInput;
+	protected ModelDropWidget histroyStoreInput;
 	
 	/**
 	 * Shows all differences.
 	 */
-	private TreeViewer historyInconsistenciesViewer;
+	protected TreeViewer historyInconsistenciesViewer;
 	
 	/**
 	 * Editor decoration.
 	 */
-	private ISelectionHighlightingAdapter historyInconsistenciesViewerDecorationAdapter;
+	protected ISelectionHighlightingAdapter historyInconsistenciesViewerDecorationAdapter;
 	
 	@Override
 	public void createPartControls(Composite parent, IWorkbenchPartSite site) {
@@ -198,36 +194,6 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 		
 		// Setup Sash-Form:
 		sashForm.setWeights(new int[] {100, 50, 40, 10, 10});
-	}
-	
-	@Override
-	public void createLocalToolBar(IToolBarManager manager) {
-		super.createLocalToolBar(manager);
-		
-		// Edit-Rule Recorder //
-		
-		Action recordEditRule = new Action() {
-			@Override
-			public void run() {
-				ISelection selection = historyInconsistenciesViewer.getSelection();
-				
-				if (selection instanceof IStructuredSelection) {
-					for (Object selected : ((IStructuredSelection) selection).toList()) {
-						if (selected instanceof Problem) {
-							getApplication().learnEditRule((Problem) selected);
-						}
-					}
-				}
-			}
-		};
-		
-		recordEditRule.setText("Learn Edit-Rule");
-		recordEditRule.setToolTipText("Learn Edit-Rule");
-		recordEditRule.setImageDescriptor(Activator.getImageDescriptor("icons/cat-icon.png"));
-		
-		manager.add(new Separator());
-		manager.add(recordEditRule);
-		manager.add(new Separator());
 	}
 	
 	@Override

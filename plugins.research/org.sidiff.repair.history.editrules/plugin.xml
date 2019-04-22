@@ -2,6 +2,14 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
+         point="org.sidiff.repair.ui.presentation">
+      <presentation
+            id="org.sidiff.repair.ui.peo.evaluation.presentation.history"
+            name="Partial CPO Engine (edit rule learning)"
+            presentation="org.sidiff.repair.history.editrules.ui.HistoryEditRuleLearnPresentation">
+      </presentation>
+   </extension>
+   <extension
          point="org.eclipse.ui.commands">
       <command
             id="org.sidiff.repair.history.editrules.generator"
