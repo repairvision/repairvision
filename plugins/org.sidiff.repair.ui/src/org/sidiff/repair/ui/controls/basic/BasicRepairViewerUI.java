@@ -415,11 +415,12 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		manager.add(calculateRepairs);
 		manager.add(openHistoricModel);
 		manager.add(applyRepairs);
-		manager.add(undoRepairs);
+		manager.add(rollbackInducingChanges);
 		manager.add(new Separator());
 		manager.add(setParameter);
 		manager.add(unsetParameter);
 		manager.add(new Separator());
+		manager.add(undoRepairs);
 		manager.add(clearSetup);
 		manager.add(openConfiguration);
 		manager.add(new Separator());
