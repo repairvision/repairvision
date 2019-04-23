@@ -11,15 +11,23 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            id="org.sidiff.graphpattern.profile.henshin.command.convert"
+            id="org.sidiff.graphpattern.profile.henshin.command.convert.tohenshinrule"
             name="Convert Graph Pattern To Henshin Rule">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.profile.henshin.command.convert.tographpattern"
+            name="Henshin Rule To Convert Graph Pattern">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             class="org.sidiff.graphpattern.profile.henshin.converter.GraphPatternToHenshinConverterHandler"
-            commandId="org.sidiff.graphpattern.profile.henshin.command.convert">
+            commandId="org.sidiff.graphpattern.profile.henshin.command.convert.tohenshinrule">
+      </handler>
+      <handler
+            class="org.sidiff.graphpattern.profile.henshin.converter.HenshinToGraphPatternConverterHandler"
+            commandId="org.sidiff.graphpattern.profile.henshin.command.convert.tographpattern">
       </handler>
    </extension>
    <extension
@@ -27,7 +35,11 @@
       <menuContribution
             locationURI="popup:org.sidiff.graphpattern.tools.menu">
          <command
-               commandId="org.sidiff.graphpattern.profile.henshin.command.convert"
+               commandId="org.sidiff.graphpattern.profile.henshin.command.convert.tohenshinrule"
+               style="push">
+         </command>
+         <command
+               commandId="org.sidiff.graphpattern.profile.henshin.command.convert.tographpattern"
                style="push">
          </command>
       </menuContribution>

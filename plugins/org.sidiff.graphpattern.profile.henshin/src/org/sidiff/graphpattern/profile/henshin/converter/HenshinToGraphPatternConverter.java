@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.converter.henshin;
+package org.sidiff.graphpattern.profile.henshin.converter;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -24,7 +24,7 @@ import org.sidiff.graphpattern.NodePattern;
  * 
  * @author Manuel Ohrndorf
  */
-public class HenshinConverter {
+public class HenshinToGraphPatternConverter {
 
 	private GraphpatternFactory GP_FACTORY = GraphpatternFactory.eINSTANCE;
 	
@@ -34,14 +34,14 @@ public class HenshinConverter {
 	
 	private Set<EReference> crossReferencedTypes = Collections.emptySet();
 
-	public HenshinConverter(Rule rule) {
+	public HenshinToGraphPatternConverter(Rule rule) {
 		this.graphPattern = GP_FACTORY.createGraphPattern();
 		this.trace = new HashMap<>();
 		
 		convertRule(rule);
 	}
 	
-	public HenshinConverter(Rule rule, Set<EReference> crossReferencedTypes) {
+	public HenshinToGraphPatternConverter(Rule rule, Set<EReference> crossReferencedTypes) {
 		this.crossReferencedTypes = crossReferencedTypes;
 		this.graphPattern = GP_FACTORY.createGraphPattern();
 		this.graphPattern.setName(rule.getName());

@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.converter.henshin.handler;
+package org.sidiff.graphpattern.profile.henshin.converter;
 import java.io.IOException;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -14,9 +14,8 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.sidiff.graphpattern.converter.henshin.HenshinConverter;
 
-public class HenshinConverterHandler extends AbstractHandler {
+public class HenshinToGraphPatternConverterHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -43,7 +42,7 @@ public class HenshinConverterHandler extends AbstractHandler {
 						// TODO: Support multiple rules and graphs.
 						Rule rule = (Rule) module.getUnits().get(0);
 						
-						HenshinConverter converter = new HenshinConverter(rule);
+						HenshinToGraphPatternConverter converter = new HenshinToGraphPatternConverter(rule);
 						ResourceSet patternRSS = new ResourceSetImpl();
 						Resource patternRes = patternRSS.createResource(
 								URI.createFileURI(fullPath + ".graphpattern"));
