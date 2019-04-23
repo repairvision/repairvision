@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ObdC0P3wEei3h-YotlkM8g" name="Delete: Named Classifier" description="Delete: Named Classifier">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_ObdC0f3wEei3h-YotlkM8g" name="mainUnit" subUnits="_ObdC2P3wEei3h-YotlkM8g">
-    <parameters xmi:id="_ObdC0v3wEei3h-YotlkM8g" name="containerPackage" kind="IN"/>
-    <parameters xmi:id="_ObdC0_3wEei3h-YotlkM8g" name="classifier" kind="IN"/>
-    <parameters xmi:id="_ObdC1P3wEei3h-YotlkM8g" name="className" kind="IN"/>
-    <parameterMappings xmi:id="_ObdC1f3wEei3h-YotlkM8g" source="_ObdC0v3wEei3h-YotlkM8g" target="_ObdC2f3wEei3h-YotlkM8g"/>
-    <parameterMappings xmi:id="_ObdC1v3wEei3h-YotlkM8g" source="_ObdC0_3wEei3h-YotlkM8g" target="_ObdC2v3wEei3h-YotlkM8g"/>
-    <parameterMappings xmi:id="_ObdC1_3wEei3h-YotlkM8g" source="_ObdC1P3wEei3h-YotlkM8g" target="_ObdC2_3wEei3h-YotlkM8g"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DNF0AGXaEemxua17r6Vydg" name="Delete: Named Classifier" description="Delete: Named Classifier">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_DNF0AWXaEemxua17r6Vydg" name="mainUnit" subUnits="_DNF0CGXaEemxua17r6Vydg">
+    <parameters xmi:id="_DNF0AmXaEemxua17r6Vydg" name="containerPackage" kind="IN"/>
+    <parameters xmi:id="_DNF0A2XaEemxua17r6Vydg" name="classifier" kind="IN"/>
+    <parameters xmi:id="_DNF0BGXaEemxua17r6Vydg" name="className" kind="IN"/>
+    <parameterMappings xmi:id="_DNF0BWXaEemxua17r6Vydg" source="_DNF0AmXaEemxua17r6Vydg" target="_DNF0CWXaEemxua17r6Vydg"/>
+    <parameterMappings xmi:id="_DNF0BmXaEemxua17r6Vydg" source="_DNF0A2XaEemxua17r6Vydg" target="_DNF0CmXaEemxua17r6Vydg"/>
+    <parameterMappings xmi:id="_DNF0B2XaEemxua17r6Vydg" source="_DNF0BGXaEemxua17r6Vydg" target="_DNF0C2XaEemxua17r6Vydg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_ObdC2P3wEei3h-YotlkM8g" name="Delete: Named Classifier">
-    <parameters xmi:id="_ObdC2f3wEei3h-YotlkM8g" name="containerPackage" kind="IN"/>
-    <parameters xmi:id="_ObdC2v3wEei3h-YotlkM8g" name="classifier" kind="IN"/>
-    <parameters xmi:id="_ObdC2_3wEei3h-YotlkM8g" name="className" kind="IN"/>
-    <lhs xmi:id="_ObdC3P3wEei3h-YotlkM8g" name="Lhs">
-      <nodes xmi:id="_ObdC3f3wEei3h-YotlkM8g" name="containerPackage" incoming="_ObdC4f3wEei3h-YotlkM8g" outgoing="_ObdC4P3wEei3h-YotlkM8g">
+  <units xsi:type="henshin:Rule" xmi:id="_DNF0CGXaEemxua17r6Vydg" name="Delete: Named Classifier">
+    <parameters xmi:id="_DNF0CWXaEemxua17r6Vydg" name="containerPackage" kind="IN"/>
+    <parameters xmi:id="_DNF0CmXaEemxua17r6Vydg" name="classifier" kind="IN"/>
+    <parameters xmi:id="_DNF0C2XaEemxua17r6Vydg" name="className" kind="IN"/>
+    <lhs xmi:id="_DNF0DGXaEemxua17r6Vydg" name="Lhs">
+      <nodes xmi:id="_DNF0DWXaEemxua17r6Vydg" name="containerPackage" incoming="_DNF0EWXaEemxua17r6Vydg" outgoing="_DNF0EGXaEemxua17r6Vydg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
       </nodes>
-      <nodes xmi:id="_ObdC3v3wEei3h-YotlkM8g" name="classifier" incoming="_ObdC4P3wEei3h-YotlkM8g" outgoing="_ObdC4f3wEei3h-YotlkM8g">
+      <nodes xmi:id="_DNF0DmXaEemxua17r6Vydg" name="classifier" incoming="_DNF0EGXaEemxua17r6Vydg" outgoing="_DNF0EWXaEemxua17r6Vydg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
-        <attributes xmi:id="_ObdC3_3wEei3h-YotlkM8g" value="className">
+        <attributes xmi:id="_DNF0D2XaEemxua17r6Vydg" value="className">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_ObdC4P3wEei3h-YotlkM8g" source="_ObdC3f3wEei3h-YotlkM8g" target="_ObdC3v3wEei3h-YotlkM8g">
+      <edges xmi:id="_DNF0EGXaEemxua17r6Vydg" source="_DNF0DWXaEemxua17r6Vydg" target="_DNF0DmXaEemxua17r6Vydg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
       </edges>
-      <edges xmi:id="_ObdC4f3wEei3h-YotlkM8g" source="_ObdC3v3wEei3h-YotlkM8g" target="_ObdC3f3wEei3h-YotlkM8g">
+      <edges xmi:id="_DNF0EWXaEemxua17r6Vydg" source="_DNF0DmXaEemxua17r6Vydg" target="_DNF0DWXaEemxua17r6Vydg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
       </edges>
     </lhs>
-    <rhs xmi:id="_ObdC4v3wEei3h-YotlkM8g" name="Rhs">
-      <nodes xmi:id="_ObdC4_3wEei3h-YotlkM8g" name="containerPackage">
+    <rhs xmi:id="_DNF0EmXaEemxua17r6Vydg" name="Rhs">
+      <nodes xmi:id="_DNF0E2XaEemxua17r6Vydg" name="containerPackage">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
       </nodes>
     </rhs>
-    <mappings xmi:id="_ObdC5P3wEei3h-YotlkM8g" origin="_ObdC3f3wEei3h-YotlkM8g" image="_ObdC4_3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_DNF0FGXaEemxua17r6Vydg" origin="_DNF0DWXaEemxua17r6Vydg" image="_DNF0E2XaEemxua17r6Vydg"/>
   </units>
 </henshin:Module>

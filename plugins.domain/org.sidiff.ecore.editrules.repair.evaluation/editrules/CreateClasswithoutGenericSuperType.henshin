@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_PaLU4P3wEei3h-YotlkM8g" name="Create: Class without Generic-Super-Type" description="Create: Class without Generic-Super-Type">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_PaLU4f3wEei3h-YotlkM8g" name="mainUnit" subUnits="_PaLU5v3wEei3h-YotlkM8g">
-    <parameters xmi:id="_PaLU4v3wEei3h-YotlkM8g" name="genericSuperType" kind="IN"/>
-    <parameters xmi:id="_PaLU4_3wEei3h-YotlkM8g" name="classWithoutGenericSuperType" kind="IN"/>
-    <parameterMappings xmi:id="_PaLU5P3wEei3h-YotlkM8g" source="_PaLU4v3wEei3h-YotlkM8g" target="_PaLU5_3wEei3h-YotlkM8g"/>
-    <parameterMappings xmi:id="_PaLU5f3wEei3h-YotlkM8g" source="_PaLU4_3wEei3h-YotlkM8g" target="_PaLU6P3wEei3h-YotlkM8g"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_EAeYwGXaEemxua17r6Vydg" name="Create: Class without Generic-Super-Type" description="Create: Class without Generic-Super-Type">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_EAeYwWXaEemxua17r6Vydg" name="mainUnit" subUnits="_EAeYxmXaEemxua17r6Vydg">
+    <parameters xmi:id="_EAeYwmXaEemxua17r6Vydg" name="genericSuperType" kind="IN"/>
+    <parameters xmi:id="_EAeYw2XaEemxua17r6Vydg" name="classWithoutGenericSuperType" kind="IN"/>
+    <parameterMappings xmi:id="_EAeYxGXaEemxua17r6Vydg" source="_EAeYwmXaEemxua17r6Vydg" target="_EAeYx2XaEemxua17r6Vydg"/>
+    <parameterMappings xmi:id="_EAeYxWXaEemxua17r6Vydg" source="_EAeYw2XaEemxua17r6Vydg" target="_EAeYyGXaEemxua17r6Vydg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_PaLU5v3wEei3h-YotlkM8g" name="Create: Class without Generic-Super-Type">
-    <parameters xmi:id="_PaLU5_3wEei3h-YotlkM8g" name="genericSuperType" kind="IN"/>
-    <parameters xmi:id="_PaLU6P3wEei3h-YotlkM8g" name="classWithoutGenericSuperType" kind="IN"/>
-    <lhs xmi:id="_PaLU6f3wEei3h-YotlkM8g" name="Lhs">
-      <nodes xmi:id="_PaLU6v3wEei3h-YotlkM8g" name="classWithoutGenericSuperType">
+  <units xsi:type="henshin:Rule" xmi:id="_EAeYxmXaEemxua17r6Vydg" name="Create: Class without Generic-Super-Type">
+    <parameters xmi:id="_EAeYx2XaEemxua17r6Vydg" name="genericSuperType" kind="IN"/>
+    <parameters xmi:id="_EAeYyGXaEemxua17r6Vydg" name="classWithoutGenericSuperType" kind="IN"/>
+    <lhs xmi:id="_EAeYyWXaEemxua17r6Vydg" name="Lhs">
+      <nodes xmi:id="_EAeYymXaEemxua17r6Vydg" name="classWithoutGenericSuperType">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <formula xsi:type="henshin:Not" xmi:id="_PaLU6_3wEei3h-YotlkM8g">
-        <child xsi:type="henshin:NestedCondition" xmi:id="_PaLU7P3wEei3h-YotlkM8g">
-          <conclusion xmi:id="_PaLU7f3wEei3h-YotlkM8g">
-            <nodes xmi:id="_PaLU7v3wEei3h-YotlkM8g" name="genericSuperType" incoming="_PaLU8P3wEei3h-YotlkM8g">
+      <formula xsi:type="henshin:Not" xmi:id="_EAeYy2XaEemxua17r6Vydg">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_EAeYzGXaEemxua17r6Vydg">
+          <conclusion xmi:id="_EAeYzWXaEemxua17r6Vydg">
+            <nodes xmi:id="_EAeYzmXaEemxua17r6Vydg" name="genericSuperType" incoming="_EAeY0GXaEemxua17r6Vydg">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
             </nodes>
-            <nodes xmi:id="_PaLU7_3wEei3h-YotlkM8g" name="classWithoutGenericSuperType" outgoing="_PaLU8P3wEei3h-YotlkM8g">
+            <nodes xmi:id="_EAeYz2XaEemxua17r6Vydg" name="classWithoutGenericSuperType" outgoing="_EAeY0GXaEemxua17r6Vydg">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
-            <edges xmi:id="_PaLU8P3wEei3h-YotlkM8g" source="_PaLU7_3wEei3h-YotlkM8g" target="_PaLU7v3wEei3h-YotlkM8g">
+            <edges xmi:id="_EAeY0GXaEemxua17r6Vydg" source="_EAeYz2XaEemxua17r6Vydg" target="_EAeYzmXaEemxua17r6Vydg">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eGenericSuperTypes"/>
             </edges>
           </conclusion>
-          <mappings xmi:id="_PaLU8f3wEei3h-YotlkM8g" origin="_PaLU6v3wEei3h-YotlkM8g" image="_PaLU7_3wEei3h-YotlkM8g"/>
+          <mappings xmi:id="_EAeY0WXaEemxua17r6Vydg" origin="_EAeYymXaEemxua17r6Vydg" image="_EAeYz2XaEemxua17r6Vydg"/>
         </child>
       </formula>
     </lhs>
-    <rhs xmi:id="_PaLU8v3wEei3h-YotlkM8g" name="Rhs">
-      <nodes xmi:id="_PaLU8_3wEei3h-YotlkM8g" name="classWithoutGenericSuperType">
+    <rhs xmi:id="_EAeY0mXaEemxua17r6Vydg" name="Rhs">
+      <nodes xmi:id="_EAeY02XaEemxua17r6Vydg" name="classWithoutGenericSuperType">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
     </rhs>
-    <mappings xmi:id="_PaLU9P3wEei3h-YotlkM8g" origin="_PaLU6v3wEei3h-YotlkM8g" image="_PaLU8_3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_EAeY1GXaEemxua17r6Vydg" origin="_EAeYymXaEemxua17r6Vydg" image="_EAeY02XaEemxua17r6Vydg"/>
   </units>
 </henshin:Module>

@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ObrsUP3wEei3h-YotlkM8g" name="Delete: Named Enumeration Literal" description="Delete: Named Enumeration Literal">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_ObrsUf3wEei3h-YotlkM8g" name="mainUnit" subUnits="_ObrsWP3wEei3h-YotlkM8g">
-    <parameters xmi:id="_ObrsUv3wEei3h-YotlkM8g" name="containerEnum" kind="IN"/>
-    <parameters xmi:id="_ObrsU_3wEei3h-YotlkM8g" name="dataType" kind="IN"/>
-    <parameters xmi:id="_ObrsVP3wEei3h-YotlkM8g" name="dataTypeName" kind="IN"/>
-    <parameterMappings xmi:id="_ObrsVf3wEei3h-YotlkM8g" source="_ObrsUv3wEei3h-YotlkM8g" target="_ObrsWf3wEei3h-YotlkM8g"/>
-    <parameterMappings xmi:id="_ObrsVv3wEei3h-YotlkM8g" source="_ObrsU_3wEei3h-YotlkM8g" target="_ObrsWv3wEei3h-YotlkM8g"/>
-    <parameterMappings xmi:id="_ObrsV_3wEei3h-YotlkM8g" source="_ObrsVP3wEei3h-YotlkM8g" target="_ObrsW_3wEei3h-YotlkM8g"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DNYu8GXaEemxua17r6Vydg" name="Delete: Named Enumeration Literal" description="Delete: Named Enumeration Literal">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_DNYu8WXaEemxua17r6Vydg" name="mainUnit" subUnits="_DNYu-GXaEemxua17r6Vydg">
+    <parameters xmi:id="_DNYu8mXaEemxua17r6Vydg" name="containerEnum" kind="IN"/>
+    <parameters xmi:id="_DNYu82XaEemxua17r6Vydg" name="dataType" kind="IN"/>
+    <parameters xmi:id="_DNYu9GXaEemxua17r6Vydg" name="dataTypeName" kind="IN"/>
+    <parameterMappings xmi:id="_DNYu9WXaEemxua17r6Vydg" source="_DNYu8mXaEemxua17r6Vydg" target="_DNYu-WXaEemxua17r6Vydg"/>
+    <parameterMappings xmi:id="_DNYu9mXaEemxua17r6Vydg" source="_DNYu82XaEemxua17r6Vydg" target="_DNYu-mXaEemxua17r6Vydg"/>
+    <parameterMappings xmi:id="_DNYu92XaEemxua17r6Vydg" source="_DNYu9GXaEemxua17r6Vydg" target="_DNYu-2XaEemxua17r6Vydg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_ObrsWP3wEei3h-YotlkM8g" name="Delete: Named Enumeration Literal">
-    <parameters xmi:id="_ObrsWf3wEei3h-YotlkM8g" name="containerEnum" kind="IN"/>
-    <parameters xmi:id="_ObrsWv3wEei3h-YotlkM8g" name="dataType" kind="IN"/>
-    <parameters xmi:id="_ObrsW_3wEei3h-YotlkM8g" name="dataTypeName" kind="IN"/>
-    <lhs xmi:id="_ObrsXP3wEei3h-YotlkM8g" name="Lhs">
-      <nodes xmi:id="_ObrsXf3wEei3h-YotlkM8g" name="containerEnum" incoming="_ObrsYf3wEei3h-YotlkM8g" outgoing="_ObrsYP3wEei3h-YotlkM8g">
+  <units xsi:type="henshin:Rule" xmi:id="_DNYu-GXaEemxua17r6Vydg" name="Delete: Named Enumeration Literal">
+    <parameters xmi:id="_DNYu-WXaEemxua17r6Vydg" name="containerEnum" kind="IN"/>
+    <parameters xmi:id="_DNYu-mXaEemxua17r6Vydg" name="dataType" kind="IN"/>
+    <parameters xmi:id="_DNYu-2XaEemxua17r6Vydg" name="dataTypeName" kind="IN"/>
+    <lhs xmi:id="_DNYu_GXaEemxua17r6Vydg" name="Lhs">
+      <nodes xmi:id="_DNYu_WXaEemxua17r6Vydg" name="containerEnum" incoming="_DNYvAWXaEemxua17r6Vydg" outgoing="_DNYvAGXaEemxua17r6Vydg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
       </nodes>
-      <nodes xmi:id="_ObrsXv3wEei3h-YotlkM8g" name="dataType" incoming="_ObrsYP3wEei3h-YotlkM8g" outgoing="_ObrsYf3wEei3h-YotlkM8g">
+      <nodes xmi:id="_DNYu_mXaEemxua17r6Vydg" name="dataType" incoming="_DNYvAGXaEemxua17r6Vydg" outgoing="_DNYvAWXaEemxua17r6Vydg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral"/>
-        <attributes xmi:id="_ObrsX_3wEei3h-YotlkM8g" value="dataTypeName">
+        <attributes xmi:id="_DNYu_2XaEemxua17r6Vydg" value="dataTypeName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_ObrsYP3wEei3h-YotlkM8g" source="_ObrsXf3wEei3h-YotlkM8g" target="_ObrsXv3wEei3h-YotlkM8g">
+      <edges xmi:id="_DNYvAGXaEemxua17r6Vydg" source="_DNYu_WXaEemxua17r6Vydg" target="_DNYu_mXaEemxua17r6Vydg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum/eLiterals"/>
       </edges>
-      <edges xmi:id="_ObrsYf3wEei3h-YotlkM8g" source="_ObrsXv3wEei3h-YotlkM8g" target="_ObrsXf3wEei3h-YotlkM8g">
+      <edges xmi:id="_DNYvAWXaEemxua17r6Vydg" source="_DNYu_mXaEemxua17r6Vydg" target="_DNYu_WXaEemxua17r6Vydg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral/eEnum"/>
       </edges>
     </lhs>
-    <rhs xmi:id="_ObrsYv3wEei3h-YotlkM8g" name="Rhs">
-      <nodes xmi:id="_ObrsY_3wEei3h-YotlkM8g" name="containerEnum">
+    <rhs xmi:id="_DNYvAmXaEemxua17r6Vydg" name="Rhs">
+      <nodes xmi:id="_DNYvA2XaEemxua17r6Vydg" name="containerEnum">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
       </nodes>
     </rhs>
-    <mappings xmi:id="_ObrsZP3wEei3h-YotlkM8g" origin="_ObrsXf3wEei3h-YotlkM8g" image="_ObrsY_3wEei3h-YotlkM8g"/>
+    <mappings xmi:id="_DNYvBGXaEemxua17r6Vydg" origin="_DNYu_WXaEemxua17r6Vydg" image="_DNYvA2XaEemxua17r6Vydg"/>
   </units>
 </henshin:Module>
