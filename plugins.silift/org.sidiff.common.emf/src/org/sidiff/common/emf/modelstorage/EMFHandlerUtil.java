@@ -1,5 +1,8 @@
 package org.sidiff.common.emf.modelstorage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
@@ -12,6 +15,22 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 public class EMFHandlerUtil {
+	
+	public static List<URI> getSelectedURI(ExecutionEvent event) {
+		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		List<URI> selectedURIs = new ArrayList<>();
+
+		if (selection instanceof IStructuredSelection) {
+			for (Object selected : ((IStructuredSelection) selection).toList()) {
+				if ((selected != null) && (selected instanceof IResource)) {
+					URI uri = EMFHandlerUtil.getURI((IResource) selected);
+					selectedURIs.add(uri);
+				}
+			}
+		}
+		
+		return selectedURIs;
+	}
 	
 	public static Resource getSelection(ExecutionEvent event, ResourceSet rss, int selectionIndex) {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);

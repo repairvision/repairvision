@@ -1,10 +1,21 @@
 package org.sidiff.consistency.common.ui.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -13,6 +24,7 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ListSelectionDialog;
 
 public class WorkbenchUtil {
 
@@ -121,6 +133,45 @@ public class WorkbenchUtil {
 		});
 		
 		return result[0];
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <I> List<I> showSelections(String message, List<I> items, ILabelProvider labelProvider) {
+		List<I> result = new ArrayList<>();
+
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				ListSelectionDialog dlg = new ListSelectionDialog(
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
+						items.toArray(),
+						new ArrayContentProvider(), labelProvider, message);
+				dlg.setTitle(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+						.getActivePage().getActivePart().getTitle());
+				dlg.setInitialSelections(items.get(0));
+				dlg.open();
+				result.addAll((Collection<? extends I>) Arrays.asList(dlg.getResult()));
+			}
+		});
+
+		return result;
+	}
+	
+	public static AdapterFactoryLabelProvider getEMFLabelProvider() {
+
+		// EMF Adapter (Item-Provider) Registry:
+		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+
+		// Display model resources:
+		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+
+		// If the model is not in the registry then display it as in EMF-Reflective-Editor:
+		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+
+		AdapterFactoryLabelProvider emfLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+		
+		return emfLabelProvider;
 	}
 
 	public static URI getURI(IResource workbenchResource) {

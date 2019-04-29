@@ -113,8 +113,6 @@ public class InfoConsole {
 				outInfo.print("\n");
 			}
 		}
-		
-		outNormal.println(getHorizontalLine());	
 	}
 	
 	public static String getHorizontalLine() {
