@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+M3+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.sirius.diagram.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.papyrus.uml.diagram.activity.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.papyrus.uml.diagram.clazz.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.papyrus.uml.diagram.communication.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.papyrus.uml.diagram.component.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.papyrus.uml.diagram.composite.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.papyrus.uml.diagram.deployment.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.papyrus.uml.diagram.profile.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.papyrus.uml.diagram.sequence.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.papyrus.uml.diagram.statemachine.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.papyrus.uml.diagram.timing.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+      <key
+            commandId="org.sidiff.completion.ui.command.proposals"
+            contextId="org.eclipse.papyrus.uml.diagram.usecase.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence=" M1+SPACE">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.ui.category.edit"
+            id="org.sidiff.completion.ui.command.proposals"
+            name="Model Content Assist">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.sidiff.completion.ui.handler.CompletionProposalListHandler"
+            commandId="org.sidiff.completion.ui.command.proposals">
+      </handler>
+   </extension>
+
+</plugin>
