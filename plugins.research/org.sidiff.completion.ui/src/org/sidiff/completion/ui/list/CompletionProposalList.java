@@ -36,20 +36,24 @@ public class CompletionProposalList {
 	 * See: org.eclipse.jface.text.contentassist.CompletionProposalPopup
 	 */
 
-	private Shell fProposalShell;
+	private Shell proposalShell;
 	
-	private TableViewer fProposalTable;
+	private TableViewer proposalTable;
 	
-	private DefaultInformationControl fProposalInformation;
+	private DefaultInformationControl proposalInformation;
 	
-	public CompletionProposalList() {
-		Display.getDefault().syncExec(new Runnable() {
+	public CompletionProposalList(Display display) {
+		display.syncExec(new Runnable() {
 
 			@Override
 			public void run() {
-				createPopup();
+				createPopup(display);
 			}
 		});
+	}
+	
+	public CompletionProposalList() {
+		this(PlatformUI.getWorkbench().getDisplay());
 	}
 	
 	public void showPopupOnCursor() {
@@ -62,34 +66,37 @@ public class CompletionProposalList {
 	}
 	
 	public Object getSelectedProposal() {
-		if (fProposalTable != null) {
-			if (!fProposalTable.getStructuredSelection().isEmpty()) {
-				return fProposalTable.getStructuredSelection().getFirstElement();
+		if (proposalTable != null) {
+			if (!proposalTable.getStructuredSelection().isEmpty()) {
+				return proposalTable.getStructuredSelection().getFirstElement();
 			}
 		}
 		return null;
 	}
 	
 	public void addProposal(ICompletionProposal proposal) {
-		fProposalTable.add(proposal);
+		proposalTable.add(proposal);
 	}
 	
 	public void addProposals(ICompletionProposal[] proposals) {
-		fProposalTable.add(proposals);
+		proposalTable.add(proposals);
 	}
 	
 	public void setSelection(int index) {
-		fProposalTable.getTable().setSelection(fProposalTable.getTable().getItem(index));
-		fProposalTable.setSelection(fProposalTable.getSelection()); // trigger listener
+		proposalTable.getTable().setSelection(proposalTable.getTable().getItem(index));
+		proposalTable.setSelection(proposalTable.getSelection()); // trigger listener
 	}
 	
+	/**
+	 * @param position The position on which the UI will be opened.
+	 */
 	public void showPopup(Point position) {
 
 		/*
-		 * Create shell
+		 * Layout shell
 		 */
 		{
-			fProposalShell.setFont(JFaceResources.getDefaultFont());
+			proposalShell.setFont(JFaceResources.getDefaultFont());
 
 			GridLayout layout = new GridLayout();
 			{
@@ -97,82 +104,82 @@ public class CompletionProposalList {
 				layout.marginHeight = 0;
 				layout.verticalSpacing = 1;
 			}
-			fProposalShell.setLayout(layout);
-			fProposalShell.setLocation(position);
+			proposalShell.setLayout(layout);
+			proposalShell.setLocation(position);
 		}
 
 		/* 
-		 * Create content table:
+		 * Layout content table:
 		 */
 		{
 			// Layout:
-			fProposalTable.getTable().setHeaderVisible(false);
-			fProposalTable.getTable().setLocation(0, 0);
+			proposalTable.getTable().setHeaderVisible(false);
+			proposalTable.getTable().setLocation(0, 0);
 
 			GridData data = new GridData(GridData.FILL_BOTH);
 			{
-				int height = fProposalTable.getTable().getItemHeight() * 10;
+				int height = proposalTable.getTable().getItemHeight() * 10;
 				double aspectRatio = 2;
 				int width = (int) (height * aspectRatio);
 
 				// Make sure our bounds still fit to the screen
-				Monitor monitor = Util.getClosestMonitor(fProposalShell.getDisplay(), position);
+				Monitor monitor = Util.getClosestMonitor(proposalShell.getDisplay(), position);
 				Rectangle bounds = monitor.getClientArea();
 				width = Math.min(width, bounds.width / 4);
 				height = Math.min(height, bounds.height / 4);
 
-				Rectangle trim = fProposalTable.getTable().computeTrim(0, 0, width, height);
+				Rectangle trim = proposalTable.getTable().computeTrim(0, 0, width, height);
 				data.heightHint = trim.height;
 				data.widthHint = trim.width;
 			}
-			fProposalTable.getTable().setLayoutData(data);
+			proposalTable.getTable().setLayoutData(data);
 			
 			// Provider for content, icons and text of proposals:
-			fProposalTable.setContentProvider(ArrayContentProvider.getInstance());
-			fProposalTable.setLabelProvider(getLabelProvider());
+			proposalTable.setContentProvider(ArrayContentProvider.getInstance());
+			proposalTable.setLabelProvider(getLabelProvider());
 			
 			// Trigger initial selection:
-			if (fProposalTable.getTable().getItemCount() > 0) {
+			if (proposalTable.getTable().getItemCount() > 0) {
 				setSelection(0);
 			}
 			
-			fProposalShell.pack();
+			proposalShell.pack();
 		}
 
 		/*
-		 *  Create proposal information:
+		 *  Layout proposal information:
 		 */
 		{
-			int width = fProposalShell.getBounds().width;
-			int height = fProposalShell.getBounds().height;
-			int x = fProposalShell.getLocation().x + fProposalShell.getBounds().width;
-			int y = fProposalShell.getLocation().y;
+			int width = proposalShell.getBounds().width;
+			int height = proposalShell.getBounds().height;
+			int x = proposalShell.getLocation().x + proposalShell.getBounds().width;
+			int y = proposalShell.getLocation().y;
 
-			fProposalInformation.setSizeConstraints(width, height);
-			fProposalInformation.setSize(width, height);
-			fProposalInformation.setLocation(new Point(x, y));
+			proposalInformation.setSizeConstraints(width, height);
+			proposalInformation.setSize(width, height);
+			proposalInformation.setLocation(new Point(x, y));
 		}
 
 		/*
 		 * Open the proposal viewer:
 		 */
-		fProposalShell.open();
+		proposalShell.open();
 	}
 	
-	private void createPopup() {
+	private void createPopup(Display display) {
 
 		/*
 		 * Create shell
 		 */
-		fProposalShell = new Shell(PlatformUI.getWorkbench().getDisplay().getActiveShell(), SWT.ON_TOP | SWT.RESIZE);
+		proposalShell = new Shell(display, SWT.ON_TOP | SWT.RESIZE);
 		
 		/* 
 		 * Create content table:
 		 */
-		fProposalTable = new TableViewer(fProposalShell, SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL);
+		proposalTable = new TableViewer(proposalShell, SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL);
 		{
 			// Enable keyboard support:
-			fProposalTable.getTable().addKeyListener(new KeyListener() {
+			proposalTable.getTable().addKeyListener(new KeyListener() {
 
 				@Override
 				public void keyReleased(KeyEvent e) {
@@ -181,8 +188,8 @@ public class CompletionProposalList {
 					if (e.keyCode == SWT.CR) {
 						Object selection = getSelectedProposal();
 						
-						fProposalShell.close();
-						fProposalShell.dispose();
+						proposalShell.close();
+						proposalShell.dispose();
 						
 						applyProposal(selection);
 					}
@@ -194,21 +201,21 @@ public class CompletionProposalList {
 			});
 			
 			// Apply proposal on double click:
-			fProposalTable.addDoubleClickListener(new IDoubleClickListener() {
+			proposalTable.addDoubleClickListener(new IDoubleClickListener() {
 
 				@Override
 				public void doubleClick(DoubleClickEvent event) {
 					Object selection = getSelectedProposal();
 					
-					fProposalShell.close();
-					fProposalShell.dispose();
+					proposalShell.close();
+					proposalShell.dispose();
 					
 					applyProposal(selection);
 				}
 			});
 			
 			// Preview proposal on each selection:
-			fProposalTable.addSelectionChangedListener(new ISelectionChangedListener() {
+			proposalTable.addSelectionChangedListener(new ISelectionChangedListener() {
 				
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
@@ -221,10 +228,10 @@ public class CompletionProposalList {
 					String information = getProposalInformation(selection);
 					
 					if (information != null) {
-						fProposalInformation.setInformation(information);
-						fProposalInformation.setVisible(true);
+						proposalInformation.setInformation(information);
+						proposalInformation.setVisible(true);
 					} else {
-						fProposalInformation.setVisible(false);
+						proposalInformation.setVisible(false);
 					}
 				}
 			});
@@ -233,18 +240,18 @@ public class CompletionProposalList {
 		/*
 		 *  Create proposal information:
 		 */
-		fProposalInformation = new DefaultInformationControl(fProposalShell, true);
+		proposalInformation = new DefaultInformationControl(proposalShell, true);
 		
 		/*
 		 * (1) Close the proposal list when losing the focus:
 		 */
-		fProposalTable.getTable().addFocusListener(new FocusListener() {
+		proposalTable.getTable().addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (!fProposalInformation.isFocusControl()) {
-					fProposalShell.close();
-					fProposalShell.dispose();
+				if (!proposalInformation.isFocusControl()) {
+					proposalShell.close();
+					proposalShell.dispose();
 				}
 			}
 
@@ -257,12 +264,12 @@ public class CompletionProposalList {
 		 * (2) Delegate the focus back to table. If the table is the new focus, then the
 		 * viewer will remain open; otherwise it will be closed by the table (1).
 		 */
-		fProposalInformation.addFocusListener(new FocusListener() {
+		proposalInformation.addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (!fProposalTable.getControl().isFocusControl()) {
-					fProposalTable.getControl().setFocus();
+				if (!proposalTable.getControl().isFocusControl()) {
+					proposalTable.getControl().setFocus();
 				}
 			}
 
@@ -333,5 +340,9 @@ public class CompletionProposalList {
 				return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
 			}
 		};
+	}
+	
+	public Shell getShell() {
+		return proposalShell;
 	}
 }
