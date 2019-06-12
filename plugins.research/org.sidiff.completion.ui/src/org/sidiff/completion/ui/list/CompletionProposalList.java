@@ -15,6 +15,8 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
@@ -41,6 +43,8 @@ public class CompletionProposalList {
 	private TableViewer proposalTable;
 	
 	private DefaultInformationControl proposalInformation;
+	
+	private ICompletionPreview preview;
 	
 	public CompletionProposalList(Display display) {
 		display.syncExec(new Runnable() {
@@ -173,6 +177,15 @@ public class CompletionProposalList {
 		 */
 		proposalShell = new Shell(display, SWT.ON_TOP | SWT.RESIZE);
 		
+		// Hide preview:
+		proposalShell.addDisposeListener(new DisposeListener() {
+			
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				hideProposalPreview();
+			}
+		});
+		
 		/* 
 		 * Create content table:
 		 */
@@ -220,11 +233,16 @@ public class CompletionProposalList {
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
 					Object selection = getSelectedProposal();
-					
-					// Show preview:
-					previewProposal(selection);
-					
-					// Show proposal information:
+					showProposalPreview(selection);
+				}
+			});
+			
+			// Show proposal information:
+			proposalTable.addSelectionChangedListener(new ISelectionChangedListener() {
+				
+				@Override
+				public void selectionChanged(SelectionChangedEvent event) {
+					Object selection = getSelectedProposal();
 					String information = getProposalInformation(selection);
 					
 					if (information != null) {
@@ -279,15 +297,33 @@ public class CompletionProposalList {
 		});
 	}
 	
-	protected boolean previewProposal(Object proposal) {
+	protected boolean showProposalPreview(Object proposal) {
 		if (proposal instanceof ICompletionProposal) {
-			return ((ICompletionProposal) proposal).preview();
+			
+			// Hide old preview:
+			hideProposalPreview();
+			
+			// Show new preview:
+			preview = ((ICompletionProposal) proposal).preview();
+			return preview.show();
+		}
+		return false;
+	}
+	
+	protected boolean hideProposalPreview() {
+		if (preview != null) {
+			return preview.hide();
 		}
 		return false;
 	}
 	
 	protected boolean applyProposal(Object proposal) {
 		if (proposal instanceof ICompletionProposal) {
+			
+			// Hide preview:
+			hideProposalPreview();
+			
+			// Apply real proposal:
 			return ((ICompletionProposal) proposal).apply();
 		}
 		return false;

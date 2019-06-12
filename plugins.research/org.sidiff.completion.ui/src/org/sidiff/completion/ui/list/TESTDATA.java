@@ -12,9 +12,21 @@ public class TESTDATA {
 				new ICompletionProposal() {
 
 					@Override
-					public boolean preview() {
-						System.out.println("preview()" + toString());
-						return false;
+					public ICompletionPreview preview() {
+						return new ICompletionPreview() {
+							
+							@Override
+							public boolean show() {
+								System.out.println("show preview()" + toString());
+								return true;
+							}
+							
+							@Override
+							public boolean hide() {
+								System.out.println("hide preview()" + toString());
+								return true;
+							}
+						};
 					}
 
 					@Override
@@ -42,9 +54,21 @@ public class TESTDATA {
 				new ICompletionProposal() {
 
 					@Override
-					public boolean preview() {
-						System.out.println("preview()" + toString());
-						return false;
+					public ICompletionPreview preview() {
+						return new ICompletionPreview() {
+							
+							@Override
+							public boolean show() {
+								System.out.println("show preview()" + toString());
+								return true;
+							}
+							
+							@Override
+							public boolean hide() {
+								System.out.println("hide preview()" + toString());
+								return true;
+							}
+						};
 					}
 
 					@Override
@@ -73,9 +97,21 @@ public class TESTDATA {
 				new ICompletionProposal() {
 
 					@Override
-					public boolean preview() {
-						System.out.println("preview()" + toString());
-						return false;
+					public ICompletionPreview preview() {
+						return new ICompletionPreview() {
+							
+							@Override
+							public boolean show() {
+								System.out.println("show preview()" + toString());
+								return true;
+							}
+							
+							@Override
+							public boolean hide() {
+								System.out.println("hide preview()" + toString());
+								return true;
+							}
+						};
 					}
 
 					@Override
@@ -103,9 +139,21 @@ public class TESTDATA {
 				new ICompletionProposal() {
 
 					@Override
-					public boolean preview() {
-						System.out.println("preview()" + toString());
-						return false;
+					public ICompletionPreview preview() {
+						return new ICompletionPreview() {
+							
+							@Override
+							public boolean show() {
+								System.out.println("show preview()" + toString());
+								return true;
+							}
+							
+							@Override
+							public boolean hide() {
+								System.out.println("hide preview()" + toString());
+								return true;
+							}
+						};
 					}
 
 					@Override

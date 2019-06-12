@@ -2,12 +2,15 @@ package org.sidiff.completion.ui.codebricks.editor;
 
 import java.awt.MouseInfo;
 import java.awt.PointerInfo;
+import java.util.Collections;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BidiSegmentEvent;
 import org.eclipse.swt.custom.BidiSegmentListener;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -37,7 +40,9 @@ import org.sidiff.completion.ui.codebricks.Brick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.CodebricksFactory;
 import org.sidiff.completion.ui.codebricks.IndentBrick;
+import org.sidiff.completion.ui.codebricks.PlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
+import org.sidiff.completion.ui.list.CompletionProposalList;
 
 public class CodebricksEditor {
 
@@ -399,7 +404,7 @@ public class CodebricksEditor {
 		}
 		
 		// Update size of shell and text field according to the text input:
-		// NOTE: The text sometimes flickers (on Windows) when using the modified listener.
+		// NOTE: The text sometimes flickers (on Windows) when using the modified listener instead.
 		textBrick.addBidiSegmentListener(new BidiSegmentListener() {
 			
 			private int oldTime = -1;
@@ -428,13 +433,15 @@ public class CodebricksEditor {
 				
 				if (textBrick.getText().isEmpty()) {
 					textBrick.setText(placeholder);
-					
-					// Make sure text field is updated:
-					textBrick.pack(true);
-					
-					// Do shell layout:
-					fitToContent();
 				}
+				
+				// NOTE: Update on e.g. proposal preview/apply.
+				
+				// Make sure text field is updated:
+				textBrick.pack(true);
+				
+				// Do shell layout:
+				fitToContent();
 			}
 		});
 		
@@ -512,6 +519,10 @@ public class CodebricksEditor {
 						editable = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
 					}
 					
+					// Show proposal list:
+					installProposalList(editorContent, viewableBrick, editable);
+					
+					// Set focus to first editable text field:
 					if (focused == null) {
 						focused = editable;
 					}
@@ -530,6 +541,39 @@ public class CodebricksEditor {
 		
 		// Do layout:
 		fitToContent();
+	}
+
+	private void installProposalList(Composite editorContent, ViewableBrick viewableBrick, Control editable) {
+		editable.setData(viewableBrick);
+		editable.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(((e.stateMask & SWT.CTRL) == SWT.CTRL) && (e.keyCode == SWT.SPACE)) {
+					if (e.widget.getData() instanceof PlaceholderBrick) {
+						CompletionProposalList proposals = new CompletionProposalList(editorContent.getDisplay());
+						
+						// Calculate proposals:
+						StyledText editable = (StyledText) e.widget;
+						PlaceholderBrick placeholderBrick = (PlaceholderBrick) e.widget.getData();
+						
+						// TODO: Show equal choices in one proposal:
+						for (ViewableBrick choice : placeholderBrick.getRemainingChoices()) {
+							proposals.addProposal(new CodebricksCompletionProposal(editable, placeholderBrick, Collections.singletonList(choice)));
+						}
+						
+						// Show proposals below editor:
+						int proposalsXPosition = editorShell.getLocation().x;
+						int proposalsYPosition = editorShell.getLocation().y + editorShell.getSize().y + 5;
+						proposals.showPopup(new Point(proposalsXPosition, proposalsYPosition));
+					}
+				}
+			}
+		});
 	}
 	
 	protected void fitToContent() {

@@ -10,7 +10,7 @@ public interface ICompletionProposal {
 	
 	String getInformation();
 	
-	boolean preview();
+	ICompletionPreview preview();
 	
 	boolean apply();
 }
