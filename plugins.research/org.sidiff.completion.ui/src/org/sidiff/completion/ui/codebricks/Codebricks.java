@@ -15,8 +15,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.completion.ui.codebricks.Codebricks#getTemplate <em>Template</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.Codebricks#getAlternatives <em>Alternatives</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.Codebricks#getTemplate <em>Template</em>}</li>
  * </ul>
  *
  * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getCodebricks()

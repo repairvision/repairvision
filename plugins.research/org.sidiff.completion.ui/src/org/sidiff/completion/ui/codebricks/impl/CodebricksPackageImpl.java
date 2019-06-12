@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.sidiff.completion.ui.codebricks.BlankBrick;
 import org.sidiff.completion.ui.codebricks.Brick;
 import org.sidiff.completion.ui.codebricks.Codebrick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
@@ -91,6 +92,13 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	private EClass viewableBrickEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass blankBrickEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -419,6 +427,16 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
+	public EClass getBlankBrick() {
+		return blankBrickEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public CodebricksFactory getCodebricksFactory() {
 		return (CodebricksFactory)getEFactoryInstance();
 	}
@@ -443,8 +461,8 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 
 		// Create classes and their features
 		codebricksEClass = createEClass(CODEBRICKS);
-		createEReference(codebricksEClass, CODEBRICKS__TEMPLATE);
 		createEReference(codebricksEClass, CODEBRICKS__ALTERNATIVES);
+		createEReference(codebricksEClass, CODEBRICKS__TEMPLATE);
 
 		codebrickEClass = createEClass(CODEBRICK);
 		createEReference(codebrickEClass, CODEBRICK__BRICKS);
@@ -476,6 +494,8 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		createEAttribute(viewableBrickEClass, VIEWABLE_BRICK__EDITABLE);
 		createEAttribute(viewableBrickEClass, VIEWABLE_BRICK__HIGHLIGHT);
 		createEOperation(viewableBrickEClass, VIEWABLE_BRICK___GET_TEXT);
+
+		blankBrickEClass = createEClass(BLANK_BRICK);
 	}
 
 	/**
@@ -512,11 +532,12 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		indentBrickEClass.getESuperTypes().add(this.getBrick());
 		lineBreakBrickEClass.getESuperTypes().add(this.getBrick());
 		viewableBrickEClass.getESuperTypes().add(this.getBrick());
+		blankBrickEClass.getESuperTypes().add(this.getBrick());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(codebricksEClass, Codebricks.class, "Codebricks", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCodebricks_Template(), this.getCodebrick(), null, "template", null, 0, 1, Codebricks.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCodebricks_Alternatives(), this.getCodebrick(), null, "alternatives", null, 0, -1, Codebricks.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCodebricks_Template(), this.getCodebrick(), null, "template", null, 0, 1, Codebricks.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(codebrickEClass, Codebrick.class, "Codebrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCodebrick_Bricks(), this.getBrick(), this.getBrick_Codebrick(), "bricks", null, 0, -1, Codebrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -551,6 +572,8 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		initEAttribute(getViewableBrick_Highlight(), ecorePackage.getEBoolean(), "highlight", null, 0, 1, ViewableBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getViewableBrick__GetText(), ecorePackage.getEString(), "getText", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(blankBrickEClass, BlankBrick.class, "BlankBrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

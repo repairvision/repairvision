@@ -104,6 +104,10 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 				return createViewableBrickAdapter();
 			}
 			@Override
+			public Adapter caseBlankBrick(BlankBrick object) {
+				return createBlankBrickAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -246,6 +250,20 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createViewableBrickAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.BlankBrick <em>Blank Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.BlankBrick
+	 * @generated
+	 */
+	public Adapter createBlankBrickAdapter() {
 		return null;
 	}
 

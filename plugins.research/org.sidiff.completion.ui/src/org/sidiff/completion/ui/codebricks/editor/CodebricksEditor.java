@@ -4,12 +4,15 @@ import java.awt.MouseInfo;
 import java.awt.PointerInfo;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.BidiSegmentEvent;
+import org.eclipse.swt.custom.BidiSegmentListener;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.SegmentEvent;
-import org.eclipse.swt.events.SegmentListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -26,10 +29,10 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.sidiff.completion.ui.Activator;
+import org.sidiff.completion.ui.codebricks.BlankBrick;
 import org.sidiff.completion.ui.codebricks.Brick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.CodebricksFactory;
@@ -137,6 +140,8 @@ public class CodebricksEditor {
 				layout.verticalSpacing = 0;
 				layout.marginWidth = 0;
 				layout.marginHeight = 0;
+				layout.marginRight = 0;
+				layout.marginLeft = 0;
 				layout.horizontalSpacing = 0;
 			}
 			editorShell.setBackground(COLOR_WHITE);
@@ -166,6 +171,10 @@ public class CodebricksEditor {
 				layout.horizontalSpacing = 0;
 				layout.marginHeight = 0;
 				layout.marginWidth = 0;
+				layout.marginLeft = 10;
+				layout.marginRight = 10;
+				layout.marginTop = 5;
+				layout.marginBottom = 5;
 				layout.verticalSpacing = 0;
 				layout.numColumns = getColumns();
 			}
@@ -181,10 +190,11 @@ public class CodebricksEditor {
 			toolbarContainer.setBackground(COLOR_WHITE);
 			GridLayout layout = new GridLayout(1, false);
 			{
-				layout.marginBottom = 5;
-				layout.marginRight = 5;
 				layout.marginWidth = 0;
 				layout.marginHeight = 0;
+				layout.marginBottom = 5;
+				layout.marginLeft = 5;
+				layout.marginRight = 5;
 				layout.horizontalSpacing = 0;
 			}
 			toolbarContainer.setLayout(layout);
@@ -369,12 +379,12 @@ public class CodebricksEditor {
 		return textBrick;
 	}
 	
-	protected Text buildEditableTextBrick(Composite parent, String text, String placeholder) {
+	protected StyledText buildEditableTextBrick(Composite parent, String text, String placeholder) {
 		return buildEditableTextBrick(parent, text, placeholder, false, null);
 	}
 	
-	protected Text buildEditableTextBrick(Composite parent, String text, String placeholder, boolean boldFont, Color color) {
-		Text textBrick = new Text(parent, SWT.NONE);
+	protected StyledText buildEditableTextBrick(Composite parent, String text, String placeholder, boolean boldFont, Color color) {
+		StyledText textBrick = new StyledText(parent, SWT.SINGLE);
 		textBrick.setText(text);
 		textBrick.setBackground(COLOR_WHITE);
 		
@@ -387,21 +397,44 @@ public class CodebricksEditor {
 		if (boldFont) {
 			textBrick.setFont(getFontBold(textBrick));
 		}
-
-		textBrick.addSegmentListener(new SegmentListener() {
-
+		
+		// Update size of shell and text field according to the text input:
+		// NOTE: The text sometimes flickers (on Windows) when using the modified listener.
+		textBrick.addBidiSegmentListener(new BidiSegmentListener() {
+			
+			private int oldTime = -1;
+			
 			@Override
-			public void getSegments(SegmentEvent event) {
-
-				// Make sure text field is updated:
-				textBrick.pack(true);
-
-				// Show placeholder if no text is set:
+			public void lineGetSegments(BidiSegmentEvent event) {
+				
+				// Handle event just once:
+				if (event.time != oldTime) {
+					oldTime = event.time;
+					
+					// Make sure text field is updated:
+					textBrick.pack(true);
+					
+					// Do shell layout:
+					fitToContent();
+				}
+			}
+		});
+		
+		// Show placeholder if no text is set:
+		textBrick.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				
 				if (textBrick.getText().isEmpty()) {
 					textBrick.setText(placeholder);
+					
+					// Make sure text field is updated:
+					textBrick.pack(true);
+					
+					// Do shell layout:
+					fitToContent();
 				}
-				
-				fitToContent();
 			}
 		});
 		
@@ -443,6 +476,7 @@ public class CodebricksEditor {
 		}
 
 		// Create content views:
+		Control focused = null;
 		Composite templateExpression = null;
 		
 		for (Brick templateBrick : getContent().getTemplate().getBricks()) {
@@ -454,7 +488,12 @@ public class CodebricksEditor {
 				for (int i = 0; i < indentBrick.getBricks(); i++) {
 					buildEmptyBrick(editorContent);
 				}
-			} 
+			}
+			
+			// Create blank:
+			if (templateBrick instanceof BlankBrick) {
+				buildTextBrick(templateExpression, " ", " ");
+			}
 			
 			// Create template expression:
 			else if (templateBrick instanceof ViewableBrick) {
@@ -465,10 +504,16 @@ public class CodebricksEditor {
 				}
 				
 				if (viewableBrick.isEditable()) {
+					Control editable = null;
+					
 					if (viewableBrick.isHighlight()) {
-						buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
+						editable = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
 					} else {
-						buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
+						editable = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
+					}
+					
+					if (focused == null) {
+						focused = editable;
 					}
 				} else {
 					if (viewableBrick.isHighlight()) {
@@ -480,6 +525,10 @@ public class CodebricksEditor {
 			}
 		}
 		
+		// Set focus to first editable text field:
+		focused.setFocus();
+		
+		// Do layout:
 		fitToContent();
 	}
 	

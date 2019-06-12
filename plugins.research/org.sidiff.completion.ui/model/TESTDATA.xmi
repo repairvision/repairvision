@@ -7,31 +7,6 @@
     xsi:schemaLocation="http://www.sidiff.org/codebricks/1.0 codebricks.ecore">
   <alternatives>
     <bricks
-        xsi:type="codebricks:PlaceholderBrick"
-        editable="true"
-        highlight="true"
-        choices="//@alternatives.1/@bricks.0 //@alternatives.3/@bricks.0 //@alternatives.2/@bricks.0"
-        mandatory="true"/>
-    <bricks
-        xsi:type="codebricks:TextBrick"
-        text="A"/>
-    <bricks
-        xsi:type="codebricks:TextBrick"
-        highlight="true"
-        text="B"/>
-    <bricks
-        xsi:type="codebricks:PlaceholderBrick"
-        editable="true"
-        highlight="true"
-        choices="//@alternatives.1/@bricks.3 //@alternatives.2/@bricks.3 //@alternatives.3/@bricks.3"/>
-    <bricks
-        xsi:type="codebricks:PlaceholderBrick"
-        editable="true"
-        highlight="true"
-        choices="//@alternatives.1/@bricks.4 //@alternatives.2/@bricks.4"/>
-  </alternatives>
-  <alternatives>
-    <bricks
         xsi:type="codebricks:TextBrick"
         text="X"/>
     <bricks
@@ -83,11 +58,13 @@
         xsi:type="codebricks:PlaceholderBrick"
         editable="true"
         highlight="true"
-        choices="//@alternatives.1/@bricks.0 //@alternatives.3/@bricks.0 //@alternatives.2/@bricks.0"
+        choices="//@alternatives.0/@bricks.0 //@alternatives.2/@bricks.0 //@alternatives.1/@bricks.0"
         mandatory="true"/>
     <bricks
         xsi:type="codebricks:TextBrick"
         text="A"/>
+    <bricks
+        xsi:type="codebricks:BlankBrick"/>
     <bricks
         xsi:type="codebricks:TextBrick"
         highlight="true"
@@ -96,11 +73,14 @@
         xsi:type="codebricks:PlaceholderBrick"
         editable="true"
         highlight="true"
-        choices="//@alternatives.1/@bricks.3 //@alternatives.2/@bricks.3 //@alternatives.3/@bricks.3"/>
+        choices="//@alternatives.0/@bricks.3 //@alternatives.1/@bricks.3 //@alternatives.2/@bricks.3"/>
     <bricks
         xsi:type="codebricks:PlaceholderBrick"
         editable="true"
         highlight="true"
-        choices="//@alternatives.1/@bricks.4 //@alternatives.2/@bricks.4"/>
+        choices="//@alternatives.0/@bricks.4 //@alternatives.1/@bricks.4"/>
+    <bricks
+        xsi:type="codebricks:TextBrick"
+        text="HalloWelt"/>
   </template>
 </codebricks:Codebricks>

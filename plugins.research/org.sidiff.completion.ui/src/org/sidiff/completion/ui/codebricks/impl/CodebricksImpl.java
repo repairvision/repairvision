@@ -25,23 +25,13 @@ import org.sidiff.completion.ui.codebricks.CodebricksPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.CodebricksImpl#getTemplate <em>Template</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.CodebricksImpl#getAlternatives <em>Alternatives</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.CodebricksImpl#getTemplate <em>Template</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class CodebricksImpl extends MinimalEObjectImpl.Container implements Codebricks {
-	/**
-	 * The cached value of the '{@link #getTemplate() <em>Template</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTemplate()
-	 * @generated
-	 * @ordered
-	 */
-	protected Codebrick template;
-
 	/**
 	 * The cached value of the '{@link #getAlternatives() <em>Alternatives</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -51,6 +41,16 @@ public class CodebricksImpl extends MinimalEObjectImpl.Container implements Code
 	 * @ordered
 	 */
 	protected EList<Codebrick> alternatives;
+
+	/**
+	 * The cached value of the '{@link #getTemplate() <em>Template</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTemplate()
+	 * @generated
+	 * @ordered
+	 */
+	protected Codebrick template;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -137,10 +137,10 @@ public class CodebricksImpl extends MinimalEObjectImpl.Container implements Code
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CodebricksPackage.CODEBRICKS__TEMPLATE:
-				return basicSetTemplate(null, msgs);
 			case CodebricksPackage.CODEBRICKS__ALTERNATIVES:
 				return ((InternalEList<?>)getAlternatives()).basicRemove(otherEnd, msgs);
+			case CodebricksPackage.CODEBRICKS__TEMPLATE:
+				return basicSetTemplate(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -153,10 +153,10 @@ public class CodebricksImpl extends MinimalEObjectImpl.Container implements Code
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CodebricksPackage.CODEBRICKS__TEMPLATE:
-				return getTemplate();
 			case CodebricksPackage.CODEBRICKS__ALTERNATIVES:
 				return getAlternatives();
+			case CodebricksPackage.CODEBRICKS__TEMPLATE:
+				return getTemplate();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -170,12 +170,12 @@ public class CodebricksImpl extends MinimalEObjectImpl.Container implements Code
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CodebricksPackage.CODEBRICKS__TEMPLATE:
-				setTemplate((Codebrick)newValue);
-				return;
 			case CodebricksPackage.CODEBRICKS__ALTERNATIVES:
 				getAlternatives().clear();
 				getAlternatives().addAll((Collection<? extends Codebrick>)newValue);
+				return;
+			case CodebricksPackage.CODEBRICKS__TEMPLATE:
+				setTemplate((Codebrick)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -189,11 +189,11 @@ public class CodebricksImpl extends MinimalEObjectImpl.Container implements Code
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CodebricksPackage.CODEBRICKS__TEMPLATE:
-				setTemplate((Codebrick)null);
-				return;
 			case CodebricksPackage.CODEBRICKS__ALTERNATIVES:
 				getAlternatives().clear();
+				return;
+			case CodebricksPackage.CODEBRICKS__TEMPLATE:
+				setTemplate((Codebrick)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -207,10 +207,10 @@ public class CodebricksImpl extends MinimalEObjectImpl.Container implements Code
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CodebricksPackage.CODEBRICKS__TEMPLATE:
-				return template != null;
 			case CodebricksPackage.CODEBRICKS__ALTERNATIVES:
 				return alternatives != null && !alternatives.isEmpty();
+			case CodebricksPackage.CODEBRICKS__TEMPLATE:
+				return template != null;
 		}
 		return super.eIsSet(featureID);
 	}

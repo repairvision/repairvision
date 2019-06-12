@@ -8,8 +8,8 @@
   <genPackages prefix="Codebricks" basePackage="org.sidiff.completion.ui" disposableProviderFactory="true"
       ecorePackage="codebricks.ecore#/">
     <genClasses ecoreClass="codebricks.ecore#//Codebricks">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference codebricks.ecore#//Codebricks/template"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference codebricks.ecore#//Codebricks/alternatives"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference codebricks.ecore#//Codebricks/template"/>
     </genClasses>
     <genClasses ecoreClass="codebricks.ecore#//Codebrick">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference codebricks.ecore#//Codebrick/bricks"/>
@@ -41,5 +41,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//ViewableBrick/highlight"/>
       <genOperations ecoreOperation="codebricks.ecore#//ViewableBrick/getText"/>
     </genClasses>
+    <genClasses ecoreClass="codebricks.ecore#//BlankBrick"/>
   </genPackages>
 </genmodel:GenModel>

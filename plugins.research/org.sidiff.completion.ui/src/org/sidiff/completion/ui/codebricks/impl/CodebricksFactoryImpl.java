@@ -63,6 +63,7 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 			case CodebricksPackage.TEXT_BRICK: return createTextBrick();
 			case CodebricksPackage.INDENT_BRICK: return createIndentBrick();
 			case CodebricksPackage.LINE_BREAK_BRICK: return createLineBreakBrick();
+			case CodebricksPackage.BLANK_BRICK: return createBlankBrick();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -143,6 +144,17 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 	public LineBreakBrick createLineBreakBrick() {
 		LineBreakBrickImpl lineBreakBrick = new LineBreakBrickImpl();
 		return lineBreakBrick;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public BlankBrick createBlankBrick() {
+		BlankBrickImpl blankBrick = new BlankBrickImpl();
+		return blankBrick;
 	}
 
 	/**

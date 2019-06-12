@@ -85,6 +85,15 @@ public interface CodebricksFactory extends EFactory {
 	LineBreakBrick createLineBreakBrick();
 
 	/**
+	 * Returns a new object of class '<em>Blank Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Blank Brick</em>'.
+	 * @generated
+	 */
+	BlankBrick createBlankBrick();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

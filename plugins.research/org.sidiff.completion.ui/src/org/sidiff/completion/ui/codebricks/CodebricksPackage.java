@@ -68,22 +68,22 @@ public interface CodebricksPackage extends EPackage {
 	int CODEBRICKS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Template</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CODEBRICKS__TEMPLATE = 0;
-
-	/**
 	 * The feature id for the '<em><b>Alternatives</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CODEBRICKS__ALTERNATIVES = 1;
+	int CODEBRICKS__ALTERNATIVES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Template</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CODEBRICKS__TEMPLATE = 1;
 
 	/**
 	 * The number of structural features of the '<em>Codebricks</em>' class.
@@ -599,6 +599,44 @@ public interface CodebricksPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.BlankBrickImpl <em>Blank Brick</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.impl.BlankBrickImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getBlankBrick()
+	 * @generated
+	 */
+	int BLANK_BRICK = 9;
+
+	/**
+	 * The feature id for the '<em><b>Codebrick</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLANK_BRICK__CODEBRICK = BRICK__CODEBRICK;
+
+	/**
+	 * The number of structural features of the '<em>Blank Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLANK_BRICK_FEATURE_COUNT = BRICK_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Blank Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLANK_BRICK_OPERATION_COUNT = BRICK_OPERATION_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.Codebricks <em>Codebricks</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -873,6 +911,16 @@ public interface CodebricksPackage extends EPackage {
 	EOperation getViewableBrick__GetText();
 
 	/**
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.BlankBrick <em>Blank Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Blank Brick</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.BlankBrick
+	 * @generated
+	 */
+	EClass getBlankBrick();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1120,6 +1168,16 @@ public interface CodebricksPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation VIEWABLE_BRICK___GET_TEXT = eINSTANCE.getViewableBrick__GetText();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.BlankBrickImpl <em>Blank Brick</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.impl.BlankBrickImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getBlankBrick()
+		 * @generated
+		 */
+		EClass BLANK_BRICK = eINSTANCE.getBlankBrick();
 
 	}
 
