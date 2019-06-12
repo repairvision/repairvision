@@ -1,10 +1,20 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Completion UI
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.sidiff.completion.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Automatic-Module-Name: org.sidiff.completion.ui
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Export-Package: org.sidiff.completion.ui.codebricks,
+ org.sidiff.completion.ui.codebricks.impl,
+ org.sidiff.completion.ui.codebricks.util
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.jface.text,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.sidiff.common.emf,
+ org.sidiff.graphpattern.edit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.ui,
- org.eclipse.jface.text
+Automatic-Module-Name: org.sidiff.completion.ui

@@ -98,4 +98,24 @@
       </handler>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated codebricks -->
+      <package
+            uri="http://www.sidiff.org/codebricks/1.0"
+            class="org.sidiff.completion.ui.codebricks.CodebricksPackage"
+            genModel="model/codebricks.genmodel"/>
+   </extension>
+   <extension
+         id="CodebricksEditorTestdriver"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="org.sidiff.completion.ui.codebricks.editor.CodebricksEditorTestdriver">
+         </run>
+      </application>
+   </extension>
+
 </plugin>

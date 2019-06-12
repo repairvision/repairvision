@@ -1,8 +1,7 @@
-package org.sidiff.completion.ui.codebricks;
+package org.sidiff.completion.ui.codebricks.editor;
 
 import java.awt.MouseInfo;
 import java.awt.PointerInfo;
-import java.io.File;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -19,7 +18,6 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -31,6 +29,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.sidiff.completion.ui.Activator;
+import org.sidiff.completion.ui.codebricks.Brick;
+import org.sidiff.completion.ui.codebricks.Codebricks;
+import org.sidiff.completion.ui.codebricks.CodebricksFactory;
+import org.sidiff.completion.ui.codebricks.IndentBrick;
+import org.sidiff.completion.ui.codebricks.ViewableBrick;
 
 public class CodebricksEditor {
 
@@ -46,7 +50,7 @@ public class CodebricksEditor {
 	
 	private ToolBar toolBar;
 	
-	private int maxWidth = 600;
+	private int maximumWidth = 600;
 	
 	private Color COLOR_WHITE;
 	
@@ -67,6 +71,11 @@ public class CodebricksEditor {
      */
     private int moveYPosition = 0;
     
+    /**
+     * Content:
+     */
+    private Codebricks codebricks;
+    
 	public CodebricksEditor(Display display) {
 		display.syncExec(new Runnable() {
 
@@ -76,6 +85,31 @@ public class CodebricksEditor {
 			}
 		});
 	}
+	
+	public void setContent(Codebricks input) {
+		this.codebricks = input;
+		
+		// Create editor content:
+		buildContent(editorContent);
+	}
+	
+	public Codebricks getContent() {
+		
+		// Use empty input:
+		if (codebricks == null) {
+			codebricks = CodebricksFactory.eINSTANCE.createCodebricks();
+		}
+		
+		return codebricks;
+	}
+	
+	public int getMaximumWidth() {
+		return maximumWidth;
+	}
+	
+	public void setMaximumWidth(int maximumWidth) {
+		this.maximumWidth = maximumWidth;
+	}
   
 	public void showPopupOnCursor() {
 		PointerInfo mousePositionInfo = MouseInfo.getPointerInfo();
@@ -84,6 +118,9 @@ public class CodebricksEditor {
 		Point mousePosition = new Point(mousePositionX, mousePositionY);
 		
 		showPopup(mousePosition);
+		
+		// Make sure size depends on the content:
+		fitToContent();
 	}
 
 	/**
@@ -130,7 +167,7 @@ public class CodebricksEditor {
 				layout.marginHeight = 0;
 				layout.marginWidth = 0;
 				layout.verticalSpacing = 0;
-				layout.numColumns = 2; // TODO
+				layout.numColumns = getColumns();
 			}
 			editorContent.setLayout(layout);
 		}
@@ -166,16 +203,19 @@ public class CodebricksEditor {
 		// Calculate editor size:
 		Point editorShellSize = editorShell.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		
-		if (editorShellSize.x < maxWidth) {
+		if (editorShellSize.x < maximumWidth) {
 			editorShell.setSize(editorShellSize);
 		} else {
-			editorShell.setSize(maxWidth, editorShellSize.y);
+			editorShell.setSize(maximumWidth, editorShellSize.y);
 		}
 		
 		// Layout and open editor:
 		editorShell.pack(true);
 		editorShell.layout(true);
 		editorShell.open();
+		
+		// Make sure size depends on the content:
+		fitToContent();
 	}
 	
 	private void createPopup(Display display) {
@@ -195,22 +235,12 @@ public class CodebricksEditor {
 		 * Create editor:
 		 */
 		scrolledEditor = new ScrolledComposite(editorShell, SWT.H_SCROLL | SWT.V_SCROLL);
-		editorContent = new Composite(scrolledEditor, SWT.NONE);
 
 		/*
-		 * TODO: Create editor content:
+		 * Create editor content:
 		 */
-		Composite brickRow_1 = buildBrickRow(editorContent);
-		
-		buildEditableTextBrick(brickRow_1, "Hallo", "[+]", true, new Color(display, new RGB(255, 0, 0)));
-		buildEditableTextBrick(brickRow_1, "Welt", "[?]");
-		
-		buildTextBrick(brickRow_1, "Hallo", "[+]", true,  new Color(display, new RGB(255, 0, 0)));
-		buildTextBrick(brickRow_1, " Welt", "[?]");
-		
-		buildEditableTextBrick(editorContent, "Hallo", "[+]", true, new Color(display, new RGB(255, 0, 0)));
-		new Label(editorContent, SWT.NONE);
-		buildEditableTextBrick(editorContent, "Welt", "[?]");
+		editorContent = new Composite(scrolledEditor, SWT.NONE);
+		buildContent(editorContent);
 		
 		/*
 		 *  Show a vertical separator as control for dragging the shell:
@@ -276,13 +306,13 @@ public class CodebricksEditor {
 		}
 	}
 	
-	private void createToolbarActions(ToolBar toolBar) {
+	protected void createToolbarActions(ToolBar toolBar) {
 		
 		/*
 		 * Close action:
 		 */
 		ToolItem actionClose = new ToolItem(toolBar, SWT.NONE);
-		actionClose.setImage(new Image(Display.getDefault(), new File("").getAbsolutePath() + "/../org.sidiff.completion.ui/icons/close.png" )); // TODO
+		actionClose.setImage(loadIcon("/icons/close.png" ));
 		
 		actionClose.addSelectionListener(new SelectionListener() {
 			
@@ -296,7 +326,7 @@ public class CodebricksEditor {
 		});
 	}
 	
-	private Composite buildBrickRow(Composite parent) {
+	protected Composite buildBrickRow(Composite parent) {
 		Composite brickRow = new Composite(parent, SWT.NONE);
 		brickRow.setBackground(COLOR_WHITE);
 		
@@ -312,12 +342,16 @@ public class CodebricksEditor {
 		
 		return brickRow;
 	}
+	
+	protected Label buildEmptyBrick(Composite parent) {
+		return new Label(editorContent, SWT.NONE);
+	}
 
-	private Label buildTextBrick(Composite parent, String text, String placeholder) {
+	protected Label buildTextBrick(Composite parent, String text, String placeholder) {
 		return buildTextBrick(parent, text, placeholder, false, null);
 	}
 	
-	private Label buildTextBrick(Composite parent, String text, String placeholder, boolean boldFont, Color color) {
+	protected Label buildTextBrick(Composite parent, String text, String placeholder, boolean boldFont, Color color) {
 		Label textBrick = new Label(parent, SWT.NONE);
 		textBrick.setText(text);
 		textBrick.setBackground(COLOR_WHITE);
@@ -335,11 +369,11 @@ public class CodebricksEditor {
 		return textBrick;
 	}
 	
-	private Text buildEditableTextBrick(Composite parent, String text, String placeholder) {
+	protected Text buildEditableTextBrick(Composite parent, String text, String placeholder) {
 		return buildEditableTextBrick(parent, text, placeholder, false, null);
 	}
 	
-	private Text buildEditableTextBrick(Composite parent, String text, String placeholder, boolean boldFont, Color color) {
+	protected Text buildEditableTextBrick(Composite parent, String text, String placeholder, boolean boldFont, Color color) {
 		Text textBrick = new Text(parent, SWT.NONE);
 		textBrick.setText(text);
 		textBrick.setBackground(COLOR_WHITE);
@@ -358,35 +392,110 @@ public class CodebricksEditor {
 
 			@Override
 			public void getSegments(SegmentEvent event) {
-				
-				// Resize editor to fit content:
-				Point newSize = editorShell.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-
-				// ... up to limit:
-				if (newSize.x < maxWidth) {
-					editorShell.setSize(newSize);
-				}
 
 				// Make sure text field is updated:
 				textBrick.pack(true);
-
-				// Update scroll area:
-				editorContent.pack(true);
-				scrolledEditor.setMinSize(editorContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 				// Show placeholder if no text is set:
 				if (textBrick.getText().isEmpty()) {
 					textBrick.setText(placeholder);
 				}
+				
+				fitToContent();
 			}
 		});
 		
-		return textBrick;
+		return textBrick;		
 	}
 	
 	private Font getFontBold(Control control) {
 		FontData fontData = control.getFont().getFontData()[0];
 		return new Font(editorShell.getDisplay(), new FontData(fontData.getName(), fontData.getHeight(), SWT.BOLD));
+	}
+	
+	
+	protected Image loadIcon(String localPath) {
+		return Activator.getIcon(localPath);
+	}
+	
+	protected int getColumns() {
+		return getContent().getTemplate().caluclateColumns();
+	}
+	
+	protected void clearContent() {
+		Control[] content = editorContent.getChildren();
+		
+		for (int i = 0; i < content.length; i++) {
+			content[i].dispose();
+		}
+	}
+	
+	protected void buildContent(Composite editorContent) {
+		
+		// Is content empty?
+		if (editorContent.getChildren().length > 0) {
+			clearContent();
+		}
+		
+		// Is input empty?
+		if (getContent().getTemplate() == null) {
+			return;
+		}
+
+		// Create content views:
+		Composite templateExpression = null;
+		
+		for (Brick templateBrick : getContent().getTemplate().getBricks()) {
+			
+			// Create indent:
+			if (templateBrick instanceof IndentBrick) {
+				IndentBrick indentBrick = (IndentBrick) templateBrick;
+				
+				for (int i = 0; i < indentBrick.getBricks(); i++) {
+					buildEmptyBrick(editorContent);
+				}
+			} 
+			
+			// Create template expression:
+			else if (templateBrick instanceof ViewableBrick) {
+				ViewableBrick viewableBrick = (ViewableBrick) templateBrick;
+				
+				if (templateExpression == null) {
+					templateExpression = buildBrickRow(editorContent);
+				}
+				
+				if (viewableBrick.isEditable()) {
+					if (viewableBrick.isHighlight()) {
+						buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
+					} else {
+						buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
+					}
+				} else {
+					if (viewableBrick.isHighlight()) {
+						buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
+					} else {
+						buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
+					}
+				}
+			}
+		}
+		
+		fitToContent();
+	}
+	
+	protected void fitToContent() {
+		
+		// Resize editor to fit content:
+		Point newSize = editorShell.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+
+		// ... up to limit:
+		if (newSize.x < maximumWidth) {
+			editorShell.setSize(newSize);
+		}
+
+		// Update scroll area:
+		editorContent.pack(true);
+		scrolledEditor.setMinSize(editorContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 	
 	public Shell getShell() {
@@ -402,25 +511,5 @@ public class CodebricksEditor {
 	private void createShell(Display display) {
 		createPopup(display);
 		showPopupOnCursor();
-	}
-
-	/**
-	 * Test driver.
-	 */
-	public static void main(String args[]) {
-		try {
-			Display display = Display.getDefault();
-			CodebricksEditor editor = new CodebricksEditor(display);
-			
-			editor.showPopupOnCursor();
-			
-			while (!editor.getShell().isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

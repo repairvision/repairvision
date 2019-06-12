@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="codebricks" nsURI="http://www.sidiff.org/codebricks/1.0" nsPrefix="codebricks">
+  <eClassifiers xsi:type="ecore:EClass" name="Codebricks">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="alternatives" upperBound="-1"
+        eType="#//Codebrick" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="template" eType="#//Codebrick"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Codebrick">
+    <eOperations name="calculateRows" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="caluclateColumns" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bricks" upperBound="-1"
+        eType="#//Brick" containment="true" eOpposite="#//Brick/codebrick"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="codebricks" eType="#//Codebricks"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Brick" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="codebrick" eType="#//Codebrick"
+        eOpposite="#//Codebrick/bricks"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlaceholderBrick" eSuperTypes="#//ViewableBrick">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="choices" upperBound="-1"
+        eType="#//ViewableBrick"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="choice" upperBound="-1"
+        eType="#//ViewableBrick"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="remainingChoices" upperBound="-1"
+        eType="#//ViewableBrick" changeable="false" volatile="true" transient="true"
+        derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ModelElementBrick" eSuperTypes="#//ViewableBrick">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TextBrick" eSuperTypes="#//ViewableBrick">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IndentBrick" eSuperTypes="#//Brick">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bricks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LineBreakBrick" eSuperTypes="#//Brick"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ViewableBrick" abstract="true" interface="true"
+      eSuperTypes="#//Brick">
+    <eOperations name="getText" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="editable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="highlight" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+</ecore:EPackage>

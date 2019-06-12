@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.sidiff.completion.ui/src" modelPluginID="org.sidiff.completion.ui"
+    modelName="Codebricks" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>codebricks.ecore</foreignModel>
+  <genPackages prefix="Codebricks" basePackage="org.sidiff.completion.ui" disposableProviderFactory="true"
+      ecorePackage="codebricks.ecore#/">
+    <genClasses ecoreClass="codebricks.ecore#//Codebricks">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference codebricks.ecore#//Codebricks/template"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference codebricks.ecore#//Codebricks/alternatives"/>
+    </genClasses>
+    <genClasses ecoreClass="codebricks.ecore#//Codebrick">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference codebricks.ecore#//Codebrick/bricks"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//Codebrick/codebricks"/>
+      <genOperations ecoreOperation="codebricks.ecore#//Codebrick/calculateRows"/>
+      <genOperations ecoreOperation="codebricks.ecore#//Codebrick/caluclateColumns"/>
+    </genClasses>
+    <genClasses ecoreClass="codebricks.ecore#//Brick">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference codebricks.ecore#//Brick/codebrick"/>
+    </genClasses>
+    <genClasses ecoreClass="codebricks.ecore#//PlaceholderBrick">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//PlaceholderBrick/choices"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//PlaceholderBrick/mandatory"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//PlaceholderBrick/choice"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//PlaceholderBrick/remainingChoices"/>
+    </genClasses>
+    <genClasses ecoreClass="codebricks.ecore#//ModelElementBrick">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ModelElementBrick/element"/>
+    </genClasses>
+    <genClasses ecoreClass="codebricks.ecore#//TextBrick">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//TextBrick/text"/>
+    </genClasses>
+    <genClasses ecoreClass="codebricks.ecore#//IndentBrick">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//IndentBrick/bricks"/>
+    </genClasses>
+    <genClasses ecoreClass="codebricks.ecore#//LineBreakBrick"/>
+    <genClasses image="false" ecoreClass="codebricks.ecore#//ViewableBrick">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//ViewableBrick/editable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//ViewableBrick/highlight"/>
+      <genOperations ecoreOperation="codebricks.ecore#//ViewableBrick/getText"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
