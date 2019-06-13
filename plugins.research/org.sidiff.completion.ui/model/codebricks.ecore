@@ -11,18 +11,19 @@
     <eOperations name="calculateRows" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eOperations name="caluclateColumns" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bricks" upperBound="-1"
-        eType="#//Brick" containment="true" eOpposite="#//Brick/codebrick"/>
+        eType="#//Brick" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="codebricks" eType="#//Codebricks"
         changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allBricks" upperBound="-1"
+        eType="#//Brick" changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Brick" abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="Brick" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="codebrick" eType="#//Codebrick"
-        eOpposite="#//Codebrick/bricks"/>
+        changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TemplatePlaceholderBrick" eSuperTypes="#//StyledBrick #//PlaceholderBrick">
+  <eClassifiers xsi:type="ecore:EClass" name="TemplatePlaceholderBrick" eSuperTypes="#//PlaceholderBrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="choices" upperBound="-1"
         eType="#//ViewableBrick"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="choice" upperBound="-1"
         eType="#//ViewableBrick"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="remainingChoices" upperBound="-1"
@@ -31,7 +32,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="composed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ObjectPlaceholderBrick" eSuperTypes="#//StyledBrick #//PlaceholderBrick">
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectPlaceholderBrick" eSuperTypes="#//PlaceholderBrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
   </eClassifiers>
@@ -53,16 +54,22 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="bricks" upperBound="-1"
         eType="#//ViewableBrick" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StyledBrick" abstract="true" interface="true"
-      eSuperTypes="#//ViewableBrick">
+  <eClassifiers xsi:type="ecore:EClass" name="StyledBrick" abstract="true" eSuperTypes="#//ViewableBrick">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="highlight" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ValuePlaceholderBrick" eSuperTypes="#//TextBrick #//PlaceholderBrick">
+  <eClassifiers xsi:type="ecore:EClass" name="ValuePlaceholderBrick" eSuperTypes="#//PlaceholderBrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ObjectDomainPlaceholderBrick" eSuperTypes="#//ObjectPlaceholderBrick #//PlaceholderBrick">
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectDomainPlaceholderBrick" eSuperTypes="#//ObjectPlaceholderBrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="domain" upperBound="-1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PlaceholderBrick" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlaceholderBrick" abstract="true" eSuperTypes="#//StyledBrick">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="placeholder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComposedTemplatePlaceholderBrick" eSuperTypes="#//TemplatePlaceholderBrick">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containerBrick" lowerBound="1"
+        eType="#//ComposedBrick"/>
+  </eClassifiers>
 </ecore:EPackage>

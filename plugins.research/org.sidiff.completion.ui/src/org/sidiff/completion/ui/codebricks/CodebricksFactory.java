@@ -121,6 +121,15 @@ public interface CodebricksFactory extends EFactory {
 	ObjectDomainPlaceholderBrick createObjectDomainPlaceholderBrick();
 
 	/**
+	 * Returns a new object of class '<em>Composed Template Placeholder Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Composed Template Placeholder Brick</em>'.
+	 * @generated
+	 */
+	ComposedTemplatePlaceholderBrick createComposedTemplatePlaceholderBrick();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

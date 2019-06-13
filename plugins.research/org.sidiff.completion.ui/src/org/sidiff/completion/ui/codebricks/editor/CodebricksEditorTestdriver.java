@@ -29,7 +29,7 @@ public class CodebricksEditorTestdriver implements IApplication {
 		
 		try {
 			ResourceSet resourceSet = new ResourceSetImpl();
-			Resource resource = resourceSet.getResource(URI.createPlatformPluginURI(Activator.PLUGIN_ID + "/model/TESTDATA.xmi", true), true);
+			Resource resource = resourceSet.getResource(URI.createPlatformPluginURI(Activator.PLUGIN_ID + "/model/TESTDATA1.xmi", true), true);
 			Codebricks codebricks = (Codebricks) resource.getContents().get(0);
 			
 			Display display = PlatformUI.createDisplay();

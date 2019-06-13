@@ -26,7 +26,7 @@ import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
  *
  * @generated
  */
-public class ValuePlaceholderBrickImpl extends TextBrickImpl implements ValuePlaceholderBrick {
+public class ValuePlaceholderBrickImpl extends PlaceholderBrickImpl implements ValuePlaceholderBrick {
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' reference.
 	 * <!-- begin-user-doc -->

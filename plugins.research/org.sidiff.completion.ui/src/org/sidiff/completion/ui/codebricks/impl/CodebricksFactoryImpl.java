@@ -67,6 +67,7 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 			case CodebricksPackage.COMPOSED_BRICK: return createComposedBrick();
 			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK: return createValuePlaceholderBrick();
 			case CodebricksPackage.OBJECT_DOMAIN_PLACEHOLDER_BRICK: return createObjectDomainPlaceholderBrick();
+			case CodebricksPackage.COMPOSED_TEMPLATE_PLACEHOLDER_BRICK: return createComposedTemplatePlaceholderBrick();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -191,6 +192,17 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 	public ObjectDomainPlaceholderBrick createObjectDomainPlaceholderBrick() {
 		ObjectDomainPlaceholderBrickImpl objectDomainPlaceholderBrick = new ObjectDomainPlaceholderBrickImpl();
 		return objectDomainPlaceholderBrick;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ComposedTemplatePlaceholderBrick createComposedTemplatePlaceholderBrick() {
+		ComposedTemplatePlaceholderBrickImpl composedTemplatePlaceholderBrick = new ComposedTemplatePlaceholderBrickImpl();
+		return composedTemplatePlaceholderBrick;
 	}
 
 	/**

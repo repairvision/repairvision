@@ -4,8 +4,10 @@ import java.awt.MouseInfo;
 import java.awt.PointerInfo;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
@@ -44,10 +46,15 @@ import org.sidiff.completion.ui.codebricks.Brick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.CodebricksFactory;
 import org.sidiff.completion.ui.codebricks.ComposedBrick;
+import org.sidiff.completion.ui.codebricks.ComposedTemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.IndentBrick;
+import org.sidiff.completion.ui.codebricks.LineBreakBrick;
+import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
+import org.sidiff.completion.ui.codebricks.PlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.StyledBrick;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.TextBrick;
+import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
 import org.sidiff.completion.ui.list.CompletionProposalList;
 
@@ -90,6 +97,8 @@ public class CodebricksEditor {
      * Content:
      */
     private Codebricks codebricks;
+    
+    private Map<Brick, Control> modelToViewMap = new HashMap<>();
     
 	public CodebricksEditor(Display display) {
 		display.syncExec(new Runnable() {
@@ -381,6 +390,11 @@ public class CodebricksEditor {
 	}
 	
 	protected Label buildTextBrick(Composite parent, String text, String placeholder, boolean boldFont, Color color) {
+		
+		if (text == null) {
+			text = "null";
+		}
+		
 		Label textBrick = new Label(parent, SWT.NONE);
 		textBrick.setText(text);
 		textBrick.setBackground(COLOR_WHITE);
@@ -403,6 +417,11 @@ public class CodebricksEditor {
 	}
 	
 	protected StyledText buildEditableTextBrick(Composite parent, String text, String placeholder, boolean boldFont, Color color) {
+		
+		if (text == null) {
+			text = "null";
+		}
+		
 		StyledText textBrick = new StyledText(parent, SWT.SINGLE);
 		textBrick.setText(text);
 		textBrick.setBackground(COLOR_WHITE);
@@ -480,6 +499,8 @@ public class CodebricksEditor {
 		for (int i = 0; i < content.length; i++) {
 			content[i].dispose();
 		}
+		
+		modelToViewMap.clear();
 	}
 	
 	protected void buildContent(Composite editorContent, List<? extends Brick> bricks) {
@@ -498,20 +519,38 @@ public class CodebricksEditor {
 		Composite templateExpression = null;
 		
 		for (Brick templateBrick : bricks) {
+			Control viewControl = null;
+			
+			// Handle line break:
+			if (templateBrick instanceof LineBreakBrick) {
+				templateExpression = null;
+			}
 			
 			// Create indent:
 			if (templateBrick instanceof IndentBrick) {
 				IndentBrick indentBrick = (IndentBrick) templateBrick;
 				
 				for (int i = 0; i < indentBrick.getBricks(); i++) {
-					buildEmptyBrick(editorContent);
+					viewControl = buildEmptyBrick(editorContent);
 				}
+			}
+			
+			else if (templateBrick instanceof ComposedBrick) {
+				
+				// Put template expression in last column(s):
+				if (templateExpression == null) {
+					templateExpression = buildBrickRow(editorContent);
+				}
+				
+				Composite composedBrick = buildBrickRow(templateExpression);
+				viewControl = composedBrick;
+				buildContent(composedBrick, ((ComposedBrick) templateBrick).getBricks());
 			}
 			
 			// Create template expression:
 			else if (templateBrick instanceof ViewableBrick) {
 				
-				// Put template expression in last column:
+				// Put template expression in last column(s):
 				if (templateExpression == null) {
 					templateExpression = buildBrickRow(editorContent);
 				}
@@ -531,26 +570,47 @@ public class CodebricksEditor {
 					}
 					
 					if (highlight) {
-						placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
+						viewControl = placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
 					} else {
-						placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText());
+						viewControl = placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText());
 					}
 					
 					// Show proposal list:
 					installProposalList(parentContainer, placeholderControl, placeholder);
+				
+				// Create value placeholder (parameter):
+				} else if (templateBrick instanceof ValuePlaceholderBrick) {
+					if (highlight) {
+						viewControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
+					} else {
+						viewControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
+					}
+					
+				// Create object placeholder (parameter):
+				} else if (templateBrick instanceof ObjectPlaceholderBrick) {
+					if (highlight) {
+						viewControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
+					} else {
+						viewControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
+					}
 					
 				// Create text:
 				} else if (viewableBrick instanceof TextBrick) {
 					if (highlight) {
-						buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
+						viewControl = buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
 					} else {
-						buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
+						viewControl = buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
 					}
 					
 				// Create blank:
 				} else if (viewableBrick instanceof BlankBrick) {
-					buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
+					viewControl = buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
 				}
+			}
+			
+			// Store model to view mapping:
+			if (viewControl != null) {
+				modelToViewMap.put(templateBrick, viewControl);
 			}
 		}
 		
@@ -584,29 +644,7 @@ public class CodebricksEditor {
 				
 				if(((e.stateMask & SWT.CTRL) == SWT.CTRL) && (e.keyCode == SWT.SPACE)) {
 					CompletionProposalList proposals = new CompletionProposalList(parentContainer.getDisplay());
-					
-					List<ViewableBrick> remainingChoices = placeholderBrick.getRemainingChoices();
-					Set<ViewableBrick> unlistedChoices = new HashSet<>(remainingChoices); 
-					
-					for (ViewableBrick choice : remainingChoices) {
-						if (choice instanceof ComposedBrick) {
-							proposals.addProposal(new CodebricksComposedProposal(CodebricksEditor.this, parentContainer, textBrick, placeholderBrick, (ComposedBrick) choice));
-						} else {
-							// Show equal choices in one proposal:
-							if (unlistedChoices.contains(choice)) {
-								List<ViewableBrick> equalChoices = new ArrayList<>();
-								
-								for (ViewableBrick unlistedChoice : unlistedChoices) {
-									if (unlistedChoice.getText().equals(choice.getText())) {
-										equalChoices.add(unlistedChoice);
-									}
-								}
-								
-								unlistedChoices.removeAll(equalChoices);
-								proposals.addProposal(new CodebricksProposal(textBrick, placeholderBrick, equalChoices));
-							}
-						}
-					}
+					proposals.addProposals(getProposals(parentContainer, textBrick, placeholderBrick));
 
 					// Show proposals below editor:
 					int proposalsXPosition = editorShell.getLocation().x;
@@ -629,6 +667,115 @@ public class CodebricksEditor {
 				fitToContent();
 			}
 		});
+	}
+	
+	private List<CodebricksProposal> getProposals(Composite parentContainer, StyledText textBrick, TemplatePlaceholderBrick placeholderBrick) {
+		List<CodebricksProposal> proposals = new ArrayList<>();
+		
+		List<ViewableBrick> remainingChoices = placeholderBrick.getRemainingChoices();
+		Set<ViewableBrick> unlistedChoices = new HashSet<>(remainingChoices); 
+		
+		for (ViewableBrick choice : remainingChoices) {
+			if (choice instanceof ComposedBrick) {
+				proposals.add(new CodebricksComposedProposal(CodebricksEditor.this, parentContainer, textBrick, placeholderBrick, (ComposedBrick) choice));
+			} else {
+				// Show equal choices in one proposal:
+				if (unlistedChoices.contains(choice)) {
+					List<ViewableBrick> equalChoices = new ArrayList<>();
+					
+					for (ViewableBrick unlistedChoice : unlistedChoices) {
+						if (unlistedChoice.getText().equals(choice.getText())) {
+							equalChoices.add(unlistedChoice);
+						}
+					}
+					
+					unlistedChoices.removeAll(equalChoices);
+					proposals.add(new CodebricksProposal(this, textBrick, placeholderBrick, equalChoices));
+				}
+			}
+		}
+		
+		return proposals;
+	}
+	
+	// TODO: Implement template changed listener.
+	protected void autoSelectPlaceholders(List<? extends Brick> bricks) {
+		try {
+			for (Brick brick : bricks) {
+				if (brick instanceof PlaceholderBrick) {
+					if (brick instanceof TemplatePlaceholderBrick) {
+						TemplatePlaceholderBrick placeholderBrick = (TemplatePlaceholderBrick) brick;
+						
+						if (tryAutoSelectPlaceholder(placeholderBrick)) { // For optimization
+							StyledText textBrick = (StyledText) modelToViewMap.get(placeholderBrick);
+							List<CodebricksProposal> proposals = getProposals(textBrick.getParent(), textBrick, placeholderBrick);
+							
+							if (proposals.isEmpty()) {
+								if (placeholderBrick instanceof ComposedTemplatePlaceholderBrick) {
+									// Hide container of composed placeholder:
+									ComposedBrick containerModel = ((ComposedTemplatePlaceholderBrick) placeholderBrick).getContainerBrick();
+									Composite containerView = (Composite) modelToViewMap.get(containerModel);
+									hideComposedPlaceholder(containerView);
+								} else {
+									// Hide placeholder:
+									hidePlaceholder(textBrick);
+								}
+							} else if (proposals.size() == 1) {
+								proposals.get(0).apply();
+							}
+						}
+					}
+				} else if (brick instanceof ComposedBrick) {
+					autoSelectPlaceholders(((ComposedBrick) brick).getBricks());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void hideComposedPlaceholder(Composite containerView) {
+		for (int i = 0; i < containerView.getChildren().length; i++) {
+			Control child = containerView.getChildren()[i];
+			hidePlaceholder(child);
+			
+			if (child instanceof Composite) {
+				hideComposedPlaceholder((Composite) child);
+			}
+		}
+	}
+	
+	private void hidePlaceholder(Control control) {
+		control.setForeground(new Color(Display.getDefault(), 160, 160, 160));
+		control.setEnabled(false);
+	}
+	
+	private boolean tryAutoSelectPlaceholder(TemplatePlaceholderBrick placeholder) {
+		
+		/*
+		 *  For optimization:
+		 */
+		
+		if (!placeholder.getChoice().isEmpty()) {
+			return false; // already selected!
+		}
+		
+		List<ViewableBrick> choices = placeholder.getRemainingChoices();
+		
+		if ((choices.size() == 0) || (choices.size() == 1)) {
+			return true;
+		} else {
+			for (ViewableBrick choice : choices) {
+				if (choice instanceof ComposedBrick) {
+					return false; // multiple composed bricks!
+				}
+				if (!choice.getText().equals(choices.get(0).getText())) {
+					return false; // not all choices are equal!
+				}
+			}
+		}
+		
+		return true;
 	}
 	
 	protected void fitToContent() {

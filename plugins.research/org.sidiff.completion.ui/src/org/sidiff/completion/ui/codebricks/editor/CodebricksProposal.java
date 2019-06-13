@@ -11,13 +11,16 @@ import org.sidiff.completion.ui.list.ICompletionProposal;
 
 public class CodebricksProposal implements ICompletionProposal {
 	
+	protected CodebricksEditor editor;
+	
 	protected StyledText textField;
 	
 	protected TemplatePlaceholderBrick placeholder;
 	
 	protected List<ViewableBrick> choice;
 	
-	public CodebricksProposal(StyledText textField, TemplatePlaceholderBrick placeholder, List<ViewableBrick> choice) {
+	public CodebricksProposal(CodebricksEditor editor, StyledText textField, TemplatePlaceholderBrick placeholder, List<ViewableBrick> choice) {
+		this.editor = editor;
 		this.textField = textField;
 		this.placeholder = placeholder;
 		this.choice = choice;
@@ -60,9 +63,15 @@ public class CodebricksProposal implements ICompletionProposal {
 	
 	@Override
 	public boolean apply() {
+		
+		// Set selected text for placeholder:
 		placeholder.getChoice().clear();
 		placeholder.getChoice().addAll(choice);
 		textField.setText(getText());
+		
+		// Update other placeholders:
+		editor.autoSelectPlaceholders(editor.getTemplate());
+		
 		return true;
 	}
 }

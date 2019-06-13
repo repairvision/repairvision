@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ObjectPlaceholderBrick extends StyledBrick, PlaceholderBrick {
+public interface ObjectPlaceholderBrick extends PlaceholderBrick {
 	/**
 	 * Returns the value of the '<em><b>Element</b></em>' reference.
 	 * <!-- begin-user-doc -->

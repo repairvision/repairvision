@@ -16,7 +16,7 @@ package org.sidiff.completion.ui.codebricks;
  * </ul>
  *
  * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getStyledBrick()
- * @model interface="true" abstract="true"
+ * @model abstract="true"
  * @generated
  */
 public interface StyledBrick extends ViewableBrick {

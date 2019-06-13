@@ -10,14 +10,11 @@ import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 
 public class CodebricksComposedProposal extends CodebricksProposal {
 	
-	protected CodebricksEditor editor;
-	
 	protected Composite placeholderContainer;
 
 	public CodebricksComposedProposal(CodebricksEditor editor, Composite placeholderContainer, StyledText textField, TemplatePlaceholderBrick placeholder, ComposedBrick choice) {
-		super(textField, placeholder, Collections.singletonList(choice));
+		super(editor, textField, placeholder, Collections.singletonList(choice));
 		this.placeholderContainer = placeholderContainer;
-		this.editor = editor;
 	}
 
 	@Override
@@ -36,6 +33,9 @@ public class CodebricksComposedProposal extends CodebricksProposal {
 		assert this.choice.size() == 1;
 		ComposedBrick choice = (ComposedBrick) this.choice.get(0);
 		editor.buildContent(placeholderContainer, choice.getBricks());
+		
+		// Update other placeholders:
+		editor.autoSelectPlaceholders(editor.getTemplate());
 		
 		return true;
 	}

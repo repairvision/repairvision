@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EDataType;
  * @model
  * @generated
  */
-public interface ValuePlaceholderBrick extends TextBrick, PlaceholderBrick {
+public interface ValuePlaceholderBrick extends PlaceholderBrick {
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' reference.
 	 * <!-- begin-user-doc -->

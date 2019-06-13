@@ -5,12 +5,13 @@ package org.sidiff.completion.ui.codebricks.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.completion.ui.codebricks.Brick;
 import org.sidiff.completion.ui.codebricks.Codebrick;
@@ -29,6 +30,7 @@ import org.sidiff.completion.ui.codebricks.LineBreakBrick;
  * <ul>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.CodebrickImpl#getBricks <em>Bricks</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.CodebrickImpl#getCodebricks <em>Codebricks</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.CodebrickImpl#getAllBricks <em>All Bricks</em>}</li>
  * </ul>
  *
  * @generated
@@ -71,7 +73,7 @@ public class CodebrickImpl extends MinimalEObjectImpl.Container implements Codeb
 	@Override
 	public EList<Brick> getBricks() {
 		if (bricks == null) {
-			bricks = new EObjectContainmentWithInverseEList<Brick>(Brick.class, this, CodebricksPackage.CODEBRICK__BRICKS, CodebricksPackage.BRICK__CODEBRICK);
+			bricks = new EObjectContainmentEList<Brick>(Brick.class, this, CodebricksPackage.CODEBRICK__BRICKS);
 		}
 		return bricks;
 	}
@@ -100,6 +102,24 @@ public class CodebrickImpl extends MinimalEObjectImpl.Container implements Codeb
 		}
 		
 		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public EList<Brick> getAllBricks() {
+		EList<Brick> allBricks = new BasicEList<>();
+		
+		eAllContents().forEachRemaining(e -> {
+			if (e instanceof Brick) {
+				allBricks.add((Brick) e);
+			}
+		});
+		
+		return allBricks;
 	}
 
 	/**
@@ -152,21 +172,6 @@ public class CodebrickImpl extends MinimalEObjectImpl.Container implements Codeb
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case CodebricksPackage.CODEBRICK__BRICKS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getBricks()).basicAdd(otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -189,6 +194,8 @@ public class CodebrickImpl extends MinimalEObjectImpl.Container implements Codeb
 			case CodebricksPackage.CODEBRICK__CODEBRICKS:
 				if (resolve) return getCodebricks();
 				return basicGetCodebricks();
+			case CodebricksPackage.CODEBRICK__ALL_BRICKS:
+				return getAllBricks();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -237,6 +244,8 @@ public class CodebrickImpl extends MinimalEObjectImpl.Container implements Codeb
 				return bricks != null && !bricks.isEmpty();
 			case CodebricksPackage.CODEBRICK__CODEBRICKS:
 				return basicGetCodebricks() != null;
+			case CodebricksPackage.CODEBRICK__ALL_BRICKS:
+				return !getAllBricks().isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

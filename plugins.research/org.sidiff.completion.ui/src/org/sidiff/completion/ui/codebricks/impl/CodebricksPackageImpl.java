@@ -17,6 +17,7 @@ import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.CodebricksFactory;
 import org.sidiff.completion.ui.codebricks.CodebricksPackage;
 import org.sidiff.completion.ui.codebricks.ComposedBrick;
+import org.sidiff.completion.ui.codebricks.ComposedTemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.IndentBrick;
 import org.sidiff.completion.ui.codebricks.LineBreakBrick;
 import org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick;
@@ -139,6 +140,13 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	private EClass placeholderBrickEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass composedTemplatePlaceholderBrickEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -267,6 +275,16 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
+	public EReference getCodebrick_AllBricks() {
+		return (EReference)codebrickEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EOperation getCodebrick__CalculateRows() {
 		return codebrickEClass.getEOperations().get(0);
 	}
@@ -327,18 +345,8 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
-	public EAttribute getTemplatePlaceholderBrick_Mandatory() {
-		return (EAttribute)templatePlaceholderBrickEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EReference getTemplatePlaceholderBrick_Choice() {
-		return (EReference)templatePlaceholderBrickEClass.getEStructuralFeatures().get(2);
+		return (EReference)templatePlaceholderBrickEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -348,7 +356,7 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 */
 	@Override
 	public EReference getTemplatePlaceholderBrick_RemainingChoices() {
-		return (EReference)templatePlaceholderBrickEClass.getEStructuralFeatures().get(3);
+		return (EReference)templatePlaceholderBrickEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -358,7 +366,7 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 */
 	@Override
 	public EAttribute getTemplatePlaceholderBrick_Composed() {
-		return (EAttribute)templatePlaceholderBrickEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)templatePlaceholderBrickEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -577,6 +585,46 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
+	public EAttribute getPlaceholderBrick_Mandatory() {
+		return (EAttribute)placeholderBrickEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getPlaceholderBrick_Placeholder() {
+		return (EAttribute)placeholderBrickEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getComposedTemplatePlaceholderBrick() {
+		return composedTemplatePlaceholderBrickEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getComposedTemplatePlaceholderBrick_ContainerBrick() {
+		return (EReference)composedTemplatePlaceholderBrickEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public CodebricksFactory getCodebricksFactory() {
 		return (CodebricksFactory)getEFactoryInstance();
 	}
@@ -607,6 +655,7 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		codebrickEClass = createEClass(CODEBRICK);
 		createEReference(codebrickEClass, CODEBRICK__BRICKS);
 		createEReference(codebrickEClass, CODEBRICK__CODEBRICKS);
+		createEReference(codebrickEClass, CODEBRICK__ALL_BRICKS);
 		createEOperation(codebrickEClass, CODEBRICK___CALCULATE_ROWS);
 		createEOperation(codebrickEClass, CODEBRICK___CALUCLATE_COLUMNS);
 
@@ -615,7 +664,6 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 
 		templatePlaceholderBrickEClass = createEClass(TEMPLATE_PLACEHOLDER_BRICK);
 		createEReference(templatePlaceholderBrickEClass, TEMPLATE_PLACEHOLDER_BRICK__CHOICES);
-		createEAttribute(templatePlaceholderBrickEClass, TEMPLATE_PLACEHOLDER_BRICK__MANDATORY);
 		createEReference(templatePlaceholderBrickEClass, TEMPLATE_PLACEHOLDER_BRICK__CHOICE);
 		createEReference(templatePlaceholderBrickEClass, TEMPLATE_PLACEHOLDER_BRICK__REMAINING_CHOICES);
 		createEAttribute(templatePlaceholderBrickEClass, TEMPLATE_PLACEHOLDER_BRICK__COMPOSED);
@@ -651,6 +699,11 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		createEReference(objectDomainPlaceholderBrickEClass, OBJECT_DOMAIN_PLACEHOLDER_BRICK__DOMAIN);
 
 		placeholderBrickEClass = createEClass(PLACEHOLDER_BRICK);
+		createEAttribute(placeholderBrickEClass, PLACEHOLDER_BRICK__MANDATORY);
+		createEAttribute(placeholderBrickEClass, PLACEHOLDER_BRICK__PLACEHOLDER);
+
+		composedTemplatePlaceholderBrickEClass = createEClass(COMPOSED_TEMPLATE_PLACEHOLDER_BRICK);
+		createEReference(composedTemplatePlaceholderBrickEClass, COMPOSED_TEMPLATE_PLACEHOLDER_BRICK__CONTAINER_BRICK);
 	}
 
 	/**
@@ -681,9 +734,7 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		templatePlaceholderBrickEClass.getESuperTypes().add(this.getStyledBrick());
 		templatePlaceholderBrickEClass.getESuperTypes().add(this.getPlaceholderBrick());
-		objectPlaceholderBrickEClass.getESuperTypes().add(this.getStyledBrick());
 		objectPlaceholderBrickEClass.getESuperTypes().add(this.getPlaceholderBrick());
 		textBrickEClass.getESuperTypes().add(this.getStyledBrick());
 		indentBrickEClass.getESuperTypes().add(this.getBrick());
@@ -692,10 +743,10 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		blankBrickEClass.getESuperTypes().add(this.getViewableBrick());
 		composedBrickEClass.getESuperTypes().add(this.getViewableBrick());
 		styledBrickEClass.getESuperTypes().add(this.getViewableBrick());
-		valuePlaceholderBrickEClass.getESuperTypes().add(this.getTextBrick());
 		valuePlaceholderBrickEClass.getESuperTypes().add(this.getPlaceholderBrick());
 		objectDomainPlaceholderBrickEClass.getESuperTypes().add(this.getObjectPlaceholderBrick());
-		objectDomainPlaceholderBrickEClass.getESuperTypes().add(this.getPlaceholderBrick());
+		placeholderBrickEClass.getESuperTypes().add(this.getStyledBrick());
+		composedTemplatePlaceholderBrickEClass.getESuperTypes().add(this.getTemplatePlaceholderBrick());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(codebricksEClass, Codebricks.class, "Codebricks", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -703,19 +754,19 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		initEReference(getCodebricks_Template(), this.getCodebrick(), null, "template", null, 0, 1, Codebricks.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(codebrickEClass, Codebrick.class, "Codebrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCodebrick_Bricks(), this.getBrick(), this.getBrick_Codebrick(), "bricks", null, 0, -1, Codebrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCodebrick_Bricks(), this.getBrick(), null, "bricks", null, 0, -1, Codebrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCodebrick_Codebricks(), this.getCodebricks(), null, "codebricks", null, 0, 1, Codebrick.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getCodebrick_AllBricks(), this.getBrick(), null, "allBricks", null, 0, -1, Codebrick.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getCodebrick__CalculateRows(), ecorePackage.getEInt(), "calculateRows", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getCodebrick__CaluclateColumns(), ecorePackage.getEInt(), "caluclateColumns", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEClass(brickEClass, Brick.class, "Brick", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getBrick_Codebrick(), this.getCodebrick(), this.getCodebrick_Bricks(), "codebrick", null, 0, 1, Brick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(brickEClass, Brick.class, "Brick", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getBrick_Codebrick(), this.getCodebrick(), null, "codebrick", null, 0, 1, Brick.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(templatePlaceholderBrickEClass, TemplatePlaceholderBrick.class, "TemplatePlaceholderBrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTemplatePlaceholderBrick_Choices(), this.getViewableBrick(), null, "choices", null, 0, -1, TemplatePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTemplatePlaceholderBrick_Mandatory(), ecorePackage.getEBoolean(), "mandatory", null, 0, 1, TemplatePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTemplatePlaceholderBrick_Choice(), this.getViewableBrick(), null, "choice", null, 0, -1, TemplatePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTemplatePlaceholderBrick_RemainingChoices(), this.getViewableBrick(), null, "remainingChoices", null, 0, -1, TemplatePlaceholderBrick.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTemplatePlaceholderBrick_Composed(), ecorePackage.getEBoolean(), "composed", null, 0, 1, TemplatePlaceholderBrick.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
@@ -742,7 +793,7 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		initEClass(composedBrickEClass, ComposedBrick.class, "ComposedBrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComposedBrick_Bricks(), this.getViewableBrick(), null, "bricks", null, 0, -1, ComposedBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(styledBrickEClass, StyledBrick.class, "StyledBrick", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(styledBrickEClass, StyledBrick.class, "StyledBrick", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStyledBrick_Highlight(), ecorePackage.getEBoolean(), "highlight", null, 0, 1, StyledBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(valuePlaceholderBrickEClass, ValuePlaceholderBrick.class, "ValuePlaceholderBrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -751,7 +802,12 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		initEClass(objectDomainPlaceholderBrickEClass, ObjectDomainPlaceholderBrick.class, "ObjectDomainPlaceholderBrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getObjectDomainPlaceholderBrick_Domain(), ecorePackage.getEObject(), null, "domain", null, 0, -1, ObjectDomainPlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(placeholderBrickEClass, PlaceholderBrick.class, "PlaceholderBrick", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(placeholderBrickEClass, PlaceholderBrick.class, "PlaceholderBrick", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getPlaceholderBrick_Mandatory(), ecorePackage.getEBoolean(), "mandatory", null, 0, 1, PlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPlaceholderBrick_Placeholder(), ecorePackage.getEString(), "placeholder", null, 0, 1, PlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(composedTemplatePlaceholderBrickEClass, ComposedTemplatePlaceholderBrick.class, "ComposedTemplatePlaceholderBrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getComposedTemplatePlaceholderBrick_ContainerBrick(), this.getComposedBrick(), null, "containerBrick", null, 1, 1, ComposedTemplatePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

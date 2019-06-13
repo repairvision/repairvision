@@ -14,7 +14,6 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getChoices <em>Choices</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#isMandatory <em>Mandatory</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getChoice <em>Choice</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getRemainingChoices <em>Remaining Choices</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#isComposed <em>Composed</em>}</li>
@@ -24,7 +23,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface TemplatePlaceholderBrick extends StyledBrick, PlaceholderBrick {
+public interface TemplatePlaceholderBrick extends PlaceholderBrick {
 	/**
 	 * Returns the value of the '<em><b>Choices</b></em>' reference list.
 	 * The list contents are of type {@link org.sidiff.completion.ui.codebricks.ViewableBrick}.
@@ -36,28 +35,6 @@ public interface TemplatePlaceholderBrick extends StyledBrick, PlaceholderBrick 
 	 * @generated
 	 */
 	EList<ViewableBrick> getChoices();
-
-	/**
-	 * Returns the value of the '<em><b>Mandatory</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Mandatory</em>' attribute.
-	 * @see #setMandatory(boolean)
-	 * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getTemplatePlaceholderBrick_Mandatory()
-	 * @model
-	 * @generated
-	 */
-	boolean isMandatory();
-
-	/**
-	 * Sets the value of the '{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#isMandatory <em>Mandatory</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Mandatory</em>' attribute.
-	 * @see #isMandatory()
-	 * @generated
-	 */
-	void setMandatory(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Choice</b></em>' reference list.

@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.sidiff.completion.ui.codebricks.Codebrick#getBricks <em>Bricks</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.Codebrick#getCodebricks <em>Codebricks</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.Codebrick#getAllBricks <em>All Bricks</em>}</li>
  * </ul>
  *
  * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getCodebrick()
@@ -27,13 +28,11 @@ public interface Codebrick extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Bricks</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.completion.ui.codebricks.Brick}.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.completion.ui.codebricks.Brick#getCodebrick <em>Codebrick</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Bricks</em>' containment reference list.
 	 * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getCodebrick_Bricks()
-	 * @see org.sidiff.completion.ui.codebricks.Brick#getCodebrick
-	 * @model opposite="codebrick" containment="true"
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<Brick> getBricks();
@@ -48,6 +47,18 @@ public interface Codebrick extends EObject {
 	 * @generated
 	 */
 	Codebricks getCodebricks();
+
+	/**
+	 * Returns the value of the '<em><b>All Bricks</b></em>' reference list.
+	 * The list contents are of type {@link org.sidiff.completion.ui.codebricks.Brick}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>All Bricks</em>' reference list.
+	 * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getCodebrick_AllBricks()
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @generated
+	 */
+	EList<Brick> getAllBricks();
 
 	/**
 	 * <!-- begin-user-doc -->

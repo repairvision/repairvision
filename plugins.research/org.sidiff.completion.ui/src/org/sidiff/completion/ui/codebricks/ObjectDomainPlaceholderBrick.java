@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ObjectDomainPlaceholderBrick extends ObjectPlaceholderBrick, PlaceholderBrick {
+public interface ObjectDomainPlaceholderBrick extends ObjectPlaceholderBrick {
 	/**
 	 * Returns the value of the '<em><b>Domain</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.

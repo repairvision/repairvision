@@ -128,6 +128,10 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 				return createPlaceholderBrickAdapter();
 			}
 			@Override
+			public Adapter caseComposedTemplatePlaceholderBrick(ComposedTemplatePlaceholderBrick object) {
+				return createComposedTemplatePlaceholderBrickAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -354,6 +358,20 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPlaceholderBrickAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.ComposedTemplatePlaceholderBrick <em>Composed Template Placeholder Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.ComposedTemplatePlaceholderBrick
+	 * @generated
+	 */
+	public Adapter createComposedTemplatePlaceholderBrickAdapter() {
 		return null;
 	}
 

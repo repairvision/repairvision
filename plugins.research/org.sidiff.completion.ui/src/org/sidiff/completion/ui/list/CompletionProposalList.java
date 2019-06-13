@@ -2,6 +2,7 @@ package org.sidiff.completion.ui.list;
 
 import java.awt.MouseInfo;
 import java.awt.PointerInfo;
+import java.util.List;
 
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.DefaultInformationControl;
@@ -84,6 +85,10 @@ public class CompletionProposalList {
 	
 	public void addProposals(ICompletionProposal[] proposals) {
 		proposalTable.add(proposals);
+	}
+	
+	public void addProposals(List<? extends ICompletionProposal> proposals) {
+		proposalTable.add(proposals.toArray());
 	}
 	
 	public void setSelection(int index) {
