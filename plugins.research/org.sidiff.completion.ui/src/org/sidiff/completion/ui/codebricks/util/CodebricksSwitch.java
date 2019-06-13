@@ -84,25 +84,30 @@ public class CodebricksSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CodebricksPackage.PLACEHOLDER_BRICK: {
-				PlaceholderBrick placeholderBrick = (PlaceholderBrick)theEObject;
-				T result = casePlaceholderBrick(placeholderBrick);
-				if (result == null) result = caseViewableBrick(placeholderBrick);
-				if (result == null) result = caseBrick(placeholderBrick);
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK: {
+				TemplatePlaceholderBrick templatePlaceholderBrick = (TemplatePlaceholderBrick)theEObject;
+				T result = caseTemplatePlaceholderBrick(templatePlaceholderBrick);
+				if (result == null) result = caseStyledBrick(templatePlaceholderBrick);
+				if (result == null) result = casePlaceholderBrick(templatePlaceholderBrick);
+				if (result == null) result = caseViewableBrick(templatePlaceholderBrick);
+				if (result == null) result = caseBrick(templatePlaceholderBrick);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CodebricksPackage.MODEL_ELEMENT_BRICK: {
-				ModelElementBrick modelElementBrick = (ModelElementBrick)theEObject;
-				T result = caseModelElementBrick(modelElementBrick);
-				if (result == null) result = caseViewableBrick(modelElementBrick);
-				if (result == null) result = caseBrick(modelElementBrick);
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK: {
+				ObjectPlaceholderBrick objectPlaceholderBrick = (ObjectPlaceholderBrick)theEObject;
+				T result = caseObjectPlaceholderBrick(objectPlaceholderBrick);
+				if (result == null) result = caseStyledBrick(objectPlaceholderBrick);
+				if (result == null) result = casePlaceholderBrick(objectPlaceholderBrick);
+				if (result == null) result = caseViewableBrick(objectPlaceholderBrick);
+				if (result == null) result = caseBrick(objectPlaceholderBrick);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case CodebricksPackage.TEXT_BRICK: {
 				TextBrick textBrick = (TextBrick)theEObject;
 				T result = caseTextBrick(textBrick);
+				if (result == null) result = caseStyledBrick(textBrick);
 				if (result == null) result = caseViewableBrick(textBrick);
 				if (result == null) result = caseBrick(textBrick);
 				if (result == null) result = defaultCase(theEObject);
@@ -132,7 +137,52 @@ public class CodebricksSwitch<T> extends Switch<T> {
 			case CodebricksPackage.BLANK_BRICK: {
 				BlankBrick blankBrick = (BlankBrick)theEObject;
 				T result = caseBlankBrick(blankBrick);
+				if (result == null) result = caseViewableBrick(blankBrick);
 				if (result == null) result = caseBrick(blankBrick);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CodebricksPackage.COMPOSED_BRICK: {
+				ComposedBrick composedBrick = (ComposedBrick)theEObject;
+				T result = caseComposedBrick(composedBrick);
+				if (result == null) result = caseViewableBrick(composedBrick);
+				if (result == null) result = caseBrick(composedBrick);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CodebricksPackage.STYLED_BRICK: {
+				StyledBrick styledBrick = (StyledBrick)theEObject;
+				T result = caseStyledBrick(styledBrick);
+				if (result == null) result = caseViewableBrick(styledBrick);
+				if (result == null) result = caseBrick(styledBrick);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK: {
+				ValuePlaceholderBrick valuePlaceholderBrick = (ValuePlaceholderBrick)theEObject;
+				T result = caseValuePlaceholderBrick(valuePlaceholderBrick);
+				if (result == null) result = caseTextBrick(valuePlaceholderBrick);
+				if (result == null) result = casePlaceholderBrick(valuePlaceholderBrick);
+				if (result == null) result = caseStyledBrick(valuePlaceholderBrick);
+				if (result == null) result = caseViewableBrick(valuePlaceholderBrick);
+				if (result == null) result = caseBrick(valuePlaceholderBrick);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CodebricksPackage.OBJECT_DOMAIN_PLACEHOLDER_BRICK: {
+				ObjectDomainPlaceholderBrick objectDomainPlaceholderBrick = (ObjectDomainPlaceholderBrick)theEObject;
+				T result = caseObjectDomainPlaceholderBrick(objectDomainPlaceholderBrick);
+				if (result == null) result = caseObjectPlaceholderBrick(objectDomainPlaceholderBrick);
+				if (result == null) result = caseStyledBrick(objectDomainPlaceholderBrick);
+				if (result == null) result = casePlaceholderBrick(objectDomainPlaceholderBrick);
+				if (result == null) result = caseViewableBrick(objectDomainPlaceholderBrick);
+				if (result == null) result = caseBrick(objectDomainPlaceholderBrick);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CodebricksPackage.PLACEHOLDER_BRICK: {
+				PlaceholderBrick placeholderBrick = (PlaceholderBrick)theEObject;
+				T result = casePlaceholderBrick(placeholderBrick);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -186,32 +236,32 @@ public class CodebricksSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Placeholder Brick</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Template Placeholder Brick</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Placeholder Brick</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Template Placeholder Brick</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T casePlaceholderBrick(PlaceholderBrick object) {
+	public T caseTemplatePlaceholderBrick(TemplatePlaceholderBrick object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Model Element Brick</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Object Placeholder Brick</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Model Element Brick</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Object Placeholder Brick</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseModelElementBrick(ModelElementBrick object) {
+	public T caseObjectPlaceholderBrick(ObjectPlaceholderBrick object) {
 		return null;
 	}
 
@@ -287,6 +337,81 @@ public class CodebricksSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseBlankBrick(BlankBrick object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Composed Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Composed Brick</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseComposedBrick(ComposedBrick object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Styled Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Styled Brick</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStyledBrick(StyledBrick object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Value Placeholder Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Value Placeholder Brick</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseValuePlaceholderBrick(ValuePlaceholderBrick object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Object Domain Placeholder Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Object Domain Placeholder Brick</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseObjectDomainPlaceholderBrick(ObjectDomainPlaceholderBrick object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Placeholder Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Placeholder Brick</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePlaceholderBrick(PlaceholderBrick object) {
 		return null;
 	}
 

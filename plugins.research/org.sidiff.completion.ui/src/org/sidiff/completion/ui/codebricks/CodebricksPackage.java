@@ -224,31 +224,13 @@ public interface CodebricksPackage extends EPackage {
 	int VIEWABLE_BRICK__CODEBRICK = BRICK__CODEBRICK;
 
 	/**
-	 * The feature id for the '<em><b>Editable</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIEWABLE_BRICK__EDITABLE = BRICK_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Highlight</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIEWABLE_BRICK__HIGHLIGHT = BRICK_FEATURE_COUNT + 1;
-
-	/**
 	 * The number of structural features of the '<em>Viewable Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VIEWABLE_BRICK_FEATURE_COUNT = BRICK_FEATURE_COUNT + 2;
+	int VIEWABLE_BRICK_FEATURE_COUNT = BRICK_FEATURE_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Get Text</em>' operation.
@@ -269,14 +251,14 @@ public interface CodebricksPackage extends EPackage {
 	int VIEWABLE_BRICK_OPERATION_COUNT = BRICK_OPERATION_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl <em>Placeholder Brick</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.StyledBrick <em>Styled Brick</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl
-	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getPlaceholderBrick()
+	 * @see org.sidiff.completion.ui.codebricks.StyledBrick
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getStyledBrick()
 	 * @generated
 	 */
-	int PLACEHOLDER_BRICK = 3;
+	int STYLED_BRICK = 11;
 
 	/**
 	 * The feature id for the '<em><b>Codebrick</b></em>' container reference.
@@ -285,16 +267,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PLACEHOLDER_BRICK__CODEBRICK = VIEWABLE_BRICK__CODEBRICK;
-
-	/**
-	 * The feature id for the '<em><b>Editable</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PLACEHOLDER_BRICK__EDITABLE = VIEWABLE_BRICK__EDITABLE;
+	int STYLED_BRICK__CODEBRICK = VIEWABLE_BRICK__CODEBRICK;
 
 	/**
 	 * The feature id for the '<em><b>Highlight</b></em>' attribute.
@@ -303,7 +276,62 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PLACEHOLDER_BRICK__HIGHLIGHT = VIEWABLE_BRICK__HIGHLIGHT;
+	int STYLED_BRICK__HIGHLIGHT = VIEWABLE_BRICK_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Styled Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STYLED_BRICK_FEATURE_COUNT = VIEWABLE_BRICK_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Text</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STYLED_BRICK___GET_TEXT = VIEWABLE_BRICK___GET_TEXT;
+
+	/**
+	 * The number of operations of the '<em>Styled Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STYLED_BRICK_OPERATION_COUNT = VIEWABLE_BRICK_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl <em>Template Placeholder Brick</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getTemplatePlaceholderBrick()
+	 * @generated
+	 */
+	int TEMPLATE_PLACEHOLDER_BRICK = 3;
+
+	/**
+	 * The feature id for the '<em><b>Codebrick</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK = STYLED_BRICK__CODEBRICK;
+
+	/**
+	 * The feature id for the '<em><b>Highlight</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPLATE_PLACEHOLDER_BRICK__HIGHLIGHT = STYLED_BRICK__HIGHLIGHT;
 
 	/**
 	 * The feature id for the '<em><b>Choices</b></em>' reference list.
@@ -312,7 +340,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PLACEHOLDER_BRICK__CHOICES = VIEWABLE_BRICK_FEATURE_COUNT + 0;
+	int TEMPLATE_PLACEHOLDER_BRICK__CHOICES = STYLED_BRICK_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
@@ -321,7 +349,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PLACEHOLDER_BRICK__MANDATORY = VIEWABLE_BRICK_FEATURE_COUNT + 1;
+	int TEMPLATE_PLACEHOLDER_BRICK__MANDATORY = STYLED_BRICK_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Choice</b></em>' reference list.
@@ -330,7 +358,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PLACEHOLDER_BRICK__CHOICE = VIEWABLE_BRICK_FEATURE_COUNT + 2;
+	int TEMPLATE_PLACEHOLDER_BRICK__CHOICE = STYLED_BRICK_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Remaining Choices</b></em>' reference list.
@@ -339,16 +367,25 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PLACEHOLDER_BRICK__REMAINING_CHOICES = VIEWABLE_BRICK_FEATURE_COUNT + 3;
+	int TEMPLATE_PLACEHOLDER_BRICK__REMAINING_CHOICES = STYLED_BRICK_FEATURE_COUNT + 3;
 
 	/**
-	 * The number of structural features of the '<em>Placeholder Brick</em>' class.
+	 * The feature id for the '<em><b>Composed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PLACEHOLDER_BRICK_FEATURE_COUNT = VIEWABLE_BRICK_FEATURE_COUNT + 4;
+	int TEMPLATE_PLACEHOLDER_BRICK__COMPOSED = STYLED_BRICK_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Template Placeholder Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPLATE_PLACEHOLDER_BRICK_FEATURE_COUNT = STYLED_BRICK_FEATURE_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Text</em>' operation.
@@ -357,26 +394,26 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PLACEHOLDER_BRICK___GET_TEXT = VIEWABLE_BRICK___GET_TEXT;
+	int TEMPLATE_PLACEHOLDER_BRICK___GET_TEXT = STYLED_BRICK___GET_TEXT;
 
 	/**
-	 * The number of operations of the '<em>Placeholder Brick</em>' class.
+	 * The number of operations of the '<em>Template Placeholder Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PLACEHOLDER_BRICK_OPERATION_COUNT = VIEWABLE_BRICK_OPERATION_COUNT + 0;
+	int TEMPLATE_PLACEHOLDER_BRICK_OPERATION_COUNT = STYLED_BRICK_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.ModelElementBrickImpl <em>Model Element Brick</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl <em>Object Placeholder Brick</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.completion.ui.codebricks.impl.ModelElementBrickImpl
-	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getModelElementBrick()
+	 * @see org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getObjectPlaceholderBrick()
 	 * @generated
 	 */
-	int MODEL_ELEMENT_BRICK = 4;
+	int OBJECT_PLACEHOLDER_BRICK = 4;
 
 	/**
 	 * The feature id for the '<em><b>Codebrick</b></em>' container reference.
@@ -385,16 +422,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_ELEMENT_BRICK__CODEBRICK = VIEWABLE_BRICK__CODEBRICK;
-
-	/**
-	 * The feature id for the '<em><b>Editable</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_ELEMENT_BRICK__EDITABLE = VIEWABLE_BRICK__EDITABLE;
+	int OBJECT_PLACEHOLDER_BRICK__CODEBRICK = STYLED_BRICK__CODEBRICK;
 
 	/**
 	 * The feature id for the '<em><b>Highlight</b></em>' attribute.
@@ -403,7 +431,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_ELEMENT_BRICK__HIGHLIGHT = VIEWABLE_BRICK__HIGHLIGHT;
+	int OBJECT_PLACEHOLDER_BRICK__HIGHLIGHT = STYLED_BRICK__HIGHLIGHT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' reference.
@@ -412,16 +440,25 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_ELEMENT_BRICK__ELEMENT = VIEWABLE_BRICK_FEATURE_COUNT + 0;
+	int OBJECT_PLACEHOLDER_BRICK__ELEMENT = STYLED_BRICK_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Model Element Brick</em>' class.
+	 * The feature id for the '<em><b>Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_ELEMENT_BRICK_FEATURE_COUNT = VIEWABLE_BRICK_FEATURE_COUNT + 1;
+	int OBJECT_PLACEHOLDER_BRICK__TYPE = STYLED_BRICK_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Object Placeholder Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_PLACEHOLDER_BRICK_FEATURE_COUNT = STYLED_BRICK_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Text</em>' operation.
@@ -430,16 +467,16 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_ELEMENT_BRICK___GET_TEXT = VIEWABLE_BRICK___GET_TEXT;
+	int OBJECT_PLACEHOLDER_BRICK___GET_TEXT = STYLED_BRICK___GET_TEXT;
 
 	/**
-	 * The number of operations of the '<em>Model Element Brick</em>' class.
+	 * The number of operations of the '<em>Object Placeholder Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_ELEMENT_BRICK_OPERATION_COUNT = VIEWABLE_BRICK_OPERATION_COUNT + 0;
+	int OBJECT_PLACEHOLDER_BRICK_OPERATION_COUNT = STYLED_BRICK_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.TextBrickImpl <em>Text Brick</em>}' class.
@@ -458,16 +495,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TEXT_BRICK__CODEBRICK = VIEWABLE_BRICK__CODEBRICK;
-
-	/**
-	 * The feature id for the '<em><b>Editable</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_BRICK__EDITABLE = VIEWABLE_BRICK__EDITABLE;
+	int TEXT_BRICK__CODEBRICK = STYLED_BRICK__CODEBRICK;
 
 	/**
 	 * The feature id for the '<em><b>Highlight</b></em>' attribute.
@@ -476,7 +504,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TEXT_BRICK__HIGHLIGHT = VIEWABLE_BRICK__HIGHLIGHT;
+	int TEXT_BRICK__HIGHLIGHT = STYLED_BRICK__HIGHLIGHT;
 
 	/**
 	 * The feature id for the '<em><b>Text</b></em>' attribute.
@@ -485,7 +513,16 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TEXT_BRICK__TEXT = VIEWABLE_BRICK_FEATURE_COUNT + 0;
+	int TEXT_BRICK__TEXT = STYLED_BRICK_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Selectable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_BRICK__SELECTABLE = STYLED_BRICK_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Text Brick</em>' class.
@@ -494,7 +531,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TEXT_BRICK_FEATURE_COUNT = VIEWABLE_BRICK_FEATURE_COUNT + 1;
+	int TEXT_BRICK_FEATURE_COUNT = STYLED_BRICK_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Text</em>' operation.
@@ -503,7 +540,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TEXT_BRICK___GET_TEXT = VIEWABLE_BRICK___GET_TEXT;
+	int TEXT_BRICK___GET_TEXT = STYLED_BRICK___GET_TEXT;
 
 	/**
 	 * The number of operations of the '<em>Text Brick</em>' class.
@@ -512,7 +549,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TEXT_BRICK_OPERATION_COUNT = VIEWABLE_BRICK_OPERATION_COUNT + 0;
+	int TEXT_BRICK_OPERATION_COUNT = STYLED_BRICK_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.IndentBrickImpl <em>Indent Brick</em>}' class.
@@ -615,7 +652,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLANK_BRICK__CODEBRICK = BRICK__CODEBRICK;
+	int BLANK_BRICK__CODEBRICK = VIEWABLE_BRICK__CODEBRICK;
 
 	/**
 	 * The number of structural features of the '<em>Blank Brick</em>' class.
@@ -624,7 +661,16 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLANK_BRICK_FEATURE_COUNT = BRICK_FEATURE_COUNT + 0;
+	int BLANK_BRICK_FEATURE_COUNT = VIEWABLE_BRICK_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Text</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BLANK_BRICK___GET_TEXT = VIEWABLE_BRICK___GET_TEXT;
 
 	/**
 	 * The number of operations of the '<em>Blank Brick</em>' class.
@@ -633,7 +679,256 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BLANK_BRICK_OPERATION_COUNT = BRICK_OPERATION_COUNT + 0;
+	int BLANK_BRICK_OPERATION_COUNT = VIEWABLE_BRICK_OPERATION_COUNT + 0;
+
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.ComposedBrickImpl <em>Composed Brick</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.impl.ComposedBrickImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getComposedBrick()
+	 * @generated
+	 */
+	int COMPOSED_BRICK = 10;
+
+	/**
+	 * The feature id for the '<em><b>Codebrick</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSED_BRICK__CODEBRICK = VIEWABLE_BRICK__CODEBRICK;
+
+	/**
+	 * The feature id for the '<em><b>Bricks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSED_BRICK__BRICKS = VIEWABLE_BRICK_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Composed Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSED_BRICK_FEATURE_COUNT = VIEWABLE_BRICK_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Text</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSED_BRICK___GET_TEXT = VIEWABLE_BRICK___GET_TEXT;
+
+	/**
+	 * The number of operations of the '<em>Composed Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSED_BRICK_OPERATION_COUNT = VIEWABLE_BRICK_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.ValuePlaceholderBrickImpl <em>Value Placeholder Brick</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.impl.ValuePlaceholderBrickImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getValuePlaceholderBrick()
+	 * @generated
+	 */
+	int VALUE_PLACEHOLDER_BRICK = 12;
+
+	/**
+	 * The feature id for the '<em><b>Codebrick</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK__CODEBRICK = TEXT_BRICK__CODEBRICK;
+
+	/**
+	 * The feature id for the '<em><b>Highlight</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK__HIGHLIGHT = TEXT_BRICK__HIGHLIGHT;
+
+	/**
+	 * The feature id for the '<em><b>Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK__TEXT = TEXT_BRICK__TEXT;
+
+	/**
+	 * The feature id for the '<em><b>Selectable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK__SELECTABLE = TEXT_BRICK__SELECTABLE;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK__TYPE = TEXT_BRICK_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Value Placeholder Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK_FEATURE_COUNT = TEXT_BRICK_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Text</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK___GET_TEXT = TEXT_BRICK___GET_TEXT;
+
+	/**
+	 * The number of operations of the '<em>Value Placeholder Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK_OPERATION_COUNT = TEXT_BRICK_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.ObjectDomainPlaceholderBrickImpl <em>Object Domain Placeholder Brick</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.impl.ObjectDomainPlaceholderBrickImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getObjectDomainPlaceholderBrick()
+	 * @generated
+	 */
+	int OBJECT_DOMAIN_PLACEHOLDER_BRICK = 13;
+
+	/**
+	 * The feature id for the '<em><b>Codebrick</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__CODEBRICK = OBJECT_PLACEHOLDER_BRICK__CODEBRICK;
+
+	/**
+	 * The feature id for the '<em><b>Highlight</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__HIGHLIGHT = OBJECT_PLACEHOLDER_BRICK__HIGHLIGHT;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__ELEMENT = OBJECT_PLACEHOLDER_BRICK__ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__TYPE = OBJECT_PLACEHOLDER_BRICK__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Domain</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__DOMAIN = OBJECT_PLACEHOLDER_BRICK_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Object Domain Placeholder Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_PLACEHOLDER_BRICK_FEATURE_COUNT = OBJECT_PLACEHOLDER_BRICK_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Text</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_PLACEHOLDER_BRICK___GET_TEXT = OBJECT_PLACEHOLDER_BRICK___GET_TEXT;
+
+	/**
+	 * The number of operations of the '<em>Object Domain Placeholder Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_PLACEHOLDER_BRICK_OPERATION_COUNT = OBJECT_PLACEHOLDER_BRICK_OPERATION_COUNT + 0;
+
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick <em>Placeholder Brick</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.PlaceholderBrick
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getPlaceholderBrick()
+	 * @generated
+	 */
+	int PLACEHOLDER_BRICK = 14;
+
+	/**
+	 * The number of structural features of the '<em>Placeholder Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLACEHOLDER_BRICK_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of operations of the '<em>Placeholder Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLACEHOLDER_BRICK_OPERATION_COUNT = 0;
 
 
 	/**
@@ -742,79 +1037,101 @@ public interface CodebricksPackage extends EPackage {
 	EReference getBrick_Codebrick();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick <em>Placeholder Brick</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick <em>Template Placeholder Brick</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Placeholder Brick</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.PlaceholderBrick
+	 * @return the meta object for class '<em>Template Placeholder Brick</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick
 	 * @generated
 	 */
-	EClass getPlaceholderBrick();
+	EClass getTemplatePlaceholderBrick();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick#getChoices <em>Choices</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getChoices <em>Choices</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Choices</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.PlaceholderBrick#getChoices()
-	 * @see #getPlaceholderBrick()
+	 * @see org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getChoices()
+	 * @see #getTemplatePlaceholderBrick()
 	 * @generated
 	 */
-	EReference getPlaceholderBrick_Choices();
+	EReference getTemplatePlaceholderBrick_Choices();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick#isMandatory <em>Mandatory</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#isMandatory <em>Mandatory</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Mandatory</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.PlaceholderBrick#isMandatory()
-	 * @see #getPlaceholderBrick()
+	 * @see org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#isMandatory()
+	 * @see #getTemplatePlaceholderBrick()
 	 * @generated
 	 */
-	EAttribute getPlaceholderBrick_Mandatory();
+	EAttribute getTemplatePlaceholderBrick_Mandatory();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick#getChoice <em>Choice</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getChoice <em>Choice</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Choice</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.PlaceholderBrick#getChoice()
-	 * @see #getPlaceholderBrick()
+	 * @see org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getChoice()
+	 * @see #getTemplatePlaceholderBrick()
 	 * @generated
 	 */
-	EReference getPlaceholderBrick_Choice();
+	EReference getTemplatePlaceholderBrick_Choice();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick#getRemainingChoices <em>Remaining Choices</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getRemainingChoices <em>Remaining Choices</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Remaining Choices</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.PlaceholderBrick#getRemainingChoices()
-	 * @see #getPlaceholderBrick()
+	 * @see org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getRemainingChoices()
+	 * @see #getTemplatePlaceholderBrick()
 	 * @generated
 	 */
-	EReference getPlaceholderBrick_RemainingChoices();
+	EReference getTemplatePlaceholderBrick_RemainingChoices();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ModelElementBrick <em>Model Element Brick</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#isComposed <em>Composed</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Model Element Brick</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.ModelElementBrick
+	 * @return the meta object for the attribute '<em>Composed</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#isComposed()
+	 * @see #getTemplatePlaceholderBrick()
 	 * @generated
 	 */
-	EClass getModelElementBrick();
+	EAttribute getTemplatePlaceholderBrick_Composed();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.completion.ui.codebricks.ModelElementBrick#getElement <em>Element</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick <em>Object Placeholder Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Object Placeholder Brick</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick
+	 * @generated
+	 */
+	EClass getObjectPlaceholderBrick();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick#getElement <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Element</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.ModelElementBrick#getElement()
-	 * @see #getModelElementBrick()
+	 * @see org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick#getElement()
+	 * @see #getObjectPlaceholderBrick()
 	 * @generated
 	 */
-	EReference getModelElementBrick_Element();
+	EReference getObjectPlaceholderBrick_Element();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Type</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick#getType()
+	 * @see #getObjectPlaceholderBrick()
+	 * @generated
+	 */
+	EReference getObjectPlaceholderBrick_Type();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.TextBrick <em>Text Brick</em>}'.
@@ -836,6 +1153,17 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTextBrick_Text();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.TextBrick#isSelectable <em>Selectable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Selectable</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.TextBrick#isSelectable()
+	 * @see #getTextBrick()
+	 * @generated
+	 */
+	EAttribute getTextBrick_Selectable();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.IndentBrick <em>Indent Brick</em>}'.
@@ -879,28 +1207,6 @@ public interface CodebricksPackage extends EPackage {
 	EClass getViewableBrick();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.ViewableBrick#isEditable <em>Editable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Editable</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.ViewableBrick#isEditable()
-	 * @see #getViewableBrick()
-	 * @generated
-	 */
-	EAttribute getViewableBrick_Editable();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.ViewableBrick#isHighlight <em>Highlight</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Highlight</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.ViewableBrick#isHighlight()
-	 * @see #getViewableBrick()
-	 * @generated
-	 */
-	EAttribute getViewableBrick_Highlight();
-
-	/**
 	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.ViewableBrick#getText() <em>Get Text</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -919,6 +1225,100 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getBlankBrick();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ComposedBrick <em>Composed Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Composed Brick</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ComposedBrick
+	 * @generated
+	 */
+	EClass getComposedBrick();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.completion.ui.codebricks.ComposedBrick#getBricks <em>Bricks</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Bricks</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ComposedBrick#getBricks()
+	 * @see #getComposedBrick()
+	 * @generated
+	 */
+	EReference getComposedBrick_Bricks();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.StyledBrick <em>Styled Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Styled Brick</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.StyledBrick
+	 * @generated
+	 */
+	EClass getStyledBrick();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.StyledBrick#isHighlight <em>Highlight</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Highlight</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.StyledBrick#isHighlight()
+	 * @see #getStyledBrick()
+	 * @generated
+	 */
+	EAttribute getStyledBrick_Highlight();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick <em>Value Placeholder Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Value Placeholder Brick</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick
+	 * @generated
+	 */
+	EClass getValuePlaceholderBrick();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Type</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getType()
+	 * @see #getValuePlaceholderBrick()
+	 * @generated
+	 */
+	EReference getValuePlaceholderBrick_Type();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick <em>Object Domain Placeholder Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Object Domain Placeholder Brick</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick
+	 * @generated
+	 */
+	EClass getObjectDomainPlaceholderBrick();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick#getDomain <em>Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Domain</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick#getDomain()
+	 * @see #getObjectDomainPlaceholderBrick()
+	 * @generated
+	 */
+	EReference getObjectDomainPlaceholderBrick_Domain();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick <em>Placeholder Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Placeholder Brick</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.PlaceholderBrick
+	 * @generated
+	 */
+	EClass getPlaceholderBrick();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1030,14 +1430,14 @@ public interface CodebricksPackage extends EPackage {
 		EReference BRICK__CODEBRICK = eINSTANCE.getBrick_Codebrick();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl <em>Placeholder Brick</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl <em>Template Placeholder Brick</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl
-		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getPlaceholderBrick()
+		 * @see org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getTemplatePlaceholderBrick()
 		 * @generated
 		 */
-		EClass PLACEHOLDER_BRICK = eINSTANCE.getPlaceholderBrick();
+		EClass TEMPLATE_PLACEHOLDER_BRICK = eINSTANCE.getTemplatePlaceholderBrick();
 
 		/**
 		 * The meta object literal for the '<em><b>Choices</b></em>' reference list feature.
@@ -1045,7 +1445,7 @@ public interface CodebricksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PLACEHOLDER_BRICK__CHOICES = eINSTANCE.getPlaceholderBrick_Choices();
+		EReference TEMPLATE_PLACEHOLDER_BRICK__CHOICES = eINSTANCE.getTemplatePlaceholderBrick_Choices();
 
 		/**
 		 * The meta object literal for the '<em><b>Mandatory</b></em>' attribute feature.
@@ -1053,7 +1453,7 @@ public interface CodebricksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PLACEHOLDER_BRICK__MANDATORY = eINSTANCE.getPlaceholderBrick_Mandatory();
+		EAttribute TEMPLATE_PLACEHOLDER_BRICK__MANDATORY = eINSTANCE.getTemplatePlaceholderBrick_Mandatory();
 
 		/**
 		 * The meta object literal for the '<em><b>Choice</b></em>' reference list feature.
@@ -1061,7 +1461,7 @@ public interface CodebricksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PLACEHOLDER_BRICK__CHOICE = eINSTANCE.getPlaceholderBrick_Choice();
+		EReference TEMPLATE_PLACEHOLDER_BRICK__CHOICE = eINSTANCE.getTemplatePlaceholderBrick_Choice();
 
 		/**
 		 * The meta object literal for the '<em><b>Remaining Choices</b></em>' reference list feature.
@@ -1069,17 +1469,25 @@ public interface CodebricksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PLACEHOLDER_BRICK__REMAINING_CHOICES = eINSTANCE.getPlaceholderBrick_RemainingChoices();
+		EReference TEMPLATE_PLACEHOLDER_BRICK__REMAINING_CHOICES = eINSTANCE.getTemplatePlaceholderBrick_RemainingChoices();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ModelElementBrickImpl <em>Model Element Brick</em>}' class.
+		 * The meta object literal for the '<em><b>Composed</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.completion.ui.codebricks.impl.ModelElementBrickImpl
-		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getModelElementBrick()
 		 * @generated
 		 */
-		EClass MODEL_ELEMENT_BRICK = eINSTANCE.getModelElementBrick();
+		EAttribute TEMPLATE_PLACEHOLDER_BRICK__COMPOSED = eINSTANCE.getTemplatePlaceholderBrick_Composed();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl <em>Object Placeholder Brick</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getObjectPlaceholderBrick()
+		 * @generated
+		 */
+		EClass OBJECT_PLACEHOLDER_BRICK = eINSTANCE.getObjectPlaceholderBrick();
 
 		/**
 		 * The meta object literal for the '<em><b>Element</b></em>' reference feature.
@@ -1087,7 +1495,15 @@ public interface CodebricksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference MODEL_ELEMENT_BRICK__ELEMENT = eINSTANCE.getModelElementBrick_Element();
+		EReference OBJECT_PLACEHOLDER_BRICK__ELEMENT = eINSTANCE.getObjectPlaceholderBrick_Element();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference OBJECT_PLACEHOLDER_BRICK__TYPE = eINSTANCE.getObjectPlaceholderBrick_Type();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.TextBrickImpl <em>Text Brick</em>}' class.
@@ -1106,6 +1522,14 @@ public interface CodebricksPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TEXT_BRICK__TEXT = eINSTANCE.getTextBrick_Text();
+
+		/**
+		 * The meta object literal for the '<em><b>Selectable</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TEXT_BRICK__SELECTABLE = eINSTANCE.getTextBrick_Selectable();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.IndentBrickImpl <em>Indent Brick</em>}' class.
@@ -1146,22 +1570,6 @@ public interface CodebricksPackage extends EPackage {
 		EClass VIEWABLE_BRICK = eINSTANCE.getViewableBrick();
 
 		/**
-		 * The meta object literal for the '<em><b>Editable</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute VIEWABLE_BRICK__EDITABLE = eINSTANCE.getViewableBrick_Editable();
-
-		/**
-		 * The meta object literal for the '<em><b>Highlight</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute VIEWABLE_BRICK__HIGHLIGHT = eINSTANCE.getViewableBrick_Highlight();
-
-		/**
 		 * The meta object literal for the '<em><b>Get Text</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1178,6 +1586,88 @@ public interface CodebricksPackage extends EPackage {
 		 * @generated
 		 */
 		EClass BLANK_BRICK = eINSTANCE.getBlankBrick();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ComposedBrickImpl <em>Composed Brick</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.impl.ComposedBrickImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getComposedBrick()
+		 * @generated
+		 */
+		EClass COMPOSED_BRICK = eINSTANCE.getComposedBrick();
+
+		/**
+		 * The meta object literal for the '<em><b>Bricks</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPOSED_BRICK__BRICKS = eINSTANCE.getComposedBrick_Bricks();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.StyledBrick <em>Styled Brick</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.StyledBrick
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getStyledBrick()
+		 * @generated
+		 */
+		EClass STYLED_BRICK = eINSTANCE.getStyledBrick();
+
+		/**
+		 * The meta object literal for the '<em><b>Highlight</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STYLED_BRICK__HIGHLIGHT = eINSTANCE.getStyledBrick_Highlight();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ValuePlaceholderBrickImpl <em>Value Placeholder Brick</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.impl.ValuePlaceholderBrickImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getValuePlaceholderBrick()
+		 * @generated
+		 */
+		EClass VALUE_PLACEHOLDER_BRICK = eINSTANCE.getValuePlaceholderBrick();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VALUE_PLACEHOLDER_BRICK__TYPE = eINSTANCE.getValuePlaceholderBrick_Type();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ObjectDomainPlaceholderBrickImpl <em>Object Domain Placeholder Brick</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.impl.ObjectDomainPlaceholderBrickImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getObjectDomainPlaceholderBrick()
+		 * @generated
+		 */
+		EClass OBJECT_DOMAIN_PLACEHOLDER_BRICK = eINSTANCE.getObjectDomainPlaceholderBrick();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference OBJECT_DOMAIN_PLACEHOLDER_BRICK__DOMAIN = eINSTANCE.getObjectDomainPlaceholderBrick_Domain();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick <em>Placeholder Brick</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.PlaceholderBrick
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getPlaceholderBrick()
+		 * @generated
+		 */
+		EClass PLACEHOLDER_BRICK = eINSTANCE.getPlaceholderBrick();
 
 	}
 

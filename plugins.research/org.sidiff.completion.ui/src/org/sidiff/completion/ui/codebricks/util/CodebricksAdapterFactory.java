@@ -80,12 +80,12 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 				return createBrickAdapter();
 			}
 			@Override
-			public Adapter casePlaceholderBrick(PlaceholderBrick object) {
-				return createPlaceholderBrickAdapter();
+			public Adapter caseTemplatePlaceholderBrick(TemplatePlaceholderBrick object) {
+				return createTemplatePlaceholderBrickAdapter();
 			}
 			@Override
-			public Adapter caseModelElementBrick(ModelElementBrick object) {
-				return createModelElementBrickAdapter();
+			public Adapter caseObjectPlaceholderBrick(ObjectPlaceholderBrick object) {
+				return createObjectPlaceholderBrickAdapter();
 			}
 			@Override
 			public Adapter caseTextBrick(TextBrick object) {
@@ -106,6 +106,26 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseBlankBrick(BlankBrick object) {
 				return createBlankBrickAdapter();
+			}
+			@Override
+			public Adapter caseComposedBrick(ComposedBrick object) {
+				return createComposedBrickAdapter();
+			}
+			@Override
+			public Adapter caseStyledBrick(StyledBrick object) {
+				return createStyledBrickAdapter();
+			}
+			@Override
+			public Adapter caseValuePlaceholderBrick(ValuePlaceholderBrick object) {
+				return createValuePlaceholderBrickAdapter();
+			}
+			@Override
+			public Adapter caseObjectDomainPlaceholderBrick(ObjectDomainPlaceholderBrick object) {
+				return createObjectDomainPlaceholderBrickAdapter();
+			}
+			@Override
+			public Adapter casePlaceholderBrick(PlaceholderBrick object) {
+				return createPlaceholderBrickAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -170,30 +190,30 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick <em>Placeholder Brick</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick <em>Template Placeholder Brick</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.completion.ui.codebricks.PlaceholderBrick
+	 * @see org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick
 	 * @generated
 	 */
-	public Adapter createPlaceholderBrickAdapter() {
+	public Adapter createTemplatePlaceholderBrickAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.ModelElementBrick <em>Model Element Brick</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick <em>Object Placeholder Brick</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.completion.ui.codebricks.ModelElementBrick
+	 * @see org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick
 	 * @generated
 	 */
-	public Adapter createModelElementBrickAdapter() {
+	public Adapter createObjectPlaceholderBrickAdapter() {
 		return null;
 	}
 
@@ -264,6 +284,76 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createBlankBrickAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.ComposedBrick <em>Composed Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.ComposedBrick
+	 * @generated
+	 */
+	public Adapter createComposedBrickAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.StyledBrick <em>Styled Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.StyledBrick
+	 * @generated
+	 */
+	public Adapter createStyledBrickAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick <em>Value Placeholder Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick
+	 * @generated
+	 */
+	public Adapter createValuePlaceholderBrickAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick <em>Object Domain Placeholder Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick
+	 * @generated
+	 */
+	public Adapter createObjectDomainPlaceholderBrickAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick <em>Placeholder Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.PlaceholderBrick
+	 * @generated
+	 */
+	public Adapter createPlaceholderBrickAdapter() {
 		return null;
 	}
 

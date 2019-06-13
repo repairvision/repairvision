@@ -21,6 +21,15 @@
     <bricks
         xsi:type="codebricks:TextBrick"
         text="H"/>
+    <bricks
+        xsi:type="codebricks:ComposedBrick">
+      <bricks
+          xsi:type="codebricks:TextBrick"
+          text="A"/>
+      <bricks
+          xsi:type="codebricks:TextBrick"
+          text="B"/>
+    </bricks>
   </alternatives>
   <alternatives>
     <bricks
@@ -38,6 +47,15 @@
     <bricks
         xsi:type="codebricks:TextBrick"
         text="F"/>
+    <bricks
+        xsi:type="codebricks:ComposedBrick">
+      <bricks
+          xsi:type="codebricks:TextBrick"
+          text="C"/>
+      <bricks
+          xsi:type="codebricks:TextBrick"
+          text="D"/>
+    </bricks>
   </alternatives>
   <alternatives>
     <bricks
@@ -52,11 +70,19 @@
     <bricks
         xsi:type="codebricks:TextBrick"
         text="G"/>
+    <bricks
+        xsi:type="codebricks:ComposedBrick">
+      <bricks
+          xsi:type="codebricks:TextBrick"
+          text="E"/>
+      <bricks
+          xsi:type="codebricks:TextBrick"
+          text="F"/>
+    </bricks>
   </alternatives>
   <template>
     <bricks
-        xsi:type="codebricks:PlaceholderBrick"
-        editable="true"
+        xsi:type="codebricks:TemplatePlaceholderBrick"
         highlight="true"
         choices="//@alternatives.0/@bricks.0 //@alternatives.2/@bricks.0 //@alternatives.1/@bricks.0"
         mandatory="true"/>
@@ -70,17 +96,19 @@
         highlight="true"
         text="B"/>
     <bricks
-        xsi:type="codebricks:PlaceholderBrick"
-        editable="true"
+        xsi:type="codebricks:TemplatePlaceholderBrick"
         highlight="true"
         choices="//@alternatives.0/@bricks.3 //@alternatives.1/@bricks.3 //@alternatives.2/@bricks.3"/>
     <bricks
-        xsi:type="codebricks:PlaceholderBrick"
-        editable="true"
+        xsi:type="codebricks:TemplatePlaceholderBrick"
         highlight="true"
         choices="//@alternatives.0/@bricks.4 //@alternatives.1/@bricks.4"/>
     <bricks
         xsi:type="codebricks:TextBrick"
         text="HalloWelt"/>
+    <bricks
+        xsi:type="codebricks:TemplatePlaceholderBrick"
+        choices="//@alternatives.0/@bricks.5 //@alternatives.1/@bricks.5 //@alternatives.2/@bricks.4"
+        mandatory="true"/>
   </template>
 </codebricks:Codebricks>

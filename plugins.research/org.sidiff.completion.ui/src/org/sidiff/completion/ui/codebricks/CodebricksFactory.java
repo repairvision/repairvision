@@ -40,22 +40,22 @@ public interface CodebricksFactory extends EFactory {
 	Codebrick createCodebrick();
 
 	/**
-	 * Returns a new object of class '<em>Placeholder Brick</em>'.
+	 * Returns a new object of class '<em>Template Placeholder Brick</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Placeholder Brick</em>'.
+	 * @return a new object of class '<em>Template Placeholder Brick</em>'.
 	 * @generated
 	 */
-	PlaceholderBrick createPlaceholderBrick();
+	TemplatePlaceholderBrick createTemplatePlaceholderBrick();
 
 	/**
-	 * Returns a new object of class '<em>Model Element Brick</em>'.
+	 * Returns a new object of class '<em>Object Placeholder Brick</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Model Element Brick</em>'.
+	 * @return a new object of class '<em>Object Placeholder Brick</em>'.
 	 * @generated
 	 */
-	ModelElementBrick createModelElementBrick();
+	ObjectPlaceholderBrick createObjectPlaceholderBrick();
 
 	/**
 	 * Returns a new object of class '<em>Text Brick</em>'.
@@ -92,6 +92,33 @@ public interface CodebricksFactory extends EFactory {
 	 * @generated
 	 */
 	BlankBrick createBlankBrick();
+
+	/**
+	 * Returns a new object of class '<em>Composed Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Composed Brick</em>'.
+	 * @generated
+	 */
+	ComposedBrick createComposedBrick();
+
+	/**
+	 * Returns a new object of class '<em>Value Placeholder Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Value Placeholder Brick</em>'.
+	 * @generated
+	 */
+	ValuePlaceholderBrick createValuePlaceholderBrick();
+
+	/**
+	 * Returns a new object of class '<em>Object Domain Placeholder Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Object Domain Placeholder Brick</em>'.
+	 * @generated
+	 */
+	ObjectDomainPlaceholderBrick createObjectDomainPlaceholderBrick();
 
 	/**
 	 * Returns the package supported by this factory.

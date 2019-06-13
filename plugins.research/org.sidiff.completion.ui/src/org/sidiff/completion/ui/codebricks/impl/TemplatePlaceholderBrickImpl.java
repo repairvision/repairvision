@@ -12,61 +12,39 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.completion.ui.codebricks.Brick;
 import org.sidiff.completion.ui.codebricks.Codebrick;
 import org.sidiff.completion.ui.codebricks.CodebricksPackage;
-import org.sidiff.completion.ui.codebricks.PlaceholderBrick;
+import org.sidiff.completion.ui.codebricks.ComposedBrick;
+import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Placeholder Brick</b></em>'.
+ * An implementation of the model object '<em><b>Template Placeholder Brick</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl#getCodebrick <em>Codebrick</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl#isEditable <em>Editable</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl#isHighlight <em>Highlight</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl#getChoices <em>Choices</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl#isMandatory <em>Mandatory</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl#getChoice <em>Choice</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl#getRemainingChoices <em>Remaining Choices</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl#getCodebrick <em>Codebrick</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl#isHighlight <em>Highlight</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl#getChoices <em>Choices</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl#isMandatory <em>Mandatory</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl#getChoice <em>Choice</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl#getRemainingChoices <em>Remaining Choices</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl#isComposed <em>Composed</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implements PlaceholderBrick {
-	/**
-	 * The default value of the '{@link #isEditable() <em>Editable</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isEditable()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean EDITABLE_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isEditable() <em>Editable</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isEditable()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean editable = EDITABLE_EDEFAULT;
-
+public class TemplatePlaceholderBrickImpl extends MinimalEObjectImpl.Container implements TemplatePlaceholderBrick {
 	/**
 	 * The default value of the '{@link #isHighlight() <em>Highlight</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -128,11 +106,21 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	protected EList<ViewableBrick> choice;
 
 	/**
+	 * The default value of the '{@link #isComposed() <em>Composed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isComposed()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean COMPOSED_EDEFAULT = false;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected PlaceholderBrickImpl() {
+	protected TemplatePlaceholderBrickImpl() {
 		super();
 	}
 
@@ -143,7 +131,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CodebricksPackage.Literals.PLACEHOLDER_BRICK;
+		return CodebricksPackage.Literals.TEMPLATE_PLACEHOLDER_BRICK;
 	}
 
 	/**
@@ -153,7 +141,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	 */
 	@Override
 	public Codebrick getCodebrick() {
-		if (eContainerFeatureID() != CodebricksPackage.PLACEHOLDER_BRICK__CODEBRICK) return null;
+		if (eContainerFeatureID() != CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK) return null;
 		return (Codebrick)eInternalContainer();
 	}
 
@@ -163,7 +151,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	 * @generated
 	 */
 	public NotificationChain basicSetCodebrick(Codebrick newCodebrick, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newCodebrick, CodebricksPackage.PLACEHOLDER_BRICK__CODEBRICK, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newCodebrick, CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK, msgs);
 		return msgs;
 	}
 
@@ -174,7 +162,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	 */
 	@Override
 	public void setCodebrick(Codebrick newCodebrick) {
-		if (newCodebrick != eInternalContainer() || (eContainerFeatureID() != CodebricksPackage.PLACEHOLDER_BRICK__CODEBRICK && newCodebrick != null)) {
+		if (newCodebrick != eInternalContainer() || (eContainerFeatureID() != CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK && newCodebrick != null)) {
 			if (EcoreUtil.isAncestor(this, newCodebrick))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -186,30 +174,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.PLACEHOLDER_BRICK__CODEBRICK, newCodebrick, newCodebrick));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isEditable() {
-		return editable;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setEditable(boolean newEditable) {
-		boolean oldEditable = editable;
-		editable = newEditable;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.PLACEHOLDER_BRICK__EDITABLE, oldEditable, editable));
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK, newCodebrick, newCodebrick));
 	}
 
 	/**
@@ -232,7 +197,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 		boolean oldHighlight = highlight;
 		highlight = newHighlight;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.PLACEHOLDER_BRICK__HIGHLIGHT, oldHighlight, highlight));
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__HIGHLIGHT, oldHighlight, highlight));
 	}
 
 	/**
@@ -243,7 +208,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public EList<ViewableBrick> getChoices() {
 		if (choices == null) {
-			choices = new EObjectResolvingEList<ViewableBrick>(ViewableBrick.class, this, CodebricksPackage.PLACEHOLDER_BRICK__CHOICES);
+			choices = new EObjectResolvingEList<ViewableBrick>(ViewableBrick.class, this, CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CHOICES);
 		}
 		return choices;
 	}
@@ -268,7 +233,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 		boolean oldMandatory = mandatory;
 		mandatory = newMandatory;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.PLACEHOLDER_BRICK__MANDATORY, oldMandatory, mandatory));
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__MANDATORY, oldMandatory, mandatory));
 	}
 
 	/**
@@ -279,7 +244,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public EList<ViewableBrick> getChoice() {
 		if (choice == null) {
-			choice = new EObjectResolvingEList<ViewableBrick>(ViewableBrick.class, this, CodebricksPackage.PLACEHOLDER_BRICK__CHOICE);
+			choice = new EObjectResolvingEList<ViewableBrick>(ViewableBrick.class, this, CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CHOICE);
 		}
 		return choice;
 	}
@@ -297,8 +262,8 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 		Set<Codebrick> selection = new HashSet<>(); 
 		
 		for (Brick templateBrick : getCodebrick().getCodebricks().getTemplate().getBricks()) {
-			if ((templateBrick instanceof PlaceholderBrick) && (templateBrick != this)) {
-				List<ViewableBrick> placeholderChoices = ((PlaceholderBrick) templateBrick).getChoice();
+			if ((templateBrick instanceof TemplatePlaceholderBrick) && (templateBrick != this)) {
+				List<ViewableBrick> placeholderChoices = ((TemplatePlaceholderBrick) templateBrick).getChoice();
 				
 				// Anything selected?
 				if (!placeholderChoices.isEmpty()) {
@@ -330,6 +295,21 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	 * @generated NOT
 	 */
 	@Override
+	public boolean isComposed() {
+		for (Brick choice : getChoices()) {
+			if (choice instanceof ComposedBrick) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
 	public String getText() {
 		if (isMandatory()) {
 			return "[+]";
@@ -346,7 +326,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CodebricksPackage.PLACEHOLDER_BRICK__CODEBRICK:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetCodebrick((Codebrick)otherEnd, msgs);
@@ -362,7 +342,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CodebricksPackage.PLACEHOLDER_BRICK__CODEBRICK:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK:
 				return basicSetCodebrick(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -376,7 +356,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case CodebricksPackage.PLACEHOLDER_BRICK__CODEBRICK:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK:
 				return eInternalContainer().eInverseRemove(this, CodebricksPackage.CODEBRICK__BRICKS, Codebrick.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
@@ -390,20 +370,20 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CodebricksPackage.PLACEHOLDER_BRICK__CODEBRICK:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK:
 				return getCodebrick();
-			case CodebricksPackage.PLACEHOLDER_BRICK__EDITABLE:
-				return isEditable();
-			case CodebricksPackage.PLACEHOLDER_BRICK__HIGHLIGHT:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__HIGHLIGHT:
 				return isHighlight();
-			case CodebricksPackage.PLACEHOLDER_BRICK__CHOICES:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CHOICES:
 				return getChoices();
-			case CodebricksPackage.PLACEHOLDER_BRICK__MANDATORY:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__MANDATORY:
 				return isMandatory();
-			case CodebricksPackage.PLACEHOLDER_BRICK__CHOICE:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CHOICE:
 				return getChoice();
-			case CodebricksPackage.PLACEHOLDER_BRICK__REMAINING_CHOICES:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__REMAINING_CHOICES:
 				return getRemainingChoices();
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__COMPOSED:
+				return isComposed();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -417,23 +397,20 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CodebricksPackage.PLACEHOLDER_BRICK__CODEBRICK:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK:
 				setCodebrick((Codebrick)newValue);
 				return;
-			case CodebricksPackage.PLACEHOLDER_BRICK__EDITABLE:
-				setEditable((Boolean)newValue);
-				return;
-			case CodebricksPackage.PLACEHOLDER_BRICK__HIGHLIGHT:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__HIGHLIGHT:
 				setHighlight((Boolean)newValue);
 				return;
-			case CodebricksPackage.PLACEHOLDER_BRICK__CHOICES:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CHOICES:
 				getChoices().clear();
 				getChoices().addAll((Collection<? extends ViewableBrick>)newValue);
 				return;
-			case CodebricksPackage.PLACEHOLDER_BRICK__MANDATORY:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__MANDATORY:
 				setMandatory((Boolean)newValue);
 				return;
-			case CodebricksPackage.PLACEHOLDER_BRICK__CHOICE:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CHOICE:
 				getChoice().clear();
 				getChoice().addAll((Collection<? extends ViewableBrick>)newValue);
 				return;
@@ -449,22 +426,19 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CodebricksPackage.PLACEHOLDER_BRICK__CODEBRICK:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK:
 				setCodebrick((Codebrick)null);
 				return;
-			case CodebricksPackage.PLACEHOLDER_BRICK__EDITABLE:
-				setEditable(EDITABLE_EDEFAULT);
-				return;
-			case CodebricksPackage.PLACEHOLDER_BRICK__HIGHLIGHT:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__HIGHLIGHT:
 				setHighlight(HIGHLIGHT_EDEFAULT);
 				return;
-			case CodebricksPackage.PLACEHOLDER_BRICK__CHOICES:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CHOICES:
 				getChoices().clear();
 				return;
-			case CodebricksPackage.PLACEHOLDER_BRICK__MANDATORY:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__MANDATORY:
 				setMandatory(MANDATORY_EDEFAULT);
 				return;
-			case CodebricksPackage.PLACEHOLDER_BRICK__CHOICE:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CHOICE:
 				getChoice().clear();
 				return;
 		}
@@ -479,20 +453,20 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CodebricksPackage.PLACEHOLDER_BRICK__CODEBRICK:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK:
 				return getCodebrick() != null;
-			case CodebricksPackage.PLACEHOLDER_BRICK__EDITABLE:
-				return editable != EDITABLE_EDEFAULT;
-			case CodebricksPackage.PLACEHOLDER_BRICK__HIGHLIGHT:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__HIGHLIGHT:
 				return highlight != HIGHLIGHT_EDEFAULT;
-			case CodebricksPackage.PLACEHOLDER_BRICK__CHOICES:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CHOICES:
 				return choices != null && !choices.isEmpty();
-			case CodebricksPackage.PLACEHOLDER_BRICK__MANDATORY:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__MANDATORY:
 				return mandatory != MANDATORY_EDEFAULT;
-			case CodebricksPackage.PLACEHOLDER_BRICK__CHOICE:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CHOICE:
 				return choice != null && !choice.isEmpty();
-			case CodebricksPackage.PLACEHOLDER_BRICK__REMAINING_CHOICES:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__REMAINING_CHOICES:
 				return !getRemainingChoices().isEmpty();
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__COMPOSED:
+				return isComposed() != COMPOSED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -505,7 +479,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case CodebricksPackage.PLACEHOLDER_BRICK___GET_TEXT:
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK___GET_TEXT:
 				return getText();
 		}
 		return super.eInvoke(operationID, arguments);
@@ -521,9 +495,7 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (editable: ");
-		result.append(editable);
-		result.append(", highlight: ");
+		result.append(" (highlight: ");
 		result.append(highlight);
 		result.append(", mandatory: ");
 		result.append(mandatory);
@@ -531,4 +503,4 @@ public class PlaceholderBrickImpl extends MinimalEObjectImpl.Container implement
 		return result.toString();
 	}
 
-} //PlaceholderBrickImpl
+} //TemplatePlaceholderBrickImpl

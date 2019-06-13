@@ -3,58 +3,42 @@
 package org.sidiff.completion.ui.codebricks.impl;
 
 import java.lang.reflect.InvocationTargetException;
-import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.sidiff.completion.ui.codebricks.CodebricksPackage;
-import org.sidiff.completion.ui.codebricks.ModelElementBrick;
-import org.sidiff.common.emf.provider.ItemProviderUtil;
+
 import org.sidiff.completion.ui.codebricks.Codebrick;
+import org.sidiff.completion.ui.codebricks.CodebricksPackage;
+import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Model Element Brick</b></em>'.
+ * An implementation of the model object '<em><b>Object Placeholder Brick</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ModelElementBrickImpl#getCodebrick <em>Codebrick</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ModelElementBrickImpl#isEditable <em>Editable</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ModelElementBrickImpl#isHighlight <em>Highlight</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ModelElementBrickImpl#getElement <em>Element</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl#getCodebrick <em>Codebrick</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl#isHighlight <em>Highlight</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl#getElement <em>Element</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl#getType <em>Type</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implements ModelElementBrick {
-	/**
-	 * The default value of the '{@link #isEditable() <em>Editable</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isEditable()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean EDITABLE_EDEFAULT = false;
-	/**
-	 * The cached value of the '{@link #isEditable() <em>Editable</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isEditable()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean editable = EDITABLE_EDEFAULT;
+public class ObjectPlaceholderBrickImpl extends MinimalEObjectImpl.Container implements ObjectPlaceholderBrick {
 	/**
 	 * The default value of the '{@link #isHighlight() <em>Highlight</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -64,6 +48,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	 * @ordered
 	 */
 	protected static final boolean HIGHLIGHT_EDEFAULT = false;
+
 	/**
 	 * The cached value of the '{@link #isHighlight() <em>Highlight</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -73,6 +58,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	 * @ordered
 	 */
 	protected boolean highlight = HIGHLIGHT_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getElement() <em>Element</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -84,11 +70,21 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	protected EObject element;
 
 	/**
+	 * The cached value of the '{@link #getType() <em>Type</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected EClass type;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ModelElementBrickImpl() {
+	protected ObjectPlaceholderBrickImpl() {
 		super();
 	}
 
@@ -99,7 +95,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CodebricksPackage.Literals.MODEL_ELEMENT_BRICK;
+		return CodebricksPackage.Literals.OBJECT_PLACEHOLDER_BRICK;
 	}
 
 	/**
@@ -109,7 +105,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	 */
 	@Override
 	public Codebrick getCodebrick() {
-		if (eContainerFeatureID() != CodebricksPackage.MODEL_ELEMENT_BRICK__CODEBRICK) return null;
+		if (eContainerFeatureID() != CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__CODEBRICK) return null;
 		return (Codebrick)eInternalContainer();
 	}
 
@@ -119,7 +115,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	 * @generated
 	 */
 	public NotificationChain basicSetCodebrick(Codebrick newCodebrick, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newCodebrick, CodebricksPackage.MODEL_ELEMENT_BRICK__CODEBRICK, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newCodebrick, CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__CODEBRICK, msgs);
 		return msgs;
 	}
 
@@ -130,7 +126,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	 */
 	@Override
 	public void setCodebrick(Codebrick newCodebrick) {
-		if (newCodebrick != eInternalContainer() || (eContainerFeatureID() != CodebricksPackage.MODEL_ELEMENT_BRICK__CODEBRICK && newCodebrick != null)) {
+		if (newCodebrick != eInternalContainer() || (eContainerFeatureID() != CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__CODEBRICK && newCodebrick != null)) {
 			if (EcoreUtil.isAncestor(this, newCodebrick))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -142,30 +138,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.MODEL_ELEMENT_BRICK__CODEBRICK, newCodebrick, newCodebrick));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isEditable() {
-		return editable;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setEditable(boolean newEditable) {
-		boolean oldEditable = editable;
-		editable = newEditable;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.MODEL_ELEMENT_BRICK__EDITABLE, oldEditable, editable));
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__CODEBRICK, newCodebrick, newCodebrick));
 	}
 
 	/**
@@ -188,7 +161,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 		boolean oldHighlight = highlight;
 		highlight = newHighlight;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.MODEL_ELEMENT_BRICK__HIGHLIGHT, oldHighlight, highlight));
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__HIGHLIGHT, oldHighlight, highlight));
 	}
 
 	/**
@@ -203,7 +176,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 			element = eResolveProxy(oldElement);
 			if (element != oldElement) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CodebricksPackage.MODEL_ELEMENT_BRICK__ELEMENT, oldElement, element));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__ELEMENT, oldElement, element));
 			}
 		}
 		return element;
@@ -228,23 +201,59 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 		EObject oldElement = element;
 		element = newElement;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.MODEL_ELEMENT_BRICK__ELEMENT, oldElement, element));
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__ELEMENT, oldElement, element));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
+	 */
+	@Override
+	public EClass getType() {
+		if (type != null && type.eIsProxy()) {
+			InternalEObject oldType = (InternalEObject)type;
+			type = (EClass)eResolveProxy(oldType);
+			if (type != oldType) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__TYPE, oldType, type));
+			}
+		}
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass basicGetType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setType(EClass newType) {
+		EClass oldType = type;
+		type = newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	@Override
 	public String getText() {
-		String text = ItemProviderUtil.getTextByObject(getElement());
-		
-		if ((text == null) || text.isEmpty()) {
-			text = "<" + element.eClass().getName() + "@" + Integer.toHexString(element.hashCode()) + ">";
-		}
-		
-		return text;
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -255,7 +264,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__CODEBRICK:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__CODEBRICK:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetCodebrick((Codebrick)otherEnd, msgs);
@@ -271,7 +280,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__CODEBRICK:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__CODEBRICK:
 				return basicSetCodebrick(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -285,7 +294,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__CODEBRICK:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__CODEBRICK:
 				return eInternalContainer().eInverseRemove(this, CodebricksPackage.CODEBRICK__BRICKS, Codebrick.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
@@ -299,15 +308,16 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__CODEBRICK:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__CODEBRICK:
 				return getCodebrick();
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__EDITABLE:
-				return isEditable();
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__HIGHLIGHT:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__HIGHLIGHT:
 				return isHighlight();
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__ELEMENT:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__ELEMENT:
 				if (resolve) return getElement();
 				return basicGetElement();
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__TYPE:
+				if (resolve) return getType();
+				return basicGetType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -320,17 +330,17 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__CODEBRICK:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__CODEBRICK:
 				setCodebrick((Codebrick)newValue);
 				return;
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__EDITABLE:
-				setEditable((Boolean)newValue);
-				return;
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__HIGHLIGHT:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__HIGHLIGHT:
 				setHighlight((Boolean)newValue);
 				return;
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__ELEMENT:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__ELEMENT:
 				setElement((EObject)newValue);
+				return;
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__TYPE:
+				setType((EClass)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -344,17 +354,17 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__CODEBRICK:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__CODEBRICK:
 				setCodebrick((Codebrick)null);
 				return;
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__EDITABLE:
-				setEditable(EDITABLE_EDEFAULT);
-				return;
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__HIGHLIGHT:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__HIGHLIGHT:
 				setHighlight(HIGHLIGHT_EDEFAULT);
 				return;
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__ELEMENT:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__ELEMENT:
 				setElement((EObject)null);
+				return;
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__TYPE:
+				setType((EClass)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -368,14 +378,14 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__CODEBRICK:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__CODEBRICK:
 				return getCodebrick() != null;
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__EDITABLE:
-				return editable != EDITABLE_EDEFAULT;
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__HIGHLIGHT:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__HIGHLIGHT:
 				return highlight != HIGHLIGHT_EDEFAULT;
-			case CodebricksPackage.MODEL_ELEMENT_BRICK__ELEMENT:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__ELEMENT:
 				return element != null;
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__TYPE:
+				return type != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -388,7 +398,7 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case CodebricksPackage.MODEL_ELEMENT_BRICK___GET_TEXT:
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK___GET_TEXT:
 				return getText();
 		}
 		return super.eInvoke(operationID, arguments);
@@ -404,12 +414,10 @@ public class ModelElementBrickImpl extends MinimalEObjectImpl.Container implemen
 		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (editable: ");
-		result.append(editable);
-		result.append(", highlight: ");
+		result.append(" (highlight: ");
 		result.append(highlight);
 		result.append(')');
 		return result.toString();
 	}
 
-} //ModelElementBrickImpl
+} //ObjectPlaceholderBrickImpl

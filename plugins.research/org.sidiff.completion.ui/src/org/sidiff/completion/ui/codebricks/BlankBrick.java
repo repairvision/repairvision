@@ -13,5 +13,5 @@ package org.sidiff.completion.ui.codebricks;
  * @model
  * @generated
  */
-public interface BlankBrick extends Brick {
+public interface BlankBrick extends ViewableBrick {
 } // BlankBrick

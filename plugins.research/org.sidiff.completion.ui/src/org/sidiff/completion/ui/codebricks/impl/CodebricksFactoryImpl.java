@@ -58,12 +58,15 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 		switch (eClass.getClassifierID()) {
 			case CodebricksPackage.CODEBRICKS: return createCodebricks();
 			case CodebricksPackage.CODEBRICK: return createCodebrick();
-			case CodebricksPackage.PLACEHOLDER_BRICK: return createPlaceholderBrick();
-			case CodebricksPackage.MODEL_ELEMENT_BRICK: return createModelElementBrick();
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK: return createTemplatePlaceholderBrick();
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK: return createObjectPlaceholderBrick();
 			case CodebricksPackage.TEXT_BRICK: return createTextBrick();
 			case CodebricksPackage.INDENT_BRICK: return createIndentBrick();
 			case CodebricksPackage.LINE_BREAK_BRICK: return createLineBreakBrick();
 			case CodebricksPackage.BLANK_BRICK: return createBlankBrick();
+			case CodebricksPackage.COMPOSED_BRICK: return createComposedBrick();
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK: return createValuePlaceholderBrick();
+			case CodebricksPackage.OBJECT_DOMAIN_PLACEHOLDER_BRICK: return createObjectDomainPlaceholderBrick();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -97,9 +100,9 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 	 * @generated
 	 */
 	@Override
-	public PlaceholderBrick createPlaceholderBrick() {
-		PlaceholderBrickImpl placeholderBrick = new PlaceholderBrickImpl();
-		return placeholderBrick;
+	public TemplatePlaceholderBrick createTemplatePlaceholderBrick() {
+		TemplatePlaceholderBrickImpl templatePlaceholderBrick = new TemplatePlaceholderBrickImpl();
+		return templatePlaceholderBrick;
 	}
 
 	/**
@@ -108,9 +111,9 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 	 * @generated
 	 */
 	@Override
-	public ModelElementBrick createModelElementBrick() {
-		ModelElementBrickImpl modelElementBrick = new ModelElementBrickImpl();
-		return modelElementBrick;
+	public ObjectPlaceholderBrick createObjectPlaceholderBrick() {
+		ObjectPlaceholderBrickImpl objectPlaceholderBrick = new ObjectPlaceholderBrickImpl();
+		return objectPlaceholderBrick;
 	}
 
 	/**
@@ -155,6 +158,39 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 	public BlankBrick createBlankBrick() {
 		BlankBrickImpl blankBrick = new BlankBrickImpl();
 		return blankBrick;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ComposedBrick createComposedBrick() {
+		ComposedBrickImpl composedBrick = new ComposedBrickImpl();
+		return composedBrick;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ValuePlaceholderBrick createValuePlaceholderBrick() {
+		ValuePlaceholderBrickImpl valuePlaceholderBrick = new ValuePlaceholderBrickImpl();
+		return valuePlaceholderBrick;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ObjectDomainPlaceholderBrick createObjectDomainPlaceholderBrick() {
+		ObjectDomainPlaceholderBrickImpl objectDomainPlaceholderBrick = new ObjectDomainPlaceholderBrickImpl();
+		return objectDomainPlaceholderBrick;
 	}
 
 	/**

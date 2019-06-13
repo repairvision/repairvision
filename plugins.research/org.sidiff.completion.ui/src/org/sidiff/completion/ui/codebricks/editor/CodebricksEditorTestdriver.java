@@ -1,6 +1,7 @@
 package org.sidiff.completion.ui.codebricks.editor;
 
 import java.io.File;
+import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -15,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.sidiff.completion.ui.Activator;
+import org.sidiff.completion.ui.codebricks.Brick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 
 public class CodebricksEditorTestdriver implements IApplication {
@@ -72,7 +74,7 @@ public class CodebricksEditorTestdriver implements IApplication {
 				}
 				
 				@Override
-				protected void buildContent(Composite editorContent) {
+				protected void buildContent(Composite editorContent, List<? extends Brick> bricks) {
 					Composite brickRow_1 = buildBrickRow(editorContent);
 					
 					buildEditableTextBrick(brickRow_1, "Hallo", "[+]", true, new Color(Display.getDefault(), new RGB(255, 0, 0)));

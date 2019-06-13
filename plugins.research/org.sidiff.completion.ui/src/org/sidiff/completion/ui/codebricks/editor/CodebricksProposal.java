@@ -4,20 +4,20 @@ import java.util.List;
 
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.completion.ui.codebricks.PlaceholderBrick;
+import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
 import org.sidiff.completion.ui.list.ICompletionPreview;
 import org.sidiff.completion.ui.list.ICompletionProposal;
 
-public class CodebricksCompletionProposal implements ICompletionProposal {
+public class CodebricksProposal implements ICompletionProposal {
 	
-	private StyledText textField;
+	protected StyledText textField;
 	
-	private PlaceholderBrick placeholder;
+	protected TemplatePlaceholderBrick placeholder;
 	
-	private List<ViewableBrick> choice;
+	protected List<ViewableBrick> choice;
 	
-	public CodebricksCompletionProposal(StyledText textField, PlaceholderBrick placeholder, List<ViewableBrick> choice) {
+	public CodebricksProposal(StyledText textField, TemplatePlaceholderBrick placeholder, List<ViewableBrick> choice) {
 		this.textField = textField;
 		this.placeholder = placeholder;
 		this.choice = choice;

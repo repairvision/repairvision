@@ -25,34 +25,14 @@ import org.sidiff.completion.ui.codebricks.TextBrick;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TextBrickImpl#getCodebrick <em>Codebrick</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TextBrickImpl#isEditable <em>Editable</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TextBrickImpl#isHighlight <em>Highlight</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TextBrickImpl#getText <em>Text</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TextBrickImpl#isSelectable <em>Selectable</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class TextBrickImpl extends MinimalEObjectImpl.Container implements TextBrick {
-	/**
-	 * The default value of the '{@link #isEditable() <em>Editable</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isEditable()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean EDITABLE_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isEditable() <em>Editable</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isEditable()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean editable = EDITABLE_EDEFAULT;
-
 	/**
 	 * The default value of the '{@link #isHighlight() <em>Highlight</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -92,6 +72,26 @@ public class TextBrickImpl extends MinimalEObjectImpl.Container implements TextB
 	 * @ordered
 	 */
 	protected String text = TEXT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isSelectable() <em>Selectable</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSelectable()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean SELECTABLE_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isSelectable() <em>Selectable</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSelectable()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean selectable = SELECTABLE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -161,29 +161,6 @@ public class TextBrickImpl extends MinimalEObjectImpl.Container implements TextB
 	 * @generated
 	 */
 	@Override
-	public boolean isEditable() {
-		return editable;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setEditable(boolean newEditable) {
-		boolean oldEditable = editable;
-		editable = newEditable;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.TEXT_BRICK__EDITABLE, oldEditable, editable));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public boolean isHighlight() {
 		return highlight;
 	}
@@ -222,6 +199,29 @@ public class TextBrickImpl extends MinimalEObjectImpl.Container implements TextB
 		text = newText;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.TEXT_BRICK__TEXT, oldText, text));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isSelectable() {
+		return selectable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setSelectable(boolean newSelectable) {
+		boolean oldSelectable = selectable;
+		selectable = newSelectable;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.TEXT_BRICK__SELECTABLE, oldSelectable, selectable));
 	}
 
 	/**
@@ -278,12 +278,12 @@ public class TextBrickImpl extends MinimalEObjectImpl.Container implements TextB
 		switch (featureID) {
 			case CodebricksPackage.TEXT_BRICK__CODEBRICK:
 				return getCodebrick();
-			case CodebricksPackage.TEXT_BRICK__EDITABLE:
-				return isEditable();
 			case CodebricksPackage.TEXT_BRICK__HIGHLIGHT:
 				return isHighlight();
 			case CodebricksPackage.TEXT_BRICK__TEXT:
 				return getText();
+			case CodebricksPackage.TEXT_BRICK__SELECTABLE:
+				return isSelectable();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -299,14 +299,14 @@ public class TextBrickImpl extends MinimalEObjectImpl.Container implements TextB
 			case CodebricksPackage.TEXT_BRICK__CODEBRICK:
 				setCodebrick((Codebrick)newValue);
 				return;
-			case CodebricksPackage.TEXT_BRICK__EDITABLE:
-				setEditable((Boolean)newValue);
-				return;
 			case CodebricksPackage.TEXT_BRICK__HIGHLIGHT:
 				setHighlight((Boolean)newValue);
 				return;
 			case CodebricksPackage.TEXT_BRICK__TEXT:
 				setText((String)newValue);
+				return;
+			case CodebricksPackage.TEXT_BRICK__SELECTABLE:
+				setSelectable((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -323,14 +323,14 @@ public class TextBrickImpl extends MinimalEObjectImpl.Container implements TextB
 			case CodebricksPackage.TEXT_BRICK__CODEBRICK:
 				setCodebrick((Codebrick)null);
 				return;
-			case CodebricksPackage.TEXT_BRICK__EDITABLE:
-				setEditable(EDITABLE_EDEFAULT);
-				return;
 			case CodebricksPackage.TEXT_BRICK__HIGHLIGHT:
 				setHighlight(HIGHLIGHT_EDEFAULT);
 				return;
 			case CodebricksPackage.TEXT_BRICK__TEXT:
 				setText(TEXT_EDEFAULT);
+				return;
+			case CodebricksPackage.TEXT_BRICK__SELECTABLE:
+				setSelectable(SELECTABLE_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -346,12 +346,12 @@ public class TextBrickImpl extends MinimalEObjectImpl.Container implements TextB
 		switch (featureID) {
 			case CodebricksPackage.TEXT_BRICK__CODEBRICK:
 				return getCodebrick() != null;
-			case CodebricksPackage.TEXT_BRICK__EDITABLE:
-				return editable != EDITABLE_EDEFAULT;
 			case CodebricksPackage.TEXT_BRICK__HIGHLIGHT:
 				return highlight != HIGHLIGHT_EDEFAULT;
 			case CodebricksPackage.TEXT_BRICK__TEXT:
 				return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
+			case CodebricksPackage.TEXT_BRICK__SELECTABLE:
+				return selectable != SELECTABLE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -366,12 +366,12 @@ public class TextBrickImpl extends MinimalEObjectImpl.Container implements TextB
 		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (editable: ");
-		result.append(editable);
-		result.append(", highlight: ");
+		result.append(" (highlight: ");
 		result.append(highlight);
 		result.append(", text: ");
 		result.append(text);
+		result.append(", selectable: ");
+		result.append(selectable);
 		result.append(')');
 		return result.toString();
 	}
