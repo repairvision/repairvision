@@ -107,7 +107,9 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 		if (attribute.getEType() instanceof EDataType) {
 			if (((EDataType) attribute.getEType()).isSerializable()) {
 				if (!attribute.isDerived()) {
-					return true;
+					if (!attribute.isMany()) {
+						return true;
+					}
 				}
 			}
 		}
