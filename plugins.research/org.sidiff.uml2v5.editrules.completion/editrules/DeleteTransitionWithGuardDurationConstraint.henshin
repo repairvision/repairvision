@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_TtWgcJLAEemgdO-oNT_Emg" name="Delete: TransitionWithGuardDurationConstraint" description="Delete: TransitionWithGuardDurationConstraint">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_TtWgcZLAEemgdO-oNT_Emg" name="mainUnit" subUnits="_TtWgeJLAEemgdO-oNT_Emg">
+    <parameters xmi:id="_TtWgcpLAEemgdO-oNT_Emg" name="transition" kind="IN"/>
+    <parameters xmi:id="_TtWgc5LAEemgdO-oNT_Emg" name="name" kind="IN"/>
+    <parameters xmi:id="_TtWgdJLAEemgdO-oNT_Emg" name="transitionDurationConstraint" kind="IN"/>
+    <parameterMappings xmi:id="_TtWgdZLAEemgdO-oNT_Emg" source="_TtWgcpLAEemgdO-oNT_Emg" target="_TtWgeZLAEemgdO-oNT_Emg"/>
+    <parameterMappings xmi:id="_TtWgdpLAEemgdO-oNT_Emg" source="_TtWgc5LAEemgdO-oNT_Emg" target="_TtWgepLAEemgdO-oNT_Emg"/>
+    <parameterMappings xmi:id="_TtWgd5LAEemgdO-oNT_Emg" source="_TtWgdJLAEemgdO-oNT_Emg" target="_TtWge5LAEemgdO-oNT_Emg"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_TtWgeJLAEemgdO-oNT_Emg" name="Delete: TransitionWithGuardDurationConstraint">
+    <parameters xmi:id="_TtWgeZLAEemgdO-oNT_Emg" name="transition" kind="IN"/>
+    <parameters xmi:id="_TtWgepLAEemgdO-oNT_Emg" name="name" kind="IN"/>
+    <parameters xmi:id="_TtWge5LAEemgdO-oNT_Emg" name="transitionDurationConstraint" kind="IN"/>
+    <lhs xmi:id="_TtWgfJLAEemgdO-oNT_Emg" name="Lhs">
+      <nodes xmi:id="_TtWgfZLAEemgdO-oNT_Emg" name="transition" incoming="_TtWgh5LAEemgdO-oNT_Emg" outgoing="_TtWgg5LAEemgdO-oNT_Emg _TtWghJLAEemgdO-oNT_Emg _TtWghZLAEemgdO-oNT_Emg _TtWghpLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+        <attributes xmi:id="_TtWgfpLAEemgdO-oNT_Emg" value="name">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_TtWgf5LAEemgdO-oNT_Emg" name="transitionDurationConstraint" incoming="_TtWgg5LAEemgdO-oNT_Emg _TtWghJLAEemgdO-oNT_Emg" outgoing="_TtWgh5LAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//DurationConstraint"/>
+        <attributes xmi:id="_TtWggJLAEemgdO-oNT_Emg" value="name + &quot;DurationConstraint&quot;">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_TtWggZLAEemgdO-oNT_Emg" name="source" incoming="_TtWghZLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <nodes xmi:id="_TtWggpLAEemgdO-oNT_Emg" name="target" incoming="_TtWghpLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <edges xmi:id="_TtWgg5LAEemgdO-oNT_Emg" source="_TtWgfZLAEemgdO-oNT_Emg" target="_TtWgf5LAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
+      </edges>
+      <edges xmi:id="_TtWghJLAEemgdO-oNT_Emg" source="_TtWgfZLAEemgdO-oNT_Emg" target="_TtWgf5LAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/guard"/>
+      </edges>
+      <edges xmi:id="_TtWghZLAEemgdO-oNT_Emg" source="_TtWgfZLAEemgdO-oNT_Emg" target="_TtWggZLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+      </edges>
+      <edges xmi:id="_TtWghpLAEemgdO-oNT_Emg" source="_TtWgfZLAEemgdO-oNT_Emg" target="_TtWggpLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+      </edges>
+      <edges xmi:id="_TtWgh5LAEemgdO-oNT_Emg" source="_TtWgf5LAEemgdO-oNT_Emg" target="_TtWgfZLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Constraint/context"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_TtWgiJLAEemgdO-oNT_Emg" name="Rhs">
+      <nodes xmi:id="_TtWgiZLAEemgdO-oNT_Emg" name="transition" outgoing="_TtWgjZLAEemgdO-oNT_Emg _TtWgjpLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+        <attributes xmi:id="_TtWgipLAEemgdO-oNT_Emg" value="name">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_TtWgi5LAEemgdO-oNT_Emg" name="source" incoming="_TtWgjZLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <nodes xmi:id="_TtWgjJLAEemgdO-oNT_Emg" name="target" incoming="_TtWgjpLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <edges xmi:id="_TtWgjZLAEemgdO-oNT_Emg" source="_TtWgiZLAEemgdO-oNT_Emg" target="_TtWgi5LAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+      </edges>
+      <edges xmi:id="_TtWgjpLAEemgdO-oNT_Emg" source="_TtWgiZLAEemgdO-oNT_Emg" target="_TtWgjJLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_TtWgj5LAEemgdO-oNT_Emg" origin="_TtWgfZLAEemgdO-oNT_Emg" image="_TtWgiZLAEemgdO-oNT_Emg"/>
+    <mappings xmi:id="_TtWgkJLAEemgdO-oNT_Emg" origin="_TtWggZLAEemgdO-oNT_Emg" image="_TtWgi5LAEemgdO-oNT_Emg"/>
+    <mappings xmi:id="_TtWgkZLAEemgdO-oNT_Emg" origin="_TtWggpLAEemgdO-oNT_Emg" image="_TtWgjJLAEemgdO-oNT_Emg"/>
+  </units>
+</henshin:Module>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ASCII"?>
+<graphpattern:Bundle xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:graphpattern="http://www.sidiff.org/graphpattern/1.0" xmi:id="_ES8S0JK-EemgdO-oNT_Emg" name="TransitionWithEffectActivity">
+  <patterns xmi:id="_ES8S0ZK-EemgdO-oNT_Emg" name="TransitionWithEffectActivity">
+    <graphs xmi:id="_ES8S0pK-EemgdO-oNT_Emg" name="TransitionWithEffectActivity">
+      <nodes xmi:id="_ES8S05K-EemgdO-oNT_Emg" name="transition">
+        <outgoings xmi:id="_ES8S1JK-EemgdO-oNT_Emg" target="_ES8S2JK-EemgdO-oNT_Emg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
+        </outgoings>
+        <outgoings xmi:id="_ES8S1ZK-EemgdO-oNT_Emg" target="_ES8S2pK-EemgdO-oNT_Emg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+        </outgoings>
+        <outgoings xmi:id="_ES8S1pK-EemgdO-oNT_Emg" target="_ES8S25K-EemgdO-oNT_Emg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+        <attributes xmi:id="_ES8S15K-EemgdO-oNT_Emg" value="name">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_ES8S2JK-EemgdO-oNT_Emg" name="transitionActivity" incomings="_ES8S1JK-EemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Activity"/>
+        <attributes xmi:id="_ES8S2ZK-EemgdO-oNT_Emg" value="name + &quot;Activity&quot;">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_ES8S2pK-EemgdO-oNT_Emg" name="source" incomings="_ES8S1ZK-EemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <nodes xmi:id="_ES8S25K-EemgdO-oNT_Emg" name="target" incomings="_ES8S1pK-EemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+    </graphs>
+    <parameters xmi:id="_ES8S3JK-EemgdO-oNT_Emg" name="name"/>
+  </patterns>
+</graphpattern:Bundle>

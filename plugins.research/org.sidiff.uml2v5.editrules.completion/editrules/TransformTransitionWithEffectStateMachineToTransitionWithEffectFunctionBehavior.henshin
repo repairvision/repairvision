@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Tpt9oJLAEemgdO-oNT_Emg" name="Transform: TransitionWithEffectStateMachine - To - TransitionWithEffectFunctionBehavior" description="Transform: TransitionWithEffectStateMachine - To - TransitionWithEffectFunctionBehavior">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Tpt9oZLAEemgdO-oNT_Emg" name="mainUnit" subUnits="_Tpt9qJLAEemgdO-oNT_Emg">
+    <parameters xmi:id="_Tpt9opLAEemgdO-oNT_Emg" name="transition" kind="IN"/>
+    <parameters xmi:id="_Tpt9o5LAEemgdO-oNT_Emg" name="name" kind="IN"/>
+    <parameters xmi:id="_Tpt9pJLAEemgdO-oNT_Emg" name="transitionFunctionBehavior" kind="IN"/>
+    <parameterMappings xmi:id="_Tpt9pZLAEemgdO-oNT_Emg" source="_Tpt9opLAEemgdO-oNT_Emg" target="_Tpt9qZLAEemgdO-oNT_Emg"/>
+    <parameterMappings xmi:id="_Tpt9ppLAEemgdO-oNT_Emg" source="_Tpt9o5LAEemgdO-oNT_Emg" target="_Tpt9qpLAEemgdO-oNT_Emg"/>
+    <parameterMappings xmi:id="_Tpt9p5LAEemgdO-oNT_Emg" source="_Tpt9pJLAEemgdO-oNT_Emg" target="_Tpt9q5LAEemgdO-oNT_Emg"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Tpt9qJLAEemgdO-oNT_Emg" name="Transform: TransitionWithEffectStateMachine - To - TransitionWithEffectFunctionBehavior">
+    <parameters xmi:id="_Tpt9qZLAEemgdO-oNT_Emg" name="transition" kind="IN"/>
+    <parameters xmi:id="_Tpt9qpLAEemgdO-oNT_Emg" name="name" kind="IN"/>
+    <parameters xmi:id="_Tpt9q5LAEemgdO-oNT_Emg" name="transitionFunctionBehavior" kind="IN"/>
+    <lhs xmi:id="_Tpt9rJLAEemgdO-oNT_Emg" name="Lhs">
+      <nodes xmi:id="_Tpt9rZLAEemgdO-oNT_Emg" name="transition" outgoing="_Tpt9sZLAEemgdO-oNT_Emg _TpuksJLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+        <attributes xmi:id="_Tpt9rpLAEemgdO-oNT_Emg" value="name">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Tpt9r5LAEemgdO-oNT_Emg" name="source" incoming="_Tpt9sZLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <nodes xmi:id="_Tpt9sJLAEemgdO-oNT_Emg" name="target" incoming="_TpuksJLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <edges xmi:id="_Tpt9sZLAEemgdO-oNT_Emg" source="_Tpt9rZLAEemgdO-oNT_Emg" target="_Tpt9r5LAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+      </edges>
+      <edges xmi:id="_TpuksJLAEemgdO-oNT_Emg" source="_Tpt9rZLAEemgdO-oNT_Emg" target="_Tpt9sJLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_TpuksZLAEemgdO-oNT_Emg" name="Rhs">
+      <nodes xmi:id="_TpukspLAEemgdO-oNT_Emg" name="transition" outgoing="_TpukuJLAEemgdO-oNT_Emg _TpukuZLAEemgdO-oNT_Emg _TpukupLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+        <attributes xmi:id="_Tpuks5LAEemgdO-oNT_Emg" value="name">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_TpuktJLAEemgdO-oNT_Emg" name="source" incoming="_TpukuJLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <nodes xmi:id="_TpuktZLAEemgdO-oNT_Emg" name="target" incoming="_TpukuZLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <nodes xmi:id="_TpuktpLAEemgdO-oNT_Emg" name="transitionFunctionBehavior" incoming="_TpukupLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//FunctionBehavior"/>
+        <attributes xmi:id="_Tpukt5LAEemgdO-oNT_Emg" value="name + &quot;FunctionBehavior&quot;">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_TpukuJLAEemgdO-oNT_Emg" source="_TpukspLAEemgdO-oNT_Emg" target="_TpuktJLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+      </edges>
+      <edges xmi:id="_TpukuZLAEemgdO-oNT_Emg" source="_TpukspLAEemgdO-oNT_Emg" target="_TpuktZLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+      </edges>
+      <edges xmi:id="_TpukupLAEemgdO-oNT_Emg" source="_TpukspLAEemgdO-oNT_Emg" target="_TpuktpLAEemgdO-oNT_Emg">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Tpuku5LAEemgdO-oNT_Emg" origin="_Tpt9rZLAEemgdO-oNT_Emg" image="_TpukspLAEemgdO-oNT_Emg"/>
+    <mappings xmi:id="_TpukvJLAEemgdO-oNT_Emg" origin="_Tpt9r5LAEemgdO-oNT_Emg" image="_TpuktJLAEemgdO-oNT_Emg"/>
+    <mappings xmi:id="_TpukvZLAEemgdO-oNT_Emg" origin="_Tpt9sJLAEemgdO-oNT_Emg" image="_TpuktZLAEemgdO-oNT_Emg"/>
+  </units>
+</henshin:Module>
