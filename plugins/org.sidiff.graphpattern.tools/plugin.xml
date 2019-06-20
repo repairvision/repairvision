@@ -14,6 +14,10 @@
                   style="push">
             </command>
             <command
+                  commandId="org.sidiff.graphpattern.tools.command.generatebasicgraphpatterns"
+                  style="push">
+            </command>
+            <command
                   commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern"
                   icon="icons/slice.gif"
                   style="push">
@@ -49,11 +53,6 @@
                icon="icons/slice.gif"
                style="push">
          </command>
-         <command
-               commandId="org.sidiff.graphpattern.tools.command.creatediagram"
-               icon="icons/Sirius.gif"
-               style="push">
-         </command>
          <separator
                name="org.sidiff.graphpattern.tools.separator.end"
                visible="true">
@@ -65,6 +64,10 @@
       <handler
             class="org.sidiff.graphpattern.tools.ConvertModelToGraphPattern"
             commandId="org.sidiff.graphpattern.tools.command.modeltopattern">
+      </handler>
+      <handler
+            class="org.sidiff.graphpattern.tools.GenerateBasicGraphPatterns"
+            commandId="org.sidiff.graphpattern.tools.command.generatebasicgraphpatterns">
       </handler>
       <handler
             class="org.sidiff.graphpattern.tools.SliceGraphPattern"
@@ -90,26 +93,37 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
+            categoryId="org.sidiff.graphpattern.category"
             id="org.sidiff.graphpattern.tools.command.modeltopattern"
             name="Convert Model To Graph Pattern">
       </command>
       <command
+            categoryId="org.sidiff.graphpattern.category"
+            id="org.sidiff.graphpattern.tools.command.generatebasicgraphpatterns"
+            name="Generate Basic Graph Patterns">
+      </command>
+      <command
+            categoryId="org.sidiff.graphpattern.category"
             id="org.sidiff.graphpattern.tools.command.slicegraphpattern"
             name="Slice Graph Pattern">
       </command>
       <command
+            categoryId="org.sidiff.graphpattern.category"
             id="org.sidiff.graphpattern.tools.command.creatediagram"
             name="Create Diagram">
       </command>
       <command
+            categoryId="org.sidiff.graphpattern.category"
             id="org.sidiff.graphpattern.tools.command.createdocumentation"
             name="Create Documentation">
       </command>
       <command
+            categoryId="org.sidiff.graphpattern.category"
             id="org.sidiff.graphpattern.tools.command.batchgenerateeditrules"
             name="Generate Edit Rules">
       </command>
       <command
+            categoryId="org.sidiff.graphpattern.category"
             id="org.sidiff.graphpattern.tools.command.splitbundle"
             name="Split Bundle">
       </command>

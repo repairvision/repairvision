@@ -1,8 +1,9 @@
 package org.sidiff.graphpattern.tools.editrules.generator.main;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
+import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.completeConditions;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.completeContext;
-import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.*;
+import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.parentConstraint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,10 @@ import org.sidiff.csp.solver.impl.Variable;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatch;
-import org.sidiff.graphpattern.tools.editrules.csp.GraphConstraintMatchings;
+import org.sidiff.graphpattern.tools.csp.GraphPatternMatch;
+import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
+import org.sidiff.graphpattern.tools.editrules.generator.MinGraphEditDistanceMatchings;
 import org.sidiff.graphpattern.util.GraphPatternUtil;
 
 public class TransformationEditRuleGenerator {
@@ -58,7 +60,7 @@ public class TransformationEditRuleGenerator {
 
 					for (NodePattern fromNode : fromConstraint.getNodes()) {
 						if (!fromNode.getStereotypes().contains(not)) {
-							IDomain<NodePattern> domain = GraphConstraintMatchings.getDomain(fromNode, 
+							IDomain<NodePattern> domain = GraphPatternMatchings.getDomain(fromNode, 
 									toConstraint.getNodes(), 
 									n -> !n.getStereotypes().contains(not));
 							IVariable<NodePattern, NodePattern> variable = new Variable<>(fromNode, domain, true);
@@ -66,7 +68,7 @@ public class TransformationEditRuleGenerator {
 						}
 					}
 
-					GraphConstraintMatchings matchings = new GraphConstraintMatchings(fromConstraint, toConstraint);
+					MinGraphEditDistanceMatchings matchings = new MinGraphEditDistanceMatchings(fromConstraint, toConstraint);
 					ICSPSolver<NodePattern, NodePattern> solver = new CSPSolver<>(problem, matchings);
 					solver.run();
 
@@ -80,14 +82,14 @@ public class TransformationEditRuleGenerator {
 					int counter = 0;
 					int count = matchings.getMatches().size();
 
-					for (GraphConstraintMatch match : matchings.getMatches()) {
+					for (GraphPatternMatch match : matchings.getMatches()) {
 						GraphPatternEditRuleGenerator editRuleGenerator = new GraphPatternEditRuleGenerator(
-								match.getPreConstraint(), 
-								match.getPostConstraint(),
+								match.getGraphPatternA(), 
+								match.getGraphPatternB(),
 								match.getMatch());
 						editRuleGenerator.generate(
-								match.getPreConstraint().getNodes(), 
-								match.getPostConstraint().getNodes());
+								match.getGraphPatternA().getNodes(), 
+								match.getGraphPatternB().getNodes());
 
 						if (count > 1) {
 							editRuleGenerator.setName(name + " (" + ++counter + ")");

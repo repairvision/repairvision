@@ -1,5 +1,8 @@
 package org.sidiff.csp.solver.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.sidiff.csp.solver.ICSPSolver;
 import org.sidiff.csp.solver.IConstraintSatisfactionProblem;
 import org.sidiff.csp.solver.IStackReader;
@@ -8,17 +11,19 @@ import org.sidiff.csp.solver.IVariableList;
 
 public class ConstraintSatisfactionProblem<R, D> implements IConstraintSatisfactionProblem<R, D> {
 
-	protected ICSPSolver<R, D> solver;
+	private ICSPSolver<R, D> solver;
 	
-	protected IVariableList<R, D> variables;
+	private Map<R, IVariable<R, D>> subjectToVariable = new HashMap<>();
 	
-	protected boolean searchInjectiveSolutions = false;
+	private IVariableList<R, D> variables;
 	
-	protected boolean searchMaximumSolutions = false;
+	private boolean searchInjectiveSolutions = false;
 	
-	protected int minimumSolutionSize = 0;
+	private boolean searchMaximumSolutions = false;
 	
-	protected int maximumSolutionSize = Integer.MAX_VALUE;
+	private int minimumSolutionSize = 0;
+	
+	private int maximumSolutionSize = Integer.MAX_VALUE;
 	
 	public ConstraintSatisfactionProblem(int size) {
 		this.variables = new VariableListImpl<R, D>(size);
@@ -35,14 +40,20 @@ public class ConstraintSatisfactionProblem<R, D> implements IConstraintSatisfact
 	}
 	
 	@Override
+	public void addVariable(IVariable<R, D> variable) {
+		subjectToVariable.put(variable.getSubject(), variable);
+		variables.init(variable);
+		variable.setCSP(this);
+	}
+	
+	@Override
 	public IVariableList<R, D> getVariables() {
 		return variables;
 	}
 	
 	@Override
-	public void addVariable(IVariable<R, D> variable) {
-		variables.init(variable);
-		variable.setCSP(this);
+	public IVariable<R, D> getVariable(R subject) {
+		return subjectToVariable.get(subject);
 	}
 	
 	@Override

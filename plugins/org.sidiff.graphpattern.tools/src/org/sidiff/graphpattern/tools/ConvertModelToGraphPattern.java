@@ -1,7 +1,6 @@
 package org.sidiff.graphpattern.tools;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,6 +41,7 @@ import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Parameter;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil;
 
 public class ConvertModelToGraphPattern extends AbstractHandler {
 
@@ -71,7 +71,7 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 				// save pattern:
 				if (bundle != null) {
 					URI patternURI = EMFHandlerUtil.getURI((IResource) selected).appendFileExtension("graphpattern");
-					saveBundle(patternURI, bundle);
+					GraphPatternGeneratorUtil.saveBundle(patternURI, bundle);
 				}
 			}
 		} else {
@@ -81,23 +81,12 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 		return null;
 	}
 	
-	protected static void saveBundle(URI patternURI, Bundle bundle) {
-		Resource patternResource = new ResourceSetImpl().createResource(patternURI);
-		patternResource.getContents().add(bundle);
-		
-		try {
-			patternResource.save(Collections.emptyMap());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	protected static Bundle convertToBundle(IFolder folder, String fileExtension) {
 		Bundle bundle = GraphpatternFactory.eINSTANCE.createBundle();
-		bundle.setName(folder.getName());
+		bundle.setName(folder.getName() + "Bundle");
 		
 		// Process folder content:
-		Pattern pattern = convertToPattern(folder, fileExtension);
+		Pattern pattern = convertToPatternTree(folder, fileExtension);
 		bundle.getPatterns().add(pattern);
 		
 		return bundle;
@@ -107,7 +96,7 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 		Bundle bundle = GraphpatternFactory.eINSTANCE.createBundle();
 		Pattern pattern = GraphpatternFactory.eINSTANCE.createPattern();
 		
-		GraphPattern graphPattern = convertToGraph(pattern, file);
+		GraphPattern graphPattern = convertToParameterizedGraph(pattern, file);
 		
 		bundle.getPatterns().add(pattern);
 		pattern.getGraphs().add(graphPattern);
@@ -118,7 +107,7 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 		return bundle;
 	}
 	
-	protected static Pattern convertToPattern(IFolder folder, String fileExtension) {
+	protected static Pattern convertToPatternTree(IFolder folder, String fileExtension) {
 		Pattern pattern = GraphpatternFactory.eINSTANCE.createPattern();
 		pattern.setName(folder.getName());
 		
@@ -129,14 +118,14 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 			    	
 			    	// Convert folder to pattern:
 			    	IFolder childFolder = (IFolder) member;
-			        Pattern subPattern = convertToPattern(childFolder, fileExtension);
+			        Pattern subPattern = convertToPatternTree(childFolder, fileExtension);
 			        pattern.getSubpatterns().add(subPattern);
 			        
 			    } else if (member instanceof IFile) {
 			    	
 			    	// Convert file to graph:
 			    	if (member.getFileExtension().equalsIgnoreCase(fileExtension)) {
-						convertToGraph(pattern, member);
+						convertToParameterizedGraph(pattern, member);
 			    	}
 			    }
 			}
@@ -147,7 +136,7 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 		return pattern;
 	}
 
-	private static GraphPattern convertToGraph(Pattern pattern, IResource member) {
+	protected static GraphPattern convertToParameterizedGraph(Pattern pattern, IResource member) {
 		GraphPattern graphPattern = convertToGraph((IFile) member);
 		pattern.getGraphs().add(graphPattern);
 		
@@ -258,10 +247,6 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 		}
 	}
 
-	protected static String getNodeFilterSignature(EObject object, String name) {
-		return "Node : " + name + " : " + object.eClass().getName();
-	}
-	
 	protected static void convertToAttributes(EObject object, NodePattern node, List<String> filters) {
 		
 		for (EAttribute attribute : object.eClass().getEAllAttributes()) {
@@ -280,10 +265,6 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 		}
 	}
 
-	protected static String getAttributeFilterSignature(NodePattern node, EObject object, EAttribute attribute) {
-		return "Attribute : " + node.getName() + " : " + object.eClass().getName() + " : " + attribute.getName();
-	}
-	
 	protected static boolean isConsideredAttribute(EAttribute attribute) {
 		if (attribute.getEType() instanceof EDataType) {
 			if (((EDataType) attribute.getEType()).isSerializable()) {
@@ -346,7 +327,10 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 			
 			// create edge:
 			if ((source != null) && (target != null)) {
-				if (!filter(getEdgeFilterSignature(source, target, type), filters)) {
+				boolean edgeFiltered = filter(getEdgeFilterSignature(source, target, type), filters);
+				boolean oppositeEdgeFiltered = (type.getEOpposite() != null) && filter(getOppositeEdgeFilterSignature(source, target, type), filters);
+				
+				if (!edgeFiltered && !oppositeEdgeFiltered) {
 					EdgePattern edge = GraphpatternFactory.eINSTANCE.createEdgePattern();
 					edge.setType(type);
 					edge.setSource(source);
@@ -367,11 +351,6 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 		}
 	}
 	
-	protected static String getEdgeFilterSignature(NodePattern source, NodePattern target, EReference type) {
-		return "Edge : " + source.getName() + " : " + source.getType().getName() + " : " + type.getName()
-				+ " : " + target.getName() + " : " + target.getType().getName();
-	}
-
 	protected static String getName(EObject object, GraphPattern graph) {
 		if (object.eClass().getEStructuralFeature("name") != null) {
 			Object name = object.eGet(object.eClass().getEStructuralFeature("name"));
@@ -391,6 +370,26 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 			}
 		}
 		return false;
+	}
+	
+	protected static String getNodeFilterSignature(EObject object, String name) {
+		return "Node : " + name + " : " + object.eClass().getName();
+	}
+	
+	protected static String getEdgeFilterSignature(NodePattern source, NodePattern target, EReference type) {
+		return "Edge : " 	+ 			source.getName() + " : " + source.getType().getName() 
+							+ " : " + 	type.getName()
+							+ " : " + 	target.getName() + " : " + target.getType().getName();
+	}
+	
+	protected static String getOppositeEdgeFilterSignature(NodePattern source, NodePattern target, EReference type) {
+		return "Edge : " 	+ 			target.getName() + " : " + target.getType().getName() 
+							+ " : " + 	type.getEOpposite().getName()
+							+ " : " + 	source.getName() + " : " + source.getType().getName();
+	}
+	
+	protected static String getAttributeFilterSignature(NodePattern node, EObject object, EAttribute attribute) {
+		return "Attribute : " + node.getName() + " : " + object.eClass().getName() + " : " + attribute.getName();
 	}
 	
 	protected static List<String> getFilter(IFile file) {

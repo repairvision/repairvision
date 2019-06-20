@@ -6,8 +6,15 @@ import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 
+import java.io.IOException;
+import java.util.Collections;
+
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.graphpattern.AttributePattern;
+import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
@@ -21,6 +28,10 @@ public class GraphPatternGeneratorUtil {
 
 	public static boolean isContext(NodePattern node) {
 		return !node.getIncomings().stream().anyMatch(e -> e.getType().isContainment());
+	}
+	
+	public static boolean hasContent(NodePattern node) {
+		return node.getOutgoings().stream().map(EdgePattern::getType).anyMatch(EReference::isContainment);
 	}
 	
 	public static boolean isCondition(EdgePattern edge) {
@@ -146,5 +157,16 @@ public class GraphPatternGeneratorUtil {
 		}
 		
 		return false;
+	}
+	
+	public static void saveBundle(URI patternURI, Bundle bundle) {
+		Resource patternResource = new ResourceSetImpl().createResource(patternURI);
+		patternResource.getContents().add(bundle);
+		
+		try {
+			patternResource.save(Collections.emptyMap());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

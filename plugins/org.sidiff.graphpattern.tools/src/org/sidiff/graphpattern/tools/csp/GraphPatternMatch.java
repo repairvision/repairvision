@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.tools.editrules.csp;
+package org.sidiff.graphpattern.tools.csp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,26 +8,26 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.tools.editrules.generator.GEDEditRuleGenerator;
 
-public class GraphConstraintMatch implements ISolution<NodePattern, NodePattern> {
+public class GraphPatternMatch implements ISolution<NodePattern, NodePattern> {
 
-	protected GraphPattern preConstraint;
+	protected GraphPattern graphPatternA;
 	
-	protected GraphPattern postConstraint;
+	protected GraphPattern graphPatternB;
 	
 	protected Map<NodePattern, NodePattern> preToPostMatch;
 	
-	public GraphConstraintMatch(GraphPattern preConstraint, GraphPattern postConstraint, int size) {
-		this.preConstraint = preConstraint;
-		this.postConstraint = postConstraint;
+	public GraphPatternMatch(GraphPattern graphPatternA, GraphPattern graphPatternB, int size) {
+		this.graphPatternA = graphPatternA;
+		this.graphPatternB = graphPatternB;
 		this.preToPostMatch = new HashMap<NodePattern, NodePattern>((int) ((float) size / 0.75f + 1.0f));
 	}
 	
-	public GraphPattern getPreConstraint() {
-		return preConstraint;
+	public GraphPattern getGraphPatternA() {
+		return graphPatternA;
 	}
 	
-	public GraphPattern getPostConstraint() {
-		return postConstraint;
+	public GraphPattern getGraphPatternB() {
+		return graphPatternB;
 	}
 	
 	@Override
@@ -36,8 +36,8 @@ public class GraphConstraintMatch implements ISolution<NodePattern, NodePattern>
 	}
 	
 	public int getGraphEditDistance() {
-		GEDEditRuleGenerator editRuleGenerator = new GEDEditRuleGenerator(preConstraint, postConstraint, preToPostMatch);
-		editRuleGenerator.generate(preConstraint.getNodes(), postConstraint.getNodes());
+		GEDEditRuleGenerator editRuleGenerator = new GEDEditRuleGenerator(graphPatternA, graphPatternB, preToPostMatch);
+		editRuleGenerator.generate(graphPatternA.getNodes(), graphPatternB.getNodes());
 		return editRuleGenerator.getGraphEditDistance();
 	}
 	

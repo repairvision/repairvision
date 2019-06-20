@@ -8,6 +8,13 @@ public interface IConstraintSatisfactionProblem<R, D> {
 	
 	IVariableList<R, D> getVariables();
 	
+	/**
+	 * @param subject 
+	 *             A subject to be resolved to a variable.
+	 * @return The associated variable.
+	 */
+	IVariable<R, D> getVariable(R subject);
+	
 	boolean isSearchInjectiveSolutions();
 	
 	void setSearchInjectiveSolutions(boolean searchInjectiveSolutions);
