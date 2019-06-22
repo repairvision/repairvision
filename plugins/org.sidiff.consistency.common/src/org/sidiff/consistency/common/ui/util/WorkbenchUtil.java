@@ -6,11 +6,15 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -108,6 +112,34 @@ public class WorkbenchUtil {
 						message);
 		    }
 		});
+	}
+	
+	public static void showErrorWithException(String message, Object context, Exception e) {
+		Display.getDefault().asyncExec(new Runnable() {
+		    @Override
+		    public void run() {
+		    	ErrorDialog.openError(
+		    			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
+		    			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getTitle(),
+		    			message,
+		    			createMultiStatus(e, context.getClass().getName()));
+		    }
+		});
+	}
+	
+	private static MultiStatus createMultiStatus(Throwable t, String pluginID) {
+		List<Status> childStatuses = new ArrayList<>();
+
+		for (StackTraceElement stackTrace : t.getStackTrace()) {
+			Status status = new Status(IStatus.ERROR, pluginID, stackTrace.toString());
+			childStatuses.add(status);
+		}
+
+		MultiStatus ms = new MultiStatus(
+				pluginID, 
+				IStatus.ERROR, childStatuses.toArray(new Status[] {}),
+				t.toString(), t);
+		return ms;
 	}
 	
 	public static boolean showQuestion(String question) {
