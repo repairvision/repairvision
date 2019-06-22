@@ -94,6 +94,7 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<NodePattern> getNodes() {
 		if (nodes == null) {
 			nodes = new EObjectContainmentEList<NodePattern>(NodePattern.class, this, GraphpatternPackage.GRAPH_PATTERN__NODES);
@@ -106,6 +107,7 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Pattern getPattern() {
 		if (eContainerFeatureID() != GraphpatternPackage.GRAPH_PATTERN__PATTERN) return null;
 		return (Pattern)eInternalContainer();
@@ -126,6 +128,7 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPattern(Pattern newPattern) {
 		if (newPattern != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.GRAPH_PATTERN__PATTERN && newPattern != null)) {
 			if (EcoreUtil.isAncestor(this, newPattern))
@@ -147,6 +150,7 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DependencyGraph getDependencyGraph() {
 		return dependencyGraph;
 	}
@@ -171,6 +175,7 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setDependencyGraph(DependencyGraph newDependencyGraph) {
 		if (newDependencyGraph != dependencyGraph) {
 			NotificationChain msgs = null;
@@ -190,6 +195,7 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<SubGraph> getSubgraphs() {
 		if (subgraphs == null) {
 			subgraphs = new EObjectContainmentEList<SubGraph>(SubGraph.class, this, GraphpatternPackage.GRAPH_PATTERN__SUBGRAPHS);

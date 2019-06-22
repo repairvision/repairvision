@@ -95,6 +95,7 @@ public class EObjectListImpl extends MinimalEObjectImpl.Container implements EOb
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getLabel() {
 		return label;
 	}
@@ -104,6 +105,7 @@ public class EObjectListImpl extends MinimalEObjectImpl.Container implements EOb
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setLabel(String newLabel) {
 		String oldLabel = label;
 		label = newLabel;

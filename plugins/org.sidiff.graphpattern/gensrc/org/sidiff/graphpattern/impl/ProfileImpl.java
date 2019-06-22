@@ -129,6 +129,7 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Stereotype> getStereotypes() {
 		if (stereotypes == null) {
 			stereotypes = new EObjectContainmentWithInverseEList<Stereotype>(Stereotype.class, this, GraphpatternPackage.PROFILE__STEREOTYPES, GraphpatternPackage.STEREOTYPE__PROFILE);
@@ -141,6 +142,7 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -150,6 +152,7 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -162,6 +165,7 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getDescription() {
 		return description;
 	}
@@ -171,6 +175,7 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setDescription(String newDescription) {
 		String oldDescription = description;
 		description = newDescription;
@@ -183,6 +188,7 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -192,6 +198,7 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setId(String newId) {
 		String oldId = id;
 		id = newId;
@@ -357,7 +364,7 @@ public class ProfileImpl extends MinimalEObjectImpl.Container implements Profile
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(", description: ");

@@ -87,6 +87,7 @@ public class DependencyNodeImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<DependencyEdge> getOutgoings() {
 		if (outgoings == null) {
 			outgoings = new EObjectWithInverseResolvingEList<DependencyEdge>(DependencyEdge.class, this, GraphpatternPackage.DEPENDENCY_NODE__OUTGOINGS, GraphpatternPackage.DEPENDENCY_EDGE__SOURCE);
@@ -99,6 +100,7 @@ public class DependencyNodeImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<DependencyEdge> getIncomings() {
 		if (incomings == null) {
 			incomings = new EObjectWithInverseResolvingEList<DependencyEdge>(DependencyEdge.class, this, GraphpatternPackage.DEPENDENCY_NODE__INCOMINGS, GraphpatternPackage.DEPENDENCY_EDGE__TARGET);
@@ -111,6 +113,7 @@ public class DependencyNodeImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<NodePattern> getNodes() {
 		if (nodes == null) {
 			nodes = new EObjectResolvingEList<NodePattern>(NodePattern.class, this, GraphpatternPackage.DEPENDENCY_NODE__NODES);

@@ -85,6 +85,7 @@ public class SubGraphItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
+			childrenFeatures.add(GraphpatternPackage.Literals.SUB_GRAPH__ELEMENTS);
 			childrenFeatures.add(GraphpatternPackage.Literals.SUB_GRAPH__SUBGRAPHS);
 		}
 		return childrenFeatures;

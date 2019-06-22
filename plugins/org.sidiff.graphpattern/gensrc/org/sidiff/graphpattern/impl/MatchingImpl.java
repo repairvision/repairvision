@@ -70,6 +70,7 @@ public abstract class MatchingImpl extends MinimalEObjectImpl.Container implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NodePattern getNode() {
 		if (eContainerFeatureID() != GraphpatternPackage.MATCHING__NODE) return null;
 		return (NodePattern)eInternalContainer();
@@ -90,6 +91,7 @@ public abstract class MatchingImpl extends MinimalEObjectImpl.Container implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setNode(NodePattern newNode) {
 		if (newNode != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.MATCHING__NODE && newNode != null)) {
 			if (EcoreUtil.isAncestor(this, newNode))

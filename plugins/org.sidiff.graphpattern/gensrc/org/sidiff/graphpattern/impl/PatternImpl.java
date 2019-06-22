@@ -103,6 +103,7 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<GraphPattern> getGraphs() {
 		if (graphs == null) {
 			graphs = new EObjectContainmentWithInverseEList<GraphPattern>(GraphPattern.class, this, GraphpatternPackage.PATTERN__GRAPHS, GraphpatternPackage.GRAPH_PATTERN__PATTERN);
@@ -115,6 +116,7 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Parameter> getParameters() {
 		if (parameters == null) {
 			parameters = new EObjectContainmentWithInverseEList<Parameter>(Parameter.class, this, GraphpatternPackage.PATTERN__PARAMETERS, GraphpatternPackage.PARAMETER__PATTERN);
@@ -127,6 +129,7 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Assignment> getAssignments() {
 		if (assignments == null) {
 			assignments = new EObjectContainmentWithInverseEList<Assignment>(Assignment.class, this, GraphpatternPackage.PATTERN__ASSIGNMENTS, GraphpatternPackage.ASSIGNMENT__PATTERN);
@@ -139,6 +142,7 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Bundle getBundle() {
 		Bundle bundle = basicGetBundle();
 		return bundle != null && bundle.eIsProxy() ? (Bundle)eResolveProxy((InternalEObject)bundle) : bundle;
@@ -168,6 +172,7 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Pattern> getSubpatterns() {
 		if (subpatterns == null) {
 			subpatterns = new EObjectContainmentEList<Pattern>(Pattern.class, this, GraphpatternPackage.PATTERN__SUBPATTERNS);

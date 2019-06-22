@@ -449,13 +449,13 @@ public interface GraphpatternPackage extends EPackage {
 	int GRAPH_ELEMENT__DESCRIPTION = PATTERN_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
+	 * The feature id for the '<em><b>Subgraphs</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_ELEMENT__SUBGRAPH = PATTERN_ELEMENT_FEATURE_COUNT + 0;
+	int GRAPH_ELEMENT__SUBGRAPHS = PATTERN_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' reference.
@@ -512,13 +512,13 @@ public interface GraphpatternPackage extends EPackage {
 	int NODE_PATTERN__DESCRIPTION = GRAPH_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
+	 * The feature id for the '<em><b>Subgraphs</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN__SUBGRAPH = GRAPH_ELEMENT__SUBGRAPH;
+	int NODE_PATTERN__SUBGRAPHS = GRAPH_ELEMENT__SUBGRAPHS;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' reference.
@@ -719,13 +719,13 @@ public interface GraphpatternPackage extends EPackage {
 	int EDGE_PATTERN__DESCRIPTION = GRAPH_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
+	 * The feature id for the '<em><b>Subgraphs</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_PATTERN__SUBGRAPH = GRAPH_ELEMENT__SUBGRAPH;
+	int EDGE_PATTERN__SUBGRAPHS = GRAPH_ELEMENT__SUBGRAPHS;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' reference.
@@ -818,13 +818,13 @@ public interface GraphpatternPackage extends EPackage {
 	int ATTRIBUTE_PATTERN__DESCRIPTION = GRAPH_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Subgraph</b></em>' reference.
+	 * The feature id for the '<em><b>Subgraphs</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE_PATTERN__SUBGRAPH = GRAPH_ELEMENT__SUBGRAPH;
+	int ATTRIBUTE_PATTERN__SUBGRAPHS = GRAPH_ELEMENT__SUBGRAPHS;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' reference.
@@ -2637,15 +2637,15 @@ public interface GraphpatternPackage extends EPackage {
 	EClass getGraphElement();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.sidiff.graphpattern.GraphElement#getSubgraph <em>Subgraph</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.GraphElement#getSubgraphs <em>Subgraphs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Subgraph</em>'.
-	 * @see org.sidiff.graphpattern.GraphElement#getSubgraph()
+	 * @return the meta object for the reference list '<em>Subgraphs</em>'.
+	 * @see org.sidiff.graphpattern.GraphElement#getSubgraphs()
 	 * @see #getGraphElement()
 	 * @generated
 	 */
-	EReference getGraphElement_Subgraph();
+	EReference getGraphElement_Subgraphs();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.sidiff.graphpattern.GraphElement#getGraph <em>Graph</em>}'.
@@ -3595,12 +3595,12 @@ public interface GraphpatternPackage extends EPackage {
 		EClass GRAPH_ELEMENT = eINSTANCE.getGraphElement();
 
 		/**
-		 * The meta object literal for the '<em><b>Subgraph</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Subgraphs</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GRAPH_ELEMENT__SUBGRAPH = eINSTANCE.getGraphElement_Subgraph();
+		EReference GRAPH_ELEMENT__SUBGRAPHS = eINSTANCE.getGraphElement_Subgraphs();
 
 		/**
 		 * The meta object literal for the '<em><b>Graph</b></em>' reference feature.

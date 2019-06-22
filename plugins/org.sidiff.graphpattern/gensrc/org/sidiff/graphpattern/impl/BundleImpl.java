@@ -86,6 +86,7 @@ public class BundleImpl extends PatternElementImpl implements Bundle {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Pattern> getPatterns() {
 		if (patterns == null) {
 			patterns = new EObjectContainmentEList<Pattern>(Pattern.class, this, GraphpatternPackage.BUNDLE__PATTERNS);
@@ -98,6 +99,7 @@ public class BundleImpl extends PatternElementImpl implements Bundle {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Profile> getProfiles() {
 		if (profiles == null) {
 			profiles = new EObjectResolvingEList<Profile>(Profile.class, this, GraphpatternPackage.BUNDLE__PROFILES);
@@ -110,6 +112,7 @@ public class BundleImpl extends PatternElementImpl implements Bundle {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EPackage> getDomains() {
 		if (domains == null) {
 			domains = new EObjectResolvingEList<EPackage>(EPackage.class, this, GraphpatternPackage.BUNDLE__DOMAINS);

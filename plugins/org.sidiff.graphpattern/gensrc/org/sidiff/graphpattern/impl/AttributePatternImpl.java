@@ -85,6 +85,7 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getValue() {
 		return value;
 	}
@@ -94,6 +95,7 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setValue(String newValue) {
 		String oldValue = value;
 		value = newValue;
@@ -106,6 +108,7 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getType() {
 		if (type != null && type.eIsProxy()) {
 			InternalEObject oldType = (InternalEObject)type;
@@ -132,6 +135,7 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setType(EAttribute newType) {
 		EAttribute oldType = type;
 		type = newType;
@@ -144,6 +148,7 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NodePattern getNode() {
 		if (eContainerFeatureID() != GraphpatternPackage.ATTRIBUTE_PATTERN__NODE) return null;
 		return (NodePattern)eInternalContainer();
@@ -164,6 +169,7 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setNode(NodePattern newNode) {
 		if (newNode != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.ATTRIBUTE_PATTERN__NODE && newNode != null)) {
 			if (EcoreUtil.isAncestor(this, newNode))
@@ -312,7 +318,7 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (value: ");
 		result.append(value);
 		result.append(')');

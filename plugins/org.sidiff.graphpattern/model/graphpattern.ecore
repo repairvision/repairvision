@@ -182,13 +182,13 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SubGraph" eSuperTypes="#//PatternElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
-        eType="#//GraphElement" eOpposite="#//GraphElement/subgraph"/>
+        eType="#//GraphElement" eOpposite="#//GraphElement/subgraphs"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subgraphs" upperBound="-1"
         eType="#//SubGraph" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GraphElement" abstract="true" eSuperTypes="#//PatternElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subgraph" eType="#//SubGraph"
-        eOpposite="#//SubGraph/elements"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subgraphs" upperBound="-1"
+        eType="#//SubGraph" eOpposite="#//SubGraph/elements"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="graph" lowerBound="1" eType="#//GraphPattern"
         changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>

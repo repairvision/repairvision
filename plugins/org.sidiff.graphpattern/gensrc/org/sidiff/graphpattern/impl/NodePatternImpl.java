@@ -147,6 +147,7 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EdgePattern> getOutgoings() {
 		if (outgoings == null) {
 			outgoings = new EObjectContainmentWithInverseEList<EdgePattern>(EdgePattern.class, this, GraphpatternPackage.NODE_PATTERN__OUTGOINGS, GraphpatternPackage.EDGE_PATTERN__SOURCE);
@@ -333,6 +334,7 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getType() {
 		if (type != null && type.eIsProxy()) {
 			InternalEObject oldType = (InternalEObject)type;
@@ -359,6 +361,7 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setType(EClass newType) {
 		EClass oldType = type;
 		type = newType;
@@ -371,6 +374,7 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<AttributePattern> getAttributes() {
 		if (attributes == null) {
 			attributes = new EObjectContainmentWithInverseEList<AttributePattern>(AttributePattern.class, this, GraphpatternPackage.NODE_PATTERN__ATTRIBUTES, GraphpatternPackage.ATTRIBUTE_PATTERN__NODE);
@@ -383,6 +387,7 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Matching getMatching() {
 		return matching;
 	}
@@ -407,6 +412,7 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setMatching(Matching newMatching) {
 		if (newMatching != matching) {
 			NotificationChain msgs = null;
@@ -426,6 +432,7 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EdgePattern> getIncomings() {
 		if (incomings == null) {
 			incomings = new EObjectWithInverseResolvingEList<EdgePattern>(EdgePattern.class, this, GraphpatternPackage.NODE_PATTERN__INCOMINGS, GraphpatternPackage.EDGE_PATTERN__TARGET);
@@ -438,6 +445,7 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Association> getAssociations() {
 		if (associations == null) {
 			associations = new EObjectContainmentWithInverseEList<Association>(Association.class, this, GraphpatternPackage.NODE_PATTERN__ASSOCIATIONS, GraphpatternPackage.ASSOCIATION__SOURCE);

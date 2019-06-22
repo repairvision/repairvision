@@ -92,6 +92,7 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<DependencyNode> getIndependent() {
 		if (independent == null) {
 			independent = new EObjectResolvingEList<DependencyNode>(DependencyNode.class, this, GraphpatternPackage.DEPENDENCY_GRAPH__INDEPENDENT);
@@ -104,6 +105,7 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GraphPattern getGraph() {
 		if (eContainerFeatureID() != GraphpatternPackage.DEPENDENCY_GRAPH__GRAPH) return null;
 		return (GraphPattern)eInternalContainer();
@@ -124,6 +126,7 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setGraph(GraphPattern newGraph) {
 		if (newGraph != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.DEPENDENCY_GRAPH__GRAPH && newGraph != null)) {
 			if (EcoreUtil.isAncestor(this, newGraph))
@@ -145,6 +148,7 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<DependencyNode> getNodes() {
 		if (nodes == null) {
 			nodes = new EObjectContainmentEList<DependencyNode>(DependencyNode.class, this, GraphpatternPackage.DEPENDENCY_GRAPH__NODES);
@@ -157,6 +161,7 @@ public class DependencyGraphImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<DependencyEdge> getEdges() {
 		if (edges == null) {
 			edges = new EObjectContainmentEList<DependencyEdge>(DependencyEdge.class, this, GraphpatternPackage.DEPENDENCY_GRAPH__EDGES);

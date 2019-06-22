@@ -2,19 +2,20 @@
  */
 package org.sidiff.graphpattern.impl;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Stack;
 import java.util.function.Predicate;
-
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
@@ -28,7 +29,7 @@ import org.sidiff.graphpattern.SubGraph;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.impl.GraphElementImpl#getSubgraph <em>Subgraph</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.GraphElementImpl#getSubgraphs <em>Subgraphs</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.GraphElementImpl#getGraph <em>Graph</em>}</li>
  * </ul>
  *
@@ -36,15 +37,14 @@ import org.sidiff.graphpattern.SubGraph;
  */
 public abstract class GraphElementImpl extends PatternElementImpl implements GraphElement {
 	/**
-	 * The cached value of the '{@link #getSubgraph() <em>Subgraph</em>}' reference.
+	 * The cached value of the '{@link #getSubgraphs() <em>Subgraphs</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSubgraph()
+	 * @see #getSubgraphs()
 	 * @generated
 	 * @ordered
 	 */
-	protected SubGraph subgraph;
-
+	protected EList<SubGraph> subgraphs;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -69,16 +69,12 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SubGraph getSubgraph() {
-		if (subgraph != null && subgraph.eIsProxy()) {
-			InternalEObject oldSubgraph = (InternalEObject)subgraph;
-			subgraph = (SubGraph)eResolveProxy(oldSubgraph);
-			if (subgraph != oldSubgraph) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH, oldSubgraph, subgraph));
-			}
+	@Override
+	public EList<SubGraph> getSubgraphs() {
+		if (subgraphs == null) {
+			subgraphs = new EObjectWithInverseResolvingEList.ManyInverse<SubGraph>(SubGraph.class, this, GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPHS, GraphpatternPackage.SUB_GRAPH__ELEMENTS);
 		}
-		return subgraph;
+		return subgraphs;
 	}
 
 	/**
@@ -86,49 +82,7 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SubGraph basicGetSubgraph() {
-		return subgraph;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetSubgraph(SubGraph newSubgraph, NotificationChain msgs) {
-		SubGraph oldSubgraph = subgraph;
-		subgraph = newSubgraph;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH, oldSubgraph, newSubgraph);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSubgraph(SubGraph newSubgraph) {
-		if (newSubgraph != subgraph) {
-			NotificationChain msgs = null;
-			if (subgraph != null)
-				msgs = ((InternalEObject)subgraph).eInverseRemove(this, GraphpatternPackage.SUB_GRAPH__ELEMENTS, SubGraph.class, msgs);
-			if (newSubgraph != null)
-				msgs = ((InternalEObject)newSubgraph).eInverseAdd(this, GraphpatternPackage.SUB_GRAPH__ELEMENTS, SubGraph.class, msgs);
-			msgs = basicSetSubgraph(newSubgraph, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH, newSubgraph, newSubgraph));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	@Override
 	public GraphPattern getGraph() {
 		GraphPattern graph = basicGetGraph();
 		return graph != null && graph.eIsProxy() ? (GraphPattern)eResolveProxy((InternalEObject)graph) : graph;
@@ -159,13 +113,12 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH:
-				if (subgraph != null)
-					msgs = ((InternalEObject)subgraph).eInverseRemove(this, GraphpatternPackage.SUB_GRAPH__ELEMENTS, SubGraph.class, msgs);
-				return basicSetSubgraph((SubGraph)otherEnd, msgs);
+			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPHS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getSubgraphs()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -178,8 +131,8 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH:
-				return basicSetSubgraph(null, msgs);
+			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPHS:
+				return ((InternalEList<?>)getSubgraphs()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -192,9 +145,8 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH:
-				if (resolve) return getSubgraph();
-				return basicGetSubgraph();
+			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPHS:
+				return getSubgraphs();
 			case GraphpatternPackage.GRAPH_ELEMENT__GRAPH:
 				if (resolve) return getGraph();
 				return basicGetGraph();
@@ -207,11 +159,13 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH:
-				setSubgraph((SubGraph)newValue);
+			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPHS:
+				getSubgraphs().clear();
+				getSubgraphs().addAll((Collection<? extends SubGraph>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -225,8 +179,8 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH:
-				setSubgraph((SubGraph)null);
+			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPHS:
+				getSubgraphs().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -240,8 +194,8 @@ public abstract class GraphElementImpl extends PatternElementImpl implements Gra
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH:
-				return subgraph != null;
+			case GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPHS:
+				return subgraphs != null && !subgraphs.isEmpty();
 			case GraphpatternPackage.GRAPH_ELEMENT__GRAPH:
 				return basicGetGraph() != null;
 		}

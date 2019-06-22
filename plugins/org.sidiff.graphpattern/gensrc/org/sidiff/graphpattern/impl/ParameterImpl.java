@@ -50,6 +50,7 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Pattern getPattern() {
 		if (eContainerFeatureID() != GraphpatternPackage.PARAMETER__PATTERN) return null;
 		return (Pattern)eInternalContainer();
@@ -70,6 +71,7 @@ public class ParameterImpl extends PatternElementImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPattern(Pattern newPattern) {
 		if (newPattern != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.PARAMETER__PATTERN && newPattern != null)) {
 			if (EcoreUtil.isAncestor(this, newPattern))

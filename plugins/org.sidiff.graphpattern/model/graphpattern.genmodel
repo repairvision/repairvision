@@ -41,6 +41,10 @@
       <genOperations ecoreOperation="graphpattern.ecore#//NodePattern/getIncident.1">
         <genParameters ecoreParameter="graphpattern.ecore#//NodePattern/getIncident.1/adjacent"/>
       </genOperations>
+      <genOperations ecoreOperation="graphpattern.ecore#//NodePattern/removeIncident"/>
+      <genOperations ecoreOperation="graphpattern.ecore#//NodePattern/removeIncident.1">
+        <genParameters ecoreParameter="graphpattern.ecore#//NodePattern/removeIncident.1/node"/>
+      </genOperations>
       <genOperations ecoreOperation="graphpattern.ecore#//NodePattern/getAdjacent"/>
     </genClasses>
     <genClasses ecoreClass="graphpattern.ecore#//EdgePattern">
@@ -74,6 +78,7 @@
     <genClasses ecoreClass="graphpattern.ecore#//Bundle">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//Bundle/patterns"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//Bundle/profiles"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//Bundle/domains"/>
     </genClasses>
     <genClasses ecoreClass="graphpattern.ecore#//Pattern">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//Pattern/graphs"/>
@@ -81,6 +86,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//Pattern/assignments"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference graphpattern.ecore#//Pattern/bundle"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//Pattern/subpatterns"/>
+      <genOperations ecoreOperation="graphpattern.ecore#//Pattern/getAllGraphPatterns"/>
     </genClasses>
     <genClasses image="false" ecoreClass="graphpattern.ecore#//PatternElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//PatternElement/name"/>
@@ -116,6 +122,7 @@
     </genClasses>
     <genClasses ecoreClass="graphpattern.ecore#//Stereotype">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//Stereotype/name"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference graphpattern.ecore#//Stereotype/profile"/>
     </genClasses>
     <genClasses image="false" ecoreClass="graphpattern.ecore#//ParameterBinding">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//ParameterBinding/parameter"/>
@@ -131,12 +138,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute graphpattern.ecore#//ValueBinding/value"/>
     </genClasses>
     <genClasses ecoreClass="graphpattern.ecore#//SubGraph">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//SubGraph/elements"/>
+      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference graphpattern.ecore#//SubGraph/elements"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//SubGraph/subgraphs"/>
     </genClasses>
     <genClasses image="false" ecoreClass="graphpattern.ecore#//GraphElement">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//GraphElement/subgraph"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//GraphElement/stereotypes"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//GraphElement/subgraphs"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference graphpattern.ecore#//GraphElement/graph"/>
     </genClasses>
     <genClasses ecoreClass="graphpattern.ecore#//Profile">
@@ -147,6 +154,12 @@
       <genOperations ecoreOperation="graphpattern.ecore#//Profile/getStereotype">
         <genParameters ecoreParameter="graphpattern.ecore#//Profile/getStereotype/name"/>
       </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="graphpattern.ecore#//Resource">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference graphpattern.ecore#//Resource/contents"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="graphpattern.ecore#//Extendable">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference graphpattern.ecore#//Extendable/stereotypes"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

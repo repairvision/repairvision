@@ -74,9 +74,10 @@ public class SubGraphImpl extends PatternElementImpl implements SubGraph {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<GraphElement> getElements() {
 		if (elements == null) {
-			elements = new EObjectWithInverseResolvingEList<GraphElement>(GraphElement.class, this, GraphpatternPackage.SUB_GRAPH__ELEMENTS, GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPH);
+			elements = new EObjectWithInverseResolvingEList.ManyInverse<GraphElement>(GraphElement.class, this, GraphpatternPackage.SUB_GRAPH__ELEMENTS, GraphpatternPackage.GRAPH_ELEMENT__SUBGRAPHS);
 		}
 		return elements;
 	}
@@ -86,6 +87,7 @@ public class SubGraphImpl extends PatternElementImpl implements SubGraph {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<SubGraph> getSubgraphs() {
 		if (subgraphs == null) {
 			subgraphs = new EObjectContainmentEList<SubGraph>(SubGraph.class, this, GraphpatternPackage.SUB_GRAPH__SUBGRAPHS);

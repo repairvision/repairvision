@@ -71,6 +71,7 @@ public class DependencyEdgeImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DependencyNode getSource() {
 		if (source != null && source.eIsProxy()) {
 			InternalEObject oldSource = (InternalEObject)source;
@@ -112,6 +113,7 @@ public class DependencyEdgeImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSource(DependencyNode newSource) {
 		if (newSource != source) {
 			NotificationChain msgs = null;
@@ -131,6 +133,7 @@ public class DependencyEdgeImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DependencyNode getTarget() {
 		if (target != null && target.eIsProxy()) {
 			InternalEObject oldTarget = (InternalEObject)target;
@@ -172,6 +175,7 @@ public class DependencyEdgeImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTarget(DependencyNode newTarget) {
 		if (newTarget != target) {
 			NotificationChain msgs = null;

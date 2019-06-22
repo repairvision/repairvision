@@ -25,7 +25,7 @@ public interface SubGraph extends PatternElement {
 	/**
 	 * Returns the value of the '<em><b>Elements</b></em>' reference list.
 	 * The list contents are of type {@link org.sidiff.graphpattern.GraphElement}.
-	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.GraphElement#getSubgraph <em>Subgraph</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.GraphElement#getSubgraphs <em>Subgraphs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Elements</em>' reference list isn't clear,
@@ -34,8 +34,8 @@ public interface SubGraph extends PatternElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Elements</em>' reference list.
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getSubGraph_Elements()
-	 * @see org.sidiff.graphpattern.GraphElement#getSubgraph
-	 * @model opposite="subgraph"
+	 * @see org.sidiff.graphpattern.GraphElement#getSubgraphs
+	 * @model opposite="subgraphs"
 	 * @generated
 	 */
 	EList<GraphElement> getElements();

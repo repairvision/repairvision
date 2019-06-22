@@ -41,26 +41,26 @@ public class GraphElementItemProvider extends PatternElementItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addSubgraphPropertyDescriptor(object);
+			addSubgraphsPropertyDescriptor(object);
 			addGraphPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Subgraph feature.
+	 * This adds a property descriptor for the Subgraphs feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addSubgraphPropertyDescriptor(Object object) {
+	protected void addSubgraphsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_GraphElement_subgraph_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GraphElement_subgraph_feature", "_UI_GraphElement_type"),
-				 GraphpatternPackage.Literals.GRAPH_ELEMENT__SUBGRAPH,
+				 getString("_UI_GraphElement_subgraphs_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_GraphElement_subgraphs_feature", "_UI_GraphElement_type"),
+				 GraphpatternPackage.Literals.GRAPH_ELEMENT__SUBGRAPHS,
 				 true,
 				 false,
 				 true,

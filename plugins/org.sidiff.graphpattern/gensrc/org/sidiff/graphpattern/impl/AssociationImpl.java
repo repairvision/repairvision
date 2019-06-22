@@ -62,6 +62,7 @@ public class AssociationImpl extends PatternElementImpl implements Association {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NodePattern getSource() {
 		if (eContainerFeatureID() != GraphpatternPackage.ASSOCIATION__SOURCE) return null;
 		return (NodePattern)eInternalContainer();
@@ -82,6 +83,7 @@ public class AssociationImpl extends PatternElementImpl implements Association {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSource(NodePattern newSource) {
 		if (newSource != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.ASSOCIATION__SOURCE && newSource != null)) {
 			if (EcoreUtil.isAncestor(this, newSource))
@@ -103,6 +105,7 @@ public class AssociationImpl extends PatternElementImpl implements Association {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GraphElement getTarget() {
 		if (target != null && target.eIsProxy()) {
 			InternalEObject oldTarget = (InternalEObject)target;
@@ -129,6 +132,7 @@ public class AssociationImpl extends PatternElementImpl implements Association {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTarget(GraphElement newTarget) {
 		GraphElement oldTarget = target;
 		target = newTarget;

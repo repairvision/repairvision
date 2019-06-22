@@ -58,6 +58,7 @@ public class ObjectBindingImpl extends ParameterBindingImpl implements ObjectBin
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject getValue() {
 		if (value != null && value.eIsProxy()) {
 			InternalEObject oldValue = (InternalEObject)value;
@@ -84,6 +85,7 @@ public class ObjectBindingImpl extends ParameterBindingImpl implements ObjectBin
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setValue(EObject newValue) {
 		EObject oldValue = value;
 		value = newValue;

@@ -68,6 +68,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<ParameterBinding> getAssignment() {
 		if (assignment == null) {
 			assignment = new EObjectContainmentEList<ParameterBinding>(ParameterBinding.class, this, GraphpatternPackage.ASSIGNMENT__ASSIGNMENT);
@@ -80,6 +81,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Pattern getPattern() {
 		if (eContainerFeatureID() != GraphpatternPackage.ASSIGNMENT__PATTERN) return null;
 		return (Pattern)eInternalContainer();
@@ -100,6 +102,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPattern(Pattern newPattern) {
 		if (newPattern != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.ASSIGNMENT__PATTERN && newPattern != null)) {
 			if (EcoreUtil.isAncestor(this, newPattern))

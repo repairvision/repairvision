@@ -3,6 +3,7 @@
 package org.sidiff.graphpattern;
 
 import java.util.function.Predicate;
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,7 +14,7 @@ import java.util.function.Predicate;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.GraphElement#getSubgraph <em>Subgraph</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.GraphElement#getSubgraphs <em>Subgraphs</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.GraphElement#getGraph <em>Graph</em>}</li>
  * </ul>
  *
@@ -23,32 +24,18 @@ import java.util.function.Predicate;
  */
 public interface GraphElement extends PatternElement {
 	/**
-	 * Returns the value of the '<em><b>Subgraph</b></em>' reference.
+	 * Returns the value of the '<em><b>Subgraphs</b></em>' reference list.
+	 * The list contents are of type {@link org.sidiff.graphpattern.SubGraph}.
 	 * It is bidirectional and its opposite is '{@link org.sidiff.graphpattern.SubGraph#getElements <em>Elements</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Subgraph</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Subgraph</em>' reference.
-	 * @see #setSubgraph(SubGraph)
-	 * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphElement_Subgraph()
+	 * @return the value of the '<em>Subgraphs</em>' reference list.
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getGraphElement_Subgraphs()
 	 * @see org.sidiff.graphpattern.SubGraph#getElements
 	 * @model opposite="elements"
 	 * @generated
 	 */
-	SubGraph getSubgraph();
-
-	/**
-	 * Sets the value of the '{@link org.sidiff.graphpattern.GraphElement#getSubgraph <em>Subgraph</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Subgraph</em>' reference.
-	 * @see #getSubgraph()
-	 * @generated
-	 */
-	void setSubgraph(SubGraph value);
+	EList<SubGraph> getSubgraphs();
 
 	/**
 	 * Returns the value of the '<em><b>Graph</b></em>' reference.

@@ -72,6 +72,7 @@ public class StereotypeImpl extends MinimalEObjectImpl.Container implements Ster
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -81,6 +82,7 @@ public class StereotypeImpl extends MinimalEObjectImpl.Container implements Ster
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -93,6 +95,7 @@ public class StereotypeImpl extends MinimalEObjectImpl.Container implements Ster
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Profile getProfile() {
 		if (eContainerFeatureID() != GraphpatternPackage.STEREOTYPE__PROFILE) return null;
 		return (Profile)eInternalContainer();
@@ -113,6 +116,7 @@ public class StereotypeImpl extends MinimalEObjectImpl.Container implements Ster
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setProfile(Profile newProfile) {
 		if (newProfile != eInternalContainer() || (eContainerFeatureID() != GraphpatternPackage.STEREOTYPE__PROFILE && newProfile != null)) {
 			if (EcoreUtil.isAncestor(this, newProfile))
@@ -250,7 +254,7 @@ public class StereotypeImpl extends MinimalEObjectImpl.Container implements Ster
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(')');
