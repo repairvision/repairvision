@@ -44,6 +44,8 @@ import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil;
 
 public class ConvertModelToGraphPattern extends AbstractHandler {
+	
+	// TODO: Method to determine <<constraint>> marker, e.g., folder name convention...
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -71,6 +73,12 @@ public class ConvertModelToGraphPattern extends AbstractHandler {
 				// save pattern:
 				if (bundle != null) {
 					URI patternURI = EMFHandlerUtil.getURI((IResource) selected).appendFileExtension("graphpattern");
+					String path = WorkbenchUtil.askForValue("Save As:", patternURI.toString(), (input) -> null);
+					
+					if ((path != null) && (!path.equals(patternURI.toString()))) {
+						patternURI = URI.createURI(path);
+					}
+					
 					GraphPatternGeneratorUtil.saveBundle(patternURI, bundle);
 				}
 			}

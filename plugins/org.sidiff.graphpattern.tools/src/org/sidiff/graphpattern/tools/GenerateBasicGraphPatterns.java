@@ -58,7 +58,7 @@ public class GenerateBasicGraphPatterns extends AbstractHandler {
 					if (selected instanceof IResource) {
 						Bundle bundle = EMFHandlerUtil.loadResource((IResource) selected, Bundle.class, new ResourceSetImpl());
 						
-						if (bundle.eResource().getURI().lastSegment().endsWith(".basic.graphpattern")) {
+						if (bundle.eResource().getURI().lastSegment().matches(".*?\\.basic.*?\\.graphpattern")) {
 							basicPatternsBundle = bundle;
 							
 							if (WorkbenchUtil.showQuestion("Clear basic pattern bundle?")) {
@@ -75,10 +75,11 @@ public class GenerateBasicGraphPatterns extends AbstractHandler {
 				throw new ExecutionException("Missing Bundle");
 			}
 		} catch (Exception e) {
-			WorkbenchUtil.showError(
+			WorkbenchUtil.showErrorWithException(
 					"Select a bundle with complex pattern to generate a new basic pattern bundle."
-					+ " Select a basic (*.basic.graphpattern) and complex pattern bundle to update the basic bundle.");
-			throw e;
+					+ " Select a basic (*.basic.graphpattern) and complex pattern bundle to update the basic bundle.",
+					this, e);
+			throw new ExecutionException(e.getMessage(), e);
 		}
 		
 		for (Pattern pattern : complexPatternsBundle.getPatterns()) {
@@ -188,7 +189,7 @@ public class GenerateBasicGraphPatterns extends AbstractHandler {
 			problem.setSearchInjectiveSolutions(true);
 			
 			for (NodePattern basicGraphPatternNode : basicGraphPattern.getNodes()) {
-				NodePatternDomain domain = new NodePatternDomain(basicGraphPatternNode, otherBasicGraphPatter.getNodes());
+				NodePatternDomain domain = new NodePatternDomain(basicGraphPatternNode, otherBasicGraphPatter.getNodes(), true, true);
 				
 				// NOTE: Optimization:
 				if (domain.isEmpty()) {
@@ -200,7 +201,7 @@ public class GenerateBasicGraphPatterns extends AbstractHandler {
 			}
 			
 			// TODO: Search only for first match:
-			GraphPatternMatchings matchings = new GraphPatternMatchings(otherBasicGraphPatter, basicGraphPattern);
+			GraphPatternMatchings matchings = new GraphPatternMatchings(basicGraphPattern, otherBasicGraphPatter);
 			ICSPSolver<NodePattern, NodePattern> solver = new CSPSolver<>(problem, matchings);
 			solver.run();
 			

@@ -18,6 +18,10 @@
                   style="push">
             </command>
             <command
+                  commandId="org.sidiff.graphpattern.tools.command.decomposingeditrules"
+                  style="push">
+            </command>
+            <command
                   commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern"
                   icon="icons/slice.gif"
                   style="push">
@@ -70,6 +74,10 @@
             commandId="org.sidiff.graphpattern.tools.command.generatebasicgraphpatterns">
       </handler>
       <handler
+            class="org.sidiff.graphpattern.tools.editrules.DecomposingEditRules"
+            commandId="org.sidiff.graphpattern.tools.command.decomposingeditrules">
+      </handler>
+      <handler
             class="org.sidiff.graphpattern.tools.SliceGraphPattern"
             commandId="org.sidiff.graphpattern.tools.command.slicegraphpattern">
       </handler>
@@ -101,6 +109,10 @@
             categoryId="org.sidiff.graphpattern.category"
             id="org.sidiff.graphpattern.tools.command.generatebasicgraphpatterns"
             name="Generate Basic Graph Patterns">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.tools.command.decomposingeditrules"
+            name="Decomposing Edit Rules">
       </command>
       <command
             categoryId="org.sidiff.graphpattern.category"

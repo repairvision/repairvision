@@ -20,9 +20,9 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatch;
-import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
+import org.sidiff.graphpattern.tools.csp.AbstractGraphPatternMatchings;
+import org.sidiff.graphpattern.tools.editrules.csp.MinGraphEditDistanceMatchings;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
-import org.sidiff.graphpattern.tools.editrules.generator.MinGraphEditDistanceMatchings;
 import org.sidiff.graphpattern.util.GraphPatternUtil;
 
 public class TransformationEditRuleGenerator {
@@ -53,14 +53,14 @@ public class TransformationEditRuleGenerator {
 					int postSize = GraphPatternUtil.getPatternSize(toConstraint.getNodes());
 
 					IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(fromConstraint.getNodes().size());
-					problem.setMinimumSolutionSize(Math.min(preSize, postSize));
+					problem.setMinimumSolutionSize(Math.min(preSize, postSize)); // NOTE: At least one of both patterns need to be matched completely.
 					problem.setMaximumSolutionSize(Math.max(preSize, postSize));
 					problem.setSearchMaximumSolutions(true);
 					problem.setSearchInjectiveSolutions(true);
 
 					for (NodePattern fromNode : fromConstraint.getNodes()) {
 						if (!fromNode.getStereotypes().contains(not)) {
-							IDomain<NodePattern> domain = GraphPatternMatchings.getDomain(fromNode, 
+							IDomain<NodePattern> domain = AbstractGraphPatternMatchings.getDomain(fromNode, 
 									toConstraint.getNodes(), 
 									n -> !n.getStereotypes().contains(not));
 							IVariable<NodePattern, NodePattern> variable = new Variable<>(fromNode, domain, true);
@@ -84,12 +84,12 @@ public class TransformationEditRuleGenerator {
 
 					for (GraphPatternMatch match : matchings.getMatches()) {
 						GraphPatternEditRuleGenerator editRuleGenerator = new GraphPatternEditRuleGenerator(
-								match.getGraphPatternA(), 
-								match.getGraphPatternB(),
+								matchings.getSubjectGraph(), 
+								matchings.getValueGraph(),
 								match.getMatch());
 						editRuleGenerator.generate(
-								match.getGraphPatternA().getNodes(), 
-								match.getGraphPatternB().getNodes());
+								matchings.getSubjectGraph().getNodes(), 
+								matchings.getValueGraph().getNodes());
 
 						if (count > 1) {
 							editRuleGenerator.setName(name + " (" + ++counter + ")");
