@@ -1,5 +1,7 @@
 package org.sidiff.graphpattern.tools.editrules;
 
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.rule;
 
@@ -8,6 +10,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -25,6 +28,7 @@ import org.sidiff.csp.solver.impl.CSPSolver;
 import org.sidiff.csp.solver.impl.ConstraintSatisfactionProblem;
 import org.sidiff.csp.solver.impl.Variable;
 import org.sidiff.graphpattern.Bundle;
+import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
@@ -35,6 +39,7 @@ import org.sidiff.graphpattern.tools.csp.GraphPatternMatch;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
 import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
 import org.sidiff.graphpattern.tools.editrules.csp.EditNodePatternDomain;
+import org.sidiff.graphpattern.tools.editrules.csp.EditRulePatternUtil;
 
 public class DecomposingEditRules extends AbstractHandler {
 
@@ -154,7 +159,7 @@ public class DecomposingEditRules extends AbstractHandler {
 		assert (new HashSet<>(basicToComplexMatch.values()).size() == basicToComplexMatch.values().size()); // injective matching
 		
 		// Maximize change sets of decomposition:
-		List<SubGraph> containedSubGraphs = findContainedSubGraphs(complexEditRuleGraph, basicToComplexMatch);
+		List<SubGraph> containedSubGraphs = findContainedChangeSets(complexEditRuleGraph, basicToComplexMatch);
 
 		// Create new sub graph if new sub graph has no other conflicting overlappings:
 		if (!hasOverlappingChanges(complexEditRuleGraph, basicToComplexMatch, containedSubGraphs)) {
@@ -171,47 +176,99 @@ public class DecomposingEditRules extends AbstractHandler {
 			complexEditRuleGraph.getSubgraphs().add(subGraph);
 			
 			SubGraph contextSubGraph = GraphpatternFactory.eINSTANCE.createSubGraph();
-			contextSubGraph.setName(basicEditRuleGraph.getName());
+			contextSubGraph.setName("context");
 			contextSubGraph.getStereotypes().add(preserve);
 			subGraph.getSubgraphs().add(contextSubGraph);
 			
-			SubGraph contentSubGraph = GraphpatternFactory.eINSTANCE.createSubGraph();
-			contentSubGraph.setName(basicEditRuleGraph.getName());
-			subGraph.getSubgraphs().add(contentSubGraph);
+			SubGraph changesSubGraph = GraphpatternFactory.eINSTANCE.createSubGraph();
+			changesSubGraph.setName("changes");
+			changesSubGraph.getStereotypes().add(create);
+			changesSubGraph.getStereotypes().add(delete);
+			subGraph.getSubgraphs().add(changesSubGraph);
 			
 			for (NodePattern basicSubGraphNode : basicToComplexMatch.keySet()) {
-				if (basicSubGraphNode.getStereotypes().get(0).equals(preserve)) {
-					contextSubGraph.getElements().add(basicToComplexMatch.get(basicSubGraphNode));
+				NodePattern complexSubGraphNode = basicToComplexMatch.get(basicSubGraphNode);
+				
+				// Store nodes:
+				if (EditRulePatternUtil.isChange(basicSubGraphNode)) {
+					changesSubGraph.getElements().add(complexSubGraphNode);
 				} else {
-					contentSubGraph.getElements().add(basicToComplexMatch.get(basicSubGraphNode));
+					contextSubGraph.getElements().add(complexSubGraphNode);
+				}
+				
+				// Store edges:
+				for (EdgePattern basicSubGraphEdge : basicSubGraphNode.getOutgoings()) {
+					EdgePattern complexSubGraphEdge = getComplexEdgeMatch(basicSubGraphEdge, basicToComplexMatch);
+
+					if (EditRulePatternUtil.isChange(complexSubGraphEdge)) {
+						changesSubGraph.getElements().add(complexSubGraphEdge);
+					} else {
+						contextSubGraph.getElements().add(complexSubGraphEdge);
+					}
 				}
 			}
 		}
 	}
 
-	private List<SubGraph> findContainedSubGraphs(GraphPattern complexEditRuleGraph, Map<NodePattern, NodePattern> basicToComplexMatch) {
+	private List<SubGraph> findContainedChangeSets(GraphPattern complexEditRuleGraph, Map<NodePattern, NodePattern> basicToComplexMatch) {
 		List<SubGraph> matchingSubGraphs = new ArrayList<>(1); 
+		int[] changeAndContextSize = getChangeAndContextSize(basicToComplexMatch);
 		
 		for (SubGraph subGraph : complexEditRuleGraph.getSubgraphs()) {
-			if (isContainedSubGraph(subGraph, basicToComplexMatch)) {
-				matchingSubGraphs.add(subGraph);
+			if (getSubGraphChanges(subGraph).size() <= changeAndContextSize[0]) {
+				
+				// For equal sized sub graph change sets (to be replaced), prefer ro keep the one with the smaller context:
+				if (!(getSubGraphChanges(subGraph).size() == changeAndContextSize[0]) 
+						|| (changeAndContextSize[1] < getSubGraphContext(subGraph).size())) {
+					
+					if (isContainedOrEqualChangeSet(subGraph, basicToComplexMatch)) {
+						matchingSubGraphs.add(subGraph);
+					}
+				}
 			}
 		}
 		
 		return matchingSubGraphs;
 	}
 	
-	private boolean isContainedSubGraph(SubGraph subGraph, Map<NodePattern, NodePattern> basicToComplexMatch) {
-		for (NodePattern basicSubGraphNode : basicToComplexMatch.keySet()) {
+	private int[] getChangeAndContextSize(Map<NodePattern, NodePattern> basicToComplexMatch) {
+		int changeSize = 0;
+		int contextSize = 0;
+		
+		for (NodePattern basicNode : basicToComplexMatch.keySet()) {
+			if (EditRulePatternUtil.isChange(basicNode)) {
+				++changeSize;
+			} else if (EditRulePatternUtil.isContext(basicNode)) {
+				++contextSize;
+			}
 			
-			// Check only change nodes of basic sub graph:
-			if (!basicSubGraphNode.getStereotypes().get(0).equals(preserve)) {
-				NodePattern complexSubGraphNode = basicToComplexMatch.get(basicSubGraphNode);
-
-				for (GraphElement subGraphChange : getSubGraphChanges(subGraph)) {
-					if (subGraphChange != complexSubGraphNode) {
-						return false;
-					}
+			for (EdgePattern basicEdge : basicNode.getOutgoings()) {
+				if (EditRulePatternUtil.isChange(basicEdge)) {
+					++changeSize;
+				} else if (EditRulePatternUtil.isContext(basicEdge)) {
+					++contextSize;
+				}
+			}
+		}
+		
+		return new int[] {changeSize, contextSize};
+	}
+	
+	private boolean isContainedOrEqualChangeSet(SubGraph complexSubGraph, Map<NodePattern, NodePattern> basicToComplexMatch) {
+		
+		// containedComplexSubGraph <= basicToComplexMatch
+		for (GraphElement complexChange : getSubGraphChanges(complexSubGraph)) {
+			if (complexChange instanceof NodePattern) {
+				
+				// complex sub graph node exist in basic rule?
+				if (!basicToComplexMatch.values().contains(complexChange)) {
+					return false;
+				}
+			} else if (complexChange instanceof EdgePattern) {
+				
+				// complex sub graph edge exist in basic rule?
+				if (getBasicEdgeMatch((EdgePattern) complexChange, basicToComplexMatch) == null) {
+					return false;
 				}
 			}
 		}
@@ -222,14 +279,27 @@ public class DecomposingEditRules extends AbstractHandler {
 		
 		for (NodePattern basicSubGraphNode : basicToComplexMatch.keySet()) {
 			
-			// Check only change nodes of basic sub graph:
-			if (!basicSubGraphNode.getStereotypes().get(0).equals(preserve)) {
-				for (SubGraph subGraph : editRuleGraph.getSubgraphs()) {
-					if (!ignoredSubGraphs.contains(subGraph)) {
+			// Check change nodes of basic sub graph:
+			if (EditRulePatternUtil.isChange(basicSubGraphNode)) {
+				for (SubGraph complexSubGraph : editRuleGraph.getSubgraphs()) {
+					if (!ignoredSubGraphs.contains(complexSubGraph)) {
 						NodePattern complexSubGraphNode = basicToComplexMatch.get(basicSubGraphNode);
 						
-						for (GraphElement subGraphChange : getSubGraphChanges(subGraph)) {
-							if (subGraphChange == complexSubGraphNode) {
+						if (getSubGraphChanges(complexSubGraph).contains(complexSubGraphNode)) {
+							return true;
+						}
+					}
+				}
+			}
+			
+			// Check change edges of basic sub graph:
+			for (EdgePattern basicSubGraphEdge : basicSubGraphNode.getOutgoings()) {
+				if (EditRulePatternUtil.isChange(basicSubGraphEdge)) {
+					for (SubGraph complexSubGraph : editRuleGraph.getSubgraphs()) {
+						if (!ignoredSubGraphs.contains(complexSubGraph)) {
+							EdgePattern complexSubGraphEdge = getComplexEdgeMatch(basicSubGraphEdge, basicToComplexMatch);
+							
+							if (getSubGraphChanges(complexSubGraph).contains(complexSubGraphEdge)) {
 								return true;
 							}
 						}
@@ -241,9 +311,55 @@ public class DecomposingEditRules extends AbstractHandler {
 		return false;
 	}
 	
+	private EdgePattern getComplexEdgeMatch(EdgePattern basicEdge, Map<NodePattern, NodePattern> basicToComplexMatch) {
+		NodePattern complexSubGraphSourceNode = basicToComplexMatch.get(basicEdge.getSource());
+		NodePattern complexSubGraphTargetNode = basicToComplexMatch.get(basicEdge.getTarget());
+		
+		for (EdgePattern complexSubGraphEdge : complexSubGraphSourceNode.getOutgoings(basicEdge.getType())) {
+			if (complexSubGraphEdge.getTarget() == complexSubGraphTargetNode) {
+				return complexSubGraphEdge;
+			}
+		}
+		
+		return null;
+	}
+	
+	private EdgePattern getBasicEdgeMatch(EdgePattern complexEdge, Map<NodePattern, NodePattern> basicToComplexMatch) {
+		Map.Entry<NodePattern, NodePattern> sourceMatch = null;
+		Map.Entry<NodePattern, NodePattern> targetMatch = null;
+		
+		for (Entry<NodePattern, NodePattern> match : basicToComplexMatch.entrySet()) {
+			if (complexEdge.getSource() == match.getValue()) {
+				sourceMatch = match;
+			}
+			if (complexEdge.getTarget() == match.getValue()) {
+				targetMatch = match;
+			}
+		}
+		
+		if ((sourceMatch != null) && (targetMatch != null)) {
+			for (EdgePattern outgoingBasicEdge : sourceMatch.getKey().getOutgoings(complexEdge.getType())) {
+				if (outgoingBasicEdge.getTarget() == targetMatch.getKey()) {
+					return outgoingBasicEdge;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	private List<GraphElement> getSubGraphContext(SubGraph subGraph) {
+		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
+			if (EditRulePatternUtil.isContext(annotatedSubGraph)) {
+				return annotatedSubGraph.getElements();
+			}
+		}
+		return Collections.emptyList();
+	}
+	
 	private List<GraphElement> getSubGraphChanges(SubGraph subGraph) {
 		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
-			if (annotatedSubGraph.getStereotypes().isEmpty()  || !annotatedSubGraph.getStereotypes().get(0).equals(preserve)) {
+			if (EditRulePatternUtil.isChange(annotatedSubGraph)) {
 				return annotatedSubGraph.getElements();
 			}
 		}

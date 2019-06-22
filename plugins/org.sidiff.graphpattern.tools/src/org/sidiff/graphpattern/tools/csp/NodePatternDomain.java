@@ -17,7 +17,7 @@ public class NodePatternDomain extends Domain<NodePattern> {
 			boolean structure = !maximumSolution 
 					|| (checkOutgoings(subject, value, exactSolution) && checkIncomings(subject, value, exactSolution));
 			
-			if (checkType(subject, value) && structure) {
+			if (checkType(subject, value) && checkStereotypes(subject, value) && structure) {
 				add(value);
 			}
 		}
@@ -65,5 +65,9 @@ public class NodePatternDomain extends Domain<NodePattern> {
 		} else {
 			return false;
 		}
+	}
+	
+	protected boolean checkStereotypes(NodePattern subject, NodePattern value) {
+		return true;
 	}
 }
