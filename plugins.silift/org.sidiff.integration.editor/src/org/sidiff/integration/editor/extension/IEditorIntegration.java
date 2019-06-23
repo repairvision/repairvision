@@ -2,12 +2,14 @@ package org.sidiff.integration.editor.extension;
 
 import java.io.FileNotFoundException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 
 public interface IEditorIntegration {
@@ -165,4 +167,10 @@ public interface IEditorIntegration {
 	 *         "diagram"
 	 */
 	public Map<String, String> getFileExtensions();
+	
+	/**
+	 * @param selection A selection in the editor, e.g., graphical elements.
+	 * @return A list of selected domain elements.
+	 */
+	List<EObject> getSelectedDomainElements(ISelection selection);
 }
