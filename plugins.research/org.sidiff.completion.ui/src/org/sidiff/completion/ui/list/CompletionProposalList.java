@@ -310,7 +310,10 @@ public class CompletionProposalList {
 			
 			// Show new preview:
 			preview = ((ICompletionProposal) proposal).preview();
-			return preview.show();
+			
+			if (preview != null) {
+				return preview.show();
+			}
 		}
 		return false;
 	}

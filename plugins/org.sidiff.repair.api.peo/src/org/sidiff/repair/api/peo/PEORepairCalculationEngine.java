@@ -15,8 +15,9 @@ import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
+import org.sidiff.validation.constraint.impact.repair.RepairImpactAnalyzes;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.index.RepairActionIndex;
+import org.sidiff.validation.constraint.impact.repair.RepairActionIndex;
 
 public class PEORepairCalculationEngine {
 	
@@ -62,7 +63,7 @@ public class PEORepairCalculationEngine {
 		// Validate model and calculate abstract repairs:
 		LogTime valiationTimer = new LogTime();
 		
-		ImpactAnalyzes impact = new ImpactAnalyzes(new RepairActionIndex(
+		RepairImpactAnalyzes impact = new RepairImpactAnalyzes(new RepairActionIndex(
 				settings.getValidationScope().iterator(), 
 				settings.getConsistencyRules(), true));
 		

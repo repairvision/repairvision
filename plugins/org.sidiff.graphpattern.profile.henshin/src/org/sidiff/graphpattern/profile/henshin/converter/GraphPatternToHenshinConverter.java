@@ -18,12 +18,14 @@ import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.SequentialUnit;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.emf.henshin.model.resource.HenshinResource;
 import org.sidiff.common.henshin.INamingConventions;
@@ -61,9 +63,9 @@ public class GraphPatternToHenshinConverter {
 		}
 		
 		// create main unit:
-		Unit mainUnit = createMainUnit();
+		MultiUnit mainUnit = createMainUnit();
 		mainUnit.setName(INamingConventions.MAIN_UNIT);
-		mainUnit.getSubUnits(false).add(rule);
+		mainUnit.getSubUnits().add(rule);
 		
 		for (Parameter ruleParameter : rule.getParameters()) {
 			Parameter unitParameter = EcoreUtil.copy(ruleParameter);
@@ -89,7 +91,7 @@ public class GraphPatternToHenshinConverter {
 		return HenshinFactory.eINSTANCE.createModule();
 	}
 	
-	protected Unit createMainUnit() {
+	protected MultiUnit createMainUnit() {
 		return HenshinFactory.eINSTANCE.createSequentialUnit();
 	}
 	

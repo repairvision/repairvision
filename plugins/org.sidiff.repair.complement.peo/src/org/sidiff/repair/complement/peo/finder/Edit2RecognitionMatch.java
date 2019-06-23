@@ -55,6 +55,10 @@ public class Edit2RecognitionMatch {
 		this.impact = impact;
 	}
 	
+	public Edit2RecognitionMatch(IRevision revision) {
+		this(revision, null);
+	}
+	
 	public List<Change> getChangeSet(RecognitionPattern recognitionPattern, IMatching matching) {
 		ArrayList<Change> changeSet = new ArrayList<>();
 		
@@ -226,7 +230,11 @@ public class Edit2RecognitionMatch {
 			return constantValue.equals(value);
 		} else {
 			// Variable value:
-			return !impact.getPositiveImpactAnalysis().onModify(addedObj, settingAttribute.getType());
+			if (impact != null) {
+				return !impact.getCurrentImpactAnalysis().onModify(addedObj, settingAttribute.getType());
+			} else {
+				return true;
+			}
 		}
 	}
 

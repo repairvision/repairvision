@@ -1,12 +1,16 @@
-package org.sidiff.completion.ui.handler;
+package org.sidiff.completion.ui.model;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.completion.ui.list.CompletionProposalList;
+import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
+import org.sidiff.repair.editrules.library.RulebaseLibrary;
+import org.sidiff.repair.editrules.library.RulebaseUtil;
 
 public class CompletionProposalListHandler extends AbstractHandler {
 	
@@ -24,8 +28,13 @@ public class CompletionProposalListHandler extends AbstractHandler {
 			// TEST:
 //			proposalList.addProposals(TESTDATA.getProposals());
 			
+			// TODO: Cache
+			List<Rule> editRules = RulebaseUtil.eLoadEditRules(
+					RulebaseLibrary.getRulebases(".*?Completion.*", DocumentType.getDocumentType(context.get(0))), false);
+			
 			proposalList.showPopupOnCursor();
-			System.out.println(context);
+			
+			new ModelCompletionProposalGenerator(editorAccess, editRules, context).generateProposals(proposalList);
 			
 			// TEST:
 //			proposalList.addProposals(TESTDATA.getProposals());

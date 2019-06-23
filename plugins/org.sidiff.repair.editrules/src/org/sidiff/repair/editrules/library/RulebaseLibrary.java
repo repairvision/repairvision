@@ -23,20 +23,26 @@ public class RulebaseLibrary {
 			String name = configurationElement.getAttribute("name");
 			
 			if ((name != null) && name.equals(rulebaseName)) {
-				String folderValue = configurationElement.getAttribute( "folder");
-				
-				String projectName = configurationElement.getContributor().getName();
-				Bundle bundle = Platform.getBundle(projectName);
-				
-				Enumeration<URL> urls = bundle.findEntries("/" + folderValue, "*", false);
-				
-				while((urls != null) && urls.hasMoreElements()) {
-					URL url = urls.nextElement();
-					String localFilePath = url.getFile();
+				collectEditRules(editRules, configurationElement);
+			}
+		}
+		
+		return editRules;
+	}
+	
+	public static List<URI> getRulebases(String rulebaseNameRegex, String documentType) {
+		List<URI> editRules = new ArrayList<>();
+		
+		for (IConfigurationElement configurationElement : Platform.getExtensionRegistry()
+				.getConfigurationElementsFor(EXTENSION_POINT_ID)) {
 
-					if (localFilePath.endsWith(".henshin")) {
-						editRules.add(URI.createPlatformPluginURI(projectName + localFilePath, true));
-					}
+			String name = configurationElement.getAttribute("name");
+			
+			if ((name != null) && name.matches(rulebaseNameRegex)) {
+				String documentTypeValue = configurationElement.getAttribute("document-type");
+				
+				if (documentTypeValue.equals(documentType)) {
+					collectEditRules(editRules, configurationElement);
 				}
 			}
 		}
@@ -53,25 +59,29 @@ public class RulebaseLibrary {
 			String documentTypeValue = configurationElement.getAttribute("document-type");
 			
 			if (documentTypeValue.equals(documentType)) {
-				String folderValue = configurationElement.getAttribute( "folder");
-				
-				String projectName = configurationElement.getContributor().getName();
-				Bundle bundle = Platform.getBundle(projectName);
-				
-				Enumeration<URL> urls = bundle.findEntries("/" + folderValue, "*", false);
-				
-				while(urls.hasMoreElements()) {
-					URL url = urls.nextElement();
-					String localFilePath = url.getFile();
-
-					if (localFilePath.endsWith(".henshin")) {
-						editRules.add(URI.createPlatformPluginURI(projectName + localFilePath, true));
-					}
-				}
+				collectEditRules(editRules, configurationElement);
 			}
 		}
 		
 		return editRules;
+	}
+
+	private static void collectEditRules(List<URI> editRules, IConfigurationElement configurationElement) {
+		String folderValue = configurationElement.getAttribute( "folder");
+		
+		String projectName = configurationElement.getContributor().getName();
+		Bundle bundle = Platform.getBundle(projectName);
+		
+		Enumeration<URL> urls = bundle.findEntries("/" + folderValue, "*", false);
+		
+		while(urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+			String localFilePath = url.getFile();
+
+			if (localFilePath.endsWith(".henshin")) {
+				editRules.add(URI.createPlatformPluginURI(projectName + localFilePath, true));
+			}
+		}
 	}
 	
 }
