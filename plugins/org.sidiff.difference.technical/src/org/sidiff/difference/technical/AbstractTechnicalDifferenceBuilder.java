@@ -263,8 +263,14 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 			return;
 		}
 
-		Object valueA = nodeA.eGet(attributeType);
-		Object valueB = nodeB.eGet(attributeType);
+		Object valueA = null;
+		Object valueB = null;
+		
+		try {
+			valueA = nodeA.eGet(attributeType);
+			valueB = nodeB.eGet(attributeType);
+		} catch(IllegalArgumentException e) {
+		}
 
 //		// Normalize null values of String attributes: We consider null to be
 //		// conceptually equal to ""
@@ -317,11 +323,13 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 			return;
 		}
 
-		AttributeValueChange change = factory.createAttributeValueChange();
-		change.setObjA(nodeA);
-		change.setObjB(nodeB);
-		change.setType(attributeType);
-		diff.getChanges().add(change);
+		if ((nodeA != null) && (nodeB != null)) {
+			AttributeValueChange change = factory.createAttributeValueChange();
+			change.setObjA(nodeA);
+			change.setObjB(nodeB);
+			change.setType(attributeType);
+			diff.getChanges().add(change);
+		}
 
 	}
 
@@ -355,13 +363,17 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 
 	@SuppressWarnings("unchecked")
 	private void addReferencedObjects(EReference refType, EObject src, Collection<EObject> referencedObjects) {
-		if (refType.isMany()) {
-			referencedObjects.addAll((Collection<EObject>) src.eGet(refType));
-		} else {
-			EObject obj = (EObject) src.eGet(refType);
-			if (obj != null) {
-				referencedObjects.add(obj);
+		try {
+			if (refType.isMany()) {
+				referencedObjects.addAll((Collection<EObject>) src.eGet(refType));
+			} else {
+				EObject obj = (EObject) src.eGet(refType);
+
+				if (obj != null) {
+					referencedObjects.add(obj);
+				}
 			}
+		} catch (IllegalArgumentException e) {
 		}
 	}
 
