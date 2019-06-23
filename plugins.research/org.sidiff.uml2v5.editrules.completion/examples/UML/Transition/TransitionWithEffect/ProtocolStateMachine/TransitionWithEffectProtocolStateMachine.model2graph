@@ -4,7 +4,7 @@ DEFINE : Parameter : VARnameEND : name : transition
 # Node : <node name> : <node type>
 FILTER : Node : .*? : Model
 FILTER : Node : .*? : PackageImport
-FILTER : Node : .*? : StateMachine
+FILTER : Node : containingStateMachine : StateMachine
 
 # Attribute : <node name> : <node type> : <attribute type>
 FILTER : Attribute : .*? : State : .*
