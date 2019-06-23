@@ -3,8 +3,10 @@ package org.sidiff.graphpattern.profile.henshin.util;
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 
 import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.Extendable;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 
@@ -31,5 +33,21 @@ public class HenshinProfileUtil {
 			}
 		}
 		return false;
+	}
+	
+	public static boolean isChange(Extendable element) {
+		return element.getStereotypes().contains(delete) || element.getStereotypes().contains(create);
+	}
+	
+	public static boolean isDelete(Extendable element) {
+		return element.getStereotypes().contains(delete);
+	}
+	
+	public static boolean isCreate(Extendable element) {
+		return element.getStereotypes().contains(create);
+	}
+	
+	public static boolean isContext(Extendable element) {
+		return element.getStereotypes().contains(preserve);
 	}
 }

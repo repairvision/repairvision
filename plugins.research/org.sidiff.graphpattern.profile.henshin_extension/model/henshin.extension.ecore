@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="henshin_extension" nsURI="http://www.eclipse.org/emf/2011/Henshin/Extension"
+    nsPrefix="henshin_extension">
+  <eClassifiers xsi:type="ecore:EClass" name="RuleExtension" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Rule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subgraphs" upperBound="-1"
+        eType="#//SubGraph" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubGraph" eSuperTypes="../../org.sidiff.graphpattern/model/graphpattern.ecore#//PatternElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subgraph" upperBound="-1"
+        eType="#//SubGraph" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//GraphElementExtension" eOpposite="#//GraphElementExtension/subgraphs"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphElementExtension" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subgraphs" upperBound="-1"
+        eType="#//SubGraph" eOpposite="#//SubGraph/elements"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeExtension" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Node #//GraphElementExtension"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EdgeExtension" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Edge #//GraphElementExtension"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeExtension" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Attribute #//GraphElementExtension"/>
+</ecore:EPackage>

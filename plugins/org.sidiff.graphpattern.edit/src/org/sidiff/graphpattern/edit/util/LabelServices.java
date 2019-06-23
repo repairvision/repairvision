@@ -75,6 +75,10 @@ public class LabelServices {
 		return getStereotypedPatternElementName(subGraph);
 	}
 	
+	public static String getLabel(PatternElement patternElement) {
+		return getStereotypedPatternElementName(patternElement);
+	}
+	
 	public static String getStereotypesLabel(List<Stereotype> stereotypes) {
 		
 		if (!stereotypes.isEmpty()) {

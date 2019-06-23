@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.profile.henshin.HenshinStereotypes;
 
 public class GraphPatternToHenshinConverterHandler extends AbstractHandler {
@@ -26,7 +27,7 @@ public class GraphPatternToHenshinConverterHandler extends AbstractHandler {
 					GraphPattern graphPattern = (GraphPattern) e;
 					
 					if (graphPattern.getStereotypes().contains(HenshinStereotypes.rule)) {
-						GraphPatternToHenshinConverter converter = new GraphPatternToHenshinConverter(graphPattern.getPattern());
+						GraphPatternToHenshinConverter converter = createConverter(graphPattern.getPattern());
 						
 						URI uri = bundle.eResource().getURI().trimFileExtension()
 								.appendSegment(graphPattern.getName().replaceAll("\\W", "")).appendFileExtension("henshin");
@@ -45,5 +46,8 @@ public class GraphPatternToHenshinConverterHandler extends AbstractHandler {
 		
 		return null;
 	}
-
+	
+	protected GraphPatternToHenshinConverter createConverter(Pattern editOperation) {
+		return new GraphPatternToHenshinConverter(editOperation);
+	}
 }

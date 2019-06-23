@@ -35,11 +35,11 @@ import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.SubGraph;
+import org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatch;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
 import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
 import org.sidiff.graphpattern.tools.editrules.csp.EditNodePatternDomain;
-import org.sidiff.graphpattern.tools.editrules.csp.EditRulePatternUtil;
 
 public class DecomposingEditRules extends AbstractHandler {
 
@@ -190,7 +190,7 @@ public class DecomposingEditRules extends AbstractHandler {
 				NodePattern complexSubGraphNode = basicToComplexMatch.get(basicSubGraphNode);
 				
 				// Store nodes:
-				if (EditRulePatternUtil.isChange(basicSubGraphNode)) {
+				if (HenshinProfileUtil.isChange(basicSubGraphNode)) {
 					changesSubGraph.getElements().add(complexSubGraphNode);
 				} else {
 					contextSubGraph.getElements().add(complexSubGraphNode);
@@ -200,7 +200,7 @@ public class DecomposingEditRules extends AbstractHandler {
 				for (EdgePattern basicSubGraphEdge : basicSubGraphNode.getOutgoings()) {
 					EdgePattern complexSubGraphEdge = getComplexEdgeMatch(basicSubGraphEdge, basicToComplexMatch);
 
-					if (EditRulePatternUtil.isChange(complexSubGraphEdge)) {
+					if (HenshinProfileUtil.isChange(complexSubGraphEdge)) {
 						changesSubGraph.getElements().add(complexSubGraphEdge);
 					} else {
 						contextSubGraph.getElements().add(complexSubGraphEdge);
@@ -236,16 +236,16 @@ public class DecomposingEditRules extends AbstractHandler {
 		int contextSize = 0;
 		
 		for (NodePattern basicNode : basicToComplexMatch.keySet()) {
-			if (EditRulePatternUtil.isChange(basicNode)) {
+			if (HenshinProfileUtil.isChange(basicNode)) {
 				++changeSize;
-			} else if (EditRulePatternUtil.isContext(basicNode)) {
+			} else if (HenshinProfileUtil.isContext(basicNode)) {
 				++contextSize;
 			}
 			
 			for (EdgePattern basicEdge : basicNode.getOutgoings()) {
-				if (EditRulePatternUtil.isChange(basicEdge)) {
+				if (HenshinProfileUtil.isChange(basicEdge)) {
 					++changeSize;
-				} else if (EditRulePatternUtil.isContext(basicEdge)) {
+				} else if (HenshinProfileUtil.isContext(basicEdge)) {
 					++contextSize;
 				}
 			}
@@ -280,7 +280,7 @@ public class DecomposingEditRules extends AbstractHandler {
 		for (NodePattern basicSubGraphNode : basicToComplexMatch.keySet()) {
 			
 			// Check change nodes of basic sub graph:
-			if (EditRulePatternUtil.isChange(basicSubGraphNode)) {
+			if (HenshinProfileUtil.isChange(basicSubGraphNode)) {
 				for (SubGraph complexSubGraph : editRuleGraph.getSubgraphs()) {
 					if (!ignoredSubGraphs.contains(complexSubGraph)) {
 						NodePattern complexSubGraphNode = basicToComplexMatch.get(basicSubGraphNode);
@@ -294,7 +294,7 @@ public class DecomposingEditRules extends AbstractHandler {
 			
 			// Check change edges of basic sub graph:
 			for (EdgePattern basicSubGraphEdge : basicSubGraphNode.getOutgoings()) {
-				if (EditRulePatternUtil.isChange(basicSubGraphEdge)) {
+				if (HenshinProfileUtil.isChange(basicSubGraphEdge)) {
 					for (SubGraph complexSubGraph : editRuleGraph.getSubgraphs()) {
 						if (!ignoredSubGraphs.contains(complexSubGraph)) {
 							EdgePattern complexSubGraphEdge = getComplexEdgeMatch(basicSubGraphEdge, basicToComplexMatch);
@@ -350,7 +350,7 @@ public class DecomposingEditRules extends AbstractHandler {
 	
 	private List<GraphElement> getSubGraphContext(SubGraph subGraph) {
 		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
-			if (EditRulePatternUtil.isContext(annotatedSubGraph)) {
+			if (HenshinProfileUtil.isContext(annotatedSubGraph)) {
 				return annotatedSubGraph.getElements();
 			}
 		}
@@ -359,7 +359,7 @@ public class DecomposingEditRules extends AbstractHandler {
 	
 	private List<GraphElement> getSubGraphChanges(SubGraph subGraph) {
 		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
-			if (EditRulePatternUtil.isChange(annotatedSubGraph)) {
+			if (HenshinProfileUtil.isChange(annotatedSubGraph)) {
 				return annotatedSubGraph.getElements();
 			}
 		}

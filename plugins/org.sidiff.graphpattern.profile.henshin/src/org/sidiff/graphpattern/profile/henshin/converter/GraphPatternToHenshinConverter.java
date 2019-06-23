@@ -24,7 +24,6 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.SequentialUnit;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.emf.henshin.model.resource.HenshinResource;
 import org.sidiff.common.henshin.INamingConventions;
@@ -37,24 +36,24 @@ import org.sidiff.graphpattern.attributes.JavaSciptParser;
 
 public class GraphPatternToHenshinConverter {
 
-	protected static final String SELF_VARIABLE = "value";
+	private static final String SELF_VARIABLE = "value";
 	
-	protected Module module;
+	private Module module;
 	
-	protected Unit unit;
+	private Unit unit;
 	
-	protected Rule rule;
+	private Rule rule;
 
-	protected Map<NodePattern, Node> lhsTrace = new HashMap<>();
+	private Map<NodePattern, Node> lhsTrace = new HashMap<>();
 	
-	protected Map<NodePattern, Node> rhsTrace = new HashMap<>();
+	private Map<NodePattern, Node> rhsTrace = new HashMap<>();
 	
-	protected Map<NodePattern, Node> acTrace = new HashMap<>(); 
+	private Map<NodePattern, Node> acTrace = new HashMap<>(); 
 	
 	public GraphPatternToHenshinConverter(Pattern editOperation) {
 		
 		// create rule:
-		this.rule = HenshinFactory.eINSTANCE.createRule();
+		this.rule = createRule();
 		this.rule.setName(editOperation.getName());
 		
 		for (GraphPattern editRule : editOperation.getGraphs()) {
@@ -62,9 +61,9 @@ public class GraphPatternToHenshinConverter {
 		}
 		
 		// create main unit:
-		SequentialUnit mainUnit = HenshinFactory.eINSTANCE.createSequentialUnit();
+		Unit mainUnit = createMainUnit();
 		mainUnit.setName(INamingConventions.MAIN_UNIT);
-		mainUnit.getSubUnits().add(rule);
+		mainUnit.getSubUnits(false).add(rule);
 		
 		for (Parameter ruleParameter : rule.getParameters()) {
 			Parameter unitParameter = EcoreUtil.copy(ruleParameter);
@@ -79,14 +78,66 @@ public class GraphPatternToHenshinConverter {
 		this.unit = mainUnit;
 		
 		// create module:
-		this.module = HenshinFactory.eINSTANCE.createModule();
+		this.module = createModule();
 		this.module.getUnits().add(getMainUnit());
 		this.module.getUnits().add(getRule());
 		this.module.setName(editOperation.getName());
 		this.module.setDescription((editOperation.getDescription() != null) ? editOperation.getDescription() : editOperation.getName());
 	}
 	
-	protected Rule convert(GraphPattern graph) {
+	protected Module createModule() {
+		return HenshinFactory.eINSTANCE.createModule();
+	}
+	
+	protected Unit createMainUnit() {
+		return HenshinFactory.eINSTANCE.createSequentialUnit();
+	}
+	
+	protected Rule createRule() {
+		return HenshinFactory.eINSTANCE.createRule();
+	}
+	
+	protected Parameter createParameter() {
+		return HenshinFactory.eINSTANCE.createParameter();
+	}
+	
+	protected Node createNode() {
+		return HenshinFactory.eINSTANCE.createNode();
+	}
+	
+	protected Edge createEdge() {
+		return HenshinFactory.eINSTANCE.createEdge();
+	}
+	
+	protected Attribute createAttribute() {
+		return HenshinFactory.eINSTANCE.createAttribute();
+	}
+	
+	public Rule getRule() {
+		return rule;
+	}
+	
+	public Unit getMainUnit() {
+		return unit;
+	}
+	
+	public Module getModule() {
+		return module;
+	}
+	
+	protected Map<NodePattern, Node> getAcTrace() {
+		return acTrace;
+	}
+	
+	protected Map<NodePattern, Node> getLhsTrace() {
+		return lhsTrace;
+	}
+	
+	protected Map<NodePattern, Node> getRhsTrace() {
+		return rhsTrace;
+	}
+	
+	private Rule convert(GraphPattern graph) {
 		NestedCondition nac = rule.getLhs().createNAC(null);
 		
 		// Nodes:
@@ -135,18 +186,6 @@ public class GraphPatternToHenshinConverter {
 		return rule;
 	}
 	
-	public Rule getRule() {
-		return rule;
-	}
-	
-	public Unit getMainUnit() {
-		return unit;
-	}
-	
-	public Module getModule() {
-		return module;
-	}
-	
 	public Resource getResource(URI uri) {
 		Resource resource = new HenshinResource(uri);
 		resource.getContents().add(getModule());
@@ -154,11 +193,11 @@ public class GraphPatternToHenshinConverter {
 		return resource;
 	}
 	
-	protected void convert(Rule rule, NodePattern pNode) {
+	private void convert(Rule rule, NodePattern pNode) {
 		
 		// LHS:
 		if (pNode.getStereotypes().contains(delete)  || pNode.getStereotypes().contains(preserve)) {
-			Node node = HenshinFactory.eINSTANCE.createNode();
+			Node node = createNode();
 			node.setName(pNode.getName());
 			node.setDescription(pNode.getDescription());
 			node.setType(pNode.getType());
@@ -169,7 +208,7 @@ public class GraphPatternToHenshinConverter {
 		
 		// RHS:
 		if (pNode.getStereotypes().contains(create)  || pNode.getStereotypes().contains(preserve)) {
-			Node node = HenshinFactory.eINSTANCE.createNode();
+			Node node = createNode();
 			node.setName(pNode.getName());
 			node.setDescription(pNode.getDescription());
 			node.setType(pNode.getType());
@@ -183,7 +222,7 @@ public class GraphPatternToHenshinConverter {
 		}
 	}
 	
-	protected void convert(Rule rule, AttributePattern pAttribute) {
+	private void convert(Rule rule, AttributePattern pAttribute) {
 		
 		// attribute condition:
 		if (!JavaSciptParser.isConstant(pAttribute.getValue())) {
@@ -204,7 +243,7 @@ public class GraphPatternToHenshinConverter {
 					attributeCondition.setConditionText(selfCondition);
 					
 					// create variable:
-					Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
+					Attribute attribute = createAttribute();
 					attribute.setType(pAttribute.getType());
 					attribute.setValue(selfVariable);
 					contextNode.getAttributes().add(attribute);
@@ -226,7 +265,7 @@ public class GraphPatternToHenshinConverter {
 					String selfCondition = pAttribute.getValue().replace(SELF_VARIABLE, selfVariable); // FIXME: refactor in AST
 
 					// create variable:
-					Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
+					Attribute attribute = createAttribute();
 					attribute.setType(pAttribute.getType());
 					attribute.setValue(selfVariable);
 					contextNode.getAttributes().add(attribute);
@@ -241,7 +280,7 @@ public class GraphPatternToHenshinConverter {
 
 		// LHS:
 		if (pAttribute.getStereotypes().contains(delete) || pAttribute.getStereotypes().contains(preserve)) {
-			Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
+			Attribute attribute = createAttribute();
 			attribute.setType(pAttribute.getType());
 			attribute.setValue(pAttribute.getValue());
 
@@ -251,7 +290,7 @@ public class GraphPatternToHenshinConverter {
 
 		// RHS:
 		if (pAttribute.getStereotypes().contains(create) || pAttribute.getStereotypes().contains(preserve)) {
-			Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
+			Attribute attribute = createAttribute();
 			attribute.setType(pAttribute.getType());
 			attribute.setValue(pAttribute.getValue());
 
@@ -260,11 +299,11 @@ public class GraphPatternToHenshinConverter {
 		}
 	}
 	
-	protected void convert(Rule rule, EdgePattern pEdge) {
+	private void convert(Rule rule, EdgePattern pEdge) {
 		
 		// LHS:
 		if (pEdge.getStereotypes().contains(delete) || pEdge.getStereotypes().contains(preserve)) {
-			Edge edge = HenshinFactory.eINSTANCE.createEdge();
+			Edge edge = createEdge();
 			edge.setType(pEdge.getType());
 			edge.setSource(lhsTrace.get(pEdge.getSource()));
 			edge.setTarget(lhsTrace.get(pEdge.getTarget()));
@@ -274,7 +313,7 @@ public class GraphPatternToHenshinConverter {
 		
 		// RHS:
 		if (pEdge.getStereotypes().contains(create) || pEdge.getStereotypes().contains(preserve)) {
-			Edge edge = HenshinFactory.eINSTANCE.createEdge();
+			Edge edge = createEdge();
 			edge.setType(pEdge.getType());
 			edge.setSource(rhsTrace.get(pEdge.getSource()));
 			edge.setTarget(rhsTrace.get(pEdge.getTarget()));
@@ -283,8 +322,8 @@ public class GraphPatternToHenshinConverter {
 		}
 	}
 	
-	protected void convert(NestedCondition ac, NodePattern pNode) {
-		Node node = HenshinFactory.eINSTANCE.createNode();
+	private void convert(NestedCondition ac, NodePattern pNode) {
+		Node node = createNode();
 		node.setName(pNode.getName());
 		node.setDescription(pNode.getDescription());
 		node.setType(pNode.getType());
@@ -293,10 +332,10 @@ public class GraphPatternToHenshinConverter {
 		acTrace.put(pNode, node);
 	}
 	
-	protected void convert(NestedCondition ac, AttributePattern pAttribute) {
+	private void convert(NestedCondition ac, AttributePattern pAttribute) {
 		
 		// create attribute:
-		Attribute attribute = HenshinFactory.eINSTANCE.createAttribute();
+		Attribute attribute = createAttribute();
 		attribute.setType(pAttribute.getType());
 		attribute.setValue(pAttribute.getValue());
 		
@@ -309,8 +348,8 @@ public class GraphPatternToHenshinConverter {
 		node.getAttributes().add(attribute);
 	}
 	
-	protected void convert(NestedCondition ac, EdgePattern pEdge) {
-		Edge edge = HenshinFactory.eINSTANCE.createEdge();
+	private void convert(NestedCondition ac, EdgePattern pEdge) {
+		Edge edge = createEdge();
 		edge.setType(pEdge.getType());
 		
 		Node sourceNode = acTrace.get(pEdge.getSource());
@@ -331,7 +370,7 @@ public class GraphPatternToHenshinConverter {
 		ac.getConclusion().getEdges().add(edge);
 	}
 	
-	protected Node createApplicationConditionContextNode(NestedCondition ac, NodePattern pNode) {
+	private Node createApplicationConditionContextNode(NestedCondition ac, NodePattern pNode) {
 		convert(ac, pNode);
 		Node node = acTrace.get(pNode);
 		ac.getMappings().add(lhsTrace.get(pNode), node);
@@ -339,12 +378,12 @@ public class GraphPatternToHenshinConverter {
 		return node;
 	}
 	
-	protected void convert(org.sidiff.graphpattern.Parameter pParameter) {
+	private void convert(org.sidiff.graphpattern.Parameter pParameter) {
 		addParameter(pParameter.getName(), pParameter.getDescription());
 	}
 	
-	protected void addParameter(String name, String description) {
-		Parameter parameter = HenshinFactory.eINSTANCE.createParameter();
+	private void addParameter(String name, String description) {
+		Parameter parameter = createParameter();
 		parameter.setName(name);
 		parameter.setDescription(description);
 		parameter.setKind(ParameterKind.IN);

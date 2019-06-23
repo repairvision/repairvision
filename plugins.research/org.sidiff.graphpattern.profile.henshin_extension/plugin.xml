@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.sidiff.graphpattern.tools.menu">
+         <command
+               commandId="org.sidiff.graphpattern.profile.henshin_extension.command.convert.tohenshinrule"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.sidiff.graphpattern.profile.henshin_extension.converter.GraphPatternToHenshinExtensionConverterHandler"
+            commandId="org.sidiff.graphpattern.profile.henshin_extension.command.convert.tohenshinrule">
+      </handler>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.sidiff.graphpattern.category"
+            id="org.sidiff.graphpattern.profile.henshin_extension.command.convert.tohenshinrule"
+            name="Convert Graph Pattern To (Extended) Henshin Rule">
+      </command>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated henshin.extension -->
+      <package
+            uri="http://www.eclipse.org/emf/2011/Henshin/Extension"
+            class="org.sidiff.graphpattern.profile.henshin_extension.HenshinExtensionPackage"
+            genModel="model/henshin.extension.genmodel"/>
+   </extension>
+
+</plugin>
