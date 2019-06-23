@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.impact;
+package org.sidiff.validation.constraint.impact.repair;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.consistency.common.emf.MetaModelUtil;
-import org.sidiff.validation.constraint.impact.index.RepairActionIndex;
+import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 

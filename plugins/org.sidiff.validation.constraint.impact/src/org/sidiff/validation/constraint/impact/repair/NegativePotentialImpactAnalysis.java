@@ -1,8 +1,7 @@
-package org.sidiff.validation.constraint.impact;
+package org.sidiff.validation.constraint.impact.repair;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.validation.constraint.impact.index.RepairActionIndex;
 
 public class NegativePotentialImpactAnalysis extends PositivePotentialImpactAnalysis {
 

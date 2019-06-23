@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.impact.index;
+package org.sidiff.validation.constraint.impact.repair;
 
 import java.util.ArrayList;
 import java.util.Collection;
