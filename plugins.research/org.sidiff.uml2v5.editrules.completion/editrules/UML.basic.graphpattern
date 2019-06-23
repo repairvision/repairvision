@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="ASCII"?>
+<graphpattern:Bundle xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:graphpattern="http://www.sidiff.org/graphpattern/1.0" xmi:id="_iW9j8JQaEemc6r1VFwT6vg" name="UMLBundle">
+  <patterns xmi:id="_iW9j8ZQaEemc6r1VFwT6vg" name="generated.fragments">
+    <subpatterns xmi:id="_iW9j8pQaEemc6r1VFwT6vg" name="TransitionInRegion">
+      <graphs xmi:id="_iW9j85QaEemc6r1VFwT6vg" name="TransitionInRegion">
+        <nodes xmi:id="_iW9j9JQaEemc6r1VFwT6vg" name="Region" incomings="_iW9j-5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9j9ZQaEemc6r1VFwT6vg" target="_iW9j-JQaEemc6r1VFwT6vg" opposite="_iW9j-5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/transition"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+        </nodes>
+        <nodes xmi:id="_iW9j9pQaEemc6r1VFwT6vg" name="target" incomings="_iW9j-pQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+        </nodes>
+        <nodes xmi:id="_iW9j95QaEemc6r1VFwT6vg" name="source" incomings="_iW9j-ZQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+        </nodes>
+        <nodes xmi:id="_iW9j-JQaEemc6r1VFwT6vg" name="transition" incomings="_iW9j9ZQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9j-ZQaEemc6r1VFwT6vg" target="_iW9j95QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+          </outgoings>
+          <outgoings xmi:id="_iW9j-pQaEemc6r1VFwT6vg" target="_iW9j9pQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+          </outgoings>
+          <outgoings xmi:id="_iW9j-5QaEemc6r1VFwT6vg" target="_iW9j9JQaEemc6r1VFwT6vg" opposite="_iW9j9ZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/container"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9j_JQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9j_ZQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9j_pQaEemc6r1VFwT6vg" name="ActivityInTransition">
+      <graphs xmi:id="_iW9j_5QaEemc6r1VFwT6vg" name="ActivityInTransition">
+        <nodes xmi:id="_iW9kAJQaEemc6r1VFwT6vg" name="transition">
+          <outgoings xmi:id="_iW9kAZQaEemc6r1VFwT6vg" target="_iW9kA5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kApQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kA5QaEemc6r1VFwT6vg" name="transitionActivity" incomings="_iW9kAZQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Activity"/>
+          <attributes xmi:id="_iW9kBJQaEemc6r1VFwT6vg" value="name + &quot;Activity&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kBZQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kBpQaEemc6r1VFwT6vg" name="FunctionBehaviorInTransition">
+      <graphs xmi:id="_iW9kB5QaEemc6r1VFwT6vg" name="FunctionBehaviorInTransition">
+        <nodes xmi:id="_iW9kCJQaEemc6r1VFwT6vg" name="transition">
+          <outgoings xmi:id="_iW9kCZQaEemc6r1VFwT6vg" target="_iW9kC5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kCpQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kC5QaEemc6r1VFwT6vg" name="transitionFunctionBehavior" incomings="_iW9kCZQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//FunctionBehavior"/>
+          <attributes xmi:id="_iW9kDJQaEemc6r1VFwT6vg" value="name + &quot;FunctionBehavior&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kDZQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kDpQaEemc6r1VFwT6vg" name="InteractionInTransition">
+      <graphs xmi:id="_iW9kD5QaEemc6r1VFwT6vg" name="InteractionInTransition">
+        <nodes xmi:id="_iW9kEJQaEemc6r1VFwT6vg" name="transition">
+          <outgoings xmi:id="_iW9kEZQaEemc6r1VFwT6vg" target="_iW9kE5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kEpQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kE5QaEemc6r1VFwT6vg" name="transitionInteraction" incomings="_iW9kEZQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
+          <attributes xmi:id="_iW9kFJQaEemc6r1VFwT6vg" value="name + &quot;Interaction&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kFZQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kFpQaEemc6r1VFwT6vg" name="OpaqueBehaviorInTransition">
+      <graphs xmi:id="_iW9kF5QaEemc6r1VFwT6vg" name="OpaqueBehaviorInTransition">
+        <nodes xmi:id="_iW9kGJQaEemc6r1VFwT6vg" name="transition">
+          <outgoings xmi:id="_iW9kGZQaEemc6r1VFwT6vg" target="_iW9kG5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kGpQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kG5QaEemc6r1VFwT6vg" name="transitionOpaqueBehavior" incomings="_iW9kGZQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//OpaqueBehavior"/>
+          <attributes xmi:id="_iW9kHJQaEemc6r1VFwT6vg" value="name + &quot;OpaqueBehavior&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kHZQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kHpQaEemc6r1VFwT6vg" name="ProtocolStateMachineAndRegionInTransition">
+      <graphs xmi:id="_iW9kH5QaEemc6r1VFwT6vg" name="ProtocolStateMachineAndRegionInTransition">
+        <nodes xmi:id="_iW9kIJQaEemc6r1VFwT6vg" name="transition">
+          <outgoings xmi:id="_iW9kIZQaEemc6r1VFwT6vg" target="_iW9kI5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kIpQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kI5QaEemc6r1VFwT6vg" name="transitionProtocolStateMachine" incomings="_iW9kIZQaEemc6r1VFwT6vg _iW9kJ5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kJJQaEemc6r1VFwT6vg" target="_iW9kJpQaEemc6r1VFwT6vg" opposite="_iW9kJ5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StateMachine/region"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//ProtocolStateMachine"/>
+          <attributes xmi:id="_iW9kJZQaEemc6r1VFwT6vg" value="name + &quot;ProtocolStateMachine&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kJpQaEemc6r1VFwT6vg" name="transitionRegion" incomings="_iW9kJJQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kJ5QaEemc6r1VFwT6vg" target="_iW9kI5QaEemc6r1VFwT6vg" opposite="_iW9kJJQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/stateMachine"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kKJQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kKZQaEemc6r1VFwT6vg" name="RegionInProtocolStateMachine">
+      <graphs xmi:id="_iW9kKpQaEemc6r1VFwT6vg" name="RegionInProtocolStateMachine">
+        <nodes xmi:id="_iW9kK5QaEemc6r1VFwT6vg" name="transitionProtocolStateMachine" incomings="_iW9kL5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kLJQaEemc6r1VFwT6vg" target="_iW9kLpQaEemc6r1VFwT6vg" opposite="_iW9kL5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StateMachine/region"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//ProtocolStateMachine"/>
+          <attributes xmi:id="_iW9kLZQaEemc6r1VFwT6vg" value="name + &quot;ProtocolStateMachine&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kLpQaEemc6r1VFwT6vg" name="transitionRegion" incomings="_iW9kLJQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kL5QaEemc6r1VFwT6vg" target="_iW9kK5QaEemc6r1VFwT6vg" opposite="_iW9kLJQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/stateMachine"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kMJQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kMZQaEemc6r1VFwT6vg" name="RegionAndStateMachineInTransition">
+      <graphs xmi:id="_iW9kMpQaEemc6r1VFwT6vg" name="RegionAndStateMachineInTransition">
+        <nodes xmi:id="_iW9kM5QaEemc6r1VFwT6vg" name="transition">
+          <outgoings xmi:id="_iW9kNJQaEemc6r1VFwT6vg" target="_iW9kNpQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kNZQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kNpQaEemc6r1VFwT6vg" name="transitionStateMachine" incomings="_iW9kNJQaEemc6r1VFwT6vg _iW9kOpQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kN5QaEemc6r1VFwT6vg" target="_iW9kOZQaEemc6r1VFwT6vg" opposite="_iW9kOpQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StateMachine/region"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StateMachine"/>
+          <attributes xmi:id="_iW9kOJQaEemc6r1VFwT6vg" value="name + &quot;StateMachine&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kOZQaEemc6r1VFwT6vg" name="transitionRegion" incomings="_iW9kN5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kOpQaEemc6r1VFwT6vg" target="_iW9kNpQaEemc6r1VFwT6vg" opposite="_iW9kN5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/stateMachine"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kO5QaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kPJQaEemc6r1VFwT6vg" name="RegionInStateMachine">
+      <graphs xmi:id="_iW9kPZQaEemc6r1VFwT6vg" name="RegionInStateMachine">
+        <nodes xmi:id="_iW9kPpQaEemc6r1VFwT6vg" name="transitionStateMachine" incomings="_iW9kQpQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kP5QaEemc6r1VFwT6vg" target="_iW9kQZQaEemc6r1VFwT6vg" opposite="_iW9kQpQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StateMachine/region"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StateMachine"/>
+          <attributes xmi:id="_iW9kQJQaEemc6r1VFwT6vg" value="name + &quot;StateMachine&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kQZQaEemc6r1VFwT6vg" name="transitionRegion" incomings="_iW9kP5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kQpQaEemc6r1VFwT6vg" target="_iW9kPpQaEemc6r1VFwT6vg" opposite="_iW9kP5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/stateMachine"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kQ5QaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kRJQaEemc6r1VFwT6vg" name="ConstraintInTransition">
+      <graphs xmi:id="_iW9kRZQaEemc6r1VFwT6vg" name="ConstraintInTransition">
+        <nodes xmi:id="_iW9kRpQaEemc6r1VFwT6vg" name="transition" incomings="_iW9kS5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kR5QaEemc6r1VFwT6vg" target="_iW9kSpQaEemc6r1VFwT6vg" opposite="_iW9kS5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
+          </outgoings>
+          <outgoings xmi:id="_iW9kSJQaEemc6r1VFwT6vg" target="_iW9kSpQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/guard"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kSZQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kSpQaEemc6r1VFwT6vg" name="transitionConstraint" incomings="_iW9kR5QaEemc6r1VFwT6vg _iW9kSJQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kS5QaEemc6r1VFwT6vg" target="_iW9kRpQaEemc6r1VFwT6vg" opposite="_iW9kR5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Constraint/context"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Constraint"/>
+          <attributes xmi:id="_iW9kTJQaEemc6r1VFwT6vg" value="name + &quot;Constraint&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kTZQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kTpQaEemc6r1VFwT6vg" name="DurationConstraintInTransition">
+      <graphs xmi:id="_iW9kT5QaEemc6r1VFwT6vg" name="DurationConstraintInTransition">
+        <nodes xmi:id="_iW9kUJQaEemc6r1VFwT6vg" name="transition" incomings="_iW9kVZQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kUZQaEemc6r1VFwT6vg" target="_iW9kVJQaEemc6r1VFwT6vg" opposite="_iW9kVZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
+          </outgoings>
+          <outgoings xmi:id="_iW9kUpQaEemc6r1VFwT6vg" target="_iW9kVJQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/guard"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kU5QaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kVJQaEemc6r1VFwT6vg" name="transitionDurationConstraint" incomings="_iW9kUZQaEemc6r1VFwT6vg _iW9kUpQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kVZQaEemc6r1VFwT6vg" target="_iW9kUJQaEemc6r1VFwT6vg" opposite="_iW9kUZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Constraint/context"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//DurationConstraint"/>
+          <attributes xmi:id="_iW9kVpQaEemc6r1VFwT6vg" value="name + &quot;DurationConstraint&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kV5QaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kWJQaEemc6r1VFwT6vg" name="InteractionConstraintInTransition">
+      <graphs xmi:id="_iW9kWZQaEemc6r1VFwT6vg" name="InteractionConstraintInTransition">
+        <nodes xmi:id="_iW9kWpQaEemc6r1VFwT6vg" name="transition" incomings="_iW9kX5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kW5QaEemc6r1VFwT6vg" target="_iW9kXpQaEemc6r1VFwT6vg" opposite="_iW9kX5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
+          </outgoings>
+          <outgoings xmi:id="_iW9kXJQaEemc6r1VFwT6vg" target="_iW9kXpQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/guard"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kXZQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kXpQaEemc6r1VFwT6vg" name="transitionInteractionConstraint" incomings="_iW9kW5QaEemc6r1VFwT6vg _iW9kXJQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kX5QaEemc6r1VFwT6vg" target="_iW9kWpQaEemc6r1VFwT6vg" opposite="_iW9kW5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Constraint/context"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionConstraint"/>
+          <attributes xmi:id="_iW9kYJQaEemc6r1VFwT6vg" value="name + &quot;InteractionConstraint&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kYZQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kYpQaEemc6r1VFwT6vg" name="IntervalConstraintInTransition">
+      <graphs xmi:id="_iW9kY5QaEemc6r1VFwT6vg" name="IntervalConstraintInTransition">
+        <nodes xmi:id="_iW9kZJQaEemc6r1VFwT6vg" name="transition" incomings="_iW9kaZQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kZZQaEemc6r1VFwT6vg" target="_iW9kaJQaEemc6r1VFwT6vg" opposite="_iW9kaZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
+          </outgoings>
+          <outgoings xmi:id="_iW9kZpQaEemc6r1VFwT6vg" target="_iW9kaJQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/guard"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kZ5QaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kaJQaEemc6r1VFwT6vg" name="transitionIntervalConstraint" incomings="_iW9kZZQaEemc6r1VFwT6vg _iW9kZpQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kaZQaEemc6r1VFwT6vg" target="_iW9kZJQaEemc6r1VFwT6vg" opposite="_iW9kZZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Constraint/context"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//IntervalConstraint"/>
+          <attributes xmi:id="_iW9kapQaEemc6r1VFwT6vg" value="name + &quot;IntervalConstraint&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9ka5QaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kbJQaEemc6r1VFwT6vg" name="TimeConstraintInTransition">
+      <graphs xmi:id="_iW9kbZQaEemc6r1VFwT6vg" name="TimeConstraintInTransition">
+        <nodes xmi:id="_iW9kbpQaEemc6r1VFwT6vg" name="transition" incomings="_iW9kc5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kb5QaEemc6r1VFwT6vg" target="_iW9kcpQaEemc6r1VFwT6vg" opposite="_iW9kc5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
+          </outgoings>
+          <outgoings xmi:id="_iW9kcJQaEemc6r1VFwT6vg" target="_iW9kcpQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/guard"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kcZQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kcpQaEemc6r1VFwT6vg" name="transitionTimeConstraint" incomings="_iW9kb5QaEemc6r1VFwT6vg _iW9kcJQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kc5QaEemc6r1VFwT6vg" target="_iW9kbpQaEemc6r1VFwT6vg" opposite="_iW9kb5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Constraint/context"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeConstraint"/>
+          <attributes xmi:id="_iW9kdJQaEemc6r1VFwT6vg" value="name + &quot;TimeConstraint&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kdZQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kdpQaEemc6r1VFwT6vg" name="AnyReceiveEventAndTriggerInModelAndTransition">
+      <graphs xmi:id="_iW9kd5QaEemc6r1VFwT6vg" name="AnyReceiveEventAndTriggerInModelAndTransition">
+        <nodes xmi:id="_iW9keJQaEemc6r1VFwT6vg" name="Container">
+          <outgoings xmi:id="_iW9keZQaEemc6r1VFwT6vg" target="_iW9kfZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+        </nodes>
+        <nodes xmi:id="_iW9kepQaEemc6r1VFwT6vg" name="transition">
+          <outgoings xmi:id="_iW9ke5QaEemc6r1VFwT6vg" target="_iW9kf5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kfJQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kfZQaEemc6r1VFwT6vg" name="transitionAnyReveiveEvent" incomings="_iW9keZQaEemc6r1VFwT6vg _iW9kgJQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//AnyReceiveEvent"/>
+          <attributes xmi:id="_iW9kfpQaEemc6r1VFwT6vg" value="name + &quot;AnyReveiveEvent&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kf5QaEemc6r1VFwT6vg" name="transitionTrigger" incomings="_iW9ke5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kgJQaEemc6r1VFwT6vg" target="_iW9kfZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger/event"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger"/>
+          <attributes xmi:id="_iW9kgZQaEemc6r1VFwT6vg" value="name + &quot;Trigger&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kgpQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kg5QaEemc6r1VFwT6vg" name="AnyReceiveEventInModel">
+      <graphs xmi:id="_iW9khJQaEemc6r1VFwT6vg" name="AnyReceiveEventInModel">
+        <nodes xmi:id="_iW9khZQaEemc6r1VFwT6vg" name="Container">
+          <outgoings xmi:id="_iW9khpQaEemc6r1VFwT6vg" target="_iW9kh5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+        </nodes>
+        <nodes xmi:id="_iW9kh5QaEemc6r1VFwT6vg" name="transitionAnyReveiveEvent" incomings="_iW9khpQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//AnyReceiveEvent"/>
+          <attributes xmi:id="_iW9kiJQaEemc6r1VFwT6vg" value="name + &quot;AnyReveiveEvent&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kiZQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kipQaEemc6r1VFwT6vg" name="CallEventAndTriggerInModelAndTransition">
+      <graphs xmi:id="_iW9ki5QaEemc6r1VFwT6vg" name="CallEventAndTriggerInModelAndTransition">
+        <nodes xmi:id="_iW9kjJQaEemc6r1VFwT6vg" name="Container">
+          <outgoings xmi:id="_iW9kjZQaEemc6r1VFwT6vg" target="_iW9kkZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+        </nodes>
+        <nodes xmi:id="_iW9kjpQaEemc6r1VFwT6vg" name="transition">
+          <outgoings xmi:id="_iW9kj5QaEemc6r1VFwT6vg" target="_iW9kk5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kkJQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kkZQaEemc6r1VFwT6vg" name="transitionCallEvent" incomings="_iW9kjZQaEemc6r1VFwT6vg _iW9klJQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//CallEvent"/>
+          <attributes xmi:id="_iW9kkpQaEemc6r1VFwT6vg" value="name + &quot;CallEvent&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kk5QaEemc6r1VFwT6vg" name="transitionTrigger" incomings="_iW9kj5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9klJQaEemc6r1VFwT6vg" target="_iW9kkZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger/event"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger"/>
+          <attributes xmi:id="_iW9klZQaEemc6r1VFwT6vg" value="name + &quot;Trigger&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9klpQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kl5QaEemc6r1VFwT6vg" name="ClassInModel">
+      <graphs xmi:id="_iW9kmJQaEemc6r1VFwT6vg" name="ClassInModel">
+        <nodes xmi:id="_iW9kmZQaEemc6r1VFwT6vg" name="Container">
+          <outgoings xmi:id="_iW9kmpQaEemc6r1VFwT6vg" target="_iW9km5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+        </nodes>
+        <nodes xmi:id="_iW9km5QaEemc6r1VFwT6vg" name="containingClass" incomings="_iW9kmpQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </nodes>
+      </graphs>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9knJQaEemc6r1VFwT6vg" name="OperationInClass">
+      <graphs xmi:id="_iW9knZQaEemc6r1VFwT6vg" name="OperationInClass">
+        <nodes xmi:id="_iW9knpQaEemc6r1VFwT6vg" name="containingClass" incomings="_iW9koZQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kn5QaEemc6r1VFwT6vg" target="_iW9koJQaEemc6r1VFwT6vg" opposite="_iW9koZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </nodes>
+        <nodes xmi:id="_iW9koJQaEemc6r1VFwT6vg" name="transition" incomings="_iW9kn5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9koZQaEemc6r1VFwT6vg" target="_iW9knpQaEemc6r1VFwT6vg" opposite="_iW9kn5QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+          <attributes xmi:id="_iW9kopQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9ko5QaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kpJQaEemc6r1VFwT6vg" name="CallEventInModel">
+      <graphs xmi:id="_iW9kpZQaEemc6r1VFwT6vg" name="CallEventInModel">
+        <nodes xmi:id="_iW9kppQaEemc6r1VFwT6vg" name="Container">
+          <outgoings xmi:id="_iW9kp5QaEemc6r1VFwT6vg" target="_iW9kqJQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+        </nodes>
+        <nodes xmi:id="_iW9kqJQaEemc6r1VFwT6vg" name="transitionCallEvent" incomings="_iW9kp5QaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//CallEvent"/>
+          <attributes xmi:id="_iW9kqZQaEemc6r1VFwT6vg" value="name + &quot;CallEvent&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kqpQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kq5QaEemc6r1VFwT6vg" name="ChangeEventAndTriggerInModelAndTransition">
+      <graphs xmi:id="_iW9krJQaEemc6r1VFwT6vg" name="ChangeEventAndTriggerInModelAndTransition">
+        <nodes xmi:id="_iW9krZQaEemc6r1VFwT6vg" name="Container">
+          <outgoings xmi:id="_iW9krpQaEemc6r1VFwT6vg" target="_iW9ktZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+        </nodes>
+        <nodes xmi:id="_iW9kr5QaEemc6r1VFwT6vg" name="transition">
+          <outgoings xmi:id="_iW9ksJQaEemc6r1VFwT6vg" target="_iW9kspQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9ksZQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kspQaEemc6r1VFwT6vg" name="transitionTrigger" incomings="_iW9ksJQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9ks5QaEemc6r1VFwT6vg" target="_iW9ktZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger/event"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger"/>
+          <attributes xmi:id="_iW9ktJQaEemc6r1VFwT6vg" value="name + &quot;Trigger&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9ktZQaEemc6r1VFwT6vg" name="transitionChangeEvent" incomings="_iW9krpQaEemc6r1VFwT6vg _iW9ks5QaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//ChangeEvent"/>
+          <attributes xmi:id="_iW9ktpQaEemc6r1VFwT6vg" value="name + &quot;ChangeEvent&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kt5QaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kuJQaEemc6r1VFwT6vg" name="ChangeEventInModel">
+      <graphs xmi:id="_iW9kuZQaEemc6r1VFwT6vg" name="ChangeEventInModel">
+        <nodes xmi:id="_iW9kupQaEemc6r1VFwT6vg" name="Container">
+          <outgoings xmi:id="_iW9ku5QaEemc6r1VFwT6vg" target="_iW9kvJQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+        </nodes>
+        <nodes xmi:id="_iW9kvJQaEemc6r1VFwT6vg" name="transitionChangeEvent" incomings="_iW9ku5QaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//ChangeEvent"/>
+          <attributes xmi:id="_iW9kvZQaEemc6r1VFwT6vg" value="name + &quot;ChangeEvent&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kvpQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kv5QaEemc6r1VFwT6vg" name="SignalEventAndTriggerInModelAndTransition">
+      <graphs xmi:id="_iW9kwJQaEemc6r1VFwT6vg" name="SignalEventAndTriggerInModelAndTransition">
+        <nodes xmi:id="_iW9kwZQaEemc6r1VFwT6vg" name="Container">
+          <outgoings xmi:id="_iW9kwpQaEemc6r1VFwT6vg" target="_iW9kyZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+        </nodes>
+        <nodes xmi:id="_iW9kw5QaEemc6r1VFwT6vg" name="transition">
+          <outgoings xmi:id="_iW9kxJQaEemc6r1VFwT6vg" target="_iW9kxpQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9kxZQaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kxpQaEemc6r1VFwT6vg" name="transitionTrigger" incomings="_iW9kxJQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kx5QaEemc6r1VFwT6vg" target="_iW9kyZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger/event"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger"/>
+          <attributes xmi:id="_iW9kyJQaEemc6r1VFwT6vg" value="name + &quot;Trigger&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kyZQaEemc6r1VFwT6vg" name="transitionSignalEvent" incomings="_iW9kwpQaEemc6r1VFwT6vg _iW9kx5QaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9kypQaEemc6r1VFwT6vg" target="_iW9kzJQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//SignalEvent/signal"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//SignalEvent"/>
+          <attributes xmi:id="_iW9ky5QaEemc6r1VFwT6vg" value="name + &quot;SignalEvent&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9kzJQaEemc6r1VFwT6vg" name="transitionSignal" incomings="_iW9kypQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Signal"/>
+          <attributes xmi:id="_iW9kzZQaEemc6r1VFwT6vg" value="name + &quot;Signal&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9kzpQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9kz5QaEemc6r1VFwT6vg" name="SignalEventInModel">
+      <graphs xmi:id="_iW9k0JQaEemc6r1VFwT6vg" name="SignalEventInModel">
+        <nodes xmi:id="_iW9k0ZQaEemc6r1VFwT6vg" name="Container">
+          <outgoings xmi:id="_iW9k0pQaEemc6r1VFwT6vg" target="_iW9k05QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+        </nodes>
+        <nodes xmi:id="_iW9k05QaEemc6r1VFwT6vg" name="transitionSignalEvent" incomings="_iW9k0pQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9k1JQaEemc6r1VFwT6vg" target="_iW9k1pQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//SignalEvent/signal"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//SignalEvent"/>
+          <attributes xmi:id="_iW9k1ZQaEemc6r1VFwT6vg" value="name + &quot;SignalEvent&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9k1pQaEemc6r1VFwT6vg" name="transitionSignal" incomings="_iW9k1JQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Signal"/>
+          <attributes xmi:id="_iW9k15QaEemc6r1VFwT6vg" value="name + &quot;Signal&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9k2JQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9k2ZQaEemc6r1VFwT6vg" name="TimeEventAndTimeExpressionAndTriggerInModelAndTransition">
+      <graphs xmi:id="_iW9k2pQaEemc6r1VFwT6vg" name="TimeEventAndTimeExpressionAndTriggerInModelAndTransition">
+        <nodes xmi:id="_iW9k25QaEemc6r1VFwT6vg" name="Container">
+          <outgoings xmi:id="_iW9k3JQaEemc6r1VFwT6vg" target="_iW9k4JQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+        </nodes>
+        <nodes xmi:id="_iW9k3ZQaEemc6r1VFwT6vg" name="transition">
+          <outgoings xmi:id="_iW9k3pQaEemc6r1VFwT6vg" target="_iW9k5ZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+          <attributes xmi:id="_iW9k35QaEemc6r1VFwT6vg" value="name">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9k4JQaEemc6r1VFwT6vg" name="transitionTimeEvent" incomings="_iW9k3JQaEemc6r1VFwT6vg _iW9k5pQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9k4ZQaEemc6r1VFwT6vg" target="_iW9k45QaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeEvent/when"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeEvent"/>
+          <attributes xmi:id="_iW9k4pQaEemc6r1VFwT6vg" value="name + &quot;TimeEvent&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9k45QaEemc6r1VFwT6vg" name="transitionEventTime" incomings="_iW9k4ZQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeExpression"/>
+          <attributes xmi:id="_iW9k5JQaEemc6r1VFwT6vg" value="name + &quot;EventTime&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9k5ZQaEemc6r1VFwT6vg" name="transitiontrigger" incomings="_iW9k3pQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9k5pQaEemc6r1VFwT6vg" target="_iW9k4JQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger/event"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Trigger"/>
+          <attributes xmi:id="_iW9k55QaEemc6r1VFwT6vg" value="name + &quot;trigger&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9k6JQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9k6ZQaEemc6r1VFwT6vg" name="TimeEventAndTimeExpressionInModel">
+      <graphs xmi:id="_iW9k6pQaEemc6r1VFwT6vg" name="TimeEventAndTimeExpressionInModel">
+        <nodes xmi:id="_iW9k65QaEemc6r1VFwT6vg" name="Container">
+          <outgoings xmi:id="_iW9k7JQaEemc6r1VFwT6vg" target="_iW9k7ZQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Model"/>
+        </nodes>
+        <nodes xmi:id="_iW9k7ZQaEemc6r1VFwT6vg" name="transitionTimeEvent" incomings="_iW9k7JQaEemc6r1VFwT6vg">
+          <outgoings xmi:id="_iW9k7pQaEemc6r1VFwT6vg" target="_iW9k8JQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeEvent/when"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeEvent"/>
+          <attributes xmi:id="_iW9k75QaEemc6r1VFwT6vg" value="name + &quot;TimeEvent&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9k8JQaEemc6r1VFwT6vg" name="transitionEventTime" incomings="_iW9k7pQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeExpression"/>
+          <attributes xmi:id="_iW9k8ZQaEemc6r1VFwT6vg" value="name + &quot;EventTime&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9k8pQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+    <subpatterns xmi:id="_iW9k85QaEemc6r1VFwT6vg" name="TimeExpressionInTimeEvent">
+      <graphs xmi:id="_iW9k9JQaEemc6r1VFwT6vg" name="TimeExpressionInTimeEvent">
+        <nodes xmi:id="_iW9k9ZQaEemc6r1VFwT6vg" name="transitionTimeEvent">
+          <outgoings xmi:id="_iW9k9pQaEemc6r1VFwT6vg" target="_iW9k-JQaEemc6r1VFwT6vg">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeEvent/when"/>
+          </outgoings>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeEvent"/>
+          <attributes xmi:id="_iW9k95QaEemc6r1VFwT6vg" value="name + &quot;TimeEvent&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+        <nodes xmi:id="_iW9k-JQaEemc6r1VFwT6vg" name="transitionEventTime" incomings="_iW9k9pQaEemc6r1VFwT6vg">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeExpression"/>
+          <attributes xmi:id="_iW9k-ZQaEemc6r1VFwT6vg" value="name + &quot;EventTime&quot;">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+          </attributes>
+        </nodes>
+      </graphs>
+      <parameters xmi:id="_iW9k-pQaEemc6r1VFwT6vg" name="name"/>
+    </subpatterns>
+  </patterns>
+</graphpattern:Bundle>
