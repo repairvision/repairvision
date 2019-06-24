@@ -19,8 +19,8 @@ import org.sidiff.csp.solver.impl.Variable;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.tools.csp.GraphPatternMatch;
 import org.sidiff.graphpattern.tools.csp.AbstractGraphPatternMatchings;
+import org.sidiff.graphpattern.tools.editrules.csp.MinGraphEditDistanceMatch;
 import org.sidiff.graphpattern.tools.editrules.csp.MinGraphEditDistanceMatchings;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
 import org.sidiff.graphpattern.util.GraphPatternUtil;
@@ -82,7 +82,7 @@ public class TransformationEditRuleGenerator {
 					int counter = 0;
 					int count = matchings.getMatches().size();
 
-					for (GraphPatternMatch match : matchings.getMatches()) {
+					for (MinGraphEditDistanceMatch match : matchings.getMatches()) {
 						GraphPatternEditRuleGenerator editRuleGenerator = new GraphPatternEditRuleGenerator(
 								matchings.getSubjectGraph(), 
 								matchings.getValueGraph(),
