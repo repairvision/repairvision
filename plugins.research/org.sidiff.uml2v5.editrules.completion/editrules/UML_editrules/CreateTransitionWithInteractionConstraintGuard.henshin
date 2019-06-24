@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmlns:henshin_extension="http://www.eclipse.org/emf/2011/Henshin/Extension" xmi:id="_Ty54EJagEemjVtXo_90URQ" name="Create: TransitionWithInteractionConstraintGuard" description="Create: TransitionWithInteractionConstraintGuard">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Ty54EZagEemjVtXo_90URQ" name="mainUnit" subUnits="_Ty54HpagEemjVtXo_90URQ">
+    <parameters xmi:id="_Ty54EpagEemjVtXo_90URQ" name="region" kind="IN"/>
+    <parameters xmi:id="_Ty54E5agEemjVtXo_90URQ" name="transition" kind="IN"/>
+    <parameters xmi:id="_Ty54FJagEemjVtXo_90URQ" name="name" kind="IN"/>
+    <parameters xmi:id="_Ty54FZagEemjVtXo_90URQ" name="transitionInteractionConstraint" kind="IN"/>
+    <parameters xmi:id="_Ty54FpagEemjVtXo_90URQ" name="source" kind="IN"/>
+    <parameters xmi:id="_Ty54F5agEemjVtXo_90URQ" name="target" kind="IN"/>
+    <parameterMappings xmi:id="_Ty54GJagEemjVtXo_90URQ" source="_Ty54EpagEemjVtXo_90URQ" target="_Ty54H5agEemjVtXo_90URQ"/>
+    <parameterMappings xmi:id="_Ty54GZagEemjVtXo_90URQ" source="_Ty54E5agEemjVtXo_90URQ" target="_Ty54IJagEemjVtXo_90URQ"/>
+    <parameterMappings xmi:id="_Ty54GpagEemjVtXo_90URQ" source="_Ty54FJagEemjVtXo_90URQ" target="_Ty54IZagEemjVtXo_90URQ"/>
+    <parameterMappings xmi:id="_Ty54G5agEemjVtXo_90URQ" source="_Ty54FZagEemjVtXo_90URQ" target="_Ty54IpagEemjVtXo_90URQ"/>
+    <parameterMappings xmi:id="_Ty54HJagEemjVtXo_90URQ" source="_Ty54FpagEemjVtXo_90URQ" target="_Ty54I5agEemjVtXo_90URQ"/>
+    <parameterMappings xmi:id="_Ty54HZagEemjVtXo_90URQ" source="_Ty54F5agEemjVtXo_90URQ" target="_Ty54JJagEemjVtXo_90URQ"/>
+  </units>
+  <units xsi:type="henshin_extension:RuleExtension" xmi:id="_Ty54HpagEemjVtXo_90URQ" name="Create: TransitionWithInteractionConstraintGuard">
+    <parameters xmi:id="_Ty54H5agEemjVtXo_90URQ" name="region" kind="IN"/>
+    <parameters xmi:id="_Ty54IJagEemjVtXo_90URQ" name="transition" kind="IN"/>
+    <parameters xmi:id="_Ty54IZagEemjVtXo_90URQ" name="name" kind="IN"/>
+    <parameters xmi:id="_Ty54IpagEemjVtXo_90URQ" name="transitionInteractionConstraint" kind="IN"/>
+    <parameters xmi:id="_Ty54I5agEemjVtXo_90URQ" name="source" kind="IN"/>
+    <parameters xmi:id="_Ty54JJagEemjVtXo_90URQ" name="target" kind="IN"/>
+    <lhs xmi:id="_Ty54JZagEemjVtXo_90URQ" name="Lhs">
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_Ty54JpagEemjVtXo_90URQ" name="region" subgraphs="_Ty54PJagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_Ty54J5agEemjVtXo_90URQ" name="source" subgraphs="_Ty54PJagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_Ty54KJagEemjVtXo_90URQ" name="target" subgraphs="_Ty54PJagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_Ty54KZagEemjVtXo_90URQ" name="Rhs">
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_Ty54KpagEemjVtXo_90URQ" name="region" incoming="_Ty54NpagEemjVtXo_90URQ" outgoing="_Ty54MZagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_Ty54K5agEemjVtXo_90URQ" name="transition" incoming="_Ty54MZagEemjVtXo_90URQ _Ty54N5agEemjVtXo_90URQ" outgoing="_Ty54MpagEemjVtXo_90URQ _Ty54M5agEemjVtXo_90URQ _Ty54NJagEemjVtXo_90URQ _Ty54NZagEemjVtXo_90URQ _Ty54NpagEemjVtXo_90URQ" subgraphs="_Ty54PZagEemjVtXo_90URQ _Ty54P5agEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+        <attributes xsi:type="henshin_extension:AttributeExtension" xmi:id="_Ty54LJagEemjVtXo_90URQ" value="name">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_Ty54LZagEemjVtXo_90URQ" name="transitionInteractionConstraint" incoming="_Ty54MpagEemjVtXo_90URQ _Ty54M5agEemjVtXo_90URQ" outgoing="_Ty54N5agEemjVtXo_90URQ" subgraphs="_Ty54QJagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionConstraint"/>
+        <attributes xsi:type="henshin_extension:AttributeExtension" xmi:id="_Ty54LpagEemjVtXo_90URQ" value="name + &quot;InteractionConstraint&quot;">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_Ty54L5agEemjVtXo_90URQ" name="source" incoming="_Ty54NJagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_Ty54MJagEemjVtXo_90URQ" name="target" incoming="_Ty54NZagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_Ty54MZagEemjVtXo_90URQ" source="_Ty54KpagEemjVtXo_90URQ" target="_Ty54K5agEemjVtXo_90URQ" subgraphs="_Ty54PZagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/transition"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_Ty54MpagEemjVtXo_90URQ" source="_Ty54K5agEemjVtXo_90URQ" target="_Ty54LZagEemjVtXo_90URQ" subgraphs="_Ty54QJagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_Ty54M5agEemjVtXo_90URQ" source="_Ty54K5agEemjVtXo_90URQ" target="_Ty54LZagEemjVtXo_90URQ" subgraphs="_Ty54QJagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/guard"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_Ty54NJagEemjVtXo_90URQ" source="_Ty54K5agEemjVtXo_90URQ" target="_Ty54L5agEemjVtXo_90URQ" subgraphs="_Ty54PZagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_Ty54NZagEemjVtXo_90URQ" source="_Ty54K5agEemjVtXo_90URQ" target="_Ty54MJagEemjVtXo_90URQ" subgraphs="_Ty54PZagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_Ty54NpagEemjVtXo_90URQ" source="_Ty54K5agEemjVtXo_90URQ" target="_Ty54KpagEemjVtXo_90URQ" subgraphs="_Ty54PZagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/container"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_Ty54N5agEemjVtXo_90URQ" source="_Ty54LZagEemjVtXo_90URQ" target="_Ty54K5agEemjVtXo_90URQ" subgraphs="_Ty54QJagEemjVtXo_90URQ">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Constraint/context"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Ty54OJagEemjVtXo_90URQ" origin="_Ty54JpagEemjVtXo_90URQ" image="_Ty54KpagEemjVtXo_90URQ"/>
+    <mappings xmi:id="_Ty54OZagEemjVtXo_90URQ" origin="_Ty54J5agEemjVtXo_90URQ" image="_Ty54L5agEemjVtXo_90URQ"/>
+    <mappings xmi:id="_Ty54OpagEemjVtXo_90URQ" origin="_Ty54KJagEemjVtXo_90URQ" image="_Ty54MJagEemjVtXo_90URQ"/>
+    <subgraphs xmi:id="_Ty54O5agEemjVtXo_90URQ" name="Create:[Transition]InRegion">
+      <subgraph xmi:id="_Ty54PJagEemjVtXo_90URQ" name="context" elements="_Ty54JpagEemjVtXo_90URQ _Ty54J5agEemjVtXo_90URQ _Ty54KJagEemjVtXo_90URQ">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#preserve"/>
+      </subgraph>
+      <subgraph xmi:id="_Ty54PZagEemjVtXo_90URQ" name="changes" elements="_Ty54K5agEemjVtXo_90URQ _Ty54NJagEemjVtXo_90URQ _Ty54NZagEemjVtXo_90URQ _Ty54NpagEemjVtXo_90URQ _Ty54MZagEemjVtXo_90URQ">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#create"/>
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#delete"/>
+      </subgraph>
+    </subgraphs>
+    <subgraphs xmi:id="_Ty54PpagEemjVtXo_90URQ" name="Create:[[InteractionConstraint]Guard]InTransition">
+      <subgraph xmi:id="_Ty54P5agEemjVtXo_90URQ" name="context" elements="_Ty54K5agEemjVtXo_90URQ">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#preserve"/>
+      </subgraph>
+      <subgraph xmi:id="_Ty54QJagEemjVtXo_90URQ" name="changes" elements="_Ty54MpagEemjVtXo_90URQ _Ty54M5agEemjVtXo_90URQ _Ty54LZagEemjVtXo_90URQ _Ty54N5agEemjVtXo_90URQ">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#create"/>
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#delete"/>
+      </subgraph>
+    </subgraphs>
+  </units>
+</henshin:Module>
