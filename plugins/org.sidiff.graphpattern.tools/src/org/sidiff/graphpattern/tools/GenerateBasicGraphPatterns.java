@@ -120,7 +120,9 @@ public class GenerateBasicGraphPatterns extends AbstractHandler {
 					// Generate name:
 					String basicGraphPatternName = generateName(basicBundle, basicGraphPattern);
 					basicPattern.setName(basicGraphPatternName);
+					basicPattern.setDescription("Derived from: " + fullGraphPattern.getName());
 					basicGraphPattern.setName(basicGraphPatternName);
+					basicGraphPattern.setDescription("Derived from: " + fullGraphPattern.getName());
 					
 					defaultPattern.getSubpatterns().add(basicPattern);
 				}

@@ -172,7 +172,7 @@ public class DecomposingEditRules extends AbstractHandler {
 			
 			// Insert new sub graph:
 			SubGraph subGraph = GraphpatternFactory.eINSTANCE.createSubGraph();
-			subGraph.setName(basicEditRuleGraph.getName());
+			subGraph.setName(DecomposingEditRulesUtil.generateHierarchicalName(basicEditRuleGraph));
 			complexEditRuleGraph.getSubgraphs().add(subGraph);
 			
 			SubGraph contextSubGraph = GraphpatternFactory.eINSTANCE.createSubGraph();
