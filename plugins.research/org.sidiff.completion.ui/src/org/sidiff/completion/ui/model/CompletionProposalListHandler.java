@@ -32,9 +32,18 @@ public class CompletionProposalListHandler extends AbstractHandler {
 			List<Rule> editRules = RulebaseUtil.eLoadEditRules(
 					RulebaseLibrary.getRulebases(".*?Completion.*", DocumentType.getDocumentType(context.get(0))), false);
 			
+			// TODO: Scheduling
 			proposalList.showPopupOnCursor();
-			
-			new ModelCompletionProposalGenerator(editorAccess, editRules, context).generateProposals(proposalList);
+//			Job generateProposals = new Job("Find Proposals") {
+//			
+//				@Override
+//				protected IStatus run(IProgressMonitor monitor) {
+					new ModelCompletionProposalGenerator(editorAccess, editRules, context).generateProposals(proposalList);
+//					proposalList.showPopupOnCursor();
+//					return Status.OK_STATUS;
+//				}
+//			};
+//			generateProposals.schedule();
 			
 			// TEST:
 //			proposalList.addProposals(TESTDATA.getProposals());

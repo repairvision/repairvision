@@ -40,6 +40,13 @@ import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGenera
 
 public class GenerateBasicGraphPatterns extends AbstractHandler {
 
+	// TODO: Create Bundle structure:
+	// - The patter graph (and its parent pattern) is named by the pivot element
+	//   that is searched for a complex mandatory sub graph (all outgoing mandatory edges).
+	//   - If multiple pivot element procuce the same pattern -> connect them by 'And'
+	// - The container pattern is named as [+]In<the name of the container element
+	//   of the pivot element>
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = HandlerUtil.getCurrentStructuredSelection(event);

@@ -1,5 +1,5 @@
 package org.sidiff.completion.ui.model;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
@@ -10,7 +10,6 @@ import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.completion.ui.list.CompletionProposalList;
-import org.sidiff.completion.ui.list.ICompletionProposal;
 import org.sidiff.completion.ui.model.impact.ModelCompletionImpactAnalyzes;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.revision.IRevision;
@@ -39,16 +38,9 @@ public class ModelCompletionProposalGenerator {
 	}
 
 	public void generateProposals(CompletionProposalList proposalList) {
-//		Job generateProposals = new Job("Find Proposals") {
-//			
-//			@Override
-//			protected IStatus run(IProgressMonitor monitor) {
-				populateSettings();
-				calculateProposals(proposalList);
-//				return Status.OK_STATUS;
-//			}
-//		};
-//		generateProposals.schedule();
+		populateSettings();
+		calculateProposals(proposalList);
+
 	}
 
 	protected Resource getCurrentModel() {
@@ -118,13 +110,45 @@ public class ModelCompletionProposalGenerator {
 		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(revision, null, graphCurrentModel);
 		complementFinderEngine.start();
 		
+		List<ModelCompletionProposalCluster> propsalClusters = new ArrayList<>();
+		
 		for (Rule editRule : getEditRules()) {
 			ModelCompletionProposalCaculation proposalCaculation = new ModelCompletionProposalCaculation(editRule, impactAnalyzes, complementFinderEngine);
 			
 			if (proposalCaculation.isPotentialProposal()) {
-				List<ICompletionProposal> proposalForEditRule = proposalCaculation.findProposals();
-				proposalList.addProposals(proposalForEditRule);
+				List<ModelCompletionProposal> proposalsForEditRule = proposalCaculation.findProposals();
+				
+				// TODO: Make this configurable: Plain proposals
+//				proposalList.addProposals(proposalsForEditRule);
+				
+				// Integrate into proposal clusters:
+				for (ModelCompletionProposal proposalForEditRule : proposalsForEditRule) {
+					List<String> candidateHistoricTemplates = proposalForEditRule.getHistoricDecompositionTemplates();
+					List<String> candidateCurrentTemplates = proposalForEditRule.getCurrentDecompositionFirstLevelTemplates();
+					boolean addedToAtLeastOneCluster = false;
+					
+					for (ModelCompletionProposalCluster propsalCluster : propsalClusters) {
+						ModelCompletionProposalCluster proposalClusterForEditRule = propsalCluster.add(
+								proposalForEditRule, candidateHistoricTemplates, candidateCurrentTemplates);
+						
+						// Is fork?
+						if ((proposalClusterForEditRule != null) && (proposalClusterForEditRule != propsalCluster)) {
+							propsalClusters.add(proposalClusterForEditRule);
+						}
+						
+						if (proposalClusterForEditRule != null) {
+							addedToAtLeastOneCluster = true;
+						}
+					}
+					
+					// No matching cluster found?
+					if (!addedToAtLeastOneCluster) {
+						propsalClusters.add(new ModelCompletionProposalCluster(proposalForEditRule));
+					}
+				}
 			}
 		}
+		
+		proposalList.addProposals(propsalClusters);
 	}
 }

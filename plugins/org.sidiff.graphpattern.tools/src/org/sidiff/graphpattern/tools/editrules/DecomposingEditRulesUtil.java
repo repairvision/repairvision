@@ -6,7 +6,7 @@ import org.sidiff.graphpattern.Pattern;
 
 public class DecomposingEditRulesUtil {
 
-	// TODO: Migration from Henshin to Graph-Pattern: org.sidiff.completion.ui.model.ModelCompletionProposal
+	// TODO: Migration from Henshin to Graph-Pattern: org.sidiff.completion.ui.model.ModelCompletionProposalUtil
 	// - getDecomposition
 	// - generateDecompositionName
 	
@@ -64,12 +64,12 @@ public class DecomposingEditRulesUtil {
 		return rulePrefix + hierarchicalName;
 	}
 	
-	public static String getFirstLevelTemplateExpression(String hierarchicalName) {
+	public static String getFirstLevelTemplate(String hierarchicalName) {
 		// replace inner [.*?] with [+]
 		return hierarchicalName.replaceAll(MATCH_INNER_BRACES, HIERARCHICAL_NAME_PLACEHOLDER);
 	}
 	
-	public static String getPlainTemplateExpression(String hierarchicalName) {
+	public static String getPlainTemplate(String hierarchicalName) {
 		// Match opening [ and closing ] braces that are not placeholders [+]
 		return hierarchicalName.replaceAll(MATCH_PREFIX_OR_POSTFIX_NOT_PLACEHOLDER, "");
 	}

@@ -8,7 +8,6 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.completion.ui.list.ICompletionProposal;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.repair.complement.construction.ComplementRule;
@@ -60,10 +59,10 @@ public class ModelCompletionProposalCaculation {
 		return !currentImpactScope.isEmpty() && !historicalImpactScope.isEmpty();
 	}
 	
-	public List<ICompletionProposal> findProposals() {
+	public List<ModelCompletionProposal> findProposals() {
 		
 		if (isPotentialProposal()) {
-			List<ICompletionProposal> proposals = new ArrayList<>();
+			List<ModelCompletionProposal> proposals = new ArrayList<>();
 			
 			for(ComplementRule complement : complementFinder.findComplementRules()) {
 
