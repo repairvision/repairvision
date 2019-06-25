@@ -24,7 +24,7 @@ import org.sidiff.graphpattern.profile.henshin_extension.SubGraph;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.profile.henshin_extension.impl.SubGraphImpl#getSubgraph <em>Subgraph</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.profile.henshin_extension.impl.SubGraphImpl#getSubgraphs <em>Subgraphs</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.profile.henshin_extension.impl.SubGraphImpl#getElements <em>Elements</em>}</li>
  * </ul>
  *
@@ -32,14 +32,14 @@ import org.sidiff.graphpattern.profile.henshin_extension.SubGraph;
  */
 public class SubGraphImpl extends PatternElementImpl implements SubGraph {
 	/**
-	 * The cached value of the '{@link #getSubgraph() <em>Subgraph</em>}' containment reference list.
+	 * The cached value of the '{@link #getSubgraphs() <em>Subgraphs</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSubgraph()
+	 * @see #getSubgraphs()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<SubGraph> subgraph;
+	protected EList<SubGraph> subgraphs;
 
 	/**
 	 * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list.
@@ -76,11 +76,11 @@ public class SubGraphImpl extends PatternElementImpl implements SubGraph {
 	 * @generated
 	 */
 	@Override
-	public EList<SubGraph> getSubgraph() {
-		if (subgraph == null) {
-			subgraph = new EObjectContainmentEList.Resolving<SubGraph>(SubGraph.class, this, HenshinExtensionPackage.SUB_GRAPH__SUBGRAPH);
+	public EList<SubGraph> getSubgraphs() {
+		if (subgraphs == null) {
+			subgraphs = new EObjectContainmentEList.Resolving<SubGraph>(SubGraph.class, this, HenshinExtensionPackage.SUB_GRAPH__SUBGRAPHS);
 		}
-		return subgraph;
+		return subgraphs;
 	}
 
 	/**
@@ -119,8 +119,8 @@ public class SubGraphImpl extends PatternElementImpl implements SubGraph {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPH:
-				return ((InternalEList<?>)getSubgraph()).basicRemove(otherEnd, msgs);
+			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPHS:
+				return ((InternalEList<?>)getSubgraphs()).basicRemove(otherEnd, msgs);
 			case HenshinExtensionPackage.SUB_GRAPH__ELEMENTS:
 				return ((InternalEList<?>)getElements()).basicRemove(otherEnd, msgs);
 		}
@@ -135,8 +135,8 @@ public class SubGraphImpl extends PatternElementImpl implements SubGraph {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPH:
-				return getSubgraph();
+			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPHS:
+				return getSubgraphs();
 			case HenshinExtensionPackage.SUB_GRAPH__ELEMENTS:
 				return getElements();
 		}
@@ -152,9 +152,9 @@ public class SubGraphImpl extends PatternElementImpl implements SubGraph {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPH:
-				getSubgraph().clear();
-				getSubgraph().addAll((Collection<? extends SubGraph>)newValue);
+			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPHS:
+				getSubgraphs().clear();
+				getSubgraphs().addAll((Collection<? extends SubGraph>)newValue);
 				return;
 			case HenshinExtensionPackage.SUB_GRAPH__ELEMENTS:
 				getElements().clear();
@@ -172,8 +172,8 @@ public class SubGraphImpl extends PatternElementImpl implements SubGraph {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPH:
-				getSubgraph().clear();
+			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPHS:
+				getSubgraphs().clear();
 				return;
 			case HenshinExtensionPackage.SUB_GRAPH__ELEMENTS:
 				getElements().clear();
@@ -190,8 +190,8 @@ public class SubGraphImpl extends PatternElementImpl implements SubGraph {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPH:
-				return subgraph != null && !subgraph.isEmpty();
+			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPHS:
+				return subgraphs != null && !subgraphs.isEmpty();
 			case HenshinExtensionPackage.SUB_GRAPH__ELEMENTS:
 				return elements != null && !elements.isEmpty();
 		}

@@ -1,8 +1,14 @@
 package org.sidiff.graphpattern.tools.editrules;
 
 
+import java.util.Collections;
+import java.util.List;
+
+import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.SubGraph;
+import org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil;
 
 public class DecomposingEditRulesUtil {
 
@@ -76,5 +82,32 @@ public class DecomposingEditRulesUtil {
 	
 	public static Boolean containsPlaceholder(String template) {
 		return template.contains(HIERARCHICAL_NAME_PLACEHOLDER);
+	}
+	
+	public static List<GraphElement> getSubGraphContext(SubGraph subGraph) {
+		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
+			if (HenshinProfileUtil.isContext(annotatedSubGraph)) {
+				return annotatedSubGraph.getElements();
+			}
+		}
+		return Collections.emptyList();
+	}
+	
+	public static List<GraphElement> getSubGraphChanges(SubGraph subGraph) {
+		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
+			if (HenshinProfileUtil.isChange(annotatedSubGraph)) {
+				return annotatedSubGraph.getElements();
+			}
+		}
+		return Collections.emptyList();
+	}
+	
+	public static void clearSubGraphElements(SubGraph subGraph) {
+		
+		for (SubGraph subSubGraph : subGraph.getSubgraphs()) {
+			clearSubGraphElements(subSubGraph);
+		}
+		
+		subGraph.getElements().clear();
 	}
 }

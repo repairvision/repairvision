@@ -122,14 +122,13 @@ public class ModelCompletionProposalGenerator {
 //				proposalList.addProposals(proposalsForEditRule);
 				
 				// Integrate into proposal clusters:
-				for (ModelCompletionProposal proposalForEditRule : proposalsForEditRule) {
-					List<String> candidateHistoricTemplates = proposalForEditRule.getHistoricDecompositionTemplates();
-					List<String> candidateCurrentTemplates = proposalForEditRule.getCurrentDecompositionFirstLevelTemplates();
+				for (ModelCompletionProposal proposalCandidate : proposalsForEditRule) {
+					DecompositionTemplates candidateDecomposition = proposalCandidate.getDecomposition();
 					boolean addedToAtLeastOneCluster = false;
 					
 					for (ModelCompletionProposalCluster propsalCluster : propsalClusters) {
 						ModelCompletionProposalCluster proposalClusterForEditRule = propsalCluster.add(
-								proposalForEditRule, candidateHistoricTemplates, candidateCurrentTemplates);
+								proposalCandidate, candidateDecomposition);
 						
 						// Is fork?
 						if ((proposalClusterForEditRule != null) && (proposalClusterForEditRule != propsalCluster)) {
@@ -143,7 +142,7 @@ public class ModelCompletionProposalGenerator {
 					
 					// No matching cluster found?
 					if (!addedToAtLeastOneCluster) {
-						propsalClusters.add(new ModelCompletionProposalCluster(proposalForEditRule));
+						propsalClusters.add(new ModelCompletionProposalCluster(proposalCandidate, candidateDecomposition));
 					}
 				}
 			}

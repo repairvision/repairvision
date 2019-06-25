@@ -48,26 +48,26 @@ public class SubGraphItemProvider extends PatternElementItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addSubgraphPropertyDescriptor(object);
+			addSubgraphsPropertyDescriptor(object);
 			addElementsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Subgraph feature.
+	 * This adds a property descriptor for the Subgraphs feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addSubgraphPropertyDescriptor(Object object) {
+	protected void addSubgraphsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_SubGraph_subgraph_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SubGraph_subgraph_feature", "_UI_SubGraph_type"),
-				 HenshinExtensionPackage.Literals.SUB_GRAPH__SUBGRAPH,
+				 getString("_UI_SubGraph_subgraphs_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SubGraph_subgraphs_feature", "_UI_SubGraph_type"),
+				 HenshinExtensionPackage.Literals.SUB_GRAPH__SUBGRAPHS,
 				 true,
 				 false,
 				 true,
@@ -110,7 +110,7 @@ public class SubGraphItemProvider extends PatternElementItemProvider {
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(HenshinExtensionPackage.Literals.SUB_GRAPH__SUBGRAPH);
+			childrenFeatures.add(HenshinExtensionPackage.Literals.SUB_GRAPH__SUBGRAPHS);
 			childrenFeatures.add(HenshinExtensionPackage.Literals.SUB_GRAPH__ELEMENTS);
 		}
 		return childrenFeatures;
@@ -168,7 +168,7 @@ public class SubGraphItemProvider extends PatternElementItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(SubGraph.class)) {
-			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPH:
+			case HenshinExtensionPackage.SUB_GRAPH__SUBGRAPHS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -188,7 +188,7 @@ public class SubGraphItemProvider extends PatternElementItemProvider {
 
 		newChildDescriptors.add
 			(createChildParameter
-				(HenshinExtensionPackage.Literals.SUB_GRAPH__SUBGRAPH,
+				(HenshinExtensionPackage.Literals.SUB_GRAPH__SUBGRAPHS,
 				 HenshinExtensionFactory.eINSTANCE.createSubGraph()));
 	}
 

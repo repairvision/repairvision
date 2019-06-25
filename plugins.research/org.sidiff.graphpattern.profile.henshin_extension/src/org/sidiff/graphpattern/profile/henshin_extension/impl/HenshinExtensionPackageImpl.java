@@ -167,7 +167,7 @@ public class HenshinExtensionPackageImpl extends EPackageImpl implements Henshin
 	 * @generated
 	 */
 	@Override
-	public EReference getSubGraph_Subgraph() {
+	public EReference getSubGraph_Subgraphs() {
 		return (EReference)subGraphEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -264,7 +264,7 @@ public class HenshinExtensionPackageImpl extends EPackageImpl implements Henshin
 		createEReference(ruleExtensionEClass, RULE_EXTENSION__SUBGRAPHS);
 
 		subGraphEClass = createEClass(SUB_GRAPH);
-		createEReference(subGraphEClass, SUB_GRAPH__SUBGRAPH);
+		createEReference(subGraphEClass, SUB_GRAPH__SUBGRAPHS);
 		createEReference(subGraphEClass, SUB_GRAPH__ELEMENTS);
 
 		graphElementExtensionEClass = createEClass(GRAPH_ELEMENT_EXTENSION);
@@ -323,7 +323,7 @@ public class HenshinExtensionPackageImpl extends EPackageImpl implements Henshin
 		initEReference(getRuleExtension_Subgraphs(), this.getSubGraph(), null, "subgraphs", null, 0, -1, RuleExtension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(subGraphEClass, SubGraph.class, "SubGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getSubGraph_Subgraph(), this.getSubGraph(), null, "subgraph", null, 0, -1, SubGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSubGraph_Subgraphs(), this.getSubGraph(), null, "subgraphs", null, 0, -1, SubGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSubGraph_Elements(), this.getGraphElementExtension(), this.getGraphElementExtension_Subgraphs(), "elements", null, 0, -1, SubGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(graphElementExtensionEClass, GraphElementExtension.class, "GraphElementExtension", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

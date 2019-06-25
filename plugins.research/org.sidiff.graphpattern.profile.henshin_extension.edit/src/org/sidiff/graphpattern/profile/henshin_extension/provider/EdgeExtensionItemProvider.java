@@ -11,9 +11,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.provider.EdgeItemProvider;
-import org.sidiff.graphpattern.profile.henshin_extension.EdgeExtension;
 import org.sidiff.graphpattern.profile.henshin_extension.HenshinExtensionPackage;
 
 /**

@@ -4,6 +4,7 @@ import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.rule;
+import static org.sidiff.graphpattern.tools.editrules.DecomposingEditRulesUtil.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,7 +72,7 @@ public class DecomposingEditRules extends AbstractHandler {
 				if (WorkbenchUtil.showQuestion("Clear existing decompositions from bundle?")) {
 					for (Pattern complexEditRulePattern : complexEditRulesBundle.getPatterns()) {
 						complexEditRulePattern.getAllGraphPatterns().forEach(graph -> {
-							graph.getSubgraphs().forEach(this::clearSubGraphElements);
+							graph.getSubgraphs().forEach(DecomposingEditRulesUtil::clearSubGraphElements);
 							graph.getSubgraphs().clear();
 						});
 					}
@@ -346,32 +347,5 @@ public class DecomposingEditRules extends AbstractHandler {
 		}
 		
 		return null;
-	}
-	
-	private List<GraphElement> getSubGraphContext(SubGraph subGraph) {
-		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
-			if (HenshinProfileUtil.isContext(annotatedSubGraph)) {
-				return annotatedSubGraph.getElements();
-			}
-		}
-		return Collections.emptyList();
-	}
-	
-	private List<GraphElement> getSubGraphChanges(SubGraph subGraph) {
-		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
-			if (HenshinProfileUtil.isChange(annotatedSubGraph)) {
-				return annotatedSubGraph.getElements();
-			}
-		}
-		return Collections.emptyList();
-	}
-	
-	private void clearSubGraphElements(SubGraph subGraph) {
-		
-		for (SubGraph subSubGraph : subGraph.getSubgraphs()) {
-			clearSubGraphElements(subSubGraph);
-		}
-		
-		subGraph.getElements().clear();
 	}
 }

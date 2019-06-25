@@ -1,6 +1,7 @@
 package org.sidiff.completion.ui.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,10 @@ public class ModelCompletionProposalUtil {
 	public static String TEMPLATE_PRESENCE_SEPARATOR_TRIM = "|" + TEMPLATE_EDIT_RULE_SEPARATOR_TRIM;
 	
 	public static String TEMPLATE_PRESENCE_SEPARATOR = " " + TEMPLATE_PRESENCE_SEPARATOR_TRIM + " ";
+	
+	public static String TEMPLATE_PARAMETER_NAME_VALUE_SEPARATOR = " = ";
+	
+	public static String TEMPLATE_PARAMETER_SEPARATOR = ", ";
 	
 	public static String TEMPLATE_NAME_PLACEHOLDER_PREFIX = 
 			DecomposingEditRulesUtil.HIERARCHICAL_NAME_PLACEHOLDER_PREFIX;
@@ -44,7 +49,7 @@ public class ModelCompletionProposalUtil {
 			TEMPLATE_OPTIONAL_PLACEHOLDER_SYMBOL +
 			TEMPLATE_NAME_PLACEHOLDER_POSTFIX;
 
-	public static String generateDecompositionNameFromSubGraphs(List<SubGraph> decomposition) {
+	public static String generateDecompositionSequenceFromSubGraphs(List<SubGraph> decomposition) {
 		StringBuilder name = new StringBuilder();
 		
 		for (SubGraph subEditRule : decomposition) {
@@ -58,11 +63,11 @@ public class ModelCompletionProposalUtil {
 		return name.toString();
 	}
 	
-	public static String generateDecompositionNameFromHierarchicals(List<String> decomposition) {
+	public static String generateDecompositionSequenceFromHierarchicals(List<String> decomposition) {
 		StringBuilder name = new StringBuilder();
 		
 		for (String subEditRule : decomposition) {
-			name.append(generateDecompositionNameFromHierarchical(subEditRule));
+			name.append(getPlainTemplate(subEditRule));
 			
 			if (subEditRule != decomposition.get(decomposition.size() - 1)) {
 				name.append(TEMPLATE_EDIT_RULE_SEPARATOR);
@@ -72,7 +77,7 @@ public class ModelCompletionProposalUtil {
 		return name.toString();
 	}
 	
-	public static String generateDecompositionNameFromHierarchical(String subEditRule) {
+	public static String getPlainTemplate(String subEditRule) {
 		return DecomposingEditRulesUtil.getPlainTemplate(subEditRule);
 	}
 
@@ -109,4 +114,21 @@ public class ModelCompletionProposalUtil {
 		return decompositionWithDependency;
 	}
 
+	public static List<GraphElementExtension> getSubGraphContext(SubGraph subGraph) {
+		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
+			if (HenshinProfileUtil.isContext(annotatedSubGraph)) {
+				return annotatedSubGraph.getElements();
+			}
+		}
+		return Collections.emptyList();
+	}
+	
+	public static List<GraphElementExtension> getSubGraphChanges(SubGraph subGraph) {
+		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
+			if (HenshinProfileUtil.isChange(annotatedSubGraph)) {
+				return annotatedSubGraph.getElements();
+			}
+		}
+		return Collections.emptyList();
+	}
 }

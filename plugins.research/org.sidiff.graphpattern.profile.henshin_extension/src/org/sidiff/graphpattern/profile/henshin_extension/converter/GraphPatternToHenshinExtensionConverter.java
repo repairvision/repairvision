@@ -56,7 +56,7 @@ public class GraphPatternToHenshinExtensionConverter extends GraphPatternToHensh
 		HenshinSubGraph convertedSubGraph = convertSubGraph(subGraph);
 		
 		HenshinSubGraph convertedParent = subGraphTrace.get(parent);
-		convertedParent.getSubgraph().add(convertedSubGraph);
+		convertedParent.getSubgraphs().add(convertedSubGraph);
 	}
 	
 	private HenshinSubGraph convertSubGraph(SubGraph subGraph) {
