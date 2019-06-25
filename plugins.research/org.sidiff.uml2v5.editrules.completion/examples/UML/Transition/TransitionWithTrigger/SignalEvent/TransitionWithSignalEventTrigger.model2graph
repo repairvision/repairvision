@@ -4,13 +4,15 @@ DEFINE : Parameter : VARnameEND : name : transition
 # Node : <node name> : <node type>
 FILTER : Node : (?!container).*? : Model
 FILTER : Node : .*? : PackageImport
-FILTER : Node : .*? : StateMachine
 
 # Attribute : <node name> : <node type> : <attribute type>
 FILTER : Attribute : .*? : Model : .*
+FILTER : Attribute : .*? : StateMachine : .*
 FILTER : Attribute : .*? : State : .*
 FILTER : Attribute : .*? : Region : .*
 FILTER : Attribute : .*? : .*? : (?!name).*
 
 # Edge : <source node name> : <source node type> : <edge type> : <target node name> : <target node type>
 FILTER : Edge : .*? : Region : subvertex : .*? : State
+FILTER : Edge : .*? : Model : packagedElement : .*? : StateMachine
+FILTER : Edge : .*? : StateMachine : region : .*? : Region
