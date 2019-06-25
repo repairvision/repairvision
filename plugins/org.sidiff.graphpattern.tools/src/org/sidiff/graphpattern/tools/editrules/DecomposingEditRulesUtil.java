@@ -73,4 +73,8 @@ public class DecomposingEditRulesUtil {
 		// Match opening [ and closing ] braces that are not placeholders [+]
 		return hierarchicalName.replaceAll(MATCH_PREFIX_OR_POSTFIX_NOT_PLACEHOLDER, "");
 	}
+	
+	public static Boolean containsPlaceholder(String template) {
+		return template.contains(HIERARCHICAL_NAME_PLACEHOLDER);
+	}
 }

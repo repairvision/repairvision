@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.ui.PlatformUI;
 import org.sidiff.completion.ui.Activator;
 import org.sidiff.completion.ui.codebricks.BlankBrick;
 import org.sidiff.completion.ui.codebricks.Brick;
@@ -99,6 +100,10 @@ public class CodebricksEditor {
     private Codebricks codebricks;
     
     private Map<Brick, Control> modelToViewMap = new HashMap<>();
+    
+    public CodebricksEditor() {
+    	this(PlatformUI.getWorkbench().getDisplay());
+	}
     
 	public CodebricksEditor(Display display) {
 		display.syncExec(new Runnable() {
@@ -490,7 +495,11 @@ public class CodebricksEditor {
 	}
 	
 	protected int getColumns() {
-		return getContent().getTemplate().caluclateColumns();
+		if (getContent().getTemplate() != null) {
+			return getContent().getTemplate().caluclateColumns();
+		} else {
+			return 0;
+		}
 	}
 	
 	protected void clearContent() {
@@ -615,10 +624,12 @@ public class CodebricksEditor {
 		}
 		
 		// Set focus to first editable text field:
-		for (Control expressionControl : templateExpression.getChildren()) {
-			if (expressionControl instanceof StyledText) {
-				expressionControl.setFocus();
-				break;
+		if (templateExpression != null) {
+			for (Control expressionControl : templateExpression.getChildren()) {
+				if (expressionControl instanceof StyledText) {
+					expressionControl.setFocus();
+					break;
+				}
 			}
 		}
 		

@@ -131,14 +131,14 @@ public class ModelCompletionProposal implements ICompletionProposal {
 	@Override
 	public ICompletionPreview preview() {
 		// TODO: Apply/undo on editing domain
-		System.out.println("Preview: " + complement.getComplementRule().getName());
+//		System.out.println("Preview: " + complement.getComplementRule().getName());
 		return null;
 	}
 
 	@Override
 	public boolean apply() {
-		// TODO open template in Codebricks editor
-		System.out.println("Apply: " + complement.getComplementRule().getName());
+		// TODO: Apply on editing domain
+//		System.out.println("Apply: " + complement.getComplementRule().getName());
 		return false;
 	}
 

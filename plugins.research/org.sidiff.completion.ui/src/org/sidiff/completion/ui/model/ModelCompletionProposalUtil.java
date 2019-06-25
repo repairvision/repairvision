@@ -13,6 +13,36 @@ import org.sidiff.graphpattern.profile.henshin_extension.SubGraph;
 import org.sidiff.graphpattern.tools.editrules.DecomposingEditRulesUtil;
 
 public class ModelCompletionProposalUtil {
+	
+	public static String TEMPLATE_EDIT_RULE_SEPARATOR_TRIM = "->";
+	
+	public static String TEMPLATE_EDIT_RULE_SEPARATOR = " " + TEMPLATE_EDIT_RULE_SEPARATOR_TRIM + " ";
+	
+	public static String TEMPLATE_PRESENCE_SEPARATOR_TRIM = "|" + TEMPLATE_EDIT_RULE_SEPARATOR_TRIM;
+	
+	public static String TEMPLATE_PRESENCE_SEPARATOR = " " + TEMPLATE_PRESENCE_SEPARATOR_TRIM + " ";
+	
+	public static String TEMPLATE_NAME_PLACEHOLDER_PREFIX = 
+			DecomposingEditRulesUtil.HIERARCHICAL_NAME_PLACEHOLDER_PREFIX;
+	
+	public static String TEMPLATE_NAME_PLACEHOLDER_POSTFIX = 
+			DecomposingEditRulesUtil.HIERARCHICAL_NAME_PLACEHOLDER_POSTFIX;
+	
+	public static String TEMPLATE_OPTIONAL_PLACEHOLDER_SYMBOL = "?";
+	
+	public static String TEMPLATE_MANDATORY_PLACEHOLDER_SYMBOL = 
+			DecomposingEditRulesUtil.HIERARCHICAL_NAME_PLACEHOLDER_SYMBOL;
+	
+	public static String TEMPLATE_MANDATORY_PLACEHOLDER = 
+			TEMPLATE_NAME_PLACEHOLDER_PREFIX +
+			TEMPLATE_MANDATORY_PLACEHOLDER_SYMBOL +
+			TEMPLATE_NAME_PLACEHOLDER_POSTFIX;
+	
+	
+	public static String TEMPLATE_OPTIONAL_PLACEHOLDER = 
+			TEMPLATE_NAME_PLACEHOLDER_PREFIX +
+			TEMPLATE_OPTIONAL_PLACEHOLDER_SYMBOL +
+			TEMPLATE_NAME_PLACEHOLDER_POSTFIX;
 
 	public static String generateDecompositionNameFromSubGraphs(List<SubGraph> decomposition) {
 		StringBuilder name = new StringBuilder();
@@ -21,7 +51,7 @@ public class ModelCompletionProposalUtil {
 			name.append(subEditRule.getName());
 			
 			if (subEditRule != decomposition.get(decomposition.size() - 1)) {
-				name.append(" -> ");
+				name.append(TEMPLATE_EDIT_RULE_SEPARATOR);
 			}
 		}
 		
@@ -32,14 +62,18 @@ public class ModelCompletionProposalUtil {
 		StringBuilder name = new StringBuilder();
 		
 		for (String subEditRule : decomposition) {
-			name.append(DecomposingEditRulesUtil.getPlainTemplate(subEditRule));
+			name.append(generateDecompositionNameFromHierarchical(subEditRule));
 			
 			if (subEditRule != decomposition.get(decomposition.size() - 1)) {
-				name.append(" -> ");
+				name.append(TEMPLATE_EDIT_RULE_SEPARATOR);
 			}
 		}
 		
 		return name.toString();
+	}
+	
+	public static String generateDecompositionNameFromHierarchical(String subEditRule) {
+		return DecomposingEditRulesUtil.getPlainTemplate(subEditRule);
 	}
 
 	public static List<SubGraph> getDecomposition(List<SubGraph> allSubGraphs, List<GraphElement> changes) {
