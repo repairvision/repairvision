@@ -27,6 +27,10 @@ public class ModelCompletionProposalUtil {
 	
 	public static String TEMPLATE_PARAMETER_SEPARATOR = ", ";
 	
+	public static String TEMPLATE_PARAMETER_LIST_PREFIX = "(";
+	
+	public static String TEMPLATE_PARAMETER_LIST_POSTFIX = ")";
+	
 	public static String TEMPLATE_NAME_PLACEHOLDER_PREFIX = 
 			DecomposingEditRulesUtil.HIERARCHICAL_NAME_PLACEHOLDER_PREFIX;
 	

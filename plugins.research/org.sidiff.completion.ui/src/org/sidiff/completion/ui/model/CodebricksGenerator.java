@@ -5,7 +5,7 @@ import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLAT
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_OPTIONAL_PLACEHOLDER;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_PARAMETER_NAME_VALUE_SEPARATOR;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_PARAMETER_SEPARATOR;
-import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_PRESENCE_SEPARATOR_TRIM;
+import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.*;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.getPlainTemplate;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.getSubGraphChanges;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.getSubGraphContext;
@@ -191,21 +191,13 @@ public class CodebricksGenerator {
 				if (DecomposingEditRulesUtil.containsPlaceholder(template)) {
 					String plainTemplate = getPlainTemplate(template);
 					
-					TemplatePlaceholderBrick complementSubEditRuleBrick = CodebricksFactory.eINSTANCE.createTemplatePlaceholderBrick();
-					complementSubEditRuleBrick.setPlaceholder(plainTemplate);
-					complementSubEditRuleBrick.setMandatory(true);
-					subEditRule.getBricks().add(complementSubEditRuleBrick);
-					
-					// Not show parameters for template:
+					// NOTE: Not show parameters for template:
 					// SEE NOTE*1 
-					TextBrick ruleParameterOpeningBracesBrick = CodebricksFactory.eINSTANCE.createTextBrick();
-					ruleParameterOpeningBracesBrick.setText("(");
-					subEditRule.getBricks().add(ruleParameterOpeningBracesBrick);
 					
-					TextBrick ruleParameterClosingBracesBrick = CodebricksFactory.eINSTANCE.createTextBrick();
-					ruleParameterClosingBracesBrick.setText(")");
-					subEditRule.getBricks().add(ruleParameterClosingBracesBrick);		
-					
+					TemplatePlaceholderBrick complementSubEditRuleBrick = CodebricksFactory.eINSTANCE.createTemplatePlaceholderBrick();
+					complementSubEditRuleBrick.setPlaceholder(plainTemplate + TEMPLATE_PARAMETER_LIST_PREFIX + TEMPLATE_PARAMETER_LIST_POSTFIX);
+					complementSubEditRuleBrick.setMandatory(true);
+					subEditRule.getBricks().add(complementSubEditRuleBrick);	
 				} else {
 					String plainFirstLevelTemplate = getPlainTemplate(template);
 					
@@ -249,7 +241,7 @@ public class CodebricksGenerator {
 		
 		// add '(':
 		TextBrick ruleParameterOpeningBracesBrick = CodebricksFactory.eINSTANCE.createTextBrick();
-		ruleParameterOpeningBracesBrick.setText("(");
+		ruleParameterOpeningBracesBrick.setText(TEMPLATE_PARAMETER_LIST_PREFIX);
 		template.getBricks().add(ruleParameterOpeningBracesBrick);
 		
 		// Create parameters for sub edit rule:
@@ -268,7 +260,7 @@ public class CodebricksGenerator {
 		
 		// add ')':
 		TextBrick ruleParameterClosingBracesBrick = CodebricksFactory.eINSTANCE.createTextBrick();
-		ruleParameterClosingBracesBrick.setText(")");
+		ruleParameterClosingBracesBrick.setText(TEMPLATE_PARAMETER_LIST_POSTFIX);
 		template.getBricks().add(ruleParameterClosingBracesBrick);
 	}
 
