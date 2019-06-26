@@ -130,6 +130,24 @@ public interface CodebricksFactory extends EFactory {
 	ComposedTemplatePlaceholderBrick createComposedTemplatePlaceholderBrick();
 
 	/**
+	 * Returns a new object of class '<em>POJO Codebrick View</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>POJO Codebrick View</em>'.
+	 * @generated
+	 */
+	POJOCodebrickView createPOJOCodebrickView();
+
+	/**
+	 * Returns a new object of class '<em>Codebrick View</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Codebrick View</em>'.
+	 * @generated
+	 */
+	CodebrickView createCodebrickView();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -86,13 +86,31 @@ public interface CodebricksPackage extends EPackage {
 	int CODEBRICKS__TEMPLATE = 1;
 
 	/**
+	 * The feature id for the '<em><b>Choice</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CODEBRICKS__CHOICE = 2;
+
+	/**
 	 * The number of structural features of the '<em>Codebricks</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CODEBRICKS_FEATURE_COUNT = 2;
+	int CODEBRICKS_FEATURE_COUNT = 3;
+
+	/**
+	 * The operation id for the '<em>Is Chosen</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CODEBRICKS___IS_CHOSEN = 0;
 
 	/**
 	 * The number of operations of the '<em>Codebricks</em>' class.
@@ -101,7 +119,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CODEBRICKS_OPERATION_COUNT = 0;
+	int CODEBRICKS_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.CodebrickImpl <em>Codebrick</em>}' class.
@@ -1147,6 +1165,171 @@ public interface CodebricksPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.POJOCodebrickViewImpl <em>POJO Codebrick View</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.impl.POJOCodebrickViewImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getPOJOCodebrickView()
+	 * @generated
+	 */
+	int POJO_CODEBRICK_VIEW = 16;
+
+	/**
+	 * The feature id for the '<em><b>Bricks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POJO_CODEBRICK_VIEW__BRICKS = CODEBRICK__BRICKS;
+
+	/**
+	 * The feature id for the '<em><b>Codebricks</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POJO_CODEBRICK_VIEW__CODEBRICKS = CODEBRICK__CODEBRICKS;
+
+	/**
+	 * The feature id for the '<em><b>All Bricks</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POJO_CODEBRICK_VIEW__ALL_BRICKS = CODEBRICK__ALL_BRICKS;
+
+	/**
+	 * The feature id for the '<em><b>Model</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POJO_CODEBRICK_VIEW__MODEL = CODEBRICK_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>POJO Codebrick View</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POJO_CODEBRICK_VIEW_FEATURE_COUNT = CODEBRICK_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Calculate Rows</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POJO_CODEBRICK_VIEW___CALCULATE_ROWS = CODEBRICK___CALCULATE_ROWS;
+
+	/**
+	 * The operation id for the '<em>Caluclate Columns</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POJO_CODEBRICK_VIEW___CALUCLATE_COLUMNS = CODEBRICK___CALUCLATE_COLUMNS;
+
+	/**
+	 * The number of operations of the '<em>POJO Codebrick View</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POJO_CODEBRICK_VIEW_OPERATION_COUNT = CODEBRICK_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.CodebrickViewImpl <em>Codebrick View</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebrickViewImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getCodebrickView()
+	 * @generated
+	 */
+	int CODEBRICK_VIEW = 17;
+
+	/**
+	 * The feature id for the '<em><b>Bricks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CODEBRICK_VIEW__BRICKS = CODEBRICK__BRICKS;
+
+	/**
+	 * The feature id for the '<em><b>Codebricks</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CODEBRICK_VIEW__CODEBRICKS = CODEBRICK__CODEBRICKS;
+
+	/**
+	 * The feature id for the '<em><b>All Bricks</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CODEBRICK_VIEW__ALL_BRICKS = CODEBRICK__ALL_BRICKS;
+
+	/**
+	 * The feature id for the '<em><b>Model</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CODEBRICK_VIEW__MODEL = CODEBRICK_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Codebrick View</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CODEBRICK_VIEW_FEATURE_COUNT = CODEBRICK_FEATURE_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Calculate Rows</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CODEBRICK_VIEW___CALCULATE_ROWS = CODEBRICK___CALCULATE_ROWS;
+
+	/**
+	 * The operation id for the '<em>Caluclate Columns</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CODEBRICK_VIEW___CALUCLATE_COLUMNS = CODEBRICK___CALUCLATE_COLUMNS;
+
+	/**
+	 * The number of operations of the '<em>Codebrick View</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CODEBRICK_VIEW_OPERATION_COUNT = CODEBRICK_OPERATION_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.Codebricks <em>Codebricks</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1177,6 +1360,27 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCodebricks_Template();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.Codebricks#getChoice <em>Choice</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Choice</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.Codebricks#getChoice()
+	 * @see #getCodebricks()
+	 * @generated
+	 */
+	EReference getCodebricks_Choice();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.Codebricks#isChosen() <em>Is Chosen</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Chosen</em>' operation.
+	 * @see org.sidiff.completion.ui.codebricks.Codebricks#isChosen()
+	 * @generated
+	 */
+	EOperation getCodebricks__IsChosen();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.Codebrick <em>Codebrick</em>}'.
@@ -1579,6 +1783,48 @@ public interface CodebricksPackage extends EPackage {
 	EReference getComposedTemplatePlaceholderBrick_ContainerBrick();
 
 	/**
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.POJOCodebrickView <em>POJO Codebrick View</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>POJO Codebrick View</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.POJOCodebrickView
+	 * @generated
+	 */
+	EClass getPOJOCodebrickView();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.POJOCodebrickView#getModel <em>Model</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Model</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.POJOCodebrickView#getModel()
+	 * @see #getPOJOCodebrickView()
+	 * @generated
+	 */
+	EAttribute getPOJOCodebrickView_Model();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.CodebrickView <em>Codebrick View</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Codebrick View</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.CodebrickView
+	 * @generated
+	 */
+	EClass getCodebrickView();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.completion.ui.codebricks.CodebrickView#getModel <em>Model</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Model</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.CodebrickView#getModel()
+	 * @see #getCodebrickView()
+	 * @generated
+	 */
+	EReference getCodebrickView_Model();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1626,6 +1872,22 @@ public interface CodebricksPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CODEBRICKS__TEMPLATE = eINSTANCE.getCodebricks_Template();
+
+		/**
+		 * The meta object literal for the '<em><b>Choice</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CODEBRICKS__CHOICE = eINSTANCE.getCodebricks_Choice();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Chosen</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CODEBRICKS___IS_CHOSEN = eINSTANCE.getCodebricks__IsChosen();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.CodebrickImpl <em>Codebrick</em>}' class.
@@ -1960,6 +2222,42 @@ public interface CodebricksPackage extends EPackage {
 		 * @generated
 		 */
 		EReference COMPOSED_TEMPLATE_PLACEHOLDER_BRICK__CONTAINER_BRICK = eINSTANCE.getComposedTemplatePlaceholderBrick_ContainerBrick();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.POJOCodebrickViewImpl <em>POJO Codebrick View</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.impl.POJOCodebrickViewImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getPOJOCodebrickView()
+		 * @generated
+		 */
+		EClass POJO_CODEBRICK_VIEW = eINSTANCE.getPOJOCodebrickView();
+
+		/**
+		 * The meta object literal for the '<em><b>Model</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute POJO_CODEBRICK_VIEW__MODEL = eINSTANCE.getPOJOCodebrickView_Model();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.CodebrickViewImpl <em>Codebrick View</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebrickViewImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getCodebrickView()
+		 * @generated
+		 */
+		EClass CODEBRICK_VIEW = eINSTANCE.getCodebrickView();
+
+		/**
+		 * The meta object literal for the '<em><b>Model</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CODEBRICK_VIEW__MODEL = eINSTANCE.getCodebrickView_Model();
 
 	}
 

@@ -77,7 +77,7 @@ public class ModelCompletionProposal implements ICompletionProposal {
 	@Override
 	public boolean apply() {
 		// TODO: Apply on editing domain
-//		System.out.println("Apply: " + complement.getComplementRule().getName());
+		System.out.println("Apply: " + complement.getComplementRule().getName());
 		return false;
 	}
 

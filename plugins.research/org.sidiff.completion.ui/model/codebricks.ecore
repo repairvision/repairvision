@@ -2,10 +2,13 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="codebricks" nsURI="http://www.sidiff.org/codebricks/1.0" nsPrefix="codebricks">
   <eClassifiers xsi:type="ecore:EClass" name="Codebricks">
+    <eOperations name="isChosen" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="alternatives" upperBound="-1"
         eType="#//Codebrick" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="template" eType="#//Codebrick"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="choice" upperBound="-1"
+        eType="#//Codebrick" changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Codebrick">
     <eOperations name="calculateRows" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -71,5 +74,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="ComposedTemplatePlaceholderBrick" eSuperTypes="#//TemplatePlaceholderBrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="containerBrick" lowerBound="1"
         eType="#//ComposedBrick"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="POJOCodebrickView" eSuperTypes="#//Codebrick">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="model" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CodebrickView" eSuperTypes="#//Codebrick">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
   </eClassifiers>
 </ecore:EPackage>

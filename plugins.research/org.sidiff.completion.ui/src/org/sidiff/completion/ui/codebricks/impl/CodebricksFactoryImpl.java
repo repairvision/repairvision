@@ -68,6 +68,8 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK: return createValuePlaceholderBrick();
 			case CodebricksPackage.OBJECT_DOMAIN_PLACEHOLDER_BRICK: return createObjectDomainPlaceholderBrick();
 			case CodebricksPackage.COMPOSED_TEMPLATE_PLACEHOLDER_BRICK: return createComposedTemplatePlaceholderBrick();
+			case CodebricksPackage.POJO_CODEBRICK_VIEW: return createPOJOCodebrickView();
+			case CodebricksPackage.CODEBRICK_VIEW: return createCodebrickView();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -203,6 +205,28 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 	public ComposedTemplatePlaceholderBrick createComposedTemplatePlaceholderBrick() {
 		ComposedTemplatePlaceholderBrickImpl composedTemplatePlaceholderBrick = new ComposedTemplatePlaceholderBrickImpl();
 		return composedTemplatePlaceholderBrick;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public POJOCodebrickView createPOJOCodebrickView() {
+		POJOCodebrickViewImpl pojoCodebrickView = new POJOCodebrickViewImpl();
+		return pojoCodebrickView;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public CodebrickView createCodebrickView() {
+		CodebrickViewImpl codebrickView = new CodebrickViewImpl();
+		return codebrickView;
 	}
 
 	/**

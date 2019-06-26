@@ -3,9 +3,11 @@ package org.sidiff.completion.ui.model;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_EDIT_RULE_SEPARATOR;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_MANDATORY_PLACEHOLDER;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_OPTIONAL_PLACEHOLDER;
+import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_PARAMETER_LIST_POSTFIX;
+import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_PARAMETER_LIST_PREFIX;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_PARAMETER_NAME_VALUE_SEPARATOR;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_PARAMETER_SEPARATOR;
-import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.*;
+import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_PRESENCE_SEPARATOR_TRIM;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.getPlainTemplate;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.getSubGraphChanges;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.getSubGraphContext;
@@ -29,6 +31,7 @@ import org.sidiff.completion.ui.codebricks.CodebricksFactory;
 import org.sidiff.completion.ui.codebricks.ComposedBrick;
 import org.sidiff.completion.ui.codebricks.LineBreakBrick;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
+import org.sidiff.completion.ui.codebricks.POJOCodebrickView;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.TextBrick;
 import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
@@ -84,7 +87,8 @@ public class CodebricksGenerator {
 			DecompositionTemplates decomposition = proposal.getDecomposition();
 			
 			// Create alternative:
-			Codebrick template = CodebricksFactory.eINSTANCE.createCodebrick();
+			POJOCodebrickView template = CodebricksFactory.eINSTANCE.createPOJOCodebrickView();
+			template.setModel(proposal);
 			codebricks.getAlternatives().add(template);
 			
 			// Historic:
@@ -118,8 +122,8 @@ public class CodebricksGenerator {
 		
 		// SEE: org.sidiff.completion.ui.model.ModelCompletionProposalCluster.matchTemplates()
 		
-		// TODO: NOTE*1: We currently do not check if the common sub sequence are also common sub graphs!
-		//               If we not show the parameters in the template for the unselected sub rules, this is still correct.
+		// TODO: NOTE*1: We currently do not check if the common sub sequence of rules is also a common sub graph!
+		//               This doesn't matter if we not show the parameters in the template for the unselected sub rules.
 		//               Different sub graphs would just lead to different IN/OUT parameter bindings between the sub rules.
 		
 		if (!inTemplate.isEmpty() && !matchAlternative.isEmpty() && (matchAlternative.size() <= inTemplate.size())) {

@@ -127,8 +127,10 @@ public class ModelCompletionProposalCluster implements ICompletionProposal {
 	 */
 	private boolean matchTemplates(List<String> matchTemplatesA, List<String> inTemplatesB) {
 		
-		// TODO: NOTE*1: We currently do not check if the common sub sequence are also common sub graphs!
-		//               If we not show the parameters in the template for the unselected sub rules, this is still correct.
+		// SEE: org.sidiff.completion.ui.model.CodebricksGenerator.matchAlternativeToTemplates()
+		
+		// TODO: NOTE*1: We currently do not check if the common sub sequence of rules is also a common sub graph!
+		//               This doesn't matter if we not show the parameters in the template for the unselected sub rules.
 		//               Different sub graphs would just lead to different IN/OUT parameter bindings between the sub rules.
 		
 		if (!inTemplatesB.isEmpty() && !matchTemplatesA.isEmpty() && (matchTemplatesA.size() <= inTemplatesB.size())) {
@@ -200,6 +202,7 @@ public class ModelCompletionProposalCluster implements ICompletionProposal {
 		
 		CodebricksEditor editor = new CodebricksEditor();
 		editor.setContent(codebricks);
+
 		editor.showPopupOnCursor();
 		
 		return false;

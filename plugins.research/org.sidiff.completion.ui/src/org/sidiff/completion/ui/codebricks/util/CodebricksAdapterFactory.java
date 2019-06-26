@@ -132,6 +132,14 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 				return createComposedTemplatePlaceholderBrickAdapter();
 			}
 			@Override
+			public Adapter casePOJOCodebrickView(POJOCodebrickView object) {
+				return createPOJOCodebrickViewAdapter();
+			}
+			@Override
+			public Adapter caseCodebrickView(CodebrickView object) {
+				return createCodebrickViewAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -372,6 +380,34 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createComposedTemplatePlaceholderBrickAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.POJOCodebrickView <em>POJO Codebrick View</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.POJOCodebrickView
+	 * @generated
+	 */
+	public Adapter createPOJOCodebrickViewAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.CodebrickView <em>Codebrick View</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.CodebrickView
+	 * @generated
+	 */
+	public Adapter createCodebrickViewAdapter() {
 		return null;
 	}
 

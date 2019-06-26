@@ -199,6 +199,20 @@ public class CodebricksSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CodebricksPackage.POJO_CODEBRICK_VIEW: {
+				POJOCodebrickView pojoCodebrickView = (POJOCodebrickView)theEObject;
+				T result = casePOJOCodebrickView(pojoCodebrickView);
+				if (result == null) result = caseCodebrick(pojoCodebrickView);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CodebricksPackage.CODEBRICK_VIEW: {
+				CodebrickView codebrickView = (CodebrickView)theEObject;
+				T result = caseCodebrickView(codebrickView);
+				if (result == null) result = caseCodebrick(codebrickView);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -440,6 +454,36 @@ public class CodebricksSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseComposedTemplatePlaceholderBrick(ComposedTemplatePlaceholderBrick object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>POJO Codebrick View</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>POJO Codebrick View</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePOJOCodebrickView(POJOCodebrickView object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Codebrick View</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Codebrick View</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCodebrickView(CodebrickView object) {
 		return null;
 	}
 

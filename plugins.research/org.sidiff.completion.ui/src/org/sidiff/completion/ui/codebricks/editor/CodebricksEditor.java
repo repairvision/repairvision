@@ -10,11 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BidiSegmentEvent;
 import org.eclipse.swt.custom.BidiSegmentListener;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
@@ -44,6 +47,7 @@ import org.eclipse.ui.PlatformUI;
 import org.sidiff.completion.ui.Activator;
 import org.sidiff.completion.ui.codebricks.BlankBrick;
 import org.sidiff.completion.ui.codebricks.Brick;
+import org.sidiff.completion.ui.codebricks.Codebrick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.CodebricksFactory;
 import org.sidiff.completion.ui.codebricks.ComposedBrick;
@@ -51,13 +55,16 @@ import org.sidiff.completion.ui.codebricks.ComposedTemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.IndentBrick;
 import org.sidiff.completion.ui.codebricks.LineBreakBrick;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
+import org.sidiff.completion.ui.codebricks.POJOCodebrickView;
 import org.sidiff.completion.ui.codebricks.PlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.StyledBrick;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.TextBrick;
 import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
+import org.sidiff.completion.ui.codebricks.util.CodebricksUtil;
 import org.sidiff.completion.ui.list.CompletionProposalList;
+import org.sidiff.completion.ui.list.ICompletionProposal;
 
 public class CodebricksEditor {
 
@@ -72,6 +79,10 @@ public class CodebricksEditor {
 	private Composite toolbarContainer;
 	
 	private ToolBar toolBar;
+	
+	private ToolItem actionApply;
+	
+	private ToolItem actionClose;
 	
 	private int maximumWidth = 600;
 	
@@ -99,6 +110,8 @@ public class CodebricksEditor {
      */
     private Codebricks codebricks;
     
+    private Adapter choiceFinishedListener;
+    
     private Map<Brick, Control> modelToViewMap = new HashMap<>();
     
     public CodebricksEditor() {
@@ -120,6 +133,9 @@ public class CodebricksEditor {
 		
 		// Create editor content:
 		buildContent(editorContent, getTemplate());
+		
+		// Wait for placeholders to be selected:
+		choiceFinishedListener = CodebricksUtil.onAlternativeChosen(codebricks, this::onAlternativeChosen);
 	}
 	
 	public Codebricks getContent() {
@@ -273,6 +289,21 @@ public class CodebricksEditor {
 		 * Create shell
 		 */
 		editorShell = new Shell(display, SWT.ON_TOP | SWT.RESIZE);
+		{
+			editorShell.addDisposeListener(new DisposeListener() {
+				
+				@Override
+				public void widgetDisposed(DisposeEvent e) {
+					
+					// Remove model listener:
+					if ((codebricks != null) && (choiceFinishedListener != null)) {
+						if (choiceFinishedListener.getTarget() != null) {
+							choiceFinishedListener.getTarget().eAdapters().remove(choiceFinishedListener);
+						}
+					}
+				}
+			});
+		}
 		
 		/*
 		 * Create editor:
@@ -352,9 +383,28 @@ public class CodebricksEditor {
 	protected void createToolbarActions(ToolBar toolBar) {
 		
 		/*
+		 * Apply action:
+		 */
+		actionApply = new ToolItem(toolBar, SWT.NONE);
+		actionApply.setImage(loadIcon("/icons/apply.png" ));
+		
+		actionApply.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				onApplyAlternative();
+				editorShell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}
+		});
+		actionApply.setEnabled(false);
+		
+		/*
 		 * Close action:
 		 */
-		ToolItem actionClose = new ToolItem(toolBar, SWT.NONE);
+		actionClose = new ToolItem(toolBar, SWT.NONE);
 		actionClose.setImage(loadIcon("/icons/close.png" ));
 		
 		actionClose.addSelectionListener(new SelectionListener() {
@@ -742,6 +792,33 @@ public class CodebricksEditor {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	protected void onAlternativeChosen(Codebrick choice) {
+		actionApply.setEnabled(true);
+	}
+	
+	protected Codebrick getChosenAlternative() {
+		if (codebricks.isChosen()) {
+			List<Codebrick> choise = codebricks.getChoice();
+			
+			if (choise.size() == 1) {
+				return choise.get(0);
+			}
+		}
+		return null;
+	}
+	
+	protected void onApplyAlternative() {
+		Codebrick applied = getChosenAlternative();
+
+		if (applied instanceof POJOCodebrickView) {
+			Object model = ((POJOCodebrickView) applied).getModel();
+
+			if (model instanceof ICompletionProposal) {
+				((ICompletionProposal) model).apply();
+			}
 		}
 	}
 	

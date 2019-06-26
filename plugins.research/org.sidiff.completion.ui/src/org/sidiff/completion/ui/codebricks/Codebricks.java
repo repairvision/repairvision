@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.sidiff.completion.ui.codebricks.Codebricks#getAlternatives <em>Alternatives</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.Codebricks#getTemplate <em>Template</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.Codebricks#getChoice <em>Choice</em>}</li>
  * </ul>
  *
  * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getCodebricks()
@@ -57,5 +58,25 @@ public interface Codebricks extends EObject {
 	 * @generated
 	 */
 	void setTemplate(Codebrick value);
+
+	/**
+	 * Returns the value of the '<em><b>Choice</b></em>' reference list.
+	 * The list contents are of type {@link org.sidiff.completion.ui.codebricks.Codebrick}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Choice</em>' reference list.
+	 * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getCodebricks_Choice()
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @generated
+	 */
+	EList<Codebrick> getChoice();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isChosen();
 
 } // Codebricks
