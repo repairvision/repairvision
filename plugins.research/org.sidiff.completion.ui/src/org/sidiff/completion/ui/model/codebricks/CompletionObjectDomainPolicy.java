@@ -28,7 +28,7 @@ public class CompletionObjectDomainPolicy extends ObjectDomainPolicyImpl {
 						ModelCompletionParameterBinding parameterBinding = completion.getParameterBinding();
 						
 						Parameter parameter = parameterBinding.getParameters().stream()
-								.filter(p -> p.getName().equals(name)).findAny().get();
+								.filter(p -> p.getName().equals(name)).findAny().orElseGet(() -> null);
 						
 						if (parameter != null) {
 							return ECollections.asEList(parameterBinding.getParameterDomain(parameter, EObject.class));

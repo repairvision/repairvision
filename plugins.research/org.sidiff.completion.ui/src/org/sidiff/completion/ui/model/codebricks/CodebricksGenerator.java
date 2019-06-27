@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.completion.ui.codebricks.Brick;
@@ -281,7 +280,7 @@ public class CodebricksGenerator {
 			if (graphElement instanceof Node) {
 				Node eoNode = (Node) graphElement;
 				
-				if (HenshinRuleAnalysisUtilEx.isDeletionNode(eoNode) || hasEdgeChanges(eoNode)) {
+				if (!HenshinRuleAnalysisUtilEx.isCreationNode(eoNode)) {
 					String name = eoNode.getName();
 					
 					// Check if parameter already exists:
@@ -361,15 +360,5 @@ public class CodebricksGenerator {
 		
 		
 		return parameterAssignment;
-	}
-	
-	private boolean hasEdgeChanges(Node node) {
-		for (Edge incident : node.getOutgoing()) {
-			if (HenshinRuleAnalysisUtilEx.isCreationEdge(incident)
-					|| HenshinRuleAnalysisUtilEx.isDeletionEdge(incident)) {
-				return true;
-			}
-		}
-		return false;
 	}
 }

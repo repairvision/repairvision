@@ -70,7 +70,7 @@ public class ConstructionEditRuleGenerator {
 //			generateFragmentRules(create, graphPattern, editRule, editRules);
 			
 			// Generate parameters:
-			GraphPatternGeneratorUtil.generateParameters(editOperation);
+			GraphPatternGeneratorUtil.generateINParameters(editOperation);
 			
 			// Add new edit rule for graph pattern:
 			editRules.merge(graphPattern, creationRules, (v1, v2) -> {v1.addAll(v2); return v1;});
@@ -119,7 +119,7 @@ public class ConstructionEditRuleGenerator {
 //			generateFragmentRules(delete, graphPattern, editRule, editRules);
 			
 			// Generate parameters:
-			GraphPatternGeneratorUtil.generateParameters(editOperation);
+			GraphPatternGeneratorUtil.generateINParameters(editOperation);
 			
 			// Add new edit rule for graph pattern:
 			editRules.merge(graphPattern, deletionRules, (v1, v2) -> {v1.addAll(v2); return v1;});

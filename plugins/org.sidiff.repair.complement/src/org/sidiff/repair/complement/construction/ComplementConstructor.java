@@ -18,7 +18,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Parameter;
+import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
@@ -95,7 +98,7 @@ public class ComplementConstructor {
 		}
 		
 		// Substitute already executed << create >> nodes:
-		if (!substituteCreateNodes(recognitionMatch, copyTrace)) {
+		if (!substituteCreateNodes(complementRule, recognitionMatch, copyTrace)) {
 			return null;
 		}
 		
@@ -148,7 +151,8 @@ public class ComplementConstructor {
 		return true;
 	}
 
-	protected boolean substituteCreateNodes(Collection<RecognitionMatch> recognitionMatch,  Map<EObject, EObject> copyTrace) {
+	// NOTE: If the complement rule is set, we generate new IN parameters for new context nodes.
+	protected boolean substituteCreateNodes(Rule complement, Collection<RecognitionMatch> recognitionMatch,  Map<EObject, EObject> copyTrace) {
 		
 		// Substitute already executed << create >> nodes:
 		for (RecognitionMatch sourceRuleMatch : recognitionMatch) {
@@ -166,6 +170,15 @@ public class ComplementConstructor {
 					// Transform create-node to preserve-node:
 					if (isCreationNode(complementNode)) {
 						ComplementUtil.makePreserve(complementNode, false);
+						
+						// Create new IN-Parameter:
+						if ((complement != null) && (complementNode.getName() != null)) {
+							Parameter inParameter = HenshinFactory.eINSTANCE.createParameter(); 
+							inParameter.setKind(ParameterKind.IN);
+							inParameter.setName(complementNode.getName());
+							inParameter.setType(complementNode.getType());
+							complement.getParameters().add(inParameter);
+						}
 					} else {
 						return false;
 					}

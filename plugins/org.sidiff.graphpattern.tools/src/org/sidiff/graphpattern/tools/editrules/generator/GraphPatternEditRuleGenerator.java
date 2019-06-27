@@ -79,7 +79,7 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		}
 		
 		// Generate parameters:
-		GraphPatternGeneratorUtil.generateParameters(editOperation);
+		GraphPatternGeneratorUtil.generateINParameters(editOperation);
 	}
 	
 	protected NodePattern generateNode(NodePattern node, Stereotype action) {

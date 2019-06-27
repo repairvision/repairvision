@@ -310,7 +310,7 @@ public class GenerateBasicGraphPatterns extends AbstractHandler {
 		Pattern basicPattern = GraphpatternFactory.eINSTANCE.createPattern();
 		basicPattern.getGraphs().add(basicGraphPattern);
 		
-		GraphPatternGeneratorUtil.generateParameters(basicPattern);
+		GraphPatternGeneratorUtil.generateINParameters(basicPattern);
 		
 		return basicPattern;
 	}

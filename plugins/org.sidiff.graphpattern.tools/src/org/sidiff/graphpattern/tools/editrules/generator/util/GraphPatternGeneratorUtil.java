@@ -3,7 +3,6 @@ package org.sidiff.graphpattern.tools.editrules.generator.util;
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.constraint;
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
-import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 
 import java.io.IOException;
@@ -22,7 +21,6 @@ import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Parameter;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
-import org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil;
 
 public class GraphPatternGeneratorUtil {
 
@@ -130,11 +128,13 @@ public class GraphPatternGeneratorUtil {
 		}
 	}
 	
-	public static void generateParameters(Pattern pattern) {
+	public static void generateINParameters(Pattern pattern) {
 		
 		for (GraphPattern editRule : pattern.getGraphs()) {
 			for (NodePattern eoNode : editRule.getNodes()) {
-				if (eoNode.getStereotypes().contains(delete) || HenshinProfileUtil.hasEdgeChanges(eoNode)) {
+				
+				// Filter OUT parameters:
+				if (!eoNode.getStereotypes().contains(create)) {
 					generateParameter(pattern, eoNode.getName());
 				}
 				
