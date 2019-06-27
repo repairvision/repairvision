@@ -107,6 +107,15 @@ public class ValueDomainPolicyImpl extends MinimalEObjectImpl.Container implemen
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public void assignValue(Object instanceValue, ValuePlaceholderBrick brick) {
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -118,6 +127,9 @@ public class ValueDomainPolicyImpl extends MinimalEObjectImpl.Container implemen
 				return createFromString((ValuePlaceholderBrick)arguments.get(0), (String)arguments.get(1), (EDataType)arguments.get(2));
 			case CodebricksPackage.VALUE_DOMAIN_POLICY___CONVERT_TO_STRING__VALUEPLACEHOLDERBRICK_OBJECT_EDATATYPE:
 				return convertToString((ValuePlaceholderBrick)arguments.get(0), arguments.get(1), (EDataType)arguments.get(2));
+			case CodebricksPackage.VALUE_DOMAIN_POLICY___ASSIGN_VALUE__OBJECT_VALUEPLACEHOLDERBRICK:
+				assignValue(arguments.get(0), (ValuePlaceholderBrick)arguments.get(1));
+				return null;
 		}
 		return super.eInvoke(operationID, arguments);
 	}

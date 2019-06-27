@@ -1338,13 +1338,22 @@ public interface CodebricksPackage extends EPackage {
 	int OBJECT_DOMAIN_POLICY___GET_DOMAIN__OBJECTPLACEHOLDERBRICK = 0;
 
 	/**
+	 * The operation id for the '<em>Assign Object</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_POLICY___ASSIGN_OBJECT__OBJECTPLACEHOLDERBRICK_EOBJECT = 1;
+
+	/**
 	 * The number of operations of the '<em>Object Domain Policy</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OBJECT_DOMAIN_POLICY_OPERATION_COUNT = 1;
+	int OBJECT_DOMAIN_POLICY_OPERATION_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.ValueDomainPolicyImpl <em>Value Domain Policy</em>}' class.
@@ -1393,13 +1402,22 @@ public interface CodebricksPackage extends EPackage {
 	int VALUE_DOMAIN_POLICY___CONVERT_TO_STRING__VALUEPLACEHOLDERBRICK_OBJECT_EDATATYPE = 2;
 
 	/**
+	 * The operation id for the '<em>Assign Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_DOMAIN_POLICY___ASSIGN_VALUE__OBJECT_VALUEPLACEHOLDERBRICK = 3;
+
+	/**
 	 * The number of operations of the '<em>Value Domain Policy</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_DOMAIN_POLICY_OPERATION_COUNT = 3;
+	int VALUE_DOMAIN_POLICY_OPERATION_COUNT = 4;
 
 
 	/**
@@ -1952,6 +1970,16 @@ public interface CodebricksPackage extends EPackage {
 	EOperation getObjectDomainPolicy__GetDomain__ObjectPlaceholderBrick();
 
 	/**
+	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.ObjectDomainPolicy#assignObject(org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick, org.eclipse.emf.ecore.EObject) <em>Assign Object</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Assign Object</em>' operation.
+	 * @see org.sidiff.completion.ui.codebricks.ObjectDomainPolicy#assignObject(org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick, org.eclipse.emf.ecore.EObject)
+	 * @generated
+	 */
+	EOperation getObjectDomainPolicy__AssignObject__ObjectPlaceholderBrick_EObject();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ValueDomainPolicy <em>Value Domain Policy</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1990,6 +2018,16 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getValueDomainPolicy__ConvertToString__ValuePlaceholderBrick_Object_EDataType();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.ValueDomainPolicy#assignValue(java.lang.Object, org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick) <em>Assign Value</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Assign Value</em>' operation.
+	 * @see org.sidiff.completion.ui.codebricks.ValueDomainPolicy#assignValue(java.lang.Object, org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick)
+	 * @generated
+	 */
+	EOperation getValueDomainPolicy__AssignValue__Object_ValuePlaceholderBrick();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2467,6 +2505,14 @@ public interface CodebricksPackage extends EPackage {
 		EOperation OBJECT_DOMAIN_POLICY___GET_DOMAIN__OBJECTPLACEHOLDERBRICK = eINSTANCE.getObjectDomainPolicy__GetDomain__ObjectPlaceholderBrick();
 
 		/**
+		 * The meta object literal for the '<em><b>Assign Object</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OBJECT_DOMAIN_POLICY___ASSIGN_OBJECT__OBJECTPLACEHOLDERBRICK_EOBJECT = eINSTANCE.getObjectDomainPolicy__AssignObject__ObjectPlaceholderBrick_EObject();
+
+		/**
 		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ValueDomainPolicyImpl <em>Value Domain Policy</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2499,6 +2545,14 @@ public interface CodebricksPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation VALUE_DOMAIN_POLICY___CONVERT_TO_STRING__VALUEPLACEHOLDERBRICK_OBJECT_EDATATYPE = eINSTANCE.getValueDomainPolicy__ConvertToString__ValuePlaceholderBrick_Object_EDataType();
+
+		/**
+		 * The meta object literal for the '<em><b>Assign Value</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VALUE_DOMAIN_POLICY___ASSIGN_VALUE__OBJECT_VALUEPLACEHOLDERBRICK = eINSTANCE.getValueDomainPolicy__AssignValue__Object_ValuePlaceholderBrick();
 
 	}
 

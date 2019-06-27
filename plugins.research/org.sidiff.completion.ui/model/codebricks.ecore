@@ -86,6 +86,10 @@
     <eOperations name="getDomain" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
       <eParameters name="brick" eType="#//ObjectPlaceholderBrick"/>
     </eOperations>
+    <eOperations name="assignObject">
+      <eParameters name="brick" eType="#//ObjectPlaceholderBrick"/>
+      <eParameters name="element" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValueDomainPolicy">
     <eOperations name="isValid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -102,6 +106,10 @@
       <eParameters name="brick" eType="#//ValuePlaceholderBrick"/>
       <eParameters name="instanceValue" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
       <eParameters name="eDataType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+    </eOperations>
+    <eOperations name="assignValue">
+      <eParameters name="instanceValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+      <eParameters name="brick" eType="#//ValuePlaceholderBrick"/>
     </eOperations>
   </eClassifiers>
 </ecore:EPackage>

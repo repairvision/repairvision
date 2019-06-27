@@ -1,4 +1,4 @@
-package org.sidiff.completion.ui.codebricks.editor;
+package org.sidiff.completion.ui.codebricks.editor.proposals;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.custom.StyledText;
@@ -13,17 +13,14 @@ import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 public class ObjectCodebricksProposal implements ICompletionProposal {
 
-	protected CodebricksEditor editor;
-	
 	protected StyledText textField;
 	
 	protected ObjectPlaceholderBrick placeholder;
 	
 	protected EObject object;
 	
-	public ObjectCodebricksProposal(CodebricksEditor editor, StyledText textField, ObjectPlaceholderBrick placeholder, EObject object) {
-		this.editor = editor;
-		this.textField = textField;
+	public ObjectCodebricksProposal(StyledText textField, ObjectPlaceholderBrick placeholder, EObject object) {
+		this.textField = textField;  				// TODO: The editor should listen to model changes!
 		this.placeholder = placeholder;
 		this.object = object;
 	}
@@ -36,6 +33,7 @@ public class ObjectCodebricksProposal implements ICompletionProposal {
 			
 			@Override
 			public boolean show() {
+//				apply();							// TODO: Needs recording/undo of all subsequent changes!	
 				textField.setText(getText());
 				return true;
 			}
@@ -85,10 +83,6 @@ public class ObjectCodebricksProposal implements ICompletionProposal {
 		
 		// Set selected text for placeholder:
 		placeholder.setElement(object);
-		textField.setText(getText());
-		
-		// Update other placeholders:
-		editor.autoSelectPlaceholders(editor.getTemplate());
 		
 		return true;
 	}

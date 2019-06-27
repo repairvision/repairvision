@@ -63,9 +63,12 @@ import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.TextBrick;
 import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
+import org.sidiff.completion.ui.codebricks.editor.proposals.ObjectCodebricksProposal;
+import org.sidiff.completion.ui.codebricks.editor.proposals.TemplateCodebricksProposal;
 import org.sidiff.completion.ui.codebricks.util.CodebricksUtil;
 import org.sidiff.completion.ui.list.CompletionProposalList;
 import org.sidiff.completion.ui.list.ICompletionProposal;
+import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 public class CodebricksEditor {
 
@@ -111,7 +114,7 @@ public class CodebricksEditor {
      */
     private Codebricks codebricks;
     
-    private Adapter choiceFinishedListener;
+    private List<Adapter> codebricksAdapters = new ArrayList<>();
     
     private Map<Brick, Control> modelToViewMap = new HashMap<>();
     
@@ -130,13 +133,33 @@ public class CodebricksEditor {
 	}
 	
 	public void setContent(Codebricks input) {
+		
+		// Clean up old content:
+		removeContentListener();
+		
+		// Set new content:
 		this.codebricks = input;
 		
 		// Create editor content:
 		buildContent(editorContent, getTemplate());
 		
 		// Wait for placeholders to be selected:
-		choiceFinishedListener = CodebricksUtil.onAlternativeChosen(codebricks, this::onAlternativeChosen);
+		codebricksAdapters.add(CodebricksUtil.onAlternativeChosen(codebricks, this::onAlternativeChosen));
+		codebricksAdapters.add(CodebricksUtil.onTemplatePlaceholderSelected(codebricks, this::onTemplatePlaceholderSelected));
+		codebricksAdapters.add(CodebricksUtil.onObjectPlaceholderSelected(codebricks, this::onObjectPlaceholderSelected));
+	}
+	
+	private void removeContentListener() {
+		
+		// Remove model listener:
+		if (codebricks != null) {
+			for (Adapter codebricksAdapter : codebricksAdapters) {
+				if (codebricksAdapter.getTarget() != null) {
+					codebricksAdapter.getTarget().eAdapters().remove(codebricksAdapter);
+				}
+			}
+			codebricksAdapters.clear();
+		}
 	}
 	
 	public Codebricks getContent() {
@@ -295,13 +318,7 @@ public class CodebricksEditor {
 				
 				@Override
 				public void widgetDisposed(DisposeEvent e) {
-					
-					// Remove model listener:
-					if ((codebricks != null) && (choiceFinishedListener != null)) {
-						if (choiceFinishedListener.getTarget() != null) {
-							choiceFinishedListener.getTarget().eAdapters().remove(choiceFinishedListener);
-						}
-					}
+					removeContentListener();
 				}
 			});
 		}
@@ -768,22 +785,19 @@ public class CodebricksEditor {
 		Set<ViewableBrick> unlistedChoices = new HashSet<>(remainingChoices); 
 		
 		for (ViewableBrick choice : remainingChoices) {
-			if (choice instanceof ComposedBrick) {
-				proposals.add(new CodebricksComposedProposal(CodebricksEditor.this, parentContainer, placeholderControl, placeholderBrick, (ComposedBrick) choice));
-			} else {
-				// Show equal choices in one proposal:
-				if (unlistedChoices.contains(choice)) {
-					List<ViewableBrick> equalChoices = new ArrayList<>();
-					
-					for (ViewableBrick unlistedChoice : unlistedChoices) {
-						if (unlistedChoice.getText().equals(choice.getText())) {
-							equalChoices.add(unlistedChoice);
-						}
+
+			// Show equal choices in one proposal:
+			if (unlistedChoices.contains(choice)) {
+				List<ViewableBrick> equalChoices = new ArrayList<>();
+
+				for (ViewableBrick unlistedChoice : unlistedChoices) {
+					if (unlistedChoice.getText().equals(choice.getText())) {
+						equalChoices.add(unlistedChoice);
 					}
-					
-					unlistedChoices.removeAll(equalChoices);
-					proposals.add(new TemplateCodebricksProposal(this, placeholderControl, placeholderBrick, equalChoices));
 				}
+
+				unlistedChoices.removeAll(equalChoices);
+				proposals.add(new TemplateCodebricksProposal(placeholderControl, placeholderBrick, equalChoices));
 			}
 		}
 		
@@ -793,10 +807,9 @@ public class CodebricksEditor {
 	private List<ICompletionProposal> getProposals(Composite parentContainer, StyledText placeholderControl, ObjectPlaceholderBrick placeholderBrick) {
 		List<ICompletionProposal> proposals = new ArrayList<>();
 
-		// TODO:
 		if (placeholderBrick.getDomain() != null) {
 			for (EObject element : placeholderBrick.getDomain().getDomain(placeholderBrick)) {
-				ObjectCodebricksProposal codebricksProposal = new ObjectCodebricksProposal(this, placeholderControl, placeholderBrick, element);
+				ObjectCodebricksProposal codebricksProposal = new ObjectCodebricksProposal(placeholderControl, placeholderBrick, element);
 				proposals.add(codebricksProposal);
 			}
 		}
@@ -810,8 +823,75 @@ public class CodebricksEditor {
 		return proposals;
 	}
 	
-	// TODO: Implement template changed listener.
-	protected void autoSelectPlaceholders(List<? extends Brick> bricks) {
+	protected void onObjectPlaceholderSelected(ObjectPlaceholderBrick placeholderBrick) {
+		StyledText textBrick = (StyledText) modelToViewMap.get(placeholderBrick);
+		textBrick.setText(ItemProviderUtil.getTextByObject(placeholderBrick.getElement()));
+		
+		placeholderBrick.getDomain().assignObject(placeholderBrick, placeholderBrick.getElement());
+		autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
+	}
+	
+	protected void autoSelectObjectPlaceholders(List<? extends Brick> bricks) {
+		try {
+			for (Brick brick : bricks) {
+				if (brick instanceof PlaceholderBrick) {
+					if (brick instanceof TemplatePlaceholderBrick) {
+						autoSelectObjectPlaceholders(((TemplatePlaceholderBrick) brick).getChoice());
+					} else if (brick instanceof ObjectPlaceholderBrick) {
+						ObjectPlaceholderBrick placeholderBrick = (ObjectPlaceholderBrick) brick;
+						
+						// Not already selected:
+						if (placeholderBrick.getElement() == null) {
+							List<EObject> currentDomain = placeholderBrick.getDomain().getDomain(placeholderBrick);
+
+							if (currentDomain.size() == 1) {
+								placeholderBrick.setElement(currentDomain.get(0));
+							}
+						}
+					}
+				} else if (brick instanceof ComposedBrick) {
+					autoSelectObjectPlaceholders(((ComposedBrick) brick).getBricks());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void onTemplatePlaceholderSelected(TemplatePlaceholderBrick placeholderBrick) {
+		StyledText textBrick = (StyledText) modelToViewMap.get(placeholderBrick);
+		ViewableBrick showChoice = placeholderBrick.getChoice().get(0);
+		
+		if (showChoice instanceof ComposedBrick) {
+			
+			// Clear container:
+			Composite placeholderContainer = textBrick.getParent();
+			Control[] children = placeholderContainer.getChildren();
+			
+			for (int i = 0; i < children.length; i++) {
+				children[i].dispose();
+			}
+			
+			// Add composed bricks:
+			buildContent(placeholderContainer, ((ComposedBrick) showChoice).getBricks());
+			
+			// If this choice is not yet determined disable controls:
+			if (placeholderBrick.getChoice().size() > 1) {
+				children = placeholderContainer.getChildren();
+				
+				for (int i = 0; i < children.length; i++) {
+					children[i].setEnabled(false);
+				}
+			}
+			
+		} else {
+			textBrick.setText(showChoice.getText());
+		}
+		
+		autoSelectTemplatePlaceholders(codebricks.getTemplate().getBricks());
+	}
+	
+	protected void autoSelectTemplatePlaceholders(List<? extends Brick> bricks) {
 		try {
 			for (Brick brick : bricks) {
 				if (brick instanceof PlaceholderBrick) {
@@ -838,7 +918,7 @@ public class CodebricksEditor {
 						}
 					}
 				} else if (brick instanceof ComposedBrick) {
-					autoSelectPlaceholders(((ComposedBrick) brick).getBricks());
+					autoSelectTemplatePlaceholders(((ComposedBrick) brick).getBricks());
 				}
 			}
 		} catch (Exception e) {
@@ -895,19 +975,17 @@ public class CodebricksEditor {
 		 *  For optimization:
 		 */
 		
-		if (!placeholder.getChoice().isEmpty()) {
+		if (placeholder.getChoice().size() == 1) {
 			return false; // already selected!
 		}
 		
 		List<ViewableBrick> choices = placeholder.getRemainingChoices();
 		
+		// Select (=1) or disable (=0) placeholder?
 		if ((choices.size() == 0) || (choices.size() == 1)) {
 			return true;
 		} else {
 			for (ViewableBrick choice : choices) {
-				if (choice instanceof ComposedBrick) {
-					return false; // multiple composed bricks!
-				}
 				if (!choice.getText().equals(choices.get(0).getText())) {
 					return false; // not all choices are equal!
 				}

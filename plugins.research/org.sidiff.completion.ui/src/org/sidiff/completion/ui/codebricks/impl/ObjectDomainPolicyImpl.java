@@ -54,6 +54,16 @@ public class ObjectDomainPolicyImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public void assignObject(ObjectPlaceholderBrick brick, EObject element) {
+	}
+
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -61,6 +71,9 @@ public class ObjectDomainPolicyImpl extends MinimalEObjectImpl.Container impleme
 		switch (operationID) {
 			case CodebricksPackage.OBJECT_DOMAIN_POLICY___GET_DOMAIN__OBJECTPLACEHOLDERBRICK:
 				return getDomain((ObjectPlaceholderBrick)arguments.get(0));
+			case CodebricksPackage.OBJECT_DOMAIN_POLICY___ASSIGN_OBJECT__OBJECTPLACEHOLDERBRICK_EOBJECT:
+				assignObject((ObjectPlaceholderBrick)arguments.get(0), (EObject)arguments.get(1));
+				return null;
 		}
 		return super.eInvoke(operationID, arguments);
 	}

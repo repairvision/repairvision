@@ -763,6 +763,16 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
+	public EOperation getObjectDomainPolicy__AssignObject__ObjectPlaceholderBrick_EObject() {
+		return objectDomainPolicyEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getValueDomainPolicy() {
 		return valueDomainPolicyEClass;
 	}
@@ -795,6 +805,16 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	@Override
 	public EOperation getValueDomainPolicy__ConvertToString__ValuePlaceholderBrick_Object_EDataType() {
 		return valueDomainPolicyEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getValueDomainPolicy__AssignValue__Object_ValuePlaceholderBrick() {
+		return valueDomainPolicyEClass.getEOperations().get(3);
 	}
 
 	/**
@@ -895,11 +915,13 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 
 		objectDomainPolicyEClass = createEClass(OBJECT_DOMAIN_POLICY);
 		createEOperation(objectDomainPolicyEClass, OBJECT_DOMAIN_POLICY___GET_DOMAIN__OBJECTPLACEHOLDERBRICK);
+		createEOperation(objectDomainPolicyEClass, OBJECT_DOMAIN_POLICY___ASSIGN_OBJECT__OBJECTPLACEHOLDERBRICK_EOBJECT);
 
 		valueDomainPolicyEClass = createEClass(VALUE_DOMAIN_POLICY);
 		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___IS_VALID__VALUEPLACEHOLDERBRICK_STRING_EDATATYPE);
 		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___CREATE_FROM_STRING__VALUEPLACEHOLDERBRICK_STRING_EDATATYPE);
 		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___CONVERT_TO_STRING__VALUEPLACEHOLDERBRICK_OBJECT_EDATATYPE);
+		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___ASSIGN_VALUE__OBJECT_VALUEPLACEHOLDERBRICK);
 	}
 
 	/**
@@ -1025,6 +1047,10 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		EOperation op = initEOperation(getObjectDomainPolicy__GetDomain__ObjectPlaceholderBrick(), ecorePackage.getEObject(), "getDomain", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getObjectPlaceholderBrick(), "brick", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = initEOperation(getObjectDomainPolicy__AssignObject__ObjectPlaceholderBrick_EObject(), null, "assignObject", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getObjectPlaceholderBrick(), "brick", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEObject(), "element", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(valueDomainPolicyEClass, ValueDomainPolicy.class, "ValueDomainPolicy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		op = initEOperation(getValueDomainPolicy__IsValid__ValuePlaceholderBrick_String_EDataType(), ecorePackage.getEBoolean(), "isValid", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1041,6 +1067,10 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		addEParameter(op, this.getValuePlaceholderBrick(), "brick", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEJavaObject(), "instanceValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDataType(), "eDataType", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getValueDomainPolicy__AssignValue__Object_ValuePlaceholderBrick(), null, "assignValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEJavaObject(), "instanceValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getValuePlaceholderBrick(), "brick", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -43,6 +43,14 @@ public interface ValueDomainPolicy extends EObject {
 	Object convertToString(ValuePlaceholderBrick brick, Object instanceValue, EDataType eDataType);
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void assignValue(Object instanceValue, ValuePlaceholderBrick brick);
+
+	/**
 	 * @generated NOT
 	 */
 	public static final String NULL = "null";

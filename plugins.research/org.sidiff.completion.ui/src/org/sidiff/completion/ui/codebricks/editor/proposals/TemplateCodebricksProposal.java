@@ -1,9 +1,11 @@
-package org.sidiff.completion.ui.codebricks.editor;
+package org.sidiff.completion.ui.codebricks.editor.proposals;
 
 import java.util.List;
 
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
 import org.sidiff.completion.ui.list.ICompletionPreview;
@@ -11,17 +13,14 @@ import org.sidiff.completion.ui.list.ICompletionProposal;
 
 public class TemplateCodebricksProposal implements ICompletionProposal {
 	
-	protected CodebricksEditor editor;
-	
 	protected StyledText textField;
 	
 	protected TemplatePlaceholderBrick placeholder;
 	
 	protected List<ViewableBrick> choice;
 	
-	public TemplateCodebricksProposal(CodebricksEditor editor, StyledText textField, TemplatePlaceholderBrick placeholder, List<ViewableBrick> choice) {
-		this.editor = editor;
-		this.textField = textField;
+	public TemplateCodebricksProposal(StyledText textField, TemplatePlaceholderBrick placeholder, List<ViewableBrick> choice) {
+		this.textField = textField;  				// TODO: The editor should listen to model changes!
 		this.placeholder = placeholder;
 		this.choice = choice;
 	}
@@ -34,6 +33,7 @@ public class TemplateCodebricksProposal implements ICompletionProposal {
 			
 			@Override
 			public boolean show() {
+//				apply();							// TODO: Needs recording/undo of all subsequent changes!	
 				textField.setText(getText());
 				return true;
 			}
@@ -58,7 +58,7 @@ public class TemplateCodebricksProposal implements ICompletionProposal {
 	
 	@Override
 	public Image getImage() {
-		return null;
+		return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
 	}
 	
 	@Override
@@ -67,10 +67,6 @@ public class TemplateCodebricksProposal implements ICompletionProposal {
 		// Set selected text for placeholder:
 		placeholder.getChoice().clear();
 		placeholder.getChoice().addAll(choice);
-		textField.setText(getText());
-		
-		// Update other placeholders:
-		editor.autoSelectPlaceholders(editor.getTemplate());
 		
 		return true;
 	}

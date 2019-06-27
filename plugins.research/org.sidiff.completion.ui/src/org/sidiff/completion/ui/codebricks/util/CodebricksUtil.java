@@ -9,6 +9,9 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.sidiff.completion.ui.codebricks.Codebrick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.CodebricksPackage;
+import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
+import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
+import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
 
 public class CodebricksUtil {
 
@@ -24,6 +27,56 @@ public class CodebricksUtil {
                 		}
                 	}
                 }
+            }
+        };
+        codebricks.eAdapters().add(adapter);
+        return adapter;
+	}
+	
+	public static Adapter onTemplatePlaceholderSelected(Codebricks codebricks, Consumer<TemplatePlaceholderBrick> onPlaceholderChanged) {
+		EContentAdapter adapter = new EContentAdapter() {
+            public void notifyChanged(Notification notification) {
+            	if (notification.getNotifier() instanceof TemplatePlaceholderBrick) {
+            		TemplatePlaceholderBrick placeholder = (TemplatePlaceholderBrick) notification.getNotifier();
+            		
+            		if (notification.getFeature() == CodebricksPackage.eINSTANCE.getTemplatePlaceholderBrick_Choice()) {
+            			if (!placeholder.getChoice().isEmpty()) {
+            				onPlaceholderChanged.accept(placeholder);
+            			}
+            		}
+            	}
+            }
+        };
+        codebricks.eAdapters().add(adapter);
+        return adapter;
+	}
+	
+	public static Adapter onObjectPlaceholderSelected(Codebricks codebricks, Consumer<ObjectPlaceholderBrick> onPlaceholderChanged) {
+		EContentAdapter adapter = new EContentAdapter() {
+            public void notifyChanged(Notification notification) {
+            	if (notification.getNotifier() instanceof ObjectPlaceholderBrick) {
+            		if (notification.getFeature() == CodebricksPackage.eINSTANCE.getObjectPlaceholderBrick_Element()) {
+            			if (notification.getNewValue() != null) {
+            				onPlaceholderChanged.accept((ObjectPlaceholderBrick) notification.getNotifier());
+            			}
+            		}
+            	}
+            }
+        };
+        codebricks.eAdapters().add(adapter);
+        return adapter;
+	}
+	
+	public static Adapter onValuePlaceholderSelected(Codebricks codebricks, Consumer<ValuePlaceholderBrick> onPlaceholderChanged) {
+		EContentAdapter adapter = new EContentAdapter() {
+            public void notifyChanged(Notification notification) {
+            	if (notification.getNotifier() instanceof ValuePlaceholderBrick) {
+            		if (notification.getFeature() == CodebricksPackage.eINSTANCE.getValuePlaceholderBrick_InstanceValue()) {
+            			if (notification.getNewValue() != null) {
+            				onPlaceholderChanged.accept((ValuePlaceholderBrick) notification.getNotifier());
+            			}
+            		}
+            	}
             }
         };
         codebricks.eAdapters().add(adapter);

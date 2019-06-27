@@ -77,6 +77,10 @@
       <genOperations ecoreOperation="codebricks.ecore#//ObjectDomainPolicy/getDomain">
         <genParameters ecoreParameter="codebricks.ecore#//ObjectDomainPolicy/getDomain/brick"/>
       </genOperations>
+      <genOperations ecoreOperation="codebricks.ecore#//ObjectDomainPolicy/assignObject">
+        <genParameters ecoreParameter="codebricks.ecore#//ObjectDomainPolicy/assignObject/brick"/>
+        <genParameters ecoreParameter="codebricks.ecore#//ObjectDomainPolicy/assignObject/element"/>
+      </genOperations>
     </genClasses>
     <genClasses image="false" ecoreClass="codebricks.ecore#//ValueDomainPolicy">
       <genOperations ecoreOperation="codebricks.ecore#//ValueDomainPolicy/isValid">
@@ -93,6 +97,10 @@
         <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/convertToString/brick"/>
         <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/convertToString/instanceValue"/>
         <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/convertToString/eDataType"/>
+      </genOperations>
+      <genOperations ecoreOperation="codebricks.ecore#//ValueDomainPolicy/assignValue">
+        <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/assignValue/instanceValue"/>
+        <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/assignValue/brick"/>
       </genOperations>
     </genClasses>
   </genPackages>

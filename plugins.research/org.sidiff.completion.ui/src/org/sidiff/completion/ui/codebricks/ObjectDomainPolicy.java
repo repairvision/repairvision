@@ -28,6 +28,14 @@ public interface ObjectDomainPolicy extends EObject {
 	EList<EObject> getDomain(ObjectPlaceholderBrick brick);
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void assignObject(ObjectPlaceholderBrick brick, EObject element);
+
+	/**
 	 * @generated NOT
 	 */
 	public static ObjectDomainPolicy eINSTANCE = CodebricksFactoryImpl.eINSTANCE.createObjectDomainPolicy();
