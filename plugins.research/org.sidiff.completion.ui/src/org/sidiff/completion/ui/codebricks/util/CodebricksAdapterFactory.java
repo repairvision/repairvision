@@ -120,10 +120,6 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 				return createValuePlaceholderBrickAdapter();
 			}
 			@Override
-			public Adapter caseObjectDomainPlaceholderBrick(ObjectDomainPlaceholderBrick object) {
-				return createObjectDomainPlaceholderBrickAdapter();
-			}
-			@Override
 			public Adapter casePlaceholderBrick(PlaceholderBrick object) {
 				return createPlaceholderBrickAdapter();
 			}
@@ -138,6 +134,14 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseCodebrickView(CodebrickView object) {
 				return createCodebrickViewAdapter();
+			}
+			@Override
+			public Adapter caseObjectDomainPolicy(ObjectDomainPolicy object) {
+				return createObjectDomainPolicyAdapter();
+			}
+			@Override
+			public Adapter caseValueDomainPolicy(ValueDomainPolicy object) {
+				return createValueDomainPolicyAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -342,20 +346,6 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick <em>Object Domain Placeholder Brick</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick
-	 * @generated
-	 */
-	public Adapter createObjectDomainPlaceholderBrickAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick <em>Placeholder Brick</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -408,6 +398,34 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCodebrickViewAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.ObjectDomainPolicy <em>Object Domain Policy</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.ObjectDomainPolicy
+	 * @generated
+	 */
+	public Adapter createObjectDomainPolicyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.ValueDomainPolicy <em>Value Domain Policy</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.ValueDomainPolicy
+	 * @generated
+	 */
+	public Adapter createValueDomainPolicyAdapter() {
 		return null;
 	}
 

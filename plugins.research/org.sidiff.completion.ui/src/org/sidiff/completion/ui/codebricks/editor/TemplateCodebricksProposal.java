@@ -9,7 +9,7 @@ import org.sidiff.completion.ui.codebricks.ViewableBrick;
 import org.sidiff.completion.ui.list.ICompletionPreview;
 import org.sidiff.completion.ui.list.ICompletionProposal;
 
-public class CodebricksProposal implements ICompletionProposal {
+public class TemplateCodebricksProposal implements ICompletionProposal {
 	
 	protected CodebricksEditor editor;
 	
@@ -19,7 +19,7 @@ public class CodebricksProposal implements ICompletionProposal {
 	
 	protected List<ViewableBrick> choice;
 	
-	public CodebricksProposal(CodebricksEditor editor, StyledText textField, TemplatePlaceholderBrick placeholder, List<ViewableBrick> choice) {
+	public TemplateCodebricksProposal(CodebricksEditor editor, StyledText textField, TemplatePlaceholderBrick placeholder, List<ViewableBrick> choice) {
 		this.editor = editor;
 		this.textField = textField;
 		this.placeholder = placeholder;

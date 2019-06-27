@@ -89,6 +89,14 @@ public interface IRepairPlan {
 	List<Object> getParameterDomain(Parameter parameter);
 	
 	/**
+	 * @param parameter The parameter of the complement rule.
+	 * @param type      The type of the values
+	 * @return All possible parameter values based on the current parameter
+	 *         assignment.
+	 */
+	<T> List<T> getParameterDomain(Parameter parameter, Class<T> type);
+	
+	/**
 	 * @param parameter
 	 *            A parameter of the complement rule.
 	 * @param value

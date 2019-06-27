@@ -61,6 +61,10 @@ public class CompletionProposalList {
 		this(PlatformUI.getWorkbench().getDisplay());
 	}
 	
+	public boolean isEmpty() {
+		return proposalTable.getTable().getItemCount() == 0;
+	}
+	
 	public void showPopupOnCursor() {
 		PointerInfo mousePositionInfo = MouseInfo.getPointerInfo();
 		int mousePositionX = mousePositionInfo.getLocation().x;
@@ -155,24 +159,35 @@ public class CompletionProposalList {
 			proposalShell.pack();
 		}
 
-		/*
-		 *  Layout proposal information:
-		 */
-		{
-			int width = proposalShell.getBounds().width;
-			int height = proposalShell.getBounds().height;
-			int x = proposalShell.getLocation().x + proposalShell.getBounds().width;
-			int y = proposalShell.getLocation().y;
-
-			proposalInformation.setSizeConstraints(width, height);
-			proposalInformation.setSize(width, height);
-			proposalInformation.setLocation(new Point(x, y));
-		}
 
 		/*
 		 * Open the proposal viewer:
 		 */
 		proposalShell.open();
+		
+		/*
+		 *  Layout proposal information:
+		 */
+		layoutInformation(getProposalInformation(getSelectedProposal()));
+	}
+	
+	private void layoutInformation(String information) {
+		int width = proposalShell.getBounds().width;
+		int height = proposalShell.getBounds().height;
+		int x = proposalShell.getLocation().x + proposalShell.getBounds().width;
+		int y = proposalShell.getLocation().y;
+
+		proposalInformation.setSizeConstraints(width, height);
+		proposalInformation.setSize(width, height);
+		proposalInformation.setLocation(new Point(x, y));
+		
+		if (information != null) {
+			proposalInformation.setInformation(information);
+			proposalInformation.setVisible(true);
+		} else {
+			proposalInformation.setVisible(false);
+		}
+		
 	}
 	
 	private void createPopup(Display display) {
@@ -249,13 +264,7 @@ public class CompletionProposalList {
 				public void selectionChanged(SelectionChangedEvent event) {
 					Object selection = getSelectedProposal();
 					String information = getProposalInformation(selection);
-					
-					if (information != null) {
-						proposalInformation.setInformation(information);
-						proposalInformation.setVisible(true);
-					} else {
-						proposalInformation.setVisible(false);
-					}
+					layoutInformation(information);
 				}
 			});
 		}
@@ -342,6 +351,21 @@ public class CompletionProposalList {
 			return ((ICompletionProposal) proposal).getInformation();
 		}
 		return null;
+	}
+	
+	public static String escapeHTML(String s) {
+	    StringBuilder out = new StringBuilder(Math.max(16, s.length()));
+	    for (int i = 0; i < s.length(); i++) {
+	        char c = s.charAt(i);
+	        if (c > 127 || c == '"' || c == '<' || c == '>' || c == '&') {
+	            out.append("&#");
+	            out.append((int) c);
+	            out.append(';');
+	        } else {
+	            out.append(c);
+	        }
+	    }
+	    return out.toString();
 	}
 	
 	protected ILabelProvider getLabelProvider() {

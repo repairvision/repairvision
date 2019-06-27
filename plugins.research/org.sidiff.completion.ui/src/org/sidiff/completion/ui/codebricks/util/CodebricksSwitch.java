@@ -168,17 +168,6 @@ public class CodebricksSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CodebricksPackage.OBJECT_DOMAIN_PLACEHOLDER_BRICK: {
-				ObjectDomainPlaceholderBrick objectDomainPlaceholderBrick = (ObjectDomainPlaceholderBrick)theEObject;
-				T result = caseObjectDomainPlaceholderBrick(objectDomainPlaceholderBrick);
-				if (result == null) result = caseObjectPlaceholderBrick(objectDomainPlaceholderBrick);
-				if (result == null) result = casePlaceholderBrick(objectDomainPlaceholderBrick);
-				if (result == null) result = caseStyledBrick(objectDomainPlaceholderBrick);
-				if (result == null) result = caseViewableBrick(objectDomainPlaceholderBrick);
-				if (result == null) result = caseBrick(objectDomainPlaceholderBrick);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case CodebricksPackage.PLACEHOLDER_BRICK: {
 				PlaceholderBrick placeholderBrick = (PlaceholderBrick)theEObject;
 				T result = casePlaceholderBrick(placeholderBrick);
@@ -210,6 +199,18 @@ public class CodebricksSwitch<T> extends Switch<T> {
 				CodebrickView codebrickView = (CodebrickView)theEObject;
 				T result = caseCodebrickView(codebrickView);
 				if (result == null) result = caseCodebrick(codebrickView);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CodebricksPackage.OBJECT_DOMAIN_POLICY: {
+				ObjectDomainPolicy objectDomainPolicy = (ObjectDomainPolicy)theEObject;
+				T result = caseObjectDomainPolicy(objectDomainPolicy);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CodebricksPackage.VALUE_DOMAIN_POLICY: {
+				ValueDomainPolicy valueDomainPolicy = (ValueDomainPolicy)theEObject;
+				T result = caseValueDomainPolicy(valueDomainPolicy);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -413,21 +414,6 @@ public class CodebricksSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Object Domain Placeholder Brick</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Object Domain Placeholder Brick</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseObjectDomainPlaceholderBrick(ObjectDomainPlaceholderBrick object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Placeholder Brick</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -484,6 +470,36 @@ public class CodebricksSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCodebrickView(CodebrickView object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Object Domain Policy</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Object Domain Policy</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseObjectDomainPolicy(ObjectDomainPolicy object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Value Domain Policy</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Value Domain Policy</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseValueDomainPolicy(ValueDomainPolicy object) {
 		return null;
 	}
 

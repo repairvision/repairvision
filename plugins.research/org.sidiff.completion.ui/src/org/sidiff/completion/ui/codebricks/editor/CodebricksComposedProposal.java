@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Control;
 import org.sidiff.completion.ui.codebricks.ComposedBrick;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 
-public class CodebricksComposedProposal extends CodebricksProposal {
+public class CodebricksComposedProposal extends TemplateCodebricksProposal {
 	
 	protected Composite placeholderContainer;
 

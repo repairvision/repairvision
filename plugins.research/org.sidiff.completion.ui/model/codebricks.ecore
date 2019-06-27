@@ -38,6 +38,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ObjectPlaceholderBrick" eSuperTypes="#//PlaceholderBrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="#//ObjectDomainPolicy"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TextBrick" eSuperTypes="#//StyledBrick">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -62,14 +63,14 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuePlaceholderBrick" eSuperTypes="#//PlaceholderBrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ObjectDomainPlaceholderBrick" eSuperTypes="#//ObjectPlaceholderBrick">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="#//ValueDomainPolicy"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="literalValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="instanceValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PlaceholderBrick" abstract="true" eSuperTypes="#//StyledBrick">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="placeholder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ComposedTemplatePlaceholderBrick" eSuperTypes="#//TemplatePlaceholderBrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="containerBrick" lowerBound="1"
@@ -80,5 +81,27 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CodebrickView" eSuperTypes="#//Codebrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectDomainPolicy">
+    <eOperations name="getDomain" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
+      <eParameters name="brick" eType="#//ObjectPlaceholderBrick"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueDomainPolicy">
+    <eOperations name="isValid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="brick" eType="#//ValuePlaceholderBrick"/>
+      <eParameters name="literalValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eParameters name="eDataType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+    </eOperations>
+    <eOperations name="createFromString" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject">
+      <eParameters name="brick" eType="#//ValuePlaceholderBrick"/>
+      <eParameters name="literalValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eParameters name="eDataType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+    </eOperations>
+    <eOperations name="convertToString" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject">
+      <eParameters name="brick" eType="#//ValuePlaceholderBrick"/>
+      <eParameters name="instanceValue" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+      <eParameters name="eDataType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+    </eOperations>
   </eClassifiers>
 </ecore:EPackage>

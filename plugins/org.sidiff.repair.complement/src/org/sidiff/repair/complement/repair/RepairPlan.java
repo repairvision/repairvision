@@ -230,13 +230,21 @@ public class RepairPlan implements IRepairPlan {
 	
 	@Override
 	public List<Object> getParameterDomain(Parameter parameter) {
-		List<Object> domain = new ArrayList<>(); 
+		return getParameterDomain(parameter, Object.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> getParameterDomain(Parameter parameter, Class<T> type) {
+		List<T> domain = new ArrayList<>(); 
 
 		for (Match complementMatch : getComplementMatches()) {
 			Object parameterValue = complementMatch.getParameterValue(parameter);
 
 			if ((parameterValue != null) && (!domain.contains(parameterValue))) {
-				domain.add(parameterValue);
+				if (type.isInstance(parameterValue)) {
+					domain.add((T) parameterValue);
+				}
 			}
 		}
 		

@@ -66,10 +66,11 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 			case CodebricksPackage.BLANK_BRICK: return createBlankBrick();
 			case CodebricksPackage.COMPOSED_BRICK: return createComposedBrick();
 			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK: return createValuePlaceholderBrick();
-			case CodebricksPackage.OBJECT_DOMAIN_PLACEHOLDER_BRICK: return createObjectDomainPlaceholderBrick();
 			case CodebricksPackage.COMPOSED_TEMPLATE_PLACEHOLDER_BRICK: return createComposedTemplatePlaceholderBrick();
 			case CodebricksPackage.POJO_CODEBRICK_VIEW: return createPOJOCodebrickView();
 			case CodebricksPackage.CODEBRICK_VIEW: return createCodebrickView();
+			case CodebricksPackage.OBJECT_DOMAIN_POLICY: return createObjectDomainPolicy();
+			case CodebricksPackage.VALUE_DOMAIN_POLICY: return createValueDomainPolicy();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -191,17 +192,6 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 	 * @generated
 	 */
 	@Override
-	public ObjectDomainPlaceholderBrick createObjectDomainPlaceholderBrick() {
-		ObjectDomainPlaceholderBrickImpl objectDomainPlaceholderBrick = new ObjectDomainPlaceholderBrickImpl();
-		return objectDomainPlaceholderBrick;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public ComposedTemplatePlaceholderBrick createComposedTemplatePlaceholderBrick() {
 		ComposedTemplatePlaceholderBrickImpl composedTemplatePlaceholderBrick = new ComposedTemplatePlaceholderBrickImpl();
 		return composedTemplatePlaceholderBrick;
@@ -227,6 +217,28 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 	public CodebrickView createCodebrickView() {
 		CodebrickViewImpl codebrickView = new CodebrickViewImpl();
 		return codebrickView;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ObjectDomainPolicy createObjectDomainPolicy() {
+		ObjectDomainPolicyImpl objectDomainPolicy = new ObjectDomainPolicyImpl();
+		return objectDomainPolicy;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ValueDomainPolicy createValueDomainPolicy() {
+		ValueDomainPolicyImpl valueDomainPolicy = new ValueDomainPolicyImpl();
+		return valueDomainPolicy;
 	}
 
 	/**

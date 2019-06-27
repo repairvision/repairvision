@@ -160,13 +160,13 @@ public class CodebricksImpl extends MinimalEObjectImpl.Container implements Code
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public boolean isChosen() {
-		for (EObject element : (Iterable<EObject>) () -> getTemplate().eAllContents()) {
-			if (element instanceof TemplatePlaceholderBrick) {
-				if (((TemplatePlaceholderBrick) element).getChoice().size() != 1) {
+		for (EObject brick : (Iterable<EObject>) () -> getTemplate().eAllContents()) {
+			if (brick instanceof TemplatePlaceholderBrick) {
+				if (((TemplatePlaceholderBrick) brick).getChoice().size() != 1) {
 					return false;
 				}
 			}

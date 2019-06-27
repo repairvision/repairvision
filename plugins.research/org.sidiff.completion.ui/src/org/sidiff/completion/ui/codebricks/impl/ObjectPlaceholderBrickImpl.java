@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.sidiff.completion.ui.codebricks.CodebricksPackage;
+import org.sidiff.completion.ui.codebricks.ObjectDomainPolicy;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
 
 /**
@@ -21,6 +22,7 @@ import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
  * <ul>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl#getElement <em>Element</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl#getDomain <em>Domain</em>}</li>
  * </ul>
  *
  * @generated
@@ -45,6 +47,16 @@ public class ObjectPlaceholderBrickImpl extends PlaceholderBrickImpl implements 
 	 * @ordered
 	 */
 	protected EClass type;
+
+	/**
+	 * The cached value of the '{@link #getDomain() <em>Domain</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDomain()
+	 * @generated
+	 * @ordered
+	 */
+	protected ObjectDomainPolicy domain;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -151,6 +163,46 @@ public class ObjectPlaceholderBrickImpl extends PlaceholderBrickImpl implements 
 	 * @generated
 	 */
 	@Override
+	public ObjectDomainPolicy getDomain() {
+		if (domain != null && domain.eIsProxy()) {
+			InternalEObject oldDomain = (InternalEObject)domain;
+			domain = (ObjectDomainPolicy)eResolveProxy(oldDomain);
+			if (domain != oldDomain) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__DOMAIN, oldDomain, domain));
+			}
+		}
+		return domain;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ObjectDomainPolicy basicGetDomain() {
+		return domain;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setDomain(ObjectDomainPolicy newDomain) {
+		ObjectDomainPolicy oldDomain = domain;
+		domain = newDomain;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__DOMAIN, oldDomain, domain));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__ELEMENT:
@@ -159,6 +211,9 @@ public class ObjectPlaceholderBrickImpl extends PlaceholderBrickImpl implements 
 			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__TYPE:
 				if (resolve) return getType();
 				return basicGetType();
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__DOMAIN:
+				if (resolve) return getDomain();
+				return basicGetDomain();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -176,6 +231,9 @@ public class ObjectPlaceholderBrickImpl extends PlaceholderBrickImpl implements 
 				return;
 			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__TYPE:
 				setType((EClass)newValue);
+				return;
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__DOMAIN:
+				setDomain((ObjectDomainPolicy)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -195,6 +253,9 @@ public class ObjectPlaceholderBrickImpl extends PlaceholderBrickImpl implements 
 			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__TYPE:
 				setType((EClass)null);
 				return;
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__DOMAIN:
+				setDomain((ObjectDomainPolicy)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -211,6 +272,8 @@ public class ObjectPlaceholderBrickImpl extends PlaceholderBrickImpl implements 
 				return element != null;
 			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__TYPE:
 				return type != null;
+			case CodebricksPackage.OBJECT_PLACEHOLDER_BRICK__DOMAIN:
+				return domain != null;
 		}
 		return super.eIsSet(featureID);
 	}

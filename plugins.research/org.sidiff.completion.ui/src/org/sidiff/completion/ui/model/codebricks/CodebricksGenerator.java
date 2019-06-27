@@ -1,4 +1,4 @@
-package org.sidiff.completion.ui.model;
+package org.sidiff.completion.ui.model.codebricks;
 
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_EDIT_RULE_SEPARATOR;
 import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_MANDATORY_PLACEHOLDER;
@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
@@ -34,8 +36,12 @@ import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.POJOCodebrickView;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.TextBrick;
+import org.sidiff.completion.ui.codebricks.ValueDomainPolicy;
 import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
+import org.sidiff.completion.ui.model.DecompositionTemplates;
+import org.sidiff.completion.ui.model.ModelCompletionProposal;
+import org.sidiff.completion.ui.model.ModelCompletionProposalCluster;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.graphpattern.profile.henshin_extension.GraphElementExtension;
 import org.sidiff.graphpattern.profile.henshin_extension.SubGraph;
@@ -280,7 +286,7 @@ public class CodebricksGenerator {
 					
 					// Check if parameter already exists:
 					if (!parameterBricks.stream().anyMatch(b -> b.getText().startsWith(name + TEMPLATE_PARAMETER_NAME_VALUE_SEPARATOR))) {
-						ComposedBrick newParameter = generateObjectParameter(name);
+						ComposedBrick newParameter = generateObjectParameter(name, eoNode.getType());
 						
 						parameterSeparator = CodebricksFactory.eINSTANCE.createTextBrick();
 						parameterSeparator.setText(TEMPLATE_PARAMETER_SEPARATOR);
@@ -295,7 +301,7 @@ public class CodebricksGenerator {
 						
 						// Check if parameter already exists:
 						if (!parameterBricks.stream().anyMatch(b -> b.getText().startsWith(variable + TEMPLATE_PARAMETER_NAME_VALUE_SEPARATOR))) {
-							ComposedBrick newParameter = generateValueParameter(variable);
+							ComposedBrick newParameter = generateValueParameter(variable, attribute.getType().getEAttributeType());
 							
 							parameterSeparator = CodebricksFactory.eINSTANCE.createTextBrick();
 							parameterSeparator.setText(TEMPLATE_PARAMETER_SEPARATOR);
@@ -311,32 +317,48 @@ public class CodebricksGenerator {
 		return parameterSeparator;
 	}
 	
-	private ComposedBrick generateValueParameter(String name) {
+	private ComposedBrick generateValueParameter(String name, EDataType type) {
+		ComposedBrick parameterAssignment = CodebricksFactory.eINSTANCE.createComposedBrick();
+		
 		TextBrick parameterName = CodebricksFactory.eINSTANCE.createTextBrick();
-		parameterName.setText(name + TEMPLATE_PARAMETER_NAME_VALUE_SEPARATOR);
+		parameterName.setText(name);
+		parameterAssignment.getBricks().add(parameterName);
+		
+		TextBrick parameterNameValueSeparator = CodebricksFactory.eINSTANCE.createTextBrick();
+		parameterNameValueSeparator.setText(TEMPLATE_PARAMETER_NAME_VALUE_SEPARATOR);
+		parameterAssignment.getBricks().add(parameterNameValueSeparator);
 		
 		ValuePlaceholderBrick parameter = CodebricksFactory.eINSTANCE.createValuePlaceholderBrick();
 		parameter.setPlaceholder(TEMPLATE_MANDATORY_PLACEHOLDER);
+		parameter.setName(name);
+		parameter.setType(type);
+		parameter.setDomain(ValueDomainPolicy.eINSTANCE);
 		parameter.setMandatory(true);
-		
-		ComposedBrick parameterAssignment = CodebricksFactory.eINSTANCE.createComposedBrick();
-		parameterAssignment.getBricks().add(parameterName);
 		parameterAssignment.getBricks().add(parameter);
+		
 		
 		return parameterAssignment;
 	}
 	
-	private ComposedBrick generateObjectParameter(String name) {
+	private ComposedBrick generateObjectParameter(String name, EClass type) {
+		ComposedBrick parameterAssignment = CodebricksFactory.eINSTANCE.createComposedBrick();
+		
 		TextBrick parameterName = CodebricksFactory.eINSTANCE.createTextBrick();
-		parameterName.setText(name + TEMPLATE_PARAMETER_NAME_VALUE_SEPARATOR);
+		parameterName.setText(name);
+		parameterAssignment.getBricks().add(parameterName);
+		
+		TextBrick parameterNameValueSeparator = CodebricksFactory.eINSTANCE.createTextBrick();
+		parameterNameValueSeparator.setText(TEMPLATE_PARAMETER_NAME_VALUE_SEPARATOR);
+		parameterAssignment.getBricks().add(parameterNameValueSeparator);
 		
 		ObjectPlaceholderBrick parameter = CodebricksFactory.eINSTANCE.createObjectPlaceholderBrick();
 		parameter.setPlaceholder(TEMPLATE_MANDATORY_PLACEHOLDER);
+		parameter.setName(name);
+		parameter.setType(type);
+		parameter.setDomain(CompletionObjectDomainPolicy.eINSTANCE);
 		parameter.setMandatory(true);
-		
-		ComposedBrick parameterAssignment = CodebricksFactory.eINSTANCE.createComposedBrick();
-		parameterAssignment.getBricks().add(parameterName);
 		parameterAssignment.getBricks().add(parameter);
+		
 		
 		return parameterAssignment;
 	}

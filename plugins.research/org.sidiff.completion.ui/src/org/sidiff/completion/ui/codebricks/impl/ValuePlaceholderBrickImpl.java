@@ -3,7 +3,6 @@
 package org.sidiff.completion.ui.codebricks.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -11,6 +10,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.sidiff.completion.ui.codebricks.CodebricksPackage;
+import org.sidiff.completion.ui.codebricks.ValueDomainPolicy;
 import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
 
 /**
@@ -22,6 +22,9 @@ import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ValuePlaceholderBrickImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ValuePlaceholderBrickImpl#getDomain <em>Domain</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ValuePlaceholderBrickImpl#getLiteralValue <em>Literal Value</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.ValuePlaceholderBrickImpl#getInstanceValue <em>Instance Value</em>}</li>
  * </ul>
  *
  * @generated
@@ -36,6 +39,52 @@ public class ValuePlaceholderBrickImpl extends PlaceholderBrickImpl implements V
 	 * @ordered
 	 */
 	protected EDataType type;
+
+	/**
+	 * The cached value of the '{@link #getDomain() <em>Domain</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDomain()
+	 * @generated
+	 * @ordered
+	 */
+	protected ValueDomainPolicy domain;
+	/**
+	 * The default value of the '{@link #getLiteralValue() <em>Literal Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLiteralValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LITERAL_VALUE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getLiteralValue() <em>Literal Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLiteralValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected String literalValue = LITERAL_VALUE_EDEFAULT;
+	/**
+	 * The default value of the '{@link #getInstanceValue() <em>Instance Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInstanceValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Object INSTANCE_VALUE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getInstanceValue() <em>Instance Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInstanceValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected Object instanceValue = INSTANCE_VALUE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -102,11 +151,104 @@ public class ValuePlaceholderBrickImpl extends PlaceholderBrickImpl implements V
 	 * @generated
 	 */
 	@Override
+	public ValueDomainPolicy getDomain() {
+		if (domain != null && domain.eIsProxy()) {
+			InternalEObject oldDomain = (InternalEObject)domain;
+			domain = (ValueDomainPolicy)eResolveProxy(oldDomain);
+			if (domain != oldDomain) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CodebricksPackage.VALUE_PLACEHOLDER_BRICK__DOMAIN, oldDomain, domain));
+			}
+		}
+		return domain;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ValueDomainPolicy basicGetDomain() {
+		return domain;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setDomain(ValueDomainPolicy newDomain) {
+		ValueDomainPolicy oldDomain = domain;
+		domain = newDomain;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.VALUE_PLACEHOLDER_BRICK__DOMAIN, oldDomain, domain));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getLiteralValue() {
+		return literalValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setLiteralValue(String newLiteralValue) {
+		String oldLiteralValue = literalValue;
+		literalValue = newLiteralValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.VALUE_PLACEHOLDER_BRICK__LITERAL_VALUE, oldLiteralValue, literalValue));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object getInstanceValue() {
+		return instanceValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setInstanceValue(Object newInstanceValue) {
+		Object oldInstanceValue = instanceValue;
+		instanceValue = newInstanceValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.VALUE_PLACEHOLDER_BRICK__INSTANCE_VALUE, oldInstanceValue, instanceValue));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__TYPE:
 				if (resolve) return getType();
 				return basicGetType();
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__DOMAIN:
+				if (resolve) return getDomain();
+				return basicGetDomain();
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__LITERAL_VALUE:
+				return getLiteralValue();
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__INSTANCE_VALUE:
+				return getInstanceValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -121,6 +263,15 @@ public class ValuePlaceholderBrickImpl extends PlaceholderBrickImpl implements V
 		switch (featureID) {
 			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__TYPE:
 				setType((EDataType)newValue);
+				return;
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__DOMAIN:
+				setDomain((ValueDomainPolicy)newValue);
+				return;
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__LITERAL_VALUE:
+				setLiteralValue((String)newValue);
+				return;
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__INSTANCE_VALUE:
+				setInstanceValue(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -137,6 +288,15 @@ public class ValuePlaceholderBrickImpl extends PlaceholderBrickImpl implements V
 			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__TYPE:
 				setType((EDataType)null);
 				return;
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__DOMAIN:
+				setDomain((ValueDomainPolicy)null);
+				return;
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__LITERAL_VALUE:
+				setLiteralValue(LITERAL_VALUE_EDEFAULT);
+				return;
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__INSTANCE_VALUE:
+				setInstanceValue(INSTANCE_VALUE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -151,8 +311,32 @@ public class ValuePlaceholderBrickImpl extends PlaceholderBrickImpl implements V
 		switch (featureID) {
 			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__TYPE:
 				return type != null;
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__DOMAIN:
+				return domain != null;
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__LITERAL_VALUE:
+				return LITERAL_VALUE_EDEFAULT == null ? literalValue != null : !LITERAL_VALUE_EDEFAULT.equals(literalValue);
+			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK__INSTANCE_VALUE:
+				return INSTANCE_VALUE_EDEFAULT == null ? instanceValue != null : !INSTANCE_VALUE_EDEFAULT.equals(instanceValue);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (literalValue: ");
+		result.append(literalValue);
+		result.append(", instanceValue: ");
+		result.append(instanceValue);
+		result.append(')');
+		return result.toString();
 	}
 
 } //ValuePlaceholderBrickImpl

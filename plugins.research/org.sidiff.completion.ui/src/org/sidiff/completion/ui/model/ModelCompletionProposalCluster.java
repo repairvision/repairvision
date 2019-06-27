@@ -13,6 +13,7 @@ import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.editor.CodebricksEditor;
 import org.sidiff.completion.ui.list.ICompletionPreview;
 import org.sidiff.completion.ui.list.ICompletionProposal;
+import org.sidiff.completion.ui.model.codebricks.CodebricksGenerator;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 public class ModelCompletionProposalCluster implements ICompletionProposal {

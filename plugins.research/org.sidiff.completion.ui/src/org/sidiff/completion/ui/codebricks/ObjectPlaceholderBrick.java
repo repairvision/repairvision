@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick#getElement <em>Element</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick#getType <em>Type</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick#getDomain <em>Domain</em>}</li>
  * </ul>
  *
  * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getObjectPlaceholderBrick()
@@ -66,5 +67,27 @@ public interface ObjectPlaceholderBrick extends PlaceholderBrick {
 	 * @generated
 	 */
 	void setType(EClass value);
+
+	/**
+	 * Returns the value of the '<em><b>Domain</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Domain</em>' reference.
+	 * @see #setDomain(ObjectDomainPolicy)
+	 * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getObjectPlaceholderBrick_Domain()
+	 * @model
+	 * @generated
+	 */
+	ObjectDomainPolicy getDomain();
+
+	/**
+	 * Sets the value of the '{@link org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick#getDomain <em>Domain</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Domain</em>' reference.
+	 * @see #getDomain()
+	 * @generated
+	 */
+	void setDomain(ObjectDomainPolicy value);
 
 } // ObjectPlaceholderBrick

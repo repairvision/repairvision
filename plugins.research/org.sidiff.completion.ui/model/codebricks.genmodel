@@ -33,6 +33,7 @@
     <genClasses ecoreClass="codebricks.ecore#//ObjectPlaceholderBrick">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ObjectPlaceholderBrick/element"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ObjectPlaceholderBrick/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ObjectPlaceholderBrick/domain"/>
     </genClasses>
     <genClasses ecoreClass="codebricks.ecore#//TextBrick">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//TextBrick/text"/>
@@ -54,13 +55,14 @@
     </genClasses>
     <genClasses ecoreClass="codebricks.ecore#//ValuePlaceholderBrick">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ValuePlaceholderBrick/type"/>
-    </genClasses>
-    <genClasses ecoreClass="codebricks.ecore#//ObjectDomainPlaceholderBrick">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ObjectDomainPlaceholderBrick/domain"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ValuePlaceholderBrick/domain"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//ValuePlaceholderBrick/literalValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//ValuePlaceholderBrick/instanceValue"/>
     </genClasses>
     <genClasses image="false" ecoreClass="codebricks.ecore#//PlaceholderBrick">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//PlaceholderBrick/mandatory"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//PlaceholderBrick/placeholder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//PlaceholderBrick/name"/>
     </genClasses>
     <genClasses ecoreClass="codebricks.ecore#//ComposedTemplatePlaceholderBrick">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ComposedTemplatePlaceholderBrick/containerBrick"/>
@@ -70,6 +72,28 @@
     </genClasses>
     <genClasses ecoreClass="codebricks.ecore#//CodebrickView">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//CodebrickView/model"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="codebricks.ecore#//ObjectDomainPolicy">
+      <genOperations ecoreOperation="codebricks.ecore#//ObjectDomainPolicy/getDomain">
+        <genParameters ecoreParameter="codebricks.ecore#//ObjectDomainPolicy/getDomain/brick"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="codebricks.ecore#//ValueDomainPolicy">
+      <genOperations ecoreOperation="codebricks.ecore#//ValueDomainPolicy/isValid">
+        <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/isValid/brick"/>
+        <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/isValid/literalValue"/>
+        <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/isValid/eDataType"/>
+      </genOperations>
+      <genOperations ecoreOperation="codebricks.ecore#//ValueDomainPolicy/createFromString">
+        <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/createFromString/brick"/>
+        <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/createFromString/literalValue"/>
+        <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/createFromString/eDataType"/>
+      </genOperations>
+      <genOperations ecoreOperation="codebricks.ecore#//ValueDomainPolicy/convertToString">
+        <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/convertToString/brick"/>
+        <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/convertToString/instanceValue"/>
+        <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/convertToString/eDataType"/>
+      </genOperations>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

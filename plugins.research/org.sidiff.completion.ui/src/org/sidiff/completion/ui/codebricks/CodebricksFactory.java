@@ -112,15 +112,6 @@ public interface CodebricksFactory extends EFactory {
 	ValuePlaceholderBrick createValuePlaceholderBrick();
 
 	/**
-	 * Returns a new object of class '<em>Object Domain Placeholder Brick</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Object Domain Placeholder Brick</em>'.
-	 * @generated
-	 */
-	ObjectDomainPlaceholderBrick createObjectDomainPlaceholderBrick();
-
-	/**
 	 * Returns a new object of class '<em>Composed Template Placeholder Brick</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -146,6 +137,24 @@ public interface CodebricksFactory extends EFactory {
 	 * @generated
 	 */
 	CodebrickView createCodebrickView();
+
+	/**
+	 * Returns a new object of class '<em>Object Domain Policy</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Object Domain Policy</em>'.
+	 * @generated
+	 */
+	ObjectDomainPolicy createObjectDomainPolicy();
+
+	/**
+	 * Returns a new object of class '<em>Value Domain Policy</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Value Domain Policy</em>'.
+	 * @generated
+	 */
+	ValueDomainPolicy createValueDomainPolicy();
 
 	/**
 	 * Returns the package supported by this factory.

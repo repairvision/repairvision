@@ -413,16 +413,6 @@ public interface CodebricksPackage extends EPackage {
 	int VALUE_PLACEHOLDER_BRICK = 12;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.ObjectDomainPlaceholderBrickImpl <em>Object Domain Placeholder Brick</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.completion.ui.codebricks.impl.ObjectDomainPlaceholderBrickImpl
-	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getObjectDomainPlaceholderBrick()
-	 * @generated
-	 */
-	int OBJECT_DOMAIN_PLACEHOLDER_BRICK = 13;
-
-	/**
 	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl <em>Placeholder Brick</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -430,7 +420,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getPlaceholderBrick()
 	 * @generated
 	 */
-	int PLACEHOLDER_BRICK = 14;
+	int PLACEHOLDER_BRICK = 13;
 
 	/**
 	 * The feature id for the '<em><b>Codebrick</b></em>' reference.
@@ -469,13 +459,22 @@ public interface CodebricksPackage extends EPackage {
 	int PLACEHOLDER_BRICK__PLACEHOLDER = STYLED_BRICK_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLACEHOLDER_BRICK__NAME = STYLED_BRICK_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Placeholder Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PLACEHOLDER_BRICK_FEATURE_COUNT = STYLED_BRICK_FEATURE_COUNT + 2;
+	int PLACEHOLDER_BRICK_FEATURE_COUNT = STYLED_BRICK_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Text</em>' operation.
@@ -530,6 +529,15 @@ public interface CodebricksPackage extends EPackage {
 	 * @ordered
 	 */
 	int TEMPLATE_PLACEHOLDER_BRICK__PLACEHOLDER = PLACEHOLDER_BRICK__PLACEHOLDER;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPLATE_PLACEHOLDER_BRICK__NAME = PLACEHOLDER_BRICK__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Choices</b></em>' reference list.
@@ -631,6 +639,15 @@ public interface CodebricksPackage extends EPackage {
 	int OBJECT_PLACEHOLDER_BRICK__PLACEHOLDER = PLACEHOLDER_BRICK__PLACEHOLDER;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_PLACEHOLDER_BRICK__NAME = PLACEHOLDER_BRICK__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -649,13 +666,22 @@ public interface CodebricksPackage extends EPackage {
 	int OBJECT_PLACEHOLDER_BRICK__TYPE = PLACEHOLDER_BRICK_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Domain</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_PLACEHOLDER_BRICK__DOMAIN = PLACEHOLDER_BRICK_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Object Placeholder Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OBJECT_PLACEHOLDER_BRICK_FEATURE_COUNT = PLACEHOLDER_BRICK_FEATURE_COUNT + 2;
+	int OBJECT_PLACEHOLDER_BRICK_FEATURE_COUNT = PLACEHOLDER_BRICK_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Text</em>' operation.
@@ -919,6 +945,15 @@ public interface CodebricksPackage extends EPackage {
 	int VALUE_PLACEHOLDER_BRICK__PLACEHOLDER = PLACEHOLDER_BRICK__PLACEHOLDER;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK__NAME = PLACEHOLDER_BRICK__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -928,13 +963,40 @@ public interface CodebricksPackage extends EPackage {
 	int VALUE_PLACEHOLDER_BRICK__TYPE = PLACEHOLDER_BRICK_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Domain</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK__DOMAIN = PLACEHOLDER_BRICK_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Literal Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK__LITERAL_VALUE = PLACEHOLDER_BRICK_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Instance Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK__INSTANCE_VALUE = PLACEHOLDER_BRICK_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Value Placeholder Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_PLACEHOLDER_BRICK_FEATURE_COUNT = PLACEHOLDER_BRICK_FEATURE_COUNT + 1;
+	int VALUE_PLACEHOLDER_BRICK_FEATURE_COUNT = PLACEHOLDER_BRICK_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get Text</em>' operation.
@@ -955,97 +1017,6 @@ public interface CodebricksPackage extends EPackage {
 	int VALUE_PLACEHOLDER_BRICK_OPERATION_COUNT = PLACEHOLDER_BRICK_OPERATION_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Codebrick</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__CODEBRICK = OBJECT_PLACEHOLDER_BRICK__CODEBRICK;
-
-	/**
-	 * The feature id for the '<em><b>Highlight</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__HIGHLIGHT = OBJECT_PLACEHOLDER_BRICK__HIGHLIGHT;
-
-	/**
-	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__MANDATORY = OBJECT_PLACEHOLDER_BRICK__MANDATORY;
-
-	/**
-	 * The feature id for the '<em><b>Placeholder</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__PLACEHOLDER = OBJECT_PLACEHOLDER_BRICK__PLACEHOLDER;
-
-	/**
-	 * The feature id for the '<em><b>Element</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__ELEMENT = OBJECT_PLACEHOLDER_BRICK__ELEMENT;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__TYPE = OBJECT_PLACEHOLDER_BRICK__TYPE;
-
-	/**
-	 * The feature id for the '<em><b>Domain</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_DOMAIN_PLACEHOLDER_BRICK__DOMAIN = OBJECT_PLACEHOLDER_BRICK_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Object Domain Placeholder Brick</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_DOMAIN_PLACEHOLDER_BRICK_FEATURE_COUNT = OBJECT_PLACEHOLDER_BRICK_FEATURE_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>Get Text</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_DOMAIN_PLACEHOLDER_BRICK___GET_TEXT = OBJECT_PLACEHOLDER_BRICK___GET_TEXT;
-
-	/**
-	 * The number of operations of the '<em>Object Domain Placeholder Brick</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OBJECT_DOMAIN_PLACEHOLDER_BRICK_OPERATION_COUNT = OBJECT_PLACEHOLDER_BRICK_OPERATION_COUNT + 0;
-
-
-	/**
 	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.ComposedTemplatePlaceholderBrickImpl <em>Composed Template Placeholder Brick</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1053,7 +1024,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getComposedTemplatePlaceholderBrick()
 	 * @generated
 	 */
-	int COMPOSED_TEMPLATE_PLACEHOLDER_BRICK = 15;
+	int COMPOSED_TEMPLATE_PLACEHOLDER_BRICK = 14;
 
 	/**
 	 * The feature id for the '<em><b>Codebrick</b></em>' reference.
@@ -1090,6 +1061,15 @@ public interface CodebricksPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSED_TEMPLATE_PLACEHOLDER_BRICK__PLACEHOLDER = TEMPLATE_PLACEHOLDER_BRICK__PLACEHOLDER;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSED_TEMPLATE_PLACEHOLDER_BRICK__NAME = TEMPLATE_PLACEHOLDER_BRICK__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Choices</b></em>' reference list.
@@ -1172,7 +1152,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getPOJOCodebrickView()
 	 * @generated
 	 */
-	int POJO_CODEBRICK_VIEW = 16;
+	int POJO_CODEBRICK_VIEW = 15;
 
 	/**
 	 * The feature id for the '<em><b>Bricks</b></em>' containment reference list.
@@ -1254,7 +1234,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getCodebrickView()
 	 * @generated
 	 */
-	int CODEBRICK_VIEW = 17;
+	int CODEBRICK_VIEW = 16;
 
 	/**
 	 * The feature id for the '<em><b>Bricks</b></em>' containment reference list.
@@ -1327,6 +1307,99 @@ public interface CodebricksPackage extends EPackage {
 	 * @ordered
 	 */
 	int CODEBRICK_VIEW_OPERATION_COUNT = CODEBRICK_OPERATION_COUNT + 0;
+
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.ObjectDomainPolicyImpl <em>Object Domain Policy</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.impl.ObjectDomainPolicyImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getObjectDomainPolicy()
+	 * @generated
+	 */
+	int OBJECT_DOMAIN_POLICY = 17;
+
+	/**
+	 * The number of structural features of the '<em>Object Domain Policy</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_POLICY_FEATURE_COUNT = 0;
+
+	/**
+	 * The operation id for the '<em>Get Domain</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_POLICY___GET_DOMAIN__OBJECTPLACEHOLDERBRICK = 0;
+
+	/**
+	 * The number of operations of the '<em>Object Domain Policy</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_DOMAIN_POLICY_OPERATION_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.ValueDomainPolicyImpl <em>Value Domain Policy</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.impl.ValueDomainPolicyImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getValueDomainPolicy()
+	 * @generated
+	 */
+	int VALUE_DOMAIN_POLICY = 18;
+
+	/**
+	 * The number of structural features of the '<em>Value Domain Policy</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_DOMAIN_POLICY_FEATURE_COUNT = 0;
+
+	/**
+	 * The operation id for the '<em>Is Valid</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_DOMAIN_POLICY___IS_VALID__VALUEPLACEHOLDERBRICK_STRING_EDATATYPE = 0;
+
+	/**
+	 * The operation id for the '<em>Create From String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_DOMAIN_POLICY___CREATE_FROM_STRING__VALUEPLACEHOLDERBRICK_STRING_EDATATYPE = 1;
+
+	/**
+	 * The operation id for the '<em>Convert To String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_DOMAIN_POLICY___CONVERT_TO_STRING__VALUEPLACEHOLDERBRICK_OBJECT_EDATATYPE = 2;
+
+	/**
+	 * The number of operations of the '<em>Value Domain Policy</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_DOMAIN_POLICY_OPERATION_COUNT = 3;
 
 
 	/**
@@ -1553,6 +1626,17 @@ public interface CodebricksPackage extends EPackage {
 	EReference getObjectPlaceholderBrick_Type();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick#getDomain <em>Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Domain</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick#getDomain()
+	 * @see #getObjectPlaceholderBrick()
+	 * @generated
+	 */
+	EReference getObjectPlaceholderBrick_Domain();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.TextBrick <em>Text Brick</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1709,25 +1793,37 @@ public interface CodebricksPackage extends EPackage {
 	EReference getValuePlaceholderBrick_Type();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick <em>Object Domain Placeholder Brick</em>}'.
+	 * Returns the meta object for the reference '{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getDomain <em>Domain</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Object Domain Placeholder Brick</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick
+	 * @return the meta object for the reference '<em>Domain</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getDomain()
+	 * @see #getValuePlaceholderBrick()
 	 * @generated
 	 */
-	EClass getObjectDomainPlaceholderBrick();
+	EReference getValuePlaceholderBrick_Domain();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick#getDomain <em>Domain</em>}'.
+	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getLiteralValue <em>Literal Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Domain</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.ObjectDomainPlaceholderBrick#getDomain()
-	 * @see #getObjectDomainPlaceholderBrick()
+	 * @return the meta object for the attribute '<em>Literal Value</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getLiteralValue()
+	 * @see #getValuePlaceholderBrick()
 	 * @generated
 	 */
-	EReference getObjectDomainPlaceholderBrick_Domain();
+	EAttribute getValuePlaceholderBrick_LiteralValue();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getInstanceValue <em>Instance Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Instance Value</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getInstanceValue()
+	 * @see #getValuePlaceholderBrick()
+	 * @generated
+	 */
+	EAttribute getValuePlaceholderBrick_InstanceValue();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick <em>Placeholder Brick</em>}'.
@@ -1760,6 +1856,17 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getPlaceholderBrick_Placeholder();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.PlaceholderBrick#getName()
+	 * @see #getPlaceholderBrick()
+	 * @generated
+	 */
+	EAttribute getPlaceholderBrick_Name();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ComposedTemplatePlaceholderBrick <em>Composed Template Placeholder Brick</em>}'.
@@ -1823,6 +1930,66 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCodebrickView_Model();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ObjectDomainPolicy <em>Object Domain Policy</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Object Domain Policy</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ObjectDomainPolicy
+	 * @generated
+	 */
+	EClass getObjectDomainPolicy();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.ObjectDomainPolicy#getDomain(org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick) <em>Get Domain</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Domain</em>' operation.
+	 * @see org.sidiff.completion.ui.codebricks.ObjectDomainPolicy#getDomain(org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick)
+	 * @generated
+	 */
+	EOperation getObjectDomainPolicy__GetDomain__ObjectPlaceholderBrick();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ValueDomainPolicy <em>Value Domain Policy</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Value Domain Policy</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ValueDomainPolicy
+	 * @generated
+	 */
+	EClass getValueDomainPolicy();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.ValueDomainPolicy#isValid(org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick, java.lang.String, org.eclipse.emf.ecore.EDataType) <em>Is Valid</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Valid</em>' operation.
+	 * @see org.sidiff.completion.ui.codebricks.ValueDomainPolicy#isValid(org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick, java.lang.String, org.eclipse.emf.ecore.EDataType)
+	 * @generated
+	 */
+	EOperation getValueDomainPolicy__IsValid__ValuePlaceholderBrick_String_EDataType();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.ValueDomainPolicy#createFromString(org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick, java.lang.String, org.eclipse.emf.ecore.EDataType) <em>Create From String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Create From String</em>' operation.
+	 * @see org.sidiff.completion.ui.codebricks.ValueDomainPolicy#createFromString(org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick, java.lang.String, org.eclipse.emf.ecore.EDataType)
+	 * @generated
+	 */
+	EOperation getValueDomainPolicy__CreateFromString__ValuePlaceholderBrick_String_EDataType();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.ValueDomainPolicy#convertToString(org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick, java.lang.Object, org.eclipse.emf.ecore.EDataType) <em>Convert To String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Convert To String</em>' operation.
+	 * @see org.sidiff.completion.ui.codebricks.ValueDomainPolicy#convertToString(org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick, java.lang.Object, org.eclipse.emf.ecore.EDataType)
+	 * @generated
+	 */
+	EOperation getValueDomainPolicy__ConvertToString__ValuePlaceholderBrick_Object_EDataType();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2026,6 +2193,14 @@ public interface CodebricksPackage extends EPackage {
 		EReference OBJECT_PLACEHOLDER_BRICK__TYPE = eINSTANCE.getObjectPlaceholderBrick_Type();
 
 		/**
+		 * The meta object literal for the '<em><b>Domain</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference OBJECT_PLACEHOLDER_BRICK__DOMAIN = eINSTANCE.getObjectPlaceholderBrick_Domain();
+
+		/**
 		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.TextBrickImpl <em>Text Brick</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2162,22 +2337,28 @@ public interface CodebricksPackage extends EPackage {
 		EReference VALUE_PLACEHOLDER_BRICK__TYPE = eINSTANCE.getValuePlaceholderBrick_Type();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ObjectDomainPlaceholderBrickImpl <em>Object Domain Placeholder Brick</em>}' class.
+		 * The meta object literal for the '<em><b>Domain</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.completion.ui.codebricks.impl.ObjectDomainPlaceholderBrickImpl
-		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getObjectDomainPlaceholderBrick()
 		 * @generated
 		 */
-		EClass OBJECT_DOMAIN_PLACEHOLDER_BRICK = eINSTANCE.getObjectDomainPlaceholderBrick();
+		EReference VALUE_PLACEHOLDER_BRICK__DOMAIN = eINSTANCE.getValuePlaceholderBrick_Domain();
 
 		/**
-		 * The meta object literal for the '<em><b>Domain</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Literal Value</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference OBJECT_DOMAIN_PLACEHOLDER_BRICK__DOMAIN = eINSTANCE.getObjectDomainPlaceholderBrick_Domain();
+		EAttribute VALUE_PLACEHOLDER_BRICK__LITERAL_VALUE = eINSTANCE.getValuePlaceholderBrick_LiteralValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Instance Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VALUE_PLACEHOLDER_BRICK__INSTANCE_VALUE = eINSTANCE.getValuePlaceholderBrick_InstanceValue();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl <em>Placeholder Brick</em>}' class.
@@ -2204,6 +2385,14 @@ public interface CodebricksPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PLACEHOLDER_BRICK__PLACEHOLDER = eINSTANCE.getPlaceholderBrick_Placeholder();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PLACEHOLDER_BRICK__NAME = eINSTANCE.getPlaceholderBrick_Name();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ComposedTemplatePlaceholderBrickImpl <em>Composed Template Placeholder Brick</em>}' class.
@@ -2258,6 +2447,58 @@ public interface CodebricksPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CODEBRICK_VIEW__MODEL = eINSTANCE.getCodebrickView_Model();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ObjectDomainPolicyImpl <em>Object Domain Policy</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.impl.ObjectDomainPolicyImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getObjectDomainPolicy()
+		 * @generated
+		 */
+		EClass OBJECT_DOMAIN_POLICY = eINSTANCE.getObjectDomainPolicy();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Domain</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OBJECT_DOMAIN_POLICY___GET_DOMAIN__OBJECTPLACEHOLDERBRICK = eINSTANCE.getObjectDomainPolicy__GetDomain__ObjectPlaceholderBrick();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ValueDomainPolicyImpl <em>Value Domain Policy</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.impl.ValueDomainPolicyImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getValueDomainPolicy()
+		 * @generated
+		 */
+		EClass VALUE_DOMAIN_POLICY = eINSTANCE.getValueDomainPolicy();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Valid</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VALUE_DOMAIN_POLICY___IS_VALID__VALUEPLACEHOLDERBRICK_STRING_EDATATYPE = eINSTANCE.getValueDomainPolicy__IsValid__ValuePlaceholderBrick_String_EDataType();
+
+		/**
+		 * The meta object literal for the '<em><b>Create From String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VALUE_DOMAIN_POLICY___CREATE_FROM_STRING__VALUEPLACEHOLDERBRICK_STRING_EDATATYPE = eINSTANCE.getValueDomainPolicy__CreateFromString__ValuePlaceholderBrick_String_EDataType();
+
+		/**
+		 * The meta object literal for the '<em><b>Convert To String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VALUE_DOMAIN_POLICY___CONVERT_TO_STRING__VALUEPLACEHOLDERBRICK_OBJECT_EDATATYPE = eINSTANCE.getValueDomainPolicy__ConvertToString__ValuePlaceholderBrick_Object_EDataType();
 
 	}
 

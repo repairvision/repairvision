@@ -18,6 +18,7 @@ import org.sidiff.completion.ui.codebricks.PlaceholderBrick;
  * <ul>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl#isMandatory <em>Mandatory</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl#getPlaceholder <em>Placeholder</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.PlaceholderBrickImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
@@ -62,6 +63,26 @@ public abstract class PlaceholderBrickImpl extends StyledBrickImpl implements Pl
 	 * @ordered
 	 */
 	protected String placeholder = PLACEHOLDER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -134,12 +155,37 @@ public abstract class PlaceholderBrickImpl extends StyledBrickImpl implements Pl
 	 * @generated
 	 */
 	@Override
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CodebricksPackage.PLACEHOLDER_BRICK__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CodebricksPackage.PLACEHOLDER_BRICK__MANDATORY:
 				return isMandatory();
 			case CodebricksPackage.PLACEHOLDER_BRICK__PLACEHOLDER:
 				return getPlaceholder();
+			case CodebricksPackage.PLACEHOLDER_BRICK__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -157,6 +203,9 @@ public abstract class PlaceholderBrickImpl extends StyledBrickImpl implements Pl
 				return;
 			case CodebricksPackage.PLACEHOLDER_BRICK__PLACEHOLDER:
 				setPlaceholder((String)newValue);
+				return;
+			case CodebricksPackage.PLACEHOLDER_BRICK__NAME:
+				setName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -176,6 +225,9 @@ public abstract class PlaceholderBrickImpl extends StyledBrickImpl implements Pl
 			case CodebricksPackage.PLACEHOLDER_BRICK__PLACEHOLDER:
 				setPlaceholder(PLACEHOLDER_EDEFAULT);
 				return;
+			case CodebricksPackage.PLACEHOLDER_BRICK__NAME:
+				setName(NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -192,6 +244,8 @@ public abstract class PlaceholderBrickImpl extends StyledBrickImpl implements Pl
 				return mandatory != MANDATORY_EDEFAULT;
 			case CodebricksPackage.PLACEHOLDER_BRICK__PLACEHOLDER:
 				return PLACEHOLDER_EDEFAULT == null ? placeholder != null : !PLACEHOLDER_EDEFAULT.equals(placeholder);
+			case CodebricksPackage.PLACEHOLDER_BRICK__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -228,6 +282,8 @@ public abstract class PlaceholderBrickImpl extends StyledBrickImpl implements Pl
 		result.append(mandatory);
 		result.append(", placeholder: ");
 		result.append(placeholder);
+		result.append(", name: ");
+		result.append(name);
 		result.append(')');
 		return result.toString();
 	}
