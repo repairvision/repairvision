@@ -172,6 +172,7 @@ public class ComplementConstructor {
 						ComplementUtil.makePreserve(complementNode, false);
 						
 						// Create new IN-Parameter:
+						// TODO: Generate name if name is null!?
 						if ((complement != null) && (complementNode.getName() != null)) {
 							Parameter inParameter = HenshinFactory.eINSTANCE.createParameter(); 
 							inParameter.setKind(ParameterKind.IN);
