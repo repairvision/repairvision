@@ -122,7 +122,7 @@ public class TemplatePlaceholderBrickImpl extends PlaceholderBrickImpl implement
 		Set<Codebrick> selection = new HashSet<>(); 
 		
 		for (Brick templateBrick : getCodebrick().getCodebricks().getTemplate().getAllBricks()) {
-			if ((templateBrick instanceof TemplatePlaceholderBrick) && (templateBrick != this)) {
+			if (templateBrick instanceof TemplatePlaceholderBrick) {
 				List<ViewableBrick> placeholderChoices = ((TemplatePlaceholderBrick) templateBrick).getChoice();
 				
 				// Anything selected?
@@ -139,7 +139,9 @@ public class TemplatePlaceholderBrickImpl extends PlaceholderBrickImpl implement
 			remaining.addAll(getChoices());
 		} else {
 			// Filter brick choices by current selection of other placeholders:
-			for (ViewableBrick choice : getChoices()) {
+			List<ViewableBrick> superSet = getChoice().isEmpty() ? getChoices() : getChoice();
+			
+			for (ViewableBrick choice : superSet) {
 				if (selection.contains(choice.getCodebrick())) {
 					remaining.add(choice);
 				}

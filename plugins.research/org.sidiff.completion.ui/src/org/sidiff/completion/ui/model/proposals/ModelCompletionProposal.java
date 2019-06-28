@@ -127,6 +127,7 @@ public class ModelCompletionProposal implements ICompletionProposal {
 			});
 		} else {
 			EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(resource.getContents().get(0));
+			// TODO: check if TransactionalEditingDomain
 			
 			if (editingDomain != null) {
 				editingDomain.getCommandStack().execute(new AbstractCommand() {

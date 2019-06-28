@@ -281,7 +281,9 @@ public class CompletionProposalList {
 
 			@Override
 			public void focusLost(FocusEvent e) {
+				
 				if (!proposalInformation.isFocusControl()) {
+					hideProposalPreview();
 					proposalShell.close();
 					proposalShell.dispose();
 				}

@@ -4,14 +4,30 @@ import java.awt.MouseInfo;
 import java.awt.PointerInfo;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EventObject;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalCommandStack;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.impl.TransactionalCommandStackImpl;
+import org.eclipse.emf.transaction.impl.TransactionalEditingDomainImpl;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BidiSegmentEvent;
 import org.eclipse.swt.custom.BidiSegmentListener;
@@ -52,7 +68,6 @@ import org.sidiff.completion.ui.codebricks.Codebrick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.CodebricksFactory;
 import org.sidiff.completion.ui.codebricks.ComposedBrick;
-import org.sidiff.completion.ui.codebricks.ComposedTemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.IndentBrick;
 import org.sidiff.completion.ui.codebricks.LineBreakBrick;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
@@ -114,6 +129,8 @@ public class CodebricksEditor {
      */
     private Codebricks codebricks;
     
+    private TransactionalEditingDomain editingDomain;
+    
     private List<Adapter> codebricksAdapters = new ArrayList<>();
     
     private Map<Brick, Control> modelToViewMap = new HashMap<>();
@@ -139,6 +156,7 @@ public class CodebricksEditor {
 		
 		// Set new content:
 		this.codebricks = input;
+		initializeEditingDomain();
 		
 		// Create editor content:
 		buildContent(editorContent, getTemplate());
@@ -170,6 +188,99 @@ public class CodebricksEditor {
 		}
 		
 		return codebricks;
+	}
+	
+	protected void initializeEditingDomain() {
+		editingDomain = TransactionUtil.getEditingDomain(codebricks);
+		TransactionalCommandStack commandStack = null;
+		
+		if (editingDomain == null) {
+			
+			// Create an adapter factory that yields item providers:
+			ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+			
+			adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+			
+			// Create the command stack that will notify this editor as commands are executed:
+			commandStack = new TransactionalCommandStackImpl();
+			
+			// Create the editing domain with a special command stack.
+			editingDomain = new TransactionalEditingDomainImpl(adapterFactory, commandStack);
+			
+			// Add model to editing domain:
+			if (codebricks.eResource() == null) {
+				executeCommand(() -> {
+					Resource resource = editingDomain.getResourceSet().createResource(URI.createURI(""));
+					resource.getContents().add(codebricks);
+					editingDomain.getResourceSet().getResources().add(resource);
+				});
+			} else {
+				executeCommand(() -> {
+					editingDomain.getResourceSet().getResources().add(codebricks.eResource());
+				});
+			}
+			
+		} else {
+			
+			// Get the command stack that will notify this editor as commands are executed:
+			commandStack = (TransactionalCommandStack) editingDomain.getCommandStack();
+		}
+
+		// Notify this editor as commands are executed:
+		commandStack.addCommandStackListener(new CommandStackListener() {
+			public void commandStackChanged(final EventObject event) {
+				editorShell.getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						onCommandExecuted(event);
+					}
+				});
+			}
+		});
+	}
+	
+	public RecordingCommand executeCommand(Runnable command) {
+		RecordingCommand recordingCommand = new RecordingCommand(editingDomain) {
+
+			@Override
+			protected void doExecute() {
+				Display.getDefault().syncExec(command);
+			}
+
+			@Override
+			public boolean canUndo() {
+				return true;
+			}
+		};
+		editingDomain.getCommandStack().execute(recordingCommand);
+		return recordingCommand;
+	}
+	
+	public static RecordingCommand executeCommand(EObject element, Runnable command) {
+		TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) AdapterFactoryEditingDomain.getEditingDomainFor(element);
+		RecordingCommand recordingCommand = new RecordingCommand(editingDomain) {
+
+			@Override
+			protected void doExecute() {
+				Display.getDefault().syncExec(command);
+			}
+
+			@Override
+			public boolean canUndo() {
+				return true;
+			}
+		};
+		editingDomain.getCommandStack().execute(recordingCommand);
+		return recordingCommand;
+	}
+	
+	public static void undoCommand(EObject element, RecordingCommand command) {
+		TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) AdapterFactoryEditingDomain.getEditingDomainFor(element);
+		
+		if (editingDomain.getCommandStack().getUndoCommand() == command) {
+			// FIXME: editingDomain.getCommandStack().getUndoCommand().getAffectedObjects() is empty!?
+			editingDomain.getCommandStack().undo();
+		}
 	}
 	
 	public List<Brick> getTemplate() {
@@ -581,6 +692,10 @@ public class CodebricksEditor {
 	}
 	
 	protected void buildContent(Composite editorContent, List<? extends Brick> bricks) {
+		buildContent(editorContent, bricks, true);
+	}
+	
+	protected void buildContent(Composite editorContent, List<? extends Brick> bricks, boolean mapModelToView) {
 		
 		// Is content empty?
 		if (editorContent.getChildren().length > 0) {
@@ -646,16 +761,12 @@ public class CodebricksEditor {
 				// Create template placeholder:
 				if (templateBrick instanceof TemplatePlaceholderBrick) {
 					placeholder = (TemplatePlaceholderBrick) viewableBrick;
-					parentContainer = templateExpression;
-					
-					if (((TemplatePlaceholderBrick) placeholder).isComposed()) {
-						parentContainer = buildBrickRow(templateExpression);
-					}
+					viewControl = parentContainer = buildBrickRow(templateExpression);
 					
 					if (highlight) {
-						viewControl = placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
+						placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
 					} else {
-						viewControl = placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText());
+						placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText());
 					}
 				// Create value placeholder (parameter):
 				} else if (templateBrick instanceof ValuePlaceholderBrick) {
@@ -704,18 +815,8 @@ public class CodebricksEditor {
 			}
 			
 			// Store model to view mapping:
-			if (viewControl != null) {
+			if (mapModelToView && (viewControl != null)) {
 				modelToViewMap.put(templateBrick, viewControl);
-			}
-		}
-		
-		// Set focus to first editable text field:
-		if (templateExpression != null) {
-			for (Control expressionControl : templateExpression.getChildren()) {
-				if (expressionControl instanceof StyledText) {
-					expressionControl.setFocus();
-					break;
-				}
 			}
 		}
 		
@@ -743,11 +844,11 @@ public class CodebricksEditor {
 					List<ICompletionProposal> codebrickProposals = Collections.emptyList();
 
 					if (placeholderBrick instanceof TemplatePlaceholderBrick) {
-						codebrickProposals = getProposals(placeholderControl, (TemplatePlaceholderBrick) placeholderBrick);
+						codebrickProposals = getProposals((TemplatePlaceholderBrick) placeholderBrick);
 					} else if (placeholderBrick instanceof ObjectPlaceholderBrick) {
-						codebrickProposals = getProposals(placeholderControl, (ObjectPlaceholderBrick) placeholderBrick);
+						codebrickProposals = getProposals((ObjectPlaceholderBrick) placeholderBrick);
 					} else if (placeholderBrick instanceof ValuePlaceholderBrick) {
-						codebrickProposals = getProposals(placeholderControl, (ValuePlaceholderBrick) placeholderBrick);
+						codebrickProposals = getProposals((ValuePlaceholderBrick) placeholderBrick);
 					}
 
 					// Show proposals below editor:
@@ -778,7 +879,7 @@ public class CodebricksEditor {
 		});
 	}
 	
-	private List<ICompletionProposal> getProposals(StyledText placeholderControl, TemplatePlaceholderBrick placeholderBrick) {
+	private List<ICompletionProposal> getProposals(TemplatePlaceholderBrick placeholderBrick) {
 		List<ICompletionProposal> proposals = new ArrayList<>();
 		
 		List<ViewableBrick> remainingChoices = placeholderBrick.getRemainingChoices();
@@ -791,25 +892,38 @@ public class CodebricksEditor {
 				List<ViewableBrick> equalChoices = new ArrayList<>();
 
 				for (ViewableBrick unlistedChoice : unlistedChoices) {
-					if (unlistedChoice.getText().equals(choice.getText())) {
+					if (canCombineProposals(unlistedChoice, choice)) {
 						equalChoices.add(unlistedChoice);
 					}
 				}
 
 				unlistedChoices.removeAll(equalChoices);
-				proposals.add(new TemplateCodebricksProposal(placeholderControl, placeholderBrick, equalChoices));
+				proposals.add(new TemplateCodebricksProposal(placeholderBrick, equalChoices));
 			}
 		}
 		
 		return proposals;
 	}
 	
-	private List<ICompletionProposal> getProposals(StyledText placeholderControl, ObjectPlaceholderBrick placeholderBrick) {
+	protected boolean canCombineProposals(ViewableBrick choiceA, ViewableBrick choiceB) {
+		return choiceA.getText().equals(choiceB.getText());
+	}
+	
+	protected boolean canCombineProposals(List<ViewableBrick> choices) {
+		for (int i = 0; i < choices.size() - 1; i++) {
+			if (!canCombineProposals(choices.get(i), choices.get(i + 1))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private List<ICompletionProposal> getProposals(ObjectPlaceholderBrick placeholderBrick) {
 		List<ICompletionProposal> proposals = new ArrayList<>();
 
 		if (placeholderBrick.getDomain() != null) {
 			for (EObject element : placeholderBrick.getDomain().getDomain(placeholderBrick)) {
-				ObjectCodebricksProposal codebricksProposal = new ObjectCodebricksProposal(placeholderControl, placeholderBrick, element);
+				ObjectCodebricksProposal codebricksProposal = new ObjectCodebricksProposal(placeholderBrick, element);
 				proposals.add(codebricksProposal);
 			}
 		}
@@ -817,20 +931,26 @@ public class CodebricksEditor {
 		return proposals;
 	}
 	
-	private List<ICompletionProposal> getProposals(StyledText placeholderControl, ValuePlaceholderBrick placeholderBrick) {
+	private List<ICompletionProposal> getProposals(ValuePlaceholderBrick placeholderBrick) {
 		List<ICompletionProposal> proposals = new ArrayList<>();
 		// TODO:
 		return proposals;
 	}
 	
+	protected void onCommandExecuted(EventObject event) {
+		fitToContent();
+	}
+	
 	protected void onObjectPlaceholderSelected(ObjectPlaceholderBrick placeholderBrick) {
+		editorShell.setRedraw(false);
+		
 		StyledText textBrick = (StyledText) modelToViewMap.get(placeholderBrick);
 		textBrick.setText(ItemProviderUtil.getTextByObject(placeholderBrick.getElement()));
 		
 		placeholderBrick.getDomain().assignObject(placeholderBrick, placeholderBrick.getElement());
 		autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
 		
-		fitToContent();
+		editorShell.setRedraw(true);
 	}
 	
 	protected void autoSelectObjectPlaceholders(List<? extends Brick> bricks) {
@@ -842,12 +962,17 @@ public class CodebricksEditor {
 					} else if (brick instanceof ObjectPlaceholderBrick) {
 						ObjectPlaceholderBrick placeholderBrick = (ObjectPlaceholderBrick) brick;
 						
-						// Not already selected:
-						if (placeholderBrick.getElement() == null) {
-							List<EObject> currentDomain = placeholderBrick.getDomain().getDomain(placeholderBrick);
+						List<EObject> currentDomain = placeholderBrick.getDomain().getDomain(placeholderBrick);
 
-							if (currentDomain.size() == 1) {
+						if (currentDomain.size() == 1) {
+							
+							// Set or update element:
+							if (currentDomain.get(0) != placeholderBrick.getElement()) {
 								placeholderBrick.setElement(currentDomain.get(0));
+							}
+						} else if (currentDomain.size() == 0) {
+							if (placeholderBrick.getElement() != null) {
+								placeholderBrick.setElement(null);
 							}
 						}
 					}
@@ -861,13 +986,13 @@ public class CodebricksEditor {
 	}
 	
 	protected void onTemplatePlaceholderSelected(TemplatePlaceholderBrick placeholderBrick) {
-		StyledText textBrick = (StyledText) modelToViewMap.get(placeholderBrick);
-		ViewableBrick showChoice = placeholderBrick.getChoice().get(0);
+		editorShell.setRedraw(false);
 		
-		if (showChoice instanceof ComposedBrick) {
+		if (!placeholderBrick.getChoice().isEmpty()) {
+			ViewableBrick showChoice = placeholderBrick.getChoice().get(0);
+			Composite placeholderContainer = (Composite) modelToViewMap.get(placeholderBrick);
 			
 			// Clear container:
-			Composite placeholderContainer = textBrick.getParent();
 			Control[] children = placeholderContainer.getChildren();
 			
 			for (int i = 0; i < children.length; i++) {
@@ -875,7 +1000,7 @@ public class CodebricksEditor {
 			}
 			
 			// Add composed bricks:
-			buildContent(placeholderContainer, ((ComposedBrick) showChoice).getBricks());
+			buildContent(placeholderContainer, Collections.singletonList(showChoice), false);
 			
 			// If this choice is not yet determined disable controls:
 			if (placeholderBrick.getChoice().size() > 1) {
@@ -885,50 +1010,95 @@ public class CodebricksEditor {
 					children[i].setEnabled(false);
 				}
 			}
-			
 		} else {
-			textBrick.setText(showChoice.getText());
+			Composite placeholderContainer = (Composite) modelToViewMap.get(placeholderBrick);
+			
+			// Clear container:
+			Control[] children = placeholderContainer.getChildren();
+			
+			for (int i = 0; i < children.length; i++) {
+				children[i].dispose();
+			}
+			
+			buildContent(placeholderContainer, Collections.singletonList(placeholderBrick), false);
+			
+			// Hide placeholder if no choices are available:
+			List<ViewableBrick> choices = placeholderBrick.getRemainingChoices();
+			
+			if (choices.isEmpty()) {
+				hideComposedPlaceholder(placeholderContainer);
+			}
 		}
 		
-		autoSelectTemplatePlaceholders(codebricks.getTemplate().getBricks());
+		autoSelectTemplatePlaceholders(placeholderBrick, codebricks.getTemplate().getBricks());
 		autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
 		
-		fitToContent();
+		editorShell.setRedraw(true);
 	}
 	
-	protected void autoSelectTemplatePlaceholders(List<? extends Brick> bricks) {
+	protected void autoSelectTemplatePlaceholders(TemplatePlaceholderBrick selectedPlaceholder, List<? extends Brick> bricks) {
 		try {
-			for (Brick brick : bricks) {
-				if (brick instanceof PlaceholderBrick) {
-					if (brick instanceof TemplatePlaceholderBrick) {
-						TemplatePlaceholderBrick placeholderBrick = (TemplatePlaceholderBrick) brick;
-						
-						if (tryAutoSelectPlaceholder(placeholderBrick)) { // For optimization
-							StyledText textBrick = (StyledText) modelToViewMap.get(placeholderBrick);
-							List<ICompletionProposal> proposals = getProposals(textBrick, placeholderBrick);
-							
-							if (proposals.isEmpty()) {
-								if (placeholderBrick instanceof ComposedTemplatePlaceholderBrick) {
-									// Hide container of composed placeholder:
-									ComposedBrick containerModel = ((ComposedTemplatePlaceholderBrick) placeholderBrick).getContainerBrick();
-									Composite containerView = (Composite) modelToViewMap.get(containerModel);
-									hideComposedPlaceholder(containerView);
+
+			// Set choices:
+			if ((selectedPlaceholder.getChoice() != null) || (!selectedPlaceholder.getChoice().isEmpty())) {
+				for (Brick brick : bricks) {
+					if (brick != selectedPlaceholder) {
+						if (brick instanceof TemplatePlaceholderBrick) {
+							TemplatePlaceholderBrick placeholderBrick = (TemplatePlaceholderBrick) brick;
+							List<ViewableBrick> choices = getRemainingChoices(placeholderBrick, selectedPlaceholder);
+
+							if (!choices.equals(placeholderBrick.getChoice())) {
+								if (!choices.isEmpty() && canCombineProposals(choices)) {
+									if (!placeholderBrick.getChoice().isEmpty()) {
+										placeholderBrick.getChoice().clear();
+									}
+									placeholderBrick.getChoice().addAll(choices);
 								} else {
-									// Hide placeholder:
-									hidePlaceholder(textBrick);
+									placeholderBrick.getChoice().retainAll(choices);
 								}
-							} else if (proposals.size() == 1) {
-								proposals.get(0).apply();
 							}
+							
+							if (choices.isEmpty()) {
+								hideComposedPlaceholder((Composite) modelToViewMap.get(placeholderBrick));
+							}
+						} else if (brick instanceof ComposedBrick) {
+							autoSelectTemplatePlaceholders(selectedPlaceholder, ((ComposedBrick) brick).getBricks());
 						}
 					}
-				} else if (brick instanceof ComposedBrick) {
-					autoSelectTemplatePlaceholders(((ComposedBrick) brick).getBricks());
 				}
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private List<ViewableBrick> getRemainingChoices(
+			TemplatePlaceholderBrick placeholderBrick,
+			TemplatePlaceholderBrick selectedPlaceholder) {
+
+		// Filter brick choices by current selection of other placeholders:
+		EList<ViewableBrick> remaining = new BasicEList<>();
+
+		List<ViewableBrick> superSet = placeholderBrick.getChoice().isEmpty() ? placeholderBrick.getChoices()
+				: placeholderBrick.getChoice();
+
+		for (ViewableBrick choice : superSet) {
+			if (containsCodebricks(choice.getCodebrick(), selectedPlaceholder.getChoice())) {
+				remaining.add(choice);
+			}
+		}
+
+		return remaining;
+	}
+	
+	private boolean containsCodebricks(Codebrick matchCodebrick, EList<ViewableBrick> inCodebricks) {
+		for (ViewableBrick inCodebrick : inCodebricks) {
+			if (matchCodebrick == inCodebrick.getCodebrick()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	protected void onAlternativeChosen(Codebrick choice) {
@@ -972,32 +1142,6 @@ public class CodebricksEditor {
 	private void hidePlaceholder(Control control) {
 		control.setForeground(new Color(Display.getDefault(), 160, 160, 160));
 		control.setEnabled(false);
-	}
-	
-	private boolean tryAutoSelectPlaceholder(TemplatePlaceholderBrick placeholder) {
-		
-		/*
-		 *  For optimization:
-		 */
-		
-		if (placeholder.getChoice().size() == 1) {
-			return false; // already selected!
-		}
-		
-		List<ViewableBrick> choices = placeholder.getRemainingChoices();
-		
-		// Select (=1) or disable (=0) placeholder?
-		if ((choices.size() == 0) || (choices.size() == 1)) {
-			return true;
-		} else {
-			for (ViewableBrick choice : choices) {
-				if (!choice.getText().equals(choices.get(0).getText())) {
-					return false; // not all choices are equal!
-				}
-			}
-		}
-		
-		return true;
 	}
 	
 	protected void fitToContent() {

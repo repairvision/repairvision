@@ -40,7 +40,7 @@ public class CodebricksUtil {
             		TemplatePlaceholderBrick placeholder = (TemplatePlaceholderBrick) notification.getNotifier();
             		
             		if (notification.getFeature() == CodebricksPackage.eINSTANCE.getTemplatePlaceholderBrick_Choice()) {
-            			if (!placeholder.getChoice().isEmpty()) {
+            			if (notification.getOldValue() != notification.getNewValue()) {
             				onPlaceholderChanged.accept(placeholder);
             			}
             		}
@@ -56,7 +56,7 @@ public class CodebricksUtil {
             public void notifyChanged(Notification notification) {
             	if (notification.getNotifier() instanceof ObjectPlaceholderBrick) {
             		if (notification.getFeature() == CodebricksPackage.eINSTANCE.getObjectPlaceholderBrick_Element()) {
-            			if (notification.getNewValue() != null) {
+            			if (notification.getOldValue() != notification.getNewValue()) {
             				onPlaceholderChanged.accept((ObjectPlaceholderBrick) notification.getNotifier());
             			}
             		}
@@ -72,7 +72,7 @@ public class CodebricksUtil {
             public void notifyChanged(Notification notification) {
             	if (notification.getNotifier() instanceof ValuePlaceholderBrick) {
             		if (notification.getFeature() == CodebricksPackage.eINSTANCE.getValuePlaceholderBrick_InstanceValue()) {
-            			if (notification.getNewValue() != null) {
+            			if (notification.getOldValue() != notification.getNewValue()) {
             				onPlaceholderChanged.accept((ValuePlaceholderBrick) notification.getNotifier());
             			}
             		}

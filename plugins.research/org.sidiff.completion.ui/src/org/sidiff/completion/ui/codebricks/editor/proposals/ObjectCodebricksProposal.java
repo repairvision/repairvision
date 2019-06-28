@@ -1,11 +1,12 @@
 package org.sidiff.completion.ui.codebricks.editor.proposals;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.swt.custom.StyledText;
+import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
+import org.sidiff.completion.ui.codebricks.editor.CodebricksEditor;
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.completion.ui.proposals.ICompletionPreview;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
@@ -13,14 +14,11 @@ import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 public class ObjectCodebricksProposal implements ICompletionProposal {
 
-	protected StyledText textField;
-	
 	protected ObjectPlaceholderBrick placeholder;
 	
 	protected EObject object;
 	
-	public ObjectCodebricksProposal(StyledText textField, ObjectPlaceholderBrick placeholder, EObject object) {
-		this.textField = textField;  				// TODO: The editor should listen to model changes!
+	public ObjectCodebricksProposal(ObjectPlaceholderBrick placeholder, EObject object) {
 		this.placeholder = placeholder;
 		this.object = object;
 	}
@@ -29,18 +27,21 @@ public class ObjectCodebricksProposal implements ICompletionProposal {
 	public ICompletionPreview preview() {
 		return new ICompletionPreview() {
 			
-			private String oldText = textField.getText();
+			private RecordingCommand command;
 			
 			@Override
 			public boolean show() {
-//				apply();							// TODO: Needs recording/undo of all subsequent changes!	
-				textField.setText(getText());
+				
+				command = CodebricksEditor.executeCommand(placeholder, () -> {
+					apply();
+				});
+				
 				return true;
 			}
 			
 			@Override
 			public boolean hide() {
-				textField.setText(oldText);
+				CodebricksEditor.undoCommand(placeholder, command);
 				return true;
 			}
 		};
@@ -82,7 +83,9 @@ public class ObjectCodebricksProposal implements ICompletionProposal {
 	public boolean apply() {
 		
 		// Set selected text for placeholder:
-		placeholder.setElement(object);
+		CodebricksEditor.executeCommand(placeholder, () -> {
+			placeholder.setElement(object);
+		}); 
 		
 		return true;
 	}
