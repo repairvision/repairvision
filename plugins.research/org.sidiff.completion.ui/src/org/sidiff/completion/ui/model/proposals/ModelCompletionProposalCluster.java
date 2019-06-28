@@ -1,7 +1,7 @@
-package org.sidiff.completion.ui.model;
+package org.sidiff.completion.ui.model.proposals;
 
-import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.TEMPLATE_PRESENCE_SEPARATOR;
-import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.generateDecompositionSequenceFromHierarchicals;
+import static org.sidiff.completion.ui.model.proposals.util.ModelCompletionProposalUtil.TEMPLATE_PRESENCE_SEPARATOR;
+import static org.sidiff.completion.ui.model.proposals.util.ModelCompletionProposalUtil.generateDecompositionSequenceFromHierarchicals;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,9 +11,10 @@ import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.editor.CodebricksEditor;
-import org.sidiff.completion.ui.list.ICompletionPreview;
-import org.sidiff.completion.ui.list.ICompletionProposal;
-import org.sidiff.completion.ui.model.codebricks.CodebricksGenerator;
+import org.sidiff.completion.ui.model.proposals.codebricks.CodebricksGenerator;
+import org.sidiff.completion.ui.model.proposals.util.DecompositionTemplates;
+import org.sidiff.completion.ui.proposals.ICompletionPreview;
+import org.sidiff.completion.ui.proposals.ICompletionProposal;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 public class ModelCompletionProposalCluster implements ICompletionProposal {

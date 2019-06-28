@@ -1,4 +1,4 @@
-package org.sidiff.completion.ui.model;
+package org.sidiff.completion.ui.model.proposals.handler;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -6,7 +6,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.completion.ui.list.CompletionProposalList;
+import org.sidiff.completion.ui.model.proposals.recognition.ModelCompletionProposalGenerator;
+import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
 import org.sidiff.repair.editrules.library.RulebaseLibrary;

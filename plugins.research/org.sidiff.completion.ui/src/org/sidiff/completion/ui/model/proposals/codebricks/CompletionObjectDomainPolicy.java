@@ -1,4 +1,4 @@
-package org.sidiff.completion.ui.model.codebricks;
+package org.sidiff.completion.ui.model.proposals.codebricks;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -7,8 +7,8 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.POJOCodebrickView;
 import org.sidiff.completion.ui.codebricks.impl.ObjectDomainPolicyImpl;
-import org.sidiff.completion.ui.model.ModelCompletionParameterBinding;
-import org.sidiff.completion.ui.model.ModelCompletionProposal;
+import org.sidiff.completion.ui.model.proposals.ModelCompletionParameterBinding;
+import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
 
 public class CompletionObjectDomainPolicy extends ObjectDomainPolicyImpl {
 

@@ -1,4 +1,4 @@
-package org.sidiff.completion.ui.model.impact;
+package org.sidiff.completion.ui.model.proposals.recognition.impact;
 
 import java.util.List;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package org.sidiff.completion.ui.model;
+package org.sidiff.completion.ui.model.proposals.recognition;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +8,7 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.repair.complement.construction.ComplementRule;

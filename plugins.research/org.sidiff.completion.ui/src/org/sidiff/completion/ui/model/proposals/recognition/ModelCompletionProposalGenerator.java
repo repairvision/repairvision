@@ -1,4 +1,4 @@
-package org.sidiff.completion.ui.model;
+package org.sidiff.completion.ui.model.proposals.recognition;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +9,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.completion.ui.list.CompletionProposalList;
-import org.sidiff.completion.ui.model.impact.ModelCompletionImpactAnalyzes;
+import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
+import org.sidiff.completion.ui.model.proposals.ModelCompletionProposalCluster;
+import org.sidiff.completion.ui.model.proposals.recognition.impact.ModelCompletionImpactAnalyzes;
+import org.sidiff.completion.ui.model.proposals.util.DecompositionTemplates;
+import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;

@@ -1,4 +1,4 @@
-package org.sidiff.completion.ui.model;
+package org.sidiff.completion.ui.model.proposals.util;
 
 import java.util.ArrayList;
 import java.util.Collections;

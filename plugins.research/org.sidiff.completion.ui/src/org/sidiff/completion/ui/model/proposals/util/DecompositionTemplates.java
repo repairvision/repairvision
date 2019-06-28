@@ -1,12 +1,13 @@
-package org.sidiff.completion.ui.model;
+package org.sidiff.completion.ui.model.proposals.util;
 
-import static org.sidiff.completion.ui.model.ModelCompletionProposalUtil.getDecomposition;
+import static org.sidiff.completion.ui.model.proposals.util.ModelCompletionProposalUtil.getDecomposition;
 import static org.sidiff.graphpattern.tools.editrules.DecomposingEditRulesUtil.getFirstLevelTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
 import org.sidiff.graphpattern.profile.henshin_extension.RuleExtension;
 import org.sidiff.graphpattern.profile.henshin_extension.SubGraph;
 

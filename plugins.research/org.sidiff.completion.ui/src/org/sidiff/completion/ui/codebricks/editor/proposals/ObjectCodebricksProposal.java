@@ -6,9 +6,9 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
-import org.sidiff.completion.ui.list.CompletionProposalList;
-import org.sidiff.completion.ui.list.ICompletionPreview;
-import org.sidiff.completion.ui.list.ICompletionProposal;
+import org.sidiff.completion.ui.proposals.CompletionProposalList;
+import org.sidiff.completion.ui.proposals.ICompletionPreview;
+import org.sidiff.completion.ui.proposals.ICompletionProposal;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 public class ObjectCodebricksProposal implements ICompletionProposal {

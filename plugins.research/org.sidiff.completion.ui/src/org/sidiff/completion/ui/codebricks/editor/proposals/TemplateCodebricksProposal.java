@@ -8,8 +8,8 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
-import org.sidiff.completion.ui.list.ICompletionPreview;
-import org.sidiff.completion.ui.list.ICompletionProposal;
+import org.sidiff.completion.ui.proposals.ICompletionPreview;
+import org.sidiff.completion.ui.proposals.ICompletionProposal;
 
 public class TemplateCodebricksProposal implements ICompletionProposal {
 	

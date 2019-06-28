@@ -1,4 +1,4 @@
-package org.sidiff.completion.ui.list;
+package org.sidiff.completion.ui.proposals;
 
 public interface ICompletionPreview {
 

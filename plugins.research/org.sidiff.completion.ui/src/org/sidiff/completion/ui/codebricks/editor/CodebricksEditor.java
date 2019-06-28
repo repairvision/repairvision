@@ -66,8 +66,8 @@ import org.sidiff.completion.ui.codebricks.ViewableBrick;
 import org.sidiff.completion.ui.codebricks.editor.proposals.ObjectCodebricksProposal;
 import org.sidiff.completion.ui.codebricks.editor.proposals.TemplateCodebricksProposal;
 import org.sidiff.completion.ui.codebricks.util.CodebricksUtil;
-import org.sidiff.completion.ui.list.CompletionProposalList;
-import org.sidiff.completion.ui.list.ICompletionProposal;
+import org.sidiff.completion.ui.proposals.CompletionProposalList;
+import org.sidiff.completion.ui.proposals.ICompletionProposal;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 public class CodebricksEditor {
@@ -681,8 +681,8 @@ public class CodebricksEditor {
 				}
 
 				// Show proposal list:
-				if ((parentContainer != null) && (placeholderControl != null) && (placeholder != null)) {
-					installProposalList(parentContainer, placeholderControl, placeholder);
+				if ((placeholderControl != null) && (placeholder != null)) {
+					installProposalList(placeholderControl, placeholder);
 				}
 				
 				/*
@@ -723,7 +723,7 @@ public class CodebricksEditor {
 		fitToContent();
 	}
 
-	private void installProposalList(Composite parentContainer, StyledText placeholderControl, PlaceholderBrick placeholderBrick) {
+	private void installProposalList(StyledText placeholderControl, PlaceholderBrick placeholderBrick) {
 		
 		// Store model in view:
 		placeholderControl.setData(placeholderBrick);
@@ -743,16 +743,16 @@ public class CodebricksEditor {
 					List<ICompletionProposal> codebrickProposals = Collections.emptyList();
 
 					if (placeholderBrick instanceof TemplatePlaceholderBrick) {
-						codebrickProposals = getProposals(parentContainer, placeholderControl, (TemplatePlaceholderBrick) placeholderBrick);
+						codebrickProposals = getProposals(placeholderControl, (TemplatePlaceholderBrick) placeholderBrick);
 					} else if (placeholderBrick instanceof ObjectPlaceholderBrick) {
-						codebrickProposals = getProposals(parentContainer, placeholderControl, (ObjectPlaceholderBrick) placeholderBrick);
+						codebrickProposals = getProposals(placeholderControl, (ObjectPlaceholderBrick) placeholderBrick);
 					} else if (placeholderBrick instanceof ValuePlaceholderBrick) {
-						codebrickProposals = getProposals(parentContainer, placeholderControl, (ValuePlaceholderBrick) placeholderBrick);
+						codebrickProposals = getProposals(placeholderControl, (ValuePlaceholderBrick) placeholderBrick);
 					}
 
 					// Show proposals below editor:
 					if (!codebrickProposals.isEmpty()) {
-						CompletionProposalList proposals =  new CompletionProposalList(parentContainer.getDisplay());
+						CompletionProposalList proposals =  new CompletionProposalList(placeholderControl.getDisplay());
 						proposals.addProposals(codebrickProposals);
 						
 						int proposalsXPosition = editorShell.getLocation().x;
@@ -778,7 +778,7 @@ public class CodebricksEditor {
 		});
 	}
 	
-	private List<ICompletionProposal> getProposals(Composite parentContainer, StyledText placeholderControl, TemplatePlaceholderBrick placeholderBrick) {
+	private List<ICompletionProposal> getProposals(StyledText placeholderControl, TemplatePlaceholderBrick placeholderBrick) {
 		List<ICompletionProposal> proposals = new ArrayList<>();
 		
 		List<ViewableBrick> remainingChoices = placeholderBrick.getRemainingChoices();
@@ -804,7 +804,7 @@ public class CodebricksEditor {
 		return proposals;
 	}
 	
-	private List<ICompletionProposal> getProposals(Composite parentContainer, StyledText placeholderControl, ObjectPlaceholderBrick placeholderBrick) {
+	private List<ICompletionProposal> getProposals(StyledText placeholderControl, ObjectPlaceholderBrick placeholderBrick) {
 		List<ICompletionProposal> proposals = new ArrayList<>();
 
 		if (placeholderBrick.getDomain() != null) {
@@ -817,7 +817,7 @@ public class CodebricksEditor {
 		return proposals;
 	}
 	
-	private List<ICompletionProposal> getProposals(Composite parentContainer, StyledText placeholderControl, ValuePlaceholderBrick placeholderBrick) {
+	private List<ICompletionProposal> getProposals(StyledText placeholderControl, ValuePlaceholderBrick placeholderBrick) {
 		List<ICompletionProposal> proposals = new ArrayList<>();
 		// TODO:
 		return proposals;
@@ -829,6 +829,8 @@ public class CodebricksEditor {
 		
 		placeholderBrick.getDomain().assignObject(placeholderBrick, placeholderBrick.getElement());
 		autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
+		
+		fitToContent();
 	}
 	
 	protected void autoSelectObjectPlaceholders(List<? extends Brick> bricks) {
@@ -889,6 +891,9 @@ public class CodebricksEditor {
 		}
 		
 		autoSelectTemplatePlaceholders(codebricks.getTemplate().getBricks());
+		autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
+		
+		fitToContent();
 	}
 	
 	protected void autoSelectTemplatePlaceholders(List<? extends Brick> bricks) {
@@ -900,7 +905,7 @@ public class CodebricksEditor {
 						
 						if (tryAutoSelectPlaceholder(placeholderBrick)) { // For optimization
 							StyledText textBrick = (StyledText) modelToViewMap.get(placeholderBrick);
-							List<ICompletionProposal> proposals = getProposals(textBrick.getParent(), textBrick, placeholderBrick);
+							List<ICompletionProposal> proposals = getProposals(textBrick, placeholderBrick);
 							
 							if (proposals.isEmpty()) {
 								if (placeholderBrick instanceof ComposedTemplatePlaceholderBrick) {

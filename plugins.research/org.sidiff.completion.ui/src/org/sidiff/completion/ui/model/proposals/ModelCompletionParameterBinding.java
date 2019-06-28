@@ -1,4 +1,4 @@
-package org.sidiff.completion.ui.model;
+package org.sidiff.completion.ui.model.proposals;
 
 import org.sidiff.repair.complement.repair.RepairPlan;
 
