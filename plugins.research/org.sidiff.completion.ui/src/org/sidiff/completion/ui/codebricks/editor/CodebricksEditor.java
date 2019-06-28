@@ -18,15 +18,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.RecordingCommand;
-import org.eclipse.emf.transaction.TransactionalCommandStack;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.impl.TransactionalCommandStackImpl;
-import org.eclipse.emf.transaction.impl.TransactionalEditingDomainImpl;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BidiSegmentEvent;
@@ -191,44 +187,21 @@ public class CodebricksEditor {
 	}
 	
 	protected void initializeEditingDomain() {
-		editingDomain = TransactionUtil.getEditingDomain(codebricks);
-		TransactionalCommandStack commandStack = null;
+		editingDomain = getEditingDomain(codebricks);
 		
 		if (editingDomain == null) {
 			
-			// Create an adapter factory that yields item providers:
-			ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-			
-			adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-			adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
-			
-			// Create the command stack that will notify this editor as commands are executed:
-			commandStack = new TransactionalCommandStackImpl();
-			
 			// Create the editing domain with a special command stack.
-			editingDomain = new TransactionalEditingDomainImpl(adapterFactory, commandStack);
-			
-			// Add model to editing domain:
 			if (codebricks.eResource() == null) {
-				executeCommand(() -> {
-					Resource resource = editingDomain.getResourceSet().createResource(URI.createURI(""));
-					resource.getContents().add(codebricks);
-					editingDomain.getResourceSet().getResources().add(resource);
-				});
-			} else {
-				executeCommand(() -> {
-					editingDomain.getResourceSet().getResources().add(codebricks.eResource());
-				});
+				Resource resource = new ResourceSetImpl().createResource(URI.createURI(""));
+				resource.getContents().add(codebricks);
 			}
 			
-		} else {
-			
-			// Get the command stack that will notify this editor as commands are executed:
-			commandStack = (TransactionalCommandStack) editingDomain.getCommandStack();
+			editingDomain = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain(codebricks.eResource().getResourceSet());
 		}
 
 		// Notify this editor as commands are executed:
-		commandStack.addCommandStackListener(new CommandStackListener() {
+		editingDomain.getCommandStack().addCommandStackListener(new CommandStackListener() {
 			public void commandStackChanged(final EventObject event) {
 				editorShell.getDisplay().asyncExec(new Runnable() {
 					public void run() {
@@ -239,35 +212,27 @@ public class CodebricksEditor {
 		});
 	}
 	
-	public RecordingCommand executeCommand(Runnable command) {
-		RecordingCommand recordingCommand = new RecordingCommand(editingDomain) {
-
-			@Override
-			protected void doExecute() {
-				Display.getDefault().syncExec(command);
+	public static TransactionalEditingDomain getEditingDomain(EObject element) {
+		TransactionalEditingDomain transactionalEditingDomain = TransactionUtil.getEditingDomain(element);
+		
+		if (transactionalEditingDomain == null) {
+			EditingDomain editingDomain =  AdapterFactoryEditingDomain.getEditingDomainFor(element);
+			
+			if (editingDomain instanceof TransactionalEditingDomain) {
+				return (TransactionalEditingDomain) editingDomain;
 			}
-
-			@Override
-			public boolean canUndo() {
-				return true;
-			}
-		};
-		editingDomain.getCommandStack().execute(recordingCommand);
-		return recordingCommand;
+		}
+		
+		return transactionalEditingDomain;
 	}
 	
 	public static RecordingCommand executeCommand(EObject element, Runnable command) {
-		TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) AdapterFactoryEditingDomain.getEditingDomainFor(element);
+		TransactionalEditingDomain editingDomain = getEditingDomain(element);
 		RecordingCommand recordingCommand = new RecordingCommand(editingDomain) {
 
 			@Override
 			protected void doExecute() {
 				Display.getDefault().syncExec(command);
-			}
-
-			@Override
-			public boolean canUndo() {
-				return true;
 			}
 		};
 		editingDomain.getCommandStack().execute(recordingCommand);
@@ -275,10 +240,9 @@ public class CodebricksEditor {
 	}
 	
 	public static void undoCommand(EObject element, RecordingCommand command) {
-		TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) AdapterFactoryEditingDomain.getEditingDomainFor(element);
+		TransactionalEditingDomain editingDomain = getEditingDomain(element);
 		
 		if (editingDomain.getCommandStack().getUndoCommand() == command) {
-			// FIXME: editingDomain.getCommandStack().getUndoCommand().getAffectedObjects() is empty!?
 			editingDomain.getCommandStack().undo();
 		}
 	}
@@ -945,10 +909,14 @@ public class CodebricksEditor {
 		editorShell.setRedraw(false);
 		
 		StyledText textBrick = (StyledText) modelToViewMap.get(placeholderBrick);
-		textBrick.setText(ItemProviderUtil.getTextByObject(placeholderBrick.getElement()));
 		
-		placeholderBrick.getDomain().assignObject(placeholderBrick, placeholderBrick.getElement());
-		autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
+		// Is parameter currently visibly in template?
+		if ((textBrick != null) && (!textBrick.isDisposed())) {
+			textBrick.setText(ItemProviderUtil.getTextByObject(placeholderBrick.getElement()));
+			
+			placeholderBrick.getDomain().assignObject(placeholderBrick, placeholderBrick.getElement());
+			autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
+		}
 		
 		editorShell.setRedraw(true);
 	}

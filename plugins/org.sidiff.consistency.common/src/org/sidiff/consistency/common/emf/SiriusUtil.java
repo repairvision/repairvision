@@ -33,12 +33,6 @@ public class SiriusUtil {
 				protected void doExecute() {
 					runnable.run();
 				}
-
-				@Override
-				public boolean canUndo() {
-					return false;
-				}
-
 			});	
 		} else {
 			runnable.run();
@@ -55,12 +49,6 @@ public class SiriusUtil {
 				protected void doExecute() {
 					runnable.run();
 				}
-
-				@Override
-				public boolean canUndo() {
-					return false;
-				}
-
 			});	
 		} else {
 			runnable.run();

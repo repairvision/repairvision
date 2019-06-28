@@ -331,7 +331,9 @@ public class CompletionProposalList {
 	
 	protected boolean hideProposalPreview() {
 		if (preview != null) {
-			return preview.hide();
+			ICompletionPreview lastPreview = preview;
+			preview = null;
+			return lastPreview.hide();
 		}
 		return false;
 	}

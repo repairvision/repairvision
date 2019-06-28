@@ -244,12 +244,6 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				protected void doExecute() {
 					result[0] = repairJob.applyRepair(repair, match, false);
 				}
-
-				@Override
-				public boolean canUndo() {
-					return true;
-				}
-
 			});
 		} else {
 			EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getModelB().getContents().get(0));
@@ -352,12 +346,6 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				protected void doExecute() {;
 					result[0] = repairJob.rollbackInconsistencyInducingChanges(repair, false);
 				}
-
-				@Override
-				public boolean canUndo() {
-					return true;
-				}
-
 			});
 		} else {
 			EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getModelB().getContents().get(0));
