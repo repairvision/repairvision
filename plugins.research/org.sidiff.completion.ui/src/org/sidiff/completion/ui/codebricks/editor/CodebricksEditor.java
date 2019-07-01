@@ -80,6 +80,7 @@ import org.sidiff.completion.ui.codebricks.util.CodebricksUtil;
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
 import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
+import org.sidiff.consistency.common.monitor.LogUtil;
 
 public class CodebricksEditor {
 
@@ -718,48 +719,20 @@ public class CodebricksEditor {
 				/*
 				 * Placeholder:
 				 */
-				Composite parentContainer = null;
-				StyledText placeholderControl = null;
-				PlaceholderBrick placeholder = null;
 				
 				// Create template placeholder:
 				if (templateBrick instanceof TemplatePlaceholderBrick) {
-					placeholder = (TemplatePlaceholderBrick) viewableBrick;
-					viewControl = parentContainer = buildBrickRow(templateExpression);
-					
-					if (highlight) {
-						placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
-					} else {
-						placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText());
-					}
+					viewControl = buildBrickRow(templateExpression);
+					buildPlaceholder((Composite) viewControl, (PlaceholderBrick) templateBrick);
 				// Create value placeholder (parameter):
 				} else if (templateBrick instanceof ValuePlaceholderBrick) {
-					placeholder = (ValuePlaceholderBrick) viewableBrick;
-					parentContainer = templateExpression;
-					
-					if (highlight) {
-						viewControl = placeholderControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
-					} else {
-						viewControl = placeholderControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
-					}
+					viewControl = buildPlaceholder(templateExpression, (PlaceholderBrick) templateBrick);
 					
 				// Create object placeholder (parameter):
 				} else if (templateBrick instanceof ObjectPlaceholderBrick) {
-					placeholder = (ObjectPlaceholderBrick) viewableBrick;
-					parentContainer = templateExpression;
-					
-					if (highlight) {
-						viewControl = placeholderControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
-					} else {
-						viewControl = placeholderControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
-					}
+					viewControl = buildPlaceholder(templateExpression, (PlaceholderBrick) templateBrick);
 				}
 
-				// Show proposal list:
-				if ((placeholderControl != null) && (placeholder != null)) {
-					installProposalList(placeholderControl, placeholder);
-				}
-				
 				/*
 				 * Basic bricks:
 				 */
@@ -786,6 +759,20 @@ public class CodebricksEditor {
 		
 		// Do layout:
 		fitToContent();
+	}
+	
+	private StyledText buildPlaceholder(Composite parentContainer, PlaceholderBrick placeholderBrick) {
+		StyledText placeholderControl = null;
+		
+		if (placeholderBrick.isHighlight()) {
+			placeholderControl =  buildEditableTextBrick(parentContainer, placeholderBrick.getText(), placeholderBrick.getText(), true, COLOR_BLACK);
+		} else {
+			placeholderControl =  buildEditableTextBrick(parentContainer, placeholderBrick.getText(), placeholderBrick.getText());
+		}
+		
+		installProposalList(placeholderControl, placeholderBrick);
+		
+		return placeholderControl;
 	}
 
 	private void installProposalList(StyledText placeholderControl, PlaceholderBrick placeholderBrick) {
@@ -956,6 +943,10 @@ public class CodebricksEditor {
 	protected void onTemplatePlaceholderSelected(TemplatePlaceholderBrick placeholderBrick) {
 		editorShell.setRedraw(false);
 		
+		System.out.println("###################################################################");
+		System.out.println(dumpControllerTree(editorShell));
+		System.out.println("###################################################################");
+		
 		if (!placeholderBrick.getChoice().isEmpty()) {
 			ViewableBrick showChoice = placeholderBrick.getChoice().get(0);
 			Composite placeholderContainer = (Composite) modelToViewMap.get(placeholderBrick);
@@ -988,7 +979,7 @@ public class CodebricksEditor {
 				children[i].dispose();
 			}
 			
-			buildContent(placeholderContainer, Collections.singletonList(placeholderBrick), false);
+			buildPlaceholder(placeholderContainer, placeholderBrick);
 			
 			// Hide placeholder if no choices are available:
 			List<ViewableBrick> choices = placeholderBrick.getRemainingChoices();
@@ -1000,6 +991,10 @@ public class CodebricksEditor {
 		
 		autoSelectTemplatePlaceholders(placeholderBrick, codebricks.getTemplate().getBricks());
 		autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
+		
+		System.out.println("###################################################################");
+		System.out.println(dumpControllerTree(editorShell));
+		System.out.println("###################################################################");
 		
 		editorShell.setRedraw(true);
 	}
@@ -1140,5 +1135,102 @@ public class CodebricksEditor {
 	private void createShell(Display display) {
 		createPopup(display);
 		showPopupOnCursor();
+	}
+	
+	@SuppressWarnings("unused")
+	private String dumpControllerTree(Composite composite) {
+		StringBuilder dump = new StringBuilder();
+		dumpControllerTree(composite, dump, 0);
+		return dump.toString();
+	}
+	
+	private void dumpControllerTree(Composite composite, StringBuilder dump, int indent) {
+		dump.append(LogUtil.repeat(" ", indent));
+		dump.append(composite.toString());
+		dumpModelByView(dump, composite);
+		dump.append("\n");
+		
+		indent += 2;
+		
+		for (Control child : composite.getChildren()) {
+
+			if (child instanceof StyledText) {
+				dump.append(LogUtil.repeat(" ", indent));
+				dump.append("StyledText {");
+				dump.append(((StyledText) child).getText());
+				dumpModelByView(dump, child);
+				dump.append("\n");
+			}
+
+			else if (child instanceof Composite) {
+				dumpControllerTree((Composite) child, dump, indent);
+			}
+
+			else if (child instanceof Label) {
+				dump.append(LogUtil.repeat(" ", indent));
+				dump.append(child);
+				dumpModelByView(dump, child);
+				dump.append("\n");
+			}
+		}
+	}
+	
+	private void dumpModelByView(StringBuilder dump, Control control) {
+		String modelDump = modelToViewMap.entrySet().stream().filter(e -> e.getValue() == control).findFirst().map(e -> e.getKey().eClass().getName()).orElse(null);
+		
+		if (modelDump != null) {
+			dump.append(" ~> ");
+			dump.append(modelDump);
+		}
+	}
+	
+	@SuppressWarnings("unused")
+	private String dumpController(Composite composite) {
+		StringBuilder dump = new StringBuilder();
+		dumpController(composite, dump);
+		return dump.toString();
+	}
+	
+	private void dumpController(Composite composite, StringBuilder dump) {
+		for (Control child : composite.getChildren()) {
+			if (child instanceof StyledText) {
+				dump.append("{");
+				dump.append(((StyledText) child).getText());
+				dump.append("}");
+			}
+			
+			else if (child instanceof Composite) {
+				dumpController((Composite) child, dump);
+			} 
+
+			else if (child instanceof Label) {
+				dump.append("{");
+				dump.append(((Label) child).getText());
+				dump.append("}");
+			}
+		}
+	}
+	
+	@SuppressWarnings("unused")
+	private String dumpControllerPlain(Composite composite) {
+		StringBuilder dump = new StringBuilder();
+		dumpControllerPlain(composite, dump);
+		return dump.toString();
+	}
+	
+	private void dumpControllerPlain(Composite composite, StringBuilder dump) {
+		for (Control child : composite.getChildren()) {
+			if (child instanceof StyledText) {
+				dump.append(((StyledText) child).getText());
+			}
+			
+			else if (child instanceof Composite) {
+				dumpControllerPlain((Composite) child, dump);
+			} 
+
+			else if (child instanceof Label) {
+				dump.append(((Label) child).getText());
+			}
+		}
 	}
 }

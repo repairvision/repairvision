@@ -194,7 +194,7 @@ public class CodebricksGenerator {
 			ComposedBrick subEditRule = CodebricksFactory.eINSTANCE.createComposedBrick();
 			
 			// Common?
-			if ((intersectionTemplates == null) || intersectionTemplates.contains(DecomposingEditRulesUtil.getFirstLevelTemplate(template))) {
+			if ((intersectionTemplates == null) || intersectionTemplates.contains(template)) {
 				
 				// Sub edit rule template?
 				if (DecomposingEditRulesUtil.containsPlaceholder(template)) {

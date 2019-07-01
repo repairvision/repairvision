@@ -39,7 +39,7 @@ public class ModelCompletionProposalCluster implements ICompletionProposal {
 		
 		// Initialize template intersection:
 		// NOTE: Allows only sub set clustering!
-		intersectionHistoricTemplates = new ArrayList<>(initialTemplate.getHistoricFirstLevel());
+		intersectionHistoricTemplates = new ArrayList<>(initialTemplate.getHistoricTemplates());
 		intersectionComplementTemplates = new ArrayList<>(initialTemplate.getComplementFirstLevel());
 	}
 	
@@ -70,7 +70,7 @@ public class ModelCompletionProposalCluster implements ICompletionProposal {
 			DecompositionTemplates candidateProposal) {
 		
 		// Match historic exact:
-		if (supersetProposal.getHistoricFirstLevel().size() == candidateProposal.getHistoricFirstLevel().size()) {
+		if (supersetProposal.getHistoricTemplates().size() == candidateProposal.getHistoricTemplates().size()) {
 			List<String> superSetComplementTemplate = supersetProposal.getComplementFirstLevel();
 			List<String> subSetComplementTemplate = candidateProposal.getComplementFirstLevel();
 			
@@ -81,7 +81,7 @@ public class ModelCompletionProposalCluster implements ICompletionProposal {
 			}
 			
 			// Match historic/current candidate template in this historic/current template:
-			if (matchTemplates(candidateProposal.getHistoricFirstLevel(), supersetProposal.getHistoricFirstLevel())) {
+			if (matchTemplates(candidateProposal.getHistoricTemplates(), supersetProposal.getHistoricTemplates())) {
 				if (matchTemplates(subSetComplementTemplate, superSetComplementTemplate)) {
 					
 					// Is candidate larger and contains currently largest main template? 
@@ -97,13 +97,13 @@ public class ModelCompletionProposalCluster implements ICompletionProposal {
 					} else {
 						
 						// Matches common intersection? -> add to cluster:
-						if (matchTemplates(candidateProposal.getHistoricFirstLevel(), intersectionHistoricTemplates)) {
+						if (matchTemplates(candidateProposal.getHistoricTemplates(), intersectionHistoricTemplates)) {
 							if (matchTemplates(candidateProposal.getComplementFirstLevel(), intersectionComplementTemplates)) {
 								proposalCluster.add(proposalCandidate);
 								
 								// Update/Shrink intersections:
 								// TODO: Check this...!?
-								intersectionHistoricTemplates.retainAll(candidateProposal.getHistoricFirstLevel());
+								intersectionHistoricTemplates.retainAll(candidateProposal.getHistoricTemplates());
 								intersectionComplementTemplates.retainAll(candidateProposal.getComplementFirstLevel());
 								
 								return this;

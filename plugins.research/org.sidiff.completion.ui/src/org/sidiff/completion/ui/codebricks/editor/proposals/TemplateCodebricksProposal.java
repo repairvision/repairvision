@@ -33,7 +33,9 @@ public class TemplateCodebricksProposal implements ICompletionProposal {
 			public boolean show() {
 				
 				command = CodebricksEditor.executeCommand(placeholder, () -> {
+					System.out.println("APPLY BEGIN ##############################################################");
 					apply();
+					System.out.println("APPLY END ##############################################################");
 				});
 				
 				return true;
@@ -41,7 +43,9 @@ public class TemplateCodebricksProposal implements ICompletionProposal {
 			
 			@Override
 			public boolean hide() {
+				System.out.println("UNDO BEGIN ##############################################################");
 				CodebricksEditor.undoCommand(placeholder, command);
+				System.out.println("UNDO END ##############################################################");
 				return true;
 			}
 		};
