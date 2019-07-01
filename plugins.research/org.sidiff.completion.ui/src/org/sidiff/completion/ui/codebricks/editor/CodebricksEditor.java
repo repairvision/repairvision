@@ -943,10 +943,6 @@ public class CodebricksEditor {
 	protected void onTemplatePlaceholderSelected(TemplatePlaceholderBrick placeholderBrick) {
 		editorShell.setRedraw(false);
 		
-		System.out.println("###################################################################");
-		System.out.println(dumpControllerTree(editorShell));
-		System.out.println("###################################################################");
-		
 		if (!placeholderBrick.getChoice().isEmpty()) {
 			ViewableBrick showChoice = placeholderBrick.getChoice().get(0);
 			Composite placeholderContainer = (Composite) modelToViewMap.get(placeholderBrick);
@@ -991,10 +987,6 @@ public class CodebricksEditor {
 		
 		autoSelectTemplatePlaceholders(placeholderBrick, codebricks.getTemplate().getBricks());
 		autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
-		
-		System.out.println("###################################################################");
-		System.out.println(dumpControllerTree(editorShell));
-		System.out.println("###################################################################");
 		
 		editorShell.setRedraw(true);
 	}
