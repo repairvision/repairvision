@@ -100,7 +100,7 @@ public class CodebricksEditor {
 	
 	private ToolItem actionClose;
 	
-	private int maximumWidth = 600;
+	private int maximumWidth = 900;
 	
 	private Color COLOR_WHITE;
 	
@@ -598,11 +598,11 @@ public class CodebricksEditor {
 				if (event.time != oldTime) {
 					oldTime = event.time;
 					
-					// Make sure text field is updated:
-					textBrick.pack(true);
-					
 					// Do shell layout:
 					fitToContent();
+					
+					// Make sure text field is updated:
+					textBrick.pack(true);
 				}
 			}
 		});
@@ -616,11 +616,11 @@ public class CodebricksEditor {
 				if (textBrick.getText().isEmpty()) {
 					textBrick.setText(placeholder);
 					
-					// Make sure text field is updated:
-					textBrick.pack(true);
-					
 					// Do shell layout:
 					fitToContent();
+					
+					// Make sure text field is updated:
+					textBrick.pack(true);
 				}
 			}
 		});
@@ -632,7 +632,6 @@ public class CodebricksEditor {
 		FontData fontData = control.getFont().getFontData()[0];
 		return new Font(editorShell.getDisplay(), new FontData(fontData.getName(), fontData.getHeight(), SWT.BOLD));
 	}
-	
 	
 	protected Image loadIcon(String localPath) {
 		return Activator.getIcon(localPath);
@@ -724,6 +723,7 @@ public class CodebricksEditor {
 				if (templateBrick instanceof TemplatePlaceholderBrick) {
 					viewControl = buildBrickRow(templateExpression);
 					buildPlaceholder((Composite) viewControl, (PlaceholderBrick) templateBrick);
+				
 				// Create value placeholder (parameter):
 				} else if (templateBrick instanceof ValuePlaceholderBrick) {
 					viewControl = buildPlaceholder(templateExpression, (PlaceholderBrick) templateBrick);
@@ -812,20 +812,6 @@ public class CodebricksEditor {
 						proposals.showPopup(new Point(proposalsXPosition, proposalsYPosition));
 					}
 				}
-			}
-		});
-
-		// Update on preview/apply proposal:
-		placeholderControl.addModifyListener(new ModifyListener() {
-			
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				// Make sure text field is updated:
-				placeholderControl.pack(true);
-
-				// Do shell layout:
-				fitToContent();
 			}
 		});
 	}
@@ -1100,18 +1086,28 @@ public class CodebricksEditor {
 	}
 	
 	protected void fitToContent() {
-		
+		editorShell.setRedraw(false);
+			
 		// Resize editor to fit content:
 		Point newSize = editorShell.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-
+		
 		// ... up to limit:
-		if (newSize.x < maximumWidth) {
+		if (newSize.x > maximumWidth) {
+			newSize.x = maximumWidth;
+		}
+		
+		// Do not shrink the editor:
+		// NOTE: Results in some disturbing flickering on preview (apply) / hide preview (undo).
+		if (newSize.x > editorShell.getSize().x) {
 			editorShell.setSize(newSize);
 		}
 
 		// Update scroll area:
 		editorContent.pack(true);
 		scrolledEditor.setMinSize(editorContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		editorContent.layout(true);
+		
+		editorShell.setRedraw(true);
 	}
 	
 	public Shell getShell() {
