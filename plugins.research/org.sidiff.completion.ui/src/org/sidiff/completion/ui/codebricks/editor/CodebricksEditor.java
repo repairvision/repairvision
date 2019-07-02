@@ -79,8 +79,8 @@ import org.sidiff.completion.ui.codebricks.editor.proposals.TemplateCodebricksPr
 import org.sidiff.completion.ui.codebricks.util.CodebricksUtil;
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
-import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 import org.sidiff.consistency.common.monitor.LogUtil;
+import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 public class CodebricksEditor {
 
@@ -105,6 +105,8 @@ public class CodebricksEditor {
 	private Color COLOR_WHITE;
 	
 	private Color COLOR_BLACK;
+	
+	private Color COLOR_HIDE;
 	
     /**
      * Mouse down event which starts the moving of the UI.
@@ -384,6 +386,7 @@ public class CodebricksEditor {
 		 */
 		COLOR_WHITE = display.getSystemColor(SWT.COLOR_WHITE);
 		COLOR_BLACK = display.getSystemColor(SWT.COLOR_BLACK);
+		COLOR_HIDE = new Color(display, 160, 160, 160);
 		
 		/*
 		 * Create shell
@@ -962,16 +965,10 @@ public class CodebricksEditor {
 			}
 			
 			buildPlaceholder(placeholderContainer, placeholderBrick);
-			
-			// Hide placeholder if no choices are available:
-			List<ViewableBrick> choices = placeholderBrick.getRemainingChoices();
-			
-			if (choices.isEmpty()) {
-				hideComposedPlaceholder(placeholderContainer);
-			}
 		}
 		
 		autoSelectTemplatePlaceholders(placeholderBrick, codebricks.getTemplate().getBricks());
+		autoTemplatePlaceholdersHiding(codebricks.getTemplate().getBricks());
 		autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
 		
 		editorShell.setRedraw(true);
@@ -979,13 +976,14 @@ public class CodebricksEditor {
 	
 	protected void autoSelectTemplatePlaceholders(TemplatePlaceholderBrick selectedPlaceholder, List<? extends Brick> bricks) {
 		try {
-
+			
 			// Set choices:
 			if ((selectedPlaceholder.getChoice() != null) || (!selectedPlaceholder.getChoice().isEmpty())) {
 				for (Brick brick : bricks) {
 					if (brick != selectedPlaceholder) {
 						if (brick instanceof TemplatePlaceholderBrick) {
 							TemplatePlaceholderBrick placeholderBrick = (TemplatePlaceholderBrick) brick;
+							
 							List<ViewableBrick> choices = getRemainingChoices(placeholderBrick, selectedPlaceholder);
 
 							if (!choices.equals(placeholderBrick.getChoice())) {
@@ -998,10 +996,6 @@ public class CodebricksEditor {
 									placeholderBrick.getChoice().retainAll(choices);
 								}
 							}
-							
-							if (choices.isEmpty()) {
-								hideComposedPlaceholder((Composite) modelToViewMap.get(placeholderBrick));
-							}
 						} else if (brick instanceof ComposedBrick) {
 							autoSelectTemplatePlaceholders(selectedPlaceholder, ((ComposedBrick) brick).getBricks());
 						}
@@ -1012,6 +1006,54 @@ public class CodebricksEditor {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	protected void autoTemplatePlaceholdersHiding(List<? extends Brick> bricks) {
+		for (Brick brick : bricks) {
+			if (brick instanceof TemplatePlaceholderBrick) {
+				if (((TemplatePlaceholderBrick) brick).getRemainingChoices().isEmpty()) {
+					hideComposedPlaceholders((Composite) modelToViewMap.get(brick));
+				} else {
+					unhideComposedPlaceholders((Composite) modelToViewMap.get(brick));
+				}
+			} else if (brick instanceof ComposedBrick) {
+				autoTemplatePlaceholdersHiding(((ComposedBrick) brick).getBricks());
+			}
+		}
+	}
+	
+	private void hideComposedPlaceholders(Composite containerView) {
+		for (int i = 0; i < containerView.getChildren().length; i++) {
+			Control child = containerView.getChildren()[i];
+			
+			if ((child instanceof Composite) && !(child instanceof StyledText)) {
+				hideComposedPlaceholders((Composite) child);
+			} else {
+				hidePlaceholder(child);
+			}
+		}
+	}
+	
+	private void unhidePlaceholder(Control control) {
+		control.setForeground(COLOR_BLACK);
+		control.setEnabled(true);
+	}
+	
+	private void unhideComposedPlaceholders(Composite containerView) {
+		for (int i = 0; i < containerView.getChildren().length; i++) {
+			Control child = containerView.getChildren()[i];
+			
+			if ((child instanceof Composite) && !(child instanceof StyledText)) {
+				unhideComposedPlaceholders((Composite) child);
+			} else {
+				unhidePlaceholder(child);
+			}
+		}
+	}
+	
+	private void hidePlaceholder(Control control) {
+		control.setForeground(COLOR_HIDE);
+		control.setEnabled(false);
 	}
 	
 	private List<ViewableBrick> getRemainingChoices(
@@ -1067,22 +1109,6 @@ public class CodebricksEditor {
 				((ICompletionProposal) model).apply();
 			}
 		}
-	}
-	
-	private void hideComposedPlaceholder(Composite containerView) {
-		for (int i = 0; i < containerView.getChildren().length; i++) {
-			Control child = containerView.getChildren()[i];
-			hidePlaceholder(child);
-			
-			if (child instanceof Composite) {
-				hideComposedPlaceholder((Composite) child);
-			}
-		}
-	}
-	
-	private void hidePlaceholder(Control control) {
-		control.setForeground(new Color(Display.getDefault(), 160, 160, 160));
-		control.setEnabled(false);
 	}
 	
 	protected void fitToContent() {
