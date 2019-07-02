@@ -128,6 +128,15 @@ public interface CodebricksFactory extends EFactory {
 	 * @generated
 	 */
 	POJOCodebrickView createPOJOCodebrickView();
+	
+	/**
+	 * Returns a new object of class '<em>POJO Codebrick View</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>POJO Codebrick View</em>'.
+	 * @generated NOT
+	 */
+	POJOCodebrickView createDelegateToAlternativePOJOCodebrickView();
 
 	/**
 	 * Returns a new object of class '<em>Codebrick View</em>'.

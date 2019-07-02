@@ -52,7 +52,7 @@ public class CodebricksGenerator {
 		Codebricks codebricks = CodebricksFactory.eINSTANCE.createCodebricks();
 		
 		// Create template:
-		Codebrick template = CodebricksFactory.eINSTANCE.createCodebrick();
+		POJOCodebrickView template = CodebricksFactory.eINSTANCE.createDelegateToAlternativePOJOCodebrickView();
 		codebricks.setTemplate(template);
 		
 		// Historic:

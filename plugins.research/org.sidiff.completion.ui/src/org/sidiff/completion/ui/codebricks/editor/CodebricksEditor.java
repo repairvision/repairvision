@@ -164,6 +164,8 @@ public class CodebricksEditor {
 		codebricksAdapters.add(CodebricksUtil.onAlternativeChosen(codebricks, this::onAlternativeChosen));
 		codebricksAdapters.add(CodebricksUtil.onTemplatePlaceholderSelected(codebricks, this::onTemplatePlaceholderSelected));
 		codebricksAdapters.add(CodebricksUtil.onObjectPlaceholderSelected(codebricks, this::onObjectPlaceholderSelected));
+		
+		executeCommand(codebricks, () -> autoSelectObjectPlaceholders(getTemplate()));
 	}
 	
 	private void removeContentListener() {
@@ -894,6 +896,7 @@ public class CodebricksEditor {
 			autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
 		}
 		
+		editorContent.pack();
 		editorShell.setRedraw(true);
 	}
 	
@@ -971,6 +974,7 @@ public class CodebricksEditor {
 		autoTemplatePlaceholdersHiding(codebricks.getTemplate().getBricks());
 		autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
 		
+		editorContent.pack();
 		editorShell.setRedraw(true);
 	}
 	

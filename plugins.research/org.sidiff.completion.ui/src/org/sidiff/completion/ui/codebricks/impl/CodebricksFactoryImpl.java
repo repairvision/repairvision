@@ -207,6 +207,34 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 		POJOCodebrickViewImpl pojoCodebrickView = new POJOCodebrickViewImpl();
 		return pojoCodebrickView;
 	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public POJOCodebrickView createDelegateToAlternativePOJOCodebrickView() {
+		POJOCodebrickViewImpl pojoCodebrickView = new POJOCodebrickViewImpl() {
+			
+			@Override
+			public Object getModel() {
+				if (getCodebricks().getAlternatives() != null) {
+					if (!getCodebricks().getAlternatives().isEmpty()) {
+
+						// TODO: Combine all alternatives!?
+						Codebrick firstAlternative = getCodebricks().getAlternatives().get(0);
+						
+						if (firstAlternative instanceof POJOCodebrickView) {
+							return ((POJOCodebrickView) firstAlternative).getModel();
+						}
+					}
+				}
+				return null;
+			}
+		};
+		return pojoCodebrickView;
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
