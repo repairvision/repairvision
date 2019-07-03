@@ -35,7 +35,6 @@ import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.POJOCodebrickView;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.TextBrick;
-import org.sidiff.completion.ui.codebricks.ValueDomainPolicy;
 import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
 import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
@@ -331,10 +330,9 @@ public class CodebricksGenerator {
 		parameter.setPlaceholder(TEMPLATE_MANDATORY_PLACEHOLDER);
 		parameter.setName(name);
 		parameter.setType(type);
-		parameter.setDomain(ValueDomainPolicy.eINSTANCE);
+		parameter.setDomain(CompletionValueDomainPolicy.eINSTANCE);
 		parameter.setMandatory(true);
 		parameterAssignment.getBricks().add(parameter);
-		
 		
 		return parameterAssignment;
 	}
@@ -357,7 +355,6 @@ public class CodebricksGenerator {
 		parameter.setDomain(CompletionObjectDomainPolicy.eINSTANCE);
 		parameter.setMandatory(true);
 		parameterAssignment.getBricks().add(parameter);
-		
 		
 		return parameterAssignment;
 	}

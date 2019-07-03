@@ -253,6 +253,8 @@ public class RepairPlan implements IRepairPlan {
 
 	@Override
 	public void setParameterValue(Parameter parameter, Object value) {
+		System.out.println(parameter.getName() + ": " + value);
+		
 		ParameterBinding binding = getParameterBinding(parameter);
 		
 		if (binding != null) {

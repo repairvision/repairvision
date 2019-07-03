@@ -4,6 +4,7 @@ package org.sidiff.completion.ui.codebricks.impl;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -72,6 +73,16 @@ public class ValueDomainPolicyImpl extends MinimalEObjectImpl.Container implemen
 	 * @generated NOT
 	 */
 	@Override
+	public EList<Object> getDomain(ValuePlaceholderBrick brick) {
+		return ECollections.emptyEList();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
 	public Object createFromString(ValuePlaceholderBrick brick, String literalValue, EDataType eDataType) {
 		if ((literalValue != null) && (literalValue != NULL)) {
 			try {
@@ -91,7 +102,7 @@ public class ValueDomainPolicyImpl extends MinimalEObjectImpl.Container implemen
 	 * @generated NOT
 	 */
 	@Override
-	public Object convertToString(ValuePlaceholderBrick brick, Object instanceValue, EDataType eDataType) {
+	public String convertToString(ValuePlaceholderBrick brick, Object instanceValue, EDataType eDataType) {
 		if ((instanceValue != null) && (eDataType != null)) {
 			try {
 				return eDataType.getEPackage().getEFactoryInstance().convertToString(eDataType, instanceValue);
@@ -123,13 +134,15 @@ public class ValueDomainPolicyImpl extends MinimalEObjectImpl.Container implemen
 		switch (operationID) {
 			case CodebricksPackage.VALUE_DOMAIN_POLICY___IS_VALID__VALUEPLACEHOLDERBRICK_STRING_EDATATYPE:
 				return isValid((ValuePlaceholderBrick)arguments.get(0), (String)arguments.get(1), (EDataType)arguments.get(2));
+			case CodebricksPackage.VALUE_DOMAIN_POLICY___GET_DOMAIN__VALUEPLACEHOLDERBRICK:
+				return getDomain((ValuePlaceholderBrick)arguments.get(0));
+			case CodebricksPackage.VALUE_DOMAIN_POLICY___ASSIGN_VALUE__OBJECT_VALUEPLACEHOLDERBRICK:
+				assignValue(arguments.get(0), (ValuePlaceholderBrick)arguments.get(1));
+				return null;
 			case CodebricksPackage.VALUE_DOMAIN_POLICY___CREATE_FROM_STRING__VALUEPLACEHOLDERBRICK_STRING_EDATATYPE:
 				return createFromString((ValuePlaceholderBrick)arguments.get(0), (String)arguments.get(1), (EDataType)arguments.get(2));
 			case CodebricksPackage.VALUE_DOMAIN_POLICY___CONVERT_TO_STRING__VALUEPLACEHOLDERBRICK_OBJECT_EDATATYPE:
 				return convertToString((ValuePlaceholderBrick)arguments.get(0), arguments.get(1), (EDataType)arguments.get(2));
-			case CodebricksPackage.VALUE_DOMAIN_POLICY___ASSIGN_VALUE__OBJECT_VALUEPLACEHOLDERBRICK:
-				assignValue(arguments.get(0), (ValuePlaceholderBrick)arguments.get(1));
-				return null;
 		}
 		return super.eInvoke(operationID, arguments);
 	}

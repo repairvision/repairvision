@@ -15,8 +15,8 @@ import org.eclipse.emf.ecore.EDataType;
  * <ul>
  *   <li>{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getType <em>Type</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getDomain <em>Domain</em>}</li>
- *   <li>{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getLiteralValue <em>Literal Value</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getInstanceValue <em>Instance Value</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getLiteralValue <em>Literal Value</em>}</li>
  * </ul>
  *
  * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getValuePlaceholderBrick()
@@ -69,6 +69,28 @@ public interface ValuePlaceholderBrick extends PlaceholderBrick {
 	void setDomain(ValueDomainPolicy value);
 
 	/**
+	 * Returns the value of the '<em><b>Instance Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Instance Value</em>' attribute.
+	 * @see #setInstanceValue(Object)
+	 * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getValuePlaceholderBrick_InstanceValue()
+	 * @model
+	 * @generated
+	 */
+	Object getInstanceValue();
+
+	/**
+	 * Sets the value of the '{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getInstanceValue <em>Instance Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Instance Value</em>' attribute.
+	 * @see #getInstanceValue()
+	 * @generated
+	 */
+	void setInstanceValue(Object value);
+
+	/**
 	 * Returns the value of the '<em><b>Literal Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -91,25 +113,19 @@ public interface ValuePlaceholderBrick extends PlaceholderBrick {
 	void setLiteralValue(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Instance Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Instance Value</em>' attribute.
-	 * @see #setInstanceValue(Object)
-	 * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getValuePlaceholderBrick_InstanceValue()
 	 * @model
 	 * @generated
 	 */
-	Object getInstanceValue();
+	void setByLiteralValue(String literalValue);
 
 	/**
-	 * Sets the value of the '{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick#getInstanceValue <em>Instance Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Instance Value</em>' attribute.
-	 * @see #getInstanceValue()
+	 * @model
 	 * @generated
 	 */
-	void setInstanceValue(Object value);
+	void setByInstanceValue(Object instanceValue);
 
 } // ValuePlaceholderBrick

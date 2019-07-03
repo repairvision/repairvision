@@ -27,6 +27,8 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BidiSegmentEvent;
 import org.eclipse.swt.custom.BidiSegmentListener;
+import org.eclipse.swt.custom.ExtendedModifyEvent;
+import org.eclipse.swt.custom.ExtendedModifyListener;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
@@ -76,6 +78,7 @@ import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
 import org.sidiff.completion.ui.codebricks.editor.proposals.ObjectCodebricksProposal;
 import org.sidiff.completion.ui.codebricks.editor.proposals.TemplateCodebricksProposal;
+import org.sidiff.completion.ui.codebricks.editor.proposals.ValueCodebricksProposal;
 import org.sidiff.completion.ui.codebricks.util.CodebricksUtil;
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
@@ -164,7 +167,9 @@ public class CodebricksEditor {
 		codebricksAdapters.add(CodebricksUtil.onAlternativeChosen(codebricks, this::onAlternativeChosen));
 		codebricksAdapters.add(CodebricksUtil.onTemplatePlaceholderSelected(codebricks, this::onTemplatePlaceholderSelected));
 		codebricksAdapters.add(CodebricksUtil.onObjectPlaceholderSelected(codebricks, this::onObjectPlaceholderSelected));
+		codebricksAdapters.add(CodebricksUtil.onValuePlaceholderSelected(codebricks, this::onValuePlaceholderSelected));
 		
+		// Initially select placeholders:
 		executeCommand(codebricks, () -> autoSelectObjectPlaceholders(getTemplate()));
 	}
 	
@@ -731,7 +736,45 @@ public class CodebricksEditor {
 				
 				// Create value placeholder (parameter):
 				} else if (templateBrick instanceof ValuePlaceholderBrick) {
-					viewControl = buildPlaceholder(templateExpression, (PlaceholderBrick) templateBrick);
+					ValuePlaceholderBrick valueTemplateBrick = (ValuePlaceholderBrick) templateBrick;
+					StyledText placeholderControl = buildPlaceholder(templateExpression, valueTemplateBrick);
+					viewControl = placeholderControl;
+					
+					// Listen to text input:
+					String placeholderValue = placeholderControl.getText();
+					placeholderControl.addExtendedModifyListener(new ExtendedModifyListener() {
+						
+						private int oldTime = -1;
+						
+						@Override
+						public void modifyText(ExtendedModifyEvent event) {
+							
+							if (event.time != oldTime) {
+								this.oldTime = event.time;
+								
+								// Replace placeholder with text input:
+								if (!placeholderControl.getText().isEmpty()) {
+									String newValue = placeholderControl.getText();
+									String oldValue = newValue.substring(0, event.start) + newValue.substring(event.start + event.length, placeholderControl.getText().length());
+									
+									if (!oldValue.equals(newValue)) {
+										if (oldValue.equals(placeholderValue)) {
+											String addedText = newValue.substring(event.start, event.start + event.length);
+											placeholderControl.setText(addedText);
+											placeholderControl.setCaretOffset(addedText.length()); // text cursor behind added text
+											
+											fitToContent();
+										}
+									}
+								}
+								
+								// Set input as literal value (before converting it to an instance value);
+								CodebricksEditor.executeCommand(valueTemplateBrick, () -> {
+									valueTemplateBrick.setByLiteralValue(placeholderControl.getText());
+								});
+							}
+						}
+					});
 					
 				// Create object placeholder (parameter):
 				} else if (templateBrick instanceof ObjectPlaceholderBrick) {
@@ -875,12 +918,76 @@ public class CodebricksEditor {
 	
 	private List<ICompletionProposal> getProposals(ValuePlaceholderBrick placeholderBrick) {
 		List<ICompletionProposal> proposals = new ArrayList<>();
-		// TODO:
+		
+		if (placeholderBrick.getDomain() != null) {
+			for (Object value : placeholderBrick.getDomain().getDomain(placeholderBrick)) {
+				ValueCodebricksProposal codebricksProposal = new ValueCodebricksProposal(placeholderBrick, value);
+				proposals.add(codebricksProposal);
+			}
+		}
+		
 		return proposals;
 	}
 	
 	protected void onCommandExecuted(EventObject event) {
+		editorShell.setRedraw(false);
+		
 		fitToContent();
+		
+		editorContent.pack();
+		editorShell.setRedraw(true);
+	}
+	
+	protected void onValuePlaceholderSelected(ValuePlaceholderBrick placeholderBrick) {
+		editorShell.setRedraw(false);
+		
+		StyledText textBrick = (StyledText) modelToViewMap.get(placeholderBrick);
+		
+		// Is parameter currently visibly in template?
+		if ((textBrick != null) && (!textBrick.isDisposed())) {
+			if (placeholderBrick.getLiteralValue() != null && !placeholderBrick.getLiteralValue().equals(textBrick.getText())) {
+				textBrick.setText(placeholderBrick.getLiteralValue());
+			}
+			
+			placeholderBrick.getDomain().assignValue(placeholderBrick.getInstanceValue(), placeholderBrick);
+			autoSelectValuePlaceholders(placeholderBrick, codebricks.getTemplate().getBricks());
+		}
+		
+		editorContent.pack();
+		editorShell.setRedraw(true);
+	}
+	
+	protected void autoSelectValuePlaceholders(ValuePlaceholderBrick selectedPlaceholder, List<? extends Brick> bricks) {
+		try {
+			for (Brick brick : bricks) {
+				if (brick != selectedPlaceholder) {
+					if (brick instanceof PlaceholderBrick) {
+						if (brick instanceof TemplatePlaceholderBrick) {
+							autoSelectValuePlaceholders(selectedPlaceholder, ((TemplatePlaceholderBrick) brick).getChoice());
+						} else if (brick instanceof ValuePlaceholderBrick) {
+							ValuePlaceholderBrick placeholderBrick = (ValuePlaceholderBrick) brick;
+							List<Object> currentDomain = placeholderBrick.getDomain().getDomain(placeholderBrick);
+							
+							if (currentDomain.size() == 1) {
+								
+								// Set or update element:
+								if (currentDomain.get(0) != placeholderBrick.getInstanceValue()) {
+									placeholderBrick.setByInstanceValue(currentDomain.get(0));
+								}
+							} else if (currentDomain.size() == 0) {
+								if (placeholderBrick.getInstanceValue() != null) {
+									placeholderBrick.setByInstanceValue(null);
+								}
+							}
+						}
+					} else if (brick instanceof ComposedBrick) {
+						autoSelectValuePlaceholders(selectedPlaceholder, ((ComposedBrick) brick).getBricks());
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	protected void onObjectPlaceholderSelected(ObjectPlaceholderBrick placeholderBrick) {

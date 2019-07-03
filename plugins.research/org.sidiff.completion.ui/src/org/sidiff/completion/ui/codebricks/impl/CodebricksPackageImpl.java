@@ -623,7 +623,7 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
-	public EAttribute getValuePlaceholderBrick_LiteralValue() {
+	public EAttribute getValuePlaceholderBrick_InstanceValue() {
 		return (EAttribute)valuePlaceholderBrickEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -633,8 +633,28 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
-	public EAttribute getValuePlaceholderBrick_InstanceValue() {
+	public EAttribute getValuePlaceholderBrick_LiteralValue() {
 		return (EAttribute)valuePlaceholderBrickEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getValuePlaceholderBrick__SetByLiteralValue__String() {
+		return valuePlaceholderBrickEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getValuePlaceholderBrick__SetByInstanceValue__Object() {
+		return valuePlaceholderBrickEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -793,7 +813,7 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
-	public EOperation getValueDomainPolicy__CreateFromString__ValuePlaceholderBrick_String_EDataType() {
+	public EOperation getValueDomainPolicy__GetDomain__ValuePlaceholderBrick() {
 		return valueDomainPolicyEClass.getEOperations().get(1);
 	}
 
@@ -803,8 +823,18 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
+	public EOperation getValueDomainPolicy__CreateFromString__ValuePlaceholderBrick_String_EDataType() {
+		return valueDomainPolicyEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EOperation getValueDomainPolicy__ConvertToString__ValuePlaceholderBrick_Object_EDataType() {
-		return valueDomainPolicyEClass.getEOperations().get(2);
+		return valueDomainPolicyEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -814,7 +844,7 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 */
 	@Override
 	public EOperation getValueDomainPolicy__AssignValue__Object_ValuePlaceholderBrick() {
-		return valueDomainPolicyEClass.getEOperations().get(3);
+		return valueDomainPolicyEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -896,8 +926,10 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		valuePlaceholderBrickEClass = createEClass(VALUE_PLACEHOLDER_BRICK);
 		createEReference(valuePlaceholderBrickEClass, VALUE_PLACEHOLDER_BRICK__TYPE);
 		createEReference(valuePlaceholderBrickEClass, VALUE_PLACEHOLDER_BRICK__DOMAIN);
-		createEAttribute(valuePlaceholderBrickEClass, VALUE_PLACEHOLDER_BRICK__LITERAL_VALUE);
 		createEAttribute(valuePlaceholderBrickEClass, VALUE_PLACEHOLDER_BRICK__INSTANCE_VALUE);
+		createEAttribute(valuePlaceholderBrickEClass, VALUE_PLACEHOLDER_BRICK__LITERAL_VALUE);
+		createEOperation(valuePlaceholderBrickEClass, VALUE_PLACEHOLDER_BRICK___SET_BY_LITERAL_VALUE__STRING);
+		createEOperation(valuePlaceholderBrickEClass, VALUE_PLACEHOLDER_BRICK___SET_BY_INSTANCE_VALUE__OBJECT);
 
 		placeholderBrickEClass = createEClass(PLACEHOLDER_BRICK);
 		createEAttribute(placeholderBrickEClass, PLACEHOLDER_BRICK__MANDATORY);
@@ -919,9 +951,10 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 
 		valueDomainPolicyEClass = createEClass(VALUE_DOMAIN_POLICY);
 		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___IS_VALID__VALUEPLACEHOLDERBRICK_STRING_EDATATYPE);
+		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___GET_DOMAIN__VALUEPLACEHOLDERBRICK);
+		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___ASSIGN_VALUE__OBJECT_VALUEPLACEHOLDERBRICK);
 		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___CREATE_FROM_STRING__VALUEPLACEHOLDERBRICK_STRING_EDATATYPE);
 		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___CONVERT_TO_STRING__VALUEPLACEHOLDERBRICK_OBJECT_EDATATYPE);
-		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___ASSIGN_VALUE__OBJECT_VALUEPLACEHOLDERBRICK);
 	}
 
 	/**
@@ -1025,8 +1058,14 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		initEClass(valuePlaceholderBrickEClass, ValuePlaceholderBrick.class, "ValuePlaceholderBrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getValuePlaceholderBrick_Type(), ecorePackage.getEDataType(), null, "type", null, 0, 1, ValuePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getValuePlaceholderBrick_Domain(), this.getValueDomainPolicy(), null, "domain", null, 0, 1, ValuePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getValuePlaceholderBrick_LiteralValue(), ecorePackage.getEString(), "literalValue", null, 0, 1, ValuePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getValuePlaceholderBrick_InstanceValue(), ecorePackage.getEJavaObject(), "instanceValue", null, 0, 1, ValuePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getValuePlaceholderBrick_LiteralValue(), ecorePackage.getEString(), "literalValue", null, 0, 1, ValuePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		EOperation op = initEOperation(getValuePlaceholderBrick__SetByLiteralValue__String(), null, "setByLiteralValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "literalValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getValuePlaceholderBrick__SetByInstanceValue__Object(), null, "setByInstanceValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEJavaObject(), "instanceValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(placeholderBrickEClass, PlaceholderBrick.class, "PlaceholderBrick", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPlaceholderBrick_Mandatory(), ecorePackage.getEBoolean(), "mandatory", null, 0, 1, PlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1044,7 +1083,7 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 
 		initEClass(objectDomainPolicyEClass, ObjectDomainPolicy.class, "ObjectDomainPolicy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		EOperation op = initEOperation(getObjectDomainPolicy__GetDomain__ObjectPlaceholderBrick(), ecorePackage.getEObject(), "getDomain", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getObjectDomainPolicy__GetDomain__ObjectPlaceholderBrick(), ecorePackage.getEObject(), "getDomain", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getObjectPlaceholderBrick(), "brick", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getObjectDomainPolicy__AssignObject__ObjectPlaceholderBrick_EObject(), null, "assignObject", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1058,19 +1097,22 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		addEParameter(op, ecorePackage.getEString(), "literalValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDataType(), "eDataType", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = initEOperation(getValueDomainPolicy__GetDomain__ValuePlaceholderBrick(), ecorePackage.getEJavaObject(), "getDomain", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getValuePlaceholderBrick(), "brick", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getValueDomainPolicy__AssignValue__Object_ValuePlaceholderBrick(), null, "assignValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEJavaObject(), "instanceValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getValuePlaceholderBrick(), "brick", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		op = initEOperation(getValueDomainPolicy__CreateFromString__ValuePlaceholderBrick_String_EDataType(), theEcorePackage.getEJavaObject(), "createFromString", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getValuePlaceholderBrick(), "brick", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "literalValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDataType(), "eDataType", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getValueDomainPolicy__ConvertToString__ValuePlaceholderBrick_Object_EDataType(), theEcorePackage.getEJavaObject(), "convertToString", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getValueDomainPolicy__ConvertToString__ValuePlaceholderBrick_Object_EDataType(), ecorePackage.getEString(), "convertToString", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getValuePlaceholderBrick(), "brick", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEJavaObject(), "instanceValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDataType(), "eDataType", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getValueDomainPolicy__AssignValue__Object_ValuePlaceholderBrick(), null, "assignValue", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEJavaObject(), "instanceValue", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getValuePlaceholderBrick(), "brick", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

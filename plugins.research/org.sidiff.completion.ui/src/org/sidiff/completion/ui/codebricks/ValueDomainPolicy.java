@@ -2,6 +2,7 @@
  */
 package org.sidiff.completion.ui.codebricks;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.completion.ui.codebricks.impl.CodebricksFactoryImpl;
@@ -32,6 +33,14 @@ public interface ValueDomainPolicy extends EObject {
 	 * @model
 	 * @generated
 	 */
+	EList<Object> getDomain(ValuePlaceholderBrick brick);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
 	Object createFromString(ValuePlaceholderBrick brick, String literalValue, EDataType eDataType);
 
 	/**
@@ -40,7 +49,7 @@ public interface ValueDomainPolicy extends EObject {
 	 * @model
 	 * @generated
 	 */
-	Object convertToString(ValuePlaceholderBrick brick, Object instanceValue, EDataType eDataType);
+	String convertToString(ValuePlaceholderBrick brick, Object instanceValue, EDataType eDataType);
 
 	/**
 	 * <!-- begin-user-doc -->
