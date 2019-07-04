@@ -2,6 +2,8 @@
  */
 package org.sidiff.completion.ui.codebricks.impl;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -220,13 +222,18 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 			@Override
 			public Object getModel() {
 				if (getCodebricks().getAlternatives() != null) {
-					if (!getCodebricks().getAlternatives().isEmpty()) {
-
-						// TODO: Combine all alternatives!?
-						Codebrick firstAlternative = getCodebricks().getAlternatives().get(0);
+					
+					// TODO: Currently, we only delegate to alternative if choice is unique
+					//       and hide parameters if until unique selection of the template.
+					//       Later, we can also make template selections based parameter
+					//       value selections!
+					List<Codebrick> currentChoices = getCodebricks().getChoice();
+					
+					if (currentChoices.size() == 1) {
+						Codebrick choice = getCodebricks().getChoice().get(0);
 						
-						if (firstAlternative instanceof POJOCodebrickView) {
-							return ((POJOCodebrickView) firstAlternative).getModel();
+						if (choice instanceof POJOCodebrickView) {
+							return ((POJOCodebrickView) choice).getModel();
 						}
 					}
 				}
