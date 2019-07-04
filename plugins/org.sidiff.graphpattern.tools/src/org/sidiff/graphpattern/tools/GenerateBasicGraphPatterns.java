@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.amalgam.explorer.activity.ui.api.editor.pages.helper.StringHelper;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -21,6 +20,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
+import org.sidiff.consistency.common.java.StringUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.csp.solver.ICSPSolver;
 import org.sidiff.csp.solver.IConstraintSatisfactionProblem;
@@ -325,10 +325,10 @@ public class GenerateBasicGraphPatterns extends AbstractHandler {
 			for (NodePattern node : graphPattern.getNodes()) {
 				if (GraphPatternGeneratorUtil.isContext(node)) {
 					if (GraphPatternGeneratorUtil.hasContent(node)) {
-						contextTypeNames.add(StringHelper.toUpperFirst(node.getType().getName()));
+						contextTypeNames.add(StringUtil.toUpperFirst(node.getType().getName()));
 					}
 				} else {
-					contentTypeNames.add(StringHelper.toUpperFirst(node.getType().getName()));
+					contentTypeNames.add(StringUtil.toUpperFirst(node.getType().getName()));
 				}
 			}
 			
