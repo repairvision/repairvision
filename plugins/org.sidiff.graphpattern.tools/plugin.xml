@@ -66,15 +66,15 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.sidiff.graphpattern.tools.ConvertModelToGraphPattern"
+            class="org.sidiff.graphpattern.tools.model2graph.ModelToGraphPatternHandler"
             commandId="org.sidiff.graphpattern.tools.command.modeltopattern">
       </handler>
       <handler
-            class="org.sidiff.graphpattern.tools.GenerateBasicGraphPatterns"
+            class="org.sidiff.graphpattern.tools.complex2basic.ComplexToBasicGraphPatternsHandler"
             commandId="org.sidiff.graphpattern.tools.command.generatebasicgraphpatterns">
       </handler>
       <handler
-            class="org.sidiff.graphpattern.tools.editrules.DecomposingEditRules"
+            class="org.sidiff.graphpattern.tools.editrules.decompose.DecomposingEditRules"
             commandId="org.sidiff.graphpattern.tools.command.decomposingeditrules">
       </handler>
       <handler

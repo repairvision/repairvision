@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.tools.editrules;
+package org.sidiff.graphpattern.tools.editrules.decompose;
 
 
 import java.util.Collections;

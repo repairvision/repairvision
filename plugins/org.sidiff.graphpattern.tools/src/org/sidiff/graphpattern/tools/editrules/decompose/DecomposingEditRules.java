@@ -1,10 +1,10 @@
-package org.sidiff.graphpattern.tools.editrules;
+package org.sidiff.graphpattern.tools.editrules.decompose;
 
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.rule;
-import static org.sidiff.graphpattern.tools.editrules.DecomposingEditRulesUtil.*;
+import static org.sidiff.graphpattern.tools.editrules.decompose.DecomposingEditRulesUtil.*;
 
 import java.util.ArrayList;
 import java.util.Collections;

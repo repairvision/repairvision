@@ -2,6 +2,8 @@ package org.sidiff.consistency.common.java;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -72,5 +74,14 @@ public class JUtil {
 			}
 		}
 		return false;
+	}
+	
+	public static <K, V> Entry<K, V> getFirstEntryByValue(Map<K, V> map, V value) {
+		for (Entry<K, V> entry : map.entrySet()) {
+			if (entry.getValue() == value) {
+				return entry;
+			}
+		}
+		return null;
 	}
 }

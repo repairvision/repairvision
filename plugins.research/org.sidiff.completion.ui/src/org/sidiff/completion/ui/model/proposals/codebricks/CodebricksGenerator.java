@@ -43,7 +43,7 @@ import org.sidiff.completion.ui.model.proposals.util.DecompositionTemplates;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.graphpattern.profile.henshin_extension.GraphElementExtension;
 import org.sidiff.graphpattern.profile.henshin_extension.SubGraph;
-import org.sidiff.graphpattern.tools.editrules.DecomposingEditRulesUtil;
+import org.sidiff.graphpattern.tools.editrules.decompose.DecomposingEditRulesUtil;
 
 public class CodebricksGenerator {
 	
