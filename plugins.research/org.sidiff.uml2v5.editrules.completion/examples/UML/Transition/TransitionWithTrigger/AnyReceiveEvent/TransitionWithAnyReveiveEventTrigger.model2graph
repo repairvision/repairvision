@@ -1,16 +1,20 @@
-# Parameter <name in model> : <parameter name in pattern> : <name replacement in pattern>
-DEFINE : Parameter : VARnameEND : name : transition
+# DEFINE : Parameter : <parameter name>
+DEFINE : Parameter : eventName
 
-# Node : <node name> : <node type>
+# DEFINE : Attribute : <node name> : <node type> : <attribute name> : <attribte value>
+DEFINE : Attribute : transition : Transition : name : eventName
+DEFINE : Attribute : trigger : Trigger : name : eventName + "Trigger"
+DEFINE : Attribute : anyReceiveEvent : AnyReceiveEvent : name : eventName + "AnyReveiveEvent"
+
+# DEFINE : Node : <node name> : <node type> : <node name replacement>
+
+# FILTER : Node : <node name> : <node type>
 FILTER : Node : (?!container).*? : Model
 FILTER : Node : .*? : PackageImport
 FILTER : Node : .*? : StateMachine
 
-# Attribute : <node name> : <node type> : <attribute type>
-FILTER : Attribute : .*? : Model : .*
-FILTER : Attribute : .*? : State : .*
-FILTER : Attribute : .*? : Region : .*
-FILTER : Attribute : .*? : .*? : (?!name).*
+# FILTER : Attribute : <node name> : <node type> : <attribute type>
+FILTER : Attribute : .*? : .*? : .*
 
-# Edge : <source node name> : <source node type> : <edge type> : <target node name> : <target node type>
+# FILTER : Edge : <source node name> : <source node type> : <edge type> : <target node name> : <target node type>
 FILTER : Edge : .*? : Region : subvertex : .*? : State

@@ -5,15 +5,15 @@
   </packageImport>
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_cY5KgJKPEem9H9REQEYgvQ" name="stateMachine">
     <region xmi:id="_cY5KgZKPEem9H9REQEYgvQ" name="region">
-      <transition xmi:id="_rUgOMJKPEem9H9REQEYgvQ" name="VARnameEND" source="_m8UF8JKPEem9H9REQEYgvQ" target="_oaSf0JKPEem9H9REQEYgvQ">
-        <trigger xmi:id="_6z8XsJKPEem9H9REQEYgvQ" name="VARnameENDTrigger" event="_KuOqIJKQEem9H9REQEYgvQ"/>
+      <transition xmi:id="_rUgOMJKPEem9H9REQEYgvQ" name="transition" source="_m8UF8JKPEem9H9REQEYgvQ" target="_oaSf0JKPEem9H9REQEYgvQ">
+        <trigger xmi:id="_6z8XsJKPEem9H9REQEYgvQ" name="trigger" event="_KuOqIJKQEem9H9REQEYgvQ"/>
       </transition>
       <subvertex xmi:type="uml:State" xmi:id="_m8UF8JKPEem9H9REQEYgvQ" name="source"/>
       <subvertex xmi:type="uml:State" xmi:id="_oaSf0JKPEem9H9REQEYgvQ" name="target"/>
     </region>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_c52igJKPEem9H9REQEYgvQ" name="containingClass">
-    <ownedOperation xmi:id="_f76lUJKPEem9H9REQEYgvQ" name="VARnameEND"/>
+    <ownedOperation xmi:id="_f76lUJKPEem9H9REQEYgvQ" name="calledOperation"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:CallEvent" xmi:id="_KuOqIJKQEem9H9REQEYgvQ" name="VARnameENDCallEvent"/>
+  <packagedElement xmi:type="uml:CallEvent" xmi:id="_KuOqIJKQEem9H9REQEYgvQ" name="callEvent" operation="_f76lUJKPEem9H9REQEYgvQ"/>
 </uml:Model>

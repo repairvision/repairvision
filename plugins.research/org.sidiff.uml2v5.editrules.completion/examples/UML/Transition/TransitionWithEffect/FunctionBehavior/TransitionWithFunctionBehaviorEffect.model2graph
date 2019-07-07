@@ -1,15 +1,21 @@
-# Parameter <name in model> : <parameter name in pattern> : <name replacement in pattern>
-DEFINE : Parameter : VARnameEND : name : transition
+# DEFINE : Parameter : <parameter name>
+DEFINE : Parameter : transitionName
 
-# Node : <node name> : <node type>
+# DEFINE : Attribute : <node name> : <node type> : <attribute name> : <attribte value>
+DEFINE : Attribute : transition : Transition : name : transitionName
+DEFINE : Attribute : functionBehaviorEffect : FunctionBehavior : name : transitionName + "FunctionBehaviorEffect"
+
+# DEFINE : Node : <node name> : <node type> : <node name replacement>
+
+# FILTER : Node : <node name> : <node type>
 FILTER : Node : .*? : Model
 FILTER : Node : .*? : PackageImport
 FILTER : Node : .*? : StateMachine
 
-# Attribute : <node name> : <node type> : <attribute type>
+# FILTER : Attribute : <node name> : <node type> : <attribute type>
 FILTER : Attribute : .*? : State : .*
 FILTER : Attribute : .*? : Region : .*
 FILTER : Attribute : .*? : .*? : (?!name).*
 
-# Edge : <source node name> : <source node type> : <edge type> : <target node name> : <target node type>
+# FILTER : Edge : <source node name> : <source node type> : <edge type> : <target node name> : <target node type>
 FILTER : Edge : .*? : Region : subvertex : .*? : State
