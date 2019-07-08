@@ -318,6 +318,8 @@ public class ComplexToBasicGraphPatterns {
 		return false;
 	}
 
+	// FIXME: Child elements of content elements are always also content elements!
+	
 	protected RequiredSubGraph extractRequiredSubGraph(NodePattern startNode) {
 		Set<NodePattern> contentNodes = new HashSet<>();
 		contentNodes.add(startNode);
