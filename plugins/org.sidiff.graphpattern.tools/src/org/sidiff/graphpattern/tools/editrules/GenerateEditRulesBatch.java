@@ -1,6 +1,7 @@
 package org.sidiff.graphpattern.tools.editrules;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.util.URI;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
+import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.Pattern;
@@ -33,9 +35,25 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			Map<GraphPattern, List<Pattern>> editOperations = new HashMap<>();
 			
 			for (Pattern pattern : patternBundle.getPatterns()) {
-				ConstructionEditRuleGenerator.generateCreationRules(pattern, editOperations);
-				ConstructionEditRuleGenerator.generateDeletionRules(pattern, editOperations);
-				TransformationEditRuleGenerator.generateStructuralTransformationRules(pattern, editOperations);
+				String[] generators = new String[] {
+						"Creation Rules Generator",
+						"Deletion Rules Generator",
+						"Transformation Rules Generator"};
+				
+				List<String> selection = WorkbenchUtil.showSelections("Select Edit Rule Generators:", 
+						Arrays.asList(generators), Arrays.asList(generators), WorkbenchUtil.getEMFLabelProvider());
+				
+				if (selection.contains(generators[0])) {
+					ConstructionEditRuleGenerator.generateCreationRules(pattern, editOperations);
+				}
+				
+				if (selection.contains(generators[1])) {
+					ConstructionEditRuleGenerator.generateDeletionRules(pattern, editOperations);
+				}
+				
+				if (selection.contains(generators[2])) {
+					TransformationEditRuleGenerator.generateStructuralTransformationRules(pattern, editOperations);
+				}
 			}
 			
 //			System.out.println("Edit Operations: " + editOperations.values().stream().mapToInt(List::size).sum());
