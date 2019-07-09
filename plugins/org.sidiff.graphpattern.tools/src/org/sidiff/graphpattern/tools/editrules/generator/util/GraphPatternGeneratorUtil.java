@@ -2,6 +2,7 @@ package org.sidiff.graphpattern.tools.editrules.generator.util;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.constraint;
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
+import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.require;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 
@@ -25,7 +26,10 @@ import org.sidiff.graphpattern.attributes.JavaSciptParser;
 public class GraphPatternGeneratorUtil {
 
 	public static boolean isContext(NodePattern node) {
-		return !node.getIncomings().stream().anyMatch(e -> e.getType().isContainment());
+		boolean isContained = node.getIncomings().stream().anyMatch(e -> e.getType().isContainment());
+		boolean isRequired = node.getStereotypes().contains(require);
+		
+		return !isContained || isRequired;
 	}
 	
 	public static boolean hasContent(NodePattern node) {
@@ -66,8 +70,8 @@ public class GraphPatternGeneratorUtil {
 	public static void completeContext(Pattern editOperation) {
 		for (GraphPattern graphPattern : editOperation.getAllGraphPatterns()) {
 			for (NodePattern node : graphPattern.getNodes()) {
-				if (!node.getStereotypes().contains(not)) {
-					if (!node.getStereotypes().contains(preserve) && isContext(node)) {
+				if (!node.getStereotypes().contains(not) && !node.getStereotypes().contains(preserve)) {
+					if (isContext(node)) {
 						
 						// Context element:
 						node.getStereotypes().clear();
@@ -92,8 +96,8 @@ public class GraphPatternGeneratorUtil {
 				
 				// edges:
 				for (EdgePattern edge : node.getOutgoings()) {
-					if (!edge.getStereotypes().contains(not)) {
-						if (!edge.getStereotypes().contains(preserve) && isCondition(edge)) {
+					if (!edge.getStereotypes().contains(not) && !edge.getStereotypes().contains(preserve)) {
+						if (isCondition(edge)) {
 							edge.getStereotypes().clear();
 							edge.getStereotypes().add(preserve);
 							
@@ -112,8 +116,8 @@ public class GraphPatternGeneratorUtil {
 				
 				// attributes:
 				for (AttributePattern attribute : node.getAttributes()) {
-					if (!attribute.getStereotypes().contains(not)) {
-						if (!attribute.getStereotypes().contains(preserve) && isCondition(attribute)) {
+					if (!attribute.getStereotypes().contains(not) && !attribute.getStereotypes().contains(preserve)) {
+						if (isCondition(attribute)) {
 							attribute.getStereotypes().clear();
 							attribute.getStereotypes().add(preserve);
 							

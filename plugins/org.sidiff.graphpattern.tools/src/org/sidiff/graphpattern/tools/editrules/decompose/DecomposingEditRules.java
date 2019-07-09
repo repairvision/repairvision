@@ -4,25 +4,17 @@ import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.rule;
-import static org.sidiff.graphpattern.tools.editrules.decompose.DecomposingEditRulesUtil.*;
+import static org.sidiff.graphpattern.tools.editrules.decompose.DecomposingEditRulesUtil.clearSubGraphElements;
+import static org.sidiff.graphpattern.tools.editrules.decompose.DecomposingEditRulesUtil.getSubGraphChanges;
+import static org.sidiff.graphpattern.tools.editrules.decompose.DecomposingEditRulesUtil.getSubGraphContext;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.handlers.HandlerUtil;
-import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.csp.solver.ICSPSolver;
 import org.sidiff.csp.solver.IConstraintSatisfactionProblem;
 import org.sidiff.csp.solver.impl.CSPSolver;
@@ -41,67 +33,24 @@ import org.sidiff.graphpattern.tools.csp.GraphPatternMatch;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
 import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
 import org.sidiff.graphpattern.tools.editrules.csp.EditNodePatternDomain;
+import org.sidiff.graphpattern.tools.editrules.decompose.dependencies.Dependency;
+import org.sidiff.graphpattern.tools.editrules.decompose.dependencies.DependencyNode;
+import org.sidiff.graphpattern.tools.editrules.decompose.dependencies.DependencyOrdering;
 
-public class DecomposingEditRules extends AbstractHandler {
+public class DecomposingEditRules {
 
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = HandlerUtil.getCurrentStructuredSelection(event);
-		Bundle complexEditRulesBundle = null;
-		Bundle basicEditRulesBundle = null;
+	public void decompose(Bundle complexEditRulesBundle, Bundle basicEditRulesBundle) {
 		
-		try {
-			if (selection.size() == 2) {
-				for (Object selected : selection.toList()) {
-					if (selected instanceof IResource) {
-						Bundle bundle = EMFHandlerUtil.loadResource((IResource) selected, Bundle.class, new ResourceSetImpl());
-						
-						if (bundle.eResource().getURI().lastSegment().matches(".*?\\.basic.*?\\.graphpattern")) {
-							basicEditRulesBundle = bundle;
-						} else {
-							complexEditRulesBundle = bundle;
-						}
-					}
-				}
-			} 
-			
-			if ((complexEditRulesBundle == null) || (basicEditRulesBundle == null)) {
-				throw new ExecutionException("Missing Bundle");
-			} else {
-				// Clean up existing sub graphs:
-				if (WorkbenchUtil.showQuestion("Clear existing decompositions from bundle?")) {
-					for (Pattern complexEditRulePattern : complexEditRulesBundle.getPatterns()) {
-						complexEditRulePattern.getAllGraphPatterns().forEach(graph -> {
-							graph.getSubgraphs().forEach(DecomposingEditRulesUtil::clearSubGraphElements);
-							graph.getSubgraphs().clear();
-						});
-					}
-				}
-				
-				// Calculate decomposition:
-				decompose(complexEditRulesBundle, basicEditRulesBundle);
-				
-				// Save decomposition in complex edit rule bundle:
-				complexEditRulesBundle.eResource().save(Collections.emptyMap());
-			}
-			
-			return null;
-		} catch (Exception e) {
-			WorkbenchUtil.showErrorWithException(
-					"Select a bundle with complex and basic (*.basic.graphpattern) edit rules"
-					+ " to decompose the complex into the basic rules.",
-					this, e);
-			throw new ExecutionException(e.getMessage(), e);
-		}
-	}
-
-	private void decompose(Bundle complexEditRulesBundle, Bundle basicEditRulesBundle) {
+		// (1) Decompose complex edit rules into basic edit rules:
 		List<GraphPattern> basicEditRuleGraphs = basicEditRulesBundle.getPatterns()
 				.stream().flatMap(p-> p.getAllGraphPatterns().stream()).collect(Collectors.toList()); 
 		
 		for (Pattern complexEditRulePattern : complexEditRulesBundle.getPatterns()) {
 			decompose(complexEditRulePattern, basicEditRuleGraphs);
 		}
+		
+		// (2) Sort decomposition of basic edit rules by their dependencies (create/use, use/delete):
+		sortByDependencies(complexEditRulesBundle);
 	}
 	
 	private void decompose(Pattern complexEditRulePattern, List<GraphPattern> basicEditRuleGraphs) {
@@ -347,5 +296,101 @@ public class DecomposingEditRules extends AbstractHandler {
 		}
 		
 		return null;
+	}
+	
+	private void sortByDependencies(Bundle complexEditRulesBundle) {
+		for (Pattern pattern: complexEditRulesBundle.getPatterns()) {
+			for (GraphPattern graphPattern : pattern.getAllGraphPatterns()) {
+				if (graphPattern.getStereotypes().contains(rule)) {
+					sortBasicRulesByDependencies(graphPattern);
+				}
+			}
+		}
+	}
+	
+	private void sortBasicRulesByDependencies(GraphPattern complexRule) {
+		List<DependencyNode<SubGraph>> dependingSubGraphs = new ArrayList<>();
+		List<Dependency<SubGraph>> dependencies = new ArrayList<>();
+		
+		// Create list of dependency nodes:
+		for (SubGraph basicRule : complexRule.getSubgraphs()) {
+			DependencyNode<SubGraph> dependingSubGraph = new DependencyNode<SubGraph>(basicRule) {
+				
+				@Override
+				public String getName() {
+					return getTarget().getName();
+				}
+			};
+			dependingSubGraphs.add(dependingSubGraph);
+		}
+		
+		// Create list of dependencies:
+		for (NodePattern complexRuleNode : complexRule.getNodes()) {
+			if (!complexRuleNode.getStereotypes().contains(preserve)) {
+				SubGraph changing = null;
+				SubGraph using = null;
+				
+				for (SubGraph basicRuleNodes : complexRuleNode.getSubgraphs()) {
+					if (HenshinProfileUtil.isContext(basicRuleNodes)) {
+						using = (SubGraph) basicRuleNodes.eContainer();
+					} else if (HenshinProfileUtil.isChange(basicRuleNodes)) {
+						changing = (SubGraph) basicRuleNodes.eContainer();
+					}
+				}
+				
+				if ((changing != null) && (using != null)) {
+					
+					// Recognized a use/delete dependency:
+					if (complexRuleNode.getStereotypes().contains(delete)) {
+						addDependencyIfNotPresent(dependencies, dependingSubGraphs, using, changing);
+					}
+					
+					// Recognized a create/use dependency:
+					else if (complexRuleNode.getStereotypes().contains(create)) {
+						addDependencyIfNotPresent(dependencies, dependingSubGraphs, changing, using);
+					}
+				}
+			}
+		}
+		
+		// Sort by dependencies:
+		new DependencyOrdering<SubGraph>().deterministicOrdering(dependingSubGraphs, dependencies);
+		
+//		System.out.println("#########################################################################");
+//		new DependencyOrdering<SubGraph>().printDeterministicOrdering(dependingSubGraphs, dependencies);
+//		System.out.println("#########################################################################");
+		
+		// Apply the ordering of the DependencyNodes to the complex rule SubGraphs:
+		for (int newPosition = 0; newPosition < dependingSubGraphs.size(); newPosition++) {
+			DependencyNode<SubGraph> dependingSubGraph = dependingSubGraphs.get(newPosition);
+			complexRule.getSubgraphs().move(newPosition, dependingSubGraph.getTarget());
+		}
+	}
+
+	private void addDependencyIfNotPresent(
+			List<Dependency<SubGraph>> dependencies, 
+			List<DependencyNode<SubGraph>> dependingSubGraphs,
+			SubGraph predecessor, SubGraph successor) {
+		
+		// Search list of dependencies if the dependency already exists:
+		for (Dependency<SubGraph> dependency : dependencies) {
+			if ((dependency.getPredecessor() == predecessor) && (dependency.getSuccessor() == successor)) {
+				return;
+			}
+		}
+		
+		// Else: Create new dependency:
+		Dependency<SubGraph> newDependency = new Dependency<SubGraph>();
+		
+		// Find DependencyNode wrapper for SubGraph:
+		for (DependencyNode<SubGraph> dependencyNode : dependingSubGraphs) {
+			if (dependencyNode.getTarget() == predecessor) {
+				newDependency.setPredecessor(dependencyNode);
+			} else if (dependencyNode.getTarget() == successor) {
+				newDependency.setSuccessor(dependencyNode);
+			}
+		}
+		
+		dependencies.add(newDependency);
 	}
 }

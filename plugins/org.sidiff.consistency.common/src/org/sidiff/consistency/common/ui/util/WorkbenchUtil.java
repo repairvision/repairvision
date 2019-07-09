@@ -3,6 +3,7 @@ package org.sidiff.consistency.common.ui.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
@@ -167,8 +168,16 @@ public class WorkbenchUtil {
 		return result[0];
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static <I> List<I> showSelections(String message, List<I> items, ILabelProvider labelProvider) {
+		if (!items.isEmpty()) {
+			return showSelections(message, items, items.subList(0, 1), labelProvider);
+		} else {
+			return showSelections(message, items, Collections.emptyList(), labelProvider);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <I> List<I> showSelections(String message, List<I> items, List<I> initialSelection, ILabelProvider labelProvider) {
 		List<I> result = new ArrayList<>();
 
 		Display.getDefault().syncExec(new Runnable() {
@@ -180,7 +189,7 @@ public class WorkbenchUtil {
 						new ArrayContentProvider(), labelProvider, message);
 				dlg.setTitle(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 						.getActivePage().getActivePart().getTitle());
-				dlg.setInitialSelections(items.get(0));
+				dlg.setInitialSelections(initialSelection.toArray());
 				dlg.open();
 				result.addAll((Collection<? extends I>) Arrays.asList(dlg.getResult()));
 			}

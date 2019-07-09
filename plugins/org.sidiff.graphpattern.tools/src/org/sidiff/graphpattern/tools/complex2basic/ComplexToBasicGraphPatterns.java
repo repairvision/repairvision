@@ -62,7 +62,9 @@ public class ComplexToBasicGraphPatterns {
 					Pattern containerPattern = getContainerPattern(basicBundle, defaultPattern, basicGraphPattern);
 					
 					// Generate name:
-					String basicGraphPatternName = generateGraphPatternName(basicBundle, containerPattern, basicGraphPattern);
+					String basicGraphPatternName = generateGraphPatternName(containerPattern, basicGraphPattern);
+					basicGraphPatternName = makeUniqueGraphPatternNames(containerPattern, basicGraphPattern, basicGraphPatternName); 
+					
 					basicPattern.setName(basicGraphPatternName);
 					basicPattern.setDescription("Derived from: " + fullGraphPattern.getName());
 					basicGraphPattern.setName(basicGraphPatternName);
@@ -318,8 +320,6 @@ public class ComplexToBasicGraphPatterns {
 		return false;
 	}
 
-	// FIXME: Child elements of content elements are always also content elements!
-	
 	protected RequiredSubGraph extractRequiredSubGraph(NodePattern startNode) {
 		Set<NodePattern> contentNodes = new HashSet<>();
 		contentNodes.add(startNode);
@@ -384,6 +384,13 @@ public class ComplexToBasicGraphPatterns {
 			}
 		}
 		
+		// Child elements of content elements are always also content elements:
+		for (EdgePattern incoming : node.getIncomings()) {
+			if (incoming.getType().isContainment() && contentNodes.contains(incoming.getSource())) {
+				return true;
+			}
+		}
+			
 		return false;
 	}
 	
@@ -460,7 +467,7 @@ public class ComplexToBasicGraphPatterns {
 		return buildContainerName.toString();
 	}
 
-	protected String generateGraphPatternName(Bundle bundle, Pattern containerPattern, GraphPattern graphPattern) {
+	protected String generateGraphPatternName(Pattern containerPattern, GraphPattern graphPattern) {
 		if (!graphPattern.getNodes().isEmpty()) {
 			
 			// Collect node type names:
@@ -488,23 +495,70 @@ public class ComplexToBasicGraphPatterns {
 				}
 			}
 			
-			// Check if name is unique:
-			String nameString = name.toString();
-			String nameWithCounter = nameString; 
-			int counter = 0;
-			
-			// NOTE: We expect hierarchical pattern names, so we just check pattern in the same sub-pattern: 
-			for (Pattern siblingPatterns : containerPattern.getSubpatterns()) {
-				if (siblingPatterns.getName().equals(nameWithCounter)) {
-					++counter;
-					nameWithCounter = nameString + counter;
-				}
-			}
-			
-			return nameWithCounter;
+			return name.toString();
 		} else {
 			return "N/A";
 		}
+	}
+	
+	protected String makeUniqueGraphPatternNames(Pattern containerPattern, GraphPattern graphPattern, String name) {
+		
+		// Check if name is unique:
+		List<Pattern> equalNamed = getPatternsWithName(containerPattern, name);
+		
+		// Generate context based name:
+		if (!equalNamed.isEmpty()) {
+			name = generateContextConditionName(graphPattern, name);
+			
+			// For new name check again for equal names:
+			equalNamed = getPatternsWithName(containerPattern, name);
+		}
+		
+		// Add counter to name:
+		int counter = 0;
+		
+		while (!equalNamed.isEmpty()) {
+			++counter;
+			name += counter;
+			
+			// For new name check again for equal names:
+			equalNamed = getPatternsWithName(containerPattern, name);
+		}
+		
+		return name;
+	}
+
+	private String generateContextConditionName(GraphPattern graphPattern, String name) {
+		StringBuilder contextNames = new StringBuilder();
+		
+		for (NodePattern node : graphPattern.getNodes()) {
+			if (!isContent(node) && !containsContent(node)) {
+				
+				if (contextNames.length() == 0) {
+					contextNames.append("With");
+				} else {
+					contextNames.append("And");
+				}
+				
+				contextNames.append(StringUtil.toUpperFirst(node.getType().getName()));
+			}
+		}
+		
+		name += contextNames.toString();
+		return name;
+	}
+	
+	private List<Pattern> getPatternsWithName(Pattern containerPattern, String name) {
+		List<Pattern> patterns = new ArrayList<>(1);
+		
+		// NOTE: We expect hierarchical pattern names, so we just check pattern in the same sub-pattern: 
+		for (Pattern siblingPattern : containerPattern.getSubpatterns()) {
+			if (siblingPattern.getName().equals(name)) {
+				patterns.add(siblingPattern);
+			}
+		}
+		
+		return patterns;
 	}
 	
 	protected boolean containsContent(NodePattern node) {
