@@ -191,7 +191,10 @@ public class WorkbenchUtil {
 						.getActivePage().getActivePart().getTitle());
 				dlg.setInitialSelections(initialSelection.toArray());
 				dlg.open();
-				result.addAll((Collection<? extends I>) Arrays.asList(dlg.getResult()));
+				
+				if (dlg.getResult() != null) {
+					result.addAll((Collection<? extends I>) Arrays.asList(dlg.getResult()));
+				}
 			}
 		});
 

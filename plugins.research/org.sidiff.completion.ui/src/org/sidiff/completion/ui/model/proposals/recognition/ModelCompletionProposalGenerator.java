@@ -1,5 +1,6 @@
 package org.sidiff.completion.ui.model.proposals.recognition;
 import java.util.ArrayList;
+import java.util.Collections;import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
@@ -15,6 +16,7 @@ import org.sidiff.completion.ui.model.proposals.recognition.impact.ModelCompleti
 import org.sidiff.completion.ui.model.proposals.util.DecompositionTemplates;
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
+import org.sidiff.graphpattern.profile.henshin_extension.RuleExtension;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
@@ -115,8 +117,15 @@ public class ModelCompletionProposalGenerator {
 		
 		List<ModelCompletionProposalCluster> propsalClusters = new ArrayList<>();
 		
+		// Sort the edit rules by size of their sub-rules starting with the largest.
+		sortEditRules(getEditRules());
+		
 		for (Rule editRule : getEditRules()) {
 			ModelCompletionProposalCaculation proposalCaculation = new ModelCompletionProposalCaculation(editRule, impactAnalyzes, complementFinderEngine);
+			
+//			if (editRule.getName().contains("Create: TransitionWithCallEventTriggerAndOperationInClass")) {
+//				System.out.println("ModelCompletionProposalGenerator.calculateProposals()");
+//			}
 			
 			if (proposalCaculation.isPotentialProposal()) {
 				List<ModelCompletionProposal> proposalsForEditRule = proposalCaculation.findProposals();
@@ -152,5 +161,23 @@ public class ModelCompletionProposalGenerator {
 		}
 		
 		proposalList.addProposals(propsalClusters);
+	}
+
+	private void sortEditRules(List<Rule> editRules) {
+	
+		Collections.sort(editRules, new Comparator<Rule>() {
+
+			@Override
+			public int compare(Rule rule1, Rule rule2) {
+				
+				if ((rule1 instanceof RuleExtension) && (rule2 instanceof RuleExtension)) {
+					Integer size1 = ((RuleExtension) rule1).getSubgraphs().size();
+					Integer size2 = ((RuleExtension) rule2).getSubgraphs().size();
+					return size2.compareTo(size1);
+				}
+				
+				return 0;
+			}
+		});
 	}
 }

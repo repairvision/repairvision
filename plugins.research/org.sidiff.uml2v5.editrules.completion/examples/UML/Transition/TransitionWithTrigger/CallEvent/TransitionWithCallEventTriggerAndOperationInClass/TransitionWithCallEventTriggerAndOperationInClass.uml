@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_cX_yoJKPEem9H9REQEYgvQ" name="container">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_ccClIJKPEem9H9REQEYgvQ">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_cY5KgJKPEem9H9REQEYgvQ" name="stateMachine">
+    <region xmi:type="uml:Region" xmi:id="_cY5KgZKPEem9H9REQEYgvQ" name="region">
+      <transition xmi:type="uml:Transition" xmi:id="_rUgOMJKPEem9H9REQEYgvQ" name="transition" source="_m8UF8JKPEem9H9REQEYgvQ" target="_oaSf0JKPEem9H9REQEYgvQ">
+        <trigger xmi:type="uml:Trigger" xmi:id="_6z8XsJKPEem9H9REQEYgvQ" name="trigger" event="_KuOqIJKQEem9H9REQEYgvQ"/>
+      </transition>
+      <subvertex xmi:type="uml:State" xmi:id="_m8UF8JKPEem9H9REQEYgvQ" name="source"/>
+      <subvertex xmi:type="uml:State" xmi:id="_oaSf0JKPEem9H9REQEYgvQ" name="target"/>
+    </region>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_c52igJKPEem9H9REQEYgvQ" name="containingClass">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_f76lUJKPEem9H9REQEYgvQ" name="calledOperation"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:CallEvent" xmi:id="_KuOqIJKQEem9H9REQEYgvQ" name="callEvent" operation="_f76lUJKPEem9H9REQEYgvQ"/>
+</uml:Model>

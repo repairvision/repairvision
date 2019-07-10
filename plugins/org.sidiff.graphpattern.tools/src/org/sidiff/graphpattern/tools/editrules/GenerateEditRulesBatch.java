@@ -31,18 +31,18 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			// Setup edit rule profile:
 			patternBundle.getProfiles().add(HenshinStereotypes.profile_model);
 			
+			String[] generators = new String[] {
+					"Creation Rules Generator",
+					"Deletion Rules Generator",
+			"Transformation Rules Generator"};
+			
+			List<String> selection = WorkbenchUtil.showSelections("Select Edit Rule Generators:", 
+					Arrays.asList(generators), Arrays.asList(generators), WorkbenchUtil.getEMFLabelProvider());
+			
 			// Generate edit rules:
 			Map<GraphPattern, List<Pattern>> editOperations = new HashMap<>();
 			
 			for (Pattern pattern : patternBundle.getPatterns()) {
-				String[] generators = new String[] {
-						"Creation Rules Generator",
-						"Deletion Rules Generator",
-						"Transformation Rules Generator"};
-				
-				List<String> selection = WorkbenchUtil.showSelections("Select Edit Rule Generators:", 
-						Arrays.asList(generators), Arrays.asList(generators), WorkbenchUtil.getEMFLabelProvider());
-				
 				if (selection.contains(generators[0])) {
 					ConstructionEditRuleGenerator.generateCreationRules(pattern, editOperations);
 				}

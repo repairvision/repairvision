@@ -97,8 +97,8 @@ public class ModelCompletionProposalCluster implements ICompletionProposal {
 					} else {
 						
 						// Matches common intersection? -> add to cluster:
-						if (matchTemplates(candidateProposal.getHistoricTemplates(), intersectionHistoricTemplates)) {
-							if (matchTemplates(candidateProposal.getComplementFirstLevel(), intersectionComplementTemplates)) {
+						if (intersectingTemplates(intersectionHistoricTemplates, candidateProposal.getHistoricTemplates())) {
+							if (intersectingTemplates(intersectionComplementTemplates, candidateProposal.getComplementFirstLevel())) {
 								proposalCluster.add(proposalCandidate);
 								
 								// Update/Shrink intersections:
@@ -157,6 +157,23 @@ public class ModelCompletionProposalCluster implements ICompletionProposal {
 		}
 		return false;
 	}
+	
+	/**
+	 * @param templatesA The first list of templates.
+	 * @param templatesB The second list of templates.
+	 * @return <code>true</code> if there is an intersection; <code>false</code> otherwise.
+	 */
+	private boolean intersectingTemplates(List<String> templatesA, List<String> templatesB) {
+
+		for (String templateA : templatesA) {
+			if (templatesB.contains(templateA)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
 	
 	@Override
 	public String getText() {
