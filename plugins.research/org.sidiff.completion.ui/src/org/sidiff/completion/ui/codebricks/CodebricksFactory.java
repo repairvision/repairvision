@@ -112,15 +112,6 @@ public interface CodebricksFactory extends EFactory {
 	ValuePlaceholderBrick createValuePlaceholderBrick();
 
 	/**
-	 * Returns a new object of class '<em>Composed Template Placeholder Brick</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Composed Template Placeholder Brick</em>'.
-	 * @generated
-	 */
-	ComposedTemplatePlaceholderBrick createComposedTemplatePlaceholderBrick();
-
-	/**
 	 * Returns a new object of class '<em>POJO Codebrick View</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -164,6 +155,15 @@ public interface CodebricksFactory extends EFactory {
 	 * @generated
 	 */
 	ValueDomainPolicy createValueDomainPolicy();
+
+	/**
+	 * Returns a new object of class '<em>Collapsible Composed Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Collapsible Composed Brick</em>'.
+	 * @generated
+	 */
+	CollapsibleComposedBrick createCollapsibleComposedBrick();
 
 	/**
 	 * Returns the package supported by this factory.

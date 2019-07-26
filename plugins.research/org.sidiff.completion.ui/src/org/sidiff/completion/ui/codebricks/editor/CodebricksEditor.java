@@ -701,6 +701,7 @@ public class CodebricksEditor {
 				}
 			}
 			
+			// Create composed bricks:
 			else if (templateBrick instanceof ComposedBrick) {
 				
 				// Put template expression in last column(s):
@@ -709,8 +710,8 @@ public class CodebricksEditor {
 				}
 				
 				Composite composedBrick = buildBrickRow(templateExpression);
+				buildContent(composedBrick, ((ComposedBrick) templateBrick).getBricks(), mapModelToView);
 				viewControl = composedBrick;
-				buildContent(composedBrick, ((ComposedBrick) templateBrick).getBricks());
 			}
 			
 			// Create template expression:
@@ -736,45 +737,7 @@ public class CodebricksEditor {
 				
 				// Create value placeholder (parameter):
 				} else if (templateBrick instanceof ValuePlaceholderBrick) {
-					ValuePlaceholderBrick valueTemplateBrick = (ValuePlaceholderBrick) templateBrick;
-					StyledText placeholderControl = buildPlaceholder(templateExpression, valueTemplateBrick);
-					viewControl = placeholderControl;
-					
-					// Listen to text input:
-					String placeholderValue = placeholderControl.getText();
-					placeholderControl.addExtendedModifyListener(new ExtendedModifyListener() {
-						
-						private int oldTime = -1;
-						
-						@Override
-						public void modifyText(ExtendedModifyEvent event) {
-							
-							if (event.time != oldTime) {
-								this.oldTime = event.time;
-								
-								// Replace placeholder with text input:
-								if (!placeholderControl.getText().isEmpty()) {
-									String newValue = placeholderControl.getText();
-									String oldValue = newValue.substring(0, event.start) + newValue.substring(event.start + event.length, placeholderControl.getText().length());
-									
-									if (!oldValue.equals(newValue)) {
-										if (oldValue.equals(placeholderValue)) {
-											String addedText = newValue.substring(event.start, event.start + event.length);
-											placeholderControl.setText(addedText);
-											placeholderControl.setCaretOffset(addedText.length()); // text cursor behind added text
-											
-											fitToContent();
-										}
-									}
-								}
-								
-								// Set input as literal value (before converting it to an instance value);
-								CodebricksEditor.executeCommand(valueTemplateBrick, () -> {
-									valueTemplateBrick.setByLiteralValue(placeholderControl.getText());
-								});
-							}
-						}
-					});
+					viewControl = buildValuePlaceholder(templateExpression, (ValuePlaceholderBrick) templateBrick);
 					
 				// Create object placeholder (parameter):
 				} else if (templateBrick instanceof ObjectPlaceholderBrick) {
@@ -807,6 +770,50 @@ public class CodebricksEditor {
 		
 		// Do layout:
 		fitToContent();
+	}
+
+	private StyledText buildValuePlaceholder(Composite templateExpression, ValuePlaceholderBrick valueTemplateBrick) {
+		
+		// Create view:
+		StyledText placeholderControl = buildPlaceholder(templateExpression, valueTemplateBrick);
+		
+		// Listen to text input:
+		String placeholderValue = placeholderControl.getText();
+		placeholderControl.addExtendedModifyListener(new ExtendedModifyListener() {
+			
+			private int oldTime = -1;
+			
+			@Override
+			public void modifyText(ExtendedModifyEvent event) {
+				
+				if (event.time != oldTime) {
+					this.oldTime = event.time;
+					
+					// Replace placeholder with text input:
+					if (!placeholderControl.getText().isEmpty()) {
+						String newValue = placeholderControl.getText();
+						String oldValue = newValue.substring(0, event.start) + newValue.substring(event.start + event.length, placeholderControl.getText().length());
+						
+						if (!oldValue.equals(newValue)) {
+							if (oldValue.equals(placeholderValue)) {
+								String addedText = newValue.substring(event.start, event.start + event.length);
+								placeholderControl.setText(addedText);
+								placeholderControl.setCaretOffset(addedText.length()); // text cursor behind added text
+								
+								fitToContent();
+							}
+						}
+					}
+					
+					// Set input as literal value (before converting it to an instance value);
+					CodebricksEditor.executeCommand(valueTemplateBrick, () -> {
+						valueTemplateBrick.setByLiteralValue(placeholderControl.getText());
+					});
+				}
+			}
+		});
+		
+		return placeholderControl;
 	}
 	
 	private StyledText buildPlaceholder(Composite parentContainer, PlaceholderBrick placeholderBrick) {
@@ -877,7 +884,7 @@ public class CodebricksEditor {
 				List<ViewableBrick> equalChoices = new ArrayList<>();
 
 				for (ViewableBrick unlistedChoice : unlistedChoices) {
-					if (canCombineProposals(unlistedChoice, choice)) {
+					if (TemplateCodebricksProposal.canCombineProposals(unlistedChoice, choice)) {
 						equalChoices.add(unlistedChoice);
 					}
 				}
@@ -888,19 +895,6 @@ public class CodebricksEditor {
 		}
 		
 		return proposals;
-	}
-	
-	protected boolean canCombineProposals(ViewableBrick choiceA, ViewableBrick choiceB) {
-		return choiceA.getText().equals(choiceB.getText());
-	}
-	
-	protected boolean canCombineProposals(List<ViewableBrick> choices) {
-		for (int i = 0; i < choices.size() - 1; i++) {
-			if (!canCombineProposals(choices.get(i), choices.get(i + 1))) {
-				return false;
-			}
-		}
-		return true;
 	}
 	
 	private List<ICompletionProposal> getProposals(ObjectPlaceholderBrick placeholderBrick) {
@@ -1098,7 +1092,7 @@ public class CodebricksEditor {
 							List<ViewableBrick> choices = getRemainingChoices(placeholderBrick, selectedPlaceholder);
 
 							if (!choices.equals(placeholderBrick.getChoice())) {
-								if (!choices.isEmpty() && canCombineProposals(choices)) {
+								if (!choices.isEmpty() && TemplateCodebricksProposal.canCombineProposals(choices)) {
 									if (!placeholderBrick.getChoice().isEmpty()) {
 										placeholderBrick.getChoice().clear();
 									}

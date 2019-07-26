@@ -6,6 +6,7 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
 import org.sidiff.completion.ui.codebricks.editor.CodebricksEditor;
@@ -22,7 +23,45 @@ public class TemplateCodebricksProposal implements ICompletionProposal {
 		this.placeholder = placeholder;
 		this.choice = choice;
 	}
-
+	
+	public static boolean canCombineProposals(ViewableBrick choiceA, ViewableBrick choiceB) {
+		String textA = getText(choiceA);
+		String textB = getText(choiceB);
+		return (textA != null) && textA.equals(textB);
+	}
+	
+	public static boolean canCombineProposals(List<ViewableBrick> choices) {
+		for (int i = 0; i < choices.size() - 1; i++) {
+			if (!canCombineProposals(choices.get(i), choices.get(i + 1))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static String getText(ViewableBrick brick) {
+		if (brick instanceof CollapsibleComposedBrick) {
+			return ((CollapsibleComposedBrick) brick).getCollapsedText();
+		} else {
+			return brick.getText();
+		}
+	}
+	
+	@Override
+	public String getText() {
+		return getText(choice.get(0));
+	}
+	
+	@Override
+	public String getInformation() {
+		return null;
+	}
+	
+	@Override
+	public Image getImage() {
+		return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
+	}
+	
 	@Override
 	public ICompletionPreview preview() {
 		return new ICompletionPreview() {
@@ -45,21 +84,6 @@ public class TemplateCodebricksProposal implements ICompletionProposal {
 				return true;
 			}
 		};
-	}
-	
-	@Override
-	public String getText() {
-		return choice.get(0).getText();
-	}
-	
-	@Override
-	public String getInformation() {
-		return null;
-	}
-	
-	@Override
-	public Image getImage() {
-		return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
 	}
 	
 	@Override

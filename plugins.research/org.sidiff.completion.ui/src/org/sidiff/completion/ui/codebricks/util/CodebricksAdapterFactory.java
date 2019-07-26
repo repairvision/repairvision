@@ -124,10 +124,6 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 				return createPlaceholderBrickAdapter();
 			}
 			@Override
-			public Adapter caseComposedTemplatePlaceholderBrick(ComposedTemplatePlaceholderBrick object) {
-				return createComposedTemplatePlaceholderBrickAdapter();
-			}
-			@Override
 			public Adapter casePOJOCodebrickView(POJOCodebrickView object) {
 				return createPOJOCodebrickViewAdapter();
 			}
@@ -142,6 +138,10 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseValueDomainPolicy(ValueDomainPolicy object) {
 				return createValueDomainPolicyAdapter();
+			}
+			@Override
+			public Adapter caseCollapsibleComposedBrick(CollapsibleComposedBrick object) {
+				return createCollapsibleComposedBrickAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -360,20 +360,6 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.ComposedTemplatePlaceholderBrick <em>Composed Template Placeholder Brick</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.sidiff.completion.ui.codebricks.ComposedTemplatePlaceholderBrick
-	 * @generated
-	 */
-	public Adapter createComposedTemplatePlaceholderBrickAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.POJOCodebrickView <em>POJO Codebrick View</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -426,6 +412,20 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createValueDomainPolicyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick <em>Collapsible Composed Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick
+	 * @generated
+	 */
+	public Adapter createCollapsibleComposedBrickAdapter() {
 		return null;
 	}
 

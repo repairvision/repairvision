@@ -29,6 +29,7 @@ import org.sidiff.completion.ui.codebricks.Brick;
 import org.sidiff.completion.ui.codebricks.Codebrick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.CodebricksFactory;
+import org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick;
 import org.sidiff.completion.ui.codebricks.ComposedBrick;
 import org.sidiff.completion.ui.codebricks.LineBreakBrick;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
@@ -162,7 +163,8 @@ public class CodebricksGenerator {
 						
 						// Add to choices:
 						if (placeholder != null) {
-							placeholder.getChoices().add(searchedAlternative.getKey());
+							ComposedBrick choice = searchedAlternative.getKey();
+							placeholder.getChoices().add(choice);
 						}
 					}
 					
@@ -190,14 +192,14 @@ public class CodebricksGenerator {
 		LinkedHashMap<ComposedBrick, String> subEditRules = new LinkedHashMap<>();
 		
 		for (String template : templates) {
-			ComposedBrick subEditRule = CodebricksFactory.eINSTANCE.createComposedBrick();
 			
 			// Common?
 			if ((intersectionTemplates == null) || intersectionTemplates.contains(template)) {
+				String plainTemplate = getPlainTemplate(template);
 				
 				// Sub edit rule template?
 				if (DecomposingEditRulesUtil.containsPlaceholder(template)) {
-					String plainTemplate = getPlainTemplate(template);
+					ComposedBrick subEditRule = CodebricksFactory.eINSTANCE.createComposedBrick();
 					
 					// NOTE: Not show parameters for template:
 					// SEE NOTE*1 
@@ -205,29 +207,40 @@ public class CodebricksGenerator {
 					TemplatePlaceholderBrick complementSubEditRuleBrick = CodebricksFactory.eINSTANCE.createTemplatePlaceholderBrick();
 					complementSubEditRuleBrick.setPlaceholder(plainTemplate + TEMPLATE_PARAMETER_LIST_PREFIX + TEMPLATE_PARAMETER_LIST_POSTFIX);
 					complementSubEditRuleBrick.setMandatory(true);
-					subEditRule.getBricks().add(complementSubEditRuleBrick);	
+					subEditRule.getBricks().add(complementSubEditRuleBrick);
+					
+					// Add sub edit rule to template:
+					codebrick.getBricks().add(subEditRule);
+					subEditRules.put(subEditRule, template); // NOTE: the rule template string is not necessarily unique.
 				} else {
-					String plainFirstLevelTemplate = getPlainTemplate(template);
+					CollapsibleComposedBrick subEditRule = CodebricksFactory.eINSTANCE.createCollapsibleComposedBrick();
 					
 					TextBrick complementSubEditRuleBrick = CodebricksFactory.eINSTANCE.createTextBrick();
-					complementSubEditRuleBrick.setText(plainFirstLevelTemplate);
+					complementSubEditRuleBrick.setText(plainTemplate);
 					subEditRule.getBricks().add(complementSubEditRuleBrick);
 					
 					createTemplateParameters(subEditRule, templateToRule.apply(template));
+					
+					// Add sub edit rule to template:
+					codebrick.getBricks().add(subEditRule);
+					subEditRules.put(subEditRule, template); // NOTE: the rule template string is not necessarily unique.
 				}
 				
 			} else {
+				ComposedBrick subEditRule = CodebricksFactory.eINSTANCE.createComposedBrick();
+				
 				// Optional placeholder:
 				// NOTE: Actually, not needed since we currently match only proposals with the same historic template.
 				TemplatePlaceholderBrick complementSubEditRuleBrick = CodebricksFactory.eINSTANCE.createTemplatePlaceholderBrick();
 				complementSubEditRuleBrick.setPlaceholder(TEMPLATE_OPTIONAL_PLACEHOLDER);
 				complementSubEditRuleBrick.setMandatory(false);
+				
 				subEditRule.getBricks().add(complementSubEditRuleBrick);
+				
+				// Add sub edit rule to template:
+				codebrick.getBricks().add(subEditRule);
+				subEditRules.put(subEditRule, template); // NOTE: the rule template string is not necessarily unique.
 			}
-			
-			// Add sub edit rule to template:
-			codebrick.getBricks().add(subEditRule);
-			subEditRules.put(subEditRule, template); // NOTE: the rule template string is not necessarily unique.
 			
 			// Not last rule?
 			if (template != templates.get(templates.size() -1)) {
@@ -243,7 +256,7 @@ public class CodebricksGenerator {
 		return subEditRules;
 	}
 
-	private void createTemplateParameters(ComposedBrick template, SubGraph subEditRule) {
+	private void createTemplateParameters(CollapsibleComposedBrick template, SubGraph subEditRule) {
 		
 		// NOTE: Show (all) IN parameters of subEditRule (hide OUT parameters):
 		
@@ -265,6 +278,9 @@ public class CodebricksGenerator {
 		if (changesParameterSeparator != null) {
 			EcoreUtil.remove(changesParameterSeparator);
 		}
+		
+		// Make parameter list collapsible:
+		template.getCollapsible().addAll(parameterList);
 		
 		// add ')':
 		TextBrick ruleParameterClosingBracesBrick = CodebricksFactory.eINSTANCE.createTextBrick();

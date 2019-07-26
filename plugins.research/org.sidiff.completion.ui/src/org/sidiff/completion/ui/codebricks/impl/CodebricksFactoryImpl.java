@@ -68,11 +68,11 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 			case CodebricksPackage.BLANK_BRICK: return createBlankBrick();
 			case CodebricksPackage.COMPOSED_BRICK: return createComposedBrick();
 			case CodebricksPackage.VALUE_PLACEHOLDER_BRICK: return createValuePlaceholderBrick();
-			case CodebricksPackage.COMPOSED_TEMPLATE_PLACEHOLDER_BRICK: return createComposedTemplatePlaceholderBrick();
 			case CodebricksPackage.POJO_CODEBRICK_VIEW: return createPOJOCodebrickView();
 			case CodebricksPackage.CODEBRICK_VIEW: return createCodebrickView();
 			case CodebricksPackage.OBJECT_DOMAIN_POLICY: return createObjectDomainPolicy();
 			case CodebricksPackage.VALUE_DOMAIN_POLICY: return createValueDomainPolicy();
+			case CodebricksPackage.COLLAPSIBLE_COMPOSED_BRICK: return createCollapsibleComposedBrick();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -194,17 +194,6 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 	 * @generated
 	 */
 	@Override
-	public ComposedTemplatePlaceholderBrick createComposedTemplatePlaceholderBrick() {
-		ComposedTemplatePlaceholderBrickImpl composedTemplatePlaceholderBrick = new ComposedTemplatePlaceholderBrickImpl();
-		return composedTemplatePlaceholderBrick;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public POJOCodebrickView createPOJOCodebrickView() {
 		POJOCodebrickViewImpl pojoCodebrickView = new POJOCodebrickViewImpl();
 		return pojoCodebrickView;
@@ -274,6 +263,17 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 	public ValueDomainPolicy createValueDomainPolicy() {
 		ValueDomainPolicyImpl valueDomainPolicy = new ValueDomainPolicyImpl();
 		return valueDomainPolicy;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public CollapsibleComposedBrick createCollapsibleComposedBrick() {
+		CollapsibleComposedBrickImpl collapsibleComposedBrick = new CollapsibleComposedBrickImpl();
+		return collapsibleComposedBrick;
 	}
 
 	/**

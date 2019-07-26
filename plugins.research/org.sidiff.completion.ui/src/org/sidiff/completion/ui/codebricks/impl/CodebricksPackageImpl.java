@@ -18,8 +18,8 @@ import org.sidiff.completion.ui.codebricks.CodebrickView;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.CodebricksFactory;
 import org.sidiff.completion.ui.codebricks.CodebricksPackage;
+import org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick;
 import org.sidiff.completion.ui.codebricks.ComposedBrick;
-import org.sidiff.completion.ui.codebricks.ComposedTemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.IndentBrick;
 import org.sidiff.completion.ui.codebricks.LineBreakBrick;
 import org.sidiff.completion.ui.codebricks.ObjectDomainPolicy;
@@ -143,13 +143,6 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass composedTemplatePlaceholderBrickEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass pojoCodebrickViewEClass = null;
 
 	/**
@@ -172,6 +165,13 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	private EClass valueDomainPolicyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass collapsibleComposedBrickEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -703,26 +703,6 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
-	public EClass getComposedTemplatePlaceholderBrick() {
-		return composedTemplatePlaceholderBrickEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getComposedTemplatePlaceholderBrick_ContainerBrick() {
-		return (EReference)composedTemplatePlaceholderBrickEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getPOJOCodebrickView() {
 		return pojoCodebrickViewEClass;
 	}
@@ -843,6 +823,36 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
+	public EClass getCollapsibleComposedBrick() {
+		return collapsibleComposedBrickEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getCollapsibleComposedBrick_Collapsible() {
+		return (EReference)collapsibleComposedBrickEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getCollapsibleComposedBrick__GetCollapsedText() {
+		return collapsibleComposedBrickEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EOperation getValueDomainPolicy__AssignValue__Object_ValuePlaceholderBrick() {
 		return valueDomainPolicyEClass.getEOperations().get(2);
 	}
@@ -936,9 +946,6 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		createEAttribute(placeholderBrickEClass, PLACEHOLDER_BRICK__PLACEHOLDER);
 		createEAttribute(placeholderBrickEClass, PLACEHOLDER_BRICK__NAME);
 
-		composedTemplatePlaceholderBrickEClass = createEClass(COMPOSED_TEMPLATE_PLACEHOLDER_BRICK);
-		createEReference(composedTemplatePlaceholderBrickEClass, COMPOSED_TEMPLATE_PLACEHOLDER_BRICK__CONTAINER_BRICK);
-
 		pojoCodebrickViewEClass = createEClass(POJO_CODEBRICK_VIEW);
 		createEAttribute(pojoCodebrickViewEClass, POJO_CODEBRICK_VIEW__MODEL);
 
@@ -955,6 +962,10 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___ASSIGN_VALUE__OBJECT_VALUEPLACEHOLDERBRICK);
 		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___CREATE_FROM_STRING__VALUEPLACEHOLDERBRICK_STRING_EDATATYPE);
 		createEOperation(valueDomainPolicyEClass, VALUE_DOMAIN_POLICY___CONVERT_TO_STRING__VALUEPLACEHOLDERBRICK_OBJECT_EDATATYPE);
+
+		collapsibleComposedBrickEClass = createEClass(COLLAPSIBLE_COMPOSED_BRICK);
+		createEReference(collapsibleComposedBrickEClass, COLLAPSIBLE_COMPOSED_BRICK__COLLAPSIBLE);
+		createEOperation(collapsibleComposedBrickEClass, COLLAPSIBLE_COMPOSED_BRICK___GET_COLLAPSED_TEXT);
 	}
 
 	/**
@@ -999,9 +1010,9 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		styledBrickEClass.getESuperTypes().add(this.getViewableBrick());
 		valuePlaceholderBrickEClass.getESuperTypes().add(this.getPlaceholderBrick());
 		placeholderBrickEClass.getESuperTypes().add(this.getStyledBrick());
-		composedTemplatePlaceholderBrickEClass.getESuperTypes().add(this.getTemplatePlaceholderBrick());
 		pojoCodebrickViewEClass.getESuperTypes().add(this.getCodebrick());
 		codebrickViewEClass.getESuperTypes().add(this.getCodebrick());
+		collapsibleComposedBrickEClass.getESuperTypes().add(this.getComposedBrick());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(codebricksEClass, Codebricks.class, "Codebricks", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1072,9 +1083,6 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		initEAttribute(getPlaceholderBrick_Placeholder(), ecorePackage.getEString(), "placeholder", null, 0, 1, PlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPlaceholderBrick_Name(), ecorePackage.getEString(), "name", null, 0, 1, PlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(composedTemplatePlaceholderBrickEClass, ComposedTemplatePlaceholderBrick.class, "ComposedTemplatePlaceholderBrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getComposedTemplatePlaceholderBrick_ContainerBrick(), this.getComposedBrick(), null, "containerBrick", null, 1, 1, ComposedTemplatePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
 		initEClass(pojoCodebrickViewEClass, POJOCodebrickView.class, "POJOCodebrickView", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPOJOCodebrickView_Model(), ecorePackage.getEJavaObject(), "model", null, 0, 1, POJOCodebrickView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1113,6 +1121,11 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		addEParameter(op, this.getValuePlaceholderBrick(), "brick", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEcorePackage.getEJavaObject(), "instanceValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDataType(), "eDataType", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(collapsibleComposedBrickEClass, CollapsibleComposedBrick.class, "CollapsibleComposedBrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCollapsibleComposedBrick_Collapsible(), this.getViewableBrick(), null, "collapsible", null, 0, -1, CollapsibleComposedBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getCollapsibleComposedBrick__GetCollapsedText(), ecorePackage.getEString(), "getCollapsedText", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

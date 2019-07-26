@@ -70,9 +70,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//PlaceholderBrick/placeholder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//PlaceholderBrick/name"/>
     </genClasses>
-    <genClasses ecoreClass="codebricks.ecore#//ComposedTemplatePlaceholderBrick">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ComposedTemplatePlaceholderBrick/containerBrick"/>
-    </genClasses>
     <genClasses ecoreClass="codebricks.ecore#//POJOCodebrickView">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//POJOCodebrickView/model"/>
     </genClasses>
@@ -111,6 +108,10 @@
         <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/convertToString/instanceValue"/>
         <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/convertToString/eDataType"/>
       </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="codebricks.ecore#//CollapsibleComposedBrick">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//CollapsibleComposedBrick/collapsible"/>
+      <genOperations ecoreOperation="codebricks.ecore#//CollapsibleComposedBrick/getCollapsedText"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
