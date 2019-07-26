@@ -242,10 +242,26 @@ public class ValuePlaceholderBrickImpl extends PlaceholderBrickImpl implements V
 	 */
 	@Override
 	public void setByLiteralValue(String literalValue) {
-		setLiteralValue(literalValue); 														// (1)
-		
-		if (getDomain().isValid(this, literalValue, getType())) {
-			setInstanceValue(getDomain().createFromString(this, literalValue, getType()));	// (2)
+		if (((literalValue == null) && (getLiteralValue() != null)) || !literalValue.equals(getLiteralValue())) {
+			boolean isValid = getDomain().isValid(this, literalValue, getType());
+			Object instanceValue = null;
+			
+			if (isValid) {
+				instanceValue = getDomain().createFromString(this, literalValue, getType());
+			}
+			
+			// 1. update domain for auto-selection:
+			if (isValid) {
+				getDomain().assignValue(instanceValue, this);
+			}
+			
+			// 2. update literal for change test:
+			setLiteralValue(literalValue);
+			
+			// 3. store instance:
+			if (isValid) {
+				setInstanceValue(instanceValue);
+			}
 		}
 	}
 
@@ -256,9 +272,20 @@ public class ValuePlaceholderBrickImpl extends PlaceholderBrickImpl implements V
 	 */
 	@Override
 	public void setByInstanceValue(Object instanceValue) {
-		if (getDomain().isValid(this, literalValue, getType())) {
-			setLiteralValue(getDomain().convertToString(this, instanceValue, getType())); 	// (1)
-			setInstanceValue(instanceValue);												// (2)
+		if (((instanceValue == null) && (getInstanceValue() != null)) || !instanceValue.equals(getInstanceValue())) {
+			if (getDomain().isValid(this, literalValue, getType())) {
+				
+				// 1. update domain for auto-selection:
+				getDomain().assignValue(instanceValue, this);
+				
+				// 2. update literal for change test:
+				String literalValue = getDomain().convertToString(this, instanceValue, getType());
+				setLiteralValue(literalValue);
+				
+				// 3. store instance:
+				setInstanceValue(instanceValue);
+				
+			}
 		}
 	}
 
