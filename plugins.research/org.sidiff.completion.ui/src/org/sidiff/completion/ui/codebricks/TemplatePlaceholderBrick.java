@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getChoice <em>Choice</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getRemainingChoices <em>Remaining Choices</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#isComposed <em>Composed</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getAlternativeChoices <em>Alternative Choices</em>}</li>
  * </ul>
  *
  * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getTemplatePlaceholderBrick()
@@ -59,6 +60,18 @@ public interface TemplatePlaceholderBrick extends PlaceholderBrick {
 	 * @generated
 	 */
 	EList<ViewableBrick> getRemainingChoices();
+
+	/**
+	 * Returns the value of the '<em><b>Alternative Choices</b></em>' reference list.
+	 * The list contents are of type {@link org.sidiff.completion.ui.codebricks.ViewableBrick}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Alternative Choices</em>' reference list.
+	 * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getTemplatePlaceholderBrick_AlternativeChoices()
+	 * @model transient="true" volatile="true" derived="true"
+	 * @generated
+	 */
+	EList<ViewableBrick> getAlternativeChoices();
 
 	/**
 	 * Returns the value of the '<em><b>Composed</b></em>' attribute.

@@ -72,7 +72,8 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 			case CodebricksPackage.CODEBRICK_VIEW: return createCodebrickView();
 			case CodebricksPackage.OBJECT_DOMAIN_POLICY: return createObjectDomainPolicy();
 			case CodebricksPackage.VALUE_DOMAIN_POLICY: return createValueDomainPolicy();
-			case CodebricksPackage.COLLAPSIBLE_COMPOSED_BRICK: return createCollapsibleComposedBrick();
+			case CodebricksPackage.COLLAPSIBLE_BRICK: return createCollapsibleBrick();
+			case CodebricksPackage.RESET_TEMPLATE_PLACEHOLDER_BRICK: return createResetTemplatePlaceholderBrick();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -271,9 +272,20 @@ public class CodebricksFactoryImpl extends EFactoryImpl implements CodebricksFac
 	 * @generated
 	 */
 	@Override
-	public CollapsibleComposedBrick createCollapsibleComposedBrick() {
-		CollapsibleComposedBrickImpl collapsibleComposedBrick = new CollapsibleComposedBrickImpl();
-		return collapsibleComposedBrick;
+	public CollapsibleBrick createCollapsibleBrick() {
+		CollapsibleBrickImpl collapsibleBrick = new CollapsibleBrickImpl();
+		return collapsibleBrick;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResetTemplatePlaceholderBrick createResetTemplatePlaceholderBrick() {
+		ResetTemplatePlaceholderBrickImpl resetTemplatePlaceholderBrick = new ResetTemplatePlaceholderBrickImpl();
+		return resetTemplatePlaceholderBrick;
 	}
 
 	/**

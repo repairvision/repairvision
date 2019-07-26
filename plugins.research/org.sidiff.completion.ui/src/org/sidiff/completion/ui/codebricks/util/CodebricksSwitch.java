@@ -203,12 +203,20 @@ public class CodebricksSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CodebricksPackage.COLLAPSIBLE_COMPOSED_BRICK: {
-				CollapsibleComposedBrick collapsibleComposedBrick = (CollapsibleComposedBrick)theEObject;
-				T result = caseCollapsibleComposedBrick(collapsibleComposedBrick);
-				if (result == null) result = caseComposedBrick(collapsibleComposedBrick);
-				if (result == null) result = caseViewableBrick(collapsibleComposedBrick);
-				if (result == null) result = caseBrick(collapsibleComposedBrick);
+			case CodebricksPackage.COLLAPSIBLE_BRICK: {
+				CollapsibleBrick collapsibleBrick = (CollapsibleBrick)theEObject;
+				T result = caseCollapsibleBrick(collapsibleBrick);
+				if (result == null) result = caseComposedBrick(collapsibleBrick);
+				if (result == null) result = caseViewableBrick(collapsibleBrick);
+				if (result == null) result = caseBrick(collapsibleBrick);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CodebricksPackage.RESET_TEMPLATE_PLACEHOLDER_BRICK: {
+				ResetTemplatePlaceholderBrick resetTemplatePlaceholderBrick = (ResetTemplatePlaceholderBrick)theEObject;
+				T result = caseResetTemplatePlaceholderBrick(resetTemplatePlaceholderBrick);
+				if (result == null) result = caseViewableBrick(resetTemplatePlaceholderBrick);
+				if (result == null) result = caseBrick(resetTemplatePlaceholderBrick);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -487,17 +495,32 @@ public class CodebricksSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Collapsible Composed Brick</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Collapsible Brick</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Collapsible Composed Brick</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Collapsible Brick</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCollapsibleComposedBrick(CollapsibleComposedBrick object) {
+	public T caseCollapsibleBrick(CollapsibleBrick object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Reset Template Placeholder Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Reset Template Placeholder Brick</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseResetTemplatePlaceholderBrick(ResetTemplatePlaceholderBrick object) {
 		return null;
 	}
 

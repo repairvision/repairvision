@@ -140,8 +140,12 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 				return createValueDomainPolicyAdapter();
 			}
 			@Override
-			public Adapter caseCollapsibleComposedBrick(CollapsibleComposedBrick object) {
-				return createCollapsibleComposedBrickAdapter();
+			public Adapter caseCollapsibleBrick(CollapsibleBrick object) {
+				return createCollapsibleBrickAdapter();
+			}
+			@Override
+			public Adapter caseResetTemplatePlaceholderBrick(ResetTemplatePlaceholderBrick object) {
+				return createResetTemplatePlaceholderBrickAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -416,16 +420,30 @@ public class CodebricksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick <em>Collapsible Composed Brick</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.CollapsibleBrick <em>Collapsible Brick</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick
+	 * @see org.sidiff.completion.ui.codebricks.CollapsibleBrick
 	 * @generated
 	 */
-	public Adapter createCollapsibleComposedBrickAdapter() {
+	public Adapter createCollapsibleBrickAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.sidiff.completion.ui.codebricks.ResetTemplatePlaceholderBrick <em>Reset Template Placeholder Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.sidiff.completion.ui.codebricks.ResetTemplatePlaceholderBrick
+	 * @generated
+	 */
+	public Adapter createResetTemplatePlaceholderBrickAdapter() {
 		return null;
 	}
 

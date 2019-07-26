@@ -29,6 +29,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//TemplatePlaceholderBrick/choice"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference codebricks.ecore#//TemplatePlaceholderBrick/remainingChoices"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//TemplatePlaceholderBrick/composed"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//TemplatePlaceholderBrick/alternativeChoices"/>
     </genClasses>
     <genClasses ecoreClass="codebricks.ecore#//ObjectPlaceholderBrick">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ObjectPlaceholderBrick/element"/>
@@ -109,9 +110,13 @@
         <genParameters ecoreParameter="codebricks.ecore#//ValueDomainPolicy/convertToString/eDataType"/>
       </genOperations>
     </genClasses>
-    <genClasses ecoreClass="codebricks.ecore#//CollapsibleComposedBrick">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//CollapsibleComposedBrick/collapsible"/>
-      <genOperations ecoreOperation="codebricks.ecore#//CollapsibleComposedBrick/getCollapsedText"/>
+    <genClasses ecoreClass="codebricks.ecore#//CollapsibleBrick">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//CollapsibleBrick/collapsible"/>
+      <genOperations ecoreOperation="codebricks.ecore#//CollapsibleBrick/getCollapsedText"/>
+    </genClasses>
+    <genClasses ecoreClass="codebricks.ecore#//ResetTemplatePlaceholderBrick">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ResetTemplatePlaceholderBrick/placeholder"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ResetTemplatePlaceholderBrick/attachedTo"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

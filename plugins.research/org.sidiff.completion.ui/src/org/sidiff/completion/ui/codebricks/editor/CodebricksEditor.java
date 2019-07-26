@@ -71,6 +71,7 @@ import org.sidiff.completion.ui.codebricks.LineBreakBrick;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.POJOCodebrickView;
 import org.sidiff.completion.ui.codebricks.PlaceholderBrick;
+import org.sidiff.completion.ui.codebricks.ResetTemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.StyledBrick;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.TextBrick;
@@ -666,10 +667,6 @@ public class CodebricksEditor {
 	}
 	
 	protected void buildContent(Composite editorContent, List<? extends Brick> bricks) {
-		buildContent(editorContent, bricks, true);
-	}
-	
-	protected void buildContent(Composite editorContent, List<? extends Brick> bricks, boolean mapModelToView) {
 		
 		// Is content empty?
 		if (editorContent.getChildren().length > 0) {
@@ -710,7 +707,7 @@ public class CodebricksEditor {
 				}
 				
 				Composite composedBrick = buildBrickRow(templateExpression);
-				buildContent(composedBrick, ((ComposedBrick) templateBrick).getBricks(), mapModelToView);
+				buildContent(composedBrick, ((ComposedBrick) templateBrick).getBricks());
 				viewControl = composedBrick;
 			}
 			
@@ -743,13 +740,30 @@ public class CodebricksEditor {
 				} else if (templateBrick instanceof ObjectPlaceholderBrick) {
 					viewControl = buildPlaceholder(templateExpression, (PlaceholderBrick) templateBrick);
 				}
+				
+				/*
+				 * Placeholder Reset hook:
+				 */
+				
+				else if (templateBrick instanceof ResetTemplatePlaceholderBrick) {
+					StyledText resetTemplateControl = null; 
+							
+					if (highlight) {
+						resetTemplateControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
+					} else {
+						resetTemplateControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
+					}
+					
+					installProposalList(resetTemplateControl, templateBrick);
+					viewControl = resetTemplateControl;
+				}
 
 				/*
 				 * Basic bricks:
 				 */
 				
 				// Create text:
-				if (viewableBrick instanceof TextBrick) {
+				else if (viewableBrick instanceof TextBrick) {
 					if (highlight) {
 						viewControl = buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
 					} else {
@@ -763,7 +777,7 @@ public class CodebricksEditor {
 			}
 			
 			// Store model to view mapping:
-			if (mapModelToView && (viewControl != null)) {
+			if (viewControl != null) {
 				modelToViewMap.put(templateBrick, viewControl);
 			}
 		}
@@ -830,13 +844,13 @@ public class CodebricksEditor {
 		return placeholderControl;
 	}
 
-	private void installProposalList(StyledText placeholderControl, PlaceholderBrick placeholderBrick) {
+	private void installProposalList(StyledText control, Brick brick) {
 		
 		// Store model in view:
-		placeholderControl.setData(placeholderBrick);
+		control.setData(brick);
 
 		// Show proposal list:
-		placeholderControl.addKeyListener(new KeyListener() {
+		control.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -844,22 +858,25 @@ public class CodebricksEditor {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				PlaceholderBrick placeholderBrick = (PlaceholderBrick) e.widget.getData();
+				Display display = control.getDisplay(); // Control might be disposed during auto-completion.
+				Brick brick = (Brick) e.widget.getData();
 				
 				if(((e.stateMask & SWT.CTRL) == SWT.CTRL) && (e.keyCode == SWT.SPACE)) {
 					List<ICompletionProposal> codebrickProposals = Collections.emptyList();
 
-					if (placeholderBrick instanceof TemplatePlaceholderBrick) {
-						codebrickProposals = getProposals((TemplatePlaceholderBrick) placeholderBrick);
-					} else if (placeholderBrick instanceof ObjectPlaceholderBrick) {
-						codebrickProposals = getProposals((ObjectPlaceholderBrick) placeholderBrick);
-					} else if (placeholderBrick instanceof ValuePlaceholderBrick) {
-						codebrickProposals = getProposals((ValuePlaceholderBrick) placeholderBrick);
+					if (brick instanceof TemplatePlaceholderBrick) {
+						codebrickProposals = getProposals((TemplatePlaceholderBrick) brick);
+					} else if (brick instanceof ResetTemplatePlaceholderBrick) {
+						codebrickProposals = getProposals(((ResetTemplatePlaceholderBrick) brick).getPlaceholder());
+					} else if (brick instanceof ObjectPlaceholderBrick) {
+						codebrickProposals = getProposals((ObjectPlaceholderBrick) brick);
+					} else if (brick instanceof ValuePlaceholderBrick) {
+						codebrickProposals = getProposals((ValuePlaceholderBrick) brick);
 					}
 
 					// Show proposals below editor:
 					if (!codebrickProposals.isEmpty()) {
-						CompletionProposalList proposals =  new CompletionProposalList(placeholderControl.getDisplay());
+						CompletionProposalList proposals =  new CompletionProposalList(display);
 						proposals.addProposals(codebrickProposals);
 						
 						int proposalsXPosition = editorShell.getLocation().x;
@@ -873,27 +890,32 @@ public class CodebricksEditor {
 	
 	private List<ICompletionProposal> getProposals(TemplatePlaceholderBrick placeholderBrick) {
 		List<ICompletionProposal> proposals = new ArrayList<>();
+		List<ViewableBrick> choices = null;
 		
-		List<ViewableBrick> remainingChoices = placeholderBrick.getRemainingChoices();
-		Set<ViewableBrick> unlistedChoices = new HashSet<>(remainingChoices); 
+		if (placeholderBrick.getChoice().isEmpty()) {
+			choices = placeholderBrick.getRemainingChoices();
+		} else {
+			choices = placeholderBrick.getAlternativeChoices();
+		}
 		
-		for (ViewableBrick choice : remainingChoices) {
-
-			// Show equal choices in one proposal:
+		// Show equal choices in one proposal:
+		Set<ViewableBrick> unlistedChoices = new HashSet<>(choices); 
+		
+		for (ViewableBrick choice : choices) {
 			if (unlistedChoices.contains(choice)) {
 				List<ViewableBrick> equalChoices = new ArrayList<>();
-
+				
 				for (ViewableBrick unlistedChoice : unlistedChoices) {
 					if (TemplateCodebricksProposal.canCombineProposals(unlistedChoice, choice)) {
 						equalChoices.add(unlistedChoice);
 					}
 				}
-
+				
 				unlistedChoices.removeAll(equalChoices);
 				proposals.add(new TemplateCodebricksProposal(placeholderBrick, equalChoices));
 			}
 		}
-		
+
 		return proposals;
 	}
 	
@@ -1048,7 +1070,7 @@ public class CodebricksEditor {
 			}
 			
 			// Add composed bricks:
-			buildContent(placeholderContainer, Collections.singletonList(showChoice), false);
+			buildContent(placeholderContainer, Collections.singletonList(showChoice));
 			
 			// If this choice is not yet determined disable controls:
 			if (placeholderBrick.getChoice().size() > 1) {
@@ -1074,6 +1096,7 @@ public class CodebricksEditor {
 		autoSelectTemplatePlaceholders(placeholderBrick, codebricks.getTemplate().getBricks());
 		autoTemplatePlaceholdersHiding(codebricks.getTemplate().getBricks());
 		autoSelectObjectPlaceholders(codebricks.getTemplate().getBricks());
+		autoSelectValuePlaceholders(null, codebricks.getTemplate().getBricks());
 		
 		editorContent.pack();
 		editorShell.setRedraw(true);

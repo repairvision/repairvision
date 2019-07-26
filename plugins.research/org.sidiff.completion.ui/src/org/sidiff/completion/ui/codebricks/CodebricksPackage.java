@@ -576,13 +576,22 @@ public interface CodebricksPackage extends EPackage {
 	int TEMPLATE_PLACEHOLDER_BRICK__COMPOSED = PLACEHOLDER_BRICK_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Alternative Choices</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPLATE_PLACEHOLDER_BRICK__ALTERNATIVE_CHOICES = PLACEHOLDER_BRICK_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Template Placeholder Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TEMPLATE_PLACEHOLDER_BRICK_FEATURE_COUNT = PLACEHOLDER_BRICK_FEATURE_COUNT + 4;
+	int TEMPLATE_PLACEHOLDER_BRICK_FEATURE_COUNT = PLACEHOLDER_BRICK_FEATURE_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Text</em>' operation.
@@ -1320,14 +1329,14 @@ public interface CodebricksPackage extends EPackage {
 
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.CollapsibleComposedBrickImpl <em>Collapsible Composed Brick</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.CollapsibleBrickImpl <em>Collapsible Brick</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.completion.ui.codebricks.impl.CollapsibleComposedBrickImpl
-	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getCollapsibleComposedBrick()
+	 * @see org.sidiff.completion.ui.codebricks.impl.CollapsibleBrickImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getCollapsibleBrick()
 	 * @generated
 	 */
-	int COLLAPSIBLE_COMPOSED_BRICK = 18;
+	int COLLAPSIBLE_BRICK = 18;
 
 	/**
 	 * The feature id for the '<em><b>Codebrick</b></em>' reference.
@@ -1336,7 +1345,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COLLAPSIBLE_COMPOSED_BRICK__CODEBRICK = COMPOSED_BRICK__CODEBRICK;
+	int COLLAPSIBLE_BRICK__CODEBRICK = COMPOSED_BRICK__CODEBRICK;
 
 	/**
 	 * The feature id for the '<em><b>Bricks</b></em>' containment reference list.
@@ -1345,7 +1354,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COLLAPSIBLE_COMPOSED_BRICK__BRICKS = COMPOSED_BRICK__BRICKS;
+	int COLLAPSIBLE_BRICK__BRICKS = COMPOSED_BRICK__BRICKS;
 
 	/**
 	 * The feature id for the '<em><b>Collapsible</b></em>' reference list.
@@ -1354,16 +1363,16 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COLLAPSIBLE_COMPOSED_BRICK__COLLAPSIBLE = COMPOSED_BRICK_FEATURE_COUNT + 0;
+	int COLLAPSIBLE_BRICK__COLLAPSIBLE = COMPOSED_BRICK_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Collapsible Composed Brick</em>' class.
+	 * The number of structural features of the '<em>Collapsible Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COLLAPSIBLE_COMPOSED_BRICK_FEATURE_COUNT = COMPOSED_BRICK_FEATURE_COUNT + 1;
+	int COLLAPSIBLE_BRICK_FEATURE_COUNT = COMPOSED_BRICK_FEATURE_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Get Text</em>' operation.
@@ -1372,7 +1381,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COLLAPSIBLE_COMPOSED_BRICK___GET_TEXT = COMPOSED_BRICK___GET_TEXT;
+	int COLLAPSIBLE_BRICK___GET_TEXT = COMPOSED_BRICK___GET_TEXT;
 
 	/**
 	 * The operation id for the '<em>Get Collapsed Text</em>' operation.
@@ -1381,16 +1390,80 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COLLAPSIBLE_COMPOSED_BRICK___GET_COLLAPSED_TEXT = COMPOSED_BRICK_OPERATION_COUNT + 0;
+	int COLLAPSIBLE_BRICK___GET_COLLAPSED_TEXT = COMPOSED_BRICK_OPERATION_COUNT + 0;
 
 	/**
-	 * The number of operations of the '<em>Collapsible Composed Brick</em>' class.
+	 * The number of operations of the '<em>Collapsible Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COLLAPSIBLE_COMPOSED_BRICK_OPERATION_COUNT = COMPOSED_BRICK_OPERATION_COUNT + 1;
+	int COLLAPSIBLE_BRICK_OPERATION_COUNT = COMPOSED_BRICK_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.ResetTemplatePlaceholderBrickImpl <em>Reset Template Placeholder Brick</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.impl.ResetTemplatePlaceholderBrickImpl
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getResetTemplatePlaceholderBrick()
+	 * @generated
+	 */
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK = 19;
+
+	/**
+	 * The feature id for the '<em><b>Codebrick</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK = VIEWABLE_BRICK__CODEBRICK;
+
+	/**
+	 * The feature id for the '<em><b>Placeholder</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK__PLACEHOLDER = VIEWABLE_BRICK_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Attached To</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK__ATTACHED_TO = VIEWABLE_BRICK_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Reset Template Placeholder Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK_FEATURE_COUNT = VIEWABLE_BRICK_FEATURE_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Get Text</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK___GET_TEXT = VIEWABLE_BRICK___GET_TEXT;
+
+	/**
+	 * The number of operations of the '<em>Reset Template Placeholder Brick</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK_OPERATION_COUNT = VIEWABLE_BRICK_OPERATION_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.Codebricks <em>Codebricks</em>}'.
@@ -1582,6 +1655,17 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTemplatePlaceholderBrick_Composed();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getAlternativeChoices <em>Alternative Choices</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Alternative Choices</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick#getAlternativeChoices()
+	 * @see #getTemplatePlaceholderBrick()
+	 * @generated
+	 */
+	EReference getTemplatePlaceholderBrick_AlternativeChoices();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick <em>Object Placeholder Brick</em>}'.
@@ -2001,35 +2085,67 @@ public interface CodebricksPackage extends EPackage {
 	EOperation getValueDomainPolicy__ConvertToString__ValuePlaceholderBrick_Object_EDataType();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick <em>Collapsible Composed Brick</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.CollapsibleBrick <em>Collapsible Brick</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Collapsible Composed Brick</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick
+	 * @return the meta object for class '<em>Collapsible Brick</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.CollapsibleBrick
 	 * @generated
 	 */
-	EClass getCollapsibleComposedBrick();
+	EClass getCollapsibleBrick();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick#getCollapsible <em>Collapsible</em>}'.
+	 * Returns the meta object for the reference list '{@link org.sidiff.completion.ui.codebricks.CollapsibleBrick#getCollapsible <em>Collapsible</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Collapsible</em>'.
-	 * @see org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick#getCollapsible()
-	 * @see #getCollapsibleComposedBrick()
+	 * @see org.sidiff.completion.ui.codebricks.CollapsibleBrick#getCollapsible()
+	 * @see #getCollapsibleBrick()
 	 * @generated
 	 */
-	EReference getCollapsibleComposedBrick_Collapsible();
+	EReference getCollapsibleBrick_Collapsible();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick#getCollapsedText() <em>Get Collapsed Text</em>}' operation.
+	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.CollapsibleBrick#getCollapsedText() <em>Get Collapsed Text</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Collapsed Text</em>' operation.
-	 * @see org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick#getCollapsedText()
+	 * @see org.sidiff.completion.ui.codebricks.CollapsibleBrick#getCollapsedText()
 	 * @generated
 	 */
-	EOperation getCollapsibleComposedBrick__GetCollapsedText();
+	EOperation getCollapsibleBrick__GetCollapsedText();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ResetTemplatePlaceholderBrick <em>Reset Template Placeholder Brick</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Reset Template Placeholder Brick</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ResetTemplatePlaceholderBrick
+	 * @generated
+	 */
+	EClass getResetTemplatePlaceholderBrick();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.completion.ui.codebricks.ResetTemplatePlaceholderBrick#getPlaceholder <em>Placeholder</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Placeholder</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ResetTemplatePlaceholderBrick#getPlaceholder()
+	 * @see #getResetTemplatePlaceholderBrick()
+	 * @generated
+	 */
+	EReference getResetTemplatePlaceholderBrick_Placeholder();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.sidiff.completion.ui.codebricks.ResetTemplatePlaceholderBrick#getAttachedTo <em>Attached To</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Attached To</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.ResetTemplatePlaceholderBrick#getAttachedTo()
+	 * @see #getResetTemplatePlaceholderBrick()
+	 * @generated
+	 */
+	EReference getResetTemplatePlaceholderBrick_AttachedTo();
 
 	/**
 	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.ValueDomainPolicy#assignValue(java.lang.Object, org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick) <em>Assign Value</em>}' operation.
@@ -2215,6 +2331,14 @@ public interface CodebricksPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TEMPLATE_PLACEHOLDER_BRICK__COMPOSED = eINSTANCE.getTemplatePlaceholderBrick_Composed();
+
+		/**
+		 * The meta object literal for the '<em><b>Alternative Choices</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEMPLATE_PLACEHOLDER_BRICK__ALTERNATIVE_CHOICES = eINSTANCE.getTemplatePlaceholderBrick_AlternativeChoices();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ObjectPlaceholderBrickImpl <em>Object Placeholder Brick</em>}' class.
@@ -2565,14 +2689,14 @@ public interface CodebricksPackage extends EPackage {
 		EOperation VALUE_DOMAIN_POLICY___CONVERT_TO_STRING__VALUEPLACEHOLDERBRICK_OBJECT_EDATATYPE = eINSTANCE.getValueDomainPolicy__ConvertToString__ValuePlaceholderBrick_Object_EDataType();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.CollapsibleComposedBrickImpl <em>Collapsible Composed Brick</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.CollapsibleBrickImpl <em>Collapsible Brick</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.completion.ui.codebricks.impl.CollapsibleComposedBrickImpl
-		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getCollapsibleComposedBrick()
+		 * @see org.sidiff.completion.ui.codebricks.impl.CollapsibleBrickImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getCollapsibleBrick()
 		 * @generated
 		 */
-		EClass COLLAPSIBLE_COMPOSED_BRICK = eINSTANCE.getCollapsibleComposedBrick();
+		EClass COLLAPSIBLE_BRICK = eINSTANCE.getCollapsibleBrick();
 
 		/**
 		 * The meta object literal for the '<em><b>Collapsible</b></em>' reference list feature.
@@ -2580,7 +2704,7 @@ public interface CodebricksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference COLLAPSIBLE_COMPOSED_BRICK__COLLAPSIBLE = eINSTANCE.getCollapsibleComposedBrick_Collapsible();
+		EReference COLLAPSIBLE_BRICK__COLLAPSIBLE = eINSTANCE.getCollapsibleBrick_Collapsible();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Collapsed Text</b></em>' operation.
@@ -2588,7 +2712,33 @@ public interface CodebricksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation COLLAPSIBLE_COMPOSED_BRICK___GET_COLLAPSED_TEXT = eINSTANCE.getCollapsibleComposedBrick__GetCollapsedText();
+		EOperation COLLAPSIBLE_BRICK___GET_COLLAPSED_TEXT = eINSTANCE.getCollapsibleBrick__GetCollapsedText();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ResetTemplatePlaceholderBrickImpl <em>Reset Template Placeholder Brick</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.impl.ResetTemplatePlaceholderBrickImpl
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getResetTemplatePlaceholderBrick()
+		 * @generated
+		 */
+		EClass RESET_TEMPLATE_PLACEHOLDER_BRICK = eINSTANCE.getResetTemplatePlaceholderBrick();
+
+		/**
+		 * The meta object literal for the '<em><b>Placeholder</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RESET_TEMPLATE_PLACEHOLDER_BRICK__PLACEHOLDER = eINSTANCE.getResetTemplatePlaceholderBrick_Placeholder();
+
+		/**
+		 * The meta object literal for the '<em><b>Attached To</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RESET_TEMPLATE_PLACEHOLDER_BRICK__ATTACHED_TO = eINSTANCE.getResetTemplatePlaceholderBrick_AttachedTo();
 
 		/**
 		 * The meta object literal for the '<em><b>Assign Value</b></em>' operation.

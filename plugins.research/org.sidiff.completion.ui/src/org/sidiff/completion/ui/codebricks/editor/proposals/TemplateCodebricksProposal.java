@@ -6,7 +6,7 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
-import org.sidiff.completion.ui.codebricks.CollapsibleComposedBrick;
+import org.sidiff.completion.ui.codebricks.CollapsibleBrick;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.ViewableBrick;
 import org.sidiff.completion.ui.codebricks.editor.CodebricksEditor;
@@ -40,8 +40,8 @@ public class TemplateCodebricksProposal implements ICompletionProposal {
 	}
 	
 	public static String getText(ViewableBrick brick) {
-		if (brick instanceof CollapsibleComposedBrick) {
-			return ((CollapsibleComposedBrick) brick).getCollapsedText();
+		if (brick instanceof CollapsibleBrick) {
+			return ((CollapsibleBrick) brick).getCollapsedText();
 		} else {
 			return brick.getText();
 		}

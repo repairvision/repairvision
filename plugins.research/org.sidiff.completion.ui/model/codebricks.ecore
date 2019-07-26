@@ -34,6 +34,8 @@
         derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="composed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="alternativeChoices" upperBound="-1"
+        eType="#//ViewableBrick" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ObjectPlaceholderBrick" eSuperTypes="#//PlaceholderBrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
@@ -117,9 +119,15 @@
       <eParameters name="eDataType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
     </eOperations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CollapsibleComposedBrick" eSuperTypes="#//ComposedBrick">
+  <eClassifiers xsi:type="ecore:EClass" name="CollapsibleBrick" eSuperTypes="#//ComposedBrick">
     <eOperations name="getCollapsedText" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="collapsible" upperBound="-1"
+        eType="#//ViewableBrick"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResetTemplatePlaceholderBrick" eSuperTypes="#//ViewableBrick">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="placeholder" lowerBound="1"
+        eType="#//TemplatePlaceholderBrick"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attachedTo" lowerBound="1"
         eType="#//ViewableBrick"/>
   </eClassifiers>
 </ecore:EPackage>
