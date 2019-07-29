@@ -124,7 +124,11 @@ public class CodebricksEditor {
 		initializeEditingDomain();
 		
 		// Create editor content:
-		ContentBuilder.build(this, editorContent, getTemplate(), COLOR_BLACK, COLOR_WHITE, COLOR_HIDE);
+		if (input != null) {
+			CodebricksEditor.executeCommand(input, () -> {
+				ContentBuilder.build(this, editorContent, getTemplate(), COLOR_BLACK, COLOR_WHITE, COLOR_HIDE);
+			});
+		}
 		
 		// Wait for placeholders to be selected:
 		codebricksAdapters.add(CodebricksUtil.onAlternativeChosen(codebricks, this::onAlternativeChosen));
@@ -364,7 +368,12 @@ public class CodebricksEditor {
 		 * Create editor content:
 		 */
 		editorContent = new Composite(scrolledEditor, SWT.NONE);
-		ContentBuilder.build(this, editorContent, getTemplate(), COLOR_BLACK, COLOR_WHITE, COLOR_HIDE);
+		
+		if (!getTemplate().isEmpty()) {
+			CodebricksEditor.executeCommand(getContent(), () -> {
+				ContentBuilder.build(this, editorContent, getTemplate(), COLOR_BLACK, COLOR_WHITE, COLOR_HIDE);
+			});
+		}
 		
 		/*
 		 *  Show a vertical separator as control for dragging the shell:
