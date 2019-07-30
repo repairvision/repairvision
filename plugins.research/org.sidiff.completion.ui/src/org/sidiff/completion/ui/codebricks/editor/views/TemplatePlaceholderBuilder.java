@@ -31,10 +31,7 @@ public class TemplatePlaceholderBuilder {
 			Color foreground, Color background, Color hidde) {
 		
 		// Create view:
-		StyledText placeholderControl =  PlaceholderBuilder.build(
-				editor, placeholderContainer, placeholderBrick,
-				TemplatePlaceholderBuilder::getProposals,
-				foreground, background);
+		StyledText placeholderControl = buildPlaceholder(editor, placeholderContainer, placeholderBrick, foreground, background);
 		
 		// Listen to model changes:
 		Codebricks codebricks = placeholderBrick.getCodebrick().getCodebricks();
@@ -42,7 +39,7 @@ public class TemplatePlaceholderBuilder {
 		Adapter modelListener = CodebricksUtil.onTemplatePlaceholderSelected(codebricks, (selectedPlaceholder) -> {
 			if (selectedPlaceholder == placeholderBrick) {
 				editor.update(() -> {
-					
+
 					if (!placeholderBrick.getChoice().isEmpty()) {
 						ViewableBrick showChoice = placeholderBrick.getChoice().get(0);
 						
@@ -73,10 +70,7 @@ public class TemplatePlaceholderBuilder {
 							children[i].dispose();
 						}
 						
-						PlaceholderBuilder.build(
-								editor, placeholderContainer, placeholderBrick,
-								TemplatePlaceholderBuilder::getProposals,
-								foreground, background);
+						buildPlaceholder(editor, placeholderContainer, placeholderBrick, foreground, background);
 					}
 				});
 			} else {
@@ -112,6 +106,18 @@ public class TemplatePlaceholderBuilder {
 				}
 			}
 		});
+		
+		return placeholderControl;
+	}
+
+	private static StyledText buildPlaceholder(
+			CodebricksEditor editor, Composite placeholderContainer, TemplatePlaceholderBrick placeholderBrick, 
+			Color foreground, Color background) {
+		
+		StyledText placeholderControl =  PlaceholderBuilder.build(
+				editor, placeholderContainer, placeholderBrick,
+				TemplatePlaceholderBuilder::getProposals,
+				foreground, background);
 		
 		return placeholderControl;
 	}

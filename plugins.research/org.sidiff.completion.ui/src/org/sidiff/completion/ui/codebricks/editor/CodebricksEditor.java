@@ -559,6 +559,9 @@ public class CodebricksEditor {
 		}
 		
 		editorShell.setRedraw(true);
+		
+		// FOR UI UPDATE DEBUGING
+//		System.out.println(dumpController(editorContent));
 	}
 	
 	public Shell getShell() {

@@ -49,7 +49,7 @@ public class TemplateCodebricksProposal implements ICompletionProposal {
 	
 	@Override
 	public String getText() {
-		return getText(choice.get(0));
+		return getText(choice.get(0)) + " - (" + choice.size() + ")";
 	}
 	
 	@Override

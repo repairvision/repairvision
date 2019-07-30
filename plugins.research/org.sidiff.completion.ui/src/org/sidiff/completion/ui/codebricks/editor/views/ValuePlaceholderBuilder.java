@@ -106,6 +106,10 @@ public class ValuePlaceholderBuilder {
 				if (modelListener.getTarget() != null) {
 					modelListener.getTarget().eAdapters().remove(modelListener);
 				}
+				
+				// Unset the old selection!
+				placeholderBrick.setInstanceValue(null);
+				placeholderBrick.setLiteralValue(null);
 			}
 		});
 		

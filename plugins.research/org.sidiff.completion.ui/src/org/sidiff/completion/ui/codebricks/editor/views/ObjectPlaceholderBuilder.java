@@ -64,6 +64,9 @@ public class ObjectPlaceholderBuilder {
 				if (modelListener.getTarget() != null) {
 					modelListener.getTarget().eAdapters().remove(modelListener);
 				}
+				
+				// Unset the old selection!
+				placeholderBrick.setElement(null);
 			}
 		});
 		
