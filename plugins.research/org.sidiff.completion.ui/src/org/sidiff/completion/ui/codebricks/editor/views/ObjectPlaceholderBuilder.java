@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
@@ -20,13 +23,21 @@ import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 public class ObjectPlaceholderBuilder {
 
-	public static StyledText build(
+	public static Composite build(
 			CodebricksEditor editor, Composite parentContainer, ObjectPlaceholderBrick placeholderBrick,
 			Color foreground, Color background) {
 		
 		// Create view:
+		Composite placeholderWithIcon = BrickRowBuilder.build(parentContainer, background);
+		
+		// Icon:
+		CLabel icon = new CLabel(placeholderWithIcon, SWT.NONE);
+		icon.setBackground(parentContainer.getDisplay().getSystemColor(SWT.COLOR_TRANSPARENT));
+		icon.setMargins(0, 0, 5, 0);
+		
+		// Text:
 		StyledText placeholderControl =  PlaceholderBuilder.build(
-				editor, parentContainer, placeholderBrick,
+				editor, placeholderWithIcon, placeholderBrick,
 				ObjectPlaceholderBuilder::getProposals,
 				foreground, background);
 		
@@ -45,7 +56,19 @@ public class ObjectPlaceholderBuilder {
 					
 					// Is parameter currently visibly in template?
 					if ((placeholderControl != null) && (!placeholderControl.isDisposed())) {
+						
+						// Icon:
+						if (placeholderBrick.getElement() != null) {
+							icon.setImage((Image) ItemProviderUtil.getImageByObject(placeholderBrick.getElement()));
+							icon.setVisible(true);
+						} else {
+							icon.setVisible(false);
+						}
+						
+						// Text:
 						placeholderControl.setText(ItemProviderUtil.getTextByObject(placeholderBrick.getElement()));
+						
+						// Domain:
 						placeholderBrick.getDomain().assignObject(placeholderBrick, placeholderBrick.getElement());
 					}
 				});
@@ -57,7 +80,7 @@ public class ObjectPlaceholderBuilder {
 		});
 		
 		// Remove model change listener from model when disposing the control:
-		placeholderControl.addDisposeListener(new DisposeListener() {
+		placeholderWithIcon.addDisposeListener(new DisposeListener() {
 			
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
@@ -71,7 +94,7 @@ public class ObjectPlaceholderBuilder {
 		});
 		
 		autoSelect(placeholderBrick);
-		return placeholderControl;
+		return placeholderWithIcon;
 	}
 
 	private static void autoSelect(ObjectPlaceholderBrick placeholderBrick) {
