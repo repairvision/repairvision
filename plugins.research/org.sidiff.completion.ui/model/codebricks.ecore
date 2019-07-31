@@ -61,7 +61,17 @@
         eType="#//ViewableBrick" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StyledBrick" abstract="true" eSuperTypes="#//ViewableBrick">
+    <eOperations name="setColor">
+      <eParameters name="red" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="green" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="blue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="getColor" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt">
+      <eParameters name="rgb" eType="#//RGB"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="highlight" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="color" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"
+        defaultValueLiteral="0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuePlaceholderBrick" eSuperTypes="#//PlaceholderBrick">
     <eOperations name="setByLiteralValue">
@@ -124,10 +134,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="collapsible" upperBound="-1"
         eType="#//ViewableBrick"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ResetTemplatePlaceholderBrick" eSuperTypes="#//ViewableBrick">
+  <eClassifiers xsi:type="ecore:EClass" name="ResetTemplatePlaceholderBrick" eSuperTypes="#//StyledBrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="placeholder" lowerBound="1"
         eType="#//TemplatePlaceholderBrick"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attachedTo" lowerBound="1"
         eType="#//ViewableBrick"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="RGB">
+    <eLiterals name="RED"/>
+    <eLiterals name="GREEN" value="1"/>
+    <eLiterals name="BLUE" value="2"/>
   </eClassifiers>
 </ecore:EPackage>

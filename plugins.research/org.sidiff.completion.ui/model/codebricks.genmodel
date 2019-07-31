@@ -8,6 +8,11 @@
   <foreignModel>codebricks.ecore</foreignModel>
   <genPackages prefix="Codebricks" basePackage="org.sidiff.completion.ui" disposableProviderFactory="true"
       ecorePackage="codebricks.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="codebricks.ecore#//RGB">
+      <genEnumLiterals ecoreEnumLiteral="codebricks.ecore#//RGB/RED"/>
+      <genEnumLiterals ecoreEnumLiteral="codebricks.ecore#//RGB/GREEN"/>
+      <genEnumLiterals ecoreEnumLiteral="codebricks.ecore#//RGB/BLUE"/>
+    </genEnums>
     <genClasses ecoreClass="codebricks.ecore#//Codebricks">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference codebricks.ecore#//Codebricks/alternatives"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference codebricks.ecore#//Codebricks/template"/>
@@ -53,6 +58,15 @@
     </genClasses>
     <genClasses image="false" ecoreClass="codebricks.ecore#//StyledBrick">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//StyledBrick/highlight"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute codebricks.ecore#//StyledBrick/color"/>
+      <genOperations ecoreOperation="codebricks.ecore#//StyledBrick/setColor">
+        <genParameters ecoreParameter="codebricks.ecore#//StyledBrick/setColor/red"/>
+        <genParameters ecoreParameter="codebricks.ecore#//StyledBrick/setColor/green"/>
+        <genParameters ecoreParameter="codebricks.ecore#//StyledBrick/setColor/blue"/>
+      </genOperations>
+      <genOperations ecoreOperation="codebricks.ecore#//StyledBrick/getColor">
+        <genParameters ecoreParameter="codebricks.ecore#//StyledBrick/getColor/rgb"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="codebricks.ecore#//ValuePlaceholderBrick">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference codebricks.ecore#//ValuePlaceholderBrick/type"/>

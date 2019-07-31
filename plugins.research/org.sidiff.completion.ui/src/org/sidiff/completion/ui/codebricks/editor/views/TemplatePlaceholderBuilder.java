@@ -28,10 +28,10 @@ public class TemplatePlaceholderBuilder {
 
 	public static StyledText build(
 			CodebricksEditor editor, Composite placeholderContainer, TemplatePlaceholderBrick placeholderBrick,
-			Color foreground, Color background, Color hidde) {
+			boolean boldFont, Color foreground, Color background, Color hide) {
 		
 		// Create view:
-		StyledText placeholderControl = buildPlaceholder(editor, placeholderContainer, placeholderBrick, foreground, background);
+		StyledText placeholderControl = buildPlaceholder(editor, placeholderContainer, placeholderBrick, boldFont, foreground, background);
 		
 		// Listen to model changes:
 		Codebricks codebricks = placeholderBrick.getCodebrick().getCodebricks();
@@ -51,7 +51,7 @@ public class TemplatePlaceholderBuilder {
 						}
 						
 						// Add composed bricks:
-						ContentBuilder.build(editor, placeholderContainer, Collections.singletonList(showChoice), foreground, background, hidde);
+						ContentBuilder.build(editor, placeholderContainer, Collections.singletonList(showChoice), foreground, background, hide);
 						
 						// If this choice is not yet determined disable controls:
 						if (placeholderBrick.getChoice().size() > 1) {
@@ -70,19 +70,26 @@ public class TemplatePlaceholderBuilder {
 							children[i].dispose();
 						}
 						
-						buildPlaceholder(editor, placeholderContainer, placeholderBrick, foreground, background);
+						buildPlaceholder(editor, placeholderContainer, placeholderBrick, boldFont, foreground, background);
 					}
 				});
 			} else {
 				
-				// Auto-select object placeholder:
+				// Auto-select update placeholder:
 				if (placeholderBrick.getRemainingChoices().isEmpty()) {
-					hideComposedPlaceholders(placeholderContainer, hidde);
+					hideComposedPlaceholders(placeholderContainer, hide);
 				} else {
-					unhideComposedPlaceholders(placeholderContainer, foreground);
+					
+					// Unhide (only unselected placeholders):
+					if (placeholderBrick.getChoice().isEmpty()) {
+						unhideComposedPlaceholders(placeholderContainer, foreground);
+					}
+					
+					// Auto-select object placeholder:
 					List<ViewableBrick> choices = getRemainingChoices(placeholderBrick, selectedPlaceholder);
 					
 					if (!choices.equals(placeholderBrick.getChoice())) {
+						
 						if (TemplateCodebricksProposal.canCombineProposals(choices)) {
 							if (!placeholderBrick.getChoice().isEmpty()) {
 								placeholderBrick.getChoice().clear();
@@ -112,24 +119,24 @@ public class TemplatePlaceholderBuilder {
 
 	private static StyledText buildPlaceholder(
 			CodebricksEditor editor, Composite placeholderContainer, TemplatePlaceholderBrick placeholderBrick, 
-			Color foreground, Color background) {
+			boolean boldFont, Color foreground, Color background) {
 		
 		StyledText placeholderControl =  PlaceholderBuilder.build(
 				editor, placeholderContainer, placeholderBrick,
 				TemplatePlaceholderBuilder::getProposals,
-				foreground, background);
+				boldFont, foreground, background, false);
 		
 		return placeholderControl;
 	}
 	
-	private static void hideComposedPlaceholders(Composite containerView, Color hidde) {
+	private static void hideComposedPlaceholders(Composite containerView, Color hide) {
 		for (int i = 0; i < containerView.getChildren().length; i++) {
 			Control child = containerView.getChildren()[i];
 			
 			if ((child instanceof Composite) && !(child instanceof StyledText)) {
-				hideComposedPlaceholders((Composite) child, hidde);
+				hideComposedPlaceholders((Composite) child, hide);
 			} else {
-				hidePlaceholder(child, hidde);
+				hidePlaceholder(child, hide);
 			}
 		}
 	}
@@ -151,8 +158,8 @@ public class TemplatePlaceholderBuilder {
 		}
 	}
 	
-	private static void hidePlaceholder(Control control, Color hidde) {
-		control.setForeground(hidde);
+	private static void hidePlaceholder(Control control, Color hide) {
+		control.setForeground(hide);
 		control.setEnabled(false);
 	}
 	

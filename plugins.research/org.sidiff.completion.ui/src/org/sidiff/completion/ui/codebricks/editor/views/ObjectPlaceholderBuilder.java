@@ -25,7 +25,7 @@ public class ObjectPlaceholderBuilder {
 
 	public static Composite build(
 			CodebricksEditor editor, Composite parentContainer, ObjectPlaceholderBrick placeholderBrick,
-			Color foreground, Color background) {
+			boolean boldFont, Color foreground, Color background) {
 		
 		// Create view:
 		Composite placeholderWithIcon = BrickRowBuilder.build(parentContainer, background);
@@ -39,7 +39,7 @@ public class ObjectPlaceholderBuilder {
 		StyledText placeholderControl =  PlaceholderBuilder.build(
 				editor, placeholderWithIcon, placeholderBrick,
 				ObjectPlaceholderBuilder::getProposals,
-				foreground, background);
+				boldFont, foreground, background, true);
 		
 		// Listen to model changes:
 		Codebricks codebricks = placeholderBrick.getCodebrick().getCodebricks();
@@ -84,12 +84,15 @@ public class ObjectPlaceholderBuilder {
 			
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
-				if (modelListener.getTarget() != null) {
-					modelListener.getTarget().eAdapters().remove(modelListener);
-				}
-				
-				// Unset the old selection!
-				placeholderBrick.setElement(null);
+				CodebricksEditor.executeCommand(placeholderBrick, () -> {
+					
+					if (modelListener.getTarget() != null) {
+						modelListener.getTarget().eAdapters().remove(modelListener);
+					}
+					
+					// Unset the old selection!
+					placeholderBrick.setElement(null);
+				});
 			}
 		});
 		

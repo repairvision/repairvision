@@ -20,7 +20,7 @@ package org.sidiff.completion.ui.codebricks;
  * @model
  * @generated
  */
-public interface ResetTemplatePlaceholderBrick extends ViewableBrick {
+public interface ResetTemplatePlaceholderBrick extends StyledBrick {
 	/**
 	 * Returns the value of the '<em><b>Placeholder</b></em>' reference.
 	 * <!-- begin-user-doc -->

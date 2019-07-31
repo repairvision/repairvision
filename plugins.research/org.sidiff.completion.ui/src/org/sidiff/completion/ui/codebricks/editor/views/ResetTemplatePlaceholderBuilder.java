@@ -10,17 +10,17 @@ public class ResetTemplatePlaceholderBuilder {
 
 	public static StyledText build(
 			CodebricksEditor editor, Composite placeholderContainer, ResetTemplatePlaceholderBrick resetBrick,
-			Color foreground, Color background) {
+			boolean boldFont, Color foreground, Color background) {
 		
 		if (resetBrick.getPlaceholder() != null) {
 			return PlaceholderBuilder.build(
 					editor, placeholderContainer, resetBrick.getPlaceholder(), resetBrick.getText(),
 					TemplatePlaceholderBuilder::getProposals, 
-					foreground, background);
+					boldFont, foreground, background, false);
 		} else {
 			return EditableTextBrickBuilder.build(
 					editor, placeholderContainer, resetBrick.getText(), resetBrick.getText(),
-					false, foreground, background);
+					boldFont, foreground, background);
 		}
 	}
 }

@@ -4,6 +4,7 @@ package org.sidiff.completion.ui.codebricks.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -180,6 +181,13 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	private EClass resetTemplatePlaceholderBrickEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum rgbEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -611,6 +619,36 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
+	public EAttribute getStyledBrick_Color() {
+		return (EAttribute)styledBrickEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getStyledBrick__SetColor__int_int_int() {
+		return styledBrickEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getStyledBrick__GetColor__RGB() {
+		return styledBrickEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getValuePlaceholderBrick() {
 		return valuePlaceholderBrickEClass;
 	}
@@ -901,6 +939,16 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 	 * @generated
 	 */
 	@Override
+	public EEnum getRGB() {
+		return rgbEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EOperation getValueDomainPolicy__AssignValue__Object_ValuePlaceholderBrick() {
 		return valueDomainPolicyEClass.getEOperations().get(2);
 	}
@@ -981,6 +1029,9 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 
 		styledBrickEClass = createEClass(STYLED_BRICK);
 		createEAttribute(styledBrickEClass, STYLED_BRICK__HIGHLIGHT);
+		createEAttribute(styledBrickEClass, STYLED_BRICK__COLOR);
+		createEOperation(styledBrickEClass, STYLED_BRICK___SET_COLOR__INT_INT_INT);
+		createEOperation(styledBrickEClass, STYLED_BRICK___GET_COLOR__RGB);
 
 		valuePlaceholderBrickEClass = createEClass(VALUE_PLACEHOLDER_BRICK);
 		createEReference(valuePlaceholderBrickEClass, VALUE_PLACEHOLDER_BRICK__TYPE);
@@ -1019,6 +1070,9 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		resetTemplatePlaceholderBrickEClass = createEClass(RESET_TEMPLATE_PLACEHOLDER_BRICK);
 		createEReference(resetTemplatePlaceholderBrickEClass, RESET_TEMPLATE_PLACEHOLDER_BRICK__PLACEHOLDER);
 		createEReference(resetTemplatePlaceholderBrickEClass, RESET_TEMPLATE_PLACEHOLDER_BRICK__ATTACHED_TO);
+
+		// Create enums
+		rgbEEnum = createEEnum(RGB);
 	}
 
 	/**
@@ -1066,7 +1120,7 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		pojoCodebrickViewEClass.getESuperTypes().add(this.getCodebrick());
 		codebrickViewEClass.getESuperTypes().add(this.getCodebrick());
 		collapsibleBrickEClass.getESuperTypes().add(this.getComposedBrick());
-		resetTemplatePlaceholderBrickEClass.getESuperTypes().add(this.getViewableBrick());
+		resetTemplatePlaceholderBrickEClass.getESuperTypes().add(this.getStyledBrick());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(codebricksEClass, Codebricks.class, "Codebricks", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1120,6 +1174,15 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 
 		initEClass(styledBrickEClass, StyledBrick.class, "StyledBrick", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStyledBrick_Highlight(), ecorePackage.getEBoolean(), "highlight", null, 0, 1, StyledBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStyledBrick_Color(), theEcorePackage.getEInt(), "color", "0", 0, 1, StyledBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		EOperation op = initEOperation(getStyledBrick__SetColor__int_int_int(), null, "setColor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEInt(), "red", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEInt(), "green", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEInt(), "blue", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getStyledBrick__GetColor__RGB(), theEcorePackage.getEInt(), "getColor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getRGB(), "rgb", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(valuePlaceholderBrickEClass, ValuePlaceholderBrick.class, "ValuePlaceholderBrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getValuePlaceholderBrick_Type(), ecorePackage.getEDataType(), null, "type", null, 0, 1, ValuePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1127,7 +1190,7 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		initEAttribute(getValuePlaceholderBrick_InstanceValue(), ecorePackage.getEJavaObject(), "instanceValue", null, 0, 1, ValuePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getValuePlaceholderBrick_LiteralValue(), ecorePackage.getEString(), "literalValue", null, 0, 1, ValuePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		EOperation op = initEOperation(getValuePlaceholderBrick__SetByLiteralValue__String(), null, "setByLiteralValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getValuePlaceholderBrick__SetByLiteralValue__String(), null, "setByLiteralValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "literalValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getValuePlaceholderBrick__SetByInstanceValue__Object(), null, "setByInstanceValue", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1185,6 +1248,12 @@ public class CodebricksPackageImpl extends EPackageImpl implements CodebricksPac
 		initEClass(resetTemplatePlaceholderBrickEClass, ResetTemplatePlaceholderBrick.class, "ResetTemplatePlaceholderBrick", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getResetTemplatePlaceholderBrick_Placeholder(), this.getTemplatePlaceholderBrick(), null, "placeholder", null, 1, 1, ResetTemplatePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getResetTemplatePlaceholderBrick_AttachedTo(), this.getViewableBrick(), null, "attachedTo", null, 1, 1, ResetTemplatePlaceholderBrick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(rgbEEnum, org.sidiff.completion.ui.codebricks.RGB.class, "RGB");
+		addEEnumLiteral(rgbEEnum, org.sidiff.completion.ui.codebricks.RGB.RED);
+		addEEnumLiteral(rgbEEnum, org.sidiff.completion.ui.codebricks.RGB.GREEN);
+		addEEnumLiteral(rgbEEnum, org.sidiff.completion.ui.codebricks.RGB.BLUE);
 
 		// Create resource
 		createResource(eNS_URI);

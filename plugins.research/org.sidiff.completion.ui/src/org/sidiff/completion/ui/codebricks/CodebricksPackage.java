@@ -4,6 +4,7 @@ package org.sidiff.completion.ui.codebricks;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -306,13 +307,22 @@ public interface CodebricksPackage extends EPackage {
 	int STYLED_BRICK__HIGHLIGHT = VIEWABLE_BRICK_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Color</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STYLED_BRICK__COLOR = VIEWABLE_BRICK_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Styled Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STYLED_BRICK_FEATURE_COUNT = VIEWABLE_BRICK_FEATURE_COUNT + 1;
+	int STYLED_BRICK_FEATURE_COUNT = VIEWABLE_BRICK_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Text</em>' operation.
@@ -324,13 +334,31 @@ public interface CodebricksPackage extends EPackage {
 	int STYLED_BRICK___GET_TEXT = VIEWABLE_BRICK___GET_TEXT;
 
 	/**
+	 * The operation id for the '<em>Set Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STYLED_BRICK___SET_COLOR__INT_INT_INT = VIEWABLE_BRICK_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STYLED_BRICK___GET_COLOR__RGB = VIEWABLE_BRICK_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Styled Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STYLED_BRICK_OPERATION_COUNT = VIEWABLE_BRICK_OPERATION_COUNT + 0;
+	int STYLED_BRICK_OPERATION_COUNT = VIEWABLE_BRICK_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl <em>Template Placeholder Brick</em>}' class.
@@ -441,6 +469,15 @@ public interface CodebricksPackage extends EPackage {
 	int PLACEHOLDER_BRICK__HIGHLIGHT = STYLED_BRICK__HIGHLIGHT;
 
 	/**
+	 * The feature id for the '<em><b>Color</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLACEHOLDER_BRICK__COLOR = STYLED_BRICK__COLOR;
+
+	/**
 	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -486,6 +523,24 @@ public interface CodebricksPackage extends EPackage {
 	int PLACEHOLDER_BRICK___GET_TEXT = STYLED_BRICK___GET_TEXT;
 
 	/**
+	 * The operation id for the '<em>Set Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLACEHOLDER_BRICK___SET_COLOR__INT_INT_INT = STYLED_BRICK___SET_COLOR__INT_INT_INT;
+
+	/**
+	 * The operation id for the '<em>Get Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLACEHOLDER_BRICK___GET_COLOR__RGB = STYLED_BRICK___GET_COLOR__RGB;
+
+	/**
 	 * The number of operations of the '<em>Placeholder Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -511,6 +566,15 @@ public interface CodebricksPackage extends EPackage {
 	 * @ordered
 	 */
 	int TEMPLATE_PLACEHOLDER_BRICK__HIGHLIGHT = PLACEHOLDER_BRICK__HIGHLIGHT;
+
+	/**
+	 * The feature id for the '<em><b>Color</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPLATE_PLACEHOLDER_BRICK__COLOR = PLACEHOLDER_BRICK__COLOR;
 
 	/**
 	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
@@ -603,6 +667,24 @@ public interface CodebricksPackage extends EPackage {
 	int TEMPLATE_PLACEHOLDER_BRICK___GET_TEXT = PLACEHOLDER_BRICK___GET_TEXT;
 
 	/**
+	 * The operation id for the '<em>Set Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPLATE_PLACEHOLDER_BRICK___SET_COLOR__INT_INT_INT = PLACEHOLDER_BRICK___SET_COLOR__INT_INT_INT;
+
+	/**
+	 * The operation id for the '<em>Get Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPLATE_PLACEHOLDER_BRICK___GET_COLOR__RGB = PLACEHOLDER_BRICK___GET_COLOR__RGB;
+
+	/**
 	 * The number of operations of the '<em>Template Placeholder Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -628,6 +710,15 @@ public interface CodebricksPackage extends EPackage {
 	 * @ordered
 	 */
 	int OBJECT_PLACEHOLDER_BRICK__HIGHLIGHT = PLACEHOLDER_BRICK__HIGHLIGHT;
+
+	/**
+	 * The feature id for the '<em><b>Color</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_PLACEHOLDER_BRICK__COLOR = PLACEHOLDER_BRICK__COLOR;
 
 	/**
 	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
@@ -702,6 +793,24 @@ public interface CodebricksPackage extends EPackage {
 	int OBJECT_PLACEHOLDER_BRICK___GET_TEXT = PLACEHOLDER_BRICK___GET_TEXT;
 
 	/**
+	 * The operation id for the '<em>Set Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_PLACEHOLDER_BRICK___SET_COLOR__INT_INT_INT = PLACEHOLDER_BRICK___SET_COLOR__INT_INT_INT;
+
+	/**
+	 * The operation id for the '<em>Get Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OBJECT_PLACEHOLDER_BRICK___GET_COLOR__RGB = PLACEHOLDER_BRICK___GET_COLOR__RGB;
+
+	/**
 	 * The number of operations of the '<em>Object Placeholder Brick</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -727,6 +836,15 @@ public interface CodebricksPackage extends EPackage {
 	 * @ordered
 	 */
 	int TEXT_BRICK__HIGHLIGHT = STYLED_BRICK__HIGHLIGHT;
+
+	/**
+	 * The feature id for the '<em><b>Color</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_BRICK__COLOR = STYLED_BRICK__COLOR;
 
 	/**
 	 * The feature id for the '<em><b>Text</b></em>' attribute.
@@ -763,6 +881,24 @@ public interface CodebricksPackage extends EPackage {
 	 * @ordered
 	 */
 	int TEXT_BRICK___GET_TEXT = STYLED_BRICK___GET_TEXT;
+
+	/**
+	 * The operation id for the '<em>Set Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_BRICK___SET_COLOR__INT_INT_INT = STYLED_BRICK___SET_COLOR__INT_INT_INT;
+
+	/**
+	 * The operation id for the '<em>Get Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_BRICK___GET_COLOR__RGB = STYLED_BRICK___GET_COLOR__RGB;
 
 	/**
 	 * The number of operations of the '<em>Text Brick</em>' class.
@@ -936,6 +1072,15 @@ public interface CodebricksPackage extends EPackage {
 	int VALUE_PLACEHOLDER_BRICK__HIGHLIGHT = PLACEHOLDER_BRICK__HIGHLIGHT;
 
 	/**
+	 * The feature id for the '<em><b>Color</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK__COLOR = PLACEHOLDER_BRICK__COLOR;
+
+	/**
 	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1015,6 +1160,24 @@ public interface CodebricksPackage extends EPackage {
 	 * @ordered
 	 */
 	int VALUE_PLACEHOLDER_BRICK___GET_TEXT = PLACEHOLDER_BRICK___GET_TEXT;
+
+	/**
+	 * The operation id for the '<em>Set Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK___SET_COLOR__INT_INT_INT = PLACEHOLDER_BRICK___SET_COLOR__INT_INT_INT;
+
+	/**
+	 * The operation id for the '<em>Get Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PLACEHOLDER_BRICK___GET_COLOR__RGB = PLACEHOLDER_BRICK___GET_COLOR__RGB;
 
 	/**
 	 * The operation id for the '<em>Set By Literal Value</em>' operation.
@@ -1418,7 +1581,25 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESET_TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK = VIEWABLE_BRICK__CODEBRICK;
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK__CODEBRICK = STYLED_BRICK__CODEBRICK;
+
+	/**
+	 * The feature id for the '<em><b>Highlight</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK__HIGHLIGHT = STYLED_BRICK__HIGHLIGHT;
+
+	/**
+	 * The feature id for the '<em><b>Color</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK__COLOR = STYLED_BRICK__COLOR;
 
 	/**
 	 * The feature id for the '<em><b>Placeholder</b></em>' reference.
@@ -1427,7 +1608,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESET_TEMPLATE_PLACEHOLDER_BRICK__PLACEHOLDER = VIEWABLE_BRICK_FEATURE_COUNT + 0;
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK__PLACEHOLDER = STYLED_BRICK_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Attached To</b></em>' reference.
@@ -1436,7 +1617,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESET_TEMPLATE_PLACEHOLDER_BRICK__ATTACHED_TO = VIEWABLE_BRICK_FEATURE_COUNT + 1;
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK__ATTACHED_TO = STYLED_BRICK_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Reset Template Placeholder Brick</em>' class.
@@ -1445,7 +1626,7 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESET_TEMPLATE_PLACEHOLDER_BRICK_FEATURE_COUNT = VIEWABLE_BRICK_FEATURE_COUNT + 2;
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK_FEATURE_COUNT = STYLED_BRICK_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Text</em>' operation.
@@ -1454,7 +1635,25 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESET_TEMPLATE_PLACEHOLDER_BRICK___GET_TEXT = VIEWABLE_BRICK___GET_TEXT;
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK___GET_TEXT = STYLED_BRICK___GET_TEXT;
+
+	/**
+	 * The operation id for the '<em>Set Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK___SET_COLOR__INT_INT_INT = STYLED_BRICK___SET_COLOR__INT_INT_INT;
+
+	/**
+	 * The operation id for the '<em>Get Color</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK___GET_COLOR__RGB = STYLED_BRICK___GET_COLOR__RGB;
 
 	/**
 	 * The number of operations of the '<em>Reset Template Placeholder Brick</em>' class.
@@ -1463,7 +1662,17 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESET_TEMPLATE_PLACEHOLDER_BRICK_OPERATION_COUNT = VIEWABLE_BRICK_OPERATION_COUNT + 0;
+	int RESET_TEMPLATE_PLACEHOLDER_BRICK_OPERATION_COUNT = STYLED_BRICK_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.completion.ui.codebricks.RGB <em>RGB</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.completion.ui.codebricks.RGB
+	 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getRGB()
+	 * @generated
+	 */
+	int RGB = 20;
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.Codebricks <em>Codebricks</em>}'.
@@ -1846,6 +2055,37 @@ public interface CodebricksPackage extends EPackage {
 	EAttribute getStyledBrick_Highlight();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.completion.ui.codebricks.StyledBrick#getColor <em>Color</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Color</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.StyledBrick#getColor()
+	 * @see #getStyledBrick()
+	 * @generated
+	 */
+	EAttribute getStyledBrick_Color();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.StyledBrick#setColor(int, int, int) <em>Set Color</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Color</em>' operation.
+	 * @see org.sidiff.completion.ui.codebricks.StyledBrick#setColor(int, int, int)
+	 * @generated
+	 */
+	EOperation getStyledBrick__SetColor__int_int_int();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.StyledBrick#getColor(org.sidiff.completion.ui.codebricks.RGB) <em>Get Color</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Color</em>' operation.
+	 * @see org.sidiff.completion.ui.codebricks.StyledBrick#getColor(org.sidiff.completion.ui.codebricks.RGB)
+	 * @generated
+	 */
+	EOperation getStyledBrick__GetColor__RGB();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick <em>Value Placeholder Brick</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2146,6 +2386,16 @@ public interface CodebricksPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getResetTemplatePlaceholderBrick_AttachedTo();
+
+	/**
+	 * Returns the meta object for enum '{@link org.sidiff.completion.ui.codebricks.RGB <em>RGB</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>RGB</em>'.
+	 * @see org.sidiff.completion.ui.codebricks.RGB
+	 * @generated
+	 */
+	EEnum getRGB();
 
 	/**
 	 * Returns the meta object for the '{@link org.sidiff.completion.ui.codebricks.ValueDomainPolicy#assignValue(java.lang.Object, org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick) <em>Assign Value</em>}' operation.
@@ -2493,6 +2743,30 @@ public interface CodebricksPackage extends EPackage {
 		EAttribute STYLED_BRICK__HIGHLIGHT = eINSTANCE.getStyledBrick_Highlight();
 
 		/**
+		 * The meta object literal for the '<em><b>Color</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STYLED_BRICK__COLOR = eINSTANCE.getStyledBrick_Color();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Color</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation STYLED_BRICK___SET_COLOR__INT_INT_INT = eINSTANCE.getStyledBrick__SetColor__int_int_int();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Color</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation STYLED_BRICK___GET_COLOR__RGB = eINSTANCE.getStyledBrick__GetColor__RGB();
+
+		/**
 		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.impl.ValuePlaceholderBrickImpl <em>Value Placeholder Brick</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2739,6 +3013,16 @@ public interface CodebricksPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RESET_TEMPLATE_PLACEHOLDER_BRICK__ATTACHED_TO = eINSTANCE.getResetTemplatePlaceholderBrick_AttachedTo();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.completion.ui.codebricks.RGB <em>RGB</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.completion.ui.codebricks.RGB
+		 * @see org.sidiff.completion.ui.codebricks.impl.CodebricksPackageImpl#getRGB()
+		 * @generated
+		 */
+		EEnum RGB = eINSTANCE.getRGB();
 
 		/**
 		 * The meta object literal for the '<em><b>Assign Value</b></em>' operation.

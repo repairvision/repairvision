@@ -8,11 +8,11 @@ import org.eclipse.swt.widgets.Composite;
 public class BrickRowBuilder {
 
 	public static Composite build(Composite parent, Color background) {
-		return build(parent, 0, 0, background);
+		return build(parent, 0, 0, background, SWT.NONE);
 	}
 	
-	public static Composite build(Composite parent, int marginLeft, int marginRight,  Color background) {
-		Composite brickRow = new Composite(parent, SWT.NONE);
+	public static Composite build(Composite parent, int marginLeft, int marginRight,  Color background, int style) {
+		Composite brickRow = new Composite(parent, style);
 		brickRow.setBackground(background);
 		
 		RowLayout layout = new RowLayout(SWT.HORIZONTAL);

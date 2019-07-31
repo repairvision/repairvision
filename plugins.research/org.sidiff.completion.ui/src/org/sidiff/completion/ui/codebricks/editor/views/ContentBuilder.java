@@ -12,6 +12,7 @@ import org.sidiff.completion.ui.codebricks.ComposedBrick;
 import org.sidiff.completion.ui.codebricks.IndentBrick;
 import org.sidiff.completion.ui.codebricks.LineBreakBrick;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
+import org.sidiff.completion.ui.codebricks.RGB;
 import org.sidiff.completion.ui.codebricks.ResetTemplatePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.StyledBrick;
 import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
@@ -76,6 +77,14 @@ public class ContentBuilder {
 				ViewableBrick viewableBrick = (ViewableBrick) templateBrick;
 				boolean highlight = (viewableBrick instanceof StyledBrick) && ((StyledBrick) viewableBrick).isHighlight();
 				
+				if (viewableBrick instanceof StyledBrick) {
+					StyledBrick styledBrick = (StyledBrick) viewableBrick;
+					foreground = new Color(editor.getShell().getDisplay(), 
+							styledBrick.getColor(RGB.RED),
+							styledBrick.getColor(RGB.GREEN),
+							styledBrick.getColor(RGB.BLUE));
+				}
+				
 				/*
 				 * Placeholder:
 				 */
@@ -83,15 +92,15 @@ public class ContentBuilder {
 				// Create template placeholder:
 				if (templateBrick instanceof TemplatePlaceholderBrick) {
 					viewControl = BrickRowBuilder.build(templateExpression, background);
-					TemplatePlaceholderBuilder.build(editor, (Composite) viewControl, (TemplatePlaceholderBrick) templateBrick, foreground, background, hidde);
+					TemplatePlaceholderBuilder.build(editor, (Composite) viewControl, (TemplatePlaceholderBrick) templateBrick, highlight, foreground, background, hidde);
 				
 				// Create value placeholder (parameter):
 				} else if (templateBrick instanceof ValuePlaceholderBrick) {
-					viewControl = ValuePlaceholderBuilder.build(editor, templateExpression, (ValuePlaceholderBrick) templateBrick, foreground, background);
+					viewControl = ValuePlaceholderBuilder.build(editor, templateExpression, (ValuePlaceholderBrick) templateBrick, highlight, foreground, background);
 					
 				// Create object placeholder (parameter):
 				} else if (templateBrick instanceof ObjectPlaceholderBrick) {
-					viewControl = ObjectPlaceholderBuilder.build(editor, templateExpression, (ObjectPlaceholderBrick) templateBrick, foreground, background);
+					viewControl = ObjectPlaceholderBuilder.build(editor, templateExpression, (ObjectPlaceholderBrick) templateBrick, highlight, foreground, background);
 				}
 				
 				/*
@@ -99,7 +108,7 @@ public class ContentBuilder {
 				 */
 				
 				else if (templateBrick instanceof ResetTemplatePlaceholderBrick) {
-					StyledText resetTemplateControl = ResetTemplatePlaceholderBuilder.build(editor, templateExpression, (ResetTemplatePlaceholderBrick) templateBrick, foreground, background);
+					StyledText resetTemplateControl = ResetTemplatePlaceholderBuilder.build(editor, templateExpression, (ResetTemplatePlaceholderBrick) templateBrick, highlight, foreground, background);
 					viewControl = resetTemplateControl;
 				}
 

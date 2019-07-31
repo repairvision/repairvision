@@ -215,6 +215,7 @@ public class CodebricksSwitch<T> extends Switch<T> {
 			case CodebricksPackage.RESET_TEMPLATE_PLACEHOLDER_BRICK: {
 				ResetTemplatePlaceholderBrick resetTemplatePlaceholderBrick = (ResetTemplatePlaceholderBrick)theEObject;
 				T result = caseResetTemplatePlaceholderBrick(resetTemplatePlaceholderBrick);
+				if (result == null) result = caseStyledBrick(resetTemplatePlaceholderBrick);
 				if (result == null) result = caseViewableBrick(resetTemplatePlaceholderBrick);
 				if (result == null) result = caseBrick(resetTemplatePlaceholderBrick);
 				if (result == null) result = defaultCase(theEObject);

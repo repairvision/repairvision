@@ -49,6 +49,8 @@ import org.sidiff.graphpattern.tools.editrules.decompose.DecomposingEditRulesUti
 
 public class CodebricksGenerator {
 	
+	private static final int[] COLOR_RULE_NAME = {127, 0, 85};
+	
 	public Codebricks createCodebrick(ModelCompletionProposalCluster cluster) {
 		Codebricks codebricks = CodebricksFactory.eINSTANCE.createCodebricks();
 		
@@ -215,6 +217,8 @@ public class CodebricksGenerator {
 					TemplatePlaceholderBrick subEditRuleBrick = CodebricksFactory.eINSTANCE.createTemplatePlaceholderBrick();
 					subEditRuleBrick.setPlaceholder(plainTemplate + TEMPLATE_PARAMETER_LIST_PREFIX + TEMPLATE_PARAMETER_LIST_POSTFIX);
 					subEditRuleBrick.setMandatory(true);
+					subEditRuleBrick.setColor(COLOR_RULE_NAME[0], COLOR_RULE_NAME[1], COLOR_RULE_NAME[2]);
+					subEditRuleBrick.setHighlight(true);
 					subEditRule.getBricks().add(subEditRuleBrick);
 					
 					// Add sub edit rule to template:
@@ -226,10 +230,14 @@ public class CodebricksGenerator {
 					// Text representing the rule name:
 					TextBrick subEditRuleBrick = CodebricksFactory.eINSTANCE.createTextBrick();
 					subEditRuleBrick.setText(plainTemplate);
+					subEditRuleBrick.setColor(COLOR_RULE_NAME[0], COLOR_RULE_NAME[1], COLOR_RULE_NAME[2]);
+					subEditRuleBrick.setHighlight(true);
 					
 					// Text install placeholder reset hook:
 					ResetTemplatePlaceholderBrick resetPlaceholderBrick = CodebricksFactory.eINSTANCE.createResetTemplatePlaceholderBrick();
 					resetPlaceholderBrick.setAttachedTo(subEditRuleBrick);
+					resetPlaceholderBrick.setColor(COLOR_RULE_NAME[0], COLOR_RULE_NAME[1], COLOR_RULE_NAME[2]);
+					resetPlaceholderBrick.setHighlight(true);
 					subEditRule.getBricks().add(resetPlaceholderBrick);
 					
 					createTemplateParameters(subEditRule, templateToRule.apply(template));
@@ -349,6 +357,7 @@ public class CodebricksGenerator {
 		
 		TextBrick parameterName = CodebricksFactory.eINSTANCE.createTextBrick();
 		parameterName.setText(name);
+		parameterName.setHighlight(true);
 		parameterAssignment.getBricks().add(parameterName);
 		
 		TextBrick parameterNameValueSeparator = CodebricksFactory.eINSTANCE.createTextBrick();
@@ -371,6 +380,7 @@ public class CodebricksGenerator {
 		
 		TextBrick parameterName = CodebricksFactory.eINSTANCE.createTextBrick();
 		parameterName.setText(name);
+		parameterName.setHighlight(true);
 		parameterAssignment.getBricks().add(parameterName);
 		
 		TextBrick parameterNameValueSeparator = CodebricksFactory.eINSTANCE.createTextBrick();

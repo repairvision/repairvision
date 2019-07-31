@@ -22,13 +22,13 @@ public class ValuePlaceholderBuilder {
 
 	public static StyledText build(
 			CodebricksEditor editor, Composite templateExpression, ValuePlaceholderBrick placeholderBrick, 
-			Color foreground, Color background) {
+			boolean boldFont, Color foreground, Color background) {
 		
 		// Create view:
 		StyledText placeholderControl = PlaceholderBuilder.build(
 				editor, templateExpression, placeholderBrick,
 				ValuePlaceholderBuilder::getProposals,
-				foreground, background);
+				boldFont, foreground, background, true);
 		
 		// Listen to text input:
 		String placeholderValue = placeholderControl.getText();
@@ -103,13 +103,16 @@ public class ValuePlaceholderBuilder {
 			
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
-				if (modelListener.getTarget() != null) {
-					modelListener.getTarget().eAdapters().remove(modelListener);
-				}
-				
-				// Unset the old selection!
-				placeholderBrick.setInstanceValue(null);
-				placeholderBrick.setLiteralValue(null);
+				CodebricksEditor.executeCommand(placeholderBrick, () -> {
+					
+					if (modelListener.getTarget() != null) {
+						modelListener.getTarget().eAdapters().remove(modelListener);
+					}
+					
+					// Unset the old selection!
+					placeholderBrick.setInstanceValue(null);
+					placeholderBrick.setLiteralValue(null);
+				});
 			}
 		});
 		

@@ -2,12 +2,7 @@
  */
 package org.sidiff.completion.ui.codebricks.impl;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -32,7 +27,7 @@ import org.sidiff.completion.ui.codebricks.ViewableBrick;
  *
  * @generated
  */
-public class ResetTemplatePlaceholderBrickImpl extends BrickImpl implements ResetTemplatePlaceholderBrick {
+public class ResetTemplatePlaceholderBrickImpl extends StyledBrickImpl implements ResetTemplatePlaceholderBrick {
 	/**
 	 * The cached value of the '{@link #getPlaceholder() <em>Placeholder</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -230,20 +225,6 @@ public class ResetTemplatePlaceholderBrickImpl extends BrickImpl implements Rese
 				return attachedTo != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case CodebricksPackage.RESET_TEMPLATE_PLACEHOLDER_BRICK___GET_TEXT:
-				return getText();
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 } //ResetTemplatePlaceholderBrickImpl

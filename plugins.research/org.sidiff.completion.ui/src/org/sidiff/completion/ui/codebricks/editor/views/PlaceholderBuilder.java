@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
@@ -21,21 +24,37 @@ public class PlaceholderBuilder {
 	public static <P extends PlaceholderBrick> StyledText build(
 			CodebricksEditor editor, Composite parentContainer, P placeholderBrick, 
 			Function<P, List<ICompletionProposal>> proposals, 
-			Color foreground, Color background) {
+			boolean boldFont, Color foreground, Color background, boolean underline) {
 		
 		return build(
 				editor, parentContainer, placeholderBrick, placeholderBrick.getText(),
 				proposals, 
-				foreground, background);
+				boldFont, foreground, background, underline);
 	}
 	
 	public static <P extends PlaceholderBrick> StyledText build(
 			CodebricksEditor editor, Composite parentContainer, P placeholderBrick, String text, 
 			Function<P, List<ICompletionProposal>> proposals, 
-			Color foreground, Color background) {
+			boolean boldFont, Color foreground, Color background, boolean underline) {
 		
 		StyledText placeholderControl = EditableTextBrickBuilder.build(editor, parentContainer, 
-				text, text, placeholderBrick.isHighlight(), foreground, background);
+				text, text, boldFont, foreground, background);
+		
+		// Underline the placeholder text:
+		if (underline) {
+			placeholderControl.addModifyListener(new ModifyListener() {
+				
+				@Override
+				public void modifyText(ModifyEvent e) {
+					StyleRange styleUnderline = new StyleRange();
+					styleUnderline.start = 0;
+					styleUnderline.length = placeholderControl.getText().length();
+					styleUnderline.underline = true;
+					placeholderControl.setStyleRange(styleUnderline);
+				}
+			});
+		}
+		
 		installProposalList(editor, placeholderControl, placeholderBrick, proposals);
 		
 		return placeholderControl;
