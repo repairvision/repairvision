@@ -7,7 +7,6 @@ import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatter
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.sidiff.csp.solver.ICSPSolver;
 import org.sidiff.csp.solver.IConstraintSatisfactionProblem;
@@ -23,11 +22,12 @@ import org.sidiff.graphpattern.tools.csp.AbstractGraphPatternMatchings;
 import org.sidiff.graphpattern.tools.editrules.csp.MinGraphEditDistanceMatch;
 import org.sidiff.graphpattern.tools.editrules.csp.MinGraphEditDistanceMatchings;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
+import org.sidiff.graphpattern.tools.editrules.generator.util.EditRuleCollector;
 import org.sidiff.graphpattern.util.GraphPatternUtil;
 
 public class TransformationEditRuleGenerator {
 
-	public static void generateStructuralTransformationRules(Pattern pattern, Map<GraphPattern, List<Pattern>> editRules) {
+	public static void generateStructuralTransformationRules(Pattern pattern, EditRuleCollector editRules) {
 		List<GraphPattern> allConstraints = pattern.getAllGraphPatterns();
 		
 		// Generate edit rules:
@@ -106,7 +106,7 @@ public class TransformationEditRuleGenerator {
 			}
 			
 			// Add new edit rule for graph pattern:
-			editRules.merge(fromConstraint, transformationRules, (v1, v2) -> {v1.addAll(v2); return v1;});
+			editRules.add(fromConstraint, transformationRules);
 		}
 	}
 }

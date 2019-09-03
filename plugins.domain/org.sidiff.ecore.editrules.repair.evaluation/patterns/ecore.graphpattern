@@ -4159,6 +4159,86 @@
       </subpatterns>
     </subpatterns>
   </patterns>
+  <patterns xmi:id="_BgF0EM1_EemXl4QrGwuV7g" name="RELOCATION_EDGES">
+    <graphs xmi:id="_BgJeiM1_EemXl4QrGwuV7g" name="[ : EPackage] - eSubpackages -> [ : EPackage]">
+      <nodes xmi:id="_BgJeic1_EemXl4QrGwuV7g">
+        <outgoings xmi:id="_BgJeis1_EemXl4QrGwuV7g" target="_BgJei81_EemXl4QrGwuV7g">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eSubpackages"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+      <nodes xmi:id="_BgJei81_EemXl4QrGwuV7g" incomings="_BgJeis1_EemXl4QrGwuV7g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+    </graphs>
+    <graphs xmi:id="_BgJehM1_EemXl4QrGwuV7g" name="[ : EPackage] - eClassifiers -> [ : EClassifier]">
+      <nodes xmi:id="_BgJehc1_EemXl4QrGwuV7g">
+        <outgoings xmi:id="_BgJehs1_EemXl4QrGwuV7g" target="_BgJeh81_EemXl4QrGwuV7g">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+      <nodes xmi:id="_BgJeh81_EemXl4QrGwuV7g" incomings="_BgJehs1_EemXl4QrGwuV7g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+    </graphs>
+    <graphs xmi:id="_BgI3bM1_EemXl4QrGwuV7g" name="[ : EClass] - eSuperTypes -> [ : EClass]">
+      <nodes xmi:id="_BgI3bc1_EemXl4QrGwuV7g">
+        <outgoings xmi:id="_BgI3bs1_EemXl4QrGwuV7g" target="_BgI3b81_EemXl4QrGwuV7g">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_BgI3b81_EemXl4QrGwuV7g" incomings="_BgI3bs1_EemXl4QrGwuV7g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </graphs>
+    <graphs xmi:id="_BgI3dM1_EemXl4QrGwuV7g" name="[ : EClass] - eStructuralFeatures -> [ : EStructuralFeature]">
+      <nodes xmi:id="_BgI3dc1_EemXl4QrGwuV7g">
+        <outgoings xmi:id="_BgI3ds1_EemXl4QrGwuV7g" target="_BgI3d81_EemXl4QrGwuV7g">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_BgI3d81_EemXl4QrGwuV7g" incomings="_BgI3ds1_EemXl4QrGwuV7g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+      </nodes>
+    </graphs>
+    <graphs xmi:id="_BgJelM1_EemXl4QrGwuV7g" name="[ : EReference] - eType -> [ : EClass]">
+      <nodes xmi:id="_BgJelc1_EemXl4QrGwuV7g">
+        <outgoings xmi:id="_BgJels1_EemXl4QrGwuV7g" target="_BgJel81_EemXl4QrGwuV7g">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </nodes>
+      <nodes xmi:id="_BgJel81_EemXl4QrGwuV7g" incomings="_BgJels1_EemXl4QrGwuV7g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+    </graphs>
+    <graphs xmi:id="_BgI3cM1_EemXl4QrGwuV7g" name="[ : EClass] - eOperations -> [ : EOperation]">
+      <nodes xmi:id="_BgI3cc1_EemXl4QrGwuV7g">
+        <outgoings xmi:id="_BgI3cs1_EemXl4QrGwuV7g" target="_BgI3c81_EemXl4QrGwuV7g">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eOperations"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_BgI3c81_EemXl4QrGwuV7g" incomings="_BgI3cs1_EemXl4QrGwuV7g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+      </nodes>
+    </graphs>
+    <graphs xmi:id="_BgI3gM1_EemXl4QrGwuV7g" name="[ : EEnum] - eLiterals -> [ : EEnumLiteral]">
+      <nodes xmi:id="_BgI3gc1_EemXl4QrGwuV7g">
+        <outgoings xmi:id="_BgI3gs1_EemXl4QrGwuV7g" target="_BgI3g81_EemXl4QrGwuV7g">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum/eLiterals"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
+      </nodes>
+      <nodes xmi:id="_BgI3g81_EemXl4QrGwuV7g" incomings="_BgI3gs1_EemXl4QrGwuV7g">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral"/>
+      </nodes>
+    </graphs>
+  </patterns>
   <profiles href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#@profile0"/>
+  <profiles href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#@profile0"/>
   <domains href="http://www.eclipse.org/emf/2002/Ecore#/"/>
 </graphpattern:Bundle>

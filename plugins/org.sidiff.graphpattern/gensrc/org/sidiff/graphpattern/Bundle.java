@@ -72,4 +72,12 @@ public interface Bundle extends PatternElement {
 	 */
 	EList<EPackage> getDomains();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Pattern getPattern(String name);
+
 } // Bundle

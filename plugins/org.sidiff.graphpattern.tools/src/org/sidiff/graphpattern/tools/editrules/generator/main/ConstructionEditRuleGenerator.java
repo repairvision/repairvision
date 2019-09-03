@@ -9,7 +9,6 @@ import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.rule;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.sidiff.consistency.common.emf.ModelingUtil;
@@ -23,6 +22,7 @@ import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil;
 import org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil;
+import org.sidiff.graphpattern.tools.editrules.generator.util.EditRuleCollector;
 import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil;
 
 // TODO: Generalize this by TransformationEditRuleGenerator
@@ -30,7 +30,7 @@ public class ConstructionEditRuleGenerator {
 
 	private static EClass pseudoResourceClass = GraphpatternPackage.eINSTANCE.getResource();
 	
-	public static void generateCreationRules(Pattern pattern, Map<GraphPattern, List<Pattern>> editRules) {
+	public static void generateCreationRules(Pattern pattern, EditRuleCollector editRules) {
 		
 		// Generate edit rules:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
@@ -73,7 +73,7 @@ public class ConstructionEditRuleGenerator {
 			GraphPatternGeneratorUtil.generateINParameters(editOperation);
 			
 			// Add new edit rule for graph pattern:
-			editRules.merge(graphPattern, creationRules, (v1, v2) -> {v1.addAll(v2); return v1;});
+			editRules.add(graphPattern, creationRules);
 		}
 		
 		// Generate sub-patterns:
@@ -82,7 +82,7 @@ public class ConstructionEditRuleGenerator {
 		}
 	}
 
-	public static void generateDeletionRules(Pattern pattern, Map<GraphPattern, List<Pattern>> editRules) {
+	public static void generateDeletionRules(Pattern pattern, EditRuleCollector editRules) {
 		
 		// Generate edit rules:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
@@ -122,7 +122,7 @@ public class ConstructionEditRuleGenerator {
 			GraphPatternGeneratorUtil.generateINParameters(editOperation);
 			
 			// Add new edit rule for graph pattern:
-			editRules.merge(graphPattern, deletionRules, (v1, v2) -> {v1.addAll(v2); return v1;});
+			editRules.add(graphPattern, deletionRules);
 		}
 		
 		// Generate sub-patterns:
