@@ -70,10 +70,42 @@ public class GraphServices {
 		
 		for (NodePattern nodePattern : graphPattern.getNodes()) {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
+
 				// Check for >consistent< opposite:
 				if (ConsistencyChecks.checkOpposite(edgePattern)) {
 					if (!opposite.contains(edgePattern)) {
-						edges.add(edgePattern);
+						if (!edgePattern.getType().isContainment()) {
+							edges.add(edgePattern);
+						}
+
+						// Filter the opposite -> as semantic candidate:
+						opposite.add(edgePattern.getOpposite());
+					}
+				}
+			}
+		}
+		
+		return edges;
+	}
+	
+	/**
+	 * @param graphPattern
+	 *            A graph pattern.
+	 * @return All edges of the graph pattern that will be shown as navigable edges.
+	 */
+	public List<EdgePattern> getUndirectedEdgeContainmentCandidates(GraphPattern graphPattern) {
+		List<EdgePattern> edges = new ArrayList<>();
+		Set<EdgePattern> opposite = new HashSet<>();
+		
+		for (NodePattern nodePattern : graphPattern.getNodes()) {
+			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
+
+				// Check for >consistent< opposite:
+				if (ConsistencyChecks.checkOpposite(edgePattern)) {
+					if (!opposite.contains(edgePattern)) {
+						if (edgePattern.getType().isContainment()) {
+							edges.add(edgePattern);
+						}
 
 						// Filter the opposite -> as semantic candidate:
 						opposite.add(edgePattern.getOpposite());
@@ -95,9 +127,35 @@ public class GraphServices {
 		
 		for (NodePattern nodePattern : graphPattern.getNodes()) {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
-				// Check if no (consistent) opposite is available:
-				if (!ConsistencyChecks.checkOpposite(edgePattern)) {
-					edges.add(edgePattern);
+				if (!edgePattern.getType().isContainment()) {
+					
+					// Check if no (consistent) opposite is available:
+					if (!ConsistencyChecks.checkOpposite(edgePattern)) {
+						edges.add(edgePattern);
+					}
+				}
+			}
+		}
+		
+		return edges;
+	}
+	
+	/**
+	 * @param graphPattern
+	 *            A graph pattern.
+	 * @return All edges of the graph pattern that will be shown as none navigable edges.
+	 */
+	public List<EdgePattern> getDirectedEdgeContainmentCandidates(GraphPattern graphPattern) {
+		List<EdgePattern> edges = new ArrayList<>();
+		
+		for (NodePattern nodePattern : graphPattern.getNodes()) {
+			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
+				if (edgePattern.getType().isContainment()) {
+					
+					// Check if no (consistent) opposite is available:
+					if (!ConsistencyChecks.checkOpposite(edgePattern)) {
+						edges.add(edgePattern);
+					}
 				}
 			}
 		}
