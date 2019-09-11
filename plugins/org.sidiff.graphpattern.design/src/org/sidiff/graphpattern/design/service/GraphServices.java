@@ -67,48 +67,46 @@ public class GraphServices {
 	public List<EdgePattern> getUndirectedEdgeCandidates(GraphPattern graphPattern) {
 		List<EdgePattern> edges = new ArrayList<>();
 		Set<EdgePattern> opposite = new HashSet<>();
-		
+
 		for (NodePattern nodePattern : graphPattern.getNodes()) {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
+				if (edgePattern.getOpposite() != null) {
+					if (!edgePattern.getType().isContainment() && !edgePattern.getOpposite().getType().isContainment()) {
 
-				// Check for >consistent< opposite:
-				if (ConsistencyChecks.checkOpposite(edgePattern)) {
-					if (!opposite.contains(edgePattern)) {
-						if (!edgePattern.getType().isContainment()) {
-							edges.add(edgePattern);
+						// Check for >consistent< opposite:
+						if (ConsistencyChecks.checkOpposite(edgePattern)) {
+							if (!opposite.contains(edgePattern)) {
+								edges.add(edgePattern);
+
+								// Filter the opposite -> as semantic candidate:
+								opposite.add(edgePattern.getOpposite());
+							}
 						}
-
-						// Filter the opposite -> as semantic candidate:
-						opposite.add(edgePattern.getOpposite());
 					}
 				}
 			}
 		}
-		
+
 		return edges;
 	}
 	
 	/**
 	 * @param graphPattern
 	 *            A graph pattern.
-	 * @return All edges of the graph pattern that will be shown as navigable edges.
+	 * @return All edges of the graph pattern that will be shown as navigable containment edges.
 	 */
 	public List<EdgePattern> getUndirectedEdgeContainmentCandidates(GraphPattern graphPattern) {
 		List<EdgePattern> edges = new ArrayList<>();
-		Set<EdgePattern> opposite = new HashSet<>();
 		
 		for (NodePattern nodePattern : graphPattern.getNodes()) {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
-
-				// Check for >consistent< opposite:
-				if (ConsistencyChecks.checkOpposite(edgePattern)) {
-					if (!opposite.contains(edgePattern)) {
-						if (edgePattern.getType().isContainment()) {
+				if (edgePattern.getOpposite() != null) {
+					if (edgePattern.getType().isContainment()) {
+						
+						// Check for >consistent< opposite:
+						if (ConsistencyChecks.checkOpposite(edgePattern)) {
 							edges.add(edgePattern);
 						}
-
-						// Filter the opposite -> as semantic candidate:
-						opposite.add(edgePattern.getOpposite());
 					}
 				}
 			}
