@@ -9,8 +9,8 @@ import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
 
 public class EditNodePatternVariable extends NodePatternVariable {
 
-	public EditNodePatternVariable(NodePattern subject, IDomain<NodePattern> domain, boolean removable) {
-		super(subject, domain, removable);
+	public EditNodePatternVariable(NodePattern subject, IDomain<NodePattern> domain, boolean removable, boolean induced) {
+		super(subject, domain, removable, induced);
 	}
 	
 	@Override

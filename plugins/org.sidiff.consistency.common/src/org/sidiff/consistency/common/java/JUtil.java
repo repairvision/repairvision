@@ -1,5 +1,6 @@
 package org.sidiff.consistency.common.java;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class JUtil {
 	
@@ -83,5 +85,12 @@ public class JUtil {
 			}
 		}
 		return null;
+	}
+	
+	
+	public static <T> Iterable<T> merge(Collection<T> c1, Collection<T> c2) {
+		Stream<T> resultingStream = Stream.concat(c1.stream(), c2.stream());
+		Iterable<T> iterable = () -> resultingStream.iterator();
+		return iterable;
 	}
 }

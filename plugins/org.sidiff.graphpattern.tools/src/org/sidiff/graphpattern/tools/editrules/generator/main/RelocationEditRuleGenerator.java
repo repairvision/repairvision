@@ -2,6 +2,10 @@ package org.sidiff.graphpattern.tools.editrules.generator.main;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.require;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
+import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.completeConditions;
+import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.completeContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +19,12 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.common.emf.access.EMFMetaAccess;
+import org.sidiff.csp.solver.ICSPSolver;
+import org.sidiff.csp.solver.IConstraintSatisfactionProblem;
+import org.sidiff.csp.solver.impl.CSPSolver;
+import org.sidiff.csp.solver.impl.ConstraintSatisfactionProblem;
+import org.sidiff.csp.solver.impl.Variable;
+import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
@@ -22,6 +32,12 @@ import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.edit.util.LabelServices;
+import org.sidiff.graphpattern.tools.csp.GraphPatternMatch;
+import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
+import org.sidiff.graphpattern.tools.csp.NodePatternDomain;
+import org.sidiff.graphpattern.tools.csp.NodePatternDomain.EdgeMatching;
+import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
+import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
 import org.sidiff.graphpattern.tools.editrules.generator.util.EditRuleCollector;
 import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil;
 
@@ -98,11 +114,109 @@ public class RelocationEditRuleGenerator {
 			List<NodePattern> contentNodes,
 			EditRuleCollector editOperations) {
 		
-		// TODO: Setup matching problem: 
-		// - graph pattern with itself
-		// - full matching of content -> partial pre-match
-		// - partial matching of context
-		System.out.println(graphPattern.getName());
+		// Setup matching problem (graph pattern with itself): 
+		int size = contextNodes.size() + contentNodes.size();
+		
+		IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(size);
+		problem.setMinimumSolutionSize(contentNodes.size());
+		problem.setMaximumSolutionSize(size);
+		problem.setSearchMaximumSolutions(true);
+		problem.setSearchInjectiveSolutions(true);
+		
+		// TOTAL_BIJECTIVE without relocatable edges!
+		
+		// Partial matching of context:
+		for (NodePattern contextNode : contextNodes) {
+			NodePatternDomain domain = new NodePatternDomain(
+					contextNode, contextNodes, 
+					EdgeMatching.TOTAL_BIJECTIVE, EdgeMatching.TOTAL_BIJECTIVE, 
+					(edge) -> relocatableEdges.contains(edge));
+			Variable<NodePattern, NodePattern> variable = new NodePatternVariable(
+					contextNode, domain, true, false);
+			problem.addVariable(variable);
+		}
+		
+		// Full matching of content:
+		for (NodePattern contentNode : contentNodes) {
+			NodePatternDomain domain = new NodePatternDomain(
+					contentNode, contentNodes, 
+					EdgeMatching.TOTAL_BIJECTIVE, EdgeMatching.TOTAL_BIJECTIVE,
+					(edge) -> relocatableEdges.contains(edge));	
+			Variable<NodePattern, NodePattern> variable = new NodePatternVariable(
+					contentNode, domain, false, false);
+			problem.addVariable(variable);
+		}
+		
+		GraphPatternMatchings matchings = new GraphPatternMatchings(graphPattern, graphPattern);
+		ICSPSolver<NodePattern, NodePattern> solver = new CSPSolver<>(problem, matchings);
+		solver.run();
+		
+		// Generate edit rules:
+		List<GraphPatternEditRuleGenerator> relocationEditOperations = new ArrayList<>();
+
+		for (GraphPatternMatch match : matchings.getMatches()) {
+			GraphPatternEditRuleGenerator editRuleGenerator = new GraphPatternEditRuleGenerator(
+					matchings.getSubjectGraph(), 
+					matchings.getValueGraph(),
+					match.getMatch());
+			editRuleGenerator.generate(
+					matchings.getSubjectGraph().getNodes(), 
+					matchings.getValueGraph().getNodes());
+
+			Pattern editOperation = editRuleGenerator.getEditOperation();
+			completeContext(editOperation);
+			completeConditions(editOperation);
+
+			if (checkRelocationEditRule(editOperation)) {
+				relocationEditOperations.add(editRuleGenerator);
+			}
+		}
+		
+		// Add new edit rules:
+		String name = "Relocation: " + graphPattern.getName();
+		int counter = 0;
+		
+		for (GraphPatternEditRuleGenerator generated : relocationEditOperations) {
+			
+			if (relocationEditOperations.size() > 1) {
+				generated.setName(name + " (" + ++counter + ")");
+			} else {
+				generated.setName(name);
+			}
+			
+			editOperations.add(graphPattern, generated.getEditOperation());
+		}
+	}
+
+	private boolean checkRelocationEditRule(Pattern editOperation) {
+		
+		// Contains at least two relocatable edges?
+		int relocatableEdgesCount = 0;
+		
+		// Contains only changes on relocatable edges?
+		for (GraphPattern graph : editOperation.getGraphs()) {
+			for (NodePattern node : graph.getNodes()) {
+				if (node.getStereotypes().contains(delete) || node.getStereotypes().contains(create)) {
+					return false;
+				}
+				for (EdgePattern edge : node.getOutgoings()) {
+					if (edge.getStereotypes().contains(delete) || edge.getStereotypes().contains(create)) {
+						if (isRelocatableEdge(edge)) {
+							++relocatableEdgesCount;
+						} else {
+							return false;
+						}
+					}
+				}
+				for (AttributePattern attribute : node.getAttributes()) {
+					if (attribute.getStereotypes().contains(delete) || attribute.getStereotypes().contains(create)) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return relocatableEdgesCount >= 2;
 	}
 	
 	public Pattern getRelocationEdges() {
@@ -123,7 +237,7 @@ public class RelocationEditRuleGenerator {
 		
 		for (NodePattern node : nodes) {
 			for (EdgePattern edge : node.getOutgoings()) {
-				if (match(edge)) {
+				if (isRelocatableEdge(edge)) {
 					matches.add(edge);
 				}
 			}
@@ -132,14 +246,38 @@ public class RelocationEditRuleGenerator {
 		return matches;
 	}
 	
-	public boolean match(EdgePattern toBeMatched) {
-		List<EdgePattern> potentialMatches = getRelocationEdgesIndex().get(toBeMatched.getType());
+	public boolean isRelocatableEdge(EdgePattern toBeMatched) {
+		
+		if (toBeMatched != null) {
+			
+			// Edge:
+			if (isRelocatableReference(
+					toBeMatched.getSource().getType(),
+					toBeMatched.getType(),
+					toBeMatched.getTarget().getType())) {
+				return true;
+			}
+			
+			// Opposite:
+			if (isRelocatableReference(
+					toBeMatched.getTarget().getType(),
+					toBeMatched.getType().getEOpposite(),
+					toBeMatched.getSource().getType())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean isRelocatableReference(EClass source, EReference reference, EClass target) {
+		List<EdgePattern> potentialMatches = getRelocationEdgesIndex().get(reference);
 		
 		if (potentialMatches != null) {
 			for (EdgePattern potentialMatch : potentialMatches) {
-				boolean sourceMatch = potentialMatch.getSource().getType() == toBeMatched.getSource().getType();
-				boolean targetMatch = potentialMatch.getTarget().getType() == toBeMatched.getTarget().getType();
-					
+				boolean sourceMatch = EMFMetaAccess.isAssignableTo(source, potentialMatch.getSource().getType());
+				boolean targetMatch = EMFMetaAccess.isAssignableTo(target, potentialMatch.getTarget().getType());
+				
 				if (sourceMatch && targetMatch) {
 					return true;
 				}

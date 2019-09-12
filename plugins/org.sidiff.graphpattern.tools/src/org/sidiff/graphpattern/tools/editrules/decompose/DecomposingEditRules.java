@@ -31,6 +31,7 @@ import org.sidiff.graphpattern.SubGraph;
 import org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatch;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
+import org.sidiff.graphpattern.tools.csp.NodePatternDomain.EdgeMatching;
 import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
 import org.sidiff.graphpattern.tools.editrules.csp.EditNodePatternDomain;
 import org.sidiff.graphpattern.tools.editrules.decompose.dependencies.Dependency;
@@ -84,14 +85,16 @@ public class DecomposingEditRules {
 			problem.setSearchInjectiveSolutions(true);
 			
 			for (NodePattern basicEditRuleNode : basicEditRuleGraph.getNodes()) {
-				EditNodePatternDomain domain = new EditNodePatternDomain(basicEditRuleNode, complexEditRuleGraph.getNodes(), true, false);
+				EditNodePatternDomain domain = new EditNodePatternDomain(
+						basicEditRuleNode, complexEditRuleGraph.getNodes(), 
+						EdgeMatching.TOTAL_INJECTIVE, EdgeMatching.TOTAL_INJECTIVE);
 				
 				// NOTE: Optimization:
 				if (domain.isEmpty()) {
 					return;
 				}
 				
-				Variable<NodePattern, NodePattern> variable = new NodePatternVariable(basicEditRuleNode, domain, false);
+				Variable<NodePattern, NodePattern> variable = new NodePatternVariable(basicEditRuleNode, domain, false, true);
 				problem.addVariable(variable);
 			}
 			

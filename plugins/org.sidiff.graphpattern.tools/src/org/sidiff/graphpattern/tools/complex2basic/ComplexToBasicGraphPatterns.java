@@ -27,6 +27,7 @@ import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain;
+import org.sidiff.graphpattern.tools.csp.NodePatternDomain.EdgeMatching;
 import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
 import org.sidiff.graphpattern.tools.editrules.decompose.DecomposingEditRulesUtil;
 import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil;
@@ -137,14 +138,16 @@ public class ComplexToBasicGraphPatterns {
 			problem.setSearchInjectiveSolutions(true);
 			
 			for (NodePattern basicGraphPatternNode : basicGraphPattern.getNodes()) {
-				NodePatternDomain domain = new NodePatternDomain(basicGraphPatternNode, otherBasicGraphPatter.getNodes(), true, true);
+				NodePatternDomain domain = new NodePatternDomain(
+						basicGraphPatternNode, otherBasicGraphPatter.getNodes(),
+						EdgeMatching.TOTAL_BIJECTIVE, EdgeMatching.TOTAL_BIJECTIVE);
 				
 				// NOTE: Optimization:
 				if (domain.isEmpty()) {
 					return false;
 				}
 				
-				Variable<NodePattern, NodePattern> variable = new NodePatternVariable(basicGraphPatternNode, domain, false);
+				Variable<NodePattern, NodePattern> variable = new NodePatternVariable(basicGraphPatternNode, domain, false, true);
 				problem.addVariable(variable);
 			}
 			

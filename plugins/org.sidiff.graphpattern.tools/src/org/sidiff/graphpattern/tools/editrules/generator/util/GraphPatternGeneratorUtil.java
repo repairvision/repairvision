@@ -36,20 +36,11 @@ public class GraphPatternGeneratorUtil {
 		return node.getOutgoings().stream().map(EdgePattern::getType).anyMatch(EReference::isContainment);
 	}
 	
-	public static boolean isCondition(EdgePattern edge) {
-		EReference type = edge.getType();
-		
-		boolean isContainmentMove = type.isContainment() && edge.getTarget().getIncomings().stream().anyMatch(e -> (e != edge) && (e.getType() == type));
-		boolean isContainerMove = type.isContainer() && edge.getSource().getOutgoings().stream().anyMatch(e -> (e != edge) && (e.getType() == type));
-		
-		boolean edgeBetweenContextNodes = edge.getSource().getStereotypes().contains(preserve) && edge.getTarget().getStereotypes().contains(preserve);
-		
-		boolean unmodifiable = !type.isContainer() && (!type.isChangeable() || type.isDerived() || type.isTransient());
-		
-		return unmodifiable || (edgeBetweenContextNodes && (!isContainmentMove || !isContainerMove));
+	public static boolean isUnmodifiable(EdgePattern edge) {
+		return !edge.getType().isContainer() && (!edge.getType().isChangeable() || edge.getType().isDerived() || edge.getType().isTransient());
 	}
 	
-	public static boolean isCondition(AttributePattern attribute) {
+	public static boolean isUnmodifiable(AttributePattern attribute) {
 		return !attribute.getType().isChangeable() || attribute.getType().isDerived() || attribute.getType().isTransient();
 	}
 
@@ -67,6 +58,9 @@ public class GraphPatternGeneratorUtil {
 		return null;
 	}
 	
+	/**
+	 * Search container nodes and structural context and mark them as 'preserve'.
+	 */
 	public static void completeContext(Pattern editOperation) {
 		for (GraphPattern graphPattern : editOperation.getAllGraphPatterns()) {
 			for (NodePattern node : graphPattern.getNodes()) {
@@ -90,6 +84,9 @@ public class GraphPatternGeneratorUtil {
 		}
 	}
 	
+	/**
+	 * Search for unmodifiable structural features and mark them as 'preserve'.
+	 */
 	public static void completeConditions(Pattern editOperation) {
 		for (GraphPattern graphPattern : editOperation.getAllGraphPatterns()) {
 			for (NodePattern node : graphPattern.getNodes()) {
@@ -97,7 +94,7 @@ public class GraphPatternGeneratorUtil {
 				// edges:
 				for (EdgePattern edge : node.getOutgoings()) {
 					if (!edge.getStereotypes().contains(not) && !edge.getStereotypes().contains(preserve)) {
-						if (isCondition(edge)) {
+						if (isUnmodifiable(edge)) {
 							edge.getStereotypes().clear();
 							edge.getStereotypes().add(preserve);
 							
@@ -117,7 +114,7 @@ public class GraphPatternGeneratorUtil {
 				// attributes:
 				for (AttributePattern attribute : node.getAttributes()) {
 					if (!attribute.getStereotypes().contains(not) && !attribute.getStereotypes().contains(preserve)) {
-						if (isCondition(attribute)) {
+						if (isUnmodifiable(attribute)) {
 							attribute.getStereotypes().clear();
 							attribute.getStereotypes().add(preserve);
 							

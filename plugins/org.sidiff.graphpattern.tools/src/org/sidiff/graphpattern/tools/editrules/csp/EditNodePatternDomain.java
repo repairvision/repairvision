@@ -1,15 +1,25 @@
 package org.sidiff.graphpattern.tools.editrules.csp;
 
 import java.util.List;
+import java.util.function.Function;
 
+import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain;
 
 public class EditNodePatternDomain extends NodePatternDomain {
 
-	public EditNodePatternDomain(NodePattern subject, List<NodePattern> candidates, boolean maximumSolution, boolean exactSolution) {
-		super(subject, candidates, maximumSolution, exactSolution);
+	public EditNodePatternDomain(
+			NodePattern subject, List<NodePattern> candidates,
+			EdgeMatching incomingMatching, EdgeMatching outgoingMatching, Function<EdgePattern, Boolean> edgeFilter) {
+		super(subject, candidates, incomingMatching, outgoingMatching, edgeFilter);
+	}
+	
+	public EditNodePatternDomain(
+			NodePattern subject, List<NodePattern> candidates,
+			EdgeMatching incomingMatching, EdgeMatching outgoingMatching) {
+		this(subject, candidates, incomingMatching, outgoingMatching, null);
 	}
 	
 	@Override

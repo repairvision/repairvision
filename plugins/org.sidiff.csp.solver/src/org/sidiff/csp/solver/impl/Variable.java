@@ -18,11 +18,21 @@ public class Variable<R, D> implements IVariable<R, D> {
 	
 	protected D value;
 	
+	/**
+	 * @param subject The subject that is represented by this variable.
+	 * @param domain  All values that could be assigned to this variable.
+	 */
 	public Variable(R subject, IDomain<D> domain) {
 		this.subject = subject;
 		this.domain = domain;
 	}
 	
+	/**
+	 * @param subject   The subject that is represented by this variable.
+	 * @param domain    All values that could be assigned to this variable.
+	 * @param removable <code>true</code> if this variable can be removed from the
+	 *                  CSP to find a (partial) solution.
+	 */
 	public Variable(R subject, IDomain<D> domain, boolean removable) {
 		super();
 		this.subject = subject;
