@@ -15,7 +15,7 @@ import org.sidiff.graphpattern.util.GraphpatternResourceImpl;
 public class HenshinGraphPatternProfile implements IGraphPatternProfile {
 	
 	protected static enum STEREOTYPE {
-		rule, create, delete, preserve, forbid, require
+		rule, create, delete, preserve, forbid, require, pre, post
 	};
 	
 	protected static final String PULGIN = "org.sidiff.graphpattern.profile.henshin";

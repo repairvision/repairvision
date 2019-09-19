@@ -67,22 +67,77 @@ public class GEDEditRuleGenerator extends BasicEditRuleGenerator {
 	}
 
 	@Override
-	protected void generateForbid(AttributePattern toAttribute) {
-		++forbidCount;
-	}
-	
-	@Override
-	protected void generateForbid(NodePattern toNode) {
+	protected void generateForbidPrecondition(NodePattern fromNode) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateForbid(EdgePattern toEdge) {
+	protected void generateForbidPrecondition(EdgePattern fromEdge) {
+		++forbidCount;
+	}
+
+	@Override
+	protected void generateForbidPrecondition(AttributePattern fromAttribute) {
+		++forbidCount;
+	}
+
+	@Override
+	protected void generateRequirePrecondition(NodePattern fromNode) {
+		++forbidCount;
+	}
+
+	@Override
+	protected void generateRequirePrecondition(EdgePattern fromEdge) {
+		++forbidCount;
+	}
+
+	@Override
+	protected void generateRequirePrecondition(AttributePattern fromAttribute) {
+		++forbidCount;
+	}
+
+	@Override
+	protected void generateForbidPostcondition(NodePattern toNode) {
+		++forbidCount;
+	}
+
+	@Override
+	protected void generateForbidPostcondition(EdgePattern toEdge) {
+		++forbidCount;
+	}
+
+	@Override
+	protected void generateForbidPostcondition(AttributePattern toAttribute) {
+		++forbidCount;
+	}
+
+	@Override
+	protected void generateRequirePostcondition(NodePattern toNode) {
+		++forbidCount;
+	}
+
+	@Override
+	protected void generateRequirePostcondition(EdgePattern toEdge) {
+		++forbidCount;
+	}
+
+	@Override
+	protected void generateRequirePostcondition(AttributePattern toAttribute) {
 		++forbidCount;
 	}
 
 	@Override
 	protected void generateContext(NodePattern fromNode, NodePattern toNode) {
+		++contextCount;
+	}
+	
+	@Override
+	protected void generatePreContext(NodePattern fromNode) {
+		++contextCount;
+	}
+
+	@Override
+	protected void generatePostContext(NodePattern toNode) {
 		++contextCount;
 	}
 
@@ -95,5 +150,4 @@ public class GEDEditRuleGenerator extends BasicEditRuleGenerator {
 	protected void generateContext(AttributePattern fromAttribute, AttributePattern toAttribute) {
 		++contextCount;
 	}
-	
 }

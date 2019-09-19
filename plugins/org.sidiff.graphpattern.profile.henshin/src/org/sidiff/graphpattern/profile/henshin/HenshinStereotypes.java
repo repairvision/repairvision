@@ -20,4 +20,8 @@ public class HenshinStereotypes {
 	public static Stereotype forbid = profile_model.getStereotype(STEREOTYPE.forbid.name());
 	
 	public static Stereotype require = profile_model.getStereotype(STEREOTYPE.require.name());
+	
+	public static Stereotype pre = profile_model.getStereotype(STEREOTYPE.pre.name());
+	
+	public static Stereotype post = profile_model.getStereotype(STEREOTYPE.post.name());
 }

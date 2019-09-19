@@ -180,7 +180,7 @@ public class ComplexToBasicGraphPatterns {
 		
 		for (NodePattern node : graphPattern.getNodes()) {
 			// Is contained node?
-			if (!GraphPatternGeneratorUtil.isContext(node)) {
+			if (!GraphPatternGeneratorUtil.isCondition(node) && !GraphPatternGeneratorUtil.isContext(node)) {
 				contentNodes.add(node);
 			}
 		}

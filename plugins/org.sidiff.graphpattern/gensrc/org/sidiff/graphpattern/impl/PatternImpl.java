@@ -196,6 +196,21 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
+	public Parameter getParameter(String name) {
+		for (Parameter parameter : getParameters()) {
+			if (parameter.getName().equals(name)) {
+				return parameter;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	protected void collectAllGraphPatterns(EList<GraphPattern> graphPatterns) {
 		graphPatterns.addAll(getGraphs());
 		
@@ -351,6 +366,8 @@ public class PatternImpl extends PatternElementImpl implements Pattern {
 		switch (operationID) {
 			case GraphpatternPackage.PATTERN___GET_ALL_GRAPH_PATTERNS:
 				return getAllGraphPatterns();
+			case GraphpatternPackage.PATTERN___GET_PARAMETER__STRING:
+				return getParameter((String)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

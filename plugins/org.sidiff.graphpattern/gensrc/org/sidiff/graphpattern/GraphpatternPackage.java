@@ -1151,13 +1151,22 @@ public interface GraphpatternPackage extends EPackage {
 	int PATTERN___GET_ALL_GRAPH_PATTERNS = PATTERN_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
+	 * The operation id for the '<em>Get Parameter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATTERN___GET_PARAMETER__STRING = PATTERN_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The number of operations of the '<em>Pattern</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PATTERN_OPERATION_COUNT = PATTERN_ELEMENT_OPERATION_COUNT + 1;
+	int PATTERN_OPERATION_COUNT = PATTERN_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
@@ -2859,6 +2868,16 @@ public interface GraphpatternPackage extends EPackage {
 	EOperation getPattern__GetAllGraphPatterns();
 
 	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.Pattern#getParameter(java.lang.String) <em>Get Parameter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Parameter</em>' operation.
+	 * @see org.sidiff.graphpattern.Pattern#getParameter(java.lang.String)
+	 * @generated
+	 */
+	EOperation getPattern__GetParameter__String();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.PatternElement <em>Pattern Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3780,6 +3799,14 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation PATTERN___GET_ALL_GRAPH_PATTERNS = eINSTANCE.getPattern__GetAllGraphPatterns();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Parameter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PATTERN___GET_PARAMETER__STRING = eINSTANCE.getPattern__GetParameter__String();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.PatternElementImpl <em>Pattern Element</em>}' class.

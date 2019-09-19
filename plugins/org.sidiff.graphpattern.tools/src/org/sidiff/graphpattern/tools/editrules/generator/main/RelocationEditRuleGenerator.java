@@ -1,11 +1,7 @@
 package org.sidiff.graphpattern.tools.editrules.generator.main;
 
-import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
-import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.require;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
-import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.completeConditions;
-import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.completeContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +60,10 @@ public class RelocationEditRuleGenerator {
 	private void generateRelocationRules(GraphPattern graphPattern, EditRuleCollector editOperations) {
 		List<EdgePattern> relocatableEdges = getMatches(graphPattern.getNodes());
 		
+//		if (graphPattern.getName().contains("Multiplicity-Many Bidirectional Reference")) {
+//			System.out.println(graphPattern.getName());
+//		}
+		
 		// NOTE: Generate only rules that synchronize two relocations:
 		if (relocatableEdges.size() >= 2) {
 			
@@ -76,7 +76,7 @@ public class RelocationEditRuleGenerator {
 			for (NodePattern node : graphPattern.getNodes()) {
 				
 				// Is not conditional node?
-				if (!node.getStereotypes().contains(not) && !node.getStereotypes().contains(require)) {
+				if (!GraphPatternGeneratorUtil.isCondition(node) ) {
 					
 					// Is contained node?
 					if (GraphPatternGeneratorUtil.isContext(node)) {
@@ -120,7 +120,7 @@ public class RelocationEditRuleGenerator {
 		IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(size);
 		problem.setMinimumSolutionSize(contentNodes.size());
 		problem.setMaximumSolutionSize(size);
-		problem.setSearchMaximumSolutions(true);
+		problem.setSearchMaximumSolutions(false);
 		problem.setSearchInjectiveSolutions(true);
 		
 		// TOTAL_BIJECTIVE without relocatable edges!
@@ -164,8 +164,6 @@ public class RelocationEditRuleGenerator {
 					matchings.getValueGraph().getNodes());
 
 			Pattern editOperation = editRuleGenerator.getEditOperation();
-			completeContext(editOperation);
-			completeConditions(editOperation);
 
 			if (checkRelocationEditRule(editOperation)) {
 				relocationEditOperations.add(editRuleGenerator);
@@ -202,7 +200,11 @@ public class RelocationEditRuleGenerator {
 				for (EdgePattern edge : node.getOutgoings()) {
 					if (edge.getStereotypes().contains(delete) || edge.getStereotypes().contains(create)) {
 						if (isRelocatableEdge(edge)) {
-							++relocatableEdgesCount;
+							
+							// NOTE: Counting without opposites:
+							if (isRelocatableReference(edge.getSource().getType(), edge.getType(), edge.getTarget().getType()) ) {
+								++relocatableEdgesCount;
+							}
 						} else {
 							return false;
 						}
@@ -216,7 +218,9 @@ public class RelocationEditRuleGenerator {
 			}
 		}
 		
-		return relocatableEdgesCount >= 2;
+		// Need at least two relocations for synchronization edit rule!
+		// NOTE: We need at least two relocatable (none opposite) edges for one relocation (remove, create). 
+		return relocatableEdgesCount >= 4;
 	}
 	
 	public Pattern getRelocationEdges() {
@@ -250,7 +254,7 @@ public class RelocationEditRuleGenerator {
 		
 		if (toBeMatched != null) {
 			
-			// Edge:
+			// Edge is relocatable...
 			if (isRelocatableReference(
 					toBeMatched.getSource().getType(),
 					toBeMatched.getType(),
@@ -258,7 +262,7 @@ public class RelocationEditRuleGenerator {
 				return true;
 			}
 			
-			// Opposite:
+			// ...or its opposite:
 			if (isRelocatableReference(
 					toBeMatched.getTarget().getType(),
 					toBeMatched.getType().getEOpposite(),

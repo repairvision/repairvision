@@ -104,6 +104,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pattern" eSuperTypes="#//PatternElement">
     <eOperations name="getAllGraphPatterns" upperBound="-1" eType="#//GraphPattern"/>
+    <eOperations name="getParameter" eType="#//Parameter">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="graphs" upperBound="-1"
         eType="#//GraphPattern" containment="true" eOpposite="#//GraphPattern/pattern"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"

@@ -118,4 +118,12 @@ public interface Pattern extends PatternElement {
 	 */
 	EList<GraphPattern> getAllGraphPatterns();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Parameter getParameter(String name);
+
 } // Pattern

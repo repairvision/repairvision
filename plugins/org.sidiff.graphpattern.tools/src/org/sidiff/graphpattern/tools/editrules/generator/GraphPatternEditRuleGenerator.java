@@ -3,18 +3,22 @@ package org.sidiff.graphpattern.tools.editrules.generator;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.forbid;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.post;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.pre;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.require;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.rule;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
@@ -26,11 +30,13 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 
 	// NOTE: We need to separate the copier since 'from' and 'to' might be the same graph.
 	
+	protected enum GraphType {
+		FROM, TO
+	}
+	
 	protected Copier fromFragmentCopier = createCopier();
 	
 	protected Copier toFragmentCopier = createCopier();
-	
-	protected Map<NodePattern, NodePattern> contextTrace = new HashMap<>();
 	
 	protected Pattern editOperation;
 	
@@ -66,24 +72,24 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		// Set edge targets:
 		for (EObject constraintGraphElement : fromFragmentCopier.keySet()) {
 			if (constraintGraphElement instanceof EdgePattern) {
-				generateEdgeTarget((EdgePattern) constraintGraphElement, fromFragmentCopier, toFragmentCopier);
+				generateEdgeTarget((EdgePattern) constraintGraphElement, GraphType.FROM);
 			}
 		}
 		for (EObject constraintGraphElement : toFragmentCopier.keySet()) {
 			if (constraintGraphElement instanceof EdgePattern) {
-				generateEdgeTarget((EdgePattern) constraintGraphElement, toFragmentCopier, fromFragmentCopier);
+				generateEdgeTarget((EdgePattern) constraintGraphElement, GraphType.TO);
 			}
 		}
 		
 		// Set opposite edges:
 		for (EObject constraintGraphElement : fromFragmentCopier.keySet()) {
 			if (constraintGraphElement instanceof EdgePattern) {
-				generateEdgeOpposite((EdgePattern) constraintGraphElement, fromFragmentCopier, toFragmentCopier);
+				generateEdgeOpposite((EdgePattern) constraintGraphElement, GraphType.FROM);
 			}
 		}
 		for (EObject constraintGraphElement : toFragmentCopier.keySet()) {
 			if (constraintGraphElement instanceof EdgePattern) {
-				generateEdgeOpposite((EdgePattern) constraintGraphElement, toFragmentCopier, fromFragmentCopier);
+				generateEdgeOpposite((EdgePattern) constraintGraphElement, GraphType.TO);
 			}
 		}
 		
@@ -91,65 +97,95 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		GraphPatternGeneratorUtil.generateINParameters(editOperation);
 	}
 	
-	private void generateEdgeOpposite(EdgePattern constraintEdge, Copier copier, Copier coCopier) {
+	private void generateEdgeOpposite(EdgePattern constraintEdge, GraphType graphType) {
 		EdgePattern constraintOpposite = constraintEdge.getOpposite();
 		
 		if (constraintOpposite != null) {
-			EdgePattern editRuleOpposite = getEditRuleEdge(constraintOpposite, copier, coCopier);
+			EdgePattern editRuleOpposite = getEditRuleEdge(constraintOpposite, graphType);
 			
-			EdgePattern editRuleEdge = (EdgePattern) copier.get(constraintEdge);
+			EdgePattern editRuleEdge = (EdgePattern) getCopier(graphType).get(constraintEdge);
 			editRuleEdge.setOpposite(editRuleOpposite);
 		}
 	}
 	
-	protected EdgePattern getEditRuleEdge(EdgePattern constraintEdge, Copier copier, Copier coCopier) {
+	protected EdgePattern getEditRuleEdge(EdgePattern constraintEdge, GraphType graphType) {
 		EdgePattern editRuleEdge = null;
 		
-		if (copier.containsKey(constraintEdge)) {
-			editRuleEdge = (EdgePattern) copier.get(constraintEdge);
+		if (getCopier(graphType).containsKey(constraintEdge)) {
+			editRuleEdge = (EdgePattern) getCopier(graphType).get(constraintEdge);
 		} else {
-			NodePattern sourceNodeMatch = getNodeMatch(constraintEdge.getSource());
-			editRuleEdge = (EdgePattern) copier.get(getEdgeMatch(constraintEdge, sourceNodeMatch.getOutgoings()));
+			NodePattern sourceNodeMatch = getNodeMatch(constraintEdge.getSource(), graphType);
+			
+			if (sourceNodeMatch != null) {
+				editRuleEdge = (EdgePattern) getCopier(graphType).get(getEdgeMatch(constraintEdge, sourceNodeMatch.getOutgoings(), graphType));
+			}
 		}
 		
 		if (editRuleEdge == null) {
-			if (coCopier.containsKey(constraintEdge)) {
-				editRuleEdge = (EdgePattern) coCopier.get(constraintEdge);
+			if (getCoCopier(graphType).containsKey(constraintEdge)) {
+				editRuleEdge = (EdgePattern) getCoCopier(graphType).get(constraintEdge);
 			} else {
-				NodePattern sourceNodeMatch = getNodeMatch(constraintEdge.getSource());
-				editRuleEdge = (EdgePattern) coCopier.get(getEdgeMatch(constraintEdge, sourceNodeMatch.getOutgoings()));
+				NodePattern sourceNodeMatch = getNodeMatch(constraintEdge.getSource(), graphType);
+				
+				if (sourceNodeMatch != null) {
+					editRuleEdge = (EdgePattern) getCoCopier(graphType).get(getEdgeMatch(constraintEdge, sourceNodeMatch.getOutgoings(), graphType));
+				}
 			}
 		}
 		
 		return editRuleEdge;
 	}
 
-	protected void generateEdgeTarget(EdgePattern constraintEdge, Copier copier, Copier coCopier) {
+	protected void generateEdgeTarget(EdgePattern constraintEdge, GraphType graphType) {
 		NodePattern constraintTargetNode = constraintEdge.getTarget();
-		NodePattern editRuleTargetNode = getEditRuleNode(constraintTargetNode, copier, coCopier);
+		NodePattern editRuleTargetNode = getEditRuleNode(constraintTargetNode, graphType);
 		
-		EdgePattern editRuleEdge = (EdgePattern) copier.get(constraintEdge);
+		EdgePattern editRuleEdge = (EdgePattern) getCopier(graphType).get(constraintEdge);
 		editRuleEdge.setTarget(editRuleTargetNode);
+		
+		if (editRuleTargetNode == null) {
+			System.err.println("Missing Edge Target: " + editRuleEdge);
+		}
 	}
 	
-	protected NodePattern getEditRuleNode(NodePattern constraintNode, Copier copier, Copier coCopier) {
+	protected NodePattern getEditRuleNode(NodePattern constraintNode, GraphType graphType) {
 		NodePattern editRuleNode = null;
 		
-		if (copier.containsKey(constraintNode)) {
-			editRuleNode = (NodePattern) copier.get(constraintNode);
+		if (getCopier(graphType).containsKey(constraintNode)) {
+			editRuleNode = (NodePattern) getCopier(graphType).get(constraintNode);
 		} else {
-			editRuleNode = (NodePattern) copier.get(getNodeMatch(constraintNode));
+ 			editRuleNode = (NodePattern) getCopier(graphType).get(getNodeMatch(constraintNode, graphType));
 		}
 		
 		if (editRuleNode == null) {
-			if (coCopier.containsKey(constraintNode)) {
-				editRuleNode = (NodePattern) coCopier.get(constraintNode);
+			if (getCoCopier(graphType).containsKey(constraintNode)) {
+				editRuleNode = (NodePattern) getCoCopier(graphType).get(constraintNode);
 			} else {
-				editRuleNode = (NodePattern) coCopier.get(getNodeMatch(constraintNode));
+				editRuleNode = (NodePattern) getCoCopier(graphType).get(getNodeMatch(constraintNode, graphType));
 			}
 		}
 		
 		return editRuleNode;
+	}
+	
+	protected Copier getCopier(GraphType graphType) {
+		return (graphType.equals(GraphType.FROM)) ? fromFragmentCopier : toFragmentCopier;
+	}
+	
+	protected Copier getCoCopier(GraphType graphType) {
+		return (graphType.equals(GraphType.FROM)) ? toFragmentCopier : fromFragmentCopier;
+	}
+	
+	protected EdgePattern getEdgeMatch(EdgePattern constraintEdge, EList<EdgePattern> outgoings, GraphType graphType) {
+		return (graphType.equals(GraphType.FROM)) 
+				? getEdgeMatchInToGraph(constraintEdge, outgoings) 
+				: getEdgeMatchInFromGraph(constraintEdge, outgoings);
+	}
+
+	protected NodePattern getNodeMatch(NodePattern source, GraphType graphType) {
+		return (graphType.equals(GraphType.FROM)) 
+				? getNodeMatchInToGraph(source) 
+				: getNodeMatchInFromGraph(source);
 	}
 	
 	protected NodePattern generateNode(NodePattern node, Stereotype action, Copier copier) {
@@ -163,23 +199,15 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 	protected EdgePattern generateEdge(EdgePattern edge, Stereotype action, Copier copier) {
 		NodePattern eoSourceNode = (NodePattern) copier.get(edge.getSource());
 		
-		if (eoSourceNode == null) {
-			eoSourceNode = contextTrace.get(edge.getSource());
-		}
-		
 		EdgePattern eoEdge = copyEdge(edge, copier);
 		eoEdge.getStereotypes().add(action);
 		eoSourceNode.getOutgoings().add(eoEdge);
 		
-		return edge;
+		return eoEdge;
 	}
 	
 	protected AttributePattern generateAttribute(AttributePattern attribute, Stereotype action, Copier copier) {
 		NodePattern eoNode = (NodePattern) copier.get(attribute.getNode());
-		
-		if (eoNode == null) {
-			eoNode = contextTrace.get(attribute.getNode());
-		}
 		
 		AttributePattern eoAttribute = copyAttribute(attribute, copier);
 		eoAttribute.getStereotypes().add(action);
@@ -221,9 +249,17 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 	@Override
 	protected void generateContext(NodePattern fromNode, NodePattern toNode) {
 		NodePattern eoNode = generateNode(toNode, preserve, toFragmentCopier);
-		
-		contextTrace.put(fromNode, eoNode);
-		contextTrace.put(toNode, eoNode);
+		fromFragmentCopier.put(fromNode, eoNode);
+	}
+	
+	@Override
+	protected void generatePreContext(NodePattern fromNode) {
+		generateNode(fromNode, preserve, fromFragmentCopier);
+	}
+
+	@Override
+	protected void generatePostContext(NodePattern toNode) {
+		generateNode(toNode, preserve, toFragmentCopier);
 	}
 	
 	@Override
@@ -248,18 +284,75 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 	}
 	
 	@Override
-	protected void generateForbid(NodePattern toNode) {
-		generateNode(toNode, forbid, toFragmentCopier);
+	protected void generateForbidPrecondition(NodePattern fromNode) {
+		GraphElement eoElement = generateNode(fromNode, forbid, fromFragmentCopier);
+		eoElement.getStereotypes().add(pre);
 	}
-	
+
 	@Override
-	protected void generateForbid(EdgePattern toEdge) {
-		generateEdge(toEdge, forbid, toFragmentCopier);
+	protected void generateForbidPrecondition(EdgePattern fromEdge) {
+		GraphElement eoElement = generateEdge(fromEdge, forbid, fromFragmentCopier);
+		eoElement.getStereotypes().add(pre);
 	}
-	
+
 	@Override
-	protected void generateForbid(AttributePattern toAttribute) {
-		generateAttribute(toAttribute, forbid, toFragmentCopier);
+	protected void generateForbidPrecondition(AttributePattern fromAttribute) {
+		GraphElement eoElement = generateAttribute(fromAttribute, forbid, fromFragmentCopier);
+		eoElement.getStereotypes().add(pre);
+	}
+
+	@Override
+	protected void generateRequirePrecondition(NodePattern fromNode) {
+		GraphElement eoElement = generateNode(fromNode, require, fromFragmentCopier);
+		eoElement.getStereotypes().add(pre);
+	}
+
+	@Override
+	protected void generateRequirePrecondition(EdgePattern fromEdge) {
+		GraphElement eoElement = generateEdge(fromEdge, require, fromFragmentCopier);
+		eoElement.getStereotypes().add(pre);
+	}
+
+	@Override
+	protected void generateRequirePrecondition(AttributePattern fromAttribute) {
+		GraphElement eoElement = generateAttribute(fromAttribute, require, fromFragmentCopier);
+		eoElement.getStereotypes().add(pre);
+	}
+
+	@Override
+	protected void generateForbidPostcondition(NodePattern toNode) {
+		GraphElement eoElement = generateNode(toNode, forbid, toFragmentCopier);
+		eoElement.getStereotypes().add(post);
+	}
+
+	@Override
+	protected void generateForbidPostcondition(EdgePattern toEdge) {
+		GraphElement eoElement = generateEdge(toEdge, forbid, toFragmentCopier);
+		eoElement.getStereotypes().add(post);
+	}
+
+	@Override
+	protected void generateForbidPostcondition(AttributePattern toAttribute) {
+		GraphElement eoElement = generateAttribute(toAttribute, forbid, toFragmentCopier);
+		eoElement.getStereotypes().add(post);
+	}
+
+	@Override
+	protected void generateRequirePostcondition(NodePattern toNode) {
+		GraphElement eoElement = generateNode(toNode, require, toFragmentCopier);
+		eoElement.getStereotypes().add(post);
+	}
+
+	@Override
+	protected void generateRequirePostcondition(EdgePattern toEdge) {
+		GraphElement eoElement = generateEdge(toEdge, require, toFragmentCopier);
+		eoElement.getStereotypes().add(post);
+	}
+
+	@Override
+	protected void generateRequirePostcondition(AttributePattern toAttribute) {
+		GraphElement eoElement = generateAttribute(toAttribute, require, toFragmentCopier);
+		eoElement.getStereotypes().add(post);
 	}
 	
 	@SuppressWarnings("serial")
@@ -276,7 +369,6 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		
 		NodePattern copy = (NodePattern) copier.copy(node);
 		copy.setType(node.getType());
-//		copy.getStereotypes().addAll(node.getStereotypes());
 		return copy;
 	}
 	
@@ -285,7 +377,6 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		
 		EdgePattern copy = (EdgePattern) copier.copy(edge);
 		copy.setType(edge.getType());
-//		copy.getStereotypes().addAll(edge.getStereotypes());
 		return copy;
 	}
 	
@@ -294,7 +385,6 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		
 		AttributePattern copy = (AttributePattern) copier.copy(attribute);
 		copy.setType(attribute.getType());
-//		copy.getStereotypes().addAll(attribute.getStereotypes());
 		return copy;
 	}
 }

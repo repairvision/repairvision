@@ -1,8 +1,6 @@
 package org.sidiff.graphpattern.tools.editrules.generator.main;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
-import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.completeConditions;
-import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.completeContext;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.parentConstraint;
 
 import java.util.ArrayList;
@@ -35,14 +33,14 @@ public class TransformationEditRuleGenerator {
 		for (GraphPattern fromConstraint : allConstraints) {
 			List<Pattern> transformationRules = new ArrayList<>();
 			
-//			if (fromConstraint.getName().contains("Multiplicity-One Containment-Container Reference")) {
+//			if (fromConstraint.getName().contains("Enumeration with Literal")) {
 //				System.out.println(fromConstraint.getName());
 //			} else {
 //				continue;
 //			}
 			
 			for (GraphPattern toConstraint : allConstraints) {
-//				if (toConstraint.getName().contains("Multiplicity-Many Bidirectional Reference")) {
+//				if (toConstraint.getName().contains("Enumeration Attribute")) {
 //					System.out.println(toConstraint.getName());
 //				} else {
 //					continue;
@@ -98,8 +96,6 @@ public class TransformationEditRuleGenerator {
 						}
 
 						Pattern editOperation = editRuleGenerator.getEditOperation();
-						completeContext(editOperation);
-						completeConditions(editOperation);
 						transformationRules.add(editOperation);
 					}
 				}

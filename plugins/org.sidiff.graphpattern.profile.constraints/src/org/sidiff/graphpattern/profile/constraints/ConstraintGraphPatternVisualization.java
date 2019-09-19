@@ -13,6 +13,10 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 	
 	protected int[] BLUE_BACKGROUND = {221, 221, 255};
 	
+	protected int[] ORANGE_FOREGROUND = {170, 68, 0};
+	
+	protected int[] ORANGE_BACKGROUND = {255, 238, 221};
+	
 	@Override
 	public int[] getNodeBackgroundColor(NodePattern node, Gradient gradient) {
 		
@@ -22,6 +26,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_BACKGROUND;
+			case require:
+				return ORANGE_BACKGROUND;
 			default:
 				break;
 			}
@@ -39,6 +45,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {	
 			case not:
 				return BLUE_FOREGROUND;
+			case require:
+				return ORANGE_FOREGROUND;
 			default:
 				break;
 			}
@@ -56,6 +64,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
+			case require:
+				return ORANGE_FOREGROUND;
 			default:
 				break;
 			}
@@ -73,6 +83,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
+			case require:
+				return ORANGE_FOREGROUND;
 			default:
 				break;
 			}
@@ -90,6 +102,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
+			case require:
+				return ORANGE_FOREGROUND;
 			default:
 				break;
 			}
@@ -107,6 +121,8 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
+			case require:
+				return ORANGE_FOREGROUND;
 			default:
 				break;
 			}
