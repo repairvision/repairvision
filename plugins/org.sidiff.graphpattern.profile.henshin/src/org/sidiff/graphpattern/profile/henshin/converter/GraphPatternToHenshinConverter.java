@@ -1,9 +1,10 @@
 package org.sidiff.graphpattern.profile.henshin.converter;
 
-import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.forbid;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.require;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.ParameterMapping;
@@ -34,7 +36,15 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
+import org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes;
 
+/**
+ * Converts a Graph-Pattern ({@link GraphPattern} with
+ * {@link HenshinStereotypes} or {@link ConstraintStereotypes} stereotypes) into
+ * a Henshin rule.
+ * 
+ * @author Manuel Ohrndorf
+ */
 public class GraphPatternToHenshinConverter {
 
 	private static final String SELF_VARIABLE = "value";
@@ -140,11 +150,16 @@ public class GraphPatternToHenshinConverter {
 	
 	private Rule convert(GraphPattern graph) {
 		NestedCondition nac = rule.getLhs().createNAC(null);
+		NestedCondition pac = rule.getLhs().createPAC(null);
 		
 		// Nodes:
 		for (NodePattern pNode : graph.getNodes()) {
-			if (pNode.getStereotypes().contains(not)) {
+			if (pNode.getStereotypes().contains(forbid) 
+					|| pNode.getStereotypes().contains(ConstraintStereotypes.not)) {
 				convert(nac, pNode);
+			} else if (pNode.getStereotypes().contains(require)
+					|| pNode.getStereotypes().contains(ConstraintStereotypes.require)) {
+				convert(pac, pNode);
 			} else {
 				convert(rule, pNode);
 			}
@@ -153,8 +168,12 @@ public class GraphPatternToHenshinConverter {
 		// Attributes:
 		for (NodePattern pNode : graph.getNodes()) {
 			for (AttributePattern pAttribute : pNode.getAttributes()) {
-				if (pAttribute.getStereotypes().contains(not)) {
+				if (pAttribute.getStereotypes().contains(forbid) 
+						|| pAttribute.getStereotypes().contains(ConstraintStereotypes.not)) {
 					convert(nac, pAttribute);
+				} else if (pAttribute.getStereotypes().contains(require)
+						|| pAttribute.getStereotypes().contains(ConstraintStereotypes.require)) {
+					convert(pac, pAttribute);
 				} else {
 					convert(rule, pAttribute);
 				}
@@ -164,8 +183,12 @@ public class GraphPatternToHenshinConverter {
 		// Edges:
 		for (NodePattern pNode : graph.getNodes()) {
 			for (EdgePattern pEdge : pNode.getOutgoings()) {
-				if (pEdge.getStereotypes().contains(not)) {
+				if (pEdge.getStereotypes().contains(forbid) 
+						|| pEdge.getStereotypes().contains(ConstraintStereotypes.not)) {
 					convert(nac, pEdge);
+				} else if (pEdge.getStereotypes().contains(require)
+						|| pEdge.getStereotypes().contains(ConstraintStereotypes.require)) {
+					convert(pac, pEdge);
 				} else {
 					convert(rule, pEdge);
 				}
@@ -179,9 +202,15 @@ public class GraphPatternToHenshinConverter {
 			}
 		}
 		
-		// remove empty NACs:
-		if (nac.getConclusion().getNodes().size() == 0) {
+		// remove empty PACs/NACs:
+		if ((nac.getConclusion().getNodes().size() == 0) && (pac.getConclusion().getNodes().size() == 0)) {
 			EcoreUtil.remove(nac.eContainer());
+		} else {
+			if (nac.getConclusion().getNodes().size() == 0) {
+				rule.getLhs().setFormula(pac);
+			} else if (pac.getConclusion().getNodes().size() == 0) {
+				rule.getLhs().setFormula((Not) nac.eContainer());
+			}
 		}
 		
 		return rule;
@@ -196,8 +225,12 @@ public class GraphPatternToHenshinConverter {
 	
 	private void convert(Rule rule, NodePattern pNode) {
 		
+		// NOTE: Empty stereotype (of constraint pattern) as preserve.
+		
 		// LHS:
-		if (pNode.getStereotypes().contains(delete)  || pNode.getStereotypes().contains(preserve)) {
+		if (pNode.getStereotypes().contains(delete)  
+				|| pNode.getStereotypes().contains(preserve)
+				|| pNode.getStereotypes().isEmpty()) {
 			Node node = createNode();
 			node.setName(pNode.getName());
 			node.setDescription(pNode.getDescription());
@@ -208,7 +241,9 @@ public class GraphPatternToHenshinConverter {
 		}
 		
 		// RHS:
-		if (pNode.getStereotypes().contains(create)  || pNode.getStereotypes().contains(preserve)) {
+		if (pNode.getStereotypes().contains(create)  
+				|| pNode.getStereotypes().contains(preserve)
+				|| pNode.getStereotypes().isEmpty()) {
 			Node node = createNode();
 			node.setName(pNode.getName());
 			node.setDescription(pNode.getDescription());
@@ -218,12 +253,14 @@ public class GraphPatternToHenshinConverter {
 			rhsTrace.put(pNode, node);
 		}
 		
-		if (pNode.getStereotypes().contains(preserve)) {
+		if (pNode.getStereotypes().contains(preserve) || pNode.getStereotypes().isEmpty()) {
 			rule.getMappings().add(lhsTrace.get(pNode), rhsTrace.get(pNode));
 		}
 	}
 	
 	private void convert(Rule rule, AttributePattern pAttribute) {
+		
+		// NOTE: Empty stereotype (of constraint pattern) as preserve.
 		
 		// attribute condition:
 		if (!JavaSciptParser.isConstant(pAttribute.getValue())) {
@@ -231,12 +268,18 @@ public class GraphPatternToHenshinConverter {
 
 			if (variables.contains(SELF_VARIABLE)) {
 				
-				if ((pAttribute.getStereotypes().contains(delete) || pAttribute.getStereotypes().contains(preserve))) {
-					Node contextNode = lhsTrace.get(pAttribute.getNode());
-					
-					// create condition:
-					String selfVariable = SELF_VARIABLE + "_" + contextNode.getName() + "_" + pAttribute.getType().getName();
-					String selfCondition = pAttribute.getValue().replace(SELF_VARIABLE, selfVariable); // FIXME: refactor in AST
+				// create condition:
+				Node contextNode = lhsTrace.containsKey(pAttribute.getNode()) ? lhsTrace.get(pAttribute.getNode()) : rhsTrace.get(pAttribute.getNode());
+				String selfVariable = SELF_VARIABLE + "_" + contextNode.getName() + "_" + pAttribute.getType().getName();
+				String selfCondition = pAttribute.getValue().replace(SELF_VARIABLE, selfVariable); // FIXME: refactor in AST
+				
+				// create parameter:
+				addParameter(selfVariable, "Attribute Condition: " + selfCondition);
+				
+				if ((pAttribute.getStereotypes().contains(delete) 
+						|| pAttribute.getStereotypes().contains(preserve))
+						|| pAttribute.getStereotypes().isEmpty()) {
+					contextNode = lhsTrace.get(pAttribute.getNode());
 					
 					AttributeCondition attributeCondition = HenshinFactory.eINSTANCE.createAttributeCondition();
 					attributeCondition.setRule(getRule());
@@ -254,25 +297,18 @@ public class GraphPatternToHenshinConverter {
 					attributeConditionAnnotation.setKey("AttributeCondition");
 					attributeConditionAnnotation.setValue(selfCondition);
 					attribute.getAnnotations().add(attributeConditionAnnotation);
-					
-					// create parameter:
-					addParameter(selfVariable, "Attribute Condition: " + selfCondition);
-					
-				} else if (pAttribute.getStereotypes().contains(create) || pAttribute.getStereotypes().contains(preserve)) {
-					Node contextNode = rhsTrace.get(pAttribute.getNode());
-					
-					// create condition:
-					String selfVariable = SELF_VARIABLE + "_" + contextNode.getName() + "_" + pAttribute.getType().getName();
-					String selfCondition = pAttribute.getValue().replace(SELF_VARIABLE, selfVariable); // FIXME: refactor in AST
+				} 
+				
+				if (pAttribute.getStereotypes().contains(create) 
+						|| pAttribute.getStereotypes().contains(preserve)
+						|| pAttribute.getStereotypes().isEmpty()) {
+					contextNode = rhsTrace.get(pAttribute.getNode());
 
 					// create variable:
 					Attribute attribute = createAttribute();
 					attribute.setType(pAttribute.getType());
 					attribute.setValue(selfVariable);
 					contextNode.getAttributes().add(attribute);
-					
-					// create parameter:
-					addParameter(selfVariable, "Attribute Condition: " + selfCondition);
 				}
 				
 				return;
@@ -280,7 +316,9 @@ public class GraphPatternToHenshinConverter {
 		}
 
 		// LHS:
-		if (pAttribute.getStereotypes().contains(delete) || pAttribute.getStereotypes().contains(preserve)) {
+		if (pAttribute.getStereotypes().contains(delete) 
+				|| pAttribute.getStereotypes().contains(preserve)
+				|| pAttribute.getStereotypes().isEmpty()) {
 			Attribute attribute = createAttribute();
 			attribute.setType(pAttribute.getType());
 			attribute.setValue(pAttribute.getValue());
@@ -290,7 +328,9 @@ public class GraphPatternToHenshinConverter {
 		}
 
 		// RHS:
-		if (pAttribute.getStereotypes().contains(create) || pAttribute.getStereotypes().contains(preserve)) {
+		if (pAttribute.getStereotypes().contains(create) 
+				|| pAttribute.getStereotypes().contains(preserve)
+				|| pAttribute.getStereotypes().isEmpty()) {
 			Attribute attribute = createAttribute();
 			attribute.setType(pAttribute.getType());
 			attribute.setValue(pAttribute.getValue());
@@ -302,8 +342,12 @@ public class GraphPatternToHenshinConverter {
 	
 	private void convert(Rule rule, EdgePattern pEdge) {
 		
+		// NOTE: Empty stereotype (of constraint pattern) as preserve.
+		
 		// LHS:
-		if (pEdge.getStereotypes().contains(delete) || pEdge.getStereotypes().contains(preserve)) {
+		if (pEdge.getStereotypes().contains(delete) 
+				|| pEdge.getStereotypes().contains(preserve)
+				|| pEdge.getStereotypes().isEmpty()) {
 			Edge edge = createEdge();
 			edge.setType(pEdge.getType());
 			edge.setSource(lhsTrace.get(pEdge.getSource()));
@@ -313,7 +357,9 @@ public class GraphPatternToHenshinConverter {
 		}
 		
 		// RHS:
-		if (pEdge.getStereotypes().contains(create) || pEdge.getStereotypes().contains(preserve)) {
+		if (pEdge.getStereotypes().contains(create) 
+				|| pEdge.getStereotypes().contains(preserve)
+				|| pEdge.getStereotypes().isEmpty()) {
 			Edge edge = createEdge();
 			edge.setType(pEdge.getType());
 			edge.setSource(rhsTrace.get(pEdge.getSource()));
@@ -384,12 +430,14 @@ public class GraphPatternToHenshinConverter {
 	}
 	
 	private void addParameter(String name, String description) {
-		Parameter parameter = createParameter();
-		parameter.setName(name);
-		parameter.setDescription(description);
-		parameter.setKind(ParameterKind.IN);
-		
-		rule.getParameters().add(parameter);
+		if (rule.getParameter(name) == null) {
+			Parameter parameter = createParameter();
+			parameter.setName(name);
+			parameter.setDescription(description);
+			parameter.setKind(ParameterKind.IN);
+			
+			rule.getParameters().add(parameter);
+		}
 	}
 	
 }

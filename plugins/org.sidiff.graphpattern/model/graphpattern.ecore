@@ -19,6 +19,10 @@
     <eOperations name="getOutgoing" eType="#//EdgePattern">
       <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
     </eOperations>
+    <eOperations name="getOutgoing" eType="#//EdgePattern">
+      <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      <eParameters name="target" eType="#//NodePattern"/>
+    </eOperations>
     <eOperations name="getOutgoings" upperBound="-1" eType="#//EdgePattern">
       <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
     </eOperations>

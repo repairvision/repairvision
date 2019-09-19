@@ -611,13 +611,22 @@ public interface GraphpatternPackage extends EPackage {
 	int NODE_PATTERN___GET_OUTGOING__EREFERENCE = GRAPH_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Get Outgoing</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_PATTERN___GET_OUTGOING__EREFERENCE_NODEPATTERN = GRAPH_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
 	 * The operation id for the '<em>Get Outgoings</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_OUTGOINGS__EREFERENCE = GRAPH_ELEMENT_OPERATION_COUNT + 2;
+	int NODE_PATTERN___GET_OUTGOINGS__EREFERENCE = GRAPH_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Incoming</em>' operation.
@@ -626,7 +635,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_INCOMING__EREFERENCE = GRAPH_ELEMENT_OPERATION_COUNT + 3;
+	int NODE_PATTERN___GET_INCOMING__EREFERENCE = GRAPH_ELEMENT_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get Incomings</em>' operation.
@@ -635,7 +644,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_INCOMINGS__EREFERENCE = GRAPH_ELEMENT_OPERATION_COUNT + 4;
+	int NODE_PATTERN___GET_INCOMINGS__EREFERENCE = GRAPH_ELEMENT_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Get Incident</em>' operation.
@@ -644,7 +653,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_INCIDENT = GRAPH_ELEMENT_OPERATION_COUNT + 5;
+	int NODE_PATTERN___GET_INCIDENT = GRAPH_ELEMENT_OPERATION_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Get Incident</em>' operation.
@@ -653,7 +662,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_INCIDENT__NODEPATTERN = GRAPH_ELEMENT_OPERATION_COUNT + 6;
+	int NODE_PATTERN___GET_INCIDENT__NODEPATTERN = GRAPH_ELEMENT_OPERATION_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Remove Incident</em>' operation.
@@ -662,7 +671,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___REMOVE_INCIDENT = GRAPH_ELEMENT_OPERATION_COUNT + 7;
+	int NODE_PATTERN___REMOVE_INCIDENT = GRAPH_ELEMENT_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Remove Incident</em>' operation.
@@ -671,7 +680,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___REMOVE_INCIDENT__NODEPATTERN = GRAPH_ELEMENT_OPERATION_COUNT + 8;
+	int NODE_PATTERN___REMOVE_INCIDENT__NODEPATTERN = GRAPH_ELEMENT_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Get Adjacent</em>' operation.
@@ -680,7 +689,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN___GET_ADJACENT = GRAPH_ELEMENT_OPERATION_COUNT + 9;
+	int NODE_PATTERN___GET_ADJACENT = GRAPH_ELEMENT_OPERATION_COUNT + 10;
 
 	/**
 	 * The number of operations of the '<em>Node Pattern</em>' class.
@@ -689,7 +698,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_PATTERN_OPERATION_COUNT = GRAPH_ELEMENT_OPERATION_COUNT + 10;
+	int NODE_PATTERN_OPERATION_COUNT = GRAPH_ELEMENT_OPERATION_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
@@ -1971,6 +1980,16 @@ public interface GraphpatternPackage extends EPackage {
 	EOperation getNodePattern__GetOutgoing__EReference();
 
 	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.NodePattern#getOutgoing(org.eclipse.emf.ecore.EReference, org.sidiff.graphpattern.NodePattern) <em>Get Outgoing</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Outgoing</em>' operation.
+	 * @see org.sidiff.graphpattern.NodePattern#getOutgoing(org.eclipse.emf.ecore.EReference, org.sidiff.graphpattern.NodePattern)
+	 * @generated
+	 */
+	EOperation getNodePattern__GetOutgoing__EReference_NodePattern();
+
+	/**
 	 * Returns the meta object for the '{@link org.sidiff.graphpattern.NodePattern#getOutgoings(org.eclipse.emf.ecore.EReference) <em>Get Outgoings</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3079,6 +3098,14 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation NODE_PATTERN___GET_OUTGOING__EREFERENCE = eINSTANCE.getNodePattern__GetOutgoing__EReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Outgoing</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation NODE_PATTERN___GET_OUTGOING__EREFERENCE_NODEPATTERN = eINSTANCE.getNodePattern__GetOutgoing__EReference_NodePattern();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Outgoings</b></em>' operation.

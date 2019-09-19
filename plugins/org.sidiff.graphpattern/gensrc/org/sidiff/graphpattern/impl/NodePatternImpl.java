@@ -174,6 +174,21 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
+	public EdgePattern getOutgoing(EReference type, NodePattern target) {
+		for (EdgePattern edge : getOutgoings()) {
+			if ((type == edge.getType()) && (edge.getTarget() == target)) {
+				return edge;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	public EList<EdgePattern> getOutgoings(EReference type) {
 		EList<EdgePattern> edges = new BasicEList<>();
 
@@ -642,6 +657,8 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 				return getAttribute((EAttribute)arguments.get(0));
 			case GraphpatternPackage.NODE_PATTERN___GET_OUTGOING__EREFERENCE:
 				return getOutgoing((EReference)arguments.get(0));
+			case GraphpatternPackage.NODE_PATTERN___GET_OUTGOING__EREFERENCE_NODEPATTERN:
+				return getOutgoing((EReference)arguments.get(0), (NodePattern)arguments.get(1));
 			case GraphpatternPackage.NODE_PATTERN___GET_OUTGOINGS__EREFERENCE:
 				return getOutgoings((EReference)arguments.get(0));
 			case GraphpatternPackage.NODE_PATTERN___GET_INCOMING__EREFERENCE:
