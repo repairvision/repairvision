@@ -34,6 +34,7 @@ import org.sidiff.graphpattern.tools.csp.NodePatternDomain;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain.EdgeMatching;
 import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
+import org.sidiff.graphpattern.tools.editrules.generator.checks.UnfulfillableConditions;
 import org.sidiff.graphpattern.tools.editrules.generator.util.EditRuleCollector;
 import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil;
 
@@ -164,10 +165,12 @@ public class RelocationEditRuleGenerator {
 					matchings.getValueGraph().getNodes());
 
 			Pattern editOperation = editRuleGenerator.getEditOperation();
+			GraphPattern editRule = editRuleGenerator.getEditRule();
 
 			if (checkRelocationEditRule(editOperation, 
 					editRuleGenerator.getTracePreGraph2EditGraph(), 
-					editRuleGenerator.getTracePostGraph2EditGraph())) {
+					editRuleGenerator.getTracePostGraph2EditGraph())
+					&& UnfulfillableConditions.check(editRule)) {
 				relocationEditOperations.add(editRuleGenerator);
 			}
 		}

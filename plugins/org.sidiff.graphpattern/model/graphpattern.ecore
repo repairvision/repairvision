@@ -16,6 +16,9 @@
     <eOperations name="getAttribute" eType="#//AttributePattern">
       <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
     </eOperations>
+    <eOperations name="getOutgoings" upperBound="-1" eType="#//EdgePattern">
+      <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    </eOperations>
     <eOperations name="getOutgoing" eType="#//EdgePattern">
       <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
     </eOperations>
@@ -23,8 +26,10 @@
       <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
       <eParameters name="target" eType="#//NodePattern"/>
     </eOperations>
-    <eOperations name="getOutgoings" upperBound="-1" eType="#//EdgePattern">
+    <eOperations name="getOutgoing" eType="#//EdgePattern">
       <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      <eParameters name="target" eType="#//NodePattern"/>
+      <eParameters name="stereotype" eType="#//Stereotype"/>
     </eOperations>
     <eOperations name="getIncoming" eType="#//EdgePattern">
       <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>

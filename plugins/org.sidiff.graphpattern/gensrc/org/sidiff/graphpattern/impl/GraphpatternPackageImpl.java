@@ -430,16 +430,6 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 */
 	@Override
 	public EOperation getNodePattern__GetOutgoing__EReference() {
-		return nodePatternEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getNodePattern__GetOutgoing__EReference_NodePattern() {
 		return nodePatternEClass.getEOperations().get(2);
 	}
 
@@ -449,7 +439,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EOperation getNodePattern__GetOutgoings__EReference() {
+	public EOperation getNodePattern__GetOutgoing__EReference_NodePattern() {
 		return nodePatternEClass.getEOperations().get(3);
 	}
 
@@ -459,7 +449,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EOperation getNodePattern__GetIncoming__EReference() {
+	public EOperation getNodePattern__GetOutgoing__EReference_NodePattern_Stereotype() {
 		return nodePatternEClass.getEOperations().get(4);
 	}
 
@@ -469,7 +459,17 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EOperation getNodePattern__GetIncomings__EReference() {
+	public EOperation getNodePattern__GetOutgoings__EReference() {
+		return nodePatternEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getNodePattern__GetIncoming__EReference() {
 		return nodePatternEClass.getEOperations().get(5);
 	}
 
@@ -479,7 +479,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EOperation getNodePattern__GetIncident() {
+	public EOperation getNodePattern__GetIncomings__EReference() {
 		return nodePatternEClass.getEOperations().get(6);
 	}
 
@@ -489,7 +489,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EOperation getNodePattern__GetIncident__NodePattern() {
+	public EOperation getNodePattern__GetIncident() {
 		return nodePatternEClass.getEOperations().get(7);
 	}
 
@@ -499,7 +499,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EOperation getNodePattern__RemoveIncident() {
+	public EOperation getNodePattern__GetIncident__NodePattern() {
 		return nodePatternEClass.getEOperations().get(8);
 	}
 
@@ -509,7 +509,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EOperation getNodePattern__RemoveIncident__NodePattern() {
+	public EOperation getNodePattern__RemoveIncident() {
 		return nodePatternEClass.getEOperations().get(9);
 	}
 
@@ -519,8 +519,18 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EOperation getNodePattern__GetAdjacent() {
+	public EOperation getNodePattern__RemoveIncident__NodePattern() {
 		return nodePatternEClass.getEOperations().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getNodePattern__GetAdjacent() {
+		return nodePatternEClass.getEOperations().get(11);
 	}
 
 	/**
@@ -1406,9 +1416,10 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEReference(nodePatternEClass, NODE_PATTERN__INCOMINGS);
 		createEReference(nodePatternEClass, NODE_PATTERN__ASSOCIATIONS);
 		createEOperation(nodePatternEClass, NODE_PATTERN___GET_ATTRIBUTE__EATTRIBUTE);
+		createEOperation(nodePatternEClass, NODE_PATTERN___GET_OUTGOINGS__EREFERENCE);
 		createEOperation(nodePatternEClass, NODE_PATTERN___GET_OUTGOING__EREFERENCE);
 		createEOperation(nodePatternEClass, NODE_PATTERN___GET_OUTGOING__EREFERENCE_NODEPATTERN);
-		createEOperation(nodePatternEClass, NODE_PATTERN___GET_OUTGOINGS__EREFERENCE);
+		createEOperation(nodePatternEClass, NODE_PATTERN___GET_OUTGOING__EREFERENCE_NODEPATTERN_STEREOTYPE);
 		createEOperation(nodePatternEClass, NODE_PATTERN___GET_INCOMING__EREFERENCE);
 		createEOperation(nodePatternEClass, NODE_PATTERN___GET_INCOMINGS__EREFERENCE);
 		createEOperation(nodePatternEClass, NODE_PATTERN___GET_INCIDENT);
@@ -1586,6 +1597,9 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		EOperation op = initEOperation(getNodePattern__GetAttribute__EAttribute(), this.getAttributePattern(), "getAttribute", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEAttribute(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = initEOperation(getNodePattern__GetOutgoings__EReference(), this.getEdgePattern(), "getOutgoings", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEReference(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		op = initEOperation(getNodePattern__GetOutgoing__EReference(), this.getEdgePattern(), "getOutgoing", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEReference(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -1593,8 +1607,10 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		addEParameter(op, ecorePackage.getEReference(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getNodePattern(), "target", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getNodePattern__GetOutgoings__EReference(), this.getEdgePattern(), "getOutgoings", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getNodePattern__GetOutgoing__EReference_NodePattern_Stereotype(), this.getEdgePattern(), "getOutgoing", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEReference(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getNodePattern(), "target", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getStereotype(), "stereotype", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getNodePattern__GetIncoming__EReference(), this.getEdgePattern(), "getIncoming", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEReference(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);

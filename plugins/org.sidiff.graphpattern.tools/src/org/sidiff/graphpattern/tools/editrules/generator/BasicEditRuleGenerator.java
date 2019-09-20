@@ -1,8 +1,10 @@
 package org.sidiff.graphpattern.tools.editrules.generator;
 
-import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.*;
+import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isCondition;
+import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isContext;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isNot;
-import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isRequire;
+import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isExists;
+import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isUnmodifiable;
 
 import java.util.List;
 import java.util.Map;
@@ -42,7 +44,7 @@ public abstract class BasicEditRuleGenerator {
 			if (isConditionMatch(postNode, preNode)) {
 
 				// << forbid/require >> attribute:
-				if (isRequire(preNode)) {
+				if (isExists(preNode)) {
 					generateRequirePrecondition(preNode);
 				} else if (isNot(preNode)) {
 					generateForbidPrecondition(preNode);
@@ -50,7 +52,7 @@ public abstract class BasicEditRuleGenerator {
 
 				// << forbid/require >> edges:
 				for (EdgePattern preEdge : preNode.getOutgoings()) {
-					if (isRequire(preEdge)) {
+					if (isExists(preEdge)) {
 						generateRequirePrecondition(preEdge);
 					} else if (isNot(preEdge)) {
 						generateForbidPrecondition(preEdge);
@@ -59,7 +61,7 @@ public abstract class BasicEditRuleGenerator {
 
 				// << forbid/require >> attributes:
 				for (AttributePattern preAttribute : preNode.getAttributes()) {
-					if (isRequire(preAttribute)) {
+					if (isExists(preAttribute)) {
 						generateRequirePrecondition(preAttribute);
 					} else if (isNot(preAttribute)) {
 						generateForbidPrecondition(preAttribute);
@@ -80,7 +82,7 @@ public abstract class BasicEditRuleGenerator {
 					if (isUnmodifiable(preEdge) || isConditionMatch(preEdge, postEdge)) {
 
 						// << forbid/require >> edge:
-						if (isRequire(preEdge)) {
+						if (isExists(preEdge)) {
 							generateRequirePrecondition(preEdge);
 						} else if (isNot(preEdge)) {
 							generateForbidPrecondition(preEdge);
@@ -102,7 +104,7 @@ public abstract class BasicEditRuleGenerator {
 					if (isUnmodifiable(preAttribute) || isConditionMatch(preAttribute, postAttribute)) {
 
 						// << forbid/require >> attribute:
-						if (isRequire(preAttribute)) {
+						if (isExists(preAttribute)) {
 							generateRequirePrecondition(preAttribute);
 						} else if (isNot(preAttribute)) {
 							generateForbidPrecondition(preAttribute);
@@ -132,7 +134,7 @@ public abstract class BasicEditRuleGenerator {
 					if (isCondition(preEdge) || isUnmodifiable(preEdge)) {
 
 						// << forbid/require >> edge:
-						if (isRequire(preEdge)) {
+						if (isExists(preEdge)) {
 							generateRequirePrecondition(preEdge);
 						} else if (isNot(preEdge)) {
 							generateForbidPrecondition(preEdge);
@@ -148,7 +150,7 @@ public abstract class BasicEditRuleGenerator {
 					if (isCondition(preAttribute) || isUnmodifiable(preAttribute)) {
 
 						// << forbid/require >> attribute:
-						if (isRequire(preAttribute)) {
+						if (isExists(preAttribute)) {
 							generateRequirePrecondition(preAttribute);
 						} else if (isNot(preAttribute)) {
 							generateForbidPrecondition(preAttribute);
@@ -170,7 +172,7 @@ public abstract class BasicEditRuleGenerator {
 			if (isConditionMatch(preNode, postNode)) {
 				
 				// << forbid/require >> node:
-				if (isRequire(postNode)) {
+				if (isExists(postNode)) {
 					generateRequirePostcondition(postNode);
 				} else if (isNot(postNode)) {
 					generateForbidPostcondition(postNode);
@@ -178,7 +180,7 @@ public abstract class BasicEditRuleGenerator {
 				
 				// << forbid/require >> edges:
 				for (EdgePattern postEdge : postNode.getOutgoings()) {
-					if (isRequire(postEdge)) {
+					if (isExists(postEdge)) {
 						generateRequirePostcondition(postEdge);
 					} else if (isNot(postEdge)) {
 						generateForbidPostcondition(postEdge);
@@ -187,7 +189,7 @@ public abstract class BasicEditRuleGenerator {
 				
 				// << forbid/require >> attributes:
 				for (AttributePattern postAttribute : postNode.getAttributes()) {
-					if (isRequire(postAttribute)) {
+					if (isExists(postAttribute)) {
 						generateRequirePostcondition(postAttribute);
 					} else if (isNot(postAttribute)) {
 						generateForbidPostcondition(postAttribute);
@@ -208,7 +210,7 @@ public abstract class BasicEditRuleGenerator {
 						if (isUnmodifiable(postEdge) || isCondition(postEdge)) {
 							
 							// << forbid/require >> edge:
-							if (isRequire(postEdge)) {
+							if (isExists(postEdge)) {
 								generateRequirePostcondition(postEdge);
 							} else if (isNot(postEdge)) {
 								generateForbidPostcondition(postEdge);
@@ -229,7 +231,7 @@ public abstract class BasicEditRuleGenerator {
 						if (isUnmodifiable(postAttribute) || isCondition(postAttribute)) {
 							
 							// << forbid/require >> attribute:
-							if (isRequire(postAttribute)) {
+							if (isExists(postAttribute)) {
 								generateRequirePostcondition(postAttribute);
 							} else if (isNot(postAttribute)) {
 								generateForbidPostcondition(postAttribute);
@@ -250,7 +252,7 @@ public abstract class BasicEditRuleGenerator {
 					if (isCondition(postEdge)) 
 					{
 						// << forbid/require >> edge:
-						if (isRequire(postEdge)) {
+						if (isExists(postEdge)) {
 							generateRequirePostcondition(postEdge);
 						} else if (isNot(postEdge)) {
 							generateForbidPostcondition(postEdge);
@@ -266,7 +268,7 @@ public abstract class BasicEditRuleGenerator {
 					if (isCondition(postAttribute)) {
 
 						// << forbid/require >> attribute:
-						if (isRequire(postAttribute)) {
+						if (isExists(postAttribute)) {
 							generateRequirePostcondition(postAttribute);
 						} else if (isNot(postAttribute)) {
 							generateForbidPostcondition(postAttribute);

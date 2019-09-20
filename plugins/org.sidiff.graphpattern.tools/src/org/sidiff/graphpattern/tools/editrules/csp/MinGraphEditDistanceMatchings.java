@@ -2,6 +2,7 @@ package org.sidiff.graphpattern.tools.editrules.csp;
 
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.tools.csp.AbstractGraphPatternMatchings;
+import org.sidiff.graphpattern.tools.editrules.generator.checks.UnfulfillableConditions;
 
 public class MinGraphEditDistanceMatchings extends AbstractGraphPatternMatchings<MinGraphEditDistanceMatch> {
 	
@@ -16,12 +17,26 @@ public class MinGraphEditDistanceMatchings extends AbstractGraphPatternMatchings
 	
 	@Override
 	public void add(MinGraphEditDistanceMatch match) {
+		
+		// TODO: Might be optimized? The match size is monotonously decreasing!
+		
+		// Generate edit rule but just count the changes:
 		int graphEditDistance = match.getGraphEditDistance(subjectGraph, valueGraph);
 		
 		if (graphEditDistance <= 0) {
 			return;
 		}
 		
+		// Generate real edit rule:
+		if (graphEditDistance <= minimumGraphEditDistance) {
+			match.generateEditOperation(subjectGraph, valueGraph);
+			
+			if (!UnfulfillableConditions.check(match.getEditRule())) {
+				return;
+			}
+		}
+		
+		// Store minimal GED matches:
 		if (graphEditDistance < minimumGraphEditDistance) {
 			minimumGraphEditDistance = graphEditDistance;
 			matches.clear();

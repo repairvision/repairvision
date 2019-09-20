@@ -28,6 +28,7 @@ import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.Matching;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Stereotype;
 
 /**
  * <!-- begin-user-doc -->
@@ -169,6 +170,23 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 		return null;
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public EdgePattern getOutgoing(EReference type, NodePattern target, Stereotype stereotype) {
+		for (EdgePattern edge : getOutgoings()) {
+			if ((type == edge.getType()) && (edge.getTarget() == target)) {
+				if (edge.getStereotypes().contains(stereotype)) {
+					return edge;
+				}
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -655,12 +673,14 @@ public class NodePatternImpl extends GraphElementImpl implements NodePattern {
 		switch (operationID) {
 			case GraphpatternPackage.NODE_PATTERN___GET_ATTRIBUTE__EATTRIBUTE:
 				return getAttribute((EAttribute)arguments.get(0));
+			case GraphpatternPackage.NODE_PATTERN___GET_OUTGOINGS__EREFERENCE:
+				return getOutgoings((EReference)arguments.get(0));
 			case GraphpatternPackage.NODE_PATTERN___GET_OUTGOING__EREFERENCE:
 				return getOutgoing((EReference)arguments.get(0));
 			case GraphpatternPackage.NODE_PATTERN___GET_OUTGOING__EREFERENCE_NODEPATTERN:
 				return getOutgoing((EReference)arguments.get(0), (NodePattern)arguments.get(1));
-			case GraphpatternPackage.NODE_PATTERN___GET_OUTGOINGS__EREFERENCE:
-				return getOutgoings((EReference)arguments.get(0));
+			case GraphpatternPackage.NODE_PATTERN___GET_OUTGOING__EREFERENCE_NODEPATTERN_STEREOTYPE:
+				return getOutgoing((EReference)arguments.get(0), (NodePattern)arguments.get(1), (Stereotype)arguments.get(2));
 			case GraphpatternPackage.NODE_PATTERN___GET_INCOMING__EREFERENCE:
 				return getIncoming((EReference)arguments.get(0));
 			case GraphpatternPackage.NODE_PATTERN___GET_INCOMINGS__EREFERENCE:
