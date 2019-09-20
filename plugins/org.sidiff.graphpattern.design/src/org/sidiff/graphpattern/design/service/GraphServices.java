@@ -71,7 +71,7 @@ public class GraphServices {
 		for (NodePattern nodePattern : graphPattern.getNodes()) {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
 				if (edgePattern.getOpposite() != null) {
-					if (!edgePattern.getType().isContainment() && !edgePattern.getOpposite().getType().isContainment()) {
+					if (!isContainment(edgePattern) && !isContainment(edgePattern.getOpposite())) {
 
 						// Check for >consistent< opposite:
 						if (ConsistencyChecks.checkOpposite(edgePattern)) {
@@ -101,7 +101,7 @@ public class GraphServices {
 		for (NodePattern nodePattern : graphPattern.getNodes()) {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
 				if (edgePattern.getOpposite() != null) {
-					if (edgePattern.getType().isContainment()) {
+					if (isContainment(edgePattern)) {
 						
 						// Check for >consistent< opposite:
 						if (ConsistencyChecks.checkOpposite(edgePattern)) {
@@ -114,6 +114,15 @@ public class GraphServices {
 		
 		return edges;
 	}
+
+	/**
+	 * @param edgePattern An edge.
+	 * @return <code>true</code> if the type of the edge is a containment;
+	 *         <code>false</code> otherwise.
+	 */
+	public boolean isContainment(EdgePattern edgePattern) {
+		return (edgePattern.getType() != null) && edgePattern.getType().isContainment();
+	}
 	
 	/**
 	 * @param graphPattern
@@ -125,7 +134,7 @@ public class GraphServices {
 		
 		for (NodePattern nodePattern : graphPattern.getNodes()) {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
-				if (!edgePattern.getType().isContainment()) {
+				if (!isContainment(edgePattern)) {
 					
 					// Check if no (consistent) opposite is available:
 					if (!ConsistencyChecks.checkOpposite(edgePattern)) {
@@ -148,7 +157,7 @@ public class GraphServices {
 		
 		for (NodePattern nodePattern : graphPattern.getNodes()) {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
-				if (edgePattern.getType().isContainment()) {
+				if (isContainment(edgePattern)) {
 					
 					// Check if no (consistent) opposite is available:
 					if (!ConsistencyChecks.checkOpposite(edgePattern)) {
