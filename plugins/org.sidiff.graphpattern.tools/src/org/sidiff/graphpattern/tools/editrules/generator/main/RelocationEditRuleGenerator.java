@@ -165,7 +165,9 @@ public class RelocationEditRuleGenerator {
 
 			Pattern editOperation = editRuleGenerator.getEditOperation();
 
-			if (checkRelocationEditRule(editOperation)) {
+			if (checkRelocationEditRule(editOperation, 
+					editRuleGenerator.getTracePreGraph2EditGraph(), 
+					editRuleGenerator.getTracePostGraph2EditGraph())) {
 				relocationEditOperations.add(editRuleGenerator);
 			}
 		}
@@ -186,7 +188,9 @@ public class RelocationEditRuleGenerator {
 		}
 	}
 
-	private boolean checkRelocationEditRule(Pattern editOperation) {
+	private boolean checkRelocationEditRule(Pattern editOperation, 
+			Map<NodePattern, NodePattern> tracePreGraph2EditRule, 
+			Map<NodePattern, NodePattern> tracePostGraph2EditRule) {
 		
 		// Contains at least two relocatable edges?
 		int relocatableEdgesCount = 0;
@@ -199,7 +203,7 @@ public class RelocationEditRuleGenerator {
 				}
 				for (EdgePattern edge : node.getOutgoings()) {
 					if (edge.getStereotypes().contains(delete) || edge.getStereotypes().contains(create)) {
-						if (isRelocatableEdge(edge)) {
+						if (isRelocation(edge, tracePreGraph2EditRule, tracePostGraph2EditRule)) {
 							
 							// NOTE: Counting without opposites:
 							if (isRelocatableReference(edge.getSource().getType(), edge.getType(), edge.getTarget().getType()) ) {
@@ -223,6 +227,33 @@ public class RelocationEditRuleGenerator {
 		return relocatableEdgesCount >= 4;
 	}
 	
+	protected boolean isRelocation(EdgePattern editRuleEdge, 
+			Map<NodePattern, NodePattern> tracePreGraph2EditRule,
+			Map<NodePattern, NodePattern> tracePostGraph2EditRule) {
+		
+		// NOTE: A relocation happens only between a mapped node 
+		//       and a none mapped node of the pre- and post-graph!
+		if (isRelocatableEdge(editRuleEdge)) {
+			NodePattern editRuleSource = editRuleEdge.getSource();
+			NodePattern editRuleTarget = editRuleEdge.getTarget();
+			
+			boolean editRuleSourceMapped = 
+					tracePreGraph2EditRule.containsValue(editRuleSource) &&
+					tracePostGraph2EditRule.containsValue(editRuleSource);
+			
+			boolean editRuleTargetMapped = 
+					tracePreGraph2EditRule.containsValue(editRuleTarget) &&
+					tracePostGraph2EditRule.containsValue(editRuleTarget);
+			
+			if ((editRuleSourceMapped && !editRuleTargetMapped)
+					|| (!editRuleSourceMapped && editRuleTargetMapped)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
 	public Pattern getRelocationEdges() {
 		return relocationEdges;
 	}
@@ -236,7 +267,7 @@ public class RelocationEditRuleGenerator {
 		return relocationEdgesIndex;
 	}
 
-	public List<EdgePattern> getMatches(List<NodePattern> nodes) {
+	private List<EdgePattern> getMatches(List<NodePattern> nodes) {
 		List<EdgePattern> matches = new ArrayList<>();
 		
 		for (NodePattern node : nodes) {
@@ -250,7 +281,7 @@ public class RelocationEditRuleGenerator {
 		return matches;
 	}
 	
-	public boolean isRelocatableEdge(EdgePattern toBeMatched) {
+	private boolean isRelocatableEdge(EdgePattern toBeMatched) {
 		
 		if (toBeMatched != null) {
 			
@@ -274,7 +305,7 @@ public class RelocationEditRuleGenerator {
 		return false;
 	}
 	
-	public boolean isRelocatableReference(EClass source, EReference reference, EClass target) {
+	private boolean isRelocatableReference(EClass source, EReference reference, EClass target) {
 		List<EdgePattern> potentialMatches = getRelocationEdgesIndex().get(reference);
 		
 		if (potentialMatches != null) {
