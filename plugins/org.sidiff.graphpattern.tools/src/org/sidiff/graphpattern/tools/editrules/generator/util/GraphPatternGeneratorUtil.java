@@ -2,7 +2,7 @@ package org.sidiff.graphpattern.tools.editrules.generator.util;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.constraint;
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
-import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.require;
+import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.exists;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class GraphPatternGeneratorUtil {
 	}
 	
 	public static boolean isCondition(GraphElement graphElement) {
-		return graphElement.getStereotypes().contains(not) || graphElement.getStereotypes().contains(require);
+		return graphElement.getStereotypes().contains(not) || graphElement.getStereotypes().contains(exists);
 	}
 	
 	public static boolean isNot(GraphElement graphElement) {
@@ -42,7 +42,7 @@ public class GraphPatternGeneratorUtil {
 	}
 	
 	public static boolean isRequire(GraphElement graphElement) {
-		return graphElement.getStereotypes().contains(require);
+		return graphElement.getStereotypes().contains(exists);
 	}
 	
 	public static boolean isUnmodifiable(EdgePattern edge) {
@@ -90,7 +90,7 @@ public class GraphPatternGeneratorUtil {
 		Parameter parameter = GraphpatternFactory.eINSTANCE.createParameter();
 		parameter.setName(name);
 		
-		if (!pattern.getParameters().stream().anyMatch(p -> p.getName().equals(name))) {
+		if (!pattern.getParameters().stream().anyMatch(p -> (p.getName() != null) && p.getName().equals(name))) {
 			pattern.getParameters().add(parameter);
 			return true;
 		}

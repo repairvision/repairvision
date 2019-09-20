@@ -1,6 +1,6 @@
 package org.sidiff.graphpattern.tools.complex2basic;
 
-import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.require;
+import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.exists;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -257,11 +257,11 @@ public class ComplexToBasicGraphPatterns {
 		
 		// Mark context as required:
 		for (NodePattern contextNode : subGraph.contextNodes) {
-			((NodePattern) subGraphCopy.get(contextNode)).getStereotypes().add(require);
+			((NodePattern) subGraphCopy.get(contextNode)).getStereotypes().add(exists);
 		}
 		
 		for (NodePattern contextNode : basicGraphContextNodes) {
-			((NodePattern) subGraphCopy.get(contextNode)).getStereotypes().add(require);
+			((NodePattern) subGraphCopy.get(contextNode)).getStereotypes().add(exists);
 		}
 		
 		// Find and copy parameter sub-set:
@@ -565,10 +565,10 @@ public class ComplexToBasicGraphPatterns {
 	}
 	
 	protected boolean containsContent(NodePattern node) {
-		if (node.getStereotypes().contains(require))  {
+		if (node.getStereotypes().contains(exists))  {
 			for (EdgePattern outgoing : node.getOutgoings()) {
 				if (outgoing.getType().isContainment()) {
-					if (!outgoing.getTarget().getStereotypes().contains(require)) {
+					if (!outgoing.getTarget().getStereotypes().contains(exists)) {
 						return true;
 					}
 				}
@@ -578,6 +578,6 @@ public class ComplexToBasicGraphPatterns {
 	}
 	
 	protected boolean isContent(NodePattern node) {
-		return !node.getStereotypes().contains(require);
+		return !node.getStereotypes().contains(exists);
 	}
 }

@@ -17,6 +17,10 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 	
 	protected int[] ORANGE_BACKGROUND = {255, 238, 221};
 	
+	protected int[] VIOLETT_FOREGROUND = {92, 65, 139};
+	
+	protected int[] VIOLETT_BACKGROUND = {200, 137, 253};
+	
 	@Override
 	public int[] getNodeBackgroundColor(NodePattern node, Gradient gradient) {
 		
@@ -26,8 +30,10 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_BACKGROUND;
-			case require:
+			case exists:
 				return ORANGE_BACKGROUND;
+			case forall:
+				return VIOLETT_BACKGROUND;
 			default:
 				break;
 			}
@@ -45,8 +51,10 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {	
 			case not:
 				return BLUE_FOREGROUND;
-			case require:
+			case exists:
 				return ORANGE_FOREGROUND;
+			case forall:
+				return VIOLETT_FOREGROUND;
 			default:
 				break;
 			}
@@ -64,8 +72,10 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
-			case require:
+			case exists:
 				return ORANGE_FOREGROUND;
+			case forall:
+				return VIOLETT_FOREGROUND;
 			default:
 				break;
 			}
@@ -83,8 +93,10 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
-			case require:
+			case exists:
 				return ORANGE_FOREGROUND;
+			case forall:
+				return VIOLETT_FOREGROUND;
 			default:
 				break;
 			}
@@ -102,8 +114,10 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
-			case require:
+			case exists:
 				return ORANGE_FOREGROUND;
+			case forall:
+				return VIOLETT_FOREGROUND;
 			default:
 				break;
 			}
@@ -121,8 +135,10 @@ public class ConstraintGraphPatternVisualization implements IGraphPatternVisuali
 			switch (STEREOTYPE.valueOf(stereotype.getName())) {
 			case not:
 				return BLUE_FOREGROUND;
-			case require:
+			case exists:
 				return ORANGE_FOREGROUND;
+			case forall:
+				return VIOLETT_FOREGROUND;
 			default:
 				break;
 			}

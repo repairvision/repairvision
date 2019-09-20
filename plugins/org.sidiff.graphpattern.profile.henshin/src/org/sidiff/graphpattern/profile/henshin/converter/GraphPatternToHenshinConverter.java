@@ -1,5 +1,7 @@
 package org.sidiff.graphpattern.profile.henshin.converter;
 
+import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.exists;
+import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.forbid;
@@ -37,6 +39,7 @@ import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes;
+import org.sidiff.graphpattern.profile.henshin.HenshinStereotypes;
 
 /**
  * Converts a Graph-Pattern ({@link GraphPattern} with
@@ -155,10 +158,10 @@ public class GraphPatternToHenshinConverter {
 		// Nodes:
 		for (NodePattern pNode : graph.getNodes()) {
 			if (pNode.getStereotypes().contains(forbid) 
-					|| pNode.getStereotypes().contains(ConstraintStereotypes.not)) {
+					|| pNode.getStereotypes().contains(not)) {
 				convert(nac, pNode);
 			} else if (pNode.getStereotypes().contains(require)
-					|| pNode.getStereotypes().contains(ConstraintStereotypes.require)) {
+					|| pNode.getStereotypes().contains(exists)) {
 				convert(pac, pNode);
 			} else {
 				convert(rule, pNode);
@@ -169,10 +172,10 @@ public class GraphPatternToHenshinConverter {
 		for (NodePattern pNode : graph.getNodes()) {
 			for (AttributePattern pAttribute : pNode.getAttributes()) {
 				if (pAttribute.getStereotypes().contains(forbid) 
-						|| pAttribute.getStereotypes().contains(ConstraintStereotypes.not)) {
+						|| pAttribute.getStereotypes().contains(not)) {
 					convert(nac, pAttribute);
 				} else if (pAttribute.getStereotypes().contains(require)
-						|| pAttribute.getStereotypes().contains(ConstraintStereotypes.require)) {
+						|| pAttribute.getStereotypes().contains(exists)) {
 					convert(pac, pAttribute);
 				} else {
 					convert(rule, pAttribute);
@@ -184,10 +187,10 @@ public class GraphPatternToHenshinConverter {
 		for (NodePattern pNode : graph.getNodes()) {
 			for (EdgePattern pEdge : pNode.getOutgoings()) {
 				if (pEdge.getStereotypes().contains(forbid) 
-						|| pEdge.getStereotypes().contains(ConstraintStereotypes.not)) {
+						|| pEdge.getStereotypes().contains(not)) {
 					convert(nac, pEdge);
 				} else if (pEdge.getStereotypes().contains(require)
-						|| pEdge.getStereotypes().contains(ConstraintStereotypes.require)) {
+						|| pEdge.getStereotypes().contains(exists)) {
 					convert(pac, pEdge);
 				} else {
 					convert(rule, pEdge);

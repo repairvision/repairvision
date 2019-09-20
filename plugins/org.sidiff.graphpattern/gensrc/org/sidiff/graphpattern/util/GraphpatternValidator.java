@@ -404,7 +404,7 @@ public class GraphpatternValidator extends EObjectValidator {
 		
 		if (JavaSciptParser.isVariable(name) && 
 				attributePattern.getGraph().getNodes().stream()
-				.anyMatch(n -> n.getName().equals(name))) {
+				.anyMatch(n -> (n.getName() != null) && n.getName().equals(name))) {
 			
 			if (diagnostics != null) {
 				diagnostics.add
