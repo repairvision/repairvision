@@ -28,22 +28,22 @@ import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGenera
 
 public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 
-	// NOTE: We need to separate the copier since 'from' and 'to' might be the same graph.
+	// NOTE: We need to separate the copier since 'pre' and 'post' might be the same graph.
 	
 	protected enum GraphType {
-		FROM, TO
+		PRE, POST
 	}
 	
-	protected Copier fromFragmentCopier = createCopier();
+	protected Copier preFragmentCopier = createCopier();
 	
-	protected Copier toFragmentCopier = createCopier();
+	protected Copier postFragmentCopier = createCopier();
 	
 	protected Pattern editOperation;
 	
 	protected GraphPattern editRule;
 	
-	public GraphPatternEditRuleGenerator(GraphPattern fromGraph, GraphPattern toGraph, Map<NodePattern, NodePattern> match) {
-		super(fromGraph, toGraph, match);
+	public GraphPatternEditRuleGenerator(GraphPattern preGraph, GraphPattern postGraph, Map<NodePattern, NodePattern> match) {
+		super(preGraph, postGraph, match);
 		
 		this.editRule = GraphpatternFactory.eINSTANCE.createGraphPattern();
 		this.editRule.getStereotypes().add(rule);
@@ -65,31 +65,43 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		return editRule;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Map<NodePattern, NodePattern> getTracePreGraph2EditGraph() {
+		Map<?, ?> copy = preFragmentCopier;
+		return (Map<NodePattern, NodePattern>) copy;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<NodePattern, NodePattern> getTracePostGraph2EditGraph() {
+		Map<?, ?> copy = postFragmentCopier;
+		return (Map<NodePattern, NodePattern>) copy;
+	}
+	
 	@Override
-	public void generate(List<NodePattern> fromFragment, List<NodePattern> toFragment) {
-		super.generate(fromFragment, toFragment);
+	public void generate(List<NodePattern> preFragment, List<NodePattern> postFragment) {
+		super.generate(preFragment, postFragment);
 		
 		// Set edge targets:
-		for (EObject constraintGraphElement : fromFragmentCopier.keySet()) {
+		for (EObject constraintGraphElement : preFragmentCopier.keySet()) {
 			if (constraintGraphElement instanceof EdgePattern) {
-				generateEdgeTarget((EdgePattern) constraintGraphElement, GraphType.FROM);
+				generateEdgeTarget((EdgePattern) constraintGraphElement, GraphType.PRE);
 			}
 		}
-		for (EObject constraintGraphElement : toFragmentCopier.keySet()) {
+		for (EObject constraintGraphElement : postFragmentCopier.keySet()) {
 			if (constraintGraphElement instanceof EdgePattern) {
-				generateEdgeTarget((EdgePattern) constraintGraphElement, GraphType.TO);
+				generateEdgeTarget((EdgePattern) constraintGraphElement, GraphType.POST);
 			}
 		}
 		
 		// Set opposite edges:
-		for (EObject constraintGraphElement : fromFragmentCopier.keySet()) {
+		for (EObject constraintGraphElement : preFragmentCopier.keySet()) {
 			if (constraintGraphElement instanceof EdgePattern) {
-				generateEdgeOpposite((EdgePattern) constraintGraphElement, GraphType.FROM);
+				generateEdgeOpposite((EdgePattern) constraintGraphElement, GraphType.PRE);
 			}
 		}
-		for (EObject constraintGraphElement : toFragmentCopier.keySet()) {
+		for (EObject constraintGraphElement : postFragmentCopier.keySet()) {
 			if (constraintGraphElement instanceof EdgePattern) {
-				generateEdgeOpposite((EdgePattern) constraintGraphElement, GraphType.TO);
+				generateEdgeOpposite((EdgePattern) constraintGraphElement, GraphType.POST);
 			}
 		}
 		
@@ -169,21 +181,21 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 	}
 	
 	protected Copier getCopier(GraphType graphType) {
-		return (graphType.equals(GraphType.FROM)) ? fromFragmentCopier : toFragmentCopier;
+		return (graphType.equals(GraphType.PRE)) ? preFragmentCopier : postFragmentCopier;
 	}
 	
 	protected Copier getCoCopier(GraphType graphType) {
-		return (graphType.equals(GraphType.FROM)) ? toFragmentCopier : fromFragmentCopier;
+		return (graphType.equals(GraphType.PRE)) ? postFragmentCopier : preFragmentCopier;
 	}
 	
 	protected EdgePattern getEdgeMatch(EdgePattern constraintEdge, EList<EdgePattern> outgoings, GraphType graphType) {
-		return (graphType.equals(GraphType.FROM)) 
+		return (graphType.equals(GraphType.PRE)) 
 				? getEdgeMatchInToGraph(constraintEdge, outgoings) 
 				: getEdgeMatchInFromGraph(constraintEdge, outgoings);
 	}
 
 	protected NodePattern getNodeMatch(NodePattern source, GraphType graphType) {
-		return (graphType.equals(GraphType.FROM)) 
+		return (graphType.equals(GraphType.PRE)) 
 				? getNodeMatchInToGraph(source) 
 				: getNodeMatchInFromGraph(source);
 	}
@@ -218,140 +230,140 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 	
 	@Override
 	protected void generateCreate(NodePattern toNode) {
-		generateNode(toNode, create, toFragmentCopier);
+		generateNode(toNode, create, postFragmentCopier);
 	}
 	
 	@Override
 	protected void generateCreate(EdgePattern toEdge) {
-		generateEdge(toEdge, create, toFragmentCopier);
+		generateEdge(toEdge, create, postFragmentCopier);
 	}
 	
 	@Override
 	protected void generateCreate(AttributePattern toAttribute) {
-		generateAttribute(toAttribute, create, toFragmentCopier);
+		generateAttribute(toAttribute, create, postFragmentCopier);
 	}
 	
 	@Override
 	protected void generateDelete(NodePattern fromNode) {
-		generateNode(fromNode, delete, fromFragmentCopier);
+		generateNode(fromNode, delete, preFragmentCopier);
 	}
 	
 	@Override
 	protected void generateDelete(EdgePattern fromEdge) {
-		generateEdge(fromEdge, delete, fromFragmentCopier);
+		generateEdge(fromEdge, delete, preFragmentCopier);
 	}
 	
 	@Override
 	protected void generateDelete(AttributePattern fromAttribute) {
-		generateAttribute(fromAttribute, delete, fromFragmentCopier);
+		generateAttribute(fromAttribute, delete, preFragmentCopier);
 	}
 	
 	@Override
 	protected void generateContext(NodePattern fromNode, NodePattern toNode) {
-		NodePattern eoNode = generateNode(toNode, preserve, toFragmentCopier);
-		fromFragmentCopier.put(fromNode, eoNode);
+		NodePattern eoNode = generateNode(toNode, preserve, postFragmentCopier);
+		preFragmentCopier.put(fromNode, eoNode);
 	}
 	
 	@Override
 	protected void generatePreContext(NodePattern fromNode) {
-		generateNode(fromNode, preserve, fromFragmentCopier);
+		generateNode(fromNode, preserve, preFragmentCopier);
 	}
 
 	@Override
 	protected void generatePostContext(NodePattern toNode) {
-		generateNode(toNode, preserve, toFragmentCopier);
+		generateNode(toNode, preserve, postFragmentCopier);
 	}
 	
 	@Override
 	protected void generateModify(AttributePattern fromAttribute, String toAttributeValue) {
 		
 		// From:
-		generateAttribute(fromAttribute, delete, fromFragmentCopier);
+		generateAttribute(fromAttribute, delete, preFragmentCopier);
 		
 		// To:
-		AttributePattern rhsAttribute = generateAttribute(fromAttribute, create, fromFragmentCopier);
+		AttributePattern rhsAttribute = generateAttribute(fromAttribute, create, preFragmentCopier);
 		rhsAttribute.setValue(toAttributeValue);
 	}
 	
 	@Override
 	protected void generateContext(EdgePattern fromEdge, EdgePattern toEdge) {
-		generateEdge(toEdge, preserve, toFragmentCopier);
+		generateEdge(toEdge, preserve, postFragmentCopier);
 	}
 	
 	@Override
 	protected void generateContext(AttributePattern fromAttribute, AttributePattern toAttribute) {
-		generateAttribute(fromAttribute, preserve, fromFragmentCopier);
+		generateAttribute(fromAttribute, preserve, preFragmentCopier);
 	}
 	
 	@Override
 	protected void generateForbidPrecondition(NodePattern fromNode) {
-		GraphElement eoElement = generateNode(fromNode, forbid, fromFragmentCopier);
+		GraphElement eoElement = generateNode(fromNode, forbid, preFragmentCopier);
 		eoElement.getStereotypes().add(pre);
 	}
 
 	@Override
 	protected void generateForbidPrecondition(EdgePattern fromEdge) {
-		GraphElement eoElement = generateEdge(fromEdge, forbid, fromFragmentCopier);
+		GraphElement eoElement = generateEdge(fromEdge, forbid, preFragmentCopier);
 		eoElement.getStereotypes().add(pre);
 	}
 
 	@Override
 	protected void generateForbidPrecondition(AttributePattern fromAttribute) {
-		GraphElement eoElement = generateAttribute(fromAttribute, forbid, fromFragmentCopier);
+		GraphElement eoElement = generateAttribute(fromAttribute, forbid, preFragmentCopier);
 		eoElement.getStereotypes().add(pre);
 	}
 
 	@Override
 	protected void generateRequirePrecondition(NodePattern fromNode) {
-		GraphElement eoElement = generateNode(fromNode, require, fromFragmentCopier);
+		GraphElement eoElement = generateNode(fromNode, require, preFragmentCopier);
 		eoElement.getStereotypes().add(pre);
 	}
 
 	@Override
 	protected void generateRequirePrecondition(EdgePattern fromEdge) {
-		GraphElement eoElement = generateEdge(fromEdge, require, fromFragmentCopier);
+		GraphElement eoElement = generateEdge(fromEdge, require, preFragmentCopier);
 		eoElement.getStereotypes().add(pre);
 	}
 
 	@Override
 	protected void generateRequirePrecondition(AttributePattern fromAttribute) {
-		GraphElement eoElement = generateAttribute(fromAttribute, require, fromFragmentCopier);
+		GraphElement eoElement = generateAttribute(fromAttribute, require, preFragmentCopier);
 		eoElement.getStereotypes().add(pre);
 	}
 
 	@Override
 	protected void generateForbidPostcondition(NodePattern toNode) {
-		GraphElement eoElement = generateNode(toNode, forbid, toFragmentCopier);
+		GraphElement eoElement = generateNode(toNode, forbid, postFragmentCopier);
 		eoElement.getStereotypes().add(post);
 	}
 
 	@Override
 	protected void generateForbidPostcondition(EdgePattern toEdge) {
-		GraphElement eoElement = generateEdge(toEdge, forbid, toFragmentCopier);
+		GraphElement eoElement = generateEdge(toEdge, forbid, postFragmentCopier);
 		eoElement.getStereotypes().add(post);
 	}
 
 	@Override
 	protected void generateForbidPostcondition(AttributePattern toAttribute) {
-		GraphElement eoElement = generateAttribute(toAttribute, forbid, toFragmentCopier);
+		GraphElement eoElement = generateAttribute(toAttribute, forbid, postFragmentCopier);
 		eoElement.getStereotypes().add(post);
 	}
 
 	@Override
 	protected void generateRequirePostcondition(NodePattern toNode) {
-		GraphElement eoElement = generateNode(toNode, require, toFragmentCopier);
+		GraphElement eoElement = generateNode(toNode, require, postFragmentCopier);
 		eoElement.getStereotypes().add(post);
 	}
 
 	@Override
 	protected void generateRequirePostcondition(EdgePattern toEdge) {
-		GraphElement eoElement = generateEdge(toEdge, require, toFragmentCopier);
+		GraphElement eoElement = generateEdge(toEdge, require, postFragmentCopier);
 		eoElement.getStereotypes().add(post);
 	}
 
 	@Override
 	protected void generateRequirePostcondition(AttributePattern toAttribute) {
-		GraphElement eoElement = generateAttribute(toAttribute, require, toFragmentCopier);
+		GraphElement eoElement = generateAttribute(toAttribute, require, postFragmentCopier);
 		eoElement.getStereotypes().add(post);
 	}
 	

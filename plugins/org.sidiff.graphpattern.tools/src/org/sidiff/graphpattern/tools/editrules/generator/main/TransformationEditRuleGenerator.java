@@ -30,49 +30,49 @@ public class TransformationEditRuleGenerator {
 		
 		// Generate edit rules:
 		// Consider cross-product of all graph patterns:
-		for (GraphPattern fromConstraint : allConstraints) {
+		for (GraphPattern preConstraint : allConstraints) {
 			List<Pattern> transformationRules = new ArrayList<>();
 			
-//			if (fromConstraint.getName().contains("Enumeration with Literal")) {
-//				System.out.println(fromConstraint.getName());
+//			if (preConstraint.getName().contains("Enumeration with Literal")) {
+//				System.out.println(preConstraint.getName());
 //			} else {
 //				continue;
 //			}
 			
-			for (GraphPattern toConstraint : allConstraints) {
-//				if (toConstraint.getName().contains("Enumeration Attribute")) {
-//					System.out.println(toConstraint.getName());
+			for (GraphPattern postConstraint : allConstraints) {
+//				if (postConstraint.getName().contains("Enumeration Attribute")) {
+//					System.out.println(postConstraint.getName());
 //				} else {
 //					continue;
 //				}
 				
-				if ((fromConstraint != toConstraint) && (parentConstraint(fromConstraint) == parentConstraint(toConstraint))) {
-					int preSize = GraphPatternUtil.getPatternSize(fromConstraint.getNodes());
-					int postSize = GraphPatternUtil.getPatternSize(toConstraint.getNodes());
+				if ((preConstraint != postConstraint) && (parentConstraint(preConstraint) == parentConstraint(postConstraint))) {
+					int preSize = GraphPatternUtil.getPatternSize(preConstraint.getNodes());
+					int postSize = GraphPatternUtil.getPatternSize(postConstraint.getNodes());
 
-					IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(fromConstraint.getNodes().size());
+					IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(preConstraint.getNodes().size());
 					problem.setMinimumSolutionSize(Math.min(preSize, postSize)); // NOTE: At least one of both patterns need to be matched completely.
 					problem.setMaximumSolutionSize(Math.max(preSize, postSize));
 					problem.setSearchMaximumSolutions(true);
 					problem.setSearchInjectiveSolutions(true);
 
-					for (NodePattern fromNode : fromConstraint.getNodes()) {
-						if (!fromNode.getStereotypes().contains(not)) {
-							IDomain<NodePattern> domain = AbstractGraphPatternMatchings.getDomain(fromNode, 
-									toConstraint.getNodes(), 
+					for (NodePattern preNode : preConstraint.getNodes()) {
+						if (!preNode.getStereotypes().contains(not)) {
+							IDomain<NodePattern> domain = AbstractGraphPatternMatchings.getDomain(preNode, 
+									postConstraint.getNodes(), 
 									n -> !n.getStereotypes().contains(not));
-							IVariable<NodePattern, NodePattern> variable = new Variable<>(fromNode, domain, true);
+							IVariable<NodePattern, NodePattern> variable = new Variable<>(preNode, domain, true);
 							problem.addVariable(variable);
 						}
 					}
 
-					MinGraphEditDistanceMatchings matchings = new MinGraphEditDistanceMatchings(fromConstraint, toConstraint);
+					MinGraphEditDistanceMatchings matchings = new MinGraphEditDistanceMatchings(preConstraint, postConstraint);
 					ICSPSolver<NodePattern, NodePattern> solver = new CSPSolver<>(problem, matchings);
 					solver.run();
 
 					String name = "Transform: "
-							+ fromConstraint.getName() + " - To - "
-							+ toConstraint.getName();
+							+ preConstraint.getName() + " - To - "
+							+ postConstraint.getName();
 
 //					System.out.println("[" + matchings.getMatches().size() + "]: " + name);
 
@@ -102,7 +102,7 @@ public class TransformationEditRuleGenerator {
 			}
 			
 			// Add new edit rule for graph pattern:
-			editRules.add(fromConstraint, transformationRules);
+			editRules.add(preConstraint, transformationRules);
 		}
 	}
 }

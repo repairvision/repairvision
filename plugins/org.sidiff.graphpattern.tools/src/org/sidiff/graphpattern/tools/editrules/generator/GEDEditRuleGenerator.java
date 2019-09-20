@@ -15,8 +15,8 @@ public class GEDEditRuleGenerator extends BasicEditRuleGenerator {
 	
 	protected int contextCount = 0;
 	
-	public GEDEditRuleGenerator(GraphPattern fromGraph, GraphPattern toGraph, Map<NodePattern, NodePattern> match) {
-		super(fromGraph, toGraph, match);
+	public GEDEditRuleGenerator(GraphPattern preGraph, GraphPattern postGraph, Map<NodePattern, NodePattern> match) {
+		super(preGraph, postGraph, match);
 	}
 
 	public int getGraphEditDistance() {
@@ -32,122 +32,122 @@ public class GEDEditRuleGenerator extends BasicEditRuleGenerator {
 	}
 	
 	@Override
-	protected void generateCreate(NodePattern toNode) {
+	protected void generateCreate(NodePattern postNode) {
 		++graphEditDistance;
 	}
 	
 	@Override
-	protected void generateCreate(EdgePattern toEdge) {
+	protected void generateCreate(EdgePattern postEdge) {
 		++graphEditDistance;
 	}
 	
 	@Override
-	protected void generateCreate(AttributePattern toAttribute) {
+	protected void generateCreate(AttributePattern postAttribute) {
 		++graphEditDistance;
 	}
 	
 	@Override
-	protected void generateDelete(NodePattern fromNode) {
+	protected void generateDelete(NodePattern preNode) {
 		++graphEditDistance;
 	}
 	
 	@Override
-	protected void generateDelete(EdgePattern fromEdge) {
+	protected void generateDelete(EdgePattern preEdge) {
 		++graphEditDistance;
 	}
 	
 	@Override
-	protected void generateDelete(AttributePattern fromAttribute) {
+	protected void generateDelete(AttributePattern preAttribute) {
 		++graphEditDistance;
 	}
 	
 	@Override
-	protected void generateModify(AttributePattern fromAttribute, String toAttributeValue) {
+	protected void generateModify(AttributePattern preAttribute, String postAttributeValue) {
 		++graphEditDistance;
 	}
 
 	@Override
-	protected void generateForbidPrecondition(NodePattern fromNode) {
+	protected void generateForbidPrecondition(NodePattern preNode) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateForbidPrecondition(EdgePattern fromEdge) {
+	protected void generateForbidPrecondition(EdgePattern preEdge) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateForbidPrecondition(AttributePattern fromAttribute) {
+	protected void generateForbidPrecondition(AttributePattern preAttribute) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateRequirePrecondition(NodePattern fromNode) {
+	protected void generateRequirePrecondition(NodePattern preNode) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateRequirePrecondition(EdgePattern fromEdge) {
+	protected void generateRequirePrecondition(EdgePattern preEdge) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateRequirePrecondition(AttributePattern fromAttribute) {
+	protected void generateRequirePrecondition(AttributePattern preAttribute) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateForbidPostcondition(NodePattern toNode) {
+	protected void generateForbidPostcondition(NodePattern postNode) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateForbidPostcondition(EdgePattern toEdge) {
+	protected void generateForbidPostcondition(EdgePattern postEdge) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateForbidPostcondition(AttributePattern toAttribute) {
+	protected void generateForbidPostcondition(AttributePattern postAttribute) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateRequirePostcondition(NodePattern toNode) {
+	protected void generateRequirePostcondition(NodePattern postNode) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateRequirePostcondition(EdgePattern toEdge) {
+	protected void generateRequirePostcondition(EdgePattern postEdge) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateRequirePostcondition(AttributePattern toAttribute) {
+	protected void generateRequirePostcondition(AttributePattern postAttribute) {
 		++forbidCount;
 	}
 
 	@Override
-	protected void generateContext(NodePattern fromNode, NodePattern toNode) {
+	protected void generateContext(NodePattern preNode, NodePattern postNode) {
 		++contextCount;
 	}
 	
 	@Override
-	protected void generatePreContext(NodePattern fromNode) {
+	protected void generatePreContext(NodePattern preNode) {
 		++contextCount;
 	}
 
 	@Override
-	protected void generatePostContext(NodePattern toNode) {
+	protected void generatePostContext(NodePattern postNode) {
 		++contextCount;
 	}
 
 	@Override
-	protected void generateContext(EdgePattern fromEdge, EdgePattern toEdge) {
+	protected void generateContext(EdgePattern preEdge, EdgePattern postEdge) {
 		++contextCount;
 	}
 
 	@Override
-	protected void generateContext(AttributePattern fromAttribute, AttributePattern toAttribute) {
+	protected void generateContext(AttributePattern preAttribute, AttributePattern postAttribute) {
 		++contextCount;
 	}
 }

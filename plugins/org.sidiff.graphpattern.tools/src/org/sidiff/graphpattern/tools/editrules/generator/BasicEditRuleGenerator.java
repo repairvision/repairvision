@@ -19,106 +19,106 @@ public abstract class BasicEditRuleGenerator {
 	
 	protected Map<NodePattern, NodePattern> match;
 	
-	protected GraphPattern fromGraph;
+	protected GraphPattern preGraph;
 	
-	protected GraphPattern toGraph;
+	protected GraphPattern postGraph;
 	
-	public BasicEditRuleGenerator(GraphPattern fromGraph, GraphPattern toGraph, Map<NodePattern, NodePattern> match) {
+	public BasicEditRuleGenerator(GraphPattern preGraph, GraphPattern postGraph, Map<NodePattern, NodePattern> match) {
 		this.match = match;
-		this.fromGraph = fromGraph;
-		this.toGraph = toGraph;
+		this.preGraph = preGraph;
+		this.postGraph = postGraph;
 	}
 	
 	protected boolean graphContains(GraphPattern graph, GraphElement element) {
 		return element.getGraph() == graph;
 	}
 	
-	public void generate(List<NodePattern> fromFragment, List<NodePattern> toFragment) {
+	public void generate(List<NodePattern> preFragment, List<NodePattern> postFragment) {
 		
 		// << delete/forbid/modify/preserve/require >>:
-		for (NodePattern fromNode : fromFragment) {
-			NodePattern toNode = getNodeMatchInToGraph(fromNode);
+		for (NodePattern preNode : preFragment) {
+			NodePattern postNode = getNodeMatchInToGraph(preNode);
 
-			if (isConditionMatch(toNode, fromNode)) {
+			if (isConditionMatch(postNode, preNode)) {
 
 				// << forbid/require >> attribute:
-				if (isRequire(fromNode)) {
-					generateRequirePrecondition(fromNode);
-				} else if (isNot(fromNode)) {
-					generateForbidPrecondition(fromNode);
+				if (isRequire(preNode)) {
+					generateRequirePrecondition(preNode);
+				} else if (isNot(preNode)) {
+					generateForbidPrecondition(preNode);
 				}
 
 				// << forbid/require >> edges:
-				for (EdgePattern fromEdge : fromNode.getOutgoings()) {
-					if (isRequire(fromEdge)) {
-						generateRequirePrecondition(fromEdge);
-					} else if (isNot(fromEdge)) {
-						generateForbidPrecondition(fromEdge);
+				for (EdgePattern preEdge : preNode.getOutgoings()) {
+					if (isRequire(preEdge)) {
+						generateRequirePrecondition(preEdge);
+					} else if (isNot(preEdge)) {
+						generateForbidPrecondition(preEdge);
 					}
 				}
 
 				// << forbid/require >> attributes:
-				for (AttributePattern fromAttribute : fromNode.getAttributes()) {
-					if (isRequire(fromAttribute)) {
-						generateRequirePrecondition(fromAttribute);
-					} else if (isNot(fromAttribute)) {
-						generateForbidPrecondition(fromAttribute);
+				for (AttributePattern preAttribute : preNode.getAttributes()) {
+					if (isRequire(preAttribute)) {
+						generateRequirePrecondition(preAttribute);
+					} else if (isNot(preAttribute)) {
+						generateForbidPrecondition(preAttribute);
 					}
 				}
-			} else if ((toNode != null) || isContext(fromNode)) {
+			} else if ((postNode != null) || isContext(preNode)) {
 
 				// << preserve >> node
-				if (toNode != null) {
-					generateContext(fromNode, toNode);
+				if (postNode != null) {
+					generateContext(preNode, postNode);
 				} else {
-					generatePreContext(fromNode);
+					generatePreContext(preNode);
 				}
 
-				for (EdgePattern fromEdge : fromNode.getOutgoings()) {
-					EdgePattern toEdge = (toNode != null) ? getEdgeMatchInToGraph(fromEdge, toNode.getOutgoings()) : null;
+				for (EdgePattern preEdge : preNode.getOutgoings()) {
+					EdgePattern postEdge = (postNode != null) ? getEdgeMatchInToGraph(preEdge, postNode.getOutgoings()) : null;
 					
-					if (isUnmodifiable(fromEdge) || isConditionMatch(fromEdge, toEdge)) {
+					if (isUnmodifiable(preEdge) || isConditionMatch(preEdge, postEdge)) {
 
 						// << forbid/require >> edge:
-						if (isRequire(fromEdge)) {
-							generateRequirePrecondition(fromEdge);
-						} else if (isNot(fromEdge)) {
-							generateForbidPrecondition(fromEdge);
+						if (isRequire(preEdge)) {
+							generateRequirePrecondition(preEdge);
+						} else if (isNot(preEdge)) {
+							generateForbidPrecondition(preEdge);
 						}
 					} else {
 
 						// << delete/preserve >> edge:
-						if (toEdge == null) {
-							generateDelete(fromEdge);
+						if (postEdge == null) {
+							generateDelete(preEdge);
 						} else {
-							generateContext(fromEdge, toEdge);
+							generateContext(preEdge, postEdge);
 						}
 					}
 				}
 
-				for (AttributePattern fromAttribute : fromNode.getAttributes()) {
-					AttributePattern toAttribute = (toNode != null) ? getAttributeMatch(fromAttribute, toNode.getAttributes(), false) : null;
+				for (AttributePattern preAttribute : preNode.getAttributes()) {
+					AttributePattern postAttribute = (postNode != null) ? getAttributeMatch(preAttribute, postNode.getAttributes(), false) : null;
 					
-					if (isUnmodifiable(fromAttribute) || isConditionMatch(fromAttribute, toAttribute)) {
+					if (isUnmodifiable(preAttribute) || isConditionMatch(preAttribute, postAttribute)) {
 
 						// << forbid/require >> attribute:
-						if (isRequire(fromAttribute)) {
-							generateRequirePrecondition(fromAttribute);
-						} else if (isNot(fromAttribute)) {
-							generateForbidPrecondition(fromAttribute);
+						if (isRequire(preAttribute)) {
+							generateRequirePrecondition(preAttribute);
+						} else if (isNot(preAttribute)) {
+							generateForbidPrecondition(preAttribute);
 						}
 					} else {
 
 						// << delete/preserve/modify >> attribute:
-						if (toAttribute == null) {
-							generateModify(fromAttribute, generateParameterName(fromAttribute));
+						if (postAttribute == null) {
+							generateModify(preAttribute, generateParameterName(preAttribute));
 						} else {
-							if (fromAttribute.getValue().equals(toAttribute.getValue())) {
-								generateContext(fromAttribute, toAttribute);
+							if (preAttribute.getValue().equals(postAttribute.getValue())) {
+								generateContext(preAttribute, postAttribute);
 							} else {
 								// NOTE: If the LHS requires some attribute value and the RHS not 
 								//       then the RHS can be set to any value (x -> parameter).
-								generateModify(fromAttribute, toAttribute.getValue());
+								generateModify(preAttribute, postAttribute.getValue());
 							}
 						}
 					}
@@ -126,155 +126,155 @@ public abstract class BasicEditRuleGenerator {
 			} else {
 
 				// << delete >> node
-				generateDelete(fromNode);
+				generateDelete(preNode);
 
-				for (EdgePattern fromEdge : fromNode.getOutgoings()) {
-					if (isCondition(fromEdge) || isUnmodifiable(fromEdge)) {
+				for (EdgePattern preEdge : preNode.getOutgoings()) {
+					if (isCondition(preEdge) || isUnmodifiable(preEdge)) {
 
 						// << forbid/require >> edge:
-						if (isRequire(fromEdge)) {
-							generateRequirePrecondition(fromEdge);
-						} else if (isNot(fromEdge)) {
-							generateForbidPrecondition(fromEdge);
+						if (isRequire(preEdge)) {
+							generateRequirePrecondition(preEdge);
+						} else if (isNot(preEdge)) {
+							generateForbidPrecondition(preEdge);
 						}
 					} else {
 
 						// << delete >> edge:
-						generateDelete(fromEdge);
+						generateDelete(preEdge);
 					}
 				}
 
-				for (AttributePattern fromAttribute : fromNode.getAttributes()) {
-					if (isCondition(fromAttribute) || isUnmodifiable(fromAttribute)) {
+				for (AttributePattern preAttribute : preNode.getAttributes()) {
+					if (isCondition(preAttribute) || isUnmodifiable(preAttribute)) {
 
 						// << forbid/require >> attribute:
-						if (isRequire(fromAttribute)) {
-							generateRequirePrecondition(fromAttribute);
-						} else if (isNot(fromAttribute)) {
-							generateForbidPrecondition(fromAttribute);
+						if (isRequire(preAttribute)) {
+							generateRequirePrecondition(preAttribute);
+						} else if (isNot(preAttribute)) {
+							generateForbidPrecondition(preAttribute);
 						}
 					} else {
 
 						// << delete >> attribute:
-						generateDelete(fromAttribute);
+						generateDelete(preAttribute);
 					}
 				}
 			}
 		}
 		
 		// << create/forbid/preserve(post)/require >>:
-		for (NodePattern toNode : toFragment) {
-			NodePattern fromNode = getNodeMatchInFromGraph(toNode);
+		for (NodePattern postNode : postFragment) {
+			NodePattern preNode = getNodeMatchInFromGraph(postNode);
 			
 			// The single node or the matched nodes are conditions?
-			if (isConditionMatch(fromNode, toNode)) {
+			if (isConditionMatch(preNode, postNode)) {
 				
 				// << forbid/require >> node:
-				if (isRequire(toNode)) {
-					generateRequirePostcondition(toNode);
-				} else if (isNot(toNode)) {
-					generateForbidPostcondition(toNode);
+				if (isRequire(postNode)) {
+					generateRequirePostcondition(postNode);
+				} else if (isNot(postNode)) {
+					generateForbidPostcondition(postNode);
 				}
 				
 				// << forbid/require >> edges:
-				for (EdgePattern toEdge : toNode.getOutgoings()) {
-					if (isRequire(toEdge)) {
-						generateRequirePostcondition(toEdge);
-					} else if (isNot(toEdge)) {
-						generateForbidPostcondition(toEdge);
+				for (EdgePattern postEdge : postNode.getOutgoings()) {
+					if (isRequire(postEdge)) {
+						generateRequirePostcondition(postEdge);
+					} else if (isNot(postEdge)) {
+						generateForbidPostcondition(postEdge);
 					}
 				}
 				
 				// << forbid/require >> attributes:
-				for (AttributePattern toAttribute : toNode.getAttributes()) {
-					if (isRequire(toAttribute)) {
-						generateRequirePostcondition(toAttribute);
-					} else if (isNot(toAttribute)) {
-						generateForbidPostcondition(toAttribute);
+				for (AttributePattern postAttribute : postNode.getAttributes()) {
+					if (isRequire(postAttribute)) {
+						generateRequirePostcondition(postAttribute);
+					} else if (isNot(postAttribute)) {
+						generateForbidPostcondition(postAttribute);
 					}
 				}
-			} else if ((fromNode != null) || isContext(toNode)) {
+			} else if ((preNode != null) || isContext(postNode)) {
 
 				// << preserve (post) >> node
-				if (fromNode == null) {
-					generatePostContext(toNode);
+				if (preNode == null) {
+					generatePostContext(postNode);
 				}
 
-				for (EdgePattern toEdge : toNode.getOutgoings()) {
-					EdgePattern fromEdge = (fromNode != null) ? getEdgeMatchInFromGraph(toEdge, fromNode.getOutgoings()) : null;
+				for (EdgePattern postEdge : postNode.getOutgoings()) {
+					EdgePattern preEdge = (preNode != null) ? getEdgeMatchInFromGraph(postEdge, preNode.getOutgoings()) : null;
 					
 					// Mapping are already processed.
-					if (fromEdge == null) {
-						if (isUnmodifiable(toEdge) || isCondition(toEdge)) {
+					if (preEdge == null) {
+						if (isUnmodifiable(postEdge) || isCondition(postEdge)) {
 							
 							// << forbid/require >> edge:
-							if (isRequire(toEdge)) {
-								generateRequirePostcondition(toEdge);
-							} else if (isNot(toEdge)) {
-								generateForbidPostcondition(toEdge);
+							if (isRequire(postEdge)) {
+								generateRequirePostcondition(postEdge);
+							} else if (isNot(postEdge)) {
+								generateForbidPostcondition(postEdge);
 							}
 						} else {
 							
 							// << create >> edge:
-							generateCreate(toEdge);
+							generateCreate(postEdge);
 						}
 					}
 				}
 
-				for (AttributePattern toAttribute : toNode.getAttributes()) {
-					AttributePattern fromAttribute = (fromNode != null) ? getAttributeMatch(toAttribute, fromNode.getAttributes(), false) : null;
+				for (AttributePattern postAttribute : postNode.getAttributes()) {
+					AttributePattern preAttribute = (preNode != null) ? getAttributeMatch(postAttribute, preNode.getAttributes(), false) : null;
 					
 					// Mapping are already processed.
-					if (fromAttribute == null) {
-						if (isUnmodifiable(toAttribute) || isCondition(toAttribute)) {
+					if (preAttribute == null) {
+						if (isUnmodifiable(postAttribute) || isCondition(postAttribute)) {
 							
 							// << forbid/require >> attribute:
-							if (isRequire(toAttribute)) {
-								generateRequirePostcondition(toAttribute);
-							} else if (isNot(toAttribute)) {
-								generateForbidPostcondition(toAttribute);
+							if (isRequire(postAttribute)) {
+								generateRequirePostcondition(postAttribute);
+							} else if (isNot(postAttribute)) {
+								generateForbidPostcondition(postAttribute);
 							}
 						} else {
 							
 							// << create >> attribute:
-							generateCreate(toAttribute);
+							generateCreate(postAttribute);
 						}
 					}
 				}
 			} else {
 
 				// << create >> node
-				generateCreate(toNode);
+				generateCreate(postNode);
 
-				for (EdgePattern toEdge : toNode.getOutgoings()) {
-					if (isCondition(toEdge)) 
+				for (EdgePattern postEdge : postNode.getOutgoings()) {
+					if (isCondition(postEdge)) 
 					{
 						// << forbid/require >> edge:
-						if (isRequire(toEdge)) {
-							generateRequirePostcondition(toEdge);
-						} else if (isNot(toEdge)) {
-							generateForbidPostcondition(toEdge);
+						if (isRequire(postEdge)) {
+							generateRequirePostcondition(postEdge);
+						} else if (isNot(postEdge)) {
+							generateForbidPostcondition(postEdge);
 						}
 					} else {
 
 						// << create >> edge:
-						generateCreate(toEdge);
+						generateCreate(postEdge);
 					}
 				}
 
-				for (AttributePattern toAttribute : toNode.getAttributes()) {
-					if (isCondition(toAttribute)) {
+				for (AttributePattern postAttribute : postNode.getAttributes()) {
+					if (isCondition(postAttribute)) {
 
 						// << forbid/require >> attribute:
-						if (isRequire(toAttribute)) {
-							generateRequirePostcondition(toAttribute);
-						} else if (isNot(toAttribute)) {
-							generateForbidPostcondition(toAttribute);
+						if (isRequire(postAttribute)) {
+							generateRequirePostcondition(postAttribute);
+						} else if (isNot(postAttribute)) {
+							generateForbidPostcondition(postAttribute);
 						}
 					} else {
 
 						// << create >> attribute:
-						generateCreate(toAttribute);
+						generateCreate(postAttribute);
 					}
 				}
 			}
@@ -285,53 +285,53 @@ public abstract class BasicEditRuleGenerator {
 		return attribute.getNode().getName() + "_" + attribute.getType().getName();
 	}
 	
-	protected abstract void generateCreate(NodePattern toNode);
+	protected abstract void generateCreate(NodePattern postNode);
 	
-	protected abstract void generateCreate(EdgePattern toEdge);
+	protected abstract void generateCreate(EdgePattern postEdge);
 	
-	protected abstract void generateCreate(AttributePattern toAttribute);
+	protected abstract void generateCreate(AttributePattern postAttribute);
 	
-	protected abstract void generateDelete(NodePattern fromNode);
+	protected abstract void generateDelete(NodePattern preNode);
 	
-	protected abstract void generateDelete(EdgePattern fromEdge);
+	protected abstract void generateDelete(EdgePattern preEdge);
 	
-	protected abstract void generateDelete(AttributePattern fromAttribute);
+	protected abstract void generateDelete(AttributePattern preAttribute);
 	
-	protected abstract void generateModify(AttributePattern fromAttribute, String toAttributeValue);
+	protected abstract void generateModify(AttributePattern preAttribute, String postAttributeValue);
 	
-	protected abstract void generateContext(NodePattern fromNode, NodePattern toNode);
+	protected abstract void generateContext(NodePattern preNode, NodePattern postNode);
 	
-	protected abstract void generatePreContext(NodePattern fromNode);
+	protected abstract void generatePreContext(NodePattern preNode);
 	
-	protected abstract void generatePostContext(NodePattern toNode);
+	protected abstract void generatePostContext(NodePattern postNode);
 	
-	protected abstract void generateContext(EdgePattern fromEdge, EdgePattern toEdge);
+	protected abstract void generateContext(EdgePattern preEdge, EdgePattern postEdge);
 	
-	protected abstract void generateContext(AttributePattern fromAttribute, AttributePattern toAttribute);
+	protected abstract void generateContext(AttributePattern preAttribute, AttributePattern postAttribute);
 	
-	protected abstract void generateForbidPrecondition(NodePattern fromNode);
+	protected abstract void generateForbidPrecondition(NodePattern preNode);
 	
-	protected abstract void generateForbidPrecondition(EdgePattern fromEdge);
+	protected abstract void generateForbidPrecondition(EdgePattern preEdge);
 	
-	protected abstract void generateForbidPrecondition(AttributePattern fromAttribute);
+	protected abstract void generateForbidPrecondition(AttributePattern preAttribute);
 	
-	protected abstract void generateRequirePrecondition(NodePattern fromNode);
+	protected abstract void generateRequirePrecondition(NodePattern preNode);
 	
-	protected abstract void generateRequirePrecondition(EdgePattern fromEdge);
+	protected abstract void generateRequirePrecondition(EdgePattern preEdge);
 	
-	protected abstract void generateRequirePrecondition(AttributePattern fromAttribute);
+	protected abstract void generateRequirePrecondition(AttributePattern preAttribute);
 	
-	protected abstract void generateForbidPostcondition(NodePattern toNode);
+	protected abstract void generateForbidPostcondition(NodePattern postNode);
 	
-	protected abstract void generateForbidPostcondition(EdgePattern toEdge);
+	protected abstract void generateForbidPostcondition(EdgePattern postEdge);
 	
-	protected abstract void generateForbidPostcondition(AttributePattern toAttribute);
+	protected abstract void generateForbidPostcondition(AttributePattern postAttribute);
 	
-	protected abstract void generateRequirePostcondition(NodePattern toNode);
+	protected abstract void generateRequirePostcondition(NodePattern postNode);
 	
-	protected abstract void generateRequirePostcondition(EdgePattern toEdge);
+	protected abstract void generateRequirePostcondition(EdgePattern postEdge);
 	
-	protected abstract void generateRequirePostcondition(AttributePattern toAttribute);
+	protected abstract void generateRequirePostcondition(AttributePattern postAttribute);
 	
 	protected AttributePattern getAttributeMatch(AttributePattern attribute, EList<AttributePattern> otherAttributes, boolean checkValue) {
 		for (AttributePattern otherAttribute : otherAttributes) {
@@ -344,12 +344,12 @@ public abstract class BasicEditRuleGenerator {
 		return null;
 	}
 
-	protected EdgePattern getEdgeMatchInFromGraph(EdgePattern toEdge, EList<EdgePattern> fromEdges) {
-		for (EdgePattern fromEdge : fromEdges) {
-			if (fromEdge.getType() == toEdge.getType()) {
-				if (fromEdge.getTarget().getType() == toEdge.getTarget().getType()) {
-					if (getNodeMatchInToGraph(fromEdge.getTarget()) == toEdge.getTarget()) {
-						return fromEdge;
+	protected EdgePattern getEdgeMatchInFromGraph(EdgePattern postEdge, EList<EdgePattern> preEdges) {
+		for (EdgePattern preEdge : preEdges) {
+			if (preEdge.getType() == postEdge.getType()) {
+				if (preEdge.getTarget().getType() == postEdge.getTarget().getType()) {
+					if (getNodeMatchInToGraph(preEdge.getTarget()) == postEdge.getTarget()) {
+						return preEdge;
 					}
 				}
 			}
@@ -357,12 +357,12 @@ public abstract class BasicEditRuleGenerator {
 		return null;
 	}
 	
-	protected EdgePattern getEdgeMatchInToGraph(EdgePattern fromEdge, EList<EdgePattern> toEdges) {
-		for (EdgePattern toEdge : toEdges) {
-			if (toEdge.getType() == fromEdge.getType()) {
-				if (toEdge.getTarget().getType() == fromEdge.getTarget().getType()) {
-					if (getNodeMatchInFromGraph(toEdge.getTarget()) == fromEdge.getTarget()) {
-						return toEdge;
+	protected EdgePattern getEdgeMatchInToGraph(EdgePattern preEdge, EList<EdgePattern> postEdges) {
+		for (EdgePattern postEdge : postEdges) {
+			if (postEdge.getType() == preEdge.getType()) {
+				if (postEdge.getTarget().getType() == preEdge.getTarget().getType()) {
+					if (getNodeMatchInFromGraph(postEdge.getTarget()) == preEdge.getTarget()) {
+						return postEdge;
 					}
 				}
 			}
@@ -370,13 +370,13 @@ public abstract class BasicEditRuleGenerator {
 		return null;
 	}
 
-	protected NodePattern getNodeMatchInToGraph(NodePattern fromNode) {
-		return match.get(fromNode);
+	protected NodePattern getNodeMatchInToGraph(NodePattern preNode) {
+		return match.get(preNode);
 	}
 	
-	protected NodePattern getNodeMatchInFromGraph(NodePattern toNode) {
+	protected NodePattern getNodeMatchInFromGraph(NodePattern postNode) {
 		for (Entry<NodePattern, NodePattern> entry : match.entrySet()) {
-			if (entry.getValue() == toNode) {
+			if (entry.getValue() == postNode) {
 				return entry.getKey();
 			}
 		}
@@ -384,12 +384,12 @@ public abstract class BasicEditRuleGenerator {
 	}
 	
 	/**
-	 * @param fromElement A graph element or <code>null</code>.
-	 * @param toElement   A graph element or <code>null</code>.
+	 * @param preElement  A graph element or <code>null</code>.
+	 * @param postElement A graph element or <code>null</code>.
 	 * @return <code>true</code> if both given nodes are conditions;
 	 *         <code>false</code> otherwise.
 	 */
-	protected boolean isConditionMatch(GraphElement fromElement, GraphElement toElement) {
-		return ((fromElement == null) || isCondition(fromElement)) && ((toElement == null) || isCondition(toElement));
+	protected boolean isConditionMatch(GraphElement preElement, GraphElement postElement) {
+		return ((preElement == null) || isCondition(preElement)) && ((postElement == null) || isCondition(postElement));
 	}
 }
