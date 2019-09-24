@@ -1,6 +1,6 @@
 package org.sidiff.graphpattern.tools.editrules.generator.main;
 
-import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
+import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil.isCondition;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.parentConstraint;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import org.sidiff.graphpattern.util.GraphPatternUtil;
 
 public class TransformationEditRuleGenerator {
 
-	public static void generateStructuralTransformationRules(Pattern pattern, EditRuleCollector editRules) {
+	public static void generateStructuralTransformationRules(Pattern pattern, EditRuleCollector editRules, boolean checkDangling) {
 		List<GraphPattern> allConstraints = pattern.getAllGraphPatterns();
 		
 		// Generate edit rules:
@@ -52,20 +52,19 @@ public class TransformationEditRuleGenerator {
 					IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(preConstraint.getNodes().size());
 					problem.setMinimumSolutionSize(Math.min(preSize, postSize)); // NOTE: At least one of both patterns need to be matched completely.
 					problem.setMaximumSolutionSize(Math.max(preSize, postSize));
-					problem.setSearchMaximumSolutions(true);
 					problem.setSearchInjectiveSolutions(true);
 
 					for (NodePattern preNode : preConstraint.getNodes()) {
-						if (!preNode.getStereotypes().contains(not)) {
+						if (!isCondition(preNode)) {
 							IDomain<NodePattern> domain = AbstractGraphPatternMatchings.getDomain(preNode, 
 									postConstraint.getNodes(), 
-									n -> !n.getStereotypes().contains(not));
-							IVariable<NodePattern, NodePattern> variable = new Variable<>(preNode, domain, true);
+									n -> !isCondition(n));
+							IVariable<NodePattern, NodePattern> variable = new Variable<>(preNode, domain, true, true);
 							problem.addVariable(variable);
 						}
 					}
 
-					MinGraphEditDistanceMatchings matchings = new MinGraphEditDistanceMatchings(preConstraint, postConstraint);
+					MinGraphEditDistanceMatchings matchings = new MinGraphEditDistanceMatchings(preConstraint, postConstraint, checkDangling);
 					ICSPSolver<NodePattern, NodePattern> solver = new CSPSolver<>(problem, matchings);
 					solver.run();
 

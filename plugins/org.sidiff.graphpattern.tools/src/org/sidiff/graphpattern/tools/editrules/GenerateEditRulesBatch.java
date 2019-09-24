@@ -21,8 +21,27 @@ import org.sidiff.graphpattern.tools.editrules.generator.util.EditRuleCollector;
 
 public class GenerateEditRulesBatch extends AbstractHandler {
 	
+	private boolean checkDangling = true;
+	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		
+		// Select generators:
+		String[] generators = new String[] {
+				"Creation Rules Generator",
+				"Deletion Rules Generator",
+				"Transformation Rules Generator",
+				"Relocation Rules Generator"};
+		
+		List<String> selection = WorkbenchUtil.showSelections("Select Edit Rule Generators:", 
+				Arrays.asList(generators), Arrays.asList(generators) , WorkbenchUtil.getEMFLabelProvider());
+		
+		// Cancel -> Selection empty
+		if (selection.isEmpty()) {
+			return null;
+		}
+		
+		// Load patterns:
 		Bundle patternBundle = EMFHandlerUtil.getSelection(event, Bundle.class);
 		
 		if (patternBundle != null) {
@@ -30,14 +49,6 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			// Setup edit rule profile:
 			patternBundle.getProfiles().add(HenshinStereotypes.profile_model);
 			
-			String[] generators = new String[] {
-					"Creation Rules Generator",
-					"Deletion Rules Generator",
-					"Transformation Rules Generator",
-					"Relocation Rules Generator"};
-			
-			List<String> selection = WorkbenchUtil.showSelections("Select Edit Rule Generators:", 
-					Arrays.asList(generators), Arrays.asList(generators) , WorkbenchUtil.getEMFLabelProvider());
 			
 			// Relocation Rules Generator
 			RelocationEditRuleGenerator relocationEditRuleGenerator = new RelocationEditRuleGenerator(patternBundle);
@@ -65,22 +76,22 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 					
 					// Creation Rules Generator
 					if (selection.contains(generators[0])) {
-						ConstructionEditRuleGenerator.generateCreationRules(pattern, editOperations);
+						ConstructionEditRuleGenerator.generateCreationRules(pattern, editOperations, checkDangling);
 					}
 					
 					// Deletion Rules Generator
 					if (selection.contains(generators[1])) {
-						ConstructionEditRuleGenerator.generateDeletionRules(pattern, editOperations);
+						ConstructionEditRuleGenerator.generateDeletionRules(pattern, editOperations, checkDangling);
 					}
 					
 					// Transformation Rules Generator
 					if (selection.contains(generators[2])) {
-						TransformationEditRuleGenerator.generateStructuralTransformationRules(pattern, editOperations);
+						TransformationEditRuleGenerator.generateStructuralTransformationRules(pattern, editOperations, checkDangling);
 					}
 					
 					// Relocation Rules Generator
 					if (selection.contains(generators[3])) {
-						relocationEditRuleGenerator.generateRelocationRules(pattern, editOperations);
+						relocationEditRuleGenerator.generateRelocationRules(pattern, editOperations, checkDangling);
 					}
 				}
 				

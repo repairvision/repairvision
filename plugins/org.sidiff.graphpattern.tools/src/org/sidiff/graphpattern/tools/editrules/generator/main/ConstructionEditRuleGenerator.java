@@ -10,16 +10,15 @@ import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Parameter;
 import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil;
-import org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
+import org.sidiff.graphpattern.tools.editrules.generator.conditions.UnfulfillableConditions;
 import org.sidiff.graphpattern.tools.editrules.generator.util.EditRuleCollector;
 
 public class ConstructionEditRuleGenerator {
 
 	private static EClass pseudoResourceClass = GraphpatternPackage.eINSTANCE.getResource();
 	
-	public static void generateCreationRules(Pattern pattern, EditRuleCollector editRules) {
+	public static void generateCreationRules(Pattern pattern, EditRuleCollector editRules, boolean checkDangling) {
 		
 		// Generate edit rules:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
@@ -38,23 +37,21 @@ public class ConstructionEditRuleGenerator {
 			// Add context and conditions:
 			removePseudoResourceNode(editRule);
 			
-			// Remove negative graph postcondition constraints:
-			// (NAC incident to create node.)
-			if (HenshinProfileUtil.hasPostCondition(editRule)) {
-				ConstraintProfileUtil.removeNAC(editRule);
-			}
-			
 			// Add new edit rule for graph pattern:
-			editRules.add(graphPattern, editOperation);
+			if (UnfulfillableConditions.check(editRule, checkDangling)) {
+				editRules.add(graphPattern, editOperation);
+			} else {
+				System.err.println("WARNING: Unfulfillable condition found: " + editRule.getName());
+			}
 		}
 		
 		// Generate sub-patterns:
 		for (Pattern subPattern : pattern.getSubpatterns()) {
-			generateCreationRules(subPattern, editRules);
+			generateCreationRules(subPattern, editRules, checkDangling);
 		}
 	}
 
-	public static void generateDeletionRules(Pattern pattern, EditRuleCollector editRules) {
+	public static void generateDeletionRules(Pattern pattern, EditRuleCollector editRules, boolean checkDangling) {
 		
 		// Generate edit rules:
 		for (GraphPattern graphPattern : pattern.getGraphs()) {
@@ -70,19 +67,20 @@ public class ConstructionEditRuleGenerator {
 			Pattern editOperation = generator.getEditOperation();
 			GraphPattern editRule = generator.getEditRule();
 			
-			// Remove negative graph constraints:
-			ConstraintProfileUtil.removeNAC(editRule);
-			
 			// Add context and conditions:
 			removePseudoResourceNode(editRule);
 			
 			// Add new edit rule for graph pattern:
-			editRules.add(graphPattern, editOperation);
+			if (UnfulfillableConditions.check(editRule, checkDangling)) {
+				editRules.add(graphPattern, editOperation);
+			} else {
+				System.err.println("WARNING: Unfulfillable condition found: " + editRule.getName());
+			}
 		}
 		
 		// Generate sub-patterns:
 		for (Pattern subPattern : pattern.getSubpatterns()) {
-			generateDeletionRules(subPattern, editRules);
+			generateDeletionRules(subPattern, editRules, checkDangling);
 		}
 	}
 	

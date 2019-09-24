@@ -1,9 +1,9 @@
 package org.sidiff.graphpattern.tools.editrules.generator;
 
-import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isCondition;
+import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil.isCondition;
+import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil.isExists;
+import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil.isNot;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isContext;
-import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isNot;
-import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isExists;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isUnmodifiable;
 
 import java.util.List;
@@ -388,8 +388,8 @@ public abstract class BasicEditRuleGenerator {
 	/**
 	 * @param preElement  A graph element or <code>null</code>.
 	 * @param postElement A graph element or <code>null</code>.
-	 * @return <code>true</code> if both given nodes are conditions;
-	 *         <code>false</code> otherwise.
+	 * @return <code>true</code> if both given nodes (one node can be
+	 *         <code>null</code>) are conditions; <code>false</code> otherwise.
 	 */
 	protected boolean isConditionMatch(GraphElement preElement, GraphElement postElement) {
 		return ((preElement == null) || isCondition(preElement)) && ((postElement == null) || isCondition(postElement));

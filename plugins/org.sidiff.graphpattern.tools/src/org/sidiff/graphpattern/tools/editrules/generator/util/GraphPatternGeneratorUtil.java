@@ -1,11 +1,7 @@
 package org.sidiff.graphpattern.tools.editrules.generator.util;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.*;
-import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.exists;
-import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.not;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.*;
-import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.post;
-import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.pre;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -17,7 +13,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
@@ -33,42 +28,6 @@ public class GraphPatternGeneratorUtil {
 	
 	public static boolean hasContent(NodePattern node) {
 		return node.getOutgoings().stream().map(EdgePattern::getType).anyMatch(EReference::isContainment);
-	}
-	
-	public static boolean isEditCondition(GraphElement graphElement) {
-		return isForbid(graphElement)|| isRequire(graphElement);
-	}
-	
-	public static boolean isRequire(GraphElement graphElement) {
-		return graphElement.getStereotypes().contains(require);
-	}
-
-	public static boolean isForbid(GraphElement graphElement) {
-		return graphElement.getStereotypes().contains(forbid);
-	}
-	
-	public static boolean isPre(GraphElement graphElement) {
-		return graphElement.getStereotypes().contains(pre);
-	}
-	
-	public static boolean isPost(GraphElement graphElement) {
-		return graphElement.getStereotypes().contains(post);
-	}
-
-	public static boolean isCondition(GraphElement graphElement) {
-		return isNot(graphElement)|| isExists(graphElement) || isForAll(graphElement);
-	}
-	
-	public static boolean isNot(GraphElement graphElement) {
-		return graphElement.getStereotypes().contains(not);
-	}
-	
-	public static boolean isExists(GraphElement graphElement) {
-		return graphElement.getStereotypes().contains(exists);
-	}
-	
-	public static boolean isForAll(GraphElement graphElement) {
-		return graphElement.getStereotypes().contains(forall);
 	}
 	
 	public static boolean isUnmodifiable(EdgePattern edge) {

@@ -81,7 +81,6 @@ public class DecomposingEditRules {
 			IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(basicRuleSize);
 			problem.setMinimumSolutionSize(basicRuleSize);
 			problem.setMaximumSolutionSize(basicRuleSize);
-			problem.setSearchMaximumSolutions(true);
 			problem.setSearchInjectiveSolutions(true);
 			
 			for (NodePattern basicEditRuleNode : basicEditRuleGraph.getNodes()) {
@@ -94,7 +93,7 @@ public class DecomposingEditRules {
 					return;
 				}
 				
-				Variable<NodePattern, NodePattern> variable = new NodePatternVariable(basicEditRuleNode, domain, false, true);
+				Variable<NodePattern, NodePattern> variable = new NodePatternVariable(basicEditRuleNode, domain, false, true, true);
 				problem.addVariable(variable);
 			}
 			

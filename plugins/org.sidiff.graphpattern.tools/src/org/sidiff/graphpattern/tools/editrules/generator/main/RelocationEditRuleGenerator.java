@@ -1,5 +1,6 @@
 package org.sidiff.graphpattern.tools.editrules.generator.main;
 
+import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil.isCondition;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 
@@ -34,7 +35,7 @@ import org.sidiff.graphpattern.tools.csp.NodePatternDomain;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain.EdgeMatching;
 import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
-import org.sidiff.graphpattern.tools.editrules.generator.checks.UnfulfillableConditions;
+import org.sidiff.graphpattern.tools.editrules.generator.conditions.UnfulfillableConditions;
 import org.sidiff.graphpattern.tools.editrules.generator.util.EditRuleCollector;
 import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil;
 
@@ -50,15 +51,22 @@ public class RelocationEditRuleGenerator {
 		this.relocationEdges = getRelocationEdges(patternBundle);
 	}
 	
-	public void generateRelocationRules(Pattern pattern, EditRuleCollector editOperations) {
+	public void generateRelocationRules(
+			Pattern pattern, 
+			EditRuleCollector editOperations,
+			boolean checkDangling) {
 		
 		// Compare each graph pattern with itself:
 		for (GraphPattern graphPattern : pattern.getAllGraphPatterns()) {
-			generateRelocationRules(graphPattern, editOperations);
+			generateRelocationRules(graphPattern, editOperations, checkDangling);
 		}
 	}
 	
-	private void generateRelocationRules(GraphPattern graphPattern, EditRuleCollector editOperations) {
+	private void generateRelocationRules(
+			GraphPattern graphPattern,
+			EditRuleCollector editOperations,
+			boolean checkDangling) {
+		
 		List<EdgePattern> relocatableEdges = getMatches(graphPattern.getNodes());
 		
 //		if (graphPattern.getName().contains("Multiplicity-Many Bidirectional Reference")) {
@@ -77,7 +85,7 @@ public class RelocationEditRuleGenerator {
 			for (NodePattern node : graphPattern.getNodes()) {
 				
 				// Is not conditional node?
-				if (!GraphPatternGeneratorUtil.isCondition(node) ) {
+				if (!isCondition(node) ) {
 					
 					// Is contained node?
 					if (GraphPatternGeneratorUtil.isContext(node)) {
@@ -103,7 +111,10 @@ public class RelocationEditRuleGenerator {
 			}
 			
 			if (relocatableEdges.size() >= 2) {
-				generateRelocationRules(graphPattern, relocatableEdges, contextNodes, contentNodes, editOperations);
+				generateRelocationRules(
+						graphPattern, relocatableEdges, 
+						contextNodes, contentNodes, 
+						editOperations, checkDangling);
 			}
 		}
 	}
@@ -113,7 +124,8 @@ public class RelocationEditRuleGenerator {
 			List<EdgePattern> relocatableEdges, 
 			List<NodePattern> contextNodes, 
 			List<NodePattern> contentNodes,
-			EditRuleCollector editOperations) {
+			EditRuleCollector editOperations,
+			boolean checkDangling) {
 		
 		// Setup matching problem (graph pattern with itself): 
 		int size = contextNodes.size() + contentNodes.size();
@@ -121,7 +133,6 @@ public class RelocationEditRuleGenerator {
 		IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(size);
 		problem.setMinimumSolutionSize(contentNodes.size());
 		problem.setMaximumSolutionSize(size);
-		problem.setSearchMaximumSolutions(false);
 		problem.setSearchInjectiveSolutions(true);
 		
 		// TOTAL_BIJECTIVE without relocatable edges!
@@ -133,7 +144,7 @@ public class RelocationEditRuleGenerator {
 					EdgeMatching.TOTAL_BIJECTIVE, EdgeMatching.TOTAL_BIJECTIVE, 
 					(edge) -> relocatableEdges.contains(edge));
 			Variable<NodePattern, NodePattern> variable = new NodePatternVariable(
-					contextNode, domain, true, false);
+					contextNode, domain, true, false, false);
 			problem.addVariable(variable);
 		}
 		
@@ -144,7 +155,7 @@ public class RelocationEditRuleGenerator {
 					EdgeMatching.TOTAL_BIJECTIVE, EdgeMatching.TOTAL_BIJECTIVE,
 					(edge) -> relocatableEdges.contains(edge));	
 			Variable<NodePattern, NodePattern> variable = new NodePatternVariable(
-					contentNode, domain, false, false);
+					contentNode, domain, false, true, false);
 			problem.addVariable(variable);
 		}
 		
@@ -170,7 +181,7 @@ public class RelocationEditRuleGenerator {
 			if (checkRelocationEditRule(editOperation, 
 					editRuleGenerator.getTracePreGraph2EditGraph(), 
 					editRuleGenerator.getTracePostGraph2EditGraph())
-					&& UnfulfillableConditions.check(editRule)) {
+					&& UnfulfillableConditions.check(editRule, checkDangling)) {
 				relocationEditOperations.add(editRuleGenerator);
 			}
 		}

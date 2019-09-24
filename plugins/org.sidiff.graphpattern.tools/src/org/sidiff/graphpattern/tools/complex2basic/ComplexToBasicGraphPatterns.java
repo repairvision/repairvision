@@ -1,6 +1,8 @@
 package org.sidiff.graphpattern.tools.complex2basic;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.exists;
+import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil.isCondition;
+import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isContext;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -134,7 +136,6 @@ public class ComplexToBasicGraphPatterns {
 			IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(size);
 			problem.setMinimumSolutionSize(size);
 			problem.setMaximumSolutionSize(size);
-			problem.setSearchMaximumSolutions(true);
 			problem.setSearchInjectiveSolutions(true);
 			
 			for (NodePattern basicGraphPatternNode : basicGraphPattern.getNodes()) {
@@ -147,7 +148,7 @@ public class ComplexToBasicGraphPatterns {
 					return false;
 				}
 				
-				Variable<NodePattern, NodePattern> variable = new NodePatternVariable(basicGraphPatternNode, domain, false, true);
+				Variable<NodePattern, NodePattern> variable = new NodePatternVariable(basicGraphPatternNode, domain, false, true, true);
 				problem.addVariable(variable);
 			}
 			
@@ -180,7 +181,7 @@ public class ComplexToBasicGraphPatterns {
 		
 		for (NodePattern node : graphPattern.getNodes()) {
 			// Is contained node?
-			if (!GraphPatternGeneratorUtil.isCondition(node) && !GraphPatternGeneratorUtil.isContext(node)) {
+			if (!isCondition(node) && !isContext(node)) {
 				contentNodes.add(node);
 			}
 		}
