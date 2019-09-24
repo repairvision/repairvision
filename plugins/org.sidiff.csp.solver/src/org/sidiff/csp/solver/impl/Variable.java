@@ -14,26 +14,22 @@ public class Variable<R, D> implements IVariable<R, D> {
 	
 	protected boolean removable = true;
 	
+	protected boolean maximize = false;
+	
 	protected IDomain<D> domain;
 	
 	protected D value;
-	
-	/**
-	 * @param subject The subject that is represented by this variable.
-	 * @param domain  All values that could be assigned to this variable.
-	 */
-	public Variable(R subject, IDomain<D> domain) {
-		this.subject = subject;
-		this.domain = domain;
-	}
 	
 	/**
 	 * @param subject   The subject that is represented by this variable.
 	 * @param domain    All values that could be assigned to this variable.
 	 * @param removable <code>true</code> if this variable can be removed from the
 	 *                  CSP to find a (partial) solution.
+	 * @param maximize  <code>true</code> if this variable must be assigned if a
+	 *                  value is available, i.e. the solution should be maximized
+	 *                  for this variable; <code>false</code> otherwise.
 	 */
-	public Variable(R subject, IDomain<D> domain, boolean removable) {
+	public Variable(R subject, IDomain<D> domain, boolean removable, boolean maximize) {
 		super();
 		this.subject = subject;
 		this.domain = domain;
@@ -71,6 +67,16 @@ public class Variable<R, D> implements IVariable<R, D> {
 	}
 	
 	@Override
+	public boolean isMaximizeSolution() {
+		return this.maximize;
+	}
+	
+	@Override
+	public void setMaximizeSolution(boolean maximize) {
+		this.maximize = maximize;
+	}
+	
+	@Override
 	public IDomain<D> getDomain() {
 		return domain;
 	}
@@ -86,7 +92,7 @@ public class Variable<R, D> implements IVariable<R, D> {
 		// necessary condition:
 		return !domain.isEmpty();
 		
-		// TODO: Check for restrictions (if assign() can fail)!
+		// TODO[Subclasses]: Check for restrictions (if assign() can fail)!
 	}
 
 	@Override
@@ -116,8 +122,8 @@ public class Variable<R, D> implements IVariable<R, D> {
 			domain.applyRestriction(this, value);
 		}
 		
-		// TODO: Calculate restrictions of all other variable domains 
-		//       based on the currently assigned value!
+		// TODO[Subclasses]: Calculate restrictions of all other variable domains 
+		//                   based on the currently assigned value!
 		return true;
 	}
 	
@@ -137,8 +143,8 @@ public class Variable<R, D> implements IVariable<R, D> {
 			domain.undoRestriction(this);
 		}
 		
-		// TODO: Undo restrictions of all other variable domains 
-		//       based on the currently assigned value!
+		// TODO[Subclasses]: Undo restrictions of all other variable domains 
+		//                   based on the currently assigned value!
 	}
 	
 	public String toString() {

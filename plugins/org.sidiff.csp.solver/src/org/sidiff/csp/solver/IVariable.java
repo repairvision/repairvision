@@ -13,6 +13,10 @@ public interface IVariable<R, D> {
 	boolean isRemovable();
 
 	void setRemovable(boolean removable);
+	
+	boolean isMaximizeSolution();
+	
+	void setMaximizeSolution(boolean maximize);
 
 	IDomain<D> getDomain();
 

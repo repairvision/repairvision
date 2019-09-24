@@ -19,8 +19,6 @@ public class ConstraintSatisfactionProblem<R, D> implements IConstraintSatisfact
 	
 	private boolean searchInjectiveSolutions = false;
 	
-	private boolean searchMaximumSolutions = false;
-	
 	private int minimumSolutionSize = 0;
 	
 	private int maximumSolutionSize = Integer.MAX_VALUE;
@@ -67,16 +65,6 @@ public class ConstraintSatisfactionProblem<R, D> implements IConstraintSatisfact
 	}
 
 	@Override
-	public boolean isSearchMaximumSolutions() {
-		return searchMaximumSolutions;
-	}
-	
-	@Override
-	public void setSearchMaximumSolutions(boolean searchMaximumSolutions) {
-		this.searchMaximumSolutions = searchMaximumSolutions;
-	}
-	
-	@Override
 	public int getMinimumSolutionSize() {
 		return minimumSolutionSize;
 	}
@@ -98,19 +86,19 @@ public class ConstraintSatisfactionProblem<R, D> implements IConstraintSatisfact
 
 	@Override
 	public boolean checkPickedSolution(IStackReader<IVariable<R, D>> solutionVariables) {
-		// TODO: Check last picked variable!
+		// TODO[Subclasses]: Check last picked variable!
 		return true;
 	}
 
 	@Override
 	public boolean checkPartialSolution(IStackReader<IVariable<R, D>> removedVariables) {
-		// TODO: Check last removed variable!
+		// TODO[Subclasses]: Check last removed variable!
 		return true;
 	}
 
 	@Override
 	public boolean checkFinalSolution(IStackReader<IVariable<R, D>> solutionVariables) {
-		// TODO: Check the final solution!
+		// TODO[Subclasses]: Check the final solution!
 		return true;
 	}
 }

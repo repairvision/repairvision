@@ -22,8 +22,8 @@ public class NodePatternVariable extends Variable<NodePattern, NodePattern> {
 	 */
 	public NodePatternVariable(
 			NodePattern subject, IDomain<NodePattern> domain, 
-			boolean removable, boolean induced) {
-		super(subject, domain, removable);
+			boolean removable, boolean maximize, boolean induced) {
+		super(subject, domain, removable, maximize);
 		this.induced = induced;
 	}
 	

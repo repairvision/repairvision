@@ -2,12 +2,15 @@ package org.sidiff.graphpattern.tools.editrules.csp;
 
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.tools.csp.AbstractGraphPatternMatchings;
-import org.sidiff.graphpattern.tools.editrules.generator.checks.UnfulfillableConditions;
+import org.sidiff.graphpattern.tools.editrules.generator.conditions.UnfulfillableConditions;
 
 public class MinGraphEditDistanceMatchings extends AbstractGraphPatternMatchings<MinGraphEditDistanceMatch> {
 	
-	public MinGraphEditDistanceMatchings(GraphPattern subjectGraph, GraphPattern valueGraph) {
+	private boolean checkDangling;
+	
+	public MinGraphEditDistanceMatchings(GraphPattern subjectGraph, GraphPattern valueGraph, boolean checkDangling) {
 		super(subjectGraph, valueGraph);
+		this.checkDangling = checkDangling;
 	}
 
 	@Override
@@ -31,7 +34,7 @@ public class MinGraphEditDistanceMatchings extends AbstractGraphPatternMatchings
 		if (graphEditDistance <= minimumGraphEditDistance) {
 			match.generateEditOperation(subjectGraph, valueGraph);
 			
-			if (!UnfulfillableConditions.check(match.getEditRule())) {
+			if (!UnfulfillableConditions.check(match.getEditRule(), checkDangling)) {
 				return;
 			}
 		}
