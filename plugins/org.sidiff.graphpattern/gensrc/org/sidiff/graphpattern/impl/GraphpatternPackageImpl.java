@@ -1647,17 +1647,17 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 
 		initEOperation(getMatching__Iterator(), this.getEIterator(), "iterator", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getMatching__Size(), ecorePackage.getEInt(), "size", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getMatching__Size(), ecorePackage.getEInt(), "size", 1, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getMatching__IsEmpty(), ecorePackage.getEBoolean(), "isEmpty", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getMatching__IsEmpty(), ecorePackage.getEBoolean(), "isEmpty", 1, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getMatching__Add__EObject(), null, "add", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEObject(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getMatching__Remove__EObject(), ecorePackage.getEBoolean(), "remove", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getMatching__Remove__EObject(), ecorePackage.getEBoolean(), "remove", 1, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEObject(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getMatching__Contains__EObject(), ecorePackage.getEBoolean(), "contains", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getMatching__Contains__EObject(), ecorePackage.getEBoolean(), "contains", 1, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEObject(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getMatching__Clear(), null, "clear", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1759,8 +1759,28 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createResource(eNS_URI);
 
 		// Create annotations
+		// http://www.eclipse.org/OCL/Import
+		createImportAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore
 		createEcoreAnnotations();
+		// http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot
+		createPivotAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Import</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createImportAnnotations() {
+		String source = "http://www.eclipse.org/OCL/Import";
+		addAnnotation
+		  (this,
+		   source,
+		   new String[] {
+			   "ecore", "http://www.eclipse.org/emf/2002/Ecore"
+		   });
 	}
 
 	/**
@@ -1771,6 +1791,20 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 */
 	protected void createEcoreAnnotations() {
 		String source = "http://www.eclipse.org/emf/2002/Ecore";
+		addAnnotation
+		  (this,
+		   source,
+		   new String[] {
+			   "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+			   "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+			   "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
+		   });
+		addAnnotation
+		  (nodePatternEClass,
+		   source,
+		   new String[] {
+			   "constraints", "TheNameOfANodeMustBeUniqueWithinAGraph"
+		   });
 		addAnnotation
 		  (edgePatternEClass,
 		   source,
@@ -1788,6 +1822,22 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		   source,
 		   new String[] {
 			   "constraints", "TheNameOfTheParameterIsNotUnique"
+		   });
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createPivotAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot";
+		addAnnotation
+		  (nodePatternEClass,
+		   source,
+		   new String[] {
+			   "TheNameOfANodeMustBeUniqueWithinAGraph", "not(self.graph.nodes->exists(n | n <> self and n.name <> null and n.name = self.name))"
 		   });
 	}
 

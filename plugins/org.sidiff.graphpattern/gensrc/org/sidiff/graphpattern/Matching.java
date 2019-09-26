@@ -80,7 +80,7 @@ public interface Matching extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	int size();
@@ -88,7 +88,7 @@ public interface Matching extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model kind="operation"
+	 * @model kind="operation" required="true"
 	 * @generated
 	 */
 	boolean isEmpty();
@@ -104,7 +104,7 @@ public interface Matching extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	boolean remove(EObject match);
@@ -112,7 +112,7 @@ public interface Matching extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	boolean contains(EObject match);

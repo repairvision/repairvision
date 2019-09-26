@@ -2,6 +2,14 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="graphpattern" nsURI="http://www.sidiff.org/graphpattern/1.0"
     nsPrefix="graphpattern">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="GraphPattern" eSuperTypes="#//PatternElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="#//NodePattern" containment="true"/>
@@ -13,6 +21,12 @@
         eType="#//SubGraph" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NodePattern" eSuperTypes="#//GraphElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="TheNameOfANodeMustBeUniqueWithinAGraph"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="TheNameOfANodeMustBeUniqueWithinAGraph" value="not(self.graph.nodes->exists(n | n &lt;> self and n.name &lt;> null and n.name = self.name))"/>
+    </eAnnotations>
     <eOperations name="getAttribute" eType="#//AttributePattern">
       <eParameters name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
     </eOperations>
@@ -78,19 +92,19 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//NodePattern"
         eOpposite="#//NodePattern/attributes"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="EIterator" instanceTypeName="java.util.Iterator&lt;org.eclipse.emf.ecore.EObject>"
+  <eClassifiers xsi:type="ecore:EDataType" name="EIterator" instanceClassName="java.util.Iterator&lt;org.eclipse.emf.ecore.EObject>"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EClass" name="Matching" abstract="true">
     <eOperations name="iterator" eType="#//EIterator"/>
-    <eOperations name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eOperations name="isEmpty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="size" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="isEmpty" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eOperations name="add">
       <eParameters name="match" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     </eOperations>
-    <eOperations name="remove" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eOperations name="remove" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="match" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     </eOperations>
-    <eOperations name="contains" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eOperations name="contains" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="match" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     </eOperations>
     <eOperations name="clear"/>

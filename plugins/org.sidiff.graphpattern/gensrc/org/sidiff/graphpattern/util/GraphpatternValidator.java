@@ -182,7 +182,46 @@ public class GraphpatternValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateNodePattern(NodePattern nodePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(nodePattern, diagnostics, context);
+		if (!validate_NoCircularContainment(nodePattern, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validateNodePattern_TheNameOfANodeMustBeUniqueWithinAGraph(nodePattern, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * The cached validation expression for the TheNameOfANodeMustBeUniqueWithinAGraph constraint of '<em>Node Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String NODE_PATTERN__THE_NAME_OF_ANODE_MUST_BE_UNIQUE_WITHIN_AGRAPH__EEXPRESSION = "not(self.graph.nodes->exists(n | n <> self and n.name <> null and n.name = self.name))";
+
+	/**
+	 * Validates the TheNameOfANodeMustBeUniqueWithinAGraph constraint of '<em>Node Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNodePattern_TheNameOfANodeMustBeUniqueWithinAGraph(NodePattern nodePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(GraphpatternPackage.Literals.NODE_PATTERN,
+				 nodePattern,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "TheNameOfANodeMustBeUniqueWithinAGraph",
+				 NODE_PATTERN__THE_NAME_OF_ANODE_MUST_BE_UNIQUE_WITHIN_AGRAPH__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
 
 	/**
