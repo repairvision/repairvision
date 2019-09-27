@@ -332,7 +332,7 @@ public class CodebricksGenerator {
 				}
 				
 				for (Attribute attribute : eoNode.getAttributes()) {
-					for (String variable : JavaSciptParser.getVariables(attribute.getValue())) {
+					for (String variable : JavaSciptParser.getVariables(attribute.getType().getEAttributeType(), attribute.getValue())) {
 						
 						// Check if parameter already exists:
 						if (!parameterBricks.stream().anyMatch(b -> b.getText().startsWith(variable + TEMPLATE_PARAMETER_NAME_VALUE_SEPARATOR))) {

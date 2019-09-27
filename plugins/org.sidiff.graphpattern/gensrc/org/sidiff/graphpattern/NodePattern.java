@@ -59,7 +59,7 @@ public interface NodePattern extends GraphElement {
 	 * @return the value of the '<em>Type</em>' reference.
 	 * @see #setType(EClass)
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getNodePattern_Type()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	EClass getType();

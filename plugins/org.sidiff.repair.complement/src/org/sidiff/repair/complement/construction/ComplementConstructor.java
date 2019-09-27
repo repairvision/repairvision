@@ -272,7 +272,7 @@ public class ComplementConstructor {
 	}
 	
 	protected boolean checkVariableBindings(Collection<RecognitionMatch> recognitionMatch, Attribute attribute) {
-		for(String variable : JavaSciptParser.getVariables(attribute.getValue())) {
+		for(String variable : JavaSciptParser.getVariables(attribute.getType().getEAttributeType(), attribute.getValue())) {
 			if (!findVariableBinding(recognitionMatch, variable)) {
 				return false;
 			}

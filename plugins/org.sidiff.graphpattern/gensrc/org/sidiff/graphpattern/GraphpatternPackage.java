@@ -883,13 +883,58 @@ public interface GraphpatternPackage extends EPackage {
 	int ATTRIBUTE_PATTERN__NODE = GRAPH_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Constant</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_PATTERN__CONSTANT = GRAPH_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Variables</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_PATTERN__VARIABLES = GRAPH_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Attribute Pattern</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE_PATTERN_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 3;
+	int ATTRIBUTE_PATTERN_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
+	 * The operation id for the '<em>Is Constant</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_PATTERN___IS_CONSTANT = GRAPH_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Is Variable</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_PATTERN___IS_VARIABLE = GRAPH_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Is Expression</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_PATTERN___IS_EXPRESSION = GRAPH_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Attribute Pattern</em>' class.
@@ -898,7 +943,7 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE_PATTERN_OPERATION_COUNT = GRAPH_ELEMENT_OPERATION_COUNT + 0;
+	int ATTRIBUTE_PATTERN_OPERATION_COUNT = GRAPH_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Matches</b></em>' reference list.
@@ -2188,6 +2233,58 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getAttributePattern_Node();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.graphpattern.AttributePattern#getConstant <em>Constant</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Constant</em>'.
+	 * @see org.sidiff.graphpattern.AttributePattern#getConstant()
+	 * @see #getAttributePattern()
+	 * @generated
+	 */
+	EAttribute getAttributePattern_Constant();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.sidiff.graphpattern.AttributePattern#getVariables <em>Variables</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Variables</em>'.
+	 * @see org.sidiff.graphpattern.AttributePattern#getVariables()
+	 * @see #getAttributePattern()
+	 * @generated
+	 */
+	EAttribute getAttributePattern_Variables();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.AttributePattern#isVariable() <em>Is Variable</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Variable</em>' operation.
+	 * @see org.sidiff.graphpattern.AttributePattern#isVariable()
+	 * @generated
+	 */
+	EOperation getAttributePattern__IsVariable();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.AttributePattern#isConstant() <em>Is Constant</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Constant</em>' operation.
+	 * @see org.sidiff.graphpattern.AttributePattern#isConstant()
+	 * @generated
+	 */
+	EOperation getAttributePattern__IsConstant();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.AttributePattern#isExpression() <em>Is Expression</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Expression</em>' operation.
+	 * @see org.sidiff.graphpattern.AttributePattern#isExpression()
+	 * @generated
+	 */
+	EOperation getAttributePattern__IsExpression();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.Matching <em>Matching</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3275,6 +3372,46 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ATTRIBUTE_PATTERN__NODE = eINSTANCE.getAttributePattern_Node();
+
+		/**
+		 * The meta object literal for the '<em><b>Constant</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE_PATTERN__CONSTANT = eINSTANCE.getAttributePattern_Constant();
+
+		/**
+		 * The meta object literal for the '<em><b>Variables</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE_PATTERN__VARIABLES = eINSTANCE.getAttributePattern_Variables();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Variable</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ATTRIBUTE_PATTERN___IS_VARIABLE = eINSTANCE.getAttributePattern__IsVariable();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Constant</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ATTRIBUTE_PATTERN___IS_CONSTANT = eINSTANCE.getAttributePattern__IsConstant();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Expression</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ATTRIBUTE_PATTERN___IS_EXPRESSION = eINSTANCE.getAttributePattern__IsExpression();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.MatchingImpl <em>Matching</em>}' class.

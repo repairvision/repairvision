@@ -1,7 +1,7 @@
 package org.sidiff.graphpattern.tools.editrules.generator.util;
 
-import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.*;
-import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.*;
+import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.constraint;
+import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -18,7 +18,6 @@ import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Parameter;
 import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.attributes.JavaSciptParser;
 
 public class GraphPatternGeneratorUtil {
 
@@ -63,7 +62,7 @@ public class GraphPatternGeneratorUtil {
 				}
 				
 				for (AttributePattern attribute : eoNode.getAttributes()) {
-					for (String variable : JavaSciptParser.getVariables(attribute.getValue())) {
+					for (String variable : attribute.getVariables()) {
 						generateParameter(pattern, variable);
 					}
 				}

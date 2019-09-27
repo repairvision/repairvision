@@ -223,7 +223,7 @@ public class Edit2RecognitionMatch {
 	}
 	
 	private boolean isRecognizedAttributeValueSet(Attribute settingAttribute, EObject addedObj, Object value) {
-		Object constantValue = JavaSciptParser.getConstant(settingAttribute.getValue());
+		Object constantValue = JavaSciptParser.getConstant(settingAttribute.getType().getEAttributeType(), settingAttribute.getValue());
 		
 		if (constantValue != null) {
 			// Constant value:

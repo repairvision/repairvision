@@ -20,7 +20,8 @@ import org.eclipse.emf.ecore.EReference;
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getEdgePattern()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne\r\nTheOppositeMayNotBeItsOwnOpposite\r\nTheOppositeTypesAreNotMetaModelConform\r\nEdgeSourceAndTypeAreNotMetaModelConform\r\nEdgeTargetAndTypeAreNotMetaModelConform'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne TheOppositeMayNotBeItsOwnOpposite TheOppositeTypesAreNotMetaModelConform EdgeSourceAndTypeAreNotMetaModelConform EdgeTargetAndTypeAreNotMetaModelConform'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne='(self.opposite &lt;&gt; null) implies (self.opposite.opposite = self)' TheOppositeMayNotBeItsOwnOpposite='self.opposite &lt;&gt; self' TheOppositeTypesAreNotMetaModelConform='((self.opposite &lt;&gt; null) and (self.type.eOpposite &lt;&gt; null)) implies (self.opposite.type = self.type.eOpposite)' EdgeSourceAndTypeAreNotMetaModelConform='((self.type &lt;&gt; null) and (self.source &lt;&gt; null) and (self.source.type &lt;&gt; null)) implies self.source.type.eAllReferences-&gt;includes(self.type)' EdgeTargetAndTypeAreNotMetaModelConform='((self.type &lt;&gt; null) and (self.target &lt;&gt; null) and (self.target.type &lt;&gt; null)) implies ((self.type.eType = self.target.type) or (self.target.type.eAllSuperTypes-&gt;includes(self.type.eType) or (self.type.eType.instanceTypeName = \'org.eclipse.emf.ecore.EObject\')))'"
  * @generated
  */
 public interface EdgePattern extends GraphElement {

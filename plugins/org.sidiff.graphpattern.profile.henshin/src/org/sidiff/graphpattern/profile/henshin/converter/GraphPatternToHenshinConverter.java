@@ -41,7 +41,6 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Stereotype;
-import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes;
 import org.sidiff.graphpattern.profile.henshin.HenshinStereotypes;
 
@@ -516,8 +515,8 @@ public class GraphPatternToHenshinConverter {
 		// NOTE: Empty stereotype (of constraint pattern) as preserve.
 		
 		// attribute condition:
-		if (!JavaSciptParser.isConstant(pAttribute.getValue())) {
-			List<String> variables = JavaSciptParser.getVariables(pAttribute.getValue());
+		if (!pAttribute.isConstant()) {
+			List<String> variables = pAttribute.getVariables();
 
 			if (variables.contains(SELF_VARIABLE)) {
 				

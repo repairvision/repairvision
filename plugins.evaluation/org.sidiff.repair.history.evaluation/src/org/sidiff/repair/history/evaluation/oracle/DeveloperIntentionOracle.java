@@ -386,7 +386,7 @@ public class DeveloperIntentionOracle {
 							String contextSignatures = getAttributeValueChangeSignature(
 									attribute.getType(), 
 									match,
-									JavaSciptParser.getConstant(attribute.getValue()),
+									JavaSciptParser.getConstant(attribute.getType().getEAttributeType(), attribute.getValue()),
 									invertActions);
 
 							if (exists(contextSignatures)) {
@@ -405,7 +405,7 @@ public class DeveloperIntentionOracle {
 	private boolean isConstantAlreadySet(Attribute attribute, IMatching editRuleMatching, boolean invertActions) {
 		
 		// Check if fixed value is already set:
-		Object constant = JavaSciptParser.getConstant(attribute.getValue());
+		Object constant = JavaSciptParser.getConstant(attribute.getType().getEAttributeType(), attribute.getValue());
 		
 		if (constant != null) {
 			if (matchContext) {
