@@ -41,7 +41,9 @@ public class NodePatternDomain extends Domain<NodePattern> {
 			EdgeMatching incomingMatching, EdgeMatching outgoingMatching, Function<EdgePattern, Boolean> edgeFilter) {
 
 		for (NodePattern value : candidates) {
-			if (checkType(subject, value) && checkStereotypes(subject, value) 
+			if (checkType(subject, value) 
+					&& checkStereotypes(subject, value)
+					&& checkAttributes(subject, value)
 					&& checkOutgoings(subject, value, incomingMatching, edgeFilter)
 					&& checkIncomings(subject, value, outgoingMatching, edgeFilter)) {
 				add(value);
@@ -140,6 +142,10 @@ public class NodePatternDomain extends Domain<NodePattern> {
 	}
 	
 	protected boolean checkStereotypes(NodePattern subject, NodePattern value) {
+		return true;
+	}
+	
+	protected boolean checkAttributes(NodePattern subject, NodePattern value) {
 		return true;
 	}
 }

@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.tools.editrules.generator.util;
+package org.sidiff.graphpattern.tools.editrules.constructors.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,5 +33,13 @@ public class EditRuleCollector {
 	
 	public Map<GraphPattern, List<Pattern>> getEditRules() {
 		return editRules;
+	}
+	
+	public Iterable<GraphPattern> getRulebase() {
+		return () -> editRules.values().stream()
+				.flatMap(List<Pattern>::stream)
+				.map(Pattern::getGraphs)
+				.flatMap(List<GraphPattern>::stream)
+				.iterator();
 	}
 }

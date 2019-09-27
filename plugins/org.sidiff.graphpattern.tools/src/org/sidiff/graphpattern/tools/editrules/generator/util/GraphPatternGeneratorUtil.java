@@ -5,21 +5,46 @@ import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Iterator;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Parameter;
 import org.sidiff.graphpattern.Pattern;
 
 public class GraphPatternGeneratorUtil {
+	
+	public static EClass pseudoResourceClass = GraphpatternPackage.eINSTANCE.getResource();
+	
+	public static void removePseudoResourceNode(GraphPattern editRule) {
+		
+		// Remove (pseudo) resource node:
+		for (Iterator<NodePattern> iterator = editRule.getNodes().iterator(); iterator.hasNext();) {
+			NodePattern node = iterator.next();
+			
+			if (node.getType().equals(pseudoResourceClass)) {
+				Parameter parameter = editRule.getPattern().getParameter(node.getName());
+				
+				if (parameter != null) {
+					EcoreUtil.remove(parameter);
+				}
+				
+				node.removeIncident();
+				iterator.remove();
+			}
+		}
+	}
 
 	public static boolean isContext(NodePattern node) {
 		return !node.getIncomings().stream().anyMatch(e -> e.getType().isContainment());

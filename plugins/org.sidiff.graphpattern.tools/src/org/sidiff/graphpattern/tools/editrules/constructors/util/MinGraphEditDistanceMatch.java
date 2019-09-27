@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.tools.editrules.csp;
+package org.sidiff.graphpattern.tools.editrules.constructors.util;
 
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.Pattern;

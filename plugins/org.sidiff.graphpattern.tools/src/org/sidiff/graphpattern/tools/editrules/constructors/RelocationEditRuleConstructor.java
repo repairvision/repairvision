@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.tools.editrules.generator.main;
+package org.sidiff.graphpattern.tools.editrules.constructors;
 
 import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil.isCondition;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
@@ -34,12 +34,12 @@ import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain.EdgeMatching;
 import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
+import org.sidiff.graphpattern.tools.editrules.constructors.util.EditRuleCollector;
+import org.sidiff.graphpattern.tools.editrules.filter.IEditRuleFilter;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
-import org.sidiff.graphpattern.tools.editrules.generator.conditions.UnfulfillableConditions;
-import org.sidiff.graphpattern.tools.editrules.generator.util.EditRuleCollector;
 import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil;
 
-public class RelocationEditRuleGenerator {
+public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 	
 	public static final String RELOCATION_EDGES_PATTERN_NAME = "RELOCATION_EDGES";
 	
@@ -47,25 +47,23 @@ public class RelocationEditRuleGenerator {
 	
 	private Map<EReference, List<EdgePattern>> relocationEdgesIndex;
 	
-	public RelocationEditRuleGenerator(Bundle patternBundle) {
+	public RelocationEditRuleConstructor(Bundle patternBundle) {
 		this.relocationEdges = getRelocationEdges(patternBundle);
 	}
 	
-	public void generateRelocationRules(
-			Pattern pattern, 
-			EditRuleCollector editOperations,
-			boolean checkDangling) {
+	@Override
+	public void construct(Pattern patterns, List<IEditRuleFilter> filter, EditRuleCollector editRules) {
 		
 		// Compare each graph pattern with itself:
-		for (GraphPattern graphPattern : pattern.getAllGraphPatterns()) {
-			generateRelocationRules(graphPattern, editOperations, checkDangling);
+		for (GraphPattern graphPattern : patterns.getAllGraphPatterns()) {
+			generateRelocationRules(graphPattern, filter, editRules);
 		}
 	}
 	
 	private void generateRelocationRules(
 			GraphPattern graphPattern,
-			EditRuleCollector editOperations,
-			boolean checkDangling) {
+			List<IEditRuleFilter> filter,
+			EditRuleCollector editRules) {
 		
 		List<EdgePattern> relocatableEdges = getMatches(graphPattern.getNodes());
 		
@@ -114,7 +112,7 @@ public class RelocationEditRuleGenerator {
 				generateRelocationRules(
 						graphPattern, relocatableEdges, 
 						contextNodes, contentNodes, 
-						editOperations, checkDangling);
+						filter, editRules);
 			}
 		}
 	}
@@ -124,8 +122,8 @@ public class RelocationEditRuleGenerator {
 			List<EdgePattern> relocatableEdges, 
 			List<NodePattern> contextNodes, 
 			List<NodePattern> contentNodes,
-			EditRuleCollector editOperations,
-			boolean checkDangling) {
+			List<IEditRuleFilter> filter, 
+			EditRuleCollector editRules) {
 		
 		// Setup matching problem (graph pattern with itself): 
 		int size = contextNodes.size() + contentNodes.size();
@@ -165,6 +163,7 @@ public class RelocationEditRuleGenerator {
 		
 		// Generate edit rules:
 		List<GraphPatternEditRuleGenerator> relocationEditOperations = new ArrayList<>();
+		String name = "Relocation: " + graphPattern.getName();
 
 		for (GraphPatternMatch match : matchings.getMatches()) {
 			GraphPatternEditRuleGenerator editRuleGenerator = new GraphPatternEditRuleGenerator(
@@ -177,17 +176,21 @@ public class RelocationEditRuleGenerator {
 
 			Pattern editOperation = editRuleGenerator.getEditOperation();
 			GraphPattern editRule = editRuleGenerator.getEditRule();
+			
 
 			if (checkRelocationEditRule(editOperation, 
 					editRuleGenerator.getTracePreGraph2EditGraph(), 
-					editRuleGenerator.getTracePostGraph2EditGraph())
-					&& UnfulfillableConditions.check(editRule, checkDangling)) {
-				relocationEditOperations.add(editRuleGenerator);
+					editRuleGenerator.getTracePostGraph2EditGraph())) {
+				
+				if (!IEditRuleFilter.filter(filter, editOperation, editRule, editRules.getRulebase())) {
+					relocationEditOperations.add(editRuleGenerator);
+				} else {
+					System.err.println("INFO: Filtered edit rule [" + matchings.getMatches().indexOf(match) + "]: " + name);
+				}
 			}
 		}
 		
 		// Add new edit rules:
-		String name = "Relocation: " + graphPattern.getName();
 		int counter = 0;
 		
 		for (GraphPatternEditRuleGenerator generated : relocationEditOperations) {
@@ -198,7 +201,7 @@ public class RelocationEditRuleGenerator {
 				generated.setName(name);
 			}
 			
-			editOperations.add(graphPattern, generated.getEditOperation());
+			editRules.add(graphPattern, generated.getEditOperation());
 		}
 	}
 

@@ -1,16 +1,18 @@
-package org.sidiff.graphpattern.tools.editrules.csp;
+package org.sidiff.graphpattern.tools.editrules.constructors.util;
+
+import java.util.List;
 
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.tools.csp.AbstractGraphPatternMatchings;
-import org.sidiff.graphpattern.tools.editrules.generator.conditions.UnfulfillableConditions;
+import org.sidiff.graphpattern.tools.editrules.filter.IEditRuleFilter;
 
 public class MinGraphEditDistanceMatchings extends AbstractGraphPatternMatchings<MinGraphEditDistanceMatch> {
 	
-	private boolean checkDangling;
+	private List<IEditRuleFilter> filter;
 	
-	public MinGraphEditDistanceMatchings(GraphPattern subjectGraph, GraphPattern valueGraph, boolean checkDangling) {
+	public MinGraphEditDistanceMatchings(GraphPattern subjectGraph, GraphPattern valueGraph, List<IEditRuleFilter> filter) {
 		super(subjectGraph, valueGraph);
-		this.checkDangling = checkDangling;
+		this.filter = filter;
 	}
 
 	@Override
@@ -21,7 +23,7 @@ public class MinGraphEditDistanceMatchings extends AbstractGraphPatternMatchings
 	@Override
 	public void add(MinGraphEditDistanceMatch match) {
 		
-		// TODO: Might be optimized? The match size is monotonously decreasing!
+		// TODO: Might be optimized? Always update the minimum match size in the CSP to make the matching monotonously decreasing!?
 		
 		// Generate edit rule but just count the changes:
 		int graphEditDistance = match.getGraphEditDistance(subjectGraph, valueGraph);
@@ -34,7 +36,7 @@ public class MinGraphEditDistanceMatchings extends AbstractGraphPatternMatchings
 		if (graphEditDistance <= minimumGraphEditDistance) {
 			match.generateEditOperation(subjectGraph, valueGraph);
 			
-			if (!UnfulfillableConditions.check(match.getEditRule(), checkDangling)) {
+			if (IEditRuleFilter.filter(filter, match.getEditOperation(), match.getEditRule(), getCurrentMatches())) {
 				return;
 			}
 		}
@@ -48,6 +50,10 @@ public class MinGraphEditDistanceMatchings extends AbstractGraphPatternMatchings
 		if (graphEditDistance == minimumGraphEditDistance) {
 			matches.add(match);
 		}
+	}
+	
+	private Iterable<GraphPattern> getCurrentMatches() {
+		return () -> matches.stream().map(m -> m.getEditRule()).iterator();
 	}
 
 	@Override

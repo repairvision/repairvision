@@ -17,6 +17,13 @@ import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 
+/**
+ * Generates edit rules by a given pre- and post-graph-pattern. The graphs
+ * formulate pre-state that should be transformed into a post-state. Therefore,
+ * a partial mapping between the graph can be given.
+ * 
+ * @author Manuel Ohrndorf
+ */
 public abstract class BasicEditRuleGenerator {
 	
 	protected Map<NodePattern, NodePattern> match;

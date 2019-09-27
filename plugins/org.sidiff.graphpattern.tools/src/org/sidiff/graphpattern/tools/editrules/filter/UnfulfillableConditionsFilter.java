@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.tools.editrules.generator.conditions;
+package org.sidiff.graphpattern.tools.editrules.filter;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isCreate;
@@ -14,16 +14,34 @@ import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Pattern;
 
-public class UnfulfillableConditions {
+public class UnfulfillableConditionsFilter implements IEditRuleFilter {
 
+	private boolean checkDangling;
+	
 	/**
-	 * @param editRule An edit rule containing forbid/require pre/post conditions
 	 * @param checkDangling <code>true</code> for DPO; <code>false</code> for SPO.
+	 */
+	public UnfulfillableConditionsFilter(boolean checkDangling) {
+		this.checkDangling = checkDangling;
+	}
+	
+	/**
 	 * @return <code>true</code> if all conditions could be fulfilled;
 	 *         <code>false</code> otherwise.
 	 */
-	public static boolean check(GraphPattern editRule, boolean checkDangling) {
+	@Override
+	public boolean filter(Pattern editRule, GraphPattern editGraph, Iterable<GraphPattern> rulebase) {
+		return !check(editGraph);
+	}
+
+	/**
+	 * @param editRule An edit rule containing forbid/require pre/post conditions
+	 * @return <code>true</code> if all conditions could be fulfilled;
+	 *         <code>false</code> otherwise.
+	 */
+	private boolean check(GraphPattern editRule) {
 
 		for (NodePattern eoNode : editRule.getNodes()) {
 			
@@ -76,7 +94,7 @@ public class UnfulfillableConditions {
 	 * - DPO: require edge/attribute on delete node
 	 * - SPO/DPO: require edge/attribute on create node
 	 */
-	private static boolean isUnfulfillableRequirement(NodePattern eoNode, GraphElement element, boolean checkDangling) {
+	private boolean isUnfulfillableRequirement(NodePattern eoNode, GraphElement element, boolean checkDangling) {
 		
 		if (checkDangling) {
 			if (isDelete(eoNode) && isRequire(element)) {
@@ -97,7 +115,7 @@ public class UnfulfillableConditions {
 	 * be fulfilled if the pre-condition edge has a corresponding delete edge and
 	 * the post-condition edge has a corresponding create edge.
 	 */
-	private static boolean isUnfulfillableMultiplicityRequirement(NodePattern eoNode, EdgePattern eoEdge) {
+	private boolean isUnfulfillableMultiplicityRequirement(NodePattern eoNode, EdgePattern eoEdge) {
 		
 		if (isRequire(eoEdge) && !eoEdge.getType().isMany()) {
 			for (EdgePattern conflictingEdge : eoNode.getOutgoings()) {

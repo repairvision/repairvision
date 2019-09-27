@@ -1,0 +1,23 @@
+package org.sidiff.graphpattern.tools.editrules.constructors;
+
+import java.util.List;
+
+import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.tools.editrules.constructors.util.EditRuleCollector;
+import org.sidiff.graphpattern.tools.editrules.filter.IEditRuleFilter;
+
+/**
+ * Constructs the mappings from a pre-state graphs that should be transformed into
+ * a post-state graphs.
+ * 
+ * @author Manuel Ohrndorf
+ */
+public interface IEditRuleConstructor {
+
+	/**
+	 * @param pattern   The graph pattern library.
+	 * @param filter    Edit rule filters to be applied.
+	 * @param editRules Collects all generated edit rules.
+	 */
+	void construct(Pattern patterns, List<IEditRuleFilter> filter, EditRuleCollector editRules);
+}

@@ -27,13 +27,14 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.graphpattern.SubGraph;
 import org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatch;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
+import org.sidiff.graphpattern.tools.csp.NodePatternDomain;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain.EdgeMatching;
 import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
-import org.sidiff.graphpattern.tools.editrules.csp.EditNodePatternDomain;
 import org.sidiff.graphpattern.tools.editrules.decompose.dependencies.Dependency;
 import org.sidiff.graphpattern.tools.editrules.decompose.dependencies.DependencyNode;
 import org.sidiff.graphpattern.tools.editrules.decompose.dependencies.DependencyOrdering;
@@ -84,16 +85,46 @@ public class DecomposingEditRules {
 			problem.setSearchInjectiveSolutions(true);
 			
 			for (NodePattern basicEditRuleNode : basicEditRuleGraph.getNodes()) {
-				EditNodePatternDomain domain = new EditNodePatternDomain(
+				NodePatternDomain domain = new NodePatternDomain(
 						basicEditRuleNode, complexEditRuleGraph.getNodes(), 
-						EdgeMatching.TOTAL_INJECTIVE, EdgeMatching.TOTAL_INJECTIVE);
-				
+						EdgeMatching.TOTAL_INJECTIVE, EdgeMatching.TOTAL_INJECTIVE) {
+					
+					@Override
+					protected boolean checkStereotypes(NodePattern basicEditRuleNode, NodePattern complexEditRuleNode) {
+
+						// Stereotype compatibility of nodes:
+						Stereotype subEditRule = basicEditRuleNode.getStereotypes().get(0);
+						Stereotype fullEditRule = complexEditRuleNode.getStereotypes().get(0);
+
+						return (subEditRule.equals(preserve) && fullEditRule.equals(create))			// create->use
+								||	(subEditRule.equals(preserve) && fullEditRule.equals(delete))		// use->delete
+								||	(subEditRule.equals(preserve) && fullEditRule.equals(preserve))
+								||	(subEditRule.equals(delete) && fullEditRule.equals(delete))
+								||	(subEditRule.equals(create) && fullEditRule.equals(create));
+					}
+				};
+
 				// NOTE: Optimization:
 				if (domain.isEmpty()) {
 					return;
 				}
 				
-				Variable<NodePattern, NodePattern> variable = new NodePatternVariable(basicEditRuleNode, domain, false, true, true);
+				Variable<NodePattern, NodePattern> variable = new NodePatternVariable(basicEditRuleNode, domain, false, true, true) {
+					
+					@Override
+					protected boolean checkStereotypes(List<Stereotype> basicEditRuleEdge, List<Stereotype> complexEditRuleEdge) {
+						
+						// Stereotype compatibility of edges:
+						Stereotype subEditRule = basicEditRuleEdge.get(0);
+						Stereotype fullEditRule = complexEditRuleEdge.get(0);
+
+						return (subEditRule.equals(preserve) && fullEditRule.equals(create))			// create->use
+								||	(subEditRule.equals(preserve) && fullEditRule.equals(delete))		// use->delete
+								||	(subEditRule.equals(preserve) && fullEditRule.equals(preserve))
+								||	(subEditRule.equals(delete) && fullEditRule.equals(delete))
+								||	(subEditRule.equals(create) && fullEditRule.equals(create));
+					}
+				};
 				problem.addVariable(variable);
 			}
 			

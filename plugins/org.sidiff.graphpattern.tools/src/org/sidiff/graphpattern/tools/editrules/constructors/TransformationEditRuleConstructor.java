@@ -1,9 +1,10 @@
-package org.sidiff.graphpattern.tools.editrules.generator.main;
+package org.sidiff.graphpattern.tools.editrules.constructors;
 
 import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil.isCondition;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.parentConstraint;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.sidiff.csp.solver.ICSPSolver;
@@ -17,14 +18,16 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.tools.csp.AbstractGraphPatternMatchings;
-import org.sidiff.graphpattern.tools.editrules.csp.MinGraphEditDistanceMatch;
-import org.sidiff.graphpattern.tools.editrules.csp.MinGraphEditDistanceMatchings;
-import org.sidiff.graphpattern.tools.editrules.generator.util.EditRuleCollector;
+import org.sidiff.graphpattern.tools.editrules.constructors.util.EditRuleCollector;
+import org.sidiff.graphpattern.tools.editrules.constructors.util.MinGraphEditDistanceMatch;
+import org.sidiff.graphpattern.tools.editrules.constructors.util.MinGraphEditDistanceMatchings;
+import org.sidiff.graphpattern.tools.editrules.filter.IEditRuleFilter;
 import org.sidiff.graphpattern.util.GraphPatternUtil;
 
-public class TransformationEditRuleGenerator {
+public class TransformationEditRuleConstructor implements IEditRuleConstructor {
 
-	public static void generateStructuralTransformationRules(Pattern pattern, EditRuleCollector editRules, boolean checkDangling) {
+	@Override
+	public void construct(Pattern pattern, List<IEditRuleFilter> filter, EditRuleCollector editRules) {
 		List<GraphPattern> allConstraints = pattern.getAllGraphPatterns();
 		
 		// Generate edit rules:
@@ -64,7 +67,7 @@ public class TransformationEditRuleGenerator {
 						}
 					}
 
-					MinGraphEditDistanceMatchings matchings = new MinGraphEditDistanceMatchings(preConstraint, postConstraint, checkDangling);
+					MinGraphEditDistanceMatchings matchings = new MinGraphEditDistanceMatchings(preConstraint, postConstraint, filter);
 					ICSPSolver<NodePattern, NodePattern> solver = new CSPSolver<>(problem, matchings);
 					solver.run();
 
@@ -74,7 +77,17 @@ public class TransformationEditRuleGenerator {
 
 //					System.out.println("[" + matchings.getMatches().size() + "]: " + name);
 
-					// Generate edit rules:
+					// Filter edit rules (by global rulebase):
+					for (Iterator<MinGraphEditDistanceMatch> iterator = matchings.getMatches().iterator(); iterator.hasNext();) {
+						MinGraphEditDistanceMatch match = iterator.next();
+						
+						if (IEditRuleFilter.filter(filter, match.getEditOperation(), match.getEditRule(), editRules.getRulebase())) {
+							System.err.println("INFO: Filtered edit rule [" + matchings.getMatches().indexOf(match) + "]: " + name);
+							iterator.remove();
+						}
+					}
+					
+					// Generate edit rule names:
 					int counter = 0;
 					int count = matchings.getMatches().size();
 
