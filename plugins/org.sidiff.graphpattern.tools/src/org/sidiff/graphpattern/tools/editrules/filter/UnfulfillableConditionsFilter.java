@@ -1,12 +1,15 @@
 package org.sidiff.graphpattern.tools.editrules.filter;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
+import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.getChange;
+import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isChange;
+import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isContext;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isCreate;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isDelete;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isEditCondition;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isPost;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isPre;
-import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.*;
+import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isRequire;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isUnmodifiable;
 
 import org.sidiff.graphpattern.AttributePattern;
@@ -113,33 +116,57 @@ public class UnfulfillableConditionsFilter implements IEditRuleFilter {
 	 * NOTE: Search for nodes with the same outgoing pre/post condition
 	 * multiplicity-one edges that have different targets. This condition can only
 	 * be fulfilled if the pre-condition edge has a corresponding delete edge and
-	 * the post-condition edge has a corresponding create edge.
+	 * post-condition edge has a corresponding create edge.
 	 */
 	private boolean isUnfulfillableMultiplicityRequirement(NodePattern eoNode, EdgePattern eoEdge) {
 		
 		if (isRequire(eoEdge) && !eoEdge.getType().isMany()) {
 			for (EdgePattern conflictingEdge : eoNode.getOutgoings()) {
-				if (conflictingEdge != eoEdge) {
-					if (conflictingEdge.getTarget() != eoEdge.getTarget()) {
-						EdgePattern preEdge = null;
-						EdgePattern postEdge = null;
-						
-						if (isPre(eoEdge) && isPost(conflictingEdge)) {
-							preEdge = eoEdge;
-							postEdge = conflictingEdge;
-						} else if (isPre(conflictingEdge) && isPost(eoEdge)) {
-							preEdge = conflictingEdge;
-							postEdge = eoEdge;
-						}
-						
-						if ((preEdge != null) && (postEdge != null)) {
-							if ((eoNode.getOutgoing(preEdge.getType(), preEdge.getTarget(), delete) == null) 
-									|| (eoNode.getOutgoing(postEdge.getType(), postEdge.getTarget(), create) == null)) {
+				if ((conflictingEdge != eoEdge) 
+						&& isEditCondition(conflictingEdge) 
+						&& (eoEdge.getType() ==conflictingEdge.getType())) {
+					
+					EdgePattern preEdge = null;
+					EdgePattern postEdge = null;
+
+					if (isPre(eoEdge) && isPost(conflictingEdge)) {
+						preEdge = eoEdge;
+						postEdge = conflictingEdge;
+					} else if (isPre(conflictingEdge) && isPost(eoEdge)) {
+						preEdge = conflictingEdge;
+						postEdge = eoEdge;
+					}
+
+					if ((preEdge != null) && (postEdge != null)) {
+
+						// This condition can only be fulfilled if the pre-condition edge has a corresponding 
+						// delete edge and post-condition edge has a corresponding create edge.
+						if ((eoNode.getOutgoing(preEdge.getType(), preEdge.getTarget(), delete) == null) 
+								|| (eoNode.getOutgoing(postEdge.getType(), postEdge.getTarget(), create) == null)) {
+							
+							// We have to check if the preconditions can be merged/matched with each other:
+							if (!matchCondition(conflictingEdge, eoEdge)) {
 								return true;
 							}
 						}
 					}
 				}
+			}
+		}
+		
+		return false;
+	}
+
+	private boolean matchCondition(EdgePattern eoEdge, EdgePattern conflictingEdge) {
+		
+		if (eoEdge.getType() == conflictingEdge.getType()) {
+			if (isEditCondition(eoEdge.getTarget()) && isEditCondition(conflictingEdge.getTarget())) {
+				
+				// FIXME: We have to check if the preconditions can be merged/matched with each other.
+				
+				return true;
+			} else {
+				return eoEdge.getTarget() == conflictingEdge.getTarget();
 			}
 		}
 		
