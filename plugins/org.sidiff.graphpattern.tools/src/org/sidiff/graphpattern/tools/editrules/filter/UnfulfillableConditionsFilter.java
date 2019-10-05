@@ -12,6 +12,9 @@ import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.is
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isRequire;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isUnmodifiable;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphElement;
@@ -23,11 +26,17 @@ public class UnfulfillableConditionsFilter implements IEditRuleFilter {
 
 	private boolean checkDangling;
 	
+	private boolean injectiveMatching;
+	
 	/**
-	 * @param checkDangling <code>true</code> for DPO; <code>false</code> for SPO.
+	 * @param injectiveMatching <code>true</code> for injective LHS node matching;
+	 *                          <code>false</code> otherwise.
+	 * @param checkDangling     <code>true</code> for DPO; <code>false</code> for
+	 *                          SPO.
 	 */
-	public UnfulfillableConditionsFilter(boolean checkDangling) {
+	public UnfulfillableConditionsFilter(boolean checkDangling, boolean injectiveMatching) {
 		this.checkDangling = checkDangling;
+		this.injectiveMatching = injectiveMatching;
 	}
 	
 	/**
@@ -53,7 +62,7 @@ public class UnfulfillableConditionsFilter implements IEditRuleFilter {
 					
 					// NOTE: Ignore derived pre/post condition edges!
 					if (!isUnmodifiable(eoEdge)) {
-						if (isUnfulfillableMultiplicityRequirement(eoNode, eoEdge)) {
+						if (!injectiveMatching || isUnfulfillableMultiplicityRequirement(eoNode, eoEdge)) {
 							return false;
 						}
 						if (isUnfulfillableRequirement(eoNode, eoEdge, checkDangling)) {
@@ -123,7 +132,7 @@ public class UnfulfillableConditionsFilter implements IEditRuleFilter {
 		if (isRequire(eoEdge) && !eoEdge.getType().isMany()) {
 			for (EdgePattern conflictingEdge : eoNode.getOutgoings()) {
 				if ((conflictingEdge != eoEdge) 
-						&& isEditCondition(conflictingEdge) 
+						&& isRequire(conflictingEdge) 
 						&& (eoEdge.getType() ==conflictingEdge.getType())) {
 					
 					EdgePattern preEdge = null;
@@ -144,11 +153,10 @@ public class UnfulfillableConditionsFilter implements IEditRuleFilter {
 						if ((eoNode.getOutgoing(preEdge.getType(), preEdge.getTarget(), delete) == null) 
 								|| (eoNode.getOutgoing(postEdge.getType(), postEdge.getTarget(), create) == null)) {
 							
-							// We have to check if the preconditions can be merged/matched with each other:
-							if (!matchCondition(conflictingEdge, eoEdge)) {
+							if (isUnfulfillableRequirmentPaths(conflictingEdge, eoEdge)) {
 								return true;
 							}
-						}
+						} 
 					}
 				}
 			}
@@ -157,19 +165,54 @@ public class UnfulfillableConditionsFilter implements IEditRuleFilter {
 		return false;
 	}
 
-	private boolean matchCondition(EdgePattern eoEdge, EdgePattern conflictingEdge) {
+	/**
+	 * Checks for equal pre/post require multiplicity-one paths which starts at the
+	 * same node A and lead to different target node. This is not fulfillable for
+	 * injective matching of the source and target node of the path.
+	 * 
+	 * @param eoEdge          A require edge starting from node A.
+	 * @param conflictingEdge A require edge starting from node A.
+	 * @return <code>true</code> if such a unfulfillable path is found;
+	 *         <code>false</code> otherwise.
+	 */
+	private boolean isUnfulfillableRequirmentPaths(EdgePattern eoEdge, EdgePattern conflictingEdge) {
 		
-		if (eoEdge.getType() == conflictingEdge.getType()) {
-			if (isEditCondition(eoEdge.getTarget()) && isEditCondition(conflictingEdge.getTarget())) {
-				
-				// FIXME: We have to check if the preconditions can be merged/matched with each other.
-				
-				return true;
-			} else {
-				return eoEdge.getTarget() == conflictingEdge.getTarget();
+		if (eoEdge.getSource() == conflictingEdge.getSource()) {
+			return isUnfulfillableRequirmentPaths(eoEdge, conflictingEdge, new HashSet<>());
+		}
+
+		return false;
+	}
+	
+	private boolean isUnfulfillableRequirmentPaths(EdgePattern eoEdge, EdgePattern conflictingEdge, Collection<EdgePattern> currentEOPath) {
+		
+		if (eoEdge.getType() == conflictingEdge.getType() && !eoEdge.getType().isMany()) {
+			if (isRequire(eoEdge) && isRequire(conflictingEdge)) {
+				if ((isPre(eoEdge) && isPost(conflictingEdge)) || (isPre(conflictingEdge) && isPost(eoEdge))) {
+					if (isRequire(eoEdge.getTarget()) && isRequire(conflictingEdge.getTarget())) {
+
+						for (EdgePattern eoPath : eoEdge.getTarget().getOutgoings()) {
+							
+							// Prevent cyclic paths:
+							if (!currentEOPath.contains(eoEdge)) {
+								currentEOPath.add(eoEdge);
+								
+								for (EdgePattern conflictingPath : conflictingEdge.getTarget().getOutgoings()) {
+									if (isUnfulfillableRequirmentPaths(eoPath, conflictingPath, currentEOPath)) {
+										return true;
+									}
+								}
+								
+								currentEOPath.remove(eoEdge);	// backtracking
+							}
+						}
+					} else {
+						return eoEdge.getTarget() != conflictingEdge.getTarget();
+					}
+				}
 			}
 		}
-		
+
 		return false;
 	}
 }

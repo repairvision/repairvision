@@ -28,6 +28,8 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	
 	private boolean checkDangling = true;
 	
+	private boolean injectiveMatching = true;
+	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		
@@ -77,7 +79,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			// Generate edit rules:
 			EditRuleCollector editOperations = new EditRuleCollector();
 			List<IEditRuleFilter> editRuleFilter = new ArrayList<>();
-			editRuleFilter.add(new UnfulfillableConditionsFilter(checkDangling));
+			editRuleFilter.add(new UnfulfillableConditionsFilter(checkDangling, injectiveMatching));
 			editRuleFilter.add(new EditRuleDuplicationFilter());
 			
 			for (Pattern pattern : patternBundle.getPatterns()) {
