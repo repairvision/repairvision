@@ -27,7 +27,7 @@ public class ApplicationCondition implements IFormula {
 
 	// Domain map:
 	public final Map<Variable, DomainSlot> domainMap;
-
+	
 	// Formula:
 	public IFormula formula;
 
@@ -123,5 +123,4 @@ public class ApplicationCondition implements IFormula {
 		return result;
 		
 	}
-	
 }

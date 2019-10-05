@@ -16,6 +16,30 @@ public class If extends BinaryFormula {
 	public String toString() {
 		return super.toString();
 	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, boolean expected) {
+		
+		if (expected) {
+			
+			// t t / f t / f f
+			Alternative alternative = Alternative.nextAlternative(parent);
+			
+			// t t
+			Sequence sequence = Sequence.nextSequence(alternative);
+			left.generate(sequence, true);
+			right.generate(sequence, true);
+			
+			// f t / f f
+			left.generate(alternative, false);
+		} else {
+			
+			// t f
+			Sequence sequence = Sequence.nextSequence(parent);
+			left.generate(sequence, true);
+			right.generate(sequence, false);
+		}
+	}
 
 	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {

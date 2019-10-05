@@ -5,52 +5,77 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 
-public class RepairAction implements IDecisionLeaf {
+public class ConstraintAction implements IDecisionLeaf {
 
-	public enum RepairType {
-		DELETE, CREATE, MODIFY
+	public enum ConstraintType {
+		REQUIRE, FORBID 
 	}
 	
-	private RepairType type;
+	private ConstraintType constraint;
 	
-	private EObject context;
+	private EClass context;
 	
 	private EStructuralFeature feature;
 	
-	public RepairAction(RepairType type, EObject context, EStructuralFeature feature) {
-		this.type = type;
+	private EClassifier type;
+
+	public ConstraintAction(ConstraintType constraint, EClass context, EStructuralFeature feature, EClassifier type) {
+		this.constraint = constraint;
 		this.context = context;
 		this.feature = feature;
+		this.type = type;
 	}
 	
-	public RepairType getType() {
-		return type;
+	public ConstraintType getConstraint() {
+		return constraint;
 	}
 
-	public EObject getContext() {
+	public void setConstraint(ConstraintType constraint) {
+		this.constraint = constraint;
+	}
+
+	public EClass getContext() {
 		return context;
+	}
+
+	public void setContext(EClass context) {
+		this.context = context;
 	}
 
 	public EStructuralFeature getFeature() {
 		return feature;
 	}
+
+	public void setFeature(EStructuralFeature feature) {
+		this.feature = feature;
+	}
+
+	public EClassifier getType() {
+		return type;
+	}
+
+	public void setType(EClassifier type) {
+		this.type = type;
+	}
 	
 	@Override
 	public int compareTo(IDecisionLeaf leaf) {
 		
-		if (leaf instanceof RepairAction) {
-			RepairAction otherRepair = (RepairAction) leaf;
-			
-			if (this.getType().equals(otherRepair.getType())) {
-				if (this.getFeature().equals(otherRepair.getFeature())) {
-					if (this.getContext().equals(otherRepair.getContext())) {
-						return 0;
+		if (leaf instanceof ConstraintAction) {
+			ConstraintAction otherConstraint = (ConstraintAction) leaf;
+
+			if (this.getConstraint().equals(otherConstraint.getConstraint())) {
+				if (this.getContext().equals(otherConstraint.getContext())) {
+					if (this.getFeature().equals(otherConstraint.getFeature())) {
+						if (this.getType().equals(otherConstraint.getType())) {
+							return 0;
+						}
 					}
 				}
 			}
@@ -70,29 +95,7 @@ public class RepairAction implements IDecisionLeaf {
 		List<List<? extends IDecisionNode>> leafIterable = Collections.singletonList(leafSingleton);
 		return leafIterable.iterator();
 	}
-	
-	public String getRepairTripleLabel() {
-		
-		EClass eClass = (context != null) ? context.eClass() : null;
-		EStructuralFeature nameFeature = (eClass != null) ? eClass.getEStructuralFeature("name") : null;
-		
-		String contextObjName = "";
-		String className = (eClass != null) ? eClass.getName() : "null";
-		
-		if (nameFeature != null) {
-			Object nameFeatureValue = context.eGet(nameFeature);
-			
-			if (nameFeatureValue instanceof String) {
-				contextObjName = (String) nameFeatureValue;
-				contextObjName = "[" + contextObjName + "]";
-			}
-		}
-		
-		return  type.toString().toLowerCase() 
-				+ ", "  + className + contextObjName
-				+ ", " + feature.getName();
-	}
-	
+
 	@Override
 	public String toString(int indent) {
 		StringBuffer string = new StringBuffer();
@@ -111,7 +114,6 @@ public class RepairAction implements IDecisionLeaf {
 	
 	@Override
 	public String toString() {
-		return "Repair@" + Integer.toHexString(hashCode()) + ": <" + getRepairTripleLabel() + ">";
+		return "Constraint@" + Integer.toHexString(hashCode()) + ": <" + constraint.name() + " " + context.getName() + "." + feature.getName() + " : " + type.getName() + ">";
 	}
-	
 }

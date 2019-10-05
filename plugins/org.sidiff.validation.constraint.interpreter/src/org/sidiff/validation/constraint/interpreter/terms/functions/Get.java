@@ -3,13 +3,17 @@ package org.sidiff.validation.constraint.interpreter.terms.functions;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
@@ -26,6 +30,11 @@ public class Get extends Function {
 		this.name = "get";
 		this.context = context;
 		this.feature = feature;
+	}
+	
+	@Override
+	public EClassifier getType() {
+		return feature.getEType();
 	}
 	
 	@Override
@@ -71,6 +80,15 @@ public class Get extends Function {
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, ConstraintType type) {
+		Sequence sequence = Sequence.nextSequence(parent);
+		context.generate(sequence, type);
+		
+		ConstraintAction newConstraint = new ConstraintAction(type, (EClass) context.getType(), feature, getType());
+		parent.appendChildDecisions(newConstraint);
 	}
 	
 	@SuppressWarnings("unchecked")

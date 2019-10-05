@@ -1,6 +1,9 @@
 package org.sidiff.validation.constraint.interpreter.terms.functions;
 
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -15,6 +18,11 @@ public class Capitalize extends Function {
 	}
 	
 	@Override
+	public EClassifier getType() {
+		return EcorePackage.eINSTANCE.getEString();
+	}
+	
+	@Override
 	public String toString() {
 		return string.getValue() + " -> " + super.toString();
 	}
@@ -26,6 +34,11 @@ public class Capitalize extends Function {
 		value = ("" + string_value.charAt(0)).toUpperCase() + string_value.substring(1);
 		
 		return value;
+	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, ConstraintType type) {
+		string.generate(parent, type);
 	}
 
 	@Override

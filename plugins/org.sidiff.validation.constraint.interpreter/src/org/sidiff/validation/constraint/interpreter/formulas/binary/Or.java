@@ -32,6 +32,25 @@ public class Or extends BinaryFormula {
 	}
 	
 	@Override
+	public void generate(IDecisionBranch parent, boolean expected) {
+		
+		if (expected) {
+			
+			// t t / t f / f t
+			Alternative alternative = Alternative.nextAlternative(parent);
+			left.generate(alternative, true);
+			right.generate(alternative, true);
+			
+		} else {
+			
+			// f f
+			Sequence sequence = Sequence.nextSequence(parent);
+			left.generate(sequence, false);
+			right.generate(sequence, false);
+		}
+	}
+	
+	@Override
 	public void required(IDecisionBranch parent, boolean expected) {
 		
 		// A OR B = true:

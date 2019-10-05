@@ -2,6 +2,7 @@ package org.sidiff.validation.constraint.interpreter.formulas.predicates;
 
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
 public abstract class Comparison extends Predicate {
@@ -19,6 +20,19 @@ public abstract class Comparison extends Predicate {
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, boolean expected) {
+		Sequence sequence = Sequence.nextSequence(parent);
+		
+		if (expected) {
+			left.generate(sequence, ConstraintType.REQUIRE);
+			right.generate(sequence, ConstraintType.REQUIRE);
+		} else {
+			left.generate(sequence, ConstraintType.FORBID);
+			right.generate(sequence, ConstraintType.FORBID);
+		}
 	}
 	
 	@Override

@@ -3,6 +3,8 @@ package org.sidiff.validation.constraint.interpreter.formulas.predicates;
 import java.util.Collection;
 
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
+import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -35,6 +37,17 @@ public class IsEmpty extends Predicate {
 			}
 		}
 		return result;
+	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, boolean expected) {
+		Sequence sequence = Sequence.nextSequence(parent);
+		
+		if (expected) {
+			term.generate(sequence, ConstraintType.FORBID);
+		} else {
+			term.generate(sequence, ConstraintType.REQUIRE);
+		}
 	}
 
 	@Override

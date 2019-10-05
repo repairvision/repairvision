@@ -32,6 +32,24 @@ public class And extends BinaryFormula {
 	}
 	
 	@Override
+	public void generate(IDecisionBranch parent, boolean expected) {
+		
+		if (expected) {
+
+			// t t
+			Sequence sequence = Sequence.nextSequence(parent);
+			left.generate(sequence, true);
+			right.generate(sequence, true);
+		} else {
+			
+			// f f / f t / t f
+			Alternative alternative = Alternative.nextAlternative(parent);
+			left.generate(alternative, false);
+			right.generate(alternative, false);
+		}
+	}
+	
+	@Override
 	public void required(IDecisionBranch parent, boolean expected) {
 		
 		// A AND B = true:

@@ -32,6 +32,41 @@ public class Xor extends BinaryFormula {
 	}
 	
 	@Override
+	public void generate(IDecisionBranch parent, boolean expected) {
+		
+		if (expected) {
+			
+			// t f / f t
+			Alternative alternative = Alternative.nextAlternative(parent);
+			
+			// t f
+			Sequence sequenceTrueFalse = Sequence.nextSequence(alternative);
+			left.generate(sequenceTrueFalse, true);
+			right.generate(sequenceTrueFalse, false);
+			
+			// f t
+			Sequence sequenceFalseTrue = Sequence.nextSequence(alternative);
+			left.generate(sequenceFalseTrue, false);
+			right.generate(sequenceFalseTrue, true);
+			
+		} else {
+			
+			// t t / f f
+			Alternative alternative = Alternative.nextAlternative(parent);
+			
+			// t t
+			Sequence sequenceTrueTrue = Sequence.nextSequence(alternative);
+			left.generate(sequenceTrueTrue, true);
+			right.generate(sequenceTrueTrue, true);
+			
+			// f f
+			Sequence sequenceFalseFalse = Sequence.nextSequence(alternative);
+			left.generate(sequenceFalseFalse, false);
+			right.generate(sequenceFalseFalse, false);
+		}
+	}
+	
+	@Override
 	public void required(IDecisionBranch parent, boolean expected) {
 		
 		// A XOR B = true:

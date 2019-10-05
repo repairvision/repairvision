@@ -2,10 +2,13 @@ package org.sidiff.validation.constraint.interpreter.terms.functions;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -23,6 +26,11 @@ public class IndexOf extends Function {
 		this.container = container;
 		this.feature = feature;
 		this.element = element;
+	}
+	
+	@Override
+	public EClassifier getType() {
+		return EcorePackage.eINSTANCE.getEInt();
 	}
 	
 	@Override
@@ -52,6 +60,14 @@ public class IndexOf extends Function {
 		}
 		
 		return value;
+	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, ConstraintType type) {
+		container.generate(parent, type);
+		element.generate(parent, type);
+		
+		// TODO: ...?
 	}
 	
 	@Override

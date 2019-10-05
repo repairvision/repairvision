@@ -15,6 +15,8 @@ public abstract class Formula extends NamedElement {
 	
 	public abstract boolean evaluate(IScopeRecorder scope, boolean optimize);
 	
+	public abstract void generate(IDecisionBranch parent, boolean expected);
+	
 	public abstract void required(IDecisionBranch parent, boolean expected);
 	
 	public abstract void repair(IDecisionBranch parent, boolean expected);
@@ -26,4 +28,5 @@ public abstract class Formula extends NamedElement {
 	public void clear() {
 		result = null;
 	}
+
 }
