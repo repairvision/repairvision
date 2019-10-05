@@ -27,12 +27,14 @@ public class PathFinder {
 			}
 			List<EReference> list = path.toReferenceList(true);
 			if (list != null) {
-				Integer count = reflists.get(list);
-				if (count != null) {
-					reflists.put(list, count + 1);
-				} else {
+				
+				// FIXME[MO-MO-2019-10-05]: Number counting of paths is wrong!
+//				Integer count = reflists.get(list);
+//				if (count != null) {
+//					reflists.put(list, count + 1);
+//				} else {
 					reflists.put(list, 1);
-				}
+//				}
 			}
 		}
 		return reflists;
@@ -115,64 +117,68 @@ public class PathFinder {
 	}
 
 	public static boolean pacConsistsOnlyOfPaths(NestedCondition pac) {
-		if (!pac.isPAC()) {
-			return false;
-		}
-
-		// Collect reached edges and nodes:
-		Set<Node> reachedPACNodes = new HashSet<Node>();
-		Set<Edge> reachedPACEdges = new HashSet<Edge>();
-		for (Path path : findAllPaths(pac.getHost(), true)) {
-			if (path.toReferenceList(true) == null) {
-				continue;
-			}
-			for (Node node : path.nodes) {
-				if (node.getGraph() == pac.getConclusion()) {
-					reachedPACNodes.add(node);
-				} else {
-					Node image = pac.getMappings().getImage(node, pac.getConclusion());
-					if (image != null) {
-						reachedPACNodes.add(image);
-					}
-				}
-			}
-			for (Edge edge : path.edges) {
-				if (edge.getGraph() == pac.getConclusion()) {
-					reachedPACEdges.add(edge);
-				} else {
-					Edge image = pac.getMappings().getImage(edge, pac.getConclusion());
-					if (image != null) {
-						reachedPACEdges.add(image);
-					}
-				}
-			}
-		}
-
-		// Check if any of the PAC nodes or edges is missing:
-		if (!reachedPACNodes.containsAll(pac.getConclusion().getNodes())) {
-			return false;
-		}
-		if (!reachedPACEdges.containsAll(pac.getConclusion().getEdges())) {
-			return false;
-		}
-
-		// Check if any node has an attribute:
-		for (Node node : reachedPACNodes) {
-			if (!node.getAttributes().isEmpty()) {
-				return false;
-			}
-		}
-
-		// Check if any of the node types does not match the LHS node type:
-		for (Node node : reachedPACNodes) {
-			Node origin = pac.getMappings().getOrigin(node);
-			if (origin != null && origin.getType() != node.getType()) {
-				return false;
-			}
-		}
-
-		// Ok.
-		return true;
+		
+		// FIXME[MO-2019-10-05]: Number counting of paths is wrong! => Path check is not sufficient!
+		return false;
+		
+//		if (!pac.isPAC()) {
+//			return false;
+//		}
+//
+//		// Collect reached edges and nodes:
+//		Set<Node> reachedPACNodes = new HashSet<Node>();
+//		Set<Edge> reachedPACEdges = new HashSet<Edge>();
+//		for (Path path : findAllPaths(pac.getHost(), true)) {
+//			if (path.toReferenceList(true) == null) {
+//				continue;
+//			}
+//			for (Node node : path.nodes) {
+//				if (node.getGraph() == pac.getConclusion()) {
+//					reachedPACNodes.add(node);
+//				} else {
+//					Node image = pac.getMappings().getImage(node, pac.getConclusion());
+//					if (image != null) {
+//						reachedPACNodes.add(image);
+//					}
+//				}
+//			}
+//			for (Edge edge : path.edges) {
+//				if (edge.getGraph() == pac.getConclusion()) {
+//					reachedPACEdges.add(edge);
+//				} else {
+//					Edge image = pac.getMappings().getImage(edge, pac.getConclusion());
+//					if (image != null) {
+//						reachedPACEdges.add(image);
+//					}
+//				}
+//			}
+//		}
+//
+//		// Check if any of the PAC nodes or edges is missing:
+//		if (!reachedPACNodes.containsAll(pac.getConclusion().getNodes())) {
+//			return false;
+//		}
+//		if (!reachedPACEdges.containsAll(pac.getConclusion().getEdges())) {
+//			return false;
+//		}
+//
+//		// Check if any node has an attribute:
+//		for (Node node : reachedPACNodes) {
+//			if (!node.getAttributes().isEmpty()) {
+//				return false;
+//			}
+//		}
+//
+//		// Check if any of the node types does not match the LHS node type:
+//		for (Node node : reachedPACNodes) {
+//			Node origin = pac.getMappings().getOrigin(node);
+//			if (origin != null && origin.getType() != node.getType()) {
+//				return false;
+//			}
+//		}
+//
+//		// Ok.
+//		return true;
 
 	}
 
