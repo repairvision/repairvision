@@ -33,12 +33,12 @@ public class ActionEdge extends ActionGraphElement {
 	
 	protected EdgePattern edgePatternB;
 	
-	public ActionEdge(ActionGraph actionGraph, Edge editRuleEdge, Map<Node, ActionNode> nodeTrace, Map<Edge, ActionEdge> edgeTrace) {
+	public ActionEdge(Action.Type action, ActionGraph actionGraph, Edge editRuleEdge, Map<Node, ActionNode> nodeTrace, Map<Edge, ActionEdge> edgeTrace) {
 		this.actionGraph = actionGraph;
 		this.editRuleEdge = editRuleEdge;
 		
 		// create action-edge:
-		this.action = editRuleEdge.getAction().getType();
+		this.action = action;
 		this.source = nodeTrace.get(ChangePatternUtil.tryLHS(editRuleEdge.getSource()));
 		this.target = nodeTrace.get(ChangePatternUtil.tryLHS(editRuleEdge.getTarget()));
 		
