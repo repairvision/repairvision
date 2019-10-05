@@ -189,7 +189,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		var name = 'v' + counter + '_' + variable.name;
 		name = newName(names, variable, name);
 		
-		return '''Variable «name» = new Variable("«variable.name»");'''
+		return '''Variable «name» = new Variable(«compileType(variable.type)», "«variable.name»");'''
 	}
 	
 	def String compileVariableRef(VariableRef path, int counter, HashMap<Object, String> names) {
@@ -218,7 +218,21 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	}
 	
 	def String compileType(EClassifier type) {
-		return 'DOMAIN.get' + type.name + '()'
+		if (isBaseClassMethode("get" + type.name)) {
+			return 'DOMAIN.get' + type.name + '_()';
+		} else {
+			return 'DOMAIN.get' + type.name + '()';
+		}
+	}
+	
+	def boolean isBaseClassMethode(String name) {
+		try {
+			if (EObject.getClass().getMethod(name) !== null) {
+				return true;
+			}
+		} catch (Exception e) {
+		}
+		return false;
 	}
 	
 	def String compileType(Classifier type, HashMap<Object, String> names) {

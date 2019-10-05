@@ -228,7 +228,9 @@
                 <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
               </get>
             </term>
-            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Pseudostate"/>
+            <type xsi:type="firstOrderLogic:ClassifierConstant">
+              <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Pseudostate"/>
+            </type>
           </not>
         </left>
         <right xsi:type="firstOrderLogic:Not">
@@ -238,7 +240,9 @@
                 <name xsi:type="ecore:EReference" href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
               </get>
             </term>
-            <type xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//FinalState"/>
+            <type xsi:type="firstOrderLogic:ClassifierConstant">
+              <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//FinalState"/>
+            </type>
           </not>
         </right>
       </left>

@@ -69,7 +69,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createTheAttributeIsNotTransientSoItMustHaveADataTypeThatIsSerializableRule() {
 		
-		Variable v0_attribute = new Variable("attribute");
+		Variable v0_attribute = new Variable(DOMAIN.getEAttribute(), "attribute");
 	
 		Term t0_transient = new Get(v0_attribute, DOMAIN.getEStructuralFeature_Transient());
 		Term t1_eType = new Get(v0_attribute, DOMAIN.getETypedElement_EType());
@@ -86,7 +86,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createAClassThatIsAnInterfaceMustAlsoBeAbstractRule() {
 		
-		Variable v1_eClass = new Variable("eClass");
+		Variable v1_eClass = new Variable(DOMAIN.getEClass(), "eClass");
 	
 		Term t3_interface = new Get(v1_eClass, DOMAIN.getEClass_Interface());
 		Term t4_abstract = new Get(v1_eClass, DOMAIN.getEClass_Abstract());
@@ -102,7 +102,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createAContainerReferenceMustHaveUpperBoundOfNotRule() {
 		
-		Variable v2_ref = new Variable("ref");
+		Variable v2_ref = new Variable(DOMAIN.getEReference(), "ref");
 	
 		Term t5_eOpposite_containment = new Get(new Get(v2_ref, DOMAIN.getEReference_EOpposite()), DOMAIN.getEReference_Containment());
 		Term t6_upperBound = new Get(v2_ref, DOMAIN.getETypedElement_UpperBound());
@@ -118,7 +118,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createAContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFromRule() {
 		
-		Variable v3_ref = new Variable("ref");
+		Variable v3_ref = new Variable(DOMAIN.getEReference(), "ref");
 	
 		Term t7_containment = new Get(v3_ref, DOMAIN.getEReference_Containment());
 		Term t8_eOpposite = new Get(v3_ref, DOMAIN.getEReference_EOpposite());
@@ -136,9 +136,9 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createAContainmentReferenceOfATypeWithAContainerFeaturethatRequiresInstancesToBeContainedElsewhereCannotBePopulatedRule() {
 		
-		Variable v4_ref = new Variable("ref");
-		Variable v5_typeClosure = new Variable("typeClosure");
-		Variable v6_feature = new Variable("feature");
+		Variable v4_ref = new Variable(DOMAIN.getEReference(), "ref");
+		Variable v5_typeClosure = new Variable(DOMAIN.getEClass(), "typeClosure");
+		Variable v6_feature = new Variable(DOMAIN.getEStructuralFeature(), "feature");
 	
 		Term t11_containment = new Get(v4_ref, DOMAIN.getEReference_Containment());
 		Term t12_eType = new Get(v4_ref, DOMAIN.getETypedElement_EType());
@@ -159,8 +159,8 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createTheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesTypeRule() {
 		
-		Variable v7_eStructuralFeature = new Variable("eStructuralFeature");
-		Variable v8_literal = new Variable("literal");
+		Variable v7_eStructuralFeature = new Variable(DOMAIN.getEStructuralFeature(), "eStructuralFeature");
+		Variable v8_literal = new Variable(DOMAIN.getEEnumLiteral(), "literal");
 	
 		Term t18_eType = new Get(v7_eStructuralFeature, DOMAIN.getETypedElement_EType());
 		Term t19_defaultValueLiteral = new Get(v7_eStructuralFeature, DOMAIN.getEStructuralFeature_DefaultValueLiteral());
@@ -172,7 +172,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 		Term t25_defaultValueLiteral = new Get(v7_eStructuralFeature, DOMAIN.getEStructuralFeature_DefaultValueLiteral());
 		Term t26_eType = new Get(v7_eStructuralFeature, DOMAIN.getETypedElement_EType());
 	
-		Formula constraint5_TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType = new And(new And(new If(new Not(new IsInstanceOf(t18_eType, DOMAIN.getEDataType())), new IsEmpty(t19_defaultValueLiteral)), new If(new IsInstanceOf(t20_eType, DOMAIN.getEEnum()), new ForAll(v8_literal, t21_eType_eLiterals, new Equality(t22_defaultValueLiteral, t23_name)))), new If(new IsInstanceOf(t24_eType, DOMAIN.getEDataType()), new IsValueLiteralOf(t25_defaultValueLiteral, t26_eType)));
+		Formula constraint5_TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType = new And(new And(new If(new Not(new IsInstanceOf(t18_eType, DOMAIN.getEDataType())), new IsEmpty(t19_defaultValueLiteral)), new If(new IsInstanceOf(t20_eType, DOMAIN.getEEnum()), new Exists(v8_literal, t21_eType_eLiterals, new Equality(t22_defaultValueLiteral, t23_name)))), new If(new IsInstanceOf(t24_eType, DOMAIN.getEDataType()), new IsValueLiteralOf(t25_defaultValueLiteral, t26_eType)));
 		
 		IConstraint rule_TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType = new Constraint(DOMAIN.getEStructuralFeature(), v7_eStructuralFeature, constraint5_TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType);
 		rule_TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType.setName("TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType");
@@ -183,7 +183,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createTheOppositeOfAContainmentReferenceMustNotBeAContainmentReferenceRule() {
 		
-		Variable v9_eReference = new Variable("eReference");
+		Variable v9_eReference = new Variable(DOMAIN.getEReference(), "eReference");
 	
 		Term t27_eOpposite = new Get(v9_eReference, DOMAIN.getEReference_EOpposite());
 		Term t28_containment = new Get(v9_eReference, DOMAIN.getEReference_Containment());
@@ -200,7 +200,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createTheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolvingRule() {
 		
-		Variable v10_reference = new Variable("reference");
+		Variable v10_reference = new Variable(DOMAIN.getEReference(), "reference");
 	
 		Term t30_transient = new Get(v10_reference, DOMAIN.getEStructuralFeature_Transient());
 		Term t31_eOpposite_resolveProxies = new Get(new Get(v10_reference, DOMAIN.getEReference_EOpposite()), DOMAIN.getEReference_ResolveProxies());
@@ -217,7 +217,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createTheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOneRule() {
 		
-		Variable v11_reference = new Variable("reference");
+		Variable v11_reference = new Variable(DOMAIN.getEReference(), "reference");
 	
 		Term t33_eOpposite = new Get(v11_reference, DOMAIN.getEReference_EOpposite());
 		Term t34_eOpposite_eOpposite = new Get(new Get(v11_reference, DOMAIN.getEReference_EOpposite()), DOMAIN.getEReference_EOpposite());
@@ -233,7 +233,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createTheOppositeMayNotBeItsOwnOppositeRule() {
 		
-		Variable v12_reference = new Variable("reference");
+		Variable v12_reference = new Variable(DOMAIN.getEReference(), "reference");
 	
 		Term t35_eOpposite = new Get(v12_reference, DOMAIN.getEReference_EOpposite());
 	
@@ -248,11 +248,11 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createThereMayNotBeTwoOperationsAndWithTheSameSignatureRule() {
 		
-		Variable v13_eOperation = new Variable("eOperation");
-		Variable v14_typeClosure = new Variable("typeClosure");
-		Variable v15_otherEOpperation = new Variable("otherEOpperation");
-		Variable v16_eParameter = new Variable("eParameter");
-		Variable v17_otherEParameter = new Variable("otherEParameter");
+		Variable v13_eOperation = new Variable(DOMAIN.getEOperation(), "eOperation");
+		Variable v14_typeClosure = new Variable(DOMAIN.getEClass(), "typeClosure");
+		Variable v15_otherEOpperation = new Variable(DOMAIN.getEOperation(), "otherEOpperation");
+		Variable v16_eParameter = new Variable(DOMAIN.getEParameter(), "eParameter");
+		Variable v17_otherEParameter = new Variable(DOMAIN.getEParameter(), "otherEParameter");
 	
 		Term t36_eContainingClass = new Get(v13_eOperation, DOMAIN.getEOperation_EContainingClass());
 		Term t37_eOperations = new Get(v14_typeClosure, DOMAIN.getEClass_EOperations());
@@ -278,8 +278,8 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createThereMayNotBeTwoParametersNamedRule() {
 		
-		Variable v18_eParameter = new Variable("eParameter");
-		Variable v19_otherEParameter = new Variable("otherEParameter");
+		Variable v18_eParameter = new Variable(DOMAIN.getEParameter(), "eParameter");
+		Variable v19_otherEParameter = new Variable(DOMAIN.getEParameter(), "otherEParameter");
 	
 		Term t48_eOperation_eParameters = new Get(new Get(v18_eParameter, DOMAIN.getEParameter_EOperation()), DOMAIN.getEOperation_EParameters());
 		Term t49_name = new Get(v18_eParameter, DOMAIN.getENamedElement_Name());
@@ -296,12 +296,12 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createThereMayNotBeAnOperationWithTheSameSignatureAsAnAccessorMethodForFeatureRule() {
 		
-		Variable v20_operation = new Variable("operation");
-		Variable v21_annotation = new Variable("annotation");
-		Variable v22_detail = new Variable("detail");
-		Variable v23_typeClosure = new Variable("typeClosure");
-		Variable v24_feature = new Variable("feature");
-		Variable v25_parameter = new Variable("parameter");
+		Variable v20_operation = new Variable(DOMAIN.getEOperation(), "operation");
+		Variable v21_annotation = new Variable(DOMAIN.getEAnnotation(), "annotation");
+		Variable v22_detail = new Variable(DOMAIN.getEStringToStringMapEntry(), "detail");
+		Variable v23_typeClosure = new Variable(DOMAIN.getEClass(), "typeClosure");
+		Variable v24_feature = new Variable(DOMAIN.getEStructuralFeature(), "feature");
+		Variable v25_parameter = new Variable(DOMAIN.getEParameter(), "parameter");
 	
 		Term t51_eAnnotations = new Get(v20_operation, DOMAIN.getEModelElement_EAnnotations());
 		Term t52_source = new Get(v21_annotation, DOMAIN.getEAnnotation_Source());
@@ -340,13 +340,13 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createThereMayNotBeTwoFeaturesNamedRule() {
 		
-		Variable v26_eClass = new Variable("eClass");
-		Variable v27_featureA = new Variable("featureA");
-		Variable v28_featureB = new Variable("featureB");
-		Variable v29_eClassX = new Variable("eClassX");
-		Variable v30_eClassY = new Variable("eClassY");
-		Variable v31_featureX = new Variable("featureX");
-		Variable v32_featureY = new Variable("featureY");
+		Variable v26_eClass = new Variable(DOMAIN.getEClass(), "eClass");
+		Variable v27_featureA = new Variable(DOMAIN.getEStructuralFeature(), "featureA");
+		Variable v28_featureB = new Variable(DOMAIN.getEStructuralFeature(), "featureB");
+		Variable v29_eClassX = new Variable(DOMAIN.getEClass(), "eClassX");
+		Variable v30_eClassY = new Variable(DOMAIN.getEClass(), "eClassY");
+		Variable v31_featureX = new Variable(DOMAIN.getEStructuralFeature(), "featureX");
+		Variable v32_featureY = new Variable(DOMAIN.getEStructuralFeature(), "featureY");
 	
 		Term t76_eStructuralFeatures = new Get(v26_eClass, DOMAIN.getEClass_EStructuralFeatures());
 		Term t77_eStructuralFeatures = new Get(v26_eClass, DOMAIN.getEClass_EStructuralFeatures());
@@ -368,9 +368,9 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createTwoFeaturesCannotBothBeIDsRule() {
 		
-		Variable v33_attribute = new Variable("attribute");
-		Variable v34_typeClosure = new Variable("typeClosure");
-		Variable v35_feature = new Variable("feature");
+		Variable v33_attribute = new Variable(DOMAIN.getEAttribute(), "attribute");
+		Variable v34_typeClosure = new Variable(DOMAIN.getEClass(), "typeClosure");
+		Variable v35_feature = new Variable(DOMAIN.getEStructuralFeature(), "feature");
 	
 		Term t84_iD = new Get(v33_attribute, DOMAIN.getEAttribute_ID());
 		Term t85_eContainingClass = new Get(v33_attribute, DOMAIN.getEStructuralFeature_EContainingClass());
@@ -388,9 +388,9 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createThereMayNotBeTwoClassifiersNamedRule() {
 		
-		Variable v36_package = new Variable("package");
-		Variable v37_classA = new Variable("classA");
-		Variable v38_classB = new Variable("classB");
+		Variable v36_package = new Variable(DOMAIN.getEPackage(), "package");
+		Variable v37_classA = new Variable(DOMAIN.getEClass(), "classA");
+		Variable v38_classB = new Variable(DOMAIN.getEClass(), "classB");
 	
 		Term t88_eClassifiers = new Get(v36_package, DOMAIN.getEPackage_EClassifiers());
 		Term t89_eClassifiers = new Get(v36_package, DOMAIN.getEPackage_EClassifiers());
@@ -408,7 +408,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createTheTypedElementMustHaveATypeRule() {
 		
-		Variable v39_eTypedElement = new Variable("eTypedElement");
+		Variable v39_eTypedElement = new Variable(DOMAIN.getETypedElement(), "eTypedElement");
 	
 		Term t92_eType = new Get(v39_eTypedElement, DOMAIN.getETypedElement_EType());
 	
@@ -423,7 +423,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createTheRequiredFeatureOfMustBeSetRule() {
 		
-		Variable v40_eModelElement = new Variable("eModelElement");
+		Variable v40_eModelElement = new Variable(DOMAIN.getEModelElement(), "eModelElement");
 	
 		Term t93_eType = new Get(v40_eModelElement, DOMAIN.getETypedElement_EType());
 		Term t94_ePackage = new Get(v40_eModelElement, DOMAIN.getEFactory_EPackage());
@@ -441,7 +441,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createTheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifierRule() {
 		
-		Variable v41_eType = new Variable("eType");
+		Variable v41_eType = new Variable(DOMAIN.getEGenericType(), "eType");
 	
 		Term t97_eClassifier_eTypeParameters = new Get(new Get(v41_eType, DOMAIN.getEGenericType_EClassifier()), DOMAIN.getEClassifier_ETypeParameters());
 		Term t98_eTypeArguments = new Get(v41_eType, DOMAIN.getEGenericType_ETypeArguments());
@@ -457,7 +457,7 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 	
 	public static IConstraint createTheGenericTypeAssociatedWithTheClassifierMustNotHaveArgumentsWhenTheClassifierHasTypeParametersRule() {
 		
-		Variable v42_eType = new Variable("eType");
+		Variable v42_eType = new Variable(DOMAIN.getEGenericType(), "eType");
 	
 		Term t99_eClassifier_eTypeParameters = new Get(new Get(v42_eType, DOMAIN.getEGenericType_EClassifier()), DOMAIN.getEClassifier_ETypeParameters());
 		Term t100_eTypeArguments = new Get(v42_eType, DOMAIN.getEGenericType_ETypeArguments());
