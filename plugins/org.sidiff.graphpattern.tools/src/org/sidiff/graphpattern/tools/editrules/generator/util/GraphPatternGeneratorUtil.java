@@ -1,7 +1,6 @@
 package org.sidiff.graphpattern.tools.editrules.generator.util;
 
 import static org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes.constraint;
-import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -22,6 +21,7 @@ import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Parameter;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil;
 
 public class GraphPatternGeneratorUtil {
 	
@@ -82,7 +82,7 @@ public class GraphPatternGeneratorUtil {
 			for (NodePattern eoNode : editRule.getNodes()) {
 				
 				// Filter OUT parameters:
-				if (!eoNode.getStereotypes().contains(create)) {
+				if (!HenshinProfileUtil.isCreate(eoNode) && !HenshinProfileUtil.isEditCondition(eoNode)) {
 					generateParameter(pattern, eoNode.getName());
 				}
 				

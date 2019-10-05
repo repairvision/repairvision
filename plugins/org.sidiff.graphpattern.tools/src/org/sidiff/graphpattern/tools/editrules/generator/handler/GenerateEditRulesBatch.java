@@ -28,6 +28,11 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 	
 	private boolean checkDangling = true;
 	
+	/**
+	 * FIXME: The injective matching should be derived for transformations and
+	 * relocations. See rule 'move_message' which moves a message between two
+	 * lifelines, e.g., to a new receiver and the sender to the old receiver.
+	 */
 	private boolean injectiveMatching = true;
 	
 	@Override
@@ -78,9 +83,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			
 			// Generate edit rules:
 			EditRuleCollector editOperations = new EditRuleCollector();
-			List<IEditRuleFilter> editRuleFilter = new ArrayList<>();
-			editRuleFilter.add(new UnfulfillableConditionsFilter(checkDangling, injectiveMatching));
-			editRuleFilter.add(new EditRuleDuplicationFilter());
+			List<IEditRuleFilter> editRuleFilter = getFilter();
 			
 			for (Pattern pattern : patternBundle.getPatterns()) {
 				
@@ -131,5 +134,12 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 		}
 		
 		return null;
+	}
+
+	private List<IEditRuleFilter> getFilter() {
+		List<IEditRuleFilter> editRuleFilter = new ArrayList<>();
+		editRuleFilter.add(new UnfulfillableConditionsFilter(checkDangling, injectiveMatching));
+		editRuleFilter.add(new EditRuleDuplicationFilter());
+		return editRuleFilter;
 	}
 }

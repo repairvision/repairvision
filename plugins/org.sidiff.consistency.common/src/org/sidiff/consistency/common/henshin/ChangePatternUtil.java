@@ -9,6 +9,7 @@ import java.util.List;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
+import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.emf.access.EMFMetaAccess;
@@ -18,8 +19,7 @@ import org.sidiff.common.henshin.view.AttributePair;
 public class ChangePatternUtil {
 
 	/**
-	 * @param rule
-	 *            The rule from which the changes will be collected.
+	 * @param rule The rule from which the changes will be collected.
 	 * @return All changes (<< delete >> / << create >> nodes / edges / << set >>
 	 *         attributes of << preserve >> nodes) of the given rule.
 	 */
@@ -57,8 +57,7 @@ public class ChangePatternUtil {
 	}
 
 	/**
-	 * @param rule
-	 *            The rule from which the changes will be collected.
+	 * @param rule The rule from which the changes will be collected.
 	 * @return All changes (<< delete >> / << create >> nodes / edges / << set >>
 	 *         attributes) of the given rule.
 	 */
@@ -99,8 +98,7 @@ public class ChangePatternUtil {
 	 * Returns all attributes of the form value1->value2 and << set >> value in a <<
 	 * preserve >> node.
 	 * 
-	 * @param node
-	 *            the Henshin node.
+	 * @param node the Henshin node.
 	 * @return the changing attributes.
 	 */
 	public static List<AttributePair> getChangingAttributes(Node node) {
@@ -149,8 +147,7 @@ public class ChangePatternUtil {
 	 * attributes in a << preserve >> node. A << delete >> attribute in a <<
 	 * preserve >> node acts like a << preserve >> attribute.
 	 * 
-	 * @param rule
-	 *            the Henshin LHS node.
+	 * @param rule the Henshin LHS node.
 	 * @return the << preserve >> LHS attributes.
 	 */
 	public static List<Attribute> getPreservedAttributes(Node lhsNode) {
@@ -173,17 +170,58 @@ public class ChangePatternUtil {
 		return res;
 	}
 
+	/**
+	 * @param node A LHS/RHS/Nested Condition node.
+	 * @return The LHS node if a mapping exists; the given node otherwise.
+	 */
 	public static Node tryLHS(Node node) {
 		if (node.getGraph().isLhs()) {
 			return node;
-		} else {
-			Node rhsNode = HenshinRuleAnalysisUtilEx.getLHS(node);
+		} else if (node.getGraph().isRhs()) {
+			Node lhsNode = HenshinRuleAnalysisUtilEx.getRemoteNode(node.getGraph().getRule().getMappings(), node);
 
-			if (rhsNode == null) {
-				return node;
-			} else {
-				return rhsNode;
+			if (lhsNode != null) {
+				return lhsNode;
+			}
+		} else if (node.getGraph().isNestedCondition()) {
+			Node lhsNode = HenshinRuleAnalysisUtilEx.getRemoteNode(((NestedCondition) node.getGraph().eContainer()).getMappings(), node);
+
+			if (lhsNode != null) {
+				return lhsNode;
 			}
 		}
+		return node;
+	}
+	
+	/**
+	 * @param node A LHS/RHS/Nested Condition node.
+	 * @return The LHS node; <code>null</code> otherwise.
+	 */
+	public static Node getLHS(Node node) {
+		if (node.getGraph().isLhs()) {
+			return node;
+		} else if (node.getGraph().isRhs()) {
+			return HenshinRuleAnalysisUtilEx.getRemoteNode(node.getGraph().getRule().getMappings(), node);
+
+		} else if (node.getGraph().isNestedCondition()) {
+			return HenshinRuleAnalysisUtilEx.getRemoteNode(((NestedCondition) node.getGraph().eContainer()).getMappings(), node);
+		}
+		return null;
+	}
+	
+	/**
+	 * @param node A LHS/RHS/Nested Condition edge.
+	 * @return The LHS edge; <code>null</code> otherwise.
+	 */
+	public static Edge getLHS(Edge edge) {
+		if (edge.getGraph().isLhs()) {
+			return edge;
+		} else if (edge.getGraph().isRhs()) {
+			return HenshinRuleAnalysisUtilEx.getRemoteEdge(edge.getGraph().getRule().getMappings(), edge);
+
+		} else if (edge.getGraph().isNestedCondition()) {
+			return HenshinRuleAnalysisUtilEx.getRemoteEdge(((NestedCondition) edge.getGraph().eContainer()).getMappings(), edge);
+		}
+		return null;
 	}
 }
