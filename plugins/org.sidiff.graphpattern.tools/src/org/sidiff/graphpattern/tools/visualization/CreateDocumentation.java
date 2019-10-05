@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.tools;
+package org.sidiff.graphpattern.tools.visualization;
 
 import java.io.BufferedReader;
 import java.io.File;

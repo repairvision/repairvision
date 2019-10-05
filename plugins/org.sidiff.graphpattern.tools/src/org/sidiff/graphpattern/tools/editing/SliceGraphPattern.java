@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.tools;
+package org.sidiff.graphpattern.tools.editing;
 
 import java.util.ArrayList;
 import java.util.HashSet;

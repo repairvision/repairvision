@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.tools;
+package org.sidiff.graphpattern.tools.editing;
 
 import java.io.IOException;
 import java.util.ArrayList;

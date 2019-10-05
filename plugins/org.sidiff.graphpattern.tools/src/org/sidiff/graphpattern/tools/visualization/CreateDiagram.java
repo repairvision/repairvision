@@ -1,8 +1,10 @@
-package org.sidiff.graphpattern.tools;
+package org.sidiff.graphpattern.tools.visualization;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -15,6 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -33,11 +36,10 @@ import org.eclipse.sirius.viewpoint.DRepresentation;
 import org.eclipse.sirius.viewpoint.description.RepresentationDescription;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.sidiff.consistency.common.emf.SiriusUtil;
-import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
+import org.sidiff.consistency.common.emf.SiriusUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 @SuppressWarnings("restriction")
 public class CreateDiagram extends AbstractHandler  {
@@ -62,7 +64,7 @@ public class CreateDiagram extends AbstractHandler  {
 			URI sessionResourceURI = modelElementURI.trimFragment().trimFileExtension().appendFileExtension("aird");
 			
 			createViewpoint(modelElementURI, sessionResourceURI, monitor);
-			createRepresentation((EObject) selected, monitor, modelElementURI, 
+			selectRepresentations((EObject) selected, monitor, modelElementURI, 
 					WorkbenchUtil.showQuestion("Open diagram editors?"));
 		}
 		
@@ -105,8 +107,10 @@ public class CreateDiagram extends AbstractHandler  {
 		// open the session and add it to the session manager:
 		session.open(monitor);
 	}
-
-	protected void createRepresentation(EObject element, IProgressMonitor monitor, URI modelElementURI, boolean openEditor) {
+	
+	protected void selectRepresentations(EObject element, IProgressMonitor monitor, URI modelElementURI, boolean openEditor) {
+		
+		// Find diagrams:
 		Session session = SessionManager.INSTANCE.getSession(modelElementURI.trimFragment().trimFileExtension().appendFileExtension("aird"), monitor);
 		EObject modelElement = session.getSemanticResources().iterator().next().getEObject(modelElementURI.fragment());
 		
@@ -116,27 +120,40 @@ public class CreateDiagram extends AbstractHandler  {
 		}
 		
 		Map<EObject, RepresentationDescription> representations = getRepresentations(session, modelElement);
-
+		
+		// Select diagrams:
+		List<EObject> selection = WorkbenchUtil.showSelections("Select diagrams to be created:", 
+				new ArrayList<>(representations.keySet()), WorkbenchUtil.getEMFLabelProvider());
+		representations.keySet().retainAll(selection);
+		
+		// Create diagrams:
 		for (Entry<EObject, RepresentationDescription> representation : representations.entrySet()) {
-			RepresentationDescription description = representation.getValue();
-			EObject nextModelElement = representation.getKey();
-			String name = getDiagramName(nextModelElement, session, description);
-			
-			SiriusUtil.edit(session.getTransactionalEditingDomain(), () -> {
-				DialectManager.INSTANCE.createRepresentation(name, nextModelElement, description, session, monitor); 
-			});
-			
-			SessionManager.INSTANCE.notifyRepresentationCreated(session);
-			
+			String name = createRepresentations(session, representation.getKey(), representation.getValue(), monitor);
+
 			// open editor:
 			if (openEditor) {
-				for (DRepresentation diagramRepresentation : DialectManager.INSTANCE.getRepresentations(description, session)) {
-					if (diagramRepresentation.getName().equals(name)) {
-						DialectUIManager dialectUIManager = DialectUIManager.INSTANCE;
+				openDiagram(session, representation.getValue(), name, monitor);
+			}
+		}
+	}
 
-						dialectUIManager.openEditor(session, diagramRepresentation, monitor);
-					}
-				}
+	protected String createRepresentations(Session session, EObject element, RepresentationDescription description, IProgressMonitor monitor) {
+		String name = getDiagramName(element, session, description);
+
+		SiriusUtil.edit(session.getTransactionalEditingDomain(), () -> {
+			DialectManager.INSTANCE.createRepresentation(name, element, description, session, monitor); 
+		});
+
+		SessionManager.INSTANCE.notifyRepresentationCreated(session);
+		return name;
+	}
+
+	private void openDiagram(Session session, RepresentationDescription description, String name, IProgressMonitor monitor) {
+		for (DRepresentation diagramRepresentation : DialectManager.INSTANCE.getRepresentations(description, session)) {
+			if (diagramRepresentation.getName().equals(name)) {
+				DialectUIManager dialectUIManager = DialectUIManager.INSTANCE;
+
+				dialectUIManager.openEditor(session, diagramRepresentation, monitor);
 			}
 		}
 	}
