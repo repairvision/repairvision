@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="__yXGsOtpEemQuOLHJni5mQ" name="Transform: Two Containment-Container References - To - Two Containment References" description="Transform: Two Containment-Container References - To - Two Containment References">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="__yXGsetpEemQuOLHJni5mQ" name="mainUnit" subUnits="__yXGwOtpEemQuOLHJni5mQ">
+    <parameters xmi:id="__yXGsutpEemQuOLHJni5mQ" name="containerClassA" kind="IN"/>
+    <parameters xmi:id="__yXGs-tpEemQuOLHJni5mQ" name="containmentReferenceA" kind="IN"/>
+    <parameters xmi:id="__yXGtOtpEemQuOLHJni5mQ" name="containerClassB" kind="IN"/>
+    <parameters xmi:id="__yXGtetpEemQuOLHJni5mQ" name="containmentReferenceB" kind="IN"/>
+    <parameters xmi:id="__yXGtutpEemQuOLHJni5mQ" name="containedClass" kind="IN"/>
+    <parameters xmi:id="__yXGt-tpEemQuOLHJni5mQ" name="oldContainerReferenceA" kind="IN"/>
+    <parameters xmi:id="__yXGuOtpEemQuOLHJni5mQ" name="oldContainerReferenceB" kind="IN"/>
+    <parameterMappings xmi:id="__yXGuetpEemQuOLHJni5mQ" source="__yXGsutpEemQuOLHJni5mQ" target="__yXGwetpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__yXGuutpEemQuOLHJni5mQ" source="__yXGs-tpEemQuOLHJni5mQ" target="__yXGwutpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__yXGu-tpEemQuOLHJni5mQ" source="__yXGtOtpEemQuOLHJni5mQ" target="__yXGw-tpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__yXGvOtpEemQuOLHJni5mQ" source="__yXGtetpEemQuOLHJni5mQ" target="__yXGxOtpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__yXGvetpEemQuOLHJni5mQ" source="__yXGtutpEemQuOLHJni5mQ" target="__yXGxetpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__yXGvutpEemQuOLHJni5mQ" source="__yXGt-tpEemQuOLHJni5mQ" target="__yXGxutpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__yXGv-tpEemQuOLHJni5mQ" source="__yXGuOtpEemQuOLHJni5mQ" target="__yXGx-tpEemQuOLHJni5mQ"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="__yXGwOtpEemQuOLHJni5mQ" name="Transform: Two Containment-Container References - To - Two Containment References">
+    <parameters xmi:id="__yXGwetpEemQuOLHJni5mQ" name="containerClassA" kind="IN"/>
+    <parameters xmi:id="__yXGwutpEemQuOLHJni5mQ" name="containmentReferenceA" kind="IN"/>
+    <parameters xmi:id="__yXGw-tpEemQuOLHJni5mQ" name="containerClassB" kind="IN"/>
+    <parameters xmi:id="__yXGxOtpEemQuOLHJni5mQ" name="containmentReferenceB" kind="IN"/>
+    <parameters xmi:id="__yXGxetpEemQuOLHJni5mQ" name="containedClass" kind="IN"/>
+    <parameters xmi:id="__yXGxutpEemQuOLHJni5mQ" name="oldContainerReferenceA" kind="IN"/>
+    <parameters xmi:id="__yXGx-tpEemQuOLHJni5mQ" name="oldContainerReferenceB" kind="IN"/>
+    <lhs xmi:id="__yXGyOtpEemQuOLHJni5mQ" name="Lhs">
+      <nodes xmi:id="__yXGyetpEemQuOLHJni5mQ" name="containerClassA" incoming="__yXG2OtpEemQuOLHJni5mQ __yXG4OtpEemQuOLHJni5mQ" outgoing="__yXG1utpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="__yXGyutpEemQuOLHJni5mQ" name="containmentReferenceA" incoming="__yXG1utpEemQuOLHJni5mQ __yXG4utpEemQuOLHJni5mQ" outgoing="__yXG1-tpEemQuOLHJni5mQ __yXG2OtpEemQuOLHJni5mQ __yXG2etpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="__yXGy-tpEemQuOLHJni5mQ" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="__yXGzOtpEemQuOLHJni5mQ" name="containerClassB" incoming="__yXG3OtpEemQuOLHJni5mQ __yXG4-tpEemQuOLHJni5mQ" outgoing="__yXG2utpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="__yXGzetpEemQuOLHJni5mQ" name="containmentReferenceB" incoming="__yXG2utpEemQuOLHJni5mQ __yXG5etpEemQuOLHJni5mQ" outgoing="__yXG2-tpEemQuOLHJni5mQ __yXG3OtpEemQuOLHJni5mQ __yXG3etpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="__yXGzutpEemQuOLHJni5mQ" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="__yXGz-tpEemQuOLHJni5mQ" name="containedClass" incoming="__yXG1-tpEemQuOLHJni5mQ __yXG2-tpEemQuOLHJni5mQ __yXG4etpEemQuOLHJni5mQ __yXG5OtpEemQuOLHJni5mQ" outgoing="__yXG3utpEemQuOLHJni5mQ __yXG3-tpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="__yXG0OtpEemQuOLHJni5mQ" name="oldContainerReferenceA" incoming="__yXG2etpEemQuOLHJni5mQ __yXG3-tpEemQuOLHJni5mQ" outgoing="__yXG4OtpEemQuOLHJni5mQ __yXG4etpEemQuOLHJni5mQ __yXG4utpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="__yXG0etpEemQuOLHJni5mQ" value="&quot;0&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/lowerBound"/>
+        </attributes>
+        <attributes xmi:id="__yXG0utpEemQuOLHJni5mQ" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="__yXG0-tpEemQuOLHJni5mQ" name="oldContainerReferenceB" incoming="__yXG3etpEemQuOLHJni5mQ __yXG3utpEemQuOLHJni5mQ" outgoing="__yXG4-tpEemQuOLHJni5mQ __yXG5OtpEemQuOLHJni5mQ __yXG5etpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="__yXG1OtpEemQuOLHJni5mQ" value="&quot;0&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/lowerBound"/>
+        </attributes>
+        <attributes xmi:id="__yXG1etpEemQuOLHJni5mQ" value="&quot;false&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="__yXG1utpEemQuOLHJni5mQ" source="__yXGyetpEemQuOLHJni5mQ" target="__yXGyutpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="__yXG1-tpEemQuOLHJni5mQ" source="__yXGyutpEemQuOLHJni5mQ" target="__yXGz-tpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="__yXG2OtpEemQuOLHJni5mQ" source="__yXGyutpEemQuOLHJni5mQ" target="__yXGyetpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="__yXG2etpEemQuOLHJni5mQ" source="__yXGyutpEemQuOLHJni5mQ" target="__yXG0OtpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="__yXG2utpEemQuOLHJni5mQ" source="__yXGzOtpEemQuOLHJni5mQ" target="__yXGzetpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="__yXG2-tpEemQuOLHJni5mQ" source="__yXGzetpEemQuOLHJni5mQ" target="__yXGz-tpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="__yXG3OtpEemQuOLHJni5mQ" source="__yXGzetpEemQuOLHJni5mQ" target="__yXGzOtpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="__yXG3etpEemQuOLHJni5mQ" source="__yXGzetpEemQuOLHJni5mQ" target="__yXG0-tpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="__yXG3utpEemQuOLHJni5mQ" source="__yXGz-tpEemQuOLHJni5mQ" target="__yXG0-tpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="__yXG3-tpEemQuOLHJni5mQ" source="__yXGz-tpEemQuOLHJni5mQ" target="__yXG0OtpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="__yXG4OtpEemQuOLHJni5mQ" source="__yXG0OtpEemQuOLHJni5mQ" target="__yXGyetpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="__yXG4etpEemQuOLHJni5mQ" source="__yXG0OtpEemQuOLHJni5mQ" target="__yXGz-tpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="__yXG4utpEemQuOLHJni5mQ" source="__yXG0OtpEemQuOLHJni5mQ" target="__yXGyutpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <edges xmi:id="__yXG4-tpEemQuOLHJni5mQ" source="__yXG0-tpEemQuOLHJni5mQ" target="__yXGzOtpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="__yXG5OtpEemQuOLHJni5mQ" source="__yXG0-tpEemQuOLHJni5mQ" target="__yXGz-tpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="__yXG5etpEemQuOLHJni5mQ" source="__yXG0-tpEemQuOLHJni5mQ" target="__yXGzetpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+      </edges>
+      <formula xsi:type="henshin:Not" xmi:id="__yXG5utpEemQuOLHJni5mQ">
+        <child xsi:type="henshin:NestedCondition" xmi:id="__yXG5-tpEemQuOLHJni5mQ">
+          <conclusion xmi:id="__yXG6OtpEemQuOLHJni5mQ" name="post">
+            <nodes xmi:id="__yXG6etpEemQuOLHJni5mQ" name="postContainerReferenceB" incoming="__yXG7utpEemQuOLHJni5mQ" outgoing="__yXG7-tpEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+            </nodes>
+            <nodes xmi:id="__yXG6utpEemQuOLHJni5mQ" name="postContainerReferenceA" incoming="__yXG7etpEemQuOLHJni5mQ" outgoing="__yXG8OtpEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+            </nodes>
+            <nodes xmi:id="__yXG6-tpEemQuOLHJni5mQ" name="containmentReferenceA" incoming="__yXG8OtpEemQuOLHJni5mQ" outgoing="__yXG7etpEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+            </nodes>
+            <nodes xmi:id="__yXG7OtpEemQuOLHJni5mQ" name="containmentReferenceB" incoming="__yXG7-tpEemQuOLHJni5mQ" outgoing="__yXG7utpEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+            </nodes>
+            <edges xmi:id="__yXG7etpEemQuOLHJni5mQ" source="__yXG6-tpEemQuOLHJni5mQ" target="__yXG6utpEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+            </edges>
+            <edges xmi:id="__yXG7utpEemQuOLHJni5mQ" source="__yXG7OtpEemQuOLHJni5mQ" target="__yXG6etpEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+            </edges>
+            <edges xmi:id="__yXG7-tpEemQuOLHJni5mQ" source="__yXG6etpEemQuOLHJni5mQ" target="__yXG7OtpEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+            </edges>
+            <edges xmi:id="__yXG8OtpEemQuOLHJni5mQ" source="__yXG6utpEemQuOLHJni5mQ" target="__yXG6-tpEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
+            </edges>
+          </conclusion>
+          <mappings xmi:id="__yXG8etpEemQuOLHJni5mQ" origin="__yXGyutpEemQuOLHJni5mQ" image="__yXG6-tpEemQuOLHJni5mQ"/>
+          <mappings xmi:id="__yXG8utpEemQuOLHJni5mQ" origin="__yXGzetpEemQuOLHJni5mQ" image="__yXG7OtpEemQuOLHJni5mQ"/>
+        </child>
+      </formula>
+    </lhs>
+    <rhs xmi:id="__yXG8-tpEemQuOLHJni5mQ" name="Rhs">
+      <nodes xmi:id="__yXG9OtpEemQuOLHJni5mQ" name="containerClassA" incoming="__yXG_etpEemQuOLHJni5mQ" outgoing="__yXG--tpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="__yXG9etpEemQuOLHJni5mQ" name="containmentReferenceA" incoming="__yXG--tpEemQuOLHJni5mQ" outgoing="__yXG_OtpEemQuOLHJni5mQ __yXG_etpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="__yXG9utpEemQuOLHJni5mQ" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="__yXG9-tpEemQuOLHJni5mQ" name="containerClassB" incoming="__yXHAOtpEemQuOLHJni5mQ" outgoing="__yXG_utpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="__yXG-OtpEemQuOLHJni5mQ" name="containmentReferenceB" incoming="__yXG_utpEemQuOLHJni5mQ" outgoing="__yXG_-tpEemQuOLHJni5mQ __yXHAOtpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="__yXG-etpEemQuOLHJni5mQ" value="&quot;true&quot;">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="__yXG-utpEemQuOLHJni5mQ" name="containedClass" incoming="__yXG_OtpEemQuOLHJni5mQ __yXG_-tpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <edges xmi:id="__yXG--tpEemQuOLHJni5mQ" source="__yXG9OtpEemQuOLHJni5mQ" target="__yXG9etpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="__yXG_OtpEemQuOLHJni5mQ" source="__yXG9etpEemQuOLHJni5mQ" target="__yXG-utpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="__yXG_etpEemQuOLHJni5mQ" source="__yXG9etpEemQuOLHJni5mQ" target="__yXG9OtpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="__yXG_utpEemQuOLHJni5mQ" source="__yXG9-tpEemQuOLHJni5mQ" target="__yXG-OtpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="__yXG_-tpEemQuOLHJni5mQ" source="__yXG-OtpEemQuOLHJni5mQ" target="__yXG-utpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+      <edges xmi:id="__yXHAOtpEemQuOLHJni5mQ" source="__yXG-OtpEemQuOLHJni5mQ" target="__yXG9-tpEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="__yXHAetpEemQuOLHJni5mQ" origin="__yXGyetpEemQuOLHJni5mQ" image="__yXG9OtpEemQuOLHJni5mQ"/>
+    <mappings xmi:id="__yXHAutpEemQuOLHJni5mQ" origin="__yXGyutpEemQuOLHJni5mQ" image="__yXG9etpEemQuOLHJni5mQ"/>
+    <mappings xmi:id="__yXHA-tpEemQuOLHJni5mQ" origin="__yXGzOtpEemQuOLHJni5mQ" image="__yXG9-tpEemQuOLHJni5mQ"/>
+    <mappings xmi:id="__yXHBOtpEemQuOLHJni5mQ" origin="__yXGzetpEemQuOLHJni5mQ" image="__yXG-OtpEemQuOLHJni5mQ"/>
+    <mappings xmi:id="__yXHBetpEemQuOLHJni5mQ" origin="__yXGz-tpEemQuOLHJni5mQ" image="__yXG-utpEemQuOLHJni5mQ"/>
+  </units>
+</henshin:Module>

@@ -1,52 +1,49 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DOTU8GXaEemxua17r6Vydg" name="Create: Named Parameter" description="Create: Named Parameter">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_DOTU8WXaEemxua17r6Vydg" name="mainUnit" subUnits="_DOTU-mXaEemxua17r6Vydg">
-    <parameters xmi:id="_DOTU8mXaEemxua17r6Vydg" name="containingOperation" kind="IN"/>
-    <parameters xmi:id="_DOTU82XaEemxua17r6Vydg" name="parameter" kind="IN"/>
-    <parameters xmi:id="_DOTU9GXaEemxua17r6Vydg" name="parameterName" kind="IN"/>
-    <parameters xmi:id="_DOTU9WXaEemxua17r6Vydg" name="type" kind="IN"/>
-    <parameterMappings xmi:id="_DOTU9mXaEemxua17r6Vydg" source="_DOTU8mXaEemxua17r6Vydg" target="_DOTU-2XaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_DOTU92XaEemxua17r6Vydg" source="_DOTU82XaEemxua17r6Vydg" target="_DOTU_GXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_DOTU-GXaEemxua17r6Vydg" source="_DOTU9GXaEemxua17r6Vydg" target="_DOTU_WXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_DOTU-WXaEemxua17r6Vydg" source="_DOTU9WXaEemxua17r6Vydg" target="_DOTU_mXaEemxua17r6Vydg"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="__RIB4OtpEemQuOLHJni5mQ" name="Create: Named Parameter" description="Create: Named Parameter">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="__RIB4etpEemQuOLHJni5mQ" name="mainUnit" subUnits="__RIB6OtpEemQuOLHJni5mQ">
+    <parameters xmi:id="__RIB4utpEemQuOLHJni5mQ" name="toContainingOperation" kind="IN"/>
+    <parameters xmi:id="__RIB4-tpEemQuOLHJni5mQ" name="parameterName" kind="IN"/>
+    <parameters xmi:id="__RIB5OtpEemQuOLHJni5mQ" name="toType" kind="IN"/>
+    <parameterMappings xmi:id="__RIB5etpEemQuOLHJni5mQ" source="__RIB4utpEemQuOLHJni5mQ" target="__RIB6etpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__RIB5utpEemQuOLHJni5mQ" source="__RIB4-tpEemQuOLHJni5mQ" target="__RIB6utpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__RIB5-tpEemQuOLHJni5mQ" source="__RIB5OtpEemQuOLHJni5mQ" target="__RIB6-tpEemQuOLHJni5mQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_DOTU-mXaEemxua17r6Vydg" name="Create: Named Parameter">
-    <parameters xmi:id="_DOTU-2XaEemxua17r6Vydg" name="containingOperation" kind="IN"/>
-    <parameters xmi:id="_DOTU_GXaEemxua17r6Vydg" name="parameter" kind="IN"/>
-    <parameters xmi:id="_DOTU_WXaEemxua17r6Vydg" name="parameterName" kind="IN"/>
-    <parameters xmi:id="_DOTU_mXaEemxua17r6Vydg" name="type" kind="IN"/>
-    <lhs xmi:id="_DOTU_2XaEemxua17r6Vydg" name="Lhs">
-      <nodes xmi:id="_DOTVAGXaEemxua17r6Vydg" name="containingOperation">
+  <units xsi:type="henshin:Rule" xmi:id="__RIB6OtpEemQuOLHJni5mQ" name="Create: Named Parameter">
+    <parameters xmi:id="__RIB6etpEemQuOLHJni5mQ" name="toContainingOperation" kind="IN"/>
+    <parameters xmi:id="__RIB6utpEemQuOLHJni5mQ" name="parameterName" kind="IN"/>
+    <parameters xmi:id="__RIB6-tpEemQuOLHJni5mQ" name="toType" kind="IN"/>
+    <lhs xmi:id="__RIB7OtpEemQuOLHJni5mQ" name="Lhs">
+      <nodes xmi:id="__RIB7etpEemQuOLHJni5mQ" name="toContainingOperation">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
       </nodes>
-      <nodes xmi:id="_DOTVAWXaEemxua17r6Vydg" name="type">
+      <nodes xmi:id="__RIB7utpEemQuOLHJni5mQ" name="toType">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
       </nodes>
     </lhs>
-    <rhs xmi:id="_DOTVAmXaEemxua17r6Vydg" name="Rhs">
-      <nodes xmi:id="_DOTVA2XaEemxua17r6Vydg" name="containingOperation" incoming="_DOTVCGXaEemxua17r6Vydg" outgoing="_DOTVB2XaEemxua17r6Vydg">
+    <rhs xmi:id="__RIB7-tpEemQuOLHJni5mQ" name="Rhs">
+      <nodes xmi:id="__RIB8OtpEemQuOLHJni5mQ" name="toContainingOperation" incoming="__RIB9etpEemQuOLHJni5mQ" outgoing="__RIB9OtpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
       </nodes>
-      <nodes xmi:id="_DOTVBGXaEemxua17r6Vydg" name="parameter" incoming="_DOTVB2XaEemxua17r6Vydg" outgoing="_DOTVCGXaEemxua17r6Vydg _DOTVCWXaEemxua17r6Vydg">
+      <nodes xmi:id="__RIB8etpEemQuOLHJni5mQ" name="newParameter" incoming="__RIB9OtpEemQuOLHJni5mQ" outgoing="__RIB9etpEemQuOLHJni5mQ __RIB9utpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
-        <attributes xmi:id="_DOTVBWXaEemxua17r6Vydg" value="parameterName">
+        <attributes xmi:id="__RIB8utpEemQuOLHJni5mQ" value="parameterName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_DOTVBmXaEemxua17r6Vydg" name="type" incoming="_DOTVCWXaEemxua17r6Vydg">
+      <nodes xmi:id="__RIB8-tpEemQuOLHJni5mQ" name="toType" incoming="__RIB9utpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
       </nodes>
-      <edges xmi:id="_DOTVB2XaEemxua17r6Vydg" source="_DOTVA2XaEemxua17r6Vydg" target="_DOTVBGXaEemxua17r6Vydg">
+      <edges xmi:id="__RIB9OtpEemQuOLHJni5mQ" source="__RIB8OtpEemQuOLHJni5mQ" target="__RIB8etpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
       </edges>
-      <edges xmi:id="_DOTVCGXaEemxua17r6Vydg" source="_DOTVBGXaEemxua17r6Vydg" target="_DOTVA2XaEemxua17r6Vydg">
+      <edges xmi:id="__RIB9etpEemQuOLHJni5mQ" source="__RIB8etpEemQuOLHJni5mQ" target="__RIB8OtpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter/eOperation"/>
       </edges>
-      <edges xmi:id="_DOTVCWXaEemxua17r6Vydg" source="_DOTVBGXaEemxua17r6Vydg" target="_DOTVBmXaEemxua17r6Vydg">
+      <edges xmi:id="__RIB9utpEemQuOLHJni5mQ" source="__RIB8etpEemQuOLHJni5mQ" target="__RIB8-tpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_DOTVCmXaEemxua17r6Vydg" origin="_DOTVAGXaEemxua17r6Vydg" image="_DOTVA2XaEemxua17r6Vydg"/>
-    <mappings xmi:id="_DOTVC2XaEemxua17r6Vydg" origin="_DOTVAWXaEemxua17r6Vydg" image="_DOTVBmXaEemxua17r6Vydg"/>
+    <mappings xmi:id="__RIB9-tpEemQuOLHJni5mQ" origin="__RIB7etpEemQuOLHJni5mQ" image="__RIB8OtpEemQuOLHJni5mQ"/>
+    <mappings xmi:id="__RIB-OtpEemQuOLHJni5mQ" origin="__RIB7utpEemQuOLHJni5mQ" image="__RIB8-tpEemQuOLHJni5mQ"/>
   </units>
 </henshin:Module>

@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DtLpUGXaEemxua17r6Vydg" name="Delete: Non-Transient Bidirectional Self-References" description="Delete: Non-Transient Bidirectional Self-References">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_DtLpUWXaEemxua17r6Vydg" name="mainUnit" subUnits="_DtLpWGXaEemxua17r6Vydg">
-    <parameters xmi:id="_DtLpUmXaEemxua17r6Vydg" name="classA" kind="IN"/>
-    <parameters xmi:id="_DtLpU2XaEemxua17r6Vydg" name="refA" kind="IN"/>
-    <parameters xmi:id="_DtLpVGXaEemxua17r6Vydg" name="refB" kind="IN"/>
-    <parameterMappings xmi:id="_DtLpVWXaEemxua17r6Vydg" source="_DtLpUmXaEemxua17r6Vydg" target="_DtLpWWXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_DtLpVmXaEemxua17r6Vydg" source="_DtLpU2XaEemxua17r6Vydg" target="_DtLpWmXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_DtLpV2XaEemxua17r6Vydg" source="_DtLpVGXaEemxua17r6Vydg" target="_DtLpW2XaEemxua17r6Vydg"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="__114gOtpEemQuOLHJni5mQ" name="Delete: Non-Transient Bidirectional Self-References" description="Delete: Non-Transient Bidirectional Self-References">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="__114getpEemQuOLHJni5mQ" name="mainUnit" subUnits="__114iOtpEemQuOLHJni5mQ">
+    <parameters xmi:id="__114gutpEemQuOLHJni5mQ" name="fromClassA" kind="IN"/>
+    <parameters xmi:id="__114g-tpEemQuOLHJni5mQ" name="oldRefA" kind="IN"/>
+    <parameters xmi:id="__114hOtpEemQuOLHJni5mQ" name="oldRefB" kind="IN"/>
+    <parameterMappings xmi:id="__114hetpEemQuOLHJni5mQ" source="__114gutpEemQuOLHJni5mQ" target="__114ietpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__114hutpEemQuOLHJni5mQ" source="__114g-tpEemQuOLHJni5mQ" target="__114iutpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__114h-tpEemQuOLHJni5mQ" source="__114hOtpEemQuOLHJni5mQ" target="__114i-tpEemQuOLHJni5mQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_DtLpWGXaEemxua17r6Vydg" name="Delete: Non-Transient Bidirectional Self-References">
-    <parameters xmi:id="_DtLpWWXaEemxua17r6Vydg" name="classA" kind="IN"/>
-    <parameters xmi:id="_DtLpWmXaEemxua17r6Vydg" name="refA" kind="IN"/>
-    <parameters xmi:id="_DtLpW2XaEemxua17r6Vydg" name="refB" kind="IN"/>
-    <lhs xmi:id="_DtLpXGXaEemxua17r6Vydg" name="Lhs">
-      <nodes xmi:id="_DtLpXWXaEemxua17r6Vydg" name="classA" incoming="_DtLpZGXaEemxua17r6Vydg _DtLpZWXaEemxua17r6Vydg _DtLpZ2XaEemxua17r6Vydg _DtLpaGXaEemxua17r6Vydg" outgoing="_DtLpYmXaEemxua17r6Vydg _DtLpY2XaEemxua17r6Vydg">
+  <units xsi:type="henshin:Rule" xmi:id="__114iOtpEemQuOLHJni5mQ" name="Delete: Non-Transient Bidirectional Self-References">
+    <parameters xmi:id="__114ietpEemQuOLHJni5mQ" name="fromClassA" kind="IN"/>
+    <parameters xmi:id="__114iutpEemQuOLHJni5mQ" name="oldRefA" kind="IN"/>
+    <parameters xmi:id="__114i-tpEemQuOLHJni5mQ" name="oldRefB" kind="IN"/>
+    <lhs xmi:id="__114jOtpEemQuOLHJni5mQ" name="Lhs">
+      <nodes xmi:id="__114jetpEemQuOLHJni5mQ" name="fromClassA" incoming="__114lOtpEemQuOLHJni5mQ __114letpEemQuOLHJni5mQ __114l-tpEemQuOLHJni5mQ __114mOtpEemQuOLHJni5mQ" outgoing="__114kutpEemQuOLHJni5mQ __114k-tpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_DtLpXmXaEemxua17r6Vydg" name="refA" incoming="_DtLpY2XaEemxua17r6Vydg _DtLpaWXaEemxua17r6Vydg" outgoing="_DtLpZGXaEemxua17r6Vydg _DtLpZWXaEemxua17r6Vydg _DtLpZmXaEemxua17r6Vydg">
+      <nodes xmi:id="__114jutpEemQuOLHJni5mQ" name="oldRefA" incoming="__114k-tpEemQuOLHJni5mQ __114metpEemQuOLHJni5mQ" outgoing="__114lOtpEemQuOLHJni5mQ __114letpEemQuOLHJni5mQ __114lutpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
-        <attributes xmi:id="_DtLpX2XaEemxua17r6Vydg" value="&quot;false&quot;">
+        <attributes xmi:id="__114j-tpEemQuOLHJni5mQ" value="&quot;false&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_DtLpYGXaEemxua17r6Vydg" name="refB" incoming="_DtLpYmXaEemxua17r6Vydg _DtLpZmXaEemxua17r6Vydg" outgoing="_DtLpZ2XaEemxua17r6Vydg _DtLpaGXaEemxua17r6Vydg _DtLpaWXaEemxua17r6Vydg">
+      <nodes xmi:id="__114kOtpEemQuOLHJni5mQ" name="oldRefB" incoming="__114kutpEemQuOLHJni5mQ __114lutpEemQuOLHJni5mQ" outgoing="__114l-tpEemQuOLHJni5mQ __114mOtpEemQuOLHJni5mQ __114metpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
-        <attributes xmi:id="_DtLpYWXaEemxua17r6Vydg" value="&quot;false&quot;">
+        <attributes xmi:id="__114ketpEemQuOLHJni5mQ" value="&quot;false&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_DtLpYmXaEemxua17r6Vydg" source="_DtLpXWXaEemxua17r6Vydg" target="_DtLpYGXaEemxua17r6Vydg">
+      <edges xmi:id="__114kutpEemQuOLHJni5mQ" source="__114jetpEemQuOLHJni5mQ" target="__114kOtpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="_DtLpY2XaEemxua17r6Vydg" source="_DtLpXWXaEemxua17r6Vydg" target="_DtLpXmXaEemxua17r6Vydg">
+      <edges xmi:id="__114k-tpEemQuOLHJni5mQ" source="__114jetpEemQuOLHJni5mQ" target="__114jutpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="_DtLpZGXaEemxua17r6Vydg" source="_DtLpXmXaEemxua17r6Vydg" target="_DtLpXWXaEemxua17r6Vydg">
+      <edges xmi:id="__114lOtpEemQuOLHJni5mQ" source="__114jutpEemQuOLHJni5mQ" target="__114jetpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="_DtLpZWXaEemxua17r6Vydg" source="_DtLpXmXaEemxua17r6Vydg" target="_DtLpXWXaEemxua17r6Vydg">
+      <edges xmi:id="__114letpEemQuOLHJni5mQ" source="__114jutpEemQuOLHJni5mQ" target="__114jetpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
-      <edges xmi:id="_DtLpZmXaEemxua17r6Vydg" source="_DtLpXmXaEemxua17r6Vydg" target="_DtLpYGXaEemxua17r6Vydg">
+      <edges xmi:id="__114lutpEemQuOLHJni5mQ" source="__114jutpEemQuOLHJni5mQ" target="__114kOtpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
       </edges>
-      <edges xmi:id="_DtLpZ2XaEemxua17r6Vydg" source="_DtLpYGXaEemxua17r6Vydg" target="_DtLpXWXaEemxua17r6Vydg">
+      <edges xmi:id="__114l-tpEemQuOLHJni5mQ" source="__114kOtpEemQuOLHJni5mQ" target="__114jetpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="_DtLpaGXaEemxua17r6Vydg" source="_DtLpYGXaEemxua17r6Vydg" target="_DtLpXWXaEemxua17r6Vydg">
+      <edges xmi:id="__114mOtpEemQuOLHJni5mQ" source="__114kOtpEemQuOLHJni5mQ" target="__114jetpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
-      <edges xmi:id="_DtLpaWXaEemxua17r6Vydg" source="_DtLpYGXaEemxua17r6Vydg" target="_DtLpXmXaEemxua17r6Vydg">
+      <edges xmi:id="__114metpEemQuOLHJni5mQ" source="__114kOtpEemQuOLHJni5mQ" target="__114jutpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
       </edges>
     </lhs>
-    <rhs xmi:id="_DtLpamXaEemxua17r6Vydg" name="Rhs">
-      <nodes xmi:id="_DtLpa2XaEemxua17r6Vydg" name="classA">
+    <rhs xmi:id="__114mutpEemQuOLHJni5mQ" name="Rhs">
+      <nodes xmi:id="__114m-tpEemQuOLHJni5mQ" name="fromClassA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
     </rhs>
-    <mappings xmi:id="_DtLpbGXaEemxua17r6Vydg" origin="_DtLpXWXaEemxua17r6Vydg" image="_DtLpa2XaEemxua17r6Vydg"/>
+    <mappings xmi:id="__114nOtpEemQuOLHJni5mQ" origin="__114jetpEemQuOLHJni5mQ" image="__114m-tpEemQuOLHJni5mQ"/>
   </units>
 </henshin:Module>

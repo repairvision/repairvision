@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ALZRwOtqEemQuOLHJni5mQ" name="Transform: Class with Generic-Super-Type (Type-Parameter bounded by Classifier) - To - Class without Generic-Super-Type (1)" description="Transform: Class with Generic-Super-Type (Type-Parameter bounded by Classifier) - To - Class without Generic-Super-Type (1)">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ALZRwetqEemQuOLHJni5mQ" name="mainUnit" subUnits="_ALZRzutqEemQuOLHJni5mQ">
+    <parameters xmi:id="_ALZRwutqEemQuOLHJni5mQ" name="oldGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_ALZRw-tqEemQuOLHJni5mQ" name="oldTypeArgumentOfGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_ALZRxOtqEemQuOLHJni5mQ" name="classWithoutGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_ALZRxetqEemQuOLHJni5mQ" name="fromClassWithGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_ALZRxutqEemQuOLHJni5mQ" name="oldP" kind="IN"/>
+    <parameters xmi:id="_ALZRx-tqEemQuOLHJni5mQ" name="fromClassifierAsTypeArgument" kind="IN"/>
+    <parameterMappings xmi:id="_ALZRyOtqEemQuOLHJni5mQ" source="_ALZRwutqEemQuOLHJni5mQ" target="_ALZRz-tqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_ALZRyetqEemQuOLHJni5mQ" source="_ALZRw-tqEemQuOLHJni5mQ" target="_ALZR0OtqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_ALZRyutqEemQuOLHJni5mQ" source="_ALZRxOtqEemQuOLHJni5mQ" target="_ALZR0etqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_ALZRy-tqEemQuOLHJni5mQ" source="_ALZRxetqEemQuOLHJni5mQ" target="_ALZR0utqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_ALZRzOtqEemQuOLHJni5mQ" source="_ALZRxutqEemQuOLHJni5mQ" target="_ALZR0-tqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_ALZRzetqEemQuOLHJni5mQ" source="_ALZRx-tqEemQuOLHJni5mQ" target="_ALZR1OtqEemQuOLHJni5mQ"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_ALZRzutqEemQuOLHJni5mQ" name="Transform: Class with Generic-Super-Type (Type-Parameter bounded by Classifier) - To - Class without Generic-Super-Type (1)">
+    <parameters xmi:id="_ALZRz-tqEemQuOLHJni5mQ" name="oldGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_ALZR0OtqEemQuOLHJni5mQ" name="oldTypeArgumentOfGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_ALZR0etqEemQuOLHJni5mQ" name="classWithoutGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_ALZR0utqEemQuOLHJni5mQ" name="fromClassWithGenericSuperType" kind="IN"/>
+    <parameters xmi:id="_ALZR0-tqEemQuOLHJni5mQ" name="oldP" kind="IN"/>
+    <parameters xmi:id="_ALZR1OtqEemQuOLHJni5mQ" name="fromClassifierAsTypeArgument" kind="IN"/>
+    <lhs xmi:id="_ALZR1etqEemQuOLHJni5mQ" name="Lhs">
+      <nodes xmi:id="_ALZR1utqEemQuOLHJni5mQ" name="oldGenericSuperType" incoming="_ALZR4OtqEemQuOLHJni5mQ" outgoing="_ALZR3OtqEemQuOLHJni5mQ _ALZR3etqEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_ALZR1-tqEemQuOLHJni5mQ" name="oldTypeArgumentOfGenericSuperType" incoming="_ALZR3OtqEemQuOLHJni5mQ" outgoing="_ALZR3utqEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+      </nodes>
+      <nodes xmi:id="_ALZR2OtqEemQuOLHJni5mQ" name="classWithoutGenericSuperType" incoming="_ALZR3etqEemQuOLHJni5mQ" outgoing="_ALZR3-tqEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_ALZR2etqEemQuOLHJni5mQ" name="fromClassWithGenericSuperType" outgoing="_ALZR4OtqEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_ALZR2utqEemQuOLHJni5mQ" name="oldP" incoming="_ALZR3-tqEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
+      </nodes>
+      <nodes xmi:id="_ALZR2-tqEemQuOLHJni5mQ" name="fromClassifierAsTypeArgument" incoming="_ALZR3utqEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+      <edges xmi:id="_ALZR3OtqEemQuOLHJni5mQ" source="_ALZR1utqEemQuOLHJni5mQ" target="_ALZR1-tqEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
+      </edges>
+      <edges xmi:id="_ALZR3etqEemQuOLHJni5mQ" source="_ALZR1utqEemQuOLHJni5mQ" target="_ALZR2OtqEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+      </edges>
+      <edges xmi:id="_ALZR3utqEemQuOLHJni5mQ" source="_ALZR1-tqEemQuOLHJni5mQ" target="_ALZR2-tqEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+      </edges>
+      <edges xmi:id="_ALZR3-tqEemQuOLHJni5mQ" source="_ALZR2OtqEemQuOLHJni5mQ" target="_ALZR2utqEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+      </edges>
+      <edges xmi:id="_ALZR4OtqEemQuOLHJni5mQ" source="_ALZR2etqEemQuOLHJni5mQ" target="_ALZR1utqEemQuOLHJni5mQ">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eGenericSuperTypes"/>
+      </edges>
+      <formula xsi:type="henshin:And" xmi:id="_ALZR4etqEemQuOLHJni5mQ">
+        <left xsi:type="henshin:Not" xmi:id="_ALZR4utqEemQuOLHJni5mQ">
+          <child xsi:type="henshin:NestedCondition" xmi:id="_ALZR4-tqEemQuOLHJni5mQ">
+            <conclusion xmi:id="_ALZR5OtqEemQuOLHJni5mQ" name="pre">
+              <nodes xmi:id="_ALZR5etqEemQuOLHJni5mQ" name="preT" incoming="_ALZR5-tqEemQuOLHJni5mQ">
+                <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
+              </nodes>
+              <nodes xmi:id="_ALZR5utqEemQuOLHJni5mQ" name="oldTypeArgumentOfGenericSuperType" outgoing="_ALZR5-tqEemQuOLHJni5mQ">
+                <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+              </nodes>
+              <edges xmi:id="_ALZR5-tqEemQuOLHJni5mQ" source="_ALZR5utqEemQuOLHJni5mQ" target="_ALZR5etqEemQuOLHJni5mQ">
+                <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeParameter"/>
+              </edges>
+            </conclusion>
+            <mappings xmi:id="_ALZR6OtqEemQuOLHJni5mQ" origin="_ALZR1-tqEemQuOLHJni5mQ" image="_ALZR5utqEemQuOLHJni5mQ"/>
+          </child>
+        </left>
+        <right xsi:type="henshin:Not" xmi:id="_ALZR6etqEemQuOLHJni5mQ">
+          <child xsi:type="henshin:NestedCondition" xmi:id="_ALZR6utqEemQuOLHJni5mQ">
+            <conclusion xmi:id="_ALZR6-tqEemQuOLHJni5mQ" name="post">
+              <nodes xmi:id="_ALZR7OtqEemQuOLHJni5mQ" name="postGenericSuperType" incoming="_ALZR7utqEemQuOLHJni5mQ">
+                <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+              </nodes>
+              <nodes xmi:id="_ALZR7etqEemQuOLHJni5mQ" name="classWithoutGenericSuperType" outgoing="_ALZR7utqEemQuOLHJni5mQ">
+                <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+              </nodes>
+              <edges xmi:id="_ALZR7utqEemQuOLHJni5mQ" source="_ALZR7etqEemQuOLHJni5mQ" target="_ALZR7OtqEemQuOLHJni5mQ">
+                <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eGenericSuperTypes"/>
+              </edges>
+            </conclusion>
+            <mappings xmi:id="_ALZR7-tqEemQuOLHJni5mQ" origin="_ALZR2OtqEemQuOLHJni5mQ" image="_ALZR7etqEemQuOLHJni5mQ"/>
+          </child>
+        </right>
+      </formula>
+    </lhs>
+    <rhs xmi:id="_ALZR8OtqEemQuOLHJni5mQ" name="Rhs">
+      <nodes xmi:id="_ALZR8etqEemQuOLHJni5mQ" name="classWithoutGenericSuperType">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_ALZR8utqEemQuOLHJni5mQ" name="fromClassWithGenericSuperType">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_ALZR8-tqEemQuOLHJni5mQ" name="fromClassifierAsTypeArgument">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_ALZR9OtqEemQuOLHJni5mQ" origin="_ALZR2OtqEemQuOLHJni5mQ" image="_ALZR8etqEemQuOLHJni5mQ"/>
+    <mappings xmi:id="_ALZR9etqEemQuOLHJni5mQ" origin="_ALZR2etqEemQuOLHJni5mQ" image="_ALZR8utqEemQuOLHJni5mQ"/>
+    <mappings xmi:id="_ALZR9utqEemQuOLHJni5mQ" origin="_ALZR2-tqEemQuOLHJni5mQ" image="_ALZR8-tqEemQuOLHJni5mQ"/>
+  </units>
+</henshin:Module>

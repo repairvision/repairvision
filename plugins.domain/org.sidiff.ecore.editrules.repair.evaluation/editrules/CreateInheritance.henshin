@@ -1,36 +1,51 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DXuWsGXaEemxua17r6Vydg" name="Create: Inheritance" description="Create: Inheritance">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_DXuWsWXaEemxua17r6Vydg" name="mainUnit" subUnits="_DXuWsmXaEemxua17r6Vydg"/>
-  <units xsi:type="henshin:Rule" xmi:id="_DXuWsmXaEemxua17r6Vydg" name="Create: Inheritance">
-    <lhs xmi:id="_DXuWs2XaEemxua17r6Vydg" name="Lhs">
-      <nodes xmi:id="_DXuWtGXaEemxua17r6Vydg" name="subClass" incoming="_DXuWt2XaEemxua17r6Vydg" outgoing="_DXuWtmXaEemxua17r6Vydg">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="__YhDUOtpEemQuOLHJni5mQ" name="Create: Inheritance" description="Create: Inheritance">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="__YhDUetpEemQuOLHJni5mQ" name="mainUnit" subUnits="__YhDVutpEemQuOLHJni5mQ">
+    <parameters xmi:id="__YhDUutpEemQuOLHJni5mQ" name="toSubClass" kind="IN"/>
+    <parameters xmi:id="__YhDU-tpEemQuOLHJni5mQ" name="toSuperClass" kind="IN"/>
+    <parameterMappings xmi:id="__YhDVOtpEemQuOLHJni5mQ" source="__YhDUutpEemQuOLHJni5mQ" target="__YhDV-tpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__YhDVetpEemQuOLHJni5mQ" source="__YhDU-tpEemQuOLHJni5mQ" target="__YhDWOtpEemQuOLHJni5mQ"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="__YhDVutpEemQuOLHJni5mQ" name="Create: Inheritance">
+    <parameters xmi:id="__YhDV-tpEemQuOLHJni5mQ" name="toSubClass" kind="IN"/>
+    <parameters xmi:id="__YhDWOtpEemQuOLHJni5mQ" name="toSuperClass" kind="IN"/>
+    <lhs xmi:id="__YhDWetpEemQuOLHJni5mQ" name="Lhs">
+      <nodes xmi:id="__YhDWutpEemQuOLHJni5mQ" name="toSubClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_DXuWtWXaEemxua17r6Vydg" name="superClass" incoming="_DXuWtmXaEemxua17r6Vydg" outgoing="_DXuWt2XaEemxua17r6Vydg">
+      <nodes xmi:id="__YhDW-tpEemQuOLHJni5mQ" name="toSuperClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <edges xmi:id="_DXuWtmXaEemxua17r6Vydg" source="_DXuWtGXaEemxua17r6Vydg" target="_DXuWtWXaEemxua17r6Vydg">
-        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
-      </edges>
-      <edges xmi:id="_DXuWt2XaEemxua17r6Vydg" source="_DXuWtWXaEemxua17r6Vydg" target="_DXuWtGXaEemxua17r6Vydg">
-        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
-      </edges>
+      <formula xsi:type="henshin:Not" xmi:id="__YhDXOtpEemQuOLHJni5mQ">
+        <child xsi:type="henshin:NestedCondition" xmi:id="__YhDXetpEemQuOLHJni5mQ">
+          <conclusion xmi:id="__YhDXutpEemQuOLHJni5mQ" name="post">
+            <nodes xmi:id="__YhDX-tpEemQuOLHJni5mQ" name="toSuperClass" outgoing="__YhDYetpEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+            </nodes>
+            <nodes xmi:id="__YhDYOtpEemQuOLHJni5mQ" name="toSubClass" incoming="__YhDYetpEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+            </nodes>
+            <edges xmi:id="__YhDYetpEemQuOLHJni5mQ" source="__YhDX-tpEemQuOLHJni5mQ" target="__YhDYOtpEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
+            </edges>
+          </conclusion>
+          <mappings xmi:id="__YhDYutpEemQuOLHJni5mQ" origin="__YhDW-tpEemQuOLHJni5mQ" image="__YhDX-tpEemQuOLHJni5mQ"/>
+          <mappings xmi:id="__YhDY-tpEemQuOLHJni5mQ" origin="__YhDWutpEemQuOLHJni5mQ" image="__YhDYOtpEemQuOLHJni5mQ"/>
+        </child>
+      </formula>
     </lhs>
-    <rhs xmi:id="_DXuWuGXaEemxua17r6Vydg" name="Rhs">
-      <nodes xmi:id="_DXuWuWXaEemxua17r6Vydg" name="subClass" incoming="_DXuWvGXaEemxua17r6Vydg" outgoing="_DXuWu2XaEemxua17r6Vydg">
+    <rhs xmi:id="__YhDZOtpEemQuOLHJni5mQ" name="Rhs">
+      <nodes xmi:id="__YhDZetpEemQuOLHJni5mQ" name="toSubClass" outgoing="__YhDZ-tpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_DXuWumXaEemxua17r6Vydg" name="superClass" incoming="_DXuWu2XaEemxua17r6Vydg" outgoing="_DXuWvGXaEemxua17r6Vydg">
+      <nodes xmi:id="__YhDZutpEemQuOLHJni5mQ" name="toSuperClass" incoming="__YhDZ-tpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <edges xmi:id="_DXuWu2XaEemxua17r6Vydg" source="_DXuWuWXaEemxua17r6Vydg" target="_DXuWumXaEemxua17r6Vydg">
-        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
-      </edges>
-      <edges xmi:id="_DXuWvGXaEemxua17r6Vydg" source="_DXuWumXaEemxua17r6Vydg" target="_DXuWuWXaEemxua17r6Vydg">
+      <edges xmi:id="__YhDZ-tpEemQuOLHJni5mQ" source="__YhDZetpEemQuOLHJni5mQ" target="__YhDZutpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_DXuWvWXaEemxua17r6Vydg" origin="_DXuWtGXaEemxua17r6Vydg" image="_DXuWuWXaEemxua17r6Vydg"/>
-    <mappings xmi:id="_DXuWvmXaEemxua17r6Vydg" origin="_DXuWtWXaEemxua17r6Vydg" image="_DXuWumXaEemxua17r6Vydg"/>
+    <mappings xmi:id="__YhDaOtpEemQuOLHJni5mQ" origin="__YhDWutpEemQuOLHJni5mQ" image="__YhDZetpEemQuOLHJni5mQ"/>
+    <mappings xmi:id="__YhDaetpEemQuOLHJni5mQ" origin="__YhDW-tpEemQuOLHJni5mQ" image="__YhDZutpEemQuOLHJni5mQ"/>
   </units>
 </henshin:Module>

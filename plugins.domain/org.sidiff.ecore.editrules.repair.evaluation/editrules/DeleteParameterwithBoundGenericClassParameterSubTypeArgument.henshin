@@ -1,150 +1,177 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ELFtUGXaEemxua17r6Vydg" name="Delete: Parameter with Bound Generic-Class-Parameter Sub-Type-Argument" description="Delete: Parameter with Bound Generic-Class-Parameter Sub-Type-Argument">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_ELFtUWXaEemxua17r6Vydg" name="mainUnit" subUnits="_ELFtamXaEemxua17r6Vydg">
-    <parameters xmi:id="_ELFtUmXaEemxua17r6Vydg" name="classWithTypeParameter" kind="IN"/>
-    <parameters xmi:id="_ELFtU2XaEemxua17r6Vydg" name="T" kind="IN"/>
-    <parameters xmi:id="_ELFtVGXaEemxua17r6Vydg" name="parameter" kind="IN"/>
-    <parameters xmi:id="_ELFtVWXaEemxua17r6Vydg" name="genericTypeOfTypedElement" kind="IN"/>
-    <parameters xmi:id="_ELFtVmXaEemxua17r6Vydg" name="typeArgumentOfGenericTypeOfTypedElement" kind="IN"/>
-    <parameters xmi:id="_ELFtV2XaEemxua17r6Vydg" name="containingClass" kind="IN"/>
-    <parameters xmi:id="_ELFtWGXaEemxua17r6Vydg" name="E" kind="IN"/>
-    <parameters xmi:id="_ELFtWWXaEemxua17r6Vydg" name="classUsedAsTypeArgument" kind="IN"/>
-    <parameters xmi:id="_ELFtWmXaEemxua17r6Vydg" name="subclassUsedAsTypeArgument" kind="IN"/>
-    <parameters xmi:id="_ELFtW2XaEemxua17r6Vydg" name="operation" kind="IN"/>
-    <parameters xmi:id="_ELFtXGXaEemxua17r6Vydg" name="boundingGenericType" kind="IN"/>
-    <parameters xmi:id="_ELFtXWXaEemxua17r6Vydg" name="boundGenericType" kind="IN"/>
-    <parameterMappings xmi:id="_ELFtXmXaEemxua17r6Vydg" source="_ELFtUmXaEemxua17r6Vydg" target="_ELFta2XaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_ELFtX2XaEemxua17r6Vydg" source="_ELFtU2XaEemxua17r6Vydg" target="_ELFtbGXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_ELFtYGXaEemxua17r6Vydg" source="_ELFtVGXaEemxua17r6Vydg" target="_ELFtbWXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_ELFtYWXaEemxua17r6Vydg" source="_ELFtVWXaEemxua17r6Vydg" target="_ELFtbmXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_ELFtYmXaEemxua17r6Vydg" source="_ELFtVmXaEemxua17r6Vydg" target="_ELFtb2XaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_ELFtY2XaEemxua17r6Vydg" source="_ELFtV2XaEemxua17r6Vydg" target="_ELFtcGXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_ELFtZGXaEemxua17r6Vydg" source="_ELFtWGXaEemxua17r6Vydg" target="_ELFtcWXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_ELFtZWXaEemxua17r6Vydg" source="_ELFtWWXaEemxua17r6Vydg" target="_ELFtcmXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_ELFtZmXaEemxua17r6Vydg" source="_ELFtWmXaEemxua17r6Vydg" target="_ELFtc2XaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_ELFtZ2XaEemxua17r6Vydg" source="_ELFtW2XaEemxua17r6Vydg" target="_ELFtdGXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_ELFtaGXaEemxua17r6Vydg" source="_ELFtXGXaEemxua17r6Vydg" target="_ELFtdWXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_ELFtaWXaEemxua17r6Vydg" source="_ELFtXWXaEemxua17r6Vydg" target="_ELFtdmXaEemxua17r6Vydg"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_AX41oOtqEemQuOLHJni5mQ" name="Delete: Parameter with Bound Generic-Class-Parameter Sub-Type-Argument" description="Delete: Parameter with Bound Generic-Class-Parameter Sub-Type-Argument">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_AX41oetqEemQuOLHJni5mQ" name="mainUnit" subUnits="_AX41uutqEemQuOLHJni5mQ">
+    <parameters xmi:id="_AX41outqEemQuOLHJni5mQ" name="fromClassWithTypeParameter" kind="IN"/>
+    <parameters xmi:id="_AX41o-tqEemQuOLHJni5mQ" name="oldT" kind="IN"/>
+    <parameters xmi:id="_AX41pOtqEemQuOLHJni5mQ" name="oldParameter" kind="IN"/>
+    <parameters xmi:id="_AX41petqEemQuOLHJni5mQ" name="oldGenericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_AX41putqEemQuOLHJni5mQ" name="oldTypeArgumentOfGenericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_AX41p-tqEemQuOLHJni5mQ" name="fromContainingClass" kind="IN"/>
+    <parameters xmi:id="_AX41qOtqEemQuOLHJni5mQ" name="oldE" kind="IN"/>
+    <parameters xmi:id="_AX41qetqEemQuOLHJni5mQ" name="fromClassUsedAsTypeArgument" kind="IN"/>
+    <parameters xmi:id="_AX41qutqEemQuOLHJni5mQ" name="fromSubclassUsedAsTypeArgument" kind="IN"/>
+    <parameters xmi:id="_AX41q-tqEemQuOLHJni5mQ" name="oldOperation" kind="IN"/>
+    <parameters xmi:id="_AX41rOtqEemQuOLHJni5mQ" name="oldBoundingGenericType" kind="IN"/>
+    <parameters xmi:id="_AX41retqEemQuOLHJni5mQ" name="oldBoundGenericType" kind="IN"/>
+    <parameterMappings xmi:id="_AX41rutqEemQuOLHJni5mQ" source="_AX41outqEemQuOLHJni5mQ" target="_AX41u-tqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_AX41r-tqEemQuOLHJni5mQ" source="_AX41o-tqEemQuOLHJni5mQ" target="_AX41vOtqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_AX41sOtqEemQuOLHJni5mQ" source="_AX41pOtqEemQuOLHJni5mQ" target="_AX41vetqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_AX41setqEemQuOLHJni5mQ" source="_AX41petqEemQuOLHJni5mQ" target="_AX41vutqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_AX41sutqEemQuOLHJni5mQ" source="_AX41putqEemQuOLHJni5mQ" target="_AX41v-tqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_AX41s-tqEemQuOLHJni5mQ" source="_AX41p-tqEemQuOLHJni5mQ" target="_AX41wOtqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_AX41tOtqEemQuOLHJni5mQ" source="_AX41qOtqEemQuOLHJni5mQ" target="_AX41wetqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_AX41tetqEemQuOLHJni5mQ" source="_AX41qetqEemQuOLHJni5mQ" target="_AX41wutqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_AX41tutqEemQuOLHJni5mQ" source="_AX41qutqEemQuOLHJni5mQ" target="_AX41w-tqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_AX41t-tqEemQuOLHJni5mQ" source="_AX41q-tqEemQuOLHJni5mQ" target="_AX41xOtqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_AX41uOtqEemQuOLHJni5mQ" source="_AX41rOtqEemQuOLHJni5mQ" target="_AX41xetqEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="_AX41uetqEemQuOLHJni5mQ" source="_AX41retqEemQuOLHJni5mQ" target="_AX41xutqEemQuOLHJni5mQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_ELFtamXaEemxua17r6Vydg" name="Delete: Parameter with Bound Generic-Class-Parameter Sub-Type-Argument">
-    <parameters xmi:id="_ELFta2XaEemxua17r6Vydg" name="classWithTypeParameter" kind="IN"/>
-    <parameters xmi:id="_ELFtbGXaEemxua17r6Vydg" name="T" kind="IN"/>
-    <parameters xmi:id="_ELFtbWXaEemxua17r6Vydg" name="parameter" kind="IN"/>
-    <parameters xmi:id="_ELFtbmXaEemxua17r6Vydg" name="genericTypeOfTypedElement" kind="IN"/>
-    <parameters xmi:id="_ELFtb2XaEemxua17r6Vydg" name="typeArgumentOfGenericTypeOfTypedElement" kind="IN"/>
-    <parameters xmi:id="_ELFtcGXaEemxua17r6Vydg" name="containingClass" kind="IN"/>
-    <parameters xmi:id="_ELFtcWXaEemxua17r6Vydg" name="E" kind="IN"/>
-    <parameters xmi:id="_ELFtcmXaEemxua17r6Vydg" name="classUsedAsTypeArgument" kind="IN"/>
-    <parameters xmi:id="_ELFtc2XaEemxua17r6Vydg" name="subclassUsedAsTypeArgument" kind="IN"/>
-    <parameters xmi:id="_ELFtdGXaEemxua17r6Vydg" name="operation" kind="IN"/>
-    <parameters xmi:id="_ELFtdWXaEemxua17r6Vydg" name="boundingGenericType" kind="IN"/>
-    <parameters xmi:id="_ELFtdmXaEemxua17r6Vydg" name="boundGenericType" kind="IN"/>
-    <lhs xmi:id="_ELFtd2XaEemxua17r6Vydg" name="Lhs">
-      <nodes xmi:id="_ELFteGXaEemxua17r6Vydg" name="classWithTypeParameter" incoming="_ELFthmXaEemxua17r6Vydg _ELGUY2XaEemxua17r6Vydg" outgoing="_ELFthGXaEemxua17r6Vydg">
+  <units xsi:type="henshin:Rule" xmi:id="_AX41uutqEemQuOLHJni5mQ" name="Delete: Parameter with Bound Generic-Class-Parameter Sub-Type-Argument">
+    <parameters xmi:id="_AX41u-tqEemQuOLHJni5mQ" name="fromClassWithTypeParameter" kind="IN"/>
+    <parameters xmi:id="_AX41vOtqEemQuOLHJni5mQ" name="oldT" kind="IN"/>
+    <parameters xmi:id="_AX41vetqEemQuOLHJni5mQ" name="oldParameter" kind="IN"/>
+    <parameters xmi:id="_AX41vutqEemQuOLHJni5mQ" name="oldGenericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_AX41v-tqEemQuOLHJni5mQ" name="oldTypeArgumentOfGenericTypeOfTypedElement" kind="IN"/>
+    <parameters xmi:id="_AX41wOtqEemQuOLHJni5mQ" name="fromContainingClass" kind="IN"/>
+    <parameters xmi:id="_AX41wetqEemQuOLHJni5mQ" name="oldE" kind="IN"/>
+    <parameters xmi:id="_AX41wutqEemQuOLHJni5mQ" name="fromClassUsedAsTypeArgument" kind="IN"/>
+    <parameters xmi:id="_AX41w-tqEemQuOLHJni5mQ" name="fromSubclassUsedAsTypeArgument" kind="IN"/>
+    <parameters xmi:id="_AX41xOtqEemQuOLHJni5mQ" name="oldOperation" kind="IN"/>
+    <parameters xmi:id="_AX41xetqEemQuOLHJni5mQ" name="oldBoundingGenericType" kind="IN"/>
+    <parameters xmi:id="_AX41xutqEemQuOLHJni5mQ" name="oldBoundGenericType" kind="IN"/>
+    <lhs xmi:id="_AX41x-tqEemQuOLHJni5mQ" name="Lhs">
+      <nodes xmi:id="_AX41yOtqEemQuOLHJni5mQ" name="fromClassWithTypeParameter" incoming="_AX411utqEemQuOLHJni5mQ _AX412utqEemQuOLHJni5mQ" outgoing="_AX411OtqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
       </nodes>
-      <nodes xmi:id="_ELFteWXaEemxua17r6Vydg" name="T" incoming="_ELFthGXaEemxua17r6Vydg" outgoing="_ELFthWXaEemxua17r6Vydg">
+      <nodes xmi:id="_AX41yetqEemQuOLHJni5mQ" name="oldT" incoming="_AX411OtqEemQuOLHJni5mQ" outgoing="_AX411etqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
       </nodes>
-      <nodes xmi:id="_ELFtemXaEemxua17r6Vydg" name="parameter" incoming="_ELGUamXaEemxua17r6Vydg" outgoing="_ELFthmXaEemxua17r6Vydg _ELGUYGXaEemxua17r6Vydg _ELGUYWXaEemxua17r6Vydg">
+      <nodes xmi:id="_AX41yutqEemQuOLHJni5mQ" name="oldParameter" incoming="_AX414OtqEemQuOLHJni5mQ" outgoing="_AX411utqEemQuOLHJni5mQ _AX411-tqEemQuOLHJni5mQ _AX412OtqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
       </nodes>
-      <nodes xmi:id="_ELFte2XaEemxua17r6Vydg" name="genericTypeOfTypedElement" incoming="_ELGUYGXaEemxua17r6Vydg" outgoing="_ELGUYmXaEemxua17r6Vydg _ELGUY2XaEemxua17r6Vydg">
+      <nodes xmi:id="_AX41y-tqEemQuOLHJni5mQ" name="oldGenericTypeOfTypedElement" incoming="_AX411-tqEemQuOLHJni5mQ" outgoing="_AX412etqEemQuOLHJni5mQ _AX412utqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
       </nodes>
-      <nodes xmi:id="_ELFtfGXaEemxua17r6Vydg" name="typeArgumentOfGenericTypeOfTypedElement" incoming="_ELGUYmXaEemxua17r6Vydg" outgoing="_ELGUZGXaEemxua17r6Vydg">
+      <nodes xmi:id="_AX41zOtqEemQuOLHJni5mQ" name="oldTypeArgumentOfGenericTypeOfTypedElement" incoming="_AX412etqEemQuOLHJni5mQ" outgoing="_AX412-tqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
       </nodes>
-      <nodes xmi:id="_ELFtfWXaEemxua17r6Vydg" name="containingClass" incoming="_ELGUaWXaEemxua17r6Vydg" outgoing="_ELGUZWXaEemxua17r6Vydg _ELGUZmXaEemxua17r6Vydg">
+      <nodes xmi:id="_AX41zetqEemQuOLHJni5mQ" name="fromContainingClass" incoming="_AX413-tqEemQuOLHJni5mQ" outgoing="_AX413OtqEemQuOLHJni5mQ _AX413etqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_ELFtfmXaEemxua17r6Vydg" name="E" incoming="_ELGUZGXaEemxua17r6Vydg _ELGUZmXaEemxua17r6Vydg" outgoing="_ELGUZ2XaEemxua17r6Vydg">
+      <nodes xmi:id="_AX41zutqEemQuOLHJni5mQ" name="oldE" incoming="_AX412-tqEemQuOLHJni5mQ _AX413etqEemQuOLHJni5mQ" outgoing="_AX413utqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
       </nodes>
-      <nodes xmi:id="_ELFtf2XaEemxua17r6Vydg" name="classUsedAsTypeArgument" incoming="_ELGUaGXaEemxua17r6Vydg _ELGUa2XaEemxua17r6Vydg">
+      <nodes xmi:id="_AX41z-tqEemQuOLHJni5mQ" name="fromClassUsedAsTypeArgument" incoming="_AX414etqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_ELFtgGXaEemxua17r6Vydg" name="subclassUsedAsTypeArgument" incoming="_ELGUbGXaEemxua17r6Vydg" outgoing="_ELGUaGXaEemxua17r6Vydg">
+      <nodes xmi:id="_AX410OtqEemQuOLHJni5mQ" name="fromSubclassUsedAsTypeArgument" incoming="_AX414utqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_ELFtgWXaEemxua17r6Vydg" name="operation" incoming="_ELGUYWXaEemxua17r6Vydg _ELGUZWXaEemxua17r6Vydg" outgoing="_ELGUaWXaEemxua17r6Vydg _ELGUamXaEemxua17r6Vydg">
+      <nodes xmi:id="_AX410etqEemQuOLHJni5mQ" name="oldOperation" incoming="_AX412OtqEemQuOLHJni5mQ _AX413OtqEemQuOLHJni5mQ" outgoing="_AX413-tqEemQuOLHJni5mQ _AX414OtqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
       </nodes>
-      <nodes xmi:id="_ELFtgmXaEemxua17r6Vydg" name="boundingGenericType" incoming="_ELFthWXaEemxua17r6Vydg" outgoing="_ELGUa2XaEemxua17r6Vydg">
+      <nodes xmi:id="_AX410utqEemQuOLHJni5mQ" name="oldBoundingGenericType" incoming="_AX411etqEemQuOLHJni5mQ" outgoing="_AX414etqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
       </nodes>
-      <nodes xmi:id="_ELFtg2XaEemxua17r6Vydg" name="boundGenericType" incoming="_ELGUZ2XaEemxua17r6Vydg" outgoing="_ELGUbGXaEemxua17r6Vydg">
+      <nodes xmi:id="_AX410-tqEemQuOLHJni5mQ" name="oldBoundGenericType" incoming="_AX413utqEemQuOLHJni5mQ" outgoing="_AX414utqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
       </nodes>
-      <edges xmi:id="_ELFthGXaEemxua17r6Vydg" source="_ELFteGXaEemxua17r6Vydg" target="_ELFteWXaEemxua17r6Vydg">
+      <edges xmi:id="_AX411OtqEemQuOLHJni5mQ" source="_AX41yOtqEemQuOLHJni5mQ" target="_AX41yetqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
       </edges>
-      <edges xmi:id="_ELFthWXaEemxua17r6Vydg" source="_ELFteWXaEemxua17r6Vydg" target="_ELFtgmXaEemxua17r6Vydg">
+      <edges xmi:id="_AX411etqEemQuOLHJni5mQ" source="_AX41yetqEemQuOLHJni5mQ" target="_AX410utqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter/eBounds"/>
       </edges>
-      <edges xmi:id="_ELFthmXaEemxua17r6Vydg" source="_ELFtemXaEemxua17r6Vydg" target="_ELFteGXaEemxua17r6Vydg">
+      <edges xmi:id="_AX411utqEemQuOLHJni5mQ" source="_AX41yutqEemQuOLHJni5mQ" target="_AX41yOtqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="_ELGUYGXaEemxua17r6Vydg" source="_ELFtemXaEemxua17r6Vydg" target="_ELFte2XaEemxua17r6Vydg">
+      <edges xmi:id="_AX411-tqEemQuOLHJni5mQ" source="_AX41yutqEemQuOLHJni5mQ" target="_AX41y-tqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eGenericType"/>
       </edges>
-      <edges xmi:id="_ELGUYWXaEemxua17r6Vydg" source="_ELFtemXaEemxua17r6Vydg" target="_ELFtgWXaEemxua17r6Vydg">
+      <edges xmi:id="_AX412OtqEemQuOLHJni5mQ" source="_AX41yutqEemQuOLHJni5mQ" target="_AX410etqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EParameter/eOperation"/>
       </edges>
-      <edges xmi:id="_ELGUYmXaEemxua17r6Vydg" source="_ELFte2XaEemxua17r6Vydg" target="_ELFtfGXaEemxua17r6Vydg">
+      <edges xmi:id="_AX412etqEemQuOLHJni5mQ" source="_AX41y-tqEemQuOLHJni5mQ" target="_AX41zOtqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
       </edges>
-      <edges xmi:id="_ELGUY2XaEemxua17r6Vydg" source="_ELFte2XaEemxua17r6Vydg" target="_ELFteGXaEemxua17r6Vydg">
+      <edges xmi:id="_AX412utqEemQuOLHJni5mQ" source="_AX41y-tqEemQuOLHJni5mQ" target="_AX41yOtqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
       </edges>
-      <edges xmi:id="_ELGUZGXaEemxua17r6Vydg" source="_ELFtfGXaEemxua17r6Vydg" target="_ELFtfmXaEemxua17r6Vydg">
+      <edges xmi:id="_AX412-tqEemQuOLHJni5mQ" source="_AX41zOtqEemQuOLHJni5mQ" target="_AX41zutqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeParameter"/>
       </edges>
-      <edges xmi:id="_ELGUZWXaEemxua17r6Vydg" source="_ELFtfWXaEemxua17r6Vydg" target="_ELFtgWXaEemxua17r6Vydg">
+      <edges xmi:id="_AX413OtqEemQuOLHJni5mQ" source="_AX41zetqEemQuOLHJni5mQ" target="_AX410etqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eOperations"/>
       </edges>
-      <edges xmi:id="_ELGUZmXaEemxua17r6Vydg" source="_ELFtfWXaEemxua17r6Vydg" target="_ELFtfmXaEemxua17r6Vydg">
+      <edges xmi:id="_AX413etqEemQuOLHJni5mQ" source="_AX41zetqEemQuOLHJni5mQ" target="_AX41zutqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
       </edges>
-      <edges xmi:id="_ELGUZ2XaEemxua17r6Vydg" source="_ELFtfmXaEemxua17r6Vydg" target="_ELFtg2XaEemxua17r6Vydg">
+      <edges xmi:id="_AX413utqEemQuOLHJni5mQ" source="_AX41zutqEemQuOLHJni5mQ" target="_AX410-tqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter/eBounds"/>
       </edges>
-      <edges xmi:id="_ELGUaGXaEemxua17r6Vydg" source="_ELFtgGXaEemxua17r6Vydg" target="_ELFtf2XaEemxua17r6Vydg">
-        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eAllSuperTypes"/>
-      </edges>
-      <edges xmi:id="_ELGUaWXaEemxua17r6Vydg" source="_ELFtgWXaEemxua17r6Vydg" target="_ELFtfWXaEemxua17r6Vydg">
+      <edges xmi:id="_AX413-tqEemQuOLHJni5mQ" source="_AX410etqEemQuOLHJni5mQ" target="_AX41zetqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eContainingClass"/>
       </edges>
-      <edges xmi:id="_ELGUamXaEemxua17r6Vydg" source="_ELFtgWXaEemxua17r6Vydg" target="_ELFtemXaEemxua17r6Vydg">
+      <edges xmi:id="_AX414OtqEemQuOLHJni5mQ" source="_AX410etqEemQuOLHJni5mQ" target="_AX41yutqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"/>
       </edges>
-      <edges xmi:id="_ELGUa2XaEemxua17r6Vydg" source="_ELFtgmXaEemxua17r6Vydg" target="_ELFtf2XaEemxua17r6Vydg">
+      <edges xmi:id="_AX414etqEemQuOLHJni5mQ" source="_AX410utqEemQuOLHJni5mQ" target="_AX41z-tqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
       </edges>
-      <edges xmi:id="_ELGUbGXaEemxua17r6Vydg" source="_ELFtg2XaEemxua17r6Vydg" target="_ELFtgGXaEemxua17r6Vydg">
+      <edges xmi:id="_AX414utqEemQuOLHJni5mQ" source="_AX410-tqEemQuOLHJni5mQ" target="_AX410OtqEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
       </edges>
+      <formula xsi:type="henshin:And" xmi:id="_AX414-tqEemQuOLHJni5mQ">
+        <left xsi:type="henshin:Not" xmi:id="_AX415OtqEemQuOLHJni5mQ">
+          <child xsi:type="henshin:NestedCondition" xmi:id="_AX415etqEemQuOLHJni5mQ">
+            <conclusion xmi:id="_AX415utqEemQuOLHJni5mQ" name="pre">
+              <nodes xmi:id="_AX415-tqEemQuOLHJni5mQ" name="preNoClassUsedAsTypeArgument" incoming="_AX416etqEemQuOLHJni5mQ">
+                <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+              </nodes>
+              <nodes xmi:id="_AX416OtqEemQuOLHJni5mQ" name="oldTypeArgumentOfGenericTypeOfTypedElement" outgoing="_AX416etqEemQuOLHJni5mQ">
+                <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
+              </nodes>
+              <edges xmi:id="_AX416etqEemQuOLHJni5mQ" source="_AX416OtqEemQuOLHJni5mQ" target="_AX415-tqEemQuOLHJni5mQ">
+                <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+              </edges>
+            </conclusion>
+            <mappings xmi:id="_AX416utqEemQuOLHJni5mQ" origin="_AX41zOtqEemQuOLHJni5mQ" image="_AX416OtqEemQuOLHJni5mQ"/>
+          </child>
+        </left>
+        <right xsi:type="henshin:NestedCondition" xmi:id="_AX416-tqEemQuOLHJni5mQ">
+          <conclusion xmi:id="_AX417OtqEemQuOLHJni5mQ" name="pre">
+            <nodes xmi:id="_AX417etqEemQuOLHJni5mQ" name="fromSubclassUsedAsTypeArgument" outgoing="_AX417-tqEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+            </nodes>
+            <nodes xmi:id="_AX417utqEemQuOLHJni5mQ" name="fromClassUsedAsTypeArgument" incoming="_AX417-tqEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+            </nodes>
+            <edges xmi:id="_AX417-tqEemQuOLHJni5mQ" source="_AX417etqEemQuOLHJni5mQ" target="_AX417utqEemQuOLHJni5mQ">
+              <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eAllSuperTypes"/>
+            </edges>
+          </conclusion>
+          <mappings xmi:id="_AX418OtqEemQuOLHJni5mQ" origin="_AX410OtqEemQuOLHJni5mQ" image="_AX417etqEemQuOLHJni5mQ"/>
+          <mappings xmi:id="_AX418etqEemQuOLHJni5mQ" origin="_AX41z-tqEemQuOLHJni5mQ" image="_AX417utqEemQuOLHJni5mQ"/>
+        </right>
+      </formula>
     </lhs>
-    <rhs xmi:id="_ELGUbWXaEemxua17r6Vydg" name="Rhs">
-      <nodes xmi:id="_ELGUbmXaEemxua17r6Vydg" name="classWithTypeParameter">
+    <rhs xmi:id="_AX418utqEemQuOLHJni5mQ" name="Rhs">
+      <nodes xmi:id="_AX418-tqEemQuOLHJni5mQ" name="fromClassWithTypeParameter">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
       </nodes>
-      <nodes xmi:id="_ELGUb2XaEemxua17r6Vydg" name="containingClass">
+      <nodes xmi:id="_AX419OtqEemQuOLHJni5mQ" name="fromContainingClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_ELGUcGXaEemxua17r6Vydg" name="classUsedAsTypeArgument" incoming="_ELGUcmXaEemxua17r6Vydg">
+      <nodes xmi:id="_AX419etqEemQuOLHJni5mQ" name="fromClassUsedAsTypeArgument">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_ELGUcWXaEemxua17r6Vydg" name="subclassUsedAsTypeArgument" outgoing="_ELGUcmXaEemxua17r6Vydg">
+      <nodes xmi:id="_AX419utqEemQuOLHJni5mQ" name="fromSubclassUsedAsTypeArgument">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <edges xmi:id="_ELGUcmXaEemxua17r6Vydg" source="_ELGUcWXaEemxua17r6Vydg" target="_ELGUcGXaEemxua17r6Vydg">
-        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eAllSuperTypes"/>
-      </edges>
     </rhs>
-    <mappings xmi:id="_ELGUc2XaEemxua17r6Vydg" origin="_ELFteGXaEemxua17r6Vydg" image="_ELGUbmXaEemxua17r6Vydg"/>
-    <mappings xmi:id="_ELGUdGXaEemxua17r6Vydg" origin="_ELFtfWXaEemxua17r6Vydg" image="_ELGUb2XaEemxua17r6Vydg"/>
-    <mappings xmi:id="_ELGUdWXaEemxua17r6Vydg" origin="_ELFtf2XaEemxua17r6Vydg" image="_ELGUcGXaEemxua17r6Vydg"/>
-    <mappings xmi:id="_ELGUdmXaEemxua17r6Vydg" origin="_ELFtgGXaEemxua17r6Vydg" image="_ELGUcWXaEemxua17r6Vydg"/>
+    <mappings xmi:id="_AX419-tqEemQuOLHJni5mQ" origin="_AX41yOtqEemQuOLHJni5mQ" image="_AX418-tqEemQuOLHJni5mQ"/>
+    <mappings xmi:id="_AX41-OtqEemQuOLHJni5mQ" origin="_AX41zetqEemQuOLHJni5mQ" image="_AX419OtqEemQuOLHJni5mQ"/>
+    <mappings xmi:id="_AX41-etqEemQuOLHJni5mQ" origin="_AX41z-tqEemQuOLHJni5mQ" image="_AX419etqEemQuOLHJni5mQ"/>
+    <mappings xmi:id="_AX41-utqEemQuOLHJni5mQ" origin="_AX410OtqEemQuOLHJni5mQ" image="_AX419utqEemQuOLHJni5mQ"/>
   </units>
 </henshin:Module>

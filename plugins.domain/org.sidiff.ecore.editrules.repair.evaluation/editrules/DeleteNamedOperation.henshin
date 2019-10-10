@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DOKyEGXaEemxua17r6Vydg" name="Delete: Named Operation" description="Delete: Named Operation">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_DOKyEWXaEemxua17r6Vydg" name="mainUnit" subUnits="_DOKyGGXaEemxua17r6Vydg">
-    <parameters xmi:id="_DOKyEmXaEemxua17r6Vydg" name="containingClass" kind="IN"/>
-    <parameters xmi:id="_DOKyE2XaEemxua17r6Vydg" name="operation" kind="IN"/>
-    <parameters xmi:id="_DOKyFGXaEemxua17r6Vydg" name="operationName" kind="IN"/>
-    <parameterMappings xmi:id="_DOKyFWXaEemxua17r6Vydg" source="_DOKyEmXaEemxua17r6Vydg" target="_DOKyGWXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_DOKyFmXaEemxua17r6Vydg" source="_DOKyE2XaEemxua17r6Vydg" target="_DOKyGmXaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_DOKyF2XaEemxua17r6Vydg" source="_DOKyFGXaEemxua17r6Vydg" target="_DOKyG2XaEemxua17r6Vydg"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="__RB7QOtpEemQuOLHJni5mQ" name="Delete: Named Operation" description="Delete: Named Operation">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="__RB7QetpEemQuOLHJni5mQ" name="mainUnit" subUnits="__RB7SOtpEemQuOLHJni5mQ">
+    <parameters xmi:id="__RB7QutpEemQuOLHJni5mQ" name="fromContainingClass" kind="IN"/>
+    <parameters xmi:id="__RB7Q-tpEemQuOLHJni5mQ" name="oldOperation" kind="IN"/>
+    <parameters xmi:id="__RB7ROtpEemQuOLHJni5mQ" name="operationName" kind="IN"/>
+    <parameterMappings xmi:id="__RB7RetpEemQuOLHJni5mQ" source="__RB7QutpEemQuOLHJni5mQ" target="__RB7SetpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__RB7RutpEemQuOLHJni5mQ" source="__RB7Q-tpEemQuOLHJni5mQ" target="__RB7SutpEemQuOLHJni5mQ"/>
+    <parameterMappings xmi:id="__RB7R-tpEemQuOLHJni5mQ" source="__RB7ROtpEemQuOLHJni5mQ" target="__RB7S-tpEemQuOLHJni5mQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_DOKyGGXaEemxua17r6Vydg" name="Delete: Named Operation">
-    <parameters xmi:id="_DOKyGWXaEemxua17r6Vydg" name="containingClass" kind="IN"/>
-    <parameters xmi:id="_DOKyGmXaEemxua17r6Vydg" name="operation" kind="IN"/>
-    <parameters xmi:id="_DOKyG2XaEemxua17r6Vydg" name="operationName" kind="IN"/>
-    <lhs xmi:id="_DOKyHGXaEemxua17r6Vydg" name="Lhs">
-      <nodes xmi:id="_DOKyHWXaEemxua17r6Vydg" name="containingClass" incoming="_DOKyIWXaEemxua17r6Vydg" outgoing="_DOKyIGXaEemxua17r6Vydg">
+  <units xsi:type="henshin:Rule" xmi:id="__RB7SOtpEemQuOLHJni5mQ" name="Delete: Named Operation">
+    <parameters xmi:id="__RB7SetpEemQuOLHJni5mQ" name="fromContainingClass" kind="IN"/>
+    <parameters xmi:id="__RB7SutpEemQuOLHJni5mQ" name="oldOperation" kind="IN"/>
+    <parameters xmi:id="__RB7S-tpEemQuOLHJni5mQ" name="operationName" kind="IN"/>
+    <lhs xmi:id="__RB7TOtpEemQuOLHJni5mQ" name="Lhs">
+      <nodes xmi:id="__RB7TetpEemQuOLHJni5mQ" name="fromContainingClass" incoming="__RB7UetpEemQuOLHJni5mQ" outgoing="__RB7UOtpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_DOKyHmXaEemxua17r6Vydg" name="operation" incoming="_DOKyIGXaEemxua17r6Vydg" outgoing="_DOKyIWXaEemxua17r6Vydg">
+      <nodes xmi:id="__RB7TutpEemQuOLHJni5mQ" name="oldOperation" incoming="__RB7UOtpEemQuOLHJni5mQ" outgoing="__RB7UetpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
-        <attributes xmi:id="_DOKyH2XaEemxua17r6Vydg" value="operationName">
+        <attributes xmi:id="__RB7T-tpEemQuOLHJni5mQ" value="operationName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_DOKyIGXaEemxua17r6Vydg" source="_DOKyHWXaEemxua17r6Vydg" target="_DOKyHmXaEemxua17r6Vydg">
+      <edges xmi:id="__RB7UOtpEemQuOLHJni5mQ" source="__RB7TetpEemQuOLHJni5mQ" target="__RB7TutpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eOperations"/>
       </edges>
-      <edges xmi:id="_DOKyIWXaEemxua17r6Vydg" source="_DOKyHmXaEemxua17r6Vydg" target="_DOKyHWXaEemxua17r6Vydg">
+      <edges xmi:id="__RB7UetpEemQuOLHJni5mQ" source="__RB7TutpEemQuOLHJni5mQ" target="__RB7TetpEemQuOLHJni5mQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eContainingClass"/>
       </edges>
     </lhs>
-    <rhs xmi:id="_DOKyImXaEemxua17r6Vydg" name="Rhs">
-      <nodes xmi:id="_DOKyI2XaEemxua17r6Vydg" name="containingClass">
+    <rhs xmi:id="__RB7UutpEemQuOLHJni5mQ" name="Rhs">
+      <nodes xmi:id="__RB7U-tpEemQuOLHJni5mQ" name="fromContainingClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
     </rhs>
-    <mappings xmi:id="_DOKyJGXaEemxua17r6Vydg" origin="_DOKyHWXaEemxua17r6Vydg" image="_DOKyI2XaEemxua17r6Vydg"/>
+    <mappings xmi:id="__RB7VOtpEemQuOLHJni5mQ" origin="__RB7TetpEemQuOLHJni5mQ" image="__RB7U-tpEemQuOLHJni5mQ"/>
   </units>
 </henshin:Module>
