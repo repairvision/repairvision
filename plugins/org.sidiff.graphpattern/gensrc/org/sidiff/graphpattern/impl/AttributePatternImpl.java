@@ -255,7 +255,7 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 		if (variables == null) {
 			variables = new EDataTypeUniqueEList<String>(String.class, this, GraphpatternPackage.ATTRIBUTE_PATTERN__VARIABLES);
 			
-			if (isVariable() && (getType().getEAttributeType() != null)) {
+			if (getType().getEAttributeType() != null) {
 				variables.addAll(JavaSciptParser.getVariables(getType().getEAttributeType(), getValue()));
 			}
 		}
