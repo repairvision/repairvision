@@ -60,7 +60,7 @@ public class HenshinProfileUtil {
 						
 						if (isEditCondition(target)) {
 							if (!postCondition.contains(target)) {
-								postCondition.add(node);
+								postCondition.add(target);
 								getPostCondition(target, postCondition);
 							}
 						}
@@ -79,7 +79,7 @@ public class HenshinProfileUtil {
 						
 						if (isEditCondition(source)) {
 							if (!postCondition.contains(source)) {
-								postCondition.add(node);
+								postCondition.add(source);
 								getPostCondition(source, postCondition);
 							}
 						}

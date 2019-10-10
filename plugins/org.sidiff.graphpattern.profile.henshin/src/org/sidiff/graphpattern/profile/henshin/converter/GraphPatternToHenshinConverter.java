@@ -196,6 +196,10 @@ public class GraphPatternToHenshinConverter {
 	
 	public GraphPatternToHenshinConverter(Pattern editOperation) {
 		
+//		if (editOperation.getName().equals("Transform: Multiplicity-Many Containment Reference - To - Multiplicity-Many Bidirectional Reference")) {
+//			System.out.println(editOperation.getName());
+//		}
+		
 		// create module:
 		this.module = createModule();
 		this.module.setName(editOperation.getName());
