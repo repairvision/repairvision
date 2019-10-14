@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class JUtil {
 	
-	public static <T> Iterable<T> createIterable(Supplier<Iterator<T>> iterator) {
+	public static <T> Iterable<T> iterable(Supplier<Iterator<T>> iterator) {
 		return new Iterable<T>() {
 
 			@Override
