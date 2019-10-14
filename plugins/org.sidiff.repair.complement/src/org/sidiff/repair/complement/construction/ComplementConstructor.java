@@ -15,10 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterKind;
@@ -27,6 +30,7 @@ import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
 import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.common.emf.ModelingUtil;
+import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
@@ -120,12 +124,41 @@ public class ComplementConstructor {
 			return null;
 		}
 		
+		if (!substituteApplicationConditions(recognitionMatch, copyTrace, complement)) {
+			return null;
+		}
+		
 		//  No remaining changes -> empty complement rule!
 		if (!hasChange(complementRule)) {
 			return null;
 		}
+		
+//		if (!isValid(complementRule)) {
+//			System.err.println("Validation Failed: " + complementRule.getName());
+//		}
 
 		return complement;
+	}
+
+	@SuppressWarnings("unused")
+	private boolean isValid(Rule complementRule) {
+		
+		for (EObject element : JUtil.iterable(() -> complementRule.eAllContents())) {
+			if (element instanceof Node) {
+				
+				// Check for proper containment:
+				for (Edge outgoing : ((Node) element).getOutgoing()) {
+					if (outgoing.eContainer() == null) {
+						return false;
+					}
+					if (outgoing.getTarget().eContainer() == null) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
 	}
 
 	protected boolean substituteDeleteEdges(Collection<RecognitionMatch> recognitionMatch, Map<EObject, EObject> copyTrace) {
@@ -271,6 +304,22 @@ public class ComplementConstructor {
 		return true;
 	}
 	
+	protected boolean substituteApplicationConditions(List<RecognitionMatch> recognitionMatch,
+			Map<EObject, EObject> copyTrace, ComplementRule complement) {
+		
+		// Search unconnected application conditions:
+		for (NestedCondition condition : complement.getComplementRule().getLhs().getNestedConditions()) {
+			for (Mapping mapping : condition.getMappings()) {
+				if (mapping.getOrigin().eContainer() == null) {
+					EcoreUtil.remove(condition);
+					break;
+				}
+			}
+		}
+		
+		return true;
+	}
+
 	protected boolean checkVariableBindings(Collection<RecognitionMatch> recognitionMatch, Attribute attribute) {
 		for(String variable : JavaSciptParser.getVariables(attribute.getType().getEAttributeType(), attribute.getValue())) {
 			if (!findVariableBinding(recognitionMatch, variable)) {
@@ -313,7 +362,7 @@ public class ComplementConstructor {
 
 					// << delete or create >> edge or attribute change => complementing changes on a deleted node!
 					// << preserve >> edge => unfulfilled PAC!
-					if (isSeparatedContextNode(complementNode)) {
+					if (isSeparatedContextNode(getLHS(complementNode), getRHS(complementNode))) {
 						// Remove separated context node:
 						complement.removeTrace(getLHS(sourceNode));
 						complement.removeTrace(getRHS(sourceNode));
@@ -333,7 +382,7 @@ public class ComplementConstructor {
 					Node complementSrcNode = (Node) copyTrace.get(sourceSrcNode);
 					
 					if ((complementSrcNode != null) && (complementSrcNode.eContainer() != null) && isPreservedNode(complementSrcNode)) {
-						if (isSeparatedContextNode(complementSrcNode)) {
+						if (isSeparatedContextNode(getLHS(complementSrcNode), getRHS(complementSrcNode))) {
 							// Remove separated context node:
 							complement.removeTrace(getLHS(complementSrcNode));
 							complement.removeTrace(getRHS(complementSrcNode));
@@ -349,7 +398,7 @@ public class ComplementConstructor {
 					Node complementTgtNode = (Node) copyTrace.get(sourceTgtNode);
 					
 					if ((complementTgtNode != null) && (complementTgtNode.eContainer() != null) && isPreservedNode(complementTgtNode)) {
-						if (isSeparatedContextNode(complementTgtNode)) {
+						if (isSeparatedContextNode(getLHS(complementTgtNode), getRHS(complementTgtNode))) {
 							// Remove separated context node:
 							complement.removeTrace(getLHS(complementTgtNode));
 							complement.removeTrace(getRHS(complementTgtNode));
@@ -365,9 +414,12 @@ public class ComplementConstructor {
 		return true;
 	}
 	
-	private boolean isSeparatedContextNode(Node complementNode) {
-		return complementNode.getOutgoing().isEmpty() && complementNode.getIncoming().isEmpty()
-				&& getChangingAttributes(getLHS(complementNode), getRHS(complementNode)).isEmpty();
+	private boolean isSeparatedContextNode(Node lhsComplementNode, Node rhsComplementNode) {
+		return lhsComplementNode.getOutgoing().isEmpty() 
+				&& lhsComplementNode.getIncoming().isEmpty()
+				&& rhsComplementNode.getOutgoing().isEmpty() 
+				&& rhsComplementNode.getIncoming().isEmpty()
+				&& getChangingAttributes(lhsComplementNode, rhsComplementNode).isEmpty();
 	}
 	
 	protected boolean hasChange(Rule rule) {
