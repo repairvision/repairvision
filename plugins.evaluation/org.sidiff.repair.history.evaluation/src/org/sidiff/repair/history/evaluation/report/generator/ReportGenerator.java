@@ -39,8 +39,6 @@ import org.sidiff.repair.history.generator.metadata.coevolution.CoevolutionVersi
 
 public class ReportGenerator implements IApplication {
 	
-	public static final String OUTPUT_FOLDER = "C:\\workspaces\\sidiff-build\\org.sidiff.repair.history.evaluation\\results\\";
-	
 	private static FileFilter FILTER_INVISIBLE = new FileFilter() {
 		
 		@Override
@@ -51,6 +49,9 @@ public class ReportGenerator implements IApplication {
 	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
+		
+		System.out.println(EvaluationDataSets.print());
+		
 		new ProjectReportGenerator();
 		new ProjectReportGeneratorDiagrams();
 		new InconsistencyReportGenerator();
@@ -64,7 +65,7 @@ public class ReportGenerator implements IApplication {
 		Map<String, List<EvaluationData>> evaluationDataPerProject = new LinkedHashMap<>();
 		
 		for (String modelPath : EvaluationDataSets.HISTORIES) {
-			File historyFolder = new File(EvaluationDataSets.REDUCED_DATA_SET + modelPath).getParentFile();
+			File historyFolder = new File(EvaluationDataSets.RESULTS_DATA_SET + modelPath).getParentFile();
 			EvaluationData data = new EvaluationData();
 			data.modelPath = new File(modelPath).getParentFile();
 			
@@ -191,8 +192,8 @@ public class ReportGenerator implements IApplication {
 		return coevoluations;
 	}
 	
-	public static List<File> getAllMetadata_Reduced() throws IOException {
-		return EvaluationDataSets.HISTORIES.stream().map(path -> new File(EvaluationDataSets.REDUCED_DATA_SET + path)).collect(Collectors.toList());
+	public static List<File> getAllMetadata_Result() throws IOException {
+		return EvaluationDataSets.HISTORIES.stream().map(path -> new File(EvaluationDataSets.RESULTS_DATA_SET + path)).collect(Collectors.toList());
 	}
 	
 	public static List<File> getAllMetadata_Original() throws IOException {
@@ -214,15 +215,15 @@ public class ReportGenerator implements IApplication {
 		return files;
 	}
 	
-	public static List<File> getProjectMetadata_Reduced(File projectFolder) throws IOException {
-		return EvaluationDataSets.HISTORIES.stream().map(path -> new File(EvaluationDataSets.REDUCED_DATA_SET + path))
+	public static List<File> getProjectMetadata_Result(File projectFolder) throws IOException {
+		return EvaluationDataSets.HISTORIES.stream().map(path -> new File(EvaluationDataSets.RESULTS_DATA_SET + path))
 				.filter(file -> file.getPath().contains(projectFolder.getPath())).collect(Collectors.toList());
 	}
 	
-	public static List<History> getProjectHistory_Reduced(File projectFolder) throws IOException {
+	public static List<History> getProjectHistory_Result(File projectFolder) throws IOException {
 		List<History> histories = new ArrayList<>();
 		
-		for (File historyFile : ReportGenerator.getProjectMetadata_Reduced(projectFolder)) {
+		for (File historyFile : ReportGenerator.getProjectMetadata_Result(projectFolder)) {
 			History history = (History) new ResourceSetImpl()
 					.getResource(URI.createFileURI(historyFile.getAbsolutePath()), true)
 					.getContents().get(0); 

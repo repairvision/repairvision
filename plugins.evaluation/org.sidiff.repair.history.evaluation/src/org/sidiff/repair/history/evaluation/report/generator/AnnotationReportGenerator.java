@@ -21,7 +21,7 @@ public class AnnotationReportGenerator {
 		int counter = 0;
 		
 		for (String historyPath : EvaluationDataSets.HISTORIES) {
-			URI historyURI = URI.createFileURI(EvaluationDataSets.REDUCED_DATA_SET + historyPath);
+			URI historyURI = URI.createFileURI(EvaluationDataSets.RESULTS_DATA_SET + historyPath);
 			Resource historyResource = new ResourceSetImpl().getResource(historyURI, true);
 			History history = (History) historyResource.getContents().get(0);
 			

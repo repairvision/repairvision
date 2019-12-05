@@ -5,6 +5,12 @@ import java.util.List;
 
 public class EvaluationDataSets {
 	
+	public static final String RESULT_REPORT = "C:/evaluations/org.eclipse.git.evaluation_2018-11-02/2019-10-12-results/";
+	
+	public static final String MANUALLY_EVALUATED_VALUES = RESULT_REPORT + "manually_evaluated_values.csv";
+	
+	public static final String RULEBASE = "Ecore Evaluation Edit Rules";
+	
 	public static final String DATA_SET = "C:/Users/manue/git/repairvision/data.evaluation/org.eclipse.git_2018-08-22/";
 
 	public static final String ORIGINAL_DATA_SET = DATA_SET + "org.eclipse.git_original/";
@@ -15,7 +21,9 @@ public class EvaluationDataSets {
 	
 	public static final String REDUCED_DATA_SET = DATA_SET + "org.eclipse.git_reduced/";
 	
-	public static List<String> HISTORIES = new ArrayList<>();
+	public static final String RESULTS_DATA_SET = "C:/evaluations/org.eclipse.git.evaluation_2018-11-02/";
+	
+	public static final List<String> HISTORIES = new ArrayList<>();
 	static {
 		HISTORIES.add("birt/chart_org.eclipse.birt.chart.engine_src_model_org.eclipse.birt.chart.model.type.ecore/chart_org.eclipse.birt.chart.engine_src_model_org.eclipse.birt.chart.model.type.ecore.history");
 		HISTORIES.add("eclipse.e4/bundles_org.eclipse.e4.ui.model.workbench_model_UIElements.ecore/bundles_org.eclipse.e4.ui.model.workbench_model_UIElements.ecore.history");
@@ -45,5 +53,26 @@ public class EvaluationDataSets {
 		HISTORIES.add("technology.cbi/org.eclipse.b3.build_model_B3Build.ecore/org.eclipse.b3.build_model_B3Build.ecore.history");
 		HISTORIES.add("technology.stem/core_org.eclipse.stem.core_model_graph.ecore/core_org.eclipse.stem.core_model_graph.ecore.history");
 		HISTORIES.add("tools.buckminster/org.eclipse.buckminster.rmap_model_rmap.ecore/org.eclipse.buckminster.rmap_model_rmap.ecore.history");
+	}
+	
+	public static String print() {
+		StringBuilder objString = new StringBuilder();
+		
+		objString.append("Rulebase: " + RULEBASE).append("\n\n");
+		objString.append("Result Report: " + RESULT_REPORT).append("\n\n");
+		objString.append("Data Set: " + DATA_SET).append("\n");
+		objString.append("Original Data Set: " + ORIGINAL_DATA_SET).append("\n");
+		objString.append("Resolved Data Set: " + RESOLVED_DATA_SET).append("\n");
+		objString.append("Matched Data Set: " + MATCHED_DATA_SET).append("\n");
+		objString.append("Reduced Data Set: " + REDUCED_DATA_SET).append("\n");
+		objString.append("Results Data Set: " + RESULTS_DATA_SET).append("\n");
+		
+		objString.append("\n").append("Histories:").append("\n");
+		
+		for (String history : HISTORIES) {
+			objString.append("  ").append(history).append("\n");
+		}
+		
+		return objString.toString();
 	}
 }

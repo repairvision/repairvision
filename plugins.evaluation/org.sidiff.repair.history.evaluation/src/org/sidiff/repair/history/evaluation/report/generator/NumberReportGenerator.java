@@ -5,6 +5,7 @@ import java.text.NumberFormat;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
@@ -17,6 +18,7 @@ import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogUtil;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.profile.henshin.HenshinStereotypes;
+import org.sidiff.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.repair.history.evaluation.report.InconsistenciesLog;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 
@@ -34,13 +36,67 @@ public class NumberReportGenerator {
 		DOC_TYPE_RESOURCE_DUMMY.getContents().add(EcoreFactory.eINSTANCE.createEPackage());
 	}
 	
+	/* Latex Commands */
+	
+	public static final String CMD_PROJECT_COUNT = "projectCount";
+	public static final String CMD_MINIMAL_ASG_PATTERN_COUNT = "minimalASGPatternCount";
+	public static final String CMD_TRANSFORMING_EDIT_RULE_COUNT = "transformingEditRuleCount";
+	public static final String CMD_CONSTRAINT_COUNT = "constraintCount";
+	public static final String CMD_OMMITED_WELL_FORMED_CONSTRAINT_COUNT = "ommitedWellFormedConstraintCount";
+	public static final String CMD_OMMITED_DOMAIN_SPECIFIC_CONSTRAINT_COUNT = "ommitedDomainSpecificConstraintCount";
+	public static final String CMD_OBSERVED_SUPPORTED_CONSTRAINT_COUNT = "observedSupportedConstraintCount";
+	public static final String CMD_OLDEST_HISTORY = "oldestHistory";
+	public static final String CMD_NEWEST_HISTORY = "newestHistory";
+	public static final String CMD_ALL_MODEL_HISTORIES = "allModelHistories";
+	public static final String CMD_INCONSISTENT_MODEL_HISTORIES = "inconsistentModelHistories";
+	public static final String CMD_ALL_SOURCE_REVISIONS = "allSourceRevisions";
+	public static final String CMD_ALL_REVISIONS = "allRevisions";
+	public static final String CMD_ALL_EVOLUTION_STEPS = "allEvolutionSteps";
+	public static final String CMD_TOTAL_INCONSISTENCIES = "totalInconsistencies";
+	public static final String CMD_REGEX_INCONSISTENCIES = "regexInconsistencies";
+	public static final String CMD_DOMAIN_SPECIFIC_INCONSISTENCIES = "domainSpecificInconsistencies";
+	public static final String CMD_SUPPORTED_INCONSISTENCIES = "supportedInconsistencies";
+	public static final String CMD_AT_LEAST_ONE_REPAIR_FOUND = "atLeastOneRepairFound";
+	public static final String CMD_PERCENTAGE_COVERED = "percentageCovered";
+	public static final String CMD_PERCENTAGE_UNCOVERED_REGEX = "percentageUncoveredRegEx";
+	public static final String CMD_TOTAL_OBSERVABLE_REPAIRS = "totalObservableRepairs";
+	public static final String CMD_OBSERVABLE_COMPLETION_REPAIRS = "observableCompletionRepairs";
+	public static final String CMD_OBSERVABLE_UNDO_REPAIRS = "observableUndoRepairs";
+	public static final String CMD_NOT_OBSERVABLE_REPAIRS = "notObservableRepairs";
+	public static final String CMD_NOT_OBSERVABLE_MISSING_CPEO = "notObservableMissingCPEO";
+	public static final String CMD_NOT_OBSERVABLE_SUB_RULE_TOO_LARGE = "notObservableSubRuleTooLarge";
+	public static final String CMD_NOT_OBSERVABLE_MISSING_CPEOS_AND_SUB_RULE_TOO_LARGE = "notObservableMissingCPEOsAndSubRuleTooLarge";
+	public static final String CMD_MISSING_CPEOS = "missingCPEOs";
+	public static final String CMD_PERCENTAGE_TOTAL_OBSERVABLE_REPAIRS = "percentageTotalObservableRepairs";
+	public static final String CMD_PERCENTAGE_OBSERVABLE_COMPLETION_REPAIRS = "percentageObservableCompletionRepairs";;
+	public static final String CMD_RANKING_COUNT_FIRST_POSITION = "rankingCountFirstPosition";
+	public static final String CMD_RANKING_COUNT_SECOND_POSITION = "rankingCountSecondPosition";
+	public static final String CMD_INCONSISTENCIES_WITH_TEN_OR_LESS_ALTERNATIVES = "inconsistenciesWithTenOrLessAlternatives";
+	public static final String CMD_AVG_COUNT_OF_UNBOUND_PARAMETERS = "avgCountOfUnboundParameters";
+	public static final String CMD_PERCENTAGE_TOP_RANKING = "percentageTopRanking";
+	public static final String CMD_EXAMPLE_A_RUNTIME_UML = "exampleARuntimeUML";
+	public static final String CMD_EXAMPLE_A_MODEL_SIZE_UML = "exampleAModelSizeUML";
+	public static final String CMD_EXAMPLE_B_RUNTIME_UML = "exampleBRuntimeUML";
+	public static final String CMD_EXAMPLE_B_MODEL_SIZE_UML = "exampleBModelSizeUML";
+	public static final String CMD_EXAMPLE_C_RUNTIME_UML = "exampleCRuntimeUML";
+	public static final String CMD_EXAMPLE_C_VERSION_COUNT_UML = "exampleCVersionCountUML";
+	public static final String CMD_RECOGNITION_RUNTIME_LESS_THEN_ONE_SECOND = "recognitionRuntimeLessThenOneSecond";
+	public static final String CMD_COMPLEMENT_RUNTIME_LOWER_BORDER = "complementRuntimeLowerBorder";
+	public static final String CMD_COMPLEMENT_RUNTIME_UPPER_BORDER = "complementRuntimeUpperBorder";
+	public static final String CMD_EXAMPLE_D_PARAMETER_CLASSES_UML = "exampleDParameterClassesUML";
+	public static final String CMD_EXAMPLE_D_PARAMETER_SUB_CLASSES_UML = "exampleDParameterSubClassesUML";
+
 	public NumberReportGenerator() {
 		
 		try {
+			LogTable manuallyEvaluated = new LogTable();
+			manuallyEvaluated.loadCSV(EvaluationDataSets.MANUALLY_EVALUATED_VALUES, true);
+			
 			LogTable projectReport = new ProjectReportGenerator().generateProjectReport();
 			LogTable rq3rq4Report = ProjectReportGeneratorDiagrams.generateRQ3RQ4PerProject(RQ3_RQ4_HOR_ONLY);
+			LogTable inconsistencyReport = InconsistencyReportGenerator.generate();
 			
-			// Some plausibility tests:
+			/* Some plausibility tests */
 			
 			// completions + undo + not observable = supported inconsistencies
 			if (observableCompletionRepairs(projectReport) 
@@ -51,8 +107,8 @@ public class NumberReportGenerator {
 			}
 			
 			// missing CPEO + sub-rule to large + no repair = not observable:
-			if (notObservableMissingCPEO() 
-					+ notObservableSubRuleTooLarge()
+			if (notObservableMissingCPEO(manuallyEvaluated) 
+					+ notObservableSubRuleTooLarge(manuallyEvaluated)
 					+ (supportedInconsistencies(projectReport) - atLeastOneRepairFound(projectReport))
 					!= notObservableRepairs(projectReport)) {
 				throw new AssertionError("missing CPEO + sub-rule to large + no repair = not observable");	
@@ -60,101 +116,98 @@ public class NumberReportGenerator {
 			
 			// Projects:
 			System.out.println();
-			System.out.println("% Projekte:");
-			System.out.println("\\newcommand{\\projectCount}{" + allProjectCount() + "\\xspace}");
+			System.out.println(createComment("Projekte:"));
+			System.out.println(createCommand(CMD_PROJECT_COUNT, allProjectCount()));
 			
 			// Configuration:
 			System.out.println();
-			System.out.println("% Configuration:");
-			System.out.println("\\newcommand{\\minimalASGPatternCount}{" + minimalASGPatternCount() + "\\xspace}");
-			System.out.println("\\newcommand{\\transformingEditRuleCount}{" + transformingEditRuleCount() + "\\xspace}");
+			System.out.println(createComment("Configuration:"));
+			System.out.println(createCommand(CMD_MINIMAL_ASG_PATTERN_COUNT, minimalASGPatternCount()));
+			System.out.println(createCommand(CMD_TRANSFORMING_EDIT_RULE_COUNT, transformingEditRuleCount()));
 			
 			// Constraints:
 			System.out.println();
-			System.out.println("% Anzahl der für die Evaluation in FOL implementierten Constraints:");
-			System.out.println("\\newcommand{\\constraintCount}{" + constraintCount() + "\\xspace}");
-			System.out.println(
-					"\\newcommand{\\ommitedWellFormedConstraintCount}{" + ommitedWellFormedConstraintCount() + "\\xspace}");
-			System.out.println("\\newcommand{\\ommitedDomainSpecificConstraintCount}{"
-					+ ommitedDomainSpecificConstraintCount() + "\\xspace}");
-			System.out.println("\\newcommand{\\observedConstraintCount}{" + observedConstraintCount() + "\\xspace}");
-			System.out.println(
-					"\\newcommand{\\observedSupportedConstraintCount}{" + observedSupportedConstraintCount() + "\\xspace}");
+			System.out.println(createComment("Anzahl der für die Evaluation in FOL implementierten Constraints:"));
+			System.out.println(createCommand(CMD_CONSTRAINT_COUNT, constraintCount()));
+			System.out.println(createCommand(CMD_OMMITED_WELL_FORMED_CONSTRAINT_COUNT, ommitedWellFormedConstraintCount(inconsistencyReport, manuallyEvaluated)));
+			System.out.println(createCommand(CMD_OMMITED_DOMAIN_SPECIFIC_CONSTRAINT_COUNT, ommitedDomainSpecificConstraintCount(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_OBSERVED_SUPPORTED_CONSTRAINT_COUNT, observedSupportedConstraintCount(inconsistencyReport)));
 			
 			// Histories:
 			System.out.println();
-			System.out.println("% Zeitraum der Modellhistorien:");
-			System.out.println("\\newcommand{\\oldestHistory}{" + oldestHistory() + "\\xspace}");
-			System.out.println("\\newcommand{\\newestHistory}{" + newestHistory() + "\\xspace}");
+			System.out.println(createComment("Zeitraum der Modellhistorien:"));
+			System.out.println(createCommand(CMD_OLDEST_HISTORY, oldestHistory(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_NEWEST_HISTORY, newestHistory(manuallyEvaluated)));
 			System.out.println();
-			System.out.println("% Anzahl der Modellhistorien:");
-			System.out.println("\\newcommand{\\allModelHistories}{" + allModelHistories(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\inconsistentModelHistories}{" + inconsistentModelHistories(projectReport) + "\\xspace}");
+			System.out.println(createComment("Anzahl der Modellhistorien:"));
+			System.out.println(createCommand(CMD_ALL_MODEL_HISTORIES, allModelHistories(projectReport)));
+			System.out.println(createCommand(CMD_INCONSISTENT_MODEL_HISTORIES, inconsistentModelHistories(projectReport)));
 			System.out.println();
-			System.out.println("\\newcommand{\\allSourceRevisions}{" + allSourceRevisions(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\allRevisions}{" + allRevisions(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\allEvolutionSteps}{" + allEvolutionSteps(projectReport) + "\\xspace}");
+			System.out.println(createCommand(CMD_ALL_SOURCE_REVISIONS, allSourceRevisions(projectReport)));
+			System.out.println(createCommand(CMD_ALL_REVISIONS, allRevisions(projectReport)));
+			System.out.println(createCommand(CMD_ALL_EVOLUTION_STEPS, allEvolutionSteps(projectReport)));
 			
 			// RQ1:
 			System.out.println();
-			System.out.println("% RQ1:");
-			System.out.println("\\newcommand{\\totalInconsistencies}{" + totalInconsistencies(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\regexInconsistencies}{" + regexInconsistencies(projectReport) + "\\xspace}");
-			System.out.println(
-					"\\newcommand{\\domainSpecificInconsistencies}{" + domainSpecificInconsistencies() + "\\xspace}");
-			System.out.println("\\newcommand{\\supportedInconsistencies}{" + supportedInconsistencies(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\atLeastOneRepairFound}{" + atLeastOneRepairFound(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\percentageCovered}{" + percentageCovered(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\percentageUncoveredRegEx}{" + percentageUncoveredRegEx(projectReport) + "\\xspace}");
+			System.out.println(createComment("RQ1:"));
+			System.out.println(createCommand(CMD_TOTAL_INCONSISTENCIES, totalInconsistencies(projectReport)));
+			System.out.println(createCommand(CMD_REGEX_INCONSISTENCIES, regexInconsistencies(projectReport)));
+			System.out.println(createCommand(CMD_DOMAIN_SPECIFIC_INCONSISTENCIES, domainSpecificInconsistencies(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_SUPPORTED_INCONSISTENCIES, supportedInconsistencies(projectReport)));
+			System.out.println(createCommand(CMD_AT_LEAST_ONE_REPAIR_FOUND, atLeastOneRepairFound(projectReport)));
+			System.out.println(createCommand(CMD_PERCENTAGE_COVERED, percentageCovered(projectReport)));
+			System.out.println(createCommand(CMD_PERCENTAGE_UNCOVERED_REGEX, percentageUncoveredRegEx(projectReport)));
 			
 			// RQ2:
 			System.out.println();
-			System.out.println("% RQ2:");
-			System.out.println("\\newcommand{\\totalObservableRepairs}{" + totalObservableRepairs(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\observableCompletionRepairs}{" + observableCompletionRepairs(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\observableUndoRepairs}{" + observableUndoRepairs(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\notObservableRepairs}{" + notObservableRepairs(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\notObservableMissingCPEO}{" + notObservableMissingCPEO() + "\\xspace}");
-			System.out.println(
-					"\\newcommand{\\notObservableSubRuleTooLarge}{" + notObservableSubRuleTooLarge() + "\\xspace}");
-			System.out.println("\\newcommand{\\notObservableMissingCPEOsAndSubRuleTooLarge}{"
-					+ notObservableMissingCPEOsAndSubRuleTooLarge() + "\\xspace}");
-			System.out.println("\\newcommand{\\missingCPEOs}{" + missingCPEOs() + "\\xspace}");
-			System.out.println("\\newcommand{\\percentageTotalObservableRepairs}{" + percentageTotalObservableRepairs(projectReport) + "\\xspace}");
-			System.out.println("\\newcommand{\\percentageObservableCompletionRepairs}{" + percentageObservableCompletionRepairs(projectReport) + "\\xspace}");
+			System.out.println(createComment("RQ2:"));
+			System.out.println(createCommand(CMD_TOTAL_OBSERVABLE_REPAIRS, totalObservableRepairs(projectReport)));
+			System.out.println(createCommand(CMD_OBSERVABLE_COMPLETION_REPAIRS, observableCompletionRepairs(projectReport)));
+			System.out.println(createCommand(CMD_OBSERVABLE_UNDO_REPAIRS, observableUndoRepairs(projectReport)));
+			System.out.println(createCommand(CMD_NOT_OBSERVABLE_REPAIRS, notObservableRepairs(projectReport)));
+			System.out.println(createCommand(CMD_NOT_OBSERVABLE_MISSING_CPEO, notObservableMissingCPEO(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_NOT_OBSERVABLE_SUB_RULE_TOO_LARGE, notObservableSubRuleTooLarge(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_NOT_OBSERVABLE_MISSING_CPEOS_AND_SUB_RULE_TOO_LARGE, notObservableMissingCPEOsAndSubRuleTooLarge(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_MISSING_CPEOS, missingCPEOs(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_PERCENTAGE_TOTAL_OBSERVABLE_REPAIRS, percentageTotalObservableRepairs(projectReport)));
+			System.out.println(createCommand(CMD_PERCENTAGE_OBSERVABLE_COMPLETION_REPAIRS, percentageObservableCompletionRepairs(projectReport)));
 			
 			// RQ3:
 			System.out.println();
-			System.out.println("% RQ3");
-			System.out.println("\\newcommand{\\rankingCountFirstPosition}{" + rankingCountFirstPosition(rq3rq4Report) + "\\xspace}");
-			System.out.println("\\newcommand{\\rankingCountSecondPosition}{" + rankingCountSecondPosition(rq3rq4Report) + "\\xspace}");
-			System.out.println("\\newcommand{\\inconsistenciesWithTenOrLessAlternatives}{"
-					+ inconsistenciesWithTenOrLessAlternatives(rq3rq4Report) + "\\xspace}");
-			System.out.println("\\newcommand{\\avgCountOfUnboundParameters}{" + avgCountOfUnboundParameters(rq3rq4Report) + "\\xspace}");
-			System.out.println("\\newcommand{\\percentageTopRanking}{" + percentageTopRanking(rq3rq4Report, projectReport) + "\\xspace}");
+			System.out.println(createComment("RQ3"));
+			System.out.println(createCommand(CMD_RANKING_COUNT_FIRST_POSITION, rankingCountFirstPosition(rq3rq4Report)));
+			System.out.println(createCommand(CMD_RANKING_COUNT_SECOND_POSITION, rankingCountSecondPosition(rq3rq4Report)));
+			System.out.println(createCommand(CMD_INCONSISTENCIES_WITH_TEN_OR_LESS_ALTERNATIVES, inconsistenciesWithTenOrLessAlternatives(rq3rq4Report)));
+			System.out.println(createCommand(CMD_AVG_COUNT_OF_UNBOUND_PARAMETERS, avgCountOfUnboundParameters(rq3rq4Report)));
+			System.out.println(createCommand(CMD_PERCENTAGE_TOP_RANKING, percentageTopRanking(rq3rq4Report, projectReport)));
 						
 			// RQ4:
 			System.out.println();
-			System.out.println("% RQ4");
-			System.out.println("\\newcommand{\\exampleARuntimeUML}{" + exampleARuntimeUML() + "\\xspace}");
-			System.out.println("\\newcommand{\\exampleAModelSizeUML}{" + exampleAModelSizeUML() + "\\xspace}");
-			System.out.println("\\newcommand{\\exampleBRuntimeUML}{" + exampleBRuntimeUML() + "\\xspace}");
-			System.out.println("\\newcommand{\\exampleBModelSizeUML}{" + exampleBModelSizeUML() + "\\xspace}");
-			System.out.println("\\newcommand{\\exampleCRuntimeUML}{" + exampleCRuntimeUML() + "\\xspace}");
-			System.out.println("\\newcommand{\\exampleCVersionCountUML}{" + exampleCVersionCountUML() + "\\xspace}");
-			System.out.println("\\newcommand{\\recognitionRuntimeLessThenOneSecond}{"
-					+ recognitionRuntimeLessThenOneSecond(rq3rq4Report) + "\\%\\xspace}");
-			System.out.println(
-					"\\newcommand{\\complementRuntimeLowerBorder}{" + complementRuntimeLowerBorder() + "\\xspace}");
-			System.out.println(
-					"\\newcommand{\\complementRuntimeUpperBorder}{" + complementRuntimeUpperBorder() + "\\xspace}");
-			System.out.println(
-					"\\newcommand{\\exampleDParameterClassesUML}{" + exampleDParameterClassesUML() + "\\xspace}");
-			System.out.println(
-					"\\newcommand{\\exampleDParameterSubClassesUML}{" + exampleDParameterSubClassesUML() + "\\xspace}");
+			System.out.println(createComment("RQ4"));
+			System.out.println(createCommand(CMD_EXAMPLE_A_RUNTIME_UML, exampleARuntimeUML(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_EXAMPLE_A_MODEL_SIZE_UML, exampleAModelSizeUML()));
+			System.out.println(createCommand(CMD_EXAMPLE_B_RUNTIME_UML, exampleBRuntimeUML(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_EXAMPLE_B_MODEL_SIZE_UML, exampleBModelSizeUML()));
+			System.out.println(createCommand(CMD_EXAMPLE_C_RUNTIME_UML, exampleCRuntimeUML(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_EXAMPLE_C_VERSION_COUNT_UML, exampleCVersionCountUML(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_RECOGNITION_RUNTIME_LESS_THEN_ONE_SECOND, recognitionRuntimeLessThenOneSecond(rq3rq4Report)));
+			System.out.println(createCommand(CMD_COMPLEMENT_RUNTIME_LOWER_BORDER, complementRuntimeLowerBorder(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_COMPLEMENT_RUNTIME_UPPER_BORDER, complementRuntimeUpperBorder(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_EXAMPLE_D_PARAMETER_CLASSES_UML, exampleDParameterClassesUML(manuallyEvaluated)));
+			System.out.println(createCommand(CMD_EXAMPLE_D_PARAMETER_SUB_CLASSES_UML, exampleDParameterSubClassesUML(manuallyEvaluated)));
 		} catch (IllegalArgumentException | IllegalAccessException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// Generate Latex Commands:
+	
+	private static String createCommand(String name, Object value) {
+		return "\\newcommand{\\" + name + "}{" + value + "\\xspace}";
+	}
+	
+	private static String createComment(String text) {
+		return "% " + text;
 	}
 	
 	// Projects:
@@ -220,56 +273,87 @@ public class NumberReportGenerator {
 		return ValidationFacade.getConstraints(DOC_TYPE_RESOURCE_DUMMY).size();
 	}
 
-	public static int ommitedWellFormedConstraintCount() {
-		return 5; // TODO: Derive...
+	public static int ommitedWellFormedConstraintCount(LogTable inconsistencyReport, LogTable manuallyEvaluated) {
+		int unsupportedDomainSpecific = ommitedDomainSpecificConstraintCount(manuallyEvaluated);
+		int unsuporrtedAll = LogUtil.count(
+				inconsistencyReport.getColumn(InconsistencyReportGenerator.COL_SUPPORTED_CONSTRAINT[0]),
+				InconsistencyReportGenerator.VALUE_NO);
+		return unsuporrtedAll - unsupportedDomainSpecific;
 	}
 
-	public static int ommitedDomainSpecificConstraintCount() {
-		return 3; // TODO: Derive...
+	public static int ommitedDomainSpecificConstraintCount(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_OMMITED_DOMAIN_SPECIFIC_CONSTRAINT_COUNT, Integer.class).get(0);
 	}
 
-	public static int observedConstraintCount() {
-		return 21; // TODO: Derive...
-	}
-
-	public static int observedSupportedConstraintCount() {
-		return 15; // TODO: Derive...
+	public static int observedSupportedConstraintCount(LogTable inconsistencyReport) {
+		return LogUtil.count(
+				inconsistencyReport.getColumn(InconsistencyReportGenerator.COL_SUPPORTED_CONSTRAINT[0]),
+				InconsistencyReportGenerator.VALUE_YES);
 	}
 	
 	// History:
 
-	public static int oldestHistory() {
-		return 2004; // TODO: Derive...
+	public static int oldestHistory(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_OLDEST_HISTORY, Integer.class).get(0);
 	}
 
-	public static int newestHistory() {
-		return 2018; // TODO: Derive...
+	public static int newestHistory(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_NEWEST_HISTORY, Integer.class).get(0);
 	}
 
+	/**
+	 * @return Summary value "All": number of all (consistent and inconsistent)
+	 *         model histories.
+	 */
 	public static int allModelHistories(LogTable projectReport) {
 		List<Integer> columnAllModels = projectReport.getColumn(ProjectReportGenerator.COL_MODELS_ALL[0], Integer.class);
 		return columnAllModels.get(columnAllModels.size() - 1);
 	}
 
+	/**
+	 * @return Summary value "Inc.": number of all model histories containing at
+	 *         least one inconsistency.
+	 */
 	public static int inconsistentModelHistories(LogTable projectReport) {
 		List<Integer> columnInconsistentModels = projectReport.getColumn(ProjectReportGenerator.COL_MODELS_INCONSISTENT[0], Integer.class);
 		return columnInconsistentModels.get(columnInconsistentModels.size() - 1);
 	}
 
+	/**
+	 * @return Summary value "Source": number of all source revisions of model
+	 *         histories containing at least one inconsistency.
+	 */
 	public static int allSourceRevisions(LogTable projectReport) {
 		List<Integer> columnSourceModels = projectReport.getColumn(ProjectReportGenerator.COL_REVISIONS_INCONSISTENT[0], Integer.class);
 		return columnSourceModels.get(columnSourceModels.size() - 1);
 	}
-
-	public static int allRevisions(LogTable projectReport) {
+	
+	/**
+	 * @return Summary value "Co-ev.": number of all co-evolving revisions of model
+	 *         histories containing at least one inconsistency.
+	 */
+	public static int allCoevolvingRevisions(LogTable projectReport) {
 		List<Integer> columnCoEvModels = projectReport.getColumn(ProjectReportGenerator.COL_REVISIONS_COEVOLVING[0], Integer.class);
-		int coEvModelsCount = columnCoEvModels.get(columnCoEvModels.size() - 1);
-		
-		return allSourceRevisions(projectReport) + coEvModelsCount;
+		return columnCoEvModels.get(columnCoEvModels.size() - 1);
+	}
+
+	/**
+	 * @return Sum of revisions (source and co-evolving) of model histories
+	 *         containing at least one inconsistency.
+	 */
+	public static int allRevisions(LogTable projectReport) {
+		return allSourceRevisions(projectReport) + allCoevolvingRevisions(projectReport);
 	}
 	
+	/**
+	 * @return The number of evolution steps for one model history is the number of
+	 *         its revisions minus one. The sum of all evolution steps (of model
+	 *         histories containing at least one inconsistency) is the number of all
+	 *         revisions (source and co-evolutions) minus the number of considered
+	 *         model histories.
+	 */
 	public static int allEvolutionSteps(LogTable projectReport) {
-		return allRevisions(projectReport) - (2 * inconsistentModelHistories(projectReport));
+		return allRevisions(projectReport) - inconsistentModelHistories(projectReport);
 	}
 	
 	// RQ1:
@@ -284,8 +368,8 @@ public class NumberReportGenerator {
 		return columnRegExInconsistencies.get(columnRegExInconsistencies.size() - 1);
 	}
 
-	public static int domainSpecificInconsistencies() {
-		return 3; // TODO: Derive...
+	public static int domainSpecificInconsistencies(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_DOMAIN_SPECIFIC_INCONSISTENCIES, Integer.class).get(0);
 	}
 
 	public static int supportedInconsistencies(LogTable projectReport) {
@@ -328,20 +412,20 @@ public class NumberReportGenerator {
 		return columntNotObservableRepairs.get(columntNotObservableRepairs.size() - 1);
 	}
 
-	public static int notObservableMissingCPEO() {
-		return 38; // TODO: Derive...
+	public static int notObservableMissingCPEO(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_NOT_OBSERVABLE_MISSING_CPEO, Integer.class).get(0);
 	}
 
-	public static int notObservableSubRuleTooLarge() {
-		return 5; // TODO: Derive...
+	public static int notObservableSubRuleTooLarge(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_NOT_OBSERVABLE_SUB_RULE_TOO_LARGE, Integer.class).get(0);
 	}
 
-	public static int notObservableMissingCPEOsAndSubRuleTooLarge() {
-		return 3; // TODO: Derive...
+	public static int notObservableMissingCPEOsAndSubRuleTooLarge(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_NOT_OBSERVABLE_MISSING_CPEOS_AND_SUB_RULE_TOO_LARGE, Integer.class).get(0);
 	}
 
-	public static int missingCPEOs() {
-		return 8; // TODO: Derive...
+	public static int missingCPEOs(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_MISSING_CPEOS, Integer.class).get(0);
 	}
 	
 	public static String percentageTotalObservableRepairs(LogTable projectReport) {
@@ -393,8 +477,8 @@ public class NumberReportGenerator {
 		return count;
 	}
 
-	public static String exampleARuntimeUML() {
-		return "300ms"; // TODO: Derive...
+	public static String exampleARuntimeUML(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_EXAMPLE_A_RUNTIME_UML, String.class).get(0);
 	}
 
 	public static int exampleAModelSizeUML() {
@@ -403,8 +487,8 @@ public class NumberReportGenerator {
 		return cmof + cmof20;
 	}
 
-	public static String exampleBRuntimeUML() {
-		return "2s"; // TODO: Derive...
+	public static String exampleBRuntimeUML(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_EXAMPLE_B_RUNTIME_UML, String.class).get(0);
 	}
 
 	public static int exampleBModelSizeUML() {
@@ -412,12 +496,12 @@ public class NumberReportGenerator {
 		return uml;
 	}
 
-	public static String exampleCRuntimeUML() {
-		return "7s"; // TODO: Derive...
+	public static String exampleCRuntimeUML(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_EXAMPLE_C_RUNTIME_UML, String.class).get(0);
 	}
 
-	public static String exampleCVersionCountUML() {
-		return "20"; // TODO: Derive...
+	public static int exampleCVersionCountUML(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_EXAMPLE_C_VERSION_COUNT_UML, Integer.class).get(0);
 	}
 
 	public static String recognitionRuntimeLessThenOneSecond(LogTable rq3rq4Report) {
@@ -427,25 +511,25 @@ public class NumberReportGenerator {
 		return percentage(recognitionRuntimeLessThenOneSecond, recognitionTimes.size());
 	}
 
-	public static String complementRuntimeLowerBorder() {
-		return "10s"; // TODO: Derive...
+	public static String complementRuntimeLowerBorder(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_COMPLEMENT_RUNTIME_LOWER_BORDER, String.class).get(0);
 	}
 
-	public static String complementRuntimeUpperBorder() {
-		return "40s"; // TODO: Derive...
+	public static String complementRuntimeUpperBorder(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_COMPLEMENT_RUNTIME_UPPER_BORDER, String.class).get(0);
 	}
 	
-	private String exampleDParameterClassesUML() {
-		return "91"; // TODO: Derive...
+	private int exampleDParameterClassesUML(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_EXAMPLE_D_PARAMETER_CLASSES_UML, Integer.class).get(0);
 	}
 
-	public static String exampleDParameterSubClassesUML() {
-		return "279"; // TODO: Derive...
+	public static int exampleDParameterSubClassesUML(LogTable manuallyEvaluated) {
+		return manuallyEvaluated.getColumn(CMD_EXAMPLE_D_PARAMETER_SUB_CLASSES_UML, Integer.class).get(0);
 	}
 	
 	private static String percentage(int partial, int all) {
 		 double percentage = ((double) partial / (double) all) * 100.0;
-		 NumberFormat nf =  NumberFormat.getInstance();
+		 NumberFormat nf =  NumberFormat.getInstance(Locale.US);
 		 nf.setMaximumFractionDigits(1);
 		 return nf.format(percentage);
 	}

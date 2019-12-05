@@ -29,6 +29,7 @@ import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
+import org.sidiff.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.repair.history.evaluation.report.HistoryLog;
 import org.sidiff.repair.history.evaluation.report.InconsistenciesLog;
 
@@ -181,7 +182,7 @@ public class ProjectReportGenerator {
 			System.out.println(convertToLatexHeader(COLS));
 			System.out.println(convertToLatex(projectReport));
 			
-			projectReport.toCSV(ReportGenerator.OUTPUT_FOLDER + "rq1-4.csv");
+			projectReport.toCSV(EvaluationDataSets.RESULT_REPORT + "rq1-4.csv");
 		}
 		
 		if (LATEX_HEADER) {
@@ -267,7 +268,7 @@ public class ProjectReportGenerator {
 			List<LogTable> inconsistenciesLog, 
 			List<LogTable> recognitionLog) throws IOException {
 		
-		List<History> histories = ReportGenerator.getProjectHistory_Reduced(modelPaths.get(0).getParentFile());
+		List<History> histories = ReportGenerator.getProjectHistory_Result(modelPaths.get(0).getParentFile());
 		LogTable[] inconsistencies = inconsistenciesLog.toArray(new LogTable[0]);
 		
 		report.append(COL_NAME[0], 

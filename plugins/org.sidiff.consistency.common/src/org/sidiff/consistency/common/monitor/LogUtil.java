@@ -212,7 +212,7 @@ public class LogUtil {
 		return NA;
 	}
 	
-	public static <T> Object count(List<T> list, T valueToCount) {
+	public static <T> int count(List<T> list, T valueToCount) {
 		int count = 0;
 		
 		for (T value : list) {

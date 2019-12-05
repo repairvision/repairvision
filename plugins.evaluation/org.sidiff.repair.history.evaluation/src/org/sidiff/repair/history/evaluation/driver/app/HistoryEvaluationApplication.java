@@ -30,22 +30,9 @@ import org.sidiff.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
 
 public class HistoryEvaluationApplication implements IApplication {
-
-	// Export products/evaluation-driver.product
-	// (If needed: update Contents/Add Required Plug-ins)
-	// 
-	// Run headless product from plugins folder (system independent):
-	// java -jar org.eclipse.equinox.launcher_1.4.0.v20161219-1356.jar -application org.sidiff.repair.history.evaluation.driver -consoleLog -noExit first second last
-	// 
-	// or
-	//
-	// Run headless product with launcher (system dependent):
-	// eclipse -application org.sidiff.repair.history.evaluation.driver -consoleLog -noExit first second last
 	
 //	private static String MATCHER = "org.sidiff.matcher.id.xmiid.XMIIDMatcher";
 //	private static String DIFFERENCE_BUILDER = "org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations";
-	
-	public static String RULEBASE = "Ecore Evaluation Edit Rules";
 	
 	private static int START_WITH_VERSION = 0;
 	
@@ -55,16 +42,16 @@ public class HistoryEvaluationApplication implements IApplication {
 		for (String historyPath : EvaluationDataSets.HISTORIES) {
 			try {
 				System.out.println("LOADIND EVALUATION: " + historyPath);
-				System.out.println("RULEBASE: " + RULEBASE);
+				System.out.println("RULEBASE: " + EvaluationDataSets.RULEBASE);
 				
 				// load history:
-				History history = loadHistory(URI.createFileURI(new File(EvaluationDataSets.REDUCED_DATA_SET + historyPath).getPath()));
+				History history = loadHistory(URI.createFileURI(new File(EvaluationDataSets.RESULTS_DATA_SET + historyPath).getPath()));
 				
 				// initialize history analyzer:
 				HistoryInfo historyInfo = new HistoryInfo(history);
 				
 				// load edit rules:
-				List<URI> rulebase = RulebaseLibrary.getRulebase(RULEBASE);
+				List<URI> rulebase = RulebaseLibrary.getRulebase(EvaluationDataSets.RULEBASE);
 				Collection<Rule> editRules = RulebaseUtil.eLoadEditRules(rulebase, false);
 				
 				System.out.println("EDIT RULES: " + editRules.size());
