@@ -167,12 +167,12 @@ public class ConstraintLibraryEcorePackage implements IConstraintLibrary {
 		Term t20_eType = new Get(v7_eStructuralFeature, DOMAIN.getETypedElement_EType());
 		Term t21_eType_eLiterals = new Get(new Get(v7_eStructuralFeature, DOMAIN.getETypedElement_EType()), DOMAIN.getEEnum_ELiterals());
 		Term t22_defaultValueLiteral = new Get(v7_eStructuralFeature, DOMAIN.getEStructuralFeature_DefaultValueLiteral());
-		Term t23_name = new Get(v8_literal, DOMAIN.getENamedElement_Name());
+		Term t23_literal = new Get(v8_literal, DOMAIN.getEEnumLiteral_Literal());
 		Term t24_eType = new Get(v7_eStructuralFeature, DOMAIN.getETypedElement_EType());
 		Term t25_defaultValueLiteral = new Get(v7_eStructuralFeature, DOMAIN.getEStructuralFeature_DefaultValueLiteral());
 		Term t26_eType = new Get(v7_eStructuralFeature, DOMAIN.getETypedElement_EType());
 	
-		Formula constraint5_TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType = new And(new And(new If(new Not(new IsInstanceOf(t18_eType, DOMAIN.getEDataType())), new IsEmpty(t19_defaultValueLiteral)), new If(new IsInstanceOf(t20_eType, DOMAIN.getEEnum()), new Exists(v8_literal, t21_eType_eLiterals, new Equality(t22_defaultValueLiteral, t23_name)))), new If(new IsInstanceOf(t24_eType, DOMAIN.getEDataType()), new IsValueLiteralOf(t25_defaultValueLiteral, t26_eType)));
+		Formula constraint5_TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType = new And(new And(new If(new Not(new IsInstanceOf(t18_eType, DOMAIN.getEDataType())), new IsEmpty(t19_defaultValueLiteral)), new If(new IsInstanceOf(t20_eType, DOMAIN.getEEnum()), new Exists(v8_literal, t21_eType_eLiterals, new Equality(t22_defaultValueLiteral, t23_literal)))), new If(new IsInstanceOf(t24_eType, DOMAIN.getEDataType()), new IsValueLiteralOf(t25_defaultValueLiteral, t26_eType)));
 		
 		IConstraint rule_TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType = new Constraint(DOMAIN.getEStructuralFeature(), v7_eStructuralFeature, constraint5_TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType);
 		rule_TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType.setName("TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType");
