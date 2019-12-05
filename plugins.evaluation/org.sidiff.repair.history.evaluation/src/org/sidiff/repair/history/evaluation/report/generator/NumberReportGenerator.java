@@ -117,84 +117,84 @@ public class NumberReportGenerator {
 			// Projects:
 			System.out.println();
 			System.out.println(createComment("Projekte:"));
-			System.out.println(createCommand(CMD_PROJECT_COUNT, allProjectCount()));
+			System.out.println(createCommandX(CMD_PROJECT_COUNT, allProjectCount()));
 			
 			// Configuration:
 			System.out.println();
 			System.out.println(createComment("Configuration:"));
-			System.out.println(createCommand(CMD_MINIMAL_ASG_PATTERN_COUNT, minimalASGPatternCount()));
-			System.out.println(createCommand(CMD_TRANSFORMING_EDIT_RULE_COUNT, transformingEditRuleCount()));
+			System.out.println(createCommandX(CMD_MINIMAL_ASG_PATTERN_COUNT, minimalASGPatternCount()));
+			System.out.println(createCommandX(CMD_TRANSFORMING_EDIT_RULE_COUNT, transformingEditRuleCount()));
 			
 			// Constraints:
 			System.out.println();
 			System.out.println(createComment("Anzahl der für die Evaluation in FOL implementierten Constraints:"));
-			System.out.println(createCommand(CMD_CONSTRAINT_COUNT, constraintCount()));
-			System.out.println(createCommand(CMD_OMMITED_WELL_FORMED_CONSTRAINT_COUNT, ommitedWellFormedConstraintCount(inconsistencyReport, manuallyEvaluated)));
-			System.out.println(createCommand(CMD_OMMITED_DOMAIN_SPECIFIC_CONSTRAINT_COUNT, ommitedDomainSpecificConstraintCount(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_OBSERVED_SUPPORTED_CONSTRAINT_COUNT, observedSupportedConstraintCount(inconsistencyReport)));
+			System.out.println(createCommandX(CMD_CONSTRAINT_COUNT, constraintCount()));
+			System.out.println(createCommandX(CMD_OMMITED_WELL_FORMED_CONSTRAINT_COUNT, ommitedWellFormedConstraintCount(inconsistencyReport, manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_OMMITED_DOMAIN_SPECIFIC_CONSTRAINT_COUNT, ommitedDomainSpecificConstraintCount(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_OBSERVED_SUPPORTED_CONSTRAINT_COUNT, observedSupportedConstraintCount(inconsistencyReport)));
 			
 			// Histories:
 			System.out.println();
 			System.out.println(createComment("Zeitraum der Modellhistorien:"));
-			System.out.println(createCommand(CMD_OLDEST_HISTORY, oldestHistory(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_NEWEST_HISTORY, newestHistory(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_OLDEST_HISTORY, oldestHistory(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_NEWEST_HISTORY, newestHistory(manuallyEvaluated)));
 			System.out.println();
 			System.out.println(createComment("Anzahl der Modellhistorien:"));
-			System.out.println(createCommand(CMD_ALL_MODEL_HISTORIES, allModelHistories(projectReport)));
-			System.out.println(createCommand(CMD_INCONSISTENT_MODEL_HISTORIES, inconsistentModelHistories(projectReport)));
+			System.out.println(createCommandX(CMD_ALL_MODEL_HISTORIES, allModelHistories(projectReport)));
+			System.out.println(createCommandX(CMD_INCONSISTENT_MODEL_HISTORIES, inconsistentModelHistories(projectReport)));
 			System.out.println();
-			System.out.println(createCommand(CMD_ALL_SOURCE_REVISIONS, allSourceRevisions(projectReport)));
-			System.out.println(createCommand(CMD_ALL_REVISIONS, allRevisions(projectReport)));
-			System.out.println(createCommand(CMD_ALL_EVOLUTION_STEPS, allEvolutionSteps(projectReport)));
+			System.out.println(createCommandX(CMD_ALL_SOURCE_REVISIONS, allSourceRevisions(projectReport)));
+			System.out.println(createCommandX(CMD_ALL_REVISIONS, allRevisions(projectReport)));
+			System.out.println(createCommandX(CMD_ALL_EVOLUTION_STEPS, allEvolutionSteps(projectReport)));
 			
 			// RQ1:
 			System.out.println();
 			System.out.println(createComment("RQ1:"));
-			System.out.println(createCommand(CMD_TOTAL_INCONSISTENCIES, totalInconsistencies(projectReport)));
-			System.out.println(createCommand(CMD_REGEX_INCONSISTENCIES, regexInconsistencies(projectReport)));
-			System.out.println(createCommand(CMD_DOMAIN_SPECIFIC_INCONSISTENCIES, domainSpecificInconsistencies(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_SUPPORTED_INCONSISTENCIES, supportedInconsistencies(projectReport)));
-			System.out.println(createCommand(CMD_AT_LEAST_ONE_REPAIR_FOUND, atLeastOneRepairFound(projectReport)));
+			System.out.println(createCommandX(CMD_TOTAL_INCONSISTENCIES, totalInconsistencies(projectReport)));
+			System.out.println(createCommandX(CMD_REGEX_INCONSISTENCIES, regexInconsistencies(projectReport)));
+			System.out.println(createCommandX(CMD_DOMAIN_SPECIFIC_INCONSISTENCIES, domainSpecificInconsistencies(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_SUPPORTED_INCONSISTENCIES, supportedInconsistencies(projectReport)));
+			System.out.println(createCommandX(CMD_AT_LEAST_ONE_REPAIR_FOUND, atLeastOneRepairFound(projectReport)));
 			System.out.println(createCommand(CMD_PERCENTAGE_COVERED, percentageCovered(projectReport)));
 			System.out.println(createCommand(CMD_PERCENTAGE_UNCOVERED_REGEX, percentageUncoveredRegEx(projectReport)));
 			
 			// RQ2:
 			System.out.println();
 			System.out.println(createComment("RQ2:"));
-			System.out.println(createCommand(CMD_TOTAL_OBSERVABLE_REPAIRS, totalObservableRepairs(projectReport)));
-			System.out.println(createCommand(CMD_OBSERVABLE_COMPLETION_REPAIRS, observableCompletionRepairs(projectReport)));
-			System.out.println(createCommand(CMD_OBSERVABLE_UNDO_REPAIRS, observableUndoRepairs(projectReport)));
-			System.out.println(createCommand(CMD_NOT_OBSERVABLE_REPAIRS, notObservableRepairs(projectReport)));
-			System.out.println(createCommand(CMD_NOT_OBSERVABLE_MISSING_CPEO, notObservableMissingCPEO(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_NOT_OBSERVABLE_SUB_RULE_TOO_LARGE, notObservableSubRuleTooLarge(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_NOT_OBSERVABLE_MISSING_CPEOS_AND_SUB_RULE_TOO_LARGE, notObservableMissingCPEOsAndSubRuleTooLarge(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_MISSING_CPEOS, missingCPEOs(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_TOTAL_OBSERVABLE_REPAIRS, totalObservableRepairs(projectReport)));
+			System.out.println(createCommandX(CMD_OBSERVABLE_COMPLETION_REPAIRS, observableCompletionRepairs(projectReport)));
+			System.out.println(createCommandX(CMD_OBSERVABLE_UNDO_REPAIRS, observableUndoRepairs(projectReport)));
+			System.out.println(createCommandX(CMD_NOT_OBSERVABLE_REPAIRS, notObservableRepairs(projectReport)));
+			System.out.println(createCommandX(CMD_NOT_OBSERVABLE_MISSING_CPEO, notObservableMissingCPEO(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_NOT_OBSERVABLE_SUB_RULE_TOO_LARGE, notObservableSubRuleTooLarge(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_NOT_OBSERVABLE_MISSING_CPEOS_AND_SUB_RULE_TOO_LARGE, notObservableMissingCPEOsAndSubRuleTooLarge(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_MISSING_CPEOS, missingCPEOs(manuallyEvaluated)));
 			System.out.println(createCommand(CMD_PERCENTAGE_TOTAL_OBSERVABLE_REPAIRS, percentageTotalObservableRepairs(projectReport)));
 			System.out.println(createCommand(CMD_PERCENTAGE_OBSERVABLE_COMPLETION_REPAIRS, percentageObservableCompletionRepairs(projectReport)));
 			
 			// RQ3:
 			System.out.println();
 			System.out.println(createComment("RQ3"));
-			System.out.println(createCommand(CMD_RANKING_COUNT_FIRST_POSITION, rankingCountFirstPosition(rq3rq4Report)));
-			System.out.println(createCommand(CMD_RANKING_COUNT_SECOND_POSITION, rankingCountSecondPosition(rq3rq4Report)));
-			System.out.println(createCommand(CMD_INCONSISTENCIES_WITH_TEN_OR_LESS_ALTERNATIVES, inconsistenciesWithTenOrLessAlternatives(rq3rq4Report)));
-			System.out.println(createCommand(CMD_AVG_COUNT_OF_UNBOUND_PARAMETERS, avgCountOfUnboundParameters(rq3rq4Report)));
+			System.out.println(createCommandX(CMD_RANKING_COUNT_FIRST_POSITION, rankingCountFirstPosition(rq3rq4Report)));
+			System.out.println(createCommandX(CMD_RANKING_COUNT_SECOND_POSITION, rankingCountSecondPosition(rq3rq4Report)));
+			System.out.println(createCommandX(CMD_INCONSISTENCIES_WITH_TEN_OR_LESS_ALTERNATIVES, inconsistenciesWithTenOrLessAlternatives(rq3rq4Report)));
+			System.out.println(createCommandX(CMD_AVG_COUNT_OF_UNBOUND_PARAMETERS, avgCountOfUnboundParameters(rq3rq4Report)));
 			System.out.println(createCommand(CMD_PERCENTAGE_TOP_RANKING, percentageTopRanking(rq3rq4Report, projectReport)));
 						
 			// RQ4:
 			System.out.println();
 			System.out.println(createComment("RQ4"));
-			System.out.println(createCommand(CMD_EXAMPLE_A_RUNTIME_UML, exampleARuntimeUML(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_EXAMPLE_A_MODEL_SIZE_UML, exampleAModelSizeUML()));
-			System.out.println(createCommand(CMD_EXAMPLE_B_RUNTIME_UML, exampleBRuntimeUML(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_EXAMPLE_B_MODEL_SIZE_UML, exampleBModelSizeUML()));
-			System.out.println(createCommand(CMD_EXAMPLE_C_RUNTIME_UML, exampleCRuntimeUML(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_EXAMPLE_C_VERSION_COUNT_UML, exampleCVersionCountUML(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_RECOGNITION_RUNTIME_LESS_THEN_ONE_SECOND, recognitionRuntimeLessThenOneSecond(rq3rq4Report)));
-			System.out.println(createCommand(CMD_COMPLEMENT_RUNTIME_LOWER_BORDER, complementRuntimeLowerBorder(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_COMPLEMENT_RUNTIME_UPPER_BORDER, complementRuntimeUpperBorder(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_EXAMPLE_D_PARAMETER_CLASSES_UML, exampleDParameterClassesUML(manuallyEvaluated)));
-			System.out.println(createCommand(CMD_EXAMPLE_D_PARAMETER_SUB_CLASSES_UML, exampleDParameterSubClassesUML(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_EXAMPLE_A_RUNTIME_UML, exampleARuntimeUML(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_EXAMPLE_A_MODEL_SIZE_UML, exampleAModelSizeUML()));
+			System.out.println(createCommandX(CMD_EXAMPLE_B_RUNTIME_UML, exampleBRuntimeUML(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_EXAMPLE_B_MODEL_SIZE_UML, exampleBModelSizeUML()));
+			System.out.println(createCommandX(CMD_EXAMPLE_C_RUNTIME_UML, exampleCRuntimeUML(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_EXAMPLE_C_VERSION_COUNT_UML, exampleCVersionCountUML(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_RECOGNITION_RUNTIME_LESS_THEN_ONE_SECOND, recognitionRuntimeLessThenOneSecond(rq3rq4Report)));
+			System.out.println(createCommandX(CMD_COMPLEMENT_RUNTIME_LOWER_BORDER, complementRuntimeLowerBorder(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_COMPLEMENT_RUNTIME_UPPER_BORDER, complementRuntimeUpperBorder(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_EXAMPLE_D_PARAMETER_CLASSES_UML, exampleDParameterClassesUML(manuallyEvaluated)));
+			System.out.println(createCommandX(CMD_EXAMPLE_D_PARAMETER_SUB_CLASSES_UML, exampleDParameterSubClassesUML(manuallyEvaluated)));
 		} catch (IllegalArgumentException | IllegalAccessException | IOException e) {
 			e.printStackTrace();
 		}
@@ -202,10 +202,23 @@ public class NumberReportGenerator {
 	
 	// Generate Latex Commands:
 	
+	/**
+	 * @return A latex command.
+	 */
 	private static String createCommand(String name, Object value) {
+		return "\\newcommand{\\" + name + "}{" + value + "}";
+	}
+	
+	/**
+	 * @return A latex command with optional trailing whitespace.
+	 */
+	private static String createCommandX(String name, Object value) {
 		return "\\newcommand{\\" + name + "}{" + value + "\\xspace}";
 	}
 	
+	/**
+	 * @return A Latex comment.
+	 */
 	private static String createComment(String text) {
 		return "% " + text;
 	}
@@ -508,7 +521,7 @@ public class NumberReportGenerator {
 		List<Integer> recognitionTimes = rq3rq4Report.getColumn(InconsistenciesLog.COL_TIME_RECOGNITION, Integer.class);
 		int recognitionRuntimeLessThenOneSecond = LogUtil.test(recognitionTimes, a -> a < 1000);
 		
-		return percentage(recognitionRuntimeLessThenOneSecond, recognitionTimes.size());
+		return percentage(recognitionRuntimeLessThenOneSecond, recognitionTimes.size()) + "\\%";
 	}
 
 	public static String complementRuntimeLowerBorder(LogTable manuallyEvaluated) {
