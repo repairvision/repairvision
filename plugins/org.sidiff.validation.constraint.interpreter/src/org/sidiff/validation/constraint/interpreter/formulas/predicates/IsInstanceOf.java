@@ -54,8 +54,9 @@ public class IsInstanceOf extends Predicate {
 			if (term.getValue() == null) {
 				result = false;
 			} else {
-				if (type instanceof EClass) {
-					result = (((EObject) term.getValue()).eClass() == type);
+				if ((type instanceof EClass) && (term.getValue() instanceof EObject)) {
+					result = (((EObject) term.getValue()).eClass() == type)
+							|| (((EObject) term.getValue()).eClass()).getESuperTypes().contains(type);
 				} else {
 					result = type.getInstanceClass().isInstance(term.getValue());
 				}
