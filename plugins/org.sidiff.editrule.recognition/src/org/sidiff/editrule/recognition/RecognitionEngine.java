@@ -34,13 +34,11 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 		matchingHelper = new RevisionGraph(revision);
 	}
 	
-	@Override
-	public RecognitionPattern createRecognitionPattern(Rule editRule) {
+	protected RecognitionPattern createRecognitionPattern(Rule editRule) {
 		return createRecognitionPattern(editRule, GraphpatternFactory.eINSTANCE.createGraphPattern());
 	}
 	
-	@Override
-	public RecognitionPattern createRecognitionPattern(Rule editRule, GraphPattern graphPattern) {
+	protected RecognitionPattern createRecognitionPattern(Rule editRule, GraphPattern graphPattern) {
 		
 		// Create Constraint-Satisfaction-Problem:
 		RecognitionPattern recognitionPattern = new RecognitionPattern(editRule, graphPattern);
@@ -50,7 +48,7 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 	
 	@Override
 	public RecognitionEngineMatcher createMatcher(
-			RecognitionPattern recognitionPattern,
+			Rule editRule,
 			ImpactAnalyzes impact,
 			ImpactScope resolvingScope,
 			ImpactScope overwriteScope,
@@ -60,6 +58,9 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 		if (!started) {
 			throw new RuntimeException("Call PartialEditRuleRecognizer start()!");
 		}
+		
+		// Create recognition pattern:
+		RecognitionPattern recognitionPattern = createRecognitionPattern(editRule);
 		
 		// Initialize change domains:
 		recognitionPattern.initialize(matchingHelper);
@@ -76,11 +77,14 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 	}
 
 	@Override
-	public RecognitionEngineMatcher createMatcher(RecognitionPattern recognitionPattern) {
+	public RecognitionEngineMatcher createMatcher(Rule editRule) {
 		
 		if (!started) {
 			throw new RuntimeException("Call PartialEditRuleRecognizer start()!");
 		}
+		
+		// Create recognition pattern:
+		RecognitionPattern recognitionPattern = createRecognitionPattern(editRule);
 		
 		// Initialize change domains:
 		recognitionPattern.initialize(matchingHelper);

@@ -1,4 +1,4 @@
-package org.sidiff.repair.complement.peo.finder.util;
+package org.sidiff.editrule.recognition.util.debug;
 
 public interface IRecognitionPatternSerializer {
 

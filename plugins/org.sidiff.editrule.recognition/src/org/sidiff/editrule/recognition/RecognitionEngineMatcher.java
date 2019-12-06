@@ -18,6 +18,8 @@ import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
 import org.sidiff.editrule.recognition.selection.MatchSelector;
 import org.sidiff.editrule.recognition.solver.PartialCSPSolver;
+import org.sidiff.editrule.recognition.util.debug.DebugUtil;
+import org.sidiff.editrule.recognition.util.debug.IRecognitionPatternSerializer;
 import org.sidiff.graphpattern.NodePattern;
 
 public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
@@ -33,6 +35,10 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	protected DependencyEvaluation dependencies;
 	
 	protected RecognitionEngineSettings settings;
+
+	protected IRecognitionPatternSerializer recognitionPatternSerializer = new IRecognitionPatternSerializer() {
+		public void saveRecognitionRule() {}
+	};
 	
 	public RecognitionEngineMatcher(
 			RecognitionEngine engine,
@@ -41,6 +47,9 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		
 		this.engine = engine;
 		this.recognitionPattern = recognitionPattern;
+		
+		// Save recognition-rule:
+		recognitionPatternSerializer.saveRecognitionRule();
 		
 		// Create matcher:
 		matchGenerator = new PartialCSPSolver();
@@ -114,9 +123,13 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	@Override
 	public List<RecognitionMatching> recognizeEditRule() {
 		
+		DebugUtil.printEditRule(recognitionPattern.getEditRule());
+		
 		LogTime matchingTimer = new LogTime();
 		matchGenerator.start();
 		matchingTimer.stop();
+		
+		DebugUtil.printRecognitionTime(matchingTimer);
 		
 		// Report matching:
 		if ((settings != null) && (settings.getMonitor().isLogging())) {
