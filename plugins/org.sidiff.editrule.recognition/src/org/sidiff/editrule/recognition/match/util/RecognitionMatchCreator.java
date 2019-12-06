@@ -1,4 +1,4 @@
-package org.sidiff.repair.complement.peo.finder;
+package org.sidiff.editrule.recognition.match.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +21,11 @@ import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.recognition.IMatching;
+import org.sidiff.editrule.recognition.match.RecognitionAttributeMatch;
+import org.sidiff.editrule.recognition.match.RecognitionEdgeMatch;
+import org.sidiff.editrule.recognition.match.RecognitionMatching;
+import org.sidiff.editrule.recognition.match.RecognitionNodeSingleMatch;
+import org.sidiff.editrule.recognition.match.RecognitionParameterMatch;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePatternAddObject;
@@ -31,14 +36,9 @@ import org.sidiff.editrule.recognition.pattern.graph.ChangePatternRemoveReferenc
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.history.revision.IRevision;
-import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
-import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
-import org.sidiff.repair.complement.matching.RecognitionMatch;
-import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
-import org.sidiff.repair.complement.matching.RecognitionParameterMatch;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
-public class Edit2RecognitionMatch {
+public class RecognitionMatchCreator {
 
 	/**
 	 * The revision between model A and B.
@@ -50,16 +50,22 @@ public class Edit2RecognitionMatch {
 	 */
 	private ImpactAnalyzes impact;
 	
-	public Edit2RecognitionMatch(IRevision revision, ImpactAnalyzes impact) {
+	/**
+	 * The recognition pattern of an edit rule.
+	 */
+	private RecognitionPattern recognitionPattern;
+	
+	public RecognitionMatchCreator(RecognitionPattern recognitionPattern, IRevision revision, ImpactAnalyzes impact) {
+		this.recognitionPattern = recognitionPattern;
 		this.revision = revision;
 		this.impact = impact;
 	}
 	
-	public Edit2RecognitionMatch(IRevision revision) {
-		this(revision, null);
+	public RecognitionMatchCreator(RecognitionPattern recognitionPattern, IRevision revision) {
+		this(recognitionPattern, revision, null);
 	}
 	
-	public List<Change> getChangeSet(RecognitionPattern recognitionPattern, IMatching matching) {
+	private List<Change> getChangeSet(IMatching matching) {
 		ArrayList<Change> changeSet = new ArrayList<>();
 		
 		for (NodePattern changeNodePattern : recognitionPattern.getChangeNodePatterns()) {
@@ -74,14 +80,14 @@ public class Edit2RecognitionMatch {
 		return changeSet;
 	}
 	
-	public List<RecognitionMatch> createEditRuleMatch(RecognitionPattern recognitionPattern, IMatching matching) {
+	public RecognitionMatching createEditRuleMatch(IMatching matching) {
 		Rule editRule = recognitionPattern.getEditRule();
 		
 		// NOTE: Consider attribute value overwrites only for full structural matchings.
 		boolean considerAttributeValueOverwrites = isFullStructuralMatching(matching);
 		
 		// Create edit-operation match:
-		List<RecognitionMatch> editRuleMatch = new ArrayList<>();
+		RecognitionMatching editRuleMatch = new RecognitionMatching(getChangeSet(matching));
 		Map<Parameter, RecognitionParameterMatch> parameters = new HashMap<>();
 		
 		// TODO: EO-Preserve-Nodes:

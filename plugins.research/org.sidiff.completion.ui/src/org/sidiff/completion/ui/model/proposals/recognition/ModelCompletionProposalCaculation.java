@@ -51,7 +51,7 @@ public class ModelCompletionProposalCaculation {
 		// Create complement finder:
 		if (isPotentialProposal()) {
 			complementFinder = complementFinderEngine.createComplementFinder(
-					editRule, currentImpactScope, overwriteImpactScope, 
+					editRule, impact, currentImpactScope, overwriteImpactScope, 
 					historicalImpactScope, new ComplementFinderSettings());
 		}
 	}

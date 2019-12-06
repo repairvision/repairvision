@@ -66,7 +66,7 @@ public class PEORepairCaculation {
 		// Create complement finder:
 		if (isPotentialRepair()) {
 			complementFinder = complementFinderEngine.createComplementFinder(
-					editRule, positiveImpactScope, overwriteImpactScope, 
+					editRule, impact, positiveImpactScope, overwriteImpactScope, 
 					negativeImpactScope, settings.getComplementFinderSettings());
 		}
 	}

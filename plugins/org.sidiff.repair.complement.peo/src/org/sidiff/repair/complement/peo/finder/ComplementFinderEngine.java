@@ -22,14 +22,14 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.editrule.recognition.RecognitionEngine;
 import org.sidiff.editrule.recognition.impact.ImpactScope;
+import org.sidiff.editrule.recognition.match.RecognitionAttributeMatch;
+import org.sidiff.editrule.recognition.match.RecognitionEdgeMatch;
+import org.sidiff.editrule.recognition.match.RecognitionMatch;
+import org.sidiff.editrule.recognition.match.RecognitionNodeSingleMatch;
+import org.sidiff.editrule.recognition.match.RecognitionParameterMatch;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.complement.construction.ComplementConstructor;
 import org.sidiff.repair.complement.construction.ComplementRule;
-import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
-import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
-import org.sidiff.repair.complement.matching.RecognitionMatch;
-import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
-import org.sidiff.repair.complement.matching.RecognitionParameterMatch;
 import org.sidiff.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.repair.complement.peo.impact.GraphActionImpactUtil;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
@@ -72,11 +72,6 @@ public class ComplementFinderEngine {
 	protected EGraph graphModelB;
 	
 	/**
-	 * Converts an recognition to an edit rule match.
-	 */
-	protected Edit2RecognitionMatch matchConverter;
-	
-	/**
 	 * Partial edit-rule recognition matcher.
 	 */
 	protected RecognitionEngine partialEditRuleRecognizer;
@@ -100,8 +95,6 @@ public class ComplementFinderEngine {
 		this.partialEditRuleRecognizer.initialize(revision);
 		this.partialEditRuleRecognizer.start();
 		
-		this.matchConverter = new Edit2RecognitionMatch(revision, impact);
-		
 		this.complementConstructor = new ComplementConstructor();
 		this.engine = new EngineImpl();
 	}
@@ -116,11 +109,10 @@ public class ComplementFinderEngine {
 		return partialEditRuleRecognizer;
 	}
 	
-	public ComplementFinder createComplementFinder(Rule editRule, 
-			ImpactScope resolvingScope, ImpactScope overwriteScope,
-			ImpactScope introducingScope, ComplementFinderSettings settings) {
-		
-		return new ComplementFinder(this, editRule, resolvingScope, overwriteScope, introducingScope, settings);
+	public ComplementFinder createComplementFinder(Rule editRule, ImpactAnalyzes impact, ImpactScope resolvingScope,
+			ImpactScope overwriteScope, ImpactScope introducingScope, ComplementFinderSettings settings) {
+
+		return new ComplementFinder(this, editRule, impact, resolvingScope, overwriteScope, introducingScope, settings);
 	}
 	
 	public List<Match> findComplementMatches(ComplementRule complementRule) {
@@ -343,9 +335,5 @@ public class ComplementFinderEngine {
 	
 	public ComplementConstructor getComplementConstructor() {
 		return complementConstructor;
-	}
-	
-	public Edit2RecognitionMatch getMatchConverter() {
-		return matchConverter;
 	}
 }

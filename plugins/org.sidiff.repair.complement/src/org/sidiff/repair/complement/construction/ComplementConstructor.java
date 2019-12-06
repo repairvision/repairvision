@@ -31,15 +31,15 @@ import org.sidiff.common.logging.LogUtil;
 import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.sidiff.consistency.common.java.JUtil;
-import org.sidiff.difference.symmetric.Change;
+import org.sidiff.editrule.recognition.match.RecognitionAttributeMatch;
+import org.sidiff.editrule.recognition.match.RecognitionEdgeMatch;
+import org.sidiff.editrule.recognition.match.RecognitionMatch;
+import org.sidiff.editrule.recognition.match.RecognitionMatching;
+import org.sidiff.editrule.recognition.match.RecognitionNodeMatch;
+import org.sidiff.editrule.recognition.match.RecognitionNodeMultiMatch;
+import org.sidiff.editrule.recognition.match.RecognitionNodeSingleMatch;
+import org.sidiff.editrule.recognition.match.RecognitionParameterMatch;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
-import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
-import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
-import org.sidiff.repair.complement.matching.RecognitionMatch;
-import org.sidiff.repair.complement.matching.RecognitionNodeMatch;
-import org.sidiff.repair.complement.matching.RecognitionNodeMultiMatch;
-import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
-import org.sidiff.repair.complement.matching.RecognitionParameterMatch;
 import org.sidiff.repair.complement.util.ComplementUtil;
 
 /**
@@ -58,12 +58,12 @@ public class ComplementConstructor {
 	 *         source-rule or <code>null</code> if the complement-rule could not
 	 *         be constructed (e.g. dangling edges, no remaining changes).
 	 */
-	public ComplementRule createComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch, List<Change> recognizedChangeSet) {
+	public ComplementRule createComplementRule(Rule recognizedRule, RecognitionMatching recognitionMatch) {
 
 		long deriveComplements = System.currentTimeMillis();
 		
 		// Derive complement rule:
-		ComplementRule complement = deriveComplementRule(recognizedRule, recognitionMatch, recognizedChangeSet); 
+		ComplementRule complement = deriveComplementRule(recognizedRule, recognitionMatch); 
 		
 		if (DebugUtil.statistic) {
 			System.out.println("########## Derive Complement: " + (System.currentTimeMillis() - deriveComplements) + "ms");
@@ -72,14 +72,14 @@ public class ComplementConstructor {
 		return complement;
 	}
 	
-	protected ComplementRule deriveComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch, List<Change> recognizedChangeSeth) {
+	protected ComplementRule deriveComplementRule(Rule recognizedRule, RecognitionMatching recognitionMatch) {
 
 		// Create copy of the source rule:
 		Map<EObject, EObject> copyTrace = ModelingUtil.deepCopy(recognizedRule);
 		Rule complementRule = (Rule) copyTrace.get(recognizedRule);
 
 		// Initialize complement rule:
-		ComplementRule complement = new ComplementRule(recognizedRule, recognitionMatch, recognizedChangeSeth, complementRule);
+		ComplementRule complement = new ComplementRule(recognizedRule, recognitionMatch, complementRule);
 
 		// Save trace [Source -> Complement]:
 		for (Node sourceNode : recognizedRule.getLhs().getNodes()) {

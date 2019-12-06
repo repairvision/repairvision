@@ -2,13 +2,15 @@ package org.sidiff.editrule.recognition;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.List;
 
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
 import org.sidiff.editrule.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.editrule.recognition.impact.ImpactScopeConstraint;
+import org.sidiff.editrule.recognition.match.RecognitionMatching;
+import org.sidiff.editrule.recognition.match.util.RecognitionMatchCreator;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
@@ -32,7 +34,11 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	protected RecognitionEngineSettings settings;
 	
-	public RecognitionEngineMatcher(RecognitionEngine engine, RecognitionPattern recognitionPattern) {
+	public RecognitionEngineMatcher(
+			RecognitionEngine engine,
+			RecognitionPattern recognitionPattern,
+			RecognitionMatchCreator matchCreator) {
+		
 		this.engine = engine;
 		this.recognitionPattern = recognitionPattern;
 		
@@ -44,6 +50,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		matchGenerator.initialize(
 				recognitionPattern.getChangeNodePatterns(),
 				matchSelector,
+				matchCreator,
 				dependencies,
 				ImpactScopeConstraint.DUMMY,
 				ImpactScopeConstraint.DUMMY,
@@ -54,6 +61,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	public RecognitionEngineMatcher(
 			RecognitionPattern recognitionPattern,
+			RecognitionMatchCreator matchCreator,
 			ImpactScope resolvingScope,
 			ImpactScope overwriteScope,
 			ImpactScope introducingScope,
@@ -90,6 +98,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		matchGenerator.initialize(
 				recognitionPattern.getChangeNodePatterns(),
 				matchSelector,
+				matchCreator,
 				dependencies,
 				resolvingScopeConstraint,
 				overwriteScopeConstraint,
@@ -103,7 +112,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	}
 	
 	@Override
-	public Iterator<IMatching> recognizeEditRule() {
+	public List<RecognitionMatching> recognizeEditRule() {
 		
 		LogTime matchingTimer = new LogTime();
 		matchGenerator.start();

@@ -5,11 +5,13 @@ import org.sidiff.consistency.common.designpatterns.IAlgorithm;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
 import org.sidiff.editrule.recognition.impact.ImpactScope;
+import org.sidiff.editrule.recognition.match.util.RecognitionMatchCreator;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.revision.RevisionGraph;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 /**
  * @author Manuel Ohrndorf
@@ -49,6 +51,7 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 	@Override
 	public RecognitionEngineMatcher createMatcher(
 			RecognitionPattern recognitionPattern,
+			ImpactAnalyzes impact,
 			ImpactScope resolvingScope,
 			ImpactScope overwriteScope,
 			ImpactScope introducingScope,
@@ -63,7 +66,13 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 //		System.out.println("Initial Domains: \n\n" + StringUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		
 		// Create matcher:
-		return new RecognitionEngineMatcher(recognitionPattern, resolvingScope, overwriteScope, introducingScope, settings);
+		return new RecognitionEngineMatcher(
+				recognitionPattern,
+				new RecognitionMatchCreator(recognitionPattern, matchingHelper.getRevision(), impact),
+				resolvingScope, 
+				overwriteScope,
+				introducingScope,
+				settings);
 	}
 
 	@Override
@@ -78,7 +87,10 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 //		System.out.println("Initial Domains: \n\n" + StringUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		
 		// Create matcher:
-		return new RecognitionEngineMatcher(this, recognitionPattern);
+		return new RecognitionEngineMatcher(
+				this, 
+				recognitionPattern,
+				new RecognitionMatchCreator(recognitionPattern, matchingHelper.getRevision()));
 	}
 	
 	@Override

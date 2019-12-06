@@ -1,4 +1,4 @@
-package org.sidiff.repair.complement.matching;
+package org.sidiff.editrule.recognition.match;
 
 import java.util.List;
 

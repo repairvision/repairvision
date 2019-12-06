@@ -1,24 +1,27 @@
 package org.sidiff.editrule.recognition.solver;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.editrule.recognition.impact.ImpactScopeConstraint;
+import org.sidiff.editrule.recognition.match.RecognitionMatching;
+import org.sidiff.editrule.recognition.match.util.RecognitionMatchCreator;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.editrule.recognition.selection.IMatchSelector;
@@ -43,10 +46,48 @@ public class PartialCSPSolver {
 
 	private Map<NodePattern, Variable> nodeToVariables = new HashMap<>();
 
-	private List<EObject[]> results;
+	// -------------------------------------------------
 	
-	private List<Integer> resultsSize;
+	private RecognitionMatchCreator matchCreator;
 
+	private List<RecognitionMatching> matchings;
+	
+	private IMatching matchingAdapter = new IMatching() {
+		
+		@Override
+		public boolean isPartialMatching() {
+			return isPartialAssignment();
+		}
+		
+		@Override
+		public Collection<NodePattern> getNodes() {
+			return nodeToVariables.keySet();
+		}
+		
+		@Override
+		public Iterator<EObject> getMatch(NodePattern node) {
+			return JUtil.singeltonIterator(getFirstMatch(node));
+		}
+		
+		@Override
+		public EObject getFirstMatch(NodePattern node) {
+			
+			// TODO: Indexed solution:
+			Variable variable = nodeToVariables.get(node);
+			
+			for (int i = 0; i < assignments.size(); i++) {
+				Variable assignedVariable = subVariables.get(i);
+				
+				if (assignedVariable == variable) {
+					EObject value = assignments.get(i);
+					return value;
+				}
+			}
+			
+			return null;
+		}
+	};
+	
 	// -------------------------------------------------
 
 	private VariableSet remainingVariables;
@@ -208,8 +249,9 @@ public class PartialCSPSolver {
 	}
 
 	public void initialize(
-			List<NodePattern> variableNodes, 
+			List<NodePattern> variableNodes,
 			IMatchSelector matchSelector,
+			RecognitionMatchCreator matchCreator,
 			DependencyEvaluation dependencies,
 			ImpactScopeConstraint resolvingScope,
 			ImpactScopeConstraint overwriteScope,
@@ -218,6 +260,7 @@ public class PartialCSPSolver {
 		// evaluation:
 		this.variableNodes = variableNodes;
 		this.matchSelector = matchSelector;
+		this.matchCreator = matchCreator;
 		
 		// constraints:
 		this.dependencies = dependencies;
@@ -227,6 +270,8 @@ public class PartialCSPSolver {
 
 		assignments = new Stack<EObject>(variableNodes.size());
 		assigned = new HashSet<>();
+		
+		matchings = new ArrayList<>();
 
 		// dependencies:
 		dependencies.start();
@@ -263,8 +308,6 @@ public class PartialCSPSolver {
 	}
 
 	private void findAssignments() {
-		results = new ArrayList<>();
-		resultsSize = new ArrayList<>();
 		assignments.reset();
 
 		LogTime matchingTimer = new LogTime();
@@ -274,7 +317,7 @@ public class PartialCSPSolver {
 		matchingTimer.stop();
 		DebugUtil.printMatchingTime(matchingTimer);
 		DebugUtil.printFalsePositives(falsePositives);
-		DebugUtil.printFoundMatchings(results.size());
+		DebugUtil.printFoundMatchings(matchings.size());
 	}
 
 	private int pickAndAppendVariable() {
@@ -515,43 +558,11 @@ public class PartialCSPSolver {
 	}
 
 	private void storeAssignment() {
-		EObject[] assignments = new EObject[variableNodes.size()];
-		results.add(assignments);
-		resultsSize.add(this.assignments.size());
-		
-		assert (results.size() == resultsSize.size());
-
-		for (int i = 0; i < this.assignments.size(); i++) {
-			Variable variable = subVariables.get(i);
-			EObject value = this.assignments.get(i);
-
-			assert (variable.node.getType() == value.eClass());
-			assignments[variable.index] = value;
-		}
+		matchings.add(matchCreator.createEditRuleMatch(matchingAdapter));
 	}
 
-	public Iterator<IMatching> getResults() {
-		return new Iterator<IMatching>() {
-
-			private Iterator<EObject[]> assignmentIterator = results.listIterator();
-			
-			private Iterator<Integer> assignmentSizeIterator = resultsSize.listIterator();
-
-			@Override
-			public boolean hasNext() {
-				return assignmentIterator.hasNext();
-			}
-
-			@Override
-			public IMatching next() {
-				if (hasNext()) {
-					return new VariableMatching(nodeToVariables, variableNodes,
-							assignmentIterator.next(), assignmentSizeIterator.next());
-				} else {
-					throw new NoSuchElementException();
-				}
-			}
-		};
+	public List<RecognitionMatching> getResults() {
+		return matchings;
 	}
 
 	/**

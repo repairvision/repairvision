@@ -1,4 +1,4 @@
-package org.sidiff.repair.complement.matching;
+package org.sidiff.editrule.recognition.match;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;

@@ -6,6 +6,7 @@ import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 public interface IRecognitionEngine {
 
@@ -21,10 +22,12 @@ public interface IRecognitionEngine {
 	
 	IRecognitionEngineMatcher createMatcher(
 			RecognitionPattern recognitionPattern,
+			ImpactAnalyzes impact,
 			ImpactScope resolvingScope,
 			ImpactScope overwriteScope,
 			ImpactScope introducingScope,
 			RecognitionEngineSettings settings);
 
-	IRecognitionEngineMatcher createMatcher(RecognitionPattern recognitionPattern);
+	IRecognitionEngineMatcher createMatcher(
+			RecognitionPattern recognitionPattern);
 }
