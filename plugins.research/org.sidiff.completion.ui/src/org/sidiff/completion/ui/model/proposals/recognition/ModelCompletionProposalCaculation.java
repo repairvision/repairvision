@@ -83,20 +83,7 @@ public class ModelCompletionProposalCaculation {
 								complement.getRecognizedChanges(),
 								complement.getRecognitionMatch())) {
 							
-							List<Match> complementMatches = complementFinderEngine.findComplementMatches(complement);
-							List<Match> proposalMatches = new ArrayList<>(complementMatches.size());
-							
-							for (Match complementMatch : complementMatches) {
-								
-								// Filter complement by real impact:
-								if (GraphActionImpactUtil.real(
-										impact.getCurrentImpactAnalysis(), 
-										complement.getComplementingChanges(), 
-										complementMatch)) {
-									
-									proposalMatches.add(complementMatch);
-								}
-							}
+							List<Match> proposalMatches = complementFinderEngine.findComplementMatches(complement);
 							
 							if (!proposalMatches.isEmpty()) {
 								proposals.add(new ModelCompletionProposal(complement, proposalMatches));

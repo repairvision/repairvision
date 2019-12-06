@@ -1,4 +1,4 @@
-package org.sidiff.editrule.recognition.generator;
+package org.sidiff.editrule.recognition.solver;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,11 +18,11 @@ import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.dependencies.DependencyEvaluation;
-import org.sidiff.editrule.recognition.generator.util.Stack;
 import org.sidiff.editrule.recognition.impact.ImpactScopeConstraint;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.editrule.recognition.selection.IMatchSelector;
+import org.sidiff.editrule.recognition.solver.util.Stack;
 import org.sidiff.editrule.recognition.util.debug.DebugUtil;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.NodePattern;
@@ -33,7 +33,7 @@ import org.sidiff.graphpattern.NodePattern;
  * 
  * @author Manuel Ohrndorf
  */
-public class PartialMatchGenerator {
+public class PartialCSPSolver {
 
 	/**
 	 * The nodes which correspond to the matching formula:

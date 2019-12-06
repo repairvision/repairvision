@@ -13,6 +13,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.editrule.recognition.dependencies.ChangeDependencies;
 import org.sidiff.editrule.recognition.pattern.graph.ActionAttributeConstraint;
 import org.sidiff.editrule.recognition.pattern.graph.ActionAttributeConstraintConstant;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
@@ -50,8 +51,13 @@ public class RecognitionPattern {
 	public RecognitionPattern(Rule editRule, GraphPattern recognitionPattern) {
 		this.editRule = editRule;
 		this.recognitionPattern = recognitionPattern; 
-		
+
+		// Generate recognition pattern:
 		generateRecognitionPattern();
+		
+		// Create dependency graph:
+		// TODO: Support for additional EOpposites per meta-model!
+		new ChangeDependencies(editRule, this).calculateDependencyGraph();
 	}
 	
 	/**

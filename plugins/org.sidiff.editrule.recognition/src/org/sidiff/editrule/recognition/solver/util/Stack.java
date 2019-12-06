@@ -1,4 +1,4 @@
-package org.sidiff.editrule.recognition.generator.util;
+package org.sidiff.editrule.recognition.solver.util;
 
 import java.util.Arrays;
 import java.util.Iterator;

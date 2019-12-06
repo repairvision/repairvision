@@ -1,4 +1,4 @@
-package org.sidiff.editrule.recognition.generator;
+package org.sidiff.editrule.recognition.solver;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

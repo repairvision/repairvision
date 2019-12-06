@@ -6,10 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.sidiff.editrule.recognition.generator.Variable;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
 import org.sidiff.editrule.recognition.selection.MatchSelectorMonitor;
+import org.sidiff.editrule.recognition.solver.Variable;
 import org.sidiff.graphpattern.NodePattern;
 
 public class RecognitionEngineRecorder {

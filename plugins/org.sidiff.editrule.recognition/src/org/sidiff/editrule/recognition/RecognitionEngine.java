@@ -4,7 +4,6 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.designpatterns.IAlgorithm;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
-import org.sidiff.editrule.recognition.dependencies.ChangeDependencies;
 import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.util.MatchingHelper;
@@ -43,10 +42,6 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 		
 		// Create Constraint-Satisfaction-Problem:
 		RecognitionPattern recognitionPattern = new RecognitionPattern(editRule, graphPattern);
-		
-		// Create dependency graph:
-		// TODO: Support for additional EOpposites per meta-model!
-		new ChangeDependencies(editRule, recognitionPattern).calculateDependencyGraph();
 		
 		return recognitionPattern;
 	}

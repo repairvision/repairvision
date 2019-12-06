@@ -7,7 +7,6 @@ import java.util.Iterator;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
 import org.sidiff.editrule.recognition.dependencies.DependencyEvaluation;
-import org.sidiff.editrule.recognition.generator.PartialMatchGenerator;
 import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.editrule.recognition.impact.ImpactScopeConstraint;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
@@ -16,6 +15,7 @@ import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
 import org.sidiff.editrule.recognition.selection.MatchSelector;
+import org.sidiff.editrule.recognition.solver.PartialCSPSolver;
 import org.sidiff.graphpattern.NodePattern;
 
 public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
@@ -24,7 +24,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	protected RecognitionPattern recognitionPattern; 
 	
-	protected PartialMatchGenerator matchGenerator;
+	protected PartialCSPSolver matchGenerator;
 	
 	protected MatchSelector matchSelector;
 	
@@ -37,7 +37,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		this.recognitionPattern = recognitionPattern;
 		
 		// Create matcher:
-		matchGenerator = new PartialMatchGenerator();
+		matchGenerator = new PartialCSPSolver();
 		matchSelector = new MatchSelector(recognitionPattern);
 		
 		dependencies = new DependencyEvaluation(recognitionPattern.getGraphPattern());
@@ -86,7 +86,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		matchSelector = new MatchSelector(recognitionPattern);
 		
 		// Create CSP-Matcher:
-		matchGenerator = new PartialMatchGenerator();
+		matchGenerator = new PartialCSPSolver();
 		matchGenerator.initialize(
 				recognitionPattern.getChangeNodePatterns(),
 				matchSelector,

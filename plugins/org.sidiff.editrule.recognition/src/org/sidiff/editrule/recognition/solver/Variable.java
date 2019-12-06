@@ -1,4 +1,4 @@
-package org.sidiff.editrule.recognition.generator;
+package org.sidiff.editrule.recognition.solver;
 
 import org.sidiff.graphpattern.NodePattern;
 
