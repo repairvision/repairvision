@@ -13,7 +13,7 @@ import java.util.Stack;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.editrule.recognition.util.MatchingHelper;
+import org.sidiff.editrule.recognition.revision.RevisionGraph;
 import org.sidiff.graphpattern.Matching;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.impl.MatchingImpl;
@@ -34,7 +34,7 @@ public class Domain extends MatchingImpl {
 	// FIXME: Use modCount of Hash-Map!?
 //	protected boolean modified;
 	
-	protected MatchingHelper matchingHelper;
+	protected RevisionGraph matchingHelper;
 	
 	public enum SelectionType {
 		
@@ -65,7 +65,7 @@ public class Domain extends MatchingImpl {
 //		this.size = 0;
 	}
 	
-	public void initialize(MatchingHelper matchingHelper) {
+	public void initialize(RevisionGraph matchingHelper) {
 		initialize();
 		this.matchingHelper = matchingHelper;
 	}

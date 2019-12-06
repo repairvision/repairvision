@@ -7,12 +7,12 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
-import org.sidiff.editrule.recognition.util.MatchingHelper;
+import org.sidiff.editrule.recognition.revision.RevisionGraph;
 import org.sidiff.graphpattern.NodePattern;
 
 public class RecognitionPatternInitializer {
 
-	public static void initializeRecognitionPattern(RecognitionPattern recognitionPattern,  MatchingHelper matchingHelper) {
+	public static void initializeRecognitionPattern(RecognitionPattern recognitionPattern,  RevisionGraph matchingHelper) {
 		
 		// Initialization as command -> support for graph patterns from editors:
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(recognitionPattern.getGraphPattern());
@@ -36,12 +36,12 @@ public class RecognitionPatternInitializer {
 		}
 	}
 	
-	private static void internal_initializeRecognitionPattern(RecognitionPattern recognitionPattern, MatchingHelper matchingHelper) {
+	private static void internal_initializeRecognitionPattern(RecognitionPattern recognitionPattern, RevisionGraph matchingHelper) {
 		initializeDomains(recognitionPattern, matchingHelper);
 		initializeChangePatterns(recognitionPattern, matchingHelper);
 	}
 	
-	private static void initializeDomains(RecognitionPattern recognitionPattern, MatchingHelper matchingHelper) {
+	private static void initializeDomains(RecognitionPattern recognitionPattern, RevisionGraph matchingHelper) {
 		for (NodePattern node : recognitionPattern.getGraphNodePatterns()) {
 			initializeEvaluation(node, matchingHelper);
 		}
@@ -50,13 +50,13 @@ public class RecognitionPatternInitializer {
 		}
 	}
 	
-	private static void initializeEvaluation(NodePattern nodePattern, MatchingHelper matchingHelper) {
+	private static void initializeEvaluation(NodePattern nodePattern, RevisionGraph matchingHelper) {
 		Domain domain = new Domain();
 		nodePattern.setMatching(domain);
 		domain.initialize(matchingHelper);
 	}
 	
-	private static void initializeChangePatterns(RecognitionPattern recognitionPattern, MatchingHelper matchingHelper) {
+	private static void initializeChangePatterns(RecognitionPattern recognitionPattern, RevisionGraph matchingHelper) {
 		
 		for (NodePattern changeNodePattern : recognitionPattern.getChangeNodePatterns()) {
 			ChangePattern changePattern = recognitionPattern.getChangePattern(changeNodePattern);

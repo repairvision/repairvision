@@ -1,4 +1,4 @@
-package org.sidiff.editrule.recognition.util;
+package org.sidiff.editrule.recognition.revision;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,7 +15,7 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.history.revision.IRevision;
 
-public class MatchingHelper {
+public class RevisionGraph {
 
 	private IRevision revision;
 	
@@ -25,7 +25,7 @@ public class MatchingHelper {
 	 * @param crossReferencer
 	 *            The generic or domain specific cross-reference calculator.
 	 */
-	public MatchingHelper(IRevision revision) {
+	public RevisionGraph(IRevision revision) {
 		this.revision = revision;
 	}
 	

@@ -15,7 +15,7 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.editrule.recognition.util.MatchingHelper;
+import org.sidiff.editrule.recognition.revision.RevisionGraph;
 import org.sidiff.repair.complement.matching.RecognitionAttributeMatch;
 import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
 import org.sidiff.repair.complement.matching.RecognitionMatch;
@@ -41,7 +41,7 @@ public class GraphActionImpactUtil {
 			if (change instanceof Edge) {
 				EReference referenceType = ((Edge) change).getType();
 				EClass sourceContextType = ((Edge) change).getSource().getType();
-				boolean strictContextType = MatchingHelper.isStrictMatchingType(((Edge) change).getSource());
+				boolean strictContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getSource());
 					
 				// Delete:
 				if (change.getGraph().isLhs()) {
@@ -52,7 +52,7 @@ public class GraphActionImpactUtil {
 					// Repair which deletes the root element of a validation:
 					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
 						EClass targetContextType = ((Edge) change).getTarget().getType();
-						boolean strictTargetContextType = MatchingHelper.isStrictMatchingType(((Edge) change).getTarget());
+						boolean strictTargetContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getTarget());
 
 						if (impact.onDelete(targetContextType, referenceType, strictTargetContextType)) {
 							return true;
@@ -75,7 +75,7 @@ public class GraphActionImpactUtil {
 			else if (change instanceof Attribute) {
 				EAttribute attributeType = ((Attribute) change).getType();
 				EClass contextType = ((Attribute) change).getNode().getType();
-				boolean strictContextType = MatchingHelper.isStrictMatchingType(((Attribute) change).getNode());
+				boolean strictContextType = RevisionGraph.isStrictMatchingType(((Attribute) change).getNode());
 				
 				if (impact.onModify(contextType, attributeType, strictContextType)) {
 					return true;

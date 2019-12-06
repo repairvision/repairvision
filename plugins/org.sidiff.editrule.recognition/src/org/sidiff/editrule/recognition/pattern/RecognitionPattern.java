@@ -20,7 +20,7 @@ import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
 import org.sidiff.editrule.recognition.pattern.graph.ActionGraph;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
-import org.sidiff.editrule.recognition.util.MatchingHelper;
+import org.sidiff.editrule.recognition.revision.RevisionGraph;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 
@@ -67,7 +67,7 @@ public class RecognitionPattern {
 	 * @param changeIndex
 	 * @param changeDomainMap
 	 */
-	public void initialize(MatchingHelper matchingHelper) {
+	public void initialize(RevisionGraph matchingHelper) {
 		actionGraph.initialize(matchingHelper);
 		RecognitionPatternInitializer.initializeRecognitionPattern(this, matchingHelper);
 	}

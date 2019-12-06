@@ -6,7 +6,7 @@ import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
 import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
-import org.sidiff.editrule.recognition.util.MatchingHelper;
+import org.sidiff.editrule.recognition.revision.RevisionGraph;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.history.revision.IRevision;
@@ -25,11 +25,11 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 	
 //	protected MergeImports mergeImports;
 	
-	protected MatchingHelper matchingHelper;
+	protected RevisionGraph matchingHelper;
 	
 	@Override
 	public void initialize(IRevision revision) {
-		matchingHelper = new MatchingHelper(revision);
+		matchingHelper = new RevisionGraph(revision);
 	}
 	
 	@Override
