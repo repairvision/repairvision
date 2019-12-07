@@ -3,12 +3,8 @@ package org.sidiff.repair.complement.peo.finder;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EGraph;
@@ -16,10 +12,14 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.model.Action.Type;
+import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.editrule.recognition.RecognitionEngine;
 import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.editrule.recognition.match.RecognitionAttributeMatch;
@@ -31,6 +31,8 @@ import org.sidiff.history.revision.IRevision;
 import org.sidiff.repair.complement.construction.ComplementConstructor;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.peo.configuration.ComplementFinderSettings;
+import org.sidiff.repair.complement.peo.finder.henshin.ComplementEngine;
+import org.sidiff.repair.complement.peo.finder.henshin.HenshinRuleStructureSorting;
 import org.sidiff.repair.complement.peo.impact.GraphActionImpactUtil;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
@@ -42,10 +44,6 @@ import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
  */
 public class ComplementFinderEngine {
 	
-	protected boolean EXPERIMENTAL = false;
-	
-	protected boolean EXPERIMENTAL_COMPARE = false;
-
 	/**
 	 * Derives the (Henshin) complement rule based on a CPEO.
 	 */
@@ -55,6 +53,11 @@ public class ComplementFinderEngine {
 	 * The (Henshin) engine which applies the rules.
 	 */
 	protected EngineImpl engine;
+	
+	/**
+	 * Optimize Henshin CSP search plan by custom sorting of nodes to be matched:
+	 */
+	protected boolean useCustomHenshinNodeSorting = true;
 	
 	/**
 	 * The revision which introduces an inconsistency.
@@ -96,7 +99,7 @@ public class ComplementFinderEngine {
 		this.partialEditRuleRecognizer.start();
 		
 		this.complementConstructor = new ComplementConstructor();
-		this.engine = new EngineImpl();
+		this.engine = new ComplementEngine(!useCustomHenshinNodeSorting);
 	}
 
 	public void finish() {
@@ -119,7 +122,39 @@ public class ComplementFinderEngine {
 
 		// Create complement pre-match by partial source-rule match:
 		Match complementMatch = new MatchImpl(complementRule.getComplementRule());
+		
+		createComplementPreMatch(complementRule, complementMatch);
+		checkForUnambiguousRepairContext(complementRule, complementMatch);
+		
+		// Check context rule (with restricted working graph):
+		ArrayList<Match> complementPreMatches = new ArrayList<>();
+		
+		// FIXME WORKAROUND: This should be done by Henshin!
+		for (Parameter parameter : complementMatch.getRule().getParameters()) {
+			Object value = complementMatch.getParameterValue(parameter);
+			engine.getScriptEngine().put(parameter.getName(), value);
+		}
 
+		// Optimize Henshin CSP search plan by sorting the nodes to be matched:
+		if (useCustomHenshinNodeSorting) {
+			HenshinRuleStructureSorting.sort(complementRule.getComplementRule(), complementMatch);
+		}
+
+		// Start complement matching:
+		LogTime complementMatching = new LogTime();
+		complementMatching.start();
+		
+		findMatches(complementRule, complementMatch, complementPreMatches);
+		
+		complementMatching.stop();
+		System.out.println("Re.Vision[Complement Time]: " + complementMatching + "ms");
+		
+		complementPreMatches.trimToSize();
+		return complementPreMatches;
+	}
+
+	private void createComplementPreMatch(ComplementRule complementRule, Match complementMatch) {
+		
 		// Get change context as pre-match:
 		for (RecognitionMatch sourceRuleMatch : complementRule.getRecognitionMatch()) {
 
@@ -179,42 +214,71 @@ public class ComplementFinderEngine {
 
 			// NOTE: Ignore EditRuleNodeMulitMatches... only unique context!
 		}
+	}
+	
+	// TODO: Check the repair impact as user defined constraint in the Henshin CSP.  
+	private void checkForUnambiguousRepairContext(ComplementRule complementRule, Match complementMatch) {
+		ImpactAnalysis currentImpactAnalysis = impact.getCurrentImpactAnalysis();
+		ImpactScope currentImpactScope = new ImpactScope(complementRule.getComplementingChanges(), currentImpactAnalysis);
+
+		Node repairContext = null;
+		EObject repairContextElement = null;
 		
-		// Check context rule (with restricted working graph):
-		ArrayList<Match> complementPreMatches = new ArrayList<>();
-		
-		// FIXME WORKAROUND: This should be done by Henshin!
-		for (Parameter parameter : complementMatch.getRule().getParameters()) {
-			Object value = complementMatch.getParameterValue(parameter);
-			engine.getScriptEngine().put(parameter.getName(), value);
-		}
-		
-		// TODO: Instead of searching all matches, just filter the domain values of the parameters.
-		if (EXPERIMENTAL) {
-			findParameterMatches(complementRule, complementMatch, complementPreMatches);
-			
-			if (EXPERIMENTAL_COMPARE) {
-				complementPreMatches.clear();
-				findMatches(complementRule, complementMatch, complementPreMatches);
+		for (GraphElement graphElement : currentImpactScope.getChanges()) {
+			if (currentImpactScope.get(graphElement).size() == 1) {
+				EObject repairScopeElement = currentImpactScope.get(graphElement).get(0);
+				
+				if (graphElement instanceof Edge) {
+					Node source = ChangePatternUtil.getLHS(((Edge) graphElement).getSource());
+					
+					if (source != null) {
+						if ((repairContext == null) && (repairContextElement == null)) {
+							repairContext = source;
+							repairContextElement = repairScopeElement;
+						} else {
+							if ((repairContext != source) && (repairContextElement != repairScopeElement)) {
+
+								// Ambiguous context!
+								repairContext = null;
+								repairContextElement = null;
+								break;
+							}
+						}
+					}
+				} else if (graphElement instanceof Attribute) {
+					Node container = ChangePatternUtil.getLHS(((Attribute) graphElement).getNode());
+					
+					if (container != null) {
+						if ((repairContext == null) && (repairContextElement == null)) {
+							repairContext = container;
+							repairContextElement = repairScopeElement;
+						}
+					} else {
+						if ((repairContext != container) && (repairContextElement != repairScopeElement)) {
+
+							// Ambiguous context!
+							repairContext = null;
+							repairContextElement = null;
+							break;
+						}
+					}
+				}
 			}
-		} else {
-			findMatches(complementRule, complementMatch, complementPreMatches);
 		}
 		
-		complementPreMatches.trimToSize();
-		return complementPreMatches;
+		if ((repairContext != null) && (repairContextElement != null)) {
+			complementMatch.setNodeTarget(repairContext, repairContextElement);
+		}
 	}
 	
 	private void findMatches(ComplementRule complementRule, Match complementMatch, ArrayList<Match> complementPreMatches) {
-		long startTime = System.currentTimeMillis();
-		
 		Iterator<Match> matchFinder = engine.findMatches(
 				complementRule.getComplementRule(), graphModelB, complementMatch).iterator();
 		
 		ImpactAnalysis currentImpactAnalysis = impact.getCurrentImpactAnalysis();
 		List<GraphElement> complementChanges = complementRule.getComplementingChanges();
 		
-//		while (matchFinder.hasNext() && (complementPreMatches.size() < 1000)) {
+//		while (matchFinder.hasNext() && (complementPreMatches.size() < 1)) {
 		while (matchFinder.hasNext()) {
 			Match nextMatch = matchFinder.next();
 			
@@ -223,94 +287,6 @@ public class ComplementFinderEngine {
 				complementPreMatches.add(nextMatch);
 			}
 		}
-		
-		long stopTime = System.currentTimeMillis();
-		
-		if (EXPERIMENTAL_COMPARE) {
-			System.err.println("RUNTIME (LHS Matches): " + (stopTime - startTime) + "ms");
-		}
-	}
-
-	private void findParameterMatches(ComplementRule complementRule, Match complementMatch, ArrayList<Match> complementPreMatches) {
-		long startTime = System.currentTimeMillis();
-		
-		// TODO: Slower for UML: TheGenericTypeAssociatedWithTheClassifier... !?
-		Rule complement = complementRule.getComplementRule();
-		Map<Node, Set<EObject>> parameterDomains = new LinkedHashMap<>();
-		
-		for (Parameter parameter : complement.getParameters()) {
-			Node lhsParameterBoundNode = complement.getLhs().getNode(parameter.getName());
-			EObject matchElement = complementMatch.getNodeTarget(lhsParameterBoundNode);
-			
-			if ((lhsParameterBoundNode != null) && (matchElement == null)) {
-				Set<EObject> parameterDomain = new HashSet<>();
-				parameterDomains.put(lhsParameterBoundNode, parameterDomain);
-				
-				// TODO: Disable engine sorting...
-				// NOTE: Move the node to the end of the LHS node list to be the 
-				//       first node that will be changed after the first match is found.
-				complement.getLhs().getNodes().move(complement.getLhs().getNodes().size() - 1, lhsParameterBoundNode);
-			}
-		}
-		
-		ImpactAnalysis currentImpactAnalysis = impact.getCurrentImpactAnalysis();
-		List<GraphElement> complementChanges = complementRule.getComplementingChanges();
-		
-		for (Node lhsParameterBoundNode : parameterDomains.keySet()) {
-			if (complementMatch.getNodeTarget(lhsParameterBoundNode) == null) {
-				List<EObject> nodeDomain = graphModelB.getDomain(lhsParameterBoundNode.getType(), false);
-				
-				for (EObject value : nodeDomain) {
-					if (!parameterDomains.get(lhsParameterBoundNode).contains(value)) {
-						complementMatch.setNodeTarget(lhsParameterBoundNode, value);
-						
-						Iterator<Match> matchFinder = engine.findMatches(
-								complement, graphModelB, complementMatch).iterator();
-						
-						while (matchFinder.hasNext()) {
-							
-							// Find complement pre-match:
-							Match nextMatch = matchFinder.next();
-
-							// Check if new values were found:
-							if (findNewParameterValues(parameterDomains, nextMatch)) {
-								
-								// Filter complement with match by impact:
-								if (GraphActionImpactUtil.real(currentImpactAnalysis, complementChanges, nextMatch)) {
-									complementPreMatches.add(nextMatch);
-								} else {
-									break;
-								}
-							} else {
-								break;
-							}
-						}
-						
-						complementMatch.setNodeTarget(lhsParameterBoundNode, null);
-					}
-				}
-			} else {
-				parameterDomains.get(lhsParameterBoundNode).add(complementMatch.getNodeTarget(lhsParameterBoundNode));
-			}
-		}
-		
-		long stopTime = System.currentTimeMillis();
-		System.err.println("RUNTIME (Parameter Matches): " + (stopTime - startTime) + "ms");
-	}
-	
-	private boolean findNewParameterValues(Map<Node, Set<EObject>> parameterDomains, Match match) {
-		boolean foundNew = false;
-		
-		for (Node lhsParameterBoundNode : parameterDomains.keySet()) {
-			EObject matchedElement = match.getNodeTarget(lhsParameterBoundNode);
-			assert (matchedElement != null);
-				
-			if (parameterDomains.get(lhsParameterBoundNode).add(matchedElement)) {
-				foundNew = true;
-			}
-		}
-		
-		return foundNew;
 	}
 
 	private void addMatch(ComplementRule complementRule, Match complementPreMatches, 
