@@ -6,6 +6,7 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -122,6 +123,31 @@ public class ComplementRule {
 		}
 		
 		return complementingChanges;
+	}
+	
+	/**
+	 * @return The boundary changes that are incident to the LHS.
+	 */
+	public List<GraphElement> getComplementingBoundaryChanges() {
+		List<GraphElement> boundaryComplementingChanges = new ArrayList<>();
+		
+		for (GraphElement graphElement : getComplementingChanges()) {
+			if (graphElement instanceof Edge) {
+				Node source = ChangePatternUtil.getLHS(((Edge) graphElement).getSource());
+				
+				if (source != null) {
+					boundaryComplementingChanges.add(graphElement);
+				}
+			} else if (graphElement instanceof Attribute) {
+				Node container = ChangePatternUtil.getLHS(((Attribute) graphElement).getNode());
+				
+				if (container != null) {
+					boundaryComplementingChanges.add(graphElement);
+				}
+			}
+		}
+		
+		return boundaryComplementingChanges;
 	}
 	
 	/**

@@ -219,7 +219,7 @@ public class ComplementFinderEngine {
 	// TODO: Check the repair impact as user defined constraint in the Henshin CSP.  
 	private void checkForUnambiguousRepairContext(ComplementRule complementRule, Match complementMatch) {
 		ImpactAnalysis currentImpactAnalysis = impact.getCurrentImpactAnalysis();
-		ImpactScope currentImpactScope = new ImpactScope(complementRule.getComplementingChanges(), currentImpactAnalysis);
+		ImpactScope currentImpactScope = new ImpactScope(complementRule.getComplementingBoundaryChanges(), currentImpactAnalysis);
 
 		Node repairContext = null;
 		EObject repairContextElement = null;
