@@ -93,7 +93,7 @@ public class PEORepairCaculation {
 					
 					if (GraphActionImpactUtil.potential(
 							impact.getCurrentPotentialImpactAnalysis(), 
-							complement.getComplementingChanges()) 
+							complement.getComplementingBoundaryChanges()) 
 					 && GraphActionImpactUtil.potential(
 							 impact.getHistoricalPotentialImpactAnalysis(), 
 							 complement.getRecognizedChanges())) {
