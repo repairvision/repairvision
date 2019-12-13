@@ -44,6 +44,8 @@ import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
  */
 public class ComplementFinderEngine {
 	
+	public static boolean DEBUG = false;
+	
 	/**
 	 * Derives the (Henshin) complement rule based on a CPEO.
 	 */
@@ -147,7 +149,10 @@ public class ComplementFinderEngine {
 		findMatches(complementRule, complementMatch, complementPreMatches);
 		
 		complementMatching.stop();
-		System.out.println("Re.Vision[Complement Time]: " + complementMatching + "ms");
+		
+		if (DEBUG) {
+			System.out.println("Re.Vision[Complement Time]: " + complementMatching + "ms");
+		}
 		
 		complementPreMatches.trimToSize();
 		return complementPreMatches;
