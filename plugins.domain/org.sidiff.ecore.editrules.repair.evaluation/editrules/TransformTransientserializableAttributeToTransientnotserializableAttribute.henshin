@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="__ZzcwOtpEemQuOLHJni5mQ" name="Transform: Transient (serializable) Attribute - To - Transient (not serializable) Attribute" description="Transform: Transient (serializable) Attribute - To - Transient (not serializable) Attribute">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="__ZzcwetpEemQuOLHJni5mQ" name="mainUnit" subUnits="__ZzcyOtpEemQuOLHJni5mQ">
-    <parameters xmi:id="__ZzcwutpEemQuOLHJni5mQ" name="containerClass" kind="IN"/>
-    <parameters xmi:id="__Zzcw-tpEemQuOLHJni5mQ" name="attribute" kind="IN"/>
-    <parameters xmi:id="__ZzcxOtpEemQuOLHJni5mQ" name="dataType" kind="IN"/>
-    <parameterMappings xmi:id="__ZzcxetpEemQuOLHJni5mQ" source="__ZzcwutpEemQuOLHJni5mQ" target="__ZzcyetpEemQuOLHJni5mQ"/>
-    <parameterMappings xmi:id="__ZzcxutpEemQuOLHJni5mQ" source="__Zzcw-tpEemQuOLHJni5mQ" target="__ZzcyutpEemQuOLHJni5mQ"/>
-    <parameterMappings xmi:id="__Zzcx-tpEemQuOLHJni5mQ" source="__ZzcxOtpEemQuOLHJni5mQ" target="__Zzcy-tpEemQuOLHJni5mQ"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_LaajEB2rEeq9ZO-r9jT7HQ" name="Transform: Transient (serializable) Attribute - To - Transient (not serializable) Attribute" description="Transform: Transient (serializable) Attribute - To - Transient (not serializable) Attribute">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_LaajER2rEeq9ZO-r9jT7HQ" name="mainUnit" subUnits="_LaajGB2rEeq9ZO-r9jT7HQ">
+    <parameters xmi:id="_LaajEh2rEeq9ZO-r9jT7HQ" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_LaajEx2rEeq9ZO-r9jT7HQ" name="attribute" kind="IN"/>
+    <parameters xmi:id="_LaajFB2rEeq9ZO-r9jT7HQ" name="dataType" kind="IN"/>
+    <parameterMappings xmi:id="_LaajFR2rEeq9ZO-r9jT7HQ" source="_LaajEh2rEeq9ZO-r9jT7HQ" target="_LaajGR2rEeq9ZO-r9jT7HQ"/>
+    <parameterMappings xmi:id="_LaajFh2rEeq9ZO-r9jT7HQ" source="_LaajEx2rEeq9ZO-r9jT7HQ" target="_LaajGh2rEeq9ZO-r9jT7HQ"/>
+    <parameterMappings xmi:id="_LaajFx2rEeq9ZO-r9jT7HQ" source="_LaajFB2rEeq9ZO-r9jT7HQ" target="_LaajGx2rEeq9ZO-r9jT7HQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="__ZzcyOtpEemQuOLHJni5mQ" name="Transform: Transient (serializable) Attribute - To - Transient (not serializable) Attribute">
-    <parameters xmi:id="__ZzcyetpEemQuOLHJni5mQ" name="containerClass" kind="IN"/>
-    <parameters xmi:id="__ZzcyutpEemQuOLHJni5mQ" name="attribute" kind="IN"/>
-    <parameters xmi:id="__Zzcy-tpEemQuOLHJni5mQ" name="dataType" kind="IN"/>
-    <lhs xmi:id="__ZzczOtpEemQuOLHJni5mQ" name="Lhs">
-      <nodes xmi:id="__ZzczetpEemQuOLHJni5mQ" name="containerClass" incoming="__Zzc1OtpEemQuOLHJni5mQ" outgoing="__Zzc0utpEemQuOLHJni5mQ">
+  <units xsi:type="henshin:Rule" xmi:id="_LaajGB2rEeq9ZO-r9jT7HQ" name="Transform: Transient (serializable) Attribute - To - Transient (not serializable) Attribute">
+    <parameters xmi:id="_LaajGR2rEeq9ZO-r9jT7HQ" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_LaajGh2rEeq9ZO-r9jT7HQ" name="attribute" kind="IN"/>
+    <parameters xmi:id="_LaajGx2rEeq9ZO-r9jT7HQ" name="dataType" kind="IN"/>
+    <lhs xmi:id="_LaajHB2rEeq9ZO-r9jT7HQ" name="Lhs">
+      <nodes xmi:id="_LaajHR2rEeq9ZO-r9jT7HQ" name="containerClass" incoming="_LaajJB2rEeq9ZO-r9jT7HQ" outgoing="_LaajIh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="__ZzczutpEemQuOLHJni5mQ" name="attribute" incoming="__Zzc0utpEemQuOLHJni5mQ" outgoing="__Zzc0-tpEemQuOLHJni5mQ __Zzc1OtpEemQuOLHJni5mQ">
+      <nodes xmi:id="_LaajHh2rEeq9ZO-r9jT7HQ" name="attribute" incoming="_LaajIh2rEeq9ZO-r9jT7HQ" outgoing="_LaajIx2rEeq9ZO-r9jT7HQ _LaajJB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
-        <attributes xmi:id="__Zzcz-tpEemQuOLHJni5mQ" value="&quot;true&quot;">
+        <attributes xmi:id="_LaajHx2rEeq9ZO-r9jT7HQ" value="&quot;true&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="__Zzc0OtpEemQuOLHJni5mQ" name="dataType" incoming="__Zzc0-tpEemQuOLHJni5mQ">
+      <nodes xmi:id="_LaajIB2rEeq9ZO-r9jT7HQ" name="dataType" incoming="_LaajIx2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
-        <attributes xmi:id="__Zzc0etpEemQuOLHJni5mQ" value="&quot;true&quot;">
+        <attributes xmi:id="_LaajIR2rEeq9ZO-r9jT7HQ" value="&quot;true&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType/serializable"/>
         </attributes>
       </nodes>
-      <edges xmi:id="__Zzc0utpEemQuOLHJni5mQ" source="__ZzczetpEemQuOLHJni5mQ" target="__ZzczutpEemQuOLHJni5mQ">
+      <edges xmi:id="_LaajIh2rEeq9ZO-r9jT7HQ" source="_LaajHR2rEeq9ZO-r9jT7HQ" target="_LaajHh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="__Zzc0-tpEemQuOLHJni5mQ" source="__ZzczutpEemQuOLHJni5mQ" target="__Zzc0OtpEemQuOLHJni5mQ">
+      <edges xmi:id="_LaajIx2rEeq9ZO-r9jT7HQ" source="_LaajHh2rEeq9ZO-r9jT7HQ" target="_LaajIB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="__Zzc1OtpEemQuOLHJni5mQ" source="__ZzczutpEemQuOLHJni5mQ" target="__ZzczetpEemQuOLHJni5mQ">
+      <edges xmi:id="_LaajJB2rEeq9ZO-r9jT7HQ" source="_LaajHh2rEeq9ZO-r9jT7HQ" target="_LaajHR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
     </lhs>
-    <rhs xmi:id="__Zzc1etpEemQuOLHJni5mQ" name="Rhs">
-      <nodes xmi:id="__Zzc1utpEemQuOLHJni5mQ" name="containerClass" incoming="__Zzc3etpEemQuOLHJni5mQ" outgoing="__Zzc2-tpEemQuOLHJni5mQ">
+    <rhs xmi:id="_LaajJR2rEeq9ZO-r9jT7HQ" name="Rhs">
+      <nodes xmi:id="_LaajJh2rEeq9ZO-r9jT7HQ" name="containerClass" incoming="_LaajLR2rEeq9ZO-r9jT7HQ" outgoing="_LaajKx2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="__Zzc1-tpEemQuOLHJni5mQ" name="attribute" incoming="__Zzc2-tpEemQuOLHJni5mQ" outgoing="__Zzc3OtpEemQuOLHJni5mQ __Zzc3etpEemQuOLHJni5mQ">
+      <nodes xmi:id="_LaajJx2rEeq9ZO-r9jT7HQ" name="attribute" incoming="_LaajKx2rEeq9ZO-r9jT7HQ" outgoing="_LaajLB2rEeq9ZO-r9jT7HQ _LaajLR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
-        <attributes xmi:id="__Zzc2OtpEemQuOLHJni5mQ" value="&quot;true&quot;">
+        <attributes xmi:id="_LaajKB2rEeq9ZO-r9jT7HQ" value="&quot;true&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="__Zzc2etpEemQuOLHJni5mQ" name="dataType" incoming="__Zzc3OtpEemQuOLHJni5mQ">
+      <nodes xmi:id="_LaajKR2rEeq9ZO-r9jT7HQ" name="dataType" incoming="_LaajLB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
-        <attributes xmi:id="__Zzc2utpEemQuOLHJni5mQ" value="&quot;false&quot;">
+        <attributes xmi:id="_LaajKh2rEeq9ZO-r9jT7HQ" value="&quot;false&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType/serializable"/>
         </attributes>
       </nodes>
-      <edges xmi:id="__Zzc2-tpEemQuOLHJni5mQ" source="__Zzc1utpEemQuOLHJni5mQ" target="__Zzc1-tpEemQuOLHJni5mQ">
+      <edges xmi:id="_LaajKx2rEeq9ZO-r9jT7HQ" source="_LaajJh2rEeq9ZO-r9jT7HQ" target="_LaajJx2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="__Zzc3OtpEemQuOLHJni5mQ" source="__Zzc1-tpEemQuOLHJni5mQ" target="__Zzc2etpEemQuOLHJni5mQ">
+      <edges xmi:id="_LaajLB2rEeq9ZO-r9jT7HQ" source="_LaajJx2rEeq9ZO-r9jT7HQ" target="_LaajKR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="__Zzc3etpEemQuOLHJni5mQ" source="__Zzc1-tpEemQuOLHJni5mQ" target="__Zzc1utpEemQuOLHJni5mQ">
+      <edges xmi:id="_LaajLR2rEeq9ZO-r9jT7HQ" source="_LaajJx2rEeq9ZO-r9jT7HQ" target="_LaajJh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
     </rhs>
-    <mappings xmi:id="__Zzc3utpEemQuOLHJni5mQ" origin="__ZzczetpEemQuOLHJni5mQ" image="__Zzc1utpEemQuOLHJni5mQ"/>
-    <mappings xmi:id="__Zzc3-tpEemQuOLHJni5mQ" origin="__ZzczutpEemQuOLHJni5mQ" image="__Zzc1-tpEemQuOLHJni5mQ"/>
-    <mappings xmi:id="__Zzc4OtpEemQuOLHJni5mQ" origin="__Zzc0OtpEemQuOLHJni5mQ" image="__Zzc2etpEemQuOLHJni5mQ"/>
+    <mappings xmi:id="_LaajLh2rEeq9ZO-r9jT7HQ" origin="_LaajHR2rEeq9ZO-r9jT7HQ" image="_LaajJh2rEeq9ZO-r9jT7HQ"/>
+    <mappings xmi:id="_LaajLx2rEeq9ZO-r9jT7HQ" origin="_LaajHh2rEeq9ZO-r9jT7HQ" image="_LaajJx2rEeq9ZO-r9jT7HQ"/>
+    <mappings xmi:id="_LaajMB2rEeq9ZO-r9jT7HQ" origin="_LaajIB2rEeq9ZO-r9jT7HQ" image="_LaajKR2rEeq9ZO-r9jT7HQ"/>
   </units>
 </henshin:Module>

@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_AL3y4OtqEemQuOLHJni5mQ" name="Delete: Class without Generic-Super-Type" description="Delete: Class without Generic-Super-Type">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_AL3y4etqEemQuOLHJni5mQ" name="mainUnit" subUnits="_AL3y5OtqEemQuOLHJni5mQ">
-    <parameters xmi:id="_AL3y4utqEemQuOLHJni5mQ" name="fromClassWithoutGenericSuperType" kind="IN"/>
-    <parameterMappings xmi:id="_AL3y4-tqEemQuOLHJni5mQ" source="_AL3y4utqEemQuOLHJni5mQ" target="_AL3y5etqEemQuOLHJni5mQ"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_MKNoUB2rEeq9ZO-r9jT7HQ" name="Delete: Class without Generic-Super-Type" description="Delete: Class without Generic-Super-Type">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_MKNoUR2rEeq9ZO-r9jT7HQ" name="mainUnit" subUnits="_MKNoVB2rEeq9ZO-r9jT7HQ">
+    <parameters xmi:id="_MKNoUh2rEeq9ZO-r9jT7HQ" name="fromClassWithoutGenericSuperType" kind="IN"/>
+    <parameterMappings xmi:id="_MKNoUx2rEeq9ZO-r9jT7HQ" source="_MKNoUh2rEeq9ZO-r9jT7HQ" target="_MKNoVR2rEeq9ZO-r9jT7HQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_AL3y5OtqEemQuOLHJni5mQ" name="Delete: Class without Generic-Super-Type">
-    <parameters xmi:id="_AL3y5etqEemQuOLHJni5mQ" name="fromClassWithoutGenericSuperType" kind="IN"/>
-    <lhs xmi:id="_AL3y5utqEemQuOLHJni5mQ" name="Lhs">
-      <nodes xmi:id="_AL3y5-tqEemQuOLHJni5mQ" name="fromClassWithoutGenericSuperType">
+  <units xsi:type="henshin:Rule" xmi:id="_MKNoVB2rEeq9ZO-r9jT7HQ" name="Delete: Class without Generic-Super-Type">
+    <parameters xmi:id="_MKNoVR2rEeq9ZO-r9jT7HQ" name="fromClassWithoutGenericSuperType" kind="IN"/>
+    <lhs xmi:id="_MKNoVh2rEeq9ZO-r9jT7HQ" name="Lhs">
+      <nodes xmi:id="_MKNoVx2rEeq9ZO-r9jT7HQ" name="fromClassWithoutGenericSuperType">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <formula xsi:type="henshin:Not" xmi:id="_AL3y6OtqEemQuOLHJni5mQ">
-        <child xsi:type="henshin:NestedCondition" xmi:id="_AL3y6etqEemQuOLHJni5mQ">
-          <conclusion xmi:id="_AL3y6utqEemQuOLHJni5mQ" name="pre">
-            <nodes xmi:id="_AL3y6-tqEemQuOLHJni5mQ" name="preGenericSuperType" incoming="_AL3y7etqEemQuOLHJni5mQ">
+      <formula xsi:type="henshin:Not" xmi:id="_MKNoWB2rEeq9ZO-r9jT7HQ">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_MKNoWR2rEeq9ZO-r9jT7HQ">
+          <conclusion xmi:id="_MKNoWh2rEeq9ZO-r9jT7HQ" name="pre">
+            <nodes xmi:id="_MKNoWx2rEeq9ZO-r9jT7HQ" name="preGenericSuperType" incoming="_MKNoXR2rEeq9ZO-r9jT7HQ">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
             </nodes>
-            <nodes xmi:id="_AL3y7OtqEemQuOLHJni5mQ" name="fromClassWithoutGenericSuperType" outgoing="_AL3y7etqEemQuOLHJni5mQ">
+            <nodes xmi:id="_MKNoXB2rEeq9ZO-r9jT7HQ" name="fromClassWithoutGenericSuperType" outgoing="_MKNoXR2rEeq9ZO-r9jT7HQ">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
-            <edges xmi:id="_AL3y7etqEemQuOLHJni5mQ" source="_AL3y7OtqEemQuOLHJni5mQ" target="_AL3y6-tqEemQuOLHJni5mQ">
+            <edges xmi:id="_MKNoXR2rEeq9ZO-r9jT7HQ" source="_MKNoXB2rEeq9ZO-r9jT7HQ" target="_MKNoWx2rEeq9ZO-r9jT7HQ">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eGenericSuperTypes"/>
             </edges>
           </conclusion>
-          <mappings xmi:id="_AL3y7utqEemQuOLHJni5mQ" origin="_AL3y5-tqEemQuOLHJni5mQ" image="_AL3y7OtqEemQuOLHJni5mQ"/>
+          <mappings xmi:id="_MKNoXh2rEeq9ZO-r9jT7HQ" origin="_MKNoVx2rEeq9ZO-r9jT7HQ" image="_MKNoXB2rEeq9ZO-r9jT7HQ"/>
         </child>
       </formula>
     </lhs>
-    <rhs xmi:id="_AL3y7-tqEemQuOLHJni5mQ" name="Rhs">
-      <nodes xmi:id="_AL3y8OtqEemQuOLHJni5mQ" name="fromClassWithoutGenericSuperType">
+    <rhs xmi:id="_MKNoXx2rEeq9ZO-r9jT7HQ" name="Rhs">
+      <nodes xmi:id="_MKNoYB2rEeq9ZO-r9jT7HQ" name="fromClassWithoutGenericSuperType">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
     </rhs>
-    <mappings xmi:id="_AL3y8etqEemQuOLHJni5mQ" origin="_AL3y5-tqEemQuOLHJni5mQ" image="_AL3y8OtqEemQuOLHJni5mQ"/>
+    <mappings xmi:id="_MKNoYR2rEeq9ZO-r9jT7HQ" origin="_MKNoVx2rEeq9ZO-r9jT7HQ" image="_MKNoYB2rEeq9ZO-r9jT7HQ"/>
   </units>
 </henshin:Module>

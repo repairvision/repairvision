@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="___wpgOtpEemQuOLHJni5mQ" name="Transform: Bidirectional Self-Reference - To - Multiplicity-One Containment-Container Self-References" description="Transform: Bidirectional Self-Reference - To - Multiplicity-One Containment-Container Self-References">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="___wpgetpEemQuOLHJni5mQ" name="mainUnit" subUnits="___wpiOtpEemQuOLHJni5mQ">
-    <parameters xmi:id="___wpgutpEemQuOLHJni5mQ" name="containerClass" kind="IN"/>
-    <parameters xmi:id="___wpg-tpEemQuOLHJni5mQ" name="containerReference" kind="IN"/>
-    <parameters xmi:id="___wphOtpEemQuOLHJni5mQ" name="containmentReference" kind="IN"/>
-    <parameterMappings xmi:id="___wphetpEemQuOLHJni5mQ" source="___wpgutpEemQuOLHJni5mQ" target="___wpietpEemQuOLHJni5mQ"/>
-    <parameterMappings xmi:id="___wphutpEemQuOLHJni5mQ" source="___wpg-tpEemQuOLHJni5mQ" target="___wpiutpEemQuOLHJni5mQ"/>
-    <parameterMappings xmi:id="___wph-tpEemQuOLHJni5mQ" source="___wphOtpEemQuOLHJni5mQ" target="___wpi-tpEemQuOLHJni5mQ"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_MAcoUB2rEeq9ZO-r9jT7HQ" name="Transform: Bidirectional Self-Reference - To - Multiplicity-One Containment-Container Self-References" description="Transform: Bidirectional Self-Reference - To - Multiplicity-One Containment-Container Self-References">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_MAcoUR2rEeq9ZO-r9jT7HQ" name="mainUnit" subUnits="_MAcoWB2rEeq9ZO-r9jT7HQ">
+    <parameters xmi:id="_MAcoUh2rEeq9ZO-r9jT7HQ" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_MAcoUx2rEeq9ZO-r9jT7HQ" name="containerReference" kind="IN"/>
+    <parameters xmi:id="_MAcoVB2rEeq9ZO-r9jT7HQ" name="containmentReference" kind="IN"/>
+    <parameterMappings xmi:id="_MAcoVR2rEeq9ZO-r9jT7HQ" source="_MAcoUh2rEeq9ZO-r9jT7HQ" target="_MAcoWR2rEeq9ZO-r9jT7HQ"/>
+    <parameterMappings xmi:id="_MAcoVh2rEeq9ZO-r9jT7HQ" source="_MAcoUx2rEeq9ZO-r9jT7HQ" target="_MAcoWh2rEeq9ZO-r9jT7HQ"/>
+    <parameterMappings xmi:id="_MAcoVx2rEeq9ZO-r9jT7HQ" source="_MAcoVB2rEeq9ZO-r9jT7HQ" target="_MAcoWx2rEeq9ZO-r9jT7HQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="___wpiOtpEemQuOLHJni5mQ" name="Transform: Bidirectional Self-Reference - To - Multiplicity-One Containment-Container Self-References">
-    <parameters xmi:id="___wpietpEemQuOLHJni5mQ" name="containerClass" kind="IN"/>
-    <parameters xmi:id="___wpiutpEemQuOLHJni5mQ" name="containerReference" kind="IN"/>
-    <parameters xmi:id="___wpi-tpEemQuOLHJni5mQ" name="containmentReference" kind="IN"/>
-    <lhs xmi:id="___wpjOtpEemQuOLHJni5mQ" name="Lhs">
-      <nodes xmi:id="___wpjetpEemQuOLHJni5mQ" name="containerClass" incoming="___wplOtpEemQuOLHJni5mQ ___wpletpEemQuOLHJni5mQ" outgoing="___wpkutpEemQuOLHJni5mQ">
+  <units xsi:type="henshin:Rule" xmi:id="_MAcoWB2rEeq9ZO-r9jT7HQ" name="Transform: Bidirectional Self-Reference - To - Multiplicity-One Containment-Container Self-References">
+    <parameters xmi:id="_MAcoWR2rEeq9ZO-r9jT7HQ" name="containerClass" kind="IN"/>
+    <parameters xmi:id="_MAcoWh2rEeq9ZO-r9jT7HQ" name="containerReference" kind="IN"/>
+    <parameters xmi:id="_MAcoWx2rEeq9ZO-r9jT7HQ" name="containmentReference" kind="IN"/>
+    <lhs xmi:id="_MAcoXB2rEeq9ZO-r9jT7HQ" name="Lhs">
+      <nodes xmi:id="_MAcoXR2rEeq9ZO-r9jT7HQ" name="containerClass" incoming="_MAcoZB2rEeq9ZO-r9jT7HQ _MAcoZR2rEeq9ZO-r9jT7HQ" outgoing="_MAcoYh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="___wpjutpEemQuOLHJni5mQ" name="containerReference" incoming="___wplutpEemQuOLHJni5mQ" outgoing="___wpk-tpEemQuOLHJni5mQ">
+      <nodes xmi:id="_MAcoXh2rEeq9ZO-r9jT7HQ" name="containerReference" incoming="_MAcoZh2rEeq9ZO-r9jT7HQ" outgoing="_MAcoYx2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
-        <attributes xmi:id="___wpj-tpEemQuOLHJni5mQ" value="&quot;false&quot;">
+        <attributes xmi:id="_MAcoXx2rEeq9ZO-r9jT7HQ" value="&quot;false&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="___wpkOtpEemQuOLHJni5mQ" name="containmentReference" incoming="___wpkutpEemQuOLHJni5mQ ___wpk-tpEemQuOLHJni5mQ" outgoing="___wplOtpEemQuOLHJni5mQ ___wpletpEemQuOLHJni5mQ ___wplutpEemQuOLHJni5mQ">
+      <nodes xmi:id="_MAcoYB2rEeq9ZO-r9jT7HQ" name="containmentReference" incoming="_MAcoYh2rEeq9ZO-r9jT7HQ _MAcoYx2rEeq9ZO-r9jT7HQ" outgoing="_MAcoZB2rEeq9ZO-r9jT7HQ _MAcoZR2rEeq9ZO-r9jT7HQ _MAcoZh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
-        <attributes xmi:id="___wpketpEemQuOLHJni5mQ" value="&quot;false&quot;">
+        <attributes xmi:id="_MAcoYR2rEeq9ZO-r9jT7HQ" value="&quot;false&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
         </attributes>
       </nodes>
-      <edges xmi:id="___wpkutpEemQuOLHJni5mQ" source="___wpjetpEemQuOLHJni5mQ" target="___wpkOtpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcoYh2rEeq9ZO-r9jT7HQ" source="_MAcoXR2rEeq9ZO-r9jT7HQ" target="_MAcoYB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="___wpk-tpEemQuOLHJni5mQ" source="___wpjutpEemQuOLHJni5mQ" target="___wpkOtpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcoYx2rEeq9ZO-r9jT7HQ" source="_MAcoXh2rEeq9ZO-r9jT7HQ" target="_MAcoYB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
       </edges>
-      <edges xmi:id="___wplOtpEemQuOLHJni5mQ" source="___wpkOtpEemQuOLHJni5mQ" target="___wpjetpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcoZB2rEeq9ZO-r9jT7HQ" source="_MAcoYB2rEeq9ZO-r9jT7HQ" target="_MAcoXR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="___wpletpEemQuOLHJni5mQ" source="___wpkOtpEemQuOLHJni5mQ" target="___wpjetpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcoZR2rEeq9ZO-r9jT7HQ" source="_MAcoYB2rEeq9ZO-r9jT7HQ" target="_MAcoXR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
-      <edges xmi:id="___wplutpEemQuOLHJni5mQ" source="___wpkOtpEemQuOLHJni5mQ" target="___wpjutpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcoZh2rEeq9ZO-r9jT7HQ" source="_MAcoYB2rEeq9ZO-r9jT7HQ" target="_MAcoXh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
       </edges>
     </lhs>
-    <rhs xmi:id="___wpl-tpEemQuOLHJni5mQ" name="Rhs">
-      <nodes xmi:id="___wpmOtpEemQuOLHJni5mQ" name="containerClass" incoming="___wpoutpEemQuOLHJni5mQ ___wpo-tpEemQuOLHJni5mQ ___wppOtpEemQuOLHJni5mQ ___wppetpEemQuOLHJni5mQ" outgoing="___wpn-tpEemQuOLHJni5mQ ___wpoOtpEemQuOLHJni5mQ">
+    <rhs xmi:id="_MAcoZx2rEeq9ZO-r9jT7HQ" name="Rhs">
+      <nodes xmi:id="_MAcoaB2rEeq9ZO-r9jT7HQ" name="containerClass" incoming="_MAcoch2rEeq9ZO-r9jT7HQ _MAcocx2rEeq9ZO-r9jT7HQ _MAcodB2rEeq9ZO-r9jT7HQ _MAcodR2rEeq9ZO-r9jT7HQ" outgoing="_MAcobx2rEeq9ZO-r9jT7HQ _MAcocB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="___wpmetpEemQuOLHJni5mQ" name="containerReference" incoming="___wpoOtpEemQuOLHJni5mQ ___wpputpEemQuOLHJni5mQ" outgoing="___wpoetpEemQuOLHJni5mQ ___wpoutpEemQuOLHJni5mQ ___wpo-tpEemQuOLHJni5mQ">
+      <nodes xmi:id="_MAcoaR2rEeq9ZO-r9jT7HQ" name="containerReference" incoming="_MAcocB2rEeq9ZO-r9jT7HQ _MAcodh2rEeq9ZO-r9jT7HQ" outgoing="_MAcocR2rEeq9ZO-r9jT7HQ _MAcoch2rEeq9ZO-r9jT7HQ _MAcocx2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
-        <attributes xmi:id="___wpmutpEemQuOLHJni5mQ" value="&quot;false&quot;">
+        <attributes xmi:id="_MAcoah2rEeq9ZO-r9jT7HQ" value="&quot;false&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
         </attributes>
-        <attributes xmi:id="___wpm-tpEemQuOLHJni5mQ" value="&quot;1&quot;">
+        <attributes xmi:id="_MAcoax2rEeq9ZO-r9jT7HQ" value="&quot;1&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="___wpnOtpEemQuOLHJni5mQ" name="containmentReference" incoming="___wpn-tpEemQuOLHJni5mQ ___wpoetpEemQuOLHJni5mQ" outgoing="___wppOtpEemQuOLHJni5mQ ___wppetpEemQuOLHJni5mQ ___wpputpEemQuOLHJni5mQ">
+      <nodes xmi:id="_MAcobB2rEeq9ZO-r9jT7HQ" name="containmentReference" incoming="_MAcobx2rEeq9ZO-r9jT7HQ _MAcocR2rEeq9ZO-r9jT7HQ" outgoing="_MAcodB2rEeq9ZO-r9jT7HQ _MAcodR2rEeq9ZO-r9jT7HQ _MAcodh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
-        <attributes xmi:id="___wpnetpEemQuOLHJni5mQ" value="&quot;true&quot;">
+        <attributes xmi:id="_MAcobR2rEeq9ZO-r9jT7HQ" value="&quot;true&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
         </attributes>
-        <attributes xmi:id="___wpnutpEemQuOLHJni5mQ" value="&quot;1&quot;">
+        <attributes xmi:id="_MAcobh2rEeq9ZO-r9jT7HQ" value="&quot;1&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
         </attributes>
       </nodes>
-      <edges xmi:id="___wpn-tpEemQuOLHJni5mQ" source="___wpmOtpEemQuOLHJni5mQ" target="___wpnOtpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcobx2rEeq9ZO-r9jT7HQ" source="_MAcoaB2rEeq9ZO-r9jT7HQ" target="_MAcobB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="___wpoOtpEemQuOLHJni5mQ" source="___wpmOtpEemQuOLHJni5mQ" target="___wpmetpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcocB2rEeq9ZO-r9jT7HQ" source="_MAcoaB2rEeq9ZO-r9jT7HQ" target="_MAcoaR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="___wpoetpEemQuOLHJni5mQ" source="___wpmetpEemQuOLHJni5mQ" target="___wpnOtpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcocR2rEeq9ZO-r9jT7HQ" source="_MAcoaR2rEeq9ZO-r9jT7HQ" target="_MAcobB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
       </edges>
-      <edges xmi:id="___wpoutpEemQuOLHJni5mQ" source="___wpmetpEemQuOLHJni5mQ" target="___wpmOtpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcoch2rEeq9ZO-r9jT7HQ" source="_MAcoaR2rEeq9ZO-r9jT7HQ" target="_MAcoaB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="___wpo-tpEemQuOLHJni5mQ" source="___wpmetpEemQuOLHJni5mQ" target="___wpmOtpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcocx2rEeq9ZO-r9jT7HQ" source="_MAcoaR2rEeq9ZO-r9jT7HQ" target="_MAcoaB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
-      <edges xmi:id="___wppOtpEemQuOLHJni5mQ" source="___wpnOtpEemQuOLHJni5mQ" target="___wpmOtpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcodB2rEeq9ZO-r9jT7HQ" source="_MAcobB2rEeq9ZO-r9jT7HQ" target="_MAcoaB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="___wppetpEemQuOLHJni5mQ" source="___wpnOtpEemQuOLHJni5mQ" target="___wpmOtpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcodR2rEeq9ZO-r9jT7HQ" source="_MAcobB2rEeq9ZO-r9jT7HQ" target="_MAcoaB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
-      <edges xmi:id="___wpputpEemQuOLHJni5mQ" source="___wpnOtpEemQuOLHJni5mQ" target="___wpmetpEemQuOLHJni5mQ">
+      <edges xmi:id="_MAcodh2rEeq9ZO-r9jT7HQ" source="_MAcobB2rEeq9ZO-r9jT7HQ" target="_MAcoaR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
       </edges>
     </rhs>
-    <mappings xmi:id="___wpp-tpEemQuOLHJni5mQ" origin="___wpjetpEemQuOLHJni5mQ" image="___wpmOtpEemQuOLHJni5mQ"/>
-    <mappings xmi:id="___wpqOtpEemQuOLHJni5mQ" origin="___wpjutpEemQuOLHJni5mQ" image="___wpmetpEemQuOLHJni5mQ"/>
-    <mappings xmi:id="___wpqetpEemQuOLHJni5mQ" origin="___wpkOtpEemQuOLHJni5mQ" image="___wpnOtpEemQuOLHJni5mQ"/>
+    <mappings xmi:id="_MAcodx2rEeq9ZO-r9jT7HQ" origin="_MAcoXR2rEeq9ZO-r9jT7HQ" image="_MAcoaB2rEeq9ZO-r9jT7HQ"/>
+    <mappings xmi:id="_MAcoeB2rEeq9ZO-r9jT7HQ" origin="_MAcoXh2rEeq9ZO-r9jT7HQ" image="_MAcoaR2rEeq9ZO-r9jT7HQ"/>
+    <mappings xmi:id="_MAcoeR2rEeq9ZO-r9jT7HQ" origin="_MAcoYB2rEeq9ZO-r9jT7HQ" image="_MAcobB2rEeq9ZO-r9jT7HQ"/>
   </units>
 </henshin:Module>

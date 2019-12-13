@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="__ZCnwOtpEemQuOLHJni5mQ" name="Create: Transient (not serializable) Attribute" description="Create: Transient (not serializable) Attribute">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="__ZCnwetpEemQuOLHJni5mQ" name="mainUnit" subUnits="__ZCnxutpEemQuOLHJni5mQ">
-    <parameters xmi:id="__ZCnwutpEemQuOLHJni5mQ" name="toContainerClass" kind="IN"/>
-    <parameters xmi:id="__ZCnw-tpEemQuOLHJni5mQ" name="toDataType" kind="IN"/>
-    <parameterMappings xmi:id="__ZCnxOtpEemQuOLHJni5mQ" source="__ZCnwutpEemQuOLHJni5mQ" target="__ZCnx-tpEemQuOLHJni5mQ"/>
-    <parameterMappings xmi:id="__ZCnxetpEemQuOLHJni5mQ" source="__ZCnw-tpEemQuOLHJni5mQ" target="__ZCnyOtpEemQuOLHJni5mQ"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_LZCDAB2rEeq9ZO-r9jT7HQ" name="Create: Transient (not serializable) Attribute" description="Create: Transient (not serializable) Attribute">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_LZCDAR2rEeq9ZO-r9jT7HQ" name="mainUnit" subUnits="_LZCDBh2rEeq9ZO-r9jT7HQ">
+    <parameters xmi:id="_LZCDAh2rEeq9ZO-r9jT7HQ" name="toContainerClass" kind="IN"/>
+    <parameters xmi:id="_LZCDAx2rEeq9ZO-r9jT7HQ" name="toDataType" kind="IN"/>
+    <parameterMappings xmi:id="_LZCDBB2rEeq9ZO-r9jT7HQ" source="_LZCDAh2rEeq9ZO-r9jT7HQ" target="_LZCDBx2rEeq9ZO-r9jT7HQ"/>
+    <parameterMappings xmi:id="_LZCDBR2rEeq9ZO-r9jT7HQ" source="_LZCDAx2rEeq9ZO-r9jT7HQ" target="_LZCDCB2rEeq9ZO-r9jT7HQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="__ZCnxutpEemQuOLHJni5mQ" name="Create: Transient (not serializable) Attribute">
-    <parameters xmi:id="__ZCnx-tpEemQuOLHJni5mQ" name="toContainerClass" kind="IN"/>
-    <parameters xmi:id="__ZCnyOtpEemQuOLHJni5mQ" name="toDataType" kind="IN"/>
-    <lhs xmi:id="__ZCnyetpEemQuOLHJni5mQ" name="Lhs">
-      <nodes xmi:id="__ZCnyutpEemQuOLHJni5mQ" name="toContainerClass">
+  <units xsi:type="henshin:Rule" xmi:id="_LZCDBh2rEeq9ZO-r9jT7HQ" name="Create: Transient (not serializable) Attribute">
+    <parameters xmi:id="_LZCDBx2rEeq9ZO-r9jT7HQ" name="toContainerClass" kind="IN"/>
+    <parameters xmi:id="_LZCDCB2rEeq9ZO-r9jT7HQ" name="toDataType" kind="IN"/>
+    <lhs xmi:id="_LZCDCR2rEeq9ZO-r9jT7HQ" name="Lhs">
+      <nodes xmi:id="_LZCDCh2rEeq9ZO-r9jT7HQ" name="toContainerClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="__ZCny-tpEemQuOLHJni5mQ" name="toDataType">
+      <nodes xmi:id="_LZCDCx2rEeq9ZO-r9jT7HQ" name="toDataType">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
       </nodes>
     </lhs>
-    <rhs xmi:id="__ZCnzOtpEemQuOLHJni5mQ" name="Rhs">
-      <nodes xmi:id="__ZCnzetpEemQuOLHJni5mQ" name="toContainerClass" incoming="__ZCn1OtpEemQuOLHJni5mQ" outgoing="__ZCn0utpEemQuOLHJni5mQ">
+    <rhs xmi:id="_LZCDDB2rEeq9ZO-r9jT7HQ" name="Rhs">
+      <nodes xmi:id="_LZCDDR2rEeq9ZO-r9jT7HQ" name="toContainerClass" incoming="_LZCDFB2rEeq9ZO-r9jT7HQ" outgoing="_LZCDEh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="__ZCnzutpEemQuOLHJni5mQ" name="newAttribute" incoming="__ZCn0utpEemQuOLHJni5mQ" outgoing="__ZCn0-tpEemQuOLHJni5mQ __ZCn1OtpEemQuOLHJni5mQ">
+      <nodes xmi:id="_LZCDDh2rEeq9ZO-r9jT7HQ" name="newAttribute" incoming="_LZCDEh2rEeq9ZO-r9jT7HQ" outgoing="_LZCDEx2rEeq9ZO-r9jT7HQ _LZCDFB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
-        <attributes xmi:id="__ZCnz-tpEemQuOLHJni5mQ" value="&quot;true&quot;">
+        <attributes xmi:id="_LZCDDx2rEeq9ZO-r9jT7HQ" value="&quot;true&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="__ZCn0OtpEemQuOLHJni5mQ" name="toDataType" incoming="__ZCn0-tpEemQuOLHJni5mQ">
+      <nodes xmi:id="_LZCDEB2rEeq9ZO-r9jT7HQ" name="toDataType" incoming="_LZCDEx2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
-        <attributes xmi:id="__ZCn0etpEemQuOLHJni5mQ" value="&quot;false&quot;">
+        <attributes xmi:id="_LZCDER2rEeq9ZO-r9jT7HQ" value="&quot;false&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType/serializable"/>
         </attributes>
       </nodes>
-      <edges xmi:id="__ZCn0utpEemQuOLHJni5mQ" source="__ZCnzetpEemQuOLHJni5mQ" target="__ZCnzutpEemQuOLHJni5mQ">
+      <edges xmi:id="_LZCDEh2rEeq9ZO-r9jT7HQ" source="_LZCDDR2rEeq9ZO-r9jT7HQ" target="_LZCDDh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="__ZCn0-tpEemQuOLHJni5mQ" source="__ZCnzutpEemQuOLHJni5mQ" target="__ZCn0OtpEemQuOLHJni5mQ">
+      <edges xmi:id="_LZCDEx2rEeq9ZO-r9jT7HQ" source="_LZCDDh2rEeq9ZO-r9jT7HQ" target="_LZCDEB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="__ZCn1OtpEemQuOLHJni5mQ" source="__ZCnzutpEemQuOLHJni5mQ" target="__ZCnzetpEemQuOLHJni5mQ">
+      <edges xmi:id="_LZCDFB2rEeq9ZO-r9jT7HQ" source="_LZCDDh2rEeq9ZO-r9jT7HQ" target="_LZCDDR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
     </rhs>
-    <mappings xmi:id="__ZCn1etpEemQuOLHJni5mQ" origin="__ZCnyutpEemQuOLHJni5mQ" image="__ZCnzetpEemQuOLHJni5mQ"/>
-    <mappings xmi:id="__ZCn1utpEemQuOLHJni5mQ" origin="__ZCny-tpEemQuOLHJni5mQ" image="__ZCn0OtpEemQuOLHJni5mQ"/>
+    <mappings xmi:id="_LZCDFR2rEeq9ZO-r9jT7HQ" origin="_LZCDCh2rEeq9ZO-r9jT7HQ" image="_LZCDDR2rEeq9ZO-r9jT7HQ"/>
+    <mappings xmi:id="_LZCDFh2rEeq9ZO-r9jT7HQ" origin="_LZCDCx2rEeq9ZO-r9jT7HQ" image="_LZCDEB2rEeq9ZO-r9jT7HQ"/>
   </units>
 </henshin:Module>

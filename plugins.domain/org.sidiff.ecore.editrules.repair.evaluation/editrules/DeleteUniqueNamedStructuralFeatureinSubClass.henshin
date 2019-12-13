@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="__RspoOtpEemQuOLHJni5mQ" name="Delete: Unique Named Structural Feature in Sub-Class" description="Delete: Unique Named Structural Feature in Sub-Class">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="__RspoetpEemQuOLHJni5mQ" name="mainUnit" subUnits="__RspqOtpEemQuOLHJni5mQ">
-    <parameters xmi:id="__RspoutpEemQuOLHJni5mQ" name="structuralFeatureName" kind="IN"/>
-    <parameters xmi:id="__Rspo-tpEemQuOLHJni5mQ" name="fromSubClass" kind="IN"/>
-    <parameters xmi:id="__RsppOtpEemQuOLHJni5mQ" name="oldSubStructuralFeature" kind="IN"/>
-    <parameterMappings xmi:id="__RsppetpEemQuOLHJni5mQ" source="__RspoutpEemQuOLHJni5mQ" target="__RspqetpEemQuOLHJni5mQ"/>
-    <parameterMappings xmi:id="__RspputpEemQuOLHJni5mQ" source="__Rspo-tpEemQuOLHJni5mQ" target="__RspqutpEemQuOLHJni5mQ"/>
-    <parameterMappings xmi:id="__Rspp-tpEemQuOLHJni5mQ" source="__RsppOtpEemQuOLHJni5mQ" target="__Rspq-tpEemQuOLHJni5mQ"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_LW58EB2rEeq9ZO-r9jT7HQ" name="Delete: Unique Named Structural Feature in Sub-Class" description="Delete: Unique Named Structural Feature in Sub-Class">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_LW58ER2rEeq9ZO-r9jT7HQ" name="mainUnit" subUnits="_LW58GB2rEeq9ZO-r9jT7HQ">
+    <parameters xmi:id="_LW58Eh2rEeq9ZO-r9jT7HQ" name="structuralFeatureName" kind="IN"/>
+    <parameters xmi:id="_LW58Ex2rEeq9ZO-r9jT7HQ" name="fromSubClass" kind="IN"/>
+    <parameters xmi:id="_LW58FB2rEeq9ZO-r9jT7HQ" name="oldSubStructuralFeature" kind="IN"/>
+    <parameterMappings xmi:id="_LW58FR2rEeq9ZO-r9jT7HQ" source="_LW58Eh2rEeq9ZO-r9jT7HQ" target="_LW58GR2rEeq9ZO-r9jT7HQ"/>
+    <parameterMappings xmi:id="_LW58Fh2rEeq9ZO-r9jT7HQ" source="_LW58Ex2rEeq9ZO-r9jT7HQ" target="_LW58Gh2rEeq9ZO-r9jT7HQ"/>
+    <parameterMappings xmi:id="_LW58Fx2rEeq9ZO-r9jT7HQ" source="_LW58FB2rEeq9ZO-r9jT7HQ" target="_LW58Gx2rEeq9ZO-r9jT7HQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="__RspqOtpEemQuOLHJni5mQ" name="Delete: Unique Named Structural Feature in Sub-Class">
-    <parameters xmi:id="__RspqetpEemQuOLHJni5mQ" name="structuralFeatureName" kind="IN"/>
-    <parameters xmi:id="__RspqutpEemQuOLHJni5mQ" name="fromSubClass" kind="IN"/>
-    <parameters xmi:id="__Rspq-tpEemQuOLHJni5mQ" name="oldSubStructuralFeature" kind="IN"/>
-    <lhs xmi:id="__RsprOtpEemQuOLHJni5mQ" name="Lhs">
-      <nodes xmi:id="__RspretpEemQuOLHJni5mQ" name="fromSubClass" incoming="__RspsetpEemQuOLHJni5mQ" outgoing="__RspsOtpEemQuOLHJni5mQ">
+  <units xsi:type="henshin:Rule" xmi:id="_LW58GB2rEeq9ZO-r9jT7HQ" name="Delete: Unique Named Structural Feature in Sub-Class">
+    <parameters xmi:id="_LW58GR2rEeq9ZO-r9jT7HQ" name="structuralFeatureName" kind="IN"/>
+    <parameters xmi:id="_LW58Gh2rEeq9ZO-r9jT7HQ" name="fromSubClass" kind="IN"/>
+    <parameters xmi:id="_LW58Gx2rEeq9ZO-r9jT7HQ" name="oldSubStructuralFeature" kind="IN"/>
+    <lhs xmi:id="_LW58HB2rEeq9ZO-r9jT7HQ" name="Lhs">
+      <nodes xmi:id="_LW58HR2rEeq9ZO-r9jT7HQ" name="fromSubClass" incoming="_LW58IR2rEeq9ZO-r9jT7HQ" outgoing="_LW58IB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="__RsprutpEemQuOLHJni5mQ" name="oldSubStructuralFeature" incoming="__RspsOtpEemQuOLHJni5mQ" outgoing="__RspsetpEemQuOLHJni5mQ">
+      <nodes xmi:id="_LW58Hh2rEeq9ZO-r9jT7HQ" name="oldSubStructuralFeature" incoming="_LW58IB2rEeq9ZO-r9jT7HQ" outgoing="_LW58IR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
-        <attributes xmi:id="__Rspr-tpEemQuOLHJni5mQ" value="structuralFeatureName">
+        <attributes xmi:id="_LW58Hx2rEeq9ZO-r9jT7HQ" value="structuralFeatureName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <edges xmi:id="__RspsOtpEemQuOLHJni5mQ" source="__RspretpEemQuOLHJni5mQ" target="__RsprutpEemQuOLHJni5mQ">
+      <edges xmi:id="_LW58IB2rEeq9ZO-r9jT7HQ" source="_LW58HR2rEeq9ZO-r9jT7HQ" target="_LW58Hh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="__RspsetpEemQuOLHJni5mQ" source="__RsprutpEemQuOLHJni5mQ" target="__RspretpEemQuOLHJni5mQ">
+      <edges xmi:id="_LW58IR2rEeq9ZO-r9jT7HQ" source="_LW58Hh2rEeq9ZO-r9jT7HQ" target="_LW58HR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
-      <formula xsi:type="henshin:Not" xmi:id="__RspsutpEemQuOLHJni5mQ">
-        <child xsi:type="henshin:NestedCondition" xmi:id="__Rsps-tpEemQuOLHJni5mQ">
-          <conclusion xmi:id="__RsptOtpEemQuOLHJni5mQ" name="pre">
-            <nodes xmi:id="__RsptetpEemQuOLHJni5mQ" name="preSuperClass" incoming="__RspuutpEemQuOLHJni5mQ" outgoing="__RspuetpEemQuOLHJni5mQ">
+      <formula xsi:type="henshin:Not" xmi:id="_LW58Ih2rEeq9ZO-r9jT7HQ">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_LW58Ix2rEeq9ZO-r9jT7HQ">
+          <conclusion xmi:id="_LW58JB2rEeq9ZO-r9jT7HQ" name="pre">
+            <nodes xmi:id="_LW58JR2rEeq9ZO-r9jT7HQ" name="preSuperClass" incoming="_LW58Kh2rEeq9ZO-r9jT7HQ" outgoing="_LW58KR2rEeq9ZO-r9jT7HQ">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
-            <nodes xmi:id="__RsptutpEemQuOLHJni5mQ" name="preSuperStructuralFeature" incoming="__RspuetpEemQuOLHJni5mQ">
+            <nodes xmi:id="_LW58Jh2rEeq9ZO-r9jT7HQ" name="preSuperStructuralFeature" incoming="_LW58KR2rEeq9ZO-r9jT7HQ">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
-              <attributes xmi:id="__Rspt-tpEemQuOLHJni5mQ" value="structuralFeatureName">
+              <attributes xmi:id="_LW58Jx2rEeq9ZO-r9jT7HQ" value="structuralFeatureName">
                 <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
               </attributes>
             </nodes>
-            <nodes xmi:id="__RspuOtpEemQuOLHJni5mQ" name="fromSubClass" outgoing="__RspuutpEemQuOLHJni5mQ">
+            <nodes xmi:id="_LW58KB2rEeq9ZO-r9jT7HQ" name="fromSubClass" outgoing="_LW58Kh2rEeq9ZO-r9jT7HQ">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
-            <edges xmi:id="__RspuetpEemQuOLHJni5mQ" source="__RsptetpEemQuOLHJni5mQ" target="__RsptutpEemQuOLHJni5mQ">
+            <edges xmi:id="_LW58KR2rEeq9ZO-r9jT7HQ" source="_LW58JR2rEeq9ZO-r9jT7HQ" target="_LW58Jh2rEeq9ZO-r9jT7HQ">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
             </edges>
-            <edges xmi:id="__RspuutpEemQuOLHJni5mQ" source="__RspuOtpEemQuOLHJni5mQ" target="__RsptetpEemQuOLHJni5mQ">
+            <edges xmi:id="_LW58Kh2rEeq9ZO-r9jT7HQ" source="_LW58KB2rEeq9ZO-r9jT7HQ" target="_LW58JR2rEeq9ZO-r9jT7HQ">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eSuperTypes"/>
             </edges>
           </conclusion>
-          <mappings xmi:id="__Rspu-tpEemQuOLHJni5mQ" origin="__RspretpEemQuOLHJni5mQ" image="__RspuOtpEemQuOLHJni5mQ"/>
+          <mappings xmi:id="_LW58Kx2rEeq9ZO-r9jT7HQ" origin="_LW58HR2rEeq9ZO-r9jT7HQ" image="_LW58KB2rEeq9ZO-r9jT7HQ"/>
         </child>
       </formula>
     </lhs>
-    <rhs xmi:id="__RspvOtpEemQuOLHJni5mQ" name="Rhs">
-      <nodes xmi:id="__RspvetpEemQuOLHJni5mQ" name="fromSubClass">
+    <rhs xmi:id="_LW58LB2rEeq9ZO-r9jT7HQ" name="Rhs">
+      <nodes xmi:id="_LW58LR2rEeq9ZO-r9jT7HQ" name="fromSubClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
     </rhs>
-    <mappings xmi:id="__RspvutpEemQuOLHJni5mQ" origin="__RspretpEemQuOLHJni5mQ" image="__RspvetpEemQuOLHJni5mQ"/>
+    <mappings xmi:id="_LW58Lh2rEeq9ZO-r9jT7HQ" origin="_LW58HR2rEeq9ZO-r9jT7HQ" image="_LW58LR2rEeq9ZO-r9jT7HQ"/>
   </units>
 </henshin:Module>

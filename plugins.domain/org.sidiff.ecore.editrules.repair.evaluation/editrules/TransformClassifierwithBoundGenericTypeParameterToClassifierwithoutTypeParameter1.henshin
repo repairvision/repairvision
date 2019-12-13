@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_AJud0OtqEemQuOLHJni5mQ" name="Transform: Classifier with Bound Generic Type Parameter - To - Classifier without Type-Parameter (1)" description="Transform: Classifier with Bound Generic Type Parameter - To - Classifier without Type-Parameter (1)">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_AJud0etqEemQuOLHJni5mQ" name="mainUnit" subUnits="_AJud3OtqEemQuOLHJni5mQ">
-    <parameters xmi:id="_AJud0utqEemQuOLHJni5mQ" name="classifierWithoutTypeParameter" kind="IN"/>
-    <parameters xmi:id="_AJud0-tqEemQuOLHJni5mQ" name="fromClassifierWithTypeParameter" kind="IN"/>
-    <parameters xmi:id="_AJud1OtqEemQuOLHJni5mQ" name="oldT" kind="IN"/>
-    <parameters xmi:id="_AJud1etqEemQuOLHJni5mQ" name="typeParameterName" kind="IN"/>
-    <parameters xmi:id="_AJud1utqEemQuOLHJni5mQ" name="oldGenericTypeOfClassifier" kind="IN"/>
-    <parameterMappings xmi:id="_AJud1-tqEemQuOLHJni5mQ" source="_AJud0utqEemQuOLHJni5mQ" target="_AJud3etqEemQuOLHJni5mQ"/>
-    <parameterMappings xmi:id="_AJud2OtqEemQuOLHJni5mQ" source="_AJud0-tqEemQuOLHJni5mQ" target="_AJud3utqEemQuOLHJni5mQ"/>
-    <parameterMappings xmi:id="_AJud2etqEemQuOLHJni5mQ" source="_AJud1OtqEemQuOLHJni5mQ" target="_AJud3-tqEemQuOLHJni5mQ"/>
-    <parameterMappings xmi:id="_AJud2utqEemQuOLHJni5mQ" source="_AJud1etqEemQuOLHJni5mQ" target="_AJud4OtqEemQuOLHJni5mQ"/>
-    <parameterMappings xmi:id="_AJud2-tqEemQuOLHJni5mQ" source="_AJud1utqEemQuOLHJni5mQ" target="_AJud4etqEemQuOLHJni5mQ"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_MIkpkB2rEeq9ZO-r9jT7HQ" name="Transform: Classifier with Bound Generic Type Parameter - To - Classifier without Type-Parameter (1)" description="Transform: Classifier with Bound Generic Type Parameter - To - Classifier without Type-Parameter (1)">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_MIkpkR2rEeq9ZO-r9jT7HQ" name="mainUnit" subUnits="_MIkpnB2rEeq9ZO-r9jT7HQ">
+    <parameters xmi:id="_MIkpkh2rEeq9ZO-r9jT7HQ" name="classifierWithoutTypeParameter" kind="IN"/>
+    <parameters xmi:id="_MIkpkx2rEeq9ZO-r9jT7HQ" name="fromClassifierWithTypeParameter" kind="IN"/>
+    <parameters xmi:id="_MIkplB2rEeq9ZO-r9jT7HQ" name="oldT" kind="IN"/>
+    <parameters xmi:id="_MIkplR2rEeq9ZO-r9jT7HQ" name="typeParameterName" kind="IN"/>
+    <parameters xmi:id="_MIkplh2rEeq9ZO-r9jT7HQ" name="oldGenericTypeOfClassifier" kind="IN"/>
+    <parameterMappings xmi:id="_MIkplx2rEeq9ZO-r9jT7HQ" source="_MIkpkh2rEeq9ZO-r9jT7HQ" target="_MIkpnR2rEeq9ZO-r9jT7HQ"/>
+    <parameterMappings xmi:id="_MIkpmB2rEeq9ZO-r9jT7HQ" source="_MIkpkx2rEeq9ZO-r9jT7HQ" target="_MIkpnh2rEeq9ZO-r9jT7HQ"/>
+    <parameterMappings xmi:id="_MIkpmR2rEeq9ZO-r9jT7HQ" source="_MIkplB2rEeq9ZO-r9jT7HQ" target="_MIkpnx2rEeq9ZO-r9jT7HQ"/>
+    <parameterMappings xmi:id="_MIkpmh2rEeq9ZO-r9jT7HQ" source="_MIkplR2rEeq9ZO-r9jT7HQ" target="_MIkpoB2rEeq9ZO-r9jT7HQ"/>
+    <parameterMappings xmi:id="_MIkpmx2rEeq9ZO-r9jT7HQ" source="_MIkplh2rEeq9ZO-r9jT7HQ" target="_MIkpoR2rEeq9ZO-r9jT7HQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_AJud3OtqEemQuOLHJni5mQ" name="Transform: Classifier with Bound Generic Type Parameter - To - Classifier without Type-Parameter (1)">
-    <parameters xmi:id="_AJud3etqEemQuOLHJni5mQ" name="classifierWithoutTypeParameter" kind="IN"/>
-    <parameters xmi:id="_AJud3utqEemQuOLHJni5mQ" name="fromClassifierWithTypeParameter" kind="IN"/>
-    <parameters xmi:id="_AJud3-tqEemQuOLHJni5mQ" name="oldT" kind="IN"/>
-    <parameters xmi:id="_AJud4OtqEemQuOLHJni5mQ" name="typeParameterName" kind="IN"/>
-    <parameters xmi:id="_AJud4etqEemQuOLHJni5mQ" name="oldGenericTypeOfClassifier" kind="IN"/>
-    <lhs xmi:id="_AJud4utqEemQuOLHJni5mQ" name="Lhs">
-      <nodes xmi:id="_AJud4-tqEemQuOLHJni5mQ" name="classifierWithoutTypeParameter" incoming="_AJud6utqEemQuOLHJni5mQ">
+  <units xsi:type="henshin:Rule" xmi:id="_MIkpnB2rEeq9ZO-r9jT7HQ" name="Transform: Classifier with Bound Generic Type Parameter - To - Classifier without Type-Parameter (1)">
+    <parameters xmi:id="_MIkpnR2rEeq9ZO-r9jT7HQ" name="classifierWithoutTypeParameter" kind="IN"/>
+    <parameters xmi:id="_MIkpnh2rEeq9ZO-r9jT7HQ" name="fromClassifierWithTypeParameter" kind="IN"/>
+    <parameters xmi:id="_MIkpnx2rEeq9ZO-r9jT7HQ" name="oldT" kind="IN"/>
+    <parameters xmi:id="_MIkpoB2rEeq9ZO-r9jT7HQ" name="typeParameterName" kind="IN"/>
+    <parameters xmi:id="_MIkpoR2rEeq9ZO-r9jT7HQ" name="oldGenericTypeOfClassifier" kind="IN"/>
+    <lhs xmi:id="_MIkpoh2rEeq9ZO-r9jT7HQ" name="Lhs">
+      <nodes xmi:id="_MIkpox2rEeq9ZO-r9jT7HQ" name="classifierWithoutTypeParameter" incoming="_MIkpqh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
       </nodes>
-      <nodes xmi:id="_AJud5OtqEemQuOLHJni5mQ" name="fromClassifierWithTypeParameter" outgoing="_AJud6OtqEemQuOLHJni5mQ">
+      <nodes xmi:id="_MIkppB2rEeq9ZO-r9jT7HQ" name="fromClassifierWithTypeParameter" outgoing="_MIkpqB2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
       </nodes>
-      <nodes xmi:id="_AJud5etqEemQuOLHJni5mQ" name="oldT" incoming="_AJud6OtqEemQuOLHJni5mQ" outgoing="_AJud6etqEemQuOLHJni5mQ">
+      <nodes xmi:id="_MIkppR2rEeq9ZO-r9jT7HQ" name="oldT" incoming="_MIkpqB2rEeq9ZO-r9jT7HQ" outgoing="_MIkpqR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
-        <attributes xmi:id="_AJud5utqEemQuOLHJni5mQ" value="typeParameterName">
+        <attributes xmi:id="_MIkpph2rEeq9ZO-r9jT7HQ" value="typeParameterName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_AJud5-tqEemQuOLHJni5mQ" name="oldGenericTypeOfClassifier" incoming="_AJud6etqEemQuOLHJni5mQ" outgoing="_AJud6utqEemQuOLHJni5mQ">
+      <nodes xmi:id="_MIkppx2rEeq9ZO-r9jT7HQ" name="oldGenericTypeOfClassifier" incoming="_MIkpqR2rEeq9ZO-r9jT7HQ" outgoing="_MIkpqh2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
       </nodes>
-      <edges xmi:id="_AJud6OtqEemQuOLHJni5mQ" source="_AJud5OtqEemQuOLHJni5mQ" target="_AJud5etqEemQuOLHJni5mQ">
+      <edges xmi:id="_MIkpqB2rEeq9ZO-r9jT7HQ" source="_MIkppB2rEeq9ZO-r9jT7HQ" target="_MIkppR2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
       </edges>
-      <edges xmi:id="_AJud6etqEemQuOLHJni5mQ" source="_AJud5etqEemQuOLHJni5mQ" target="_AJud5-tqEemQuOLHJni5mQ">
+      <edges xmi:id="_MIkpqR2rEeq9ZO-r9jT7HQ" source="_MIkppR2rEeq9ZO-r9jT7HQ" target="_MIkppx2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter/eBounds"/>
       </edges>
-      <edges xmi:id="_AJud6utqEemQuOLHJni5mQ" source="_AJud5-tqEemQuOLHJni5mQ" target="_AJud4-tqEemQuOLHJni5mQ">
+      <edges xmi:id="_MIkpqh2rEeq9ZO-r9jT7HQ" source="_MIkppx2rEeq9ZO-r9jT7HQ" target="_MIkpox2rEeq9ZO-r9jT7HQ">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
       </edges>
-      <formula xsi:type="henshin:Not" xmi:id="_AJud6-tqEemQuOLHJni5mQ">
-        <child xsi:type="henshin:NestedCondition" xmi:id="_AJud7OtqEemQuOLHJni5mQ">
-          <conclusion xmi:id="_AJud7etqEemQuOLHJni5mQ" name="post">
-            <nodes xmi:id="_AJud7utqEemQuOLHJni5mQ" name="postT" incoming="_AJud8OtqEemQuOLHJni5mQ">
+      <formula xsi:type="henshin:Not" xmi:id="_MIkpqx2rEeq9ZO-r9jT7HQ">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_MIkprB2rEeq9ZO-r9jT7HQ">
+          <conclusion xmi:id="_MIkprR2rEeq9ZO-r9jT7HQ" name="post">
+            <nodes xmi:id="_MIkprh2rEeq9ZO-r9jT7HQ" name="postT" incoming="_MIkpsB2rEeq9ZO-r9jT7HQ">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
             </nodes>
-            <nodes xmi:id="_AJud7-tqEemQuOLHJni5mQ" name="classifierWithoutTypeParameter" outgoing="_AJud8OtqEemQuOLHJni5mQ">
+            <nodes xmi:id="_MIkprx2rEeq9ZO-r9jT7HQ" name="classifierWithoutTypeParameter" outgoing="_MIkpsB2rEeq9ZO-r9jT7HQ">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
             </nodes>
-            <edges xmi:id="_AJud8OtqEemQuOLHJni5mQ" source="_AJud7-tqEemQuOLHJni5mQ" target="_AJud7utqEemQuOLHJni5mQ">
+            <edges xmi:id="_MIkpsB2rEeq9ZO-r9jT7HQ" source="_MIkprx2rEeq9ZO-r9jT7HQ" target="_MIkprh2rEeq9ZO-r9jT7HQ">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
             </edges>
           </conclusion>
-          <mappings xmi:id="_AJud8etqEemQuOLHJni5mQ" origin="_AJud4-tqEemQuOLHJni5mQ" image="_AJud7-tqEemQuOLHJni5mQ"/>
+          <mappings xmi:id="_MIkpsR2rEeq9ZO-r9jT7HQ" origin="_MIkpox2rEeq9ZO-r9jT7HQ" image="_MIkprx2rEeq9ZO-r9jT7HQ"/>
         </child>
       </formula>
     </lhs>
-    <rhs xmi:id="_AJud8utqEemQuOLHJni5mQ" name="Rhs">
-      <nodes xmi:id="_AJud8-tqEemQuOLHJni5mQ" name="classifierWithoutTypeParameter">
+    <rhs xmi:id="_MIkpsh2rEeq9ZO-r9jT7HQ" name="Rhs">
+      <nodes xmi:id="_MIkpsx2rEeq9ZO-r9jT7HQ" name="classifierWithoutTypeParameter">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
       </nodes>
-      <nodes xmi:id="_AJud9OtqEemQuOLHJni5mQ" name="fromClassifierWithTypeParameter">
+      <nodes xmi:id="_MIkptB2rEeq9ZO-r9jT7HQ" name="fromClassifierWithTypeParameter">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
       </nodes>
     </rhs>
-    <mappings xmi:id="_AJud9etqEemQuOLHJni5mQ" origin="_AJud4-tqEemQuOLHJni5mQ" image="_AJud8-tqEemQuOLHJni5mQ"/>
-    <mappings xmi:id="_AJud9utqEemQuOLHJni5mQ" origin="_AJud5OtqEemQuOLHJni5mQ" image="_AJud9OtqEemQuOLHJni5mQ"/>
+    <mappings xmi:id="_MIkptR2rEeq9ZO-r9jT7HQ" origin="_MIkpox2rEeq9ZO-r9jT7HQ" image="_MIkpsx2rEeq9ZO-r9jT7HQ"/>
+    <mappings xmi:id="_MIkpth2rEeq9ZO-r9jT7HQ" origin="_MIkppB2rEeq9ZO-r9jT7HQ" image="_MIkptB2rEeq9ZO-r9jT7HQ"/>
   </units>
 </henshin:Module>
