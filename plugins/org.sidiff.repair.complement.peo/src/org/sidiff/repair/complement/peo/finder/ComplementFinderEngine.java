@@ -151,6 +151,7 @@ public class ComplementFinderEngine {
 		complementMatching.stop();
 		
 		if (DEBUG) {
+			System.out.println("Re.Vision[Complement Count]: " + complementPreMatches.size());
 			System.out.println("Re.Vision[Complement Time]: " + complementMatching + "ms");
 		}
 		
@@ -240,14 +241,12 @@ public class ComplementFinderEngine {
 						if ((repairContext == null) && (repairContextElement == null)) {
 							repairContext = source;
 							repairContextElement = repairScopeElement;
-						} else {
-							if ((repairContext != source) && (repairContextElement != repairScopeElement)) {
+						} else if ((repairContext != source) || (repairContextElement != repairScopeElement)) {
 
 								// Ambiguous context!
 								repairContext = null;
 								repairContextElement = null;
 								break;
-							}
 						}
 					}
 				} else if (graphElement instanceof Attribute) {
@@ -257,9 +256,7 @@ public class ComplementFinderEngine {
 						if ((repairContext == null) && (repairContextElement == null)) {
 							repairContext = container;
 							repairContextElement = repairScopeElement;
-						}
-					} else {
-						if ((repairContext != container) && (repairContextElement != repairScopeElement)) {
+						} else if ((repairContext != container) || (repairContextElement != repairScopeElement)) {
 
 							// Ambiguous context!
 							repairContext = null;
@@ -268,6 +265,12 @@ public class ComplementFinderEngine {
 						}
 					}
 				}
+			} else {
+				
+				// Ambiguous context!
+				repairContext = null;
+				repairContextElement = null;
+				break;
 			}
 		}
 		
