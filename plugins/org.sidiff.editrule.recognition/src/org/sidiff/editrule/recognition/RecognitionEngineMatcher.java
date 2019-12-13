@@ -16,6 +16,7 @@ import org.sidiff.editrule.recognition.pattern.domain.Domain;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
+import org.sidiff.editrule.recognition.selection.IMatchSelector;
 import org.sidiff.editrule.recognition.selection.MatchSelector;
 import org.sidiff.editrule.recognition.solver.PartialCSPSolver;
 import org.sidiff.editrule.recognition.util.debug.DebugUtil;
@@ -30,7 +31,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	protected PartialCSPSolver matchGenerator;
 	
-	protected MatchSelector matchSelector;
+	protected IMatchSelector matchSelector;
 	
 	protected DependencyEvaluation dependencies;
 	
@@ -101,6 +102,11 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		
 		// Create Structural-Matcher:
 		matchSelector = new MatchSelector(recognitionPattern);
+		
+		// TODO[EXPERIMENTAL]: Seed initial domains by impact:
+//		MatchSeeding matchSeeding = new MatchSeeding(recognitionPattern);
+//		matchSeeding.seed(resolvingScope, overwriteScope);
+//		matchSelector = matchSeeding;	// Remove old selector!
 		
 		// Create CSP-Matcher:
 		matchGenerator = new PartialCSPSolver();

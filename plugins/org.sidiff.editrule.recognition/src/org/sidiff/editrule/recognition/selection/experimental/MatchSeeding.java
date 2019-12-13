@@ -1,19 +1,28 @@
-package org.sidiff.editrule.recognition.selection;
+package org.sidiff.editrule.recognition.selection.experimental;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.GraphElement;
+import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.difference.symmetric.Change;
+import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.domain.Domain;
+import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
+import org.sidiff.editrule.recognition.pattern.graph.path.MatchingPath;
 import org.sidiff.editrule.recognition.pattern.graph.path.MatchingPathFactory;
+import org.sidiff.editrule.recognition.selection.IMatchSelector;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 
-public class MatchSelector implements IMatchSelector {
+public class MatchSeeding implements IMatchSelector {
 	
 	protected RecognitionPattern recognitionPattern;
 	
 	protected MatchingPathFactory matchingPathFactory = new MatchingPathFactory();
 	
-	public MatchSelector(RecognitionPattern recognitionPattern) {
+	public MatchSeeding(RecognitionPattern recognitionPattern) {
 		this.recognitionPattern = recognitionPattern;
 	}
 	
@@ -22,8 +31,33 @@ public class MatchSelector implements IMatchSelector {
 		this.matchingPathFactory = matchingPathFactory;
 	}
 	
-	@Override
-	public void initialSelection(NodePattern selectedNode, EObject selectedMatch) {
+	public void seed(ImpactScope... scopes) {
+		seedInitialize();
+		
+		for (ImpactScope scope : scopes) {
+			for (GraphElement scopeGraphElement: scope.getChanges()) {
+				Node scopeNode = null;
+
+				if (scopeGraphElement instanceof Node) {
+					scopeNode = (Node) scopeGraphElement;
+				} else if (scopeGraphElement instanceof Edge) {
+					scopeNode = ((Edge) scopeGraphElement).getSource();
+				} else if (scopeGraphElement instanceof Attribute) {
+					scopeNode = ((Attribute) scopeGraphElement).getNode();
+				}
+				
+				scopeNode = ChangePatternUtil.tryLHS(scopeNode);
+				
+				for (EObject scopeObj : scope.get(scopeGraphElement)) {
+					seed(scopeNode, scopeObj);
+				}
+			}
+		}
+		
+		seedFinished();
+	}
+	
+	public void seedInitialize() {
 		
 		// Clear old domains:
 		
@@ -41,27 +75,59 @@ public class MatchSelector implements IMatchSelector {
 			domain.setCollecting(true);
 		}
 		
+	}
+	
+	public void seed(Node node, EObject seed) {
+		
 //		System.out.println("-----------------------------------------------------------");
-//		System.out.println("Initial Selection: " + selectedNode);
+//		System.out.println("Seed: " + node);
 		
 		// Search domains from model:
-		recognitionPattern.getChangePattern(selectedNode).searchPaths(matchingPathFactory.createMatchingPath(), (Change) selectedMatch);
+		ActionNode actionNode = recognitionPattern.getNodeTrace().get(node);
+		actionNode.addMatchContextB(seed);
+		
+		recognitionPattern.getNodeTrace().get(node).searchPaths(null, new MatchingPath());
+		
+//		System.out.println(PrintUtil.printSelections(recognitionPattern.getGraphPattern().getNodes()));
+		
+	}
+	
+	public void seedFinished() {
 		
 		// Action-Graph:
 		for (NodePattern node : recognitionPattern.getGraphNodePatterns()) {
 			Domain domain = Domain.get(node.getMatching());
 			domain.setCollecting(false);
-			domain.restrictUnmarked(selectedNode);
+			domain.restrictUnmarked(null);
 		}
 		
 		// Changes:
 		for (NodePattern node : recognitionPattern.getChangeNodePatterns()) {
 			Domain domain = Domain.get(node.getMatching());
 			domain.setCollecting(false);
-			domain.restrictUnmarked(selectedNode);
+			domain.restrictUnmarked(null);
+		}
+	}
+	
+	@Override
+	public void initialSelection(NodePattern selectedNode, EObject selectedMatch) {
+		
+		// Clear old domains:
+		
+		// Action-Graph:
+		for (NodePattern node : recognitionPattern.getGraphNodePatterns()) {
+			Domain domain = Domain.get(node.getMatching());
+			domain.clearSelection();
 		}
 		
-//		System.out.println(PrintUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
+		// Changes:
+		for (NodePattern node : recognitionPattern.getChangeNodePatterns()) {
+			Domain domain = Domain.get(node.getMatching());
+			domain.clearSelection();
+		}
+		
+		// Restriction:
+		selection(selectedNode, selectedMatch);
 	}
 	
 	@Override

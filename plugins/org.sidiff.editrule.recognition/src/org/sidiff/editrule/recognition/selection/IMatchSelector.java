@@ -1,10 +1,17 @@
 package org.sidiff.editrule.recognition.selection;
 
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.editrule.recognition.pattern.graph.path.MatchingPathFactory;
 import org.sidiff.graphpattern.NodePattern;
 
 public interface IMatchSelector {
 
+	/**
+	 * @param matchingPathFactory Creates an object to store the path during
+	 *                            matching.
+	 */
+	void setMatchingPathFactory(MatchingPathFactory matchingPathFactory);
+	
 	/**
 	 * The first selection for the search pattern.
 	 * 
