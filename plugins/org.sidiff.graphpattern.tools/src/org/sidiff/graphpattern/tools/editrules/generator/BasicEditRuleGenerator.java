@@ -89,7 +89,8 @@ public abstract class BasicEditRuleGenerator {
 					if (isUnmodifiable(preEdge) || isConditionMatch(preEdge, postEdge)) {
 
 						// << forbid/require >> edge:
-						if (isExists(preEdge)) {
+						// NOTE: Consider unmodifiable without stereotyps as 'exists'.
+						if (isExists(preEdge) || preEdge.getStereotypes().isEmpty()) {
 							generateRequirePrecondition(preEdge);
 						} else if (isNot(preEdge)) {
 							generateForbidPrecondition(preEdge);
@@ -111,7 +112,8 @@ public abstract class BasicEditRuleGenerator {
 					if (isUnmodifiable(preAttribute) || isConditionMatch(preAttribute, postAttribute)) {
 
 						// << forbid/require >> attribute:
-						if (isExists(preAttribute)) {
+						// NOTE: Consider unmodifiable without stereotyps as 'exists'.
+						if (isExists(preAttribute) || preAttribute.getStereotypes().isEmpty()) {
 							generateRequirePrecondition(preAttribute);
 						} else if (isNot(preAttribute)) {
 							generateForbidPrecondition(preAttribute);
@@ -141,7 +143,8 @@ public abstract class BasicEditRuleGenerator {
 					if (isCondition(preEdge) || isUnmodifiable(preEdge)) {
 
 						// << forbid/require >> edge:
-						if (isExists(preEdge)) {
+						// NOTE: Consider unmodifiable without stereotyps as 'exists'. 
+						if (isExists(preEdge) || preEdge.getStereotypes().isEmpty()) {
 							generateRequirePrecondition(preEdge);
 						} else if (isNot(preEdge)) {
 							generateForbidPrecondition(preEdge);
@@ -157,7 +160,8 @@ public abstract class BasicEditRuleGenerator {
 					if (isCondition(preAttribute) || isUnmodifiable(preAttribute)) {
 
 						// << forbid/require >> attribute:
-						if (isExists(preAttribute)) {
+						// NOTE: Consider unmodifiable without stereotyps as 'exists'.
+						if (isExists(preAttribute) || preAttribute.getStereotypes().isEmpty()) {
 							generateRequirePrecondition(preAttribute);
 						} else if (isNot(preAttribute)) {
 							generateForbidPrecondition(preAttribute);
@@ -217,7 +221,8 @@ public abstract class BasicEditRuleGenerator {
 						if (isUnmodifiable(postEdge) || isCondition(postEdge)) {
 							
 							// << forbid/require >> edge:
-							if (isExists(postEdge)) {
+							// NOTE: Consider unmodifiable without stereotyps as 'exists'.
+							if (isExists(postEdge) || postEdge.getStereotypes().isEmpty()) {
 								generateRequirePostcondition(postEdge);
 							} else if (isNot(postEdge)) {
 								generateForbidPostcondition(postEdge);
@@ -238,7 +243,8 @@ public abstract class BasicEditRuleGenerator {
 						if (isUnmodifiable(postAttribute) || isCondition(postAttribute)) {
 							
 							// << forbid/require >> attribute:
-							if (isExists(postAttribute)) {
+							// NOTE: Consider unmodifiable without stereotyps as 'exists'.
+							if (isExists(postAttribute) || postAttribute.getStereotypes().isEmpty()) {
 								generateRequirePostcondition(postAttribute);
 							} else if (isNot(postAttribute)) {
 								generateForbidPostcondition(postAttribute);
