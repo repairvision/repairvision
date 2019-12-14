@@ -1,6 +1,6 @@
 package org.sidiff.graphpattern.tools.editrules.constructors;
 
-import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil.isCondition;
+import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil.isNegativeCondition;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.parentConstraint;
 
 import java.util.ArrayList;
@@ -58,10 +58,10 @@ public class TransformationEditRuleConstructor implements IEditRuleConstructor {
 					problem.setSearchInjectiveSolutions(true);
 
 					for (NodePattern preNode : preConstraint.getNodes()) {
-						if (!isCondition(preNode)) {
+						if (!isNegativeCondition(preNode)) {
 							IDomain<NodePattern> domain = AbstractGraphPatternMatchings.getDomain(preNode, 
 									postConstraint.getNodes(), 
-									n -> !isCondition(n));
+									n -> !isNegativeCondition(n));
 							IVariable<NodePattern, NodePattern> variable = new Variable<>(preNode, domain, true, true);
 							problem.addVariable(variable);
 						}
