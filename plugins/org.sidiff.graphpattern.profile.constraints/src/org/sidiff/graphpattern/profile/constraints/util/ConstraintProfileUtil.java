@@ -39,6 +39,14 @@ public class ConstraintProfileUtil {
 	public static boolean isCondition(GraphElement graphElement) {
 		return isNot(graphElement) || isExists(graphElement) || isForAll(graphElement);
 	}
+	
+	public static boolean isPositiveCondition(GraphElement graphElement) {
+		return isExists(graphElement) || isForAll(graphElement);
+	}
+	
+	public static boolean isNegativeCondition(GraphElement graphElement) {
+		return isNot(graphElement);
+	}
 
 	public static boolean isNot(GraphElement graphElement) {
 		return graphElement.getStereotypes().contains(not);
