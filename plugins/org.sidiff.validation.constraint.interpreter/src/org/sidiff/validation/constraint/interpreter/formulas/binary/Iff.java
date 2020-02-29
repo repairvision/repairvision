@@ -16,6 +16,41 @@ public class Iff extends BinaryFormula {
 	public String toString() {
 		return super.toString();
 	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, boolean expected) {
+		
+		if (expected) {
+			
+			// t t / f f
+			Alternative alternative = Alternative.nextAlternative(parent);
+			
+			// t t
+			Sequence sequenceTrue = Sequence.nextSequence(alternative);
+			left.generate(sequenceTrue, true);
+			right.generate(sequenceTrue, true);
+			
+			// f f
+			Sequence sequenceFalse = Sequence.nextSequence(alternative);
+			left.generate(sequenceFalse, true);
+			right.generate(sequenceFalse, true);
+			
+		} else {
+			
+			// f t / t f
+			Alternative alternative = Alternative.nextAlternative(parent);
+			
+			// f t
+			Sequence sequenceFalseTrue = Sequence.nextSequence(alternative);
+			left.generate(sequenceFalseTrue, false);
+			right.generate(sequenceFalseTrue, true);
+			
+			// t f
+			Sequence sequenceTrueFalse = Sequence.nextSequence(alternative);
+			left.generate(sequenceTrueFalse, true);
+			right.generate(sequenceTrueFalse, false);
+		}
+	}
 
 	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {

@@ -671,7 +671,7 @@ public class GraphpatternEditor
 					 getContainer().getDisplay().asyncExec
 						 (new Runnable() {
 							  public void run() {
-								  getViewer().refresh();
+								  if (getViewer() != null) getViewer().refresh();
 								  firePropertyChange(IEditorPart.PROP_DIRTY);
 
 								  // Try to select the affected objects.

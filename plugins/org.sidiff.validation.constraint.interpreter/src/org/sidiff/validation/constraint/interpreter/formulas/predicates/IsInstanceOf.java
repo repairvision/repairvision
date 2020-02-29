@@ -5,6 +5,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -53,8 +54,9 @@ public class IsInstanceOf extends Predicate {
 			if (term.getValue() == null) {
 				result = false;
 			} else {
-				if (type instanceof EClass) {
-					result = (((EObject) term.getValue()).eClass() == type);
+				if ((type instanceof EClass) && (term.getValue() instanceof EObject)) {
+					result = (((EObject) term.getValue()).eClass() == type)
+							|| (((EObject) term.getValue()).eClass()).getESuperTypes().contains(type);
 				} else {
 					result = type.getInstanceClass().isInstance(term.getValue());
 				}
@@ -64,6 +66,24 @@ public class IsInstanceOf extends Predicate {
 		}
 		
 		return result;
+	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, boolean expected) {
+		
+		if (expected) {
+			term.generate(parent, ConstraintType.REQUIRE);
+			
+			if (typeTerm != null) {
+				typeTerm.generate(parent, ConstraintType.REQUIRE);
+			}
+		} else {
+			term.generate(parent, ConstraintType.FORBID);
+			
+			if (typeTerm != null) {
+				typeTerm.generate(parent, ConstraintType.FORBID);
+			}
+		}
 	}
 	
 	@Override

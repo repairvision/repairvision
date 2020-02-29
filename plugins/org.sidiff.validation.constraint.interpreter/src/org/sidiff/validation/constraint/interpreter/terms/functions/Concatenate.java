@@ -1,6 +1,9 @@
 package org.sidiff.validation.constraint.interpreter.terms.functions;
 
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -18,6 +21,11 @@ public class Concatenate extends Function {
 	}
 	
 	@Override
+	public EClassifier getType() {
+		return EcorePackage.eINSTANCE.getEString();
+	}
+	
+	@Override
 	public String toString() {
 		return left.getValue() + ", " + right.getValue() + " -> " + super.toString();
 	}
@@ -30,6 +38,12 @@ public class Concatenate extends Function {
 		value = "" + left.getValue() + right.getValue(); 
 		
 		return value;
+	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, ConstraintType type) {
+		left.generate(parent, type);
+		right.generate(parent, type);
 	}
 
 	@Override

@@ -20,10 +20,7 @@ public class CSPSolver<R, D> implements ICSPSolver<R, D> {
 	
 	protected Stack<IVariable<R, D>> solutionVariables;
 	
-	/**
-	 * NOTE(Optimization): Expand after remove variable might lead to no new matchings! 
-	 */
-	private boolean isNewSolution = false;
+	private boolean checkForMaximumSolution;
 	
 	private int droppedSolutions = 0;
 	
@@ -40,6 +37,16 @@ public class CSPSolver<R, D> implements ICSPSolver<R, D> {
 		this.pickableVariables = problem.getVariables();
 		this.removedVariables = new Stack<IVariable<R, D>>(pickableVariables.currentSize());
 		this.solutionVariables = new Stack<IVariable<R, D>>(pickableVariables.currentSize());
+		
+		// check if at least one variable needs to be checked:
+		this.checkForMaximumSolution = false;
+		
+		for (IVariable<R, D> variable : problem.getVariables()) {
+			if (variable.isMaximizeSolution()) {
+				this.checkForMaximumSolution = true;
+				break;
+			}
+		}
 	}
 	
 	@Override
@@ -74,15 +81,12 @@ public class CSPSolver<R, D> implements ICSPSolver<R, D> {
 				for (D value : variable.getDomain()) {
 
 					// (B) assign the variable with the value:
-					isNewSolution = variable.assign(value);
-					
-					if (isNewSolution) {
+					if (variable.assign(value)) {
 						expandSolution();
 					}
 					
 					// (B) backtracking:
 					variable.free();
-					isNewSolution = false;
 				}
 			} else {
 				++droppedSolutions;
@@ -111,7 +115,7 @@ public class CSPSolver<R, D> implements ICSPSolver<R, D> {
 		} else {
 			
 			// save actual assignment:
-			if ((!problem.isSearchMaximumSolutions() || isNewSolution) && checkFinalSolution()) {
+			if (checkFinalSolution()) {
 				storeSolution();
 			} else {
 				++droppedSolutions;
@@ -122,7 +126,7 @@ public class CSPSolver<R, D> implements ICSPSolver<R, D> {
 	protected boolean checkFinalSolution() {
 		return (solutionVariables.size() >= problem.getMinimumSolutionSize())
 			&& (solutionVariables.size() <= problem.getMaximumSolutionSize())
-			&& (!problem.isSearchMaximumSolutions() || checkMaximumSolution()) 
+			&& checkMaximumSolution() 
 			&& problem.checkFinalSolution(solutionVariables);
 	}
 	
@@ -139,9 +143,11 @@ public class CSPSolver<R, D> implements ICSPSolver<R, D> {
 		assert (pickableVariables.currentSize() == 0);
 		
 		// Check that no removed variable can be assigned with a value:
-		for (IVariable<R, D> removedVariable : removedVariables) {
-			if (removedVariable.isAssignable()) {
-				return false;
+		if (checkForMaximumSolution) {
+			for (IVariable<R, D> removedVariable : removedVariables) {
+				if (removedVariable.isAssignable()) {
+					return false;
+				}
 			}
 		}
 		

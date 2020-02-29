@@ -17,11 +17,11 @@ public class RepairAction implements IDecisionLeaf {
 		DELETE, CREATE, MODIFY
 	}
 	
-	protected RepairType type;
+	private RepairType type;
 	
-	protected EObject context;
+	private EObject context;
 	
-	protected EStructuralFeature feature;
+	private EStructuralFeature feature;
 	
 	public RepairAction(RepairType type, EObject context, EStructuralFeature feature) {
 		this.type = type;

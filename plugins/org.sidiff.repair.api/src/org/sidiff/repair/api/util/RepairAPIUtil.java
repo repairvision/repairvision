@@ -2,7 +2,6 @@ package org.sidiff.repair.api.util;
 
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
@@ -12,11 +11,6 @@ import org.sidiff.repair.api.IRepairPlan;
 
 public class RepairAPIUtil {
 
-	public static URI getRecognitionRuleURI(URI editRule, String fileExtension) {
-		return editRule.trimSegments(1).appendSegment("rr_" + editRule.lastSegment())
-				.trimFileExtension().appendFileExtension(fileExtension);
-	}
-	
 	public static int countOfNodeChanges(List<GraphElement> changes) {
 		int count = 0;
 		

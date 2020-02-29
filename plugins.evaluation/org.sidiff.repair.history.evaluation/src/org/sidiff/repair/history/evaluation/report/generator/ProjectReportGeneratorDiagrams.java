@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.sidiff.consistency.common.monitor.LogTable;
+import org.sidiff.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.repair.history.evaluation.report.HistoryLog;
 import org.sidiff.repair.history.evaluation.report.InconsistenciesLog;
 
@@ -24,11 +25,11 @@ public class ProjectReportGeneratorDiagrams {
 			
 			// RQ3:
 			LogTable rq3_rq4 = generateRQ3RQ4PerProject(false);
-			rq3_rq4.toCSV(ReportGenerator.OUTPUT_FOLDER + "rq3-4.csv");
+			rq3_rq4.toCSV(EvaluationDataSets.RESULT_REPORT + "rq3-4.csv");
 			
 			// RQ3 (HOR only):
 			LogTable rq3_rq4_hor = generateRQ3RQ4PerProject(true);
-			rq3_rq4_hor.toCSV(ReportGenerator.OUTPUT_FOLDER + "rq3-4_hor.csv");
+			rq3_rq4_hor.toCSV(EvaluationDataSets.RESULT_REPORT + "rq3-4_hor.csv");
 			
 		} catch (IOException e) {
 			e.printStackTrace();

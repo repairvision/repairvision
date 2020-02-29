@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Unbenanntes Dokument</title>
+</head>
+
+<body>
+<h1>Matching of Edit Rule Generator</h1>
+<table width="100%" border="1">
+  <tr>
+    <th scope="col">Pattern A (Pre)</th>
+    <th scope="col">Pattern B (Post)</th>
+    <th scope="col">Edit Rule</th>
+    <th scope="col">Comment</th>
+  </tr>
+  <tr>
+    <td>&lt;&lt;?&gt;&gt;</td>
+    <td>&lt;&lt;?&gt;&gt;</td>
+    <td>&lt;&lt;preserve&gt;&gt;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&lt;&lt;not&gt;&gt;</td>
+    <td>&lt;&lt;?&gt;&gt;</td>
+    <td>&lt;&lt;forbid (precondition)&gt;&gt; + &lt;create&gt;&gt;</td>
+    <td>not supported (1)</td>
+  </tr>
+  <tr>
+    <td>&lt;&lt;exists&gt;&gt;</td>
+    <td>&lt;&lt;?&gt;&gt;</td>
+    <td>&lt;&lt;preserve&gt;&gt;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&lt;&lt;?&gt;&gt;</td>
+    <td>&lt;&lt;not&gt;&gt;</td>
+    <td>&lt;&lt;delete&gt;&gt;</td>
+    <td>not supported (1)</td>
+  </tr>
+  <tr>
+    <td>&lt;&lt;not&gt;&gt;</td>
+    <td>&lt;&lt;not&gt;&gt;</td>
+    <td>&lt;&lt;forbid&gt;&gt;</td>
+    <td>not supported (1)</td>
+  </tr>
+  <tr>
+    <td>&lt;&lt;exists&gt;&gt;</td>
+    <td>&lt;&lt;not&gt;&gt;</td>
+    <td>&nbsp;</td>
+    <td>not allowed (2)</td>
+  </tr>
+  <tr>
+    <td>&lt;&lt;?&gt;&gt;</td>
+    <td>&lt;&lt;exists&gt;&gt;</td>
+    <td>&lt;&lt;preserve&gt;&gt;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&lt;&lt;not&gt;&gt;</td>
+    <td>&lt;&lt;exists&gt;&gt;</td>
+    <td>&nbsp;</td>
+    <td>not allowed (2)</td>
+  </tr>
+  <tr>
+    <td>&lt;&lt;exists&gt;&gt;</td>
+    <td>&lt;&lt;exists&gt;&gt;</td>
+    <td>&lt;&lt;require&gt;&gt; or &lt;&lt;preserve&gt;&gt; (with incident changes)</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>(1) Currently only mappings are supported that lead to &lt;&lt;preserve&gt;&gt; nodes in the edit rule.</p>
+<p>(2) &lt;&lt;not&gt;&gt; means the element is not existing, &lt;&lt;exists&gt;&gt; the element already exists (without further modifications), it follows a mapping is not possible.</p>
+</body>
+</html>

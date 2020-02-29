@@ -1,8 +1,9 @@
 package org.sidiff.editrule.recognition;
 
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 
+import org.sidiff.editrule.recognition.match.RecognitionMatching;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
@@ -19,5 +20,5 @@ public interface IRecognitionEngineMatcher {
 	
 	Collection<ChangePattern> getAllChanges();
 	
-	Iterator<IMatching> recognizeEditRule();
+	List<RecognitionMatching> recognizeEditRule();
 }

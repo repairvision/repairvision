@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Ta_YUBdKEeqBYOG0GoNe2g" name="Create: MessageSignature" description="Create: MessageSignature">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Ta_YURdKEeqBYOG0GoNe2g" name="mainUnit" subUnits="_Ta_YXBdKEeqBYOG0GoNe2g">
+    <parameters xmi:id="_Ta_YUhdKEeqBYOG0GoNe2g" name="opName" kind="IN"/>
+    <parameters xmi:id="_Ta_YUxdKEeqBYOG0GoNe2g" name="toLifeline" kind="IN"/>
+    <parameters xmi:id="_Ta_YVBdKEeqBYOG0GoNe2g" name="postReceiverType" kind="IN"/>
+    <parameters xmi:id="_Ta_YVRdKEeqBYOG0GoNe2g" name="toClass" kind="IN"/>
+    <parameters xmi:id="_Ta_YVhdKEeqBYOG0GoNe2g" name="toContainer" kind="IN"/>
+    <parameterMappings xmi:id="_Ta_YVxdKEeqBYOG0GoNe2g" source="_Ta_YUhdKEeqBYOG0GoNe2g" target="_Ta_YXRdKEeqBYOG0GoNe2g"/>
+    <parameterMappings xmi:id="_Ta_YWBdKEeqBYOG0GoNe2g" source="_Ta_YUxdKEeqBYOG0GoNe2g" target="_Ta_YXhdKEeqBYOG0GoNe2g"/>
+    <parameterMappings xmi:id="_Ta_YWRdKEeqBYOG0GoNe2g" source="_Ta_YVBdKEeqBYOG0GoNe2g" target="_Ta_YXxdKEeqBYOG0GoNe2g"/>
+    <parameterMappings xmi:id="_Ta_YWhdKEeqBYOG0GoNe2g" source="_Ta_YVRdKEeqBYOG0GoNe2g" target="_Ta_YYBdKEeqBYOG0GoNe2g"/>
+    <parameterMappings xmi:id="_Ta_YWxdKEeqBYOG0GoNe2g" source="_Ta_YVhdKEeqBYOG0GoNe2g" target="_Ta_YYRdKEeqBYOG0GoNe2g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Ta_YXBdKEeqBYOG0GoNe2g" name="Create: MessageSignature">
+    <parameters xmi:id="_Ta_YXRdKEeqBYOG0GoNe2g" name="opName" kind="IN"/>
+    <parameters xmi:id="_Ta_YXhdKEeqBYOG0GoNe2g" name="toLifeline" kind="IN"/>
+    <parameters xmi:id="_Ta_YXxdKEeqBYOG0GoNe2g" name="postReceiverType" kind="IN"/>
+    <parameters xmi:id="_Ta_YYBdKEeqBYOG0GoNe2g" name="toClass" kind="IN"/>
+    <parameters xmi:id="_Ta_YYRdKEeqBYOG0GoNe2g" name="toContainer" kind="IN"/>
+    <lhs xmi:id="_Ta_YYhdKEeqBYOG0GoNe2g" name="Lhs">
+      <nodes xmi:id="_Ta_YYxdKEeqBYOG0GoNe2g" name="toLifeline">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_Ta_YZBdKEeqBYOG0GoNe2g" name="toClass">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes xmi:id="_Ta_YZRdKEeqBYOG0GoNe2g" name="toContainer">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
+      </nodes>
+      <formula xsi:type="henshin:NestedCondition" xmi:id="_Ta_YZhdKEeqBYOG0GoNe2g">
+        <conclusion xmi:id="_Ta_YZxdKEeqBYOG0GoNe2g" name="post">
+          <nodes xmi:id="_Ta_YaBdKEeqBYOG0GoNe2g" name="postReceiverType" incoming="_Ta_YaxdKEeqBYOG0GoNe2g" outgoing="_Ta_YbBdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+          </nodes>
+          <nodes xmi:id="_Ta_YaRdKEeqBYOG0GoNe2g" name="toLifeline" outgoing="_Ta_YaxdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+          </nodes>
+          <nodes xmi:id="_Ta_YahdKEeqBYOG0GoNe2g" name="toClass" incoming="_Ta_YbBdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+          </nodes>
+          <edges xmi:id="_Ta_YaxdKEeqBYOG0GoNe2g" source="_Ta_YaRdKEeqBYOG0GoNe2g" target="_Ta_YaBdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+          </edges>
+          <edges xmi:id="_Ta_YbBdKEeqBYOG0GoNe2g" source="_Ta_YaBdKEeqBYOG0GoNe2g" target="_Ta_YahdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+          </edges>
+        </conclusion>
+        <mappings xmi:id="_Ta_YbRdKEeqBYOG0GoNe2g" origin="_Ta_YYxdKEeqBYOG0GoNe2g" image="_Ta_YaRdKEeqBYOG0GoNe2g"/>
+        <mappings xmi:id="_Ta_YbhdKEeqBYOG0GoNe2g" origin="_Ta_YZBdKEeqBYOG0GoNe2g" image="_Ta_YahdKEeqBYOG0GoNe2g"/>
+      </formula>
+    </lhs>
+    <rhs xmi:id="_Ta_YbxdKEeqBYOG0GoNe2g" name="Rhs">
+      <nodes xmi:id="_Ta_YcBdKEeqBYOG0GoNe2g" name="newMessage" incoming="_Ta_YgBdKEeqBYOG0GoNe2g" outgoing="_Ta_YeBdKEeqBYOG0GoNe2g _Ta_YeRdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+        <attributes xmi:id="_Ta_YcRdKEeqBYOG0GoNe2g" value="opName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Ta_YchdKEeqBYOG0GoNe2g" name="newTargetEnd" incoming="_Ta_YeBdKEeqBYOG0GoNe2g _Ta_YfBdKEeqBYOG0GoNe2g _Ta_YfxdKEeqBYOG0GoNe2g" outgoing="_Ta_YehdKEeqBYOG0GoNe2g _Ta_YexdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+      </nodes>
+      <nodes xmi:id="_Ta_YcxdKEeqBYOG0GoNe2g" name="toLifeline" incoming="_Ta_YehdKEeqBYOG0GoNe2g" outgoing="_Ta_YfBdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_Ta_YdBdKEeqBYOG0GoNe2g" name="toClass" incoming="_Ta_YfhdKEeqBYOG0GoNe2g" outgoing="_Ta_YfRdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes xmi:id="_Ta_YdRdKEeqBYOG0GoNe2g" name="newOperation" incoming="_Ta_YfRdKEeqBYOG0GoNe2g" outgoing="_Ta_YfhdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+        <attributes xmi:id="_Ta_YdhdKEeqBYOG0GoNe2g" value="opName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Ta_YdxdKEeqBYOG0GoNe2g" name="toContainer" incoming="_Ta_YeRdKEeqBYOG0GoNe2g _Ta_YexdKEeqBYOG0GoNe2g" outgoing="_Ta_YfxdKEeqBYOG0GoNe2g _Ta_YgBdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
+      </nodes>
+      <edges xmi:id="_Ta_YeBdKEeqBYOG0GoNe2g" source="_Ta_YcBdKEeqBYOG0GoNe2g" target="_Ta_YchdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/receiveEvent"/>
+      </edges>
+      <edges xmi:id="_Ta_YeRdKEeqBYOG0GoNe2g" source="_Ta_YcBdKEeqBYOG0GoNe2g" target="_Ta_YdxdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/interaction"/>
+      </edges>
+      <edges xmi:id="_Ta_YehdKEeqBYOG0GoNe2g" source="_Ta_YchdKEeqBYOG0GoNe2g" target="_Ta_YcxdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+      </edges>
+      <edges xmi:id="_Ta_YexdKEeqBYOG0GoNe2g" source="_Ta_YchdKEeqBYOG0GoNe2g" target="_Ta_YdxdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/enclosingInteraction"/>
+      </edges>
+      <edges xmi:id="_Ta_YfBdKEeqBYOG0GoNe2g" source="_Ta_YcxdKEeqBYOG0GoNe2g" target="_Ta_YchdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/coveredBy"/>
+      </edges>
+      <edges xmi:id="_Ta_YfRdKEeqBYOG0GoNe2g" source="_Ta_YdBdKEeqBYOG0GoNe2g" target="_Ta_YdRdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+      </edges>
+      <edges xmi:id="_Ta_YfhdKEeqBYOG0GoNe2g" source="_Ta_YdRdKEeqBYOG0GoNe2g" target="_Ta_YdBdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
+      </edges>
+      <edges xmi:id="_Ta_YfxdKEeqBYOG0GoNe2g" source="_Ta_YdxdKEeqBYOG0GoNe2g" target="_Ta_YchdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/fragment"/>
+      </edges>
+      <edges xmi:id="_Ta_YgBdKEeqBYOG0GoNe2g" source="_Ta_YdxdKEeqBYOG0GoNe2g" target="_Ta_YcBdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/message"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Ta_YgRdKEeqBYOG0GoNe2g" origin="_Ta_YYxdKEeqBYOG0GoNe2g" image="_Ta_YcxdKEeqBYOG0GoNe2g"/>
+    <mappings xmi:id="_Ta_YghdKEeqBYOG0GoNe2g" origin="_Ta_YZBdKEeqBYOG0GoNe2g" image="_Ta_YdBdKEeqBYOG0GoNe2g"/>
+    <mappings xmi:id="_Ta_YgxdKEeqBYOG0GoNe2g" origin="_Ta_YZRdKEeqBYOG0GoNe2g" image="_Ta_YdxdKEeqBYOG0GoNe2g"/>
+  </units>
+</henshin:Module>

@@ -257,13 +257,13 @@ public interface HenshinExtensionPackage extends EPackage {
 	int SUB_GRAPH__DESCRIPTION = GraphpatternPackage.PATTERN_ELEMENT__DESCRIPTION;
 
 	/**
-	 * The feature id for the '<em><b>Subgraph</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Subgraphs</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SUB_GRAPH__SUBGRAPH = GraphpatternPackage.PATTERN_ELEMENT_FEATURE_COUNT + 0;
+	int SUB_GRAPH__SUBGRAPHS = GraphpatternPackage.PATTERN_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Elements</b></em>' reference list.
@@ -645,15 +645,15 @@ public interface HenshinExtensionPackage extends EPackage {
 	EClass getSubGraph();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.graphpattern.profile.henshin_extension.SubGraph#getSubgraph <em>Subgraph</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.graphpattern.profile.henshin_extension.SubGraph#getSubgraphs <em>Subgraphs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Subgraph</em>'.
-	 * @see org.sidiff.graphpattern.profile.henshin_extension.SubGraph#getSubgraph()
+	 * @return the meta object for the containment reference list '<em>Subgraphs</em>'.
+	 * @see org.sidiff.graphpattern.profile.henshin_extension.SubGraph#getSubgraphs()
 	 * @see #getSubGraph()
 	 * @generated
 	 */
-	EReference getSubGraph_Subgraph();
+	EReference getSubGraph_Subgraphs();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.profile.henshin_extension.SubGraph#getElements <em>Elements</em>}'.
@@ -768,12 +768,12 @@ public interface HenshinExtensionPackage extends EPackage {
 		EClass SUB_GRAPH = eINSTANCE.getSubGraph();
 
 		/**
-		 * The meta object literal for the '<em><b>Subgraph</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Subgraphs</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference SUB_GRAPH__SUBGRAPH = eINSTANCE.getSubGraph_Subgraph();
+		EReference SUB_GRAPH__SUBGRAPHS = eINSTANCE.getSubGraph_Subgraphs();
 
 		/**
 		 * The meta object literal for the '<em><b>Elements</b></em>' reference list feature.

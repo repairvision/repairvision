@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Stereotype;
 
 /**
  * <!-- begin-user-doc -->
@@ -418,7 +419,19 @@ public class EdgePatternImpl extends GraphElementImpl implements EdgePattern {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
+		
+		// Stereotypes:
+		String edgeStereotype = "";
+		
+		for (Stereotype stereotype : getStereotypes()) {
+			edgeStereotype += stereotype.getName() + ","; 
+		}
+		
+		if (edgeStereotype != "") {
+			edgeStereotype = "<<" + edgeStereotype.substring(0, edgeStereotype.length() - 1) + ">> ";
+		}
 	
+		// Path:
 		String sourceName = getSource() != null ? getSource().getName() != null ? getSource().getName() : "" : "";
 		String sourceType = getSource() != null ? getSource().getType() != null ? getSource().getType().getName() : "?" : "?";
 		String targetName = getTarget() != null ? getTarget().getName() != null ? getTarget().getName() : "" : "";
@@ -427,6 +440,7 @@ public class EdgePatternImpl extends GraphElementImpl implements EdgePattern {
 		String edgeType = getType() != null ? getType().getName() : "?";
 		
 		result.append(" (path: " 
+				+ edgeStereotype
 				+ "[" + sourceName+ ":" + sourceType + "]"
 				+ " - " + edgeType + " -> " 
 				+ "[" + targetName + ":" + targetType + "]" 

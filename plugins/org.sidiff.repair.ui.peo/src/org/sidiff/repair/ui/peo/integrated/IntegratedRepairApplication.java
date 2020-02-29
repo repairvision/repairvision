@@ -1,21 +1,17 @@
 package org.sidiff.repair.ui.peo.integrated;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.command.AbstractCommand;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.henshin.interpreter.Match;
@@ -24,16 +20,12 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.FileEditorInput;
 import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.analysis.tracing.HistoryModelDatabase;
 import org.sidiff.history.analysis.validation.FOLValidator;
-import org.sidiff.integration.editor.access.IntegrationEditorAccess;
-import org.sidiff.integration.editor.extension.IEditorIntegration;
+import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
 import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
@@ -121,77 +113,15 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	}
 	
 	private Resource getCurrentModelVersion() {
-		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		ActiveModelEditorAccess editorAccess = new ActiveModelEditorAccess();
 		
-		if (editor == null) {
-			return null;
+		if (editorAccess.getEditingDomain() == null) {
+			autoSaveModel = true;
+		} else {
+			autoSaveModel = false;
 		}
 		
-		// check for editor integration extension (supported models):
-		for (IEditorIntegration editorIntegration : IntegrationEditorAccess.getInstance().getIntegrationEditors()) {
-			try {
-				EditingDomain editingDomain = editorIntegration.getEditingDomain(editor);
-				
-				if (editingDomain != null) {
-					for (Resource resource : editingDomain.getResourceSet().getResources()) {
-						if (editorIntegration.supportsModel(resource.getURI())) {
-							autoSaveModel = false;
-							return resource;
-						}
-					}
-				}
-			} catch (Exception e) {
-			}
-		}
-		
-		// check for editor integration extension:
-		for (IEditorIntegration editorIntegration : IntegrationEditorAccess.getInstance().getIntegrationEditors()) {
-			try {
-				EditingDomain editingDomain = editorIntegration.getEditingDomain(editor);
-				
-				if (editingDomain != null) {
-					if (!editingDomain.getResourceSet().getResources().isEmpty()) {
-						autoSaveModel = false;
-						return editingDomain.getResourceSet().getResources().get(0);
-					}
-				}
-			} catch (Exception e) {
-			}
-		}
-		
-		// get by reflection:
-		for (Method method : editor.getClass().getMethods()) {
-			if (method.getName().equals("getEditingDomain") && method.getReturnType().equals(EditingDomain.class)) {
-				try {
-					EditingDomain editingDomain = (EditingDomain) method.invoke(editor);
-					
-					if (editingDomain != null) {
-						for (Resource resource : editingDomain.getResourceSet().getResources()) {
-							autoSaveModel = false;
-							return resource;
-						}
-					}
-				} catch (Exception e) {
-				}
-			}
-		}
-	
-		// get editor file input:
-		if (editor.getEditorInput() instanceof FileEditorInput) {
-			try {
-				IFile file = ((FileEditorInput) editor.getEditorInput()).getFile();
-				URI fileURI = URI.createFileURI(file.getLocation().toFile().getAbsolutePath());
-				Resource resource = new ResourceSetImpl().getResource(fileURI, true);
-				
-				if ((resource != null) && (!resource.getContents().isEmpty())) {
-					autoSaveModel = true;
-					return resource;
-				}
-			} catch (Exception e) {
-			}
-		}
-		
-		return null;
+		return editorAccess.getModelResource();
 	}
 	
 	@Override
@@ -314,12 +244,6 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				protected void doExecute() {
 					result[0] = repairJob.applyRepair(repair, match, false);
 				}
-
-				@Override
-				public boolean canUndo() {
-					return true;
-				}
-
 			});
 		} else {
 			EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getModelB().getContents().get(0));
@@ -422,12 +346,6 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				protected void doExecute() {;
 					result[0] = repairJob.rollbackInconsistencyInducingChanges(repair, false);
 				}
-
-				@Override
-				public boolean canUndo() {
-					return true;
-				}
-
 			});
 		} else {
 			EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getModelB().getContents().get(0));

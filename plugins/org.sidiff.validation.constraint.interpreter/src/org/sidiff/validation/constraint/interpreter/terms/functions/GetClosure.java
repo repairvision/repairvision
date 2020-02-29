@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
@@ -31,6 +34,11 @@ public class GetClosure extends Function {
 		this.feature = feature;
 	}
 	
+	@Override
+	public EClassifier getType() {
+		return feature.getEType();
+	}
+
 	@Override
 	public String toString() {
 		return element.getValue() + ", " + feature.getName() + " -> " + super.toString();
@@ -81,8 +89,17 @@ public class GetClosure extends Function {
 	}
 	
 	@Override
+	public void generate(IDecisionBranch parent, ConstraintType type) {
+		Sequence sequence = Sequence.nextSequence(parent);
+		element.generate(sequence, type);
+		
+		ConstraintAction newConstraint = new ConstraintAction(type, feature.getEContainingClass(), feature, feature.getEType());
+		parent.appendChildDecisions(newConstraint);
+	}
+	
+	@Override
 	public void required(IDecisionBranch parent) {
-		// see: consistency(IScopeDecision parent, EObject valid)
+		// see: required(IScopeDecision parent, EObject valid)
 	}
 	
 	public void required(IDecisionBranch parent, EObject valid) {

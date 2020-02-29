@@ -58,15 +58,15 @@ public class PEORepairCaculation {
 		List<Attribute> settingAttributes = ChangePatternUtil.getSettingAttributes(editRule);
 		
 		// Filter edit-rules by impact (sub-rule -> negative, complement-rule -> positive):
-		this.positiveImpactScope = new ImpactScope(changes, impact.getPositiveImpactAnalysis());
-		this.negativeImpactScope = new ImpactScope(changes, impact.getNegativeImpactAnalysis());
+		this.positiveImpactScope = new ImpactScope(changes, impact.getCurrentImpactAnalysis());
+		this.negativeImpactScope = new ImpactScope(changes, impact.getHistoricalImpactAnalysis());
 		
-		ImpactScope overwriteImpactScope = new ImpactScope(settingAttributes, impact.getPositiveImpactAnalysis());
+		ImpactScope overwriteImpactScope = new ImpactScope(settingAttributes, impact.getCurrentImpactAnalysis());
 		
 		// Create complement finder:
 		if (isPotentialRepair()) {
 			complementFinder = complementFinderEngine.createComplementFinder(
-					editRule, positiveImpactScope, overwriteImpactScope, 
+					editRule, impact, positiveImpactScope, overwriteImpactScope, 
 					negativeImpactScope, settings.getComplementFinderSettings());
 		}
 	}
@@ -92,30 +92,19 @@ public class PEORepairCaculation {
 				if (complement.getComplementingChanges().size() > 0) {
 					
 					if (GraphActionImpactUtil.potential(
-							impact.getPositivePotentialImpactAnalysis(), 
-							complement.getComplementingChanges()) 
+							impact.getCurrentPotentialImpactAnalysis(), 
+							complement.getComplementingBoundaryChanges()) 
 					 && GraphActionImpactUtil.potential(
-							 impact.getNegativePotentialImpactAnalysis(), 
+							 impact.getHistoricalPotentialImpactAnalysis(), 
 							 complement.getRecognizedChanges())) {
 
 						// Filter complement with pre-match by inconsistency impact:
 						if (GraphActionImpactUtil.real(
-								impact.getNegativeImpactAnalysis(),
+								impact.getHistoricalImpactAnalysis(),
 								complement.getRecognizedChanges(),
 								complement.getRecognitionMatch())) {
 							
-							List<Match> complementMatches = complementFinderEngine.findComplementMatches(complement);
-							List<Match> repairMatches = new ArrayList<>(complementMatches.size());
-							
-							for (Match complementMatch : complementMatches) {
-								if (GraphActionImpactUtil.real(
-										impact.getPositiveImpactAnalysis(), 
-										complement.getComplementingChanges(), 
-										complementMatch)) {
-									
-									repairMatches.add(complementMatch);
-								}
-							}
+							List<Match> repairMatches = complementFinderEngine.findComplementMatches(complement);
 							
 							if (!repairMatches.isEmpty()) {
 								repairs.add(new RepairPlan(complement, repairMatches));

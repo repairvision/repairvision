@@ -44,24 +44,32 @@ public class RulebaseUtil {
 			boolean isValid = validate ? editRuleValidation(editRuleFile.getLocation().toFile().toString(), editRuleRes) : true;
 			
 			if (!onlyValid || isValid) {
-				editRules.add(getEditRule(editRuleRes));
+				Rule editRule = getEditRule(editRuleRes);
+				
+				if (editRule != null) {
+					editRules.add(editRule);
+				}
 			}
 		}
 		
 		return editRules;
 	}
 	
-	public static Collection<Rule> eLoadEditRules(Collection<URI> editRuleFiles, boolean validate) {
+	public static List<Rule> eLoadEditRules(Collection<URI> editRuleFiles, boolean validate) {
 		
 		// Load edit-rules:
-		Collection<Rule> editRules = new ArrayList<>();
+		List<Rule> editRules = new ArrayList<>();
 		ResourceSet editRulesRSS = new ResourceSetImpl();
 		
 		for (URI editRuleURI : editRuleFiles) {
 			Resource editRuleRes = editRulesRSS.getResource(editRuleURI, true);
 			
 			if (!validate || editRuleValidation(editRuleURI.toFileString(), editRuleRes)) {
-				editRules.add(getEditRule(editRuleRes));
+				Rule editRule = getEditRule(editRuleRes);
+				
+				if (editRule != null) {
+					editRules.add(editRule);
+				}
 			}
 		}
 		
@@ -111,6 +119,8 @@ public class RulebaseUtil {
 						return editRule;
 					}
 				}
+				
+				throw new NoMainUnitFoundException((Module) root);
 			} catch (NoMainUnitFoundException e) {
 				e.printStackTrace();
 			}

@@ -1,55 +1,13 @@
 package org.sidiff.validation.constraint.impact;
 
-import java.util.List;
+public interface ImpactAnalyzes {
 
-import org.sidiff.validation.constraint.api.util.Validation;
-import org.sidiff.validation.constraint.impact.index.RepairActionIndex;
+	PotentialImpactAnalysis getHistoricalPotentialImpactAnalysis();
 
-public class ImpactAnalyzes {
-	
-	private RepairActionIndex repairActionIndex;
+	ImpactAnalysis getHistoricalImpactAnalysis();
 
-	private NegativePotentialImpactAnalysis negativePotentialImpactAnalysis;
-	
-	private NegativeImpactAnalysis negativeImpactAnalysis;
-	
-	private PositivePotentialImpactAnalysis positivePotentialImpactAnalysis;
-	
-	private PositiveImpactAnalysis positiveImpactAnalysis;
-	
-	public ImpactAnalyzes(RepairActionIndex repairActionIndex) {
-		this.repairActionIndex = repairActionIndex;
-		this.negativePotentialImpactAnalysis = new NegativePotentialImpactAnalysis(repairActionIndex);
-		this.negativeImpactAnalysis = new NegativeImpactAnalysis(repairActionIndex);
-		this.positiveImpactAnalysis = new PositiveImpactAnalysis(repairActionIndex);
-		this.positivePotentialImpactAnalysis = new PositivePotentialImpactAnalysis(repairActionIndex);
-	}
-	
-	public NegativePotentialImpactAnalysis getNegativePotentialImpactAnalysis() {
-		return negativePotentialImpactAnalysis;
-	}
-	
-	public NegativeImpactAnalysis getNegativeImpactAnalysis() {
-		return negativeImpactAnalysis;
-	}
-	
-	public PositiveImpactAnalysis getPositiveImpactAnalysis() {
-		return positiveImpactAnalysis;
-	}
-	
-	public PositivePotentialImpactAnalysis getPositivePotentialImpactAnalysis() {
-		return positivePotentialImpactAnalysis;
-	}
+	ImpactAnalysis getCurrentImpactAnalysis();
 
-	public List<? extends Validation> getValidations() {
-		return repairActionIndex.getValidations();
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder toString = new StringBuilder(super.toString());
-		toString.append(" -> ");
-		toString.append(repairActionIndex.toString());
-		return toString.toString();
-	}
+	PotentialImpactAnalysis getCurrentPotentialImpactAnalysis();
+
 }

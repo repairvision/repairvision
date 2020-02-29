@@ -6,11 +6,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.sidiff.editrule.recognition.generator.Variable;
+import org.eclipse.emf.common.util.URI;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
 import org.sidiff.editrule.recognition.selection.MatchSelectorMonitor;
+import org.sidiff.editrule.recognition.solver.Variable;
+import org.sidiff.editrule.recognition.util.debug.IRecognitionPatternSerializer;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.util.GraphPatternConstants;
+import org.sidiff.graphpattern.util.GraphPatternUtil;
 
 public class RecognitionEngineRecorder {
 
@@ -21,6 +25,11 @@ public class RecognitionEngineRecorder {
 	private RecognitionEngineMatcher recognitionEngineMatcher;
 	
 	private MatchSelectorMonitor matchSelectorMonitor;
+	
+	/**
+	 * Writes the recognition rule to the location of the edit rule (e.g. debugging).
+	 */
+	private boolean saveRecognitionRule;
 	
 	public RecognitionEngineRecorder(RecognitionEngineMatcher recognitionEngineMatcher) {
 		this.recognitionEngineMatcher = recognitionEngineMatcher;
@@ -95,5 +104,32 @@ public class RecognitionEngineRecorder {
 	
 	public List<List<ActionNode>> getMatchingPathRecording() {
 		return matchSelectorMonitor.getPathRecording().getRecording();
+	}
+	
+	public boolean isSaveRecognitionRule() {
+		return saveRecognitionRule;
+	}
+
+	public void setSaveRecognitionRule(boolean saveRecognitionRule) {
+		this.saveRecognitionRule = saveRecognitionRule;
+		
+		if (saveRecognitionRule) {
+			recognitionEngineMatcher.recognitionPatternSerializer = new IRecognitionPatternSerializer() {
+				public void saveRecognitionRule() {
+					GraphPatternUtil.saveGraphPattern(getRecognitionRuleURI(
+							recognitionEngineMatcher.recognitionPattern.getEditRule().eResource().getURI(), GraphPatternConstants.FILE_EXTENSION),
+							recognitionEngineMatcher.recognitionPattern.getGraphPattern());
+				}
+			};
+		} else {
+			recognitionEngineMatcher.recognitionPatternSerializer = new IRecognitionPatternSerializer() {
+				public void saveRecognitionRule() {}
+			};
+		}
+	}
+	
+	protected URI getRecognitionRuleURI(URI editRule, String fileExtension) {
+		return editRule.trimSegments(1).appendSegment("rr_" + editRule.lastSegment())
+				.trimFileExtension().appendFileExtension(fileExtension);
 	}
 }

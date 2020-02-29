@@ -15,13 +15,13 @@ import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.difference.symmetric.Change;
+import org.sidiff.editrule.recognition.match.RecognitionEdgeMatch;
+import org.sidiff.editrule.recognition.match.RecognitionMatch;
+import org.sidiff.editrule.recognition.match.RecognitionNodeMatch;
+import org.sidiff.editrule.recognition.match.RecognitionNodeMultiMatch;
+import org.sidiff.editrule.recognition.match.RecognitionNodeSingleMatch;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.complement.construction.ComplementRule;
-import org.sidiff.repair.complement.matching.RecognitionEdgeMatch;
-import org.sidiff.repair.complement.matching.RecognitionMatch;
-import org.sidiff.repair.complement.matching.RecognitionNodeMatch;
-import org.sidiff.repair.complement.matching.RecognitionNodeMultiMatch;
-import org.sidiff.repair.complement.matching.RecognitionNodeSingleMatch;
 import org.sidiff.repair.complement.util.ParameterBinding;
 
 /**
@@ -230,13 +230,21 @@ public class RepairPlan implements IRepairPlan {
 	
 	@Override
 	public List<Object> getParameterDomain(Parameter parameter) {
-		List<Object> domain = new ArrayList<>(); 
+		return getParameterDomain(parameter, Object.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> getParameterDomain(Parameter parameter, Class<T> type) {
+		List<T> domain = new ArrayList<>(); 
 
 		for (Match complementMatch : getComplementMatches()) {
 			Object parameterValue = complementMatch.getParameterValue(parameter);
 
 			if ((parameterValue != null) && (!domain.contains(parameterValue))) {
-				domain.add(parameterValue);
+				if (type.isInstance(parameterValue)) {
+					domain.add((T) parameterValue);
+				}
 			}
 		}
 		

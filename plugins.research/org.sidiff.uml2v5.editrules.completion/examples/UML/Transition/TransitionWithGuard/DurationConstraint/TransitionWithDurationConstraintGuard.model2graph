@@ -1,0 +1,21 @@
+# DEFINE : Parameter : <parameter name>
+DEFINE : Parameter : transitionName
+
+# DEFINE : Attribute : <node name> : <node type> : <attribute name> : <attribte value>
+DEFINE : Attribute : transition : Transition : name : transitionName
+DEFINE : Attribute : durationConstraint : DurationConstraint : name : transitionName + "DurationConstraint"
+
+# DEFINE : Node : <node name> : <node type> : <node name replacement>
+
+# FILTER : Node : <node name> : <node type>
+FILTER : Node : .*? : Model
+FILTER : Node : .*? : PackageImport
+FILTER : Node : .*? : StateMachine
+
+# FILTER : Attribute : <node name> : <node type> : <attribute type>
+FILTER : Attribute : .*? : State : .*
+FILTER : Attribute : .*? : Region : .*
+FILTER : Attribute : .*? : .*? : (?!name).*
+
+# FILTER : Edge : <source node name> : <source node type> : <edge type> : <target node name> : <target node type>
+FILTER : Edge : .*? : Region : subvertex : .*? : State

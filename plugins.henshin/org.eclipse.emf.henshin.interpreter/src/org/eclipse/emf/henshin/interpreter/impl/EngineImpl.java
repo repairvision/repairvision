@@ -523,6 +523,7 @@ public class EngineImpl implements Engine {
 
 			// Now initialize the match finder:
 			SolutionFinder solutionFinder = new SolutionFinder(graph, domainMap, conditionHandler);
+			solutionFinder.setRuleInfo(ruleInfo);
 			solutionFinder.variables = graphMap.get(rule.getLhs());
 			solutionFinder.formula = initFormula(rule.getLhs().getFormula(), graph, graphMap, domainMap);
 			return solutionFinder;

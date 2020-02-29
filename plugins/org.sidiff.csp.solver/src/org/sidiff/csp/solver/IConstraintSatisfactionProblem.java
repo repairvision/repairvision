@@ -19,10 +19,6 @@ public interface IConstraintSatisfactionProblem<R, D> {
 	
 	void setSearchInjectiveSolutions(boolean searchInjectiveSolutions);
 	
-	boolean isSearchMaximumSolutions();
-	
-	void setSearchMaximumSolutions(boolean searchMaximumSolutions);
-
 	int getMinimumSolutionSize();
 
 	void setMinimumSolutionSize(int minimumSolutionSize);

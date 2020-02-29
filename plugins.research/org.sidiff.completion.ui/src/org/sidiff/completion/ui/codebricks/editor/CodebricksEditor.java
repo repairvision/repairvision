@@ -4,21 +4,23 @@ import java.awt.MouseInfo;
 import java.awt.PointerInfo;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.BidiSegmentEvent;
-import org.eclipse.swt.custom.BidiSegmentListener;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
@@ -26,13 +28,10 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -40,23 +39,16 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.ui.PlatformUI;
 import org.sidiff.completion.ui.Activator;
-import org.sidiff.completion.ui.codebricks.BlankBrick;
 import org.sidiff.completion.ui.codebricks.Brick;
+import org.sidiff.completion.ui.codebricks.Codebrick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.CodebricksFactory;
-import org.sidiff.completion.ui.codebricks.ComposedBrick;
-import org.sidiff.completion.ui.codebricks.ComposedTemplatePlaceholderBrick;
-import org.sidiff.completion.ui.codebricks.IndentBrick;
-import org.sidiff.completion.ui.codebricks.LineBreakBrick;
-import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
-import org.sidiff.completion.ui.codebricks.PlaceholderBrick;
-import org.sidiff.completion.ui.codebricks.StyledBrick;
-import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
-import org.sidiff.completion.ui.codebricks.TextBrick;
-import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
-import org.sidiff.completion.ui.codebricks.ViewableBrick;
-import org.sidiff.completion.ui.list.CompletionProposalList;
+import org.sidiff.completion.ui.codebricks.POJOCodebrickView;
+import org.sidiff.completion.ui.codebricks.editor.views.ContentBuilder;
+import org.sidiff.completion.ui.codebricks.util.CodebricksUtil;
+import org.sidiff.completion.ui.proposals.ICompletionProposal;
 
 public class CodebricksEditor {
 
@@ -72,11 +64,17 @@ public class CodebricksEditor {
 	
 	private ToolBar toolBar;
 	
-	private int maximumWidth = 600;
+	private ToolItem actionApply;
+	
+	private ToolItem actionClose;
+	
+	private int maximumWidth = 900;
 	
 	private Color COLOR_WHITE;
 	
 	private Color COLOR_BLACK;
+	
+	private Color COLOR_HIDE;
 	
     /**
      * Mouse down event which starts the moving of the UI.
@@ -98,7 +96,13 @@ public class CodebricksEditor {
      */
     private Codebricks codebricks;
     
-    private Map<Brick, Control> modelToViewMap = new HashMap<>();
+    private TransactionalEditingDomain editingDomain;
+    
+    private List<Adapter> codebricksAdapters = new ArrayList<>();
+    
+    public CodebricksEditor() {
+    	this(PlatformUI.getWorkbench().getDisplay());
+	}
     
 	public CodebricksEditor(Display display) {
 		display.syncExec(new Runnable() {
@@ -111,10 +115,36 @@ public class CodebricksEditor {
 	}
 	
 	public void setContent(Codebricks input) {
+		
+		// Clean up old content:
+		removeContentListener();
+		
+		// Set new content:
 		this.codebricks = input;
+		initializeEditingDomain();
 		
 		// Create editor content:
-		buildContent(editorContent, getTemplate());
+		if (input != null) {
+			CodebricksEditor.executeCommand(input, () -> {
+				ContentBuilder.build(this, editorContent, getTemplate(), COLOR_BLACK, COLOR_WHITE, COLOR_HIDE);
+			});
+		}
+		
+		// Wait for placeholders to be selected:
+		codebricksAdapters.add(CodebricksUtil.onAlternativeChosen(codebricks, this::onAlternativeChosen));
+	}
+	
+	private void removeContentListener() {
+		
+		// Remove model listener:
+		if (codebricks != null) {
+			for (Adapter codebricksAdapter : codebricksAdapters) {
+				if (codebricksAdapter.getTarget() != null) {
+					codebricksAdapter.getTarget().eAdapters().remove(codebricksAdapter);
+				}
+			}
+			codebricksAdapters.clear();
+		}
 	}
 	
 	public Codebricks getContent() {
@@ -125,6 +155,56 @@ public class CodebricksEditor {
 		}
 		
 		return codebricks;
+	}
+	
+	protected void initializeEditingDomain() {
+		editingDomain = getEditingDomain(codebricks);
+		
+		if (editingDomain == null) {
+			
+			// Create the editing domain with a special command stack.
+			if (codebricks.eResource() == null) {
+				Resource resource = new ResourceSetImpl().createResource(URI.createURI(""));
+				resource.getContents().add(codebricks);
+			}
+			
+			editingDomain = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain(codebricks.eResource().getResourceSet());
+		}
+	}
+	
+	public static TransactionalEditingDomain getEditingDomain(EObject element) {
+		TransactionalEditingDomain transactionalEditingDomain = TransactionUtil.getEditingDomain(element);
+		
+		if (transactionalEditingDomain == null) {
+			EditingDomain editingDomain =  AdapterFactoryEditingDomain.getEditingDomainFor(element);
+			
+			if (editingDomain instanceof TransactionalEditingDomain) {
+				return (TransactionalEditingDomain) editingDomain;
+			}
+		}
+		
+		return transactionalEditingDomain;
+	}
+	
+	public static RecordingCommand executeCommand(EObject element, Runnable command) {
+		TransactionalEditingDomain editingDomain = getEditingDomain(element);
+		RecordingCommand recordingCommand = new RecordingCommand(editingDomain) {
+
+			@Override
+			protected void doExecute() {
+				Display.getDefault().syncExec(command);
+			}
+		};
+		editingDomain.getCommandStack().execute(recordingCommand);
+		return recordingCommand;
+	}
+	
+	public static void undoCommand(EObject element, RecordingCommand command) {
+		TransactionalEditingDomain editingDomain = getEditingDomain(element);
+		
+		if (editingDomain.getCommandStack().getUndoCommand() == command) {
+			editingDomain.getCommandStack().undo();
+		}
 	}
 	
 	public List<Brick> getTemplate() {
@@ -151,7 +231,7 @@ public class CodebricksEditor {
 		showPopup(mousePosition);
 		
 		// Make sure size depends on the content:
-		fitToContent();
+		update();
 	}
 
 	/**
@@ -253,7 +333,7 @@ public class CodebricksEditor {
 		editorShell.open();
 		
 		// Make sure size depends on the content:
-		fitToContent();
+		update();
 	}
 	
 	private void createPopup(Display display) {
@@ -263,11 +343,21 @@ public class CodebricksEditor {
 		 */
 		COLOR_WHITE = display.getSystemColor(SWT.COLOR_WHITE);
 		COLOR_BLACK = display.getSystemColor(SWT.COLOR_BLACK);
+		COLOR_HIDE = new Color(display, 160, 160, 160);
 		
 		/*
 		 * Create shell
 		 */
 		editorShell = new Shell(display, SWT.ON_TOP | SWT.RESIZE);
+		{
+			editorShell.addDisposeListener(new DisposeListener() {
+				
+				@Override
+				public void widgetDisposed(DisposeEvent e) {
+					removeContentListener();
+				}
+			});
+		}
 		
 		/*
 		 * Create editor:
@@ -278,7 +368,12 @@ public class CodebricksEditor {
 		 * Create editor content:
 		 */
 		editorContent = new Composite(scrolledEditor, SWT.NONE);
-		buildContent(editorContent, getTemplate());
+		
+		if (!getTemplate().isEmpty()) {
+			CodebricksEditor.executeCommand(getContent(), () -> {
+				ContentBuilder.build(this, editorContent, getTemplate(), COLOR_BLACK, COLOR_WHITE, COLOR_HIDE);
+			});
+		}
 		
 		/*
 		 *  Show a vertical separator as control for dragging the shell:
@@ -347,9 +442,28 @@ public class CodebricksEditor {
 	protected void createToolbarActions(ToolBar toolBar) {
 		
 		/*
+		 * Apply action:
+		 */
+		actionApply = new ToolItem(toolBar, SWT.NONE);
+		actionApply.setImage(loadIcon("/icons/apply.png" ));
+		
+		actionApply.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				onApplyAlternative();
+				editorShell.close();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {}
+		});
+		actionApply.setEnabled(false);
+		
+		/*
 		 * Close action:
 		 */
-		ToolItem actionClose = new ToolItem(toolBar, SWT.NONE);
+		actionClose = new ToolItem(toolBar, SWT.NONE);
 		actionClose.setImage(loadIcon("/icons/close.png" ));
 		
 		actionClose.addSelectionListener(new SelectionListener() {
@@ -364,433 +478,90 @@ public class CodebricksEditor {
 		});
 	}
 	
-	protected Composite buildBrickRow(Composite parent) {
-		Composite brickRow = new Composite(parent, SWT.NONE);
-		brickRow.setBackground(COLOR_WHITE);
-		
-		RowLayout layout = new RowLayout(SWT.HORIZONTAL);
-		{
-			layout.spacing = 0;
-			layout.marginTop = 0;
-			layout.marginRight = 0;
-			layout.marginLeft = 0;
-			layout.marginBottom = 0;
-		}
-		brickRow.setLayout(layout);
-		
-		return brickRow;
-	}
-	
-	protected Label buildEmptyBrick(Composite parent) {
-		return new Label(editorContent, SWT.NONE);
-	}
-
-	protected Label buildTextBrick(Composite parent, String text, String placeholder) {
-		return buildTextBrick(parent, text, placeholder, false, null);
-	}
-	
-	protected Label buildTextBrick(Composite parent, String text, String placeholder, boolean boldFont, Color color) {
-		
-		if (text == null) {
-			text = "null";
-		}
-		
-		Label textBrick = new Label(parent, SWT.NONE);
-		textBrick.setText(text);
-		textBrick.setBackground(COLOR_WHITE);
-		
-		if (color != null) {
-			textBrick.setForeground(color);
-		} else {
-			textBrick.setForeground(COLOR_BLACK);
-		}
-
-		if (boldFont) {
-			textBrick.setFont(getFontBold(textBrick));
-		}
-		
-		return textBrick;
-	}
-	
-	protected StyledText buildEditableTextBrick(Composite parent, String text, String placeholder) {
-		return buildEditableTextBrick(parent, text, placeholder, false, null);
-	}
-	
-	protected StyledText buildEditableTextBrick(Composite parent, String text, String placeholder, boolean boldFont, Color color) {
-		
-		if (text == null) {
-			text = "null";
-		}
-		
-		StyledText textBrick = new StyledText(parent, SWT.SINGLE);
-		textBrick.setText(text);
-		textBrick.setBackground(COLOR_WHITE);
-		
-		if (color != null) {
-			textBrick.setForeground(color);
-		} else {
-			textBrick.setForeground(COLOR_BLACK);
-		}
-
-		if (boldFont) {
-			textBrick.setFont(getFontBold(textBrick));
-		}
-		
-		// Update size of shell and text field according to the text input:
-		// NOTE: The text sometimes flickers (on Windows) when using the modified listener instead.
-		textBrick.addBidiSegmentListener(new BidiSegmentListener() {
-			
-			private int oldTime = -1;
-			
-			@Override
-			public void lineGetSegments(BidiSegmentEvent event) {
-				
-				// Handle event just once:
-				if (event.time != oldTime) {
-					oldTime = event.time;
-					
-					// Make sure text field is updated:
-					textBrick.pack(true);
-					
-					// Do shell layout:
-					fitToContent();
-				}
-			}
-		});
-		
-		// Show placeholder if no text is set:
-		textBrick.addModifyListener(new ModifyListener() {
-			
-			@Override
-			public void modifyText(ModifyEvent e) {
-				
-				if (textBrick.getText().isEmpty()) {
-					textBrick.setText(placeholder);
-					
-					// Make sure text field is updated:
-					textBrick.pack(true);
-					
-					// Do shell layout:
-					fitToContent();
-				}
-			}
-		});
-		
-		return textBrick;		
-	}
-	
-	private Font getFontBold(Control control) {
-		FontData fontData = control.getFont().getFontData()[0];
-		return new Font(editorShell.getDisplay(), new FontData(fontData.getName(), fontData.getHeight(), SWT.BOLD));
-	}
-	
-	
 	protected Image loadIcon(String localPath) {
 		return Activator.getIcon(localPath);
 	}
 	
 	protected int getColumns() {
-		return getContent().getTemplate().caluclateColumns();
-	}
-	
-	protected void clearContent() {
-		Control[] content = editorContent.getChildren();
-		
-		for (int i = 0; i < content.length; i++) {
-			content[i].dispose();
-		}
-		
-		modelToViewMap.clear();
-	}
-	
-	protected void buildContent(Composite editorContent, List<? extends Brick> bricks) {
-		
-		// Is content empty?
-		if (editorContent.getChildren().length > 0) {
-			clearContent();
-		}
-		
-		// Is input empty?
-		if (getContent().getTemplate() == null) {
-			return;
-		}
-
-		// Create content views:
-		Composite templateExpression = null;
-		
-		for (Brick templateBrick : bricks) {
-			Control viewControl = null;
-			
-			// Handle line break:
-			if (templateBrick instanceof LineBreakBrick) {
-				templateExpression = null;
-			}
-			
-			// Create indent:
-			if (templateBrick instanceof IndentBrick) {
-				IndentBrick indentBrick = (IndentBrick) templateBrick;
-				
-				for (int i = 0; i < indentBrick.getBricks(); i++) {
-					viewControl = buildEmptyBrick(editorContent);
-				}
-			}
-			
-			else if (templateBrick instanceof ComposedBrick) {
-				
-				// Put template expression in last column(s):
-				if (templateExpression == null) {
-					templateExpression = buildBrickRow(editorContent);
-				}
-				
-				Composite composedBrick = buildBrickRow(templateExpression);
-				viewControl = composedBrick;
-				buildContent(composedBrick, ((ComposedBrick) templateBrick).getBricks());
-			}
-			
-			// Create template expression:
-			else if (templateBrick instanceof ViewableBrick) {
-				
-				// Put template expression in last column(s):
-				if (templateExpression == null) {
-					templateExpression = buildBrickRow(editorContent);
-				}
-				
-				// Viewable brick:
-				ViewableBrick viewableBrick = (ViewableBrick) templateBrick;
-				boolean highlight = (viewableBrick instanceof StyledBrick) && ((StyledBrick) viewableBrick).isHighlight();
-				
-				// Create template placeholder:
-				if (templateBrick instanceof TemplatePlaceholderBrick) {
-					TemplatePlaceholderBrick placeholder = (TemplatePlaceholderBrick) viewableBrick;
-					Composite parentContainer = templateExpression;
-					StyledText placeholderControl;
-					
-					if (placeholder.isComposed()) {
-						parentContainer = buildBrickRow(templateExpression);
-					}
-					
-					if (highlight) {
-						viewControl = placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
-					} else {
-						viewControl = placeholderControl = buildEditableTextBrick(parentContainer, viewableBrick.getText(), viewableBrick.getText());
-					}
-					
-					// Show proposal list:
-					installProposalList(parentContainer, placeholderControl, placeholder);
-				
-				// Create value placeholder (parameter):
-				} else if (templateBrick instanceof ValuePlaceholderBrick) {
-					if (highlight) {
-						viewControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
-					} else {
-						viewControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
-					}
-					
-				// Create object placeholder (parameter):
-				} else if (templateBrick instanceof ObjectPlaceholderBrick) {
-					if (highlight) {
-						viewControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
-					} else {
-						viewControl = buildEditableTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
-					}
-					
-				// Create text:
-				} else if (viewableBrick instanceof TextBrick) {
-					if (highlight) {
-						viewControl = buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText(), true, COLOR_BLACK);
-					} else {
-						viewControl = buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
-					}
-					
-				// Create blank:
-				} else if (viewableBrick instanceof BlankBrick) {
-					viewControl = buildTextBrick(templateExpression, viewableBrick.getText(), viewableBrick.getText());
-				}
-			}
-			
-			// Store model to view mapping:
-			if (viewControl != null) {
-				modelToViewMap.put(templateBrick, viewControl);
-			}
-		}
-		
-		// Set focus to first editable text field:
-		for (Control expressionControl : templateExpression.getChildren()) {
-			if (expressionControl instanceof StyledText) {
-				expressionControl.setFocus();
-				break;
-			}
-		}
-		
-		// Do layout:
-		fitToContent();
-	}
-
-	private void installProposalList(Composite parentContainer, StyledText textBrick, TemplatePlaceholderBrick placeholderBrick) {
-		
-		// Store model in view:
-		textBrick.setData(placeholderBrick);
-
-		// Show proposal list:
-		textBrick.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				assert e.widget.getData() == placeholderBrick;
-				
-				if(((e.stateMask & SWT.CTRL) == SWT.CTRL) && (e.keyCode == SWT.SPACE)) {
-					CompletionProposalList proposals = new CompletionProposalList(parentContainer.getDisplay());
-					proposals.addProposals(getProposals(parentContainer, textBrick, placeholderBrick));
-
-					// Show proposals below editor:
-					int proposalsXPosition = editorShell.getLocation().x;
-					int proposalsYPosition = editorShell.getLocation().y + editorShell.getSize().y + 5;
-					proposals.showPopup(new Point(proposalsXPosition, proposalsYPosition));
-				}
-			}
-		});
-
-		// Update on preview/apply proposal:
-		textBrick.addModifyListener(new ModifyListener() {
-			
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				// Make sure text field is updated:
-				textBrick.pack(true);
-
-				// Do shell layout:
-				fitToContent();
-			}
-		});
-	}
-	
-	private List<CodebricksProposal> getProposals(Composite parentContainer, StyledText textBrick, TemplatePlaceholderBrick placeholderBrick) {
-		List<CodebricksProposal> proposals = new ArrayList<>();
-		
-		List<ViewableBrick> remainingChoices = placeholderBrick.getRemainingChoices();
-		Set<ViewableBrick> unlistedChoices = new HashSet<>(remainingChoices); 
-		
-		for (ViewableBrick choice : remainingChoices) {
-			if (choice instanceof ComposedBrick) {
-				proposals.add(new CodebricksComposedProposal(CodebricksEditor.this, parentContainer, textBrick, placeholderBrick, (ComposedBrick) choice));
-			} else {
-				// Show equal choices in one proposal:
-				if (unlistedChoices.contains(choice)) {
-					List<ViewableBrick> equalChoices = new ArrayList<>();
-					
-					for (ViewableBrick unlistedChoice : unlistedChoices) {
-						if (unlistedChoice.getText().equals(choice.getText())) {
-							equalChoices.add(unlistedChoice);
-						}
-					}
-					
-					unlistedChoices.removeAll(equalChoices);
-					proposals.add(new CodebricksProposal(this, textBrick, placeholderBrick, equalChoices));
-				}
-			}
-		}
-		
-		return proposals;
-	}
-	
-	// TODO: Implement template changed listener.
-	protected void autoSelectPlaceholders(List<? extends Brick> bricks) {
-		try {
-			for (Brick brick : bricks) {
-				if (brick instanceof PlaceholderBrick) {
-					if (brick instanceof TemplatePlaceholderBrick) {
-						TemplatePlaceholderBrick placeholderBrick = (TemplatePlaceholderBrick) brick;
-						
-						if (tryAutoSelectPlaceholder(placeholderBrick)) { // For optimization
-							StyledText textBrick = (StyledText) modelToViewMap.get(placeholderBrick);
-							List<CodebricksProposal> proposals = getProposals(textBrick.getParent(), textBrick, placeholderBrick);
-							
-							if (proposals.isEmpty()) {
-								if (placeholderBrick instanceof ComposedTemplatePlaceholderBrick) {
-									// Hide container of composed placeholder:
-									ComposedBrick containerModel = ((ComposedTemplatePlaceholderBrick) placeholderBrick).getContainerBrick();
-									Composite containerView = (Composite) modelToViewMap.get(containerModel);
-									hideComposedPlaceholder(containerView);
-								} else {
-									// Hide placeholder:
-									hidePlaceholder(textBrick);
-								}
-							} else if (proposals.size() == 1) {
-								proposals.get(0).apply();
-							}
-						}
-					}
-				} else if (brick instanceof ComposedBrick) {
-					autoSelectPlaceholders(((ComposedBrick) brick).getBricks());
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void hideComposedPlaceholder(Composite containerView) {
-		for (int i = 0; i < containerView.getChildren().length; i++) {
-			Control child = containerView.getChildren()[i];
-			hidePlaceholder(child);
-			
-			if (child instanceof Composite) {
-				hideComposedPlaceholder((Composite) child);
-			}
-		}
-	}
-	
-	private void hidePlaceholder(Control control) {
-		control.setForeground(new Color(Display.getDefault(), 160, 160, 160));
-		control.setEnabled(false);
-	}
-	
-	private boolean tryAutoSelectPlaceholder(TemplatePlaceholderBrick placeholder) {
-		
-		/*
-		 *  For optimization:
-		 */
-		
-		if (!placeholder.getChoice().isEmpty()) {
-			return false; // already selected!
-		}
-		
-		List<ViewableBrick> choices = placeholder.getRemainingChoices();
-		
-		if ((choices.size() == 0) || (choices.size() == 1)) {
-			return true;
+		if (getContent().getTemplate() != null) {
+			return getContent().getTemplate().caluclateColumns();
 		} else {
-			for (ViewableBrick choice : choices) {
-				if (choice instanceof ComposedBrick) {
-					return false; // multiple composed bricks!
-				}
-				if (!choice.getText().equals(choices.get(0).getText())) {
-					return false; // not all choices are equal!
-				}
+			return 0;
+		}
+	}
+	
+	protected void onAlternativeChosen(Codebrick choice) {
+		actionApply.setEnabled(true);
+	}
+	
+	protected Codebrick getChosenAlternative() {
+		if (codebricks.isChosen()) {
+			List<Codebrick> choise = codebricks.getChoice();
+			
+			if (choise.size() == 1) {
+				return choise.get(0);
+			}
+		}
+		return null;
+	}
+	
+	protected void onApplyAlternative() {
+		Codebrick applied = getChosenAlternative();
+
+		if (applied instanceof POJOCodebrickView) {
+			Object model = ((POJOCodebrickView) applied).getModel();
+
+			if (model instanceof ICompletionProposal) {
+				((ICompletionProposal) model).apply();
+			}
+		}
+	}
+	
+	public void update() {
+		update(true, true, null);
+	}
+	
+	public void update(Runnable update) {
+		update(true, false, update);
+	}
+	
+	public void update(boolean changed, boolean resize, Runnable update) {
+		editorShell.setRedraw(false);
+		
+		if (resize) {
+			
+			// Resize editor to fit content:
+			Point newSize = editorShell.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+			
+			// ... up to limit:
+			if (newSize.x > maximumWidth) {
+				newSize.x = maximumWidth;
+			}
+			
+			// Do not shrink the editor:
+			// NOTE: Results in some disturbing flickering on preview (apply) / hide preview (undo).
+			if (newSize.x > editorShell.getSize().x) {
+				editorShell.setSize(newSize);
 			}
 		}
 		
-		return true;
-	}
-	
-	protected void fitToContent() {
-		
-		// Resize editor to fit content:
-		Point newSize = editorShell.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-
-		// ... up to limit:
-		if (newSize.x < maximumWidth) {
-			editorShell.setSize(newSize);
+		// Perform UI update:
+		if (update != null) {
+			update.run();
 		}
 
 		// Update scroll area:
-		editorContent.pack(true);
-		scrolledEditor.setMinSize(editorContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		editorContent.pack(changed);
+		
+		if (resize) {
+			scrolledEditor.setMinSize(editorContent.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			editorContent.layout(changed);
+		}
+		
+		editorShell.setRedraw(true);
+		
+		// FOR UI UPDATE DEBUGING
+//		System.out.println(dumpController(editorContent));
 	}
 	
 	public Shell getShell() {
@@ -806,5 +577,55 @@ public class CodebricksEditor {
 	private void createShell(Display display) {
 		createPopup(display);
 		showPopupOnCursor();
+	}
+
+	@SuppressWarnings("unused")
+	private String dumpController(Composite composite) {
+		StringBuilder dump = new StringBuilder();
+		dumpController(composite, dump);
+		return dump.toString();
+	}
+	
+	private void dumpController(Composite composite, StringBuilder dump) {
+		for (Control child : composite.getChildren()) {
+			if (child instanceof StyledText) {
+				dump.append("{");
+				dump.append(((StyledText) child).getText());
+				dump.append("}");
+			}
+			
+			else if (child instanceof Composite) {
+				dumpController((Composite) child, dump);
+			} 
+
+			else if (child instanceof Label) {
+				dump.append("{");
+				dump.append(((Label) child).getText());
+				dump.append("}");
+			}
+		}
+	}
+	
+	@SuppressWarnings("unused")
+	private String dumpControllerPlain(Composite composite) {
+		StringBuilder dump = new StringBuilder();
+		dumpControllerPlain(composite, dump);
+		return dump.toString();
+	}
+	
+	private void dumpControllerPlain(Composite composite, StringBuilder dump) {
+		for (Control child : composite.getChildren()) {
+			if (child instanceof StyledText) {
+				dump.append(((StyledText) child).getText());
+			}
+			
+			else if (child instanceof Composite) {
+				dumpControllerPlain((Composite) child, dump);
+			} 
+
+			else if (child instanceof Label) {
+				dump.append(((Label) child).getText());
+			}
+		}
 	}
 }

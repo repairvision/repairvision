@@ -13,6 +13,7 @@ package org.sidiff.completion.ui.codebricks;
  * <ul>
  *   <li>{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick#isMandatory <em>Mandatory</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick#getPlaceholder <em>Placeholder</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick#getName <em>Name</em>}</li>
  * </ul>
  *
  * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getPlaceholderBrick()
@@ -64,4 +65,26 @@ public interface PlaceholderBrick extends StyledBrick {
 	 * @generated
 	 */
 	void setPlaceholder(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see org.sidiff.completion.ui.codebricks.CodebricksPackage#getPlaceholderBrick_Name()
+	 * @model
+	 * @generated
+	 */
+	String getName();
+
+	/**
+	 * Sets the value of the '{@link org.sidiff.completion.ui.codebricks.PlaceholderBrick#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
+	void setName(String value);
 } // PlaceholderBrick

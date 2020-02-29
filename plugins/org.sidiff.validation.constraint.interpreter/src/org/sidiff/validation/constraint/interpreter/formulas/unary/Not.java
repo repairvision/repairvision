@@ -23,6 +23,11 @@ public class Not extends UnaryFormula {
 	}
 	
 	@Override
+	public void generate(IDecisionBranch parent, boolean expected) {
+		child.generate(parent, !expected);
+	}
+	
+	@Override
 	public void required(IDecisionBranch parent, boolean expected) {
 		
 		// NOT A = true

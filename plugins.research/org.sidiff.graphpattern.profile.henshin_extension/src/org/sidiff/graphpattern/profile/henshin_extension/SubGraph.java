@@ -14,7 +14,7 @@ import org.sidiff.graphpattern.PatternElement;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.sidiff.graphpattern.profile.henshin_extension.SubGraph#getSubgraph <em>Subgraph</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.profile.henshin_extension.SubGraph#getSubgraphs <em>Subgraphs</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.profile.henshin_extension.SubGraph#getElements <em>Elements</em>}</li>
  * </ul>
  *
@@ -24,16 +24,16 @@ import org.sidiff.graphpattern.PatternElement;
  */
 public interface SubGraph extends PatternElement {
 	/**
-	 * Returns the value of the '<em><b>Subgraph</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Subgraphs</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.graphpattern.profile.henshin_extension.SubGraph}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Subgraph</em>' containment reference list.
-	 * @see org.sidiff.graphpattern.profile.henshin_extension.HenshinExtensionPackage#getSubGraph_Subgraph()
+	 * @return the value of the '<em>Subgraphs</em>' containment reference list.
+	 * @see org.sidiff.graphpattern.profile.henshin_extension.HenshinExtensionPackage#getSubGraph_Subgraphs()
 	 * @model containment="true" resolveProxies="true"
 	 * @generated
 	 */
-	EList<SubGraph> getSubgraph();
+	EList<SubGraph> getSubgraphs();
 
 	/**
 	 * Returns the value of the '<em><b>Elements</b></em>' reference list.

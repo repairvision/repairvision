@@ -4,9 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
+import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
@@ -20,6 +24,11 @@ public class GetContainments extends Function {
 	public GetContainments(Term element) {
 		this.name = "getContainments";
 		this.element = element;
+	}
+	
+	@Override
+	public EClassifier getType() {
+		return EcorePackage.eINSTANCE.getEObject();
 	}
 	
 	@Override
@@ -41,6 +50,14 @@ public class GetContainments extends Function {
 		}
 		
 		return value;
+	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, ConstraintType type) {
+		Sequence sequence = Sequence.nextSequence(parent);
+		element.generate(sequence, type);
+		
+		// TODO: Alternative of all possible classes that can be contained by the element.
 	}
 	
 	@SuppressWarnings("unchecked")

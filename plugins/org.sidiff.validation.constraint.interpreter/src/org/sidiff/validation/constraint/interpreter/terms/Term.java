@@ -1,7 +1,9 @@
 package org.sidiff.validation.constraint.interpreter.terms;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.sidiff.validation.constraint.interpreter.NamedElement;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
@@ -12,6 +14,8 @@ public abstract class Term extends NamedElement  {
 	public Object getValue() {
 		return value;
 	}
+	
+	public abstract EClassifier getType();
 	
 	@Override
 	public String toString() {
@@ -27,6 +31,8 @@ public abstract class Term extends NamedElement  {
 	}
 	
 	public abstract Object evaluate(IScopeRecorder scope);
+
+	public abstract void generate(IDecisionBranch parent, ConstraintType type);
 	
 	public abstract void required(IDecisionBranch parent);
 	
@@ -42,4 +48,5 @@ public abstract class Term extends NamedElement  {
 	 * 
 	 */
 	public abstract void repair(IDecisionBranch parent, RepairType type);
+
 }

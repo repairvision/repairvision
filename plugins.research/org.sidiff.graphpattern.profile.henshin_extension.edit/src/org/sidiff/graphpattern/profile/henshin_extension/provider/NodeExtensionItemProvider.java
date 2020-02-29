@@ -15,7 +15,6 @@ import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.provider.NodeItemProvider;
 import org.sidiff.graphpattern.profile.henshin_extension.HenshinExtensionFactory;
 import org.sidiff.graphpattern.profile.henshin_extension.HenshinExtensionPackage;
-import org.sidiff.graphpattern.profile.henshin_extension.NodeExtension;
 
 /**
  * This is the item provider adapter for a {@link org.sidiff.graphpattern.profile.henshin_extension.NodeExtension} object.

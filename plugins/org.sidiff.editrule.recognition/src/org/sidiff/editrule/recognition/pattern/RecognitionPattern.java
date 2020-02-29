@@ -5,18 +5,22 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
+import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.editrule.recognition.dependencies.ChangeDependencies;
 import org.sidiff.editrule.recognition.pattern.graph.ActionAttributeConstraint;
 import org.sidiff.editrule.recognition.pattern.graph.ActionAttributeConstraintConstant;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
 import org.sidiff.editrule.recognition.pattern.graph.ActionGraph;
 import org.sidiff.editrule.recognition.pattern.graph.ActionNode;
 import org.sidiff.editrule.recognition.pattern.graph.ChangePattern;
-import org.sidiff.editrule.recognition.util.MatchingHelper;
+import org.sidiff.editrule.recognition.revision.RevisionGraph;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 
@@ -47,8 +51,13 @@ public class RecognitionPattern {
 	public RecognitionPattern(Rule editRule, GraphPattern recognitionPattern) {
 		this.editRule = editRule;
 		this.recognitionPattern = recognitionPattern; 
-		
+
+		// Generate recognition pattern:
 		generateRecognitionPattern();
+		
+		// Create dependency graph:
+		// TODO: Support for additional EOpposites per meta-model!
+		new ChangeDependencies(editRule, this).calculateDependencyGraph();
 	}
 	
 	/**
@@ -58,7 +67,7 @@ public class RecognitionPattern {
 	 * @param changeIndex
 	 * @param changeDomainMap
 	 */
-	public void initialize(MatchingHelper matchingHelper) {
+	public void initialize(RevisionGraph matchingHelper) {
 		actionGraph.initialize(matchingHelper);
 		RecognitionPatternInitializer.initializeRecognitionPattern(this, matchingHelper);
 	}
@@ -72,7 +81,7 @@ public class RecognitionPattern {
 		
 		// Nodes: <<delete>> / <<preserve>>:
 		for (Node lhsNode : editRule.getLhs().getNodes()) {
-			ActionNode node = new ActionNode(actionGraph, lhsNode, nodeTrace);
+			ActionNode node = new ActionNode(lhsNode.getAction().getType(), actionGraph, lhsNode, nodeTrace);
 			addEditRuleNode(node);
 			
 			for (Attribute attribute : lhsNode.getAttributes()) {
@@ -88,19 +97,41 @@ public class RecognitionPattern {
 		
 		// Nodes: <<create>>:
 		for (Node createNode : HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes(editRule)) {
-			addEditRuleNode(new ActionNode(actionGraph, createNode, nodeTrace));
+			addEditRuleNode(new ActionNode(createNode.getAction().getType(), actionGraph, createNode, nodeTrace));
+		}
+		
+		// Nodes: <<require>>:
+		for (NestedCondition pac : editRule.getLhs().getPACs()) {
+			for(Node requireNode : pac.getConclusion().getNodes()) {
+				if (ChangePatternUtil.getLHS(requireNode) == null) {
+					
+					// NOTE: Handle <<require>> nodes as <<preserve>> nodes:
+					addEditRuleNode(new ActionNode(Action.Type.PRESERVE, actionGraph, requireNode, nodeTrace));
+				}
+			}
 		}
 		
 		// create action-graph edges:
 		
 		// Edges: <<delete>> / <<preserve>>:
 		for (Edge lhsEdge : editRule.getLhs().getEdges()) {
-			addEditRuleEdge(new ActionEdge(actionGraph, lhsEdge, nodeTrace, edgeTrace));
+			addEditRuleEdge(new ActionEdge(lhsEdge.getAction().getType(), actionGraph, lhsEdge, nodeTrace, edgeTrace));
 		}
 		
 		// Edges: <<create>>:
 		for (Edge createEdge : HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges(editRule)) {
-			addEditRuleEdge(new ActionEdge(actionGraph, createEdge, nodeTrace, edgeTrace));
+			addEditRuleEdge(new ActionEdge(createEdge.getAction().getType(),actionGraph, createEdge, nodeTrace, edgeTrace));
+		}
+		
+		// Edges: <<require>>:
+		for (NestedCondition pac : editRule.getLhs().getPACs()) {
+			for(Edge requireEdge : pac.getConclusion().getEdges()) {
+				if (ChangePatternUtil.getLHS(requireEdge) == null) {
+					
+					// NOTE: Handle <<require>> edges as <<preserve>> edges:
+					addEditRuleEdge(new ActionEdge(Action.Type.PRESERVE, actionGraph, requireEdge, nodeTrace, edgeTrace));
+				}
+			}
 		}
 		
 		// connect nodes and edges:

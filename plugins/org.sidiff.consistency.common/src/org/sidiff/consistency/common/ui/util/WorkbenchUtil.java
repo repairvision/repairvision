@@ -3,11 +3,17 @@ package org.sidiff.consistency.common.ui.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -20,6 +26,8 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -29,6 +37,7 @@ import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 public class WorkbenchUtil {
 
@@ -167,8 +176,16 @@ public class WorkbenchUtil {
 		return result[0];
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static <I> List<I> showSelections(String message, List<I> items, ILabelProvider labelProvider) {
+		if (!items.isEmpty()) {
+			return showSelections(message, items, items.subList(0, 1), labelProvider);
+		} else {
+			return showSelections(message, items, Collections.emptyList(), labelProvider);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <I> List<I> showSelections(String message, List<I> items, List<I> initialSelection, ILabelProvider labelProvider) {
 		List<I> result = new ArrayList<>();
 
 		Display.getDefault().syncExec(new Runnable() {
@@ -180,9 +197,12 @@ public class WorkbenchUtil {
 						new ArrayContentProvider(), labelProvider, message);
 				dlg.setTitle(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 						.getActivePage().getActivePart().getTitle());
-				dlg.setInitialSelections(items.get(0));
+				dlg.setInitialSelections(initialSelection.toArray());
 				dlg.open();
-				result.addAll((Collection<? extends I>) Arrays.asList(dlg.getResult()));
+				
+				if (dlg.getResult() != null) {
+					result.addAll((Collection<? extends I>) Arrays.asList(dlg.getResult()));
+				}
 			}
 		});
 
@@ -214,4 +234,37 @@ public class WorkbenchUtil {
 	
 		return URI.createPlatformResourceURI(platformPath, true);
 	}
+	
+	public static void updateProject(IProject project) {
+		try {
+			project.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void updateProject(IResource workbenchResource) {
+		updateProject(workbenchResource.getProject());
+	}
+	
+	public static void updateProject(String projectName) {
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IProject project = root.getProject(projectName);
+		updateProject(project);
+	}
+	
+	public static void updateProject(ExecutionEvent event) {
+		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		
+		if (!selection.isEmpty()) {
+			if (selection instanceof IStructuredSelection) {
+				Object firstElement = ((IStructuredSelection) selection).getFirstElement();
+				
+				if (firstElement instanceof IResource) {
+					updateProject((IResource) firstElement); 
+				}
+			}
+		}
+	}
+
 }

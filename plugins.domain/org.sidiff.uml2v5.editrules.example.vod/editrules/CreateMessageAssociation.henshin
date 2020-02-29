@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_TcLrjRdKEeqBYOG0GoNe2g" name="Create:  MessageAssociation" description="Create:  MessageAssociation">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_TcLrjhdKEeqBYOG0GoNe2g" name="mainUnit" subUnits="_TcLrnxdKEeqBYOG0GoNe2g">
+    <parameters xmi:id="_TcLrjxdKEeqBYOG0GoNe2g" name="toReceiverLifeline" kind="IN"/>
+    <parameters xmi:id="_TcLrkBdKEeqBYOG0GoNe2g" name="postReceiverType" kind="IN"/>
+    <parameters xmi:id="_TcLrkRdKEeqBYOG0GoNe2g" name="toSenderLifeline" kind="IN"/>
+    <parameters xmi:id="_TcLrkhdKEeqBYOG0GoNe2g" name="postSenderType" kind="IN"/>
+    <parameters xmi:id="_TcLrkxdKEeqBYOG0GoNe2g" name="postSenderClass" kind="IN"/>
+    <parameters xmi:id="_TcLrlBdKEeqBYOG0GoNe2g" name="toContainer" kind="IN"/>
+    <parameters xmi:id="_TcLrlRdKEeqBYOG0GoNe2g" name="postReceiverClass" kind="IN"/>
+    <parameters xmi:id="_TcLrlhdKEeqBYOG0GoNe2g" name="postNavigable" kind="IN"/>
+    <parameterMappings xmi:id="_TcLrlxdKEeqBYOG0GoNe2g" source="_TcLrjxdKEeqBYOG0GoNe2g" target="_TcLroBdKEeqBYOG0GoNe2g"/>
+    <parameterMappings xmi:id="_TcLrmBdKEeqBYOG0GoNe2g" source="_TcLrkBdKEeqBYOG0GoNe2g" target="_TcLroRdKEeqBYOG0GoNe2g"/>
+    <parameterMappings xmi:id="_TcLrmRdKEeqBYOG0GoNe2g" source="_TcLrkRdKEeqBYOG0GoNe2g" target="_TcLrohdKEeqBYOG0GoNe2g"/>
+    <parameterMappings xmi:id="_TcLrmhdKEeqBYOG0GoNe2g" source="_TcLrkhdKEeqBYOG0GoNe2g" target="_TcLroxdKEeqBYOG0GoNe2g"/>
+    <parameterMappings xmi:id="_TcLrmxdKEeqBYOG0GoNe2g" source="_TcLrkxdKEeqBYOG0GoNe2g" target="_TcLrpBdKEeqBYOG0GoNe2g"/>
+    <parameterMappings xmi:id="_TcLrnBdKEeqBYOG0GoNe2g" source="_TcLrlBdKEeqBYOG0GoNe2g" target="_TcLrpRdKEeqBYOG0GoNe2g"/>
+    <parameterMappings xmi:id="_TcLrnRdKEeqBYOG0GoNe2g" source="_TcLrlRdKEeqBYOG0GoNe2g" target="_TcLrphdKEeqBYOG0GoNe2g"/>
+    <parameterMappings xmi:id="_TcLrnhdKEeqBYOG0GoNe2g" source="_TcLrlhdKEeqBYOG0GoNe2g" target="_TcLrpxdKEeqBYOG0GoNe2g"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_TcLrnxdKEeqBYOG0GoNe2g" name="Create:  MessageAssociation">
+    <parameters xmi:id="_TcLroBdKEeqBYOG0GoNe2g" name="toReceiverLifeline" kind="IN"/>
+    <parameters xmi:id="_TcLroRdKEeqBYOG0GoNe2g" name="postReceiverType" kind="IN"/>
+    <parameters xmi:id="_TcLrohdKEeqBYOG0GoNe2g" name="toSenderLifeline" kind="IN"/>
+    <parameters xmi:id="_TcLroxdKEeqBYOG0GoNe2g" name="postSenderType" kind="IN"/>
+    <parameters xmi:id="_TcLrpBdKEeqBYOG0GoNe2g" name="postSenderClass" kind="IN"/>
+    <parameters xmi:id="_TcLrpRdKEeqBYOG0GoNe2g" name="toContainer" kind="IN"/>
+    <parameters xmi:id="_TcLrphdKEeqBYOG0GoNe2g" name="postReceiverClass" kind="IN"/>
+    <parameters xmi:id="_TcLrpxdKEeqBYOG0GoNe2g" name="postNavigable" kind="IN"/>
+    <lhs xmi:id="_TcLrqBdKEeqBYOG0GoNe2g" name="Lhs">
+      <nodes xmi:id="_TcLrqRdKEeqBYOG0GoNe2g" name="toReceiverLifeline">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_TcLrqhdKEeqBYOG0GoNe2g" name="toSenderLifeline">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_TcLrqxdKEeqBYOG0GoNe2g" name="toContainer">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
+      </nodes>
+      <formula xsi:type="henshin:NestedCondition" xmi:id="_TcLrrBdKEeqBYOG0GoNe2g">
+        <conclusion xmi:id="_TcLrrRdKEeqBYOG0GoNe2g" name="post">
+          <nodes xmi:id="_TcLrrhdKEeqBYOG0GoNe2g" name="postReceiverType" incoming="_TcLrtRdKEeqBYOG0GoNe2g _TcLruRdKEeqBYOG0GoNe2g" outgoing="_TcLrthdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+          </nodes>
+          <nodes xmi:id="_TcLrrxdKEeqBYOG0GoNe2g" name="postSenderType" incoming="_TcLrtxdKEeqBYOG0GoNe2g _TcLruhdKEeqBYOG0GoNe2g" outgoing="_TcLruBdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+          </nodes>
+          <nodes xmi:id="_TcLrsBdKEeqBYOG0GoNe2g" name="postSenderClass" incoming="_TcLruBdKEeqBYOG0GoNe2g" outgoing="_TcLruRdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+          </nodes>
+          <nodes xmi:id="_TcLrsRdKEeqBYOG0GoNe2g" name="postReceiverClass" outgoing="_TcLruhdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+          </nodes>
+          <nodes xmi:id="_TcLrshdKEeqBYOG0GoNe2g" name="postNavigable" incoming="_TcLrthdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Association"/>
+          </nodes>
+          <nodes xmi:id="_TcLrsxdKEeqBYOG0GoNe2g" name="toReceiverLifeline" outgoing="_TcLrtRdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+          </nodes>
+          <nodes xmi:id="_TcLrtBdKEeqBYOG0GoNe2g" name="toSenderLifeline" outgoing="_TcLrtxdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+          </nodes>
+          <edges xmi:id="_TcLrtRdKEeqBYOG0GoNe2g" source="_TcLrsxdKEeqBYOG0GoNe2g" target="_TcLrrhdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+          </edges>
+          <edges xmi:id="_TcLrthdKEeqBYOG0GoNe2g" source="_TcLrrhdKEeqBYOG0GoNe2g" target="_TcLrshdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property/association"/>
+          </edges>
+          <edges xmi:id="_TcLrtxdKEeqBYOG0GoNe2g" source="_TcLrtBdKEeqBYOG0GoNe2g" target="_TcLrrxdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+          </edges>
+          <edges xmi:id="_TcLruBdKEeqBYOG0GoNe2g" source="_TcLrrxdKEeqBYOG0GoNe2g" target="_TcLrsBdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+          </edges>
+          <edges xmi:id="_TcLruRdKEeqBYOG0GoNe2g" source="_TcLrsBdKEeqBYOG0GoNe2g" target="_TcLrrhdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuredClassifier/ownedAttribute"/>
+          </edges>
+          <edges xmi:id="_TcLruhdKEeqBYOG0GoNe2g" source="_TcLrsRdKEeqBYOG0GoNe2g" target="_TcLrrxdKEeqBYOG0GoNe2g">
+            <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuredClassifier/ownedAttribute"/>
+          </edges>
+        </conclusion>
+        <mappings xmi:id="_TcLruxdKEeqBYOG0GoNe2g" origin="_TcLrqRdKEeqBYOG0GoNe2g" image="_TcLrsxdKEeqBYOG0GoNe2g"/>
+        <mappings xmi:id="_TcLrvBdKEeqBYOG0GoNe2g" origin="_TcLrqhdKEeqBYOG0GoNe2g" image="_TcLrtBdKEeqBYOG0GoNe2g"/>
+      </formula>
+    </lhs>
+    <rhs xmi:id="_TcLrvRdKEeqBYOG0GoNe2g" name="Rhs">
+      <nodes xmi:id="_TcLrvhdKEeqBYOG0GoNe2g" name="newMessage" incoming="_TcLrzRdKEeqBYOG0GoNe2g" outgoing="_TcLrxBdKEeqBYOG0GoNe2g _TcLrxRdKEeqBYOG0GoNe2g _TcLrxhdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+      </nodes>
+      <nodes xmi:id="_TcLrvxdKEeqBYOG0GoNe2g" name="newTargetEnd" incoming="_TcLrxBdKEeqBYOG0GoNe2g _TcLryRdKEeqBYOG0GoNe2g _TcLrzxdKEeqBYOG0GoNe2g" outgoing="_TcLrxxdKEeqBYOG0GoNe2g _TcLryBdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+      </nodes>
+      <nodes xmi:id="_TcLrwBdKEeqBYOG0GoNe2g" name="toReceiverLifeline" incoming="_TcLrxxdKEeqBYOG0GoNe2g" outgoing="_TcLryRdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_TcLrwRdKEeqBYOG0GoNe2g" name="toSenderLifeline" incoming="_TcLryxdKEeqBYOG0GoNe2g" outgoing="_TcLryhdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_TcLrwhdKEeqBYOG0GoNe2g" name="newSourceEnd" incoming="_TcLrxRdKEeqBYOG0GoNe2g _TcLryhdKEeqBYOG0GoNe2g _TcLrzhdKEeqBYOG0GoNe2g" outgoing="_TcLryxdKEeqBYOG0GoNe2g _TcLrzBdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//MessageOccurrenceSpecification"/>
+      </nodes>
+      <nodes xmi:id="_TcLrwxdKEeqBYOG0GoNe2g" name="toContainer" incoming="_TcLrxhdKEeqBYOG0GoNe2g _TcLryBdKEeqBYOG0GoNe2g _TcLrzBdKEeqBYOG0GoNe2g" outgoing="_TcLrzRdKEeqBYOG0GoNe2g _TcLrzhdKEeqBYOG0GoNe2g _TcLrzxdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
+      </nodes>
+      <edges xmi:id="_TcLrxBdKEeqBYOG0GoNe2g" source="_TcLrvhdKEeqBYOG0GoNe2g" target="_TcLrvxdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/receiveEvent"/>
+      </edges>
+      <edges xmi:id="_TcLrxRdKEeqBYOG0GoNe2g" source="_TcLrvhdKEeqBYOG0GoNe2g" target="_TcLrwhdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/sendEvent"/>
+      </edges>
+      <edges xmi:id="_TcLrxhdKEeqBYOG0GoNe2g" source="_TcLrvhdKEeqBYOG0GoNe2g" target="_TcLrwxdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/interaction"/>
+      </edges>
+      <edges xmi:id="_TcLrxxdKEeqBYOG0GoNe2g" source="_TcLrvxdKEeqBYOG0GoNe2g" target="_TcLrwBdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+      </edges>
+      <edges xmi:id="_TcLryBdKEeqBYOG0GoNe2g" source="_TcLrvxdKEeqBYOG0GoNe2g" target="_TcLrwxdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/enclosingInteraction"/>
+      </edges>
+      <edges xmi:id="_TcLryRdKEeqBYOG0GoNe2g" source="_TcLrwBdKEeqBYOG0GoNe2g" target="_TcLrvxdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/coveredBy"/>
+      </edges>
+      <edges xmi:id="_TcLryhdKEeqBYOG0GoNe2g" source="_TcLrwRdKEeqBYOG0GoNe2g" target="_TcLrwhdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/coveredBy"/>
+      </edges>
+      <edges xmi:id="_TcLryxdKEeqBYOG0GoNe2g" source="_TcLrwhdKEeqBYOG0GoNe2g" target="_TcLrwRdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+      </edges>
+      <edges xmi:id="_TcLrzBdKEeqBYOG0GoNe2g" source="_TcLrwhdKEeqBYOG0GoNe2g" target="_TcLrwxdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/enclosingInteraction"/>
+      </edges>
+      <edges xmi:id="_TcLrzRdKEeqBYOG0GoNe2g" source="_TcLrwxdKEeqBYOG0GoNe2g" target="_TcLrvhdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/message"/>
+      </edges>
+      <edges xmi:id="_TcLrzhdKEeqBYOG0GoNe2g" source="_TcLrwxdKEeqBYOG0GoNe2g" target="_TcLrwhdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/fragment"/>
+      </edges>
+      <edges xmi:id="_TcLrzxdKEeqBYOG0GoNe2g" source="_TcLrwxdKEeqBYOG0GoNe2g" target="_TcLrvxdKEeqBYOG0GoNe2g">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/fragment"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_TcLr0BdKEeqBYOG0GoNe2g" origin="_TcLrqRdKEeqBYOG0GoNe2g" image="_TcLrwBdKEeqBYOG0GoNe2g"/>
+    <mappings xmi:id="_TcLr0RdKEeqBYOG0GoNe2g" origin="_TcLrqhdKEeqBYOG0GoNe2g" image="_TcLrwRdKEeqBYOG0GoNe2g"/>
+    <mappings xmi:id="_TcLr0hdKEeqBYOG0GoNe2g" origin="_TcLrqxdKEeqBYOG0GoNe2g" image="_TcLrwxdKEeqBYOG0GoNe2g"/>
+  </units>
+</henshin:Module>

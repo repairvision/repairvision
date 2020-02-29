@@ -16,6 +16,7 @@ import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
+import org.sidiff.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.library.IConstraintLibrary;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
@@ -23,25 +24,19 @@ import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class InconsistencyReportGenerator {
 	
-	private static final String[] COL_INCONSISTENCY = new String[] {"Consistency rule descriptions (with placeholders {i} for specific inconsistencies)", "Inconsistency Name"};
+	public static final String[] COL_INCONSISTENCY = new String[] {"Consistency rule descriptions (with placeholders {i} for specific inconsistencies)", "Inconsistency Name"};
 	
-	private static final String[] COL_INCONSISTENCY_COUNT = new String[] {"Violations", "Inconsistency Violation Count"};
+	public static final String[] COL_INCONSISTENCY_COUNT = new String[] {"Violations", "Inconsistency Violation Count"};
 	
-	private static final String[] COL_SUPPORTED_CONSTRAINT = new String[] {"Supported", "Supported Constraint"};
+	public static final String[] COL_SUPPORTED_CONSTRAINT = new String[] {"Supported", "Supported Constraint"};
 	
-	private static final String[] COL_PROJECTS = new String[] {"Projects", "Projects in which the inconsistencies occur"};
+	public static final String[] COL_PROJECTS = new String[] {"Projects", "Projects in which the inconsistencies occur"};
+	
+	public static final String VALUE_YES = "yes";
+	
+	public static final String VALUE_NO = "no";
 
-	private String getProjectName(Problem problem) {
-		String projectFullName = problem.eResource().getURI().segment(3); // TODO: Depends on local path
-		
-		if (projectFullName.contains(".")) {
-			return projectFullName.substring(projectFullName.lastIndexOf(".") + 1, projectFullName.length());
-		} else {
-			return projectFullName;
-		}
-	}
-	
-	private class ProjectSet extends HashSet<String> {
+	private static class ProjectSet extends HashSet<String> {
 		
 		private static final long serialVersionUID = 1L;
 
@@ -60,10 +55,17 @@ public class InconsistencyReportGenerator {
 	}
 	
 	public InconsistencyReportGenerator() throws IOException {
+		
+		// Print Latex table:
+		System.out.println();
+		System.out.println(LogUtil.convertToLatex(generate()));
+	}
+	
+	public static LogTable generate() throws IOException {
 		Map<String, LogTable> inconsistencyLogs = new LinkedHashMap<>();
 		
 		// Analyze metadata:
-		for (File historyFile : ReportGenerator.getAllMetadata_Reduced()) {
+		for (File historyFile : ReportGenerator.getAllMetadata_Result()) {
 			History history = (History) new ResourceSetImpl()
 					.getResource(URI.createFileURI(historyFile.getAbsolutePath()), true)
 					.getContents().get(0);  
@@ -110,16 +112,27 @@ public class InconsistencyReportGenerator {
 			IConstraint constraint = ConstraintLibraryUtil.getConsistencyRule(libraries, constraintName);
 			
 			if (constraint != null) {
-				supportedConstraints.add("yes");
+				supportedConstraints.add(VALUE_YES);
 			} else {
-				supportedConstraints.add("no");
+				supportedConstraints.add(VALUE_NO);
 			}
 		}
 		
 		inconsistencyLog.createColumn(COL_SUPPORTED_CONSTRAINT[0], supportedConstraints);
 		
-		// Print Latex table:
-		System.out.println();
-		System.out.println(LogUtil.convertToLatex(inconsistencyLog));
+		return inconsistencyLog;
+	}
+	
+	private static String getProjectName(Problem problem) {
+		String projectFullName = problem.eResource().getURI().toFileString();
+		projectFullName = projectFullName.substring(EvaluationDataSets.RESULTS_DATA_SET.length(), projectFullName.length());
+		projectFullName = projectFullName.replace("\\", "/");
+		projectFullName = projectFullName.substring(0, projectFullName.indexOf("/"));
+		
+		if (projectFullName.contains(".")) {
+			return projectFullName.substring(projectFullName.lastIndexOf(".") + 1, projectFullName.length());
+		} else {
+			return projectFullName;
+		}
 	}
 }

@@ -5,6 +5,7 @@ import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.Formula;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -45,6 +46,18 @@ public class Exists extends Quantifier {
 
 		result = false;
 		return result;
+	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, boolean expected) {
+		Sequence sequence = Sequence.nextSequence(parent);
+		formula.generate(sequence, expected);
+		
+		if (expected) {
+			iteration.generate(sequence, ConstraintType.REQUIRE);
+		} else {
+			iteration.generate(sequence, ConstraintType.FORBID);
+		}
 	}
 	
 	@Override

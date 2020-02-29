@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DXOncGXaEemxua17r6Vydg" name="Create: Interface" description="Create: Interface">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_DXOncWXaEemxua17r6Vydg" name="mainUnit" subUnits="_DXOndmXaEemxua17r6Vydg">
-    <parameters xmi:id="_DXOncmXaEemxua17r6Vydg" name="package" kind="IN"/>
-    <parameters xmi:id="_DXOnc2XaEemxua17r6Vydg" name="interface" kind="IN"/>
-    <parameterMappings xmi:id="_DXOndGXaEemxua17r6Vydg" source="_DXOncmXaEemxua17r6Vydg" target="_DXOnd2XaEemxua17r6Vydg"/>
-    <parameterMappings xmi:id="_DXOndWXaEemxua17r6Vydg" source="_DXOnc2XaEemxua17r6Vydg" target="_DXOneGXaEemxua17r6Vydg"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_0R_-gB6FEeq3H7jqxYh1TA" name="Create: Interface" description="Create: Interface">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_0R_-gR6FEeq3H7jqxYh1TA" name="mainUnit" subUnits="_0R_-hB6FEeq3H7jqxYh1TA">
+    <parameters xmi:id="_0R_-gh6FEeq3H7jqxYh1TA" name="toPackage" kind="IN"/>
+    <parameterMappings xmi:id="_0R_-gx6FEeq3H7jqxYh1TA" source="_0R_-gh6FEeq3H7jqxYh1TA" target="_0R_-hR6FEeq3H7jqxYh1TA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_DXOndmXaEemxua17r6Vydg" name="Create: Interface">
-    <parameters xmi:id="_DXOnd2XaEemxua17r6Vydg" name="package" kind="IN"/>
-    <parameters xmi:id="_DXOneGXaEemxua17r6Vydg" name="interface" kind="IN"/>
-    <lhs xmi:id="_DXOneWXaEemxua17r6Vydg" name="Lhs">
-      <nodes xmi:id="_DXOnemXaEemxua17r6Vydg" name="package">
+  <units xsi:type="henshin:Rule" xmi:id="_0R_-hB6FEeq3H7jqxYh1TA" name="Create: Interface">
+    <parameters xmi:id="_0R_-hR6FEeq3H7jqxYh1TA" name="toPackage" kind="IN"/>
+    <lhs xmi:id="_0R_-hh6FEeq3H7jqxYh1TA" name="Lhs">
+      <nodes xmi:id="_0R_-hx6FEeq3H7jqxYh1TA" name="toPackage">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
       </nodes>
     </lhs>
-    <rhs xmi:id="_DXOne2XaEemxua17r6Vydg" name="Rhs">
-      <nodes xmi:id="_DXOnfGXaEemxua17r6Vydg" name="package" incoming="_DXOngWXaEemxua17r6Vydg" outgoing="_DXOngGXaEemxua17r6Vydg">
+    <rhs xmi:id="_0R_-iB6FEeq3H7jqxYh1TA" name="Rhs">
+      <nodes xmi:id="_0R_-iR6FEeq3H7jqxYh1TA" name="toPackage" incoming="_0R_-jh6FEeq3H7jqxYh1TA" outgoing="_0R_-jR6FEeq3H7jqxYh1TA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
       </nodes>
-      <nodes xmi:id="_DXOnfWXaEemxua17r6Vydg" name="interface" incoming="_DXOngGXaEemxua17r6Vydg" outgoing="_DXOngWXaEemxua17r6Vydg">
+      <nodes xmi:id="_0R_-ih6FEeq3H7jqxYh1TA" name="newInterface" incoming="_0R_-jR6FEeq3H7jqxYh1TA" outgoing="_0R_-jh6FEeq3H7jqxYh1TA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
-        <attributes xmi:id="_DXOnfmXaEemxua17r6Vydg" value="&quot;true&quot;">
+        <attributes xmi:id="_0R_-ix6FEeq3H7jqxYh1TA" value="&quot;true&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/abstract"/>
         </attributes>
-        <attributes xmi:id="_DXOnf2XaEemxua17r6Vydg" value="&quot;true&quot;">
+        <attributes xmi:id="_0R_-jB6FEeq3H7jqxYh1TA" value="&quot;true&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/interface"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_DXOngGXaEemxua17r6Vydg" source="_DXOnfGXaEemxua17r6Vydg" target="_DXOnfWXaEemxua17r6Vydg">
+      <edges xmi:id="_0R_-jR6FEeq3H7jqxYh1TA" source="_0R_-iR6FEeq3H7jqxYh1TA" target="_0R_-ih6FEeq3H7jqxYh1TA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
       </edges>
-      <edges xmi:id="_DXOngWXaEemxua17r6Vydg" source="_DXOnfWXaEemxua17r6Vydg" target="_DXOnfGXaEemxua17r6Vydg">
+      <edges xmi:id="_0R_-jh6FEeq3H7jqxYh1TA" source="_0R_-ih6FEeq3H7jqxYh1TA" target="_0R_-iR6FEeq3H7jqxYh1TA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_DXOngmXaEemxua17r6Vydg" origin="_DXOnemXaEemxua17r6Vydg" image="_DXOnfGXaEemxua17r6Vydg"/>
+    <mappings xmi:id="_0R_-jx6FEeq3H7jqxYh1TA" origin="_0R_-hx6FEeq3H7jqxYh1TA" image="_0R_-iR6FEeq3H7jqxYh1TA"/>
   </units>
 </henshin:Module>

@@ -67,16 +67,78 @@ public class GraphServices {
 	public List<EdgePattern> getUndirectedEdgeCandidates(GraphPattern graphPattern) {
 		List<EdgePattern> edges = new ArrayList<>();
 		Set<EdgePattern> opposite = new HashSet<>();
+
+		for (NodePattern nodePattern : graphPattern.getNodes()) {
+			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
+				if (edgePattern.getOpposite() != null) {
+					if (!isContainment(edgePattern) && !isContainment(edgePattern.getOpposite())) {
+
+						// Check for >consistent< opposite:
+						if (ConsistencyChecks.checkOpposite(edgePattern)) {
+							if (!opposite.contains(edgePattern)) {
+								edges.add(edgePattern);
+
+								// Filter the opposite -> as semantic candidate:
+								opposite.add(edgePattern.getOpposite());
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return edges;
+	}
+	
+	/**
+	 * @param graphPattern
+	 *            A graph pattern.
+	 * @return All edges of the graph pattern that will be shown as navigable containment edges.
+	 */
+	public List<EdgePattern> getUndirectedEdgeContainmentCandidates(GraphPattern graphPattern) {
+		List<EdgePattern> edges = new ArrayList<>();
 		
 		for (NodePattern nodePattern : graphPattern.getNodes()) {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
-				// Check for >consistent< opposite:
-				if (ConsistencyChecks.checkOpposite(edgePattern)) {
-					if (!opposite.contains(edgePattern)) {
-						edges.add(edgePattern);
+				if (edgePattern.getOpposite() != null) {
+					if (isContainment(edgePattern)) {
+						
+						// Check for >consistent< opposite:
+						if (ConsistencyChecks.checkOpposite(edgePattern)) {
+							edges.add(edgePattern);
+						}
+					}
+				}
+			}
+		}
+		
+		return edges;
+	}
 
-						// Filter the opposite -> as semantic candidate:
-						opposite.add(edgePattern.getOpposite());
+	/**
+	 * @param edgePattern An edge.
+	 * @return <code>true</code> if the type of the edge is a containment;
+	 *         <code>false</code> otherwise.
+	 */
+	public boolean isContainment(EdgePattern edgePattern) {
+		return (edgePattern.getType() != null) && edgePattern.getType().isContainment();
+	}
+	
+	/**
+	 * @param graphPattern
+	 *            A graph pattern.
+	 * @return All edges of the graph pattern that will be shown as none navigable edges.
+	 */
+	public List<EdgePattern> getDirectedEdgeCandidates(GraphPattern graphPattern) {
+		List<EdgePattern> edges = new ArrayList<>();
+		
+		for (NodePattern nodePattern : graphPattern.getNodes()) {
+			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
+				if (!isContainment(edgePattern)) {
+					
+					// Check if no (consistent) opposite is available:
+					if (!ConsistencyChecks.checkOpposite(edgePattern)) {
+						edges.add(edgePattern);
 					}
 				}
 			}
@@ -90,14 +152,17 @@ public class GraphServices {
 	 *            A graph pattern.
 	 * @return All edges of the graph pattern that will be shown as none navigable edges.
 	 */
-	public List<EdgePattern> getDirectedEdgeCandidates(GraphPattern graphPattern) {
+	public List<EdgePattern> getDirectedEdgeContainmentCandidates(GraphPattern graphPattern) {
 		List<EdgePattern> edges = new ArrayList<>();
 		
 		for (NodePattern nodePattern : graphPattern.getNodes()) {
 			for (EdgePattern edgePattern : nodePattern.getOutgoings()) {
-				// Check if no (consistent) opposite is available:
-				if (!ConsistencyChecks.checkOpposite(edgePattern)) {
-					edges.add(edgePattern);
+				if (isContainment(edgePattern)) {
+					
+					// Check if no (consistent) opposite is available:
+					if (!ConsistencyChecks.checkOpposite(edgePattern)) {
+						edges.add(edgePattern);
+					}
 				}
 			}
 		}

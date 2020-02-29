@@ -18,6 +18,11 @@ public class MatchSelector implements IMatchSelector {
 	}
 	
 	@Override
+	public void setMatchingPathFactory(MatchingPathFactory matchingPathFactory) {
+		this.matchingPathFactory = matchingPathFactory;
+	}
+	
+	@Override
 	public void initialSelection(NodePattern selectedNode, EObject selectedMatch) {
 		
 		// Clear old domains:

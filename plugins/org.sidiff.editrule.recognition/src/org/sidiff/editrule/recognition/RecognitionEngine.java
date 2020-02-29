@@ -4,13 +4,14 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.designpatterns.IAlgorithm;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
-import org.sidiff.editrule.recognition.dependencies.ChangeDependencies;
 import org.sidiff.editrule.recognition.impact.ImpactScope;
+import org.sidiff.editrule.recognition.match.util.RecognitionMatchCreator;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
-import org.sidiff.editrule.recognition.util.MatchingHelper;
+import org.sidiff.editrule.recognition.revision.RevisionGraph;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 /**
  * @author Manuel Ohrndorf
@@ -26,34 +27,29 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 	
 //	protected MergeImports mergeImports;
 	
-	protected MatchingHelper matchingHelper;
+	protected RevisionGraph matchingHelper;
 	
 	@Override
 	public void initialize(IRevision revision) {
-		matchingHelper = new MatchingHelper(revision);
+		matchingHelper = new RevisionGraph(revision);
 	}
 	
-	@Override
-	public RecognitionPattern createRecognitionPattern(Rule editRule) {
+	protected RecognitionPattern createRecognitionPattern(Rule editRule) {
 		return createRecognitionPattern(editRule, GraphpatternFactory.eINSTANCE.createGraphPattern());
 	}
 	
-	@Override
-	public RecognitionPattern createRecognitionPattern(Rule editRule, GraphPattern graphPattern) {
+	protected RecognitionPattern createRecognitionPattern(Rule editRule, GraphPattern graphPattern) {
 		
 		// Create Constraint-Satisfaction-Problem:
 		RecognitionPattern recognitionPattern = new RecognitionPattern(editRule, graphPattern);
-		
-		// Create dependency graph:
-		// TODO: Support for additional EOpposites per meta-model!
-		new ChangeDependencies(editRule, recognitionPattern).calculateDependencyGraph();
 		
 		return recognitionPattern;
 	}
 	
 	@Override
 	public RecognitionEngineMatcher createMatcher(
-			RecognitionPattern recognitionPattern,
+			Rule editRule,
+			ImpactAnalyzes impact,
 			ImpactScope resolvingScope,
 			ImpactScope overwriteScope,
 			ImpactScope introducingScope,
@@ -63,27 +59,42 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 			throw new RuntimeException("Call PartialEditRuleRecognizer start()!");
 		}
 		
+		// Create recognition pattern:
+		RecognitionPattern recognitionPattern = createRecognitionPattern(editRule);
+		
 		// Initialize change domains:
 		recognitionPattern.initialize(matchingHelper);
 //		System.out.println("Initial Domains: \n\n" + StringUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		
 		// Create matcher:
-		return new RecognitionEngineMatcher(recognitionPattern, resolvingScope, overwriteScope, introducingScope, settings);
+		return new RecognitionEngineMatcher(
+				recognitionPattern,
+				new RecognitionMatchCreator(recognitionPattern, matchingHelper.getRevision(), impact),
+				resolvingScope, 
+				overwriteScope,
+				introducingScope,
+				settings);
 	}
 
 	@Override
-	public RecognitionEngineMatcher createMatcher(RecognitionPattern recognitionPattern) {
+	public RecognitionEngineMatcher createMatcher(Rule editRule) {
 		
 		if (!started) {
 			throw new RuntimeException("Call PartialEditRuleRecognizer start()!");
 		}
 		
+		// Create recognition pattern:
+		RecognitionPattern recognitionPattern = createRecognitionPattern(editRule);
+		
 		// Initialize change domains:
 		recognitionPattern.initialize(matchingHelper);
 //		System.out.println("Initial Domains: \n\n" + StringUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		
 		// Create matcher:
-		return new RecognitionEngineMatcher(this, recognitionPattern);
+		return new RecognitionEngineMatcher(
+				this, 
+				recognitionPattern,
+				new RecognitionMatchCreator(recognitionPattern, matchingHelper.getRevision()));
 	}
 	
 	@Override

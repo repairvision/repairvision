@@ -6,13 +6,13 @@ import org.sidiff.editrule.recognition.pattern.graph.path.MatchingPathRecorder;
 
 public class MatchSelectorMonitor {
 
-	private MatchSelector matchSelector;
+	private IMatchSelector matchSelector;
 	
 	private boolean recording;
 	
 	private MatchingPathRecorder pathRecording;
 	
-	public MatchSelectorMonitor(MatchSelector matchSelector) {
+	public MatchSelectorMonitor(IMatchSelector matchSelector) {
 		this.matchSelector = matchSelector;
 	}
 	
@@ -24,14 +24,14 @@ public class MatchSelectorMonitor {
 		this.recording = recording;
 		
 		if (recording) {
-			matchSelector.matchingPathFactory = new MatchingPathFactory() {
+			matchSelector.setMatchingPathFactory(new MatchingPathFactory() {
 				public MatchingPath createMatchingPath() {
 					pathRecording = new MatchingPathRecorder();
 					return pathRecording;
 				}
-			};
+			});
 		} else {
-			matchSelector.matchingPathFactory = new MatchingPathFactory();
+			matchSelector.setMatchingPathFactory(new MatchingPathFactory());
 		}
 	}
 	

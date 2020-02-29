@@ -1,0 +1,117 @@
+package org.sidiff.graphpattern.tools.editrules.constructors;
+
+import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil.isNegativeCondition;
+import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.parentConstraint;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.sidiff.csp.solver.ICSPSolver;
+import org.sidiff.csp.solver.IConstraintSatisfactionProblem;
+import org.sidiff.csp.solver.IDomain;
+import org.sidiff.csp.solver.IVariable;
+import org.sidiff.csp.solver.impl.CSPSolver;
+import org.sidiff.csp.solver.impl.ConstraintSatisfactionProblem;
+import org.sidiff.csp.solver.impl.Variable;
+import org.sidiff.graphpattern.GraphPattern;
+import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.tools.csp.AbstractGraphPatternMatchings;
+import org.sidiff.graphpattern.tools.editrules.constructors.util.EditRuleCollector;
+import org.sidiff.graphpattern.tools.editrules.constructors.util.MinGraphEditDistanceMatch;
+import org.sidiff.graphpattern.tools.editrules.constructors.util.MinGraphEditDistanceMatchings;
+import org.sidiff.graphpattern.tools.editrules.filter.IEditRuleFilter;
+import org.sidiff.graphpattern.util.GraphPatternUtil;
+
+public class TransformationEditRuleConstructor implements IEditRuleConstructor {
+
+	@Override
+	public void construct(Pattern pattern, List<IEditRuleFilter> filter, EditRuleCollector editRules) {
+		List<GraphPattern> allConstraints = pattern.getAllGraphPatterns();
+		
+		// Generate edit rules:
+		// Consider cross-product of all graph patterns:
+		for (GraphPattern preConstraint : allConstraints) {
+			List<Pattern> transformationRules = new ArrayList<>();
+			
+//			if (preConstraint.getName().contains("Enumeration with Literal")) {
+//				System.out.println(preConstraint.getName());
+//			} else {
+//				continue;
+//			}
+			
+			for (GraphPattern postConstraint : allConstraints) {
+//				if (postConstraint.getName().contains("Enumeration Attribute")) {
+//					System.out.println(postConstraint.getName());
+//				} else {
+//					continue;
+//				}
+				
+				if ((preConstraint != postConstraint) && (parentConstraint(preConstraint) == parentConstraint(postConstraint))) {
+					int preSize = GraphPatternUtil.getPatternSize(preConstraint.getNodes());
+					int postSize = GraphPatternUtil.getPatternSize(postConstraint.getNodes());
+
+					// NOTE: Find match: 
+					//       - Pre in Post or Post in Pre
+					//       - equal node types
+					//       - keep match with minimal graph edit distance
+					//       - do not consider negative condition nodes in matching
+					IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(preConstraint.getNodes().size());
+					problem.setMinimumSolutionSize(Math.min(preSize, postSize)); // NOTE: At least one of both patterns need to be matched completely.
+					problem.setMaximumSolutionSize(Math.max(preSize, postSize));
+					problem.setSearchInjectiveSolutions(true);
+
+					for (NodePattern preNode : preConstraint.getNodes()) {
+						if (!isNegativeCondition(preNode)) {
+							IDomain<NodePattern> domain = AbstractGraphPatternMatchings.getDomain(preNode, 
+									postConstraint.getNodes(), 
+									n -> !isNegativeCondition(n));
+							IVariable<NodePattern, NodePattern> variable = new Variable<>(preNode, domain, true, true);
+							problem.addVariable(variable);
+						}
+					}
+
+					MinGraphEditDistanceMatchings matchings = new MinGraphEditDistanceMatchings(preConstraint, postConstraint, filter);
+					ICSPSolver<NodePattern, NodePattern> solver = new CSPSolver<>(problem, matchings);
+					solver.run();
+
+					String name = "Transform: "
+							+ preConstraint.getName() + " - To - "
+							+ postConstraint.getName();
+
+//					System.out.println("[" + matchings.getMatches().size() + "]: " + name);
+
+					// Filter edit rules (by global rulebase):
+					for (Iterator<MinGraphEditDistanceMatch> iterator = matchings.getMatches().iterator(); iterator.hasNext();) {
+						MinGraphEditDistanceMatch match = iterator.next();
+						
+						if (IEditRuleFilter.filter(filter, match.getEditOperation(), match.getEditRule(), editRules.getRulebase())) {
+							System.err.println("INFO: Filtered edit rule [" + matchings.getMatches().indexOf(match) + "]: " + name);
+							iterator.remove();
+						}
+					}
+					
+					// Generate edit rule names:
+					int counter = 0;
+					int count = matchings.getMatches().size();
+
+					for (MinGraphEditDistanceMatch match : matchings.getMatches()) {
+
+						if (count > 1) {
+							match.setName(name + " (" + ++counter + ")");
+						} else {
+							match.setName(name);
+						}
+
+						Pattern editOperation = match.getEditOperation();
+						transformationRules.add(editOperation);
+					}
+				}
+			}
+			
+			// Add new edit rule for graph pattern:
+			editRules.add(preConstraint, transformationRules);
+		}
+	}
+}

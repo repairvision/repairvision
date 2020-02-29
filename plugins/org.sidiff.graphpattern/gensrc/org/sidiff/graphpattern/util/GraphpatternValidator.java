@@ -1,43 +1,15 @@
-/**
- */
 package org.sidiff.graphpattern.util;
+
 
 import java.util.Iterator;
 import java.util.Map;
-
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.sidiff.graphpattern.Assignment;
-import org.sidiff.graphpattern.Association;
-import org.sidiff.graphpattern.AttributePattern;
-import org.sidiff.graphpattern.Bundle;
-import org.sidiff.graphpattern.DependencyEdge;
-import org.sidiff.graphpattern.DependencyGraph;
-import org.sidiff.graphpattern.DependencyNode;
-import org.sidiff.graphpattern.EObjectList;
-import org.sidiff.graphpattern.EdgePattern;
-import org.sidiff.graphpattern.Extendable;
-import org.sidiff.graphpattern.GraphElement;
-import org.sidiff.graphpattern.GraphPattern;
-import org.sidiff.graphpattern.GraphpatternPackage;
-import org.sidiff.graphpattern.Matching;
-import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.graphpattern.ObjectBinding;
-import org.sidiff.graphpattern.Parameter;
-import org.sidiff.graphpattern.ParameterBinding;
-import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.PatternElement;
-import org.sidiff.graphpattern.Profile;
-import org.sidiff.graphpattern.Resource;
-import org.sidiff.graphpattern.Stereotype;
-import org.sidiff.graphpattern.SubGraph;
-import org.sidiff.graphpattern.ValueBinding;
-import org.sidiff.graphpattern.attributes.JavaSciptParser;
+import org.sidiff.graphpattern.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -182,7 +154,46 @@ public class GraphpatternValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateNodePattern(NodePattern nodePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(nodePattern, diagnostics, context);
+		if (!validate_NoCircularContainment(nodePattern, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(nodePattern, diagnostics, context);
+		if (result || diagnostics != null) result &= validateNodePattern_TheNameOfANodeMustBeUniqueWithinAGraph(nodePattern, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * The cached validation expression for the TheNameOfANodeMustBeUniqueWithinAGraph constraint of '<em>Node Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String NODE_PATTERN__THE_NAME_OF_ANODE_MUST_BE_UNIQUE_WITHIN_AGRAPH__EEXPRESSION = "not(self.graph.nodes->exists(n | n <> self and n.name <> null and n.name = self.name))";
+
+	/**
+	 * Validates the TheNameOfANodeMustBeUniqueWithinAGraph constraint of '<em>Node Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNodePattern_TheNameOfANodeMustBeUniqueWithinAGraph(NodePattern nodePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(GraphpatternPackage.Literals.NODE_PATTERN,
+				 nodePattern,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "TheNameOfANodeMustBeUniqueWithinAGraph",
+				 NODE_PATTERN__THE_NAME_OF_ANODE_MUST_BE_UNIQUE_WITHIN_AGRAPH__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
 
 	/**
@@ -209,140 +220,148 @@ public class GraphpatternValidator extends EObjectValidator {
 	}
 
 	/**
+	 * The cached validation expression for the TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne constraint of '<em>Edge Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String EDGE_PATTERN__THE_OPPOSITE_OF_THE_OPPOSITE_MAY_NOT_BE_AREFERENCE_DIFFERENT_FROM_THIS_ONE__EEXPRESSION = "(self.opposite <> null) implies (self.opposite.opposite = self)";
+
+	/**
 	 * Validates the TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne constraint of '<em>Edge Pattern</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	public boolean validateEdgePattern_TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne(EdgePattern edgePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		
-		// Inconsistent or missing opposite?
-		if ((edgePattern.getOpposite() != null) && (edgePattern.getOpposite().getOpposite() != edgePattern)) {
-			if (diagnostics != null) {
-				diagnostics.add
-				(createDiagnostic
-						(Diagnostic.ERROR,
-								DIAGNOSTIC_SOURCE,
-								0,
-								"_UI_GenericConstraint_diagnostic",
-								new Object[] { "The opposite of the opposite may not be a reference different from this one", getObjectLabel(edgePattern, context) },
-								new Object[] { edgePattern },
-								context));
-			}
-			return false;
-		}
-		return true;
+		return
+			validate
+				(GraphpatternPackage.Literals.EDGE_PATTERN,
+				 edgePattern,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne",
+				 EDGE_PATTERN__THE_OPPOSITE_OF_THE_OPPOSITE_MAY_NOT_BE_AREFERENCE_DIFFERENT_FROM_THIS_ONE__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
+
+	/**
+	 * The cached validation expression for the TheOppositeMayNotBeItsOwnOpposite constraint of '<em>Edge Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String EDGE_PATTERN__THE_OPPOSITE_MAY_NOT_BE_ITS_OWN_OPPOSITE__EEXPRESSION = "self.opposite <> self";
 
 	/**
 	 * Validates the TheOppositeMayNotBeItsOwnOpposite constraint of '<em>Edge Pattern</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	public boolean validateEdgePattern_TheOppositeMayNotBeItsOwnOpposite(EdgePattern edgePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		
-		if ((edgePattern != null) && (edgePattern.getOpposite() == edgePattern)) {
-			if (diagnostics != null) {
-				diagnostics.add
-					(createDiagnostic
-						(Diagnostic.ERROR,
-						 DIAGNOSTIC_SOURCE,
-						 0,
-						 "_UI_GenericConstraint_diagnostic",
-						 new Object[] { "The opposite may not be its own opposite", getObjectLabel(edgePattern, context) },
-						 new Object[] { edgePattern },
-						 context));
-			}
-			return false;
-		}
-		return true;
+		return
+			validate
+				(GraphpatternPackage.Literals.EDGE_PATTERN,
+				 edgePattern,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "TheOppositeMayNotBeItsOwnOpposite",
+				 EDGE_PATTERN__THE_OPPOSITE_MAY_NOT_BE_ITS_OWN_OPPOSITE__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
+
+	/**
+	 * The cached validation expression for the TheOppositeTypesAreNotMetaModelConform constraint of '<em>Edge Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String EDGE_PATTERN__THE_OPPOSITE_TYPES_ARE_NOT_META_MODEL_CONFORM__EEXPRESSION = "((self.opposite <> null) and (self.type.eOpposite <> null)) implies (self.opposite.type = self.type.eOpposite)";
 
 	/**
 	 * Validates the TheOppositeTypesAreNotMetaModelConform constraint of '<em>Edge Pattern</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	public boolean validateEdgePattern_TheOppositeTypesAreNotMetaModelConform(EdgePattern edgePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (edgePattern.getType() != null) {
-			if ((edgePattern.getType().getEOpposite() != null) && (edgePattern.getOpposite() != null)) {
-				if (edgePattern.getType().getEOpposite() != edgePattern.getOpposite().getType()) {
-					if (diagnostics != null) {
-						diagnostics.add
-							(createDiagnostic
-								(Diagnostic.ERROR,
-								 DIAGNOSTIC_SOURCE,
-								 0,
-								 "_UI_GenericConstraint_diagnostic",
-								 new Object[] { "The opposite types are not meta-model conform", getObjectLabel(edgePattern, context) },
-								 new Object[] { edgePattern },
-								 context));
-					}
-					return false;
-				}
-			}
-		}
-		return true;
+		return
+			validate
+				(GraphpatternPackage.Literals.EDGE_PATTERN,
+				 edgePattern,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "TheOppositeTypesAreNotMetaModelConform",
+				 EDGE_PATTERN__THE_OPPOSITE_TYPES_ARE_NOT_META_MODEL_CONFORM__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
+
+	/**
+	 * The cached validation expression for the EdgeSourceAndTypeAreNotMetaModelConform constraint of '<em>Edge Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String EDGE_PATTERN__EDGE_SOURCE_AND_TYPE_ARE_NOT_META_MODEL_CONFORM__EEXPRESSION = "((self.type <> null) and (self.source <> null) and (self.source.type <> null)) implies self.source.type.eAllReferences->includes(self.type)";
 
 	/**
 	 * Validates the EdgeSourceAndTypeAreNotMetaModelConform constraint of '<em>Edge Pattern</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	public boolean validateEdgePattern_EdgeSourceAndTypeAreNotMetaModelConform(EdgePattern edgePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if ((edgePattern.getType() != null) && (edgePattern.getSource() != null) && (edgePattern.getSource().getType() != null)) {
-			if (edgePattern.getSource().getType().getEAllReferences().contains(edgePattern.getType())) {
-				return true;
-			} else {
-				if (diagnostics != null) {
-					diagnostics.add
-					(createDiagnostic
-							(Diagnostic.ERROR,
-									DIAGNOSTIC_SOURCE,
-									0,
-									"_UI_GenericConstraint_diagnostic",
-									new Object[] { "Edge source and type are not meta-model conform", getObjectLabel(edgePattern, context) },
-									new Object[] { edgePattern },
-									context));
-				}
-				return false;
-			}
-		}
-		return false;
+		return
+			validate
+				(GraphpatternPackage.Literals.EDGE_PATTERN,
+				 edgePattern,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "EdgeSourceAndTypeAreNotMetaModelConform",
+				 EDGE_PATTERN__EDGE_SOURCE_AND_TYPE_ARE_NOT_META_MODEL_CONFORM__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
+
+	/**
+	 * The cached validation expression for the EdgeTargetAndTypeAreNotMetaModelConform constraint of '<em>Edge Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String EDGE_PATTERN__EDGE_TARGET_AND_TYPE_ARE_NOT_META_MODEL_CONFORM__EEXPRESSION = "((self.type <> null) and (self.target <> null) and (self.target.type <> null)) implies ((self.type.eType = self.target.type) or (self.target.type.eAllSuperTypes->includes(self.type.eType) or (self.type.eType.instanceTypeName = 'org.eclipse.emf.ecore.EObject')))";
 
 	/**
 	 * Validates the EdgeTargetAndTypeAreNotMetaModelConform constraint of '<em>Edge Pattern</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	public boolean validateEdgePattern_EdgeTargetAndTypeAreNotMetaModelConform(EdgePattern edgePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if ((edgePattern.getType() != null) && (edgePattern.getTarget() != null) && (edgePattern.getTarget().getType() != null)) {
-			if ((edgePattern.getType().getEType() == edgePattern.getTarget().getType()) 
-					|| (edgePattern.getTarget().getType().getEAllSuperTypes().contains(edgePattern.getType().getEType()))
-					|| (edgePattern.getType().getEType() == EcorePackage.eINSTANCE.getEObject())) {
-				return true;
-			} else {
-				if (diagnostics != null) {
-					diagnostics.add
-					(createDiagnostic
-							(Diagnostic.ERROR,
-									DIAGNOSTIC_SOURCE,
-									0,
-									"_UI_GenericConstraint_diagnostic",
-									new Object[] { "Edge target and type are not meta-model conform", getObjectLabel(edgePattern, context) },
-									new Object[] { edgePattern },
-									context));
-				}
-				return false;
-			}
-		}
-		return false;
+		return
+			validate
+				(GraphpatternPackage.Literals.EDGE_PATTERN,
+				 edgePattern,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "EdgeTargetAndTypeAreNotMetaModelConform",
+				 EDGE_PATTERN__EDGE_TARGET_AND_TYPE_ARE_NOT_META_MODEL_CONFORM__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
 
 	/**
@@ -366,60 +385,61 @@ public class GraphpatternValidator extends EObjectValidator {
 	}
 
 	/**
+	 * The cached validation expression for the TheAttributeTypeAndTheContainingClassAreNotMetaModelConform constraint of '<em>Attribute Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String ATTRIBUTE_PATTERN__THE_ATTRIBUTE_TYPE_AND_THE_CONTAINING_CLASS_ARE_NOT_META_MODEL_CONFORM__EEXPRESSION = "((self.type <> null) and (self.node <> null) and (self.node.type <> null)) implies (self.node.type.eAllAttributes->includes(self.type))";
+
+	/**
 	 * Validates the TheAttributeTypeAndTheContainingClassAreNotMetaModelConform constraint of '<em>Attribute Pattern</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	public boolean validateAttributePattern_TheAttributeTypeAndTheContainingClassAreNotMetaModelConform(AttributePattern attributePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if ((attributePattern.getType() != null) && (attributePattern.getNode() != null) && (attributePattern.getNode().getType() != null)) {
-			if (attributePattern.getNode().getType().getEAllAttributes().contains(attributePattern.getType())) {
-				return true;
-			} else {
-				if (diagnostics != null) {
-					diagnostics.add
-					(createDiagnostic
-							(Diagnostic.ERROR,
-									DIAGNOSTIC_SOURCE,
-									0,
-									"_UI_GenericConstraint_diagnostic",
-									new Object[] { "The attribute type and the containing class are not meta-model conform", getObjectLabel(attributePattern, context) },
-									new Object[] { attributePattern },
-									context));
-				}
-				return false;
-			}
-		}
-		return false;
+		return
+			validate
+				(GraphpatternPackage.Literals.ATTRIBUTE_PATTERN,
+				 attributePattern,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "TheAttributeTypeAndTheContainingClassAreNotMetaModelConform",
+				 ATTRIBUTE_PATTERN__THE_ATTRIBUTE_TYPE_AND_THE_CONTAINING_CLASS_ARE_NOT_META_MODEL_CONFORM__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
+
+	/**
+	 * The cached validation expression for the TheNameOfTheAttributeVariableIsEqualToANameOfANode constraint of '<em>Attribute Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String ATTRIBUTE_PATTERN__THE_NAME_OF_THE_ATTRIBUTE_VARIABLE_IS_EQUAL_TO_ANAME_OF_ANODE__EEXPRESSION = "not(self.isVariable() and self.graph.nodes->exists(n | (n.name <> null) and n.name = self.name))";
 
 	/**
 	 * Validates the TheNameOfTheAttributeVariableIsEqualToANameOfANode constraint of '<em>Attribute Pattern</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	public boolean validateAttributePattern_TheNameOfTheAttributeVariableIsEqualToANameOfANode(AttributePattern attributePattern, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		String name = attributePattern.getValue();
-		
-		if (JavaSciptParser.isVariable(name) && 
-				attributePattern.getGraph().getNodes().stream()
-				.anyMatch(n -> n.getName().equals(name))) {
-			
-			if (diagnostics != null) {
-				diagnostics.add
-					(createDiagnostic
-						(Diagnostic.WARNING,
-						 DIAGNOSTIC_SOURCE,
-						 0,
-						 "_UI_GenericConstraint_diagnostic",
-						 new Object[] { "The name of the attribute variable is equal to a name of a node", getObjectLabel(attributePattern, context) },
-						 new Object[] { attributePattern },
-						 context));
-			}
-			return false;
-		}
-		return true;
+		return
+			validate
+				(GraphpatternPackage.Literals.ATTRIBUTE_PATTERN,
+				 attributePattern,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "TheNameOfTheAttributeVariableIsEqualToANameOfANode",
+				 ATTRIBUTE_PATTERN__THE_NAME_OF_THE_ATTRIBUTE_VARIABLE_IS_EQUAL_TO_ANAME_OF_ANODE__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
 
 	/**
@@ -478,29 +498,32 @@ public class GraphpatternValidator extends EObjectValidator {
 	}
 
 	/**
+	 * The cached validation expression for the TheNameOfTheParameterIsNotUnique constraint of '<em>Parameter</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String PARAMETER__THE_NAME_OF_THE_PARAMETER_IS_NOT_UNIQUE__EEXPRESSION = "not(self.pattern.parameters->exists(p |p <> self and p.name = self.name))";
+
+	/**
 	 * Validates the TheNameOfTheParameterIsNotUnique constraint of '<em>Parameter</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	public boolean validateParameter_TheNameOfTheParameterIsNotUnique(Parameter parameter, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		
-		if (parameter.getPattern().getParameters().stream()
-				.anyMatch(p -> ((p != parameter) && p.getName().equals(parameter.getName())))) {
-			if (diagnostics != null) {
-				diagnostics.add
-					(createDiagnostic
-						(Diagnostic.ERROR,
-						 DIAGNOSTIC_SOURCE,
-						 0,
-						 "_UI_GenericConstraint_diagnostic",
-						 new Object[] { "The name of the parameter is not unique", getObjectLabel(parameter, context) },
-						 new Object[] { parameter },
-						 context));
-			}
-			return false;
-		}
-		return true;
+		return
+			validate
+				(GraphpatternPackage.Literals.PARAMETER,
+				 parameter,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "TheNameOfTheParameterIsNotUnique",
+				 PARAMETER__THE_NAME_OF_THE_PARAMETER_IS_NOT_UNIQUE__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
 
 	/**

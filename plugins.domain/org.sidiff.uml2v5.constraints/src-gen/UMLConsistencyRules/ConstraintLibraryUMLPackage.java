@@ -58,10 +58,10 @@ public class ConstraintLibraryUMLPackage implements IConstraintLibrary {
 	
 	public static IConstraint createInconsistency_MessageSignatureRule() {
 		
-		Variable v0_m = new Variable("m");
-		Variable v1_o1 = new Variable("o1");
-		Variable v2_l = new Variable("l");
-		Variable v3_o2 = new Variable("o2");
+		Variable v0_m = new Variable(DOMAIN.getMessage(), "m");
+		Variable v1_o1 = new Variable(DOMAIN.getOperation(), "o1");
+		Variable v2_l = new Variable(DOMAIN.getLifeline(), "l");
+		Variable v3_o2 = new Variable(DOMAIN.getOperation(), "o2");
 	
 		Term t0_signature = new Get(v0_m, DOMAIN.getMessage_Signature());
 		Term t1_name = new Get(v1_o1, DOMAIN.getNamedElement_Name());
@@ -81,10 +81,10 @@ public class ConstraintLibraryUMLPackage implements IConstraintLibrary {
 	
 	public static IConstraint createInconsistency_MessageConnectionRule() {
 		
-		Variable v4_m = new Variable("m");
-		Variable v5_l1 = new Variable("l1");
-		Variable v6_l2 = new Variable("l2");
-		Variable v7_a = new Variable("a");
+		Variable v4_m = new Variable(DOMAIN.getMessage(), "m");
+		Variable v5_l1 = new Variable(DOMAIN.getLifeline(), "l1");
+		Variable v6_l2 = new Variable(DOMAIN.getLifeline(), "l2");
+		Variable v7_a = new Variable(DOMAIN.getTypedElement(), "a");
 	
 		Term t6_receiveEvent_covered = new Get(new Get(v4_m, DOMAIN.getMessage_ReceiveEvent()), DOMAIN.getInteractionFragment_Covered());
 		Term t7_sendEvent_covered = new Get(new Get(v4_m, DOMAIN.getMessage_SendEvent()), DOMAIN.getInteractionFragment_Covered());
@@ -103,11 +103,11 @@ public class ConstraintLibraryUMLPackage implements IConstraintLibrary {
 	
 	public static IConstraint createInconsistency_UnimplementedRealizationRule() {
 		
-		Variable v8_realization = new Variable("realization");
-		Variable v9_supplier = new Variable("supplier");
-		Variable v10_op_interface = new Variable("op_interface");
-		Variable v11_client = new Variable("client");
-		Variable v12_op_class = new Variable("op_class");
+		Variable v8_realization = new Variable(DOMAIN.getRealization(), "realization");
+		Variable v9_supplier = new Variable(DOMAIN.getInterface(), "supplier");
+		Variable v10_op_interface = new Variable(DOMAIN.getOperation(), "op_interface");
+		Variable v11_client = new Variable(DOMAIN.getClass_(), "client");
+		Variable v12_op_class = new Variable(DOMAIN.getOperation(), "op_class");
 	
 		Term t11_supplier = new Get(v8_realization, DOMAIN.getDependency_Supplier());
 		Term t12_ownedOperation = new Get(v9_supplier, DOMAIN.getInterface_OwnedOperation());
@@ -127,7 +127,7 @@ public class ConstraintLibraryUMLPackage implements IConstraintLibrary {
 	
 	public static IConstraint createInconsistency_DanglingTransitionRule() {
 		
-		Variable v13_t = new Variable("t");
+		Variable v13_t = new Variable(DOMAIN.getTransition(), "t");
 	
 		Term t17_source = new Get(v13_t, DOMAIN.getTransition_Source());
 		Term t18_target = new Get(v13_t, DOMAIN.getTransition_Target());
@@ -143,7 +143,7 @@ public class ConstraintLibraryUMLPackage implements IConstraintLibrary {
 	
 	public static IConstraint createInconsistency_TransitionWithoutTriggerRule() {
 		
-		Variable v14_t = new Variable("t");
+		Variable v14_t = new Variable(DOMAIN.getTransition(), "t");
 	
 		Term t19_source = new Get(v14_t, DOMAIN.getTransition_Source());
 		Term t20_target = new Get(v14_t, DOMAIN.getTransition_Target());
@@ -160,7 +160,7 @@ public class ConstraintLibraryUMLPackage implements IConstraintLibrary {
 	
 	public static IConstraint createInconsistency_UntypedLifelineRule() {
 		
-		Variable v15_l = new Variable("l");
+		Variable v15_l = new Variable(DOMAIN.getLifeline(), "l");
 	
 		Term t22_represents = new Get(v15_l, DOMAIN.getLifeline_Represents());
 	
@@ -175,7 +175,7 @@ public class ConstraintLibraryUMLPackage implements IConstraintLibrary {
 	
 	public static IConstraint createInconsistency_UntypedPropertyRule() {
 		
-		Variable v16_p = new Variable("p");
+		Variable v16_p = new Variable(DOMAIN.getProperty(), "p");
 	
 		Term t23_type = new Get(v16_p, DOMAIN.getTypedElement_Type());
 	
@@ -190,7 +190,7 @@ public class ConstraintLibraryUMLPackage implements IConstraintLibrary {
 	
 	public static IConstraint createMissingFeature_CallEvent_OperationRule() {
 		
-		Variable v17_ce = new Variable("ce");
+		Variable v17_ce = new Variable(DOMAIN.getCallEvent(), "ce");
 	
 		Term t24_operation = new Get(v17_ce, DOMAIN.getCallEvent_Operation());
 	
@@ -205,7 +205,7 @@ public class ConstraintLibraryUMLPackage implements IConstraintLibrary {
 	
 	public static IConstraint createMissingFeature_Trigger_EventRule() {
 		
-		Variable v18_t = new Variable("t");
+		Variable v18_t = new Variable(DOMAIN.getTrigger(), "t");
 	
 		Term t25_event = new Get(v18_t, DOMAIN.getTrigger_Event());
 	

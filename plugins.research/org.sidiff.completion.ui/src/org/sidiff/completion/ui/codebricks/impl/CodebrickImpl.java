@@ -19,6 +19,8 @@ import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.CodebricksPackage;
 import org.sidiff.completion.ui.codebricks.IndentBrick;
 import org.sidiff.completion.ui.codebricks.LineBreakBrick;
+import org.sidiff.completion.ui.codebricks.TemplatePlaceholderBrick;
+import org.sidiff.completion.ui.codebricks.ViewableBrick;
 
 /**
  * <!-- begin-user-doc -->
@@ -264,6 +266,35 @@ public class CodebrickImpl extends MinimalEObjectImpl.Container implements Codeb
 				return caluclateColumns();
 		}
 		return super.eInvoke(operationID, arguments);
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		StringBuilder string = new StringBuilder();
+		
+		for (Brick brick : getBricks()) {
+			if (brick instanceof ViewableBrick) {
+				string.append(((ViewableBrick) brick).getText());
+				string.append("\n");
+				
+				if (brick instanceof TemplatePlaceholderBrick) {
+					for (ViewableBrick choice : ((TemplatePlaceholderBrick) brick).getChoice()) {
+						string.append("  choice: ");
+						string.append(choice.getText());
+					}
+				}
+			} else {
+				string.append(brick.toString());
+				string.append("\n");
+			}
+		}
+		
+		return string.toString();
 	}
 
 } //CodebrickImpl

@@ -75,7 +75,7 @@ public abstract class ChangeImpl implements Change {
 		@Override
 		public void applyAndReverse() {
 			if (create) {
-				graph.add(object);
+//				graph.add(object);
 			} else {
 				graph.remove(object);
 			}

@@ -112,22 +112,67 @@ public interface CodebricksFactory extends EFactory {
 	ValuePlaceholderBrick createValuePlaceholderBrick();
 
 	/**
-	 * Returns a new object of class '<em>Object Domain Placeholder Brick</em>'.
+	 * Returns a new object of class '<em>POJO Codebrick View</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Object Domain Placeholder Brick</em>'.
+	 * @return a new object of class '<em>POJO Codebrick View</em>'.
 	 * @generated
 	 */
-	ObjectDomainPlaceholderBrick createObjectDomainPlaceholderBrick();
+	POJOCodebrickView createPOJOCodebrickView();
+	
+	/**
+	 * Returns a new object of class '<em>POJO Codebrick View</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>POJO Codebrick View</em>'.
+	 * @generated NOT
+	 */
+	POJOCodebrickView createDelegateToAlternativePOJOCodebrickView();
 
 	/**
-	 * Returns a new object of class '<em>Composed Template Placeholder Brick</em>'.
+	 * Returns a new object of class '<em>Codebrick View</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Composed Template Placeholder Brick</em>'.
+	 * @return a new object of class '<em>Codebrick View</em>'.
 	 * @generated
 	 */
-	ComposedTemplatePlaceholderBrick createComposedTemplatePlaceholderBrick();
+	CodebrickView createCodebrickView();
+
+	/**
+	 * Returns a new object of class '<em>Object Domain Policy</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Object Domain Policy</em>'.
+	 * @generated
+	 */
+	ObjectDomainPolicy createObjectDomainPolicy();
+
+	/**
+	 * Returns a new object of class '<em>Value Domain Policy</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Value Domain Policy</em>'.
+	 * @generated
+	 */
+	ValueDomainPolicy createValueDomainPolicy();
+
+	/**
+	 * Returns a new object of class '<em>Collapsible Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Collapsible Brick</em>'.
+	 * @generated
+	 */
+	CollapsibleBrick createCollapsibleBrick();
+
+	/**
+	 * Returns a new object of class '<em>Reset Template Placeholder Brick</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Reset Template Placeholder Brick</em>'.
+	 * @generated
+	 */
+	ResetTemplatePlaceholderBrick createResetTemplatePlaceholderBrick();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -12,38 +12,55 @@ import org.sidiff.graphpattern.Stereotype;
 
 public class NodePatternVariable extends Variable<NodePattern, NodePattern> {
 
-	public NodePatternVariable(NodePattern subject, IDomain<NodePattern> domain, boolean removable) {
-		super(subject, domain, removable);
+	private boolean induced;
+	
+	/**
+	 * @param induced Requires to match all edges between assigned nodes
+	 *                (https://en.wikipedia.org/wiki/Induced_subgraph).
+	 * 
+	 * @see Variable#Variable(Object, IDomain, boolean)
+	 */
+	public NodePatternVariable(
+			NodePattern subject, IDomain<NodePattern> domain, 
+			boolean removable, boolean maximize, boolean induced) {
+		super(subject, domain, removable, maximize);
+		this.induced = induced;
 	}
 	
 	@Override
 	public boolean assign(NodePattern assignment) {
 		
 		// Check node against adjacent assignments:
-		checkOutgoings(assignment);
-		checkIncomings(assignment);
+		if (induced) {
+			checkOutgoings(assignment);
+			checkIncomings(assignment);
+		}
 		
 		return super.assign(assignment);
 	}
 	
-	private boolean checkOutgoings(NodePattern assignment) {
+	protected boolean checkOutgoings(NodePattern assignment) {
 		
 		for (EdgePattern outgoing : subject.getOutgoings()) {
 			NodePattern adjacentNode = outgoing.getTarget();
 			IVariable<NodePattern, NodePattern> adjacentVariable = csp.getVariable(adjacentNode);
-			NodePattern adjacentAssignment = adjacentVariable.getValue();
 			
-			// Check assigned value:
-			if (adjacentAssignment != null) {
-				if (!checkOutgoing(assignment, outgoing.getType(), outgoing.getStereotypes(), adjacentAssignment)) {
-					return false;
+			// Allow to exclude nodes of the subject graph from the CSP.
+			if (adjacentVariable != null) {
+				NodePattern adjacentAssignment = adjacentVariable.getValue();
+				
+				// Check assigned value:
+				if (adjacentAssignment != null) {
+					if (!checkOutgoing(assignment, outgoing.getType(), outgoing.getStereotypes(), adjacentAssignment)) {
+						return false;
+					}
 				}
 			}
 		}
 		return true;
 	}
 
-	private boolean checkOutgoing(NodePattern source, EReference type, List<Stereotype> stereotypes, NodePattern target) {
+	protected boolean checkOutgoing(NodePattern source, EReference type, List<Stereotype> stereotypes, NodePattern target) {
 		for (EdgePattern sourceOutgoing : source.getOutgoings()) {
 			if (sourceOutgoing.getType() == type) {
 				if (sourceOutgoing.getTarget() == target) {
@@ -56,24 +73,28 @@ public class NodePatternVariable extends Variable<NodePattern, NodePattern> {
 		return false;
 	}
 	
-	private boolean checkIncomings(NodePattern assignment) {
+	protected boolean checkIncomings(NodePattern assignment) {
 		
 		for (EdgePattern incoming : subject.getIncomings()) {
 			NodePattern adjacentNode = incoming.getSource();
 			IVariable<NodePattern, NodePattern> adjacentVariable = csp.getVariable(adjacentNode);
-			NodePattern adjacentAssignment = adjacentVariable.getValue();
 			
-			// Check assigned value:
-			if (adjacentAssignment != null) {
-				if (!checkIncoming(assignment, incoming.getType(), incoming.getStereotypes(), adjacentAssignment)) {
-					return false;
+			// Allow to exclude nodes of the subject graph from the CSP.
+			if (adjacentVariable != null) {
+				NodePattern adjacentAssignment = adjacentVariable.getValue();
+				
+				// Check assigned value:
+				if (adjacentAssignment != null) {
+					if (!checkIncoming(assignment, incoming.getType(), incoming.getStereotypes(), adjacentAssignment)) {
+						return false;
+					}
 				}
 			}
 		}
 		return true;
 	}
 
-	private boolean checkIncoming(NodePattern target, EReference type, List<Stereotype> stereotypes, NodePattern source) {
+	protected boolean checkIncoming(NodePattern target, EReference type, List<Stereotype> stereotypes, NodePattern source) {
 		for (EdgePattern targetIncoming : target.getIncomings()) {
 			if (targetIncoming.getType() == type) {
 				if (targetIncoming.getSource() == source) {

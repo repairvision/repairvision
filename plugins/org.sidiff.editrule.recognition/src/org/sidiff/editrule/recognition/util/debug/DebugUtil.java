@@ -12,7 +12,6 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTime;
-import org.sidiff.editrule.recognition.IMatching;
 import org.sidiff.editrule.recognition.pattern.RecognitionPattern;
 import org.sidiff.editrule.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.editrule.recognition.pattern.graph.ActionEdge;
@@ -161,17 +160,6 @@ public class DebugUtil {
 	public static void printFoundMatchings(int matchings) {
 		if (EVALUATION) {
 			print("Re.Vision[Matchings Found]: " + matchings);
-		}
-	}
-
-	public static void printMatching(RecognitionPattern recognitionPattern, IMatching matching) {
-		if (MATCHING) {
-			System.out.println("Matching:");
-
-			for (NodePattern changePattern : recognitionPattern.getChangeNodePatterns()) {
-				System.out.println("  " + recognitionPattern.getChangePattern(changePattern) + ": "
-						+ matching.getFirstMatch(changePattern));
-			}
 		}
 	}
 

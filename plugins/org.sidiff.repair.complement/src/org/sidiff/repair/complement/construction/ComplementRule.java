@@ -6,6 +6,7 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSEdge;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +27,9 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.difference.symmetric.Change;
-import org.sidiff.repair.complement.matching.RecognitionActionMatch;
-import org.sidiff.repair.complement.matching.RecognitionMatch;
+import org.sidiff.editrule.recognition.match.RecognitionActionMatch;
+import org.sidiff.editrule.recognition.match.RecognitionMatch;
+import org.sidiff.editrule.recognition.match.RecognitionMatching;
 
 /**
  * Stores the trace of a complement rule for a given partially executed edit rule.
@@ -49,12 +51,7 @@ public class ComplementRule {
 	/**
 	 * The (partial) match of the recognition rule.
 	 */
-	private List<RecognitionMatch> recognitionMatch;
-	
-	/**
-	 * The recognized changes of the model difference.
-	 */
-	private List<Change> recognizedChangeSet;
+	private RecognitionMatching recognitionMatch;
 	
 	/**
 	 * The complement rule for the partially executed edit rule.
@@ -76,10 +73,9 @@ public class ComplementRule {
 	 */
 	private Map<Node, Node> rhsTrace = new HashMap<>();
 	
-	public ComplementRule(Rule recognizedRule, List<RecognitionMatch> recognitionMatch, List<Change> recognizedChangeSet, Rule complementRule) {
+	public ComplementRule(Rule recognizedRule, RecognitionMatching recognitionMatch, Rule complementRule) {
 		this.recognizedRule = recognizedRule;
 		this.recognitionMatch = recognitionMatch;
-		this.recognizedChangeSet = recognizedChangeSet;
 		this.complementRule = complementRule;
 	}
 	
@@ -113,7 +109,7 @@ public class ComplementRule {
 	}
 	
 	public List<Change> getRecognizedChangeSet() {
-		return recognizedChangeSet;
+		return recognitionMatch.getChangeSet();
 	}
 	
 	public Rule getComplementRule() {
@@ -127,6 +123,31 @@ public class ComplementRule {
 		}
 		
 		return complementingChanges;
+	}
+	
+	/**
+	 * @return The boundary changes that are incident to the LHS.
+	 */
+	public List<GraphElement> getComplementingBoundaryChanges() {
+		List<GraphElement> boundaryComplementingChanges = new ArrayList<>();
+		
+		for (GraphElement graphElement : getComplementingChanges()) {
+			if (graphElement instanceof Edge) {
+				Node source = ChangePatternUtil.getLHS(((Edge) graphElement).getSource());
+				
+				if (source != null) {
+					boundaryComplementingChanges.add(graphElement);
+				}
+			} else if (graphElement instanceof Attribute) {
+				Node container = ChangePatternUtil.getLHS(((Attribute) graphElement).getNode());
+				
+				if (container != null) {
+					boundaryComplementingChanges.add(graphElement);
+				}
+			}
+		}
+		
+		return boundaryComplementingChanges;
 	}
 	
 	/**

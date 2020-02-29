@@ -8,12 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -158,5 +162,31 @@ public class DefaultEditorIntegration implements IEditorIntegration {
 	@Override
 	public Map<String, String> getFileExtensions() {
 		return Collections.emptyMap();
+	}
+	
+	@Override
+	public List<EObject> getSelectedDomainElements(ISelection selection) {
+		
+		// https://wiki.eclipse.org/Papyrus/Papyrus_Developer_Guide/How_To_Code_Examples#How_to_Get_the_Current_Selection_from_Java_code
+		// https://wiki.eclipse.org/Papyrus/Papyrus_Developer_Guide/How_To_Code_Examples#How_to_adapt_a_Graphical_Object_to_underlying_Domain_.28UML.29
+		if ((selection != null) && !selection.isEmpty() && (selection instanceof IStructuredSelection)) {
+			List<EObject> selected = new ArrayList<EObject>();
+
+			for (Object selectedObject : ((IStructuredSelection) selection).toArray()) {
+				EObject element = null;
+				
+				if (selectedObject instanceof IAdaptable) {
+					element = ((IAdaptable) selectedObject).getAdapter(EObject.class);
+				}
+				if (element == null) {
+					element = Platform.getAdapterManager().getAdapter(selectedObject, EObject.class);
+				}
+				if (element != null) {
+					selected.add(element);
+				}
+			}
+			return selected;
+		}
+		return Collections.emptyList();
 	}
 }

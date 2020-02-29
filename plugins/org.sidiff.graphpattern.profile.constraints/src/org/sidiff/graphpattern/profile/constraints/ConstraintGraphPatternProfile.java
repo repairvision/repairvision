@@ -16,7 +16,7 @@ import org.sidiff.graphpattern.util.GraphpatternResourceImpl;
 public class ConstraintGraphPatternProfile implements IGraphPatternProfile {
 	
 	protected static enum STEREOTYPE {
-		constraint, not
+		constraint, not, exists, forall
 	};
 	
 	protected static final String PULGIN = "org.sidiff.graphpattern.profile.constraints";

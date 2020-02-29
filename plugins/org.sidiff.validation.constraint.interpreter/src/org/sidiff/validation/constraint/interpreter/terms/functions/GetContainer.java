@@ -1,9 +1,12 @@
 package org.sidiff.validation.constraint.interpreter.terms.functions;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
@@ -18,6 +21,11 @@ public class GetContainer extends Function {
 	public GetContainer(Term element) {
 		this.name = "getContainer";
 		this.element = element;
+	}
+	
+	@Override
+	public EClassifier getType() {
+		return EcorePackage.eINSTANCE.getEObject();
 	}
 	
 	@Override
@@ -39,6 +47,14 @@ public class GetContainer extends Function {
 		}
 		
 		return value;
+	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, ConstraintType type) {
+		Sequence sequence = Sequence.nextSequence(parent);
+		element.generate(sequence, type);
+		
+		// TODO: Alternative of all possible classes that can contain the element.
 	}
 	
 	@Override

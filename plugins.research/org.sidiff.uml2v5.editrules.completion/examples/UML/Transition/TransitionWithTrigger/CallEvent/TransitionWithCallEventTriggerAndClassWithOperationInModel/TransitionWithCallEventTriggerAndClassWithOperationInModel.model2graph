@@ -1,0 +1,23 @@
+# DEFINE : Parameter : <parameter name>
+DEFINE : Parameter : eventName
+DEFINE : Parameter : className
+
+# DEFINE : Attribute : <node name> : <node type> : <attribute name> : <attribte value>
+DEFINE : Attribute : containingClass : Class : name : className
+DEFINE : Attribute : calledOperation : Operation : name : eventName
+DEFINE : Attribute : transition : Transition : name : eventName
+DEFINE : Attribute : trigger : Trigger : name : eventName + "Trigger"
+DEFINE : Attribute : callEvent : CallEvent : name : eventName + "CallEvent"
+
+# DEFINE : Node : <node name> : <node type> : <node name replacement>
+
+# FILTER : Node : <node name> : <node type>
+FILTER : Node : (?!container).*? : Model
+FILTER : Node : .*? : PackageImport
+FILTER : Node : .*? : StateMachine
+
+# FILTER : Attribute : <node name> : <node type> : <attribute type>
+FILTER : Attribute : .*? : .*? : .*
+
+# FILTER : Edge : <source node name> : <source node type> : <edge type> : <target node name> : <target node type>
+FILTER : Edge : .*? : Region : subvertex : .*? : State

@@ -2,18 +2,22 @@
  */
 package org.sidiff.graphpattern.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.graphpattern.attributes.JavaSciptParser;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,6 +30,8 @@ import org.sidiff.graphpattern.NodePattern;
  *   <li>{@link org.sidiff.graphpattern.impl.AttributePatternImpl#getValue <em>Value</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.AttributePatternImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.impl.AttributePatternImpl#getNode <em>Node</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.AttributePatternImpl#getConstant <em>Constant</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.impl.AttributePatternImpl#getVariables <em>Variables</em>}</li>
  * </ul>
  *
  * @generated
@@ -60,6 +66,36 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 	 * @ordered
 	 */
 	protected EAttribute type;
+
+	/**
+	 * The default value of the '{@link #getConstant() <em>Constant</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConstant()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Object CONSTANT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getConstant() <em>Constant</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConstant()
+	 * @generated
+	 * @ordered
+	 */
+	protected Object constant = CONSTANT_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getVariables() <em>Variables</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVariables()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> variables;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -188,6 +224,94 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * 
+	 * @return The constant as primitive data type or <code>null</code>.
+	 * 
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public Object getConstant() {
+		
+		if (constant == null) { 
+			if (isConstant() && (getType().getEAttributeType() != null)) {
+				constant = JavaSciptParser.getConstant(getType().getEAttributeType(), getValue());
+			}
+		}
+		
+		return constant;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @return The variables contained in the expression of the attribute value; an empty list otherwise.
+	 * 
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public EList<String> getVariables() {
+		if (variables == null) {
+			variables = new EDataTypeUniqueEList<String>(String.class, this, GraphpatternPackage.ATTRIBUTE_PATTERN__VARIABLES);
+			
+			if (getType().getEAttributeType() != null) {
+				variables.addAll(JavaSciptParser.getVariables(getType().getEAttributeType(), getValue()));
+			}
+		}
+		return variables;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @param expression An expression.
+	 * @return <code>true</code> if the expression is a single variable;
+	 *         <code>false</code> otherwise.
+	 * 
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public boolean isVariable() {
+		return JavaSciptParser.isVariable(getValue());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @param type       The type of the expression result.
+	 * @param expression An expression.
+	 * @return <code>true</code> if the expression contains a single constant
+	 *         (quoted) value; <code>false</code> otherwise.
+	 * 
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public boolean isConstant() {
+		return JavaSciptParser.isConstant(getValue());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @param expression An expression.
+	 * @return <code>true</code> if the expression is a single variable;
+	 *         <code>false</code> otherwise.
+	 * 
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isExpression() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -245,6 +369,10 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 				return basicGetType();
 			case GraphpatternPackage.ATTRIBUTE_PATTERN__NODE:
 				return getNode();
+			case GraphpatternPackage.ATTRIBUTE_PATTERN__CONSTANT:
+				return getConstant();
+			case GraphpatternPackage.ATTRIBUTE_PATTERN__VARIABLES:
+				return getVariables();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -305,8 +433,30 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 				return type != null;
 			case GraphpatternPackage.ATTRIBUTE_PATTERN__NODE:
 				return getNode() != null;
+			case GraphpatternPackage.ATTRIBUTE_PATTERN__CONSTANT:
+				return CONSTANT_EDEFAULT == null ? constant != null : !CONSTANT_EDEFAULT.equals(constant);
+			case GraphpatternPackage.ATTRIBUTE_PATTERN__VARIABLES:
+				return variables != null && !variables.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case GraphpatternPackage.ATTRIBUTE_PATTERN___IS_CONSTANT:
+				return isConstant();
+			case GraphpatternPackage.ATTRIBUTE_PATTERN___IS_VARIABLE:
+				return isVariable();
+			case GraphpatternPackage.ATTRIBUTE_PATTERN___IS_EXPRESSION:
+				return isExpression();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -321,6 +471,10 @@ public class AttributePatternImpl extends GraphElementImpl implements AttributeP
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (value: ");
 		result.append(value);
+		result.append(", constant: ");
+		result.append(constant);
+		result.append(", variables: ");
+		result.append(variables);
 		result.append(')');
 		return result.toString();
 	}

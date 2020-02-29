@@ -117,15 +117,15 @@ public class LogTable {
 	
 	@SuppressWarnings("unchecked")
 	public <T> List<T> getColumn(String name, Class<? extends T> type) {
-		List<T> numbers = new ArrayList<>();
+		List<T> values = new ArrayList<>();
 		
 		for(Object objectValue : getColumn(name)) {
 			if (type.isInstance(objectValue)) {
-				numbers.add((T) objectValue);
+				values.add((T) objectValue);
 			}
 		}
 		
-		return numbers;
+		return values;
 	}
 	
 	public Set<String> getColumns() {
@@ -276,6 +276,10 @@ public class LogTable {
 	}
 	
 	public void loadCSV(String fileName) {
+		loadCSV(fileName, false);
+	}
+	
+	public void loadCSV(String fileName, boolean trim) {
 		this.fileName = fileName;
 		
 		CSVParser csvFileParser = null;
@@ -292,13 +296,13 @@ public class LogTable {
 			String[] header = csvFileParser.getHeaderMap().keySet().toArray(new String[0]);
 			
 			for (String columnName : header) {
-				table.put(columnName, new ArrayList<>());
+				table.put(getEntry(columnName, trim), new ArrayList<>());
 			}
 			
 			for (CSVRecord record : csvFileParser.getRecords()) {
 				for (int i = 0; i < record.size(); i++) {
-					String stringValue = record.get(i);
-					String columnName = header[i];
+					String stringValue = getEntry(record.get(i), trim);
+					String columnName = getEntry(header[i], trim);
 					
 					Object value = stringToValue(typeDefinition.getType(columnName), stringValue);
 					table.get(columnName).add(value);
@@ -306,7 +310,7 @@ public class LogTable {
 			}
 			
 			if (header.length > 0) {
-				this.maxColumn = table.get(header[0]);
+				this.maxColumn = table.get(getEntry(header[0], trim));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -326,6 +330,10 @@ public class LogTable {
 				}
 			}
 		}
+	}
+	
+	private String getEntry(String value, boolean trim) {
+		return trim ? value.trim() : value;
 	}
 	
 	public String getFileName() {

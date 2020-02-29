@@ -11,9 +11,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 
 public class HenshinToGraphPatternConverterHandler extends AbstractHandler {
 
@@ -39,17 +41,25 @@ public class HenshinToGraphPatternConverterHandler extends AbstractHandler {
 								URI.createPlatformResourceURI(platformPath, true), true);
 						Module module = (Module) moduleRes.getContents().get(0);
 						
-						// TODO: Support multiple rules and graphs.
-						Rule rule = (Rule) module.getUnits().get(0);
+						boolean convertActions = WorkbenchUtil.showQuestion("Convert Henshin Actions?");
 						
-						HenshinToGraphPatternConverter converter = new HenshinToGraphPatternConverter(rule);
 						ResourceSet patternRSS = new ResourceSetImpl();
 						Resource patternRes = patternRSS.createResource(
 								URI.createFileURI(fullPath + ".graphpattern"));
-						patternRes.getContents().add(converter.getGraphPattern());
+						
+						// Support multiple rules:
+						for (Unit unit : module.getUnits()) {
+							if (unit instanceof Rule) {
+								Rule rule = (Rule) unit;
+								
+								HenshinToGraphPatternConverter converter = new HenshinToGraphPatternConverter(rule, convertActions);
+								patternRes.getContents().add(converter.getBundle());
+							}
+						}
 						
 						try {
 							patternRes.save(null);
+							WorkbenchUtil.updateProject(event);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}

@@ -264,7 +264,7 @@
               <constant xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
             </type>
           </left>
-          <right xsi:type="firstOrderLogic:ForAll">
+          <right xsi:type="firstOrderLogic:Exists">
             <name name="literal">
               <type xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral"/>
             </name>
@@ -285,7 +285,7 @@
               </left>
               <right xsi:type="firstOrderLogic:VariableRef" name="//@constraints.5/@formula/@left/@right/@right/@name">
                 <get>
-                  <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+                  <name xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral/literal"/>
                 </get>
               </right>
             </formula>

@@ -15,7 +15,7 @@ public class ActionAttributeConstraintConstant implements ActionAttributeConstra
 	}
 
 	public static ActionAttributeConstraintConstant create(EAttribute type, String value) {
-		Object parsedValue = JavaSciptParser.getConstant(value);
+		Object parsedValue = JavaSciptParser.getConstant(type.getEAttributeType(), value);
 		
 		if (parsedValue != null) {
 			return new ActionAttributeConstraintConstant(type, parsedValue);

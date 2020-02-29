@@ -12,4 +12,8 @@ public class ConstraintStereotypes {
 	public static Stereotype constraint = instance.getStereotype(STEREOTYPE.constraint.name());
 	
 	public static Stereotype not = instance.getStereotype(STEREOTYPE.not.name());
+	
+	public static Stereotype exists = instance.getStereotype(STEREOTYPE.exists.name());
+	
+	public static Stereotype forall = instance.getStereotype(STEREOTYPE.forall.name());
 }

@@ -29,8 +29,8 @@ import org.sidiff.repair.api.util.ComplementMatching;
 import org.sidiff.repair.api.util.IMatching;
 import org.sidiff.repair.api.util.RecognitionMatching;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
-import org.sidiff.validation.constraint.impact.PositiveImpactAnalysis;
-import org.sidiff.validation.constraint.impact.index.RepairActionIndex;
+import org.sidiff.validation.constraint.impact.repair.PositiveImpactAnalysis;
+import org.sidiff.validation.constraint.impact.repair.RepairActionIndex;
 
 public class DeveloperIntentionOracle {
 
@@ -386,7 +386,7 @@ public class DeveloperIntentionOracle {
 							String contextSignatures = getAttributeValueChangeSignature(
 									attribute.getType(), 
 									match,
-									JavaSciptParser.getConstant(attribute.getValue()),
+									JavaSciptParser.getConstant(attribute.getType().getEAttributeType(), attribute.getValue()),
 									invertActions);
 
 							if (exists(contextSignatures)) {
@@ -405,7 +405,7 @@ public class DeveloperIntentionOracle {
 	private boolean isConstantAlreadySet(Attribute attribute, IMatching editRuleMatching, boolean invertActions) {
 		
 		// Check if fixed value is already set:
-		Object constant = JavaSciptParser.getConstant(attribute.getValue());
+		Object constant = JavaSciptParser.getConstant(attribute.getType().getEAttributeType(), attribute.getValue());
 		
 		if (constant != null) {
 			if (matchContext) {

@@ -2,6 +2,7 @@
  */
 package org.sidiff.graphpattern;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 
 /**
@@ -16,10 +17,13 @@ import org.eclipse.emf.ecore.EAttribute;
  *   <li>{@link org.sidiff.graphpattern.AttributePattern#getValue <em>Value</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.AttributePattern#getType <em>Type</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.AttributePattern#getNode <em>Node</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.AttributePattern#getConstant <em>Constant</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.AttributePattern#getVariables <em>Variables</em>}</li>
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getAttributePattern()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='TheAttributeTypeAndTheContainingClassAreNotMetaModelConform\r\nTheNameOfTheAttributeVariableIsEqualToANameOfANode'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='TheAttributeTypeAndTheContainingClassAreNotMetaModelConform TheNameOfTheAttributeVariableIsEqualToANameOfANode'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot TheAttributeTypeAndTheContainingClassAreNotMetaModelConform='((self.type &lt;&gt; null) and (self.node &lt;&gt; null) and (self.node.type &lt;&gt; null)) implies (self.node.type.eAllAttributes-&gt;includes(self.type))' TheNameOfTheAttributeVariableIsEqualToANameOfANode='not(self.isVariable() and self.graph.nodes-&gt;exists(n | (n.name &lt;&gt; null) and n.name = self.name))'"
  * @generated
  */
 public interface AttributePattern extends GraphElement {
@@ -102,5 +106,52 @@ public interface AttributePattern extends GraphElement {
 	 * @generated
 	 */
 	void setNode(NodePattern value);
+
+	/**
+	 * Returns the value of the '<em><b>Constant</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Constant</em>' attribute.
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getAttributePattern_Constant()
+	 * @model transient="true" changeable="false" derived="true"
+	 * @generated
+	 */
+	Object getConstant();
+
+	/**
+	 * Returns the value of the '<em><b>Variables</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Variables</em>' attribute list.
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getAttributePattern_Variables()
+	 * @model transient="true" changeable="false" derived="true"
+	 * @generated
+	 */
+	EList<String> getVariables();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" required="true"
+	 * @generated
+	 */
+	boolean isVariable();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" required="true"
+	 * @generated
+	 */
+	boolean isConstant();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" required="true"
+	 * @generated
+	 */
+	boolean isExpression();
 
 } // AttributePattern

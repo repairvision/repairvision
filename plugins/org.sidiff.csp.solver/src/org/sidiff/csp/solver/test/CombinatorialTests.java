@@ -25,10 +25,10 @@ public class CombinatorialTests {
 		SolutionsCounter<String, String> solutions = new SolutionsCounter<String, String>(PRINT_SOLUTIONS);
 		IConstraintSatisfactionProblem<String, String> problem = new ConstraintSatisfactionProblem<String, String>(10);
 		
-		problem.addVariable(new Variable<>("v1", new Domain<>("A")));
-		problem.addVariable(new Variable<>("v2", new Domain<>("B")));
-		problem.addVariable(new Variable<>("v3", new Domain<>("C")));
-		problem.addVariable(new Variable<>("v4", new Domain<>("D")));
+		problem.addVariable(new Variable<>("v1", new Domain<>("A"), true, false));
+		problem.addVariable(new Variable<>("v2", new Domain<>("B"), true, false));
+		problem.addVariable(new Variable<>("v3", new Domain<>("C"), true, false));
+		problem.addVariable(new Variable<>("v4", new Domain<>("D"), true, false));
 		
 		// solve:
 		ICSPSolver<String, String> solver = new CSPSolver<String, String>(problem, solutions);
@@ -49,10 +49,10 @@ public class CombinatorialTests {
 		SolutionsCounter<String, String> solutions = new SolutionsCounter<String, String>(PRINT_SOLUTIONS);
 		ConstraintSatisfactionProblem<String, String> problem = new ConstraintSatisfactionProblem<String, String>(10);
 		
-		problem.addVariable(new Variable<>("v1", new Domain<>("A")));
-		problem.addVariable(new Variable<>("v2", new Domain<>("B")));
-		problem.addVariable(new Variable<>("v3", new Domain<>("C")));
-		problem.addVariable(new Variable<>("v4", new Domain<>("D")));
+		problem.addVariable(new Variable<>("v1", new Domain<>("A"), true, false));
+		problem.addVariable(new Variable<>("v2", new Domain<>("B"), true, false));
+		problem.addVariable(new Variable<>("v3", new Domain<>("C"), true, false));
+		problem.addVariable(new Variable<>("v4", new Domain<>("D"), true, false));
 		
 		// only partial solutions:
 		problem.setMaximumSolutionSize(problem.getVariables().currentSize() - 1);
@@ -77,22 +77,21 @@ public class CombinatorialTests {
 		SolutionsCounter<String, String> solutions = new SolutionsCounter<String, String>(PRINT_SOLUTIONS);
 		ConstraintSatisfactionProblem<String, String> problem = new ConstraintSatisfactionProblem<String, String>(10);
 		
-		problem.addVariable(new Variable<>("v1", new Domain<>("A")));
-		problem.addVariable(new Variable<>("v2", new Domain<>("B")));
-		problem.addVariable(new Variable<>("v3", new Domain<>("C")));
-		problem.addVariable(new Variable<>("v4", new Domain<>("D")));
+		problem.addVariable(new Variable<>("v1", new Domain<>("A"), true, true));
+		problem.addVariable(new Variable<>("v2", new Domain<>("B"), true, true));
+		problem.addVariable(new Variable<>("v3", new Domain<>("C"), true, true));
+		problem.addVariable(new Variable<>("v4", new Domain<>("D"), true, true));
 		
 		// only maximal partial solutions:
 		problem.setMaximumSolutionSize(problem.getVariables().currentSize() - 1);
 		problem.setMinimumSolutionSize(1);
-		problem.setSearchMaximumSolutions(true);
 		
 		// solve:
 		ICSPSolver<String, String> solver = new CSPSolver<String, String>(problem, solutions);
 		solver.run();
 		
-		// test (all values are independent of each other -> cross-product -> only one filtered full solution):
-		Assert.assertEquals(0, solutions.getCounter(), 0);
+		// test (all values are independent of each other -> power set minus full and empty solution):
+		Assert.assertEquals(Math.pow(2, problem.getVariables().currentSize()) - 2, solutions.getCounter(), 0);
 		
 		if (PRINT_SOLUTIONS) System.out.println();
 		if (PRINT_SOLUTIONS) System.out.println("---------------- FINISHED CSP ----------------");
@@ -106,15 +105,14 @@ public class CombinatorialTests {
 		SolutionsCounter<String, String> solutions = new SolutionsCounter<String, String>(PRINT_SOLUTIONS);
 		ConstraintSatisfactionProblem<String, String> problem = new ConstraintSatisfactionProblem<String, String>(10);
 		
-		problem.addVariable(new Variable<>("v1", new Domain<>("A")));
-		problem.addVariable(new Variable<>("v2", new Domain<>("B")));
-		problem.addVariable(new Variable<>("v3", new Domain<>("C")));
-		problem.addVariable(new Variable<>("v4", new Domain<>("D")));
+		problem.addVariable(new Variable<>("v1", new Domain<>("A"), true, true));
+		problem.addVariable(new Variable<>("v2", new Domain<>("B"), true, true));
+		problem.addVariable(new Variable<>("v3", new Domain<>("C"), true, true));
+		problem.addVariable(new Variable<>("v4", new Domain<>("D"), true, true));
 		
 		// only maximal partial solutions:
 		problem.setMaximumSolutionSize(problem.getVariables().currentSize());
 		problem.setMinimumSolutionSize(problem.getVariables().currentSize());
-		problem.setSearchMaximumSolutions(true);
 		
 		// solve:
 		ICSPSolver<String, String> solver = new CSPSolver<String, String>(problem, solutions);
@@ -135,10 +133,10 @@ public class CombinatorialTests {
 		SolutionsCounter<String, String> solutions = new SolutionsCounter<String, String>(PRINT_SOLUTIONS);
 		IConstraintSatisfactionProblem<String, String> problem = new ConstraintSatisfactionProblem<String, String>(10);
 		
-		problem.addVariable(new Variable<>("v1", new Domain<>("A1", "A2")));
-		problem.addVariable(new Variable<>("v2", new Domain<>("B1", "B2")));
-		problem.addVariable(new Variable<>("v3", new Domain<>("C1", "C2")));
-		problem.addVariable(new Variable<>("v4", new Domain<>("D1", "D2")));
+		problem.addVariable(new Variable<>("v1", new Domain<>("A1", "A2"), true, false));
+		problem.addVariable(new Variable<>("v2", new Domain<>("B1", "B2"), true, false));
+		problem.addVariable(new Variable<>("v3", new Domain<>("C1", "C2"), true, false));
+		problem.addVariable(new Variable<>("v4", new Domain<>("D1", "D2"), true, false));
 
 		// only partial solutions:
 		problem.setMaximumSolutionSize(problem.getVariables().currentSize() - 1);
@@ -163,10 +161,10 @@ public class CombinatorialTests {
 		SolutionsCounter<String, String> solutions = new SolutionsCounter<String, String>(PRINT_SOLUTIONS);
 		IConstraintSatisfactionProblem<String, String> problem = new ConstraintSatisfactionProblem<String, String>(10);
 		
-		problem.addVariable(new Variable<>("v1", new Domain<>("A1", "A2")));
-		problem.addVariable(new Variable<>("v2", new Domain<>("B1", "B2")));
-		problem.addVariable(new Variable<>("v3", new Domain<>("C1", "C2")));
-		problem.addVariable(new Variable<>("v4", new Domain<>("D1", "D2")));
+		problem.addVariable(new Variable<>("v1", new Domain<>("A1", "A2"), true, false));
+		problem.addVariable(new Variable<>("v2", new Domain<>("B1", "B2"), true, false));
+		problem.addVariable(new Variable<>("v3", new Domain<>("C1", "C2"), true, false));
+		problem.addVariable(new Variable<>("v4", new Domain<>("D1", "D2"), true, false));
 		
 		// solve:
 		ICSPSolver<String, String> solver = new CSPSolver<String, String>(problem, solutions);
@@ -187,22 +185,21 @@ public class CombinatorialTests {
 		SolutionsCounter<String, String> solutions = new SolutionsCounter<String, String>(PRINT_SOLUTIONS);
 		ConstraintSatisfactionProblem<String, String> problem = new ConstraintSatisfactionProblem<String, String>(10);
 		
-		problem.addVariable(new Variable<>("v1", new Domain<>("A1", "A2")));
-		problem.addVariable(new Variable<>("v2", new Domain<>("B1", "B2")));
-		problem.addVariable(new Variable<>("v3", new Domain<>("C1", "C2")));
-		problem.addVariable(new Variable<>("v4", new Domain<>("D1", "D2")));
+		problem.addVariable(new Variable<>("v1", new Domain<>("A1", "A2"), true, true));
+		problem.addVariable(new Variable<>("v2", new Domain<>("B1", "B2"), true, true));
+		problem.addVariable(new Variable<>("v3", new Domain<>("C1", "C2"), true, true));
+		problem.addVariable(new Variable<>("v4", new Domain<>("D1", "D2"), true, true));
 		
 		// only maximal partial solutions:
 		problem.setMaximumSolutionSize(problem.getVariables().currentSize() - 1);
 		problem.setMinimumSolutionSize(1);
-		problem.setSearchMaximumSolutions(true);
 		
 		// solve:
 		ICSPSolver<String, String> solver = new CSPSolver<String, String>(problem, solutions);
 		solver.run();
 		
-		// test (all values are independent of each other -> cross-product -> 4*4 filtered full solutions):
-		Assert.assertEquals(0, solutions.getCounter(), 0);
+		// test (all values are independent of each other -> power set minus all full solutions and empty solution):
+		Assert.assertEquals(Math.pow(3, problem.getVariables().currentSize()) - 4*4 - 1, solutions.getCounter(), 0);
 		
 		if (PRINT_SOLUTIONS) System.out.println();
 		if (PRINT_SOLUTIONS) System.out.println("---------------- FINISHED CSP ----------------");
@@ -216,15 +213,14 @@ public class CombinatorialTests {
 		SolutionsCounter<String, String> solutions = new SolutionsCounter<String, String>(PRINT_SOLUTIONS);
 		ConstraintSatisfactionProblem<String, String> problem = new ConstraintSatisfactionProblem<String, String>(10);
 		
-		problem.addVariable(new Variable<>("v1", new Domain<>("A1", "A2")));
-		problem.addVariable(new Variable<>("v2", new Domain<>("B1", "B2")));
-		problem.addVariable(new Variable<>("v3", new Domain<>("C1", "C2")));
-		problem.addVariable(new Variable<>("v4", new Domain<>("D1", "D2")));
+		problem.addVariable(new Variable<>("v1", new Domain<>("A1", "A2"), true, true));
+		problem.addVariable(new Variable<>("v2", new Domain<>("B1", "B2"), true, true));
+		problem.addVariable(new Variable<>("v3", new Domain<>("C1", "C2"), true, true));
+		problem.addVariable(new Variable<>("v4", new Domain<>("D1", "D2"), true, true));
 		
 		// only maximal partial solutions:
 		problem.setMaximumSolutionSize(problem.getVariables().currentSize());
 		problem.setMinimumSolutionSize(problem.getVariables().currentSize());
-		problem.setSearchMaximumSolutions(true);
 		
 		// solve:
 		ICSPSolver<String, String> solver = new CSPSolver<String, String>(problem, solutions);
@@ -249,13 +245,12 @@ public class CombinatorialTests {
 		String b = "B";
 		String c = "C";
 		
-		problem.addVariable(new Variable<>("v1", new Domain<>(a, b, c)));
-		problem.addVariable(new Variable<>("v2", new Domain<>(a, b, c)));
+		problem.addVariable(new Variable<>("v1", new Domain<>(a, b, c), true, true));
+		problem.addVariable(new Variable<>("v2", new Domain<>(a, b, c), true, true));
 		
 		// only maximal partial solutions:
 		problem.setMaximumSolutionSize(problem.getVariables().currentSize());
 		problem.setMinimumSolutionSize(problem.getVariables().currentSize());
-		problem.setSearchMaximumSolutions(true);
 		problem.setSearchInjectiveSolutions(true);
 		
 		// solve:

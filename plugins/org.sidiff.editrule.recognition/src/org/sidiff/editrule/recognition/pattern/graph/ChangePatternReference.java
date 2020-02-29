@@ -25,20 +25,22 @@ public abstract class ChangePatternReference extends ChangePattern  {
 		EObject changeTgt = getChangeReferenceTarget(changeReference);
 		
 		for (ActionEdge parallelEdge : edge.getSource().getIncident(edge.getTarget())) {
-			if (parallelEdge != edge) {
-				for (EObject parallelChange : (Iterable<EObject>) () -> Domain.get(parallelEdge.getChange().getChangeNodePattern()).iterator()) {
+			if ((parallelEdge != edge) && (parallelEdge.getChange() != null)) {
+				Domain changeDomain = Domain.get(parallelEdge.getChange().getChangeNodePattern());
+				
+				for (EObject parallelChange : (Iterable<EObject>) () -> changeDomain.iterator()) {
 					EObject parallelChangeSrc = getChangeReferenceSource(parallelChange);
 					EObject parallelChangeTgt = getChangeReferenceTarget(parallelChange);
 					
 					if (parallelEdge.getSource() == edge.getSource()) {
 						if ((changeSrc == parallelChangeSrc) && (changeTgt == parallelChangeTgt))  {
-							Domain.get(parallelEdge.getChange().getChangeNodePattern()).mark(parallelChange);
+							changeDomain.mark(parallelChange);
 						}
 					} else {
 						assert parallelEdge.getSource() == edge.getTarget();
 						
 						if ((changeSrc == parallelChangeTgt) && (changeTgt == parallelChangeSrc))  {
-							Domain.get(parallelEdge.getChange().getChangeNodePattern()).mark(parallelChange);
+							changeDomain.mark(parallelChange);
 						}
 					}
 				}

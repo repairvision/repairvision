@@ -25,7 +25,8 @@ import org.eclipse.emf.ecore.EReference;
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getNodePattern()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='TheNameOfANodeMustBeUniqueWithinAGraph'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot TheNameOfANodeMustBeUniqueWithinAGraph='not(self.graph.nodes-&gt;exists(n | n &lt;&gt; self and n.name &lt;&gt; null and n.name = self.name))'"
  * @generated
  */
 public interface NodePattern extends GraphElement {
@@ -58,7 +59,7 @@ public interface NodePattern extends GraphElement {
 	 * @return the value of the '<em>Type</em>' reference.
 	 * @see #setType(EClass)
 	 * @see org.sidiff.graphpattern.GraphpatternPackage#getNodePattern_Type()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	EClass getType();
@@ -234,6 +235,22 @@ public interface NodePattern extends GraphElement {
 	 * @generated
 	 */
 	EdgePattern getOutgoing(EReference type);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EdgePattern getOutgoing(EReference type, NodePattern target);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EdgePattern getOutgoing(EReference type, NodePattern target, Stereotype stereotype);
 
 	/**
 	 * <!-- begin-user-doc -->

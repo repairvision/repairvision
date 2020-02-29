@@ -1,13 +1,24 @@
 package org.sidiff.validation.constraint.interpreter.terms;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
+import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
 public class Variable extends Term {
 
-	public Variable(String name) {
+	private EClass type;
+	
+	public Variable(EClass type, String name) {
+		this.type = type;
 		this.name = name;
+	}
+	
+	@Override
+	public EClassifier getType() {
+		return type;
 	}
 	
 	public void assign(Object value) {
@@ -23,6 +34,11 @@ public class Variable extends Term {
 	@Override
 	public Object getValue() {
 		return value;
+	}
+	
+	@Override
+	public void generate(IDecisionBranch parent, ConstraintType type) {
+		// nothing to do...
 	}
 	
 	@Override

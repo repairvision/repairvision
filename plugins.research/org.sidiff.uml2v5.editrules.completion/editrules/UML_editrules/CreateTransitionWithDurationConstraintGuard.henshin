@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmlns:henshin_extension="http://www.eclipse.org/emf/2011/Henshin/Extension" xmi:id="_QStp0KMMEemWlJuPjNhG1w" name="Create: TransitionWithDurationConstraintGuard" description="Create: TransitionWithDurationConstraintGuard">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_QStp0aMMEemWlJuPjNhG1w" name="mainUnit" subUnits="_QStp2qMMEemWlJuPjNhG1w">
+    <parameters xmi:id="_QStp0qMMEemWlJuPjNhG1w" name="region" kind="IN"/>
+    <parameters xmi:id="_QStp06MMEemWlJuPjNhG1w" name="transitionName" kind="IN"/>
+    <parameters xmi:id="_QStp1KMMEemWlJuPjNhG1w" name="source" kind="IN"/>
+    <parameters xmi:id="_QStp1aMMEemWlJuPjNhG1w" name="target" kind="IN"/>
+    <parameterMappings xmi:id="_QStp1qMMEemWlJuPjNhG1w" source="_QStp0qMMEemWlJuPjNhG1w" target="_QStp26MMEemWlJuPjNhG1w"/>
+    <parameterMappings xmi:id="_QStp16MMEemWlJuPjNhG1w" source="_QStp06MMEemWlJuPjNhG1w" target="_QStp3KMMEemWlJuPjNhG1w"/>
+    <parameterMappings xmi:id="_QStp2KMMEemWlJuPjNhG1w" source="_QStp1KMMEemWlJuPjNhG1w" target="_QStp3aMMEemWlJuPjNhG1w"/>
+    <parameterMappings xmi:id="_QStp2aMMEemWlJuPjNhG1w" source="_QStp1aMMEemWlJuPjNhG1w" target="_QStp3qMMEemWlJuPjNhG1w"/>
+  </units>
+  <units xsi:type="henshin_extension:RuleExtension" xmi:id="_QStp2qMMEemWlJuPjNhG1w" name="Create: TransitionWithDurationConstraintGuard">
+    <parameters xmi:id="_QStp26MMEemWlJuPjNhG1w" name="region" kind="IN"/>
+    <parameters xmi:id="_QStp3KMMEemWlJuPjNhG1w" name="transitionName" kind="IN"/>
+    <parameters xmi:id="_QStp3aMMEemWlJuPjNhG1w" name="source" kind="IN"/>
+    <parameters xmi:id="_QStp3qMMEemWlJuPjNhG1w" name="target" kind="IN"/>
+    <lhs xmi:id="_QStp36MMEemWlJuPjNhG1w" name="Lhs">
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_QStp4KMMEemWlJuPjNhG1w" name="region" subgraphs="_QStp9qMMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_QStp4aMMEemWlJuPjNhG1w" name="source" subgraphs="_QStp9qMMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_QStp4qMMEemWlJuPjNhG1w" name="target" subgraphs="_QStp9qMMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_QStp46MMEemWlJuPjNhG1w" name="Rhs">
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_QStp5KMMEemWlJuPjNhG1w" name="region" incoming="_QStp8KMMEemWlJuPjNhG1w" outgoing="_QStp66MMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region"/>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_QStp5aMMEemWlJuPjNhG1w" name="transition" incoming="_QStp66MMEemWlJuPjNhG1w _QStp8aMMEemWlJuPjNhG1w" outgoing="_QStp7KMMEemWlJuPjNhG1w _QStp7aMMEemWlJuPjNhG1w _QStp7qMMEemWlJuPjNhG1w _QStp76MMEemWlJuPjNhG1w _QStp8KMMEemWlJuPjNhG1w" subgraphs="_QStp96MMEemWlJuPjNhG1w _QStp-aMMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition"/>
+        <attributes xsi:type="henshin_extension:AttributeExtension" xmi:id="_QStp5qMMEemWlJuPjNhG1w" value="transitionName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_QStp56MMEemWlJuPjNhG1w" name="durationConstraint" incoming="_QStp7KMMEemWlJuPjNhG1w _QStp7aMMEemWlJuPjNhG1w" outgoing="_QStp8aMMEemWlJuPjNhG1w" subgraphs="_QStp-qMMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//DurationConstraint"/>
+        <attributes xsi:type="henshin_extension:AttributeExtension" xmi:id="_QStp6KMMEemWlJuPjNhG1w" value="transitionName + &quot;DurationConstraint&quot;">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_QStp6aMMEemWlJuPjNhG1w" name="source" incoming="_QStp7qMMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <nodes xsi:type="henshin_extension:NodeExtension" xmi:id="_QStp6qMMEemWlJuPjNhG1w" name="target" incoming="_QStp76MMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
+      </nodes>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_QStp66MMEemWlJuPjNhG1w" source="_QStp5KMMEemWlJuPjNhG1w" target="_QStp5aMMEemWlJuPjNhG1w" subgraphs="_QStp96MMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/transition"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_QStp7KMMEemWlJuPjNhG1w" source="_QStp5aMMEemWlJuPjNhG1w" target="_QStp56MMEemWlJuPjNhG1w" subgraphs="_QStp-qMMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_QStp7aMMEemWlJuPjNhG1w" source="_QStp5aMMEemWlJuPjNhG1w" target="_QStp56MMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/guard"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_QStp7qMMEemWlJuPjNhG1w" source="_QStp5aMMEemWlJuPjNhG1w" target="_QStp6aMMEemWlJuPjNhG1w" subgraphs="_QStp96MMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/source"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_QStp76MMEemWlJuPjNhG1w" source="_QStp5aMMEemWlJuPjNhG1w" target="_QStp6qMMEemWlJuPjNhG1w" subgraphs="_QStp96MMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/target"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_QStp8KMMEemWlJuPjNhG1w" source="_QStp5aMMEemWlJuPjNhG1w" target="_QStp5KMMEemWlJuPjNhG1w" subgraphs="_QStp96MMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/container"/>
+      </edges>
+      <edges xsi:type="henshin_extension:EdgeExtension" xmi:id="_QStp8aMMEemWlJuPjNhG1w" source="_QStp56MMEemWlJuPjNhG1w" target="_QStp5aMMEemWlJuPjNhG1w" subgraphs="_QStp-qMMEemWlJuPjNhG1w">
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Constraint/context"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_QStp8qMMEemWlJuPjNhG1w" origin="_QStp4KMMEemWlJuPjNhG1w" image="_QStp5KMMEemWlJuPjNhG1w"/>
+    <mappings xmi:id="_QStp86MMEemWlJuPjNhG1w" origin="_QStp4aMMEemWlJuPjNhG1w" image="_QStp6aMMEemWlJuPjNhG1w"/>
+    <mappings xmi:id="_QStp9KMMEemWlJuPjNhG1w" origin="_QStp4qMMEemWlJuPjNhG1w" image="_QStp6qMMEemWlJuPjNhG1w"/>
+    <subgraphs xmi:id="_QStp9aMMEemWlJuPjNhG1w" name="Create:[Transition]InRegion">
+      <subgraphs xmi:id="_QStp9qMMEemWlJuPjNhG1w" name="context" elements="_QStp4KMMEemWlJuPjNhG1w _QStp4qMMEemWlJuPjNhG1w _QStp4aMMEemWlJuPjNhG1w">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#preserve"/>
+      </subgraphs>
+      <subgraphs xmi:id="_QStp96MMEemWlJuPjNhG1w" name="changes" elements="_QStp66MMEemWlJuPjNhG1w _QStp5aMMEemWlJuPjNhG1w _QStp7qMMEemWlJuPjNhG1w _QStp76MMEemWlJuPjNhG1w _QStp8KMMEemWlJuPjNhG1w">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#create"/>
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#delete"/>
+      </subgraphs>
+    </subgraphs>
+    <subgraphs xmi:id="_QStp-KMMEemWlJuPjNhG1w" name="Create:[[DurationConstraint]Guard]InTransition">
+      <subgraphs xmi:id="_QStp-aMMEemWlJuPjNhG1w" name="context" elements="_QStp5aMMEemWlJuPjNhG1w">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#preserve"/>
+      </subgraphs>
+      <subgraphs xmi:id="_QStp-qMMEemWlJuPjNhG1w" name="changes" elements="_QStp56MMEemWlJuPjNhG1w _QStp8aMMEemWlJuPjNhG1w _QStp7KMMEemWlJuPjNhG1w">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#create"/>
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#delete"/>
+      </subgraphs>
+    </subgraphs>
+  </units>
+</henshin:Module>

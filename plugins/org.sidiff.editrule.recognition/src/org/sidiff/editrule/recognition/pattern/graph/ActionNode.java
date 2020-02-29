@@ -56,8 +56,8 @@ public class ActionNode extends ActionGraphElement  {
 	
 	protected NodePattern nodePatternB;
 	
-	public ActionNode(ActionGraph actionGraph, Node editRuleNode, Map<Node, ActionNode> nodeTrace) {
-		this.action = editRuleNode.getAction().getType();
+	public ActionNode(Action.Type action, ActionGraph actionGraph, Node editRuleNode, Map<Node, ActionNode> nodeTrace) {
+		this.action = action;
 		this.editRuleNode = editRuleNode;
 		
 		// Update trace:

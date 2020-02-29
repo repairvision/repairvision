@@ -2,10 +2,13 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="codebricks" nsURI="http://www.sidiff.org/codebricks/1.0" nsPrefix="codebricks">
   <eClassifiers xsi:type="ecore:EClass" name="Codebricks">
+    <eOperations name="isChosen" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="alternatives" upperBound="-1"
         eType="#//Codebrick" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="template" eType="#//Codebrick"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="choice" upperBound="-1"
+        eType="#//Codebrick" changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Codebrick">
     <eOperations name="calculateRows" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -31,10 +34,13 @@
         derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="composed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="alternativeChoices" upperBound="-1"
+        eType="#//ViewableBrick" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ObjectPlaceholderBrick" eSuperTypes="#//PlaceholderBrick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="#//ObjectDomainPolicy"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TextBrick" eSuperTypes="#//StyledBrick">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -55,21 +61,88 @@
         eType="#//ViewableBrick" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StyledBrick" abstract="true" eSuperTypes="#//ViewableBrick">
+    <eOperations name="setColor">
+      <eParameters name="red" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="green" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="blue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="getColor" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt">
+      <eParameters name="rgb" eType="#//RGB"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="highlight" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="color" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"
+        defaultValueLiteral="0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuePlaceholderBrick" eSuperTypes="#//PlaceholderBrick">
+    <eOperations name="setByLiteralValue">
+      <eParameters name="literalValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="setByInstanceValue">
+      <eParameters name="instanceValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ObjectDomainPlaceholderBrick" eSuperTypes="#//ObjectPlaceholderBrick">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="#//ValueDomainPolicy"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="instanceValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="literalValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PlaceholderBrick" abstract="true" eSuperTypes="#//StyledBrick">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="placeholder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ComposedTemplatePlaceholderBrick" eSuperTypes="#//TemplatePlaceholderBrick">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="containerBrick" lowerBound="1"
-        eType="#//ComposedBrick"/>
+  <eClassifiers xsi:type="ecore:EClass" name="POJOCodebrickView" eSuperTypes="#//Codebrick">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="model" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CodebrickView" eSuperTypes="#//Codebrick">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectDomainPolicy">
+    <eOperations name="getDomain" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
+      <eParameters name="brick" eType="#//ObjectPlaceholderBrick"/>
+    </eOperations>
+    <eOperations name="assignObject">
+      <eParameters name="brick" eType="#//ObjectPlaceholderBrick"/>
+      <eParameters name="element" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueDomainPolicy">
+    <eOperations name="isValid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="brick" eType="#//ValuePlaceholderBrick"/>
+      <eParameters name="literalValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eParameters name="eDataType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+    </eOperations>
+    <eOperations name="getDomain" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject">
+      <eParameters name="brick" eType="#//ValuePlaceholderBrick"/>
+    </eOperations>
+    <eOperations name="assignValue">
+      <eParameters name="instanceValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+      <eParameters name="brick" eType="#//ValuePlaceholderBrick"/>
+    </eOperations>
+    <eOperations name="createFromString" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject">
+      <eParameters name="brick" eType="#//ValuePlaceholderBrick"/>
+      <eParameters name="literalValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eParameters name="eDataType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+    </eOperations>
+    <eOperations name="convertToString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eParameters name="brick" eType="#//ValuePlaceholderBrick"/>
+      <eParameters name="instanceValue" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+      <eParameters name="eDataType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CollapsibleBrick" eSuperTypes="#//ComposedBrick">
+    <eOperations name="getCollapsedText" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="collapsible" upperBound="-1"
+        eType="#//ViewableBrick"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResetTemplatePlaceholderBrick" eSuperTypes="#//StyledBrick">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="placeholder" lowerBound="1"
+        eType="#//TemplatePlaceholderBrick"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attachedTo" lowerBound="1"
+        eType="#//ViewableBrick"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="RGB">
+    <eLiterals name="RED"/>
+    <eLiterals name="GREEN" value="1"/>
+    <eLiterals name="BLUE" value="2"/>
   </eClassifiers>
 </ecore:EPackage>

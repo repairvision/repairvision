@@ -51,7 +51,7 @@ context EStructuralFeature eStructuralFeature :
 	(isInstanceOf(eStructuralFeature.eType, EEnum) implies
 		// The default value must be one of the EEnum's literals
 		exists(EEnumLiteral literal in eStructuralFeature.eType.EEnum::eLiterals :
-			isEqual(eStructuralFeature.defaultValueLiteral, literal.name)
+			isEqual(eStructuralFeature.defaultValueLiteral, literal.literal)
 		)
 	)
 	and

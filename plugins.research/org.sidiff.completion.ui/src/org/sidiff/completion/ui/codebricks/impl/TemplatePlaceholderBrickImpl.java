@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -29,6 +31,7 @@ import org.sidiff.completion.ui.codebricks.ViewableBrick;
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl#getChoice <em>Choice</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl#getRemainingChoices <em>Remaining Choices</em>}</li>
  *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl#isComposed <em>Composed</em>}</li>
+ *   <li>{@link org.sidiff.completion.ui.codebricks.impl.TemplatePlaceholderBrickImpl#getAlternativeChoices <em>Alternative Choices</em>}</li>
  * </ul>
  *
  * @generated
@@ -111,7 +114,12 @@ public class TemplatePlaceholderBrickImpl extends PlaceholderBrickImpl implement
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * 
+	 * Calculates all remaining choices based on the current selection of all
+	 * placeholders in template.
+	 * 
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	@Override
@@ -122,7 +130,7 @@ public class TemplatePlaceholderBrickImpl extends PlaceholderBrickImpl implement
 		Set<Codebrick> selection = new HashSet<>(); 
 		
 		for (Brick templateBrick : getCodebrick().getCodebricks().getTemplate().getAllBricks()) {
-			if ((templateBrick instanceof TemplatePlaceholderBrick) && (templateBrick != this)) {
+			if (templateBrick instanceof TemplatePlaceholderBrick) {
 				List<ViewableBrick> placeholderChoices = ((TemplatePlaceholderBrick) templateBrick).getChoice();
 				
 				// Anything selected?
@@ -139,7 +147,59 @@ public class TemplatePlaceholderBrickImpl extends PlaceholderBrickImpl implement
 			remaining.addAll(getChoices());
 		} else {
 			// Filter brick choices by current selection of other placeholders:
-			for (ViewableBrick choice : getChoices()) {
+			List<ViewableBrick> superSet = getChoice().isEmpty() ? getChoices() : getChoice();
+			
+			for (ViewableBrick choice : superSet) {
+				if (selection.contains(choice.getCodebrick())) {
+					remaining.add(choice);
+				}
+			}
+		}
+		
+		return remaining;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * In comparison with the {@link #getRemainingChoices()} this calculation
+	 * ignores the its own choice.
+	 * 
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public EList<ViewableBrick> getAlternativeChoices() {
+		EList<ViewableBrick> remaining = new BasicEList<>();
+		
+		// Calculate current placeholder selections:
+		Set<Codebrick> selection = new HashSet<>(); 
+
+		for (Brick templateBrick : getCodebrick().getCodebricks().getTemplate().getAllBricks()) {
+			if (templateBrick instanceof TemplatePlaceholderBrick) {
+				List<ViewableBrick> placeholderChoices = ((TemplatePlaceholderBrick) templateBrick).getChoice();
+
+				// Anything selected?
+				if (!placeholderChoices.isEmpty()) {
+					for (Brick placeholderChoice : placeholderChoices) {
+						selection.add(placeholderChoice.getCodebrick());
+					}
+				}
+			}
+		}
+		
+		// Ignore own choices:
+		selection.removeAll(getChoice().stream().map(ViewableBrick::getCodebrick).collect(Collectors.toList()));
+
+		if (selection.isEmpty()) {
+			// No restrictions:
+			remaining.addAll(getChoices());
+		} else {
+			// Filter brick choices by current selection of other placeholders:
+			List<ViewableBrick> superSet = getChoice().isEmpty() ? getChoices() : getChoice();
+			
+			for (ViewableBrick choice : superSet) {
 				if (selection.contains(choice.getCodebrick())) {
 					remaining.add(choice);
 				}
@@ -180,6 +240,8 @@ public class TemplatePlaceholderBrickImpl extends PlaceholderBrickImpl implement
 				return getRemainingChoices();
 			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__COMPOSED:
 				return isComposed();
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__ALTERNATIVE_CHOICES:
+				return getAlternativeChoices();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -201,6 +263,10 @@ public class TemplatePlaceholderBrickImpl extends PlaceholderBrickImpl implement
 				getChoice().clear();
 				getChoice().addAll((Collection<? extends ViewableBrick>)newValue);
 				return;
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__ALTERNATIVE_CHOICES:
+				getAlternativeChoices().clear();
+				getAlternativeChoices().addAll((Collection<? extends ViewableBrick>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -218,6 +284,9 @@ public class TemplatePlaceholderBrickImpl extends PlaceholderBrickImpl implement
 				return;
 			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__CHOICE:
 				getChoice().clear();
+				return;
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__ALTERNATIVE_CHOICES:
+				getAlternativeChoices().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -239,6 +308,8 @@ public class TemplatePlaceholderBrickImpl extends PlaceholderBrickImpl implement
 				return !getRemainingChoices().isEmpty();
 			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__COMPOSED:
 				return isComposed() != COMPOSED_EDEFAULT;
+			case CodebricksPackage.TEMPLATE_PLACEHOLDER_BRICK__ALTERNATIVE_CHOICES:
+				return !getAlternativeChoices().isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
