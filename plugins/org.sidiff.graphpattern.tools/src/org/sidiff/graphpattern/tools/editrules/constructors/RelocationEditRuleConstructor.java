@@ -133,9 +133,12 @@ public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 		problem.setMaximumSolutionSize(size);
 		problem.setSearchInjectiveSolutions(true);
 		
-		// TOTAL_BIJECTIVE without relocatable edges!
-		
 		// Partial matching of context:
+		// - node types equal
+		// - match all incoming/outgoing edges
+		//   - edge with equal type (not structural)
+		//     - NOTE: necessary, not sufficient -> we only allow changes on relocatable edges
+		//   - matching of relocatable edges is optional
 		for (NodePattern contextNode : contextNodes) {
 			NodePatternDomain domain = new NodePatternDomain(
 					contextNode, contextNodes, 
@@ -147,6 +150,11 @@ public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 		}
 		
 		// Full matching of content:
+		// - node types equal
+		// - match all incoming/outgoing edges
+		//   - edge with equal type (not structural)
+		//     - NOTE: necessary, not sufficient -> we only allow changes on relocatable edges
+		//   - matching of relocatable edges is optional
 		for (NodePattern contentNode : contentNodes) {
 			NodePatternDomain domain = new NodePatternDomain(
 					contentNode, contentNodes, 
@@ -205,11 +213,19 @@ public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 		}
 	}
 
+	/**
+	 * Edit operation:
+	 * - contains at least two relocations
+	 *   - i.e. at least 4 relocatable edges
+	 * - contains only edge changes
+	 *   - no changes on nodes or attributes
+	 *   - or none relocatable edges
+	 */
 	private boolean checkRelocationEditRule(Pattern editOperation, 
 			Map<NodePattern, NodePattern> tracePreGraph2EditRule, 
 			Map<NodePattern, NodePattern> tracePostGraph2EditRule) {
 		
-		// Contains at least two relocatable edges?
+		// Contains at least two relocations?
 		int relocatableEdgesCount = 0;
 		
 		// Contains only changes on relocatable edges?
@@ -238,6 +254,8 @@ public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 				}
 			}
 		}
+		
+		// FIXME: Shouldn't we match two edges for one relocation based on their source and target nodes!
 		
 		// Need at least two relocations for synchronization edit rule!
 		// NOTE: We need at least two relocatable (none opposite) edges for one relocation (remove, create). 

@@ -36,6 +36,13 @@ public class NodePatternDomain extends Domain<NodePattern> {
 		PARTIAL_INJECTIVE
 	}
 	
+	/**
+	 * @param subject The node to be matched.
+	 * @param candidates Candidates for matchable nodes.
+	 * @param incomingMatching Required matching criteria for incoming edges of a node.
+	 * @param outgoingMatching Required matching criteria for outgoing edges of a node.
+	 * @param edgeFilter Edges that are ignored during edge matching.
+	 */
 	public NodePatternDomain(
 			NodePattern subject, List<NodePattern> candidates,
 			EdgeMatching incomingMatching, EdgeMatching outgoingMatching, Function<EdgePattern, Boolean> edgeFilter) {
@@ -51,6 +58,10 @@ public class NodePatternDomain extends Domain<NodePattern> {
 		}
 	}
 	
+	/**
+	 * 
+	 * @see NodePatternDomain#NodePatternDomain(NodePattern, List, EdgeMatching, EdgeMatching, Function)
+	 */
 	public NodePatternDomain(
 			NodePattern subject, List<NodePattern> candidates,
 			EdgeMatching incomingMatching, EdgeMatching outgoingMatching) {

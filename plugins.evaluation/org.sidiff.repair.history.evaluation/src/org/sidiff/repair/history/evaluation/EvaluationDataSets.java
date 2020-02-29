@@ -5,7 +5,7 @@ import java.util.List;
 
 public class EvaluationDataSets {
 	
-	public static final String RESULT_REPORT = "C:/evaluations/org.eclipse.git.evaluation_2018-11-02/2019-10-12-results/";
+	public static final String RESULT_REPORT = "C:/evaluations/org.eclipse.git.evaluation_2018-11-02/2019-12-14-results/";
 	
 	public static final String MANUALLY_EVALUATED_VALUES = RESULT_REPORT + "manually_evaluated_values.csv";
 	

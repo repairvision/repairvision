@@ -52,6 +52,11 @@ public class TransformationEditRuleConstructor implements IEditRuleConstructor {
 					int preSize = GraphPatternUtil.getPatternSize(preConstraint.getNodes());
 					int postSize = GraphPatternUtil.getPatternSize(postConstraint.getNodes());
 
+					// NOTE: Find match: 
+					//       - Pre in Post or Post in Pre
+					//       - equal node types
+					//       - keep match with minimal graph edit distance
+					//       - do not consider negative condition nodes in matching
 					IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(preConstraint.getNodes().size());
 					problem.setMinimumSolutionSize(Math.min(preSize, postSize)); // NOTE: At least one of both patterns need to be matched completely.
 					problem.setMaximumSolutionSize(Math.max(preSize, postSize));
