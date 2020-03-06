@@ -11,9 +11,10 @@ public interface ModelAST {
 
 	/**
 	 * @param element A model element.
-	 * @return The child elements of the given element in the abstract syntax tree.
+	 * @return The child elements of the given element in the abstract syntax tree;
+	 *         or <code>null</code>
 	 */
-	Iterator<? extends Object> children(Object element);
+	Iterator<Object> children(Object element);
 
 	/**
 	 * @param element A model element.
