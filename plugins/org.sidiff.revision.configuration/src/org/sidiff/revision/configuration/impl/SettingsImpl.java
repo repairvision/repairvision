@@ -12,9 +12,9 @@ import org.sidiff.revision.configuration.Settings;
  * 
  * @author Manuel Ohrndorf
  * @see Settings
- * @see BindingImpl
+ * @see SingletonsImpl
  */
-public class SettingsImpl<P extends Enum<?>> extends BindingImpl implements Settings<P> {
+public class SettingsImpl<P extends Enum<?>> extends BindingsImpl implements Settings<P> {
 
 	private Map<P, Object> properties;
 	
@@ -28,7 +28,7 @@ public class SettingsImpl<P extends Enum<?>> extends BindingImpl implements Sett
 	}
 
 	@Override
-	public Object get(P property) {
+	public Object property(P property) {
 		if (properties == null) {
 			return null;
 		} else {
@@ -37,7 +37,7 @@ public class SettingsImpl<P extends Enum<?>> extends BindingImpl implements Sett
 	}
 
 	@Override
-	public Object set(P property, Object value) {
+	public Object setProperty(P property, Object value) {
 		if (value == null) {
 			return getProperties().remove(property);
 		} else {

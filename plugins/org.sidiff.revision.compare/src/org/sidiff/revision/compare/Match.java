@@ -13,7 +13,7 @@ public interface Match {
 	 * @param elementA A model element of model A.
 	 * @param elementB A model element of model B.
 	 * @return <code>true</code> if a new match was added; <code>false</code>
-	 *         otherwise, e.g., if the match already exists.
+	 *         otherwise.
 	 */
 	boolean add(Object elementA, Object elementB);
 
@@ -21,7 +21,7 @@ public interface Match {
 	 * @param elementA A model element of model A.
 	 * @param elementB A model element of model B.
 	 * @return <code>true</code> if the match is removed; <code>false</code>
-	 *         otherwise, e.g., if the match does not exist.
+	 *         otherwise.
 	 */
 	boolean remove(Object elementA, Object elementB);
 

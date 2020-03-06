@@ -14,11 +14,24 @@ import org.sidiff.revision.configuration.Settings;
  * 
  * @author Manuel Ohrndorf
  * @see Configuration
- * @see BindingImpl
+ * @see SingletonsImpl
  */
-public class ConfigurationImpl extends BindingImpl implements Configuration {
+public class ConfigurationImpl extends BindingsImpl implements Configuration {
 
 	private Map<Class<? extends Enum<?>>, Settings<? extends Enum<?>>> settings;
+
+	@Override
+	public <P extends Enum<?>> Settings<P> add(Class<P> properties, Settings<P> settings) {
+		Settings<P> oldSettings = remove(properties);
+		this.settings.put(properties, settings);
+		return oldSettings;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <P extends Enum<?>> Settings<P> remove(Class<P> properties) {
+		return (Settings<P>) settings.remove(properties);
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -28,12 +41,6 @@ public class ConfigurationImpl extends BindingImpl implements Configuration {
 		} else {
 			return (Settings<P>) getBindings().get(properties);
 		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public <P extends Enum<?>> Settings<P> remove(Class<P> properties) {
-		return (Settings<P>) settings.remove(properties);
 	}
 
 	@Override
@@ -45,30 +52,6 @@ public class ConfigurationImpl extends BindingImpl implements Configuration {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Object get(Enum<?> property) {
-		if (settings(property.getClass()) != null) {
-			Settings<Enum<?>> settings = (Settings<Enum<?>>) settings(property.getClass());
-			return settings.get(property);
-		} else {
-			return null;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Object set(Enum<?> property, Object value) {
-		
-		if (settings(property.getClass()) == null) {
-			Settings<Enum<?>> newSettings = new SettingsImpl<Enum<?>>();
-			getBindings().put((Class<? extends Enum<?>>) property.getClass(), newSettings);
-		}
-		
-		Settings<Enum<?>> settings = (Settings<Enum<?>>) settings(property.getClass());
-		return settings.set(property, value);
-	}
-	
 	private Map<Class<? extends Enum<?>>, Settings<? extends Enum<?>>> getBindings() {
 		if (settings == null) {
 			this.settings = new LinkedHashMap<>();

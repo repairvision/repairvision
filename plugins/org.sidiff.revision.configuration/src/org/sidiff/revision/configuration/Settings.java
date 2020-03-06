@@ -7,7 +7,7 @@ import java.util.Set;
  * 
  * @author Manuel Ohrndorf
  */
-public interface Settings<P extends Enum<?>> extends Bindings {
+public interface Settings<P extends Enum<?>> extends Singletons, Factories {
 
 	/**
 	 * @return All enumeration literal that define the properties.
@@ -18,13 +18,13 @@ public interface Settings<P extends Enum<?>> extends Bindings {
 	 * @param property A settings property.
 	 * @return The associated value.
 	 */
-	Object get(P property);
+	Object property(P property);
 
 	/**
 	 * @param property A settings property.
 	 * @param value    The new associated value.
 	 * @return The old associated value.
 	 */
-	Object set(P property, Object value);
+	Object setProperty(P property, Object value);
 
 }
