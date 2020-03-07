@@ -5,10 +5,8 @@ import java.lang.reflect.Field;
 
 import org.sidiff.revision.configuration.Configurable;
 import org.sidiff.revision.configuration.Configuration;
-import org.sidiff.revision.configuration.Settings;
 import org.sidiff.revision.configuration.annotations.ConfigField;
 import org.sidiff.revision.configuration.annotations.ConfigProperties;
-import org.sidiff.revision.configuration.annotations.ConfigSettings;
 
 /**
  * {@link Configuration} and {@link Configurable} convenience methods.
@@ -33,70 +31,44 @@ public class ConfigUtil {
 	}
 
 	/**
-	 * @param configurable A configurable object.
-	 * @return The settings contained in the annotated field
-	 *         ({@link ConfigSettings}); or <code>null</code>.
-	 */
-	public static Settings<? extends Enum<?>> getConfigSettings(Configurable configurable) {
-		for (Field field : configurable.getClass().getDeclaredFields()) {
-			if (field.isAnnotationPresent(ConfigSettings.class)) {
-				try {
-					return (Settings<?>) field.get(configurable);
-				} catch (IllegalArgumentException | IllegalAccessException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * @param configurable A configurable object.
-	 * @return The configuration contained in the annotated field
-	 *         ({@link ConfigField}); or <code>null</code>.
-	 */
-	public static Configuration getConfigField(Configurable configurable) {
-		for (Field field : configurable.getClass().getDeclaredFields()) {
-			if (field.isAnnotationPresent(ConfigField.class)) {
-				try {
-					return (Configuration) field.get(configurable);
-				} catch (IllegalArgumentException | IllegalAccessException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Injects a value into all fields with a specific annotation.
+	 * Reads a value from the (first) field with a specific annotation.
 	 * 
-	 * @param target     The object which need injection.
-	 * @param annotation The annotation of the field(s).
-	 * @param value      The value to be injected.
+	 * @param configurable A configurable object.
+	 * @return The value contained in the annotated field; or <code>null</code>.
 	 */
-	public static void inject(Object target, Class<? extends Annotation> annotation, Object value) {
-		for (Field field : target.getClass().getDeclaredFields()) {
+	public static Object read(Configurable configurable, Class<? extends Annotation> annotation) {
+		for (Field field : configurable.getClass().getDeclaredFields()) {
 			if (field.isAnnotationPresent(annotation)) {
 				try {
-					boolean accessible = field.canAccess(target);
+					return field.get(configurable);
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Writes a value into all fields with a specific annotation.
+	 * 
+	 * @param target     The configuration contained in the annotated field
+	 *                   ({@link ConfigField}); or <code>null</code>.
+	 * @param annotation The annotation of the field(s).
+	 * @param value      The value to write.
+	 */
+	public static void write(Configurable configurable, Class<? extends Annotation> annotation, Object value) {
+		for (Field field : configurable.getClass().getDeclaredFields()) {
+			if (field.isAnnotationPresent(annotation)) {
+				try {
+					boolean accessible = field.canAccess(configurable);
 					field.setAccessible(true);
-					field.set(target, value);
+					field.set(configurable, value);
 					field.setAccessible(accessible);
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-	}
-
-	/**
-	 * @param configurable The configurable component to be initialized.
-	 * @param config       The global configuration.
-	 */
-	public static void setupDefaultConfiguration(Configurable configurable, Configuration config) {
-		configurable.configureDefaultSettings(config);
-		configurable.configureDefaultSingletons(config);
-		configurable.configureDefaultFactories(config);
 	}
 }

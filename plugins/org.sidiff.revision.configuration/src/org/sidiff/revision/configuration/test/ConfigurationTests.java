@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.sidiff.revision.configuration.Configuration;
 import org.sidiff.revision.configuration.Settings;
+import org.sidiff.revision.configuration.annotations.ConfigField;
+import org.sidiff.revision.configuration.annotations.ConfigSettings;
 import org.sidiff.revision.configuration.impl.ConfigurationImpl;
 import org.sidiff.revision.configuration.impl.SettingsImpl;
 import org.sidiff.revision.configuration.test.ConfigurableA.Properties;
@@ -43,7 +45,7 @@ public class ConfigurationTests {
 		Configuration config = new ConfigurationImpl();
 
 		Settings<ConfigurableA.Properties> settings = new SettingsImpl<>(ConfigurableA.Properties.class);
-		config.add(ConfigurableA.Properties.class, settings);
+		config.addSettings(ConfigurableA.Properties.class, settings);
 
 		ConfigurableA configurable1 = new ConfigurableA();
 		configurable1.configure(config);
@@ -60,14 +62,14 @@ public class ConfigurationTests {
 		Configuration config = new ConfigurationImpl();
 		
 		Settings<ConfigurableA.Properties> settings = new SettingsImpl<>(ConfigurableA.Properties.class);
-		config.add(ConfigurableA.Properties.class, settings);
+		config.addSettings(ConfigurableA.Properties.class, settings);
 
 		ConfigurableA configurable = new ConfigurableA();
 		configurable.configure(config);
 
 		Assert.assertEquals(ConfigurableA.Properties.class, ConfigUtil.getConfigProperties(configurable)); // Properties
-		Assert.assertEquals(config, ConfigUtil.getConfigField(configurable)); // Config
-		Assert.assertEquals(settings, ConfigUtil.getConfigSettings(configurable)); // Settings
+		Assert.assertEquals(config, ConfigUtil.read(configurable, ConfigField.class)); // Config
+		Assert.assertEquals(settings, ConfigUtil.read(configurable, ConfigSettings.class)); // Settings
 	}
 	
 	@Test
@@ -75,22 +77,28 @@ public class ConfigurationTests {
 		ConfigurableC configurableWithoutAnnotations = new ConfigurableC();
 		
 		Assert.assertNull(ConfigUtil.getConfigProperties(configurableWithoutAnnotations)); // Properties
-		Assert.assertNull(ConfigUtil.getConfigField(configurableWithoutAnnotations)); // Config
-		Assert.assertNull(ConfigUtil.getConfigSettings(configurableWithoutAnnotations)); // Settings
+		Assert.assertNull(ConfigUtil.read(configurableWithoutAnnotations, ConfigField.class)); // Config
+		Assert.assertNull(ConfigUtil.read(configurableWithoutAnnotations, ConfigSettings.class)); // Settings
 	}
 
 	@Test
 	public void testGlobalConfigurableSetup() {
 		Configuration config = new ConfigurationImpl();
 
-		ConfigurableA configurable = new ConfigurableA();
-		configurable.configure(config); // global config
+		ConfigurableD configurable = new ConfigurableD(config); // global config
 
 		Assert.assertEquals(config, configurable.getConfig());
-		Assert.assertNotNull(config.settings(ConfigurableA.Properties.class));
+		
+		Assert.assertNotNull(config.settings(ConfigurableD.Properties.class));
 		Assert.assertTrue(config.settings().contains(configurable.getSettings()));
+		
+		Assert.assertNotNull(config.singletons(ConfigurableD.class));
+		Assert.assertTrue(config.singletons().contains(configurable.getSingletons()));
+		
+		Assert.assertNotNull(config.factories(ConfigurableD.class));
+		Assert.assertTrue(config.factories().contains(configurable.getFactories()));
 	}
-
+	
 	@Test
 	public void testAddRemoveSettingsOnConfiguration() {
 		Configuration config = new ConfigurationImpl();
@@ -99,20 +107,20 @@ public class ConfigurationTests {
 
 		// add A:
 		Settings<ConfigurableA.Properties> settingsA = new SettingsImpl<>(ConfigurableA.Properties.class);
-		config.add(ConfigurableA.Properties.class, settingsA);
+		config.addSettings(ConfigurableA.Properties.class, settingsA);
 
 		Assert.assertNotNull(config.settings(ConfigurableA.Properties.class));
 		Assert.assertTrue(config.settings().contains(settingsA));
 
 		// add B:
 		Settings<ConfigurableB.Properties> settingsB = new SettingsImpl<>(ConfigurableB.Properties.class);
-		config.add(ConfigurableB.Properties.class, settingsB);
+		config.addSettings(ConfigurableB.Properties.class, settingsB);
 
 		Assert.assertNotNull(config.settings(ConfigurableB.Properties.class));
 		Assert.assertTrue(config.settings().contains(settingsB));
 
 		// remove A:
-		config.remove(ConfigurableA.Properties.class);
+		config.removeSettings(ConfigurableA.Properties.class);
 
 		Assert.assertNull(config.settings(ConfigurableA.Properties.class));
 		Assert.assertFalse(config.settings().contains(settingsA));
@@ -128,59 +136,90 @@ public class ConfigurationTests {
 		// initialize settings:
 		Settings<Properties> settings = config.settings(ConfigurableA.Properties.class);
 
-		Assert.assertTrue(settings.properties().isEmpty());
-		Assert.assertNull(settings.property(ConfigurableA.Properties.PROPERTY_A1));
+		Assert.assertTrue(settings.settings().isEmpty());
+		Assert.assertNull(settings.get(ConfigurableA.Properties.PROPERTY_A1));
 
 		// set properties:
-		settings.setProperty(ConfigurableA.Properties.PROPERTY_A1, "HalloWelt");
-		Assert.assertEquals(1, settings.properties().size());
+		settings.set(ConfigurableA.Properties.PROPERTY_A1, "HalloWelt");
+		Assert.assertEquals(1, settings.settings().size());
 
-		settings.setProperty(ConfigurableA.Properties.PROPERTY_A2, 42);
-		Assert.assertEquals(2, settings.properties().size());
+		settings.set(ConfigurableA.Properties.PROPERTY_A2, 42);
+		Assert.assertEquals(2, settings.settings().size());
 
-		settings.setProperty(ConfigurableA.Properties.PROPERTY_A3, configurable);
-		Assert.assertEquals(3, settings.properties().size());
+		settings.set(ConfigurableA.Properties.PROPERTY_A3, configurable);
+		Assert.assertEquals(3, settings.settings().size());
 
 		// get properties:
-		Assert.assertEquals("HalloWelt", settings.property(ConfigurableA.Properties.PROPERTY_A1));
-		Assert.assertEquals(42, settings.property(ConfigurableA.Properties.PROPERTY_A2));
-		Assert.assertEquals(configurable, settings.property(ConfigurableA.Properties.PROPERTY_A3));
+		Assert.assertEquals("HalloWelt", settings.get(ConfigurableA.Properties.PROPERTY_A1));
+		Assert.assertEquals(42, settings.get(ConfigurableA.Properties.PROPERTY_A2));
+		Assert.assertEquals(configurable, settings.get(ConfigurableA.Properties.PROPERTY_A3));
 
 		// unset propery:
-		settings.setProperty(ConfigurableA.Properties.PROPERTY_A1, null);
-		Assert.assertEquals(2, settings.properties().size());
-		Assert.assertNull(settings.property(ConfigurableA.Properties.PROPERTY_A1));
+		settings.set(ConfigurableA.Properties.PROPERTY_A1, null);
+		Assert.assertEquals(2, settings.settings().size());
+		Assert.assertNull(settings.get(ConfigurableA.Properties.PROPERTY_A1));
+	}
+	
+	@Test
+	public void testEmpytSettings() {
+		Configuration config = new ConfigurationImpl();
+		Assert.assertTrue(config.settings().isEmpty());
+		
+		ConfigurableA configurable = new ConfigurableA();
+		configurable.configure(config);
+		
+		Assert.assertTrue(config.settings(ConfigurableA.Properties.class).settings().isEmpty());
+	}
+	
+	@Test
+	public void testEmpytSingletons() {
+		Configuration config = new ConfigurationImpl();
+		Assert.assertTrue(config.singletons().isEmpty());
+		
+		ConfigurableA configurable = new ConfigurableA();
+		configurable.configure(config);
+		
+		Assert.assertTrue(config.singletons(ConfigurableA.class).singletons().isEmpty());
+		Assert.assertNull(config.singletons(ConfigurableA.class).get(List.class));
+	}
+	
+	@Test
+	public void testEmpytFactories() {
+		Configuration config = new ConfigurationImpl();
+		Assert.assertTrue(config.factories().isEmpty());
+		
+		ConfigurableA configurable = new ConfigurableA();
+		configurable.configure(config);
+		
+		Assert.assertTrue(config.factories(ConfigurableA.class).factories().isEmpty());
+		Assert.assertNull(config.factories(ConfigurableA.class).get(List.class));
 	}
 
 	@Test
 	public void testSingletons() {
 		Configuration config = new ConfigurationImpl();
 		
-		// global:
-		Assert.assertTrue(config.singletons().isEmpty());
-		Assert.assertNull(config.singleton(List.class));
-		
 		// local:
 		ConfigurableD configurable = new ConfigurableD(config);
 		
 		// get singleton:
-		Assert.assertEquals(2, configurable.getSettings().singletons().size());
-		Assert.assertTrue(configurable.getSettings().singletons().contains(List.class));
-		Assert.assertTrue(configurable.getSettings().singletons().contains(Set.class));
+		Assert.assertEquals(2, configurable.getSingletons().singletons().size());
+		Assert.assertTrue(configurable.getSingletons().singletons().contains(List.class));
+		Assert.assertTrue(configurable.getSingletons().singletons().contains(Set.class));
 		
 		@SuppressWarnings("unchecked")
-		List<String> hallo = configurable.getSettings().singleton(List.class);
+		List<String> hallo = configurable.getSingletons().get(List.class);
 		Assert.assertTrue(hallo.contains("Hallo"));
 		
 		@SuppressWarnings("unchecked")
-		Set<String> welt = configurable.getSettings().singleton(Set.class);
+		Set<String> welt = configurable.getSingletons().get(Set.class);
 		Assert.assertTrue(welt.contains("Welt"));
 		
 		// unset binding:
-		configurable.getSettings().setSingleton(List.class, null);
+		configurable.getSingletons().set(List.class, null);
 		
 		@SuppressWarnings("unchecked")
-		List<String> notBound = configurable.getSettings().singleton(List.class);
+		List<String> notBound = configurable.getSingletons().get(List.class);
 		Assert.assertNull(notBound);
 	}
 
@@ -188,35 +227,31 @@ public class ConfigurationTests {
 	public void testFactorys() {
 		Configuration config = new ConfigurationImpl();
 		
-		// global:
-		Assert.assertTrue(config.factories().isEmpty());
-		Assert.assertNull(config.factory(List.class));
-		
 		// local:
 		ConfigurableD configurable = new ConfigurableD(config);
 		
-		Assert.assertEquals(2, configurable.getSettings().factories().size());
-		Assert.assertTrue(configurable.getSettings().factories().contains(List.class));
-		Assert.assertTrue(configurable.getSettings().factories().contains(Set.class));
+		Assert.assertEquals(2, configurable.getFactories().factories().size());
+		Assert.assertTrue(configurable.getFactories().factories().contains(List.class));
+		Assert.assertTrue(configurable.getFactories().factories().contains(Set.class));
 		
 		// without parameters:
-		Assert.assertTrue(configurable.getSettings().create(List.class) instanceof List);
-		Assert.assertTrue(configurable.getSettings().create(Set.class) instanceof Set);
+		Assert.assertTrue(configurable.getFactories().create(List.class) instanceof List);
+		Assert.assertTrue(configurable.getFactories().create(Set.class) instanceof Set);
 		
 		// with parameters:
 		@SuppressWarnings("unchecked")
-		List<String> hallo = configurable.getSettings().create(List.class, Collections.singletonList("Hallo"));
+		List<String> hallo = configurable.getFactories().create(List.class, Collections.singletonList("Hallo"));
 		Assert.assertTrue(hallo.contains("Hallo"));
 		
 		@SuppressWarnings("unchecked")
-		Set<String> welt = configurable.getSettings().create(Set.class, Collections.singleton("Welt"));
+		Set<String> welt = configurable.getFactories().create(Set.class, Collections.singleton("Welt"));
 		Assert.assertTrue(welt.contains("Welt"));
 		
 		// unset binding:
-		configurable.getSettings().setFactory(List.class, null);
+		configurable.getFactories().set(List.class, null);
 		
 		@SuppressWarnings("unchecked")
-		List<String> notBound = configurable.getSettings().create(List.class);
+		List<String> notBound = configurable.getFactories().create(List.class);
 		Assert.assertNull(notBound);
 	}
 }

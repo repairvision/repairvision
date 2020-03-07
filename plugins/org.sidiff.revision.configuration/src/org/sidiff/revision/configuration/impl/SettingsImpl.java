@@ -14,7 +14,7 @@ import org.sidiff.revision.configuration.Settings;
  * @see Settings
  * @see SingletonsImpl
  */
-public class SettingsImpl<P extends Enum<?>> extends BindingsImpl implements Settings<P> {
+public class SettingsImpl<P extends Enum<?>> implements Settings<P> {
 
 	private Class<? extends Enum<?>> type;
 
@@ -28,7 +28,7 @@ public class SettingsImpl<P extends Enum<?>> extends BindingsImpl implements Set
 	}
 
 	@Override
-	public Set<P> properties() {
+	public Set<P> settings() {
 		if (properties == null) {
 			return Collections.emptySet();
 		} else {
@@ -37,7 +37,7 @@ public class SettingsImpl<P extends Enum<?>> extends BindingsImpl implements Set
 	}
 
 	@Override
-	public Object property(P property) {
+	public Object get(P property) {
 		if (properties == null) {
 			return null;
 		} else {
@@ -46,7 +46,7 @@ public class SettingsImpl<P extends Enum<?>> extends BindingsImpl implements Set
 	}
 
 	@Override
-	public Object setProperty(P property, Object value) {
+	public Object set(P property, Object value) {
 		if (value == null) {
 			return getProperties().remove(property);
 		} else {

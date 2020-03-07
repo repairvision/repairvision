@@ -19,7 +19,7 @@ public interface Factories {
 	 * @param type The class type of the binding.
 	 * @return The (sub) class type that is bound to the type; or <code>null</code>.
 	 */
-	<T> Class<? extends T> factory(Class<T> type);
+	<T> Class<? extends T> get(Class<T> type);
 
 	/**
 	 * @param <T>     The type of the binding.
@@ -27,7 +27,7 @@ public interface Factories {
 	 * @param binding The (sub) class type that should be bound to the type.
 	 * @return The old class type that was bound to the type; or <code>null</code>.
 	 */
-	Class<?> setFactory(Class<?> type, Class<?> binding);
+	Class<?> set(Class<?> type, Class<?> binding);
 
 	/**
 	 * @param <T>                  The type of the object to be created.
