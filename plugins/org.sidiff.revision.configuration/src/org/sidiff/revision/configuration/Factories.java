@@ -27,13 +27,13 @@ public interface Factories {
 	 * @param binding The (sub) class type that should be bound to the type.
 	 * @return The old class type that was bound to the type; or <code>null</code>.
 	 */
-	<T> T setFactory(Class<T> type, Class<? extends T> binding);
-	
+	Class<?> setFactory(Class<?> type, Class<?> binding);
+
 	/**
-	 * @param <T>         The type of the object to be created.
-	 * @param type        The type of the object to be created.
-	 * @param constructor The constructor arguments.
+	 * @param <T>                  The type of the object to be created.
+	 * @param type                 The type of the object to be created.
+	 * @param constructorArguments The constructor arguments.
 	 * @return A new instance of the given type, based on the concrete bound type.
 	 */
-	<T> T create(Class<T> type, Object... constructor);
+	<T> T create(Class<T> type, Object... constructorArguments);
 }

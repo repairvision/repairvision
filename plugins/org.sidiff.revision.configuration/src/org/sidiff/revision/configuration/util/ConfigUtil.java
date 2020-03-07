@@ -2,10 +2,6 @@ package org.sidiff.revision.configuration.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.sidiff.revision.configuration.Configurable;
 import org.sidiff.revision.configuration.Configuration;
@@ -20,21 +16,6 @@ import org.sidiff.revision.configuration.annotations.ConfigSettings;
  * @author Manuel Ohrndorf
  */
 public class ConfigUtil {
-
-	/**
-	 * @param elements The types of the set.
-	 * @return A set containing all given types.
-	 */
-	public static Set<Class<?>> createTypeSet(Class<?>... elements) {
-		if (elements.length == 0) {
-			return Collections.emptySet();
-		} else if (elements.length == 1) {
-			return Collections.singleton(elements[0]);
-		} else {
-			return new HashSet<>(Arrays.asList(elements));
-		}
-		
-	}
 
 	/**
 	 * @param configurable A configurable object.
@@ -98,7 +79,10 @@ public class ConfigUtil {
 		for (Field field : target.getClass().getDeclaredFields()) {
 			if (field.isAnnotationPresent(annotation)) {
 				try {
+					boolean accessible = field.canAccess(target);
+					field.setAccessible(true);
 					field.set(target, value);
+					field.setAccessible(accessible);
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 					e.printStackTrace();
 				}
@@ -106,4 +90,13 @@ public class ConfigUtil {
 		}
 	}
 
+	/**
+	 * @param configurable The configurable component to be initialized.
+	 * @param config       The global configuration.
+	 */
+	public static void setupDefaultConfiguration(Configurable configurable, Configuration config) {
+		configurable.configureDefaultSettings(config);
+		configurable.configureDefaultSingletons(config);
+		configurable.configureDefaultFactories(config);
+	}
 }

@@ -23,14 +23,14 @@ public class ConfigurationImpl extends BindingsImpl implements Configuration {
 	@Override
 	public <P extends Enum<?>> Settings<P> add(Class<P> properties, Settings<P> settings) {
 		Settings<P> oldSettings = remove(properties);
-		this.settings.put(properties, settings);
+		this.getSettings().put(properties, settings);
 		return oldSettings;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public <P extends Enum<?>> Settings<P> remove(Class<P> properties) {
-		return (Settings<P>) settings.remove(properties);
+		return (Settings<P>) getSettings().remove(properties);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -39,7 +39,7 @@ public class ConfigurationImpl extends BindingsImpl implements Configuration {
 		if (settings == null) {
 			return null;
 		} else {
-			return (Settings<P>) getBindings().get(properties);
+			return (Settings<P>) getSettings().get(properties);
 		}
 	}
 
@@ -48,11 +48,11 @@ public class ConfigurationImpl extends BindingsImpl implements Configuration {
 		if (settings == null) {
 			return Collections.emptySet();
 		} else {
-			return Collections.unmodifiableSet(new LinkedHashSet<>(getBindings().values()));
+			return Collections.unmodifiableSet(new LinkedHashSet<>(getSettings().values()));
 		}
 	}
 
-	private Map<Class<? extends Enum<?>>, Settings<? extends Enum<?>>> getBindings() {
+	private Map<Class<? extends Enum<?>>, Settings<? extends Enum<?>>> getSettings() {
 		if (settings == null) {
 			this.settings = new LinkedHashMap<>();
 		}

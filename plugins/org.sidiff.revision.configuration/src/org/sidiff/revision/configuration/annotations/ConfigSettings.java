@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks the configuration settings contained in the annotated field.
+ * Marks the local configuration settings contained in the annotated field.
  * 
  * @author Manuel Ohrndorf
  */

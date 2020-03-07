@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks the configuration contained in the annotated field.
+ * Marks the global configuration contained in the annotated field.
  * 
  * @author Manuel Ohrndorf
  */
