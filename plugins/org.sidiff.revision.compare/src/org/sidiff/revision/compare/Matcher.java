@@ -1,7 +1,6 @@
 package org.sidiff.revision.compare;
 
 import org.sidiff.revision.configuration.Configurable;
-import org.sidiff.revision.configuration.Configuration;
 import org.sidiff.revision.model.ModelSet;
 
 /**
@@ -14,25 +13,23 @@ import org.sidiff.revision.model.ModelSet;
 public interface Matcher extends Configurable {
 
 	/**
-	 * @param model  Contains all model elements that should be compared to another
-	 *               model.
-	 * @param config Matcher specific settings for this matching task.
+	 * @param model Contains all model elements that should be compared to another
+	 *              model.
 	 * @return <code>true</code> if the matcher can process the given model;
 	 *         <code>false</code> otherwise.
 	 */
-	boolean canHandle(ModelSet model, Configuration config);
+	boolean canHandle(ModelSet model);
 
 	/**
 	 * Calculates a matching between two models. That means a correspondence for
 	 * each preserved object between the models.
 	 * 
-	 * @param match  Stores the matched elements.
 	 * @param modelA Contains all model elements that should be compared to
 	 *               {@code modelB}.
 	 * @param modelB Contains all model elements that should be compared to
 	 *               {@code modelA}.
-	 * @param config Matcher specific settings for this matching task.
+	 * @return The calculated matches between both models.
 	 */
-	void match(Match match, ModelSet modelA, ModelSet modelB, Configuration config);
+	Match match(ModelSet modelA, ModelSet modelB);
 
 }

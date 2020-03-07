@@ -24,7 +24,7 @@ public class Candidates {
 	/**
 	 * The key to candidate map.
 	 */
-	protected Map<Object, List<Object>> candidates = new HashMap<>();
+	protected Map<Object, List<Object>> candidates;
 
 	/**
 	 * Creates and initializes the candidate management.

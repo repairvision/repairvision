@@ -16,8 +16,17 @@ import org.sidiff.revision.configuration.Settings;
  */
 public class SettingsImpl<P extends Enum<?>> extends BindingsImpl implements Settings<P> {
 
+	private Class<? extends Enum<?>> type;
+
 	private Map<P, Object> properties;
-	
+
+	/**
+	 * @param type The class of the enumeration defining the properties.
+	 */
+	public SettingsImpl(Class<? extends Enum<?>> type) {
+		this.type = type;
+	}
+
 	@Override
 	public Set<P> properties() {
 		if (properties == null) {
@@ -44,11 +53,11 @@ public class SettingsImpl<P extends Enum<?>> extends BindingsImpl implements Set
 			return getProperties().put(property, value);
 		}
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private Map<P, Object> getProperties() {
 		if (properties == null) {
-			this.properties = new EnumMap(properties);
+			this.properties = new EnumMap(type);
 		}
 		return properties;
 	}

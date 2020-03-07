@@ -2,7 +2,6 @@ package org.sidiff.revision.compare.matching;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.sidiff.revision.compare.Match;
 import org.sidiff.revision.configuration.Configurable;
@@ -14,7 +13,6 @@ import org.sidiff.revision.configuration.annotations.ConfigSettings;
 import org.sidiff.revision.model.ModelASG;
 import org.sidiff.revision.model.ModelSet;
 import org.sidiff.revision.model.util.ASTIterator;
-import org.sidiff.revision.configuration.util.ConfigUtil;
 
 /**
  * A basic configurable ({@link Candidates}) matching algorithm.
@@ -24,22 +22,13 @@ import org.sidiff.revision.configuration.util.ConfigUtil;
  */
 public class Matching implements Configurable {
 
-	/**
-	 * The properties of the local configuration settings of the matching algorithm.
-	 */
 	@ConfigProperties
 	public enum Properties {
 	}
 
-	/**
-	 * The global configuration of the framework.
-	 */
 	@ConfigField
 	protected Configuration config;
 
-	/**
-	 * The local configuration settings of the matching algorithm.
-	 */
 	@ConfigSettings
 	protected Settings<Properties> settings;
 
@@ -59,48 +48,39 @@ public class Matching implements Configurable {
 	private ModelSet modelB;
 
 	/**
-	 * @param match  {@link #match}
 	 * @param modelA {@link #modelA}
 	 * @param modelB {@link #modelB}
-	 * @param config {@link #config}
+	 * @param config An un- or a pre-configured configuration for this component.
 	 */
-	public Matching(Match match, ModelSet modelA, ModelSet modelB, Configuration config) {
-		this.match = match;
+	public Matching(ModelSet modelA, ModelSet modelB, Configuration config) {
 		this.modelA = modelA;
 		this.modelB = modelB;
 
-		setup(config);
+		configure(config);
 	}
-	
+
 	/**
-	 * @param match  {@link #match}
 	 * @param modelA {@link #modelA}
 	 * @param modelB {@link #modelB}
 	 */
-	public Matching(Match match, ModelSet modelA, ModelSet modelB) {
-		this(match, modelA, modelB, null);
+	public Matching(ModelSet modelA, ModelSet modelB) {
+		this(modelA, modelB, null);
 	}
 
 	/**
 	 * @see Candidates
 	 */
 	@Override
-	public Set<Class<?>> factories() {
-		return ConfigUtil.createTypeSet(Candidates.class);
-	}
-
-	/**
-	 * @see Candidates
-	 */
-	@Override
-	public void setupDefaultFactories(Configuration config) {
-		config.settings(Properties.class).setFactory(Candidates.class, Candidates.class);
+	public void configureDefaultFactories(Configuration config) {
+		settings.setFactory(Candidates.class, Candidates.class);
+		settings.setFactory(Matching.class, Matching.class);
 	}
 
 	/**
 	 * Starts the matching of model A with model B.
 	 */
-	public void match() {
+	public Match match() {
+		this.match = settings.create(Match.class);
 
 		// Match model sets:
 		if (compare(modelA, modelB)) {
@@ -112,6 +92,8 @@ public class Matching implements Configurable {
 				}
 			}
 		}
+
+		return match;
 	}
 
 	protected void match(Match match, ModelASG astA, ModelASG astB) {

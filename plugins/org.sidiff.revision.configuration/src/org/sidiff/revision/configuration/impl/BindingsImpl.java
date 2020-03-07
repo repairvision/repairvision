@@ -1,29 +1,28 @@
 package org.sidiff.revision.configuration.impl;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
+import java.beans.Expression;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.sidiff.revision.configuration.Factories;
 import org.sidiff.revision.configuration.Singletons;
 
 /**
- * A (insertion-ordered) map based singleton and factory settings implementation.
+ * A (insertion-ordered) map based singleton and factory settings
+ * implementation.
  * 
  * @author Manuel Ohrndorf
  */
 public class BindingsImpl implements Singletons, Factories {
-	
+
 	private Map<Class<?>, Object> singletons;
 
 	private Map<Class<?>, Class<?>> factories;
 
 	// Singletons:
-	
+
 	@Override
 	public Set<Class<?>> singletons() {
 		if (singletons == null) {
@@ -52,16 +51,16 @@ public class BindingsImpl implements Singletons, Factories {
 			return (T) getSingletons().put(type, binding);
 		}
 	}
-	
+
 	private Map<Class<?>, Object> getSingletons() {
 		if (singletons == null) {
 			this.singletons = new LinkedHashMap<>();
 		}
 		return singletons;
 	}
-	
+
 	// Factories:
-	
+
 	@Override
 	public Set<Class<?>> factories() {
 		if (factories == null) {
@@ -81,30 +80,26 @@ public class BindingsImpl implements Singletons, Factories {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T setFactory(Class<T> type, Class<? extends T> binding) {
+	public Class<?> setFactory(Class<?> type, Class<?> binding) {
 		if (binding == null) {
-			return (T) getFactories().remove(type);
+			return getFactories().remove(type);
 		} else {
-			return (T) getFactories().put(type, binding);
+			return getFactories().put(type, binding);
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T create(Class<T> type, Object... constructor) {
+	public <T> T create(Class<T> type, Object... constructorArguments) {
 		try {
-			Class<?>[] parameterTypes = Arrays.asList(constructor).stream().map(Object::getClass)
-					.collect(Collectors.toList()).toArray(new Class<?>[0]);
-			return (T) ((Class<?>) factory(type)).getDeclaredConstructor(parameterTypes).newInstance(constructor);
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
+			return (T) new Expression(factory(type), "new", constructorArguments).getValue();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	private Map<Class<?>, Class<?>> getFactories() {
 		if (factories == null) {
 			this.factories = new LinkedHashMap<>();
