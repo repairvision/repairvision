@@ -18,7 +18,7 @@ public class ConfigurableB implements Configurable {
 	
 	@ConfigSettings
 	private Settings<Properties> settings;
-
+	
 	public Configuration getConfig() {
 		return config;
 	}

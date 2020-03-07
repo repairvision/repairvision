@@ -8,47 +8,56 @@ import java.util.Set;
 
 import org.sidiff.revision.configuration.Configurable;
 import org.sidiff.revision.configuration.Configuration;
+import org.sidiff.revision.configuration.Factories;
 import org.sidiff.revision.configuration.Settings;
+import org.sidiff.revision.configuration.Singletons;
+import org.sidiff.revision.configuration.annotations.ConfigFactories;
 import org.sidiff.revision.configuration.annotations.ConfigField;
 import org.sidiff.revision.configuration.annotations.ConfigProperties;
 import org.sidiff.revision.configuration.annotations.ConfigSettings;
+import org.sidiff.revision.configuration.annotations.ConfigSingletons;
 
 public class ConfigurableD implements Configurable {
 
 	@ConfigProperties
 	public enum Properties {
-		PROPERTY_D1,
-		PROPERTY_D2,
+		PROPERTY_D1, PROPERTY_D2,
 	}
-	
+
 	@ConfigField
 	public Configuration config;
-	
+
 	@ConfigSettings
 	public Settings<Properties> settings;
-	
+
+	@ConfigSingletons
+	public Singletons singletons;
+
+	@ConfigFactories
+	public Factories factories;
+
 	public ConfigurableD(Configuration config) {
 		configure(config);
 	}
 
 	@Override
 	public void configureDefaultSettings(Configuration config) {
-		settings.setProperty(Properties.PROPERTY_D1, "Hallo");
-		settings.setProperty(Properties.PROPERTY_D1, "Welt");
+		settings.set(Properties.PROPERTY_D1, "Hallo");
+		settings.set(Properties.PROPERTY_D1, "Welt");
 	}
-	
+
 	@Override
 	public void configureDefaultFactories(Configuration config) {
-		settings.setFactory(List.class, ArrayList.class);
-		settings.setFactory(Set.class, HashSet.class);
+		factories.set(List.class, ArrayList.class);
+		factories.set(Set.class, HashSet.class);
 	}
-	
+
 	@Override
 	public void configureDefaultSingletons(Configuration config) {
-		settings.setSingleton(List.class, Collections.singletonList("Hallo"));
-		settings.setSingleton(Set.class, Collections.singleton("Welt"));
+		singletons.set(List.class, Collections.singletonList("Hallo"));
+		singletons.set(Set.class, Collections.singleton("Welt"));
 	}
-	
+
 	public Configuration getConfig() {
 		return config;
 	}
@@ -56,4 +65,13 @@ public class ConfigurableD implements Configurable {
 	public Settings<Properties> getSettings() {
 		return settings;
 	}
+
+	public Singletons getSingletons() {
+		return singletons;
+	}
+
+	public Factories getFactories() {
+		return factories;
+	}
+
 }

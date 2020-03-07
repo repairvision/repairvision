@@ -6,10 +6,8 @@ import java.util.List;
 import org.sidiff.revision.compare.Match;
 import org.sidiff.revision.configuration.Configurable;
 import org.sidiff.revision.configuration.Configuration;
-import org.sidiff.revision.configuration.Settings;
-import org.sidiff.revision.configuration.annotations.ConfigField;
-import org.sidiff.revision.configuration.annotations.ConfigProperties;
-import org.sidiff.revision.configuration.annotations.ConfigSettings;
+import org.sidiff.revision.configuration.Factories;
+import org.sidiff.revision.configuration.annotations.ConfigFactories;
 import org.sidiff.revision.model.ModelASG;
 import org.sidiff.revision.model.ModelSet;
 import org.sidiff.revision.model.util.ASTIterator;
@@ -18,19 +16,12 @@ import org.sidiff.revision.model.util.ASTIterator;
  * A basic configurable ({@link Candidates}) matching algorithm.
  * 
  * @author Manuel Ohrndorf
- * @see Matching#factories()
+ * @see Matching#settings()
  */
 public class Matching implements Configurable {
 
-	@ConfigProperties
-	public enum Properties {
-	}
-
-	@ConfigField
-	protected Configuration config;
-
-	@ConfigSettings
-	protected Settings<Properties> settings;
+	@ConfigFactories
+	protected Factories factories;
 
 	/**
 	 * The matching of corresponding elements between model A and B.
@@ -72,15 +63,15 @@ public class Matching implements Configurable {
 	 */
 	@Override
 	public void configureDefaultFactories(Configuration config) {
-		settings.setFactory(Candidates.class, Candidates.class);
-		settings.setFactory(Matching.class, Matching.class);
+		factories.set(Candidates.class, Candidates.class);
+		factories.set(Matching.class, Matching.class);
 	}
 
 	/**
 	 * Starts the matching of model A with model B.
 	 */
 	public Match match() {
-		this.match = settings.create(Match.class);
+		this.match = factories.create(Match.class);
 
 		// Match model sets:
 		if (compare(modelA, modelB)) {
@@ -103,7 +94,7 @@ public class Matching implements Configurable {
 			if (compare(astA, astB)) {
 				match.add(astA, astB);
 
-				Candidates candidatesB = settings.create(Candidates.class, astB);
+				Candidates candidatesB = factories.create(Candidates.class, astB);
 				match(match, astA, candidatesB);
 			}
 		}

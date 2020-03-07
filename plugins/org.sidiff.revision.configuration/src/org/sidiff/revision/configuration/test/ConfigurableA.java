@@ -21,7 +21,7 @@ public class ConfigurableA implements Configurable {
 	
 	@ConfigSettings
 	public Settings<Properties> settings;
-	
+
 	public Configuration getConfig() {
 		return config;
 	}
@@ -29,4 +29,5 @@ public class ConfigurableA implements Configurable {
 	public Settings<Properties> getSettings() {
 		return settings;
 	}
+
 }

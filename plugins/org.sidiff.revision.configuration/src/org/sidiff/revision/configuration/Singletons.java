@@ -19,7 +19,7 @@ public interface Singletons {
 	 * @param type The class type of the binding.
 	 * @return The object that is bound to the type; or <code>null</code>.
 	 */
-	<T> T singleton(Class<T> type);
+	<T> T get(Class<T> type);
 
 	/**
 	 * @param <T>     The type of the binding.
@@ -27,6 +27,6 @@ public interface Singletons {
 	 * @param binding The object that should be bound to the type.
 	 * @return The old object that was bound to the type; or <code>null</code>.
 	 */
-	<T> T setSingleton(Class<T> type, T binding);
+	<T> T set(Class<T> type, T binding);
 
 }

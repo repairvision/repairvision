@@ -7,24 +7,24 @@ import java.util.Set;
  * 
  * @author Manuel Ohrndorf
  */
-public interface Settings<P extends Enum<?>> extends Singletons, Factories {
+public interface Settings<P extends Enum<?>> {
 
 	/**
 	 * @return All enumeration literal that define the properties.
 	 */
-	Set<P> properties();
+	Set<P> settings();
 
 	/**
 	 * @param property A settings property.
 	 * @return The associated value.
 	 */
-	Object property(P property);
+	Object get(P property);
 
 	/**
 	 * @param property A settings property.
 	 * @param value    The new associated value.
 	 * @return The old associated value.
 	 */
-	Object setProperty(P property, Object value);
+	Object set(P property, Object value);
 
 }
