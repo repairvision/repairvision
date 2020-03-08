@@ -1,6 +1,5 @@
 package org.sidiff.revision.configuration.test;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -235,17 +234,8 @@ public class ConfigurationTests {
 		Assert.assertTrue(configurable.getFactories().factories().contains(Set.class));
 		
 		// without parameters:
-		Assert.assertTrue(configurable.getFactories().create(List.class) instanceof List);
+		Assert.assertTrue(configurable.getFactories().get(List.class).create() instanceof List);
 		Assert.assertTrue(configurable.getFactories().create(Set.class) instanceof Set);
-		
-		// with parameters:
-		@SuppressWarnings("unchecked")
-		List<String> hallo = configurable.getFactories().create(List.class, Collections.singletonList("Hallo"));
-		Assert.assertTrue(hallo.contains("Hallo"));
-		
-		@SuppressWarnings("unchecked")
-		Set<String> welt = configurable.getFactories().create(Set.class, Collections.singleton("Welt"));
-		Assert.assertTrue(welt.contains("Welt"));
 		
 		// unset binding:
 		configurable.getFactories().set(List.class, null);

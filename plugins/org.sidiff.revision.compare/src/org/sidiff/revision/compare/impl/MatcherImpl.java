@@ -3,6 +3,7 @@ package org.sidiff.revision.compare.impl;
 import org.sidiff.revision.compare.Match;
 import org.sidiff.revision.compare.Matcher;
 import org.sidiff.revision.compare.matching.Matching;
+import org.sidiff.revision.compare.matching.impl.MatchingImpl;
 import org.sidiff.revision.configuration.Configuration;
 import org.sidiff.revision.configuration.Factories;
 import org.sidiff.revision.configuration.annotations.ConfigFactories;
@@ -35,7 +36,7 @@ public class MatcherImpl implements Matcher {
 
 	@Override
 	public void configureDefaultFactories(Configuration config) {
-		factories.set(Matching.class, Matching.class);
+		factories.set(Matching.class, () -> new MatchingImpl(config));
 	}
 
 	@Override
@@ -45,7 +46,8 @@ public class MatcherImpl implements Matcher {
 
 	@Override
 	public Match match(ModelSet modelA, ModelSet modelB) {
-		Matching matching = factories.create(Matching.class, modelA, modelB, config);
+		Matching matching = factories.create(Matching.class);
+		matching.init(modelA, modelB);
 		return matching.match();
 	}
 

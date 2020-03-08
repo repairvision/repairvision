@@ -48,8 +48,8 @@ public class ConfigurableD implements Configurable {
 
 	@Override
 	public void configureDefaultFactories(Configuration config) {
-		factories.set(List.class, ArrayList.class);
-		factories.set(Set.class, HashSet.class);
+		factories.set(List.class, () -> new ArrayList<>());
+		factories.set(Set.class, () -> new HashSet<>());
 	}
 
 	@Override
