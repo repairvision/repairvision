@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.sidiff.revision.compare.Match;
 import org.sidiff.revision.compare.impl.MatchImpl;
+import org.sidiff.revision.compare.matching.Candidate;
 import org.sidiff.revision.compare.matching.CandidateList;
 import org.sidiff.revision.compare.matching.Candidates;
 import org.sidiff.revision.compare.matching.Matching;
@@ -118,13 +119,13 @@ public class MatchingImpl implements Configurable, Matching {
 		CandidateList candidatesByKeyB = candidatesB.getCandidates(keyA);
 
 		// An iterator can efficiently find and delete the candidate in the linked list.
-		for (Iterator<Object> iterator = candidatesByKeyB.iterator(); iterator.hasNext();) {
-			Object elementB = iterator.next();
+		for (Iterator<Candidate> iterator = candidatesByKeyB.iterator(); iterator.hasNext();) {
+			Candidate candidateB = iterator.next();
 
-			if (compare(elemetA, elementB)) {
+			if (compare(elemetA, candidateB.getElement())) {
 
 				// Synchronize matching and candidates!
-				match.add(elemetA, elementB);
+				match.add(elemetA, candidateB.getElement());
 				iterator.remove();
 				break;
 			}
