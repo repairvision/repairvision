@@ -1,4 +1,4 @@
-package org.sidiff.revision.configuration.test;
+package org.sidiff.revision.configuration.test.data;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -3,6 +3,7 @@ package org.sidiff.revision.compare.matching.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.sidiff.revision.compare.matching.Candidate;
 import org.sidiff.revision.compare.matching.CandidateList;
 import org.sidiff.revision.compare.matching.Candidates;
 import org.sidiff.revision.configuration.Configurable;
@@ -24,9 +25,14 @@ public class CandidatesImpl implements Configurable, Candidates {
 	protected Factories factories;
 	
 	/**
-	 * Cache the candidate factory for efficiency.
+	 * Cache the candidate list factory for efficiency.
 	 */
 	protected Factory<CandidateList> factoryCandidateList;
+	
+	/**
+	 * Cache the candidate factory for efficiency.
+	 */
+	protected Factory<Candidate> factoryCandidate;
 
 	/**
 	 * The model containing the candidate elements.
@@ -50,6 +56,7 @@ public class CandidatesImpl implements Configurable, Candidates {
 		configure(config);
 		
 		this.factoryCandidateList = factories.get(CandidateList.class);
+		this.factoryCandidate = factories.get(Candidate.class);
 		this.emptyCandidateList = factoryCandidateList.create();
 	}
 
@@ -59,7 +66,7 @@ public class CandidatesImpl implements Configurable, Candidates {
 	
 	@Override
 	public void configureDefaultFactories(Configuration config) {
-		factories.set(CandidateList.class, () -> new CadidateListImpl());
+		factories.set(CandidateList.class, () -> new CadidateListImpl(() -> new CandidateImpl()));
 	}
 
 	public void init(ModelASG model) {
@@ -81,7 +88,10 @@ public class CandidatesImpl implements Configurable, Candidates {
 			this.candidates.put(key, candidates);
 		}
 
-		candidates.add(element);
+		Candidate candidate = factoryCandidate.create();
+		candidate.setElement(element);
+		
+		candidates.add(candidate);
 	}
 
 

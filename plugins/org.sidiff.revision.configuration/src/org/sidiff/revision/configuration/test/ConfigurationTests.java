@@ -11,7 +11,11 @@ import org.sidiff.revision.configuration.annotations.ConfigField;
 import org.sidiff.revision.configuration.annotations.ConfigSettings;
 import org.sidiff.revision.configuration.impl.ConfigurationImpl;
 import org.sidiff.revision.configuration.impl.SettingsImpl;
-import org.sidiff.revision.configuration.test.ConfigurableA.Properties;
+import org.sidiff.revision.configuration.test.data.ConfigurableA;
+import org.sidiff.revision.configuration.test.data.ConfigurableB;
+import org.sidiff.revision.configuration.test.data.ConfigurableC;
+import org.sidiff.revision.configuration.test.data.ConfigurableD;
+import org.sidiff.revision.configuration.test.data.ConfigurableA.Properties;
 import org.sidiff.revision.configuration.util.ConfigUtil;
 
 /**
