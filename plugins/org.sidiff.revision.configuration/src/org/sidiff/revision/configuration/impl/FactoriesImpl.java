@@ -1,12 +1,12 @@
 package org.sidiff.revision.configuration.impl;
 
-import java.beans.Expression;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.sidiff.revision.configuration.Factories;
+import org.sidiff.revision.configuration.Factory;
 
 /**
  * A (insertion-ordered) map based factory settings implementation.
@@ -15,7 +15,7 @@ import org.sidiff.revision.configuration.Factories;
  */
 public class FactoriesImpl implements Factories {
 
-	private Map<Class<?>, Class<?>> factories;
+	private Map<Class<?>, Factory<?>> factories;
 
 	@Override
 	public Set<Class<?>> factories() {
@@ -28,38 +28,39 @@ public class FactoriesImpl implements Factories {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> Class<? extends T> get(Class<T> type) {
+	public <T> Factory<T> get(Class<T> type) {
 		if (factories == null) {
 			return null;
 		} else {
-			return (Class<? extends T>) getFactories().get(type);
-		}
-	}
-
-	@Override
-	public Class<?> set(Class<?> type, Class<?> binding) {
-		if (binding == null) {
-			return getFactories().remove(type);
-		} else {
-			return getFactories().put(type, binding);
+			return (Factory<T>) getFactories().get(type);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T create(Class<T> type, Object... constructorArguments) {
-		try {
-			return (T) new Expression(get(type), "new", constructorArguments).getValue();
-		} catch (Exception e) {
-			e.printStackTrace();
+	public <T> Factory<T> set(Class<T> type, Factory<T> factory) {
+		if (factory == null) {
+			return (Factory<T>) getFactories().remove(type);
+		} else {
+			return (Factory<T>) getFactories().put(type, factory);
 		}
-		return null;
 	}
 
-	private Map<Class<?>, Class<?>> getFactories() {
+	private Map<Class<?>, Factory<?>> getFactories() {
 		if (factories == null) {
 			this.factories = new LinkedHashMap<>();
 		}
 		return factories;
+	}
+
+	@Override
+	public <T> T create(Class<T> type) {
+		Factory<T> factory = get(type);
+		
+		if (factory != null) {
+			return factory.create();
+		} else {
+			return null;
+		}
 	}
 }
