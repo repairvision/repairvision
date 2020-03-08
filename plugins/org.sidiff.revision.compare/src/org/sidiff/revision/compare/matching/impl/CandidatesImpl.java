@@ -66,7 +66,7 @@ public class CandidatesImpl implements Configurable, Candidates {
 	
 	@Override
 	public void configureDefaultFactories(Configuration config) {
-		factories.set(CandidateList.class, () -> new CadidateListImpl(() -> new CandidateImpl()));
+		factories.set(CandidateList.class, () -> new CandidateListImpl(() -> new CandidateImpl()));
 	}
 
 	public void init(ModelASG model) {

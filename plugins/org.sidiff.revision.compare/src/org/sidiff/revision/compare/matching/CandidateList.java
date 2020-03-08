@@ -1,5 +1,9 @@
 package org.sidiff.revision.compare.matching;
 
+import java.util.Iterator;
+
+import org.sidiff.revision.compare.MatchExists;
+
 /**
  * A list of candidates that are unmachted.
  * 
@@ -22,7 +26,7 @@ public interface CandidateList extends Iterable<Candidate> {
 	 * @return The element wrapped as candidate.
 	 */
 	Candidate add(Object element);
-	
+
 	/**
 	 * @param candidate A candidate representing an element.
 	 * @return The element wrapped as candidate.
@@ -35,10 +39,10 @@ public interface CandidateList extends Iterable<Candidate> {
 	 * @return The element wrapped as candidate.
 	 */
 	Candidate addBefore(Object element, Candidate contained);
-	
+
 	/**
 	 * @param newCandidate A candidate representing an element.
-	 * @param contained A contained element as candidate (after).
+	 * @param contained    A contained element as candidate (after).
 	 * @return The element wrapped as candidate.
 	 */
 	Candidate addBefore(Candidate newCandidate, Candidate contained);
@@ -48,4 +52,14 @@ public interface CandidateList extends Iterable<Candidate> {
 	 * @return {@code true} if an element was removed.
 	 */
 	boolean remove(Candidate candidate);
+
+	/**
+	 * Iterator that only return unmatched candidates.
+	 * 
+	 * @param match       To check for already matched elements.
+	 * @param synchronize {@code true} to remove already matched elements during the
+	 *                    iteration on the candidate list.
+	 * @return An iterator over unmatched candidates.
+	 */
+	Iterator<Candidate> iterator(MatchExists match, boolean synchronize);
 }
