@@ -10,7 +10,7 @@ import java.util.Iterator;
 import org.junit.Test;
 import org.sidiff.revision.compare.matching.Candidate;
 import org.sidiff.revision.compare.matching.CandidateList;
-import org.sidiff.revision.compare.matching.impl.CadidateListImpl;
+import org.sidiff.revision.compare.matching.impl.CandidateListImpl;
 import org.sidiff.revision.compare.matching.impl.CandidateImpl;
 import org.sidiff.revision.configuration.Factory;
 
@@ -24,7 +24,7 @@ public class CandidateListTests {
 	public Factory<CandidateList> factoryCandidateList;
 
 	public CandidateListTests() {
-		this.factoryCandidateList = () -> new CadidateListImpl(() -> new CandidateImpl());
+		this.factoryCandidateList = () -> new CandidateListImpl(() -> new CandidateImpl());
 	}
 	
 	@Test
