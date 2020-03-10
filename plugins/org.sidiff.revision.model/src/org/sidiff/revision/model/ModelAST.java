@@ -10,11 +10,21 @@ import java.util.Iterator;
 public interface ModelAST {
 
 	/**
+	 * @return The containing collection of models.
+	 */
+	ModelSet getModelSet();
+	
+	/**
+	 * @return The root element of the AST.
+	 */
+	Object getRoot();
+	
+	/**
 	 * @param element A model element.
 	 * @return The child elements of the given element in the abstract syntax tree;
 	 *         or <code>null</code>
 	 */
-	Iterator<Object> children(Object element);
+	Iterator<? extends Object> children(Object element);
 
 	/**
 	 * @param element A model element.
