@@ -3,12 +3,12 @@ import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.getChange;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isChange;
-import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isContext;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isCreate;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isDelete;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isEditCondition;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isPost;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isPre;
+import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isPreserve;
 import static org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil.isRequire;
 import static org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil.isUnmodifiable;
 
@@ -75,11 +75,11 @@ public class UnfulfillableConditionsFilter implements IEditRuleFilter {
 				} else if (isChange(eoEdge)) {
 					
 					// Changes only between context nodes or nodes of the same change!
-					if (!isContext(eoEdge.getSource()) && !getChange(eoEdge.getSource()).equals(getChange(eoEdge))) {
+					if (!isPreserve(eoEdge.getSource()) && !getChange(eoEdge.getSource()).equals(getChange(eoEdge))) {
 						return false;
 					}
 					
-					if (!isContext(eoEdge.getTarget()) && !getChange(eoEdge.getTarget()).equals(getChange(eoEdge))) {
+					if (!isPreserve(eoEdge.getTarget()) && !getChange(eoEdge.getTarget()).equals(getChange(eoEdge))) {
 						return false;
 					}
 				}

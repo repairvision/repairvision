@@ -120,7 +120,7 @@ public class ModelCompletionProposalUtil {
 
 	public static List<GraphElementExtension> getSubGraphContext(SubGraph subGraph) {
 		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
-			if (HenshinProfileUtil.isContext(annotatedSubGraph)) {
+			if (HenshinProfileUtil.isPreserve(annotatedSubGraph)) {
 				return annotatedSubGraph.getElements();
 			}
 		}

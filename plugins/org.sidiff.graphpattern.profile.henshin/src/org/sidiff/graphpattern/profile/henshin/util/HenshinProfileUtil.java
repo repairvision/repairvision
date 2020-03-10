@@ -166,7 +166,7 @@ public class HenshinProfileUtil {
 		return element.getStereotypes().contains(create);
 	}
 	
-	public static boolean isContext(Extendable element) {
+	public static boolean isPreserve(Extendable element) {
 		return element.getStereotypes().contains(preserve);
 	}
 

@@ -221,14 +221,14 @@ public class DecomposingEditRules {
 		for (NodePattern basicNode : basicToComplexMatch.keySet()) {
 			if (HenshinProfileUtil.isChange(basicNode)) {
 				++changeSize;
-			} else if (HenshinProfileUtil.isContext(basicNode)) {
+			} else if (HenshinProfileUtil.isPreserve(basicNode)) {
 				++contextSize;
 			}
 			
 			for (EdgePattern basicEdge : basicNode.getOutgoings()) {
 				if (HenshinProfileUtil.isChange(basicEdge)) {
 					++changeSize;
-				} else if (HenshinProfileUtil.isContext(basicEdge)) {
+				} else if (HenshinProfileUtil.isPreserve(basicEdge)) {
 					++contextSize;
 				}
 			}
@@ -364,7 +364,7 @@ public class DecomposingEditRules {
 				SubGraph using = null;
 				
 				for (SubGraph basicRuleNodes : complexRuleNode.getSubgraphs()) {
-					if (HenshinProfileUtil.isContext(basicRuleNodes)) {
+					if (HenshinProfileUtil.isPreserve(basicRuleNodes)) {
 						using = (SubGraph) basicRuleNodes.eContainer();
 					} else if (HenshinProfileUtil.isChange(basicRuleNodes)) {
 						changing = (SubGraph) basicRuleNodes.eContainer();

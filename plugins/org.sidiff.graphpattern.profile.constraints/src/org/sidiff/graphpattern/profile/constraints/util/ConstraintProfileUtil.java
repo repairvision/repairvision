@@ -17,33 +17,33 @@ public class ConstraintProfileUtil {
 
 	public static void removeNAC(GraphPattern constraint) {
 		for (NodePattern node : new ArrayList<>(constraint.getNodes())) {
-			
+
 			for (EdgePattern edge : new ArrayList<>(node.getOutgoings())) {
 				if (edge.getStereotypes().contains(not)) {
 					node.removeEdge(edge);
 				}
 			}
-			
+
 			for (AttributePattern attribute : new ArrayList<>(node.getAttributes())) {
 				if (attribute.getStereotypes().contains(not)) {
 					EcoreUtil.remove(attribute);
 				}
 			}
-			
+
 			if (node.getStereotypes().contains(not)) {
 				EcoreUtil.remove(node);
 			}
 		}
 	}
-	
+
 	public static boolean isCondition(GraphElement graphElement) {
 		return isNot(graphElement) || isExists(graphElement) || isForAll(graphElement);
 	}
-	
+
 	public static boolean isPositiveCondition(GraphElement graphElement) {
 		return isExists(graphElement) || isForAll(graphElement);
 	}
-	
+
 	public static boolean isNegativeCondition(GraphElement graphElement) {
 		return isNot(graphElement);
 	}

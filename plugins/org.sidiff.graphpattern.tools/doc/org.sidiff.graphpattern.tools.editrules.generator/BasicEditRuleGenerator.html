@@ -23,7 +23,7 @@
   <tr>
     <td>&lt;&lt;not&gt;&gt;</td>
     <td>&lt;&lt;?&gt;&gt;</td>
-    <td>&lt;&lt;forbid (precondition)&gt;&gt; + &lt;create&gt;&gt;</td>
+    <td>&lt;&lt;forbid (precondition)&gt;&gt; and &lt;&lt;create&gt;&gt;</td>
     <td>not supported (1)</td>
   </tr>
   <tr>
@@ -65,11 +65,12 @@
   <tr>
     <td>&lt;&lt;exists&gt;&gt;</td>
     <td>&lt;&lt;exists&gt;&gt;</td>
-    <td>&lt;&lt;require&gt;&gt; or &lt;&lt;preserve&gt;&gt; (with incident changes)</td>
-    <td>&nbsp;</td>
+    <td>&lt;&lt;preserve&gt;&gt;</td>
+    <td>(3)</td>
   </tr>
 </table>
 <p>(1) Currently only mappings are supported that lead to &lt;&lt;preserve&gt;&gt; nodes in the edit rule.</p>
 <p>(2) &lt;&lt;not&gt;&gt; means the element is not existing, &lt;&lt;exists&gt;&gt; the element already exists (without further modifications), it follows a mapping is not possible.</p>
+<p>(3) Overlapping of pre- and post-condition graph, which needs a context node in the LHS.</p>
 </body>
 </html>

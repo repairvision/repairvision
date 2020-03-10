@@ -197,7 +197,7 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 
 	protected NodePattern getNodeMatch(NodePattern source, GraphType graphType) {
 		return (graphType.equals(GraphType.PRE)) 
-				? getNodeMatchInToGraph(source) 
+				? getNodeMatchInToGraph(source)
 				: getNodeMatchInFromGraph(source);
 	}
 	

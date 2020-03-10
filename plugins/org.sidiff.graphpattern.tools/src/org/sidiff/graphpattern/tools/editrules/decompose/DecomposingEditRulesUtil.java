@@ -86,7 +86,7 @@ public class DecomposingEditRulesUtil {
 	
 	public static List<GraphElement> getSubGraphContext(SubGraph subGraph) {
 		for (SubGraph annotatedSubGraph : subGraph.getSubgraphs()) {
-			if (HenshinProfileUtil.isContext(annotatedSubGraph)) {
+			if (HenshinProfileUtil.isPreserve(annotatedSubGraph)) {
 				return annotatedSubGraph.getElements();
 			}
 		}
