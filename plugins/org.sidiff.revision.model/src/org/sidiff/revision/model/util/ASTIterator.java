@@ -9,7 +9,7 @@ public class ASTIterator implements Iterator<Object> {
 
 	private ModelAST modelAST;
 	
-	private LinkedList<Iterator<Object>> trace = new LinkedList<>();
+	private LinkedList<Iterator<?>> trace = new LinkedList<>();
 	
 	public ASTIterator(ModelAST modelAST) {
 		this.modelAST = modelAST;
@@ -32,7 +32,7 @@ public class ASTIterator implements Iterator<Object> {
 		}
 		
 		// DFS:
-		Iterator<Object> children = modelAST.children(next);
+		Iterator<?> children = modelAST.children(next);
 		
 		if (children != null) {
 			trace.add(children);
