@@ -20,7 +20,7 @@ public class CSPSolver<R, D> implements ICSPSolver<R, D> {
 	
 	protected Stack<IVariable<R, D>> solutionVariables;
 	
-	private boolean checkForMaximumSolution;
+	private boolean checkForMaximumSolution;	// derived from variables
 	
 	private int droppedSolutions = 0;
 	
@@ -145,7 +145,7 @@ public class CSPSolver<R, D> implements ICSPSolver<R, D> {
 		// Check that no removed variable can be assigned with a value:
 		if (checkForMaximumSolution) {
 			for (IVariable<R, D> removedVariable : removedVariables) {
-				if (removedVariable.isAssignable()) {
+				if (removedVariable.isMaximizeSolution() && removedVariable.isAssignable()) {
 					return false;
 				}
 			}

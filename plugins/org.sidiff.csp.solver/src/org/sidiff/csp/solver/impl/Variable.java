@@ -34,6 +34,7 @@ public class Variable<R, D> implements IVariable<R, D> {
 		this.subject = subject;
 		this.domain = domain;
 		this.removable = removable;
+		this.maximize = maximize;
 	}
 
 	@Override

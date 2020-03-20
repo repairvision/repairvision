@@ -30,6 +30,9 @@ public class TransformationEditRuleConstructor implements IEditRuleConstructor {
 	public void construct(Pattern pattern, List<IEditRuleFilter> filter, EditRuleCollector editRules) {
 		List<GraphPattern> allConstraints = pattern.getAllGraphPatterns();
 		
+		// TODO[PERFORMANCE]: As long as it makes no difference to match A,B or B,A we
+		// could also just process all pair instead of the cross-product of all patterns.
+
 		// Generate edit rules:
 		// Consider cross-product of all graph patterns:
 		for (GraphPattern preConstraint : allConstraints) {
@@ -49,8 +52,8 @@ public class TransformationEditRuleConstructor implements IEditRuleConstructor {
 //				}
 				
 				if ((preConstraint != postConstraint) && (parentConstraint(preConstraint) == parentConstraint(postConstraint))) {
-					int preSize = GraphPatternUtil.getPatternSize(preConstraint.getNodes());
-					int postSize = GraphPatternUtil.getPatternSize(postConstraint.getNodes());
+					int preSize = GraphPatternUtil.count(preConstraint.getNodes(), n -> !isNegativeCondition(n));
+					int postSize = GraphPatternUtil.count(postConstraint.getNodes(), n -> !isNegativeCondition(n));
 
 					// NOTE: Find match: 
 					//       - Pre in Post or Post in Pre
@@ -58,7 +61,8 @@ public class TransformationEditRuleConstructor implements IEditRuleConstructor {
 					//       - keep match with minimal graph edit distance
 					//       - do not consider negative condition nodes in matching
 					IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(preConstraint.getNodes().size());
-					problem.setMinimumSolutionSize(Math.min(preSize, postSize)); // NOTE: At least one of both patterns need to be matched completely.
+					problem.setMinimumSolutionSize(Math.min(preSize, postSize)); 	// NOTE: At least one of both patterns need to be matched completely.
+//					problem.setMinimumSolutionSize(1);								// NOTE: MCS matching, with minimum of 1
 					problem.setMaximumSolutionSize(Math.max(preSize, postSize));
 					problem.setSearchInjectiveSolutions(true);
 
@@ -67,7 +71,11 @@ public class TransformationEditRuleConstructor implements IEditRuleConstructor {
 							IDomain<NodePattern> domain = AbstractGraphPatternMatchings.getDomain(preNode, 
 									postConstraint.getNodes(), 
 									n -> !isNegativeCondition(n));
-							IVariable<NodePattern, NodePattern> variable = new Variable<>(preNode, domain, true, true);
+							IVariable<NodePattern, NodePattern> variable = new Variable<>(
+									preNode, 
+									domain, 
+									domain.isEmpty(),	// optimization - search maximum common set - in general true
+									true);
 							problem.addVariable(variable);
 						}
 					}

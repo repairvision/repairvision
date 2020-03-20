@@ -31,8 +31,8 @@ public class SetEdgePatternTypeCommand extends CompoundCommand {
 			} else {
 				// Has no opposite type:
 				if (edge.getOpposite().getType() != type) {
-					// i.e.: edge.getOpposite().setType(value);
-					append(new SetCommand(domain, edge.getOpposite(), feature, type));
+					// i.e.: edge.getOpposite().setType(null);
+					append(new SetCommand(domain, edge.getOpposite(), feature, null));
 				}
 			}
 		}

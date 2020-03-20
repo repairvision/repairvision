@@ -89,9 +89,10 @@ public abstract class BasicEditRuleGenerator {
 		for (EdgePattern preEdge : preNode.getOutgoings()) {
 			EdgePattern postEdge = (postNode != null) ? getEdgeMatchInToGraph(preEdge, postNode.getOutgoings()) : null;
 
-			if (isUnmodifiable(preEdge) || isConditionMatch(preEdge, postEdge)) {
+			if (isContext(preEdge, postEdge)) {
+				generateContext(preEdge, postEdge);
+			} else if (isCondition(preEdge) || isUnmodifiable(preEdge)) {
 
-				// << forbid/require >> edge:
 				// NOTE: Consider unmodifiable without stereotyps as 'exists'.
 				if (isExists(preEdge) || preEdge.getStereotypes().isEmpty()) {
 					generateRequirePrecondition(preEdge);
@@ -99,13 +100,7 @@ public abstract class BasicEditRuleGenerator {
 					generateForbidPrecondition(preEdge);
 				}
 			} else {
-
-				// << delete/preserve >> edge:
-				if (postEdge == null) {
-					generateDelete(preEdge);
-				} else {
-					generateContext(preEdge, postEdge);
-				}
+				generateDelete(preEdge);
 			}
 		}
 
@@ -114,29 +109,25 @@ public abstract class BasicEditRuleGenerator {
 			AttributePattern postAttribute = (postNode != null)
 					? getAttributeMatch(preAttribute, postNode.getAttributes(), false)
 					: null;
+					
+			if (isContext(preAttribute, postAttribute)) {			// mapped attribute
+				generateContext(preAttribute, postAttribute);
+			} else if (isModify(preAttribute, postAttribute)) {		// mapped attribute or no post-attribute
+				if (postAttribute == null) {
+					// NOTE: The pre-value can be set to any post-value.
+					generateModify(preAttribute, generateParameterName(preAttribute));
+				} else {
+					// NOTE: If the LHS requires some attribute value and the RHS not
+					// then the RHS can be set to any value (x -> parameter).
+					generateModify(preAttribute, postAttribute.getValue());
+				}
+			} else if (isCondition(preAttribute) || isUnmodifiable(preAttribute)) {
 
-			if (isUnmodifiable(preAttribute) || isConditionMatch(preAttribute, postAttribute)) {
-
-				// << forbid/require >> attribute:
 				// NOTE: Consider unmodifiable without stereotyps as 'exists'.
 				if (isExists(preAttribute) || preAttribute.getStereotypes().isEmpty()) {
 					generateRequirePrecondition(preAttribute);
 				} else if (isNot(preAttribute)) {
 					generateForbidPrecondition(preAttribute);
-				}
-			} else {
-
-				// << preserve/modify >> attribute:
-				if (postAttribute == null) {
-					generateModify(preAttribute, generateParameterName(preAttribute));
-				} else {
-					if (preAttribute.getValue().equals(postAttribute.getValue())) {
-						generateContext(preAttribute, postAttribute);
-					} else {
-						// NOTE: If the LHS requires some attribute value and the RHS not
-						// then the RHS can be set to any value (x -> parameter).
-						generateModify(preAttribute, postAttribute.getValue());
-					}
 				}
 			}
 		}
@@ -457,6 +448,54 @@ public abstract class BasicEditRuleGenerator {
 		return false;		
 	}
 	
+	protected boolean isContext(EdgePattern preEdge, EdgePattern postEdge) {
+
+		if (!isNegativeCondition(preEdge) && !isNegativeCondition(postEdge)) {
+			if (!isUnmodifiable(preEdge) && !isUnmodifiable(postEdge)) {	// interpret as condition
+				
+				// is mapped edge?
+				if ((preEdge != null) && (postEdge != null)) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	protected boolean isContext(AttributePattern preAttribute, AttributePattern postAttribute) {
+
+		if (!isNegativeCondition(preAttribute) && !isNegativeCondition(postAttribute)) {
+			if (!isUnmodifiable(preAttribute) && !isUnmodifiable(postAttribute)) {	// interpret as condition
+				
+				// is mapped attribute?
+				if ((preAttribute != null) && (postAttribute != null)) {
+					if (preAttribute.getValue().equals(postAttribute.getValue())) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	protected boolean isModify(AttributePattern preAttribute, AttributePattern postAttribute) {
+
+		if (!isNegativeCondition(preAttribute) && !isNegativeCondition(postAttribute)) {
+			
+			if (preAttribute != null) {
+				
+				// NOTE: no post-attribute allows any post-value => introduce parameter.
+				if ((postAttribute == null) || !preAttribute.getValue().equals(postAttribute.getValue())) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
 	protected boolean isCondition(GraphElement graphElement) {
 		return (graphElement != null) && ConstraintProfileUtil.isCondition(graphElement);
 	}
@@ -481,13 +520,4 @@ public abstract class BasicEditRuleGenerator {
 		return (attribute != null) && GraphPatternGeneratorUtil.isUnmodifiable(attribute);
 	}
 
-	/**
-	 * @param preElement  A graph element or <code>null</code>.
-	 * @param postElement A graph element or <code>null</code>.
-	 * @return <code>true</code> if both given nodes (one node can be
-	 *         <code>null</code>) are conditions; <code>false</code> otherwise.
-	 */
-	protected boolean isConditionMatch(GraphElement preElement, GraphElement postElement) {
-		return ((preElement == null) || isCondition(preElement)) && ((postElement == null) || isCondition(postElement));
-	}
 }

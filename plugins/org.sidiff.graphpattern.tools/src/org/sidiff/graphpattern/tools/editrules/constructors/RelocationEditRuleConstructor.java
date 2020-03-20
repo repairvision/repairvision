@@ -148,12 +148,11 @@ public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 		for (NodePattern contextNode : contextNodes) {
 			NodePatternDomain domain = new NodePatternDomain(
 					contextNode, 
-					contextNodes, 
+					Collections.singletonList(contextNode), 		// NOTE: map node only to itself instead of all contextNodes 
 					EdgeMatching.TOTAL_BIJECTIVE,
 					EdgeMatching.TOTAL_BIJECTIVE, 
 					(edge) -> relocatableEdges.contains(edge));
-			Variable<NodePattern, NodePattern> variable = new NodePatternVariable(contextNode, domain, true, false,
-					false);
+			Variable<NodePattern, NodePattern> variable = new NodePatternVariable(contextNode, domain, true, false, false);
 			problem.addVariable(variable);
 		}
 
@@ -167,12 +166,11 @@ public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 		for (NodePattern contentNode : contentNodes) {
 			NodePatternDomain domain = new NodePatternDomain(
 					contentNode,
-					Collections.singletonList(contentNode), // NOTE: use pre-match instead of all contentNodes 
+					Collections.singletonList(contentNode),			 // NOTE: use pre-match instead of all contentNodes 
 					EdgeMatching.TOTAL_BIJECTIVE,
 					EdgeMatching.TOTAL_BIJECTIVE, 
 					(edge) -> relocatableEdges.contains(edge));
-			Variable<NodePattern, NodePattern> variable = new NodePatternVariable(contentNode, domain, false, true,
-					false);
+			Variable<NodePattern, NodePattern> variable = new NodePatternVariable(contentNode, domain, false, true, false);
 			problem.addVariable(variable);
 		}
 
