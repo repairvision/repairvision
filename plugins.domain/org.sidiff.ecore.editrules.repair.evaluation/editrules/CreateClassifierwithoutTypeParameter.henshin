@@ -1,37 +1,33 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_1NxqQB6FEeq3H7jqxYh1TA" name="Create: Classifier without Type-Parameter" description="Create: Classifier without Type-Parameter">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_1NxqQR6FEeq3H7jqxYh1TA" name="mainUnit" subUnits="_1NxqRB6FEeq3H7jqxYh1TA">
-    <parameters xmi:id="_1NxqQh6FEeq3H7jqxYh1TA" name="toClassifierWithoutTypeParameter" kind="IN"/>
-    <parameterMappings xmi:id="_1NxqQx6FEeq3H7jqxYh1TA" source="_1NxqQh6FEeq3H7jqxYh1TA" target="_1NxqRR6FEeq3H7jqxYh1TA"/>
-  </units>
-  <units xsi:type="henshin:Rule" xmi:id="_1NxqRB6FEeq3H7jqxYh1TA" name="Create: Classifier without Type-Parameter">
-    <parameters xmi:id="_1NxqRR6FEeq3H7jqxYh1TA" name="toClassifierWithoutTypeParameter" kind="IN"/>
-    <lhs xmi:id="_1NxqRh6FEeq3H7jqxYh1TA" name="Lhs">
-      <nodes xmi:id="_1NxqRx6FEeq3H7jqxYh1TA" name="toClassifierWithoutTypeParameter">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Do2lgG3fEeq8HvZ3P3dIrg" name="Create: Classifier without Type-Parameter" description="Create: Classifier without Type-Parameter">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Do2lgW3fEeq8HvZ3P3dIrg" name="mainUnit" subUnits="_Do2lgm3fEeq8HvZ3P3dIrg"/>
+  <units xsi:type="henshin:Rule" xmi:id="_Do2lgm3fEeq8HvZ3P3dIrg" name="Create: Classifier without Type-Parameter">
+    <lhs xmi:id="_Do2lg23fEeq8HvZ3P3dIrg" name="Lhs">
+      <nodes xmi:id="_Do2lhG3fEeq8HvZ3P3dIrg" name="toClassifierWithoutTypeParameter">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
       </nodes>
-      <formula xsi:type="henshin:Not" xmi:id="_1NxqSB6FEeq3H7jqxYh1TA">
-        <child xsi:type="henshin:NestedCondition" xmi:id="_1NxqSR6FEeq3H7jqxYh1TA">
-          <conclusion xmi:id="_1NxqSh6FEeq3H7jqxYh1TA" name="post">
-            <nodes xmi:id="_1NxqSx6FEeq3H7jqxYh1TA" name="postT" incoming="_1NxqTR6FEeq3H7jqxYh1TA">
+      <formula xsi:type="henshin:Not" xmi:id="_Do2lhW3fEeq8HvZ3P3dIrg">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_Do2lhm3fEeq8HvZ3P3dIrg">
+          <conclusion xmi:id="_Do2lh23fEeq8HvZ3P3dIrg" name="post">
+            <nodes xmi:id="_Do2liG3fEeq8HvZ3P3dIrg" name="postT" incoming="_Do2lim3fEeq8HvZ3P3dIrg">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
             </nodes>
-            <nodes xmi:id="_1NxqTB6FEeq3H7jqxYh1TA" name="toClassifierWithoutTypeParameter" outgoing="_1NxqTR6FEeq3H7jqxYh1TA">
+            <nodes xmi:id="_Do2liW3fEeq8HvZ3P3dIrg" name="toClassifierWithoutTypeParameter" outgoing="_Do2lim3fEeq8HvZ3P3dIrg">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
             </nodes>
-            <edges xmi:id="_1NxqTR6FEeq3H7jqxYh1TA" source="_1NxqTB6FEeq3H7jqxYh1TA" target="_1NxqSx6FEeq3H7jqxYh1TA">
+            <edges xmi:id="_Do2lim3fEeq8HvZ3P3dIrg" source="_Do2liW3fEeq8HvZ3P3dIrg" target="_Do2liG3fEeq8HvZ3P3dIrg">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
             </edges>
           </conclusion>
-          <mappings xmi:id="_1NxqTh6FEeq3H7jqxYh1TA" origin="_1NxqRx6FEeq3H7jqxYh1TA" image="_1NxqTB6FEeq3H7jqxYh1TA"/>
+          <mappings xmi:id="_Do2li23fEeq8HvZ3P3dIrg" origin="_Do2lhG3fEeq8HvZ3P3dIrg" image="_Do2liW3fEeq8HvZ3P3dIrg"/>
         </child>
       </formula>
     </lhs>
-    <rhs xmi:id="_1NxqTx6FEeq3H7jqxYh1TA" name="Rhs">
-      <nodes xmi:id="_1NxqUB6FEeq3H7jqxYh1TA" name="toClassifierWithoutTypeParameter">
+    <rhs xmi:id="_Do2ljG3fEeq8HvZ3P3dIrg" name="Rhs">
+      <nodes xmi:id="_Do2ljW3fEeq8HvZ3P3dIrg" name="toClassifierWithoutTypeParameter">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
       </nodes>
     </rhs>
-    <mappings xmi:id="_1NxqUR6FEeq3H7jqxYh1TA" origin="_1NxqRx6FEeq3H7jqxYh1TA" image="_1NxqUB6FEeq3H7jqxYh1TA"/>
+    <mappings xmi:id="_Do2ljm3fEeq8HvZ3P3dIrg" origin="_Do2lhG3fEeq8HvZ3P3dIrg" image="_Do2ljW3fEeq8HvZ3P3dIrg"/>
   </units>
 </henshin:Module>

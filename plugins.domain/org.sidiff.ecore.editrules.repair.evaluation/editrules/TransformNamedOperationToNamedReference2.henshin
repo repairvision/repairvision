@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_C2YmwG3fEeq8HvZ3P3dIrg" name="Transform: Named Operation - To - Named Reference (2)" description="Transform: Named Operation - To - Named Reference (2)">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_C2YmwW3fEeq8HvZ3P3dIrg" name="mainUnit" subUnits="_C2YmzG3fEeq8HvZ3P3dIrg">
+    <parameters xmi:id="_C2Ymwm3fEeq8HvZ3P3dIrg" name="type" kind="IN"/>
+    <parameters xmi:id="_C2Ymw23fEeq8HvZ3P3dIrg" name="oldOperation" kind="IN"/>
+    <parameters xmi:id="_C2YmxG3fEeq8HvZ3P3dIrg" name="operationName" kind="IN"/>
+    <parameters xmi:id="_C2YmxW3fEeq8HvZ3P3dIrg" name="toContainerClass" kind="IN"/>
+    <parameters xmi:id="_C2Ymxm3fEeq8HvZ3P3dIrg" name="referenceName" kind="IN"/>
+    <parameterMappings xmi:id="_C2Ymx23fEeq8HvZ3P3dIrg" source="_C2Ymwm3fEeq8HvZ3P3dIrg" target="_C2YmzW3fEeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_C2YmyG3fEeq8HvZ3P3dIrg" source="_C2Ymw23fEeq8HvZ3P3dIrg" target="_C2Ymzm3fEeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_C2YmyW3fEeq8HvZ3P3dIrg" source="_C2YmxG3fEeq8HvZ3P3dIrg" target="_C2Ymz23fEeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_C2Ymym3fEeq8HvZ3P3dIrg" source="_C2YmxW3fEeq8HvZ3P3dIrg" target="_C2Ym0G3fEeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_C2Ymy23fEeq8HvZ3P3dIrg" source="_C2Ymxm3fEeq8HvZ3P3dIrg" target="_C2Ym0W3fEeq8HvZ3P3dIrg"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_C2YmzG3fEeq8HvZ3P3dIrg" name="Transform: Named Operation - To - Named Reference (2)">
+    <parameters xmi:id="_C2YmzW3fEeq8HvZ3P3dIrg" name="type" kind="IN"/>
+    <parameters xmi:id="_C2Ymzm3fEeq8HvZ3P3dIrg" name="oldOperation" kind="IN"/>
+    <parameters xmi:id="_C2Ymz23fEeq8HvZ3P3dIrg" name="operationName" kind="IN"/>
+    <parameters xmi:id="_C2Ym0G3fEeq8HvZ3P3dIrg" name="toContainerClass" kind="IN"/>
+    <parameters xmi:id="_C2Ym0W3fEeq8HvZ3P3dIrg" name="referenceName" kind="IN"/>
+    <lhs xmi:id="_C2Ym0m3fEeq8HvZ3P3dIrg" name="Lhs">
+      <nodes xmi:id="_C2Ym023fEeq8HvZ3P3dIrg" name="type" incoming="_C2Ym2G3fEeq8HvZ3P3dIrg" outgoing="_C2Ym123fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_C2Ym1G3fEeq8HvZ3P3dIrg" name="oldOperation" incoming="_C2Ym123fEeq8HvZ3P3dIrg" outgoing="_C2Ym2G3fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
+        <attributes xmi:id="_C2Ym1W3fEeq8HvZ3P3dIrg" value="operationName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_C2Ym1m3fEeq8HvZ3P3dIrg" name="toContainerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <edges xmi:id="_C2Ym123fEeq8HvZ3P3dIrg" source="_C2Ym023fEeq8HvZ3P3dIrg" target="_C2Ym1G3fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eOperations"/>
+      </edges>
+      <edges xmi:id="_C2Ym2G3fEeq8HvZ3P3dIrg" source="_C2Ym1G3fEeq8HvZ3P3dIrg" target="_C2Ym023fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eContainingClass"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_C2Ym2W3fEeq8HvZ3P3dIrg" name="Rhs">
+      <nodes xmi:id="_C2Ym2m3fEeq8HvZ3P3dIrg" name="type" incoming="_C2Ym4G3fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_C2Ym223fEeq8HvZ3P3dIrg" name="toContainerClass" incoming="_C2Ym323fEeq8HvZ3P3dIrg" outgoing="_C2Ym3m3fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_C2Ym3G3fEeq8HvZ3P3dIrg" name="newReference" incoming="_C2Ym3m3fEeq8HvZ3P3dIrg" outgoing="_C2Ym323fEeq8HvZ3P3dIrg _C2Ym4G3fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_C2Ym3W3fEeq8HvZ3P3dIrg" value="referenceName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_C2Ym3m3fEeq8HvZ3P3dIrg" source="_C2Ym223fEeq8HvZ3P3dIrg" target="_C2Ym3G3fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_C2Ym323fEeq8HvZ3P3dIrg" source="_C2Ym3G3fEeq8HvZ3P3dIrg" target="_C2Ym223fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_C2Ym4G3fEeq8HvZ3P3dIrg" source="_C2Ym3G3fEeq8HvZ3P3dIrg" target="_C2Ym2m3fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_C2Ym4W3fEeq8HvZ3P3dIrg" origin="_C2Ym023fEeq8HvZ3P3dIrg" image="_C2Ym2m3fEeq8HvZ3P3dIrg"/>
+    <mappings xmi:id="_C2Ym4m3fEeq8HvZ3P3dIrg" origin="_C2Ym1m3fEeq8HvZ3P3dIrg" image="_C2Ym223fEeq8HvZ3P3dIrg"/>
+  </units>
+</henshin:Module>

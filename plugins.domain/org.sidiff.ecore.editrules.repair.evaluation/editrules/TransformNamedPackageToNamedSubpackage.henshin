@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_Cylr4G3fEeq8HvZ3P3dIrg" name="Transform: Named Package - To - Named Subpackage" description="Transform: Named Package - To - Named Subpackage">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_Cylr4W3fEeq8HvZ3P3dIrg" name="mainUnit" subUnits="_Cylr7G3fEeq8HvZ3P3dIrg">
+    <parameters xmi:id="_Cylr4m3fEeq8HvZ3P3dIrg" name="subPackage" kind="IN"/>
+    <parameters xmi:id="_Cylr423fEeq8HvZ3P3dIrg" name="packageName" kind="IN"/>
+    <parameters xmi:id="_Cylr5G3fEeq8HvZ3P3dIrg" name="className" kind="IN"/>
+    <parameters xmi:id="_Cylr5W3fEeq8HvZ3P3dIrg" name="fromResource" kind="IN"/>
+    <parameters xmi:id="_Cylr5m3fEeq8HvZ3P3dIrg" name="toContainerPackage" kind="IN"/>
+    <parameterMappings xmi:id="_Cylr523fEeq8HvZ3P3dIrg" source="_Cylr4m3fEeq8HvZ3P3dIrg" target="_Cylr7W3fEeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_Cylr6G3fEeq8HvZ3P3dIrg" source="_Cylr423fEeq8HvZ3P3dIrg" target="_Cylr7m3fEeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_Cylr6W3fEeq8HvZ3P3dIrg" source="_Cylr5G3fEeq8HvZ3P3dIrg" target="_Cylr723fEeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_Cylr6m3fEeq8HvZ3P3dIrg" source="_Cylr5W3fEeq8HvZ3P3dIrg" target="_Cylr8G3fEeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_Cylr623fEeq8HvZ3P3dIrg" source="_Cylr5m3fEeq8HvZ3P3dIrg" target="_Cylr8W3fEeq8HvZ3P3dIrg"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Cylr7G3fEeq8HvZ3P3dIrg" name="Transform: Named Package - To - Named Subpackage">
+    <parameters xmi:id="_Cylr7W3fEeq8HvZ3P3dIrg" name="subPackage" kind="IN"/>
+    <parameters xmi:id="_Cylr7m3fEeq8HvZ3P3dIrg" name="packageName" kind="IN"/>
+    <parameters xmi:id="_Cylr723fEeq8HvZ3P3dIrg" name="className" kind="IN"/>
+    <parameters xmi:id="_Cylr8G3fEeq8HvZ3P3dIrg" name="fromResource" kind="IN"/>
+    <parameters xmi:id="_Cylr8W3fEeq8HvZ3P3dIrg" name="toContainerPackage" kind="IN"/>
+    <lhs xmi:id="_Cylr8m3fEeq8HvZ3P3dIrg" name="Lhs">
+      <nodes xmi:id="_Cylr823fEeq8HvZ3P3dIrg" name="subPackage" incoming="_Cylr923fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+        <attributes xmi:id="_Cylr9G3fEeq8HvZ3P3dIrg" value="packageName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Cylr9W3fEeq8HvZ3P3dIrg" name="fromResource" outgoing="_Cylr923fEeq8HvZ3P3dIrg">
+        <type href="http://www.sidiff.org/graphpattern/1.0#//Resource"/>
+      </nodes>
+      <nodes xmi:id="_Cylr9m3fEeq8HvZ3P3dIrg" name="toContainerPackage">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+      <edges xmi:id="_Cylr923fEeq8HvZ3P3dIrg" source="_Cylr9W3fEeq8HvZ3P3dIrg" target="_Cylr823fEeq8HvZ3P3dIrg">
+        <type href="http://www.sidiff.org/graphpattern/1.0#//Resource/contents"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_Cylr-G3fEeq8HvZ3P3dIrg" name="Rhs">
+      <nodes xmi:id="_Cylr-W3fEeq8HvZ3P3dIrg" name="subPackage" incoming="_Cylr_m3fEeq8HvZ3P3dIrg" outgoing="_Cylr_W3fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+        <attributes xmi:id="_Cylr-m3fEeq8HvZ3P3dIrg" value="className">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Cylr-23fEeq8HvZ3P3dIrg" name="fromResource">
+        <type href="http://www.sidiff.org/graphpattern/1.0#//Resource"/>
+      </nodes>
+      <nodes xmi:id="_Cylr_G3fEeq8HvZ3P3dIrg" name="toContainerPackage" incoming="_Cylr_W3fEeq8HvZ3P3dIrg" outgoing="_Cylr_m3fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+      <edges xmi:id="_Cylr_W3fEeq8HvZ3P3dIrg" source="_Cylr-W3fEeq8HvZ3P3dIrg" target="_Cylr_G3fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eSuperPackage"/>
+      </edges>
+      <edges xmi:id="_Cylr_m3fEeq8HvZ3P3dIrg" source="_Cylr_G3fEeq8HvZ3P3dIrg" target="_Cylr-W3fEeq8HvZ3P3dIrg">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eSubpackages"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Cylr_23fEeq8HvZ3P3dIrg" origin="_Cylr823fEeq8HvZ3P3dIrg" image="_Cylr-W3fEeq8HvZ3P3dIrg"/>
+    <mappings xmi:id="_CylsAG3fEeq8HvZ3P3dIrg" origin="_Cylr9W3fEeq8HvZ3P3dIrg" image="_Cylr-23fEeq8HvZ3P3dIrg"/>
+    <mappings xmi:id="_CylsAW3fEeq8HvZ3P3dIrg" origin="_Cylr9m3fEeq8HvZ3P3dIrg" image="_Cylr_G3fEeq8HvZ3P3dIrg"/>
+  </units>
+</henshin:Module>
