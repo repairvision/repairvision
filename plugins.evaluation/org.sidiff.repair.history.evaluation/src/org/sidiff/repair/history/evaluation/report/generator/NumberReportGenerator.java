@@ -24,8 +24,6 @@ import org.sidiff.validation.constraint.api.ValidationFacade;
 
 public class NumberReportGenerator {
 	
-	private static String PATH_GRAPH_PATTERNS = "/org.sidiff.ecore.editrules.repair.evaluation/patterns/ecore.graphpattern";
-	
 	private static String PATH_EDIT_RULES = "/org.sidiff.ecore.editrules.repair.evaluation/patterns/ecore_editrules.graphpattern";
 	
 	private static Resource DOC_TYPE_RESOURCE_DUMMY = new ResourceImpl();
@@ -38,53 +36,55 @@ public class NumberReportGenerator {
 	
 	/* Latex Commands */
 	
-	public static final String CMD_PROJECT_COUNT = "projectCount";
-	public static final String CMD_MINIMAL_ASG_PATTERN_COUNT = "minimalASGPatternCount";
-	public static final String CMD_TRANSFORMING_EDIT_RULE_COUNT = "transformingEditRuleCount";
-	public static final String CMD_CONSTRAINT_COUNT = "constraintCount";
-	public static final String CMD_OMMITED_WELL_FORMED_CONSTRAINT_COUNT = "ommitedWellFormedConstraintCount";
-	public static final String CMD_OMMITED_DOMAIN_SPECIFIC_CONSTRAINT_COUNT = "ommitedDomainSpecificConstraintCount";
-	public static final String CMD_OBSERVED_SUPPORTED_CONSTRAINT_COUNT = "observedSupportedConstraintCount";
-	public static final String CMD_OLDEST_HISTORY = "oldestHistory";
-	public static final String CMD_NEWEST_HISTORY = "newestHistory";
-	public static final String CMD_ALL_MODEL_HISTORIES = "allModelHistories";
-	public static final String CMD_INCONSISTENT_MODEL_HISTORIES = "inconsistentModelHistories";
-	public static final String CMD_ALL_SOURCE_REVISIONS = "allSourceRevisions";
-	public static final String CMD_ALL_REVISIONS = "allRevisions";
-	public static final String CMD_ALL_EVOLUTION_STEPS = "allEvolutionSteps";
-	public static final String CMD_TOTAL_INCONSISTENCIES = "totalInconsistencies";
-	public static final String CMD_REGEX_INCONSISTENCIES = "regexInconsistencies";
-	public static final String CMD_DOMAIN_SPECIFIC_INCONSISTENCIES = "domainSpecificInconsistencies";
-	public static final String CMD_SUPPORTED_INCONSISTENCIES = "supportedInconsistencies";
-	public static final String CMD_AT_LEAST_ONE_REPAIR_FOUND = "atLeastOneRepairFound";
-	public static final String CMD_PERCENTAGE_COVERED = "percentageCovered";
-	public static final String CMD_PERCENTAGE_UNCOVERED_REGEX = "percentageUncoveredRegEx";
-	public static final String CMD_TOTAL_OBSERVABLE_REPAIRS = "totalObservableRepairs";
-	public static final String CMD_OBSERVABLE_COMPLETION_REPAIRS = "observableCompletionRepairs";
-	public static final String CMD_OBSERVABLE_UNDO_REPAIRS = "observableUndoRepairs";
-	public static final String CMD_NOT_OBSERVABLE_REPAIRS = "notObservableRepairs";
-	public static final String CMD_NOT_OBSERVABLE_MISSING_CPEO = "notObservableMissingCPEO";
-	public static final String CMD_NOT_OBSERVABLE_SUB_RULE_TOO_LARGE = "notObservableSubRuleTooLarge";
-	public static final String CMD_NOT_OBSERVABLE_MISSING_CPEOS_AND_SUB_RULE_TOO_LARGE = "notObservableMissingCPEOsAndSubRuleTooLarge";
-	public static final String CMD_MISSING_CPEOS = "missingCPEOs";
-	public static final String CMD_PERCENTAGE_TOTAL_OBSERVABLE_REPAIRS = "percentageTotalObservableRepairs";
-	public static final String CMD_PERCENTAGE_OBSERVABLE_COMPLETION_REPAIRS = "percentageObservableCompletionRepairs";;
-	public static final String CMD_RANKING_COUNT_FIRST_POSITION = "rankingCountFirstPosition";
-	public static final String CMD_RANKING_COUNT_SECOND_POSITION = "rankingCountSecondPosition";
-	public static final String CMD_INCONSISTENCIES_WITH_TEN_OR_LESS_ALTERNATIVES = "inconsistenciesWithTenOrLessAlternatives";
-	public static final String CMD_AVG_COUNT_OF_UNBOUND_PARAMETERS = "avgCountOfUnboundParameters";
-	public static final String CMD_PERCENTAGE_TOP_RANKING = "percentageTopRanking";
-	public static final String CMD_EXAMPLE_A_RUNTIME_UML = "exampleARuntimeUML";
-	public static final String CMD_EXAMPLE_A_MODEL_SIZE_UML = "exampleAModelSizeUML";
-	public static final String CMD_EXAMPLE_B_RUNTIME_UML = "exampleBRuntimeUML";
-	public static final String CMD_EXAMPLE_B_MODEL_SIZE_UML = "exampleBModelSizeUML";
-	public static final String CMD_EXAMPLE_C_RUNTIME_UML = "exampleCRuntimeUML";
-	public static final String CMD_EXAMPLE_C_VERSION_COUNT_UML = "exampleCVersionCountUML";
-	public static final String CMD_RECOGNITION_RUNTIME_LESS_THEN_ONE_SECOND = "recognitionRuntimeLessThenOneSecond";
-	public static final String CMD_COMPLEMENT_RUNTIME_LOWER_BORDER = "complementRuntimeLowerBorder";
-	public static final String CMD_COMPLEMENT_RUNTIME_UPPER_BORDER = "complementRuntimeUpperBorder";
-	public static final String CMD_EXAMPLE_D_PARAMETER_CLASSES_UML = "exampleDParameterClassesUML";
-	public static final String CMD_EXAMPLE_D_PARAMETER_SUB_CLASSES_UML = "exampleDParameterSubClassesUML";
+	private static final String CMD_PROJECT_COUNT = "projectCount";
+	private static final String CMD_MINIMAL_ASG_PATTERN_COUNT = "minimalASGPatternCount";
+	private static final String CMD_CREATING_DELETING_EDIT_RULE_COUNT = "creatingDeletingEditRuleCount";
+	private static final String CMD_TRANSFORMING_EDIT_RULE_COUNT = "transformingEditRuleCount";
+	private static final String CMD_RECLOCATING_EDIT_RULE_COUNT = "relocatingEditRuleCount";
+	private static final String CMD_CONSTRAINT_COUNT = "constraintCount";
+	private static final String CMD_OMMITED_WELL_FORMED_CONSTRAINT_COUNT = "ommitedWellFormedConstraintCount";
+	private static final String CMD_OMMITED_DOMAIN_SPECIFIC_CONSTRAINT_COUNT = "ommitedDomainSpecificConstraintCount";
+	private static final String CMD_OBSERVED_SUPPORTED_CONSTRAINT_COUNT = "observedSupportedConstraintCount";
+	private static final String CMD_OLDEST_HISTORY = "oldestHistory";
+	private static final String CMD_NEWEST_HISTORY = "newestHistory";
+	private static final String CMD_ALL_MODEL_HISTORIES = "allModelHistories";
+	private static final String CMD_INCONSISTENT_MODEL_HISTORIES = "inconsistentModelHistories";
+	private static final String CMD_ALL_SOURCE_REVISIONS = "allSourceRevisions";
+	private static final String CMD_ALL_REVISIONS = "allRevisions";
+	private static final String CMD_ALL_EVOLUTION_STEPS = "allEvolutionSteps";
+	private static final String CMD_TOTAL_INCONSISTENCIES = "totalInconsistencies";
+	private static final String CMD_REGEX_INCONSISTENCIES = "regexInconsistencies";
+	private static final String CMD_DOMAIN_SPECIFIC_INCONSISTENCIES = "domainSpecificInconsistencies";
+	private static final String CMD_SUPPORTED_INCONSISTENCIES = "supportedInconsistencies";
+	private static final String CMD_AT_LEAST_ONE_REPAIR_FOUND = "atLeastOneRepairFound";
+	private static final String CMD_PERCENTAGE_COVERED = "percentageCovered";
+	private static final String CMD_PERCENTAGE_UNCOVERED_REGEX = "percentageUncoveredRegEx";
+	private static final String CMD_TOTAL_OBSERVABLE_REPAIRS = "totalObservableRepairs";
+	private static final String CMD_OBSERVABLE_COMPLETION_REPAIRS = "observableCompletionRepairs";
+	private static final String CMD_OBSERVABLE_UNDO_REPAIRS = "observableUndoRepairs";
+	private static final String CMD_NOT_OBSERVABLE_REPAIRS = "notObservableRepairs";
+	private static final String CMD_NOT_OBSERVABLE_MISSING_CPEO = "notObservableMissingCPEO";
+	private static final String CMD_NOT_OBSERVABLE_SUB_RULE_TOO_LARGE = "notObservableSubRuleTooLarge";
+	private static final String CMD_NOT_OBSERVABLE_MISSING_CPEOS_AND_SUB_RULE_TOO_LARGE = "notObservableMissingCPEOsAndSubRuleTooLarge";
+	private static final String CMD_MISSING_CPEOS = "missingCPEOs";
+	private static final String CMD_PERCENTAGE_TOTAL_OBSERVABLE_REPAIRS = "percentageTotalObservableRepairs";
+	private static final String CMD_PERCENTAGE_OBSERVABLE_COMPLETION_REPAIRS = "percentageObservableCompletionRepairs";;
+	private static final String CMD_RANKING_COUNT_FIRST_POSITION = "rankingCountFirstPosition";
+	private static final String CMD_RANKING_COUNT_SECOND_POSITION = "rankingCountSecondPosition";
+	private static final String CMD_INCONSISTENCIES_WITH_TEN_OR_LESS_ALTERNATIVES = "inconsistenciesWithTenOrLessAlternatives";
+	private static final String CMD_AVG_COUNT_OF_UNBOUND_PARAMETERS = "avgCountOfUnboundParameters";
+	private static final String CMD_PERCENTAGE_TOP_RANKING = "percentageTopRanking";
+	private static final String CMD_EXAMPLE_A_RUNTIME_UML = "exampleARuntimeUML";
+	private static final String CMD_EXAMPLE_A_MODEL_SIZE_UML = "exampleAModelSizeUML";
+	private static final String CMD_EXAMPLE_B_RUNTIME_UML = "exampleBRuntimeUML";
+	private static final String CMD_EXAMPLE_B_MODEL_SIZE_UML = "exampleBModelSizeUML";
+	private static final String CMD_EXAMPLE_C_RUNTIME_UML = "exampleCRuntimeUML";
+	private static final String CMD_EXAMPLE_C_VERSION_COUNT_UML = "exampleCVersionCountUML";
+	private static final String CMD_RECOGNITION_RUNTIME_LESS_THEN_ONE_SECOND = "recognitionRuntimeLessThenOneSecond";
+	private static final String CMD_COMPLEMENT_RUNTIME_LOWER_BORDER = "complementRuntimeLowerBorder";
+	private static final String CMD_COMPLEMENT_RUNTIME_UPPER_BORDER = "complementRuntimeUpperBorder";
+	private static final String CMD_EXAMPLE_D_PARAMETER_CLASSES_UML = "exampleDParameterClassesUML";
+	private static final String CMD_EXAMPLE_D_PARAMETER_SUB_CLASSES_UML = "exampleDParameterSubClassesUML";
 
 	public NumberReportGenerator() {
 		
@@ -123,7 +123,9 @@ public class NumberReportGenerator {
 			System.out.println();
 			System.out.println(createComment("Configuration:"));
 			System.out.println(createCommandX(CMD_MINIMAL_ASG_PATTERN_COUNT, minimalASGPatternCount()));
+			System.out.println(createCommandX(CMD_CREATING_DELETING_EDIT_RULE_COUNT, creatingDeletingEditRuleCount()));
 			System.out.println(createCommandX(CMD_TRANSFORMING_EDIT_RULE_COUNT, transformingEditRuleCount()));
+			System.out.println(createCommandX(CMD_RECLOCATING_EDIT_RULE_COUNT, relocationEditRuleCount()));
 			
 			// Constraints:
 			System.out.println();
@@ -229,10 +231,6 @@ public class NumberReportGenerator {
 		return consideredProjectCount() + unconsideredProjectCount();
 	}
 
-	public static int filteredProjectCount() {
-		return ReportGenerator.getProjects_Reduced().size() - consideredProjectCount();
-	}
-
 	public static int consideredProjectCount() {
 		try {
 			return ReportGenerator.getEvaluationsPerProject().size();
@@ -247,21 +245,9 @@ public class NumberReportGenerator {
 	}
 	
 	// Configuration:
-
-	public static int minimalASGPatternCount() {
-		Resource patternResource = new ResourceSetImpl().getResource(URI.createPlatformPluginURI(PATH_GRAPH_PATTERNS, true), true);
-		Set<String> patternNames = new HashSet<>();
-		
-		for (EObject element : (Iterable<EObject>) () -> patternResource.getAllContents()) {
-			if (element instanceof GraphPattern) {
-				patternNames.add(((GraphPattern) element).getName());
-			}
-		}
-		
-		return patternNames.size();
-	}
-
-	public static int transformingEditRuleCount() {
+	
+	
+	private static int editRuleCount(String prefix) {
 		Resource patternResource = new ResourceSetImpl().getResource(URI.createPlatformPluginURI(PATH_EDIT_RULES, true), true);
 		Set<String> patternNames = new HashSet<>();
 		
@@ -270,7 +256,7 @@ public class NumberReportGenerator {
 				if (((GraphPattern) element).getStereotypes().contains(HenshinStereotypes.rule)) {
 					String name = ((GraphPattern) element).getName();
 					
-					if (name.startsWith("Transform:")) {
+					if (name.startsWith(prefix)) {
 						patternNames.add(name);
 					}
 				}
@@ -279,14 +265,30 @@ public class NumberReportGenerator {
 		
 		return patternNames.size();
 	}
+
+	private static int minimalASGPatternCount() {
+		return Math.max(editRuleCount("Create:"), editRuleCount("Delete:")); // NOTE: Excluding duplicated patterns
+	}
+	
+	private static int creatingDeletingEditRuleCount() {
+		return minimalASGPatternCount() * 2;	// NOTE: Including filtered rules
+	}
+
+	private static int transformingEditRuleCount() {
+		return editRuleCount("Transform:");
+	}
+	
+	private static int relocationEditRuleCount() {
+		return editRuleCount("Relocation:");
+	}
 	
 	// Constraints:
 
-	public static int constraintCount() {
+	private static int constraintCount() {
 		return ValidationFacade.getConstraints(DOC_TYPE_RESOURCE_DUMMY).size();
 	}
 
-	public static int ommitedWellFormedConstraintCount(LogTable inconsistencyReport, LogTable manuallyEvaluated) {
+	private static int ommitedWellFormedConstraintCount(LogTable inconsistencyReport, LogTable manuallyEvaluated) {
 		int unsupportedDomainSpecific = ommitedDomainSpecificConstraintCount(manuallyEvaluated);
 		int unsuporrtedAll = LogUtil.count(
 				inconsistencyReport.getColumn(InconsistencyReportGenerator.COL_SUPPORTED_CONSTRAINT[0]),
@@ -294,11 +296,11 @@ public class NumberReportGenerator {
 		return unsuporrtedAll - unsupportedDomainSpecific;
 	}
 
-	public static int ommitedDomainSpecificConstraintCount(LogTable manuallyEvaluated) {
+	private static int ommitedDomainSpecificConstraintCount(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_OMMITED_DOMAIN_SPECIFIC_CONSTRAINT_COUNT, Integer.class).get(0);
 	}
 
-	public static int observedSupportedConstraintCount(LogTable inconsistencyReport) {
+	private static int observedSupportedConstraintCount(LogTable inconsistencyReport) {
 		return LogUtil.count(
 				inconsistencyReport.getColumn(InconsistencyReportGenerator.COL_SUPPORTED_CONSTRAINT[0]),
 				InconsistencyReportGenerator.VALUE_YES);
@@ -306,11 +308,11 @@ public class NumberReportGenerator {
 	
 	// History:
 
-	public static int oldestHistory(LogTable manuallyEvaluated) {
+	private static int oldestHistory(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_OLDEST_HISTORY, Integer.class).get(0);
 	}
 
-	public static int newestHistory(LogTable manuallyEvaluated) {
+	private static int newestHistory(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_NEWEST_HISTORY, Integer.class).get(0);
 	}
 
@@ -318,7 +320,7 @@ public class NumberReportGenerator {
 	 * @return Summary value "All": number of all (consistent and inconsistent)
 	 *         model histories.
 	 */
-	public static int allModelHistories(LogTable projectReport) {
+	private static int allModelHistories(LogTable projectReport) {
 		List<Integer> columnAllModels = projectReport.getColumn(ProjectReportGenerator.COL_MODELS_ALL[0], Integer.class);
 		return columnAllModels.get(columnAllModels.size() - 1);
 	}
@@ -327,7 +329,7 @@ public class NumberReportGenerator {
 	 * @return Summary value "Inc.": number of all model histories containing at
 	 *         least one inconsistency.
 	 */
-	public static int inconsistentModelHistories(LogTable projectReport) {
+	private static int inconsistentModelHistories(LogTable projectReport) {
 		List<Integer> columnInconsistentModels = projectReport.getColumn(ProjectReportGenerator.COL_MODELS_INCONSISTENT[0], Integer.class);
 		return columnInconsistentModels.get(columnInconsistentModels.size() - 1);
 	}
@@ -336,7 +338,7 @@ public class NumberReportGenerator {
 	 * @return Summary value "Source": number of all source revisions of model
 	 *         histories containing at least one inconsistency.
 	 */
-	public static int allSourceRevisions(LogTable projectReport) {
+	private static int allSourceRevisions(LogTable projectReport) {
 		List<Integer> columnSourceModels = projectReport.getColumn(ProjectReportGenerator.COL_REVISIONS_INCONSISTENT[0], Integer.class);
 		return columnSourceModels.get(columnSourceModels.size() - 1);
 	}
@@ -345,7 +347,7 @@ public class NumberReportGenerator {
 	 * @return Summary value "Co-ev.": number of all co-evolving revisions of model
 	 *         histories containing at least one inconsistency.
 	 */
-	public static int allCoevolvingRevisions(LogTable projectReport) {
+	private static int allCoevolvingRevisions(LogTable projectReport) {
 		List<Integer> columnCoEvModels = projectReport.getColumn(ProjectReportGenerator.COL_REVISIONS_COEVOLVING[0], Integer.class);
 		return columnCoEvModels.get(columnCoEvModels.size() - 1);
 	}
@@ -354,7 +356,7 @@ public class NumberReportGenerator {
 	 * @return Sum of revisions (source and co-evolving) of model histories
 	 *         containing at least one inconsistency.
 	 */
-	public static int allRevisions(LogTable projectReport) {
+	private static int allRevisions(LogTable projectReport) {
 		return allSourceRevisions(projectReport) + allCoevolvingRevisions(projectReport);
 	}
 	
@@ -365,32 +367,32 @@ public class NumberReportGenerator {
 	 *         revisions (source and co-evolutions) minus the number of considered
 	 *         model histories.
 	 */
-	public static int allEvolutionSteps(LogTable projectReport) {
+	private static int allEvolutionSteps(LogTable projectReport) {
 		return allRevisions(projectReport) - inconsistentModelHistories(projectReport);
 	}
 	
 	// RQ1:
 
-	public static int totalInconsistencies(LogTable projectReport) {
+	private static int totalInconsistencies(LogTable projectReport) {
 		List<Integer> columnTotalInconsistencies = projectReport.getColumn(ProjectReportGenerator.COL_INCONSISTENCIES_RESOLVED[0], Integer.class);
 		return columnTotalInconsistencies.get(columnTotalInconsistencies.size() - 1);
 	}
 
-	public static int regexInconsistencies(LogTable projectReport) {
+	private static int regexInconsistencies(LogTable projectReport) {
 		List<Integer> columnRegExInconsistencies = projectReport.getColumn(ProjectReportGenerator.COL_WELLFORMED_CONSTRAINTS[0], Integer.class);
 		return columnRegExInconsistencies.get(columnRegExInconsistencies.size() - 1);
 	}
 
-	public static int domainSpecificInconsistencies(LogTable manuallyEvaluated) {
+	private static int domainSpecificInconsistencies(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_DOMAIN_SPECIFIC_INCONSISTENCIES, Integer.class).get(0);
 	}
 
-	public static int supportedInconsistencies(LogTable projectReport) {
+	private static int supportedInconsistencies(LogTable projectReport) {
 		List<Integer> columnSupportedInconsistencies = projectReport.getColumn(ProjectReportGenerator.COL_INCONSISTENCIES_RESOLVED_SUPPORTED[0], Integer.class);
 		return columnSupportedInconsistencies.get(columnSupportedInconsistencies.size() - 1);
 	}
 
-	public static int atLeastOneRepairFound(LogTable projectReport) {
+	private static int atLeastOneRepairFound(LogTable projectReport) {
 		List<Integer> columntAtLeastOneRepairFound = projectReport.getColumn(ProjectReportGenerator.COL_REPAIRED_INCONSISTENCY[0], Integer.class);
 		return columntAtLeastOneRepairFound.get(columntAtLeastOneRepairFound.size() - 1);
 	}
@@ -406,71 +408,71 @@ public class NumberReportGenerator {
 	
 	// RQ2:
 
-	public static int totalObservableRepairs(LogTable projectReport) {
+	private static int totalObservableRepairs(LogTable projectReport) {
 		return observableCompletionRepairs(projectReport) + observableUndoRepairs(projectReport);
 	}
 
-	public static int observableCompletionRepairs(LogTable projectReport) {
+	private static int observableCompletionRepairs(LogTable projectReport) {
 		List<Integer> columntObservableCompletionRepairs = projectReport.getColumn(ProjectReportGenerator.COL_HOR_COMPLETION[0], Integer.class);
 		return columntObservableCompletionRepairs.get(columntObservableCompletionRepairs.size() - 1);
 	}
 
-	public static int observableUndoRepairs(LogTable projectReport) {
+	private static int observableUndoRepairs(LogTable projectReport) {
 		List<Integer> columntObservableUndoRepairs = projectReport.getColumn(ProjectReportGenerator.COL_HOR_UNDO[0], Integer.class);
 		return columntObservableUndoRepairs.get(columntObservableUndoRepairs.size() - 1);
 	}
 
-	public static int notObservableRepairs(LogTable projectReport) {
+	private static int notObservableRepairs(LogTable projectReport) {
 		List<Integer> columntNotObservableRepairs = projectReport.getColumn(ProjectReportGenerator.COL_HOR_NOT[0], Integer.class);
 		return columntNotObservableRepairs.get(columntNotObservableRepairs.size() - 1);
 	}
 
-	public static int notObservableMissingCPEO(LogTable manuallyEvaluated) {
+	private static int notObservableMissingCPEO(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_NOT_OBSERVABLE_MISSING_CPEO, Integer.class).get(0);
 	}
 
-	public static int notObservableSubRuleTooLarge(LogTable manuallyEvaluated) {
+	private static int notObservableSubRuleTooLarge(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_NOT_OBSERVABLE_SUB_RULE_TOO_LARGE, Integer.class).get(0);
 	}
 
-	public static int notObservableMissingCPEOsAndSubRuleTooLarge(LogTable manuallyEvaluated) {
+	private static int notObservableMissingCPEOsAndSubRuleTooLarge(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_NOT_OBSERVABLE_MISSING_CPEOS_AND_SUB_RULE_TOO_LARGE, Integer.class).get(0);
 	}
 
-	public static int missingCPEOs(LogTable manuallyEvaluated) {
+	private static int missingCPEOs(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_MISSING_CPEOS, Integer.class).get(0);
 	}
 	
-	public static String percentageTotalObservableRepairs(LogTable projectReport) {
+	private static String percentageTotalObservableRepairs(LogTable projectReport) {
 		return percentage(totalObservableRepairs(projectReport), supportedInconsistencies(projectReport));
 	}
 	
-	public static String percentageObservableCompletionRepairs(LogTable projectReport) {
+	private static String percentageObservableCompletionRepairs(LogTable projectReport) {
 		return percentage(observableCompletionRepairs(projectReport), totalObservableRepairs(projectReport));
 	}
 	
 	// RQ3:
 
-	public static Object rankingCountFirstPosition(LogTable rq3rq4Report) {
+	private static Object rankingCountFirstPosition(LogTable rq3rq4Report) {
 		return LogUtil.count(rq3rq4Report.getColumn(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, Integer.class), 0);
 	}
 
-	public static Object rankingCountSecondPosition(LogTable rq3rq4Report) {
+	private static Object rankingCountSecondPosition(LogTable rq3rq4Report) {
 		return LogUtil.count(rq3rq4Report.getColumn(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, Integer.class), 1);
 	}
 
-	public static String inconsistenciesWithTenOrLessAlternatives(LogTable rq3rq4Report) {
+	private static String inconsistenciesWithTenOrLessAlternatives(LogTable rq3rq4Report) {
 		List<Integer> complementCount = rq3rq4Report.getColumn(InconsistenciesLog.COL_COMPLEMENTS, Integer.class);
 		int tenOrLess = LogUtil.test(complementCount, a -> a <= 10);
 		
 		return percentage(tenOrLess, complementCount.size()) + "\\%";
 	}
 
-	public static Object avgCountOfUnboundParameters(LogTable rq3rq4Report) {
+	private static Object avgCountOfUnboundParameters(LogTable rq3rq4Report) {
 		return LogUtil.avg(rq3rq4Report.getColumn(InconsistenciesLog.COL_UNBOUND_PARAMETERS_OF_BEST_HOR, Integer.class));
 	}
 	
-	public static String percentageTopRanking(LogTable rq3rq4Report, LogTable projectReport) {
+	private static String percentageTopRanking(LogTable rq3rq4Report, LogTable projectReport) {
 		return percentage((int) rankingCountFirstPosition(rq3rq4Report), totalObservableRepairs(projectReport));
 	}
 	
@@ -490,45 +492,45 @@ public class NumberReportGenerator {
 		return count;
 	}
 
-	public static String exampleARuntimeUML(LogTable manuallyEvaluated) {
+	private static String exampleARuntimeUML(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_EXAMPLE_A_RUNTIME_UML, String.class).get(0);
 	}
 
-	public static int exampleAModelSizeUML() {
+	private static int exampleAModelSizeUML() {
 		int cmof = getModelSize("C:/workspaces/sidiff-build/org.eclipse.git.evaluation_2018-11-02/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF.ecore/0009_2011-10-06T04-05-09Z_cab66f3576c668586ce408b840cb1d3e9108423b/plugins_org.eclipse.uml2.uml_model_CMOF.ecore");
 		int cmof20 = getModelSize("C:/workspaces/sidiff-build/org.eclipse.git.evaluation_2018-11-02/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore/0004_2013-02-03T17-51-59Z_bb3ae2647564fc84f1bf5254c970e143693ef23c/plugins_org.eclipse.uml2.uml_model_CMOF20.ecore");
 		return cmof + cmof20;
 	}
 
-	public static String exampleBRuntimeUML(LogTable manuallyEvaluated) {
+	private static String exampleBRuntimeUML(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_EXAMPLE_B_RUNTIME_UML, String.class).get(0);
 	}
 
-	public static int exampleBModelSizeUML() {
+	private static int exampleBModelSizeUML() {
 		int uml = getModelSize("C:/workspaces/sidiff-build/org.eclipse.git.evaluation_2018-11-02/modeling.mdt.uml2/plugins_org.eclipse.uml2.uml_model_UML.ecore/0083_2008-01-21T16-00-11Z_3c0e7ad91e38426f88a118f58605ea5183faeaa7/plugins_org.eclipse.uml2.uml_model_UML.ecore");
 		return uml;
 	}
 
-	public static String exampleCRuntimeUML(LogTable manuallyEvaluated) {
+	private static String exampleCRuntimeUML(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_EXAMPLE_C_RUNTIME_UML, String.class).get(0);
 	}
 
-	public static int exampleCVersionCountUML(LogTable manuallyEvaluated) {
+	private static int exampleCVersionCountUML(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_EXAMPLE_C_VERSION_COUNT_UML, Integer.class).get(0);
 	}
 
-	public static String recognitionRuntimeLessThenOneSecond(LogTable rq3rq4Report) {
+	private static String recognitionRuntimeLessThenOneSecond(LogTable rq3rq4Report) {
 		List<Integer> recognitionTimes = rq3rq4Report.getColumn(InconsistenciesLog.COL_TIME_RECOGNITION, Integer.class);
 		int recognitionRuntimeLessThenOneSecond = LogUtil.test(recognitionTimes, a -> a < 1000);
 		
 		return percentage(recognitionRuntimeLessThenOneSecond, recognitionTimes.size()) + "\\%";
 	}
 
-	public static String complementRuntimeLowerBorder(LogTable manuallyEvaluated) {
+	private static String complementRuntimeLowerBorder(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_COMPLEMENT_RUNTIME_LOWER_BORDER, String.class).get(0);
 	}
 
-	public static String complementRuntimeUpperBorder(LogTable manuallyEvaluated) {
+	private static String complementRuntimeUpperBorder(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_COMPLEMENT_RUNTIME_UPPER_BORDER, String.class).get(0);
 	}
 	
@@ -536,7 +538,7 @@ public class NumberReportGenerator {
 		return manuallyEvaluated.getColumn(CMD_EXAMPLE_D_PARAMETER_CLASSES_UML, Integer.class).get(0);
 	}
 
-	public static int exampleDParameterSubClassesUML(LogTable manuallyEvaluated) {
+	private static int exampleDParameterSubClassesUML(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_EXAMPLE_D_PARAMETER_SUB_CLASSES_UML, Integer.class).get(0);
 	}
 	
