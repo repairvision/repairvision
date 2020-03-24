@@ -49,10 +49,13 @@ public class GraphPatternGeneratorUtil {
 
 	public static boolean isContext(NodePattern node) {
 		if (ConstraintProfileUtil.isPositiveCondition(node)) {
-			return (node.getIncomings().stream().anyMatch(e -> e.getStereotypes().isEmpty()))
+			return node.getIncomings().stream().anyMatch(e -> e.getStereotypes().isEmpty())
 					|| node.getOutgoings().stream().anyMatch(e -> e.getStereotypes().isEmpty());
 		} else {
-			return !node.getIncomings().stream().anyMatch(e -> e.getType().isContainment());
+			// TODO: Enforce this by a constraint!?
+			return !node.getIncomings().stream().anyMatch(e -> e.getType().isContainment())
+					|| node.getIncomings().stream().anyMatch(e -> ConstraintProfileUtil.isPositiveCondition(e))
+					|| node.getOutgoings().stream().anyMatch(e -> ConstraintProfileUtil.isPositiveCondition(e));
 		}
 	}
 
