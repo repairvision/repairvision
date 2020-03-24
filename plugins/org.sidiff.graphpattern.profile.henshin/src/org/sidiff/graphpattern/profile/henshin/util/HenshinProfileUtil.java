@@ -8,9 +8,6 @@ import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.pre;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.require;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.Extendable;
@@ -30,105 +27,17 @@ public class HenshinProfileUtil {
 		return false;
 	}
 	
-	public static Set<GraphElement> getPostCondition(GraphPattern editRule) {
-		Set<GraphElement> postCondition = new HashSet<>();
-		
-		for (NodePattern node : editRule.getNodes()) {
-			getPostCondition(node, postCondition);
+	public static boolean hasAttributeChanges(NodePattern node) {
+		for (AttributePattern contained : node.getAttributes()) {
+			if (contained.getStereotypes().contains(delete) || contained.getStereotypes().contains(create)) {
+				return true;
+			}
 		}
-		
-		return postCondition;
+		return false;
 	}
 	
-	private static void getPostCondition(NodePattern node, Set<GraphElement> postCondition) {
-
-		if (!postCondition.contains(node)) {
-			
-			// Find first incident edge of post condition, 
-			// i.e., a forbid/require edge on a create node. 
-			if (isCreate(node)) {
-				
-				// Search for outgoing conditions on create node:
-				for (EdgePattern outgoingEdge : node.getOutgoings()) {
-					if (isEditCondition(outgoingEdge)) {
-						
-						// Post condition found!
-						postCondition.add(outgoingEdge);
-						
-						// Collect post condition sub-graph:
-						NodePattern target = outgoingEdge.getTarget();
-						
-						if (isEditCondition(target)) {
-							if (!postCondition.contains(target)) {
-								postCondition.add(target);
-								getPostCondition(target, postCondition);
-							}
-						}
-					}
-				}
-				
-				// Search for incoming conditions on create node:
-				for (EdgePattern incomingEdge : node.getIncomings()) {
-					if (isEditCondition(incomingEdge)) {
-						
-						// Post condition found!
-						postCondition.add(incomingEdge);
-						
-						// Collect post condition sub-graph:
-						NodePattern source = incomingEdge.getSource();
-						
-						if (isEditCondition(source)) {
-							if (!postCondition.contains(source)) {
-								postCondition.add(source);
-								getPostCondition(source, postCondition);
-							}
-						}
-					}
-				}
-				
-				// Collect post condition attributes in create node:
-				for (AttributePattern attribute : node.getAttributes()) {
-					if (isEditCondition(attribute)) {
-						postCondition.add(attribute);
-					}
-				}
-			}
-		} else {
-			
-			// Collect post condition sub-graph:
-			for (EdgePattern outgoingEdge : node.getOutgoings()) {
-				if (isEditCondition(outgoingEdge)) {
-					NodePattern target = outgoingEdge.getTarget();
-					
-					if (isEditCondition(target)) {
-						if (!postCondition.contains(target)) {
-							postCondition.add(target);
-							getPostCondition(target, postCondition);
-						}
-					}
-				}
-			}
-			
-			for (EdgePattern incomingEdge : node.getIncomings()) {
-				if (isEditCondition(incomingEdge)) {
-					NodePattern source = incomingEdge.getSource();
-					
-					if (isEditCondition(source)) {
-						if (!postCondition.contains(source)) {
-							postCondition.add(source);
-							getPostCondition(source, postCondition);
-						}
-					}
-				}
-			}
-			
-			// Collect post condition attributes:
-			for (AttributePattern attribute : node.getAttributes()) {
-				if (isEditCondition(attribute)) {
-					postCondition.add(attribute);
-				}
-			}
-		}
+	public static boolean hasChanges(NodePattern node) {
+		return hasEdgeChanges(node) || hasAttributeChanges(node);
 	}
 	
 	public static boolean hasPostCondition(GraphPattern editRule) {

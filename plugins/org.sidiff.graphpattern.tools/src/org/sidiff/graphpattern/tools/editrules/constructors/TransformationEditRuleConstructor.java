@@ -61,8 +61,8 @@ public class TransformationEditRuleConstructor implements IEditRuleConstructor {
 					//       - keep match with minimal graph edit distance
 					//       - do not consider negative condition nodes in matching
 					IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(preConstraint.getNodes().size());
-					problem.setMinimumSolutionSize(Math.min(preSize, postSize)); 	// NOTE: At least one of both patterns need to be matched completely.
-//					problem.setMinimumSolutionSize(1);								// NOTE: MCS matching, with minimum of 1
+//					problem.setMinimumSolutionSize(Math.min(preSize, postSize)); 	// NOTE: At least one of both patterns need to be matched completely.
+					problem.setMinimumSolutionSize(1);								// NOTE: MCS matching, with minimum of 1
 					problem.setMaximumSolutionSize(Math.max(preSize, postSize));
 					problem.setSearchInjectiveSolutions(true);
 

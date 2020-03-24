@@ -269,7 +269,7 @@ public class ComplexToBasicGraphPatterns {
 		Pattern basicPattern = GraphpatternFactory.eINSTANCE.createPattern();
 		basicPattern.getGraphs().add(basicGraphPattern);
 		
-		GraphPatternGeneratorUtil.generateINParameters(basicPattern);
+		GraphPatternGeneratorUtil.generateInputParameters(basicPattern);
 		
 		return basicPattern;
 	}

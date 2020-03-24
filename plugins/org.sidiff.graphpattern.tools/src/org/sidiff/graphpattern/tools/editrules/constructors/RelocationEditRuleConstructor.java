@@ -134,8 +134,10 @@ public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 		int size = contextNodes.size() + contentNodes.size();
 
 		IConstraintSatisfactionProblem<NodePattern, NodePattern> problem = new ConstraintSatisfactionProblem<>(size);
-		problem.setMinimumSolutionSize(contentNodes.size());
-		problem.setMaximumSolutionSize(size);
+//		problem.setMinimumSolutionSize(contentNodes.size());	// NOTE: consider all context mappings
+//		problem.setMaximumSolutionSize(size);
+		problem.setMinimumSolutionSize(size - 2);				// NOTE: consider all pairs of unmapped context nodes
+		problem.setMaximumSolutionSize(size - 2);
 		problem.setSearchInjectiveSolutions(true);
 
 		// Partial matching of context:

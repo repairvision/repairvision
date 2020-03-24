@@ -107,7 +107,7 @@ public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 		}
 		
 		// Generate parameters:
-		GraphPatternGeneratorUtil.generateINParameters(editOperation);
+		GraphPatternGeneratorUtil.generateInputParameters(editOperation);
 	}
 	
 	private void generateEdgeOpposite(EdgePattern constraintEdge, GraphType graphType) {

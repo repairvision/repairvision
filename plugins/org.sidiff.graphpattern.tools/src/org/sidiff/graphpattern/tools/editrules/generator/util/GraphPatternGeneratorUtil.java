@@ -84,13 +84,13 @@ public class GraphPatternGeneratorUtil {
 		return null;
 	}
 
-	public static void generateINParameters(Pattern pattern) {
+	public static void generateInputParameters(Pattern pattern) {
 
 		for (GraphPattern editRule : pattern.getGraphs()) {
 			for (NodePattern eoNode : editRule.getNodes()) {
 
 				// Filter OUT parameters:
-				if (!HenshinProfileUtil.isCreate(eoNode) && !HenshinProfileUtil.isEditCondition(eoNode)) {
+				if (isInputNode(eoNode)) {
 					generateParameter(pattern, eoNode.getName());
 				}
 
@@ -101,6 +101,11 @@ public class GraphPatternGeneratorUtil {
 				}
 			}
 		}
+	}
+	
+	public static boolean isInputNode(NodePattern node) {
+		return (HenshinProfileUtil.isPreserve(node) && HenshinProfileUtil.hasChanges(node))
+			|| HenshinProfileUtil.isDelete(node);
 	}
 
 	public static boolean generateParameter(Pattern pattern, String name) {
