@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_j8PjoG37Eeq8HvZ3P3dIrg" name="Create: Named Package" description="Create: Named Package">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_j8PjoW37Eeq8HvZ3P3dIrg" name="mainUnit" subUnits="_j8PjpG37Eeq8HvZ3P3dIrg">
-    <parameters xmi:id="_j8Pjom37Eeq8HvZ3P3dIrg" name="packageName" kind="IN"/>
-    <parameterMappings xmi:id="_j8Pjo237Eeq8HvZ3P3dIrg" source="_j8Pjom37Eeq8HvZ3P3dIrg" target="_j8PjpW37Eeq8HvZ3P3dIrg"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ueyZsG4ZEeqtMKWMoy76sA" name="Create: Named Package" description="Create: Named Package">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ueyZsW4ZEeqtMKWMoy76sA" name="mainUnit" subUnits="_ueyZtG4ZEeqtMKWMoy76sA">
+    <parameters xmi:id="_ueyZsm4ZEeqtMKWMoy76sA" name="packageName" kind="IN"/>
+    <parameterMappings xmi:id="_ueyZs24ZEeqtMKWMoy76sA" source="_ueyZsm4ZEeqtMKWMoy76sA" target="_ueyZtW4ZEeqtMKWMoy76sA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_j8PjpG37Eeq8HvZ3P3dIrg" name="Create: Named Package">
-    <parameters xmi:id="_j8PjpW37Eeq8HvZ3P3dIrg" name="packageName" kind="IN"/>
-    <rhs xmi:id="_j8Pjpm37Eeq8HvZ3P3dIrg" name="Rhs">
-      <nodes xmi:id="_j8Pjp237Eeq8HvZ3P3dIrg" name="newPackage">
+  <units xsi:type="henshin:Rule" xmi:id="_ueyZtG4ZEeqtMKWMoy76sA" name="Create: Named Package">
+    <parameters xmi:id="_ueyZtW4ZEeqtMKWMoy76sA" name="packageName" kind="IN"/>
+    <rhs xmi:id="_ueyZtm4ZEeqtMKWMoy76sA" name="Rhs">
+      <nodes xmi:id="_ueyZt24ZEeqtMKWMoy76sA" name="newPackage">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
-        <attributes xmi:id="_j8PjqG37Eeq8HvZ3P3dIrg" value="packageName">
+        <attributes xmi:id="_ueyZuG4ZEeqtMKWMoy76sA" value="packageName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
