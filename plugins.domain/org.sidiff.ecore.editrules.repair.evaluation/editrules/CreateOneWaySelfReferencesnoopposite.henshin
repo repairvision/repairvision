@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DV_T4G3fEeq8HvZ3P3dIrg" name="Create: One-Way Self-References [no opposite]" description="Create: One-Way Self-References [no opposite]">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_DV_T4W3fEeq8HvZ3P3dIrg" name="mainUnit" subUnits="_DV_T5G3fEeq8HvZ3P3dIrg">
-    <parameters xmi:id="_DV_T4m3fEeq8HvZ3P3dIrg" name="toClassA" kind="IN"/>
-    <parameterMappings xmi:id="_DV_T423fEeq8HvZ3P3dIrg" source="_DV_T4m3fEeq8HvZ3P3dIrg" target="_DV_T5W3fEeq8HvZ3P3dIrg"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ket-kG37Eeq8HvZ3P3dIrg" name="Create: One-Way Self-References [no opposite]" description="Create: One-Way Self-References [no opposite]">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ket-kW37Eeq8HvZ3P3dIrg" name="mainUnit" subUnits="_ket-lG37Eeq8HvZ3P3dIrg">
+    <parameters xmi:id="_ket-km37Eeq8HvZ3P3dIrg" name="toClassA" kind="IN"/>
+    <parameterMappings xmi:id="_ket-k237Eeq8HvZ3P3dIrg" source="_ket-km37Eeq8HvZ3P3dIrg" target="_ket-lW37Eeq8HvZ3P3dIrg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_DV_T5G3fEeq8HvZ3P3dIrg" name="Create: One-Way Self-References [no opposite]">
-    <parameters xmi:id="_DV_T5W3fEeq8HvZ3P3dIrg" name="toClassA" kind="IN"/>
-    <lhs xmi:id="_DV_T5m3fEeq8HvZ3P3dIrg" name="Lhs">
-      <nodes xmi:id="_DV_T523fEeq8HvZ3P3dIrg" name="toClassA">
+  <units xsi:type="henshin:Rule" xmi:id="_ket-lG37Eeq8HvZ3P3dIrg" name="Create: One-Way Self-References [no opposite]">
+    <parameters xmi:id="_ket-lW37Eeq8HvZ3P3dIrg" name="toClassA" kind="IN"/>
+    <lhs xmi:id="_ket-lm37Eeq8HvZ3P3dIrg" name="Lhs">
+      <nodes xmi:id="_ket-l237Eeq8HvZ3P3dIrg" name="toClassA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
     </lhs>
-    <rhs xmi:id="_DV_T6G3fEeq8HvZ3P3dIrg" name="Rhs">
-      <nodes xmi:id="_DV_T6W3fEeq8HvZ3P3dIrg" name="toClassA" incoming="_DV_T7G3fEeq8HvZ3P3dIrg _DV_T7W3fEeq8HvZ3P3dIrg" outgoing="_DV_T623fEeq8HvZ3P3dIrg">
+    <rhs xmi:id="_ket-mG37Eeq8HvZ3P3dIrg" name="Rhs">
+      <nodes xmi:id="_ket-mW37Eeq8HvZ3P3dIrg" name="toClassA" incoming="_ket-nG37Eeq8HvZ3P3dIrg _ket-nW37Eeq8HvZ3P3dIrg" outgoing="_ket-m237Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_DV_T6m3fEeq8HvZ3P3dIrg" name="newRefA" incoming="_DV_T623fEeq8HvZ3P3dIrg" outgoing="_DV_T7G3fEeq8HvZ3P3dIrg _DV_T7W3fEeq8HvZ3P3dIrg">
+      <nodes xmi:id="_ket-mm37Eeq8HvZ3P3dIrg" name="newRefA" incoming="_ket-m237Eeq8HvZ3P3dIrg" outgoing="_ket-nG37Eeq8HvZ3P3dIrg _ket-nW37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
       </nodes>
-      <edges xmi:id="_DV_T623fEeq8HvZ3P3dIrg" source="_DV_T6W3fEeq8HvZ3P3dIrg" target="_DV_T6m3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_ket-m237Eeq8HvZ3P3dIrg" source="_ket-mW37Eeq8HvZ3P3dIrg" target="_ket-mm37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="_DV_T7G3fEeq8HvZ3P3dIrg" source="_DV_T6m3fEeq8HvZ3P3dIrg" target="_DV_T6W3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_ket-nG37Eeq8HvZ3P3dIrg" source="_ket-mm37Eeq8HvZ3P3dIrg" target="_ket-mW37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="_DV_T7W3fEeq8HvZ3P3dIrg" source="_DV_T6m3fEeq8HvZ3P3dIrg" target="_DV_T6W3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_ket-nW37Eeq8HvZ3P3dIrg" source="_ket-mm37Eeq8HvZ3P3dIrg" target="_ket-mW37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_DV_T7m3fEeq8HvZ3P3dIrg" origin="_DV_T523fEeq8HvZ3P3dIrg" image="_DV_T6W3fEeq8HvZ3P3dIrg"/>
+    <mappings xmi:id="_ket-nm37Eeq8HvZ3P3dIrg" origin="_ket-l237Eeq8HvZ3P3dIrg" image="_ket-mW37Eeq8HvZ3P3dIrg"/>
   </units>
 </henshin:Module>

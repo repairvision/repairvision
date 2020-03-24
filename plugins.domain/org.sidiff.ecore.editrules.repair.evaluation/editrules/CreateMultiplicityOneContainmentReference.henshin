@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DKBUcG3fEeq8HvZ3P3dIrg" name="Create: Multiplicity-One Containment Reference" description="Create: Multiplicity-One Containment Reference">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_DKBUcW3fEeq8HvZ3P3dIrg" name="mainUnit" subUnits="_DKBUdm3fEeq8HvZ3P3dIrg">
-    <parameters xmi:id="_DKBUcm3fEeq8HvZ3P3dIrg" name="toContainedClass" kind="IN"/>
-    <parameters xmi:id="_DKBUc23fEeq8HvZ3P3dIrg" name="toContainerClass" kind="IN"/>
-    <parameterMappings xmi:id="_DKBUdG3fEeq8HvZ3P3dIrg" source="_DKBUcm3fEeq8HvZ3P3dIrg" target="_DKBUd23fEeq8HvZ3P3dIrg"/>
-    <parameterMappings xmi:id="_DKBUdW3fEeq8HvZ3P3dIrg" source="_DKBUc23fEeq8HvZ3P3dIrg" target="_DKBUeG3fEeq8HvZ3P3dIrg"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_kTtocG37Eeq8HvZ3P3dIrg" name="Create: Multiplicity-One Containment Reference" description="Create: Multiplicity-One Containment Reference">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_kTtocW37Eeq8HvZ3P3dIrg" name="mainUnit" subUnits="_kTtodm37Eeq8HvZ3P3dIrg">
+    <parameters xmi:id="_kTtocm37Eeq8HvZ3P3dIrg" name="toContainedClass" kind="IN"/>
+    <parameters xmi:id="_kTtoc237Eeq8HvZ3P3dIrg" name="toContainerClass" kind="IN"/>
+    <parameterMappings xmi:id="_kTtodG37Eeq8HvZ3P3dIrg" source="_kTtocm37Eeq8HvZ3P3dIrg" target="_kTtod237Eeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_kTtodW37Eeq8HvZ3P3dIrg" source="_kTtoc237Eeq8HvZ3P3dIrg" target="_kTtoeG37Eeq8HvZ3P3dIrg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_DKBUdm3fEeq8HvZ3P3dIrg" name="Create: Multiplicity-One Containment Reference">
-    <parameters xmi:id="_DKBUd23fEeq8HvZ3P3dIrg" name="toContainedClass" kind="IN"/>
-    <parameters xmi:id="_DKBUeG3fEeq8HvZ3P3dIrg" name="toContainerClass" kind="IN"/>
-    <lhs xmi:id="_DKBUeW3fEeq8HvZ3P3dIrg" name="Lhs">
-      <nodes xmi:id="_DKBUem3fEeq8HvZ3P3dIrg" name="toContainedClass">
+  <units xsi:type="henshin:Rule" xmi:id="_kTtodm37Eeq8HvZ3P3dIrg" name="Create: Multiplicity-One Containment Reference">
+    <parameters xmi:id="_kTtod237Eeq8HvZ3P3dIrg" name="toContainedClass" kind="IN"/>
+    <parameters xmi:id="_kTtoeG37Eeq8HvZ3P3dIrg" name="toContainerClass" kind="IN"/>
+    <lhs xmi:id="_kTtoeW37Eeq8HvZ3P3dIrg" name="Lhs">
+      <nodes xmi:id="_kTtoem37Eeq8HvZ3P3dIrg" name="toContainedClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_DKBUe23fEeq8HvZ3P3dIrg" name="toContainerClass">
+      <nodes xmi:id="_kTtoe237Eeq8HvZ3P3dIrg" name="toContainerClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
     </lhs>
-    <rhs xmi:id="_DKBUfG3fEeq8HvZ3P3dIrg" name="Rhs">
-      <nodes xmi:id="_DKBUfW3fEeq8HvZ3P3dIrg" name="toContainedClass" incoming="_DKBUg23fEeq8HvZ3P3dIrg">
+    <rhs xmi:id="_kTtofG37Eeq8HvZ3P3dIrg" name="Rhs">
+      <nodes xmi:id="_kTtofW37Eeq8HvZ3P3dIrg" name="toContainedClass" incoming="_kTtog237Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_DKBUfm3fEeq8HvZ3P3dIrg" name="toContainerClass" incoming="_DKBUhG3fEeq8HvZ3P3dIrg" outgoing="_DKBUgm3fEeq8HvZ3P3dIrg">
+      <nodes xmi:id="_kTtofm37Eeq8HvZ3P3dIrg" name="toContainerClass" incoming="_kTtohG37Eeq8HvZ3P3dIrg" outgoing="_kTtogm37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_DKBUf23fEeq8HvZ3P3dIrg" name="newContainmentReference" incoming="_DKBUgm3fEeq8HvZ3P3dIrg" outgoing="_DKBUg23fEeq8HvZ3P3dIrg _DKBUhG3fEeq8HvZ3P3dIrg">
+      <nodes xmi:id="_kTtof237Eeq8HvZ3P3dIrg" name="newContainmentReference" incoming="_kTtogm37Eeq8HvZ3P3dIrg" outgoing="_kTtog237Eeq8HvZ3P3dIrg _kTtohG37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
-        <attributes xmi:id="_DKBUgG3fEeq8HvZ3P3dIrg" value="&quot;1&quot;">
+        <attributes xmi:id="_kTtogG37Eeq8HvZ3P3dIrg" value="&quot;1&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
         </attributes>
-        <attributes xmi:id="_DKBUgW3fEeq8HvZ3P3dIrg" value="&quot;true&quot;">
+        <attributes xmi:id="_kTtogW37Eeq8HvZ3P3dIrg" value="&quot;true&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_DKBUgm3fEeq8HvZ3P3dIrg" source="_DKBUfm3fEeq8HvZ3P3dIrg" target="_DKBUf23fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_kTtogm37Eeq8HvZ3P3dIrg" source="_kTtofm37Eeq8HvZ3P3dIrg" target="_kTtof237Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="_DKBUg23fEeq8HvZ3P3dIrg" source="_DKBUf23fEeq8HvZ3P3dIrg" target="_DKBUfW3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_kTtog237Eeq8HvZ3P3dIrg" source="_kTtof237Eeq8HvZ3P3dIrg" target="_kTtofW37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="_DKBUhG3fEeq8HvZ3P3dIrg" source="_DKBUf23fEeq8HvZ3P3dIrg" target="_DKBUfm3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_kTtohG37Eeq8HvZ3P3dIrg" source="_kTtof237Eeq8HvZ3P3dIrg" target="_kTtofm37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_DKBUhW3fEeq8HvZ3P3dIrg" origin="_DKBUem3fEeq8HvZ3P3dIrg" image="_DKBUfW3fEeq8HvZ3P3dIrg"/>
-    <mappings xmi:id="_DKBUhm3fEeq8HvZ3P3dIrg" origin="_DKBUe23fEeq8HvZ3P3dIrg" image="_DKBUfm3fEeq8HvZ3P3dIrg"/>
+    <mappings xmi:id="_kTtohW37Eeq8HvZ3P3dIrg" origin="_kTtoem37Eeq8HvZ3P3dIrg" image="_kTtofW37Eeq8HvZ3P3dIrg"/>
+    <mappings xmi:id="_kTtohm37Eeq8HvZ3P3dIrg" origin="_kTtoe237Eeq8HvZ3P3dIrg" image="_kTtofm37Eeq8HvZ3P3dIrg"/>
   </units>
 </henshin:Module>

@@ -1,58 +1,45 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_CzwwkG3fEeq8HvZ3P3dIrg" name="Transform: Named Classifier - To - Named Package" description="Transform: Named Classifier - To - Named Package">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_CzwwkW3fEeq8HvZ3P3dIrg" name="mainUnit" subUnits="_CzwwnG3fEeq8HvZ3P3dIrg">
-    <parameters xmi:id="_Czwwkm3fEeq8HvZ3P3dIrg" name="package" kind="IN"/>
-    <parameters xmi:id="_Czwwk23fEeq8HvZ3P3dIrg" name="packageName" kind="IN"/>
-    <parameters xmi:id="_CzwwlG3fEeq8HvZ3P3dIrg" name="oldClassifier" kind="IN"/>
-    <parameters xmi:id="_CzwwlW3fEeq8HvZ3P3dIrg" name="className" kind="IN"/>
-    <parameters xmi:id="_Czwwlm3fEeq8HvZ3P3dIrg" name="toResource" kind="IN"/>
-    <parameterMappings xmi:id="_Czwwl23fEeq8HvZ3P3dIrg" source="_Czwwkm3fEeq8HvZ3P3dIrg" target="_CzwwnW3fEeq8HvZ3P3dIrg"/>
-    <parameterMappings xmi:id="_CzwwmG3fEeq8HvZ3P3dIrg" source="_Czwwk23fEeq8HvZ3P3dIrg" target="_Czwwnm3fEeq8HvZ3P3dIrg"/>
-    <parameterMappings xmi:id="_CzwwmW3fEeq8HvZ3P3dIrg" source="_CzwwlG3fEeq8HvZ3P3dIrg" target="_Czwwn23fEeq8HvZ3P3dIrg"/>
-    <parameterMappings xmi:id="_Czwwmm3fEeq8HvZ3P3dIrg" source="_CzwwlW3fEeq8HvZ3P3dIrg" target="_CzwwoG3fEeq8HvZ3P3dIrg"/>
-    <parameterMappings xmi:id="_Czwwm23fEeq8HvZ3P3dIrg" source="_Czwwlm3fEeq8HvZ3P3dIrg" target="_CzwwoW3fEeq8HvZ3P3dIrg"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_j9aoUG37Eeq8HvZ3P3dIrg" name="Transform: Named Classifier - To - Named Package" description="Transform: Named Classifier - To - Named Package">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_j9aoUW37Eeq8HvZ3P3dIrg" name="mainUnit" subUnits="_j9aoWm37Eeq8HvZ3P3dIrg">
+    <parameters xmi:id="_j9aoUm37Eeq8HvZ3P3dIrg" name="package" kind="IN"/>
+    <parameters xmi:id="_j9aoU237Eeq8HvZ3P3dIrg" name="packageName" kind="IN"/>
+    <parameters xmi:id="_j9aoVG37Eeq8HvZ3P3dIrg" name="oldClassifier" kind="IN"/>
+    <parameters xmi:id="_j9aoVW37Eeq8HvZ3P3dIrg" name="className" kind="IN"/>
+    <parameterMappings xmi:id="_j9aoVm37Eeq8HvZ3P3dIrg" source="_j9aoUm37Eeq8HvZ3P3dIrg" target="_j9aoW237Eeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_j9aoV237Eeq8HvZ3P3dIrg" source="_j9aoU237Eeq8HvZ3P3dIrg" target="_j9aoXG37Eeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_j9aoWG37Eeq8HvZ3P3dIrg" source="_j9aoVG37Eeq8HvZ3P3dIrg" target="_j9aoXW37Eeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_j9aoWW37Eeq8HvZ3P3dIrg" source="_j9aoVW37Eeq8HvZ3P3dIrg" target="_j9aoXm37Eeq8HvZ3P3dIrg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_CzwwnG3fEeq8HvZ3P3dIrg" name="Transform: Named Classifier - To - Named Package">
-    <parameters xmi:id="_CzwwnW3fEeq8HvZ3P3dIrg" name="package" kind="IN"/>
-    <parameters xmi:id="_Czwwnm3fEeq8HvZ3P3dIrg" name="packageName" kind="IN"/>
-    <parameters xmi:id="_Czwwn23fEeq8HvZ3P3dIrg" name="oldClassifier" kind="IN"/>
-    <parameters xmi:id="_CzwwoG3fEeq8HvZ3P3dIrg" name="className" kind="IN"/>
-    <parameters xmi:id="_CzwwoW3fEeq8HvZ3P3dIrg" name="toResource" kind="IN"/>
-    <lhs xmi:id="_Czwwom3fEeq8HvZ3P3dIrg" name="Lhs">
-      <nodes xmi:id="_Czwwo23fEeq8HvZ3P3dIrg" name="package" incoming="_CzwwqG3fEeq8HvZ3P3dIrg" outgoing="_Czwwp23fEeq8HvZ3P3dIrg">
+  <units xsi:type="henshin:Rule" xmi:id="_j9aoWm37Eeq8HvZ3P3dIrg" name="Transform: Named Classifier - To - Named Package">
+    <parameters xmi:id="_j9aoW237Eeq8HvZ3P3dIrg" name="package" kind="IN"/>
+    <parameters xmi:id="_j9aoXG37Eeq8HvZ3P3dIrg" name="packageName" kind="IN"/>
+    <parameters xmi:id="_j9aoXW37Eeq8HvZ3P3dIrg" name="oldClassifier" kind="IN"/>
+    <parameters xmi:id="_j9aoXm37Eeq8HvZ3P3dIrg" name="className" kind="IN"/>
+    <lhs xmi:id="_j9aoX237Eeq8HvZ3P3dIrg" name="Lhs">
+      <nodes xmi:id="_j9aoYG37Eeq8HvZ3P3dIrg" name="package" incoming="_j9aoZG37Eeq8HvZ3P3dIrg" outgoing="_j9aoY237Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
       </nodes>
-      <nodes xmi:id="_CzwwpG3fEeq8HvZ3P3dIrg" name="oldClassifier" incoming="_Czwwp23fEeq8HvZ3P3dIrg" outgoing="_CzwwqG3fEeq8HvZ3P3dIrg">
+      <nodes xmi:id="_j9aoYW37Eeq8HvZ3P3dIrg" name="oldClassifier" incoming="_j9aoY237Eeq8HvZ3P3dIrg" outgoing="_j9aoZG37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
-        <attributes xmi:id="_CzwwpW3fEeq8HvZ3P3dIrg" value="className">
+        <attributes xmi:id="_j9aoYm37Eeq8HvZ3P3dIrg" value="className">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_Czwwpm3fEeq8HvZ3P3dIrg" name="toResource">
-        <type href="http://www.sidiff.org/graphpattern/1.0#//Resource"/>
-      </nodes>
-      <edges xmi:id="_Czwwp23fEeq8HvZ3P3dIrg" source="_Czwwo23fEeq8HvZ3P3dIrg" target="_CzwwpG3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_j9aoY237Eeq8HvZ3P3dIrg" source="_j9aoYG37Eeq8HvZ3P3dIrg" target="_j9aoYW37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
       </edges>
-      <edges xmi:id="_CzwwqG3fEeq8HvZ3P3dIrg" source="_CzwwpG3fEeq8HvZ3P3dIrg" target="_Czwwo23fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_j9aoZG37Eeq8HvZ3P3dIrg" source="_j9aoYW37Eeq8HvZ3P3dIrg" target="_j9aoYG37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
       </edges>
     </lhs>
-    <rhs xmi:id="_CzwwqW3fEeq8HvZ3P3dIrg" name="Rhs">
-      <nodes xmi:id="_Czwwqm3fEeq8HvZ3P3dIrg" name="package" incoming="_CzwwrW3fEeq8HvZ3P3dIrg">
+    <rhs xmi:id="_j9aoZW37Eeq8HvZ3P3dIrg" name="Rhs">
+      <nodes xmi:id="_j9aoZm37Eeq8HvZ3P3dIrg" name="package">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
-        <attributes xmi:id="_Czwwq23fEeq8HvZ3P3dIrg" value="packageName">
+        <attributes xmi:id="_j9aoZ237Eeq8HvZ3P3dIrg" value="packageName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_CzwwrG3fEeq8HvZ3P3dIrg" name="toResource" outgoing="_CzwwrW3fEeq8HvZ3P3dIrg">
-        <type href="http://www.sidiff.org/graphpattern/1.0#//Resource"/>
-      </nodes>
-      <edges xmi:id="_CzwwrW3fEeq8HvZ3P3dIrg" source="_CzwwrG3fEeq8HvZ3P3dIrg" target="_Czwwqm3fEeq8HvZ3P3dIrg">
-        <type href="http://www.sidiff.org/graphpattern/1.0#//Resource/contents"/>
-      </edges>
     </rhs>
-    <mappings xmi:id="_Czwwrm3fEeq8HvZ3P3dIrg" origin="_Czwwo23fEeq8HvZ3P3dIrg" image="_Czwwqm3fEeq8HvZ3P3dIrg"/>
-    <mappings xmi:id="_Czwwr23fEeq8HvZ3P3dIrg" origin="_Czwwpm3fEeq8HvZ3P3dIrg" image="_CzwwrG3fEeq8HvZ3P3dIrg"/>
+    <mappings xmi:id="_j9aoaG37Eeq8HvZ3P3dIrg" origin="_j9aoYG37Eeq8HvZ3P3dIrg" image="_j9aoZm37Eeq8HvZ3P3dIrg"/>
   </units>
 </henshin:Module>

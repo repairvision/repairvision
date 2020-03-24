@@ -5,6 +5,7 @@ import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatch;
 import org.sidiff.graphpattern.tools.editrules.generator.GEDEditRuleGenerator;
 import org.sidiff.graphpattern.tools.editrules.generator.GraphPatternEditRuleGenerator;
+import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil;
 
 public class MinGraphEditDistanceMatch extends GraphPatternMatch {
 
@@ -47,5 +48,7 @@ public class MinGraphEditDistanceMatch extends GraphPatternMatch {
 		editRuleGenerator.generate(subjectGraph.getNodes(), valueGraph.getNodes());
 		this.editOperation = editRuleGenerator.getEditOperation();
 		this.editRule = editRuleGenerator.getEditRule();
+		
+		GraphPatternGeneratorUtil.removePseudoResourceNode(editRule);
 	}
 }

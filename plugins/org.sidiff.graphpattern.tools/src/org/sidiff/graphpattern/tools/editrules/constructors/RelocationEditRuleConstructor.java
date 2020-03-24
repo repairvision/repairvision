@@ -196,6 +196,7 @@ public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 					editRuleGenerator.getTracePostGraph2EditGraph())) {
 
 				if (!IEditRuleFilter.filter(filter, editOperation, editRule, editRules.getRulebase())) {
+					GraphPatternGeneratorUtil.removePseudoResourceNode(editRule);
 					relocationEditOperations.add(editRuleGenerator);
 				} else {
 					System.err.println(

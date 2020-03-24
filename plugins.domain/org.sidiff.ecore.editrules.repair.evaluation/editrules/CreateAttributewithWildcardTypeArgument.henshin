@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_DuTGMG3fEeq8HvZ3P3dIrg" name="Create: Attribute with Wildcard Type-Argument" description="Create: Attribute with Wildcard Type-Argument">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_DuTGMW3fEeq8HvZ3P3dIrg" name="mainUnit" subUnits="_DuTGNm3fEeq8HvZ3P3dIrg">
-    <parameters xmi:id="_DuTGMm3fEeq8HvZ3P3dIrg" name="toDataTypeWithTypeParameter" kind="IN"/>
-    <parameters xmi:id="_DuTGM23fEeq8HvZ3P3dIrg" name="toContainerClass" kind="IN"/>
-    <parameterMappings xmi:id="_DuTGNG3fEeq8HvZ3P3dIrg" source="_DuTGMm3fEeq8HvZ3P3dIrg" target="_DuTGN23fEeq8HvZ3P3dIrg"/>
-    <parameterMappings xmi:id="_DuTGNW3fEeq8HvZ3P3dIrg" source="_DuTGM23fEeq8HvZ3P3dIrg" target="_DuTGOG3fEeq8HvZ3P3dIrg"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ky10cG37Eeq8HvZ3P3dIrg" name="Create: Attribute with Wildcard Type-Argument" description="Create: Attribute with Wildcard Type-Argument">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ky10cW37Eeq8HvZ3P3dIrg" name="mainUnit" subUnits="_ky10dm37Eeq8HvZ3P3dIrg">
+    <parameters xmi:id="_ky10cm37Eeq8HvZ3P3dIrg" name="toDataTypeWithTypeParameter" kind="IN"/>
+    <parameters xmi:id="_ky10c237Eeq8HvZ3P3dIrg" name="toContainerClass" kind="IN"/>
+    <parameterMappings xmi:id="_ky10dG37Eeq8HvZ3P3dIrg" source="_ky10cm37Eeq8HvZ3P3dIrg" target="_ky10d237Eeq8HvZ3P3dIrg"/>
+    <parameterMappings xmi:id="_ky10dW37Eeq8HvZ3P3dIrg" source="_ky10c237Eeq8HvZ3P3dIrg" target="_ky10eG37Eeq8HvZ3P3dIrg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_DuTGNm3fEeq8HvZ3P3dIrg" name="Create: Attribute with Wildcard Type-Argument">
-    <parameters xmi:id="_DuTGN23fEeq8HvZ3P3dIrg" name="toDataTypeWithTypeParameter" kind="IN"/>
-    <parameters xmi:id="_DuTGOG3fEeq8HvZ3P3dIrg" name="toContainerClass" kind="IN"/>
-    <lhs xmi:id="_DuTGOW3fEeq8HvZ3P3dIrg" name="Lhs">
-      <nodes xmi:id="_DuTGOm3fEeq8HvZ3P3dIrg" name="toDataTypeWithTypeParameter">
+  <units xsi:type="henshin:Rule" xmi:id="_ky10dm37Eeq8HvZ3P3dIrg" name="Create: Attribute with Wildcard Type-Argument">
+    <parameters xmi:id="_ky10d237Eeq8HvZ3P3dIrg" name="toDataTypeWithTypeParameter" kind="IN"/>
+    <parameters xmi:id="_ky10eG37Eeq8HvZ3P3dIrg" name="toContainerClass" kind="IN"/>
+    <lhs xmi:id="_ky10eW37Eeq8HvZ3P3dIrg" name="Lhs">
+      <nodes xmi:id="_ky10em37Eeq8HvZ3P3dIrg" name="toDataTypeWithTypeParameter">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
       </nodes>
-      <nodes xmi:id="_DuTGO23fEeq8HvZ3P3dIrg" name="toContainerClass">
+      <nodes xmi:id="_ky10e237Eeq8HvZ3P3dIrg" name="toContainerClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
     </lhs>
-    <rhs xmi:id="_DuTGPG3fEeq8HvZ3P3dIrg" name="Rhs">
-      <nodes xmi:id="_DuTGPW3fEeq8HvZ3P3dIrg" name="toDataTypeWithTypeParameter" incoming="_DuTGRW3fEeq8HvZ3P3dIrg _DuTGSG3fEeq8HvZ3P3dIrg" outgoing="_DuTGQ23fEeq8HvZ3P3dIrg">
+    <rhs xmi:id="_ky10fG37Eeq8HvZ3P3dIrg" name="Rhs">
+      <nodes xmi:id="_ky10fW37Eeq8HvZ3P3dIrg" name="toDataTypeWithTypeParameter" incoming="_ky10hW37Eeq8HvZ3P3dIrg _ky10iG37Eeq8HvZ3P3dIrg" outgoing="_ky10g237Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
       </nodes>
-      <nodes xmi:id="_DuTGPm3fEeq8HvZ3P3dIrg" name="newT" incoming="_DuTGQ23fEeq8HvZ3P3dIrg">
+      <nodes xmi:id="_ky10fm37Eeq8HvZ3P3dIrg" name="newT" incoming="_ky10g237Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
       </nodes>
-      <nodes xmi:id="_DuTGP23fEeq8HvZ3P3dIrg" name="newAttributeWithGenericType" incoming="_DuTGSW3fEeq8HvZ3P3dIrg" outgoing="_DuTGRG3fEeq8HvZ3P3dIrg _DuTGRW3fEeq8HvZ3P3dIrg _DuTGRm3fEeq8HvZ3P3dIrg">
+      <nodes xmi:id="_ky10f237Eeq8HvZ3P3dIrg" name="newAttributeWithGenericType" incoming="_ky10iW37Eeq8HvZ3P3dIrg" outgoing="_ky10hG37Eeq8HvZ3P3dIrg _ky10hW37Eeq8HvZ3P3dIrg _ky10hm37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
       </nodes>
-      <nodes xmi:id="_DuTGQG3fEeq8HvZ3P3dIrg" name="newGenericTypeOfTypedElement" incoming="_DuTGRm3fEeq8HvZ3P3dIrg" outgoing="_DuTGR23fEeq8HvZ3P3dIrg _DuTGSG3fEeq8HvZ3P3dIrg">
+      <nodes xmi:id="_ky10gG37Eeq8HvZ3P3dIrg" name="newGenericTypeOfTypedElement" incoming="_ky10hm37Eeq8HvZ3P3dIrg" outgoing="_ky10h237Eeq8HvZ3P3dIrg _ky10iG37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
       </nodes>
-      <nodes xmi:id="_DuTGQW3fEeq8HvZ3P3dIrg" name="newTypeArgumentOfGenericTypeOfTypedElement" incoming="_DuTGR23fEeq8HvZ3P3dIrg">
+      <nodes xmi:id="_ky10gW37Eeq8HvZ3P3dIrg" name="newTypeArgumentOfGenericTypeOfTypedElement" incoming="_ky10h237Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
       </nodes>
-      <nodes xmi:id="_DuTGQm3fEeq8HvZ3P3dIrg" name="toContainerClass" incoming="_DuTGRG3fEeq8HvZ3P3dIrg" outgoing="_DuTGSW3fEeq8HvZ3P3dIrg">
+      <nodes xmi:id="_ky10gm37Eeq8HvZ3P3dIrg" name="toContainerClass" incoming="_ky10hG37Eeq8HvZ3P3dIrg" outgoing="_ky10iW37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <edges xmi:id="_DuTGQ23fEeq8HvZ3P3dIrg" source="_DuTGPW3fEeq8HvZ3P3dIrg" target="_DuTGPm3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_ky10g237Eeq8HvZ3P3dIrg" source="_ky10fW37Eeq8HvZ3P3dIrg" target="_ky10fm37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
       </edges>
-      <edges xmi:id="_DuTGRG3fEeq8HvZ3P3dIrg" source="_DuTGP23fEeq8HvZ3P3dIrg" target="_DuTGQm3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_ky10hG37Eeq8HvZ3P3dIrg" source="_ky10f237Eeq8HvZ3P3dIrg" target="_ky10gm37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
-      <edges xmi:id="_DuTGRW3fEeq8HvZ3P3dIrg" source="_DuTGP23fEeq8HvZ3P3dIrg" target="_DuTGPW3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_ky10hW37Eeq8HvZ3P3dIrg" source="_ky10f237Eeq8HvZ3P3dIrg" target="_ky10fW37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="_DuTGRm3fEeq8HvZ3P3dIrg" source="_DuTGP23fEeq8HvZ3P3dIrg" target="_DuTGQG3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_ky10hm37Eeq8HvZ3P3dIrg" source="_ky10f237Eeq8HvZ3P3dIrg" target="_ky10gG37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eGenericType"/>
       </edges>
-      <edges xmi:id="_DuTGR23fEeq8HvZ3P3dIrg" source="_DuTGQG3fEeq8HvZ3P3dIrg" target="_DuTGQW3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_ky10h237Eeq8HvZ3P3dIrg" source="_ky10gG37Eeq8HvZ3P3dIrg" target="_ky10gW37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
       </edges>
-      <edges xmi:id="_DuTGSG3fEeq8HvZ3P3dIrg" source="_DuTGQG3fEeq8HvZ3P3dIrg" target="_DuTGPW3fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_ky10iG37Eeq8HvZ3P3dIrg" source="_ky10gG37Eeq8HvZ3P3dIrg" target="_ky10fW37Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
       </edges>
-      <edges xmi:id="_DuTGSW3fEeq8HvZ3P3dIrg" source="_DuTGQm3fEeq8HvZ3P3dIrg" target="_DuTGP23fEeq8HvZ3P3dIrg">
+      <edges xmi:id="_ky10iW37Eeq8HvZ3P3dIrg" source="_ky10gm37Eeq8HvZ3P3dIrg" target="_ky10f237Eeq8HvZ3P3dIrg">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_DuTGSm3fEeq8HvZ3P3dIrg" origin="_DuTGOm3fEeq8HvZ3P3dIrg" image="_DuTGPW3fEeq8HvZ3P3dIrg"/>
-    <mappings xmi:id="_DuTGS23fEeq8HvZ3P3dIrg" origin="_DuTGO23fEeq8HvZ3P3dIrg" image="_DuTGQm3fEeq8HvZ3P3dIrg"/>
+    <mappings xmi:id="_ky10im37Eeq8HvZ3P3dIrg" origin="_ky10em37Eeq8HvZ3P3dIrg" image="_ky10fW37Eeq8HvZ3P3dIrg"/>
+    <mappings xmi:id="_ky10i237Eeq8HvZ3P3dIrg" origin="_ky10e237Eeq8HvZ3P3dIrg" image="_ky10gm37Eeq8HvZ3P3dIrg"/>
   </units>
 </henshin:Module>
