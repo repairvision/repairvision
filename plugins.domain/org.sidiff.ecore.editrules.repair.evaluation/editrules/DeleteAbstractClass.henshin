@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_unqB0G4ZEeqtMKWMoy76sA" name="Delete: Abstract Class" description="Delete: Abstract Class">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_unqB0W4ZEeqtMKWMoy76sA" name="mainUnit" subUnits="_unqB1m4ZEeqtMKWMoy76sA">
-    <parameters xmi:id="_unqB0m4ZEeqtMKWMoy76sA" name="fromPackage" kind="IN"/>
-    <parameters xmi:id="_unqB024ZEeqtMKWMoy76sA" name="oldAbstractClass" kind="IN"/>
-    <parameterMappings xmi:id="_unqB1G4ZEeqtMKWMoy76sA" source="_unqB0m4ZEeqtMKWMoy76sA" target="_unqB124ZEeqtMKWMoy76sA"/>
-    <parameterMappings xmi:id="_unqB1W4ZEeqtMKWMoy76sA" source="_unqB024ZEeqtMKWMoy76sA" target="_unqB2G4ZEeqtMKWMoy76sA"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ofWfMG67EeqnUr4w5kV3sA" name="Delete: Abstract Class" description="Delete: Abstract Class">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ofWfMW67EeqnUr4w5kV3sA" name="mainUnit" subUnits="_ofWfNm67EeqnUr4w5kV3sA">
+    <parameters xmi:id="_ofWfMm67EeqnUr4w5kV3sA" name="fromPackage" kind="IN"/>
+    <parameters xmi:id="_ofWfM267EeqnUr4w5kV3sA" name="oldAbstractClass" kind="IN"/>
+    <parameterMappings xmi:id="_ofWfNG67EeqnUr4w5kV3sA" source="_ofWfMm67EeqnUr4w5kV3sA" target="_ofWfN267EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ofWfNW67EeqnUr4w5kV3sA" source="_ofWfM267EeqnUr4w5kV3sA" target="_ofWfOG67EeqnUr4w5kV3sA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_unqB1m4ZEeqtMKWMoy76sA" name="Delete: Abstract Class">
-    <parameters xmi:id="_unqB124ZEeqtMKWMoy76sA" name="fromPackage" kind="IN"/>
-    <parameters xmi:id="_unqB2G4ZEeqtMKWMoy76sA" name="oldAbstractClass" kind="IN"/>
-    <lhs xmi:id="_unqB2W4ZEeqtMKWMoy76sA" name="Lhs">
-      <nodes xmi:id="_unqB2m4ZEeqtMKWMoy76sA" name="fromPackage" incoming="_unqB324ZEeqtMKWMoy76sA" outgoing="_unqB3m4ZEeqtMKWMoy76sA">
+  <units xsi:type="henshin:Rule" xmi:id="_ofWfNm67EeqnUr4w5kV3sA" name="Delete: Abstract Class">
+    <parameters xmi:id="_ofWfN267EeqnUr4w5kV3sA" name="fromPackage" kind="IN"/>
+    <parameters xmi:id="_ofWfOG67EeqnUr4w5kV3sA" name="oldAbstractClass" kind="IN"/>
+    <lhs xmi:id="_ofWfOW67EeqnUr4w5kV3sA" name="Lhs">
+      <nodes xmi:id="_ofWfOm67EeqnUr4w5kV3sA" name="fromPackage" incoming="_ofWfP267EeqnUr4w5kV3sA" outgoing="_ofWfPm67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
       </nodes>
-      <nodes xmi:id="_unqB224ZEeqtMKWMoy76sA" name="oldAbstractClass" incoming="_unqB3m4ZEeqtMKWMoy76sA" outgoing="_unqB324ZEeqtMKWMoy76sA">
+      <nodes xmi:id="_ofWfO267EeqnUr4w5kV3sA" name="oldAbstractClass" incoming="_ofWfPm67EeqnUr4w5kV3sA" outgoing="_ofWfP267EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
-        <attributes xmi:id="_unqB3G4ZEeqtMKWMoy76sA" value="&quot;true&quot;">
+        <attributes xmi:id="_ofWfPG67EeqnUr4w5kV3sA" value="&quot;true&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/abstract"/>
         </attributes>
-        <attributes xmi:id="_unqB3W4ZEeqtMKWMoy76sA" value="&quot;false&quot;">
+        <attributes xmi:id="_ofWfPW67EeqnUr4w5kV3sA" value="&quot;false&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/interface"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_unqB3m4ZEeqtMKWMoy76sA" source="_unqB2m4ZEeqtMKWMoy76sA" target="_unqB224ZEeqtMKWMoy76sA">
+      <edges xmi:id="_ofWfPm67EeqnUr4w5kV3sA" source="_ofWfOm67EeqnUr4w5kV3sA" target="_ofWfO267EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
       </edges>
-      <edges xmi:id="_unqB324ZEeqtMKWMoy76sA" source="_unqB224ZEeqtMKWMoy76sA" target="_unqB2m4ZEeqtMKWMoy76sA">
+      <edges xmi:id="_ofWfP267EeqnUr4w5kV3sA" source="_ofWfO267EeqnUr4w5kV3sA" target="_ofWfOm67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
       </edges>
     </lhs>
-    <rhs xmi:id="_unqB4G4ZEeqtMKWMoy76sA" name="Rhs">
-      <nodes xmi:id="_unqB4W4ZEeqtMKWMoy76sA" name="fromPackage">
+    <rhs xmi:id="_ofWfQG67EeqnUr4w5kV3sA" name="Rhs">
+      <nodes xmi:id="_ofWfQW67EeqnUr4w5kV3sA" name="fromPackage">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
       </nodes>
     </rhs>
-    <mappings xmi:id="_unqB4m4ZEeqtMKWMoy76sA" origin="_unqB2m4ZEeqtMKWMoy76sA" image="_unqB4W4ZEeqtMKWMoy76sA"/>
+    <mappings xmi:id="_ofWfQm67EeqnUr4w5kV3sA" origin="_ofWfOm67EeqnUr4w5kV3sA" image="_ofWfQW67EeqnUr4w5kV3sA"/>
   </units>
 </henshin:Module>

@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_upo-0G4ZEeqtMKWMoy76sA" name="Create: Serializable Attribute" description="Create: Serializable Attribute">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_upo-0W4ZEeqtMKWMoy76sA" name="mainUnit" subUnits="_upo-1m4ZEeqtMKWMoy76sA">
-    <parameters xmi:id="_upo-0m4ZEeqtMKWMoy76sA" name="toContainerClass" kind="IN"/>
-    <parameters xmi:id="_upo-024ZEeqtMKWMoy76sA" name="toDataType" kind="IN"/>
-    <parameterMappings xmi:id="_upo-1G4ZEeqtMKWMoy76sA" source="_upo-0m4ZEeqtMKWMoy76sA" target="_upo-124ZEeqtMKWMoy76sA"/>
-    <parameterMappings xmi:id="_upo-1W4ZEeqtMKWMoy76sA" source="_upo-024ZEeqtMKWMoy76sA" target="_upo-2G4ZEeqtMKWMoy76sA"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ogNa0G67EeqnUr4w5kV3sA" name="Create: Serializable Attribute" description="Create: Serializable Attribute">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ogNa0W67EeqnUr4w5kV3sA" name="mainUnit" subUnits="_ogNa1m67EeqnUr4w5kV3sA">
+    <parameters xmi:id="_ogNa0m67EeqnUr4w5kV3sA" name="toContainerClass" kind="IN"/>
+    <parameters xmi:id="_ogNa0267EeqnUr4w5kV3sA" name="toDataType" kind="IN"/>
+    <parameterMappings xmi:id="_ogNa1G67EeqnUr4w5kV3sA" source="_ogNa0m67EeqnUr4w5kV3sA" target="_ogNa1267EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ogNa1W67EeqnUr4w5kV3sA" source="_ogNa0267EeqnUr4w5kV3sA" target="_ogNa2G67EeqnUr4w5kV3sA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_upo-1m4ZEeqtMKWMoy76sA" name="Create: Serializable Attribute">
-    <parameters xmi:id="_upo-124ZEeqtMKWMoy76sA" name="toContainerClass" kind="IN"/>
-    <parameters xmi:id="_upo-2G4ZEeqtMKWMoy76sA" name="toDataType" kind="IN"/>
-    <lhs xmi:id="_upo-2W4ZEeqtMKWMoy76sA" name="Lhs">
-      <nodes xmi:id="_upo-2m4ZEeqtMKWMoy76sA" name="toContainerClass">
+  <units xsi:type="henshin:Rule" xmi:id="_ogNa1m67EeqnUr4w5kV3sA" name="Create: Serializable Attribute">
+    <parameters xmi:id="_ogNa1267EeqnUr4w5kV3sA" name="toContainerClass" kind="IN"/>
+    <parameters xmi:id="_ogNa2G67EeqnUr4w5kV3sA" name="toDataType" kind="IN"/>
+    <lhs xmi:id="_ogNa2W67EeqnUr4w5kV3sA" name="Lhs">
+      <nodes xmi:id="_ogNa2m67EeqnUr4w5kV3sA" name="toContainerClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_upo-224ZEeqtMKWMoy76sA" name="toDataType">
+      <nodes xmi:id="_ogNa2267EeqnUr4w5kV3sA" name="toDataType">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
       </nodes>
     </lhs>
-    <rhs xmi:id="_upo-3G4ZEeqtMKWMoy76sA" name="Rhs">
-      <nodes xmi:id="_upo-3W4ZEeqtMKWMoy76sA" name="toContainerClass" incoming="_upo-5G4ZEeqtMKWMoy76sA" outgoing="_upo-4m4ZEeqtMKWMoy76sA">
+    <rhs xmi:id="_ogNa3G67EeqnUr4w5kV3sA" name="Rhs">
+      <nodes xmi:id="_ogNa3W67EeqnUr4w5kV3sA" name="toContainerClass" incoming="_ogNa5G67EeqnUr4w5kV3sA" outgoing="_ogNa4m67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_upo-3m4ZEeqtMKWMoy76sA" name="newAttribute" incoming="_upo-4m4ZEeqtMKWMoy76sA" outgoing="_upo-424ZEeqtMKWMoy76sA _upo-5G4ZEeqtMKWMoy76sA">
+      <nodes xmi:id="_ogNa3m67EeqnUr4w5kV3sA" name="newAttribute" incoming="_ogNa4m67EeqnUr4w5kV3sA" outgoing="_ogNa4267EeqnUr4w5kV3sA _ogNa5G67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
-        <attributes xmi:id="_upo-324ZEeqtMKWMoy76sA" value="&quot;false&quot;">
+        <attributes xmi:id="_ogNa3267EeqnUr4w5kV3sA" value="&quot;false&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_upo-4G4ZEeqtMKWMoy76sA" name="toDataType" incoming="_upo-424ZEeqtMKWMoy76sA">
+      <nodes xmi:id="_ogNa4G67EeqnUr4w5kV3sA" name="toDataType" incoming="_ogNa4267EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
-        <attributes xmi:id="_upo-4W4ZEeqtMKWMoy76sA" value="&quot;true&quot;">
+        <attributes xmi:id="_ogNa4W67EeqnUr4w5kV3sA" value="&quot;true&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType/serializable"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_upo-4m4ZEeqtMKWMoy76sA" source="_upo-3W4ZEeqtMKWMoy76sA" target="_upo-3m4ZEeqtMKWMoy76sA">
+      <edges xmi:id="_ogNa4m67EeqnUr4w5kV3sA" source="_ogNa3W67EeqnUr4w5kV3sA" target="_ogNa3m67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="_upo-424ZEeqtMKWMoy76sA" source="_upo-3m4ZEeqtMKWMoy76sA" target="_upo-4G4ZEeqtMKWMoy76sA">
+      <edges xmi:id="_ogNa4267EeqnUr4w5kV3sA" source="_ogNa3m67EeqnUr4w5kV3sA" target="_ogNa4G67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="_upo-5G4ZEeqtMKWMoy76sA" source="_upo-3m4ZEeqtMKWMoy76sA" target="_upo-3W4ZEeqtMKWMoy76sA">
+      <edges xmi:id="_ogNa5G67EeqnUr4w5kV3sA" source="_ogNa3m67EeqnUr4w5kV3sA" target="_ogNa3W67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_upo-5W4ZEeqtMKWMoy76sA" origin="_upo-2m4ZEeqtMKWMoy76sA" image="_upo-3W4ZEeqtMKWMoy76sA"/>
-    <mappings xmi:id="_upo-5m4ZEeqtMKWMoy76sA" origin="_upo-224ZEeqtMKWMoy76sA" image="_upo-4G4ZEeqtMKWMoy76sA"/>
+    <mappings xmi:id="_ogNa5W67EeqnUr4w5kV3sA" origin="_ogNa2m67EeqnUr4w5kV3sA" image="_ogNa3W67EeqnUr4w5kV3sA"/>
+    <mappings xmi:id="_ogNa5m67EeqnUr4w5kV3sA" origin="_ogNa2267EeqnUr4w5kV3sA" image="_ogNa4G67EeqnUr4w5kV3sA"/>
   </units>
 </henshin:Module>

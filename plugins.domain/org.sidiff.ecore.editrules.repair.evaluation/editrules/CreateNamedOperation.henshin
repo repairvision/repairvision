@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ui1MMG4ZEeqtMKWMoy76sA" name="Create: Named Operation" description="Create: Named Operation">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_ui1MMW4ZEeqtMKWMoy76sA" name="mainUnit" subUnits="_ui1MNm4ZEeqtMKWMoy76sA">
-    <parameters xmi:id="_ui1MMm4ZEeqtMKWMoy76sA" name="toContainingClass" kind="IN"/>
-    <parameters xmi:id="_ui1MM24ZEeqtMKWMoy76sA" name="operationName" kind="IN"/>
-    <parameterMappings xmi:id="_ui1MNG4ZEeqtMKWMoy76sA" source="_ui1MMm4ZEeqtMKWMoy76sA" target="_ui1MN24ZEeqtMKWMoy76sA"/>
-    <parameterMappings xmi:id="_ui1MNW4ZEeqtMKWMoy76sA" source="_ui1MM24ZEeqtMKWMoy76sA" target="_ui1MOG4ZEeqtMKWMoy76sA"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ocW1kG67EeqnUr4w5kV3sA" name="Create: Named Operation" description="Create: Named Operation">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ocW1kW67EeqnUr4w5kV3sA" name="mainUnit" subUnits="_ocW1lm67EeqnUr4w5kV3sA">
+    <parameters xmi:id="_ocW1km67EeqnUr4w5kV3sA" name="toContainingClass" kind="IN"/>
+    <parameters xmi:id="_ocW1k267EeqnUr4w5kV3sA" name="operationName" kind="IN"/>
+    <parameterMappings xmi:id="_ocW1lG67EeqnUr4w5kV3sA" source="_ocW1km67EeqnUr4w5kV3sA" target="_ocW1l267EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ocW1lW67EeqnUr4w5kV3sA" source="_ocW1k267EeqnUr4w5kV3sA" target="_ocW1mG67EeqnUr4w5kV3sA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_ui1MNm4ZEeqtMKWMoy76sA" name="Create: Named Operation">
-    <parameters xmi:id="_ui1MN24ZEeqtMKWMoy76sA" name="toContainingClass" kind="IN"/>
-    <parameters xmi:id="_ui1MOG4ZEeqtMKWMoy76sA" name="operationName" kind="IN"/>
-    <lhs xmi:id="_ui1MOW4ZEeqtMKWMoy76sA" name="Lhs">
-      <nodes xmi:id="_ui1MOm4ZEeqtMKWMoy76sA" name="toContainingClass">
+  <units xsi:type="henshin:Rule" xmi:id="_ocW1lm67EeqnUr4w5kV3sA" name="Create: Named Operation">
+    <parameters xmi:id="_ocW1l267EeqnUr4w5kV3sA" name="toContainingClass" kind="IN"/>
+    <parameters xmi:id="_ocW1mG67EeqnUr4w5kV3sA" name="operationName" kind="IN"/>
+    <lhs xmi:id="_ocW1mW67EeqnUr4w5kV3sA" name="Lhs">
+      <nodes xmi:id="_ocW1mm67EeqnUr4w5kV3sA" name="toContainingClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
     </lhs>
-    <rhs xmi:id="_ui1MO24ZEeqtMKWMoy76sA" name="Rhs">
-      <nodes xmi:id="_ui1MPG4ZEeqtMKWMoy76sA" name="toContainingClass" incoming="_ui1MQG4ZEeqtMKWMoy76sA" outgoing="_ui1MP24ZEeqtMKWMoy76sA">
+    <rhs xmi:id="_ocW1m267EeqnUr4w5kV3sA" name="Rhs">
+      <nodes xmi:id="_ocW1nG67EeqnUr4w5kV3sA" name="toContainingClass" incoming="_ocW1oG67EeqnUr4w5kV3sA" outgoing="_ocW1n267EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_ui1MPW4ZEeqtMKWMoy76sA" name="newOperation" incoming="_ui1MP24ZEeqtMKWMoy76sA" outgoing="_ui1MQG4ZEeqtMKWMoy76sA">
+      <nodes xmi:id="_ocW1nW67EeqnUr4w5kV3sA" name="newOperation" incoming="_ocW1n267EeqnUr4w5kV3sA" outgoing="_ocW1oG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
-        <attributes xmi:id="_ui1MPm4ZEeqtMKWMoy76sA" value="operationName">
+        <attributes xmi:id="_ocW1nm67EeqnUr4w5kV3sA" value="operationName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_ui1MP24ZEeqtMKWMoy76sA" source="_ui1MPG4ZEeqtMKWMoy76sA" target="_ui1MPW4ZEeqtMKWMoy76sA">
+      <edges xmi:id="_ocW1n267EeqnUr4w5kV3sA" source="_ocW1nG67EeqnUr4w5kV3sA" target="_ocW1nW67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eOperations"/>
       </edges>
-      <edges xmi:id="_ui1MQG4ZEeqtMKWMoy76sA" source="_ui1MPW4ZEeqtMKWMoy76sA" target="_ui1MPG4ZEeqtMKWMoy76sA">
+      <edges xmi:id="_ocW1oG67EeqnUr4w5kV3sA" source="_ocW1nW67EeqnUr4w5kV3sA" target="_ocW1nG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eContainingClass"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_ui1MQW4ZEeqtMKWMoy76sA" origin="_ui1MOm4ZEeqtMKWMoy76sA" image="_ui1MPG4ZEeqtMKWMoy76sA"/>
+    <mappings xmi:id="_ocW1oW67EeqnUr4w5kV3sA" origin="_ocW1mm67EeqnUr4w5kV3sA" image="_ocW1nG67EeqnUr4w5kV3sA"/>
   </units>
 </henshin:Module>
