@@ -73,13 +73,12 @@ public class UnfulfillableConditionsFilter implements IEditRuleFilter {
 						}
 					}
 				} else if (isChange(eoEdge)) {
-					
-					// Changes only between context nodes or nodes of the same change!
-					if (!isPreserve(eoEdge.getSource()) && !getChange(eoEdge.getSource()).equals(getChange(eoEdge))) {
+
+					if (!isPreserve(eoEdge.getSource()) && !isEqualChanges(eoEdge.getSource(), eoEdge)) {
 						return false;
 					}
-					
-					if (!isPreserve(eoEdge.getTarget()) && !getChange(eoEdge.getTarget()).equals(getChange(eoEdge))) {
+
+					if (!isPreserve(eoEdge.getTarget()) && !isEqualChanges(eoEdge.getTarget(), eoEdge)) {
 						return false;
 					}
 				}
@@ -99,6 +98,13 @@ public class UnfulfillableConditionsFilter implements IEditRuleFilter {
 		}
 
 		return true;
+	}
+	
+	private boolean isEqualChanges(GraphElement elementA, GraphElement elementB) {
+		if (isChange(elementA) && isChange(elementB)) {
+			return getChange(elementA).equals(getChange(elementB));
+		}
+		return false;
 	}
 	
 	/**
