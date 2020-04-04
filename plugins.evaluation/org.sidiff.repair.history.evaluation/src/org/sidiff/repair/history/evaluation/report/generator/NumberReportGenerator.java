@@ -24,6 +24,8 @@ import org.sidiff.validation.constraint.api.ValidationFacade;
 
 public class NumberReportGenerator {
 	
+	private static String PATH_GRAPH_PATTERNS = "/org.sidiff.ecore.editrules.repair.evaluation/patterns/ecore.graphpattern";
+	
 	private static String PATH_EDIT_RULES = "/org.sidiff.ecore.editrules.repair.evaluation/patterns/ecore_editrules.graphpattern";
 	
 	private static Resource DOC_TYPE_RESOURCE_DUMMY = new ResourceImpl();
@@ -37,7 +39,10 @@ public class NumberReportGenerator {
 	/* Latex Commands */
 	
 	private static final String CMD_PROJECT_COUNT = "projectCount";
+	private static final String CMD_ALL_ASG_PATTERN_COUNT = "allASGPatternCount";
 	private static final String CMD_MINIMAL_ASG_PATTERN_COUNT = "minimalASGPatternCount";
+	private static final String CMD_CONFIGURATION_EFFORT = "configurationEffort";
+	private static final String CMD_ALL_GENERATED_CPEOS_COUNT = "allGeneratedCPEOs";
 	private static final String CMD_CREATING_DELETING_EDIT_RULE_COUNT = "creatingDeletingEditRuleCount";
 	private static final String CMD_TRANSFORMING_EDIT_RULE_COUNT = "transformingEditRuleCount";
 	private static final String CMD_RECLOCATING_EDIT_RULE_COUNT = "relocatingEditRuleCount";
@@ -82,7 +87,6 @@ public class NumberReportGenerator {
 	private static final String CMD_EXAMPLE_C_VERSION_COUNT_UML = "exampleCVersionCountUML";
 	private static final String CMD_RECOGNITION_RUNTIME_LESS_THEN_ONE_SECOND = "recognitionRuntimeLessThenOneSecond";
 	private static final String CMD_COMPLEMENT_RUNTIME_LOWER_BORDER = "complementRuntimeLowerBorder";
-	private static final String CMD_COMPLEMENT_RUNTIME_UPPER_BORDER = "complementRuntimeUpperBorder";
 	private static final String CMD_EXAMPLE_D_PARAMETER_CLASSES_UML = "exampleDParameterClassesUML";
 	private static final String CMD_EXAMPLE_D_PARAMETER_SUB_CLASSES_UML = "exampleDParameterSubClassesUML";
 
@@ -122,7 +126,10 @@ public class NumberReportGenerator {
 			// Configuration:
 			System.out.println();
 			System.out.println(createComment("Configuration:"));
+			System.out.println(createCommandX(CMD_ALL_ASG_PATTERN_COUNT, allASGPatternCount()));
 			System.out.println(createCommandX(CMD_MINIMAL_ASG_PATTERN_COUNT, minimalASGPatternCount()));
+			System.out.println(createCommandX(CMD_CONFIGURATION_EFFORT, configurationEffort()));
+			System.out.println(createCommandX(CMD_ALL_GENERATED_CPEOS_COUNT, allGeneratedCPEOsCount()));
 			System.out.println(createCommandX(CMD_CREATING_DELETING_EDIT_RULE_COUNT, creatingDeletingEditRuleCount()));
 			System.out.println(createCommandX(CMD_TRANSFORMING_EDIT_RULE_COUNT, transformingEditRuleCount()));
 			System.out.println(createCommandX(CMD_RECLOCATING_EDIT_RULE_COUNT, relocationEditRuleCount()));
@@ -194,7 +201,6 @@ public class NumberReportGenerator {
 			System.out.println(createCommandX(CMD_EXAMPLE_C_VERSION_COUNT_UML, exampleCVersionCountUML(manuallyEvaluated)));
 			System.out.println(createCommandX(CMD_RECOGNITION_RUNTIME_LESS_THEN_ONE_SECOND, recognitionRuntimeLessThenOneSecond(rq3rq4Report)));
 			System.out.println(createCommandX(CMD_COMPLEMENT_RUNTIME_LOWER_BORDER, complementRuntimeLowerBorder(manuallyEvaluated)));
-			System.out.println(createCommandX(CMD_COMPLEMENT_RUNTIME_UPPER_BORDER, complementRuntimeUpperBorder(manuallyEvaluated)));
 			System.out.println(createCommandX(CMD_EXAMPLE_D_PARAMETER_CLASSES_UML, exampleDParameterClassesUML(manuallyEvaluated)));
 			System.out.println(createCommandX(CMD_EXAMPLE_D_PARAMETER_SUB_CLASSES_UML, exampleDParameterSubClassesUML(manuallyEvaluated)));
 		} catch (IllegalArgumentException | IllegalAccessException | IOException e) {
@@ -265,9 +271,33 @@ public class NumberReportGenerator {
 		
 		return patternNames.size();
 	}
+	
+	public static int allASGPatternCount() {
+		Resource patternResource = new ResourceSetImpl().getResource(URI.createPlatformPluginURI(PATH_GRAPH_PATTERNS, true), true);
+		int count = 0;
+		
+		for (EObject element : (Iterable<EObject>) () -> patternResource.getAllContents()) {
+			if (element instanceof GraphPattern) {
+				++count;
+			}
+		}
+		
+		return count;
+	}
 
 	private static int minimalASGPatternCount() {
 		return Math.max(editRuleCount("Create:"), editRuleCount("Delete:")); // NOTE: Excluding duplicated patterns
+	}
+	
+	private static String configurationEffort() {
+		NumberFormat nf =  NumberFormat.getInstance(Locale.US);
+		nf.setMaximumFractionDigits(1);
+		
+		return nf.format((double) allASGPatternCount() / (double) constraintCount());
+	}
+	
+	private static int allGeneratedCPEOsCount() {
+		return creatingDeletingEditRuleCount() + transformingEditRuleCount() + relocationEditRuleCount();
 	}
 	
 	private static int creatingDeletingEditRuleCount() {
@@ -530,10 +560,6 @@ public class NumberReportGenerator {
 		return manuallyEvaluated.getColumn(CMD_COMPLEMENT_RUNTIME_LOWER_BORDER, String.class).get(0);
 	}
 
-	private static String complementRuntimeUpperBorder(LogTable manuallyEvaluated) {
-		return manuallyEvaluated.getColumn(CMD_COMPLEMENT_RUNTIME_UPPER_BORDER, String.class).get(0);
-	}
-	
 	private int exampleDParameterClassesUML(LogTable manuallyEvaluated) {
 		return manuallyEvaluated.getColumn(CMD_EXAMPLE_D_PARAMETER_CLASSES_UML, Integer.class).get(0);
 	}
