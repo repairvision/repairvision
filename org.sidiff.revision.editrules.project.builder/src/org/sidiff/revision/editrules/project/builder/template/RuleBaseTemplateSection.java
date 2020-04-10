@@ -36,8 +36,8 @@ import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes;
 import org.sidiff.graphpattern.tools.visualization.CreateDiagram;
+import org.sidiff.revision.editrules.project.RuleBasePlugin;
 import org.sidiff.revision.editrules.project.builder.Activator;
-import org.sidiff.revision.editrules.project.builder.RuleBasePlugin;
 import org.sidiff.revision.editrules.project.builder.nature.RuleBaseProjectNature;
 import org.sidiff.revision.editrules.project.builder.wizard.RuleBaseProjectPageEditRules;
 

@@ -1,5 +1,8 @@
 package org.sidiff.graphpattern.tools.model2graph;
 
+import java.io.IOException;
+import java.util.Collections;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -7,13 +10,14 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
-import org.sidiff.graphpattern.tools.editrules.generator.util.GraphPatternGeneratorUtil;
 
 public class ModelToGraphPatternHandler extends AbstractHandler {
 	
@@ -49,7 +53,7 @@ public class ModelToGraphPatternHandler extends AbstractHandler {
 						patternURI = URI.createURI(path);
 					}
 					
-					GraphPatternGeneratorUtil.saveBundle(patternURI, bundle);
+					saveBundle(patternURI, bundle);
 				}
 			}
 		} else {
@@ -57,6 +61,17 @@ public class ModelToGraphPatternHandler extends AbstractHandler {
 		}
 		
 		return null;
+	}
+	
+	protected void saveBundle(URI patternURI, Bundle bundle) {
+		Resource patternResource = new ResourceSetImpl().createResource(patternURI);
+		patternResource.getContents().add(bundle);
+
+		try {
+			patternResource.save(Collections.emptyMap());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	protected ModelToGraphPatternDefinitonFactory getDefinitionFactory() {

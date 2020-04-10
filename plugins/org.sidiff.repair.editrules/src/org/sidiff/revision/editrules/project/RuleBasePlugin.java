@@ -1,7 +1,7 @@
-package org.sidiff.revision.editrules.project.builder;
+package org.sidiff.revision.editrules.project;
 
 /**
- * Defines the structure of a rulebase plug-in.
+ * Defines the default structure of a rulebase plug-in.
  * 
  * @author Manuel Ohrndorf
  */
@@ -10,12 +10,12 @@ public class RuleBasePlugin {
 	/**
 	 * Plug-in which offers the extension point schema of {@link #EXTENSION_POINT_ID}.
 	 */
-	public static String EXTENSION_POINT_DEPENDENCIE = "org.sidiff.repair.editrules";
+	public static String EXTENSION_POINT_DEPENDENCIE = "org.sidiff.revision.editrules.project";
 	
 	/**
 	 * Extension point which registers a rulebase.
 	 */
-	public static String EXTENSION_POINT_ID  = "org.sidiff.repair.editrules.rulebase";
+	public static String EXTENSION_POINT_ID  = "org.sidiff.revision.editrules.project.rulebase";
 	
 	/**
 	 * {@link #EXTENSION_POINT_ID} element which registers a rulebase.

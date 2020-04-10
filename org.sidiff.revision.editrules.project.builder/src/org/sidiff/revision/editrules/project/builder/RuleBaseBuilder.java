@@ -23,12 +23,13 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.profile.henshin.converter.GraphPatternToHenshinConverterHandler;
-import org.sidiff.graphpattern.tools.editrules.constructors.CreationEditRuleConstructor;
-import org.sidiff.graphpattern.tools.editrules.constructors.DeletionEditRuleConstructor;
-import org.sidiff.graphpattern.tools.editrules.constructors.IEditRuleConstructor;
-import org.sidiff.graphpattern.tools.editrules.constructors.RelocationEditRuleConstructor;
-import org.sidiff.graphpattern.tools.editrules.constructors.TransformationEditRuleConstructor;
-import org.sidiff.graphpattern.tools.editrules.generator.handler.GenerateEditRulesBatch;
+import org.sidiff.revision.editrules.generation.constructors.CreationEditRuleConstructor;
+import org.sidiff.revision.editrules.generation.constructors.DeletionEditRuleConstructor;
+import org.sidiff.revision.editrules.generation.constructors.IEditRuleConstructor;
+import org.sidiff.revision.editrules.generation.constructors.RelocationEditRuleConstructor;
+import org.sidiff.revision.editrules.generation.constructors.TransformationEditRuleConstructor;
+import org.sidiff.revision.editrules.generation.generator.handler.GenerateEditRulesBatch;
+import org.sidiff.revision.editrules.project.RuleBasePlugin;
 
 /**
  * Builds the edit rules from a catalog of graph patterns.

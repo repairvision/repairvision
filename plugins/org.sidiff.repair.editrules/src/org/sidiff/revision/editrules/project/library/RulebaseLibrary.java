@@ -1,4 +1,4 @@
-package org.sidiff.repair.editrules.library;
+package org.sidiff.revision.editrules.project.library;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,16 +9,20 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.osgi.framework.Bundle;
+import org.sidiff.revision.editrules.project.RuleBasePlugin;
 
+/**
+ * Access to the registered rulebases.
+ * 
+ * @author Manuel Ohrndorf
+ */
 public class RulebaseLibrary {
 
-	public static final String EXTENSION_POINT_ID = "org.sidiff.repair.editrules.rulebase";
-	
 	public static List<URI> getRulebase(String rulebaseName) {
 		List<URI> editRules = new ArrayList<>();
 		
 		for (IConfigurationElement configurationElement : Platform.getExtensionRegistry()
-				.getConfigurationElementsFor(EXTENSION_POINT_ID)) {
+				.getConfigurationElementsFor(RuleBasePlugin.EXTENSION_POINT_ID)) {
 
 			String name = configurationElement.getAttribute("name");
 			
@@ -34,7 +38,7 @@ public class RulebaseLibrary {
 		List<URI> editRules = new ArrayList<>();
 		
 		for (IConfigurationElement configurationElement : Platform.getExtensionRegistry()
-				.getConfigurationElementsFor(EXTENSION_POINT_ID)) {
+				.getConfigurationElementsFor(RuleBasePlugin.EXTENSION_POINT_ID)) {
 
 			String name = configurationElement.getAttribute("name");
 			
@@ -54,7 +58,7 @@ public class RulebaseLibrary {
 		List<URI> editRules = new ArrayList<>();
 		
 		for (IConfigurationElement configurationElement : Platform.getExtensionRegistry()
-				.getConfigurationElementsFor(EXTENSION_POINT_ID)) {
+				.getConfigurationElementsFor(RuleBasePlugin.EXTENSION_POINT_ID)) {
 
 			String documentTypeValue = configurationElement.getAttribute("document-type");
 			

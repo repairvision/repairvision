@@ -25,7 +25,6 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
-import org.sidiff.repair.editrules.library.RulebaseUtil;
 import org.sidiff.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.InconsistencyEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.PrintHistoryInfoDriver;
@@ -34,6 +33,7 @@ import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
 import org.sidiff.repair.ui.app.IRepairApplication;
 import org.sidiff.repair.ui.app.IResultChangedListener;
 import org.sidiff.repair.ui.config.RepairPreferencePage;
+import org.sidiff.revision.editrules.project.library.RulebaseUtil;
 
 public class HistoryRepairApplication implements IRepairApplication<PEORepairJob, PEORepairSettings> {
 

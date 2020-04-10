@@ -10,8 +10,8 @@ import org.sidiff.completion.ui.model.proposals.recognition.ModelCompletionPropo
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
-import org.sidiff.repair.editrules.library.RulebaseLibrary;
-import org.sidiff.repair.editrules.library.RulebaseUtil;
+import org.sidiff.revision.editrules.project.library.RulebaseLibrary;
+import org.sidiff.revision.editrules.project.library.RulebaseUtil;
 
 public class CompletionProposalListHandler extends AbstractHandler {
 	

@@ -1,4 +1,4 @@
-package org.sidiff.repair.editrules;
+package org.sidiff.revision.editrules.project;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

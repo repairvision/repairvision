@@ -23,11 +23,11 @@ import org.sidiff.repair.api.IRepairFacade;
 import org.sidiff.repair.api.peo.PEORepairFacade;
 import org.sidiff.repair.api.peo.PEORepairJob;
 import org.sidiff.repair.api.peo.configuration.PEORepairSettings;
-import org.sidiff.repair.editrules.library.RulebaseLibrary;
-import org.sidiff.repair.editrules.library.RulebaseUtil;
 import org.sidiff.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.repair.history.evaluation.driver.data.HistoryInfo;
+import org.sidiff.revision.editrules.project.library.RulebaseLibrary;
+import org.sidiff.revision.editrules.project.library.RulebaseUtil;
 
 public class HistoryEvaluationApplication implements IApplication {
 	

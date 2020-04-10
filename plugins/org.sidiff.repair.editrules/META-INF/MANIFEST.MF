@@ -1,16 +1,15 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Editrules
-Bundle-SymbolicName: org.sidiff.repair.editrules;singleton:=true
+Bundle-Name: Edit Rule Library
+Bundle-SymbolicName: org.sidiff.revision.editrules.project;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.sidiff.repair.editrules.Activator
-Require-Bundle: org.eclipse.ui,
+Bundle-Activator: org.sidiff.revision.editrules.project.Activator
+Require-Bundle: org.eclipse.core.resources,
  org.eclipse.core.runtime,
- org.eclipse.core.resources,
- org.eclipse.emf.ecore,
- org.sidiff.editrule.consistency.validation,
- org.sidiff.consistency.common
+ org.sidiff.consistency.common,
+ org.sidiff.editrule.consistency.validation
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.sidiff.repair.editrules.library
+Export-Package: org.sidiff.revision.editrules.project,
+ org.sidiff.revision.editrules.project.library
 Automatic-Module-Name: org.sidiff.repair.editrules
