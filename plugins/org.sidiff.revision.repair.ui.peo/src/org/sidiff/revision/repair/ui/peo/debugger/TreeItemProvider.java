@@ -1,4 +1,4 @@
-package org.sidiff.consistency.common.ui.tree;
+package org.sidiff.revision.repair.ui.peo.debugger;
 
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;

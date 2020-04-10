@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.ui.tree.ITreeItem;
 import org.sidiff.revision.editrules.recognition.RecognitionEngineMatcher;
 import org.sidiff.revision.editrules.recognition.RecognitionEngineRecorder;
 import org.sidiff.revision.editrules.recognition.RecognitionEngineRecorder.IChangeTag;
 import org.sidiff.revision.repair.ui.peo.Activator;
+import org.sidiff.revision.repair.ui.peo.debugger.ITreeItem;
 
 public class DebuggingSnapshotItem implements ITreeItem {
 	

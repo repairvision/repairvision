@@ -1,9 +1,9 @@
 package org.sidiff.revision.repair.ui.peo.debugger.model;
 
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.ui.tree.ITreeItem;
 import org.sidiff.revision.editrules.recognition.pattern.graph.ActionNode;
 import org.sidiff.revision.repair.ui.peo.Activator;
+import org.sidiff.revision.repair.ui.peo.debugger.ITreeItem;
 
 public class EditRuleNodeItem extends EditRuleGraphElementItem implements ITreeItem  {
 

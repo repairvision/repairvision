@@ -27,9 +27,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.common.ui.util.UIUtil;
-import org.sidiff.consistency.common.ui.dialogs.CreateProjectDialog;
 import org.sidiff.historymodel.History;
 import org.sidiff.repair.history.editrules.generator.EditRuleGenerator.RulebaseLimitExceededException;
+import org.sidiff.repair.history.editrules.util.CreateProjectDialog;
 import org.sidiff.repair.history.editrules.util.IterableHistory;
 
 public class EditRuleGeneratorHandler extends AbstractHandler implements IHandler {

@@ -2,9 +2,9 @@ package org.sidiff.revision.repair.ui.peo.debugger.model;
 
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.ui.tree.ITreeItem;
 import org.sidiff.revision.editrules.recognition.pattern.graph.ActionEdge;
 import org.sidiff.revision.repair.ui.peo.Activator;
+import org.sidiff.revision.repair.ui.peo.debugger.ITreeItem;
 
 public class EditRuleEdgeItem extends EditRuleGraphElementItem implements ITreeItem {
 

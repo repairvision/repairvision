@@ -5,11 +5,11 @@ import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.ui.tree.ITreeItem;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.revision.repair.ui.peo.Activator;
+import org.sidiff.revision.repair.ui.peo.debugger.ITreeItem;
 
 public class DomainItem implements ITreeItem {
 

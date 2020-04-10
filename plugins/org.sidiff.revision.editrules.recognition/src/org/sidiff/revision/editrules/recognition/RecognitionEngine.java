@@ -1,7 +1,6 @@
 package org.sidiff.revision.editrules.recognition;
 
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.designpatterns.IAlgorithm;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
@@ -16,7 +15,7 @@ import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 /**
  * @author Manuel Ohrndorf
  */
-public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
+public class RecognitionEngine implements IRecognitionEngine {
 	
 	// -enableDebugUtil
 	// -DLOGCHANNEL="ConsoleLogChannel" -DLOGEVENTS="*"
@@ -97,7 +96,6 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 				new RecognitionMatchCreator(recognitionPattern, matchingHelper.getRevision()));
 	}
 	
-	@Override
 	public void start() {
 		
 //		// Merge external resources into the difference:
@@ -107,7 +105,6 @@ public class RecognitionEngine implements IAlgorithm, IRecognitionEngine {
 		started = true;
 	}
 
-	@Override
 	public void finish() {
 		
 //		// Unmerge external resources into the difference:

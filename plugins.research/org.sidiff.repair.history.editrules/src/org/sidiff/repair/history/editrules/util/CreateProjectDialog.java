@@ -1,4 +1,4 @@
-package org.sidiff.consistency.common.ui.dialogs;
+package org.sidiff.repair.history.editrules.util;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;

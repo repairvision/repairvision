@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.ui.tree.ITreeItem;
 import org.sidiff.revision.repair.api.peo.PEORepairCalculationEngineDebugger;
 import org.sidiff.revision.repair.ui.peo.Activator;
+import org.sidiff.revision.repair.ui.peo.debugger.ITreeItem;
 
 public class DebuggingSession implements ITreeItem {
 	

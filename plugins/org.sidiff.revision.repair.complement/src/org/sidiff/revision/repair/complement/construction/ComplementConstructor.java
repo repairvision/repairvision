@@ -28,7 +28,6 @@ import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
-import org.sidiff.consistency.common.debug.DebugUtil;
 import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
@@ -49,6 +48,8 @@ import org.sidiff.revision.repair.complement.util.ComplementUtil;
  */
 public class ComplementConstructor {
 	
+	public static final boolean DEBUG = false;
+	
 	/**
 	 * @param recognitionMatch
 	 *            A partial (edit-rule) matching of the partially executed
@@ -65,7 +66,7 @@ public class ComplementConstructor {
 		// Derive complement rule:
 		ComplementRule complement = deriveComplementRule(recognizedRule, recognitionMatch); 
 		
-		if (DebugUtil.statistic) {
+		if (DEBUG) {
 			System.out.println("########## Derive Complement: " + (System.currentTimeMillis() - deriveComplements) + "ms");
 		}
 		
@@ -240,7 +241,7 @@ public class ComplementConstructor {
 					// Check dangling constraint:
 					if (!complementNode.getIncoming().isEmpty() || !complementNode.getOutgoing().isEmpty()) {
 						
-						if (DebugUtil.isActive) {
+						if (DEBUG) {
 							LogUtil.log(LogEvent.NOTICE, "Dangling Edges: " + complementNode 
 									+ "\n  (" + complementNode.getGraph().getRule() + ")");
 						}
