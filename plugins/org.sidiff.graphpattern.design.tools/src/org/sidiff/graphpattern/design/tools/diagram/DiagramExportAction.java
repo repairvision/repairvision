@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.design.tools;
+package org.sidiff.graphpattern.design.tools.diagram;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;

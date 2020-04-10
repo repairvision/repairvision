@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.design.tools;
+package org.sidiff.graphpattern.design.tools.documentation;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,84 +11,97 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.sirius.business.api.dialect.DialectManager;
 import org.eclipse.sirius.business.api.session.Session;
 import org.eclipse.sirius.business.api.session.SessionManager;
 import org.eclipse.sirius.common.tools.api.resource.ImageFileFormat;
 import org.eclipse.sirius.viewpoint.DRepresentation;
-import org.eclipse.ui.handlers.HandlerUtil;
-import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.design.tools.diagram.DiagramExportAction;
 import org.sidiff.graphpattern.edit.util.LabelServices;
 
-public class CreateDocumentation extends AbstractHandler {
-
-	protected static final String FOLDER = "doc";
+public class GraphPatternDocumentationCreator {
 	
-	protected static boolean LIFT_LEAFS = true;
+	private String folder = "doc";
 	
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Bundle graphPatternBundle = EMFHandlerUtil.getSelection(event, Bundle.class);
-
-		if (graphPatternBundle != null) {
-			LIFT_LEAFS = WorkbenchUtil.showQuestion("Hide tree levels that contain just one leaf?");
-			
-			ISelection selection = HandlerUtil.getCurrentSelection(event);
-			IResource resource = ((IResource) ((StructuredSelection) selection).getFirstElement());
-			IProject project = resource.getProject();
-			
-			// create output folder:
-			new File(project.getLocation().toFile().getAbsolutePath() + File.separator + FOLDER).mkdirs();
-			
-			// generate SVG diagrams:
-			if (WorkbenchUtil.showQuestion("Generate diagrams?")) {
-				generateSVGDiagrams(project, resource, graphPatternBundle, WorkbenchUtil.showQuestion("Embed SVG into HTML?"));
-			}
-			
-			// generate HTML list:
-			String docPath = project.getFolder(FOLDER).getLocation().toOSString() + File.separator + graphPatternBundle.getName().toLowerCase() + ".html";
-        	generateHTMLList(graphPatternBundle, docPath);
-			
-			// show new file in workspace:
-			try {
-				project.refreshLocal(IProject.DEPTH_INFINITE, new NullProgressMonitor());
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
+	private boolean simplifyTree = true;
+	
+	private boolean generateSVG = true;
+	
+	private boolean embeddedSVG  = true;
+	
+	/**
+	 * @param folder       The the documentation folder relative to the project.
+	 * @param simplifyTree Simplify/Merge tree nodes that contain just one child node?
+	 * @param generateSVG  Generate diagrams?
+	 * @param embeddedSVG  Embed SVG into HTML?
+	 */
+	public GraphPatternDocumentationCreator(String folder, boolean simplifyTree, boolean generateSVG, boolean embeddedSVG) {
+		this.folder = folder;
+		this.simplifyTree = simplifyTree;
+		this.generateSVG = generateSVG;
+		this.embeddedSVG = embeddedSVG;
+	}
+	
+	/**
+	 * @param simplifyTree Simplify/Merge tree nodes that contain just one child node?
+	 * @param generateSVG  Generate diagrams?
+	 * @param embeddedSVG  Embed SVG into HTML?
+	 */
+	public GraphPatternDocumentationCreator(boolean simplifyTree, boolean generateSVG, boolean embeddedSVG) {
+		this.simplifyTree = simplifyTree;
+		this.generateSVG = generateSVG;
+		this.embeddedSVG = embeddedSVG;
+	}
+	
+	public GraphPatternDocumentationCreator() {
+	}
+	
+	public void createDocumentation(IResource resource, Bundle graphPatternBundle) {
+		IProject project = resource.getProject();
+		
+		// create output folder:
+		new File(project.getLocation().toFile().getAbsolutePath() + File.separator + folder).mkdirs();
+		
+		// generate SVG diagrams:
+		if (generateSVG) {
+			generateSVGDiagrams(resource);
 		}
 		
-		return null;
+		// generate HTML list:
+		String docPath = project.getFolder(folder).getLocation().toOSString() + File.separator + graphPatternBundle.getName().toLowerCase() + ".html";
+    	generateHTMLList(graphPatternBundle, docPath);
+		
+		// show new file in workspace:
+		try {
+			project.refreshLocal(IProject.DEPTH_INFINITE, new NullProgressMonitor());
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
 	}
 
-	private Map<String, GraphPattern> generateSVGDiagrams(IProject project, IResource resource, Bundle graphPatternBundle, boolean embeddedSVG) {
+	private Map<String, GraphPattern> generateSVGDiagrams(IResource diagramResource) {
 		
 		Map<String, GraphPattern> links = new HashMap<>();
 		
 		// create SVG diagram:
-		URI uri = URI.createPlatformResourceURI(project.getName() + "/" + resource.getProjectRelativePath().toString(), true);
+		URI uri = URI.createPlatformResourceURI(diagramResource.getProject().getName() + "/" + diagramResource.getProjectRelativePath().toString(), true);
 		Session session = SessionManager.INSTANCE.getSession(uri.trimFileExtension().appendFileExtension("aird"), new NullProgressMonitor());
-
+	
 		if (session != null) {
 			Collection<DRepresentation> dRepresentationsToExportAsImage = DialectManager.INSTANCE.getAllRepresentations(session);
-
+	
 			for (DRepresentation dRepresentation : dRepresentationsToExportAsImage) {
-
+	
 				// get Graph Pattern of diagram:
 				GraphPattern graphPattern = ((NodePattern) dRepresentation.getRepresentationElements().stream()
 						.filter(e -> e.getTarget() instanceof NodePattern).findFirst().get().getTarget())
@@ -96,8 +109,8 @@ public class CreateDocumentation extends AbstractHandler {
 				
 				// create output path:
 				String pathName = getDiagramPath(graphPattern);
-				String localPath = FOLDER + File.separator + pathName;
-				File outputFolder = new File(project.getLocation().toFile().getAbsolutePath() + File.separator + localPath);
+				String localPath = folder + File.separator + pathName;
+				File outputFolder = new File(diagramResource.getProject().getLocation().toFile().getAbsolutePath() + File.separator + localPath);
 				
 				// Skip already existing:
 				if (outputFolder.exists()) {
@@ -106,23 +119,23 @@ public class CreateDocumentation extends AbstractHandler {
 				
 				// create output folder:
 				outputFolder.mkdir();
-				IPath outputPath = project.getFolder(localPath).getLocation();
+				IPath outputPath = diagramResource.getProject().getFolder(localPath).getLocation();
 				
 				// export image:
 				new DiagramExportAction(session, Collections.singleton(dRepresentation), outputPath, ImageFileFormat.SVG, true, true);
-
+	
 				// map diagram an graph pattern:
 				String htmlDocLink = null;
 				String svgDocLink = null;
-
+	
 				BufferedReader docReaderBuffer = null;
 				FileWriter htmlDocWriter = null;
-
+	
 				// get HTML path:
 				IPath htmlPath = null; 
 				
 				try {
-					IResource htmlDoc = Arrays.asList(project.getFolder(localPath).members()).stream()
+					IResource htmlDoc = Arrays.asList(diagramResource.getProject().getFolder(localPath).members()).stream()
 							.filter(r -> r.getFileExtension().equals("html")).findFirst().get();
 					htmlDoc.move(htmlDoc.getFullPath().removeLastSegments(1).append(getDiagramNameHTML(graphPattern)), true, null);
 					
@@ -131,13 +144,13 @@ public class CreateDocumentation extends AbstractHandler {
 					e.printStackTrace();
 				}
 				
-				htmlDocLink = htmlPath.makeRelativeTo(project.getFolder(FOLDER).getLocation()).toPortableString();
+				htmlDocLink = htmlPath.makeRelativeTo(diagramResource.getProject().getFolder(folder).getLocation()).toPortableString();
 				
 				// get SVG path:
 				IPath svgPath = null;
 				
 				try {
-					IResource svgDoc = Arrays.asList(project.getFolder(localPath).members()).stream()
+					IResource svgDoc = Arrays.asList(diagramResource.getProject().getFolder(localPath).members()).stream()
 							.filter(r -> r.getFileExtension().equals("svg")).findFirst().get();
 					svgDoc.move(svgDoc.getFullPath().removeLastSegments(1).append(getDiagramNameSVG(graphPattern)), true, null);
 					
@@ -146,10 +159,10 @@ public class CreateDocumentation extends AbstractHandler {
 					e.printStackTrace();
 				}
 				
-				svgDocLink = svgPath.makeRelativeTo(project.getFolder(localPath).getLocation()).toPortableString();
+				svgDocLink = svgPath.makeRelativeTo(diagramResource.getProject().getFolder(localPath).getLocation()).toPortableString();
 				
 				try {
-
+	
 					// write HTML file:
 					StringBuilder newHtmlDoc = new StringBuilder(); 
 					
@@ -187,7 +200,7 @@ public class CreateDocumentation extends AbstractHandler {
 						
 						FileReader docReader = new FileReader(svgPath.toFile());
 						docReaderBuffer = new BufferedReader(docReader);
-
+	
 						String line = docReaderBuffer.readLine();
 						
 						while (line != null) {
@@ -210,18 +223,18 @@ public class CreateDocumentation extends AbstractHandler {
 						// >> fix: make HTML hyperlinks relative <<
 						FileReader docReader = new FileReader(htmlPath.toFile());
 						docReaderBuffer = new BufferedReader(docReader);
-
+	
 						String line = docReaderBuffer.readLine();
 						
 						while (line != null) {
 							line = line.replaceAll("data=\".*?\"", "data=\"" + svgDocLink + "\"");
 							line = line.replaceAll("src=\".*?\"", "data=\"" + svgDocLink + "\"");
-
+	
 							newHtmlDoc.append(line + "\n");
 							line = docReaderBuffer.readLine();
 						}
 					}
-
+	
 					htmlDocWriter = new FileWriter(htmlPath.toFile());
 					htmlDocWriter.write(newHtmlDoc.toString());
 					
@@ -430,11 +443,11 @@ public class CreateDocumentation extends AbstractHandler {
 		}
 	}
 	
-	public void generateHTMLListItem(StringBuilder doc, Pattern pattern) {
+	private void generateHTMLListItem(StringBuilder doc, Pattern pattern) {
 		
 		// item:
-		// LIFT_LEAFS: Hide sub-patterns that contain only graph patterns and no other sub-patterns
-		if (!LIFT_LEAFS || !(pattern.getSubpatterns().size() == 0)) {
+		// simplifyTree: Hide sub-patterns that contain only graph patterns and no other sub-patterns
+		if (!simplifyTree || !(pattern.getSubpatterns().size() == 0)) {
 			String patternStereotype = LabelServices.getStereotypesLabel(pattern.getStereotypes()).replace("<", "&lt;").replace(">", "&gt;");;
 			
 			doc.append("<li>");
@@ -450,7 +463,7 @@ public class CreateDocumentation extends AbstractHandler {
 		doc.append("\n");
 		
 		// sub-patterns:
-		if (!LIFT_LEAFS) {
+		if (!simplifyTree) {
 			for (Pattern subPattern : pattern.getSubpatterns()) {
 				generateHTMLListItem(doc, subPattern);
 			}
@@ -472,8 +485,8 @@ public class CreateDocumentation extends AbstractHandler {
 			doc.append("\n");
 		}
 		
-		// LIFT_LEAFS: generate sub-pattern after (leaf) graph patterns
-		if (LIFT_LEAFS) {
+		// simplifyTree: generate sub-pattern after (leaf) graph patterns
+		if (simplifyTree) {
 			for (Pattern subPattern : pattern.getSubpatterns()) {
 				generateHTMLListItem(doc, subPattern);
 			}
@@ -482,16 +495,16 @@ public class CreateDocumentation extends AbstractHandler {
 		doc.append("</ul>");
 		doc.append("\n");
 	}
-
-	private String getDiagramPath(GraphPattern graphPattern) {
+	
+	protected String getDiagramPath(GraphPattern graphPattern) {
 		return LabelServices.getLabel(graphPattern).replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 	}
 	
-	private String getDiagramNameHTML(GraphPattern graphPattern) {
+	protected String getDiagramNameHTML(GraphPattern graphPattern) {
 		return "diagram.html";
 	}
 	
-	private String getDiagramNameSVG(GraphPattern graphPattern) {
+	protected String getDiagramNameSVG(GraphPattern graphPattern) {
 		return "diagram.svg";
 	}
 }

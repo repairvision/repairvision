@@ -34,7 +34,7 @@ import org.eclipse.pde.ui.templates.PluginReference;
 import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.GraphpatternFactory;
-import org.sidiff.graphpattern.design.tools.CreateDiagram;
+import org.sidiff.graphpattern.design.tools.diagram.ModelDiagramCreator;
 import org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes;
 import org.sidiff.revision.editrules.project.RuleBasePlugin;
 import org.sidiff.revision.editrules.project.builder.Activator;
@@ -239,8 +239,8 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 	
 	private URI createGraphPatternDiagram(Bundle patternBundle, IProgressMonitor monitor) {
 		try {
-			CreateDiagram createDiagram = new CreateDiagram();
-			URI diagramFile = createDiagram.createDiagram(patternBundle, false, monitor);
+			ModelDiagramCreator createDiagram = new ModelDiagramCreator(patternBundle, monitor);
+			URI diagramFile = createDiagram.createRepresentations(monitor);
 			return diagramFile;
 		} catch (Exception e) {
 			e.printStackTrace();
