@@ -2,16 +2,16 @@ package org.sidiff.revision.editrules.generation.filter;
 
 import java.util.List;
 
-import org.sidiff.csp.solver.ICSPSolver;
-import org.sidiff.csp.solver.IConstraintSatisfactionProblem;
-import org.sidiff.csp.solver.impl.CSPSolver;
-import org.sidiff.csp.solver.impl.ConstraintSatisfactionProblem;
-import org.sidiff.csp.solver.impl.Variable;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Stereotype;
+import org.sidiff.graphpattern.csp.generic.ICSPSolver;
+import org.sidiff.graphpattern.csp.generic.IConstraintSatisfactionProblem;
+import org.sidiff.graphpattern.csp.generic.impl.CSPSolver;
+import org.sidiff.graphpattern.csp.generic.impl.ConstraintSatisfactionProblem;
+import org.sidiff.graphpattern.csp.generic.impl.Variable;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain.EdgeMatching;

@@ -195,7 +195,7 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 	}
 	
 	private void searchInTable() {
-		String searchKey = tableSearch.getText().strip().toLowerCase();
+		String searchKey = tableSearch.getText().trim().toLowerCase();
 		List<String> searchedDocumentTypes = new ArrayList<>();
 		
 		for (String documentType : availableDocumentTypes) {
