@@ -7,7 +7,7 @@ import java.util.Iterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.sidiff.consistency.common.java.LookaheadIterator;
+import org.sidiff.common.utilities.java.LookaheadIterator;
 import org.sidiff.history.repository.IModelRepository;
 import org.sidiff.history.repository.IModelRepositoryConnector;
 import org.sidiff.history.repository.IModelVersion;

@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
-import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.ChangePatternUtil;
 import org.sidiff.revision.repair.ui.Activator;
 
 public class ActionNodeItem extends ActionItem {

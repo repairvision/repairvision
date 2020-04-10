@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.monitor.LogTime;
+import org.sidiff.common.utilities.monitor.LogTime;
 import org.sidiff.revision.editrules.recognition.RecognitionEngine;
 import org.sidiff.revision.editrules.recognition.RecognitionEngineMatcher;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;

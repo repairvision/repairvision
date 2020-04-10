@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EAnnotation;
-import org.sidiff.consistency.common.ui.util.InfoConsole;
+import org.sidiff.common.utilities.ui.util.InfoConsole;
 import org.sidiff.revision.repair.history.evaluation.driver.data.HistoryInfo;
 
 public class PrintHistoryInfoDriver {

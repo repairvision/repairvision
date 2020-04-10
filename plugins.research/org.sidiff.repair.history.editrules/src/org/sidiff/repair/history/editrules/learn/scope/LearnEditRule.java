@@ -15,7 +15,7 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.tools.recorder.DifferenceToEditRule;
 import org.sidiff.editrule.tools.recorder.TransformationSetup;

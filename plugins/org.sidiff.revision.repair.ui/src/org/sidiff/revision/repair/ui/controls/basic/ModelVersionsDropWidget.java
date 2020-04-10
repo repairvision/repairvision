@@ -4,7 +4,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.sidiff.consistency.common.ui.widgets.IUnsetableControl;
+import org.sidiff.common.utilities.ui.widgets.IUnsetableControl;
 import org.sidiff.revision.repair.ui.app.impl.EclipseResourceRepairApplication;
 
 public class ModelVersionsDropWidget implements IUnsetableControl {

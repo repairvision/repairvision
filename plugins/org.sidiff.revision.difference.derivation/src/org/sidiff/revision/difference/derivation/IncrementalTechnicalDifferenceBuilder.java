@@ -7,8 +7,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.emf.access.Scope;
-import org.sidiff.common.logging.LogEvent;
-import org.sidiff.common.logging.LogUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 
 /**
@@ -57,8 +55,6 @@ public class IncrementalTechnicalDifferenceBuilder implements ITechnicalDifferen
 
 	@Override
 	public SymmetricDifference deriveTechDiff(SymmetricDifference difference, Scope scope) {
-		LogUtil.log(LogEvent.NOTICE, "Starting incremental derivation of low-level difference");
-
 		Resource modelA = difference.getModelA();
 		Resource modelB = difference.getModelB();
 		
@@ -66,15 +62,10 @@ public class IncrementalTechnicalDifferenceBuilder implements ITechnicalDifferen
 			ITechnicalDifferenceBuilder nextBuilder = tdBuilders.get(i);
 
 			if (nextBuilder.canHandleModels(modelA, modelB)) {
-				LogUtil.log(LogEvent.NOTICE, "Next tdBuilder (" + i + "): " + nextBuilder.getName());
 				nextBuilder.deriveTechDiff(difference, scope);
 			} else {
-				LogUtil.log(LogEvent.NOTICE, "Next tdBuilder (" + i + "): " + nextBuilder.getName()
-						+ ": Skip because cannot handle resources " + modelA + " and " + modelB);
 			}
 		}
-
-		LogUtil.log(LogEvent.NOTICE, "Finished incremental derivation of low-level difference");
 		
 		return difference;
 	}

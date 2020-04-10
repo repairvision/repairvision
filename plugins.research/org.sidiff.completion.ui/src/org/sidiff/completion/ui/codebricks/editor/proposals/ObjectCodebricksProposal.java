@@ -5,12 +5,12 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.editor.CodebricksEditor;
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.completion.ui.proposals.ICompletionPreview;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
-import org.sidiff.consistency.common.emf.ItemProviderUtil;
 
 public class ObjectCodebricksProposal implements ICompletionProposal {
 

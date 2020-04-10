@@ -14,7 +14,7 @@ import org.eclipse.sirius.diagram.ui.tools.api.graphical.edit.styles.SimpleStyle
 import org.eclipse.sirius.diagram.ui.tools.api.graphical.edit.styles.StyleConfiguration;
 import org.eclipse.sirius.viewpoint.Style;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.emf.ItemProviderUtil;
+import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.graphpattern.EdgePattern;
 
 /**

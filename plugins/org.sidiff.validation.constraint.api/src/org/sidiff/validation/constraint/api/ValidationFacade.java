@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.consistency.common.emf.DocumentType;
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.api.util.RepairValidation;

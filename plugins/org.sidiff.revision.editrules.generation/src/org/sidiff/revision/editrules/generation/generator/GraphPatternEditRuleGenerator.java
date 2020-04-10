@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
+import org.sidiff.common.utilities.java.StringUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphElement;
@@ -25,7 +26,6 @@ import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.Stereotype;
 import org.sidiff.revision.editrules.generation.generator.util.GraphPatternGeneratorUtil;
-import org.sidiff.consistency.common.java.StringUtil;
 
 public class GraphPatternEditRuleGenerator extends BasicEditRuleGenerator {
 

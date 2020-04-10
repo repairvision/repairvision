@@ -6,7 +6,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.ui.util.NameUtil;
+import org.sidiff.common.utilities.ui.util.NameUtil;
 import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.ui.Activator;
 import org.sidiff.revision.repair.ui.provider.IHighlightableElement;

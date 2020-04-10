@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.sidiff.common.utilities.emf.ItemProviderUtil;
+import org.sidiff.common.utilities.emf.MetaModelUtil;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
@@ -27,8 +29,6 @@ import org.sidiff.graphpattern.edit.commands.SetEdgePatternTypeCommand;
 import org.sidiff.graphpattern.edit.util.ColorServices;
 import org.sidiff.graphpattern.edit.util.LabelServices;
 import org.eclipse.emf.ecore.EClass;
-import org.sidiff.consistency.common.emf.ItemProviderUtil;
-import org.sidiff.consistency.common.emf.MetaModelUtil;
 
 /**
  * This is the item provider adapter for a {@link org.sidiff.graphpattern.EdgePattern} object.

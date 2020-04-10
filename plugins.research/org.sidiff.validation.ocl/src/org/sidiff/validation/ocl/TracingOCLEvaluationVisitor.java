@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.evaluation.EvaluationVisitorDecorator;
 import org.eclipse.ocl.pivot.util.Visitable;
-import org.sidiff.consistency.common.ui.util.InfoConsole;
+import org.sidiff.common.utilities.ui.util.InfoConsole;
 
 /**
  * A decorator for evaluation visitors that is installed when evaluation tracing

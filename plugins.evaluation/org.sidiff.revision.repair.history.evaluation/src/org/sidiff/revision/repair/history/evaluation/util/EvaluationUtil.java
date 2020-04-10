@@ -13,7 +13,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
-import org.sidiff.consistency.common.monitor.LogTable;
+import org.sidiff.common.utilities.monitor.LogTable;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.historymodel.History;

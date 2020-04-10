@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.Pattern;

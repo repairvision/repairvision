@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.sidiff.consistency.common.monitor.LogTime;
+import org.sidiff.common.utilities.monitor.LogTime;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionEngineSettings;
 import org.sidiff.revision.editrules.recognition.dependencies.DependencyEvaluation;

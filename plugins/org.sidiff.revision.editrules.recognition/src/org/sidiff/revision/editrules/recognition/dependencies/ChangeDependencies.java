@@ -19,7 +19,7 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.view.AttributePair;
-import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.ChangePatternUtil;
 import org.sidiff.graphpattern.DependencyEdge;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.GraphPattern;

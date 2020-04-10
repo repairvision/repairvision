@@ -1,8 +1,8 @@
 package org.sidiff.revision.repair.history.evaluation.report.monitor;
 
-import org.sidiff.consistency.common.monitor.LogTable;
-import org.sidiff.consistency.common.monitor.LogTime;
-import org.sidiff.consistency.common.monitor.LogUtil;
+import org.sidiff.common.utilities.monitor.LogTable;
+import org.sidiff.common.utilities.monitor.LogTime;
+import org.sidiff.common.utilities.monitor.LogUtil;
 import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderMonitor;
 import org.sidiff.revision.repair.history.evaluation.report.InconsistenciesLog;
 

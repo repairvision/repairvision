@@ -16,8 +16,6 @@ import org.sidiff.common.emf.access.EMFMetaAccess;
 import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.emf.access.EObjectLocation;
 import org.sidiff.common.emf.access.Scope;
-import org.sidiff.common.logging.LogEvent;
-import org.sidiff.common.logging.LogUtil;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;
@@ -56,12 +54,6 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 
 	@Override
 	public SymmetricDifference deriveTechDiff(SymmetricDifference difference, Scope scope) {
-		LogUtil.log(LogEvent.NOTICE, "------------------------------------------------------------");
-		LogUtil.log(LogEvent.NOTICE, "----------------- DERIVE TECHNICAL DIFFERENCE --------------");
-		LogUtil.log(LogEvent.NOTICE, "------------------------------------------------------------");
-		LogUtil.log(LogEvent.NOTICE, "Difference builder: " + getClass().getSimpleName());
-		LogUtil.log(LogEvent.NOTICE, "Scope: " + scope);
-
 		this.diff = difference;
 		this.scope = scope;
 
@@ -78,17 +70,14 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 			EObject nodeA = c.getMatchedA();
 			EObject nodeB = c.getMatchedB();
 			EClass nodeType = nodeA.eClass();
-			assert (nodeB.eClass() == nodeType) : "Corresponding objects have different types..!?";
 
 			// filter
 
 			if (!doProcess(nodeA)) {
-				LogUtil.log(LogEvent.DEBUG, "Skip correspondence (does not match docType): " + nodeA + " <-> " + nodeB);
 				continue;
 			}
 
 			if (unconsideredNodeTypes.contains(nodeType)) {
-				LogUtil.log(LogEvent.DEBUG, "Skip correspondence (unconsideredNodeType): " + nodeA + " <-> " + nodeB);
 				// skip and also delete correspondence
 				if(c.getContainerCorrespondence() != null)
 					c.getContainerCorrespondence().getContainmentCorrespondences().remove(c);
@@ -101,13 +90,11 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 			assert (objectALocation == objectBLocation) : "different object locations not yet supported!";
 
 			if (objectALocation == EObjectLocation.PACKAGE_REGISTRY) {
-				LogUtil.log(LogEvent.DEBUG, "Skip correspondence (PACKAGE_REGISTRY): " + nodeA + " <-> " + nodeB);
 				// skip, but do no delete correspondence
 				continue;
 			}
 
 			if (scope == Scope.RESOURCE && objectALocation == EObjectLocation.RESOURCE_SET_INTERNAL) {
-				LogUtil.log(LogEvent.DEBUG, "Skip correspondence (RESOURCE_SET): " + nodeA + " <-> " + nodeB);
 				// skip, but do not delete correspondence
 				continue;
 			}
@@ -145,16 +132,13 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 
 		for(EObject elementA : diff.getMatching().getUnmatchedA()){
 			if (!doProcess(elementA)) {
-				LogUtil.log(LogEvent.DEBUG, "Skip node (does not match docType): " + elementA);
 				continue;
 			}
 			if (unconsideredNodeTypes.contains(elementA.eClass())) {
-				LogUtil.log(LogEvent.DEBUG, "Skip node (unconsideredNodeType): " + elementA);
 				continue;
 			}
 
 			// Special in A
-			LogUtil.log(LogEvent.DEBUG, "removeNode: " + getObjectName(elementA));
 			removeNode(elementA);
 
 			// Outgoing edges
@@ -174,16 +158,13 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 		for(EObject elementB : diff.getMatching().getUnmatchedB()){
 			
 			if (!doProcess(elementB)) {
-				LogUtil.log(LogEvent.DEBUG, "Skip node (does not match docType): " + elementB);
 				continue;
 			}
 			if (unconsideredNodeTypes.contains(elementB.eClass())) {
-				LogUtil.log(LogEvent.DEBUG, "Skip node (unconsideredNodeType): " + elementB);
 				continue;
 			}
 
 			// Special in B
-			LogUtil.log(LogEvent.DEBUG, "addNode: " + getObjectName(elementB));
 			addNode(elementB);
 
 			// Outgoing edges
@@ -194,8 +175,6 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 				deriveDiffB(edgeType, elementB, diffB);
 			}
 		}
-
-
 	}
 
 	private void deriveDiffA(EReference edgeType, EObject nodeA, Set<EObject> diffA) {
@@ -207,8 +186,6 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 		}
 
 		for (EObject tgt : diffA) {
-			LogUtil.log(LogEvent.DEBUG, "delEdge: src: " + getObjectName(nodeA) + " target: " + getObjectName(tgt)
-			+ " type: " + edgeType.getName());
 			removeEdge(nodeA, tgt, edgeType);
 		}
 	}
@@ -222,8 +199,6 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 		}
 
 		for (EObject tgt : diffB) {
-			LogUtil.log(LogEvent.DEBUG, "addEdge: src: " + getObjectName(nodeB) + " target: " + getObjectName(tgt)
-			+ " type: " + edgeType.getName());
 			addEdge(nodeB, tgt, edgeType);
 		}
 	}

@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
-import org.sidiff.consistency.common.emf.MetaModelUtil;
+import org.sidiff.common.utilities.emf.MetaModelUtil;
 import org.sidiff.revision.editrules.recognition.revision.RevisionGraph;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 

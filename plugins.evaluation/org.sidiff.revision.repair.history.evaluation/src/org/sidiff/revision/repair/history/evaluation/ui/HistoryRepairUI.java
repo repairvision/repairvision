@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.common.ui.util.UIUtil;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;

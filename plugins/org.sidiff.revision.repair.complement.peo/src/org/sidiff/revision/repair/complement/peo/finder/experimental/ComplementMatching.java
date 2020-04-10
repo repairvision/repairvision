@@ -20,7 +20,7 @@ package org.sidiff.revision.repair.complement.peo.finder.experimental;
 //import org.sidiff.revision.repair.complement.peo.impact.GraphActionImpactUtil;
 //import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 //import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
-//import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+//import org.sidiff.common.utilities.henshin.ChangePatternUtil;
 //import org.sidiff.editrule.recognition.impact.ImpactScope;
 //
 //public class ComplementMatching {

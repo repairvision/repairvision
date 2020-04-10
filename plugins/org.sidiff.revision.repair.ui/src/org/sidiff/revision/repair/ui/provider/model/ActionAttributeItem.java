@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.ChangePatternUtil;
 import org.sidiff.revision.repair.ui.Activator;
 
 public class ActionAttributeItem extends ActionItem {

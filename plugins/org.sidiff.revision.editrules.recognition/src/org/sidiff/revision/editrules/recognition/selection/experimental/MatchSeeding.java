@@ -5,6 +5,7 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
+import org.sidiff.common.utilities.henshin.ChangePatternUtil;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
@@ -14,7 +15,6 @@ import org.sidiff.revision.editrules.recognition.pattern.graph.ActionNode;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPath;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPathFactory;
 import org.sidiff.revision.editrules.recognition.selection.IMatchSelector;
-import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 
 public class MatchSeeding implements IMatchSelector {
 	

@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.monitor.LogTime;
+import org.sidiff.common.utilities.monitor.LogTime;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.revision.repair.api.IRepairPlan;

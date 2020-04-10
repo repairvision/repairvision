@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
+import org.sidiff.common.utilities.emf.ModelingUtil;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.consistency.common.emf.ModelingUtil;
 
 public class RecognitionNodeMultiMatch extends RecognitionNodeMatch {
 

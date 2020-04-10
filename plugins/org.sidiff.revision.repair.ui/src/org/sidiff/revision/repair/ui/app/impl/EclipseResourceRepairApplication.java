@@ -6,7 +6,7 @@ import java.util.List;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.revision.repair.api.IRepairSettings;
 import org.sidiff.revision.repair.api.RepairJob;

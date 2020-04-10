@@ -1,7 +1,7 @@
 package org.sidiff.revision.repair.complement.peo.impact;
 
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
-import static org.sidiff.consistency.common.henshin.ChangePatternUtil.tryLHS;
+import static org.sidiff.common.utilities.henshin.ChangePatternUtil.tryLHS;
 
 import java.util.Collection;
 import java.util.List;

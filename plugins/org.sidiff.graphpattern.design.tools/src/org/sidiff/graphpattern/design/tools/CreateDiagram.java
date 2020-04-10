@@ -37,9 +37,9 @@ import org.eclipse.sirius.viewpoint.description.RepresentationDescription;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.consistency.common.emf.ItemProviderUtil;
-import org.sidiff.consistency.common.emf.SiriusUtil;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.emf.ItemProviderUtil;
+import org.sidiff.common.utilities.emf.SiriusUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 
 @SuppressWarnings("restriction")
 public class CreateDiagram extends AbstractHandler  {

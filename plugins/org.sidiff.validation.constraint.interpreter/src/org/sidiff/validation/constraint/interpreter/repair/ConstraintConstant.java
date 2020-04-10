@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
-import org.sidiff.consistency.common.java.JUtil;
+import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;

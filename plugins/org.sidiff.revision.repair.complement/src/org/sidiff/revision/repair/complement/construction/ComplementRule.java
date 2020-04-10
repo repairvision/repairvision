@@ -25,7 +25,7 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.ChangePatternUtil;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.revision.editrules.recognition.match.RecognitionActionMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;

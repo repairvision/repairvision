@@ -23,7 +23,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.sidiff.consistency.common.emf.ItemProviderUtil;
+import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.revision.editrules.project.builder.Activator;
 
 /**

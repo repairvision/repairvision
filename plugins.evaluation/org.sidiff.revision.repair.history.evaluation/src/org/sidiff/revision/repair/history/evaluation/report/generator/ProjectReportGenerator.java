@@ -1,18 +1,18 @@
 package org.sidiff.revision.repair.history.evaluation.report.generator;
 
-import static org.sidiff.consistency.common.monitor.LogUtil.NA;
-import static org.sidiff.consistency.common.monitor.LogUtil.assertPositive;
-import static org.sidiff.consistency.common.monitor.LogUtil.avg;
-import static org.sidiff.consistency.common.monitor.LogUtil.convertToLatex;
-import static org.sidiff.consistency.common.monitor.LogUtil.convertToLatexHeader;
-import static org.sidiff.consistency.common.monitor.LogUtil.count;
-import static org.sidiff.consistency.common.monitor.LogUtil.max;
-import static org.sidiff.consistency.common.monitor.LogUtil.median;
-import static org.sidiff.consistency.common.monitor.LogUtil.merge;
-import static org.sidiff.consistency.common.monitor.LogUtil.min;
-import static org.sidiff.consistency.common.monitor.LogUtil.round;
-import static org.sidiff.consistency.common.monitor.LogUtil.sum;
-import static org.sidiff.consistency.common.monitor.LogUtil.test;
+import static org.sidiff.common.utilities.monitor.LogUtil.NA;
+import static org.sidiff.common.utilities.monitor.LogUtil.assertPositive;
+import static org.sidiff.common.utilities.monitor.LogUtil.avg;
+import static org.sidiff.common.utilities.monitor.LogUtil.convertToLatex;
+import static org.sidiff.common.utilities.monitor.LogUtil.convertToLatexHeader;
+import static org.sidiff.common.utilities.monitor.LogUtil.count;
+import static org.sidiff.common.utilities.monitor.LogUtil.max;
+import static org.sidiff.common.utilities.monitor.LogUtil.median;
+import static org.sidiff.common.utilities.monitor.LogUtil.merge;
+import static org.sidiff.common.utilities.monitor.LogUtil.min;
+import static org.sidiff.common.utilities.monitor.LogUtil.round;
+import static org.sidiff.common.utilities.monitor.LogUtil.sum;
+import static org.sidiff.common.utilities.monitor.LogUtil.test;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +25,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.sidiff.consistency.common.monitor.LogTable;
-import org.sidiff.consistency.common.monitor.LogUtil;
+import org.sidiff.common.utilities.monitor.LogTable;
+import org.sidiff.common.utilities.monitor.LogUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.revision.repair.history.evaluation.EvaluationDataSets;

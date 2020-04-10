@@ -11,7 +11,7 @@ import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.consistency.common.monitor.LogTime;
+import org.sidiff.common.utilities.monitor.LogTime;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.editrules.recognition.pattern.RecognitionPattern;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain.SelectionType;

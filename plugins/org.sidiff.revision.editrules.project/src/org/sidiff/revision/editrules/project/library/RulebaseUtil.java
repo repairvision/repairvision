@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.sidiff.common.henshin.HenshinUnitAnalysis;
 import org.sidiff.common.henshin.exceptions.NoMainUnitFoundException;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.editrule.consistency.validation.Activator;
 import org.sidiff.editrule.consistency.validation.EditRuleValidation;
 import org.sidiff.editrule.consistency.validation.EditRuleValidator;

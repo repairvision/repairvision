@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.sidiff.consistency.common.emf.MetaModelUtil;
+import org.sidiff.common.utilities.emf.MetaModelUtil;
 import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;

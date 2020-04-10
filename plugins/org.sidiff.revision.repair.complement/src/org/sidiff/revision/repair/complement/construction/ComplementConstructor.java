@@ -26,10 +26,8 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.logging.LogEvent;
-import org.sidiff.common.logging.LogUtil;
-import org.sidiff.consistency.common.emf.ModelingUtil;
-import org.sidiff.consistency.common.java.JUtil;
+import org.sidiff.common.utilities.emf.ModelingUtil;
+import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
@@ -242,7 +240,7 @@ public class ComplementConstructor {
 					if (!complementNode.getIncoming().isEmpty() || !complementNode.getOutgoing().isEmpty()) {
 						
 						if (DEBUG) {
-							LogUtil.log(LogEvent.NOTICE, "Dangling Edges: " + complementNode 
+							System.out.println("Dangling Edges: " + complementNode 
 									+ "\n  (" + complementNode.getGraph().getRule() + ")");
 						}
 						

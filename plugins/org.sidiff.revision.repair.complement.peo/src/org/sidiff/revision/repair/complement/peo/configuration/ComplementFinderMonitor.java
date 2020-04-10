@@ -1,6 +1,6 @@
 package org.sidiff.revision.repair.complement.peo.configuration;
 
-import org.sidiff.consistency.common.monitor.LogTime;
+import org.sidiff.common.utilities.monitor.LogTime;
 
 public class ComplementFinderMonitor {
 

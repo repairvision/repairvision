@@ -24,7 +24,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.sidiff.consistency.common.monitor.LogTable;
+import org.sidiff.common.utilities.monitor.LogTable;
 import org.sidiff.historymodel.History;
 import org.sidiff.revision.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.revision.repair.history.evaluation.report.EditRulesLog;

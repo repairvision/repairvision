@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.common.emf.provider.ItemProviderUtil;
-import org.sidiff.consistency.common.java.JUtil;
+import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;

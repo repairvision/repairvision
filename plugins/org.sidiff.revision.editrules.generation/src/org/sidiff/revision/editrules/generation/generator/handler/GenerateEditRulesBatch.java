@@ -12,7 +12,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.profile.henshin.HenshinStereotypes;

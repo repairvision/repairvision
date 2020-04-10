@@ -28,7 +28,7 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.common.ui.util.UIUtil;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.revision.repair.api.IRepairPlan;

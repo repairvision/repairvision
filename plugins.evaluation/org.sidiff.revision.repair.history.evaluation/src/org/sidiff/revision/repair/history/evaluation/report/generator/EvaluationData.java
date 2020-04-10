@@ -2,7 +2,7 @@ package org.sidiff.revision.repair.history.evaluation.report.generator;
 
 import java.io.File;
 
-import org.sidiff.consistency.common.monitor.LogTable;
+import org.sidiff.common.utilities.monitor.LogTable;
 
 public class EvaluationData {
 	
