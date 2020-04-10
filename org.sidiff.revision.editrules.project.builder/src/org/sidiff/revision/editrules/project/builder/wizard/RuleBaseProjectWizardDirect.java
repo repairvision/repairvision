@@ -13,7 +13,7 @@ import org.eclipse.pde.ui.IPluginContentWizard;
  * @author Manuel Ohrndorf
  */
 @SuppressWarnings("restriction")
-public class DirectRulebaseProjectWizard extends NewPluginProjectWizard {
+public class RuleBaseProjectWizardDirect extends NewPluginProjectWizard {
 	
 	@Override
 	public void addPage(IWizardPage page) {
