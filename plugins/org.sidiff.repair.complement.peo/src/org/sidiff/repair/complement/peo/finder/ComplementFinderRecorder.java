@@ -1,6 +1,6 @@
 package org.sidiff.repair.complement.peo.finder;
 
-import org.sidiff.editrule.recognition.RecognitionEngineRecorder;
+import org.sidiff.revision.editrule.recognition.RecognitionEngineRecorder;
 
 public class ComplementFinderRecorder extends RecognitionEngineRecorder {
 	

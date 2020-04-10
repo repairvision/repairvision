@@ -1,6 +1,6 @@
 package org.sidiff.repair.complement.peo.configuration;
 
-import org.sidiff.editrule.recognition.configuration.RecognitionEngineSettings;
+import org.sidiff.revision.editrule.recognition.configuration.RecognitionEngineSettings;
 
 public class ComplementFinderSettings {
 

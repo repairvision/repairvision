@@ -10,12 +10,12 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
-import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.repair.complement.peo.impact.GraphActionImpactUtil;
+import org.sidiff.revision.editrule.recognition.impact.ImpactScope;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 // org.sidiff.repair.api.peo.PEORepairCaculation

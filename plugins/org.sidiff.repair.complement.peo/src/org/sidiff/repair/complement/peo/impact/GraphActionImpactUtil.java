@@ -15,11 +15,11 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.editrule.recognition.match.RecognitionAttributeMatch;
-import org.sidiff.editrule.recognition.match.RecognitionEdgeMatch;
-import org.sidiff.editrule.recognition.match.RecognitionMatch;
-import org.sidiff.editrule.recognition.match.RecognitionNodeSingleMatch;
-import org.sidiff.editrule.recognition.revision.RevisionGraph;
+import org.sidiff.revision.editrule.recognition.match.RecognitionAttributeMatch;
+import org.sidiff.revision.editrule.recognition.match.RecognitionEdgeMatch;
+import org.sidiff.revision.editrule.recognition.match.RecognitionMatch;
+import org.sidiff.revision.editrule.recognition.match.RecognitionNodeSingleMatch;
+import org.sidiff.revision.editrule.recognition.revision.RevisionGraph;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;
 

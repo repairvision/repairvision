@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
-import org.sidiff.editrule.recognition.RecognitionEngineMatcher;
-import org.sidiff.editrule.recognition.RecognitionEngineRecorder;
-import org.sidiff.editrule.recognition.RecognitionEngineRecorder.IChangeTag;
 import org.sidiff.repair.ui.peo.Activator;
+import org.sidiff.revision.editrule.recognition.RecognitionEngineMatcher;
+import org.sidiff.revision.editrule.recognition.RecognitionEngineRecorder;
+import org.sidiff.revision.editrule.recognition.RecognitionEngineRecorder.IChangeTag;
 
 public class DebuggingSnapshotItem implements ITreeItem {
 	

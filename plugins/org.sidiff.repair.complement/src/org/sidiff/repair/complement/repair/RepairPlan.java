@@ -15,14 +15,14 @@ import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.difference.symmetric.Change;
-import org.sidiff.editrule.recognition.match.RecognitionEdgeMatch;
-import org.sidiff.editrule.recognition.match.RecognitionMatch;
-import org.sidiff.editrule.recognition.match.RecognitionNodeMatch;
-import org.sidiff.editrule.recognition.match.RecognitionNodeMultiMatch;
-import org.sidiff.editrule.recognition.match.RecognitionNodeSingleMatch;
 import org.sidiff.repair.api.IRepairPlan;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.util.ParameterBinding;
+import org.sidiff.revision.editrule.recognition.match.RecognitionEdgeMatch;
+import org.sidiff.revision.editrule.recognition.match.RecognitionMatch;
+import org.sidiff.revision.editrule.recognition.match.RecognitionNodeMatch;
+import org.sidiff.revision.editrule.recognition.match.RecognitionNodeMultiMatch;
+import org.sidiff.revision.editrule.recognition.match.RecognitionNodeSingleMatch;
 
 /**
  * Represents a single parameterized repair operation.

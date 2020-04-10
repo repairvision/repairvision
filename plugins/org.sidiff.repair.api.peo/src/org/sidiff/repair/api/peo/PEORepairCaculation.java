@@ -11,7 +11,6 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.difference.symmetric.Change;
-import org.sidiff.editrule.recognition.impact.ImpactScope;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.repair.api.IRepairPlan;
@@ -21,6 +20,7 @@ import org.sidiff.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.repair.complement.peo.impact.GraphActionImpactUtil;
 import org.sidiff.repair.complement.repair.RepairPlan;
+import org.sidiff.revision.editrule.recognition.impact.ImpactScope;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 public class PEORepairCaculation {
