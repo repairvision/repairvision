@@ -19,7 +19,7 @@ import org.sidiff.completion.ui.codebricks.editor.CodebricksEditor;
 import org.sidiff.completion.ui.codebricks.editor.proposals.ObjectCodebricksProposal;
 import org.sidiff.completion.ui.codebricks.util.CodebricksUtil;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
-import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
+import org.sidiff.consistency.common.emf.ItemProviderUtil;
 
 public class ObjectPlaceholderBuilder {
 

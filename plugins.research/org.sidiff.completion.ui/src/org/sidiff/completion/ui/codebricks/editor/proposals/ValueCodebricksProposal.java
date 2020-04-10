@@ -8,7 +8,7 @@ import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.editor.CodebricksEditor;
 import org.sidiff.completion.ui.proposals.ICompletionPreview;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
-import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
+import org.sidiff.consistency.common.emf.ItemProviderUtil;
 
 public class ValueCodebricksProposal implements ICompletionProposal  {
 

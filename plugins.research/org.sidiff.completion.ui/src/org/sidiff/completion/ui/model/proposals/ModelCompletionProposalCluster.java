@@ -15,7 +15,7 @@ import org.sidiff.completion.ui.model.proposals.codebricks.CodebricksGenerator;
 import org.sidiff.completion.ui.model.proposals.util.DecompositionTemplates;
 import org.sidiff.completion.ui.proposals.ICompletionPreview;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
-import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
+import org.sidiff.consistency.common.emf.ItemProviderUtil;
 
 public class ModelCompletionProposalCluster implements ICompletionProposal {
 	

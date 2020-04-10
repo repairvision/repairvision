@@ -15,10 +15,15 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.emf.edit.ui.action.ValidateAction;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -38,6 +43,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.sidiff.consistency.common.emf.ItemProviderUtil;
 
 public class WorkbenchUtil {
 
@@ -224,6 +230,36 @@ public class WorkbenchUtil {
 		AdapterFactoryLabelProvider emfLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 		
 		return emfLabelProvider;
+	}
+	
+	public static boolean validateEMFResource(IResource resource, EObject eObject) {
+		
+		// Remove old markers:
+		try {
+			resource.deleteMarkers(EValidator.MARKER, true, IResource.FILE);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// Diagnostician which shows the EMF labels:
+		Diagnostician diagnostician = new Diagnostician() {
+			@Override
+			public String getObjectLabel(EObject eObject) {
+				return ItemProviderUtil.getTextByObject(eObject);
+			}
+		};
+
+		Diagnostic diagnostic = diagnostician.validate(eObject);
+		
+		// Create workbench markers:
+		try {
+			ValidateAction.EclipseResourcesUtil markerHelper = new ValidateAction.EclipseResourcesUtil();
+			markerHelper.createMarkers(diagnostic);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return diagnostic.getSeverity() != Diagnostic.ERROR;
 	}
 
 	public static URI getURI(IResource workbenchResource) {

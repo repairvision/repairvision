@@ -23,31 +23,32 @@ public class GraphPatternToHenshinConverterHandler extends AbstractHandler {
 		Bundle bundle = EMFHandlerUtil.getSelection(event, Bundle.class);
 		
 		if (bundle != null) {
-			bundle.eAllContents().forEachRemaining(e -> {
-				if (e instanceof GraphPattern) {
-					GraphPattern graphPattern = (GraphPattern) e;
-					
-					if (graphPattern.getStereotypes().contains(HenshinStereotypes.rule)) {
-						GraphPatternToHenshinConverter converter = createConverter(graphPattern.getPattern());
-						
-						URI uri = bundle.eResource().getURI().trimFileExtension()
-								.appendSegment(graphPattern.getName().replaceAll("\\W", "")).appendFileExtension("henshin");
-						
-						Resource resource = converter.getResource(uri);
-						
-						try {
-							resource.save(Collections.emptyMap());
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-					}
-				}
-			});
-			
+			convertBundle(bundle, bundle.eResource().getURI().trimFileExtension());
 			WorkbenchUtil.updateProject(event);
 		}
 		
 		return null;
+	}
+
+	public void convertBundle(Bundle bundle, URI folder) {
+		bundle.eAllContents().forEachRemaining(e -> {
+			if (e instanceof GraphPattern) {
+				GraphPattern graphPattern = (GraphPattern) e;
+				
+				if (graphPattern.getStereotypes().contains(HenshinStereotypes.rule)) {
+					GraphPatternToHenshinConverter converter = createConverter(graphPattern.getPattern());
+					
+					URI uri = folder.appendSegment(graphPattern.getName().replaceAll("\\W", "")).appendFileExtension("henshin");
+					Resource resource = converter.getResource(uri);
+					
+					try {
+						resource.save(Collections.emptyMap());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 	
 	protected GraphPatternToHenshinConverter createConverter(Pattern editOperation) {

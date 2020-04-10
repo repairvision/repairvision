@@ -25,9 +25,9 @@ import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.edit.commands.SetEdgePatternOppositeCommand;
 import org.sidiff.graphpattern.edit.commands.SetEdgePatternTypeCommand;
 import org.sidiff.graphpattern.edit.util.ColorServices;
-import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 import org.sidiff.graphpattern.edit.util.LabelServices;
 import org.eclipse.emf.ecore.EClass;
+import org.sidiff.consistency.common.emf.ItemProviderUtil;
 import org.sidiff.consistency.common.emf.MetaModelUtil;
 
 /**

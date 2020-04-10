@@ -37,9 +37,9 @@ import org.eclipse.sirius.viewpoint.description.RepresentationDescription;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
+import org.sidiff.consistency.common.emf.ItemProviderUtil;
 import org.sidiff.consistency.common.emf.SiriusUtil;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
-import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 @SuppressWarnings("restriction")
 public class CreateDiagram extends AbstractHandler  {
@@ -60,15 +60,20 @@ public class CreateDiagram extends AbstractHandler  {
 			IProgressMonitor monitor = new NullProgressMonitor();
 			
 			// new diagram:
-			URI modelElementURI = EcoreUtil.getURI((EObject)selected);
-			URI sessionResourceURI = modelElementURI.trimFragment().trimFileExtension().appendFileExtension("aird");
-			
-			createViewpoint(modelElementURI, sessionResourceURI, monitor);
-			selectRepresentations((EObject) selected, monitor, modelElementURI, 
-					WorkbenchUtil.showQuestion("Open diagram editors?"));
+			createDiagram((EObject) selected, WorkbenchUtil.showQuestion("Open diagram editors?"), monitor);
 		}
 		
 		return null;
+	}
+
+	public URI createDiagram(EObject modelElement, boolean openDiagrams, IProgressMonitor monitor) {
+		URI modelElementURI = EcoreUtil.getURI((EObject)modelElement);
+		URI sessionResourceURI = modelElementURI.trimFragment().trimFileExtension().appendFileExtension("aird");
+		
+		createViewpoint(modelElementURI, sessionResourceURI, monitor);
+		selectRepresentations((EObject) modelElement, monitor, modelElementURI, openDiagrams);
+		
+		return sessionResourceURI;
 	}
 	
 	protected Object getSelection(ExecutionEvent event) {
