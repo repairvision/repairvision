@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Edit Rule Generation
+Bundle-SymbolicName: org.sidiff.revision.editrules.generation;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: org.sidiff.revision.editrules.generation
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: org.sidiff.revision.editrules.generation.constructors,
+ org.sidiff.revision.editrules.generation.constructors.util,
+ org.sidiff.revision.editrules.generation.decompose,
+ org.sidiff.revision.editrules.generation.decompose.dependencies,
+ org.sidiff.revision.editrules.generation.filter,
+ org.sidiff.revision.editrules.generation.generator,
+ org.sidiff.revision.editrules.generation.generator.handler,
+ org.sidiff.revision.editrules.generation.generator.util
+Require-Bundle: org.sidiff.graphpattern,
+ org.sidiff.graphpattern.profile.henshin,
+ org.sidiff.graphpattern.profile.constraints,
+ org.eclipse.ui.workbench,
+ org.eclipse.core.commands,
+ org.sidiff.consistency.common,
+ org.sidiff.common.emf,
+ org.eclipse.core.resources,
+ org.sidiff.graphpattern.tools,
+ org.sidiff.csp.solver,
+ org.sidiff.graphpattern.edit
