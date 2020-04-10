@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Partial Edit Operation Complement Construction
+Bundle-SymbolicName: org.sidiff.revision.repair.complement.peo
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.sidiff.revision.repair.complement.peo.Activator
+Bundle-Vendor: Software Engineering Group
+Export-Package: org.sidiff.revision.repair.complement.peo.configuration,
+ org.sidiff.revision.repair.complement.peo.finder,
+ org.sidiff.revision.repair.complement.peo.impact
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.henshin.interpreter,
+ org.sidiff.revision.repair.complement,
+ org.sidiff.revision.repair.api,
+ org.sidiff.common.henshin;bundle-version="1.0.1",
+ org.sidiff.revision.editrules.recognition,
+ org.sidiff.consistency.common;visibility:=reexport,
+ org.sidiff.graphpattern,
+ org.sidiff.history.revision
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.sidiff.revision.repair.complement.peo
+Bundle-ActivationPolicy: lazy

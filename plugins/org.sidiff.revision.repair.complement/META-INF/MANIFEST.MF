@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Complement-Rule Calculation
+Bundle-SymbolicName: org.sidiff.revision.repair.complement
+Bundle-Version: 0.0.1.qualifier
+Bundle-Activator: org.sidiff.revision.repair.complement.Activator
+Export-Package: org.sidiff.revision.repair.complement.construction,
+ org.sidiff.revision.repair.complement.repair,
+ org.sidiff.revision.repair.complement.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.sidiff.common.henshin,
+ org.sidiff.consistency.common,
+ org.sidiff.revision.repair.api,
+ org.sidiff.graphpattern,
+ org.sidiff.revision.editrules.recognition
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.sidiff.revision.repair.complement

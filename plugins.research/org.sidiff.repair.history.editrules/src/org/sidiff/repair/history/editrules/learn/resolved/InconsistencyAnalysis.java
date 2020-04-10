@@ -21,8 +21,6 @@ import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.technical.api.TechnicalDifferenceFacade;
-import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.generic.matcher.uuid.UUIDMatcher;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.history.revision.IRevision;
@@ -34,6 +32,8 @@ import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.matcher.IMatcher;
 import org.sidiff.matching.model.Correspondence;
+import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
+import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
@@ -58,7 +58,6 @@ public class InconsistencyAnalysis {
 	protected SymmetricDifference calculateDifference(Resource modelA, Resource modelB, IMatcher matcher) {
 		
 		DifferenceSettings settings = new DifferenceSettings();
-		settings.setMergeImports(false);
 		settings.setMatcher(matcher);
 		settings.setCorrespondencesService(
 				CorrespondencesUtil.getAvailableCorrespondencesService(

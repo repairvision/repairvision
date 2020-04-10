@@ -14,13 +14,13 @@ import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.IVersion;
 import org.sidiff.history.revision.difference.IDifference;
 import org.sidiff.history.revision.difference.impl.Difference;
 import org.sidiff.history.revision.metamodel.IMetaModel;
 import org.sidiff.history.revision.metamodel.impl.MetaModel;
+import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 
 public class Revision implements IRevision {
 

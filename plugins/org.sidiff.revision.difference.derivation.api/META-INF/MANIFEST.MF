@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SiDiff Technical Difference - API
+Bundle-SymbolicName: org.sidiff.revision.difference.derivation.api;singleton:=true
+Bundle-Version: 1.0.2.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.sidiff.revision.difference.derivation;visibility:=reexport,
+ org.sidiff.matching.api;visibility:=reexport,
+ org.sidiff.difference.symmetric.edit;visibility:=reexport,
+ org.sidiff.correspondences.matchingmodel;visibility:=reexport,
+ org.eclipse.core.runtime
+Export-Package: org.sidiff.revision.difference.derivation.api,
+ org.sidiff.revision.difference.derivation.api.settings,
+ org.sidiff.revision.difference.derivation.api.util
+Bundle-Vendor: Software Engineering Group, University of Siegen
+Automatic-Module-Name: org.sidiff.revision.difference.derivation.api

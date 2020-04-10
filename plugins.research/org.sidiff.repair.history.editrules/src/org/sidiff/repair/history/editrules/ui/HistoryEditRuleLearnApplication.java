@@ -7,7 +7,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.repair.history.editrules.driver.LearnEditRuleDriver;
-import org.sidiff.repair.history.evaluation.ui.HistoryRepairApplication;
+import org.sidiff.revision.repair.history.evaluation.ui.HistoryRepairApplication;
 
 public class HistoryEditRuleLearnApplication extends HistoryRepairApplication {
 

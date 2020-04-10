@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
-import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.analysis.validation.IValidator;
 import org.sidiff.history.repository.IModelRepository;
 import org.sidiff.history.repository.IModelRepositoryConnector;
@@ -25,6 +24,7 @@ import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
+import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 

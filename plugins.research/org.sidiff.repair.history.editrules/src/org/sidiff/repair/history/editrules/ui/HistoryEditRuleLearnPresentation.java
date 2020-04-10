@@ -1,7 +1,7 @@
 package org.sidiff.repair.history.editrules.ui;
 
-import org.sidiff.repair.api.peo.PEORepairFacade;
-import org.sidiff.repair.ui.presentation.IRepairPresentation;
+import org.sidiff.revision.repair.api.peo.PEORepairFacade;
+import org.sidiff.revision.repair.ui.presentation.IRepairPresentation;
 
 public class HistoryEditRuleLearnPresentation implements IRepairPresentation {
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="presentation" name="Repair Engine Presentation" schema="schema/presentation.exsd"/>
+
+  <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Model Repair"
+            id="org.sidiff.revision.repair.ui">
+      </category>
+      <view
+            name="Model Repair"
+            icon="icons/repair.png"
+            category="org.sidiff.revision.repair.ui"
+            class="org.sidiff.revision.repair.ui.views.RepairView"
+            id="org.sidiff.revision.repair.ui.views.RepairView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.sidiff.revision.repair.ui.config.RepairPreferencePage"
+            id="org.sidiff.revision.repair.ui.config.mainpage"
+            name="Model Repairing">
+      </page>
+   </extension>
+   
+</plugin>

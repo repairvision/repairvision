@@ -10,15 +10,15 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
-import org.sidiff.repair.complement.construction.ComplementRule;
-import org.sidiff.repair.complement.peo.configuration.ComplementFinderSettings;
-import org.sidiff.repair.complement.peo.finder.ComplementFinder;
-import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
-import org.sidiff.repair.complement.peo.impact.GraphActionImpactUtil;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
+import org.sidiff.revision.repair.complement.construction.ComplementRule;
+import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
+import org.sidiff.revision.repair.complement.peo.finder.ComplementFinder;
+import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
+import org.sidiff.revision.repair.complement.peo.impact.GraphActionImpactUtil;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
-// org.sidiff.repair.api.peo.PEORepairCaculation
+// org.sidiff.revision.repair.api.peo.PEORepairCaculation
 public class ModelCompletionProposalCaculation {
 	
 	protected Rule editRule;

@@ -22,7 +22,7 @@ import org.sidiff.completion.ui.proposals.ICompletionPreview;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
 import org.sidiff.consistency.common.emf.ItemProviderUtil;
 import org.sidiff.graphpattern.profile.henshin_extension.RuleExtension;
-import org.sidiff.repair.complement.construction.ComplementRule;
+import org.sidiff.revision.repair.complement.construction.ComplementRule;
 
 public class ModelCompletionProposal implements ICompletionProposal {
 
@@ -97,7 +97,7 @@ public class ModelCompletionProposal implements ICompletionProposal {
 	@Override
 	public boolean apply() {
 		
-		// SEE: org.sidiff.repair.api.RepairJob
+		// SEE: org.sidiff.revision.repair.api.RepairJob
 		
 		// TODO: Apply on editing domain
 		System.out.println("Apply: " + complement.getComplementRule().getName());
