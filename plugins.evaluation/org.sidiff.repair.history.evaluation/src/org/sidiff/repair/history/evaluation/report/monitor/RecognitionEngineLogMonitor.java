@@ -3,7 +3,7 @@ package org.sidiff.repair.history.evaluation.report.monitor;
 import org.sidiff.consistency.common.monitor.LogTable;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.repair.history.evaluation.report.RecognitionLog;
-import org.sidiff.revision.editrule.recognition.configuration.RecognitionEngineMonitor;
+import org.sidiff.revision.editrules.recognition.configuration.RecognitionEngineMonitor;
 
 public class RecognitionEngineLogMonitor extends RecognitionEngineMonitor {
 

@@ -25,13 +25,13 @@ import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.revision.editrule.recognition.match.RecognitionActionMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionAttributeMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionEdgeMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionNodeMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionNodeMultiMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionNodeSingleMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionActionMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionNodeMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionNodeMultiMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionNodeSingleMatch;
 
 public class ComplementUtil {
 

@@ -7,10 +7,10 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.monitor.LogTime;
 import org.sidiff.repair.complement.construction.ComplementRule;
 import org.sidiff.repair.complement.peo.configuration.ComplementFinderSettings;
-import org.sidiff.revision.editrule.recognition.RecognitionEngine;
-import org.sidiff.revision.editrule.recognition.RecognitionEngineMatcher;
-import org.sidiff.revision.editrule.recognition.impact.ImpactScope;
-import org.sidiff.revision.editrule.recognition.match.RecognitionMatching;
+import org.sidiff.revision.editrules.recognition.RecognitionEngine;
+import org.sidiff.revision.editrules.recognition.RecognitionEngineMatcher;
+import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
+import org.sidiff.revision.editrules.recognition.match.RecognitionMatching;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 public class ComplementFinder {

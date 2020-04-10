@@ -27,9 +27,9 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.consistency.common.henshin.ChangePatternUtil;
 import org.sidiff.difference.symmetric.Change;
-import org.sidiff.revision.editrule.recognition.match.RecognitionActionMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionMatching;
+import org.sidiff.revision.editrules.recognition.match.RecognitionActionMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionMatching;
 
 /**
  * Stores the trace of a complement rule for a given partially executed edit rule.

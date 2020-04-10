@@ -5,7 +5,7 @@ import java.util.List;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
 import org.sidiff.repair.ui.peo.Activator;
-import org.sidiff.revision.editrule.recognition.pattern.graph.ActionNode;
+import org.sidiff.revision.editrules.recognition.pattern.graph.ActionNode;
 
 public class PathItem implements ITreeItem {
 

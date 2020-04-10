@@ -5,8 +5,8 @@ import java.util.List;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
 import org.sidiff.repair.ui.peo.Activator;
-import org.sidiff.revision.editrule.recognition.RecognitionEngineRecorder.IChangeTag;
-import org.sidiff.revision.editrule.recognition.pattern.graph.ChangePattern;
+import org.sidiff.revision.editrules.recognition.RecognitionEngineRecorder.IChangeTag;
+import org.sidiff.revision.editrules.recognition.pattern.graph.ChangePattern;
 
 public class ChangesItem implements ITreeItem {
 

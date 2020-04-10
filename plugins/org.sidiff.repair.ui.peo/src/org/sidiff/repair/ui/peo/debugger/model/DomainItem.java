@@ -8,8 +8,8 @@ import org.eclipse.swt.graphics.Image;
 import org.sidiff.consistency.common.ui.tree.ITreeItem;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.repair.ui.peo.Activator;
-import org.sidiff.revision.editrule.recognition.pattern.domain.Domain;
-import org.sidiff.revision.editrule.recognition.pattern.domain.Domain.SelectionType;
+import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
+import org.sidiff.revision.editrules.recognition.pattern.domain.Domain.SelectionType;
 
 public class DomainItem implements ITreeItem {
 

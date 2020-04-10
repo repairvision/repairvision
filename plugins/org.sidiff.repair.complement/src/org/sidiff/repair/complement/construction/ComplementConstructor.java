@@ -33,14 +33,14 @@ import org.sidiff.consistency.common.emf.ModelingUtil;
 import org.sidiff.consistency.common.java.JUtil;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.repair.complement.util.ComplementUtil;
-import org.sidiff.revision.editrule.recognition.match.RecognitionAttributeMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionEdgeMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionMatching;
-import org.sidiff.revision.editrule.recognition.match.RecognitionNodeMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionNodeMultiMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionNodeSingleMatch;
-import org.sidiff.revision.editrule.recognition.match.RecognitionParameterMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionMatching;
+import org.sidiff.revision.editrules.recognition.match.RecognitionNodeMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionNodeMultiMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionNodeSingleMatch;
+import org.sidiff.revision.editrules.recognition.match.RecognitionParameterMatch;
 
 /**
  * Constructs the complement-rule = recognized-rule (-) partial-edit-rule-match

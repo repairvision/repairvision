@@ -15,7 +15,7 @@ import org.sidiff.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.repair.complement.peo.impact.GraphActionImpactUtil;
-import org.sidiff.revision.editrule.recognition.impact.ImpactScope;
+import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 // org.sidiff.repair.api.peo.PEORepairCaculation
