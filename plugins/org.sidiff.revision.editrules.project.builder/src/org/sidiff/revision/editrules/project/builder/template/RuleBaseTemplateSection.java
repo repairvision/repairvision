@@ -113,7 +113,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 
 	@Override
 	public void addPages(Wizard wizard) {
-		pageEditRules = new RuleBaseProjectPageEditRules(getAvailableDocumentTypes());
+		pageEditRules = new RuleBaseProjectPageEditRules(getStringOption(KEY_PACKAGE_NAME), getAvailableDocumentTypes());
 		wizard.addPage(pageEditRules);
 		markPagesAdded();
 	}
@@ -219,7 +219,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		patternBundle.getProfiles().add(ConstraintStereotypes.instance);
 		patternBundle.setName(pageEditRules.getName());
 		patternBundle.setDescription(pageEditRules.getDescription());
-		patternBundle.getDomains().addAll(pageEditRules.getDocumentTypes());
+		patternBundle.getDomains().addAll(pageEditRules.getSelectedDocumentTypes());
 
 		URI patternURI = URI.createPlatformResourceURI(project.getName() + "/" + RuleBasePlugin.GRAPHPATTERN_FILE, true);
 		

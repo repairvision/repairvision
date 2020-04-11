@@ -7,6 +7,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 /**
  * Retrieve labels and images of EMF items.
@@ -56,7 +57,10 @@ public class ItemProviderUtil {
 			} catch (Exception e) {
 			}
 			
-			return EMFEditPlugin.INSTANCE.getImage("/full/obj16/Item");
+			try {
+				return ExtendedImageRegistry.INSTANCE.getImage(EMFEditPlugin.INSTANCE.getImage("/full/obj16/Item"));
+			} catch (Exception e) {
+			}
 		}
 		return null;
 	}

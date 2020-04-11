@@ -20,6 +20,10 @@ public class DocumentType {
 			pkg = pkg.getESuperPackage();
 		}
 		
+		return getDocumentType(pkg);
+	}
+	
+	public static String getDocumentType(EPackage pkg) {
 		return pkg.getNsURI();
 	}
 	
