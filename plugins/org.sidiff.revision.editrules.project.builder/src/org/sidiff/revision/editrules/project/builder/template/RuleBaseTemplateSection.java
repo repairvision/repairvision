@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.pde.core.plugin.IPluginBase;
@@ -28,6 +29,9 @@ import org.eclipse.pde.ui.templates.OptionTemplateSection;
 import org.eclipse.pde.ui.templates.PluginReference;
 import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.graphpattern.Bundle;
+import org.sidiff.graphpattern.Pattern;
+import org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil;
 import org.sidiff.revision.editrules.project.RuleBasePlugin;
 import org.sidiff.revision.editrules.project.builder.Activator;
 import org.sidiff.revision.editrules.project.builder.nature.RuleBaseProjectNature;
@@ -113,7 +117,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		markPagesAdded();
 	}
 	
-	protected String[] getAvailableDocumentTypes() {
+	private String[] getAvailableDocumentTypes() {
 		return EcorePlugin.getEPackageNsURIToGenModelLocationMap(false).keySet().toArray(new String[0]);
 	}
 
@@ -129,14 +133,16 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		Set<String> newFiles = new LinkedHashSet<>();
 		newFiles.add(RuleBasePlugin.GRAPHPATTERN_FILE);
 		newFiles.add(RuleBasePlugin.GRAPHPATTERN_EDIT_RULE_FILE);
-		newFiles.addAll(getNewFolders());
+		newFiles.add(getEditRuleFolder());
 		return newFiles.toArray(new String[0]);
 	}
 	
-	private static Set<String> getNewFolders() {
-		Set<String> newFolders = new LinkedHashSet<>();
-		newFolders.add(RuleBasePlugin.EDIT_RULE_FOLDER + "/");
-		return newFolders;
+	private String getEditRuleFolder() {
+		return RuleBasePlugin.EDIT_RULE_FOLDER + "/";
+	}
+	
+	private String getExampleFolder() {
+		return RuleBasePlugin.EXAMPLE_FOLDER + "/";
 	}
 	
 	@Override
@@ -179,33 +185,21 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 
 	@Override
 	public void execute(IProject project, IPluginModelBase model, IProgressMonitor monitor) throws CoreException {
-		SubMonitor progress = SubMonitor.convert(monitor, 4);
-		super.execute(project, model, progress.split(1));
+		SubMonitor progress = SubMonitor.convert(monitor, 100);
+		super.execute(project, model, progress.split(50));
 
-		createOutputFolders(project, progress.split(1));
-		createASGPatternBundle(project, monitor);
-	}
-	
-	private static void createOutputFolders(IProject project, IProgressMonitor monitor) throws CoreException {
-		Set<String> newFolders = getNewFolders();
+		createFolder(project, getEditRuleFolder(), progress.split(1));
+		Bundle patternBundle = createASGPatternBundle(project, progress.split(39));
 		
-		for(String folderName : newFolders) {
-			IFolder folder = project.getFolder(folderName);
-			if(!folder.exists()) {
-				folder.create(true, true, monitor);
-			}
+		if (pageEditRules.isCreateExampleFolderOption()) {
+			createExampleFolders(patternBundle, project, progress.split(10));
 		}
-		
-		monitor.done();
 	}
-	
-	protected void createASGPatternBundle(IProject project, IProgressMonitor monitor) {
+
+	private Bundle createASGPatternBundle(IProject project, IProgressMonitor monitor) {
 		ASGPatternBundle asgPattern = new ASGPatternBundle(pageEditRules.getName(), pageEditRules.getDescription());
 		pageEditRules.getSelectedDocumentTypes().forEach(asgPattern::addDocumentType);
-		
-		if (pageEditRules.isInitializePatternsOption()) {
-			pageEditRules.getSelectedConstraints().forEach(asgPattern::addConstraint);
-		}
+		pageEditRules.getSelectedConstraints().forEach(c -> asgPattern.addConstraint(c, pageEditRules.isInitializePatternsOption()));
 		
 		DiagramURI diagramDashboardURI = asgPattern.saveWithDiagrams(project, monitor);
 		
@@ -214,9 +208,11 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		asgPattern.save(project);
 		
 		openDiagram(project, diagramDashboardURI);
+		
+		return asgPattern.getPatternBundle();
 	}
 
-	protected void openDiagram(IProject project, DiagramURI diagramDashboardURI) {
+	private void openDiagram(IProject project, DiagramURI diagramDashboardURI) {
 		if (diagramDashboardURI.diagramURI != null) {
 			try {
 				String path = project.getLocation().removeLastSegments(1) + diagramDashboardURI.diagramURI.toPlatformString(true);
@@ -225,5 +221,47 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private void createExampleFolders(Bundle patternBundle, IProject project, IProgressMonitor monitor) throws CoreException {
+		createFolder(project, getExampleFolder(), monitor);
+		String bundleFolder = createFolder(project, getExampleFolder() + patternBundle.getName() + "/", monitor);
+		
+		// Convert Constraint-Pattern tree to folder structure:
+		for (EObject element : (Iterable<EObject>) () -> patternBundle.eAllContents()) {
+			if (element instanceof Pattern) {
+				if (ConstraintProfileUtil.isConstraint((Pattern) element)) {
+					String patternFolder = getPatternFolder((Pattern) element);
+					createFolder(project, bundleFolder + patternFolder, monitor);
+				}
+			}
+		}
+		
+		monitor.done();
+	}
+	
+	private String getPatternFolder(Pattern pattern) {
+		StringBuilder patternFolder = new StringBuilder();
+		patternFolder.append(pattern.getName());
+		patternFolder.append("/");
+		
+		while (pattern.eContainer() instanceof Pattern) {
+			pattern = (Pattern) pattern.eContainer();
+			patternFolder.insert(0, "/");
+			patternFolder.insert(0, pattern.getName());
+		}
+		
+		return patternFolder.toString();
+	}
+
+	private static String createFolder(IProject project, String newFolder, IProgressMonitor monitor) throws CoreException {
+		IFolder folder = project.getFolder(newFolder);
+
+		if(!folder.exists()) {
+			folder.create(true, true, monitor);
+		}
+
+		monitor.done();
+		return newFolder;
 	}
 }

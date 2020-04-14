@@ -48,6 +48,8 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 
 	// Created with WindowBuilder //
 	
+	private static final String SEARCH_INFO_TEXT = "search for keyword or pattern (*) ...";
+	
 	private Text nameText;
 	
 	private Text descriptionText;
@@ -69,6 +71,10 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 	private Set<IConstraint> selectedConstraints;
 	
 	private CheckboxTableViewer constraintsTable;
+	
+	private Button selectAllConstraints;
+	
+	private Button clearSelectedConstraints;
 	
 	private Text constraintSearch;
 	
@@ -209,109 +215,145 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 				documentTypesContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 			}
 			
-			documentTypeSearch = new Text(documentTypesContainer, SWT.BORDER);
-			{
-				String infoText = "search for keyword or pattern (*) ...";
-				
-				documentTypeSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-				documentTypeSearch.setText(infoText);
-				documentTypeSearch.addFocusListener(new FocusListener() {
-					
-					@Override
-					public void focusLost(FocusEvent e) {
-						if (documentTypeSearch.getText().equals("")) {
-							documentTypeSearch.setText(infoText);
-						}
-					}
-					
-					@Override
-					public void focusGained(FocusEvent e) {
-						if (documentTypeSearch.getText().equals(infoText)) {
-							documentTypeSearch.setText("");
-						}
-					}
-				});
-				documentTypeSearch.addKeyListener(new KeyListener() {
-					
-					@Override
-					public void keyReleased(KeyEvent e) {
-						if (documentTypeSearch.getText().equals(infoText)) {
-							searchInDocumentTypeTable(null);
-						} else {
-							searchInDocumentTypeTable(documentTypeSearch.getText());
-						}
-					}
-
-					@Override
-					public void keyPressed(KeyEvent e) {
-					}
-				});
-			}
+			createDocumentTypeSearch(documentTypesContainer);
+			createDocumentTypesTable(documentTypesContainer);
 			
-			ScrolledComposite scrolledTable = new ScrolledComposite(documentTypesContainer, SWT.H_SCROLL | SWT.V_SCROLL);
-			{
-				scrolledTable.setExpandVertical(true);
-				scrolledTable.setExpandHorizontal(true);
-				
-				GridData scrolledTableLayout = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 2);
-				scrolledTableLayout.heightHint = 100;
-				scrolledTable.setLayoutData(scrolledTableLayout);
-			}
+			createDocumentTypeTableListeners();
+			createDocumentTypeSearchListeners();
 			
-			Composite tableContainer = new Composite(scrolledTable, SWT.NONE);
-			{
-				GridLayout tableContainerLayout = new GridLayout(1, false);
-				tableContainerLayout.verticalSpacing = 0;
-				tableContainerLayout.marginHeight = 0;
-				tableContainerLayout.marginWidth = 0;
-				tableContainerLayout.horizontalSpacing = 0;
-				tableContainer.setLayout(tableContainerLayout);
-			}
-			scrolledTable.setContent(tableContainer);
-			
-			documentTypesTable = CheckboxTableViewer.newCheckList(tableContainer, SWT.BORDER | SWT.MULTI);
-			{
-				documentTypesTable.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-				documentTypesTable.setLabelProvider(new ColumnLabelProvider() {
-					
-					Image icon = (Image) ItemProviderUtil.getImageByType(EcorePackage.eINSTANCE.getEPackage());
-					
-					@Override
-					public Image getImage(Object element) {
-						return icon;
-					}
-				});
-				documentTypesTable.setContentProvider(new ArrayContentProvider());
-				documentTypesTable.setInput(availableDocumentTypes);
-				documentTypesTable.addCheckStateListener(new ICheckStateListener() {
-					
-					@Override
-					public void checkStateChanged(CheckStateChangedEvent event) {
-						if (event.getChecked()) {
-							String packageName = (String) event.getElement();
-							selectedDocumentTypes.add(packageName);
-							
-							// For convenience, set name and description...
-							if (nameText.getText().isEmpty() && descriptionText.getText().isEmpty()) {
-								List<EPackage> packages = DocumentType.getDocumentType(packageName);
-								
-								if (!packages.isEmpty()) {
-									nameText.setText(StringUtil.toUpperFirst(packages.get(0).getName()));
-									descriptionText.setText("Document Type: " + packageName);
-								}
-							}
-							
-						} else {
-							selectedDocumentTypes.remove(event.getElement());
-						}
-					}
-					
-				});
-			}
-			
-			// FINALLY, calculate the content to be scrolled!
-			tableContainer.setSize(tableContainer.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		}
+	}
+
+	private void createDocumentTypeSearch(Composite documentTypesContainer) {
+		documentTypeSearch = new Text(documentTypesContainer, SWT.BORDER);
+		{
+			documentTypeSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			documentTypeSearch.setText(SEARCH_INFO_TEXT);
+		}
+	}
+
+	private void createDocumentTypeSearchListeners() {
+		documentTypeSearch.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (documentTypeSearch.getText().equals("")) {
+					documentTypeSearch.setText(SEARCH_INFO_TEXT);
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (documentTypeSearch.getText().equals(SEARCH_INFO_TEXT)) {
+					documentTypeSearch.setText("");
+				}
+			}
+		});
+		documentTypeSearch.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (documentTypeSearch.getText().equals(SEARCH_INFO_TEXT)) {
+					searchInDocumentTypeTable(null);
+				} else {
+					searchInDocumentTypeTable(documentTypeSearch.getText());
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+		});
+		
+		// For convenience, set name and description based on document type:
+		documentTypesTable.addCheckStateListener(new ICheckStateListener() {
+
+			@Override
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				if (event.getChecked()) {
+					String packageName = (String) event.getElement();
+
+					if (nameText.getText().isEmpty() && descriptionText.getText().isEmpty()) {
+						List<EPackage> packages = DocumentType.getDocumentType(packageName);
+
+						if (!packages.isEmpty()) {
+							nameText.setText(StringUtil.toUpperFirst(packages.get(0).getName()));
+							descriptionText.setText("Document Type: " + packageName);
+						}
+					}
+				}
+			}
+		});
+	}
+
+	private void createDocumentTypesTable(Composite documentTypesContainer) {
+		
+		ScrolledComposite scrolledTable = new ScrolledComposite(documentTypesContainer, SWT.H_SCROLL | SWT.V_SCROLL);
+		{
+			scrolledTable.setExpandVertical(true);
+			scrolledTable.setExpandHorizontal(true);
+			
+			GridData scrolledTableLayout = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 2);
+			scrolledTableLayout.heightHint = 100;
+			scrolledTable.setLayoutData(scrolledTableLayout);
+		}
+		
+		Composite tableContainer = new Composite(scrolledTable, SWT.NONE);
+		{
+			GridLayout tableContainerLayout = new GridLayout(1, false);
+			tableContainerLayout.verticalSpacing = 0;
+			tableContainerLayout.marginHeight = 0;
+			tableContainerLayout.marginWidth = 0;
+			tableContainerLayout.horizontalSpacing = 0;
+			tableContainer.setLayout(tableContainerLayout);
+		}
+		scrolledTable.setContent(tableContainer);
+		
+		documentTypesTable = CheckboxTableViewer.newCheckList(tableContainer, SWT.BORDER | SWT.MULTI);
+		{
+			documentTypesTable.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+			documentTypesTable.setLabelProvider(new ColumnLabelProvider() {
+				
+				Image icon = (Image) ItemProviderUtil.getImageByType(EcorePackage.eINSTANCE.getEPackage());
+				
+				@Override
+				public Image getImage(Object element) {
+					return icon;
+				}
+			});
+			documentTypesTable.setContentProvider(new ArrayContentProvider());
+			documentTypesTable.setInput(availableDocumentTypes);
+		}
+		
+		// FINALLY, calculate the content to be scrolled!
+		tableContainer.setSize(tableContainer.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	}
+
+	private void createDocumentTypeTableListeners() {
+		documentTypesTable.addCheckStateListener(new ICheckStateListener() {
+			
+			@Override
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				if (event.getChecked()) {
+					String packageName = (String) event.getElement();
+					selectedDocumentTypes.add(packageName);
+					
+					// For convenience, set name and description...
+					if (nameText.getText().isEmpty() && descriptionText.getText().isEmpty()) {
+						List<EPackage> packages = DocumentType.getDocumentType(packageName);
+						
+						if (!packages.isEmpty()) {
+							nameText.setText(StringUtil.toUpperFirst(packages.get(0).getName()));
+							descriptionText.setText("Document Type: " + packageName);
+						}
+					}
+					
+				} else {
+					selectedDocumentTypes.remove(event.getElement());
+				}
+			}
+			
+		});
 	}
 	
 	private void searchInDocumentTypeTable(String text) {
@@ -351,146 +393,175 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 				constraintContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 			}
 			
-			constraintSearch = new Text(constraintContainer, SWT.BORDER);
-			{
-				String infoText = "search for keyword or pattern (*) ...";
-				
-				constraintSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-				constraintSearch.setText(infoText);
-				constraintSearch.addFocusListener(new FocusListener() {
-					
-					@Override
-					public void focusLost(FocusEvent e) {
-						if (constraintSearch.getText().equals("")) {
-							constraintSearch.setText(infoText);
-						}
-					}
-					
-					@Override
-					public void focusGained(FocusEvent e) {
-						if (constraintSearch.getText().equals(infoText)) {
-							constraintSearch.setText("");
-						}
-					}
-				});
-				constraintSearch.addKeyListener(new KeyListener() {
-					
-					@Override
-					public void keyReleased(KeyEvent e) {
-						if (constraintSearch.getText().equals(infoText)) {
-							searchInConstraintTable(null);
-						} else {
-							searchInConstraintTable(constraintSearch.getText());
-						}
-					}
-
-					@Override
-					public void keyPressed(KeyEvent e) {
-					}
-				});
-			}
+			createConstraintSearch(constraintContainer);
+			createConstraintsTable(constraintContainer);
+			createConstraintSelectionTools(constraintContainer);
 			
-			ScrolledComposite scrolledTable = new ScrolledComposite(constraintContainer, SWT.H_SCROLL | SWT.V_SCROLL);
-			{
-				scrolledTable.setExpandVertical(true);
-				scrolledTable.setExpandHorizontal(true);
-				
-				GridData scrolledTableLayout = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 2);
-				scrolledTableLayout.heightHint = 100;
-				scrolledTable.setLayoutData(scrolledTableLayout);
-			}
-			
-			Composite tableContainer = new Composite(scrolledTable, SWT.NONE);
-			{
-				GridLayout tableContainerLayout = new GridLayout(1, false);
-				tableContainerLayout.verticalSpacing = 0;
-				tableContainerLayout.marginWidth = 0;
-				tableContainerLayout.marginHeight = 0;
-				tableContainerLayout.horizontalSpacing = 0;
-				tableContainer.setLayout(tableContainerLayout);
-			}
-			scrolledTable.setContent(tableContainer);
-			
-			constraintsTable = CheckboxTableViewer.newCheckList(tableContainer, SWT.BORDER | SWT.MULTI);
-			{
-				constraintsTable.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-				constraintsTable.setLabelProvider(new ColumnLabelProvider() {
-					
-					@Override
-					public Image getImage(Object element) {
-						
-						if (element instanceof IConstraint) {
-							return (Image) ItemProviderUtil.getImageByType(((IConstraint) element).getContextType());
-						}
-						
-						return super.getImage(element);
-					}
-					
-					@Override
-					public String getText(Object element) {
-						
-						if (element instanceof IConstraint) {
-							return ((IConstraint) element).getName();
-						}
-						
-						return super.getText(element);
-					}
-				});
-				constraintsTable.setContentProvider(new ArrayContentProvider());
-				constraintsTable.setInput(availableConstraints);
-				constraintsTable.addCheckStateListener(new ICheckStateListener() {
-					
-					@Override
-					public void checkStateChanged(CheckStateChangedEvent event) {
-						if (event.getChecked()) {
-							selectedConstraints.add((IConstraint) event.getElement());
-						} else {
-							selectedConstraints.remove(event.getElement());
-						}
-						
-					}
-				});
-				
-				// Listen to selected document types: 
-				documentTypesTable.addCheckStateListener(new ICheckStateListener() {
-					
-					@Override
-					public void checkStateChanged(CheckStateChangedEvent event) {
-						RuleBaseProjectPageEditRules.this.availableConstraints = getAvailableConstraints();
-						constraintsTable.setInput(RuleBaseProjectPageEditRules.this.availableConstraints);
-					}
-				});
-			}
-			
-			Composite constraintSelectionTools = new Composite(constraintContainer, SWT.NONE);
-			{
-				constraintSelectionTools.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-				constraintSelectionTools.setLayout(new FillLayout(SWT.HORIZONTAL));
-				
-				Button selectAllConstraints = new Button(constraintSelectionTools, SWT.NONE);
-				selectAllConstraints.setText("Select All");
-				selectAllConstraints.addListener(SWT.Selection, new Listener() {
-					@Override
-					public void handleEvent(Event event) {
-						constraintsTable.setAllChecked(true); // no notification ->
-						selectedConstraints.addAll(Arrays.asList(availableConstraints));
-					}
-				});
-				
-				Button clearSelectedConstraints = new Button(constraintSelectionTools, SWT.NONE);
-				clearSelectedConstraints.setText("Clear Selection");
-				clearSelectedConstraints.addListener(SWT.Selection, new Listener() {
-					@Override
-					public void handleEvent(Event event) {
-						constraintsTable.setAllChecked(false); // no notification ->
-						selectedConstraints.removeAll(Arrays.asList(availableConstraints));
-					}
-				});
-			}
-			
-			// FINALLY, calculate the content to be scrolled!
-			tableContainer.setSize(tableContainer.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			createConstraintSearchListeners();
+			createConstraintsTableListener();
+			createConstraintSelectionToolsListener();
 		}
+	}
+
+	private void createConstraintSearch(Composite constraintContainer) {
+		
+		constraintSearch = new Text(constraintContainer, SWT.BORDER);
+		{
+			constraintSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			constraintSearch.setText(SEARCH_INFO_TEXT);
+		}
+	}
+
+	private void createConstraintSearchListeners() {
+		constraintSearch.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (constraintSearch.getText().equals("")) {
+					constraintSearch.setText(SEARCH_INFO_TEXT);
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (constraintSearch.getText().equals(SEARCH_INFO_TEXT)) {
+					constraintSearch.setText("");
+				}
+			}
+		});
+		constraintSearch.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (constraintSearch.getText().equals(SEARCH_INFO_TEXT)) {
+					searchInConstraintTable(null);
+				} else {
+					searchInConstraintTable(constraintSearch.getText());
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+		});
+	}
+
+	private void createConstraintsTable(Composite constraintContainer) {
+		
+		ScrolledComposite scrolledTable = new ScrolledComposite(constraintContainer, SWT.H_SCROLL | SWT.V_SCROLL);
+		{
+			scrolledTable.setExpandVertical(true);
+			scrolledTable.setExpandHorizontal(true);
+			
+			GridData scrolledTableLayout = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 2);
+			scrolledTableLayout.heightHint = 100;
+			scrolledTable.setLayoutData(scrolledTableLayout);
+		}
+		
+		Composite tableContainer = new Composite(scrolledTable, SWT.NONE);
+		{
+			GridLayout tableContainerLayout = new GridLayout(1, false);
+			tableContainerLayout.verticalSpacing = 0;
+			tableContainerLayout.marginWidth = 0;
+			tableContainerLayout.marginHeight = 0;
+			tableContainerLayout.horizontalSpacing = 0;
+			tableContainer.setLayout(tableContainerLayout);
+		}
+		scrolledTable.setContent(tableContainer);
+		
+		constraintsTable = CheckboxTableViewer.newCheckList(tableContainer, SWT.BORDER | SWT.MULTI);
+		{
+			constraintsTable.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+			constraintsTable.setLabelProvider(new ColumnLabelProvider() {
+				
+				@Override
+				public Image getImage(Object element) {
+					
+					if (element instanceof IConstraint) {
+						return (Image) ItemProviderUtil.getImageByType(((IConstraint) element).getContextType());
+					}
+					
+					return super.getImage(element);
+				}
+				
+				@Override
+				public String getText(Object element) {
+					
+					if (element instanceof IConstraint) {
+						return ((IConstraint) element).getName();
+					}
+					
+					return super.getText(element);
+				}
+			});
+			constraintsTable.setContentProvider(new ArrayContentProvider());
+			constraintsTable.setInput(availableConstraints);
+		}
+		
+		// FINALLY, calculate the content to be scrolled!
+		tableContainer.setSize(tableContainer.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	}
+	
+	private void createConstraintSelectionTools(Composite constraintContainer) {
+		Composite constraintSelectionTools = new Composite(constraintContainer, SWT.NONE);
+		{
+			constraintSelectionTools.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+			constraintSelectionTools.setLayout(new FillLayout(SWT.HORIZONTAL));
+			
+			selectAllConstraints = new Button(constraintSelectionTools, SWT.NONE);
+			selectAllConstraints.setText("Select All");
+			
+			clearSelectedConstraints = new Button(constraintSelectionTools, SWT.NONE);
+			clearSelectedConstraints.setText("Clear Selection");
+		}
+	}
+
+	private void createConstraintSelectionToolsListener() {
+		
+		selectAllConstraints.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				constraintsTable.setAllChecked(true); // no notification ->
+				selectedConstraints.addAll(Arrays.asList(availableConstraints));
+			}
+		});
+		
+		clearSelectedConstraints.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				constraintsTable.setAllChecked(false); // no notification ->
+				selectedConstraints.removeAll(Arrays.asList(availableConstraints));
+			}
+		});
+	}
+
+	private void createConstraintsTableListener() {
+		constraintsTable.addCheckStateListener(new ICheckStateListener() {
+			
+			@Override
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				if (event.getChecked()) {
+					selectedConstraints.add((IConstraint) event.getElement());
+				} else {
+					selectedConstraints.remove(event.getElement());
+				}
+				
+			}
+		});
+		
+		// Listen to selected document types: 
+		documentTypesTable.addCheckStateListener(new ICheckStateListener() {
+			
+			@Override
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				RuleBaseProjectPageEditRules.this.availableConstraints = getAvailableConstraints();
+				constraintsTable.setInput(RuleBaseProjectPageEditRules.this.availableConstraints);
+				
+				// Select all:
+				constraintsTable.setAllChecked(true);
+				selectedConstraints.addAll(Arrays.asList(availableConstraints));
+			}
+		});
 	}
 	
 	private void searchInConstraintTable(String text) {

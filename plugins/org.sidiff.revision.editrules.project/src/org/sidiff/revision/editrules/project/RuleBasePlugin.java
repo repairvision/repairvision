@@ -41,6 +41,11 @@ public class RuleBasePlugin {
 	 * The base folder which contains the Henshin edit-rules.
 	 */
 	public static final String EDIT_RULE_FOLDER = "editrules";
+	
+	/**
+	 * The base folder which contains the ASG pattern examples.
+	 */
+	public static final String EXAMPLE_FOLDER = "examples";
 
 	/**
 	 * The plug-in relative path to the ASG patterns file.

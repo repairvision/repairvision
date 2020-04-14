@@ -47,14 +47,16 @@ public class ASGPatternBundle {
 		EditRuleGenerator.initializeRelocationEdge(patternBundle);
 	}
 	
-	public void addConstraint(IConstraint constraint) {
+	public void addConstraint(IConstraint constraint, boolean initialize) {
 		Pattern constraintPatterns = GraphpatternFactory.eINSTANCE.createPattern();
 		constraintPatterns.setName(constraint.getName());
 		constraintPatterns.setDescription(constraint.getMessage());
 		constraintPatterns.getStereotypes().add(ConstraintStereotypes.constraint);
 		patternBundle.getPatterns().add(constraintPatterns);
 		
-		initializeConstraint(constraintPatterns, constraint);
+		if (initialize) {
+			initializeConstraint(constraintPatterns, constraint);
+		}
 	}
 	
 	protected void initializeConstraint(Pattern constraintPatterns, IConstraint constraint) {
