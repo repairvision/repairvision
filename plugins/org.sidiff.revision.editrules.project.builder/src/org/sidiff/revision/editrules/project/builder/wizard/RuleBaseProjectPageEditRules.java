@@ -137,14 +137,14 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 		List<IConstraint> sortedSelectedConstraints = new ArrayList<>(selectedConstraints);
 		sortedSelectedConstraints.sort(new Comparator<IConstraint>() {
 
-					@Override
-					public int compare(IConstraint c1, IConstraint c2) {
-						return c1.getName().compareTo(c2.getName());
-					}
-				});
+			@Override
+			public int compare(IConstraint c1, IConstraint c2) {
+				return c1.getName().compareTo(c2.getName());
+			}
+		});
 		return new LinkedHashSet<>(sortedSelectedConstraints);
 	}
-	
+
 	public boolean isCreateExampleFolderOption() {
 		return exampleFolderOption.getSelection();
 	}
