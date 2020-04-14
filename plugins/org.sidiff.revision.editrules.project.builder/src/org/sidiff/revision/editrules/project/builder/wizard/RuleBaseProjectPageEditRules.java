@@ -2,6 +2,7 @@ package org.sidiff.revision.editrules.project.builder.wizard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -133,7 +134,15 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 	}
 	
 	public Set<IConstraint> getSelectedConstraints() {
-		return new LinkedHashSet<>(selectedConstraints);
+		List<IConstraint> sortedSelectedConstraints = new ArrayList<>(selectedConstraints);
+		sortedSelectedConstraints.sort(new Comparator<IConstraint>() {
+
+					@Override
+					public int compare(IConstraint c1, IConstraint c2) {
+						return c1.getName().compareTo(c2.getName());
+					}
+				});
+		return new LinkedHashSet<>(sortedSelectedConstraints);
 	}
 	
 	public boolean isCreateExampleFolderOption() {

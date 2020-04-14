@@ -186,7 +186,8 @@ public class ASGPatternBundle {
 			if (modelElement instanceof GraphPattern) {
 				String constraint = ConstraintProfileUtil.getParentConstraint(modelElement).getName();
 				String pattern =  ((GraphPattern) modelElement).getName();
-				return pattern + " - " + constraint;
+				
+				return constraint + " - " + pattern;
 			}
 			
 			return super.getDiagramName(modelElement);
