@@ -28,7 +28,7 @@ import org.sidiff.revision.editrules.generation.constructors.DeletionEditRuleCon
 import org.sidiff.revision.editrules.generation.constructors.IEditRuleConstructor;
 import org.sidiff.revision.editrules.generation.constructors.RelocationEditRuleConstructor;
 import org.sidiff.revision.editrules.generation.constructors.TransformationEditRuleConstructor;
-import org.sidiff.revision.editrules.generation.generator.handler.GenerateEditRulesBatch;
+import org.sidiff.revision.editrules.generation.generator.api.EditRuleGenerator;
 import org.sidiff.revision.editrules.project.RuleBasePlugin;
 
 /**
@@ -90,7 +90,7 @@ public class RuleBaseBuilder extends IncrementalProjectBuilder {
 				TransformationEditRuleConstructor.class,
 				RelocationEditRuleConstructor.class});
 		
-		GenerateEditRulesBatch generator = new GenerateEditRulesBatch();
+		EditRuleGenerator generator = new EditRuleGenerator();
 		Bundle editrulesBundle = generator.generateEditRules(generators, patternBundle, editrulesURI);
 		
 		return editrulesBundle;

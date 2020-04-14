@@ -1,9 +1,7 @@
 package org.sidiff.common.utilities.emf;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -12,19 +10,28 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 
+/**
+ * Convenient functions for ecore modeling.
+ * 
+ * @author Manuel Ohrndorf
+ */
 public class ModelingUtil {
-	
+
+	/**
+	 * @param element A model element.
+	 * @return Iterates over all container elements.
+	 */
 	public static Iterator<EObject> getRootPath(EObject element) {
 		return new Iterator<EObject>() {
-			
+
 			private EObject location = element;
-			
+
 			@Override
 			public EObject next() {
 				location = location.eContainer();
 				return location;
 			}
-			
+
 			@Override
 			public boolean hasNext() {
 				return location.eContainer() != null;
@@ -35,8 +42,7 @@ public class ModelingUtil {
 	/**
 	 * Creates a deep copy (i.e. full tree content) of the given object.
 	 * 
-	 * @param original
-	 *            The root object which will be copied.
+	 * @param original The root object which will be copied.
 	 * @return The copy trace: Original -> Copy
 	 */
 	public static Map<EObject, EObject> deepCopy(EObject original) {
@@ -56,10 +62,8 @@ public class ModelingUtil {
 	/**
 	 * Creates a deep copy (i.e. full tree content) of the given resource.
 	 * 
-	 * @param original
-	 *            The resource which will be copied.
-	 * @param copy
-	 *            An empty target resource.
+	 * @param original The resource which will be copied.
+	 * @param copy     An empty target resource.
 	 * 
 	 * @return The copy trace: Original -> Copy
 	 */
@@ -83,8 +87,7 @@ public class ModelingUtil {
 	/**
 	 * Creates a of the given object.
 	 * 
-	 * @param original
-	 *            The object which will be copied.
+	 * @param original The object which will be copied.
 	 * @return The copied object.
 	 */
 	public static EObject copy(EObject original) {
@@ -127,38 +130,10 @@ public class ModelingUtil {
 	}
 
 	/**
-	 * @param copy
-	 *            The copied object.
-	 * @param copyTrace
-	 *            The copy trace: Original -> Copy
-	 * @return The original object.
+	 * @param obj A model element.
+	 * @return The name of the model element, i.e., the value of the name attribute
+	 *         if it exist; the {@link obj#toString} value otherwise.
 	 */
-	public static EObject getReverseTrace(EObject copy, Map<EObject, EObject> copyTrace) {
-
-		for (Entry<EObject, EObject> trace : copyTrace.entrySet()) {
-			if (trace.getValue() == copy) {
-				return trace.getKey();
-			}
-		}
-
-		return null;
-	}
-	
-	public static String getNames(Collection<? extends EObject> objects) {
-		StringBuffer string = new StringBuffer();
-		
-		string.append("[");
-		
-		for (EObject object : objects) {
-			string.append(getName(object));
-			string.append(", ");
-		}
-		string.replace(string.length() - 2, string.length(), "");
-		string.append("]");
-		
-		return string.toString();
-	}
-	
 	public static String getName(EObject obj) {
 		try {
 			return (String) obj.eGet(obj.eClass().getEStructuralFeature("name"));

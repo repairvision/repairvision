@@ -1,6 +1,7 @@
 package org.sidiff.revision.editrules.project.builder.wizard;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +33,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.emf.ItemProviderUtil;
+import org.sidiff.common.utilities.java.StringUtil;
 import org.sidiff.revision.editrules.project.builder.Activator;
 import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.api.library.IConstraintLibrary;
@@ -118,11 +120,7 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 		Set<EPackage> documentTypes = new LinkedHashSet<>();
 		
 		for (Object selectedDocumentType : selectedDocumentTypes) {
-			EPackage documentType = EPackage.Registry.INSTANCE.getEPackage((String) selectedDocumentType);
-			
-			if (documentType != null) {
-				documentTypes.add(documentType);
-			}
+			documentTypes.addAll(DocumentType.getDocumentType((String) selectedDocumentType));
 		}
 	
 		return documentTypes;
@@ -290,12 +288,24 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 					@Override
 					public void checkStateChanged(CheckStateChangedEvent event) {
 						if (event.getChecked()) {
-							selectedDocumentTypes.add((String) event.getElement());
+							String packageName = (String) event.getElement();
+							selectedDocumentTypes.add(packageName);
+							
+							// For convenience, set name and description...
+							if (nameText.getText().isEmpty() && descriptionText.getText().isEmpty()) {
+								List<EPackage> packages = DocumentType.getDocumentType(packageName);
+								
+								if (!packages.isEmpty()) {
+									nameText.setText(StringUtil.toUpperFirst(packages.get(0).getName()));
+									descriptionText.setText("Document Type: " + packageName);
+								}
+							}
+							
 						} else {
 							selectedDocumentTypes.remove(event.getElement());
 						}
-						
 					}
+					
 				});
 			}
 			
@@ -462,7 +472,8 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 				selectAllConstraints.addListener(SWT.Selection, new Listener() {
 					@Override
 					public void handleEvent(Event event) {
-						constraintsTable.setAllChecked(true);
+						constraintsTable.setAllChecked(true); // no notification ->
+						selectedConstraints.addAll(Arrays.asList(availableConstraints));
 					}
 				});
 				
@@ -471,7 +482,8 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 				clearSelectedConstraints.addListener(SWT.Selection, new Listener() {
 					@Override
 					public void handleEvent(Event event) {
-						constraintsTable.setAllChecked(false);
+						constraintsTable.setAllChecked(false); // no notification ->
+						selectedConstraints.removeAll(Arrays.asList(availableConstraints));
 					}
 				});
 			}

@@ -1,9 +1,8 @@
 package org.sidiff.revision.editrules.project.builder.template;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -16,11 +15,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.pde.core.plugin.IPluginBase;
 import org.eclipse.pde.core.plugin.IPluginElement;
@@ -32,13 +27,11 @@ import org.eclipse.pde.ui.IFieldData;
 import org.eclipse.pde.ui.templates.OptionTemplateSection;
 import org.eclipse.pde.ui.templates.PluginReference;
 import org.sidiff.common.ui.util.UIUtil;
-import org.sidiff.graphpattern.Bundle;
-import org.sidiff.graphpattern.GraphpatternFactory;
-import org.sidiff.graphpattern.design.tools.diagram.ModelDiagramCreator;
-import org.sidiff.graphpattern.profile.constraints.ConstraintStereotypes;
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.revision.editrules.project.RuleBasePlugin;
 import org.sidiff.revision.editrules.project.builder.Activator;
 import org.sidiff.revision.editrules.project.builder.nature.RuleBaseProjectNature;
+import org.sidiff.revision.editrules.project.builder.template.ASGPatternBundle.DiagramURI;
 import org.sidiff.revision.editrules.project.builder.wizard.RuleBaseProjectPageEditRules;
 
 /**
@@ -89,9 +82,11 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		IPluginElement element = factory.createElement(extension);
 		
 		// register new rulebase:
+		String documentType = DocumentType.getDocumentType(new ArrayList<>(pageEditRules.getSelectedDocumentTypes()));
+		
 		element.setName(RuleBasePlugin.EXTENSION_POINT_ELEMENT_RULEBASE);
 		element.setAttribute(RuleBasePlugin.EXTENSION_POINT_ATTRIBUTE_RULEBASE_NAME, getStringOption(KEY_PACKAGE_NAME));
-		element.setAttribute(RuleBasePlugin.EXTENSION_POINT_ATTRIBUTE_RULEBASE_DOCUMENT_TYPE, pageEditRules.getName());
+		element.setAttribute(RuleBasePlugin.EXTENSION_POINT_ATTRIBUTE_RULEBASE_DOCUMENT_TYPE, documentType);
 		element.setAttribute(RuleBasePlugin.EXTENSION_POINT_ATTRIBUTE_RULEBASE_FOLDER, RuleBasePlugin.EDIT_RULE_FOLDER);
 		
 		extension.add(element);
@@ -188,17 +183,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		super.execute(project, model, progress.split(1));
 
 		createOutputFolders(project, progress.split(1));
-		Bundle patternBundle = createGraphPatternFile(project, progress.split(1));
-		URI diagramFile = createGraphPatternDiagram(patternBundle, progress.split(1));
-		
-		if (diagramFile != null) {
-			try {
-				String path = project.getLocation().removeLastSegments(1) + diagramFile.toPlatformString(true);
-				UIUtil.openEditor(path);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
+		createASGPatternBundle(project, monitor);
 	}
 	
 	private static void createOutputFolders(IProject project, IProgressMonitor monitor) throws CoreException {
@@ -213,39 +198,32 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		
 		monitor.done();
 	}
-
-	private Bundle createGraphPatternFile(IProject project, IProgressMonitor monitor) {
-		Bundle patternBundle = GraphpatternFactory.eINSTANCE.createBundle();
-		patternBundle.getProfiles().add(ConstraintStereotypes.instance);
-		patternBundle.setName(pageEditRules.getName());
-		patternBundle.setDescription(pageEditRules.getDescription());
-		patternBundle.getDomains().addAll(pageEditRules.getSelectedDocumentTypes());
-
-		URI patternURI = URI.createPlatformResourceURI(project.getName() + "/" + RuleBasePlugin.GRAPHPATTERN_FILE, true);
-		
-		ResourceSet resourceSet = new ResourceSetImpl();
-		Resource resource = resourceSet.createResource(patternURI);
-		resource.getContents().add(patternBundle);
-		
-		try {
-			resource.save(Collections.emptyMap());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		monitor.done();
-		return patternBundle;
-	}
 	
-	private URI createGraphPatternDiagram(Bundle patternBundle, IProgressMonitor monitor) {
-		try {
-			ModelDiagramCreator createDiagram = new ModelDiagramCreator(patternBundle, monitor);
-			URI diagramFile = createDiagram.createRepresentations(monitor);
-			return diagramFile;
-		} catch (Exception e) {
-			e.printStackTrace();
+	protected void createASGPatternBundle(IProject project, IProgressMonitor monitor) {
+		ASGPatternBundle asgPattern = new ASGPatternBundle(pageEditRules.getName(), pageEditRules.getDescription());
+		pageEditRules.getSelectedDocumentTypes().forEach(asgPattern::addDocumentType);
+		
+		if (pageEditRules.isInitializePatternsOption()) {
+			pageEditRules.getSelectedConstraints().forEach(asgPattern::addConstraint);
 		}
 		
-		return null;
+		DiagramURI diagramDashboardURI = asgPattern.saveWithDiagrams(project, monitor);
+		
+		// Do no include the relocation edge in the diagrams:
+		asgPattern.initializeRelocationEdges();
+		asgPattern.save(project);
+		
+		openDiagram(project, diagramDashboardURI);
+	}
+
+	protected void openDiagram(IProject project, DiagramURI diagramDashboardURI) {
+		if (diagramDashboardURI.diagramURI != null) {
+			try {
+				String path = project.getLocation().removeLastSegments(1) + diagramDashboardURI.diagramURI.toPlatformString(true);
+				UIUtil.openEditor(path);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

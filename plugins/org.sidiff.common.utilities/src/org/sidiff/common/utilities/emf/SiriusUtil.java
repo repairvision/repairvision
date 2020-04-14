@@ -22,6 +22,11 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
+/**
+ * Helper functions to work with EMF sirius diagrams.
+ * 
+ * @author Manuel Ohrndorf
+ */
 @SuppressWarnings({ "restriction", "deprecation" })
 public class SiriusUtil {
 	

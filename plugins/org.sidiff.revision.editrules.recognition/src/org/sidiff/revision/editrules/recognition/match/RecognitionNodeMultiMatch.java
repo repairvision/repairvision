@@ -1,5 +1,6 @@
 package org.sidiff.revision.editrules.recognition.match;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -39,8 +40,23 @@ public class RecognitionNodeMultiMatch extends RecognitionNodeMatch {
 		
 		string.append("<<" + getAction() + ">>");
 		string.append(" " + getNode());
-		string.append(" A: " + ModelingUtil.getNames(getModelAElements()));
-		string.append(" B: " + ModelingUtil.getNames(getModelBElements()));
+		string.append(" A: " + getNames(getModelAElements()));
+		string.append(" B: " + getNames(getModelBElements()));
+		
+		return string.toString();
+	}
+	
+	private static String getNames(Collection<? extends EObject> objects) {
+		StringBuffer string = new StringBuffer();
+		
+		string.append("[");
+		
+		for (EObject object : objects) {
+			string.append(ModelingUtil.getName(object));
+			string.append(", ");
+		}
+		string.replace(string.length() - 2, string.length(), "");
+		string.append("]");
 		
 		return string.toString();
 	}

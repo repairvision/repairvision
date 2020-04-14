@@ -413,7 +413,7 @@ public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 		return relocationEdgesIndex;
 	}
 
-	private static Pattern getRelocationEdges(Bundle editRuleBundle) {
+	public static Pattern getRelocationEdges(Bundle editRuleBundle) {
 		return editRuleBundle.getPattern(RELOCATION_EDGES_PATTERN_NAME);
 	}
 

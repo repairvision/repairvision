@@ -76,7 +76,7 @@ public class ModelDiagramCreator {
 	}
 	
 	public String createRepresentation(EObject element, RepresentationDescription description, IProgressMonitor monitor) {
-		String name = getDiagramName(element, session, description);
+		String name = getUniqueDiagramName(element, session, description);
 
 		SiriusUtil.edit(session.getTransactionalEditingDomain(), () -> {
 			DialectManager.INSTANCE.createRepresentation(name, element, description, session, monitor); 
@@ -174,8 +174,8 @@ public class ModelDiagramCreator {
 		return representations;
 	}
 	
-	protected String getDiagramName(EObject modelElement, Session session, RepresentationDescription description) {
-		String name = ItemProviderUtil.getTextByObject(modelElement);
+	protected String getUniqueDiagramName(EObject modelElement, Session session, RepresentationDescription description) {
+		String name = getDiagramName(modelElement);
 		int count = 0;
 		
 		for (DRepresentation diagramRepresentation : DialectManager.INSTANCE.getRepresentations(description, session)) {
@@ -189,5 +189,9 @@ public class ModelDiagramCreator {
 		}
 		
 		return name;
+	}
+	
+	protected String getDiagramName(EObject modelElement) {
+		return ItemProviderUtil.getTextByObject(modelElement);
 	}
 }
