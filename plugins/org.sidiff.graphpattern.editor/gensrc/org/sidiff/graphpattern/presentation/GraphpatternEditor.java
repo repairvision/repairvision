@@ -58,6 +58,8 @@ import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.edit.ui.provider.DecoratingColumLabelProvider;
+import org.eclipse.emf.edit.ui.provider.DiagnosticDecorator;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
@@ -963,7 +965,7 @@ public class GraphpatternEditor
 	 * This is the method used by the framework to install your own controls.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void createPages() {
@@ -997,7 +999,12 @@ public class GraphpatternEditor
 				selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
 				selectionViewer.setUseHashlookup(true);
 
-				selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider.ColorProvider(adapterFactory, selectionViewer));
+				// Label provider with colors and diagnostic decorations:
+				selectionViewer.setLabelProvider(new DecoratingColumLabelProvider(
+						new AdapterFactoryLabelProvider.ColorProvider(adapterFactory, selectionViewer),
+						new DiagnosticDecorator(editingDomain, selectionViewer,
+								GraphpatternEditorPlugin.getPlugin().getDialogSettings())));
+				
 				selectionViewer.setInput(editingDomain.getResourceSet());
 				selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
 				viewerPane.setTitle(editingDomain.getResourceSet());
