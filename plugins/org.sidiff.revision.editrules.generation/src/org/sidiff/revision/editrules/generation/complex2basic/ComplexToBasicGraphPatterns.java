@@ -41,7 +41,7 @@ public class ComplexToBasicGraphPatterns {
 	public void findNewBasicPatterns(Bundle complexPatternsBundle, Bundle basicPatternsBundle, Pattern pattern) {
 		
 		// Search pattern tree:
-		for (Pattern subPattern : pattern.getSubpatterns()) {
+		for (Pattern subPattern : pattern.getPatterns()) {
 			findNewBasicPatterns(complexPatternsBundle, basicPatternsBundle, subPattern);
 		}
 		
@@ -73,7 +73,7 @@ public class ComplexToBasicGraphPatterns {
 					basicGraphPattern.setName(basicGraphPatternName);
 					basicGraphPattern.setDescription("Derived from: " + fullGraphPattern.getName());
 					
-					containerPattern.getSubpatterns().add(basicPattern);
+					containerPattern.getPatterns().add(basicPattern);
 				}
 			}
 		}
@@ -119,7 +119,7 @@ public class ComplexToBasicGraphPatterns {
 			}
 		}
 		
-		for (Pattern subPatterns : otherBasicPatterns.getSubpatterns()) {
+		for (Pattern subPatterns : otherBasicPatterns.getPatterns()) {
 			if (graphPatternExist(subPatterns, basicPattern)) {
 				return true;
 			}
@@ -440,7 +440,7 @@ public class ComplexToBasicGraphPatterns {
 			}
 		}
 		
-		for (Pattern containerPattern : defaultPattern.getSubpatterns()) {
+		for (Pattern containerPattern : defaultPattern.getPatterns()) {
 			if (containerPattern.getName().equals(containerName)) {
 				return containerPattern;
 			}
@@ -449,7 +449,7 @@ public class ComplexToBasicGraphPatterns {
 		// If pattern not found, create new pattern:
 		Pattern containerPattern = GraphpatternFactory.eINSTANCE.createPattern();
 		containerPattern.setName(containerName);
-		defaultPattern.getSubpatterns().add(containerPattern);
+		defaultPattern.getPatterns().add(containerPattern);
 		
 		return containerPattern;
 	}
@@ -556,7 +556,7 @@ public class ComplexToBasicGraphPatterns {
 		List<Pattern> patterns = new ArrayList<>(1);
 		
 		// NOTE: We expect hierarchical pattern names, so we just check pattern in the same sub-pattern: 
-		for (Pattern siblingPattern : containerPattern.getSubpatterns()) {
+		for (Pattern siblingPattern : containerPattern.getPatterns()) {
 			if (siblingPattern.getName().equals(name)) {
 				patterns.add(siblingPattern);
 			}

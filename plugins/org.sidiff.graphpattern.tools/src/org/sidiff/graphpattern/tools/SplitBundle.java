@@ -139,10 +139,10 @@ public class SplitBundle extends AbstractHandler {
 	}
 	
 	private boolean isEmptyPattern(Pattern pattern) {
-		if (pattern.getGraphs().isEmpty() && pattern.getSubpatterns().isEmpty()) {
+		if (pattern.getGraphs().isEmpty() && pattern.getPatterns().isEmpty()) {
 			return true;
 		} else {
-			for (Pattern subpattern : pattern.getSubpatterns()) {
+			for (Pattern subpattern : pattern.getPatterns()) {
 				if (!isEmptyPattern(subpattern)) {
 					return false;
 				}

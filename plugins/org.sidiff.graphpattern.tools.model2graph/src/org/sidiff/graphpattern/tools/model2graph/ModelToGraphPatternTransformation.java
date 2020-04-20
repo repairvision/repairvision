@@ -4,20 +4,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
@@ -27,107 +19,58 @@ import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Parameter;
 import org.sidiff.graphpattern.Pattern;
 
-public class ModelToGraphPattern {
+public class ModelToGraphPatternTransformation {
 	
-	// TODO: Method to determine <<constraint>> marker, e.g., folder name convention...
+	private ModelToGraphPatternDefiniton definition;
+	
+	public ModelToGraphPatternTransformation(ModelToGraphPatternDefiniton definition) {
+		this.definition = definition;
+	}
 
-	public Bundle convertToBundle(IFolder folder, String fileExtension, ModelToGraphPatternDefinitonFactory definitionFactory) {
+	public Bundle toBundle(Resource modelResource) {
 		Bundle bundle = GraphpatternFactory.eINSTANCE.createBundle();
-		bundle.setName(folder.getName() + "Bundle");
+		Pattern pattern = toParameterizedGraph(modelResource);
 		
-		// Process folder content:
-		Pattern pattern = convertToPatternTree(folder, fileExtension, definitionFactory);
 		bundle.getPatterns().add(pattern);
+		bundle.setName(definition.getNameBundle(modelResource));
 		
 		return bundle;
 	}
 	
-	public Bundle convertToBundle(IFile file, ModelToGraphPatternDefinitonFactory definitionFactory) {
-		Bundle bundle = GraphpatternFactory.eINSTANCE.createBundle();
+	public Pattern toParameterizedGraph(Resource modelResource) {
 		Pattern pattern = GraphpatternFactory.eINSTANCE.createPattern();
 		
-		GraphPattern graphPattern = convertToParameterizedGraph(pattern, file, definitionFactory);
-		
-		bundle.getPatterns().add(pattern);
+		// Convert to graph:
+		GraphPattern graphPattern = toGraph(modelResource);
 		pattern.getGraphs().add(graphPattern);
+		pattern.setName(definition.getNamePattern(modelResource));
 		
-		bundle.setName(graphPattern.getName());
-		pattern.setName(graphPattern.getName());
-		
-		return bundle;
-	}
-	
-	protected Pattern convertToPatternTree(IFolder folder, String fileExtension, ModelToGraphPatternDefinitonFactory definitionFactory) {
-		Pattern pattern = GraphpatternFactory.eINSTANCE.createPattern();
-		pattern.setName(folder.getName());
-		
-		// Process folder content:
-        try {
-			for (IResource member : folder.members()) {
-			    if (member instanceof IFolder) {
-			    	
-			    	// Convert folder to pattern:
-			    	IFolder childFolder = (IFolder) member;
-			        Pattern subPattern = convertToPatternTree(childFolder, fileExtension, definitionFactory);
-			        pattern.getSubpatterns().add(subPattern);
-			        
-			    } else if (member instanceof IFile) {
-			    	
-			    	// Convert file to graph:
-			    	if (member.getFileExtension().equalsIgnoreCase(fileExtension)) {
-						convertToParameterizedGraph(pattern, member, definitionFactory);
-			    	}
-			    }
-			}
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
+		// Convert parameters:
+		toParameter(pattern, graphPattern);
 		
 		return pattern;
 	}
 
-	protected GraphPattern convertToParameterizedGraph(Pattern pattern, IResource member, ModelToGraphPatternDefinitonFactory definitionFactory) {
-		
-		// Load model:
-		ResourceSet rss = new ResourceSetImpl();
-		URI uri = EMFHandlerUtil.getURI(member);
-		Resource modelResource = rss.getResource(uri, true);
-		
-		// Create model2graph definition:
-		ModelToGraphPatternDefiniton definition = definitionFactory.createDefintion(modelResource);
-		
-		// Convert to graph:
-		GraphPattern graphPattern = convertToGraph(modelResource, definition);
-		pattern.getGraphs().add(graphPattern);
-		
-		// Convert parameters:
-		convertToParameter(pattern, graphPattern, definition);
-		
-		return graphPattern;
-	}
-
-	public GraphPattern convertToGraph(Resource modelResource, ModelToGraphPatternDefiniton definition) {
-		
+	public GraphPattern toGraph(Resource modelResource) {
 		Map<EObject, NodePattern> trace = new HashMap<>();
-		String name = modelResource.getURI().trimFileExtension().lastSegment();
 
 		GraphPattern graph = GraphpatternFactory.eINSTANCE.createGraphPattern();
-		graph.setName(name);
+		graph.setName(definition.getNameGraph(modelResource));
 		
 		// convert objects to nodes:
 		modelResource.getAllContents().forEachRemaining(e -> {
-			convertToNode(trace, graph, e, definition);
+			toNode(trace, graph, e);
 		});
 		
 		// convert references to edges:
 		modelResource.getAllContents().forEachRemaining(e -> {
-			convertToEdges(trace, graph, e, definition);
+			toEdges(trace, graph, e);
 		});
 		
 		return graph;
 	}
 	
-	protected NodePattern convertToNode(Map<EObject, NodePattern> trace, GraphPattern graph, EObject object, ModelToGraphPatternDefiniton definition) {
+	protected NodePattern toNode(Map<EObject, NodePattern> trace, GraphPattern graph, EObject object) {
 		
 		String name = definition.getName(object, graph);
 		
@@ -141,7 +84,7 @@ public class ModelToGraphPattern {
 			trace.put(object, node);
 			
 			// create attribute patterns:
-			convertToAttributes(object, node, definition);
+			toAttributes(object, node);
 			
 			return node;
 		} else {
@@ -149,7 +92,7 @@ public class ModelToGraphPattern {
 		}
 	}
 
-	protected void convertToAttributes(EObject object, NodePattern node, ModelToGraphPatternDefiniton definition) {
+	protected void toAttributes(EObject object, NodePattern node) {
 		
 		for (EAttribute attribute : object.eClass().getEAllAttributes()) {
 			String attributeValue = definition.getAttributeDefintion(node, attribute);
@@ -178,21 +121,21 @@ public class ModelToGraphPattern {
 		}
 	}
 
-	protected void convertToEdges(Map<EObject, NodePattern> trace, GraphPattern graph, EObject object, ModelToGraphPatternDefiniton definition) {
+	protected void toEdges(Map<EObject, NodePattern> trace, GraphPattern graph, EObject object) {
 		
 		for (EReference reference : object.eClass().getEAllReferences()) {
 			if (definition.isConsideredReference(reference)) {
 				if (reference.isMany()) {
 					for (Object target : (Collection<?>) object.eGet(reference)) {
 						if (target instanceof EObject) {
-							createEdge(trace, graph, object, (EObject) target, reference, definition);
+							createEdge(trace, graph, object, (EObject) target, reference);
 						}
 					}
 				} else {
 					Object target = object.eGet(reference);
 					
 					if (target instanceof EObject) {
-						createEdge(trace, graph, object, (EObject) target, reference, definition);
+						createEdge(trace, graph, object, (EObject) target, reference);
 					}
 				}
 			}
@@ -201,8 +144,7 @@ public class ModelToGraphPattern {
 	
 	protected void createEdge(
 			Map<EObject, NodePattern> trace, GraphPattern graph, 
-			EObject sourceObj, EObject targetObj, EReference type, 
-			ModelToGraphPatternDefiniton definition) {
+			EObject sourceObj, EObject targetObj, EReference type) {
 		
 		if ((sourceObj != null) && (targetObj != null)) {
 			
@@ -211,11 +153,11 @@ public class ModelToGraphPattern {
 			NodePattern target = trace.get(targetObj);
 			
 			if (source == null) {
-				source = convertToNode(trace, graph, sourceObj, definition);
+				source = toNode(trace, graph, sourceObj);
 			}
 			
 			if (target == null) {
-				target = convertToNode(trace, graph, targetObj, definition);
+				target = toNode(trace, graph, targetObj);
 			}
 			
 			// create edge:
@@ -244,11 +186,12 @@ public class ModelToGraphPattern {
 		}
 	}
 	
-	protected void convertToParameter(Pattern pattern, GraphPattern graphPattern, ModelToGraphPatternDefiniton definition) {
+	protected void toParameter(Pattern pattern, GraphPattern graphPattern) {
 		for (String parameterDefinition : definition.getParameterDefinitions()) {
 			Parameter parameter = GraphpatternFactory.eINSTANCE.createParameter();
 			parameter.setName(parameterDefinition);
 			pattern.getParameters().add(parameter);
 		}
 	}
+
 }

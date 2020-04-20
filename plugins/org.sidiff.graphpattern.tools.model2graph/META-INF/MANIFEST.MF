@@ -3,9 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Model To Graph Transformation
 Bundle-SymbolicName: org.sidiff.graphpattern.tools.model2graph;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Automatic-Module-Name: org.sidiff.graphpattern.tools.model2graph
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ActivationPolicy: lazy
+Export-Package: org.sidiff.graphpattern.tools.model2graph
 Require-Bundle: org.sidiff.graphpattern,
  org.eclipse.core.resources,
  org.eclipse.core.runtime,
@@ -13,3 +11,6 @@ Require-Bundle: org.sidiff.graphpattern,
  org.eclipse.jface,
  org.sidiff.common.utilities,
  org.sidiff.common.emf
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.sidiff.graphpattern.tools.model2graph

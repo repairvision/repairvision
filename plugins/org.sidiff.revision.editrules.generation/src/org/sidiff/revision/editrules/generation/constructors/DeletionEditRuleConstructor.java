@@ -46,7 +46,7 @@ public class DeletionEditRuleConstructor implements IEditRuleConstructor {
 		}
 		
 		// Generate sub-patterns:
-		for (Pattern subPattern : patterns.getSubpatterns()) {
+		for (Pattern subPattern : patterns.getPatterns()) {
 			construct(subPattern, filter, editRules);
 		}
 	}

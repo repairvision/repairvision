@@ -447,7 +447,7 @@ public class GraphPatternDocumentationCreator {
 		
 		// item:
 		// simplifyTree: Hide sub-patterns that contain only graph patterns and no other sub-patterns
-		if (!simplifyTree || !(pattern.getSubpatterns().size() == 0)) {
+		if (!simplifyTree || !(pattern.getPatterns().size() == 0)) {
 			String patternStereotype = LabelServices.getStereotypesLabel(pattern.getStereotypes()).replace("<", "&lt;").replace(">", "&gt;");;
 			
 			doc.append("<li>");
@@ -464,7 +464,7 @@ public class GraphPatternDocumentationCreator {
 		
 		// sub-patterns:
 		if (!simplifyTree) {
-			for (Pattern subPattern : pattern.getSubpatterns()) {
+			for (Pattern subPattern : pattern.getPatterns()) {
 				generateHTMLListItem(doc, subPattern);
 			}
 		}
@@ -487,7 +487,7 @@ public class GraphPatternDocumentationCreator {
 		
 		// simplifyTree: generate sub-pattern after (leaf) graph patterns
 		if (simplifyTree) {
-			for (Pattern subPattern : pattern.getSubpatterns()) {
+			for (Pattern subPattern : pattern.getPatterns()) {
 				generateHTMLListItem(doc, subPattern);
 			}
 		}

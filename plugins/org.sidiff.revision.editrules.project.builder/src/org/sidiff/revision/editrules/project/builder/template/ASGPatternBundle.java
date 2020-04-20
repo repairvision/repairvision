@@ -73,7 +73,7 @@ public class ASGPatternBundle {
 		Pattern contextPattern = GraphpatternFactory.eINSTANCE.createPattern();
 		contextPattern.setName(patternName);
 		contextPattern.setDescription(getASGPatternDescription(containment, contextType));
-		constraintPatterns.getSubpatterns().add(contextPattern);
+		constraintPatterns.getPatterns().add(contextPattern);
 		
 		GraphPattern contextGraphPattern = GraphpatternFactory.eINSTANCE.createGraphPattern();
 		contextGraphPattern.setName(patternName);

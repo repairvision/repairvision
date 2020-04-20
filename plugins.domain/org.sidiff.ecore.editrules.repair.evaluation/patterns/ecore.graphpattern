@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <graphpattern:Bundle xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:graphpattern="http://www.sidiff.org/graphpattern/1.0" xmi:id="_zkGBQEPTEeiAN6Yblsgm0Q" name="Ecore" description="Ecore Design Guide">
   <patterns xmi:id="_qYcvsEh2EeisDfk75x3arg" name="Named Elements">
-    <subpatterns xmi:id="_pWTA0E31EeiHZ-IT3DPXmQ" name="TheNameIsNotWellFormed, TheTypedElementMustHaveAType">
+    <patterns xmi:id="_pWTA0E31EeiHZ-IT3DPXmQ" name="TheNameIsNotWellFormed, TheTypedElementMustHaveAType">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_xsjxMEefEeiX06hCI1EKEA" name="Named Package">
+      <patterns xmi:id="_xsjxMEefEeiX06hCI1EKEA" name="Named Package">
         <graphs xmi:id="_CMWKIEewEeiX06hCI1EKEA" name="Named Package">
           <nodes xmi:id="_CMWKIUewEeiX06hCI1EKEA" name="package" incomings="_a_gugHYjEeipgNxXRI6Oaw">
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
@@ -18,8 +18,8 @@
             <type href="http://www.sidiff.org/graphpattern/1.0#//Resource"/>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_tagLcEh2EeisDfk75x3arg" name="Named Subpackage">
+      </patterns>
+      <patterns xmi:id="_tagLcEh2EeisDfk75x3arg" name="Named Subpackage">
         <graphs xmi:id="_tagLdUh2EeisDfk75x3arg" name="Named Subpackage">
           <nodes xmi:id="_tagLdkh2EeisDfk75x3arg" name="containerPackage" incomings="_tagLeUh2EeisDfk75x3arg">
             <outgoings xmi:id="_tagLd0h2EeisDfk75x3arg" target="_tagLeEh2EeisDfk75x3arg" opposite="_tagLeUh2EeisDfk75x3arg">
@@ -37,8 +37,8 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_t0RWUEh2EeisDfk75x3arg" name="Named Classifier">
+      </patterns>
+      <patterns xmi:id="_t0RWUEh2EeisDfk75x3arg" name="Named Classifier">
         <graphs xmi:id="_t0RWW0h2EeisDfk75x3arg" name="Named Classifier">
           <nodes xmi:id="_t0RWXEh2EeisDfk75x3arg" name="containerPackage" incomings="_t0RWX0h2EeisDfk75x3arg">
             <outgoings xmi:id="_t0RWXUh2EeisDfk75x3arg" target="_t0RWXkh2EeisDfk75x3arg" opposite="_t0RWX0h2EeisDfk75x3arg">
@@ -56,8 +56,8 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_t0RWeUh2EeisDfk75x3arg" name="Named Enumeration Literal">
+      </patterns>
+      <patterns xmi:id="_t0RWeUh2EeisDfk75x3arg" name="Named Enumeration Literal">
         <graphs xmi:id="_t0RWikh2EeisDfk75x3arg" name="Named Enumeration Literal">
           <nodes xmi:id="_t0RWi0h2EeisDfk75x3arg" name="containerEnum" incomings="_t0RWjkh2EeisDfk75x3arg">
             <outgoings xmi:id="_t0RWjEh2EeisDfk75x3arg" target="_t0RWjUh2EeisDfk75x3arg" opposite="_t0RWjkh2EeisDfk75x3arg">
@@ -75,8 +75,8 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_uF7HAEh2EeisDfk75x3arg" name="Named Reference">
+      </patterns>
+      <patterns xmi:id="_uF7HAEh2EeisDfk75x3arg" name="Named Reference">
         <graphs xmi:id="_uF7HF0h2EeisDfk75x3arg" name="Named Reference">
           <nodes xmi:id="_uF7HGEh2EeisDfk75x3arg" name="containerClass" incomings="_uF7HG0h2EeisDfk75x3arg">
             <outgoings xmi:id="_uF7HGUh2EeisDfk75x3arg" target="_uF7HGkh2EeisDfk75x3arg" opposite="_uF7HG0h2EeisDfk75x3arg">
@@ -100,8 +100,8 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_0cz38OckEeiau_JqD9E0sA" name="Named Attribute">
+      </patterns>
+      <patterns xmi:id="_0cz38OckEeiau_JqD9E0sA" name="Named Attribute">
         <graphs xmi:id="_0cz38eckEeiau_JqD9E0sA" name="Named Attribute">
           <nodes xmi:id="_0cz38uckEeiau_JqD9E0sA" name="containerClass" incomings="_0cz39eckEeiau_JqD9E0sA">
             <outgoings xmi:id="_0cz38-ckEeiau_JqD9E0sA" target="_0cz39OckEeiau_JqD9E0sA" opposite="_0cz39eckEeiau_JqD9E0sA">
@@ -125,8 +125,8 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_uF7HKUh2EeisDfk75x3arg" name="Named Operation">
+      </patterns>
+      <patterns xmi:id="_uF7HKUh2EeisDfk75x3arg" name="Named Operation">
         <graphs xmi:id="_uF7HRkh2EeisDfk75x3arg" name="Named Operation">
           <nodes xmi:id="_uF7HR0h2EeisDfk75x3arg" name="containingClass" incomings="_uF7HSkh2EeisDfk75x3arg">
             <outgoings xmi:id="_uF7HSEh2EeisDfk75x3arg" target="_uF7HSUh2EeisDfk75x3arg" opposite="_uF7HSkh2EeisDfk75x3arg">
@@ -144,8 +144,8 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_uF7HUkh2EeisDfk75x3arg" name="Named Parameter">
+      </patterns>
+      <patterns xmi:id="_uF7HUkh2EeisDfk75x3arg" name="Named Parameter">
         <graphs xmi:id="_uF7HdUh2EeisDfk75x3arg" name="Named Parameter">
           <nodes xmi:id="_uF7Hdkh2EeisDfk75x3arg" name="containingOperation" incomings="_uF7HeUh2EeisDfk75x3arg">
             <outgoings xmi:id="_uF7Hd0h2EeisDfk75x3arg" target="_uF7HeEh2EeisDfk75x3arg" opposite="_uF7HeUh2EeisDfk75x3arg">
@@ -169,13 +169,13 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_v30lsEe2EeiX06hCI1EKEA" name="Structural Feature">
-    <subpatterns xmi:id="_me-dIE3vEeiHZ-IT3DPXmQ" name="ThereMayNotBeTwoFeaturesNamed">
+    <patterns xmi:id="_me-dIE3vEeiHZ-IT3DPXmQ" name="ThereMayNotBeTwoFeaturesNamed">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_1g1nIEh7Eei-YeUSX7KcAg" name="Unique Named Structural Feature in Super-Class">
+      <patterns xmi:id="_1g1nIEh7Eei-YeUSX7KcAg" name="Unique Named Structural Feature in Super-Class">
         <graphs xmi:id="_UgB4oEh7Eei-YeUSX7KcAg" name="Unique Named Structural Feature in Super-Class">
           <nodes xmi:id="_UgB4oUh7Eei-YeUSX7KcAg" name="superClass" incomings="_UgB4p0h7Eei-YeUSX7KcAg _UgB4pEh7Eei-YeUSX7KcAg">
             <outgoings xmi:id="_UgB4okh7Eei-YeUSX7KcAg" target="_UgB4o0h7Eei-YeUSX7KcAg" opposite="_UgB4pEh7Eei-YeUSX7KcAg">
@@ -216,8 +216,8 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_2lUi8Eh7Eei-YeUSX7KcAg" name="Unique Named Structural Feature in Sub-Class">
+      </patterns>
+      <patterns xmi:id="_2lUi8Eh7Eei-YeUSX7KcAg" name="Unique Named Structural Feature in Sub-Class">
         <graphs xmi:id="_pHvjgEh7Eei-YeUSX7KcAg" name="Unique Named Structural Feature in Sub-Class">
           <nodes xmi:id="_pHvjgUh7Eei-YeUSX7KcAg" name="superClass" incomings="_pHvjh0h7Eei-YeUSX7KcAg _pHvjhEh7Eei-YeUSX7KcAg">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -258,9 +258,9 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_2i2YIE3pEeiHZ-IT3DPXmQ" name="ThereMayNotBeAnOperationWithTheSameSignatureAsAnAccessorMethodForFeature">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_2i2YIE3pEeiHZ-IT3DPXmQ" name="ThereMayNotBeAnOperationWithTheSameSignatureAsAnAccessorMethodForFeature">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
       <graphs xmi:id="_fIfMwESkEeiX06hCI1EKEA" name="Accessor Operation for Structural Feature">
         <nodes xmi:id="_fIfMwUSkEeiX06hCI1EKEA" name="containerClass" incomings="_fIfMzkSkEeiX06hCI1EKEA _fIfMyESkEeiX06hCI1EKEA">
@@ -329,10 +329,10 @@
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
         </nodes>
       </graphs>
-    </subpatterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_x2hdcEPZEeiX06hCI1EKEA" name="Class" description="">
-    <subpatterns xmi:id="_yMHd4E3oEeiHZ-IT3DPXmQ" name="AClassThatIsAnInterfaceMustAlsoBeAbstract">
+    <patterns xmi:id="_yMHd4E3oEeiHZ-IT3DPXmQ" name="AClassThatIsAnInterfaceMustAlsoBeAbstract">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
       <graphs xmi:id="_x2hdcUPZEeiX06hCI1EKEA" name="Concrete Class">
         <nodes xmi:id="_x2hdckPZEeiX06hCI1EKEA" name="containerPackage" incomings="_zkGqAkPTEeiAN6Yblsgm0Q">
@@ -394,8 +394,8 @@
           </attributes>
         </nodes>
       </graphs>
-    </subpatterns>
-    <subpatterns xmi:id="_WjdM4E31EeiHZ-IT3DPXmQ" name="AClassMayNotBeASuperTypeOfItself">
+    </patterns>
+    <patterns xmi:id="_WjdM4E31EeiHZ-IT3DPXmQ" name="AClassMayNotBeASuperTypeOfItself">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
       <graphs xmi:id="_ziugkUPZEeiX06hCI1EKEA" name="Inheritance">
         <nodes xmi:id="_zkGpBUPTEeiAN6Yblsgm0Q" name="subClass" incomings="_TVDlUEliEeiMLNXPjHBLhA">
@@ -412,10 +412,10 @@
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
         </nodes>
       </graphs>
-    </subpatterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_glwDsESeEeiX06hCI1EKEA" name="Attribute" description="">
-    <subpatterns xmi:id="_t9F4sE3oEeiHZ-IT3DPXmQ" name="TheAttributeIsNotTransientSoItMustHaveADataTypeThatIsSerializable">
+    <patterns xmi:id="_t9F4sE3oEeiHZ-IT3DPXmQ" name="TheAttributeIsNotTransientSoItMustHaveADataTypeThatIsSerializable">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
       <graphs xmi:id="_glwDsUSeEeiX06hCI1EKEA" name="Serializable Attribute">
         <nodes xmi:id="_glwDskSeEeiX06hCI1EKEA" name="containerClass" incomings="_glwDtkSeEeiX06hCI1EKEA">
@@ -495,8 +495,8 @@
           </attributes>
         </nodes>
       </graphs>
-    </subpatterns>
-    <subpatterns xmi:id="_iBsoQE3pEeiHZ-IT3DPXmQ" name="TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType">
+    </patterns>
+    <patterns xmi:id="_iBsoQE3pEeiHZ-IT3DPXmQ" name="TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
       <graphs xmi:id="_Q7J5cUSmEeiX06hCI1EKEA" name="Enumeration Attribute">
         <nodes xmi:id="_Q7J5ckSmEeiX06hCI1EKEA" name="containerClass" incomings="_Q7J5dkSmEeiX06hCI1EKEA">
@@ -554,10 +554,10 @@
           </attributes>
         </nodes>
       </graphs>
-    </subpatterns>
-    <subpatterns xmi:id="_1t6FcE3vEeiHZ-IT3DPXmQ" name="TwoFeaturesCannotBothBeIDs">
+    </patterns>
+    <patterns xmi:id="_1t6FcE3vEeiHZ-IT3DPXmQ" name="TwoFeaturesCannotBothBeIDs">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_G0uq0EPcEeiX06hCI1EKEA" name="ID Attribute">
+      <patterns xmi:id="_G0uq0EPcEeiX06hCI1EKEA" name="ID Attribute">
         <graphs xmi:id="_2CZEIEPdEeiX06hCI1EKEA" name="ID Attribute">
           <nodes xmi:id="_2CZEIUPdEeiX06hCI1EKEA" name="containerClass" incomings="_2CZEJUPdEeiX06hCI1EKEA _3zIB8kPdEeiX06hCI1EKEA">
             <outgoings xmi:id="_2CZEIkPdEeiX06hCI1EKEA" target="_2CZEI0PdEeiX06hCI1EKEA" opposite="_2CZEJUPdEeiX06hCI1EKEA">
@@ -596,8 +596,8 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_wXVioEPZEeiX06hCI1EKEA" name="ID Attribute in Inheritance">
+      </patterns>
+      <patterns xmi:id="_wXVioEPZEeiX06hCI1EKEA" name="ID Attribute in Inheritance">
         <graphs xmi:id="_wXWJsEPZEeiX06hCI1EKEA" name="ID Attribute in Super Type">
           <nodes xmi:id="_zkGqYkPTEeiAN6Yblsgm0Q" name="superClass" incomings="_zkGqbUPTEeiAN6Yblsgm0Q _zkGqfkPTEeiAN6Yblsgm0Q">
             <outgoings xmi:id="_zkGqZEPTEeiAN6Yblsgm0Q" target="_zkGqakPTEeiAN6Yblsgm0Q" opposite="_zkGqbUPTEeiAN6Yblsgm0Q">
@@ -688,13 +688,13 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_yTLJkEiBEei-YeUSX7KcAg" name="Reference">
-    <subpatterns xmi:id="_EeksUE4PEeiHZ-IT3DPXmQ" name="TheOppositeMayNotBeItsOwnOpposite">
+    <patterns xmi:id="_EeksUE4PEeiHZ-IT3DPXmQ" name="TheOppositeMayNotBeItsOwnOpposite">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_cede0E4NEeiHZ-IT3DPXmQ" name="One-Way Reference [not its own opposite]">
+      <patterns xmi:id="_cede0E4NEeiHZ-IT3DPXmQ" name="One-Way Reference [not its own opposite]">
         <graphs xmi:id="_cede0U4NEeiHZ-IT3DPXmQ" name="One-Way Reference [not its own opposite]">
           <nodes xmi:id="_cede0k4NEeiHZ-IT3DPXmQ" name="classA" incomings="_cede1k4NEeiHZ-IT3DPXmQ">
             <outgoings xmi:id="_cede004NEeiHZ-IT3DPXmQ" target="_cede1E4NEeiHZ-IT3DPXmQ" opposite="_cede1k4NEeiHZ-IT3DPXmQ">
@@ -719,11 +719,11 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_HpS74E4PEeiHZ-IT3DPXmQ" name="TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_HpS74E4PEeiHZ-IT3DPXmQ" name="TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_XinnUEe0EeiX06hCI1EKEA" name="One-Way Reference [no opposite]">
+      <patterns xmi:id="_XinnUEe0EeiX06hCI1EKEA" name="One-Way Reference [no opposite]">
         <graphs xmi:id="_XinnUUe0EeiX06hCI1EKEA" name="One-Way Reference [no opposite]">
           <nodes xmi:id="_XinnUke0EeiX06hCI1EKEA" name="classA" incomings="_XinnV0e0EeiX06hCI1EKEA">
             <outgoings xmi:id="_XinnVEe0EeiX06hCI1EKEA" target="_XinnVUe0EeiX06hCI1EKEA" opposite="_XinnV0e0EeiX06hCI1EKEA">
@@ -756,11 +756,11 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_8gzZwE3oEeiHZ-IT3DPXmQ" name="TheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolving" description="">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_8gzZwE3oEeiHZ-IT3DPXmQ" name="TheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolving" description="">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_qF3kkEPZEeiX06hCI1EKEA" name="Bidirectional Reference">
+      <patterns xmi:id="_qF3kkEPZEeiX06hCI1EKEA" name="Bidirectional Reference">
         <graphs xmi:id="_qF3kkUPZEeiX06hCI1EKEA" name="Non-Transient Bidirectional Reference">
           <nodes xmi:id="_zkHP5kPTEeiAN6Yblsgm0Q" name="classA" incomings="_zkHP00PTEeiAN6Yblsgm0Q _zkHP8UPTEeiAN6Yblsgm0Q">
             <outgoings xmi:id="_zkHP6EPTEeiAN6Yblsgm0Q" target="_zkHP7kPTEeiAN6Yblsgm0Q" opposite="_zkHP8UPTEeiAN6Yblsgm0Q">
@@ -896,12 +896,12 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_U3QVgE4QEeiHZ-IT3DPXmQ" name="AContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom" description="">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_U3QVgE4QEeiHZ-IT3DPXmQ" name="AContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom" description="">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_SFYY4E4SEeiHZ-IT3DPXmQ" name="ABidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom">
-        <subpatterns xmi:id="_XgBHgE4QEeiHZ-IT3DPXmQ" name="Bidirectional Reference">
+      <patterns xmi:id="_SFYY4E4SEeiHZ-IT3DPXmQ" name="ABidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom">
+        <patterns xmi:id="_XgBHgE4QEeiHZ-IT3DPXmQ" name="Bidirectional Reference">
           <graphs xmi:id="_rsT98UPZEeiX06hCI1EKEA" name="Multiplicity-One Bidirectional Reference" description="">
             <nodes xmi:id="_zkHPfkPTEeiAN6Yblsgm0Q" name="oppositeReference" incomings="_zkHPZkPTEeiAN6Yblsgm0Q _awYe0XPdEeipvcIPyTUA6w">
               <outgoings xmi:id="_zkHPgkPTEeiAN6Yblsgm0Q" target="_zkHPYkPTEeiAN6Yblsgm0Q">
@@ -987,12 +987,12 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_cotQsE3xEeiHZ-IT3DPXmQ" name="TheOppositeOfAContainmentReferenceMustNotBeAContainmentReference, AContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom, AContainerReferenceMustHaveUpperBoundOfNot" description="">
+        </patterns>
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_cotQsE3xEeiHZ-IT3DPXmQ" name="TheOppositeOfAContainmentReferenceMustNotBeAContainmentReference, AContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom, AContainerReferenceMustHaveUpperBoundOfNot" description="">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_ZGMGMEbgEeiX06hCI1EKEA" name="Containment Reference">
+      <patterns xmi:id="_ZGMGMEbgEeiX06hCI1EKEA" name="Containment Reference">
         <graphs xmi:id="_ZGMGMUbgEeiX06hCI1EKEA" name="Multiplicity-One Containment Reference" description="">
           <nodes xmi:id="_ZGMGMkbgEeiX06hCI1EKEA" name="containedClass" incomings="_ZGMGPUbgEeiX06hCI1EKEA">
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
@@ -1072,8 +1072,8 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_rsT98EPZEeiX06hCI1EKEA" name="Containment-Container Reference">
+      </patterns>
+      <patterns xmi:id="_rsT98EPZEeiX06hCI1EKEA" name="Containment-Container Reference">
         <graphs xmi:id="_SvRocEbVEeiX06hCI1EKEA" name="Multiplicity-Many Containment-Container Reference" description="">
           <nodes xmi:id="_SvRodEbVEeiX06hCI1EKEA" name="containedClass" incomings="_SvRojUbVEeiX06hCI1EKEA _SvRoekbVEeiX06hCI1EKEA">
             <outgoings xmi:id="_SvRodkbVEeiX06hCI1EKEA" target="_SvRod0bVEeiX06hCI1EKEA" opposite="_SvRoekbVEeiX06hCI1EKEA">
@@ -1177,8 +1177,8 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_UWZ9gOgnEeiihsxvqXQoGg" name="Bidirectional Reference">
+      </patterns>
+      <patterns xmi:id="_UWZ9gOgnEeiihsxvqXQoGg" name="Bidirectional Reference">
         <graphs xmi:id="_UWZ9j-gnEeiihsxvqXQoGg" name="Multiplicity-Many Bidirectional Reference" description="">
           <nodes xmi:id="_UWZ9kOgnEeiihsxvqXQoGg" name="reference" incomings="_UWZ9megnEeiihsxvqXQoGg _UWZ9negnEeiihsxvqXQoGg">
             <outgoings xmi:id="_UWZ9kegnEeiihsxvqXQoGg" target="_UWZ9lugnEeiihsxvqXQoGg">
@@ -1273,11 +1273,11 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_ZzNfsE3wEeiHZ-IT3DPXmQ" name="AContainmentReferenceOfATypeWithAContainerFeaturethatexistssInstancesToBeContainedElsewhereCannotBePopulated" description="">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_ZzNfsE3wEeiHZ-IT3DPXmQ" name="AContainmentReferenceOfATypeWithAContainerFeaturethatexistssInstancesToBeContainedElsewhereCannotBePopulated" description="">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_nHN0IEbkEeiX06hCI1EKEA" name="Containment References">
+      <patterns xmi:id="_nHN0IEbkEeiX06hCI1EKEA" name="Containment References">
         <graphs xmi:id="_nHN0IUbkEeiX06hCI1EKEA" name="Containment References">
           <nodes xmi:id="_nHN0IkbkEeiX06hCI1EKEA" name="containerClass" incomings="_nHN0JkbkEeiX06hCI1EKEA">
             <outgoings xmi:id="_nHN0I0bkEeiX06hCI1EKEA" target="_nHN0JEbkEeiX06hCI1EKEA" opposite="_nHN0JkbkEeiX06hCI1EKEA">
@@ -1313,8 +1313,8 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_VjefUUbeEeiX06hCI1EKEA" name="Containment-Container[No Lower Bound] References">
+      </patterns>
+      <patterns xmi:id="_VjefUUbeEeiX06hCI1EKEA" name="Containment-Container[No Lower Bound] References">
         <graphs xmi:id="_VjefUkbeEeiX06hCI1EKEA" name="Containment-Container[No Lower Bound] References">
           <nodes xmi:id="_VjefW0beEeiX06hCI1EKEA" name="containedClass" incomings="_VjefZ0beEeiX06hCI1EKEA _Vjefe0beEeiX06hCI1EKEA _VjeflUbeEeiX06hCI1EKEA _VjefsUbeEeiX06hCI1EKEA _OgvoJm67EeqnUr4w5kV3sA _OgvoJ267EeqnUr4w5kV3sA _OgvoIW67EeqnUr4w5kV3sA _OgvoIm67EeqnUr4w5kV3sA">
             <outgoings xmi:id="_VjefXUbeEeiX06hCI1EKEA" target="_VjefZEbeEeiX06hCI1EKEA" opposite="_VjefZ0beEeiX06hCI1EKEA">
@@ -1473,13 +1473,13 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_Fs8J0EliEeiMLNXPjHBLhA" name="Self-Reference" description="">
-    <subpatterns xmi:id="_vTywoE4OEeiHZ-IT3DPXmQ" name="TheOppositeMayNotBeItsOwnOpposite">
+    <patterns xmi:id="_vTywoE4OEeiHZ-IT3DPXmQ" name="TheOppositeMayNotBeItsOwnOpposite">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_JH6rcE4OEeiHZ-IT3DPXmQ" name="One-Way Self-References [not its own opposite]">
+      <patterns xmi:id="_JH6rcE4OEeiHZ-IT3DPXmQ" name="One-Way Self-References [not its own opposite]">
         <graphs xmi:id="_JH6rcU4OEeiHZ-IT3DPXmQ" name="One-Way Self-References [not its own opposite]">
           <nodes xmi:id="_JH6rck4OEeiHZ-IT3DPXmQ" name="classA" incomings="_JH6rdk4OEeiHZ-IT3DPXmQ _JH6rdU4OEeiHZ-IT3DPXmQ">
             <outgoings xmi:id="_JH6rc04OEeiHZ-IT3DPXmQ" target="_JH6rdE4OEeiHZ-IT3DPXmQ" opposite="_JH6rdk4OEeiHZ-IT3DPXmQ">
@@ -1501,11 +1501,11 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_XoXRYE3zEeiHZ-IT3DPXmQ" name="TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_XoXRYE3zEeiHZ-IT3DPXmQ" name="TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_jEyS8El1EeiHZ-IT3DPXmQ" name="One-Way Self-References [no opposite]">
+      <patterns xmi:id="_jEyS8El1EeiHZ-IT3DPXmQ" name="One-Way Self-References [no opposite]">
         <graphs xmi:id="_jEyS8Ul1EeiHZ-IT3DPXmQ" name="One-Way Self-References [no opposite]">
           <nodes xmi:id="_jEyS8kl1EeiHZ-IT3DPXmQ" name="classA" incomings="_jEyS9kl1EeiHZ-IT3DPXmQ _jEyS9Ul1EeiHZ-IT3DPXmQ">
             <outgoings xmi:id="_jEyS80l1EeiHZ-IT3DPXmQ" target="_jEyS9El1EeiHZ-IT3DPXmQ" opposite="_jEyS9kl1EeiHZ-IT3DPXmQ">
@@ -1535,11 +1535,11 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_090UME4OEeiHZ-IT3DPXmQ" name="TheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolving">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_090UME4OEeiHZ-IT3DPXmQ" name="TheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolving">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_vrBasEl1EeiHZ-IT3DPXmQ" name="Bidirectional Self-References">
+      <patterns xmi:id="_vrBasEl1EeiHZ-IT3DPXmQ" name="Bidirectional Self-References">
         <graphs xmi:id="_vrBasUl1EeiHZ-IT3DPXmQ" name="Non-Transient Bidirectional Self-References">
           <nodes xmi:id="_vrBaskl1EeiHZ-IT3DPXmQ" name="classA" incomings="_vrBavUl1EeiHZ-IT3DPXmQ _vrBat0l1EeiHZ-IT3DPXmQ _vrBatkl1EeiHZ-IT3DPXmQ _vrBavkl1EeiHZ-IT3DPXmQ">
             <outgoings xmi:id="_vrBatEl1EeiHZ-IT3DPXmQ" target="_vrBatUl1EeiHZ-IT3DPXmQ" opposite="_vrBat0l1EeiHZ-IT3DPXmQ">
@@ -1666,12 +1666,12 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_Ohk68E4SEeiHZ-IT3DPXmQ" name="AContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_Ohk68E4SEeiHZ-IT3DPXmQ" name="AContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_X1DRcE4SEeiHZ-IT3DPXmQ" name="ABidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom">
-        <subpatterns xmi:id="_blCxQE4SEeiHZ-IT3DPXmQ" name="Bidirectional Self-References">
+      <patterns xmi:id="_X1DRcE4SEeiHZ-IT3DPXmQ" name="ABidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom">
+        <patterns xmi:id="_blCxQE4SEeiHZ-IT3DPXmQ" name="Bidirectional Self-References">
           <graphs xmi:id="_blCxQU4SEeiHZ-IT3DPXmQ" name="Multiplicity-One Bidirectional Self-Reference" description="">
             <nodes xmi:id="_blCxQk4SEeiHZ-IT3DPXmQ" name="containerClass" incomings="_blCxTU4SEeiHZ-IT3DPXmQ _blCxTE4SEeiHZ-IT3DPXmQ">
               <outgoings xmi:id="_blCxQ04SEeiHZ-IT3DPXmQ" target="_blCxS04SEeiHZ-IT3DPXmQ" opposite="_blCxTU4SEeiHZ-IT3DPXmQ">
@@ -1733,12 +1733,12 @@
               </attributes>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_dHaUAE3zEeiHZ-IT3DPXmQ" name="TheOppositeOfAContainmentReferenceMustNotBeAContainmentReference, AContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom, AContainerReferenceMustHaveUpperBoundOfNot">
+        </patterns>
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_dHaUAE3zEeiHZ-IT3DPXmQ" name="TheOppositeOfAContainmentReferenceMustNotBeAContainmentReference, AContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom, AContainerReferenceMustHaveUpperBoundOfNot">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_5Hp3wEl2EeiHZ-IT3DPXmQ" name="Containment Self-References">
+      <patterns xmi:id="_5Hp3wEl2EeiHZ-IT3DPXmQ" name="Containment Self-References">
         <graphs xmi:id="_5Hp3wUl2EeiHZ-IT3DPXmQ" name="Multiplicity-One Containment Self-References" description="">
           <nodes xmi:id="_5Hp3w0l2EeiHZ-IT3DPXmQ" name="containerClass" incomings="_5Hp3x0l2EeiHZ-IT3DPXmQ _5Hp3xkl2EeiHZ-IT3DPXmQ">
             <outgoings xmi:id="_5Hp3xEl2EeiHZ-IT3DPXmQ" target="_5Hp3xUl2EeiHZ-IT3DPXmQ" opposite="_5Hp3x0l2EeiHZ-IT3DPXmQ">
@@ -1812,8 +1812,8 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_n-05IEl3EeiHZ-IT3DPXmQ" name="Containment-Container Self-References">
+      </patterns>
+      <patterns xmi:id="_n-05IEl3EeiHZ-IT3DPXmQ" name="Containment-Container Self-References">
         <graphs xmi:id="_n-05IUl3EeiHZ-IT3DPXmQ" name="Multiplicity-One Containment-Container Self-References" description="">
           <nodes xmi:id="_n-05Kkl3EeiHZ-IT3DPXmQ" name="containerClass" incomings="_n-05Lkl3EeiHZ-IT3DPXmQ _n-05JUl3EeiHZ-IT3DPXmQ _n-05Jkl3EeiHZ-IT3DPXmQ _n-05LUl3EeiHZ-IT3DPXmQ">
             <outgoings xmi:id="_n-05K0l3EeiHZ-IT3DPXmQ" target="_n-05LEl3EeiHZ-IT3DPXmQ" opposite="_n-05Lkl3EeiHZ-IT3DPXmQ">
@@ -1911,8 +1911,8 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="__Jb0AOgnEeiihsxvqXQoGg" name="Bidirectional Self-References">
+      </patterns>
+      <patterns xmi:id="__Jb0AOgnEeiihsxvqXQoGg" name="Bidirectional Self-References">
         <graphs xmi:id="__Jb0AegnEeiihsxvqXQoGg" name="Multiplicity-One Bidirectional Self-Reference" description="">
           <nodes xmi:id="__Jb0AugnEeiihsxvqXQoGg" name="containerClass" incomings="__Jb0COgnEeiihsxvqXQoGg __Jb0B-gnEeiihsxvqXQoGg">
             <outgoings xmi:id="__Jb0A-gnEeiihsxvqXQoGg" target="__Jb0BugnEeiihsxvqXQoGg" opposite="__Jb0COgnEeiihsxvqXQoGg">
@@ -1974,11 +1974,11 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_ZvqfoE30EeiHZ-IT3DPXmQ" name="AContainmentReferenceOfATypeWithAContainerFeaturethatexistssInstancesToBeContainedElsewhereCannotBePopulated">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_ZvqfoE30EeiHZ-IT3DPXmQ" name="AContainmentReferenceOfATypeWithAContainerFeaturethatexistssInstancesToBeContainedElsewhereCannotBePopulated">
       <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-      <subpatterns xmi:id="_UmtLsG65EeqnUr4w5kV3sA" name="Containment Self-References">
+      <patterns xmi:id="_UmtLsG65EeqnUr4w5kV3sA" name="Containment Self-References">
         <graphs xmi:id="_UmtLsW65EeqnUr4w5kV3sA" name="Containment Self-References">
           <nodes xmi:id="_UmtLsm65EeqnUr4w5kV3sA" name="selfContainedClass" incomings="_UmtLtm65EeqnUr4w5kV3sA _UmtLtW65EeqnUr4w5kV3sA">
             <outgoings xmi:id="_UmtLs265EeqnUr4w5kV3sA" target="_UmtLtG65EeqnUr4w5kV3sA" opposite="_UmtLtm65EeqnUr4w5kV3sA">
@@ -2011,8 +2011,8 @@
             <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
           </nodes>
         </graphs>
-      </subpatterns>
-      <subpatterns xmi:id="_zeexIG65EeqnUr4w5kV3sA" name="Containment-Container[No Lower Bound] Self-References">
+      </patterns>
+      <patterns xmi:id="_zeexIG65EeqnUr4w5kV3sA" name="Containment-Container[No Lower Bound] Self-References">
         <graphs xmi:id="_zeexIW65EeqnUr4w5kV3sA" name="Containment-Container[No Lower Bound] Self-References">
           <nodes xmi:id="_zeexJW65EeqnUr4w5kV3sA" name="selfContainedClass" incomings="_zeexLW65EeqnUr4w5kV3sA _zeexKW65EeqnUr4w5kV3sA _zeexKG65EeqnUr4w5kV3sA _zeexLm65EeqnUr4w5kV3sA _kxgw-W66EeqnUr4w5kV3sA _kxgw8266EeqnUr4w5kV3sA _zeexNm65EeqnUr4w5kV3sA _zeexPG65EeqnUr4w5kV3sA _kxgw9G66EeqnUr4w5kV3sA _kxgw-G66EeqnUr4w5kV3sA">
             <outgoings xmi:id="_zeexJm65EeqnUr4w5kV3sA" target="_zeexJ265EeqnUr4w5kV3sA" opposite="_zeexKW65EeqnUr4w5kV3sA">
@@ -2168,14 +2168,14 @@
             </attributes>
           </nodes>
         </graphs>
-      </subpatterns>
-    </subpatterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_J13BsEiLEei-YeUSX7KcAg" name="Generic Type">
-    <subpatterns xmi:id="_ioMrQOZ-Eei6N-Ckb3hvWw" name="Classifier">
-      <subpatterns xmi:id="__gEpcE33EeiHZ-IT3DPXmQ" name="AGenericTypeInThisContextMustReferToAClassifierOrATypeParameter">
+    <patterns xmi:id="_ioMrQOZ-Eei6N-Ckb3hvWw" name="Classifier">
+      <patterns xmi:id="__gEpcE33EeiHZ-IT3DPXmQ" name="AGenericTypeInThisContextMustReferToAClassifierOrATypeParameter">
         <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-        <subpatterns xmi:id="_ajFFUEktEei-YeUSX7KcAg" name="Classifier with Unbound Generic Type-Parameter" description="e.g. ClassX&lt;T>">
+        <patterns xmi:id="_ajFFUEktEei-YeUSX7KcAg" name="Classifier with Unbound Generic Type-Parameter" description="e.g. ClassX&lt;T>">
           <graphs xmi:id="_KPFSYEktEei-YeUSX7KcAg" name="Classifier with Unbound Generic Type Parameter">
             <nodes xmi:id="_KPFSYUktEei-YeUSX7KcAg" name="classifierUsedAsTypeParameter" incomings="_KPFSaEktEei-YeUSX7KcAg">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -2206,8 +2206,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_x695IUkqEei-YeUSX7KcAg" name="Classifier with Bound Generic Type-Parameter" description="e.g. ClassX&lt;T extends ClassY>">
+        </patterns>
+        <patterns xmi:id="_x695IUkqEei-YeUSX7KcAg" name="Classifier with Bound Generic Type-Parameter" description="e.g. ClassX&lt;T extends ClassY>">
           <graphs xmi:id="_x695IkkqEei-YeUSX7KcAg" name="Classifier with Bound Generic Type Parameter">
             <nodes xmi:id="_x695KkkqEei-YeUSX7KcAg" name="classifierUsedAsTypeParameter" incomings="_x695PUkqEei-YeUSX7KcAg">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
@@ -2234,8 +2234,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_5N0YILHXEei6ZYhriKfJIQ" name="Classifier without Type-Parameter" description="">
+        </patterns>
+        <patterns xmi:id="_5N0YILHXEei6ZYhriKfJIQ" name="Classifier without Type-Parameter" description="">
           <graphs xmi:id="_5N0YIbHXEei6ZYhriKfJIQ" name="Classifier without Type-Parameter">
             <nodes xmi:id="_5N0YIrHXEei6ZYhriKfJIQ" name="classifierWithoutTypeParameter">
               <outgoings xmi:id="_5N0YI7HXEei6ZYhriKfJIQ" target="_5N0YJLHXEei6ZYhriKfJIQ">
@@ -2249,11 +2249,11 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_t_Mt0OaAEeiWho_CjxocuA" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_t_Mt0OaAEeiWho_CjxocuA" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
         <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-        <subpatterns xmi:id="_t_Mt0eaAEeiWho_CjxocuA" name="Class with Generic-Super-Type (Type-Parameter bounded by Type-Parameter)" description="e.g. ClassX -> ClassA&lt;EString> and ClassA&lt;T>">
+        <patterns xmi:id="_t_Mt0eaAEeiWho_CjxocuA" name="Class with Generic-Super-Type (Type-Parameter bounded by Type-Parameter)" description="e.g. ClassX -> ClassA&lt;EString> and ClassA&lt;T>">
           <graphs xmi:id="_t_Mt0uaAEeiWho_CjxocuA" name="Class with Generic-Super-Type (Type-Parameter bounded by Type-Parameter)">
             <nodes xmi:id="_t_Mt1eaAEeiWho_CjxocuA" name="T" incomings="_7S8-sOaHEei25Okpt_Iv0w _fi_-oPfGEeiBCfa-s0gabw">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypeParameter"/>
@@ -2300,8 +2300,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_t_NU4eaAEeiWho_CjxocuA" name="Class with Generic-Super-Type (Type-Parameter bounded by Classifier)" description="e.g. ClassX&lt;E> -> ClassA&lt;E> and ClassA&lt;T>">
+        </patterns>
+        <patterns xmi:id="_t_NU4eaAEeiWho_CjxocuA" name="Class with Generic-Super-Type (Type-Parameter bounded by Classifier)" description="e.g. ClassX&lt;E> -> ClassA&lt;E> and ClassA&lt;T>">
           <graphs xmi:id="_t_NU4uaAEeiWho_CjxocuA" name="Class with Generic-Super-Type (Type-Parameter bounded by Classifier)" description="">
             <nodes xmi:id="_3RTfoPfJEeiBCfa-s0gabw" name="T" incomings="_3RTfpffJEeiBCfa-s0gabw">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -2345,8 +2345,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_t_NU8uaAEeiWho_CjxocuA" name="Class without Generic-Super-Type" description="">
+        </patterns>
+        <patterns xmi:id="_t_NU8uaAEeiWho_CjxocuA" name="Class without Generic-Super-Type" description="">
           <graphs xmi:id="_t_NU8-aAEeiWho_CjxocuA" name="Class without Generic-Super-Type">
             <nodes xmi:id="_nl1eYeaIEei25Okpt_Iv0w" name="genericSuperType" incomings="_nl1eauaIEei25Okpt_Iv0w">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -2360,13 +2360,13 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_sIfVwOZ-Eei6N-Ckb3hvWw" name="Attribute">
-      <subpatterns xmi:id="_wSGPcOZ-Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
+        </patterns>
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_sIfVwOZ-Eei6N-Ckb3hvWw" name="Attribute">
+      <patterns xmi:id="_wSGPcOZ-Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
         <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-        <subpatterns xmi:id="_wSGPceZ-Eei6N-Ckb3hvWw" name="Attribute with Bound Type-Argument" description="e.g. ClassX&lt;E extends ClassA> and ClassY.attr : DataTypeX&lt;ClassA>">
+        <patterns xmi:id="_wSGPceZ-Eei6N-Ckb3hvWw" name="Attribute with Bound Type-Argument" description="e.g. ClassX&lt;E extends ClassA> and ClassY.attr : DataTypeX&lt;ClassA>">
           <graphs xmi:id="_wSGPcuZ-Eei6N-Ckb3hvWw" name="Attribute with Bound Type-Argument">
             <nodes xmi:id="_wSGPc-Z-Eei6N-Ckb3hvWw" name="dataTypeWithTypeParameter" incomings="_wSGPe-Z-Eei6N-Ckb3hvWw _wSGPf-Z-Eei6N-Ckb3hvWw">
               <outgoings xmi:id="_wSGPdOZ-Eei6N-Ckb3hvWw" target="_wSGPdeZ-Eei6N-Ckb3hvWw">
@@ -2423,8 +2423,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_wSGPheZ-Eei6N-Ckb3hvWw" name="Attribute with Wildcard Type-Argument" description="e.g. ClassX&lt;E extends ClassA> and ClassY.attr : DataTypeX&lt;?>">
+        </patterns>
+        <patterns xmi:id="_wSGPheZ-Eei6N-Ckb3hvWw" name="Attribute with Wildcard Type-Argument" description="e.g. ClassX&lt;E extends ClassA> and ClassY.attr : DataTypeX&lt;?>">
           <graphs xmi:id="_wSGPhuZ-Eei6N-Ckb3hvWw" name="Attribute with Wildcard Type-Argument">
             <nodes xmi:id="_wSGPh-Z-Eei6N-Ckb3hvWw" name="classifierUsedAsTypeArgument" incomings="_wSGPk-Z-Eei6N-Ckb3hvWw">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -2474,8 +2474,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_wSGPluZ-Eei6N-Ckb3hvWw" name="Attribute without Generic-Type" description="">
+        </patterns>
+        <patterns xmi:id="_wSGPluZ-Eei6N-Ckb3hvWw" name="Attribute without Generic-Type" description="">
           <graphs xmi:id="_wSGPl-Z-Eei6N-Ckb3hvWw" name="Attribute without Generic-Type">
             <nodes xmi:id="_wSGPmOZ-Eei6N-Ckb3hvWw" name="dataTypeWithoutTypeParameter" incomings="_wSGPneZ-Eei6N-Ckb3hvWw _wSGPoeZ-Eei6N-Ckb3hvWw">
               <outgoings xmi:id="_wSGPmeZ-Eei6N-Ckb3hvWw" target="_wSGPmuZ-Eei6N-Ckb3hvWw">
@@ -2521,13 +2521,13 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_zaQ6QOZ-Eei6N-Ckb3hvWw" name="Reference">
-      <subpatterns xmi:id="_2eI68OZ-Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
+        </patterns>
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_zaQ6QOZ-Eei6N-Ckb3hvWw" name="Reference">
+      <patterns xmi:id="_2eI68OZ-Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
         <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-        <subpatterns xmi:id="_2eI7JeZ-Eei6N-Ckb3hvWw" name="Reference with Bound Generic-Class-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends ClassA> and ClassY.reference : ClassX&lt;T>">
+        <patterns xmi:id="_2eI7JeZ-Eei6N-Ckb3hvWw" name="Reference with Bound Generic-Class-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends ClassA> and ClassY.reference : ClassX&lt;T>">
           <graphs xmi:id="_2eI7JuZ-Eei6N-Ckb3hvWw" name="Reference with Bound Generic-Class-Parameter Type-Argument" description="">
             <nodes xmi:id="_2eI7J-Z-Eei6N-Ckb3hvWw" name="noClassifierUsedAsTypeArgument" incomings="_2eI7NOZ-Eei6N-Ckb3hvWw">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -2607,8 +2607,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_2eI7QOZ-Eei6N-Ckb3hvWw" name="Reference with Bound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends ClassA> and ClassY.reference : ClassX&lt;T>">
+        </patterns>
+        <patterns xmi:id="_2eI7QOZ-Eei6N-Ckb3hvWw" name="Reference with Bound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends ClassA> and ClassY.reference : ClassX&lt;T>">
           <graphs xmi:id="_2eI7QeZ-Eei6N-Ckb3hvWw" name="Reference with Bound Generic-Parameter Type-Argument" description="">
             <nodes xmi:id="_2eI7QuZ-Eei6N-Ckb3hvWw" name="classifierUsedAsTypeArgument" incomings="_2eI7TuZ-Eei6N-Ckb3hvWw">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
@@ -2656,8 +2656,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_2eI7UeZ-Eei6N-Ckb3hvWw" name="Reference with Unbound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends ClassA> and ClassY.reference : ClassX&lt;T>">
+        </patterns>
+        <patterns xmi:id="_2eI7UeZ-Eei6N-Ckb3hvWw" name="Reference with Unbound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends ClassA> and ClassY.reference : ClassX&lt;T>">
           <graphs xmi:id="_2eI7UuZ-Eei6N-Ckb3hvWw" name="Reference with Unbound Generic-Parameter Type-Argument" description="">
             <nodes xmi:id="_2eI7U-Z-Eei6N-Ckb3hvWw" name="classifierUsedAsTypeArgument" incomings="_2eI7X-Z-Eei6N-Ckb3hvWw">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -2707,8 +2707,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_2eI7YuZ-Eei6N-Ckb3hvWw" name="Reference without Generic-Type" description="">
+        </patterns>
+        <patterns xmi:id="_2eI7YuZ-Eei6N-Ckb3hvWw" name="Reference without Generic-Type" description="">
           <graphs xmi:id="_2eI7Y-Z-Eei6N-Ckb3hvWw" name="Reference without Generic-Type" description="">
             <nodes xmi:id="_2eI7ZOZ-Eei6N-Ckb3hvWw" name="classWithoutTypeParameter" incomings="_2eI7aOZ-Eei6N-Ckb3hvWw _2eI7beZ-Eei6N-Ckb3hvWw">
               <outgoings xmi:id="_2eI7ZeZ-Eei6N-Ckb3hvWw" target="_2eI7ZuZ-Eei6N-Ckb3hvWw">
@@ -2754,13 +2754,13 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_6IVUwOZ-Eei6N-Ckb3hvWw" name="Operation">
-      <subpatterns xmi:id="_8hGi8OZ-Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
+        </patterns>
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_6IVUwOZ-Eei6N-Ckb3hvWw" name="Operation">
+      <patterns xmi:id="_8hGi8OZ-Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
         <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-        <subpatterns xmi:id="_8hGjceZ-Eei6N-Ckb3hvWw" name="Operation with Bound Generic-Class-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation() : ClassX&lt;T>">
+        <patterns xmi:id="_8hGjceZ-Eei6N-Ckb3hvWw" name="Operation with Bound Generic-Class-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation() : ClassX&lt;T>">
           <graphs xmi:id="_8hGjcuZ-Eei6N-Ckb3hvWw" name="Operation with Bound Generic-Class-Parameter Type-Argument" description="">
             <nodes xmi:id="_8hGjc-Z-Eei6N-Ckb3hvWw" name="noClassifierUsedAsTypeArgument" incomings="_8hGjgOZ-Eei6N-Ckb3hvWw">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -2840,8 +2840,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_8hGjjOZ-Eei6N-Ckb3hvWw" name="Operation with Unbound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation() : ClassX&lt;T>">
+        </patterns>
+        <patterns xmi:id="_8hGjjOZ-Eei6N-Ckb3hvWw" name="Operation with Unbound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation() : ClassX&lt;T>">
           <graphs xmi:id="_8hGjjeZ-Eei6N-Ckb3hvWw" name="Operation with Unbound Generic-Parameter Type-Argument" description="">
             <nodes xmi:id="_8hGjjuZ-Eei6N-Ckb3hvWw" name="classifierUsedAsTypeArgument" incomings="_8hGjmuZ-Eei6N-Ckb3hvWw">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -2891,8 +2891,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_8hGjneZ-Eei6N-Ckb3hvWw" name="Operation with Bound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation() : ClassX&lt;T>">
+        </patterns>
+        <patterns xmi:id="_8hGjneZ-Eei6N-Ckb3hvWw" name="Operation with Bound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation() : ClassX&lt;T>">
           <graphs xmi:id="_8hGjnuZ-Eei6N-Ckb3hvWw" name="Operation with Bound Generic-Parameter Type-Argument" description="">
             <nodes xmi:id="_8hGjn-Z-Eei6N-Ckb3hvWw" name="classifierUsedAsTypeArgument" incomings="_8hGjq-Z-Eei6N-Ckb3hvWw">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
@@ -2940,8 +2940,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_8hGjruZ-Eei6N-Ckb3hvWw" name="Operation without Generic-Type" description="">
+        </patterns>
+        <patterns xmi:id="_8hGjruZ-Eei6N-Ckb3hvWw" name="Operation without Generic-Type" description="">
           <graphs xmi:id="_8hGjr-Z-Eei6N-Ckb3hvWw" name="Operation without Generic-Type" description="">
             <nodes xmi:id="_8hGjsOZ-Eei6N-Ckb3hvWw" name="classifierWithoutTypeParameter" incomings="_8hGjtOZ-Eei6N-Ckb3hvWw _8hGjueZ-Eei6N-Ckb3hvWw">
               <outgoings xmi:id="_8hGjseZ-Eei6N-Ckb3hvWw" target="_8hGjsuZ-Eei6N-Ckb3hvWw">
@@ -2987,13 +2987,13 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_ANulsOZ_Eei6N-Ckb3hvWw" name="Parameter">
-      <subpatterns xmi:id="_D4Sy8OZ_Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
+        </patterns>
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_ANulsOZ_Eei6N-Ckb3hvWw" name="Parameter">
+      <patterns xmi:id="_D4Sy8OZ_Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
         <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-        <subpatterns xmi:id="_D4SzveZ_Eei6N-Ckb3hvWw" name="Parameter with Bound Generic-Class-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation(p :  ClassX&lt;T>)">
+        <patterns xmi:id="_D4SzveZ_Eei6N-Ckb3hvWw" name="Parameter with Bound Generic-Class-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation(p :  ClassX&lt;T>)">
           <graphs xmi:id="_D4SzvuZ_Eei6N-Ckb3hvWw" name="Parameter with Bound Generic-Class-Parameter Type-Argument" description="">
             <nodes xmi:id="_D4Szv-Z_Eei6N-Ckb3hvWw" name="noClassifierUsedAsTypeArgument" incomings="_D4SzzOZ_Eei6N-Ckb3hvWw">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -3086,8 +3086,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_D4Sz2-Z_Eei6N-Ckb3hvWw" name="Parameter with Unbound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation(p :  ClassX&lt;T>)">
+        </patterns>
+        <patterns xmi:id="_D4Sz2-Z_Eei6N-Ckb3hvWw" name="Parameter with Unbound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation(p :  ClassX&lt;T>)">
           <graphs xmi:id="_D4Sz3OZ_Eei6N-Ckb3hvWw" name="Parameter with Unbound Generic-Parameter Type-Argument" description="">
             <nodes xmi:id="_D4Sz3eZ_Eei6N-Ckb3hvWw" name="classifierUsedAsTypeArgument" incomings="_D4Sz6eZ_Eei6N-Ckb3hvWw">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -3137,8 +3137,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_D4Sz7OZ_Eei6N-Ckb3hvWw" name="Parameter with Bound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation(p :  ClassX&lt;T>)">
+        </patterns>
+        <patterns xmi:id="_D4Sz7OZ_Eei6N-Ckb3hvWw" name="Parameter with Bound Generic-Parameter Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation(p :  ClassX&lt;T>)">
           <graphs xmi:id="_D4Sz7eZ_Eei6N-Ckb3hvWw" name="Parameter with Bound Generic-Parameter Type-Argument" description="">
             <nodes xmi:id="_D4Sz7uZ_Eei6N-Ckb3hvWw" name="classifierUsedAsTypeArgument" incomings="_D4Sz-uZ_Eei6N-Ckb3hvWw">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
@@ -3186,8 +3186,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_D4Sz_eZ_Eei6N-Ckb3hvWw" name="Parameter without Generic-Type" description="">
+        </patterns>
+        <patterns xmi:id="_D4Sz_eZ_Eei6N-Ckb3hvWw" name="Parameter without Generic-Type" description="">
           <graphs xmi:id="_D4Sz_uZ_Eei6N-Ckb3hvWw" name="Parameter without Generic-Type" description="">
             <nodes xmi:id="_D4Sz_-Z_Eei6N-Ckb3hvWw" name="classifierWithoutTypeParameter" incomings="_D4S0A-Z_Eei6N-Ckb3hvWw _D4S0COZ_Eei6N-Ckb3hvWw">
               <outgoings xmi:id="_D4S0AOZ_Eei6N-Ckb3hvWw" target="_D4S0AeZ_Eei6N-Ckb3hvWw">
@@ -3233,15 +3233,15 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
+        </patterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_A4GBIElqEeiMLNXPjHBLhA" name="Generic Type with Inheritance" description="">
-    <subpatterns xmi:id="_JZTki-Z_Eei6N-Ckb3hvWw" name="Attribute">
-      <subpatterns xmi:id="_MVXF4OZ_Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
+    <patterns xmi:id="_JZTki-Z_Eei6N-Ckb3hvWw" name="Attribute">
+      <patterns xmi:id="_MVXF4OZ_Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
         <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-        <subpatterns xmi:id="_MVXF4eZ_Eei6N-Ckb3hvWw" name="Attribute with Bound Sub-Type-Argument" description="e.g. ClassX&lt;E extends ClassA> and ClassY.attr : DataTypeX&lt;SubClassOfA>">
+        <patterns xmi:id="_MVXF4eZ_Eei6N-Ckb3hvWw" name="Attribute with Bound Sub-Type-Argument" description="e.g. ClassX&lt;E extends ClassA> and ClassY.attr : DataTypeX&lt;SubClassOfA>">
           <graphs xmi:id="_MVXF4uZ_Eei6N-Ckb3hvWw" name="Attribute with Bound Sub-Type-Argument">
             <nodes xmi:id="_MVXF4-Z_Eei6N-Ckb3hvWw" name="subclassUsedAsTypeArgument" incomings="_MVXF8-Z_Eei6N-Ckb3hvWw">
               <outgoings xmi:id="_MVXF5OZ_Eei6N-Ckb3hvWw" target="_MVXF9OZ_Eei6N-Ckb3hvWw">
@@ -3305,8 +3305,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_MVXF9-Z_Eei6N-Ckb3hvWw" name="Attribute without Generic-Type" description="">
+        </patterns>
+        <patterns xmi:id="_MVXF9-Z_Eei6N-Ckb3hvWw" name="Attribute without Generic-Type" description="">
           <graphs xmi:id="_MVXF-OZ_Eei6N-Ckb3hvWw" name="Attribute without Generic-Type">
             <nodes xmi:id="_MVXF-eZ_Eei6N-Ckb3hvWw" name="dataTypeWithoutTypeParameter" incomings="_MVXF_uZ_Eei6N-Ckb3hvWw _MVXGAuZ_Eei6N-Ckb3hvWw">
               <outgoings xmi:id="_MVXF-uZ_Eei6N-Ckb3hvWw" target="_MVXF--Z_Eei6N-Ckb3hvWw">
@@ -3352,13 +3352,13 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_JZTkweZ_Eei6N-Ckb3hvWw" name="Reference">
-      <subpatterns xmi:id="_Mout0OZ_Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
+        </patterns>
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_JZTkweZ_Eei6N-Ckb3hvWw" name="Reference">
+      <patterns xmi:id="_Mout0OZ_Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
         <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-        <subpatterns xmi:id="_Mout9uZ_Eei6N-Ckb3hvWw" name="Reference with Bound Generic-Class-Parameter Sub-Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.reference : ClassX&lt;T>">
+        <patterns xmi:id="_Mout9uZ_Eei6N-Ckb3hvWw" name="Reference with Bound Generic-Class-Parameter Sub-Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.reference : ClassX&lt;T>">
           <graphs xmi:id="_Mout9-Z_Eei6N-Ckb3hvWw" name="Reference with Bound Generic-Class-Parameter Sub-Type-Argument" description="">
             <nodes xmi:id="_Mout-OZ_Eei6N-Ckb3hvWw" name="noClassUsedAsTypeArgument" incomings="_MouuBeZ_Eei6N-Ckb3hvWw">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -3445,8 +3445,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_MouuE-Z_Eei6N-Ckb3hvWw" name="Reference without Generic-Type" description="">
+        </patterns>
+        <patterns xmi:id="_MouuE-Z_Eei6N-Ckb3hvWw" name="Reference without Generic-Type" description="">
           <graphs xmi:id="_MouuFOZ_Eei6N-Ckb3hvWw" name="Reference without Generic-Type" description="">
             <nodes xmi:id="_MouuFeZ_Eei6N-Ckb3hvWw" name="classWithoutTypeParameter" incomings="_MouuGeZ_Eei6N-Ckb3hvWw _MouuHuZ_Eei6N-Ckb3hvWw">
               <outgoings xmi:id="_MouuFuZ_Eei6N-Ckb3hvWw" target="_MouuF-Z_Eei6N-Ckb3hvWw">
@@ -3492,13 +3492,13 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_JZTlD-Z_Eei6N-Ckb3hvWw" name="Operation">
-      <subpatterns xmi:id="_NKjBcOZ_Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
+        </patterns>
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_JZTlD-Z_Eei6N-Ckb3hvWw" name="Operation">
+      <patterns xmi:id="_NKjBcOZ_Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
         <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-        <subpatterns xmi:id="_NKjBwuZ_Eei6N-Ckb3hvWw" name="Operation with Bound Generic-Class-Parameter Sub-Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation() : ClassX&lt;T>">
+        <patterns xmi:id="_NKjBwuZ_Eei6N-Ckb3hvWw" name="Operation with Bound Generic-Class-Parameter Sub-Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation() : ClassX&lt;T>">
           <graphs xmi:id="_NKjBw-Z_Eei6N-Ckb3hvWw" name="Operation with Bound Generic-Class-Parameter Sub-Type-Argument" description="">
             <nodes xmi:id="_NKjBxOZ_Eei6N-Ckb3hvWw" name="noClassUsedAsTypeArgument" incomings="_NKjB0eZ_Eei6N-Ckb3hvWw">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -3585,8 +3585,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_NKjB3-Z_Eei6N-Ckb3hvWw" name="Operation without Generic-Type" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation() : ClassX&lt;T>">
+        </patterns>
+        <patterns xmi:id="_NKjB3-Z_Eei6N-Ckb3hvWw" name="Operation without Generic-Type" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation() : ClassX&lt;T>">
           <graphs xmi:id="_NKjB4OZ_Eei6N-Ckb3hvWw" name="Operation without Generic-Type" description="">
             <nodes xmi:id="_NKjB4eZ_Eei6N-Ckb3hvWw" name="classifierWithTypeParameter" incomings="_NKjB5eZ_Eei6N-Ckb3hvWw _NKjB6uZ_Eei6N-Ckb3hvWw">
               <outgoings xmi:id="_NKjB4uZ_Eei6N-Ckb3hvWw" target="_NKjB4-Z_Eei6N-Ckb3hvWw">
@@ -3632,13 +3632,13 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_JZTlXeZ_Eei6N-Ckb3hvWw" name="Parameter">
-      <subpatterns xmi:id="_NmxDYOZ_Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
+        </patterns>
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_JZTlXeZ_Eei6N-Ckb3hvWw" name="Parameter">
+      <patterns xmi:id="_NmxDYOZ_Eei6N-Ckb3hvWw" name="TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier">
         <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#constraint"/>
-        <subpatterns xmi:id="_NmxD3uZ_Eei6N-Ckb3hvWw" name="Parameter with Bound  Generic-Class-Parameter Sub-Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation(p :  ClassX&lt;T>)">
+        <patterns xmi:id="_NmxD3uZ_Eei6N-Ckb3hvWw" name="Parameter with Bound  Generic-Class-Parameter Sub-Type-Argument" description="ClassX&lt;E extends ClassA> and ClassY&lt;T extends SubClassOfA> and ClassY.operation(p :  ClassX&lt;T>)">
           <graphs xmi:id="_NmxD3-Z_Eei6N-Ckb3hvWw" name="Parameter with Bound Generic-Class-Parameter Sub-Type-Argument" description="">
             <nodes xmi:id="_NmxD4OZ_Eei6N-Ckb3hvWw" name="noClassUsedAsTypeArgument" incomings="_NmxD7eZ_Eei6N-Ckb3hvWw">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#not"/>
@@ -3738,8 +3738,8 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
             </nodes>
           </graphs>
-        </subpatterns>
-        <subpatterns xmi:id="_NmxD_uZ_Eei6N-Ckb3hvWw" name="Parameter without Generic-Type" description="">
+        </patterns>
+        <patterns xmi:id="_NmxD_uZ_Eei6N-Ckb3hvWw" name="Parameter without Generic-Type" description="">
           <graphs xmi:id="_NmxD_-Z_Eei6N-Ckb3hvWw" name="Parameter without Generic-Type" description="">
             <nodes xmi:id="_yygZMB2qEeq9ZO-r9jT7HQ" name="containingClass" incomings="_6SdjoB2qEeq9ZO-r9jT7HQ">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
@@ -3798,9 +3798,9 @@
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
             </nodes>
           </graphs>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
+        </patterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_BgF0EM1_EemXl4QrGwuV7g" name="RELOCATION_EDGES">
     <graphs xmi:id="_BgJeiM1_EemXl4QrGwuV7g" name="[ : EPackage] - eSubpackages -> [ : EPackage]">

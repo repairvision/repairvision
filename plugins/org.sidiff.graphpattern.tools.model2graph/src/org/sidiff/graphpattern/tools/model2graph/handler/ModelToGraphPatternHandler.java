@@ -1,4 +1,4 @@
-package org.sidiff.graphpattern.tools.model2graph;
+package org.sidiff.graphpattern.tools.model2graph.handler;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -18,6 +18,10 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
+import org.sidiff.graphpattern.tools.model2graph.FolderToBundleTransformation;
+import org.sidiff.graphpattern.tools.model2graph.ModelToGraphPatternDefiniton;
+import org.sidiff.graphpattern.tools.model2graph.ModelToGraphPatternFactory;
+import org.sidiff.graphpattern.tools.model2graph.ModelToGraphPatternTransformation;
 
 public class ModelToGraphPatternHandler extends AbstractHandler {
 	
@@ -39,9 +43,16 @@ public class ModelToGraphPatternHandler extends AbstractHandler {
 							return null;
 						}
 					});
-					bundle = new ModelToGraphPattern().convertToBundle((IFolder) selected, fileExtension, getDefinitionFactory());
+					bundle = new FolderToBundleTransformation(
+							Collections.singleton(fileExtension),
+							getFactory()).toBundle((IFolder) selected);
 				} else if (selected instanceof IFile) {
-					bundle = new ModelToGraphPattern().convertToBundle((IFile) selected, getDefinitionFactory());
+					ModelToGraphPatternFactory factory = getFactory();
+					Resource modelFile = factory.loadModel((IFile) selected);
+					ModelToGraphPatternDefiniton definition = factory.createDefinition(modelFile);
+					ModelToGraphPatternTransformation transformation = factory.createTransformation(definition);
+					
+					bundle = transformation.toBundle(modelFile);
 				}
 				
 				// save pattern:
@@ -74,7 +85,7 @@ public class ModelToGraphPatternHandler extends AbstractHandler {
 		}
 	}
 	
-	protected ModelToGraphPatternDefinitonFactory getDefinitionFactory() {
-		return new ModelToGraphPatternDefinitonFactory();
+	protected ModelToGraphPatternFactory getFactory() {
+		return new ModelToGraphPatternFactory();
 	}
 }

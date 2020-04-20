@@ -113,7 +113,7 @@ public class EditRuleGenerator {
 		
 		editOperations.getEditRules().forEach((preConstraint, operations) -> {
 			for (Pattern editOperation : operations) {
-				preConstraint.getPattern().getSubpatterns().add(editOperation);
+				preConstraint.getPattern().getPatterns().add(editOperation);
 			}
 		});
 		

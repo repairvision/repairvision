@@ -1,8 +1,12 @@
 package org.sidiff.revision.editrules.project.builder;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -16,13 +20,18 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.sidiff.common.emf.access.EMFGenModelAccess;
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.profile.henshin.converter.GraphPatternToHenshinConverterHandler;
+import org.sidiff.graphpattern.tools.model2graph.FolderToBundleTransformation;
+import org.sidiff.graphpattern.tools.model2graph.ModelToGraphPatternFactory;
 import org.sidiff.revision.editrules.generation.constructors.CreationEditRuleConstructor;
 import org.sidiff.revision.editrules.generation.constructors.DeletionEditRuleConstructor;
 import org.sidiff.revision.editrules.generation.constructors.IEditRuleConstructor;
@@ -44,9 +53,38 @@ public class RuleBaseBuilder extends IncrementalProjectBuilder {
 		
 		Bundle patternBundle = loadGraphPatterns();
 		
+		// Convert models to ASG pattens:
+		convertExamplePatterns(patternBundle, monitor);
+		
+		// Generate edit rules:
 		if (validateGraphPatterns(patternBundle, monitor)) {
 			Bundle editrulesBundle = generateEditRulePatterns(patternBundle, editrulesURI);
 			convertToHenshin(henshinEditrulesURI, editrulesBundle);
+		}
+		
+		monitor.done();
+	}
+	
+	protected void convertExamplePatterns(Bundle patternBundle, IProgressMonitor monitor) {
+		IFolder exampleFolder = getExampleFolder(patternBundle);
+		
+		if ((exampleFolder != null) && (exampleFolder.exists())) {
+			Set<String> modelFileExtensions = new HashSet<>();
+			
+			for (EPackage metamodel : patternBundle.getDomains()) {
+				modelFileExtensions.addAll(EMFGenModelAccess.getFileExtensionFromDocumentType(DocumentType.getDocumentType(metamodel)));
+			}
+			
+			// TODO: make 'overwrite' and 'create definition file' configurable
+			ModelToGraphPatternFactory modelToGraphPatternFactory = new ModelToGraphPatternFactory(true);
+			FolderToBundleTransformation converter = new FolderToBundleTransformation(modelFileExtensions, modelToGraphPatternFactory);
+			converter.updateBundle(patternBundle, exampleFolder, false);	
+			
+			try {
+				patternBundle.eResource().save(Collections.emptyMap());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		monitor.done();
@@ -60,6 +98,10 @@ public class RuleBaseBuilder extends IncrementalProjectBuilder {
 	private URI getHeshinRuleFolder() {
 		return URI.createPlatformResourceURI(
 				getProject().getName() + "/" + RuleBasePlugin.EDIT_RULE_FOLDER, true);
+	}
+	
+	private IFolder getExampleFolder(Bundle patternBundle) {
+		return getProject().getFolder(RuleBasePlugin.EXAMPLE_FOLDER + "/" + patternBundle.getName());
 	}
 
 	private Bundle loadGraphPatterns() {

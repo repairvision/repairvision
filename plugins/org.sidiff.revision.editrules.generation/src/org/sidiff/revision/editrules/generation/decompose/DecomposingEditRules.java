@@ -56,7 +56,7 @@ public class DecomposingEditRules {
 	}
 	
 	private void decompose(Pattern complexEditRulePattern, List<GraphPattern> basicEditRuleGraphs) {
-		for (Pattern complexEditRuleSubPattern : complexEditRulePattern.getSubpatterns()) {
+		for (Pattern complexEditRuleSubPattern : complexEditRulePattern.getPatterns()) {
 			decompose(complexEditRuleSubPattern, basicEditRuleGraphs);
 		}
 		

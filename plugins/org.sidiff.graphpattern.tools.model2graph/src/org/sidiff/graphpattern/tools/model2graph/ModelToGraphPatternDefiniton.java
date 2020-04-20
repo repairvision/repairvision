@@ -1,6 +1,8 @@
 package org.sidiff.graphpattern.tools.model2graph;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +12,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.sidiff.common.utilities.java.StringUtil;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 
@@ -29,6 +33,30 @@ public class ModelToGraphPatternDefiniton {
 		this.configFile = configFile;
 	}
 	
+	public String getNameBundle(Resource modelResource) {
+		if ((modelResource.getURI() != null) && modelResource.getURI().segmentCount() >= 3) {
+			return modelResource.getURI().trimFileExtension().segment(modelResource.getURI().segmentCount() - 2);
+		} else {
+			return getNamePattern(modelResource);
+		}
+	}
+	
+	public String getNamePattern(Resource modelResource) {
+		if ((modelResource.getURI() != null) && modelResource.getURI().segmentCount() >= 2) {
+			return modelResource.getURI().trimFileExtension().segment(modelResource.getURI().segmentCount() - 1);
+		} else {
+			return getNameGraph(modelResource);
+		}
+	}
+	
+	public String getNameGraph(Resource modelResource) {
+		if ((modelResource.getURI() != null) && modelResource.getURI().segmentCount() >= 1) {
+			return modelResource.getURI().trimFileExtension().lastSegment();
+		} else {
+			return modelResource.toString();
+		}
+	}
+	
 	public String getName(EObject object, GraphPattern graph) {
 		String name = null;
 		
@@ -36,7 +64,9 @@ public class ModelToGraphPatternDefiniton {
 			Object nameValue = object.eGet(object.eClass().getEStructuralFeature("name"));
 			
 			if (nameValue instanceof String) {
-				name = (String) nameValue;
+				if (!((String) nameValue).isEmpty()) {
+					name = (String) nameValue;
+				}
 			}
 		}
 		
@@ -57,7 +87,10 @@ public class ModelToGraphPatternDefiniton {
 			
 			return name;
 		} else {
-			return "#" + graph.getNodes().size();
+			long typeCount = graph.getNodes().stream().filter(node -> node.getType().equals(object.eClass())).count();
+			String postFix = typeCount > 0 ? "" + typeCount : ""; 
+					
+			return StringUtil.toLowerFirst(object.eClass().getName()) + postFix;
 		}
 	}
 	
@@ -217,5 +250,40 @@ public class ModelToGraphPatternDefiniton {
 	
 	public String getAttributeFilterSignature(NodePattern node, EObject object, EAttribute attribute) {
 		return "Attribute : " + node.getName() + " : " + object.eClass().getName() + " : " + attribute.getName();
+	}
+	
+	public boolean definitionFileExists() {
+		return configFile.exists();
+	}
+	
+	public void createDefinitionFile() throws IOException {
+		configFile.createNewFile();
+		FileWriter configFileWriter = null;
+		
+		try {
+			configFileWriter = new FileWriter(configFile);
+			
+			configFileWriter.append("# Transformation Definition: (copy example line, replace patterns <...> with regular expression, remove #)");
+			configFileWriter.append("\n");
+			
+			configFileWriter.append("# DEFINE : Parameter : <parameter name>");
+			configFileWriter.append("\n");
+			configFileWriter.append("# DEFINE : Attribute : <node name> : <node type> : <attribute name> : <attribte value>");
+			configFileWriter.append("\n");
+			configFileWriter.append("# DEFINE : Node : <node name> : <node type> : <node name replacement>");
+			configFileWriter.append("\n");
+			configFileWriter.append("\n");
+			
+			configFileWriter.append("# FILTER : Node : <node name> : <node type>");
+			configFileWriter.append("\n");
+			configFileWriter.append("# FILTER : Attribute : <node name> : <node type> : <attribute type>");
+			configFileWriter.append("\n");
+			configFileWriter.append("# FILTER : Edge : <source node name> : <source node type> : <edge type> : <target node name> : <target node type>");
+			configFileWriter.append("\n");
+		} finally {
+			if (configFileWriter != null) {
+				configFileWriter.close();
+			}
+		}
 	}
 }
