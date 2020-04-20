@@ -4,28 +4,20 @@ Bundle-Name: ReVision Edit Rule Project Wizard
 Bundle-SymbolicName: org.sidiff.revision.editrules.project.builder;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.sidiff.revision.editrules.project.builder.Activator
-Require-Bundle: org.eclipse.core.resources,
- org.eclipse.core.runtime,
- org.eclipse.jface,
+Require-Bundle: org.eclipse.emf.transaction,
  org.eclipse.pde.ui,
- org.eclipse.ui.workbench,
- org.sidiff.graphpattern,
- org.sidiff.graphpattern.profile.constraints,
- org.sidiff.common.utilities,
- org.sidiff.graphpattern.edit,
- org.sidiff.graphpattern.tools,
- org.sidiff.graphpattern.profile.henshin,
- org.eclipse.emf.validation,
- org.eclipse.emf.transaction,
+ org.sidiff.common.emf,
  org.sidiff.common.ui,
- org.sidiff.revision.editrules.project,
- org.sidiff.revision.editrules.generation,
+ org.sidiff.common.utilities,
  org.sidiff.graphpattern.design.tools,
- org.sidiff.validation.constraint.interpreter,
- org.sidiff.validation.constraint.api,
- org.sidiff.repair.history.editrules,
+ org.sidiff.graphpattern.edit,
+ org.sidiff.graphpattern.profile.constraints,
+ org.sidiff.graphpattern.profile.henshin,
  org.sidiff.graphpattern.tools.model2graph,
- org.sidiff.common.emf
+ org.sidiff.revision.editrules.generation,
+ org.sidiff.revision.editrules.project,
+ org.sidiff.validation.constraint.api,
+ org.sidiff.validation.constraint.interpreter
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.sidiff.revision.editrules.project.wizard
