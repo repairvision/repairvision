@@ -21,7 +21,7 @@ public class SetEdgePatternTypeCommand extends CompoundCommand {
 		
 		// Set consistent opposite type:
 		if (edge.getOpposite() != null) {
-			if (type.getEOpposite() != null) {
+			if ((type != null) && (type.getEOpposite() != null)) {
 				// Has opposite type:
 				if (edge.getOpposite().getType() != type.getEOpposite()) {
 					// Inconsistent opposite type -> set opposite type:

@@ -28,11 +28,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.common.emf.access.EMFGenModelAccess;
 import org.sidiff.common.utilities.emf.DocumentType;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.profile.henshin.converter.GraphPatternToHenshinConverterHandler;
 import org.sidiff.graphpattern.tools.model2graph.FolderToBundleTransformation;
 import org.sidiff.graphpattern.tools.model2graph.ModelToGraphPatternFactory;
+import org.sidiff.graphpattern.validation.GraphPatternValidation;
 import org.sidiff.revision.editrules.generation.constructors.CreationEditRuleConstructor;
 import org.sidiff.revision.editrules.generation.constructors.DeletionEditRuleConstructor;
 import org.sidiff.revision.editrules.generation.constructors.IEditRuleConstructor;
@@ -138,7 +138,7 @@ public class RuleBaseBuilder extends IncrementalProjectBuilder {
 	
 	private boolean validateGraphPatterns(Bundle patternBundle, IProgressMonitor monitor) {
 		IFile graphpatternFile = getProject().getFile(RuleBasePlugin.GRAPHPATTERN_FILE);
-		return WorkbenchUtil.validateEMFResource(graphpatternFile, patternBundle);
+		return GraphPatternValidation.validate(graphpatternFile, patternBundle);
 	}
 
 	private Bundle generateEditRulePatterns(Bundle patternBundle, URI editrulesURI, IProgressMonitor monitor) {

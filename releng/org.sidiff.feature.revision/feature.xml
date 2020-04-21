@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.sidiff.feature.repair"
-      label="Re(pair)Vision"
-      version="1.1.0.qualifier"
+      id="org.sidiff.feature.revision"
+      label="ReVision"
+      version="1.2.0.qualifier"
       provider-name="Software Engineering Group, University of Siegen"
-      plugin="org.sidiff.branding.core">
+      plugin="org.sidiff.branding.revision">
 
-   <description url="http://pi.informatik.uni-siegen.de/projects/repairvision/">
-      All core plug-ins of ReVision: A tool for history-based model repair recommendations
+   <description url="https://repairvision.github.io/">
+      All core plug-ins of ReVision: A tool for history-based model
+repair recommendations
    </description>
 
-   <copyright url="http://pi.informatik.uni-siegen.de/projects/repairvision/">
-      Copyright (c) 2014 Software Engineering Group, University of
-Siegen. All rights reserved.
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
+      Copyright (c) 2019 Software Engineering Group, University of
+Siegen. All rights reserved. This program and the accompanying
+materials are made available under the terms of the Eclipse Public
+License v1.0 which accompanies this distribution, and is available
+at http://www.eclipse.org/legal/epl-v10.html
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
@@ -143,8 +147,14 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
    </license>
 
    <url>
-      <update label="ReVision UpdateSite" url="http://pi.informatik.uni-siegen.de/projects/repairvision/updatesite"/>
+      <update label="ReVision Update Site" url="https://repairvision.github.io/updatesite/releases/latest"/>
    </url>
+
+   <requires>
+      <import feature="org.tigris.subversion.clientadapter.svnkit.feature" version="1.8.12.3" match="greaterOrEqual"/>
+      <import feature="org.tigris.subversion.clientadapter.javahl.feature" version="1.11.1.201901162041" match="greaterOrEqual"/>
+      <import feature="org.tigris.subversion.subclipse" version="4.3.0.201901172050" match="greaterOrEqual"/>
+   </requires>
 
    <plugin
          id="org.sidiff.candidates"
@@ -735,6 +745,13 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.sidiff.revision.repair.history.retrieval"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.sidiff.graphpattern.validation"
          download-size="0"
          install-size="0"
          version="0.0.0"

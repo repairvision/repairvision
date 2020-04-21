@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.sdiff.feature.repair.domains.uml"
-      label="Re(pair)Vision - Domain UML"
-      version="1.1.0.qualifier"
+      id="org.sdiff.feature.revision.domains.ecore"
+      label="ReVision - Domain Ecore"
+      version="1.2.0.qualifier"
       provider-name="Software Engineering Group, University of Siegen"
-      plugin="org.sidiff.branding.core">
+      plugin="org.sidiff.branding.revision">
 
-   <description url="http://pi.informatik.uni-siegen.de/projects/repairvision/">
-      Domain-specific features which enable repair support for UML.
+   <description url="https://repairvision.github.io/">
+      Domain-specific features which enable repair support for Ecore.
    </description>
 
-   <copyright url="http://pi.informatik.uni-siegen.de/projects/repairvision/">
-      Copyright (c) 2014 Software Engineering Group, University of
-Siegen. All rights reserved.
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
+      Copyright (c) 2019 Software Engineering Group, University of
+Siegen. All rights reserved. This program and the accompanying
+materials are made available under the terms of the Eclipse Public
+License v1.0 which accompanies this distribution, and is available
+at http://www.eclipse.org/legal/epl-v10.html
    </copyright>
 
-   <license url="http://www.example.com/license">
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
       Eclipse Foundation Software User Agreement
 February 1, 2011
 
@@ -143,22 +146,29 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
    </license>
 
    <url>
-      <update label="ReVision UpdateSite" url="http://pi.informatik.uni-siegen.de/projects/repairvision/updatesite"/>
+      <update label="ReVision Update Site" url="https://repairvision.github.io/updatesite/releases/latest"/>
    </url>
 
    <requires>
-      <import feature="org.sidiff.feature.repair" version="1.0.0.qualifier"/>
+      <import feature="org.sidiff.feature.revision" version="1.0.0.qualifier"/>
    </requires>
 
    <plugin
-         id="org.sidiff.uml2v5.constraints"
+         id="org.sidiff.ecore.constraints"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.sidiff.uml2v5.editrules.repair"
+         id="org.sidiff.ecore.editrules.repair.evaluation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.sidiff.ecore.matcher.signature"
          download-size="0"
          install-size="0"
          version="0.0.0"
