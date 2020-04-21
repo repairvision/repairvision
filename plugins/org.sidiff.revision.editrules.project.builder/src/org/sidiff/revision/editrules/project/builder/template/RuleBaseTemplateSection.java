@@ -1,5 +1,9 @@
 package org.sidiff.revision.editrules.project.builder.template;
 
+import static org.sidiff.revision.editrules.project.builder.util.RuleBaseBuilderUtils.createEditRuleFolders;
+import static org.sidiff.revision.editrules.project.builder.util.RuleBaseBuilderUtils.createExampleFolders;
+import static org.sidiff.revision.editrules.project.builder.util.RuleBaseBuilderUtils.getEditRuleFolder;
+
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,14 +12,12 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.pde.core.plugin.IPluginBase;
@@ -30,8 +32,6 @@ import org.eclipse.pde.ui.templates.PluginReference;
 import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.graphpattern.Bundle;
-import org.sidiff.graphpattern.Pattern;
-import org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil;
 import org.sidiff.revision.editrules.project.RuleBasePlugin;
 import org.sidiff.revision.editrules.project.builder.Activator;
 import org.sidiff.revision.editrules.project.builder.nature.RuleBaseProjectNature;
@@ -137,14 +137,6 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		return newFiles.toArray(new String[0]);
 	}
 	
-	private String getEditRuleFolder() {
-		return RuleBasePlugin.EDIT_RULE_FOLDER + "/";
-	}
-	
-	private String getExampleFolder() {
-		return RuleBasePlugin.EXAMPLE_FOLDER + "/";
-	}
-	
 	@Override
 	public IPluginReference[] getDependencies(String schemaVersion) {
 		return new IPluginReference[] {
@@ -168,8 +160,10 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 	
 	private static String getFormattedPackageName(String pluginID) {
 		StringBuilder builder = new StringBuilder();
+		
 		for (int i = 0; i < pluginID.length(); i++) {
 			char ch = pluginID.charAt(i);
+			
 			if (builder.length() == 0) {
 				if (Character.isJavaIdentifierStart(ch)) {
 					builder.append(Character.toLowerCase(ch));
@@ -188,7 +182,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		SubMonitor progress = SubMonitor.convert(monitor, 100);
 		super.execute(project, model, progress.split(50));
 
-		createFolder(project, getEditRuleFolder(), progress.split(1));
+		createEditRuleFolders(project, progress.split(1));
 		Bundle patternBundle = createASGPatternBundle(project, progress.split(39));
 		
 		if (pageEditRules.isCreateExampleFolderOption()) {
@@ -223,45 +217,4 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		}
 	}
 	
-	private void createExampleFolders(Bundle patternBundle, IProject project, IProgressMonitor monitor) throws CoreException {
-		String exampleFolder = getExampleFolder();
-		createFolder(project, exampleFolder, monitor);
-		
-		// Convert Constraint-Pattern tree to folder structure:
-		for (EObject element : (Iterable<EObject>) () -> patternBundle.eResource().getAllContents()) {
-			if (element instanceof Pattern) {
-				if ((element instanceof Bundle) || ConstraintProfileUtil.isConstraint((Pattern) element)) {
-					String patternFolder = getPatternFolder((Pattern) element);
-					createFolder(project,  exampleFolder + patternFolder, monitor);
-				}
-			}
-		}
-		
-		monitor.done();
-	}
-	
-	private String getPatternFolder(Pattern pattern) {
-		StringBuilder patternFolder = new StringBuilder();
-		patternFolder.append(pattern.getName());
-		patternFolder.append("/");
-		
-		while (pattern.eContainer() instanceof Pattern) {
-			pattern = (Pattern) pattern.eContainer();
-			patternFolder.insert(0, "/");
-			patternFolder.insert(0, pattern.getName());
-		}
-		
-		return patternFolder.toString();
-	}
-
-	private static String createFolder(IProject project, String newFolder, IProgressMonitor monitor) throws CoreException {
-		IFolder folder = project.getFolder(newFolder);
-
-		if(!folder.exists()) {
-			folder.create(true, true, monitor);
-		}
-
-		monitor.done();
-		return newFolder;
-	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,6 +40,7 @@ import org.sidiff.revision.editrules.generation.constructors.RelocationEditRuleC
 import org.sidiff.revision.editrules.generation.constructors.TransformationEditRuleConstructor;
 import org.sidiff.revision.editrules.generation.generator.api.EditRuleGenerator;
 import org.sidiff.revision.editrules.project.RuleBasePlugin;
+import org.sidiff.revision.editrules.project.builder.util.RuleBaseBuilderUtils;
 
 /**
  * Builds the edit rules from a catalog of graph patterns.
@@ -47,25 +49,61 @@ import org.sidiff.revision.editrules.project.RuleBasePlugin;
  */
 public class RuleBaseBuilder extends IncrementalProjectBuilder {
 
-	protected void buildRulebase(IProgressMonitor monitor) {
-		URI editrulesURI = getEditrulesURI();
-		URI henshinEditrulesURI = getHeshinRuleFolder();
+	private Set<IPath> watchForChanges() {
+		Set<IPath> paths = new LinkedHashSet<>();
+		IProject project = getProject();
 		
-		Bundle patternBundle = loadGraphPatterns();
+		paths.add(project.getFile(RuleBasePlugin.GRAPHPATTERN_FILE).getProjectRelativePath());
+		paths.add(project.getFolder(RuleBasePlugin.EXAMPLE_FOLDER).getProjectRelativePath());
 		
-		// Convert models to ASG pattens:
-		convertExamplePatterns(patternBundle, monitor);
-		
-		// Generate edit rules:
-		if (validateGraphPatterns(patternBundle, monitor)) {
-			Bundle editrulesBundle = generateEditRulePatterns(patternBundle, editrulesURI);
-			convertToHenshin(henshinEditrulesURI, editrulesBundle);
-		}
-		
-		monitor.done();
+		return paths;
 	}
 	
-	protected void convertExamplePatterns(Bundle patternBundle, IProgressMonitor monitor) {
+	private URI getGraphPatternFileURI() {
+		return URI.createPlatformResourceURI(
+				getProject().getName() + "/" + RuleBasePlugin.GRAPHPATTERN_FILE, true);
+	}
+	
+	private URI getGraphPatternEditRuleFileURI() {
+		return URI.createPlatformResourceURI(
+				getProject().getName() + "/" + RuleBasePlugin.GRAPHPATTERN_EDIT_RULE_FILE, true);
+	}
+	
+	private URI getEditRuleFolderURI() {
+		return URI.createPlatformResourceURI(
+				getProject().getName() + "/" + RuleBasePlugin.EDIT_RULE_FOLDER, true);
+	}
+	
+	private IFolder getExampleFolder(Bundle patternBundle) {
+		return getProject().getFolder(RuleBaseBuilderUtils.getExampleFolder(patternBundle));
+	}
+	
+	private void buildRulebase(IProgressMonitor monitor) {
+		SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
+		
+		URI editrulesURI = getGraphPatternEditRuleFileURI();
+		URI henshinEditrulesURI = getEditRuleFolderURI();
+		
+		Bundle patternBundle = loadGraphPatterns(subMonitor.split(10));
+		
+		// Synchronize pattern bundle and example folder structure:
+		try {
+			RuleBaseBuilderUtils.createExampleFolders(patternBundle, getProject(), subMonitor.split(5));
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+		
+		// Convert models to ASG pattens:
+		convertExamplePatterns(patternBundle, subMonitor.split(25));
+		
+		// Generate edit rules:
+		if (validateGraphPatterns(patternBundle, subMonitor.split(10))) {
+			Bundle editrulesBundle = generateEditRulePatterns(patternBundle, editrulesURI, subMonitor.split(30));
+			convertToHenshin(henshinEditrulesURI, editrulesBundle, subMonitor.split(20));
+		}
+	}
+	
+	private void convertExamplePatterns(Bundle patternBundle, IProgressMonitor monitor) {
 		IFolder exampleFolder = getExampleFolder(patternBundle);
 		
 		if ((exampleFolder != null) && (exampleFolder.exists())) {
@@ -86,27 +124,10 @@ public class RuleBaseBuilder extends IncrementalProjectBuilder {
 				e.printStackTrace();
 			}
 		}
-		
-		monitor.done();
 	}
 
-	private URI getEditrulesURI() {
-		return URI.createPlatformResourceURI(
-				getProject().getName() + "/" + RuleBasePlugin.GRAPHPATTERN_EDIT_RULE_FILE, true);
-	}
-	
-	private URI getHeshinRuleFolder() {
-		return URI.createPlatformResourceURI(
-				getProject().getName() + "/" + RuleBasePlugin.EDIT_RULE_FOLDER, true);
-	}
-	
-	private IFolder getExampleFolder(Bundle patternBundle) {
-		return getProject().getFolder(RuleBasePlugin.EXAMPLE_FOLDER + "/" + patternBundle.getName());
-	}
-
-	private Bundle loadGraphPatterns() {
-		URI graphpatternURI = URI.createPlatformResourceURI(
-				getProject().getName() + "/" + RuleBasePlugin.GRAPHPATTERN_FILE, true);
+	private Bundle loadGraphPatterns(IProgressMonitor monitor) {
+		URI graphpatternURI = getGraphPatternFileURI();
 		
 		ResourceSet resourceSet = new ResourceSetImpl();
 		Resource resource = resourceSet.getResource(graphpatternURI, true);
@@ -117,13 +138,10 @@ public class RuleBaseBuilder extends IncrementalProjectBuilder {
 	
 	private boolean validateGraphPatterns(Bundle patternBundle, IProgressMonitor monitor) {
 		IFile graphpatternFile = getProject().getFile(RuleBasePlugin.GRAPHPATTERN_FILE);
-		boolean result = WorkbenchUtil.validateEMFResource(graphpatternFile, patternBundle);
-		
-		monitor.done();
-		return result;
+		return WorkbenchUtil.validateEMFResource(graphpatternFile, patternBundle);
 	}
 
-	private Bundle generateEditRulePatterns(Bundle patternBundle, URI editrulesURI) {
+	private Bundle generateEditRulePatterns(Bundle patternBundle, URI editrulesURI, IProgressMonitor monitor) {
 		
 		@SuppressWarnings("unchecked")
 		List<Class<IEditRuleConstructor>> generators = Arrays.asList(new Class[] {
@@ -138,22 +156,24 @@ public class RuleBaseBuilder extends IncrementalProjectBuilder {
 		return editrulesBundle;
 	}
 	
-	private void convertToHenshin(URI henshinEditrulesURI, Bundle editrulesBundle) {
+	private void convertToHenshin(URI henshinEditrulesURI, Bundle editrulesBundle, IProgressMonitor monitor) {
 		GraphPatternToHenshinConverterHandler henshinConverter = new GraphPatternToHenshinConverterHandler();
 		henshinConverter.convertBundle(editrulesBundle, henshinEditrulesURI);
 	}
 	
 	@Override
 	protected IProject[] build(int kind, Map<String, String> args, IProgressMonitor monitor) throws CoreException {
+		SubMonitor subMonitor = SubMonitor.convert(monitor, 1);
+		
 		if (kind == IncrementalProjectBuilder.FULL_BUILD) {
-			fullBuild(monitor);
+			fullBuild(subMonitor.split(1));
 		} else {
 			IResourceDelta delta = getDelta(getProject());
 			
 			if (delta == null) {
-				fullBuild(monitor);
+				fullBuild(subMonitor.split(1));
 			} else {
-				incrementalBuild(delta, monitor);
+				incrementalBuild(delta, subMonitor.split(1));
 			}
 		}
 		return null;
@@ -190,6 +210,7 @@ public class RuleBaseBuilder extends IncrementalProjectBuilder {
 
 	private void fullBuild(IProgressMonitor monitor) throws CoreException {
 		SubMonitor progress = SubMonitor.convert(monitor, 100);
+		
 		refreshProject(progress.split(5));
 		clean(progress.split(10));
 		buildRulebase(progress.split(80));
@@ -197,16 +218,15 @@ public class RuleBaseBuilder extends IncrementalProjectBuilder {
 	}
 	
 	private void incrementalBuild(IResourceDelta delta, IProgressMonitor monitor) throws CoreException {
-		IFile graphpatternFile = getProject().getFile(RuleBasePlugin.GRAPHPATTERN_FILE);
-		
-		if (graphpatternFile.exists() && containsResource(delta, graphpatternFile.getProjectRelativePath())) {
+		if (containsResource(delta, watchForChanges())) {
 			fullBuild(monitor);
 		}
 	}
 	
-	private boolean containsResource(IResourceDelta delta, IPath path) throws CoreException {
-		for (IResourceDelta resourceDelta : delta.getAffectedChildren()) {
-			if (path.equals(resourceDelta.getResource().getProjectRelativePath())) {
+	private boolean containsResource(IResourceDelta delta, Set<IPath> path) throws CoreException {
+		for (IResourceDelta childDelta : delta.getAffectedChildren()) {
+			if (path.contains(childDelta.getResource().getProjectRelativePath())
+					|| containsResource(childDelta, path)) {
 				return true;
 			}
 		}

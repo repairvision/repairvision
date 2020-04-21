@@ -254,7 +254,12 @@ public class WorkbenchUtil {
 		// Create workbench markers:
 		try {
 			ValidateAction.EclipseResourcesUtil markerHelper = new ValidateAction.EclipseResourcesUtil();
-			markerHelper.createMarkers(diagnostic);
+			
+			// (Do not show root diagnostic: markerHelper.createMarkers(diagnostic))
+			for (Diagnostic diagnosticChild : diagnostic.getChildren()) {
+				markerHelper.createMarkers(diagnosticChild);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
