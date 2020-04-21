@@ -224,15 +224,15 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 	}
 	
 	private void createExampleFolders(Bundle patternBundle, IProject project, IProgressMonitor monitor) throws CoreException {
-		createFolder(project, getExampleFolder(), monitor);
-		String bundleFolder = createFolder(project, getExampleFolder() + patternBundle.getName() + "/", monitor);
+		String exampleFolder = getExampleFolder();
+		createFolder(project, exampleFolder, monitor);
 		
 		// Convert Constraint-Pattern tree to folder structure:
-		for (EObject element : (Iterable<EObject>) () -> patternBundle.eAllContents()) {
+		for (EObject element : (Iterable<EObject>) () -> patternBundle.eResource().getAllContents()) {
 			if (element instanceof Pattern) {
-				if (ConstraintProfileUtil.isConstraint((Pattern) element)) {
+				if ((element instanceof Bundle) || ConstraintProfileUtil.isConstraint((Pattern) element)) {
 					String patternFolder = getPatternFolder((Pattern) element);
-					createFolder(project, bundleFolder + patternFolder, monitor);
+					createFolder(project,  exampleFolder + patternFolder, monitor);
 				}
 			}
 		}
