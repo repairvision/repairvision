@@ -10,7 +10,7 @@ import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairTy
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
-public class IsInstanceOf extends Predicate {
+public class IsInstanceOf extends PredicateImpl {
 
 	protected Term term;
 	

@@ -78,12 +78,14 @@ public class RulebaseLibrary {
 		
 		Enumeration<URL> urls = bundle.findEntries("/" + folderValue, "*", false);
 		
-		while(urls.hasMoreElements()) {
-			URL url = urls.nextElement();
-			String localFilePath = url.getFile();
-
-			if (localFilePath.endsWith(".henshin")) {
-				editRules.add(URI.createPlatformPluginURI(projectName + localFilePath, true));
+		if (urls != null) {
+			while(urls.hasMoreElements()) {
+				URL url = urls.nextElement();
+				String localFilePath = url.getFile();
+				
+				if (localFilePath.endsWith(".henshin")) {
+					editRules.add(URI.createPlatformPluginURI(projectName + localFilePath, true));
+				}
 			}
 		}
 	}

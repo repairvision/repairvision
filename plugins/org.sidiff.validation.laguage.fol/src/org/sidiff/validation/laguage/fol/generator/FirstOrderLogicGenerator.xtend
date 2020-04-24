@@ -154,7 +154,8 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 			'''
 		
 		fsa.generateFile(packageName + '/' + className + '.java', code)
-		saveAsXMI(resource);
+		
+//		saveAsXMI(resource); // TODO: just for debugging
 	}
 	
 	def String getPackageImportClass(String packageImport) {

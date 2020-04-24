@@ -9,7 +9,7 @@ import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairTy
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
-public class IsEmpty extends Predicate {
+public class IsEmpty extends PredicateImpl {
 
 	protected Term term;
 	
