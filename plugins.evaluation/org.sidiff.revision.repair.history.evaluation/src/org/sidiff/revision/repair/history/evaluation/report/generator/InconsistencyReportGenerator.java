@@ -17,10 +17,10 @@ import org.sidiff.common.utilities.monitor.LogUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.revision.repair.history.evaluation.EvaluationDataSets;
-import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.api.library.IConstraintLibrary;
-import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.project.library.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.project.library.IConstraintLibrary;
+import org.sidiff.validation.constraint.project.library.util.ConstraintLibraryUtil;
 
 public class InconsistencyReportGenerator {
 	

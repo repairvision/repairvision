@@ -31,6 +31,12 @@ Workflow {
 		language = StandardLanguage {
 			name = "org.sidiff.validation.laguage.fol.FirstOrderLogic"
 			fileExtensions = "fol"
+			
+			// formatter API
+			fragment = formatting.Formatter2Fragment2 auto-inject {}
+			
+			// provides a preference page for template proposals
+			fragment = ui.templates.CodetemplatesGeneratorFragment2 auto-inject {}
 
 			serializer = {
 				generateStub = false
@@ -38,6 +44,10 @@ Workflow {
 			validator = {
 				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
 			}
+			projectWizard = {
+		        generate = true
+		        pluginProject = true
+		    }
 		}
 	}
 }

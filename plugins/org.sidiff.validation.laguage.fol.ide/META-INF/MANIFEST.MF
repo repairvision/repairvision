@@ -7,8 +7,13 @@ Bundle-SymbolicName: org.sidiff.validation.laguage.fol.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.sidiff.validation.laguage.fol,
  org.eclipse.xtext.ide,
- org.eclipse.xtext.xbase.ide,org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
+ org.eclipse.swt
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.sidiff.validation.laguage.fol.ide.contentassist.antlr,
- org.sidiff.validation.laguage.fol.ide.contentassist.antlr.internal
+ org.sidiff.validation.laguage.fol.ide.contentassist.antlr.internal,
+ org.sidiff.validation.laguage.fol.ide.highlighting
+Import-Package: org.eclipse.xtext.ui.editor.syntaxcoloring,
+ org.eclipse.xtext.ui.editor.utils
 Automatic-Module-Name: org.sidiff.validation.laguage.fol.ide

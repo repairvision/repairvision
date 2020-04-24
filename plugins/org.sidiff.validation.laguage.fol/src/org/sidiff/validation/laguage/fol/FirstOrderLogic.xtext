@@ -9,11 +9,14 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 // - http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
 
 ConstraintLibrary:
-	"domain" domain=STRING 'import' packageImport=STRING 
+	imports+=Import*
 	constraints+=Constraint*;
 
+Import:
+	'domain' domain=STRING;
+	
 Constraint:
-	'constraint' name=ID 'message' message=STRING 'context' variable=Variable ':' formula=Formula;
+	'constraint' name=ID 'message' message=STRING 'context' variable=Variable ('<' type=[ecore::EClassifier] '>')?':' formula=Formula;
 
 Variable:
 	type=[ecore::EClassifier] name=ID;
@@ -57,7 +60,7 @@ UnaryFormula returns Formula :
 	Not;
 
 Not returns UnaryFormula:
-	{Not} "not(" not=Formula ")";
+	{Not} "not" "(" not=Formula ")";
 	
 // predicates (term -> boolean):
 
@@ -65,107 +68,121 @@ Predicate returns Formula:
 	Equals | Inequality | IsEmpty | IsInstanceOf | IsValueLiteralOf;
 
 Equals:
-	"isEqual(" (left=Term) "," (right=Term) ")";
+	"isEqual" "(" (left=Term) "," (right=Term) ")";
 
 Inequality returns Formula:
 	Greater | GreaterEqual | Smaller | SmallerEqual;
 
 Greater:
-	"isGreater(" (left=Term) "," (right=Term) ")";
+	"isGreater" "(" (left=Term) "," (right=Term) ")";
 	
 GreaterEqual:
-	"isGreaterEqual(" (left=Term) "," (right=Term) ")";
+	"isGreaterEqual" "(" (left=Term) "," (right=Term) ")";
 	
 Smaller:
-	"isSmaller(" (left=Term) "," (right=Term) ")";
+	"isSmaller" "(" (left=Term) "," (right=Term) ")";
 	
 SmallerEqual:
-	"isSmallerEqual(" (left=Term) "," (right=Term) ")";	
+	"isSmallerEqual" "(" (left=Term) "," (right=Term) ")";	
 	
 IsEmpty:
-	"isEmpty(" term=Term ")";
+	"isEmpty" "(" term=Term ")";
 	
 IsInstanceOf:
-	"isInstanceOf(" term=Term "," type=Classifier ")";
+	"isInstanceOf" "(" term=Term "," type=Term ")";
 	
 IsValueLiteralOf:
-	"isValueLiteralOf(" term=Term "," type=DataType ")";
-	
-// terms as types:
-Classifier:
-	ClassifierConstant | AsClassifier;
+	"isValueLiteralOf" "(" term=Term "," type=Term ")";
 
-ClassifierConstant:
-	constant=[ecore::EClassifier];
-	
-AsClassifier:
-	"asClassifier(" term=Term ")";
-
-DataType: 
-	DataTypeConstant | AsDataType;
-
-DataTypeConstant:
-	constant=[ecore::EDataType];
-
-AsDataType:
-	"asDataType(" term=Term ")";
-	
 // quantifier
 
 Quantifier returns Formula:
 	ForAll | Exists;
 
 ForAll returns Quantifier:
-	{ForAll} "forAll(" name=Variable "in" iteration=Term ":" formula=Formula ")";
+	{ForAll} "forAll" "(" name=Variable "in" iteration=Term ":" formula=Formula ")";
 	
 Exists returns Quantifier:
-	{Exists} "exists(" name=Variable "in" iteration=Term ":" formula=Formula ")";
+	{Exists} "exists" "(" name=Variable "in" iteration=Term ":" formula=Formula ")";
 
 // boolean:
 
 BooleanExpression returns Formula:
 	'(' Formula ')' | UnaryFormula | Quantifier | Predicate | BoolConstant;
-	
-BoolConstant returns Term:
-	{BoolConstant} value=('true' | 'false');
 
 // terms:
 
 Term:
-	Constant | VariableRef | GetContainments | GetContainer | GetClosure | Size | IndexOf | Concatenate | Capitalize;
+	ReferenceBase
+		| Concatenate
+		| Size | IndexOf | Capitalize
+		| Constant;
+
+// Base class for Rules that support navigation using Get.
+ReferenceBase:
+	(VariableRef | Select | GetContainer | GetContainments | GetClosure) (get=Get)?;
 	
-VariableRef returns Term:
-	{VariableRef} name=[Variable] (get=Get)?;
+// A reference to a Variable, which can be navigated using Get.
+VariableRef:
+	name=[Variable];
+
+// Select evaluates to all possible Variable assignments
+// bound by the given Term, which satisfy the given formula.
+// The result can be navigated using Get.
+Select:
+	"select" "(" iteration=Term "," name=Variable ":" formula=Formula ")";
 
 // function terms (term -> term):
 
 Get:
-	"." (type=[ecore::EClassifier] "::" )? name=[ecore::EStructuralFeature] (next=Get)?;
+	"." (type=[ecore::EClass] "::" )? name=[ecore::EStructuralFeature] (next=Get)?;
 	
 GetContainer:
-	"getContainer(" element=Term ")";
+	"getContainer" "(" element=Term ")";
 	
 GetContainments:
-	"getContainments(" element=Term ")";
+	"getContainments" "(" element=Term ")";
 	
 GetClosure:
-	"getClosure(" element=Term "," feature=[ecore::EStructuralFeature] ")";
+	"getClosure" "(" initial=Term "," variable=Variable ":" iteration=Term ")";
 	
 Size: 
-	"size(" elements=Term ")";
+	"size" "(" elements=Term ")";
 	
 IndexOf:
-	"indexOf(" container=Term "," feature=[ecore::EStructuralFeature] "," element=Term ")";
+	"indexOf" "(" container=Term "," element=Term ")";
 	
 Concatenate :
-	"concatenate(" left=Term "," right=Term ")";
+	"concatenate" "(" left=Term "," right=Term ")";
 	
 Capitalize :
-	"capitalize(" string=Term ")";
+	"capitalize" "(" string=Term ")";
 
 // primitive terms:
 
 Constant returns Term:
-	{IntConstant} value=INT |
-	{StringConstant} value=STRING |
-	BoolConstant;
+	IntConstant | StringConstant | BoolConstant | MetaConstant;
+
+IntConstant:
+	value=SIGNED_INT;
+
+StringConstant:
+	value=STRING;
+
+BoolConstant:
+	value=BOOLEAN;
+
+// If classifier is an EClass, literalOrFeature may be an EStructuralFeature of that class.
+// If classifier is an EEnum, literalOrFeature may be an EEnumLiteral of that enum.
+// Else, literalOrValue is not set.
+MetaConstant:
+	classifier=[ecore::EClassifier] ("::" literalOrFeature=[ecore::ENamedElement])?;
+
+
+// terminals:
+
+terminal BOOLEAN returns ecore::EBoolean:
+	'true'|'false';
+	
+terminal SIGNED_INT returns ecore::EInt:
+	'-'? INT;

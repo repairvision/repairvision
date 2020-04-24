@@ -3,12 +3,17 @@
  */
 package org.sidiff.validation.laguage.fol.scoping
 
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Get
+import org.sidiff.validation.laguage.fol.firstOrderLogic.MetaConstant
 import org.sidiff.validation.laguage.fol.util.ScopeUtil
-import org.eclipse.emf.ecore.EClass
 
 /**
  * This class contains custom scoping description.
@@ -20,40 +25,56 @@ class FirstOrderLogicScopeProvider extends AbstractFirstOrderLogicScopeProvider 
 
 	override getScope(EObject context, EReference reference) {
 
+		// Constraint
+		if (reference == FirstOrderLogicPackage.eINSTANCE.constraint_Type) {
+			return Scopes::scopeFor(ScopeUtil.getAllClassifiers(context))
+		}
+
 		// Variable
-		if (reference == FirstOrderLogicPackage.eINSTANCE.variable_Type) {
-			return Scopes::scopeFor(ScopeUtil.getAllTypes(context)
-				.filter[it instanceof EClass]
-			)
-		} 
-		
-		// IsInstanceOf:
-		else if (reference == FirstOrderLogicPackage.eINSTANCE.classifierConstant_Constant) {
-			return Scopes::scopeFor(ScopeUtil.getAllTypes(context))
-		} 
-		
-		// IsValueLiteralOf:
-		else if (reference == FirstOrderLogicPackage.eINSTANCE.dataTypeConstant_Constant) {
-			return Scopes::scopeFor(ScopeUtil.getAllDataTypes(context))
-		} 
-		
+		else if (reference == FirstOrderLogicPackage.eINSTANCE.variable_Type) {
+			return Scopes::scopeFor(ScopeUtil.getAllClassifiers(context))
+		}
+
+		// VariableRef
+		else if (reference == FirstOrderLogicPackage.eINSTANCE.variableRef_Name) {
+			return ScopeUtil.getAllReferenceableVariables(context)
+		}
+
+		// MetaConstant
+		else if (reference == FirstOrderLogicPackage.eINSTANCE.metaConstant_Classifier) {
+			return Scopes::scopeFor(ScopeUtil.getAllClassifiers(context))
+		} else if (reference == FirstOrderLogicPackage.eINSTANCE.metaConstant_LiteralOrFeature) {
+			val classifier = (context as MetaConstant).classifier
+			return if(classifier instanceof EEnum) {
+				Scopes::scopeFor(classifier.ELiterals)
+			} else if(classifier instanceof EClass) {
+				Scopes::scopeFor(classifier.EStructuralFeatures)				
+			} else {
+				IScope::NULLSCOPE				
+			}
+		}
+
 		// Get:
 		else if (reference == FirstOrderLogicPackage.eINSTANCE.get_Name) {
-			return Scopes::scopeFor(ScopeUtil.getAllFeatures(context))
+			val get = context as Get
+			val type = if(get.type === null) {
+				ScopeUtil.getRawResultType(context.eContainer)
+			} else {
+				get.type
+			}
+			if(type instanceof EClass) {
+				return Scopes::scopeFor(type.EAllStructuralFeatures)
+			}
+			return IScope::NULLSCOPE
 		} else if (reference == FirstOrderLogicPackage.eINSTANCE.get_Type) {
-			return Scopes::scopeFor(ScopeUtil.getAllSubTypes(context));
-		} 
-		
-		// GetClosure:
-		else if (reference == FirstOrderLogicPackage.eINSTANCE.getClosure_Feature) {
-			return Scopes::scopeFor(ScopeUtil.getAllFeatures(context))
+			val type = ScopeUtil.getRawResultType(context.eContainer)
+			if(type instanceof EClass) {
+				return Scopes::scopeFor(ScopeUtil.getAllSubTypes(context, type),
+						Scopes::scopeFor(EcoreUtil2.getAllSuperTypes(type)))
+			}
+			return IScope::NULLSCOPE
 		}
-		
-		// IndexOf:
-		else if (reference == FirstOrderLogicPackage.eINSTANCE.indexOf_Feature) {
-			return Scopes::scopeFor(ScopeUtil.getAllFeatures(context))
-		}
-		
-		super.getScope(context, reference)
+
+		throw new UnsupportedOperationException("Scoping is not implemented for " + context + " -> " + reference);
 	}
 }

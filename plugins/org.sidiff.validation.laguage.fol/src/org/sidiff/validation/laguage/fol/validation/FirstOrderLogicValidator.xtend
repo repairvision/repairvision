@@ -3,6 +3,27 @@
  */
 package org.sidiff.validation.laguage.fol.validation
 
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EDataType
+import org.eclipse.emf.ecore.EcorePackage
+import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.xtext.validation.Check
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Capitalize
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Concatenate
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary
+import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Formula
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetClosure
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainer
+import org.sidiff.validation.laguage.fol.firstOrderLogic.IsInstanceOf
+import org.sidiff.validation.laguage.fol.firstOrderLogic.IsValueLiteralOf
+import org.sidiff.validation.laguage.fol.firstOrderLogic.MetaConstant
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Select
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable
+import org.sidiff.validation.laguage.fol.util.ScopeUtil
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainments
 
 /**
  * This class contains custom validation rules. 
@@ -10,16 +31,110 @@ package org.sidiff.validation.laguage.fol.validation
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class FirstOrderLogicValidator extends AbstractFirstOrderLogicValidator {
-	
-//	public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					FirstOrderLogicPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
-	
+
+	public static val CONSTRAINT__NAME_MUST_BE_UNIQUE = 'CONSTRAINT__NAME_MUST_BE_UNIQUE'
+	public static val META_CONSTANT__CLASSIFIER_MUST_BE_EDATATYPE = 'META_CONSTANT__CLASSIFIER_MUST_BE_EDATATYPE'
+	public static val META_CONSTANT__FEATURE_MUST_NOT_BE_SET = 'META_CONSTANT__FEATURE_MUST_NOT_BE_SET'
+
+	@Check
+	def checkConstraintHasAUniqueName(Constraint constraint) {
+		if(EcoreUtil2.getContainerOfType(constraint, ConstraintLibrary).constraints
+			.findFirst[it !== constraint && it.name == constraint.name] !== null) {
+				error('Constraints must have unique names.',
+					FirstOrderLogicPackage.Literals.CONSTRAINT__NAME,
+					CONSTRAINT__NAME_MUST_BE_UNIQUE)
+		}
+	}
+
+	@Check
+	def checkMetaConstantIsValidAtItsPosition(MetaConstant constant) {
+		val container = EcoreUtil2.getContainerOfType(constant, Formula)
+		switch(container) {
+			IsInstanceOf: {
+				if(constant.literalOrFeature !== null) {
+					error('Literal/Feature must not be set when using isInstanceOf.',
+						FirstOrderLogicPackage.Literals.META_CONSTANT__LITERAL_OR_FEATURE,
+						META_CONSTANT__FEATURE_MUST_NOT_BE_SET)
+				}
+			}
+			IsValueLiteralOf: {
+				if(constant.literalOrFeature !== null) {
+					error('Literal/Feature must not be set when using isValueLiteralOf.',
+						FirstOrderLogicPackage.Literals.META_CONSTANT__LITERAL_OR_FEATURE,
+						META_CONSTANT__FEATURE_MUST_NOT_BE_SET)
+				}
+				if(!(constant.classifier instanceof EDataType)) {
+					error('Classifier must be an EDataType when using isValueLiteralOf.',
+						FirstOrderLogicPackage.Literals.META_CONSTANT__CLASSIFIER,
+						META_CONSTANT__CLASSIFIER_MUST_BE_EDATATYPE)
+				}
+			}
+		}
+	}
+
+	@Check
+	def checkVariableTypeCompatible(Variable variable) {
+		val container = variable.eContainer
+		val iterationType = switch(container) {
+			Quantifier: ScopeUtil.getResultType(container.iteration)
+			Select: ScopeUtil.getResultType(container.iteration)
+			GetClosure: ScopeUtil.getResultType(container.iteration)
+			Constraint: EcorePackage::eINSTANCE.EObject
+		}
+		if(iterationType instanceof EDataType || variable.type instanceof EDataType) {
+			if(variable.type != iterationType) {
+				error('''Variable type does not match the type of the set (variable: «variable.type.name», set: «iterationType.name»)''',
+					FirstOrderLogicPackage.Literals.VARIABLE__TYPE)
+			}
+		} else if(iterationType instanceof EClass) {
+			val variableClass = variable.type as EClass
+			if(!EcoreUtil2.isAssignableFrom(variableClass, iterationType)
+				&& !EcoreUtil2.isAssignableFrom(iterationType, variableClass)) {
+				error('''Variable type is incompatible the type of the set (variable: «variable.type.name», set: «iterationType.name»)''',
+					FirstOrderLogicPackage.Literals.VARIABLE__TYPE)
+			}
+		}
+	}
+
+	@Check
+	def checkConcatenateTermTypes(Concatenate concatenate) {
+		val leftType = ScopeUtil.getResultType(concatenate.left)
+		if(!(leftType instanceof EDataType)) {
+			error('Concatenate requires primitive (EDataType) values, given type: ' + leftType.name,
+				FirstOrderLogicPackage.Literals.CONCATENATE__LEFT)
+		}
+
+		val rightType = ScopeUtil.getResultType(concatenate.right)
+		if(!(rightType instanceof EDataType)) {
+			error('Concatenate requires primitive (EDataType) values, given type: ' + rightType.name,
+				FirstOrderLogicPackage.Literals.CONCATENATE__RIGHT)
+		}
+	}
+
+	@Check
+	def checkConcatenateTermTypes(Capitalize capitalize) {
+		val type = ScopeUtil.getResultType(capitalize.string)
+		if(!(type instanceof EDataType)) {
+			error('Capitalize requires primitive (EDataType) values, given type: ' + type.name,
+				FirstOrderLogicPackage.Literals.CAPITALIZE__STRING)
+		}
+	}
+
+	@Check
+	def checkGetContainerTermType(GetContainer getContainer) {
+		val type = ScopeUtil.getResultType(getContainer.element)
+		if(!(type instanceof EClass)) {
+			error('GetContainer requires values of type EClass, given type: ' + type.name,
+				FirstOrderLogicPackage.Literals.GET_CONTAINER__ELEMENT)
+		}
+	}
+
+	@Check
+	def checkGetContainmentsTermType(GetContainments getContainments) {
+		val type = ScopeUtil.getResultType(getContainments.element)
+		if(!(type instanceof EClass)) {
+			error('GetContainments requires values of type EClass, given type: ' + type.name,
+				FirstOrderLogicPackage.Literals.GET_CONTAINMENTS__ELEMENT)
+		}
+	}
 }
