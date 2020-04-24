@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.pde.core.plugin.IPluginBase;
 import org.eclipse.pde.core.plugin.IPluginElement;
@@ -112,15 +111,11 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 
 	@Override
 	public void addPages(Wizard wizard) {
-		pageEditRules = new RuleBaseProjectPageEditRules(getStringOption(KEY_PACKAGE_NAME), getAvailableDocumentTypes());
+		pageEditRules = new RuleBaseProjectPageEditRules(getStringOption(KEY_PACKAGE_NAME), DocumentType.getAvailableDocumentTypes());
 		wizard.addPage(pageEditRules);
 		markPagesAdded();
 	}
 	
-	private String[] getAvailableDocumentTypes() {
-		return EcorePlugin.getEPackageNsURIToGenModelLocationMap(false).keySet().toArray(new String[0]);
-	}
-
 	@Override
 	public boolean isDependentOnParentWizard() {
 		return true;

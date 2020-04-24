@@ -59,7 +59,7 @@ public class HenshinToGraphPatternConverterHandler extends AbstractHandler {
 						
 						try {
 							patternRes.save(null);
-							WorkbenchUtil.updateProject(event);
+							WorkbenchUtil.refreshProject(event);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}

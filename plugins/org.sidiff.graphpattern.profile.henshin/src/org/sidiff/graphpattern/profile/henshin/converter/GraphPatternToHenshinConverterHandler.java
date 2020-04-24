@@ -24,7 +24,7 @@ public class GraphPatternToHenshinConverterHandler extends AbstractHandler {
 		
 		if (bundle != null) {
 			convertBundle(bundle, bundle.eResource().getURI().trimFileExtension());
-			WorkbenchUtil.updateProject(event);
+			WorkbenchUtil.refreshProject(event);
 		}
 		
 		return null;

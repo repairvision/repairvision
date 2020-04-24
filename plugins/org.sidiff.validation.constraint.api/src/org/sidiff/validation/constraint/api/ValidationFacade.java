@@ -7,8 +7,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.utilities.emf.DocumentType;
-import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
 import org.sidiff.validation.constraint.api.util.RequiredValidation;
@@ -21,6 +19,8 @@ import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
+import org.sidiff.validation.constraint.project.library.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.project.library.util.ConstraintLibraryUtil;
 
 /**
  * Access to the constraint validation.

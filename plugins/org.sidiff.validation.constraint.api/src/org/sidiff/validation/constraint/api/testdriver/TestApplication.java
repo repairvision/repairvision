@@ -9,10 +9,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.common.utilities.emf.DocumentType;
-import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.api.util.ValidationIterator;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.project.library.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.project.library.util.ConstraintLibraryUtil;
 
 public class TestApplication implements IApplication {
 	

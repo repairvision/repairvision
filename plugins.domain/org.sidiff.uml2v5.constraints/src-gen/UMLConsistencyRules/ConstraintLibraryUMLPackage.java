@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.eclipse.uml2.uml.UMLPackage;
 
-import org.sidiff.validation.constraint.api.library.*;
+import org.sidiff.validation.constraint.project.library.*;
 
 import org.sidiff.validation.constraint.interpreter.*;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.*;

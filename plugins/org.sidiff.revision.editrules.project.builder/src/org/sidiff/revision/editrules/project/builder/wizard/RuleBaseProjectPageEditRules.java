@@ -36,9 +36,9 @@ import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.common.utilities.java.StringUtil;
 import org.sidiff.revision.editrules.project.builder.Activator;
-import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.api.library.IConstraintLibrary;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.project.library.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.project.library.IConstraintLibrary;
 
 /**
  * Rulebase Project Page: Creates a new rulebase containing edit rules for a specific document type. 
@@ -123,17 +123,17 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 		return "";
 	}
 	
-	public Set<EPackage> getSelectedDocumentTypes() {
+	public List<EPackage> getSelectedDocumentTypes() {
 		Set<EPackage> documentTypes = new LinkedHashSet<>();
 		
 		for (Object selectedDocumentType : selectedDocumentTypes) {
 			documentTypes.addAll(DocumentType.getDocumentType((String) selectedDocumentType));
 		}
 	
-		return documentTypes;
+		return new ArrayList<>(documentTypes);
 	}
 	
-	public Set<IConstraint> getSelectedConstraints() {
+	public List<IConstraint> getSelectedConstraints() {
 		List<IConstraint> sortedSelectedConstraints = new ArrayList<>(selectedConstraints);
 		sortedSelectedConstraints.sort(new Comparator<IConstraint>() {
 
@@ -142,7 +142,7 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 				return c1.getName().compareTo(c2.getName());
 			}
 		});
-		return new LinkedHashSet<>(sortedSelectedConstraints);
+		return new ArrayList<>(sortedSelectedConstraints);
 	}
 
 	public boolean isCreateExampleFolderOption() {

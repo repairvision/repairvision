@@ -4,16 +4,15 @@ Bundle-Name: Constraint Library
 Bundle-SymbolicName: org.sidiff.validation.constraint.api;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.sidiff.validation.constraint.api.Activator
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
+ org.eclipse.ui,
  org.sidiff.common.emf,
  org.sidiff.common.utilities,
- org.sidiff.validation.constraint.interpreter
+ org.sidiff.validation.constraint.interpreter,
+ org.sidiff.validation.constraint.project;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.sidiff.validation.constraint.api,
- org.sidiff.validation.constraint.api.library,
- org.sidiff.validation.constraint.api.library.util,
  org.sidiff.validation.constraint.api.util
 Automatic-Module-Name: org.sidiff.validation.constraint.api

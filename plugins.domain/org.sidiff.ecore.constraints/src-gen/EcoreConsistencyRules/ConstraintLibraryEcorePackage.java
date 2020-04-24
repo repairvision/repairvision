@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EcorePackage;
 
-import org.sidiff.validation.constraint.api.library.*;
+import org.sidiff.validation.constraint.project.library.*;
 
 import org.sidiff.validation.constraint.interpreter.*;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.*;

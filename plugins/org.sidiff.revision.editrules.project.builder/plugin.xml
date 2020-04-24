@@ -50,7 +50,7 @@
                requiresActivator="false"
                ui-content="false">
             <description>
-               This wizard creates a rulebase plugin project for defining edit rules which can be used in the ReVision environment.
+               This wizard creates a plug-in project for defining edit rules which can be used in the ReVision environment.
             </description>
       </wizard>
    </extension>
@@ -58,7 +58,7 @@
          point="org.eclipse.pde.ui.templates">
       <template
             class="org.sidiff.revision.editrules.project.builder.template.RuleBaseTemplateSection"
-            contributingId="org.sidiff.editrule.rulebase.rulebase_extension"
+            contributingId="org.sidiff.revision.editrules.project.rulebase"
             icon="icons/configuration.png"
             id="org.sidiff.revision.editrules.project.builder.template"
             name="Edit Rule Plug-in Project Template">
@@ -67,18 +67,18 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            id="org.sidiff.revision.editrules.project.builder.category"
+            id="org.sidiff.revision.category"
             name="ReVision">
       </category>
       <wizard
-            category="org.sidiff.revision.editrules.project.builder.category"
+            category="org.sidiff.revision.category"
             class="org.sidiff.revision.editrules.project.builder.wizard.RuleBaseProjectWizardDirect"
             icon="icons/configuration.png"
             id="org.sidiff.revision.editrules.project.builder.wizard.direct"
             name="Edit Rule Plug-in Project"
             project="true">
          <description>
-            This wizard creates a rulebase plugin project for defining edit rules which can be used in the ReVision environment.
+            This wizard creates a plug-in project for defining edit rules which can be used in the ReVision environment.
          </description>
       </wizard>
    </extension>

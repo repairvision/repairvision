@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 
 /**
@@ -90,5 +91,12 @@ public class DocumentType {
 		}
 
 		return null;
+	}
+	
+	/**
+	 * @return All registered document types.
+	 */
+	public static String[] getAvailableDocumentTypes() {
+		return EcorePlugin.getEPackageNsURIToGenModelLocationMap(false).keySet().toArray(new String[0]);
 	}
 }
