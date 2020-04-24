@@ -11,7 +11,7 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 	
-	public static final String ID = "org.sidiff.revision.editrules.project.builder"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.sidiff.revision.editrules.project.builder"; //$NON-NLS-1$
 	
 	private static Activator plugin;
 
@@ -40,7 +40,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	public static void log(int severity, String message, Throwable throwable) {
-		getDefault().getLog().log(new Status(severity, ID, message, throwable));
+		getDefault().getLog().log(new Status(severity, PLUGIN_ID, message, throwable));
 	}
 
 	public static void logError(String message, Throwable throwable) {

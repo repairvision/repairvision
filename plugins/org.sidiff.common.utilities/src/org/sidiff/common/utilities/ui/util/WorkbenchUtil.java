@@ -7,10 +7,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -276,7 +279,7 @@ public class WorkbenchUtil {
 		return URI.createPlatformResourceURI(platformPath, true);
 	}
 	
-	public static void updateProject(IProject project) {
+	public static void refreshProject(IProject project) {
 		try {
 			project.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 		} catch (Exception e) {
@@ -284,17 +287,17 @@ public class WorkbenchUtil {
 		}
 	}
 	
-	public static void updateProject(IResource workbenchResource) {
-		updateProject(workbenchResource.getProject());
+	public static void refreshProject(IResource workbenchResource) {
+		refreshProject(workbenchResource.getProject());
 	}
 	
-	public static void updateProject(String projectName) {
+	public static void refreshProject(String projectName) {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProject project = root.getProject(projectName);
-		updateProject(project);
+		refreshProject(project);
 	}
 	
-	public static void updateProject(ExecutionEvent event) {
+	public static void refreshProject(ExecutionEvent event) {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		
 		if (!selection.isEmpty()) {
@@ -302,10 +305,20 @@ public class WorkbenchUtil {
 				Object firstElement = ((IStructuredSelection) selection).getFirstElement();
 				
 				if (firstElement instanceof IResource) {
-					updateProject((IResource) firstElement); 
+					refreshProject((IResource) firstElement); 
 				}
 			}
 		}
+	}
+
+	public static String createFolder(IProject project, String newFolder, IProgressMonitor monitor) throws CoreException {
+		IFolder folder = project.getFolder(newFolder);
+	
+		if(!folder.exists()) {
+			folder.create(true, true, monitor);
+		}
+	
+		return newFolder;
 	}
 
 }

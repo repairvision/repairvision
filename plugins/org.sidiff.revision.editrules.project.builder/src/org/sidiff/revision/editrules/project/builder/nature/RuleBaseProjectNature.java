@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.CoreException;
 public class RuleBaseProjectNature implements IProjectNature {
 
 	/**
-	 * ID of this project nature
+	 * PLUGIN_ID of this project nature
 	 */
 	public static final String NATURE_ID = "org.sidiff.revision.editrules.project.builder.rulebasenature";
 	

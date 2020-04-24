@@ -1,11 +1,11 @@
 package org.sidiff.revision.editrules.project.builder.util;
 
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil;
@@ -39,32 +39,22 @@ public class RuleBaseBuilderUtils {
 		return patternPath.toString();
 	}
 	
-	public static String createFolder(IProject project, String newFolder, IProgressMonitor monitor) throws CoreException {
-		IFolder folder = project.getFolder(newFolder);
-
-		if(!folder.exists()) {
-			folder.create(true, true, monitor);
-		}
-
-		return newFolder;
-	}
-	
 	public static void createEditRuleFolders(IProject project, IProgressMonitor monitor) throws CoreException {
-		createFolder(project, getEditRuleFolder(), monitor);
+		WorkbenchUtil.createFolder(project, getEditRuleFolder(), monitor);
 	}
 	
 	public static void createExampleFolders(Bundle patternBundle, IProject project, IProgressMonitor monitor) throws CoreException {
 		SubMonitor subMonitor = SubMonitor.convert(monitor, 2);
 		
 		String exampleFolder = getExampleFolder();
-		createFolder(project, exampleFolder, subMonitor.split(1));
+		WorkbenchUtil.createFolder(project, exampleFolder, subMonitor.split(1));
 		
 		// Convert Constraint-Pattern tree to folder structure:
 		for (EObject element : (Iterable<EObject>) () -> patternBundle.eResource().getAllContents()) {
 			if (element instanceof Pattern) {
 				if ((element instanceof Bundle) || ConstraintProfileUtil.isConstraint((Pattern) element)) {
 					String patternFolder = getPatternPath((Pattern) element);
-					createFolder(project,  exampleFolder + patternFolder, subMonitor.split(1));
+					WorkbenchUtil.createFolder(project,  exampleFolder + patternFolder, subMonitor.split(1));
 				}
 			}
 		}

@@ -6,7 +6,7 @@ import org.eclipse.pde.ui.templates.NewPluginTemplateWizard;
 import org.sidiff.revision.editrules.project.builder.template.RuleBaseTemplateSection;
 
 /**
- * This is a simple wizard for creating a new model file.
+ * This is a wizard for creating a new rulebase plug-ins.
  * 
  * @author Manuel Ohrndorf
  */
