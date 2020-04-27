@@ -40,9 +40,11 @@ public class ConstraintLibraryRegistry {
 			try {
 				IConstraintLibrary library = (IConstraintLibrary) configurationElement.createExecutableExtension("library");
 				
-				List<IConstraintLibrary> domain = librarys.getOrDefault(library.getDocumentType(), new ArrayList<>());
-				domain.add(library);
-				librarys.put(library.getDocumentType(), domain);
+				for (String documentType : library.getDocumentTypes()) {
+					List<IConstraintLibrary> domain = librarys.getOrDefault(documentType, new ArrayList<>());
+					domain.add(library);
+					librarys.put(documentType, domain);
+				}
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}

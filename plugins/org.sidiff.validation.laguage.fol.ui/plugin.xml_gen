@@ -26,11 +26,11 @@
 		<handler
 			class="org.sidiff.validation.laguage.fol.ui.FirstOrderLogicExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
 			commandId="org.sidiff.validation.laguage.fol.FirstOrderLogic.validate">
-		<activeWhen>
-			<reference
+			<activeWhen>
+				<reference
 					definitionId="org.sidiff.validation.laguage.fol.FirstOrderLogic.Editor.opened">
-			</reference>
-		</activeWhen>
+				</reference>
+			</activeWhen>
 		</handler>
 		<!-- copy qualified name -->
 		<handler
@@ -119,38 +119,38 @@
 	</extension>
 	<extension
 		point="org.eclipse.ui.commands">
-	<command
+		<command
 			description="Trigger expensive validation"
 			id="org.sidiff.validation.laguage.fol.FirstOrderLogic.validate"
 			name="Validate">
-	</command>
-	<!-- copy qualified name -->
-	<command
+		</command>
+		<!-- copy qualified name -->
+		<command
 			id="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
 			categoryId="org.eclipse.ui.category.edit"
 			description="Copy the qualified name for the selected element"
 			name="Copy Qualified Name">
-	</command>
-	<command
+		</command>
+		<command
 			id="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName"
 			categoryId="org.eclipse.ui.category.edit"
 			description="Copy the qualified name for the selected element"
 			name="Copy Qualified Name">
-	</command>
+		</command>
 	</extension>
 	<extension point="org.eclipse.ui.menus">
 		<menuContribution
 			locationURI="popup:#TextEditorContext?after=group.edit">
-			 <command
-				 commandId="org.sidiff.validation.laguage.fol.FirstOrderLogic.validate"
-				 style="push"
-				 tooltip="Trigger expensive validation">
-			<visibleWhen checkEnabled="false">
-				<reference
-					definitionId="org.sidiff.validation.laguage.fol.FirstOrderLogic.Editor.opened">
-				</reference>
-			</visibleWhen>
-		</command>
+			<command
+				commandId="org.sidiff.validation.laguage.fol.FirstOrderLogic.validate"
+				style="push"
+				tooltip="Trigger expensive validation">
+				<visibleWhen checkEnabled="false">
+					<reference
+						definitionId="org.sidiff.validation.laguage.fol.FirstOrderLogic.Editor.opened">
+					</reference>
+				</visibleWhen>
+			</command>
 		</menuContribution>
 		<!-- copy qualified name -->
 		<menuContribution locationURI="popup:#TextEditorContext?after=copy">
@@ -421,5 +421,34 @@
 			extension="fol"
 			type="text">
 		</fileTypes>
+	</extension>
+	<extension
+		point="org.eclipse.ui.newWizards">
+		<category id="org.sidiff.validation.laguage.fol.ui.category" name="FirstOrderLogic">
+		</category>
+		<wizard
+			category="org.sidiff.validation.laguage.fol.ui.category"
+			class="org.sidiff.validation.laguage.fol.ui.FirstOrderLogicExecutableExtensionFactory:org.eclipse.xtext.ui.wizard.template.TemplateNewProjectWizard"
+			id="org.sidiff.validation.laguage.fol.ui.wizard.FirstOrderLogicNewProjectWizard"
+			name="FirstOrderLogic Project"
+			icon="icons/new_FirstOrderLogic_proj.gif"
+			project="true">
+		</wizard>
+	</extension>
+	<extension
+		point="org.eclipse.xtext.ui.projectTemplate">
+		<projectTemplateProvider
+			class="org.sidiff.validation.laguage.fol.ui.FirstOrderLogicExecutableExtensionFactory:org.sidiff.validation.laguage.fol.ui.wizard.FirstOrderLogicProjectTemplateProvider"
+			grammarName="org.sidiff.validation.laguage.fol.FirstOrderLogic">
+		</projectTemplateProvider>
+	</extension>
+	<extension
+		point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+			<newWizardShortcut id="org.sidiff.validation.laguage.fol.ui.wizard.FirstOrderLogicNewProjectWizard"/>
+		</perspectiveExtension>
+		<perspectiveExtension targetID="org.eclipse.jdt.ui.JavaPerspective">
+			<newWizardShortcut id="org.sidiff.validation.laguage.fol.ui.wizard.FirstOrderLogicNewProjectWizard"/>
+		</perspectiveExtension>
 	</extension>
 </plugin>

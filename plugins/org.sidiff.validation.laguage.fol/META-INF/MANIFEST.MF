@@ -1,27 +1,38 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.sidiff.validation.laguage.fol
-Bundle-Vendor: My Company
+Bundle-SymbolicName: org.sidiff.validation.laguage.fol;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-SymbolicName: org.sidiff.validation.laguage.fol; singleton:=true
-Bundle-ActivationPolicy: lazy
+Bundle-Vendor: My Company
+Export-Package: org.sidiff.validation.laguage.fol,
+ org.sidiff.validation.laguage.fol.firstOrderLogic,
+ org.sidiff.validation.laguage.fol.firstOrderLogic.impl,
+ org.sidiff.validation.laguage.fol.firstOrderLogic.util,
+ org.sidiff.validation.laguage.fol.formatting2,
+ org.sidiff.validation.laguage.fol.generator,
+ org.sidiff.validation.laguage.fol.parser.antlr,
+ org.sidiff.validation.laguage.fol.parser.antlr.internal,
+ org.sidiff.validation.laguage.fol.scoping,
+ org.sidiff.validation.laguage.fol.serializer,
+ org.sidiff.validation.laguage.fol.services,
+ org.sidiff.validation.laguage.fol.validation
 Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.5.0",
- org.eclipse.emf.ecore,org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
- org.eclipse.xtext.util,org.eclipse.xtend.lib;bundle-version="2.14.0",
- org.eclipse.emf.common
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.eclipse.emf.common,
+ org.eclipse.core.runtime,
+ org.sidiff.common.utilities,
+ org.eclipse.core.resources,
+ org.eclipse.pde.core,
+ org.sidiff.validation.constraint.project,
+ org.eclipse.ui.editors,
+ org.eclipse.text
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.sidiff.validation.laguage.fol.parser.antlr,
- org.sidiff.validation.laguage.fol,
- org.sidiff.validation.laguage.fol.scoping,
- org.sidiff.validation.laguage.fol.firstOrderLogic,
- org.sidiff.validation.laguage.fol.firstOrderLogic.util,
- org.sidiff.validation.laguage.fol.generator,
- org.sidiff.validation.laguage.fol.serializer,
- org.sidiff.validation.laguage.fol.firstOrderLogic.impl,
- org.sidiff.validation.laguage.fol.parser.antlr.internal,
- org.sidiff.validation.laguage.fol.validation,
- org.sidiff.validation.laguage.fol.services
-Import-Package: org.apache.log4j
 Automatic-Module-Name: org.sidiff.validation.laguage.fol
+Import-Package: org.apache.log4j
+Bundle-ActivationPolicy: lazy

@@ -3,6 +3,22 @@
  */
 package org.sidiff.validation.laguage.fol.validation
 
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EcorePackage
+import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.xtext.validation.Check
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Capitalize
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Concatenate
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary
+import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainer
+import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainments
+import org.sidiff.validation.laguage.fol.util.LanguageUtil
+import org.sidiff.validation.laguage.fol.firstOrderLogic.AsClassifier
+import org.sidiff.common.utilities.emf.MetaModelUtil
+import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef
+import org.sidiff.validation.laguage.fol.firstOrderLogic.AsDataType
 
 /**
  * This class contains custom validation rules. 
@@ -11,15 +27,100 @@ package org.sidiff.validation.laguage.fol.validation
  */
 class FirstOrderLogicValidator extends AbstractFirstOrderLogicValidator {
 	
-//	public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					FirstOrderLogicPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
+	public static val CONSTRAINT__NAME_MUST_BE_UNIQUE = 'CONSTRAINT__NAME_MUST_BE_UNIQUE'
+
+	@Check
+	def checkConstraintHasAUniqueName(Constraint constraint) {
+		if(EcoreUtil2.getContainerOfType(constraint, ConstraintLibrary).constraints
+			.findFirst[it !== constraint && it.name == constraint.name] !== null) {
+				error('Constraints must have unique names.',
+					FirstOrderLogicPackage.Literals.CONSTRAINT__NAME,
+					CONSTRAINT__NAME_MUST_BE_UNIQUE)
+		}
+	}
 	
+	@Check
+	def checkAsClassifierTermType(AsClassifier asClassifier) {
+		val type = LanguageUtil.getResultType(asClassifier.term)
+
+		if (!((type instanceof EClass) && (MetaModelUtil.isAssignableTo(EcorePackage.eINSTANCE.EClassifier, type as EClass)))) {
+			error('Not a valid type (EClassfier) reference',
+				FirstOrderLogicPackage.Literals.AS_CLASSIFIER__TERM)
+		}
+		
+	 	if (asClassifier.term instanceof VariableRef) {
+	 		var ref = LanguageUtil.getReferenceTarget(asClassifier.term as VariableRef)
+	 		
+			if ((ref !== null) && ref.many) {
+				error('Collection can not be a type (EClassfier) reference',
+					FirstOrderLogicPackage.Literals.AS_CLASSIFIER__TERM)
+			}
+		}
+	}
+	
+	@Check
+	def checkAsDataTypeTermType(AsDataType asDataType) {
+		val type = LanguageUtil.getResultType(asDataType.term)
+
+		if (!((type instanceof EClass) && (MetaModelUtil.isAssignableTo(EcorePackage.eINSTANCE.EDataType, type as EClass)))) {
+			error('Not a valid data type (EDataType) reference',
+				FirstOrderLogicPackage.Literals.AS_DATA_TYPE__TERM)
+		}
+		
+		if (asDataType.term instanceof VariableRef) {
+	 		var ref = LanguageUtil.getReferenceTarget(asDataType.term as VariableRef)
+	 		
+			if ((ref !== null) && ref.many) {
+				error('Collection can not be a data type (EDataType) reference',
+					FirstOrderLogicPackage.Literals.AS_DATA_TYPE__TERM)
+			}
+		}
+	}
+
+	@Check
+	def checkConcatenateTermTypes(Concatenate concatenate) {
+		val leftType = LanguageUtil.getResultType(concatenate.left)
+		
+		if (!(leftType == EcorePackage::eINSTANCE.EString)) {
+			error('Concatenate requires string values, given type: ' + leftType.name,
+				FirstOrderLogicPackage.Literals.CONCATENATE__LEFT)
+		}
+
+		val rightType = LanguageUtil.getResultType(concatenate.right)
+		
+		if (!(rightType == EcorePackage::eINSTANCE.EString)) {
+			error('Concatenate requires string values, given type: ' + rightType.name,
+				FirstOrderLogicPackage.Literals.CONCATENATE__RIGHT)
+		}
+	}
+
+	@Check
+	def checkCapitalizeTermTypes(Capitalize capitalize) {
+		val type = LanguageUtil.getResultType(capitalize.string)
+		
+		if (!(type == EcorePackage::eINSTANCE.EString)) {
+			error('Capitalize requires string values, given type: ' + type.name,
+				FirstOrderLogicPackage.Literals.CAPITALIZE__STRING)
+		}
+	}
+
+	@Check
+	def checkGetContainerTermType(GetContainer getContainer) {
+		val type = LanguageUtil.getResultType(getContainer.element)
+		
+		if (!(type instanceof EClass)) {
+			error('GetContainer requires values of type EClass, given type: ' + type.name,
+				FirstOrderLogicPackage.Literals.GET_CONTAINER__ELEMENT)
+		}
+	}
+
+	@Check
+	def checkGetContainmentsTermType(GetContainments getContainments) {
+		val type = LanguageUtil.getResultType(getContainments.element)
+
+		if (!(type instanceof EClass)) {
+			error('GetContainments requires values of type EClass, given type: ' + type.name,
+				FirstOrderLogicPackage.Literals.GET_CONTAINMENTS__ELEMENT)
+		}
+	}
 }

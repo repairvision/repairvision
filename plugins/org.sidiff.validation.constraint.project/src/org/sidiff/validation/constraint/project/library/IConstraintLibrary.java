@@ -1,15 +1,21 @@
 package org.sidiff.validation.constraint.project.library;
 
 import java.util.List;
+import java.util.Set;
 
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public interface IConstraintLibrary {
 
 	/**
-	 * @return The document type of this constraint library.
+	 * @return The domain meta-model(s) used by constraints of this library.
 	 */
-	String getDocumentType();
+	Set<String> getDomains();
+	
+	/**
+	 * @return The document type(s) of this constraint library (based on the context types).
+	 */
+	Set<String> getDocumentTypes();
 	
 	/**
 	 * @return All constraints of this library.

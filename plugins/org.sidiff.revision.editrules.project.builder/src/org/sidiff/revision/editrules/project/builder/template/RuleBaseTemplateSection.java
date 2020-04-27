@@ -28,6 +28,7 @@ import org.eclipse.pde.core.plugin.IPluginReference;
 import org.eclipse.pde.ui.IFieldData;
 import org.eclipse.pde.ui.templates.OptionTemplateSection;
 import org.eclipse.pde.ui.templates.PluginReference;
+import org.osgi.framework.Constants;
 import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.graphpattern.Bundle;
@@ -76,6 +77,8 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 	protected void updateModel(IProgressMonitor monitor) throws CoreException {
 		addRuleBaseExtension();
 		addRuleBaseNature();
+		
+		setManifestHeader(Constants.BUNDLE_ACTIVATIONPOLICY, Constants.ACTIVATION_LAZY);
 	}
 	
 	private void addRuleBaseExtension() throws CoreException {
@@ -186,7 +189,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 	}
 
 	private Bundle createASGPatternBundle(IProject project, IProgressMonitor monitor) {
-		ASGPatternBundle asgPattern = new ASGPatternBundle(pageEditRules.getName(), pageEditRules.getDescription());
+		ASGPatternBundle asgPattern = new ASGPatternBundle(pageEditRules.getName(), pageEditRules.getDescriptionText());
 		pageEditRules.getSelectedDocumentTypes().forEach(asgPattern::addDocumentType);
 		pageEditRules.getSelectedConstraints().forEach(c -> asgPattern.addConstraint(c, pageEditRules.isInitializePatternsOption()));
 		
@@ -212,4 +215,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		}
 	}
 	
+	public boolean canFinish() {
+		return pageEditRules.canFinish();
+	}
 }

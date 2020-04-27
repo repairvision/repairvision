@@ -4,10 +4,22 @@
 package org.sidiff.validation.laguage.fol.ui
 
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration
+import org.sidiff.validation.laguage.fol.ui.highlighting.FirstOrderLogicHighlightingConfiguration
+import org.sidiff.validation.laguage.fol.ui.highlighting.FirstOrderLogicSemanticHighlightingCalculator
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
  */
 @FinalFieldsConstructor
 class FirstOrderLogicUiModule extends AbstractFirstOrderLogicUiModule {
+
+	def Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
+		FirstOrderLogicHighlightingConfiguration
+	}
+
+	def Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+		FirstOrderLogicSemanticHighlightingCalculator
+	}
 }

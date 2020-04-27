@@ -3,6 +3,7 @@ package org.sidiff.validation.laguage.fol.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EClass;
@@ -14,6 +15,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.common.services.DefaultTerminalConverters;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Domain;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IndexOf;
@@ -23,31 +25,43 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef;
 public class ScopeUtil extends DefaultTerminalConverters {
 
 	public static Collection<EClassifier> getAllTypes(EObject context) {
-		ConstraintLibrary rulebase = getConstraintLibrary(context);
+		ConstraintLibrary library = getConstraintLibrary(context);
 
-		if (rulebase != null) {
-			EPackage domainPackage = EPackage.Registry.INSTANCE.getEPackage(rulebase.getDomain().trim());
+		if (library != null) {
+			List<EClassifier> allTypes = new ArrayList<>();
 			
-			if (domainPackage != null) {
-				return domainPackage.getEClassifiers();
+			for (Domain domain : library.getDomains()) {
+				EPackage domainPackage = EPackage.Registry.INSTANCE.getEPackage(domain.getDomain().trim());
+				
+				if (domainPackage != null) {
+					allTypes.addAll(domainPackage.getEClassifiers());
+				}
 			}
+			
+			return allTypes;
 		}
 		
-		return null;
+		return Collections.emptyList();
 	}
 	
 	public static Collection<EClassifier> getAllDataTypes(EObject context) {
-		ConstraintLibrary rulebase = getConstraintLibrary(context);
+		ConstraintLibrary library = getConstraintLibrary(context);
 
-		if (rulebase != null) {
-			EPackage domainPackage = EPackage.Registry.INSTANCE.getEPackage(rulebase.getDomain().trim());
+		if (library != null) {
+			List<EClassifier> allDataTypes = new ArrayList<>();
 			
-			if (domainPackage != null) {
-				return domainPackage.getEClassifiers().stream().filter(c -> c instanceof EDataType).collect(Collectors.toList());
+			for (Domain domain : library.getDomains()) {
+				EPackage domainPackage = EPackage.Registry.INSTANCE.getEPackage(domain.getDomain().trim());
+				
+				if (domainPackage != null) {
+					allDataTypes.addAll(domainPackage.getEClassifiers().stream().filter(c -> c instanceof EDataType).collect(Collectors.toList()));
+				}
 			}
+			
+			return allDataTypes;
 		}
 		
-		return null;
+		return Collections.emptyList();
 	}
 	
 	private static ConstraintLibrary getConstraintLibrary(EObject context) {

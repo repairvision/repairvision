@@ -22,4 +22,12 @@ public class ConstraintProjectWizard extends NewPluginTemplateWizard {
 	public ITemplateSection[] createTemplateSections() {
 		return new ITemplateSection[] { new ConstraintTemplateSection() };	
 	}
+	
+	@Override
+	public boolean canFinish() {
+		ConstraintTemplateSection constraintTemplateSection = (ConstraintTemplateSection) getTemplateSections()[0];
+
+		return super.canFinish() && constraintTemplateSection.canFinish();
+	}
+	
 }

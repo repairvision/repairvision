@@ -376,6 +376,26 @@
 	</extension>
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
+			class="org.sidiff.validation.laguage.fol.ui.FirstOrderLogicExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+			id="org.sidiff.validation.laguage.fol.FirstOrderLogic"
+			name="FirstOrderLogic">
+			<keywordReference id="org.sidiff.validation.laguage.fol.ui.keyword_FirstOrderLogic"/>
+		</page>
+		<page
+			category="org.sidiff.validation.laguage.fol.FirstOrderLogic"
+			class="org.sidiff.validation.laguage.fol.ui.FirstOrderLogicExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+			id="org.sidiff.validation.laguage.fol.FirstOrderLogic.coloring"
+			name="Syntax Coloring">
+			<keywordReference id="org.sidiff.validation.laguage.fol.ui.keyword_FirstOrderLogic"/>
+		</page>
+		<page
+			category="org.sidiff.validation.laguage.fol.FirstOrderLogic"
+			class="org.sidiff.validation.laguage.fol.ui.FirstOrderLogicExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+			id="org.sidiff.validation.laguage.fol.FirstOrderLogic.templates"
+			name="Templates">
+			<keywordReference id="org.sidiff.validation.laguage.fol.ui.keyword_FirstOrderLogic"/>
+		</page>
+		<page
 			category="org.sidiff.validation.laguage.fol.FirstOrderLogic"
 			class="org.sidiff.validation.laguage.fol.ui.FirstOrderLogicExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
 			id="org.sidiff.validation.laguage.fol.FirstOrderLogic.refactoring"
@@ -406,5 +426,34 @@
 			extension="fol"
 			type="text">
 		</fileTypes>
+	</extension>
+		<extension
+		point="org.eclipse.ui.newWizards">
+		<category id="org.sidiff.validation.laguage.fol.ui.category" name="FirstOrderLogic">
+		</category>
+		<wizard
+			category="org.sidiff.validation.laguage.fol.ui.category"
+			class="org.sidiff.validation.laguage.fol.ui.FirstOrderLogicExecutableExtensionFactory:org.eclipse.xtext.ui.wizard.template.TemplateNewProjectWizard"
+			id="org.sidiff.validation.laguage.fol.ui.wizard.FirstOrderLogicNewProjectWizard"
+			name="FirstOrderLogic Project"
+			icon="icons/new_FirstOrderLogic_proj.gif"
+			project="true">
+		</wizard>
+	</extension>
+	<extension
+		point="org.eclipse.xtext.ui.projectTemplate">
+		<projectTemplateProvider
+			class="org.sidiff.validation.laguage.fol.ui.FirstOrderLogicExecutableExtensionFactory:org.sidiff.validation.laguage.fol.ui.wizard.FirstOrderLogicProjectTemplateProvider"
+			grammarName="org.sidiff.validation.laguage.fol.FirstOrderLogic">
+		</projectTemplateProvider>
+	</extension>
+	<extension
+		point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+			<newWizardShortcut id="org.sidiff.validation.laguage.fol.ui.wizard.FirstOrderLogicNewProjectWizard"/>
+		</perspectiveExtension>
+		<perspectiveExtension targetID="org.eclipse.jdt.ui.JavaPerspective">
+			<newWizardShortcut id="org.sidiff.validation.laguage.fol.ui.wizard.FirstOrderLogicNewProjectWizard"/>
+		</perspectiveExtension>
 	</extension>
 </plugin>

@@ -19,6 +19,8 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -61,8 +63,8 @@ public class ConstraintProjectPageEditRules extends WizardPage {
 
 	public ConstraintProjectPageEditRules(String name, String[] availableDocumentTypes) {
 		super("ConstraintProjectPageEditRules");
-		this.setDescription("Create a new constraint library for a specific document type.");
 		this.setTitle("Modeling Language and Consistency Rules");
+		this.setDescription("Creates a new constraint library for a specific document type.");
 		this.setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.getPluginId(), "configuration.png"));
 		
 		this.availableDocumentTypes = availableDocumentTypes;
@@ -81,6 +83,18 @@ public class ConstraintProjectPageEditRules extends WizardPage {
 		return availableConstraints.toArray(new IConstraint[0]);
 	}
 	
+	protected void setMessages() {
+		if (!canFinish()) {
+			setMessage("The document type and name must be set");
+		} else {
+			setMessage(null);
+		}
+	}
+	
+	public boolean canFinish() {
+		return !getName().isEmpty() && !getSelectedDocumentTypes().isEmpty();
+	}
+	
 	public String getName() {
 		if (nameText.getText() != null) {
 			return nameText.getText();
@@ -88,7 +102,7 @@ public class ConstraintProjectPageEditRules extends WizardPage {
 		return "";
 	}
 	
-	public String getDescription() {
+	public String getDescriptionText() {
 		if (descriptionText.getText() != null) {
 			return descriptionText.getText();
 		}
@@ -118,6 +132,8 @@ public class ConstraintProjectPageEditRules extends WizardPage {
 		
 		// FINALLY, calculate the content to be scrolled!
 		container.setSize(container.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		setMessages();
 	}
 
 	private Composite createScrolledContainer(Composite parent) {
@@ -145,7 +161,19 @@ public class ConstraintProjectPageEditRules extends WizardPage {
 			
 			nameText = new Text(container, SWT.BORDER);
 			nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			
+			createNameControlListeners();
 		}
+	}
+
+	private void createNameControlListeners() {
+		nameText.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				setMessages();
+			}
+		});
 	}
 
 	private void createDescriptionControl(Composite container) {
@@ -310,6 +338,8 @@ public class ConstraintProjectPageEditRules extends WizardPage {
 				} else {
 					selectedDocumentTypes.remove(event.getElement());
 				}
+				
+				setMessages();
 			}
 			
 		});
@@ -335,4 +365,5 @@ public class ConstraintProjectPageEditRules extends WizardPage {
 
 		documentTypesTable.setCheckedElements(selectedDocumentTypes.toArray());
 	}
+
 }

@@ -22,4 +22,11 @@ public class RuleBaseProjectWizard extends NewPluginTemplateWizard {
 	public ITemplateSection[] createTemplateSections() {
 		return new ITemplateSection[] { new RuleBaseTemplateSection() };	
 	}
+	
+	@Override
+	public boolean canFinish() {
+		RuleBaseTemplateSection ruleBaseTemplateSection = (RuleBaseTemplateSection) getTemplateSections()[0];
+		
+		return super.canFinish() && ruleBaseTemplateSection.canFinish();
+	}
 }
