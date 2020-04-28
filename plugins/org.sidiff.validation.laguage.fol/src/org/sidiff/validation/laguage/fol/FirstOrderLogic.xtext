@@ -130,13 +130,13 @@ GetContainments:
 	"getContainments" "(" element=Term ")";
 	
 GetClosure:
-	"getClosure" "(" element=Term "," feature=[ecore::EStructuralFeature] ")";
+	"getClosure" "(" element=Term "," feature=FeatureConstant ")";
 	
 Size: 
 	"size" "(" elements=Term ")";
 	
 IndexOf:
-	"indexOf" "(" container=Term "," feature=[ecore::EStructuralFeature] "," element=Term ")";
+	"indexOf" "(" container=Term "," feature=FeatureConstant "," element=Term ")";
 	
 Concatenate :
 	"concatenate" "(" left=Term "," right=Term ")";
@@ -145,6 +145,9 @@ Capitalize :
 	"capitalize" "(" string=Term ")";
 
 // type constants and type references:
+FeatureConstant:
+	constant=[ecore::EStructuralFeature];
+
 Classifier:
 	ClassifierConstant | AsClassifier;
 

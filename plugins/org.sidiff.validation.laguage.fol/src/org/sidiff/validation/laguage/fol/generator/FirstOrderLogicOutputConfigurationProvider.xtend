@@ -18,7 +18,6 @@ class FirstOrderLogicOutputConfigurationProvider implements IOutputConfiguration
 		configProjectRoot.setOutputDirectory(".")
 		configProjectRoot.setOverrideExistingResources(true)
 		configProjectRoot.setCleanUpDerivedResources(true)
-		configProjectRoot.setSetDerivedProperty(true)
 		configProjectRoot.setKeepLocalHistory(true)
 		configProjectRoot
 	}
@@ -30,7 +29,6 @@ class FirstOrderLogicOutputConfigurationProvider implements IOutputConfiguration
 		defaultOutput.setOverrideExistingResources(true)
 		defaultOutput.setCreateOutputDirectory(true)
 		defaultOutput.setCleanUpDerivedResources(true)
-		defaultOutput.setSetDerivedProperty(true)
 		defaultOutput.setKeepLocalHistory(true)
 		defaultOutput
 	}

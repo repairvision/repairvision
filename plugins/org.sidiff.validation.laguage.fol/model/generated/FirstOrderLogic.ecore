@@ -88,7 +88,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="GetClosure" eSuperTypes="#//Term">
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//Term"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="feature" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="feature" eType="#//FeatureConstant"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Size" eSuperTypes="#//Term">
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" eType="#//Term"
@@ -97,7 +98,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="IndexOf" eSuperTypes="#//Term">
     <eStructuralFeatures xsi:type="ecore:EReference" name="container" eType="#//Term"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="feature" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="feature" eType="#//FeatureConstant"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//Term"
         containment="true"/>
   </eClassifiers>
@@ -109,6 +111,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="Capitalize" eSuperTypes="#//Term">
     <eStructuralFeatures xsi:type="ecore:EReference" name="string" eType="#//Term"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FeatureConstant">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constant" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Classifier"/>
   <eClassifiers xsi:type="ecore:EClass" name="ClassifierConstant" eSuperTypes="#//Classifier">

@@ -1203,15 +1203,14 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cElementTermParserRuleCall_2_0 = (RuleCall)cElementAssignment_2.eContents().get(0);
 		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cFeatureAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final CrossReference cFeatureEStructuralFeatureCrossReference_4_0 = (CrossReference)cFeatureAssignment_4.eContents().get(0);
-		private final RuleCall cFeatureEStructuralFeatureIDTerminalRuleCall_4_0_1 = (RuleCall)cFeatureEStructuralFeatureCrossReference_4_0.eContents().get(1);
+		private final RuleCall cFeatureFeatureConstantParserRuleCall_4_0 = (RuleCall)cFeatureAssignment_4.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//GetClosure:
-		//	"getClosure" "(" element=Term "," feature=[ecore::EStructuralFeature] ")";
+		//	"getClosure" "(" element=Term "," feature=FeatureConstant ")";
 		@Override public ParserRule getRule() { return rule; }
 		
-		//"getClosure" "(" element=Term "," feature=[ecore::EStructuralFeature] ")"
+		//"getClosure" "(" element=Term "," feature=FeatureConstant ")"
 		public Group getGroup() { return cGroup; }
 		
 		//"getClosure"
@@ -1229,14 +1228,11 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//","
 		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
 		
-		//feature=[ecore::EStructuralFeature]
+		//feature=FeatureConstant
 		public Assignment getFeatureAssignment_4() { return cFeatureAssignment_4; }
 		
-		//[ecore::EStructuralFeature]
-		public CrossReference getFeatureEStructuralFeatureCrossReference_4_0() { return cFeatureEStructuralFeatureCrossReference_4_0; }
-		
-		//ID
-		public RuleCall getFeatureEStructuralFeatureIDTerminalRuleCall_4_0_1() { return cFeatureEStructuralFeatureIDTerminalRuleCall_4_0_1; }
+		//FeatureConstant
+		public RuleCall getFeatureFeatureConstantParserRuleCall_4_0() { return cFeatureFeatureConstantParserRuleCall_4_0; }
 		
 		//")"
 		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
@@ -1281,18 +1277,17 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cContainerTermParserRuleCall_2_0 = (RuleCall)cContainerAssignment_2.eContents().get(0);
 		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cFeatureAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final CrossReference cFeatureEStructuralFeatureCrossReference_4_0 = (CrossReference)cFeatureAssignment_4.eContents().get(0);
-		private final RuleCall cFeatureEStructuralFeatureIDTerminalRuleCall_4_0_1 = (RuleCall)cFeatureEStructuralFeatureCrossReference_4_0.eContents().get(1);
+		private final RuleCall cFeatureFeatureConstantParserRuleCall_4_0 = (RuleCall)cFeatureAssignment_4.eContents().get(0);
 		private final Keyword cCommaKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		private final Assignment cElementAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cElementTermParserRuleCall_6_0 = (RuleCall)cElementAssignment_6.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//IndexOf:
-		//	"indexOf" "(" container=Term "," feature=[ecore::EStructuralFeature] "," element=Term ")";
+		//	"indexOf" "(" container=Term "," feature=FeatureConstant "," element=Term ")";
 		@Override public ParserRule getRule() { return rule; }
 		
-		//"indexOf" "(" container=Term "," feature=[ecore::EStructuralFeature] "," element=Term ")"
+		//"indexOf" "(" container=Term "," feature=FeatureConstant "," element=Term ")"
 		public Group getGroup() { return cGroup; }
 		
 		//"indexOf"
@@ -1310,14 +1305,11 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//","
 		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
 		
-		//feature=[ecore::EStructuralFeature]
+		//feature=FeatureConstant
 		public Assignment getFeatureAssignment_4() { return cFeatureAssignment_4; }
 		
-		//[ecore::EStructuralFeature]
-		public CrossReference getFeatureEStructuralFeatureCrossReference_4_0() { return cFeatureEStructuralFeatureCrossReference_4_0; }
-		
-		//ID
-		public RuleCall getFeatureEStructuralFeatureIDTerminalRuleCall_4_0_1() { return cFeatureEStructuralFeatureIDTerminalRuleCall_4_0_1; }
+		//FeatureConstant
+		public RuleCall getFeatureFeatureConstantParserRuleCall_4_0() { return cFeatureFeatureConstantParserRuleCall_4_0; }
 		
 		//","
 		public Keyword getCommaKeyword_5() { return cCommaKeyword_5; }
@@ -1405,13 +1397,32 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
+	public class FeatureConstantElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.FeatureConstant");
+		private final Assignment cConstantAssignment = (Assignment)rule.eContents().get(1);
+		private final CrossReference cConstantEStructuralFeatureCrossReference_0 = (CrossReference)cConstantAssignment.eContents().get(0);
+		private final RuleCall cConstantEStructuralFeatureIDTerminalRuleCall_0_1 = (RuleCall)cConstantEStructuralFeatureCrossReference_0.eContents().get(1);
+		
+		//// type constants and type references:
+		//FeatureConstant:
+		//	constant=[ecore::EStructuralFeature];
+		@Override public ParserRule getRule() { return rule; }
+		
+		//constant=[ecore::EStructuralFeature]
+		public Assignment getConstantAssignment() { return cConstantAssignment; }
+		
+		//[ecore::EStructuralFeature]
+		public CrossReference getConstantEStructuralFeatureCrossReference_0() { return cConstantEStructuralFeatureCrossReference_0; }
+		
+		//ID
+		public RuleCall getConstantEStructuralFeatureIDTerminalRuleCall_0_1() { return cConstantEStructuralFeatureIDTerminalRuleCall_0_1; }
+	}
 	public class ClassifierElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.sidiff.validation.laguage.fol.FirstOrderLogic.Classifier");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cClassifierConstantParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cAsClassifierParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//// type constants and type references:
 		//Classifier:
 		//	ClassifierConstant | AsClassifier;
 		@Override public ParserRule getRule() { return rule; }
@@ -1652,6 +1663,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	private final IndexOfElements pIndexOf;
 	private final ConcatenateElements pConcatenate;
 	private final CapitalizeElements pCapitalize;
+	private final FeatureConstantElements pFeatureConstant;
 	private final ClassifierElements pClassifier;
 	private final ClassifierConstantElements pClassifierConstant;
 	private final AsClassifierElements pAsClassifier;
@@ -1711,6 +1723,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		this.pIndexOf = new IndexOfElements();
 		this.pConcatenate = new ConcatenateElements();
 		this.pCapitalize = new CapitalizeElements();
+		this.pFeatureConstant = new FeatureConstantElements();
 		this.pClassifier = new ClassifierElements();
 		this.pClassifierConstant = new ClassifierConstantElements();
 		this.pAsClassifier = new AsClassifierElements();
@@ -2091,7 +2104,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//GetClosure:
-	//	"getClosure" "(" element=Term "," feature=[ecore::EStructuralFeature] ")";
+	//	"getClosure" "(" element=Term "," feature=FeatureConstant ")";
 	public GetClosureElements getGetClosureAccess() {
 		return pGetClosure;
 	}
@@ -2111,7 +2124,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//IndexOf:
-	//	"indexOf" "(" container=Term "," feature=[ecore::EStructuralFeature] "," element=Term ")";
+	//	"indexOf" "(" container=Term "," feature=FeatureConstant "," element=Term ")";
 	public IndexOfElements getIndexOfAccess() {
 		return pIndexOf;
 	}
@@ -2141,6 +2154,16 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//// type constants and type references:
+	//FeatureConstant:
+	//	constant=[ecore::EStructuralFeature];
+	public FeatureConstantElements getFeatureConstantAccess() {
+		return pFeatureConstant;
+	}
+	
+	public ParserRule getFeatureConstantRule() {
+		return getFeatureConstantAccess().getRule();
+	}
+	
 	//Classifier:
 	//	ClassifierConstant | AsClassifier;
 	public ClassifierElements getClassifierAccess() {

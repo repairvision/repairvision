@@ -43,6 +43,7 @@ public class UMLConsistencyRules implements IConstraintLibrary {
 		addConstraint(createInconsistency_UntypedPropertyConstraint());
 		addConstraint(createMissingFeature_CallEvent_OperationConstraint());
 		addConstraint(createMissingFeature_Trigger_EventConstraint());
+		addConstraint(createMissingFeature_ActionExecutionSpecification_actionConstraint());
 	}
 	
 	private static void addDomain(String domain) {
@@ -86,12 +87,12 @@ public class UMLConsistencyRules implements IConstraintLibrary {
 		
 		Term t_signature = new Get(v_m, org.eclipse.uml2.uml.UMLPackage.Literals.MESSAGE__SIGNATURE);
 		Term t_name = new Get(v_o1, org.eclipse.uml2.uml.UMLPackage.Literals.NAMED_ELEMENT__NAME);
-		Term t_name1 = new Get(v_m, org.eclipse.uml2.uml.UMLPackage.Literals.NAMED_ELEMENT__NAME);
+		Term t_name_1 = new Get(v_m, org.eclipse.uml2.uml.UMLPackage.Literals.NAMED_ELEMENT__NAME);
 		Term t_receiveEvent_covered = new Get(new Get(v_m, org.eclipse.uml2.uml.UMLPackage.Literals.MESSAGE__RECEIVE_EVENT), org.eclipse.uml2.uml.UMLPackage.Literals.INTERACTION_FRAGMENT__COVERED);
 		Term t_represents_type_ownedOperation = new Get(new Get(new Get(v_l, org.eclipse.uml2.uml.UMLPackage.Literals.LIFELINE__REPRESENTS), org.eclipse.uml2.uml.UMLPackage.Literals.TYPED_ELEMENT__TYPE), org.eclipse.uml2.uml.UMLPackage.Literals.CLASS__OWNED_OPERATION);
-		Term t_signature1 = new Get(v_m, org.eclipse.uml2.uml.UMLPackage.Literals.MESSAGE__SIGNATURE);
+		Term t_signature_1 = new Get(v_m, org.eclipse.uml2.uml.UMLPackage.Literals.MESSAGE__SIGNATURE);
 		
-		Formula formula = new And(new Exists(v_o1, t_signature, new Equality(t_name, t_name1)), new ForAll(v_l, t_receiveEvent_covered, new Exists(v_o2, t_represents_type_ownedOperation, new Equality(v_o2, t_signature1))));
+		Formula formula = new And(new Exists(v_o1, t_signature, new Equality(t_name, t_name_1)), new ForAll(v_l, t_receiveEvent_covered, new Exists(v_o2, t_represents_type_ownedOperation, new Equality(v_o2, t_signature_1))));
 		
 		IConstraint constraint_Inconsistency_MessageSignature = new Constraint(org.eclipse.uml2.uml.UMLPackage.Literals.MESSAGE, v_m, formula);
 		constraint_Inconsistency_MessageSignature.setName("Inconsistency_MessageSignature");
@@ -133,11 +134,11 @@ public class UMLConsistencyRules implements IConstraintLibrary {
 		Term t_supplier = new Get(v_realization, org.eclipse.uml2.uml.UMLPackage.Literals.DEPENDENCY__SUPPLIER);
 		Term t_ownedOperation = new Get(v_supplier, org.eclipse.uml2.uml.UMLPackage.Literals.INTERFACE__OWNED_OPERATION);
 		Term t_client = new Get(v_realization, org.eclipse.uml2.uml.UMLPackage.Literals.DEPENDENCY__CLIENT);
-		Term t_ownedOperation1 = new Get(v_client, org.eclipse.uml2.uml.UMLPackage.Literals.CLASS__OWNED_OPERATION);
+		Term t_ownedOperation_1 = new Get(v_client, org.eclipse.uml2.uml.UMLPackage.Literals.CLASS__OWNED_OPERATION);
 		Term t_name = new Get(v_op_interface, org.eclipse.uml2.uml.UMLPackage.Literals.NAMED_ELEMENT__NAME);
-		Term t_name1 = new Get(v_op_class, org.eclipse.uml2.uml.UMLPackage.Literals.NAMED_ELEMENT__NAME);
+		Term t_name_1 = new Get(v_op_class, org.eclipse.uml2.uml.UMLPackage.Literals.NAMED_ELEMENT__NAME);
 		
-		Formula formula = new ForAll(v_supplier, t_supplier, new ForAll(v_op_interface, t_ownedOperation, new ForAll(v_client, t_client, new Exists(v_op_class, t_ownedOperation1, new Equality(t_name, t_name1)))));
+		Formula formula = new ForAll(v_supplier, t_supplier, new ForAll(v_op_interface, t_ownedOperation, new ForAll(v_client, t_client, new Exists(v_op_class, t_ownedOperation_1, new Equality(t_name, t_name_1)))));
 		
 		IConstraint constraint_Inconsistency_UnimplementedRealization = new Constraint(org.eclipse.uml2.uml.UMLPackage.Literals.REALIZATION, v_realization, formula);
 		constraint_Inconsistency_UnimplementedRealization.setName("Inconsistency_UnimplementedRealization");
@@ -237,6 +238,21 @@ public class UMLConsistencyRules implements IConstraintLibrary {
 		constraint_MissingFeature_Trigger_Event.setMessage("The required feature 'event' of <Trigger> must be set");
 		
 		return constraint_MissingFeature_Trigger_Event;
+	}
+	
+	public static IConstraint createMissingFeature_ActionExecutionSpecification_actionConstraint() {
+		
+		Variable v_a = new Variable(org.eclipse.uml2.uml.UMLPackage.Literals.ACTION_EXECUTION_SPECIFICATION, "a");
+		
+		Term t_action = new Get(v_a, org.eclipse.uml2.uml.UMLPackage.Literals.ACTION_EXECUTION_SPECIFICATION__ACTION);
+		
+		Formula formula = new Not(new IsEmpty(t_action));
+		
+		IConstraint constraint_MissingFeature_ActionExecutionSpecification_action = new Constraint(org.eclipse.uml2.uml.UMLPackage.Literals.ACTION_EXECUTION_SPECIFICATION, v_a, formula);
+		constraint_MissingFeature_ActionExecutionSpecification_action.setName("MissingFeature_ActionExecutionSpecification_action");
+		constraint_MissingFeature_ActionExecutionSpecification_action.setMessage("The required feature 'action' of <Action Execution Specification> must be set");
+		
+		return constraint_MissingFeature_ActionExecutionSpecification_action;
 	}
 	
 }

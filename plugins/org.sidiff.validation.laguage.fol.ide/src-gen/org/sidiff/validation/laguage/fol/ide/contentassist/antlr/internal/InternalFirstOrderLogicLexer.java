@@ -827,10 +827,10 @@ public class InternalFirstOrderLogicLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalFirstOrderLogic.g:6836:14: ( ( 'true' | 'false' ) )
-            // InternalFirstOrderLogic.g:6836:16: ( 'true' | 'false' )
+            // InternalFirstOrderLogic.g:6872:14: ( ( 'true' | 'false' ) )
+            // InternalFirstOrderLogic.g:6872:16: ( 'true' | 'false' )
             {
-            // InternalFirstOrderLogic.g:6836:16: ( 'true' | 'false' )
+            // InternalFirstOrderLogic.g:6872:16: ( 'true' | 'false' )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -848,7 +848,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:6836:17: 'true'
+                    // InternalFirstOrderLogic.g:6872:17: 'true'
                     {
                     match("true"); 
 
@@ -856,7 +856,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:6836:24: 'false'
+                    // InternalFirstOrderLogic.g:6872:24: 'false'
                     {
                     match("false"); 
 
@@ -882,10 +882,10 @@ public class InternalFirstOrderLogicLexer extends Lexer {
         try {
             int _type = RULE_SIGNED_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalFirstOrderLogic.g:6838:17: ( ( '-' )? RULE_INT )
-            // InternalFirstOrderLogic.g:6838:19: ( '-' )? RULE_INT
+            // InternalFirstOrderLogic.g:6874:17: ( ( '-' )? RULE_INT )
+            // InternalFirstOrderLogic.g:6874:19: ( '-' )? RULE_INT
             {
-            // InternalFirstOrderLogic.g:6838:19: ( '-' )?
+            // InternalFirstOrderLogic.g:6874:19: ( '-' )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -894,7 +894,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:6838:19: '-'
+                    // InternalFirstOrderLogic.g:6874:19: '-'
                     {
                     match('-'); 
 
@@ -920,10 +920,10 @@ public class InternalFirstOrderLogicLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalFirstOrderLogic.g:6840:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // InternalFirstOrderLogic.g:6840:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalFirstOrderLogic.g:6876:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalFirstOrderLogic.g:6876:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // InternalFirstOrderLogic.g:6840:11: ( '^' )?
+            // InternalFirstOrderLogic.g:6876:11: ( '^' )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -932,7 +932,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:6840:11: '^'
+                    // InternalFirstOrderLogic.g:6876:11: '^'
                     {
                     match('^'); 
 
@@ -950,7 +950,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalFirstOrderLogic.g:6840:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalFirstOrderLogic.g:6876:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop4:
             do {
                 int alt4=2;
@@ -997,10 +997,10 @@ public class InternalFirstOrderLogicLexer extends Lexer {
     // $ANTLR start "RULE_INT"
     public final void mRULE_INT() throws RecognitionException {
         try {
-            // InternalFirstOrderLogic.g:6842:19: ( ( '0' .. '9' )+ )
-            // InternalFirstOrderLogic.g:6842:21: ( '0' .. '9' )+
+            // InternalFirstOrderLogic.g:6878:19: ( ( '0' .. '9' )+ )
+            // InternalFirstOrderLogic.g:6878:21: ( '0' .. '9' )+
             {
-            // InternalFirstOrderLogic.g:6842:21: ( '0' .. '9' )+
+            // InternalFirstOrderLogic.g:6878:21: ( '0' .. '9' )+
             int cnt5=0;
             loop5:
             do {
@@ -1014,7 +1014,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // InternalFirstOrderLogic.g:6842:22: '0' .. '9'
+            	    // InternalFirstOrderLogic.g:6878:22: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1044,10 +1044,10 @@ public class InternalFirstOrderLogicLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalFirstOrderLogic.g:6844:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // InternalFirstOrderLogic.g:6844:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalFirstOrderLogic.g:6880:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // InternalFirstOrderLogic.g:6880:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // InternalFirstOrderLogic.g:6844:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalFirstOrderLogic.g:6880:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -1065,10 +1065,10 @@ public class InternalFirstOrderLogicLexer extends Lexer {
             }
             switch (alt8) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:6844:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // InternalFirstOrderLogic.g:6880:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // InternalFirstOrderLogic.g:6844:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // InternalFirstOrderLogic.g:6880:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop6:
                     do {
                         int alt6=3;
@@ -1084,7 +1084,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // InternalFirstOrderLogic.g:6844:21: '\\\\' .
+                    	    // InternalFirstOrderLogic.g:6880:21: '\\\\' .
                     	    {
                     	    match('\\'); 
                     	    matchAny(); 
@@ -1092,7 +1092,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // InternalFirstOrderLogic.g:6844:28: ~ ( ( '\\\\' | '\"' ) )
+                    	    // InternalFirstOrderLogic.g:6880:28: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1117,10 +1117,10 @@ public class InternalFirstOrderLogicLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:6844:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // InternalFirstOrderLogic.g:6880:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // InternalFirstOrderLogic.g:6844:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // InternalFirstOrderLogic.g:6880:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop7:
                     do {
                         int alt7=3;
@@ -1136,7 +1136,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
 
                         switch (alt7) {
                     	case 1 :
-                    	    // InternalFirstOrderLogic.g:6844:54: '\\\\' .
+                    	    // InternalFirstOrderLogic.g:6880:54: '\\\\' .
                     	    {
                     	    match('\\'); 
                     	    matchAny(); 
@@ -1144,7 +1144,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // InternalFirstOrderLogic.g:6844:61: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // InternalFirstOrderLogic.g:6880:61: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1187,12 +1187,12 @@ public class InternalFirstOrderLogicLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalFirstOrderLogic.g:6846:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // InternalFirstOrderLogic.g:6846:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // InternalFirstOrderLogic.g:6882:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // InternalFirstOrderLogic.g:6882:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // InternalFirstOrderLogic.g:6846:24: ( options {greedy=false; } : . )*
+            // InternalFirstOrderLogic.g:6882:24: ( options {greedy=false; } : . )*
             loop9:
             do {
                 int alt9=2;
@@ -1217,7 +1217,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // InternalFirstOrderLogic.g:6846:52: .
+            	    // InternalFirstOrderLogic.g:6882:52: .
             	    {
             	    matchAny(); 
 
@@ -1247,12 +1247,12 @@ public class InternalFirstOrderLogicLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalFirstOrderLogic.g:6848:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalFirstOrderLogic.g:6848:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalFirstOrderLogic.g:6884:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalFirstOrderLogic.g:6884:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // InternalFirstOrderLogic.g:6848:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalFirstOrderLogic.g:6884:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop10:
             do {
                 int alt10=2;
@@ -1265,7 +1265,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // InternalFirstOrderLogic.g:6848:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalFirstOrderLogic.g:6884:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1285,7 +1285,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalFirstOrderLogic.g:6848:40: ( ( '\\r' )? '\\n' )?
+            // InternalFirstOrderLogic.g:6884:40: ( ( '\\r' )? '\\n' )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -1294,9 +1294,9 @@ public class InternalFirstOrderLogicLexer extends Lexer {
             }
             switch (alt12) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:6848:41: ( '\\r' )? '\\n'
+                    // InternalFirstOrderLogic.g:6884:41: ( '\\r' )? '\\n'
                     {
-                    // InternalFirstOrderLogic.g:6848:41: ( '\\r' )?
+                    // InternalFirstOrderLogic.g:6884:41: ( '\\r' )?
                     int alt11=2;
                     int LA11_0 = input.LA(1);
 
@@ -1305,7 +1305,7 @@ public class InternalFirstOrderLogicLexer extends Lexer {
                     }
                     switch (alt11) {
                         case 1 :
-                            // InternalFirstOrderLogic.g:6848:41: '\\r'
+                            // InternalFirstOrderLogic.g:6884:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1337,10 +1337,10 @@ public class InternalFirstOrderLogicLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalFirstOrderLogic.g:6850:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalFirstOrderLogic.g:6850:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalFirstOrderLogic.g:6886:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalFirstOrderLogic.g:6886:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalFirstOrderLogic.g:6850:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalFirstOrderLogic.g:6886:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt13=0;
             loop13:
             do {
@@ -1394,8 +1394,8 @@ public class InternalFirstOrderLogicLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalFirstOrderLogic.g:6852:16: ( . )
-            // InternalFirstOrderLogic.g:6852:18: .
+            // InternalFirstOrderLogic.g:6888:16: ( . )
+            // InternalFirstOrderLogic.g:6888:18: .
             {
             matchAny(); 
 

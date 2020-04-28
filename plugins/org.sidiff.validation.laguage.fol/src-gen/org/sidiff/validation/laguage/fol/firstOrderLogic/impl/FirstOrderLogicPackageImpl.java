@@ -25,6 +25,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.DataTypeConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Domain;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Equals;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.FeatureConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicFactory;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll;
@@ -230,6 +231,13 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * @generated
    */
   private EClass capitalizeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass featureConstantEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1141,6 +1149,28 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
    * @generated
    */
   @Override
+  public EClass getFeatureConstant()
+  {
+    return featureConstantEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getFeatureConstant_Constant()
+  {
+    return (EReference)featureConstantEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getClassifier()
   {
     return classifierEClass;
@@ -1673,6 +1703,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     capitalizeEClass = createEClass(CAPITALIZE);
     createEReference(capitalizeEClass, CAPITALIZE__STRING);
 
+    featureConstantEClass = createEClass(FEATURE_CONSTANT);
+    createEReference(featureConstantEClass, FEATURE_CONSTANT__CONSTANT);
+
     classifierEClass = createEClass(CLASSIFIER);
 
     classifierConstantEClass = createEClass(CLASSIFIER_CONSTANT);
@@ -1867,14 +1900,14 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
 
     initEClass(getClosureEClass, GetClosure.class, "GetClosure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getGetClosure_Element(), this.getTerm(), null, "element", null, 0, 1, GetClosure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getGetClosure_Feature(), ecorePackage.getEStructuralFeature(), null, "feature", null, 0, 1, GetClosure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGetClosure_Feature(), this.getFeatureConstant(), null, "feature", null, 0, 1, GetClosure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(sizeEClass, Size.class, "Size", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSize_Elements(), this.getTerm(), null, "elements", null, 0, 1, Size.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(indexOfEClass, IndexOf.class, "IndexOf", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getIndexOf_Container(), this.getTerm(), null, "container", null, 0, 1, IndexOf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getIndexOf_Feature(), ecorePackage.getEStructuralFeature(), null, "feature", null, 0, 1, IndexOf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIndexOf_Feature(), this.getFeatureConstant(), null, "feature", null, 0, 1, IndexOf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getIndexOf_Element(), this.getTerm(), null, "element", null, 0, 1, IndexOf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(concatenateEClass, Concatenate.class, "Concatenate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1883,6 +1916,9 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
 
     initEClass(capitalizeEClass, Capitalize.class, "Capitalize", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCapitalize_String(), this.getTerm(), null, "string", null, 0, 1, Capitalize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(featureConstantEClass, FeatureConstant.class, "FeatureConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getFeatureConstant_Constant(), ecorePackage.getEStructuralFeature(), null, "constant", null, 0, 1, FeatureConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(classifierEClass, Classifier.class, "Classifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -14,6 +14,8 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.IntConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef
+import org.sidiff.validation.laguage.fol.firstOrderLogic.FeatureConstant
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Domain
 
 class FirstOrderLogicSemanticHighlightingCalculator extends DefaultSemanticHighlightingCalculator {
 
@@ -21,10 +23,21 @@ class FirstOrderLogicSemanticHighlightingCalculator extends DefaultSemanticHighl
 			IHighlightedPositionAcceptor acceptor, CancelIndicator cancelIndicator) {
 
 		switch(object) {
+			
+			Domain:{
+				acceptor.highlightFeature(object,
+					FirstOrderLogicPackage.eINSTANCE.domain_Domain,
+					FirstOrderLogicHighlightingConfiguration.CONSTANT_ID)
+				return false
+			}
+			
 			Variable: {
 				acceptor.highlightFeature(object,
 					FirstOrderLogicPackage.eINSTANCE.variable_Name,
 					FirstOrderLogicHighlightingConfiguration.VARIABLE_ID)
+				acceptor.highlightFeature(object,
+					FirstOrderLogicPackage.eINSTANCE.variable_Type,
+					FirstOrderLogicHighlightingConfiguration.CONSTANT_ID)
 				return false
 			}
 			
@@ -38,10 +51,10 @@ class FirstOrderLogicSemanticHighlightingCalculator extends DefaultSemanticHighl
 			Get: {
 				acceptor.highlightFeature(object,
 					FirstOrderLogicPackage.eINSTANCE.get_Name,
-					FirstOrderLogicHighlightingConfiguration.VARIABLE_ID)
+					FirstOrderLogicHighlightingConfiguration.GET_ID)
 				highlightFeature(acceptor, object,
 					FirstOrderLogicPackage.eINSTANCE.get_Type,
-					FirstOrderLogicHighlightingConfiguration.VARIABLE_ID)
+					FirstOrderLogicHighlightingConfiguration.GET_ID)
 				return false
 			}
 			
@@ -66,6 +79,12 @@ class FirstOrderLogicSemanticHighlightingCalculator extends DefaultSemanticHighl
 				return false
 			}
 			
+			FeatureConstant: {
+				acceptor.highlightNode(NodeModelUtils.getNode(object),
+					FirstOrderLogicHighlightingConfiguration.CONSTANT_ID)
+				return false
+			}
+			
 			ClassifierConstant: {
 				acceptor.highlightNode(NodeModelUtils.getNode(object),
 					FirstOrderLogicHighlightingConfiguration.CONSTANT_ID)
@@ -82,5 +101,4 @@ class FirstOrderLogicSemanticHighlightingCalculator extends DefaultSemanticHighl
 		}
 		
 	}
-	
 }

@@ -129,6 +129,7 @@ public class FirstOrderLogicParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getConcatenateAccess().getLeftAssignment_2(), "rule__Concatenate__LeftAssignment_2");
 			builder.put(grammarAccess.getConcatenateAccess().getRightAssignment_4(), "rule__Concatenate__RightAssignment_4");
 			builder.put(grammarAccess.getCapitalizeAccess().getStringAssignment_2(), "rule__Capitalize__StringAssignment_2");
+			builder.put(grammarAccess.getFeatureConstantAccess().getConstantAssignment(), "rule__FeatureConstant__ConstantAssignment");
 			builder.put(grammarAccess.getClassifierConstantAccess().getConstantAssignment(), "rule__ClassifierConstant__ConstantAssignment");
 			builder.put(grammarAccess.getAsClassifierAccess().getTermAssignment_2(), "rule__AsClassifier__TermAssignment_2");
 			builder.put(grammarAccess.getDataTypeConstantAccess().getConstantAssignment(), "rule__DataTypeConstant__ConstantAssignment");

@@ -2,10 +2,13 @@ package org.sidiff.validation.laguage.fol.util
 
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.EcorePackage
 import org.sidiff.validation.laguage.fol.firstOrderLogic.BoolConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Capitalize
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Classifier
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Concatenate
+import org.sidiff.validation.laguage.fol.firstOrderLogic.DataType
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainer
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IndexOf
@@ -14,13 +17,10 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.Size
 import org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Term
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef
-import org.sidiff.validation.laguage.fol.firstOrderLogic.Classifier
-import org.sidiff.validation.laguage.fol.firstOrderLogic.DataType
-import org.eclipse.emf.ecore.EStructuralFeature
 
 class LanguageUtil {
 	
-	def static EStructuralFeature getReferenceTarget(VariableRef ref) {
+	def static EStructuralFeature getVariableReferenceTarget(VariableRef ref) {
 		var lastGet = ref.get
 
 		while (lastGet !== null && lastGet.next !== null) {
@@ -36,7 +36,7 @@ class LanguageUtil {
 	
 	def static EClassifier getResultType(Term term) {
 		if (term instanceof VariableRef) {
-			var ref = getReferenceTarget(term);
+			var ref = LanguageUtil.getVariableReferenceTarget(term);
 			
 			if (ref !== null) {
 				return ref.EType

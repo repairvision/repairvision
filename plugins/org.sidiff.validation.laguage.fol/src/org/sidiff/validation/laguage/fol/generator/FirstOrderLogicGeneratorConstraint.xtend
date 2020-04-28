@@ -18,6 +18,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.DataType
 import org.sidiff.validation.laguage.fol.firstOrderLogic.DataTypeConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Equals
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists
+import org.sidiff.validation.laguage.fol.firstOrderLogic.FeatureConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Formula
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get
@@ -95,7 +96,7 @@ class FirstOrderLogicGeneratorConstraint {
 		
 		while (names.containsValue(newName)) {
 			i++
-			newName = name + i
+			newName = name + '_' + i
 		}
 		
 		names.put(astNode, newName)
@@ -159,8 +160,12 @@ class FirstOrderLogicGeneratorConstraint {
 			'''«type.toQualifiedPackageClass».Literals.«type.toMetaLiteralName»'''
 		}
 	}
+	
+	private def dispatch String compileFeature(FeatureConstant feature) {
+		compileFeature(feature.constant)
+	}
 
-	private def String compileFeature(EStructuralFeature feature) {
+	private def dispatch String compileFeature(EStructuralFeature feature) {
 		'''«feature.EContainingClass.toQualifiedPackageClass».Literals.«feature.EContainingClass.toMetaLiteralName»__«feature.toMetaLiteralName»'''
 	}
 

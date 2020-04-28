@@ -2118,13 +2118,19 @@ ruleGetClosure returns [EObject current=null]
 		(
 			(
 				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getGetClosureRule());
-					}
+					newCompositeNode(grammarAccess.getGetClosureAccess().getFeatureFeatureConstantParserRuleCall_4_0());
 				}
-				otherlv_4=RULE_ID
+				lv_feature_4_0=ruleFeatureConstant
 				{
-					newLeafNode(otherlv_4, grammarAccess.getGetClosureAccess().getFeatureEStructuralFeatureCrossReference_4_0());
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGetClosureRule());
+					}
+					set(
+						$current,
+						"feature",
+						lv_feature_4_0,
+						"org.sidiff.validation.laguage.fol.FirstOrderLogic.FeatureConstant");
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)
@@ -2235,13 +2241,19 @@ ruleIndexOf returns [EObject current=null]
 		(
 			(
 				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getIndexOfRule());
-					}
+					newCompositeNode(grammarAccess.getIndexOfAccess().getFeatureFeatureConstantParserRuleCall_4_0());
 				}
-				otherlv_4=RULE_ID
+				lv_feature_4_0=ruleFeatureConstant
 				{
-					newLeafNode(otherlv_4, grammarAccess.getIndexOfAccess().getFeatureEStructuralFeatureCrossReference_4_0());
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getIndexOfRule());
+					}
+					set(
+						$current,
+						"feature",
+						lv_feature_4_0,
+						"org.sidiff.validation.laguage.fol.FirstOrderLogic.FeatureConstant");
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)
@@ -2395,6 +2407,36 @@ ruleCapitalize returns [EObject current=null]
 		{
 			newLeafNode(otherlv_3, grammarAccess.getCapitalizeAccess().getRightParenthesisKeyword_3());
 		}
+	)
+;
+
+// Entry rule entryRuleFeatureConstant
+entryRuleFeatureConstant returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getFeatureConstantRule()); }
+	iv_ruleFeatureConstant=ruleFeatureConstant
+	{ $current=$iv_ruleFeatureConstant.current; }
+	EOF;
+
+// Rule FeatureConstant
+ruleFeatureConstant returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getFeatureConstantRule());
+				}
+			}
+			otherlv_0=RULE_ID
+			{
+				newLeafNode(otherlv_0, grammarAccess.getFeatureConstantAccess().getConstantEStructuralFeatureCrossReference_0());
+			}
+		)
 	)
 ;
 

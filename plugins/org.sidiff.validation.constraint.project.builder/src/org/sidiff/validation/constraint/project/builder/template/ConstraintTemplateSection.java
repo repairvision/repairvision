@@ -242,9 +242,9 @@ public class ConstraintTemplateSection extends OptionTemplateSection {
 		
 		for (EPackage domain : domains) {
 			code.append("domain ");
-			code.append("\"");
+			code.append("'");
 			code.append(domain.getNsURI());
-			code.append("\"");
+			code.append("'");
 			code.append("\n");
 		}
 		

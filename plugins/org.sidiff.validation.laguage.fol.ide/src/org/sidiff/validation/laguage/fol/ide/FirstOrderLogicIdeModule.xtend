@@ -3,7 +3,6 @@
  */
 package org.sidiff.validation.laguage.fol.ide
 
-
 /**
  * Use this class to register ide components.
  */

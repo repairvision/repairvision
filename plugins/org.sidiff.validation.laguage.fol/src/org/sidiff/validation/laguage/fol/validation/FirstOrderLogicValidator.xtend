@@ -49,7 +49,7 @@ class FirstOrderLogicValidator extends AbstractFirstOrderLogicValidator {
 		}
 		
 	 	if (asClassifier.term instanceof VariableRef) {
-	 		var ref = LanguageUtil.getReferenceTarget(asClassifier.term as VariableRef)
+	 		var ref = LanguageUtil.getVariableReferenceTarget(asClassifier.term as VariableRef)
 	 		
 			if ((ref !== null) && ref.many) {
 				error('Collection can not be a type (EClassfier) reference',
@@ -68,7 +68,7 @@ class FirstOrderLogicValidator extends AbstractFirstOrderLogicValidator {
 		}
 		
 		if (asDataType.term instanceof VariableRef) {
-	 		var ref = LanguageUtil.getReferenceTarget(asDataType.term as VariableRef)
+	 		var ref = LanguageUtil.getVariableReferenceTarget(asDataType.term as VariableRef)
 	 		
 			if ((ref !== null) && ref.many) {
 				error('Collection can not be a data type (EDataType) reference',

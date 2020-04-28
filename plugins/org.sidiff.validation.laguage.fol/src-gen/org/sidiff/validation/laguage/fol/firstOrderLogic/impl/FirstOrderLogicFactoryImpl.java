@@ -89,6 +89,7 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
       case FirstOrderLogicPackage.INDEX_OF: return createIndexOf();
       case FirstOrderLogicPackage.CONCATENATE: return createConcatenate();
       case FirstOrderLogicPackage.CAPITALIZE: return createCapitalize();
+      case FirstOrderLogicPackage.FEATURE_CONSTANT: return createFeatureConstant();
       case FirstOrderLogicPackage.CLASSIFIER: return createClassifier();
       case FirstOrderLogicPackage.CLASSIFIER_CONSTANT: return createClassifierConstant();
       case FirstOrderLogicPackage.AS_CLASSIFIER: return createAsClassifier();
@@ -398,6 +399,18 @@ public class FirstOrderLogicFactoryImpl extends EFactoryImpl implements FirstOrd
   {
     CapitalizeImpl capitalize = new CapitalizeImpl();
     return capitalize;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public FeatureConstant createFeatureConstant()
+  {
+    FeatureConstantImpl featureConstant = new FeatureConstantImpl();
+    return featureConstant;
   }
 
   /**

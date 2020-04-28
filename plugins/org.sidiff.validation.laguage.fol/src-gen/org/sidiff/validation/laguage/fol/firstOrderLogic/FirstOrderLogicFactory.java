@@ -240,6 +240,15 @@ public interface FirstOrderLogicFactory extends EFactory
   Capitalize createCapitalize();
 
   /**
+   * Returns a new object of class '<em>Feature Constant</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Feature Constant</em>'.
+   * @generated
+   */
+  FeatureConstant createFeatureConstant();
+
+  /**
    * Returns a new object of class '<em>Classifier</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -27,6 +27,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.DataTypeConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Domain;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Equals;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.FeatureConstant;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
@@ -105,6 +106,9 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 				return; 
 			case FirstOrderLogicPackage.EXISTS:
 				sequence_Exists(context, (Exists) semanticObject); 
+				return; 
+			case FirstOrderLogicPackage.FEATURE_CONSTANT:
+				sequence_FeatureConstant(context, (FeatureConstant) semanticObject); 
 				return; 
 			case FirstOrderLogicPackage.FOR_ALL:
 				sequence_ForAll(context, (ForAll) semanticObject); 
@@ -495,6 +499,24 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
+	 *     FeatureConstant returns FeatureConstant
+	 *
+	 * Constraint:
+	 *     constant=[EStructuralFeature|ID]
+	 */
+	protected void sequence_FeatureConstant(ISerializationContext context, FeatureConstant semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, FirstOrderLogicPackage.Literals.FEATURE_CONSTANT__CONSTANT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, FirstOrderLogicPackage.Literals.FEATURE_CONSTANT__CONSTANT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getFeatureConstantAccess().getConstantEStructuralFeatureIDTerminalRuleCall_0_1(), semanticObject.eGet(FirstOrderLogicPackage.Literals.FEATURE_CONSTANT__CONSTANT, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Formula returns ForAll
 	 *     BinaryFormula returns ForAll
 	 *     Iff returns ForAll
@@ -537,7 +559,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     GetClosure returns GetClosure
 	 *
 	 * Constraint:
-	 *     (element=Term feature=[EStructuralFeature|ID])
+	 *     (element=Term feature=FeatureConstant)
 	 */
 	protected void sequence_GetClosure(ISerializationContext context, GetClosure semanticObject) {
 		if (errorAcceptor != null) {
@@ -548,7 +570,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getGetClosureAccess().getElementTermParserRuleCall_2_0(), semanticObject.getElement());
-		feeder.accept(grammarAccess.getGetClosureAccess().getFeatureEStructuralFeatureIDTerminalRuleCall_4_0_1(), semanticObject.eGet(FirstOrderLogicPackage.Literals.GET_CLOSURE__FEATURE, false));
+		feeder.accept(grammarAccess.getGetClosureAccess().getFeatureFeatureConstantParserRuleCall_4_0(), semanticObject.getFeature());
 		feeder.finish();
 	}
 	
@@ -747,7 +769,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	 *     IndexOf returns IndexOf
 	 *
 	 * Constraint:
-	 *     (container=Term feature=[EStructuralFeature|ID] element=Term)
+	 *     (container=Term feature=FeatureConstant element=Term)
 	 */
 	protected void sequence_IndexOf(ISerializationContext context, IndexOf semanticObject) {
 		if (errorAcceptor != null) {
@@ -760,7 +782,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getIndexOfAccess().getContainerTermParserRuleCall_2_0(), semanticObject.getContainer());
-		feeder.accept(grammarAccess.getIndexOfAccess().getFeatureEStructuralFeatureIDTerminalRuleCall_4_0_1(), semanticObject.eGet(FirstOrderLogicPackage.Literals.INDEX_OF__FEATURE, false));
+		feeder.accept(grammarAccess.getIndexOfAccess().getFeatureFeatureConstantParserRuleCall_4_0(), semanticObject.getFeature());
 		feeder.accept(grammarAccess.getIndexOfAccess().getElementTermParserRuleCall_6_0(), semanticObject.getElement());
 		feeder.finish();
 	}

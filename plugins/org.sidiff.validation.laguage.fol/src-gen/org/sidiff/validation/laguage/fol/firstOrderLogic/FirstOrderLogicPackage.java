@@ -726,7 +726,7 @@ public interface FirstOrderLogicPackage extends EPackage
   int GET_CLOSURE__ELEMENT = TERM_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Feature</b></em>' reference.
+   * The feature id for the '<em><b>Feature</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -791,7 +791,7 @@ public interface FirstOrderLogicPackage extends EPackage
   int INDEX_OF__CONTAINER = TERM_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Feature</b></em>' reference.
+   * The feature id for the '<em><b>Feature</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -883,6 +883,34 @@ public interface FirstOrderLogicPackage extends EPackage
   int CAPITALIZE_FEATURE_COUNT = TERM_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FeatureConstantImpl <em>Feature Constant</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FeatureConstantImpl
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getFeatureConstant()
+   * @generated
+   */
+  int FEATURE_CONSTANT = 24;
+
+  /**
+   * The feature id for the '<em><b>Constant</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FEATURE_CONSTANT__CONSTANT = 0;
+
+  /**
+   * The number of structural features of the '<em>Feature Constant</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FEATURE_CONSTANT_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ClassifierImpl <em>Classifier</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -890,7 +918,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getClassifier()
    * @generated
    */
-  int CLASSIFIER = 24;
+  int CLASSIFIER = 25;
 
   /**
    * The number of structural features of the '<em>Classifier</em>' class.
@@ -909,7 +937,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getClassifierConstant()
    * @generated
    */
-  int CLASSIFIER_CONSTANT = 25;
+  int CLASSIFIER_CONSTANT = 26;
 
   /**
    * The feature id for the '<em><b>Constant</b></em>' reference.
@@ -937,7 +965,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getAsClassifier()
    * @generated
    */
-  int AS_CLASSIFIER = 26;
+  int AS_CLASSIFIER = 27;
 
   /**
    * The feature id for the '<em><b>Term</b></em>' containment reference.
@@ -965,7 +993,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getDataType()
    * @generated
    */
-  int DATA_TYPE = 27;
+  int DATA_TYPE = 28;
 
   /**
    * The number of structural features of the '<em>Data Type</em>' class.
@@ -984,7 +1012,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getDataTypeConstant()
    * @generated
    */
-  int DATA_TYPE_CONSTANT = 28;
+  int DATA_TYPE_CONSTANT = 29;
 
   /**
    * The feature id for the '<em><b>Constant</b></em>' reference.
@@ -1012,7 +1040,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getAsDataType()
    * @generated
    */
-  int AS_DATA_TYPE = 29;
+  int AS_DATA_TYPE = 30;
 
   /**
    * The feature id for the '<em><b>Term</b></em>' containment reference.
@@ -1040,7 +1068,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getIntConstant()
    * @generated
    */
-  int INT_CONSTANT = 30;
+  int INT_CONSTANT = 31;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1068,7 +1096,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getStringConstant()
    * @generated
    */
-  int STRING_CONSTANT = 31;
+  int STRING_CONSTANT = 32;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1096,7 +1124,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getBoolConstant()
    * @generated
    */
-  int BOOL_CONSTANT = 32;
+  int BOOL_CONSTANT = 33;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1124,7 +1152,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getIff()
    * @generated
    */
-  int IFF = 33;
+  int IFF = 34;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1161,7 +1189,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getIf()
    * @generated
    */
-  int IF = 34;
+  int IF = 35;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1198,7 +1226,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getXor()
    * @generated
    */
-  int XOR = 35;
+  int XOR = 36;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1235,7 +1263,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getOr()
    * @generated
    */
-  int OR = 36;
+  int OR = 37;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1272,7 +1300,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getAnd()
    * @generated
    */
-  int AND = 37;
+  int AND = 38;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1309,7 +1337,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getNot()
    * @generated
    */
-  int NOT = 38;
+  int NOT = 39;
 
   /**
    * The feature id for the '<em><b>Not</b></em>' containment reference.
@@ -1337,7 +1365,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getForAll()
    * @generated
    */
-  int FOR_ALL = 39;
+  int FOR_ALL = 40;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' containment reference.
@@ -1383,7 +1411,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getExists()
    * @generated
    */
-  int EXISTS = 40;
+  int EXISTS = 41;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' containment reference.
@@ -1429,7 +1457,7 @@ public interface FirstOrderLogicPackage extends EPackage
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getVariableRef()
    * @generated
    */
-  int VARIABLE_REF = 41;
+  int VARIABLE_REF = 42;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' reference.
@@ -2023,10 +2051,10 @@ public interface FirstOrderLogicPackage extends EPackage
   EReference getGetClosure_Element();
 
   /**
-   * Returns the meta object for the reference '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.GetClosure#getFeature <em>Feature</em>}'.
+   * Returns the meta object for the containment reference '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.GetClosure#getFeature <em>Feature</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Feature</em>'.
+   * @return the meta object for the containment reference '<em>Feature</em>'.
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.GetClosure#getFeature()
    * @see #getGetClosure()
    * @generated
@@ -2076,10 +2104,10 @@ public interface FirstOrderLogicPackage extends EPackage
   EReference getIndexOf_Container();
 
   /**
-   * Returns the meta object for the reference '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IndexOf#getFeature <em>Feature</em>}'.
+   * Returns the meta object for the containment reference '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.IndexOf#getFeature <em>Feature</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Feature</em>'.
+   * @return the meta object for the containment reference '<em>Feature</em>'.
    * @see org.sidiff.validation.laguage.fol.firstOrderLogic.IndexOf#getFeature()
    * @see #getIndexOf()
    * @generated
@@ -2149,6 +2177,27 @@ public interface FirstOrderLogicPackage extends EPackage
    * @generated
    */
   EReference getCapitalize_String();
+
+  /**
+   * Returns the meta object for class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.FeatureConstant <em>Feature Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Feature Constant</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FeatureConstant
+   * @generated
+   */
+  EClass getFeatureConstant();
+
+  /**
+   * Returns the meta object for the reference '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.FeatureConstant#getConstant <em>Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Constant</em>'.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FeatureConstant#getConstant()
+   * @see #getFeatureConstant()
+   * @generated
+   */
+  EReference getFeatureConstant_Constant();
 
   /**
    * Returns the meta object for class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.Classifier <em>Classifier</em>}'.
@@ -3038,7 +3087,7 @@ public interface FirstOrderLogicPackage extends EPackage
     EReference GET_CLOSURE__ELEMENT = eINSTANCE.getGetClosure_Element();
 
     /**
-     * The meta object literal for the '<em><b>Feature</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Feature</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -3082,7 +3131,7 @@ public interface FirstOrderLogicPackage extends EPackage
     EReference INDEX_OF__CONTAINER = eINSTANCE.getIndexOf_Container();
 
     /**
-     * The meta object literal for the '<em><b>Feature</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Feature</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -3140,6 +3189,24 @@ public interface FirstOrderLogicPackage extends EPackage
      * @generated
      */
     EReference CAPITALIZE__STRING = eINSTANCE.getCapitalize_String();
+
+    /**
+     * The meta object literal for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FeatureConstantImpl <em>Feature Constant</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FeatureConstantImpl
+     * @see org.sidiff.validation.laguage.fol.firstOrderLogic.impl.FirstOrderLogicPackageImpl#getFeatureConstant()
+     * @generated
+     */
+    EClass FEATURE_CONSTANT = eINSTANCE.getFeatureConstant();
+
+    /**
+     * The meta object literal for the '<em><b>Constant</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FEATURE_CONSTANT__CONSTANT = eINSTANCE.getFeatureConstant_Constant();
 
     /**
      * The meta object literal for the '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.impl.ClassifierImpl <em>Classifier</em>}' class.

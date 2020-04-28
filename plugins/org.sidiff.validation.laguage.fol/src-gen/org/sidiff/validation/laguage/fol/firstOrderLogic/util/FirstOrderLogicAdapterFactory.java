@@ -196,6 +196,11 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
         return createCapitalizeAdapter();
       }
       @Override
+      public Adapter caseFeatureConstant(FeatureConstant object)
+      {
+        return createFeatureConstantAdapter();
+      }
+      @Override
       public Adapter caseClassifier(Classifier object)
       {
         return createClassifierAdapter();
@@ -663,6 +668,21 @@ public class FirstOrderLogicAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createCapitalizeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.sidiff.validation.laguage.fol.firstOrderLogic.FeatureConstant <em>Feature Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.sidiff.validation.laguage.fol.firstOrderLogic.FeatureConstant
+   * @generated
+   */
+  public Adapter createFeatureConstantAdapter()
   {
     return null;
   }
