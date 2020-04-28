@@ -19,6 +19,8 @@ class FirstOrderLogicFormatter extends AbstractFormatter2 {
 	}
 
 	def dispatch void format(Domain domain, extension IFormattableDocument document) {
+		domain.prepend[noIndentation].prepend[noSpace]
+		domain.regionFor.feature(FirstOrderLogicPackage.Literals.DOMAIN__DOMAIN).prepend[oneSpace]
 		domain.append[newLine]
 	}
 
@@ -27,14 +29,16 @@ class FirstOrderLogicFormatter extends AbstractFormatter2 {
 		constraint.allRegionsFor.features(
 			FirstOrderLogicPackage.Literals.CONSTRAINT__NAME,
 			FirstOrderLogicPackage.Literals.CONSTRAINT__MESSAGE).forEach[append[newLine]]
-		constraint.variable.format
+		constraint.regionFor.feature(FirstOrderLogicPackage.Literals.CONSTRAINT__MESSAGE).prepend[oneSpace]
+		
+		constraint.variable.surround[oneSpace]
+		
 		constraint.formula.allRegionsFor.keywords('or', 'and', 'implies', 'xor', '=').forEach[surround[newLine]]
 		constraint.formula.allRegionsFor.keywords('(', ')').forEach[surround[noSpace lowPriority]]
 		constraint.formula.allRegionsFor.keywords(':').forEach[surround[oneSpace].append[newLine]]
-//		constraint.formula.allRegionsFor.keywords(',').forEach[prepend[noSpace].append[newLine]]
-//		constraint.formula.allRegionsFor.keywords('(').forEach[append[newLine]]
 		constraint.formula.allRegionsFor.keywordPairs('(', ')').forEach[interior[indent]]
-		constraint.formula.prepend[newLine].format
+		
+		constraint.formula.prepend[newLine].surround[indent].format
 	}
 
 	def dispatch void format(Get get, extension IFormattableDocument document) {
