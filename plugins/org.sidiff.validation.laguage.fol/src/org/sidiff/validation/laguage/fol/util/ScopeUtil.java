@@ -3,7 +3,9 @@ package org.sidiff.validation.laguage.fol.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EClass;
@@ -16,14 +18,45 @@ import org.eclipse.xtext.common.services.DefaultTerminalConverters;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Domain;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IndexOf;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef;
 
 public class ScopeUtil extends DefaultTerminalConverters {
+	
+	public static List<Variable> getVariables(VariableRef ref) {
 
+		// Hide variables in parent scopes by variable names:
+		List<Variable> scope = new ArrayList<>();
+		Set<String> nameScope = new HashSet<>();
+		EObject container = ref;
+		
+		while (container.eContainer() != null) {
+			Variable variable = null;
+			container = container.eContainer();
+			
+			if (container instanceof Constraint) {
+				variable = ((Constraint) container).getVariable();
+			} else if (container instanceof ForAll) {
+				variable = ((ForAll) container).getName();
+			} else if (container instanceof Exists) {
+				variable = ((Exists) container).getName();
+			}
+			
+			if ((variable != null) && (!nameScope.contains(variable.getName()))) {
+				nameScope.add(variable.getName());
+				scope.add(variable);
+			}
+		}
+		
+		return scope;
+	}
+	
 	public static Collection<EClassifier> getAllTypes(EObject context) {
 		ConstraintLibrary library = getConstraintLibrary(context);
 
@@ -110,6 +143,16 @@ public class ScopeUtil extends DefaultTerminalConverters {
 		return null;
 	}
 	
+	private static boolean isProxy(EObject obj, EStructuralFeature feature) {
+		Object value = obj.eGet(feature, false);
+		
+		if (value instanceof EObject) {
+			return ((EObject) value).eIsProxy();
+		}
+		
+		return false;
+	}
+	
 	public static Collection<EClass> getAllSubTypes(EObject context) {
 		Collection<EClass> subTypes = new ArrayList<>();
 		EClassifier type = getType(context);
@@ -136,14 +179,5 @@ public class ScopeUtil extends DefaultTerminalConverters {
 		
 		return Collections.emptyList();
 	}
-	
-	private static boolean isProxy(EObject obj, EStructuralFeature feature) {
-		Object value = obj.eGet(feature, false);
-		
-		if (value instanceof EObject) {
-			return ((EObject) value).eIsProxy();
-		}
-		
-		return false;
-	}
+
 }
