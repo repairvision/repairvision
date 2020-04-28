@@ -24,7 +24,6 @@ import org.sidiff.validation.laguage.fol.util.GeneratorUtil
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
- // FIXME: Bind scope of variables to quantifiers!
 class FirstOrderLogicGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
