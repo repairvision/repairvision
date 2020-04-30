@@ -3,6 +3,7 @@ package org.sidiff.common.utilities.emf;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -17,7 +18,7 @@ import org.eclipse.emf.ecore.resource.Resource;
  * @author Manuel Ohrndorf
  */
 public class DocumentType {
-	
+
 	public static final String SEPARATOR = ";";
 
 	/**
@@ -41,15 +42,15 @@ public class DocumentType {
 	public static List<EPackage> getDocumentType(String documentType) {
 		if (documentType.contains(SEPARATOR)) {
 			List<EPackage> packages = new ArrayList<>();
-			
+
 			for (String containedDocumentType : documentType.split(SEPARATOR)) {
 				packages.addAll(getDocumentType(containedDocumentType));
 			}
-			
+
 			return packages;
 		} else {
 			EPackage pkg = EPackage.Registry.INSTANCE.getEPackage(documentType);
-			
+
 			if (pkg != null) {
 				return Collections.singletonList(pkg);
 			} else {
@@ -65,20 +66,20 @@ public class DocumentType {
 	public static String getDocumentType(EPackage pkg) {
 		return pkg.getNsURI();
 	}
-	
+
 	/**
-	 * @param packages A composition of meta-models.
+	 * @param documentTypes A composition of meta-models.
 	 * @return The document type of the composed meta-model.
 	 */
-	public static String getDocumentType(List<EPackage> packages) {
-		StringBuilder documentType = new StringBuilder();
-		
-		for (EPackage pkg : packages) {
-			documentType.append(getDocumentType(pkg));
-			documentType.append(SEPARATOR);
+	public static String getDocumentType(List<String> documentTypes) {
+		StringBuilder serializedDocumentType = new StringBuilder();
+
+		for (String documentType : documentTypes) {
+			serializedDocumentType.append(documentType);
+			serializedDocumentType.append(SEPARATOR);
 		}
-		
-		return documentType.substring(0, documentType.length() - 1);
+
+		return serializedDocumentType.substring(0, serializedDocumentType.length() - 1);
 	}
 
 	/**
@@ -92,11 +93,11 @@ public class DocumentType {
 
 		return null;
 	}
-	
+
 	/**
 	 * @return All registered document types.
 	 */
-	public static String[] getAvailableDocumentTypes() {
-		return EcorePlugin.getEPackageNsURIToGenModelLocationMap(false).keySet().toArray(new String[0]);
+	public static Set<String> getAvailableDocumentTypes() {
+		return Collections.unmodifiableSet(EcorePlugin.getEPackageNsURIToGenModelLocationMap(false).keySet());
 	}
 }

@@ -8,7 +8,6 @@ import java.util.Collections
 import java.util.LinkedHashSet
 import java.util.List
 import java.util.Map
-import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
@@ -17,6 +16,7 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary
+import org.sidiff.validation.laguage.fol.util.EMFMetaAccessUtil
 import org.sidiff.validation.laguage.fol.util.GeneratorUtil
 
 /**
@@ -180,17 +180,17 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	private def Map<String, String> getDomainPackages(ConstraintLibrary library) {
 
 		// Map package nsURI to package name for compilation of meta types
+		var workspaceGenModels = EMFMetaAccessUtil.workspaceGenModels
 		var domains = newHashMap
 		
 		for (domain : library.domains) {
-			val packageImport = Platform.extensionRegistry.getConfigurationElementsFor("org.eclipse.emf.ecore.generated_package")
-				.filter[getAttribute("uri") == domain.domain]
-				.map[getAttribute("class")]
-				.head
-				
-			if(packageImport === null) {
+			var nsURI = domain.domain.trim
+			var packageImport = EMFMetaAccessUtil.getEPackageClass(nsURI, workspaceGenModels)
+			
+			if (packageImport === null) {
 				throw new IllegalArgumentException("Package is not registered: " + domain.domain)
 			}
+			
 			domains.put(domain.domain, packageImport)
 		}
 		

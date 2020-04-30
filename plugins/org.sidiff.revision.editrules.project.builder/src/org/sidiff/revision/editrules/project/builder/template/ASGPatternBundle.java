@@ -2,6 +2,7 @@ package org.sidiff.revision.editrules.project.builder.template;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -19,6 +20,7 @@ import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.design.tools.diagram.ModelDiagramCreator;
@@ -62,9 +64,19 @@ public class ASGPatternBundle {
 	protected void initializeConstraint(Pattern constraintPatterns, IConstraint constraint) {
 		EClass contextType = constraint.getContextType();
 		
-		for (EReference containment : MetaModelUtil.getEAllContainers(patternBundle.getDomains(), contextType)) {
+		for (EReference containment : getEAllContainers(contextType)) {
 			createContextElementGraph(constraintPatterns, containment, contextType);
 		}
+	}
+
+	private Set<EReference> getEAllContainers(EClass contextType) {
+		Set<EReference> containerReferences = MetaModelUtil.getEAllContainers(patternBundle.getDomains(), contextType);
+		
+		if (MetaModelUtil.isRootContainer(containerReferences)) {
+			containerReferences.add(GraphpatternPackage.eINSTANCE.getResource_Contents());
+		}
+		
+		return containerReferences;
 	}
 
 	protected void createContextElementGraph(Pattern constraintPatterns, EReference containment, EClass contextType) {

@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.common.emf.access.EMFGenModelAccess;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.profile.henshin.converter.GraphPatternToHenshinConverterHandler;
@@ -41,6 +40,7 @@ import org.sidiff.revision.editrules.generation.constructors.TransformationEditR
 import org.sidiff.revision.editrules.generation.generator.api.EditRuleGenerator;
 import org.sidiff.revision.editrules.project.RuleBasePlugin;
 import org.sidiff.revision.editrules.project.builder.util.RuleBaseBuilderUtils;
+import org.sidiff.validation.laguage.fol.util.EMFMetaAccessUtil;
 
 /**
  * Builds the edit rules from a catalog of graph patterns.
@@ -110,7 +110,7 @@ public class RuleBaseBuilder extends IncrementalProjectBuilder {
 			Set<String> modelFileExtensions = new HashSet<>();
 			
 			for (EPackage metamodel : patternBundle.getDomains()) {
-				modelFileExtensions.addAll(EMFGenModelAccess.getFileExtensionFromDocumentType(DocumentType.getDocumentType(metamodel)));
+				modelFileExtensions.addAll(EMFMetaAccessUtil.getFileExtensionFromDocumentType(DocumentType.getDocumentType(metamodel)));
 			}
 			
 			// TODO: make 'overwrite' and 'create definition file' configurable

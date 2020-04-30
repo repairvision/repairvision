@@ -6,9 +6,11 @@ import static org.sidiff.revision.editrules.project.builder.util.RuleBaseBuilder
 
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -18,6 +20,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.pde.core.plugin.IPluginBase;
 import org.eclipse.pde.core.plugin.IPluginElement;
@@ -37,6 +40,7 @@ import org.sidiff.revision.editrules.project.builder.Activator;
 import org.sidiff.revision.editrules.project.builder.nature.RuleBaseProjectNature;
 import org.sidiff.revision.editrules.project.builder.template.ASGPatternBundle.DiagramURI;
 import org.sidiff.revision.editrules.project.builder.wizard.RuleBaseProjectPageEditRules;
+import org.sidiff.validation.laguage.fol.util.EMFMetaAccessUtil;
 
 /**
  * Defines the PDE template for creating a rulebase plug-in project.
@@ -47,9 +51,18 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 	
 	private RuleBaseProjectPageEditRules pageEditRules;
 	
+	private Map<String, EPackage> workspaceEPackages;
+	
 	public RuleBaseTemplateSection() {
 		addOption(KEY_PACKAGE_NAME, RuleBaseTemplateSection.KEY_PACKAGE_NAME, (String) null, 0);
 		setPageCount(1);
+	}
+	
+	private Map<String, EPackage> getWorkspaceEPackages() {
+		if (workspaceEPackages == null) {
+			workspaceEPackages = EMFMetaAccessUtil.getWorkspaceEPackages();
+		}
+		return workspaceEPackages;
 	}
 
 	@Override
@@ -88,7 +101,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		IPluginElement element = factory.createElement(extension);
 		
 		// register new rulebase:
-		String documentType = DocumentType.getDocumentType(new ArrayList<>(pageEditRules.getSelectedDocumentTypes()));
+		String documentType = DocumentType.getDocumentType(pageEditRules.getSelectedDocumentTypes());
 		
 		element.setName(RuleBasePlugin.EXTENSION_POINT_ELEMENT_RULEBASE);
 		element.setAttribute(RuleBasePlugin.EXTENSION_POINT_ATTRIBUTE_RULEBASE_NAME, getStringOption(KEY_PACKAGE_NAME));
@@ -114,7 +127,15 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 
 	@Override
 	public void addPages(Wizard wizard) {
-		pageEditRules = new RuleBaseProjectPageEditRules(getStringOption(KEY_PACKAGE_NAME), DocumentType.getAvailableDocumentTypes());
+		Set<String> availableDocumentTypes = new HashSet<>(DocumentType.getAvailableDocumentTypes());
+		availableDocumentTypes.addAll(getWorkspaceEPackages().keySet());
+		
+		String[] sortedAvailableDocumentTypes = availableDocumentTypes.toArray(new String[0]);
+		Arrays.sort(sortedAvailableDocumentTypes);
+		
+		pageEditRules = new RuleBaseProjectPageEditRules(
+				getStringOption(KEY_PACKAGE_NAME), 
+				sortedAvailableDocumentTypes);
 		wizard.addPage(pageEditRules);
 		markPagesAdded();
 	}
@@ -156,6 +177,10 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		initializeOption(KEY_PACKAGE_NAME, getFormattedPackageName(pluginId));
 	}
 	
+	private EPackage getEPackage(String documentType) {
+		return EMFMetaAccessUtil.getEPackage(documentType, getWorkspaceEPackages());
+	}
+	
 	private static String getFormattedPackageName(String pluginID) {
 		StringBuilder builder = new StringBuilder();
 		
@@ -190,7 +215,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 
 	private Bundle createASGPatternBundle(IProject project, IProgressMonitor monitor) {
 		ASGPatternBundle asgPattern = new ASGPatternBundle(pageEditRules.getName(), pageEditRules.getDescriptionText());
-		pageEditRules.getSelectedDocumentTypes().forEach(asgPattern::addDocumentType);
+		pageEditRules.getSelectedDocumentTypes().forEach(docType -> asgPattern.addDocumentType(getEPackage(docType)));
 		pageEditRules.getSelectedConstraints().forEach(c -> asgPattern.addConstraint(c, pageEditRules.isInitializePatternsOption()));
 		
 		DiagramURI diagramDashboardURI = asgPattern.saveWithDiagrams(project, monitor);

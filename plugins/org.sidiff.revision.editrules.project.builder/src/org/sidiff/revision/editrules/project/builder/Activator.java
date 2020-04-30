@@ -14,7 +14,7 @@ public class Activator extends AbstractUIPlugin {
 	public static final String PLUGIN_ID = "org.sidiff.revision.editrules.project.builder"; //$NON-NLS-1$
 	
 	private static Activator plugin;
-
+	
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);

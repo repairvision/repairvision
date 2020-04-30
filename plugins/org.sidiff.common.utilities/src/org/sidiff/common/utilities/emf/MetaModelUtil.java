@@ -50,4 +50,21 @@ public class MetaModelUtil {
 		
 		return containments;
 	}
+	
+	/**
+	 * @param containerReferences {@link #getEAllContainers(Collection, EClass)}
+	 * @return <code>true</code> if there is no container reference or if there is
+	 *         just a self-reference; <code>false</code> otherwise.
+	 */
+	public static boolean isRootContainer(Set<EReference> containerReferences) {
+		
+		for (EReference eReference : containerReferences) {
+			if (eReference.getEType() != eReference.getEContainingClass()) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 }

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -57,14 +58,14 @@ public class ScopeUtil extends DefaultTerminalConverters {
 		return scope;
 	}
 	
-	public static Collection<EClassifier> getAllTypes(EObject context) {
+	public static Collection<EClassifier> getAllTypes(EObject context, Map<String, EPackage> workspaceEPackages) {
 		ConstraintLibrary library = getConstraintLibrary(context);
 
 		if (library != null) {
 			List<EClassifier> allTypes = new ArrayList<>();
 			
 			for (Domain domain : library.getDomains()) {
-				EPackage domainPackage = EPackage.Registry.INSTANCE.getEPackage(domain.getDomain().trim());
+				EPackage domainPackage = EMFMetaAccessUtil.getEPackage(domain.getDomain().trim(), workspaceEPackages);
 				
 				if (domainPackage != null) {
 					allTypes.addAll(domainPackage.getEClassifiers());
@@ -77,14 +78,14 @@ public class ScopeUtil extends DefaultTerminalConverters {
 		return Collections.emptyList();
 	}
 	
-	public static Collection<EClassifier> getAllDataTypes(EObject context) {
+	public static Collection<EClassifier> getAllDataTypes(EObject context, Map<String, EPackage> workspaceEPackages) {
 		ConstraintLibrary library = getConstraintLibrary(context);
 
 		if (library != null) {
 			List<EClassifier> allDataTypes = new ArrayList<>();
 			
 			for (Domain domain : library.getDomains()) {
-				EPackage domainPackage = EPackage.Registry.INSTANCE.getEPackage(domain.getDomain().trim());
+				EPackage domainPackage = EMFMetaAccessUtil.getEPackage(domain.getDomain().trim(), workspaceEPackages);
 				
 				if (domainPackage != null) {
 					allDataTypes.addAll(domainPackage.getEClassifiers().stream().filter(c -> c instanceof EDataType).collect(Collectors.toList()));
@@ -153,12 +154,12 @@ public class ScopeUtil extends DefaultTerminalConverters {
 		return false;
 	}
 	
-	public static Collection<EClass> getAllSubTypes(EObject context) {
+	public static Collection<EClass> getAllSubTypes(EObject context, Map<String, EPackage> workspaceEPackages) {
 		Collection<EClass> subTypes = new ArrayList<>();
 		EClassifier type = getType(context);
 		
 		// Iterate over all classes in the package
-		for (EClassifier classifier : getAllTypes(context)) {
+		for (EClassifier classifier : getAllTypes(context, workspaceEPackages)) {
 
 			if (classifier instanceof EClass) {
 				if (((EClass) classifier).getEAllSuperTypes().contains(type)) {

@@ -2,12 +2,14 @@ package org.sidiff.revision.editrules.project.builder.wizard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -34,10 +36,11 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.common.utilities.java.StringUtil;
 import org.sidiff.revision.editrules.project.builder.Activator;
+import org.sidiff.revision.editrules.project.builder.util.RuleBaseBuilderUtils;
+import org.sidiff.revision.editrules.project.builder.util.RuleBaseBuilderUtils.WorkspaceContext;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.project.library.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.project.library.IConstraintLibrary;
@@ -86,6 +89,8 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 	private Button exampleFolderOption;
 	
 	private Button initializePatternsOptions;
+	
+	private WorkspaceContext workspaceContext;
 
 	public RuleBaseProjectPageEditRules(String name, String[] availableDocumentTypes) {
 		super("RuleBaseProjectPageEditRules");
@@ -102,11 +107,23 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 	protected IConstraint[] getAvailableConstraints() {
 		List<IConstraint> availableConstraints = new ArrayList<>();
 		
-		for (EPackage documentType : getSelectedDocumentTypes()) {
-			for (IConstraintLibrary library : ConstraintLibraryRegistry.getLibraries(DocumentType.getDocumentType(documentType))) {
+		// Runtime registered constraints:
+		for (String documentType : getSelectedDocumentTypes()) {
+			for (IConstraintLibrary library : ConstraintLibraryRegistry.getLibraries(documentType)) {
 				availableConstraints.addAll(library.getConstraints());
 			}
 		}
+
+		// Workspace registered constraints:
+		this.workspaceContext = new WorkspaceContext();
+		availableConstraints.addAll(RuleBaseBuilderUtils.getWorkspaceConstraints(
+				new HashSet<>(getSelectedDocumentTypes()), workspaceContext));
+		
+		Collections.sort(availableConstraints, new Comparator<IConstraint>() {
+			public int compare(IConstraint c1, IConstraint c2) {
+				return c1.getName().compareTo(c2.getName());
+			}
+		});
 		
 		return availableConstraints.toArray(new IConstraint[0]);
 	}
@@ -137,14 +154,8 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 		return "";
 	}
 	
-	public List<EPackage> getSelectedDocumentTypes() {
-		Set<EPackage> documentTypes = new LinkedHashSet<>();
-		
-		for (Object selectedDocumentType : selectedDocumentTypes) {
-			documentTypes.addAll(DocumentType.getDocumentType((String) selectedDocumentType));
-		}
-	
-		return new ArrayList<>(documentTypes);
+	public List<String> getSelectedDocumentTypes() {
+		return new ArrayList<>(selectedDocumentTypes);
 	}
 	
 	public List<IConstraint> getSelectedConstraints() {
@@ -301,26 +312,6 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 			public void keyPressed(KeyEvent e) {
 			}
 		});
-		
-		// For convenience, set name and description based on document type:
-		documentTypesTable.addCheckStateListener(new ICheckStateListener() {
-
-			@Override
-			public void checkStateChanged(CheckStateChangedEvent event) {
-				if (event.getChecked()) {
-					String packageName = (String) event.getElement();
-
-					if (nameText.getText().isEmpty() && descriptionText.getText().isEmpty()) {
-						List<EPackage> packages = DocumentType.getDocumentType(packageName);
-
-						if (!packages.isEmpty()) {
-							nameText.setText(StringUtil.toUpperFirst(packages.get(0).getName()));
-							descriptionText.setText("Document Type: " + packageName);
-						}
-					}
-				}
-			}
-		});
 	}
 
 	private void createDocumentTypesTable(Composite documentTypesContainer) {
@@ -367,26 +358,36 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 	}
 
 	private void createDocumentTypeTableListeners() {
+		
 		documentTypesTable.addCheckStateListener(new ICheckStateListener() {
 			
 			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				if (event.getChecked()) {
-					String packageName = (String) event.getElement();
-					selectedDocumentTypes.add(packageName);
+					String documentType = (String) event.getElement();
+					selectedDocumentTypes.add(documentType);
 					
 					// For convenience, set name and description...
 					if (nameText.getText().isEmpty() && descriptionText.getText().isEmpty()) {
-						List<EPackage> packages = DocumentType.getDocumentType(packageName);
+						String name = documentType.substring(documentType.lastIndexOf("/") + 1, documentType.length());
 						
-						if (!packages.isEmpty()) {
-							nameText.setText(StringUtil.toUpperFirst(packages.get(0).getName()));
-							descriptionText.setText("Document Type: " + packageName);
+						if (!name.isEmpty()) {
+							nameText.setText(StringUtil.toUpperFirst(name));
+							descriptionText.setText("Document Type: " + documentType);
 						}
 					}
 					
 				} else {
 					selectedDocumentTypes.remove(event.getElement());
+					
+					// synchronize constraints:
+					for (Iterator<IConstraint> iterator = selectedConstraints.iterator(); iterator.hasNext();) {
+						IConstraint constraint = iterator.next();
+						
+						if (!selectedDocumentTypes.contains(constraint.getContextType().getEPackage().getNsURI())) {
+							iterator.remove();
+						}
+					}
 				}
 				
 				setMessages();
@@ -638,5 +639,11 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 			exampleFolderOption.setSelection(true);
 			exampleFolderOption.setText("Create Folder for Model Examples");
 		}
+	}
+	
+	@Override
+	public void dispose() {
+		workspaceContext.close();
+		super.dispose();
 	}
 }

@@ -15,6 +15,7 @@ Export-Package: org.sidiff.validation.laguage.fol,
  org.sidiff.validation.laguage.fol.scoping,
  org.sidiff.validation.laguage.fol.serializer,
  org.sidiff.validation.laguage.fol.services,
+ org.sidiff.validation.laguage.fol.util,
  org.sidiff.validation.laguage.fol.validation
 Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.xbase,
@@ -31,7 +32,8 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.pde.core,
  org.sidiff.validation.constraint.project,
  org.eclipse.ui.editors,
- org.eclipse.text
+ org.eclipse.text,
+ org.eclipse.emf.codegen.ecore
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.sidiff.validation.laguage.fol
 Import-Package: org.apache.log4j

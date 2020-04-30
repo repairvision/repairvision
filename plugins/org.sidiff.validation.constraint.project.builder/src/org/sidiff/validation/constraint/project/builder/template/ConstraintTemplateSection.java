@@ -5,10 +5,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -37,9 +41,7 @@ import org.eclipse.pde.core.plugin.PluginRegistry;
 import org.eclipse.pde.ui.IFieldData;
 import org.eclipse.pde.ui.templates.OptionTemplateSection;
 import org.eclipse.pde.ui.templates.PluginReference;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.Constants;
-import org.osgi.framework.FrameworkUtil;
 import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.java.StringUtil;
@@ -47,7 +49,8 @@ import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.validation.constraint.project.ConstraintPlugin;
 import org.sidiff.validation.constraint.project.builder.Activator;
 import org.sidiff.validation.constraint.project.builder.nature.ConstraintProjectNature;
-import org.sidiff.validation.constraint.project.builder.wizard.ConstraintProjectPageEditRules;
+import org.sidiff.validation.constraint.project.builder.wizard.ConstraintProjectPageConstraints;
+import org.sidiff.validation.laguage.fol.util.EMFMetaAccessUtil;
 
 /**
  * Defines the PDE template for creating a constraint plug-in project.
@@ -56,11 +59,20 @@ import org.sidiff.validation.constraint.project.builder.wizard.ConstraintProject
  */
 public class ConstraintTemplateSection extends OptionTemplateSection {
 	
-	private ConstraintProjectPageEditRules pageConstraints;
+	private ConstraintProjectPageConstraints pageConstraints;
+	
+	private Map<String, EPackage> workspaceEPackages;
 
 	public ConstraintTemplateSection() {
 		addOption(KEY_PACKAGE_NAME, ConstraintTemplateSection.KEY_PACKAGE_NAME, (String) null, 0);
 		setPageCount(1);
+	}
+	
+	private Map<String, EPackage> getWorkspaceEPackages() {
+		if (workspaceEPackages == null) {
+			workspaceEPackages = EMFMetaAccessUtil.getWorkspaceEPackages();
+		}
+		return workspaceEPackages;
 	}
 	
 	@Override
@@ -119,7 +131,15 @@ public class ConstraintTemplateSection extends OptionTemplateSection {
 
 	@Override
 	public void addPages(Wizard wizard) {
-		pageConstraints = new ConstraintProjectPageEditRules(getStringOption(KEY_PACKAGE_NAME),DocumentType.getAvailableDocumentTypes());
+		Set<String> availableDocumentTypes = new HashSet<>(DocumentType.getAvailableDocumentTypes());
+		availableDocumentTypes.addAll(getWorkspaceEPackages().keySet());
+		
+		String[] sortedAvailableDocumentTypes = availableDocumentTypes.toArray(new String[0]);
+		Arrays.sort(sortedAvailableDocumentTypes);
+		
+		pageConstraints = new ConstraintProjectPageConstraints(
+				getStringOption(KEY_PACKAGE_NAME), 
+				sortedAvailableDocumentTypes);
 		wizard.addPage(pageConstraints);
 		markPagesAdded();
 	}
@@ -142,9 +162,8 @@ public class ConstraintTemplateSection extends OptionTemplateSection {
 		dependencies.add(new PluginReference(ConstraintPlugin.EXTENSION_POINT_DEPENDENCIE, null, 0));
 		dependencies.add(new PluginReference(ConstraintPlugin.CONSTRAINT_INTERPRETER_DEPENDENCIE, null, 0));
 		
-		for (EPackage documentType : pageConstraints.getSelectedDocumentTypes()) {
-			Bundle bundle = FrameworkUtil.getBundle(getModelPackageClass(documentType));
-			String documentTypeDependency = bundle.getSymbolicName();
+		for (String documentType : pageConstraints.getSelectedDocumentTypes()) {
+			String documentTypeDependency = EMFMetaAccessUtil.getPluginSymbolicName(documentType, EMFMetaAccessUtil.getWorkspaceGenModels());
 			dependencies.add(new PluginReference(documentTypeDependency, null, 0));
 		}
 		
@@ -190,7 +209,7 @@ public class ConstraintTemplateSection extends OptionTemplateSection {
 	}
 
 	private File createFOLFile(IFolder folder, String fileName) {
-		List<EPackage> domains = pageConstraints.getSelectedDocumentTypes();
+		List<String> documentTypes = pageConstraints.getSelectedDocumentTypes();
 		String description = "";
 		String header = "";
 		String helloWorldConstraint = "";
@@ -204,17 +223,21 @@ public class ConstraintTemplateSection extends OptionTemplateSection {
 		}
 		
 		// Header:
-		if (!domains.isEmpty()) {
-			EPackage documentType = getMainDocumentType(domains);
+		if (!documentTypes.isEmpty()) {
+			String documentType = getMainDocumentType(documentTypes);
 			
-			header = getDomains(domains);
+			header = getDomains(documentTypes);
 			
 			// Hello World Constraint:
-			Optional<EClassifier> exampleClass = documentType.getEClassifiers().stream().filter(c -> c instanceof EClass).findAny();
+			EPackage ePackage = getEPackage(documentType);
 			
-			if (exampleClass.isPresent()) {
-				helloWorldConstraint = "\n// TODO: Hello World Constraint - Replace This:\n";
-				helloWorldConstraint += "constraint MyName message \"My validation message\" context " +  exampleClass.get().getName() + " contextElementName : isEqual(true, true)";
+			if (ePackage != null) {
+				Optional<EClassifier> exampleClass = ePackage.getEClassifiers().stream().filter(c -> c instanceof EClass).findAny();
+				
+				if (exampleClass.isPresent()) {
+					helloWorldConstraint = "\n// TODO: Hello World Constraint - Replace This:\n";
+					helloWorldConstraint += "constraint MyName message \"My validation message\" context " +  exampleClass.get().getName() + " contextElementName : isEqual(true, true)";
+				}
 			}
 		}
 		
@@ -237,13 +260,13 @@ public class ConstraintTemplateSection extends OptionTemplateSection {
 		return folFile;
 	}
 
-	private String getDomains(List<EPackage> domains) {
+	private String getDomains(List<String> documentTypes) {
 		StringBuilder code = new StringBuilder();
 		
-		for (EPackage domain : domains) {
+		for (String documentType : documentTypes) {
 			code.append("domain ");
 			code.append("'");
-			code.append(domain.getNsURI());
+			code.append(documentType);
 			code.append("'");
 			code.append("\n");
 		}
@@ -292,22 +315,16 @@ public class ConstraintTemplateSection extends OptionTemplateSection {
 		javaProject.setRawClasspath(newEntries, null);
 	}
 	
-	private EPackage getMainDocumentType(List<EPackage> documentTypes) {
+	private String getMainDocumentType(List<String> documentTypes) {
 		if (!documentTypes.isEmpty()) {
 			return documentTypes.get(0);
 		} else {
-			return null;
+			return "";
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	private static Class<? extends EPackage> getModelPackageClass(EPackage documentType) {
-		try {
-			return  (Class<? extends EPackage>) documentType.getClass().getField("eINSTANCE").getType();
-		} catch (NoSuchFieldException | SecurityException e) {
-			e.printStackTrace();
-		}
-		return null;
+	private EPackage getEPackage(String documentType) {
+		return EMFMetaAccessUtil.getEPackage(documentType, getWorkspaceEPackages());
 	}
 	
 	private static String getFormattedPackageName(String pluginID) {

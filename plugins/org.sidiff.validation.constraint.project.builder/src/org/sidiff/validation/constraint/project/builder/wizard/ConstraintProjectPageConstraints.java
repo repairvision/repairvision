@@ -5,7 +5,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -28,20 +27,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.common.utilities.java.StringUtil;
-import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.project.builder.Activator;
-import org.sidiff.validation.constraint.project.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.project.library.IConstraintLibrary;
 
 /**
- * Constraint Library Project Page: Creates a new constraint cibrary for a specific document type. 
+ * Constraint Library Project Page: Creates a new constraint library for a specific document type. 
  * 
  * @author Manuel Ohrndorf
  */
-public class ConstraintProjectPageEditRules extends WizardPage {
+public class ConstraintProjectPageConstraints extends WizardPage {
 
 	// Created with WindowBuilder //
 	
@@ -61,26 +56,14 @@ public class ConstraintProjectPageEditRules extends WizardPage {
 	
 	private Text documentTypeSearch;
 
-	public ConstraintProjectPageEditRules(String name, String[] availableDocumentTypes) {
-		super("ConstraintProjectPageEditRules");
+	public ConstraintProjectPageConstraints(String name, String[] availableDocumentTypes) {
+		super("ConstraintProjectPageConstraints");
 		this.setTitle("Modeling Language and Consistency Rules");
 		this.setDescription("Creates a new constraint library for a specific document type.");
 		this.setImageDescriptor(Activator.imageDescriptorFromPlugin(Activator.getPluginId(), "configuration.png"));
 		
 		this.availableDocumentTypes = availableDocumentTypes;
 		this.selectedDocumentTypes = new LinkedHashSet<>();
-	}
-	
-	protected IConstraint[] getAvailableConstraints() {
-		List<IConstraint> availableConstraints = new ArrayList<>();
-		
-		for (EPackage documentType : getSelectedDocumentTypes()) {
-			for (IConstraintLibrary library : ConstraintLibraryRegistry.getLibraries(DocumentType.getDocumentType(documentType))) {
-				availableConstraints.addAll(library.getConstraints());
-			}
-		}
-		
-		return availableConstraints.toArray(new IConstraint[0]);
 	}
 	
 	protected void setMessages() {
@@ -109,14 +92,8 @@ public class ConstraintProjectPageEditRules extends WizardPage {
 		return "";
 	}
 	
-	public List<EPackage> getSelectedDocumentTypes() {
-		Set<EPackage> documentTypes = new LinkedHashSet<>();
-		
-		for (Object selectedDocumentType : selectedDocumentTypes) {
-			documentTypes.addAll(DocumentType.getDocumentType((String) selectedDocumentType));
-		}
-	
-		return new ArrayList<>(documentTypes);
+	public List<String> getSelectedDocumentTypes() {
+		return new ArrayList<>(selectedDocumentTypes);
 	}
 
 	@Override
@@ -251,26 +228,6 @@ public class ConstraintProjectPageEditRules extends WizardPage {
 			public void keyPressed(KeyEvent e) {
 			}
 		});
-		
-		// For convenience, set name and description based on document type:
-		documentTypesTable.addCheckStateListener(new ICheckStateListener() {
-
-			@Override
-			public void checkStateChanged(CheckStateChangedEvent event) {
-				if (event.getChecked()) {
-					String packageName = (String) event.getElement();
-
-					if (nameText.getText().isEmpty() && descriptionText.getText().isEmpty()) {
-						List<EPackage> packages = DocumentType.getDocumentType(packageName);
-
-						if (!packages.isEmpty()) {
-							nameText.setText(StringUtil.toUpperFirst(packages.get(0).getName()));
-							descriptionText.setText("Document Type: " + packageName);
-						}
-					}
-				}
-			}
-		});
 	}
 
 	private void createDocumentTypesTable(Composite documentTypesContainer) {
@@ -317,21 +274,22 @@ public class ConstraintProjectPageEditRules extends WizardPage {
 	}
 
 	private void createDocumentTypeTableListeners() {
+		
 		documentTypesTable.addCheckStateListener(new ICheckStateListener() {
 			
 			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				if (event.getChecked()) {
-					String packageName = (String) event.getElement();
-					selectedDocumentTypes.add(packageName);
+					String documentType = (String) event.getElement();
+					selectedDocumentTypes.add(documentType);
 					
 					// For convenience, set name and description...
 					if (nameText.getText().isEmpty() && descriptionText.getText().isEmpty()) {
-						List<EPackage> packages = DocumentType.getDocumentType(packageName);
+						String name = documentType.substring(documentType.lastIndexOf("/") + 1, documentType.length());
 						
-						if (!packages.isEmpty()) {
-							nameText.setText(StringUtil.toUpperFirst(packages.get(0).getName()));
-							descriptionText.setText("Document Type: " + packageName);
+						if (!name.isEmpty()) {
+							nameText.setText(StringUtil.toUpperFirst(name));
+							descriptionText.setText("Document Type: " + documentType);
 						}
 					}
 					
