@@ -44,61 +44,62 @@ public class RuleBaseBuilderUtils {
 	public static String getEditRuleFolder() {
 		return RuleBasePlugin.EDIT_RULE_FOLDER + "/";
 	}
-	
+
 	public static String getExampleFolder() {
 		return RuleBasePlugin.EXAMPLE_FOLDER + "/";
 	}
-	
-	public static  String getExampleFolder(Bundle patternBundle) {
+
+	public static String getExampleFolder(Bundle patternBundle) {
 		return RuleBasePlugin.EXAMPLE_FOLDER + "/" + patternBundle.getName();
 	}
-	
+
 	public static String getPatternPath(Pattern pattern) {
 		StringBuilder patternPath = new StringBuilder();
 		patternPath.append(pattern.getName());
 		patternPath.append("/");
-		
+
 		while (pattern.eContainer() instanceof Pattern) {
 			pattern = (Pattern) pattern.eContainer();
 			patternPath.insert(0, "/");
 			patternPath.insert(0, pattern.getName());
 		}
-		
+
 		return patternPath.toString();
 	}
-	
+
 	public static void createEditRuleFolders(IProject project, IProgressMonitor monitor) throws CoreException {
 		WorkbenchUtil.createFolder(project, getEditRuleFolder(), monitor);
 	}
-	
-	public static void createExampleFolders(Bundle patternBundle, IProject project, IProgressMonitor monitor) throws CoreException {
+
+	public static void createExampleFolders(Bundle patternBundle, IProject project, IProgressMonitor monitor)
+			throws CoreException {
 		SubMonitor subMonitor = SubMonitor.convert(monitor, 2);
-		
+
 		String exampleFolder = getExampleFolder();
 		WorkbenchUtil.createFolder(project, exampleFolder, subMonitor.split(1));
-		
+
 		// Convert Constraint-Pattern tree to folder structure:
 		for (EObject element : (Iterable<EObject>) () -> patternBundle.eResource().getAllContents()) {
 			if (element instanceof Pattern) {
 				if ((element instanceof Bundle) || ConstraintProfileUtil.isConstraint((Pattern) element)) {
 					String patternFolder = getPatternPath((Pattern) element);
-					WorkbenchUtil.createFolder(project,  exampleFolder + patternFolder, subMonitor.split(1));
+					WorkbenchUtil.createFolder(project, exampleFolder + patternFolder, subMonitor.split(1));
 				}
 			}
 		}
 	}
-	
+
 	public static List<IConstraint> getWorkspaceConstraints(Set<String> documentTypes, WorkspaceContext context) {
-		cleanUpEMFRegistry(); // from old loaded workspace classes
-		
+		cleanUpEMFRegistry();
+
 		List<IConstraint> availableConstraints = new ArrayList<>();
-		
-		for (Entry<String, IProject> libraryEntry: getWorkspaceConstraintLibraries().entrySet()) {
+
+		for (Entry<String, IProject> libraryEntry : getWorkspaceConstraintLibraries().entrySet()) {
 			List<IConstraint> constraints = new ArrayList<>();
-			
+
 			try {
-				IConstraintLibrary library = loadWorkspaceClass(
-						libraryEntry.getValue(), IConstraintLibrary.class, libraryEntry.getKey(), context);
+				IConstraintLibrary library = loadWorkspaceClass(libraryEntry.getValue(), IConstraintLibrary.class,
+						libraryEntry.getKey(), context);
 
 				for (IConstraint constraint : library.getConstraints()) {
 					if (documentTypes.contains(constraint.getContextType().getEPackage().getNsURI())) {
@@ -107,23 +108,32 @@ public class RuleBaseBuilderUtils {
 				}
 			} catch (Throwable t) {
 				constraints.clear();
-				//t.printStackTrace();
+				// t.printStackTrace();
 			}
 			availableConstraints.addAll(constraints);
 		}
-		
+
 		return availableConstraints;
 	}
-	
+
+	/**
+	 * Clean up framework from loaded workspace models.
+	 */
+	// TODO: It would be better to control the loading and unloading of models in
+	// the workspace ourself. At the moment, the models register themselves as a
+	// side effect when they are used. This might cause (uncritical) class cast
+	// exceptions on the model factory if the model is reloaded. (A class in java is
+	// identified by its classloader and classpath.) Cleaning the models from the
+	// EMF registry solves the class cast exceptions.
 	private static void cleanUpEMFRegistry() {
 		for (String nsURI : EMFMetaAccessUtil.getWorkspaceGenModels().keySet()) {
 			EPackage.Registry.INSTANCE.put(nsURI, null);
 		}
 	}
-	
+
 	private static Map<String, IProject> getWorkspaceConstraintLibraries() {
 		Map<String, IProject> libraries = new HashMap<>();
-		
+
 		IPluginModelBase[] workspacePlugins = PluginRegistry.getWorkspaceModels();
 
 		for (IPluginModelBase workspacePlugin : workspacePlugins) {
@@ -134,7 +144,6 @@ public class RuleBaseBuilderUtils {
 			for (IPluginExtension extension : extensions) {
 				if (ConstraintPlugin.EXTENSION_POINT_ID.equals(extension.getPoint())) {
 					IPluginObject[] children = extension.getChildren();
-					
 
 					for (IPluginObject child : children) {
 						if (ConstraintPlugin.EXTENSION_POINT_ELEMENT_LIBRARY.equals(child.getName())) {
@@ -149,17 +158,18 @@ public class RuleBaseBuilderUtils {
 				}
 			}
 		}
-		
+
 		return libraries;
 	}
-	
+
 	public static class WorkspaceContext {
-		
+
 		private WorkspaceClassLoader classLoader;
-		
+
 		public void close() {
 			if (classLoader != null) {
 				try {
+					cleanUpEMFRegistry();
 					classLoader.close();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -167,9 +177,9 @@ public class RuleBaseBuilderUtils {
 			}
 		}
 	}
-	
-	private static class WorkspaceClassLoader extends URLClassLoader{
-		
+
+	private static class WorkspaceClassLoader extends URLClassLoader {
+
 		public WorkspaceClassLoader(ClassLoader parent) {
 			super(new URL[0], parent);
 		}
@@ -179,8 +189,7 @@ public class RuleBaseBuilderUtils {
 				super.addURL(url);
 			}
 		}
-		
-		
+
 		public boolean contains(URL url) {
 			for (URL containedURL : getURLs()) {
 				if (containedURL.equals(url)) {
@@ -189,20 +198,19 @@ public class RuleBaseBuilderUtils {
 			}
 			return false;
 		}
-		
+
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private static <T> T loadWorkspaceClass(IProject project, Class<T> classType, String className,
 			WorkspaceContext context) throws CoreException, MalformedURLException, ClassNotFoundException,
 			InstantiationException, IllegalAccessException, IOException {
 
-		ClassLoader parentClassLoader = Thread.currentThread().getContextClassLoader();
-		
-		@SuppressWarnings("resource")
-		WorkspaceClassLoader workspaceClassLoader = new WorkspaceClassLoader(parentClassLoader);
-		context.classLoader = workspaceClassLoader;
-		
+		if (context.classLoader == null) {
+			ClassLoader parentClassLoader = Thread.currentThread().getContextClassLoader();
+			context.classLoader = new WorkspaceClassLoader(parentClassLoader);
+		}
+
 		IJavaProject javaProject = JavaCore.create(project);
 		String[] classPathEntries = JavaRuntime.computeDefaultRuntimeClassPath(javaProject);
 
@@ -213,11 +221,11 @@ public class RuleBaseBuilderUtils {
 
 			// Other projects in the workspace (not runtime)
 			if (project.getWorkspace().getRoot().findContainersForLocationURI(uri).length > 0) {
-				workspaceClassLoader.add(url);
+				context.classLoader.add(url);
 			}
 		}
-		
-		Class<?> loadedClass = workspaceClassLoader.loadClass(className);
+
+		Class<?> loadedClass = context.classLoader.loadClass(className);
 		return (T) loadedClass.newInstance();
 	}
 }

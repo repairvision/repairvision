@@ -90,6 +90,11 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 	
 	private Button initializePatternsOptions;
 	
+	// TODO: Defines the context in which models are loaded/reloaded from the active
+	// development workspace. The classloader is closed and the models are removed
+	// from the EMF registry after closing the wizard (dispose()). Another (better)
+	// possibility would be to create and bound the context to a thread for the
+	// rulebase building.
 	private WorkspaceContext workspaceContext = new WorkspaceContext();
 
 	public RuleBaseProjectPageEditRules(String name, String[] availableDocumentTypes) {
