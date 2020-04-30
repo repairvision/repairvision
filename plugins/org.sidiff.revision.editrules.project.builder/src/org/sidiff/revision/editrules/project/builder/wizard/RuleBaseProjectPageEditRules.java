@@ -90,7 +90,7 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 	
 	private Button initializePatternsOptions;
 	
-	private WorkspaceContext workspaceContext;
+	private WorkspaceContext workspaceContext = new WorkspaceContext();
 
 	public RuleBaseProjectPageEditRules(String name, String[] availableDocumentTypes) {
 		super("RuleBaseProjectPageEditRules");
@@ -115,7 +115,6 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 		}
 
 		// Workspace registered constraints:
-		this.workspaceContext = new WorkspaceContext();
 		availableConstraints.addAll(RuleBaseBuilderUtils.getWorkspaceConstraints(
 				new HashSet<>(getSelectedDocumentTypes()), workspaceContext));
 		
