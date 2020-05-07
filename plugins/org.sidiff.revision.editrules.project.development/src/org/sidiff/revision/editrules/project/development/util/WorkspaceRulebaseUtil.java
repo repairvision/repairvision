@@ -1,8 +1,8 @@
-package org.sidiff.revision.editrules.project.builder.development.util;
+package org.sidiff.revision.editrules.project.development.util;
 
 import java.util.List;
 
-import org.sidiff.revision.editrules.project.builder.development.registry.WorkspaceRulebaseExtension;
+import org.sidiff.revision.editrules.project.development.registry.WorkspaceRulebaseExtension;
 import org.sidiff.revision.editrules.project.registry.RulebaseExtension;
 
 public class WorkspaceRulebaseUtil {

@@ -1,4 +1,4 @@
-package org.sidiff.revision.editrules.project.builder.development.registry;
+package org.sidiff.revision.editrules.project.development.registry;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.sidiff.revision.editrules.project.builder.development.registry;
+package org.sidiff.revision.editrules.project.development.registry;
 
 import org.sidiff.revision.editrules.project.registry.RulebaseExtension;
 

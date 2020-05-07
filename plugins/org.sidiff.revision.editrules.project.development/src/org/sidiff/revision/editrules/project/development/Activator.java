@@ -1,4 +1,4 @@
-package org.sidiff.revision.editrules.project.builder.development;
+package org.sidiff.revision.editrules.project.development;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
