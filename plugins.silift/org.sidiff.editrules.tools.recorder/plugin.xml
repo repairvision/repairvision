@@ -5,13 +5,23 @@
          point="org.eclipse.ui.commands">
       <command
             categoryId="org.sidiff.difference.ui.category.silift"
+            description="Creates a model difference based on two model versions."
+            id="org.sidiff.difference.symmetric.editrules.command.creatediff"
+            name="Creates Model Difference">
+      </command>
+      <command
+            categoryId="org.sidiff.difference.ui.category.silift"
             description="Creates an edit-rule based on a model difference."
             id="org.sidiff.difference.symmetric.editrules.command.createeditrule"
-            name="Create Example based Edit-Rule">
+            name="Create Edit-Rule based on Model Difference">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
+      <handler
+            class="org.sidiff.editrule.tools.recorder.handlers.CreateDifferenceHandler"
+            commandId="org.sidiff.difference.symmetric.editrules.command.creatediff">
+      </handler>
          <handler
             class="org.sidiff.editrule.tools.recorder.handlers.CreateEditRuleHandler"
             commandId="org.sidiff.difference.symmetric.editrules.command.createeditrule">
@@ -40,9 +50,13 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.silift.menu?after=org.sidiff.editrule.tools.separatorTop">
+            locationURI="popup:org.eclipse.emf.henshin.menu">
          <menu
-               label="Edit-Rule Recorder">
+               label="Example based Edit-Rule">
+            <command
+                  commandId="org.sidiff.difference.symmetric.editrules.command.creatediff"
+                  style="push">
+            </command>
             <command
                   commandId="org.sidiff.difference.symmetric.editrules.command.createeditrule"
                   style="push">

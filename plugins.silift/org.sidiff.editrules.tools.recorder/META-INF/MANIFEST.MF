@@ -3,14 +3,19 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Symmetric Difference to Edit Rule Converter
 Bundle-SymbolicName: org.sidiff.editrules.tools.recorder;singleton:=true
 Bundle-Version: 1.0.2.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Software Engineering Group
+Export-Package: org.sidiff.editrule.tools.recorder,
+ org.sidiff.editrule.tools.recorder.filters
 Require-Bundle: org.eclipse.core.commands,
  org.eclipse.core.resources,
  org.sidiff.common.henshin,
  org.sidiff.common.ui,
  org.sidiff.difference.symmetric,
- org.sidiff.editrule.tools
-Bundle-Vendor: Software Engineering Group, University of Siegen
-Export-Package: org.sidiff.editrule.tools.recorder,
- org.sidiff.editrule.tools.recorder.filters
+ org.sidiff.editrule.tools,
+ org.sidiff.matcher,
+ org.sidiff.matcher.adapter.emfcompare,
+ org.sidiff.revision.difference.derivation,
+ org.sidiff.correspondences.matchingmodel,
+ org.sidiff.common.utilities
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.sidiff.editrules.tools.recorder
