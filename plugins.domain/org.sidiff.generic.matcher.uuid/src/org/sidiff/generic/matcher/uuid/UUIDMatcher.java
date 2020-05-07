@@ -152,8 +152,8 @@ public class UUIDMatcher implements IMatcher {
 			resourceSetA = modelA.getResourceSet().getResources();
 			resourceSetB = modelB.getResourceSet().getResources();
 		} else {
-			resourceSetA = Collections.singletonList(modelB);
-			resourceSetB = Collections.singletonList(modelA);
+			resourceSetA = Collections.singletonList(modelA);
+			resourceSetB = Collections.singletonList(modelB);
 		}
 		
 		for (Resource resourceA : resourceSetA) {
