@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map;
 
+import org.sidiff.validation.constraint.project.registry.*;
+
 import org.sidiff.validation.constraint.interpreter.*;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.*;
 import org.sidiff.validation.constraint.interpreter.formulas.predicates.*;
@@ -14,75 +16,88 @@ import org.sidiff.validation.constraint.interpreter.formulas.quantifiers.*;
 import org.sidiff.validation.constraint.interpreter.formulas.unary.*;
 import org.sidiff.validation.constraint.interpreter.terms.*;
 import org.sidiff.validation.constraint.interpreter.terms.functions.*;
-import org.sidiff.validation.constraint.project.registry.*;
 
 public class UMLConsistencyRules implements IConstraintLibrary {
-
-	private static Set<String> domains = new LinkedHashSet<>();
-
-	private static Set<String> documentTypes = new LinkedHashSet<>();
 	
-	private static Map<String, IConstraint> rules = new LinkedHashMap<>();
-
-	static {
-		addDomain("http://www.eclipse.org/uml2/5.0.0/UML");
-	}
-
-	static {
-		addDocumentType("http://www.eclipse.org/uml2/5.0.0/UML");
-	}
-
-	static {
-		addConstraint(createInconsistency_MessageSignatureConstraint());
-		addConstraint(createInconsistency_MessageConnectionConstraint());
-		addConstraint(createInconsistency_UnimplementedRealizationConstraint());
-		addConstraint(createInconsistency_DanglingTransitionConstraint());
-		addConstraint(createInconsistency_TransitionWithoutTriggerConstraint());
-		addConstraint(createInconsistency_UntypedLifelineConstraint());
-		addConstraint(createInconsistency_UntypedPropertyConstraint());
-		addConstraint(createMissingFeature_CallEvent_OperationConstraint());
-		addConstraint(createMissingFeature_Trigger_EventConstraint());
-		addConstraint(createMissingFeature_ActionExecutionSpecification_actionConstraint());
-	}
+	private String name = "UMLConsistency Rules";
 	
-	private static void addDomain(String domain) {
-		domains.add(domain);
-	}
+	private Set<String> domains;
 	
-	private static void addDocumentType(String documentType) {
-		documentTypes.add(documentType);
-	}
-
-	private static void addConstraint(IConstraint rule) {
-		rules.put(rule.getName(), rule);
-	}
+	private Set<String> documentTypes;
+	
+	private Map<String, IConstraint> constraints;
 	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return "Test";
+		return name;
 	}
 	
 	@Override
 	public Set<String> getDomains() {
+		
+		if (domains == null) {
+			this.domains = new LinkedHashSet<>();
+			 
+			addDomain("http://www.eclipse.org/uml2/5.0.0/UML");
+		}
+		
 		return domains;
+	}
+	
+	private void addDomain(String domain) {
+		domains.add(domain);
 	}
 	
 	@Override
 	public Set<String> getDocumentTypes() {
+		
+		if (documentTypes == null) {
+			documentTypes = new LinkedHashSet<>();
+			
+			addDocumentType("http://www.eclipse.org/uml2/5.0.0/UML");
+		}
+		
 		return documentTypes;
 	}
-
+	
+	private void addDocumentType(String documentType) {
+		documentTypes.add(documentType);
+	}
+	
+	public Map<String, IConstraint> getConstraintEntries() {
+		
+		if (constraints == null) {
+			constraints = new LinkedHashMap<>();
+		
+			addConstraint(createInconsistency_MessageSignatureConstraint());
+			addConstraint(createInconsistency_MessageConnectionConstraint());
+			addConstraint(createInconsistency_UnimplementedRealizationConstraint());
+			addConstraint(createInconsistency_DanglingTransitionConstraint());
+			addConstraint(createInconsistency_TransitionWithoutTriggerConstraint());
+			addConstraint(createInconsistency_UntypedLifelineConstraint());
+			addConstraint(createInconsistency_UntypedPropertyConstraint());
+			addConstraint(createMissingFeature_CallEvent_OperationConstraint());
+			addConstraint(createMissingFeature_Trigger_EventConstraint());
+			addConstraint(createMissingFeature_ActionExecutionSpecification_actionConstraint());
+		}
+		
+		return constraints;
+	}
+	
+	private void addConstraint(IConstraint rule) {
+		constraints.put(rule.getName(), rule);
+	}
+	
 	@Override
 	public List<IConstraint> getConstraints() {
-		return new ArrayList<>(rules.values());
+		return new ArrayList<>(getConstraintEntries().values());
 	}
-
+	
 	@Override
 	public IConstraint getConstraint(String name) {
-		return rules.get(name);
+		return getConstraintEntries().get(name);
 	}
-
+	
 	public static IConstraint createInconsistency_MessageSignatureConstraint() {
 		
 		Variable v_m = new Variable(org.eclipse.uml2.uml.UMLPackage.Literals.MESSAGE, "m");

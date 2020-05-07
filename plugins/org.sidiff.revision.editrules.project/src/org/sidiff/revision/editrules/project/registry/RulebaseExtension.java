@@ -61,4 +61,47 @@ public class RulebaseExtension {
 		
 		return editRules;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((documentType == null) ? 0 : documentType.hashCode());
+		result = prime * result + ((folder == null) ? 0 : folder.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((projectName == null) ? 0 : projectName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RulebaseExtension other = (RulebaseExtension) obj;
+		if (documentType == null) {
+			if (other.documentType != null)
+				return false;
+		} else if (!documentType.equals(other.documentType))
+			return false;
+		if (folder == null) {
+			if (other.folder != null)
+				return false;
+		} else if (!folder.equals(other.folder))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (projectName == null) {
+			if (other.projectName != null)
+				return false;
+		} else if (!projectName.equals(other.projectName))
+			return false;
+		return true;
+	}
 }

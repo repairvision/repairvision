@@ -27,7 +27,7 @@ public class FirstOrderLogicParser extends AbstractAntlrParser {
 
 	@Override 
 	protected String getDefaultRuleName() {
-		return "ConstraintLibraryExtension";
+		return "ConstraintLibrary";
 	}
 
 	public FirstOrderLogicGrammarAccess getGrammarAccess() {

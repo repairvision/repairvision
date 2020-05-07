@@ -16,7 +16,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 import org.sidiff.revision.repair.api.RepairJob;
 import org.sidiff.revision.repair.ui.app.IResultChangedListener;
-import org.sidiff.revision.repair.ui.config.RepairDectectionEngineProvider;
+import org.sidiff.revision.repair.ui.config.UserInterfaceProvider;
 import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
 import org.sidiff.revision.repair.ui.controls.IRepairUI;
 
@@ -26,7 +26,7 @@ public class RepairView extends ViewPart implements IResultChangedListener<Repai
 
 	protected IRepairUI<?>  presentation;
 	
-	protected RepairDectectionEngineProvider repairEgineProvider;
+	protected UserInterfaceProvider repairEgineProvider;
 	
 	public RepairView() {
 	}
@@ -45,7 +45,7 @@ public class RepairView extends ViewPart implements IResultChangedListener<Repai
 		container.setLayout(gl_composite);
 
 		// Setup repair engine:
-		repairEgineProvider = RepairPreferencePage.getRepairDectectionProvider();
+		repairEgineProvider = RepairPreferencePage.getUserInterfaceProvider();
 		repairEgineProvider.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override

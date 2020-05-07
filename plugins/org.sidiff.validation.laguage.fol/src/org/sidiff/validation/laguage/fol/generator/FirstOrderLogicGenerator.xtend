@@ -88,7 +88,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		var domains = getDomainPackages(library)
 
 		'''
-		«IF (!packageName.empty)»package «libraryName»;«ENDIF»
+		«IF (!packageName.empty)»package «packageName»;«ENDIF»
 		
 		import java.util.ArrayList;
 		import java.util.LinkedHashMap;
@@ -109,7 +109,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		
 		public class «className» implements IConstraintLibrary {
 			
-			private String name = "«className»"
+			private String name = "«libraryName»";
 			
 			private Set<String> domains;
 			
@@ -136,7 +136,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 				return domains;
 			}
 			
-			private static void addDomain(String domain) {
+			private void addDomain(String domain) {
 				domains.add(domain);
 			}
 			
@@ -154,7 +154,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 				return documentTypes;
 			}
 			
-			private static void addDocumentType(String documentType) {
+			private void addDocumentType(String documentType) {
 				documentTypes.add(documentType);
 			}
 			
@@ -171,7 +171,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 				return constraints;
 			}
 			
-			private static void addConstraint(IConstraint rule) {
+			private void addConstraint(IConstraint rule) {
 				constraints.put(rule.getName(), rule);
 			}
 			

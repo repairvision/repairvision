@@ -11,7 +11,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.sidiff.revision.repair.ui.presentation.extension.RepairPresentationEntry;
 import org.sidiff.revision.repair.ui.presentation.extension.RepairPresentationLibrary;
 
-public class RepairDectectionEngineProvider implements ISelectionProvider {
+public class UserInterfaceProvider implements ISelectionProvider {
 	
 	public static String DEFAULT = "org.sidiff.revision.repair.ui.peo.presentation.integrated";
 //	public static String DEFAULT = "org.sidiff.revision.repair.ui.peo.presentation.ruleselection";

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map;
 
+import org.sidiff.validation.constraint.project.registry.*;
+
 import org.sidiff.validation.constraint.interpreter.*;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.*;
 import org.sidiff.validation.constraint.interpreter.formulas.predicates.*;
@@ -14,85 +16,98 @@ import org.sidiff.validation.constraint.interpreter.formulas.quantifiers.*;
 import org.sidiff.validation.constraint.interpreter.formulas.unary.*;
 import org.sidiff.validation.constraint.interpreter.terms.*;
 import org.sidiff.validation.constraint.interpreter.terms.functions.*;
-import org.sidiff.validation.constraint.project.registry.*;
 
 public class EcoreConsistencyRules implements IConstraintLibrary {
-
-	private static Set<String> domains = new LinkedHashSet<>();
-
-	private static Set<String> documentTypes = new LinkedHashSet<>();
 	
-	private static Map<String, IConstraint> rules = new LinkedHashMap<>();
-
-	static {
-		addDomain("http://www.eclipse.org/emf/2002/Ecore");
-	}
-
-	static {
-		addDocumentType("http://www.eclipse.org/emf/2002/Ecore");
-	}
-
-	static {
-		addConstraint(createTheAttributeIsNotTransientSoItMustHaveADataTypeThatIsSerializableConstraint());
-		addConstraint(createAClassThatIsAnInterfaceMustAlsoBeAbstractConstraint());
-		addConstraint(createAContainerReferenceMustHaveUpperBoundOfNotConstraint());
-		addConstraint(createAContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFromConstraint());
-		addConstraint(createAContainmentReferenceOfATypeWithAContainerFeaturethatRequiresInstancesToBeContainedElsewhereCannotBePopulatedConstraint());
-		addConstraint(createTheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesTypeConstraint());
-		addConstraint(createTheOppositeOfAContainmentReferenceMustNotBeAContainmentReferenceConstraint());
-		addConstraint(createTheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolvingConstraint());
-		addConstraint(createTheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOneConstraint());
-		addConstraint(createTheOppositeMayNotBeItsOwnOppositeConstraint());
-		addConstraint(createThereMayNotBeTwoOperationsAndWithTheSameSignatureConstraint());
-		addConstraint(createThereMayNotBeTwoParametersNamedConstraint());
-		addConstraint(createThereMayNotBeAnOperationWithTheSameSignatureAsAnAccessorMethodForFeatureConstraint());
-		addConstraint(createThereMayNotBeTwoFeaturesNamedConstraint());
-		addConstraint(createTwoFeaturesCannotBothBeIDsConstraint());
-		addConstraint(createThereMayNotBeTwoClassifiersNamedConstraint());
-		addConstraint(createTheTypedElementMustHaveATypeConstraint());
-		addConstraint(createTheRequiredFeatureOfMustBeSetConstraint());
-		addConstraint(createTheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifierConstraint());
-		addConstraint(createTheGenericTypeAssociatedWithTheClassifierMustNotHaveArgumentsWhenTheClassifierHasTypeParametersConstraint());
-	}
+	private String name = "Ecore Consistency Rules";
 	
-	private static void addDomain(String domain) {
-		domains.add(domain);
-	}
+	private Set<String> domains;
 	
-	private static void addDocumentType(String documentType) {
-		documentTypes.add(documentType);
-	}
-
-	private static void addConstraint(IConstraint rule) {
-		rules.put(rule.getName(), rule);
-	}
+	private Set<String> documentTypes;
+	
+	private Map<String, IConstraint> constraints;
 	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return "Test";
+		return name;
 	}
 	
 	@Override
 	public Set<String> getDomains() {
+		
+		if (domains == null) {
+			this.domains = new LinkedHashSet<>();
+			 
+			addDomain("http://www.eclipse.org/emf/2002/Ecore");
+		}
+		
 		return domains;
+	}
+	
+	private void addDomain(String domain) {
+		domains.add(domain);
 	}
 	
 	@Override
 	public Set<String> getDocumentTypes() {
+		
+		if (documentTypes == null) {
+			documentTypes = new LinkedHashSet<>();
+			
+			addDocumentType("http://www.eclipse.org/emf/2002/Ecore");
+		}
+		
 		return documentTypes;
 	}
-
+	
+	private void addDocumentType(String documentType) {
+		documentTypes.add(documentType);
+	}
+	
+	public Map<String, IConstraint> getConstraintEntries() {
+		
+		if (constraints == null) {
+			constraints = new LinkedHashMap<>();
+		
+			addConstraint(createTheAttributeIsNotTransientSoItMustHaveADataTypeThatIsSerializableConstraint());
+			addConstraint(createAClassThatIsAnInterfaceMustAlsoBeAbstractConstraint());
+			addConstraint(createAContainerReferenceMustHaveUpperBoundOfNotConstraint());
+			addConstraint(createAContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFromConstraint());
+			addConstraint(createAContainmentReferenceOfATypeWithAContainerFeaturethatRequiresInstancesToBeContainedElsewhereCannotBePopulatedConstraint());
+			addConstraint(createTheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesTypeConstraint());
+			addConstraint(createTheOppositeOfAContainmentReferenceMustNotBeAContainmentReferenceConstraint());
+			addConstraint(createTheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolvingConstraint());
+			addConstraint(createTheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOneConstraint());
+			addConstraint(createTheOppositeMayNotBeItsOwnOppositeConstraint());
+			addConstraint(createThereMayNotBeTwoOperationsAndWithTheSameSignatureConstraint());
+			addConstraint(createThereMayNotBeTwoParametersNamedConstraint());
+			addConstraint(createThereMayNotBeAnOperationWithTheSameSignatureAsAnAccessorMethodForFeatureConstraint());
+			addConstraint(createThereMayNotBeTwoFeaturesNamedConstraint());
+			addConstraint(createTwoFeaturesCannotBothBeIDsConstraint());
+			addConstraint(createThereMayNotBeTwoClassifiersNamedConstraint());
+			addConstraint(createTheTypedElementMustHaveATypeConstraint());
+			addConstraint(createTheRequiredFeatureOfMustBeSetConstraint());
+			addConstraint(createTheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifierConstraint());
+			addConstraint(createTheGenericTypeAssociatedWithTheClassifierMustNotHaveArgumentsWhenTheClassifierHasTypeParametersConstraint());
+		}
+		
+		return constraints;
+	}
+	
+	private void addConstraint(IConstraint rule) {
+		constraints.put(rule.getName(), rule);
+	}
+	
 	@Override
 	public List<IConstraint> getConstraints() {
-		return new ArrayList<>(rules.values());
+		return new ArrayList<>(getConstraintEntries().values());
 	}
-
+	
 	@Override
 	public IConstraint getConstraint(String name) {
-		return rules.get(name);
+		return getConstraintEntries().get(name);
 	}
-
+	
 	public static IConstraint createTheAttributeIsNotTransientSoItMustHaveADataTypeThatIsSerializableConstraint() {
 		
 		Variable v_attribute = new Variable(org.eclipse.emf.ecore.EcorePackage.Literals.EATTRIBUTE, "attribute");

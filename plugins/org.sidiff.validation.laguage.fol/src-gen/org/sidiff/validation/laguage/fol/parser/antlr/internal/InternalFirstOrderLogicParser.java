@@ -98,7 +98,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
         @Override
         protected String getFirstRuleName() {
-        	return "ConstraintLibraryExtension";
+        	return "ConstraintLibrary";
        	}
 
        	@Override
