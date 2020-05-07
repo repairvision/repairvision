@@ -50,4 +50,4 @@ public interface ConstraintLibrary extends EObject
    */
   EList<Constraint> getConstraints();
 
-} // ConstraintLibrary
+} // ConstraintLibraryExtension

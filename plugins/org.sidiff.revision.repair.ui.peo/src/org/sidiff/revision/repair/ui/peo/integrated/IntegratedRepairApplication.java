@@ -20,14 +20,12 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.swt.widgets.Display;
-import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.history.analysis.tracing.HistoryModelDatabase;
 import org.sidiff.history.analysis.validation.FOLValidator;
 import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
-import org.sidiff.revision.editrules.project.library.RulebaseLibrary;
-import org.sidiff.revision.editrules.project.library.RulebaseUtil;
+import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 import org.sidiff.revision.repair.api.IRepairFacade;
 import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.PEORepairJob;
@@ -98,7 +96,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				// Search inconsistencies:
 				validations = ValidationFacade.validate(
 						getModelB().getAllContents(), 
-						ValidationFacade.getConstraints(getModelB()));
+						getConstraints());
 				
 				// Update UI:
 				Display.getDefault().syncExec(() -> {
@@ -143,8 +141,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				// Load edit rules:
 				// TODO: cache edit rules?
 //				if (editRules == null) {
-					editRules = RulebaseUtil.eLoadEditRules(
-							RulebaseLibrary.getEditRules(DocumentType.getDocumentType(getModelB())), false);
+					editRules = RulebaseUtil.eLoadEditRules(getEditRules(), false);
 //				}
 				
 				// Calculate repairs:

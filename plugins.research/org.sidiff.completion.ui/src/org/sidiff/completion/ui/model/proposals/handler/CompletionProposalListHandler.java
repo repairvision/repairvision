@@ -10,8 +10,8 @@ import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.completion.ui.model.proposals.recognition.ModelCompletionProposalGenerator;
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
-import org.sidiff.revision.editrules.project.library.RulebaseLibrary;
-import org.sidiff.revision.editrules.project.library.RulebaseUtil;
+import org.sidiff.revision.editrules.project.registry.RulebaseRegistry;
+import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 
 public class CompletionProposalListHandler extends AbstractHandler {
 	
@@ -31,7 +31,7 @@ public class CompletionProposalListHandler extends AbstractHandler {
 			
 			// TODO: Cache
 			List<Rule> editRules = RulebaseUtil.eLoadEditRules(
-					RulebaseLibrary.getRulebases(".*?Completion.*", DocumentType.getDocumentType(context.get(0))), false);
+					RulebaseRegistry.getRulebases(".*?Completion.*", DocumentType.getDocumentType(context.get(0))), false);
 			
 			// TODO: Scheduling
 			proposalList.showPopupOnCursor();

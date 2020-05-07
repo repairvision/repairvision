@@ -1,10 +1,10 @@
-package org.sidiff.validation.constraint.project.library.util;
+package org.sidiff.validation.constraint.project.registry.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.project.library.IConstraintLibrary;
+import org.sidiff.validation.constraint.project.registry.IConstraintLibrary;
 
 public class ConstraintLibraryUtil {
 

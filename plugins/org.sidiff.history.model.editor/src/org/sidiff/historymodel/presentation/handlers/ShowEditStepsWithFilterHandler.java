@@ -27,8 +27,8 @@ import org.sidiff.historymodel.presentation.util.HistoryModelEditorTools;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.project.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.project.library.util.ConstraintLibraryUtil;
+import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.project.registry.util.ConstraintLibraryUtil;
 
 public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 	

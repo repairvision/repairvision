@@ -18,6 +18,7 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary
 import org.sidiff.validation.laguage.fol.util.EMFMetaAccessUtil
 import org.sidiff.validation.laguage.fol.util.GeneratorUtil
+import org.sidiff.common.utilities.ui.util.NameUtil
 
 /**
  * Generates code from your model files on save.
@@ -40,18 +41,23 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 	}
 
 	private def generateJavaClass(ConstraintLibrary library, IFileSystemAccess2 fsa) {
+		val libraryName = library.libraryName
 		val className = library.javaClassName
 		val packageName = library.javaPackageName
 
 		fsa.generateFile(
 			packageName.replace('.', '/') + '/' + className + '.java',
-			library.toJavaCode(className, packageName))
+			library.toJavaCode(libraryName, className, packageName))
 		
 		if (packageName.empty) {
 			return className;
 		} else {
 			return packageName + '.' + className
 		}
+	}
+	
+	private def getLibraryName(ConstraintLibrary library) {
+		return NameUtil.beautifyName(library.eResource.URI.trimFileExtension.lastSegment)
 	}
 	
 	private def getJavaClassName(ConstraintLibrary library) {
@@ -78,11 +84,11 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		return packageName
 	}
 	
-	private def toJavaCode(ConstraintLibrary library, String className, String packageName) {
+	private def toJavaCode(ConstraintLibrary library, String libraryName, String className, String packageName) {
 		var domains = getDomainPackages(library)
 
 		'''
-		«IF (!packageName.empty)»package «packageName»;«ENDIF»
+		«IF (!packageName.empty)»package «libraryName»;«ENDIF»
 		
 		import java.util.ArrayList;
 		import java.util.LinkedHashMap;
@@ -91,7 +97,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		import java.util.Set;
 		import java.util.Map;
 		
-		import org.sidiff.validation.constraint.project.library.*;
+		import org.sidiff.validation.constraint.project.registry.*;
 		
 		import org.sidiff.validation.constraint.interpreter.*;
 		import org.sidiff.validation.constraint.interpreter.formulas.binary.*;
@@ -102,63 +108,83 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 		import org.sidiff.validation.constraint.interpreter.terms.functions.*;
 		
 		public class «className» implements IConstraintLibrary {
-		
-			private static Set<String> domains = new LinkedHashSet<>();
-		
-			private static Set<String> documentTypes = new LinkedHashSet<>();
 			
-			private static Map<String, IConstraint> rules = new LinkedHashMap<>();
-		
-			static {
-				«FOR domain : library.domains»
-				addDomain("«domain.domain»");
-				«ENDFOR»
+			private String name = "«className»"
+			
+			private Set<String> domains;
+			
+			private Set<String> documentTypes;
+			
+			private Map<String, IConstraint> constraints;
+			
+			@Override
+			public String getName() {
+				return name;
 			}
-		
-			static {
-				«FOR documentType : getDocumentTypes(library)»
-				addDocumentType("«documentType»");
-				«ENDFOR»
-			}
-		
-			static {
-				«FOR constraint : library.constraints»
-				addConstraint(create«constraint.name»Constraint());
-				«ENDFOR»
+			
+			@Override
+			public Set<String> getDomains() {
+				
+				if (domains == null) {
+					this.domains = new LinkedHashSet<>();
+					 
+					«FOR domain : library.domains»
+					addDomain("«domain.domain»");
+					«ENDFOR»
+				}
+				
+				return domains;
 			}
 			
 			private static void addDomain(String domain) {
 				domains.add(domain);
 			}
 			
+			@Override
+			public Set<String> getDocumentTypes() {
+				
+				if (documentTypes == null) {
+					documentTypes = new LinkedHashSet<>();
+					
+					«FOR documentType : getDocumentTypes(library)»
+					addDocumentType("«documentType»");
+					«ENDFOR»
+				}
+				
+				return documentTypes;
+			}
+			
 			private static void addDocumentType(String documentType) {
 				documentTypes.add(documentType);
 			}
-		
+			
+			public Map<String, IConstraint> getConstraintEntries() {
+				
+				if (constraints == null) {
+					constraints = new LinkedHashMap<>();
+				
+					«FOR constraint : library.constraints»
+					addConstraint(create«constraint.name»Constraint());
+					«ENDFOR»
+				}
+				
+				return constraints;
+			}
+			
 			private static void addConstraint(IConstraint rule) {
-				rules.put(rule.getName(), rule);
+				constraints.put(rule.getName(), rule);
 			}
 			
-			@Override
-			public Set<String> getDomains() {
-				return domains;
-			}
-			
-			@Override
-			public Set<String> getDocumentTypes() {
-				return documentTypes;
-			}
-		
 			@Override
 			public List<IConstraint> getConstraints() {
-				return new ArrayList<>(rules.values());
+				return new ArrayList<>(getConstraintEntries().values());
 			}
-		
+			
 			@Override
 			public IConstraint getConstraint(String name) {
-				return rules.get(name);
+				return getConstraintEntries().get(name);
 			}
-
+			
 			«FOR constraint : library.constraints»
 			«new FirstOrderLogicGeneratorConstraint(domains).doGenerate(constraint)»
 			
@@ -209,7 +235,7 @@ class FirstOrderLogicGenerator extends AbstractGenerator {
 //			<!-- Generated file, do not modify. -->
 //			<plugin>
 //			   <extension
-//			         point="org.sidiff.validation.constraint.project.library">
+//			         point="org.sidiff.validation.constraint.project.registry">
 //			      <library
 //			            library="«extensionClass»">
 //			      </library>

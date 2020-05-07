@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map;
 
-import org.sidiff.validation.constraint.project.library.*;
-
 import org.sidiff.validation.constraint.interpreter.*;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.*;
 import org.sidiff.validation.constraint.interpreter.formulas.predicates.*;
@@ -16,6 +14,7 @@ import org.sidiff.validation.constraint.interpreter.formulas.quantifiers.*;
 import org.sidiff.validation.constraint.interpreter.formulas.unary.*;
 import org.sidiff.validation.constraint.interpreter.terms.*;
 import org.sidiff.validation.constraint.interpreter.terms.functions.*;
+import org.sidiff.validation.constraint.project.registry.*;
 
 public class UMLConsistencyRules implements IConstraintLibrary {
 
@@ -56,6 +55,12 @@ public class UMLConsistencyRules implements IConstraintLibrary {
 
 	private static void addConstraint(IConstraint rule) {
 		rules.put(rule.getName(), rule);
+	}
+	
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Test";
 	}
 	
 	@Override

@@ -35,7 +35,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 		//// NOTES: 
 		//// - escape keywords with ^keyword
 		//// - http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
-		//ConstraintLibrary:
+		//ConstraintLibraryExtension:
 		//	domains+=Domain*
 		//	constraints+=Constraint*;
 		@Override public ParserRule getRule() { return rule; }
@@ -1768,7 +1768,7 @@ public class FirstOrderLogicGrammarAccess extends AbstractGrammarElementFinder {
 	//// NOTES: 
 	//// - escape keywords with ^keyword
 	//// - http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
-	//ConstraintLibrary:
+	//ConstraintLibraryExtension:
 	//	domains+=Domain*
 	//	constraints+=Constraint*;
 	public ConstraintLibraryElements getConstraintLibraryAccess() {

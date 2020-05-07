@@ -39,14 +39,14 @@ import org.eclipse.swt.widgets.Text;
 import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.common.utilities.java.StringUtil;
 import org.sidiff.revision.editrules.project.builder.Activator;
-import org.sidiff.revision.editrules.project.builder.util.RuleBaseBuilderUtils;
-import org.sidiff.revision.editrules.project.builder.util.RuleBaseBuilderUtils.WorkspaceContext;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.project.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.project.library.IConstraintLibrary;
+import org.sidiff.validation.constraint.project.development.registry.WorkspaceConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.project.development.registry.WorkspaceConstraintLibraryRegistry.WorkspaceContext;
+import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.project.registry.IConstraintLibrary;
 
 /**
- * Rulebase Project Page: Creates a new rulebase containing edit rules for a specific document type. 
+ * RulebaseExtension Project Page: Creates a new rulebase containing edit rules for a specific document type. 
  * 
  * @author Manuel Ohrndorf
  */
@@ -120,7 +120,7 @@ public class RuleBaseProjectPageEditRules extends WizardPage {
 		}
 
 		// Workspace registered constraints:
-		availableConstraints.addAll(RuleBaseBuilderUtils.getWorkspaceConstraints(
+		availableConstraints.addAll(WorkspaceConstraintLibraryRegistry.getConstraints(
 				new HashSet<>(getSelectedDocumentTypes()), workspaceContext));
 		
 		Collections.sort(availableConstraints, new Comparator<IConstraint>() {

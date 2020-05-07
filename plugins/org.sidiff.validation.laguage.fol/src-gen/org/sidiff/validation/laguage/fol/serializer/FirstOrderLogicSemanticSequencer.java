@@ -350,7 +350,7 @@ public class FirstOrderLogicSemanticSequencer extends AbstractDelegatingSemantic
 	
 	/**
 	 * Contexts:
-	 *     ConstraintLibrary returns ConstraintLibrary
+	 *     ConstraintLibraryExtension returns ConstraintLibraryExtension
 	 *
 	 * Constraint:
 	 *     ((domains+=Domain+ constraints+=Constraint+) | constraints+=Constraint+)?

@@ -11,8 +11,8 @@ import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.validation.constraint.api.util.ValidationIterator;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.project.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.project.library.util.ConstraintLibraryUtil;
+import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.project.registry.util.ConstraintLibraryUtil;
 
 public class TestApplication implements IApplication {
 	

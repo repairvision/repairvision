@@ -1,12 +1,15 @@
 package org.sidiff.revision.repair.ui.config;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -23,6 +26,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.sidiff.common.utilities.emf.DocumentType;
@@ -35,19 +40,24 @@ import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.derivation.api.util.TechnicalDifferenceUtils;
 import org.sidiff.revision.difference.derivation.util.TechnicalDifferenceBuilderUtil;
+import org.sidiff.revision.editrules.project.builder.development.registry.WorkspaceRulebaseRegistry;
+import org.sidiff.revision.editrules.project.registry.RulebaseExtension;
+import org.sidiff.revision.editrules.project.registry.RulebaseRegistry;
 import org.sidiff.revision.repair.ui.presentation.extension.RepairPresentationEntry;
 import org.sidiff.revision.repair.ui.presentation.extension.RepairPresentationLibrary;
+import org.sidiff.validation.constraint.project.registry.ConstraintLibraryExtension;
+import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;
 
 // TODO: IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 public class RepairPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
 	public static final String ID = "org.sidiff.revision.repair.ui.config.mainpage";
 	
-	protected static final String SETUP_MATCHERS_MESSAGE = "Please add some models!";
+	protected static final String SETUP_MATCHERS_MESSAGE = "Please select some models!";
 	
 	protected static final String EMPTY_MATCHERS_MESSAGE = "No matchers available for the given model type.";
 	
-	protected static final String SETUP_DIFFERENCE_BUILDER_MESSAGE = "Please add some models!";
+	protected static final String SETUP_DIFFERENCE_BUILDER_MESSAGE = "Please select some models!";
 	
 	protected static final String EMPTY_DIFFERENCE_BUILDER_MESSAGE = "No technical difference builder available for the given model type.";
 	
@@ -65,6 +75,10 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	
 	protected static RepairDectectionEngineProvider repairEngine = new RepairDectectionEngineProvider();
 	
+	protected static List<RulebaseExtension> rulebases;
+	
+	protected static List<ConstraintLibraryExtension> constraintLibraries;
+	
 	//// UI ////
 	
 	private ComboViewer viewer_matching;
@@ -74,6 +88,8 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	private Composite config_container;
 	
 	private ComboViewer viewer_repair;
+	private Table editRulesTable;
+	private Table validationTable;
 	
 	/**
 	 * Create the preference page.
@@ -92,6 +108,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	 * 
 	 * @param parent
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Control createContents(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
@@ -235,48 +252,132 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		}
 		
 		/*
-		 *  Repair detection:
+		 *  Repair:
 		 */
-		Group grpRepairDetection = new Group(container, SWT.NONE);
+		Group grpRepair = new Group(container, SWT.NONE);
 		{
-			grpRepairDetection.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-			grpRepairDetection.setText("Repair Detection");
-			grpRepairDetection.setLayout(new GridLayout(1, false));
+			grpRepair.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+			grpRepair.setText("Repair");
+			grpRepair.setLayout(new GridLayout(2, false));
 			
-			viewer_repair = new ComboViewer(grpRepairDetection, SWT.NONE);
-			Combo combo = viewer_repair.getCombo();
-			combo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-			combo.setBounds(0, 0, 91, 23);
-			
-			// Provider:
-			viewer_repair.setComparator(new ViewerComparator());
-			viewer_repair.setContentProvider(ArrayContentProvider.getInstance());
-			viewer_repair.setLabelProvider(new LabelProvider() {
-				
-				@Override
-				public String getText(Object element) {
-					
-					if (element instanceof RepairPresentationEntry) {
-						return ((RepairPresentationEntry) element).getName();
+			Label lblInterface = new Label(grpRepair, SWT.NONE);
+			{
+				lblInterface.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				lblInterface.setText("User Interface: ");
+
+				viewer_repair = new ComboViewer(grpRepair, SWT.NONE);
+				Combo combo = viewer_repair.getCombo();
+				combo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+				combo.setBounds(0, 0, 91, 23);
+
+				// Provider:
+				viewer_repair.setComparator(new ViewerComparator());
+				viewer_repair.setContentProvider(ArrayContentProvider.getInstance());
+				viewer_repair.setLabelProvider(new LabelProvider() {
+
+					@Override
+					public String getText(Object element) {
+
+						if (element instanceof RepairPresentationEntry) {
+							return ((RepairPresentationEntry) element).getName();
+						}
+
+						return super.getText(element);
 					}
-					
-					return super.getText(element);
-				}
-			});
-			
-			// Set input:
-			viewer_repair.setInput(RepairPresentationLibrary.getEntries().toArray());
-			
-			// Set selection:
-			viewer_repair.setSelection(repairEngine.getSelection());
-			viewer_repair.addSelectionChangedListener(event -> {
-				repairEngine.setSelection(event.getSelection());
-			});
+				});
+
+				// Set input:
+				viewer_repair.setInput(RepairPresentationLibrary.getEntries().toArray());
+
+				// Set selection:
+				viewer_repair.setSelection(repairEngine.getSelection());
+
+				viewer_repair.addSelectionChangedListener(event -> {
+					repairEngine.setSelection(event.getSelection());
+				});
+			}
+
+			Label lblEditRules = new Label(grpRepair, SWT.NONE);
+			{
+				lblEditRules.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+				lblEditRules.setText("Edit Rules:");
+
+				CheckboxTableViewer editRulesViewer = CheckboxTableViewer.newCheckList(grpRepair, SWT.BORDER | SWT.FULL_SELECTION);
+				editRulesTable = editRulesViewer.getTable();
+				editRulesTable.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 2, 1));
+				
+				// Provider:
+				editRulesViewer.setComparator(new ViewerComparator());
+				editRulesViewer.setContentProvider(ArrayContentProvider.getInstance());
+				editRulesViewer.setLabelProvider(new LabelProvider() {
+
+					@Override
+					public String getText(Object element) {
+
+						if (element instanceof RulebaseExtension) {
+							RulebaseExtension rulebase = (RulebaseExtension) element;
+							return rulebase.getName() + " (" + rulebase.getDocumentType() + ")";
+						}
+
+						return super.getText(element);
+					}
+				});
+				
+				// Set input:
+				List<RulebaseExtension> availableRulebases = new ArrayList<>(RulebaseRegistry.getRulebases());
+				availableRulebases.addAll(WorkspaceRulebaseRegistry.getRulebases());
+				
+				editRulesViewer.setInput(availableRulebases.toArray());
+
+				// Set selection:
+				editRulesViewer.setAllChecked(true);
+
+				editRulesViewer.addSelectionChangedListener(event -> {
+					rulebases = editRulesViewer.getStructuredSelection().toList();
+				});
+			}
+
+			Label lblValidation = new Label(grpRepair, SWT.NONE);
+			{
+				lblValidation.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+				lblValidation.setText("Constraints:");
+
+				CheckboxTableViewer validationViewer = CheckboxTableViewer.newCheckList(grpRepair, SWT.BORDER | SWT.FULL_SELECTION);
+				validationTable = validationViewer.getTable();
+				validationTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+				
+				// Provider:
+				validationViewer.setComparator(new ViewerComparator());
+				validationViewer.setContentProvider(ArrayContentProvider.getInstance());
+				validationViewer.setLabelProvider(new LabelProvider() {
+
+					@Override
+					public String getText(Object element) {
+
+						if (element instanceof ConstraintLibraryExtension) {
+							ConstraintLibraryExtension library = (ConstraintLibraryExtension) element;
+							return library.getName() + " (" + library.getDocumentTypes().stream().collect(Collectors.joining (", ")) + ")";
+						}
+
+						return super.getText(element);
+					}
+				});
+				
+				// Set input:
+				validationViewer.setInput(ConstraintLibraryRegistry.getConstraintLibraries().toArray());
+
+				// Set selection:
+				validationViewer.setAllChecked(true);
+
+				validationViewer.addSelectionChangedListener(event -> {
+					constraintLibraries = validationViewer.getStructuredSelection().toList();
+				});
+			}
 		}
 
 		return container;
 	}
-	
+
 	private void appendMatcherSettings(Composite parent) {
 		
 		if (config_container != null) {
@@ -408,6 +509,14 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	
 	public static RepairDectectionEngineProvider getRepairDectectionProvider() {
 		return repairEngine;
+	}
+	
+	public static List<RulebaseExtension> getRulebases() {
+		return rulebases;
+	}
+	
+	public static List<ConstraintLibraryExtension> getConstraintLibraries() {
+		return constraintLibraries;
 	}
 	
 	public static void populateSettings(Resource model) {

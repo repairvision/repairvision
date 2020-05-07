@@ -58,7 +58,7 @@ public class EvaluationDataSets {
 	public static String print() {
 		StringBuilder objString = new StringBuilder();
 		
-		objString.append("Rulebase: " + RULEBASE).append("\n\n");
+		objString.append("RulebaseExtension: " + RULEBASE).append("\n\n");
 		objString.append("Result Report: " + RESULT_REPORT).append("\n\n");
 		objString.append("Data Set: " + DATA_SET).append("\n");
 		objString.append("Original Data Set: " + ORIGINAL_DATA_SET).append("\n");

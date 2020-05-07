@@ -1,4 +1,4 @@
-package org.sidiff.revision.editrules.project.library;
+package org.sidiff.revision.editrules.project.registry.util;
 
 import java.util.ArrayList;
 import java.util.Collection;

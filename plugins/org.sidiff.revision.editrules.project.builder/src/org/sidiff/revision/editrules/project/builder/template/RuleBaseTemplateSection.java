@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -51,20 +50,11 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 	
 	private RuleBaseProjectPageEditRules pageEditRules;
 	
-	private Map<String, EPackage> workspaceEPackages;
-	
 	public RuleBaseTemplateSection() {
 		addOption(KEY_PACKAGE_NAME, RuleBaseTemplateSection.KEY_PACKAGE_NAME, (String) null, 0);
 		setPageCount(1);
 	}
 	
-	private Map<String, EPackage> getWorkspaceEPackages() {
-		if (workspaceEPackages == null) {
-			workspaceEPackages = EMFMetaAccessUtil.getWorkspaceEPackages();
-		}
-		return workspaceEPackages;
-	}
-
 	@Override
 	public String getUsedExtensionPoint() {
 		return RuleBasePlugin.EXTENSION_POINT_ID;
@@ -128,8 +118,6 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 	@Override
 	public void addPages(Wizard wizard) {
 		Set<String> availableDocumentTypes = new HashSet<>(DocumentType.getAvailableDocumentTypes());
-		availableDocumentTypes.addAll(getWorkspaceEPackages().keySet());
-		
 		String[] sortedAvailableDocumentTypes = availableDocumentTypes.toArray(new String[0]);
 		Arrays.sort(sortedAvailableDocumentTypes);
 		
@@ -178,7 +166,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 	}
 	
 	private EPackage getEPackage(String documentType) {
-		return EMFMetaAccessUtil.getEPackage(documentType, getWorkspaceEPackages());
+		return EMFMetaAccessUtil.getEPackage(documentType);
 	}
 	
 	private static String getFormattedPackageName(String pluginID) {

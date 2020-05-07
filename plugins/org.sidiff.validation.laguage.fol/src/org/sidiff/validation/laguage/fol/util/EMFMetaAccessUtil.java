@@ -63,10 +63,14 @@ public class EMFMetaAccessUtil {
 		}
 	}
 	
+	public static EPackage getEPackage(String nsURI) {
+		return getEPackage(nsURI, null);
+	}
+	
 	public static EPackage getEPackage(String nsURI, Map<String, EPackage> workspaceEPackages) {
 	
 		// Prefer development models in workspace over registered runtime models.
-		if (workspaceEPackages.containsKey(nsURI)) {
+		if ((workspaceEPackages != null) && workspaceEPackages.containsKey(nsURI)) {
 			return workspaceEPackages.get(nsURI);
 		} else {
 			return EPackage.Registry.INSTANCE.getEPackage(nsURI);

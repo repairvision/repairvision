@@ -19,8 +19,8 @@ import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
-import org.sidiff.validation.constraint.project.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.project.library.util.ConstraintLibraryUtil;
+import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.project.registry.util.ConstraintLibraryUtil;
 
 /**
  * Access to the constraint validation.

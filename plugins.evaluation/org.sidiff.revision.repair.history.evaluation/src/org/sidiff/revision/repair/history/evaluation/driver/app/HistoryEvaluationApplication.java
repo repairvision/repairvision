@@ -19,8 +19,8 @@ import org.sidiff.matcher.IMatcher;
 import org.sidiff.revision.difference.derivation.GenericTechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
-import org.sidiff.revision.editrules.project.library.RulebaseLibrary;
-import org.sidiff.revision.editrules.project.library.RulebaseUtil;
+import org.sidiff.revision.editrules.project.registry.RulebaseRegistry;
+import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 import org.sidiff.revision.repair.api.IRepairFacade;
 import org.sidiff.revision.repair.api.peo.PEORepairFacade;
 import org.sidiff.revision.repair.api.peo.PEORepairJob;
@@ -51,7 +51,7 @@ public class HistoryEvaluationApplication implements IApplication {
 				HistoryInfo historyInfo = new HistoryInfo(history);
 				
 				// load edit rules:
-				List<URI> rulebase = RulebaseLibrary.getRulebase(EvaluationDataSets.RULEBASE);
+				List<URI> rulebase = RulebaseRegistry.getRulebase(EvaluationDataSets.RULEBASE);
 				Collection<Rule> editRules = RulebaseUtil.eLoadEditRules(rulebase, false);
 				
 				System.out.println("EDIT RULES: " + editRules.size());

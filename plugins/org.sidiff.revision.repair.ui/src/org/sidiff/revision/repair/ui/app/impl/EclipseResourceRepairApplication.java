@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.editrules.project.registry.RulebaseRegistry;
 import org.sidiff.revision.repair.api.IRepairSettings;
 import org.sidiff.revision.repair.api.RepairJob;
 import org.sidiff.revision.repair.ui.app.IRepairApplication;
 import org.sidiff.revision.repair.ui.app.IResultChangedListener;
 import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
+import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;
 
 public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F extends IRepairSettings> implements IRepairApplication<J, F> {
 
@@ -113,6 +117,14 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 	
 	protected String getDoumentType() {
 		return RepairPreferencePage.getDoumentType();
+	}
+	
+	protected List<URI> getEditRules() {
+		return RulebaseRegistry.getEditRules(getDoumentType(), RepairPreferencePage.getRulebases());
+	}
+	
+	protected List<IConstraint> getConstraints() {
+		return ConstraintLibraryRegistry.getConstraints(getDoumentType(), RepairPreferencePage.getConstraintLibraries());
 	}
 	
 	@Override

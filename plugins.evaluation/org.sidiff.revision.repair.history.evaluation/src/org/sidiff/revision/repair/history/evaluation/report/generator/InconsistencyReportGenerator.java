@@ -3,7 +3,6 @@ package org.sidiff.revision.repair.history.evaluation.report.generator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,9 +17,10 @@ import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.revision.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.project.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.project.library.IConstraintLibrary;
-import org.sidiff.validation.constraint.project.library.util.ConstraintLibraryUtil;
+import org.sidiff.validation.constraint.project.registry.ConstraintLibraryExtension;
+import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.project.registry.IConstraintLibrary;
+import org.sidiff.validation.constraint.project.registry.util.ConstraintLibraryUtil;
 
 public class InconsistencyReportGenerator {
 	
@@ -105,9 +105,9 @@ public class InconsistencyReportGenerator {
 		// Supported constraints:
 		List<String> supportedConstraints = new ArrayList<>();
 		
-		List<IConstraintLibrary> libraries = ConstraintLibraryRegistry.getLibraries().values().stream()
-				.flatMap(Collection::stream).collect(Collectors.toList());
-		
+		List<IConstraintLibrary> libraries = ConstraintLibraryRegistry.getConstraintLibraries().stream()
+				.map(ConstraintLibraryExtension::getConstraintLibrary).collect(Collectors.toList());
+
 		for (String constraintName : inconsistencyLog.getColumn(COL_INCONSISTENCY[0], String.class)) {
 			IConstraint constraint = ConstraintLibraryUtil.getConsistencyRule(libraries, constraintName);
 			

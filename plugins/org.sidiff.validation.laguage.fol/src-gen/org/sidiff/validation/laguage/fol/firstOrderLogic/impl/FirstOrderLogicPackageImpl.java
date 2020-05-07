@@ -1828,7 +1828,7 @@ public class FirstOrderLogicPackageImpl extends EPackageImpl implements FirstOrd
     variableRefEClass.getESuperTypes().add(this.getTerm());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(constraintLibraryEClass, ConstraintLibrary.class, "ConstraintLibrary", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(constraintLibraryEClass, ConstraintLibrary.class, "ConstraintLibraryExtension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConstraintLibrary_Domains(), this.getDomain(), null, "domains", null, 0, -1, ConstraintLibrary.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConstraintLibrary_Constraints(), this.getConstraint(), null, "constraints", null, 0, -1, ConstraintLibrary.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

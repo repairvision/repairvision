@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.project.library;
+package org.sidiff.validation.constraint.project.registry;
 
 import java.util.List;
 import java.util.Set;
@@ -7,6 +7,11 @@ import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public interface IConstraintLibrary {
 
+	/**
+	 * @return The name of the constraint library.
+	 */
+	String getName();
+	
 	/**
 	 * @return The domain meta-model(s) used by constraints of this library.
 	 */
