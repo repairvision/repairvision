@@ -103,7 +103,7 @@ public class SymmetricDifferenceUtil {
 	public static URI getDifferenceURI(URI modelA, URI modelB) {
 		return URI.createURI(
 				modelA.trimFileExtension().toString() + "_to_" +
-				modelB.trimFileExtension().appendFileExtension(".symmetric").lastSegment());
+				modelB.trimFileExtension().appendFileExtension("symmetric").lastSegment());
 	}
 	
 	public static boolean validateChange(Change change) {
