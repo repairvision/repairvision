@@ -3,9 +3,9 @@ package org.sidiff.history.revision.util;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.common.emf.access.Scope;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
-import org.sidiff.difference.technical.api.settings.DifferenceSettings;
-import org.sidiff.difference.technical.util.TechnicalDifferenceBuilderUtil;
 import org.sidiff.generic.matcher.uuid.UUIDMatcher;
+import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.derivation.util.TechnicalDifferenceBuilderUtil;
 
 public class SettingsUtil {
 
@@ -25,7 +25,6 @@ public class SettingsUtil {
 		
 		settings.setMatcher(new UUIDMatcher());
 		settings.setTechBuilder(TechnicalDifferenceBuilderUtil.getGenericTechnicalDifferenceBuilder());
-		settings.setMergeImports(false);
 		
 		return settings;
 	}

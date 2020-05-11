@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.sidiff.graphpattern.Pattern#getParameters <em>Parameters</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.Pattern#getAssignments <em>Assignments</em>}</li>
  *   <li>{@link org.sidiff.graphpattern.Pattern#getBundle <em>Bundle</em>}</li>
- *   <li>{@link org.sidiff.graphpattern.Pattern#getSubpatterns <em>Subpatterns</em>}</li>
+ *   <li>{@link org.sidiff.graphpattern.Pattern#getPatterns <em>Patterns</em>}</li>
  * </ul>
  *
  * @see org.sidiff.graphpattern.GraphpatternPackage#getPattern()
@@ -95,20 +95,24 @@ public interface Pattern extends PatternElement {
 	Bundle getBundle();
 
 	/**
-	 * Returns the value of the '<em><b>Subpatterns</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Patterns</b></em>' containment reference list.
 	 * The list contents are of type {@link org.sidiff.graphpattern.Pattern}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Subpatterns</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Subpatterns</em>' containment reference list.
-	 * @see org.sidiff.graphpattern.GraphpatternPackage#getPattern_Subpatterns()
+	 * @return the value of the '<em>Patterns</em>' containment reference list.
+	 * @see org.sidiff.graphpattern.GraphpatternPackage#getPattern_Patterns()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<Pattern> getSubpatterns();
+	EList<Pattern> getPatterns();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Pattern getPattern(String name);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -117,6 +121,14 @@ public interface Pattern extends PatternElement {
 	 * @generated
 	 */
 	EList<GraphPattern> getAllGraphPatterns();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	GraphPattern getGraph(String name);
 
 	/**
 	 * <!-- begin-user-doc -->

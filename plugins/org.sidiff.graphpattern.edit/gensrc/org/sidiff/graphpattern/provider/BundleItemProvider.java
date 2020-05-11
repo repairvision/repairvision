@@ -47,10 +47,33 @@ public class BundleItemProvider extends PatternElementItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addBundlePropertyDescriptor(object);
 			addProfilesPropertyDescriptor(object);
 			addDomainsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Bundle feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addBundlePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Pattern_bundle_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Pattern_bundle_feature", "_UI_Pattern_type"),
+				 GraphpatternPackage.Literals.PATTERN__BUNDLE,
+				 false,
+				 false,
+				 false,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -109,7 +132,10 @@ public class BundleItemProvider extends PatternElementItemProvider {
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(GraphpatternPackage.Literals.BUNDLE__PATTERNS);
+			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__GRAPHS);
+			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__PARAMETERS);
+			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__ASSIGNMENTS);
+			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__PATTERNS);
 		}
 		return childrenFeatures;
 	}
@@ -166,6 +192,9 @@ public class BundleItemProvider extends PatternElementItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Bundle.class)) {
+			case GraphpatternPackage.BUNDLE__GRAPHS:
+			case GraphpatternPackage.BUNDLE__PARAMETERS:
+			case GraphpatternPackage.BUNDLE__ASSIGNMENTS:
 			case GraphpatternPackage.BUNDLE__PATTERNS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -186,7 +215,27 @@ public class BundleItemProvider extends PatternElementItemProvider {
 
 		newChildDescriptors.add
 			(createChildParameter
-				(GraphpatternPackage.Literals.BUNDLE__PATTERNS,
+				(GraphpatternPackage.Literals.PATTERN__GRAPHS,
+				 GraphpatternFactory.eINSTANCE.createGraphPattern()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.PATTERN__PARAMETERS,
+				 GraphpatternFactory.eINSTANCE.createParameter()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.PATTERN__ASSIGNMENTS,
+				 GraphpatternFactory.eINSTANCE.createAssignment()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.PATTERN__PATTERNS,
+				 GraphpatternFactory.eINSTANCE.createBundle()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.PATTERN__PATTERNS,
 				 GraphpatternFactory.eINSTANCE.createPattern()));
 	}
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension 
+         id="constraintnature"
+         name="Constraint Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.sidiff.validation.constraint.project.builder.nature.ConstraintProjectNature">
+         </run>
+      </runtime>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+      <image
+               icon="icons/configuration_10x10.png"
+               id="org.sidiff.validation.constraint.project.builder.icon"
+               natureId="org.sidiff.validation.constraint.project.builder.constraintnature">
+      </image>
+   </extension>
+   <extension
+            point="org.eclipse.pde.ui.pluginContent">
+      <wizard
+               category="ReVision"
+               class="org.sidiff.validation.constraint.project.builder.wizard.ConstraintProjectWizard"
+               icon="icons/configuration.png"
+               id="org.sidiff.validation.constraint.project.builder.wizard"
+               java="true"
+               name="Constraint Plug-in Project"
+               pureOSGi="false"
+               rcp="false"
+               requiresActivator="false"
+               ui-content="false">
+            <description>
+               This wizard creates a plug-in project for defining constraints which can be used in the ReVision environment.
+            </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.pde.ui.templates">
+      <template
+            class="org.sidiff.validation.constraint.project.builder.template.ConstraintTemplateSection"
+            contributingId="org.sidiff.validation.constraint.project.registry"
+            icon="icons/configuration.png"
+            id="org.sidiff.validation.constraint.project.builder.template"
+            name="Constraint Plug-in Project Template">
+      </template>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.sidiff.revision.category"
+            name="ReVision">
+      </category>
+      <wizard
+            category="org.sidiff.revision.category"
+            class="org.sidiff.validation.constraint.project.builder.wizard.ConstraintProjectWizardDirect"
+            icon="icons/configuration.png"
+            id="org.sidiff.validation.constraint.project.builder.wizard.direct"
+            name="Constraint Plug-in Project"
+            project="true">
+         <description>
+            This wizard creates a plug-in project for defining constraints which can be used in the ReVision environment.
+         </description>
+      </wizard>
+   </extension>
+</plugin>

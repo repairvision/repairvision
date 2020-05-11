@@ -9,7 +9,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.Pattern;
@@ -23,31 +23,32 @@ public class GraphPatternToHenshinConverterHandler extends AbstractHandler {
 		Bundle bundle = EMFHandlerUtil.getSelection(event, Bundle.class);
 		
 		if (bundle != null) {
-			bundle.eAllContents().forEachRemaining(e -> {
-				if (e instanceof GraphPattern) {
-					GraphPattern graphPattern = (GraphPattern) e;
-					
-					if (graphPattern.getStereotypes().contains(HenshinStereotypes.rule)) {
-						GraphPatternToHenshinConverter converter = createConverter(graphPattern.getPattern());
-						
-						URI uri = bundle.eResource().getURI().trimFileExtension()
-								.appendSegment(graphPattern.getName().replaceAll("\\W", "")).appendFileExtension("henshin");
-						
-						Resource resource = converter.getResource(uri);
-						
-						try {
-							resource.save(Collections.emptyMap());
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-					}
-				}
-			});
-			
-			WorkbenchUtil.updateProject(event);
+			convertBundle(bundle, bundle.eResource().getURI().trimFileExtension());
+			WorkbenchUtil.refreshProject(event);
 		}
 		
 		return null;
+	}
+
+	public void convertBundle(Bundle bundle, URI folder) {
+		bundle.eAllContents().forEachRemaining(e -> {
+			if (e instanceof GraphPattern) {
+				GraphPattern graphPattern = (GraphPattern) e;
+				
+				if (graphPattern.getStereotypes().contains(HenshinStereotypes.rule)) {
+					GraphPatternToHenshinConverter converter = createConverter(graphPattern.getPattern());
+					
+					URI uri = folder.appendSegment(graphPattern.getName().replaceAll("\\W", "")).appendFileExtension("henshin");
+					Resource resource = converter.getResource(uri);
+					
+					try {
+						resource.save(Collections.emptyMap());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 	
 	protected GraphPatternToHenshinConverter createConverter(Pattern editOperation) {

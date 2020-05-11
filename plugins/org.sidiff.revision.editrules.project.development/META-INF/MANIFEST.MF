@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Access to Workspace Rulebases
+Bundle-SymbolicName: org.sidiff.revision.editrules.project.development;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.sidiff.revision.editrules.project.development.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.sidiff.revision.editrules.project,
+ org.eclipse.pde.core,
+ org.eclipse.core.resources
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.sidiff.revision.editrules.project.builder.development
+Bundle-ActivationPolicy: lazy
+Export-Package: org.sidiff.revision.editrules.project.development.registry,
+ org.sidiff.revision.editrules.project.development.util

@@ -1,0 +1,276 @@
+domain 'http://www.eclipse.org/emf/2002/Ecore'
+
+constraint TheAttributeIsNotTransientSoItMustHaveADataTypeThatIsSerializable
+message 'The attribute is not transient so it must have a data type that is serializable'
+context EAttribute attribute :
+	(isEqual(attribute.transient, false)
+		and
+		isInstanceOf(attribute.eType, EDataType))
+	implies
+	isEqual(attribute.eType.EDataType::serializable, true)
+
+constraint AClassThatIsAnInterfaceMustAlsoBeAbstract
+message 'A class that is an interface must also be abstract'
+context EClass eClass :
+	isEqual(eClass.interface, true)
+	implies
+	isEqual(eClass.abstract, true)
+
+constraint AContainerReferenceMustHaveUpperBoundOfNot
+message 'A container reference must have upper bound of 1'
+context EReference ref :
+	isEqual(ref.eOpposite.containment, true)
+	implies
+	isEqual(ref.upperBound, 1)
+
+constraint AContainmentOrBidirectionalReferenceMustBeUniqueIfItsUpperBoundIsDifferentFrom
+message 'A containment or bidirectional reference must be unique if its upper bound is different from 1'
+context EReference ref :
+	((isEqual(ref.containment, true)
+			or
+			not(isEmpty(ref.eOpposite)))
+		and
+		not(isEqual(ref.upperBound, 1)))
+	implies
+	isEqual(ref.unique, true)
+
+constraint AContainmentReferenceOfATypeWithAContainerFeaturethatRequiresInstancesToBeContainedElsewhereCannotBePopulated
+message 'A containment reference of a type with a container feature that requires instances to be contained elsewhere cannot be populated'
+context EReference ref :
+	isEqual(ref.containment, true)
+	implies
+	(isInstanceOf(ref.eType, EClass)
+		implies
+		(forAll(EClass typeClosure in getClosure(ref.eType, eSuperTypes) :
+				forAll(EStructuralFeature feature in typeClosure.eStructuralFeatures :
+					(isInstanceOf(feature, EReference)
+						and
+						isEqual(feature.EReference::eOpposite.containment, true))
+					implies
+					(isEqual(feature.EReference::lowerBound, 0)
+						or
+						isEqual(feature.EReference::eOpposite, ref))))))
+
+constraint TheDefaultValueLiteralMustBeAValidLiteralOfTheAttributesType
+message 'The default value literal must be a valid literal of the attributes type'
+context EStructuralFeature eStructuralFeature :
+	(not(isInstanceOf(eStructuralFeature.eType, EDataType))
+		implies
+		isEmpty(eStructuralFeature.defaultValueLiteral))
+	and
+	(isInstanceOf(eStructuralFeature.eType, EEnum)
+		implies
+		// The default value must be one of the EEnum's literals
+		exists(EEnumLiteral literal in eStructuralFeature.eType.EEnum::eLiterals :
+			isEqual(eStructuralFeature.defaultValueLiteral, literal.literal)))
+	and
+	(isInstanceOf(eStructuralFeature.eType, EDataType)
+		implies
+		isValueLiteralOf(eStructuralFeature.defaultValueLiteral, asDataType(eStructuralFeature.eType)))
+
+constraint TheOppositeOfAContainmentReferenceMustNotBeAContainmentReference
+message 'The opposite of a containment reference must not be a containment reference'
+context EReference eReference :
+	not(isEmpty(eReference.eOpposite))
+	implies
+	(isEqual(eReference.containment, false)
+		or
+		isEqual(eReference.eOpposite.containment, false))
+
+constraint TheOppositeOfATransientReferenceMustBeTransientIfItIsProxyResolving
+message 'The opposite of a transient reference must be transient if it is proxy resolving'
+context EReference reference :
+	isEqual(reference.transient, true)
+	implies
+	(isEqual(reference.eOpposite.resolveProxies, false)
+		or
+		isEqual(reference.eOpposite.transient, true))
+
+constraint TheOppositeOfTheOppositeMayNotBeAReferenceDifferentFromThisOne
+message 'The opposite of the opposite may not be a reference different from this one'
+context EReference reference :
+	not(isEmpty(reference.eOpposite))
+	implies
+	isEqual(reference.eOpposite.eOpposite, reference)
+
+constraint TheOppositeMayNotBeItsOwnOpposite
+message 'The opposite may not be its own opposite'
+context EReference reference :
+	not(isEqual(reference.eOpposite, reference))
+
+constraint ThereMayNotBeTwoOperationsAndWithTheSameSignature
+message 'There may not be two operations with the same signature'
+context EOperation eOperation :
+	not(exists(EClass typeClosure in getClosure(eOperation.eContainingClass, eSuperTypes) :
+			exists(EOperation otherEOpperation in typeClosure.eOperations :
+				not(isEqual(eOperation, otherEOpperation))
+				and
+				isEqual(eOperation.name, otherEOpperation.name)
+				and
+				isEqual(size(eOperation.eParameters), size(otherEOpperation.eParameters))
+				and
+				((isEmpty(eOperation.eParameters)
+						and
+						isEmpty(otherEOpperation.eParameters))
+					or
+					exists(EParameter eParameter in eOperation.eParameters :
+						exists(EParameter otherEParameter in otherEOpperation.eParameters :
+							not(isEqual(eParameter, otherEParameter))
+							and
+							isEqual(eParameter.eType, otherEParameter.eType)
+							and
+							isEqual(indexOf(eOperation, eParameters, eParameter),
+					    indexOf(otherEOpperation, eParameters, otherEParameter))))))))
+
+constraint ThereMayNotBeTwoParametersNamed
+message 'There may not be two parameters with the same name'
+context EParameter eParameter :
+	not(exists(EParameter otherEParameter in eParameter.eOperation.eParameters :
+			not(isEqual(eParameter, otherEParameter))
+			and
+			isEqual(eParameter.name, otherEParameter.name)))
+
+constraint ThereMayNotBeAnOperationWithTheSameSignatureAsAnAccessorMethodForFeature
+message 'There may not be an operation with the same signature as an accessor method for a feature'
+context EOperation operation :
+	exists(EAnnotation annotation in operation.eAnnotations :
+		isEqual(annotation.source, 'http://www.eclipse.org/emf/2002/GenModel')
+		and
+		exists(EStringToStringMapEntry detail in annotation.details :
+			isEqual(detail.key, 'suppressedVisibility')
+			and
+			isEqual(detail.value, 'true')))
+	or
+	forAll(EClass typeClosure in getClosure(operation.eContainingClass, eSuperTypes) :
+		forAll(EStructuralFeature feature in typeClosure.eStructuralFeatures :
+			((isEqual(size(operation.eParameters), 1)
+					and
+					forAll(EParameter parameter in operation.eParameters :
+						isEqual(parameter.eType, feature.eType)))
+				implies
+				not(isEqual(operation.name, concatenate('set', capitalize(feature.name)))))
+			and
+			(isEqual(size(operation.eParameters), 0)
+				implies
+				not(isEqual(operation.name, concatenate('get', capitalize(feature.name)))))
+			and
+			(isEqual(size(operation.eParameters), 0)
+				implies
+				not(isEqual(operation.name, concatenate('is', capitalize(feature.name)))))
+			and
+			(isEqual(size(operation.eParameters), 0)
+				implies
+				not(isEqual(operation.name, concatenate('isSet', capitalize(feature.name)))))
+			and
+			(isEqual(size(operation.eParameters), 0)
+				implies
+				not(isEqual(operation.name, concatenate('unset', capitalize(feature.name)))))))
+
+//constraint ThereMayNotBeTwoFeaturesNamed
+//message 'There may not be two features with the same name'
+//context EStructuralFeature feature :
+//	forAll(EClass typeClosure in getClosure(feature.eContainingClass, eSuperTypes) :
+//		forAll(EStructuralFeature otherFeature in typeClosure.eStructuralFeatures :
+//			isEqual(feature, otherFeature) or not(isEqual(feature.name, otherFeature.name))
+//		)
+//	)
+
+constraint ThereMayNotBeTwoFeaturesNamed
+message 'There may not be two features with the same name'
+context EClass eClass :
+	forAll(EStructuralFeature featureA in eClass.eStructuralFeatures :
+		forAll(EStructuralFeature featureB in eClass.eStructuralFeatures :
+			not(isEqual(featureA, featureB))
+			implies
+			not(isEqual(featureA.name, featureB.name))))
+	and
+	// multi inheritance:
+	forAll(EClass eClassX in getClosure(eClass, eSuperTypes) :
+		forAll(EClass eClassY in getClosure(eClass, eSuperTypes) :
+			(not(isEqual(eClassX, eClassY))
+				implies
+				forAll(EStructuralFeature featureX in eClassX.eStructuralFeatures :
+					forAll(EStructuralFeature featureY in eClassY.eStructuralFeatures :
+						not(isEqual(featureX.name, featureY.name)))))))
+
+constraint TwoFeaturesCannotBothBeIDs
+message 'The features cannot both be IDs'
+context EAttribute attribute :
+	isEqual(attribute.iD, true)
+	implies
+	forAll(EClass typeClosure in getClosure(attribute.eContainingClass, eSuperTypes) :
+		forAll(EStructuralFeature feature in typeClosure.eStructuralFeatures :
+			(isInstanceOf(feature, EAttribute)
+				and
+				not(isEqual(feature, attribute)))
+			implies
+			not(isEqual(feature.EAttribute::iD, true))))
+
+constraint ThereMayNotBeTwoClassifiersNamed
+message 'There may not be two classifiers with the same name'
+context EPackage package :
+	forAll(EClass classA in package.eClassifiers :
+		not(exists(EClass classB in package.eClassifiers :
+				isEqual(classA.name, classB.name)
+				and
+				not(isEqual(classA, classB)))))
+
+constraint TheTypedElementMustHaveAType
+message 'The typed element must have a type'
+context ETypedElement eTypedElement :
+	isInstanceOf(eTypedElement, EOperation)
+	or
+	not(isEmpty(eTypedElement.eType))
+
+//// Meta-Model Constraints (multiplicities) ////
+
+/* TheRequiredFeatureOfMustBeSet Generator (lower bound >= 1)
+
+			System.out.println("constraint TheRequiredFeatureOfMustBeSet");
+			System.out.println("message 'The required feature must be set'");
+			System.out.println("context EModelElement eModelElement : ");
+
+			EPackage model =  EcorePackage.eINSTANCE;
+			EClass parentClass = null;
+
+			for (EObject element : (Iterable<EObject>) () -> model.eAllContents()) {
+				if (element instanceof EClass) {
+					parentClass = (EClass) element;
+				}
+
+				if (element instanceof ETypedElement) {
+					if (((ETypedElement) element).getLowerBound() >= 1) {
+						System.out.print("isInstanceOf(eModelElement, " + parentClass.getName() + ")");
+						System.out.print(" implies not(isEmpty(eModelElement." + parentClass.getName() + "::" + ((ETypedElement) element).getName() + "))");
+						System.out.println(" and");
+					}
+				}
+			}
+
+ */
+
+constraint TheRequiredFeatureOfMustBeSet
+message 'The required feature must be set'
+context EModelElement eModelElement : // TODO: Support EObject
+//	(isInstanceOf(eModelElement, EAttribute) implies not(isEmpty(eModelElement.EAttribute::eAttributeType))) and // NOTE: derived reference
+	(isInstanceOf(eModelElement, EAttribute) implies not(isEmpty(eModelElement.EAttribute::eType))) and
+	(isInstanceOf(eModelElement, EFactory) implies not(isEmpty(eModelElement.EFactory::ePackage))) and
+	(isInstanceOf(eModelElement, EPackage) implies not(isEmpty(eModelElement.EPackage::eFactoryInstance))) and
+//	isInstanceOf(eModelElement, EReference) implies not(isEmpty(eModelElement.EReference::eReferenceType)) // NOTE: derived reference
+	(isInstanceOf(eModelElement, EReference) implies not(isEmpty(eModelElement.EReference::eType)))
+// TODO: Support EObject, Expression to derive eRawType
+//	(isInstanceOf(eModelElement, EGenericType) implies not(isEmpty(eModelElement.EGenericType::eRawType)))
+
+//// Ecore Generics ////
+
+constraint TheGenericTypeAssociatedWithTheClassifierShouldHaveTypeArgumentsToMatchTheNumberOfTypeParametersOfTheClassifier
+message 'The generic type associated with the classifier is missing type arguments to match the number of type parameters of the classifier'
+context EGenericType eType :
+	isEqual(size(eType.eClassifier.eTypeParameters), size(eType.eTypeArguments))
+//context EGenericType eType : isGreaterEqual(size(eType.eTypeArguments), size(eType.eClassifier.eTypeParameters))
+
+constraint TheGenericTypeAssociatedWithTheClassifierMustNotHaveArgumentsWhenTheClassifierHasTypeParameters
+message 'The generic type associated with the classifier must not have more arguments then the classifier has type parameters'
+context EGenericType eType :
+	isEqual(size(eType.eClassifier.eTypeParameters), size(eType.eTypeArguments))
+//context EGenericType eType : isSmallerEqual(size(eType.eTypeArguments), size(eType.eClassifier.eTypeParameters)) 

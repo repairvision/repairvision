@@ -57,6 +57,10 @@
             id="org.sidiff.editrule.tools.command.invertrules"
             name="Invert Edit-Rule Actions">
       </command>
+      <category
+            id="org.sidiff.difference.ui.category.silift"
+            name="SiLift Tools">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -272,11 +276,7 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.silift.menu?after=header">
-         <separator
-               name="org.sidiff.editrule.tools.separatorTop"
-               visible="true">
-         </separator>
+            locationURI="popup:org.eclipse.emf.henshin.menu">
          <menu
                label="Edit-Rule Tools">
             <command
@@ -316,10 +316,6 @@
                   style="push">
             </command>
          </menu>
-         <separator
-               name="org.sidiff.editrule.tools.separatorBottom"
-               visible="true">
-         </separator>
       </menuContribution>
    </extension>
    <extension point="org.eclipse.core.expressions.definitions">

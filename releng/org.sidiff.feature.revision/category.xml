@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.sidiff.feature.revision_1.2.0.qualifier.jar" id="org.sidiff.feature.revision" version="1.2.0.qualifier">
+      <category name="Re(pair)Vision"/>
+   </feature>
+   <feature url="features/org.sdiff.feature.revision.domains.ecore_1.2.0.qualifier.jar" id="org.sdiff.feature.revision.domains.ecore" version="1.2.0.qualifier">
+      <category name="Re(pair)Vision Domains - Ecore"/>
+   </feature>
+   <feature url="features/org.sdiff.feature.revision.domains.uml_1.2.0.qualifier.jar" id="org.sdiff.feature.revision.domains.uml" version="1.2.0.qualifier">
+      <category name="Re(pair)Vision Domains - UML"/>
+   </feature>
+   <category-def name="Re(pair)Vision" label="Re(pair)Vision">
+      <description>
+         All core plug-ins of ReVision: A tool for history-based model repair recommendations
+      </description>
+   </category-def>
+   <category-def name="Re(pair)Vision Domains - Ecore" label="Re(pair)Vision Domains - Ecore">
+      <description>
+         Domain-specific features which enable repair support for Ecore.
+      </description>
+   </category-def>
+   <category-def name="Re(pair)Vision Domains - UML" label="Re(pair)Vision Domain - UML">
+      <description>
+         Domain-specific features which enable repair support for UML.
+      </description>
+   </category-def>
+   <repository-reference location="http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/releases-3.2.1/" enabled="true" />
+   <repository-reference location="http://download.eclipse.org/technology/m2e/releases" enabled="true" />
+   <repository-reference location="http://dl.bintray.com/subclipse/releases/subclipse/latest/" enabled="true" />
+   <repository-reference location="http://download.eclipse.org/modeling/mdt/ocl/updates/releases/latest" enabled="true" />
+   <repository-reference location="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/2020-03" enabled="true" />
+</site>

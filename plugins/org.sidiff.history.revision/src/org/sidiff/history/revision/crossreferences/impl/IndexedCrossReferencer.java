@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.consistency.common.java.JUtil;
+import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.history.revision.crossreferences.ICrossReferencer;
 
 public class IndexedCrossReferencer implements ICrossReferencer {
@@ -28,7 +28,12 @@ public class IndexedCrossReferencer implements ICrossReferencer {
 	@Override
 	public Iterator<? extends EObject> getInverse(EObject target, EReference incoming) {
 		if (incoming.isContainment()) {
-			return Collections.singletonList(target.eContainer()).iterator();
+			EObject container = target.eContainer();
+			
+			// is not root element?
+			if (container != null) {
+				return Collections.singletonList(target.eContainer()).iterator();
+			}
 		} else {
 			if (incoming.getEOpposite() == null) {
 				List<List<EObject>> sourceAllCrossReferences = crossReferences.get(target);

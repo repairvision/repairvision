@@ -12,7 +12,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.history.analysis.validation.IValidator;
 import org.sidiff.history.repository.IModelRepository;
@@ -25,6 +24,7 @@ import org.sidiff.historymodel.Version;
 import org.sidiff.matching.api.MatchingFacade;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.Matching;
+import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 
 public class HistoryModelGenerator {
 	

@@ -132,6 +132,7 @@ public class GraphpatternSwitch<T> extends Switch<T> {
 			case GraphpatternPackage.BUNDLE: {
 				Bundle bundle = (Bundle)theEObject;
 				T result = caseBundle(bundle);
+				if (result == null) result = casePattern(bundle);
 				if (result == null) result = casePatternElement(bundle);
 				if (result == null) result = caseExtendable(bundle);
 				if (result == null) result = defaultCase(theEObject);

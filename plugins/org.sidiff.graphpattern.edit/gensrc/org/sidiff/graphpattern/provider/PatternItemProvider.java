@@ -88,7 +88,7 @@ public class PatternItemProvider
 			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__GRAPHS);
 			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__PARAMETERS);
 			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__ASSIGNMENTS);
-			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__SUBPATTERNS);
+			childrenFeatures.add(GraphpatternPackage.Literals.PATTERN__PATTERNS);
 		}
 		return childrenFeatures;
 	}
@@ -147,7 +147,7 @@ public class PatternItemProvider
 			case GraphpatternPackage.PATTERN__GRAPHS:
 			case GraphpatternPackage.PATTERN__PARAMETERS:
 			case GraphpatternPackage.PATTERN__ASSIGNMENTS:
-			case GraphpatternPackage.PATTERN__SUBPATTERNS:
+			case GraphpatternPackage.PATTERN__PATTERNS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -182,7 +182,12 @@ public class PatternItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(GraphpatternPackage.Literals.PATTERN__SUBPATTERNS,
+				(GraphpatternPackage.Literals.PATTERN__PATTERNS,
+				 GraphpatternFactory.eINSTANCE.createBundle()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GraphpatternPackage.Literals.PATTERN__PATTERNS,
 				 GraphpatternFactory.eINSTANCE.createPattern()));
 	}
 

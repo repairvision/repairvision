@@ -10,6 +10,9 @@
         <outgoings xmi:id="_nRLAkN7LEemgBKP5N8TP5A" target="_fgIGIN7LEemgBKP5N8TP5A" opposite="_nRLAkd7LEemgBKP5N8TP5A">
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/interaction"/>
         </outgoings>
+        <outgoings xmi:id="_idPTkGlcEeqBntAFP-_Czw" target="_zQD8LNu4Eem5HqrDly5-rw">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/signature"/>
+        </outgoings>
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
         <attributes xmi:id="_zQD8Fdu4Eem5HqrDly5-rw" value="opName">
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -50,7 +53,7 @@
         </outgoings>
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
       </nodes>
-      <nodes xmi:id="_zQD8LNu4Eem5HqrDly5-rw" name="operation" incomings="_zQD8Kdu4Eem5HqrDly5-rw">
+      <nodes xmi:id="_zQD8LNu4Eem5HqrDly5-rw" name="operation" incomings="_zQD8Kdu4Eem5HqrDly5-rw _idPTkGlcEeqBntAFP-_Czw">
         <outgoings xmi:id="_zQD8Ldu4Eem5HqrDly5-rw" target="_zQD8J9u4Eem5HqrDly5-rw" opposite="_zQD8Kdu4Eem5HqrDly5-rw">
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
         </outgoings>
@@ -65,6 +68,77 @@
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/fragment"/>
         </outgoings>
         <outgoings xmi:id="_nRLAkd7LEemgBKP5N8TP5A" target="_zQD8E9u4Eem5HqrDly5-rw" opposite="_nRLAkN7LEemgBKP5N8TP5A">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/message"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>
+      </nodes>
+    </graphs>
+    <graphs xmi:id="_BnrqQGlFEeq7Ss-TVqpjzA" name="MessageDestructionSignature">
+      <nodes xmi:id="_BnsRUGlFEeq7Ss-TVqpjzA" name="message" incomings="_BnsRY2lFEeq7Ss-TVqpjzA">
+        <outgoings xmi:id="_BnsRUWlFEeq7Ss-TVqpjzA" target="_BnsRVGlFEeq7Ss-TVqpjzA">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/receiveEvent"/>
+        </outgoings>
+        <outgoings xmi:id="_BnsRUmlFEeq7Ss-TVqpjzA" target="_BnsRYWlFEeq7Ss-TVqpjzA" opposite="_BnsRY2lFEeq7Ss-TVqpjzA">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/interaction"/>
+        </outgoings>
+        <outgoings xmi:id="_ok-G0GlcEeqBntAFP-_Czw" target="_BnsRXmlFEeq7Ss-TVqpjzA">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message/signature"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+        <attributes xmi:id="_BnsRU2lFEeq7Ss-TVqpjzA" value="opName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_BnsRVGlFEeq7Ss-TVqpjzA" name="targetEnd" incomings="_BnsRUWlFEeq7Ss-TVqpjzA _BnsRWWlFEeq7Ss-TVqpjzA _BnsRYmlFEeq7Ss-TVqpjzA">
+        <outgoings xmi:id="_BnsRVWlFEeq7Ss-TVqpjzA" target="_BnsRV2lFEeq7Ss-TVqpjzA" opposite="_BnsRWWlFEeq7Ss-TVqpjzA">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/covered"/>
+        </outgoings>
+        <outgoings xmi:id="_BnsRVmlFEeq7Ss-TVqpjzA" target="_BnsRYWlFEeq7Ss-TVqpjzA" opposite="_BnsRYmlFEeq7Ss-TVqpjzA">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//InteractionFragment/enclosingInteraction"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//DestructionOccurrenceSpecification"/>
+      </nodes>
+      <nodes xmi:id="_BnsRV2lFEeq7Ss-TVqpjzA" name="lifeline" incomings="_BnsRVWlFEeq7Ss-TVqpjzA">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
+        <outgoings xmi:id="_BnsRWGlFEeq7Ss-TVqpjzA" target="_BnsRWmlFEeq7Ss-TVqpjzA">
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/represents"/>
+        </outgoings>
+        <outgoings xmi:id="_BnsRWWlFEeq7Ss-TVqpjzA" target="_BnsRVGlFEeq7Ss-TVqpjzA" opposite="_BnsRVWlFEeq7Ss-TVqpjzA">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline/coveredBy"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+      </nodes>
+      <nodes xmi:id="_BnsRWmlFEeq7Ss-TVqpjzA" name="receiverType" incomings="_BnsRWGlFEeq7Ss-TVqpjzA">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
+        <outgoings xmi:id="_BnsRW2lFEeq7Ss-TVqpjzA" target="_BnsRXGlFEeq7Ss-TVqpjzA">
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TypedElement/type"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Property"/>
+      </nodes>
+      <nodes xmi:id="_BnsRXGlFEeq7Ss-TVqpjzA" name="class" incomings="_BnsRW2lFEeq7Ss-TVqpjzA _BnsRX2lFEeq7Ss-TVqpjzA">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
+        <outgoings xmi:id="_BnsRXWlFEeq7Ss-TVqpjzA" target="_BnsRXmlFEeq7Ss-TVqpjzA" opposite="_BnsRX2lFEeq7Ss-TVqpjzA">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </nodes>
+      <nodes xmi:id="_BnsRXmlFEeq7Ss-TVqpjzA" name="operation" incomings="_BnsRXWlFEeq7Ss-TVqpjzA _ok-G0GlcEeqBntAFP-_Czw">
+        <outgoings xmi:id="_BnsRX2lFEeq7Ss-TVqpjzA" target="_BnsRXGlFEeq7Ss-TVqpjzA" opposite="_BnsRXWlFEeq7Ss-TVqpjzA">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation/class"/>
+        </outgoings>
+        <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
+        <attributes xmi:id="_BnsRYGlFEeq7Ss-TVqpjzA" value="opName">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_BnsRYWlFEeq7Ss-TVqpjzA" name="container" incomings="_BnsRVmlFEeq7Ss-TVqpjzA _BnsRUmlFEeq7Ss-TVqpjzA">
+        <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
+        <outgoings xmi:id="_BnsRYmlFEeq7Ss-TVqpjzA" target="_BnsRVGlFEeq7Ss-TVqpjzA" opposite="_BnsRVmlFEeq7Ss-TVqpjzA">
+          <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/fragment"/>
+        </outgoings>
+        <outgoings xmi:id="_BnsRY2lFEeq7Ss-TVqpjzA" target="_BnsRUGlFEeq7Ss-TVqpjzA" opposite="_BnsRUmlFEeq7Ss-TVqpjzA">
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction/message"/>
         </outgoings>
         <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Interaction"/>

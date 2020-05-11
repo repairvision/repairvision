@@ -1,6 +1,6 @@
 package org.sidiff.completion.ui.model.proposals;
 
-import org.sidiff.repair.complement.repair.RepairPlan;
+import org.sidiff.revision.repair.complement.repair.RepairPlan;
 
 public class ModelCompletionParameterBinding extends RepairPlan {
 

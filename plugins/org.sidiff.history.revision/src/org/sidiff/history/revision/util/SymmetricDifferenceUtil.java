@@ -26,10 +26,10 @@ import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricFactory;
 import org.sidiff.difference.symmetric.SymmetricPackage;
-import org.sidiff.difference.technical.api.TechnicalDifferenceFacade;
-import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.matcher.IMatcher;
+import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
+import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 
 public class SymmetricDifferenceUtil {
 
@@ -48,7 +48,6 @@ public class SymmetricDifferenceUtil {
 			throws DifferenceCalculationException {
 
 		DifferenceSettings settings = new DifferenceSettings();
-		settings.setMergeImports(false);
 		settings.setMatcher(matcher);
 
 		try {
@@ -62,8 +61,6 @@ public class SymmetricDifferenceUtil {
 
 	public static SymmetricDifference calculateDifference(Resource modelA, Resource modelB, DifferenceSettings settings)
 			throws DifferenceCalculationException {
-
-		settings.setMergeImports(false);
 
 		try {
 			return TechnicalDifferenceFacade.deriveTechnicalDifference(modelA, modelB, settings);
@@ -106,7 +103,7 @@ public class SymmetricDifferenceUtil {
 	public static URI getDifferenceURI(URI modelA, URI modelB) {
 		return URI.createURI(
 				modelA.trimFileExtension().toString() + "_to_" +
-				modelB.trimFileExtension().appendFileExtension(".symmetric").lastSegment());
+				modelB.trimFileExtension().appendFileExtension("symmetric").lastSegment());
 	}
 	
 	public static boolean validateChange(Change change) {

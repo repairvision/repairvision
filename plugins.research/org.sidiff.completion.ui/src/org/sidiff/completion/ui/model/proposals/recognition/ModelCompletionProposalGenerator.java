@@ -15,13 +15,13 @@ import org.sidiff.completion.ui.model.proposals.ModelCompletionProposalCluster;
 import org.sidiff.completion.ui.model.proposals.recognition.impact.ModelCompletionImpactAnalyzes;
 import org.sidiff.completion.ui.model.proposals.util.DecompositionTemplates;
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
-import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.graphpattern.profile.henshin_extension.RuleExtension;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
-import org.sidiff.repair.complement.peo.finder.ComplementFinderEngine;
-import org.sidiff.repair.ui.config.RepairPreferencePage;
+import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
+import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 public class ModelCompletionProposalGenerator {
@@ -64,7 +64,7 @@ public class ModelCompletionProposalGenerator {
 		return historicModel;
 	}
 	
-	// org.sidiff.repair.ui.app.impl.EMFResourceRepairApplication<J, F>:
+	// org.sidiff.revision.repair.ui.app.impl.EMFResourceRepairApplication<J, F>:
 	
 	protected void populateSettings() {
 		if (getCurrentModel() != null) {
@@ -92,7 +92,7 @@ public class ModelCompletionProposalGenerator {
 		return new ModelCompletionImpactAnalyzes(revision, context);
 	}
 	
-	// org.sidiff.repair.api.peo.PEORepairCalculationEngine
+	// org.sidiff.revision.repair.api.peo.PEORepairCalculationEngine
 	
 	private IRevision calculateDifference() {
 		DifferenceSettings differenceSettings = getMatchingSettings();

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.sidiff.graphpattern.tools.menu">
+         <command
+               commandId="org.sidiff.graphpattern.tools.command.creatediagram"
+               icon="icons/sirius.gif"
+               style="push">
+         </command>
+         <command
+               commandId="org.sidiff.graphpattern.tools.command.createdocumentation"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.sidiff.graphpattern.design.tools.diagram.CreateDiagramHandler"
+            commandId="org.sidiff.graphpattern.tools.command.creatediagram">
+      </handler>
+      <handler
+            class="org.sidiff.graphpattern.design.tools.documentation.CreateGraphPatternDocumentationHandler"
+            commandId="org.sidiff.graphpattern.tools.command.createdocumentation">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.sidiff.graphpattern.category"
+            id="org.sidiff.graphpattern.tools.command.creatediagram"
+            name="Create Diagram">
+      </command>
+      <command
+            categoryId="org.sidiff.graphpattern.category"
+            id="org.sidiff.graphpattern.tools.command.createdocumentation"
+            name="Create Documentation">
+      </command>
+   </extension>
+</plugin>

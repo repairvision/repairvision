@@ -11,7 +11,7 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.sidiff.graphpattern.profile.henshin.util.HenshinProfileUtil;
 import org.sidiff.graphpattern.profile.henshin_extension.GraphElementExtension;
 import org.sidiff.graphpattern.profile.henshin_extension.SubGraph;
-import org.sidiff.graphpattern.tools.editrules.decompose.DecomposingEditRulesUtil;
+import  org.sidiff.revision.editrules.generation.decompose.DecomposingEditRulesUtil;
 
 public class ModelCompletionProposalUtil {
 	

@@ -3,6 +3,10 @@ package org.sidiff.validation.laguage.fol.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EClass;
@@ -14,40 +18,84 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.common.services.DefaultTerminalConverters;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Domain;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Exists;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IndexOf;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef;
 
 public class ScopeUtil extends DefaultTerminalConverters {
+	
+	public static List<Variable> getVariables(VariableRef ref) {
 
-	public static Collection<EClassifier> getAllTypes(EObject context) {
-		ConstraintLibrary rulebase = getConstraintLibrary(context);
-
-		if (rulebase != null) {
-			EPackage domainPackage = EPackage.Registry.INSTANCE.getEPackage(rulebase.getDomain().trim());
+		// Hide variables in parent scopes by variable names:
+		List<Variable> scope = new ArrayList<>();
+		Set<String> nameScope = new HashSet<>();
+		EObject container = ref;
+		
+		while (container.eContainer() != null) {
+			Variable variable = null;
+			container = container.eContainer();
 			
-			if (domainPackage != null) {
-				return domainPackage.getEClassifiers();
+			if (container instanceof Constraint) {
+				variable = ((Constraint) container).getVariable();
+			} else if (container instanceof ForAll) {
+				variable = ((ForAll) container).getName();
+			} else if (container instanceof Exists) {
+				variable = ((Exists) container).getName();
+			}
+			
+			if ((variable != null) && (!nameScope.contains(variable.getName()))) {
+				nameScope.add(variable.getName());
+				scope.add(variable);
 			}
 		}
 		
-		return null;
+		return scope;
 	}
 	
-	public static Collection<EClassifier> getAllDataTypes(EObject context) {
-		ConstraintLibrary rulebase = getConstraintLibrary(context);
+	public static Collection<EClassifier> getAllTypes(EObject context, Map<String, EPackage> workspaceEPackages) {
+		ConstraintLibrary library = getConstraintLibrary(context);
 
-		if (rulebase != null) {
-			EPackage domainPackage = EPackage.Registry.INSTANCE.getEPackage(rulebase.getDomain().trim());
+		if (library != null) {
+			List<EClassifier> allTypes = new ArrayList<>();
 			
-			if (domainPackage != null) {
-				return domainPackage.getEClassifiers().stream().filter(c -> c instanceof EDataType).collect(Collectors.toList());
+			for (Domain domain : library.getDomains()) {
+				EPackage domainPackage = EMFMetaAccessUtil.getEPackage(domain.getDomain().trim(), workspaceEPackages);
+				
+				if (domainPackage != null) {
+					allTypes.addAll(domainPackage.getEClassifiers());
+				}
 			}
+			
+			return allTypes;
 		}
 		
-		return null;
+		return Collections.emptyList();
+	}
+	
+	public static Collection<EClassifier> getAllDataTypes(EObject context, Map<String, EPackage> workspaceEPackages) {
+		ConstraintLibrary library = getConstraintLibrary(context);
+
+		if (library != null) {
+			List<EClassifier> allDataTypes = new ArrayList<>();
+			
+			for (Domain domain : library.getDomains()) {
+				EPackage domainPackage = EMFMetaAccessUtil.getEPackage(domain.getDomain().trim(), workspaceEPackages);
+				
+				if (domainPackage != null) {
+					allDataTypes.addAll(domainPackage.getEClassifiers().stream().filter(c -> c instanceof EDataType).collect(Collectors.toList()));
+				}
+			}
+			
+			return allDataTypes;
+		}
+		
+		return Collections.emptyList();
 	}
 	
 	private static ConstraintLibrary getConstraintLibrary(EObject context) {
@@ -96,12 +144,22 @@ public class ScopeUtil extends DefaultTerminalConverters {
 		return null;
 	}
 	
-	public static Collection<EClass> getAllSubTypes(EObject context) {
+	private static boolean isProxy(EObject obj, EStructuralFeature feature) {
+		Object value = obj.eGet(feature, false);
+		
+		if (value instanceof EObject) {
+			return ((EObject) value).eIsProxy();
+		}
+		
+		return false;
+	}
+	
+	public static Collection<EClass> getAllSubTypes(EObject context, Map<String, EPackage> workspaceEPackages) {
 		Collection<EClass> subTypes = new ArrayList<>();
 		EClassifier type = getType(context);
 		
 		// Iterate over all classes in the package
-		for (EClassifier classifier : getAllTypes(context)) {
+		for (EClassifier classifier : getAllTypes(context, workspaceEPackages)) {
 
 			if (classifier instanceof EClass) {
 				if (((EClass) classifier).getEAllSuperTypes().contains(type)) {
@@ -122,14 +180,5 @@ public class ScopeUtil extends DefaultTerminalConverters {
 		
 		return Collections.emptyList();
 	}
-	
-	private static boolean isProxy(EObject obj, EStructuralFeature feature) {
-		Object value = obj.eGet(feature, false);
-		
-		if (value instanceof EObject) {
-			return ((EObject) value).eIsProxy();
-		}
-		
-		return false;
-	}
+
 }

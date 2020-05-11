@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_0VD5kB6FEeq3H7jqxYh1TA" name="Create: Enumeration with Literal" description="Create: Enumeration with Literal">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_0VD5kR6FEeq3H7jqxYh1TA" name="mainUnit" subUnits="_0VD5lh6FEeq3H7jqxYh1TA">
-    <parameters xmi:id="_0VD5kh6FEeq3H7jqxYh1TA" name="toEnumeration" kind="IN"/>
-    <parameters xmi:id="_0VD5kx6FEeq3H7jqxYh1TA" name="literalName" kind="IN"/>
-    <parameterMappings xmi:id="_0VD5lB6FEeq3H7jqxYh1TA" source="_0VD5kh6FEeq3H7jqxYh1TA" target="_0VD5lx6FEeq3H7jqxYh1TA"/>
-    <parameterMappings xmi:id="_0VD5lR6FEeq3H7jqxYh1TA" source="_0VD5kx6FEeq3H7jqxYh1TA" target="_0VD5mB6FEeq3H7jqxYh1TA"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ohdYAG67EeqnUr4w5kV3sA" name="Create: Enumeration with Literal" description="Create: Enumeration with Literal">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ohdYAW67EeqnUr4w5kV3sA" name="mainUnit" subUnits="_ohdYBm67EeqnUr4w5kV3sA">
+    <parameters xmi:id="_ohdYAm67EeqnUr4w5kV3sA" name="toEnumeration" kind="IN"/>
+    <parameters xmi:id="_ohdYA267EeqnUr4w5kV3sA" name="literalName" kind="IN"/>
+    <parameterMappings xmi:id="_ohdYBG67EeqnUr4w5kV3sA" source="_ohdYAm67EeqnUr4w5kV3sA" target="_ohdYB267EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ohdYBW67EeqnUr4w5kV3sA" source="_ohdYA267EeqnUr4w5kV3sA" target="_ohdYCG67EeqnUr4w5kV3sA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_0VD5lh6FEeq3H7jqxYh1TA" name="Create: Enumeration with Literal">
-    <parameters xmi:id="_0VD5lx6FEeq3H7jqxYh1TA" name="toEnumeration" kind="IN"/>
-    <parameters xmi:id="_0VD5mB6FEeq3H7jqxYh1TA" name="literalName" kind="IN"/>
-    <lhs xmi:id="_0VD5mR6FEeq3H7jqxYh1TA" name="Lhs">
-      <nodes xmi:id="_0VD5mh6FEeq3H7jqxYh1TA" name="toEnumeration">
+  <units xsi:type="henshin:Rule" xmi:id="_ohdYBm67EeqnUr4w5kV3sA" name="Create: Enumeration with Literal">
+    <parameters xmi:id="_ohdYB267EeqnUr4w5kV3sA" name="toEnumeration" kind="IN"/>
+    <parameters xmi:id="_ohdYCG67EeqnUr4w5kV3sA" name="literalName" kind="IN"/>
+    <lhs xmi:id="_ohdYCW67EeqnUr4w5kV3sA" name="Lhs">
+      <nodes xmi:id="_ohdYCm67EeqnUr4w5kV3sA" name="toEnumeration">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
       </nodes>
     </lhs>
-    <rhs xmi:id="_0VD5mx6FEeq3H7jqxYh1TA" name="Rhs">
-      <nodes xmi:id="_0VD5nB6FEeq3H7jqxYh1TA" name="toEnumeration" incoming="_0VD5oB6FEeq3H7jqxYh1TA" outgoing="_0VD5nx6FEeq3H7jqxYh1TA">
+    <rhs xmi:id="_ohdYC267EeqnUr4w5kV3sA" name="Rhs">
+      <nodes xmi:id="_ohdYDG67EeqnUr4w5kV3sA" name="toEnumeration" incoming="_ohdYEG67EeqnUr4w5kV3sA" outgoing="_ohdYD267EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
       </nodes>
-      <nodes xmi:id="_0VD5nR6FEeq3H7jqxYh1TA" name="newLiteral" incoming="_0VD5nx6FEeq3H7jqxYh1TA" outgoing="_0VD5oB6FEeq3H7jqxYh1TA">
+      <nodes xmi:id="_ohdYDW67EeqnUr4w5kV3sA" name="newLiteral" incoming="_ohdYD267EeqnUr4w5kV3sA" outgoing="_ohdYEG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral"/>
-        <attributes xmi:id="_0VD5nh6FEeq3H7jqxYh1TA" value="literalName">
+        <attributes xmi:id="_ohdYDm67EeqnUr4w5kV3sA" value="literalName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_0VD5nx6FEeq3H7jqxYh1TA" source="_0VD5nB6FEeq3H7jqxYh1TA" target="_0VD5nR6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_ohdYD267EeqnUr4w5kV3sA" source="_ohdYDG67EeqnUr4w5kV3sA" target="_ohdYDW67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum/eLiterals"/>
       </edges>
-      <edges xmi:id="_0VD5oB6FEeq3H7jqxYh1TA" source="_0VD5nR6FEeq3H7jqxYh1TA" target="_0VD5nB6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_ohdYEG67EeqnUr4w5kV3sA" source="_ohdYDW67EeqnUr4w5kV3sA" target="_ohdYDG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral/eEnum"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_0VD5oR6FEeq3H7jqxYh1TA" origin="_0VD5mh6FEeq3H7jqxYh1TA" image="_0VD5nB6FEeq3H7jqxYh1TA"/>
+    <mappings xmi:id="_ohdYEW67EeqnUr4w5kV3sA" origin="_ohdYCm67EeqnUr4w5kV3sA" image="_ohdYDG67EeqnUr4w5kV3sA"/>
   </units>
 </henshin:Module>

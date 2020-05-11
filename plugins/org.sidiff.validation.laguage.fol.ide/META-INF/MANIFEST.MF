@@ -5,9 +5,10 @@ Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.sidiff.validation.laguage.fol.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.sidiff.validation.laguage.fol,
- org.eclipse.xtext.ide,
- org.eclipse.xtext.xbase.ide,org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Require-Bundle: org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
+ org.sidiff.validation.laguage.fol
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.sidiff.validation.laguage.fol.ide.contentassist.antlr,
  org.sidiff.validation.laguage.fol.ide.contentassist.antlr.internal

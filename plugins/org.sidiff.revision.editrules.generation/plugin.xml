@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.sidiff.graphpattern.tools.menu">
+         <command
+               commandId="org.sidiff.graphpattern.tools.command.generatebasicgraphpatterns"
+               style="push">
+         </command>
+         <command
+               commandId="org.sidiff.graphpattern.tools.command.decomposingeditrules"
+               style="push">
+         </command>
+         <command
+               commandId="org.sidiff.graphpattern.tools.command.batchgenerateeditrules"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.sidiff.revision.editrules.generation.complex2basic.ComplexToBasicGraphPatternsHandler"
+            commandId="org.sidiff.graphpattern.tools.command.generatebasicgraphpatterns">
+      </handler>
+      <handler
+            class="org.sidiff.revision.editrules.generation.decompose.DecomposingEditRulesHandler"
+            commandId="org.sidiff.graphpattern.tools.command.decomposingeditrules">
+      </handler>
+      <handler
+            class="org.sidiff.revision.editrules.generation.generator.handler.GenerateEditRulesBatch"
+            commandId="org.sidiff.graphpattern.tools.command.batchgenerateeditrules">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.sidiff.graphpattern.category"
+            id="org.sidiff.graphpattern.tools.command.generatebasicgraphpatterns"
+            name="Generate Basic Graph Patterns">
+      </command>
+      <command
+            id="org.sidiff.graphpattern.tools.command.decomposingeditrules"
+            name="Decomposing Edit Rules">
+      </command>
+      <command
+            categoryId="org.sidiff.graphpattern.category"
+            id="org.sidiff.graphpattern.tools.command.batchgenerateeditrules"
+            name="Generate Edit Rules">
+      </command>
+   </extension>
+</plugin>

@@ -17,12 +17,12 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.swt.graphics.Image;
+import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.completion.ui.model.proposals.util.DecompositionTemplates;
 import org.sidiff.completion.ui.proposals.ICompletionPreview;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
-import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 import org.sidiff.graphpattern.profile.henshin_extension.RuleExtension;
-import org.sidiff.repair.complement.construction.ComplementRule;
+import org.sidiff.revision.repair.complement.construction.ComplementRule;
 
 public class ModelCompletionProposal implements ICompletionProposal {
 
@@ -97,7 +97,7 @@ public class ModelCompletionProposal implements ICompletionProposal {
 	@Override
 	public boolean apply() {
 		
-		// SEE: org.sidiff.repair.api.RepairJob
+		// SEE: org.sidiff.revision.repair.api.RepairJob
 		
 		// TODO: Apply on editing domain
 		System.out.println("Apply: " + complement.getComplementRule().getName());

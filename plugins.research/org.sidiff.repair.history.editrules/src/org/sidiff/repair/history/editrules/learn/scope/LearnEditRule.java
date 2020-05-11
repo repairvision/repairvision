@@ -1,6 +1,6 @@
 package org.sidiff.repair.history.editrules.learn.scope;
 
-import static org.sidiff.difference.technical.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
+import static org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -15,15 +15,15 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.editrule.tools.recorder.DifferenceToEditRule;
 import org.sidiff.editrule.tools.recorder.TransformationSetup;
 import org.sidiff.editrule.tools.recorder.filters.IAttributeFilter;
 import org.sidiff.editrule.tools.recorder.filters.IReferenceFilter;
 import org.sidiff.editrule.tools.util.EditRuleUtil;
 import org.sidiff.editrule.tools.util.HenshinDiagramUtil;
+import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;

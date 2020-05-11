@@ -9,8 +9,11 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 // - http://www.lorenzobettini.it/2014/02/switching-from-an-inferred-ecore-model-to-an-imported-one-in-your-xtext-grammar/
 
 ConstraintLibrary:
-	"domain" domain=STRING 'import' packageImport=STRING 
+	domains+=Domain*
 	constraints+=Constraint*;
+
+Domain:
+	'domain' domain=STRING;
 
 Constraint:
 	'constraint' name=ID 'message' message=STRING 'context' variable=Variable ':' formula=Formula;
@@ -57,7 +60,7 @@ UnaryFormula returns Formula :
 	Not;
 
 Not returns UnaryFormula:
-	{Not} "not(" not=Formula ")";
+	{Not} "not" "(" not=Formula ")";
 	
 // predicates (term -> boolean):
 
@@ -65,50 +68,31 @@ Predicate returns Formula:
 	Equals | Inequality | IsEmpty | IsInstanceOf | IsValueLiteralOf;
 
 Equals:
-	"isEqual(" (left=Term) "," (right=Term) ")";
+	"isEqual" "(" (left=Term) "," (right=Term) ")";
 
 Inequality returns Formula:
 	Greater | GreaterEqual | Smaller | SmallerEqual;
 
 Greater:
-	"isGreater(" (left=Term) "," (right=Term) ")";
+	"isGreater" "(" (left=Term) "," (right=Term) ")";
 	
 GreaterEqual:
-	"isGreaterEqual(" (left=Term) "," (right=Term) ")";
+	"isGreaterEqual" "(" (left=Term) "," (right=Term) ")";
 	
 Smaller:
-	"isSmaller(" (left=Term) "," (right=Term) ")";
+	"isSmaller" "(" (left=Term) "," (right=Term) ")";
 	
 SmallerEqual:
-	"isSmallerEqual(" (left=Term) "," (right=Term) ")";	
+	"isSmallerEqual" "(" (left=Term) "," (right=Term) ")";	
 	
 IsEmpty:
-	"isEmpty(" term=Term ")";
+	"isEmpty" "(" term=Term ")";
 	
 IsInstanceOf:
-	"isInstanceOf(" term=Term "," type=Classifier ")";
+	"isInstanceOf" "(" term=Term "," type=Classifier ")";
 	
 IsValueLiteralOf:
-	"isValueLiteralOf(" term=Term "," type=DataType ")";
-	
-// terms as types:
-Classifier:
-	ClassifierConstant | AsClassifier;
-
-ClassifierConstant:
-	constant=[ecore::EClassifier];
-	
-AsClassifier:
-	"asClassifier(" term=Term ")";
-
-DataType: 
-	DataTypeConstant | AsDataType;
-
-DataTypeConstant:
-	constant=[ecore::EDataType];
-
-AsDataType:
-	"asDataType(" term=Term ")";
+	"isValueLiteralOf" "(" term=Term "," type=DataType ")";
 	
 // quantifier
 
@@ -116,18 +100,15 @@ Quantifier returns Formula:
 	ForAll | Exists;
 
 ForAll returns Quantifier:
-	{ForAll} "forAll(" name=Variable "in" iteration=Term ":" formula=Formula ")";
+	{ForAll} "forAll" "(" name=Variable "in" iteration=Term ":" formula=Formula ")";
 	
 Exists returns Quantifier:
-	{Exists} "exists(" name=Variable "in" iteration=Term ":" formula=Formula ")";
+	{Exists} "exists" "(" name=Variable "in" iteration=Term ":" formula=Formula ")";
 
 // boolean:
 
 BooleanExpression returns Formula:
-	'(' Formula ')' | UnaryFormula | Quantifier | Predicate | BoolConstant;
-	
-BoolConstant returns Term:
-	{BoolConstant} value=('true' | 'false');
+	"(" Formula ")" | UnaryFormula | Quantifier | Predicate | BoolConstant;
 
 // terms:
 
@@ -143,29 +124,66 @@ Get:
 	"." (type=[ecore::EClassifier] "::" )? name=[ecore::EStructuralFeature] (next=Get)?;
 	
 GetContainer:
-	"getContainer(" element=Term ")";
+	"getContainer" "(" element=Term ")";
 	
 GetContainments:
-	"getContainments(" element=Term ")";
+	"getContainments" "(" element=Term ")";
 	
 GetClosure:
-	"getClosure(" element=Term "," feature=[ecore::EStructuralFeature] ")";
+	"getClosure" "(" element=Term "," feature=FeatureConstant ")";
 	
 Size: 
-	"size(" elements=Term ")";
+	"size" "(" elements=Term ")";
 	
 IndexOf:
-	"indexOf(" container=Term "," feature=[ecore::EStructuralFeature] "," element=Term ")";
+	"indexOf" "(" container=Term "," feature=FeatureConstant "," element=Term ")";
 	
 Concatenate :
-	"concatenate(" left=Term "," right=Term ")";
+	"concatenate" "(" left=Term "," right=Term ")";
 	
 Capitalize :
-	"capitalize(" string=Term ")";
+	"capitalize" "(" string=Term ")";
 
-// primitive terms:
+// type constants and type references:
+FeatureConstant:
+	constant=[ecore::EStructuralFeature];
+
+Classifier:
+	ClassifierConstant | AsClassifier;
+
+ClassifierConstant:
+	constant=[ecore::EClassifier];
+	
+AsClassifier:
+	"asClassifier" "(" term=Term ")";
+
+DataType: 
+	DataTypeConstant | AsDataType;
+
+DataTypeConstant:
+	constant=[ecore::EDataType];
+
+AsDataType:
+	"asDataType" "(" term=Term ")";
+
+// primitive constants:
 
 Constant returns Term:
-	{IntConstant} value=INT |
-	{StringConstant} value=STRING |
-	BoolConstant;
+	IntConstant | StringConstant | BoolConstant;
+
+IntConstant:
+	value=SIGNED_INT;
+
+StringConstant:
+	value=STRING;
+
+BoolConstant:
+	value=BOOLEAN;
+
+// terminals:
+
+terminal BOOLEAN returns ecore::EBoolean:
+	'true' | 'false';
+	
+terminal SIGNED_INT returns ecore::EInt:
+	'-'? INT;

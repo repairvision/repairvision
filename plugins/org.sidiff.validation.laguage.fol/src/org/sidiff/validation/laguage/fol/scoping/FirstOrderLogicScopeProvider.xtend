@@ -3,12 +3,16 @@
  */
 package org.sidiff.validation.laguage.fol.scoping
 
+import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.Scopes
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage
+import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef
 import org.sidiff.validation.laguage.fol.util.ScopeUtil
-import org.eclipse.emf.ecore.EClass
+import org.sidiff.validation.laguage.fol.util.EMFMetaAccessUtil
+import java.util.Map
+import org.eclipse.emf.ecore.EPackage
 
 /**
  * This class contains custom scoping description.
@@ -17,42 +21,49 @@ import org.eclipse.emf.ecore.EClass
  * on how and when to use it.
  */
 class FirstOrderLogicScopeProvider extends AbstractFirstOrderLogicScopeProvider {
-
+	
+	Map<String, EPackage> workspaceEPackages
+	
+	def getWorkspaceEPackages() {
+		if (workspaceEPackages === null) {
+			workspaceEPackages = EMFMetaAccessUtil.workspaceEPackages
+		}
+		return workspaceEPackages
+	}
+	
 	override getScope(EObject context, EReference reference) {
+
+		// VariableRef
+		if (reference == FirstOrderLogicPackage.eINSTANCE.variableRef_Name) {
+			return Scopes::scopeFor(ScopeUtil.getVariables(context as VariableRef))
+		}
 
 		// Variable
 		if (reference == FirstOrderLogicPackage.eINSTANCE.variable_Type) {
-			return Scopes::scopeFor(ScopeUtil.getAllTypes(context)
-				.filter[it instanceof EClass]
-			)
+			return Scopes::scopeFor(ScopeUtil.getAllTypes(context, getWorkspaceEPackages()).filter[it instanceof EClass])
 		} 
 		
-		// IsInstanceOf:
-		else if (reference == FirstOrderLogicPackage.eINSTANCE.classifierConstant_Constant) {
-			return Scopes::scopeFor(ScopeUtil.getAllTypes(context))
+		// ClassifierConstant:
+		if (reference == FirstOrderLogicPackage.eINSTANCE.classifierConstant_Constant) {
+			return Scopes::scopeFor(ScopeUtil.getAllTypes(context, getWorkspaceEPackages()))
 		} 
 		
-		// IsValueLiteralOf:
-		else if (reference == FirstOrderLogicPackage.eINSTANCE.dataTypeConstant_Constant) {
-			return Scopes::scopeFor(ScopeUtil.getAllDataTypes(context))
+		// DataTypeConstant:
+		if (reference == FirstOrderLogicPackage.eINSTANCE.dataTypeConstant_Constant) {
+			return Scopes::scopeFor(ScopeUtil.getAllDataTypes(context, getWorkspaceEPackages()))
 		} 
+		
+		// FeatureConstant
+		if (reference == FirstOrderLogicPackage.eINSTANCE.featureConstant_Constant) {
+			return Scopes::scopeFor(ScopeUtil.getAllFeatures(context))
+		}
 		
 		// Get:
-		else if (reference == FirstOrderLogicPackage.eINSTANCE.get_Name) {
+		if (reference == FirstOrderLogicPackage.eINSTANCE.get_Name) {
 			return Scopes::scopeFor(ScopeUtil.getAllFeatures(context))
 		} else if (reference == FirstOrderLogicPackage.eINSTANCE.get_Type) {
-			return Scopes::scopeFor(ScopeUtil.getAllSubTypes(context));
+			return Scopes::scopeFor(ScopeUtil.getAllSubTypes(context, getWorkspaceEPackages()));
 		} 
-		
-		// GetClosure:
-		else if (reference == FirstOrderLogicPackage.eINSTANCE.getClosure_Feature) {
-			return Scopes::scopeFor(ScopeUtil.getAllFeatures(context))
-		}
-		
-		// IndexOf:
-		else if (reference == FirstOrderLogicPackage.eINSTANCE.indexOf_Feature) {
-			return Scopes::scopeFor(ScopeUtil.getAllFeatures(context))
-		}
 		
 		super.getScope(context, reference)
 	}

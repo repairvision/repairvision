@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_obAxwG67EeqnUr4w5kV3sA" name="Transform: Named Classifier - To - Named Package" description="Transform: Named Classifier - To - Named Package">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_obAxwW67EeqnUr4w5kV3sA" name="mainUnit" subUnits="_obAxym67EeqnUr4w5kV3sA">
+    <parameters xmi:id="_obAxwm67EeqnUr4w5kV3sA" name="package" kind="IN"/>
+    <parameters xmi:id="_obAxw267EeqnUr4w5kV3sA" name="packageName" kind="IN"/>
+    <parameters xmi:id="_obAxxG67EeqnUr4w5kV3sA" name="oldClassifier" kind="IN"/>
+    <parameters xmi:id="_obAxxW67EeqnUr4w5kV3sA" name="className" kind="IN"/>
+    <parameterMappings xmi:id="_obAxxm67EeqnUr4w5kV3sA" source="_obAxwm67EeqnUr4w5kV3sA" target="_obAxy267EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_obAxx267EeqnUr4w5kV3sA" source="_obAxw267EeqnUr4w5kV3sA" target="_obAxzG67EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_obAxyG67EeqnUr4w5kV3sA" source="_obAxxG67EeqnUr4w5kV3sA" target="_obAxzW67EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_obAxyW67EeqnUr4w5kV3sA" source="_obAxxW67EeqnUr4w5kV3sA" target="_obAxzm67EeqnUr4w5kV3sA"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_obAxym67EeqnUr4w5kV3sA" name="Transform: Named Classifier - To - Named Package">
+    <parameters xmi:id="_obAxy267EeqnUr4w5kV3sA" name="package" kind="IN"/>
+    <parameters xmi:id="_obAxzG67EeqnUr4w5kV3sA" name="packageName" kind="IN"/>
+    <parameters xmi:id="_obAxzW67EeqnUr4w5kV3sA" name="oldClassifier" kind="IN"/>
+    <parameters xmi:id="_obAxzm67EeqnUr4w5kV3sA" name="className" kind="IN"/>
+    <lhs xmi:id="_obAxz267EeqnUr4w5kV3sA" name="Lhs">
+      <nodes xmi:id="_obAx0G67EeqnUr4w5kV3sA" name="package" incoming="_obAx1G67EeqnUr4w5kV3sA" outgoing="_obAx0267EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+      </nodes>
+      <nodes xmi:id="_obAx0W67EeqnUr4w5kV3sA" name="oldClassifier" incoming="_obAx0267EeqnUr4w5kV3sA" outgoing="_obAx1G67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+        <attributes xmi:id="_obAx0m67EeqnUr4w5kV3sA" value="className">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_obAx0267EeqnUr4w5kV3sA" source="_obAx0G67EeqnUr4w5kV3sA" target="_obAx0W67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
+      </edges>
+      <edges xmi:id="_obAx1G67EeqnUr4w5kV3sA" source="_obAx0W67EeqnUr4w5kV3sA" target="_obAx0G67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_obAx1W67EeqnUr4w5kV3sA" name="Rhs">
+      <nodes xmi:id="_obAx1m67EeqnUr4w5kV3sA" name="package">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+        <attributes xmi:id="_obAx1267EeqnUr4w5kV3sA" value="packageName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_obAx2G67EeqnUr4w5kV3sA" origin="_obAx0G67EeqnUr4w5kV3sA" image="_obAx1m67EeqnUr4w5kV3sA"/>
+  </units>
+</henshin:Module>

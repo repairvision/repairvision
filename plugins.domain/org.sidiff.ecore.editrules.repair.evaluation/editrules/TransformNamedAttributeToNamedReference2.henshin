@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ocIzIG67EeqnUr4w5kV3sA" name="Transform: Named Attribute - To - Named Reference (2)" description="Transform: Named Attribute - To - Named Reference (2)">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ocIzIW67EeqnUr4w5kV3sA" name="mainUnit" subUnits="_ocIzLm67EeqnUr4w5kV3sA">
+    <parameters xmi:id="_ocIzIm67EeqnUr4w5kV3sA" name="type" kind="IN"/>
+    <parameters xmi:id="_ocIzI267EeqnUr4w5kV3sA" name="oldAttribte" kind="IN"/>
+    <parameters xmi:id="_ocIzJG67EeqnUr4w5kV3sA" name="attributeName" kind="IN"/>
+    <parameters xmi:id="_ocIzJW67EeqnUr4w5kV3sA" name="fromType" kind="IN"/>
+    <parameters xmi:id="_ocIzJm67EeqnUr4w5kV3sA" name="toContainerClass" kind="IN"/>
+    <parameters xmi:id="_ocIzJ267EeqnUr4w5kV3sA" name="referenceName" kind="IN"/>
+    <parameterMappings xmi:id="_ocIzKG67EeqnUr4w5kV3sA" source="_ocIzIm67EeqnUr4w5kV3sA" target="_ocIzL267EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ocIzKW67EeqnUr4w5kV3sA" source="_ocIzI267EeqnUr4w5kV3sA" target="_ocIzMG67EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ocIzKm67EeqnUr4w5kV3sA" source="_ocIzJG67EeqnUr4w5kV3sA" target="_ocIzMW67EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ocIzK267EeqnUr4w5kV3sA" source="_ocIzJW67EeqnUr4w5kV3sA" target="_ocIzMm67EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ocIzLG67EeqnUr4w5kV3sA" source="_ocIzJm67EeqnUr4w5kV3sA" target="_ocIzM267EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ocIzLW67EeqnUr4w5kV3sA" source="_ocIzJ267EeqnUr4w5kV3sA" target="_ocIzNG67EeqnUr4w5kV3sA"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_ocIzLm67EeqnUr4w5kV3sA" name="Transform: Named Attribute - To - Named Reference (2)">
+    <parameters xmi:id="_ocIzL267EeqnUr4w5kV3sA" name="type" kind="IN"/>
+    <parameters xmi:id="_ocIzMG67EeqnUr4w5kV3sA" name="oldAttribte" kind="IN"/>
+    <parameters xmi:id="_ocIzMW67EeqnUr4w5kV3sA" name="attributeName" kind="IN"/>
+    <parameters xmi:id="_ocIzMm67EeqnUr4w5kV3sA" name="fromType" kind="IN"/>
+    <parameters xmi:id="_ocIzM267EeqnUr4w5kV3sA" name="toContainerClass" kind="IN"/>
+    <parameters xmi:id="_ocIzNG67EeqnUr4w5kV3sA" name="referenceName" kind="IN"/>
+    <lhs xmi:id="_ocIzNW67EeqnUr4w5kV3sA" name="Lhs">
+      <nodes xmi:id="_ocIzNm67EeqnUr4w5kV3sA" name="type" incoming="_ocIzPG67EeqnUr4w5kV3sA" outgoing="_ocIzO267EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_ocIzN267EeqnUr4w5kV3sA" name="oldAttribte" incoming="_ocIzO267EeqnUr4w5kV3sA" outgoing="_ocIzPG67EeqnUr4w5kV3sA _ocIzPW67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+        <attributes xmi:id="_ocIzOG67EeqnUr4w5kV3sA" value="attributeName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_ocIzOW67EeqnUr4w5kV3sA" name="fromType" incoming="_ocIzPW67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+      </nodes>
+      <nodes xmi:id="_ocIzOm67EeqnUr4w5kV3sA" name="toContainerClass">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <edges xmi:id="_ocIzO267EeqnUr4w5kV3sA" source="_ocIzNm67EeqnUr4w5kV3sA" target="_ocIzN267EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_ocIzPG67EeqnUr4w5kV3sA" source="_ocIzN267EeqnUr4w5kV3sA" target="_ocIzNm67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_ocIzPW67EeqnUr4w5kV3sA" source="_ocIzN267EeqnUr4w5kV3sA" target="_ocIzOW67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_ocIzPm67EeqnUr4w5kV3sA" name="Rhs">
+      <nodes xmi:id="_ocIzP267EeqnUr4w5kV3sA" name="type" incoming="_ocIzRm67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_ocIzQG67EeqnUr4w5kV3sA" name="fromType">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+      </nodes>
+      <nodes xmi:id="_ocIzQW67EeqnUr4w5kV3sA" name="toContainerClass" incoming="_ocIzRW67EeqnUr4w5kV3sA" outgoing="_ocIzRG67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+      </nodes>
+      <nodes xmi:id="_ocIzQm67EeqnUr4w5kV3sA" name="newReference" incoming="_ocIzRG67EeqnUr4w5kV3sA" outgoing="_ocIzRW67EeqnUr4w5kV3sA _ocIzRm67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+        <attributes xmi:id="_ocIzQ267EeqnUr4w5kV3sA" value="referenceName">
+          <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_ocIzRG67EeqnUr4w5kV3sA" source="_ocIzQW67EeqnUr4w5kV3sA" target="_ocIzQm67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
+      </edges>
+      <edges xmi:id="_ocIzRW67EeqnUr4w5kV3sA" source="_ocIzQm67EeqnUr4w5kV3sA" target="_ocIzQW67EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
+      </edges>
+      <edges xmi:id="_ocIzRm67EeqnUr4w5kV3sA" source="_ocIzQm67EeqnUr4w5kV3sA" target="_ocIzP267EeqnUr4w5kV3sA">
+        <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_ocIzR267EeqnUr4w5kV3sA" origin="_ocIzNm67EeqnUr4w5kV3sA" image="_ocIzP267EeqnUr4w5kV3sA"/>
+    <mappings xmi:id="_ocIzSG67EeqnUr4w5kV3sA" origin="_ocIzOW67EeqnUr4w5kV3sA" image="_ocIzQG67EeqnUr4w5kV3sA"/>
+    <mappings xmi:id="_ocIzSW67EeqnUr4w5kV3sA" origin="_ocIzOm67EeqnUr4w5kV3sA" image="_ocIzQW67EeqnUr4w5kV3sA"/>
+  </units>
+</henshin:Module>

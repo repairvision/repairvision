@@ -7,7 +7,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.repair.history.editrules.Activator;
-import org.sidiff.repair.history.evaluation.ui.HistoryRepairUI;
+import org.sidiff.revision.repair.history.evaluation.ui.HistoryRepairUI;
 
 public class HistoryEditRuleLearnUI extends HistoryRepairUI {
 	

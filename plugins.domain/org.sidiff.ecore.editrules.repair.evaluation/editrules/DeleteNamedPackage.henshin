@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_0LBMwB6FEeq3H7jqxYh1TA" name="Delete: Named Package" description="Delete: Named Package">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_0LBMwR6FEeq3H7jqxYh1TA" name="mainUnit" subUnits="_0LBMxh6FEeq3H7jqxYh1TA">
-    <parameters xmi:id="_0LBMwh6FEeq3H7jqxYh1TA" name="oldPackage" kind="IN"/>
-    <parameters xmi:id="_0LBMwx6FEeq3H7jqxYh1TA" name="packageName" kind="IN"/>
-    <parameterMappings xmi:id="_0LBMxB6FEeq3H7jqxYh1TA" source="_0LBMwh6FEeq3H7jqxYh1TA" target="_0LBMxx6FEeq3H7jqxYh1TA"/>
-    <parameterMappings xmi:id="_0LBMxR6FEeq3H7jqxYh1TA" source="_0LBMwx6FEeq3H7jqxYh1TA" target="_0LBMyB6FEeq3H7jqxYh1TA"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_oaRx8G67EeqnUr4w5kV3sA" name="Delete: Named Package" description="Delete: Named Package">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_oaRx8W67EeqnUr4w5kV3sA" name="mainUnit" subUnits="_oaRx9m67EeqnUr4w5kV3sA">
+    <parameters xmi:id="_oaRx8m67EeqnUr4w5kV3sA" name="oldPackage" kind="IN"/>
+    <parameters xmi:id="_oaRx8267EeqnUr4w5kV3sA" name="packageName" kind="IN"/>
+    <parameterMappings xmi:id="_oaRx9G67EeqnUr4w5kV3sA" source="_oaRx8m67EeqnUr4w5kV3sA" target="_oaRx9267EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_oaRx9W67EeqnUr4w5kV3sA" source="_oaRx8267EeqnUr4w5kV3sA" target="_oaRx-G67EeqnUr4w5kV3sA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_0LBMxh6FEeq3H7jqxYh1TA" name="Delete: Named Package">
-    <parameters xmi:id="_0LBMxx6FEeq3H7jqxYh1TA" name="oldPackage" kind="IN"/>
-    <parameters xmi:id="_0LBMyB6FEeq3H7jqxYh1TA" name="packageName" kind="IN"/>
-    <lhs xmi:id="_0LBMyR6FEeq3H7jqxYh1TA" name="Lhs">
-      <nodes xmi:id="_0LBMyh6FEeq3H7jqxYh1TA" name="oldPackage">
+  <units xsi:type="henshin:Rule" xmi:id="_oaRx9m67EeqnUr4w5kV3sA" name="Delete: Named Package">
+    <parameters xmi:id="_oaRx9267EeqnUr4w5kV3sA" name="oldPackage" kind="IN"/>
+    <parameters xmi:id="_oaRx-G67EeqnUr4w5kV3sA" name="packageName" kind="IN"/>
+    <lhs xmi:id="_oaRx-W67EeqnUr4w5kV3sA" name="Lhs">
+      <nodes xmi:id="_oaRx-m67EeqnUr4w5kV3sA" name="oldPackage">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
-        <attributes xmi:id="_0LBMyx6FEeq3H7jqxYh1TA" value="packageName">
+        <attributes xmi:id="_oaRx-267EeqnUr4w5kV3sA" value="packageName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>

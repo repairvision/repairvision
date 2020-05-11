@@ -4,11 +4,11 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.completion.ui.codebricks.ValuePlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.editor.CodebricksEditor;
 import org.sidiff.completion.ui.proposals.ICompletionPreview;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
-import org.sidiff.graphpattern.edit.util.ItemProviderUtil;
 
 public class ValueCodebricksProposal implements ICompletionProposal  {
 

@@ -21,14 +21,14 @@ import org.sidiff.difference.symmetric.AttributeValueChange;
 import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.SymmetricFactory;
-import org.sidiff.difference.technical.ITechnicalDifferenceBuilder;
-import org.sidiff.difference.technical.api.settings.DifferenceSettings;
 import org.sidiff.history.revision.IVersion;
 import org.sidiff.history.revision.difference.IDifference;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.matcher.IMatcher;
 import org.sidiff.matching.model.Correspondence;
 import org.sidiff.matching.model.Matching;
+import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
+import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 
 public class Difference implements IDifference {
 

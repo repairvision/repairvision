@@ -1,8 +1,9 @@
 package org.sidiff.validation.constraint.interpreter.formulas.unary;
 
+import org.sidiff.validation.constraint.interpreter.formulas.binary.FormulaImpl;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.Formula;
 
-public abstract class UnaryFormula extends Formula {
+public abstract class UnaryFormula extends FormulaImpl {
 
 	protected Formula child;
 

@@ -6,12 +6,12 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.completion.ui.model.proposals.recognition.ModelCompletionProposalGenerator;
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
-import org.sidiff.consistency.common.emf.DocumentType;
 import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
-import org.sidiff.repair.editrules.library.RulebaseLibrary;
-import org.sidiff.repair.editrules.library.RulebaseUtil;
+import org.sidiff.revision.editrules.project.registry.RulebaseRegistry;
+import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 
 public class CompletionProposalListHandler extends AbstractHandler {
 	
@@ -31,7 +31,7 @@ public class CompletionProposalListHandler extends AbstractHandler {
 			
 			// TODO: Cache
 			List<Rule> editRules = RulebaseUtil.eLoadEditRules(
-					RulebaseLibrary.getRulebases(".*?Completion.*", DocumentType.getDocumentType(context.get(0))), false);
+					RulebaseRegistry.getRulebases(".*?Completion.*", DocumentType.getDocumentType(context.get(0))), false);
 			
 			// TODO: Scheduling
 			proposalList.showPopupOnCursor();

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="rulebasebuilder"
+         name="Rulebase Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            callOnEmptyDelta="false"
+            hasNature="true"
+            isConfigurable="false"
+            supportsConfigurations="false">
+         <run
+               class="org.sidiff.revision.editrules.project.builder.RuleBaseBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension 
+         id="rulebasenature"
+         name="Rulebase Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.sidiff.revision.editrules.project.builder.nature.RuleBaseProjectNature">
+         </run>
+      </runtime>
+      <builder
+            id="org.sidiff.revision.editrules.project.builder.rulebasebuilder">
+      </builder>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+      <image
+               icon="icons/configuration_10x10.png"
+               id="org.sidiff.revision.editrules.project.builder.icon"
+               natureId="org.sidiff.revision.editrules.project.builder.rulebasenature">
+      </image>
+   </extension>
+   <extension
+            point="org.eclipse.pde.ui.pluginContent">
+      <wizard
+               category="ReVision"
+               class="org.sidiff.revision.editrules.project.builder.wizard.RuleBaseProjectWizard"
+               icon="icons/configuration.png"
+               id="org.sidiff.revision.editrules.project.builder.wizard"
+               java="true"
+               name="Edit Rule Plug-in Project"
+               pureOSGi="false"
+               rcp="false"
+               requiresActivator="false"
+               ui-content="false">
+            <description>
+               This wizard creates a plug-in project for defining edit rules which can be used in the ReVision environment.
+            </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.pde.ui.templates">
+      <template
+            class="org.sidiff.revision.editrules.project.builder.template.RuleBaseTemplateSection"
+            contributingId="org.sidiff.revision.editrules.project.rulebase"
+            icon="icons/configuration.png"
+            id="org.sidiff.revision.editrules.project.builder.template"
+            name="Edit Rule Plug-in Project Template">
+      </template>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.sidiff.revision.category"
+            name="ReVision">
+      </category>
+      <wizard
+            category="org.sidiff.revision.category"
+            class="org.sidiff.revision.editrules.project.builder.wizard.RuleBaseProjectWizardDirect"
+            icon="icons/configuration.png"
+            id="org.sidiff.revision.editrules.project.builder.wizard.direct"
+            name="Edit Rule Plug-in Project"
+            project="true">
+         <description>
+            This wizard creates a plug-in project for defining edit rules which can be used in the ReVision environment.
+         </description>
+      </wizard>
+   </extension>
+</plugin>

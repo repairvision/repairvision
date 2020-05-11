@@ -1,80 +1,77 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_0U4TYB6FEeq3H7jqxYh1TA" name="Transform: Enumeration Attribute - To - Enumeration with Literal" description="Transform: Enumeration Attribute - To - Enumeration with Literal">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_0U4TYR6FEeq3H7jqxYh1TA" name="mainUnit" subUnits="_0U4TbB6FEeq3H7jqxYh1TA">
-    <parameters xmi:id="_0U4TYh6FEeq3H7jqxYh1TA" name="fromContainerClass" kind="IN"/>
-    <parameters xmi:id="_0U4TYx6FEeq3H7jqxYh1TA" name="oldAttribute" kind="IN"/>
-    <parameters xmi:id="_0U4TZB6FEeq3H7jqxYh1TA" name="literalName" kind="IN"/>
-    <parameters xmi:id="_0U4TZR6FEeq3H7jqxYh1TA" name="enumeration" kind="IN"/>
-    <parameters xmi:id="_0U4TZh6FEeq3H7jqxYh1TA" name="literal" kind="IN"/>
-    <parameterMappings xmi:id="_0U4TZx6FEeq3H7jqxYh1TA" source="_0U4TYh6FEeq3H7jqxYh1TA" target="_0U4TbR6FEeq3H7jqxYh1TA"/>
-    <parameterMappings xmi:id="_0U4TaB6FEeq3H7jqxYh1TA" source="_0U4TYx6FEeq3H7jqxYh1TA" target="_0U4Tbh6FEeq3H7jqxYh1TA"/>
-    <parameterMappings xmi:id="_0U4TaR6FEeq3H7jqxYh1TA" source="_0U4TZB6FEeq3H7jqxYh1TA" target="_0U4Tbx6FEeq3H7jqxYh1TA"/>
-    <parameterMappings xmi:id="_0U4Tah6FEeq3H7jqxYh1TA" source="_0U4TZR6FEeq3H7jqxYh1TA" target="_0U4TcB6FEeq3H7jqxYh1TA"/>
-    <parameterMappings xmi:id="_0U4Tax6FEeq3H7jqxYh1TA" source="_0U4TZh6FEeq3H7jqxYh1TA" target="_0U4TcR6FEeq3H7jqxYh1TA"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_ohWDQG67EeqnUr4w5kV3sA" name="Transform: Enumeration Attribute - To - Enumeration with Literal" description="Transform: Enumeration Attribute - To - Enumeration with Literal">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_ohWDQW67EeqnUr4w5kV3sA" name="mainUnit" subUnits="_ohWDSm67EeqnUr4w5kV3sA">
+    <parameters xmi:id="_ohWDQm67EeqnUr4w5kV3sA" name="fromContainerClass" kind="IN"/>
+    <parameters xmi:id="_ohWDQ267EeqnUr4w5kV3sA" name="oldAttribute" kind="IN"/>
+    <parameters xmi:id="_ohWDRG67EeqnUr4w5kV3sA" name="literalName" kind="IN"/>
+    <parameters xmi:id="_ohWDRW67EeqnUr4w5kV3sA" name="enumeration" kind="IN"/>
+    <parameterMappings xmi:id="_ohWDRm67EeqnUr4w5kV3sA" source="_ohWDQm67EeqnUr4w5kV3sA" target="_ohWDS267EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ohWDR267EeqnUr4w5kV3sA" source="_ohWDQ267EeqnUr4w5kV3sA" target="_ohWDTG67EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ohWDSG67EeqnUr4w5kV3sA" source="_ohWDRG67EeqnUr4w5kV3sA" target="_ohWDTW67EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_ohWDSW67EeqnUr4w5kV3sA" source="_ohWDRW67EeqnUr4w5kV3sA" target="_ohWDTm67EeqnUr4w5kV3sA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_0U4TbB6FEeq3H7jqxYh1TA" name="Transform: Enumeration Attribute - To - Enumeration with Literal">
-    <parameters xmi:id="_0U4TbR6FEeq3H7jqxYh1TA" name="fromContainerClass" kind="IN"/>
-    <parameters xmi:id="_0U4Tbh6FEeq3H7jqxYh1TA" name="oldAttribute" kind="IN"/>
-    <parameters xmi:id="_0U4Tbx6FEeq3H7jqxYh1TA" name="literalName" kind="IN"/>
-    <parameters xmi:id="_0U4TcB6FEeq3H7jqxYh1TA" name="enumeration" kind="IN"/>
-    <parameters xmi:id="_0U4TcR6FEeq3H7jqxYh1TA" name="literal" kind="IN"/>
-    <lhs xmi:id="_0U4Tch6FEeq3H7jqxYh1TA" name="Lhs">
-      <nodes xmi:id="_0U4Tcx6FEeq3H7jqxYh1TA" name="fromContainerClass" incoming="_0U4Tex6FEeq3H7jqxYh1TA" outgoing="_0U4TeR6FEeq3H7jqxYh1TA">
+  <units xsi:type="henshin:Rule" xmi:id="_ohWDSm67EeqnUr4w5kV3sA" name="Transform: Enumeration Attribute - To - Enumeration with Literal">
+    <parameters xmi:id="_ohWDS267EeqnUr4w5kV3sA" name="fromContainerClass" kind="IN"/>
+    <parameters xmi:id="_ohWDTG67EeqnUr4w5kV3sA" name="oldAttribute" kind="IN"/>
+    <parameters xmi:id="_ohWDTW67EeqnUr4w5kV3sA" name="literalName" kind="IN"/>
+    <parameters xmi:id="_ohWDTm67EeqnUr4w5kV3sA" name="enumeration" kind="IN"/>
+    <lhs xmi:id="_ohWDT267EeqnUr4w5kV3sA" name="Lhs">
+      <nodes xmi:id="_ohWDUG67EeqnUr4w5kV3sA" name="fromContainerClass" incoming="_ohWDWG67EeqnUr4w5kV3sA" outgoing="_ohWDVm67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_0U4TdB6FEeq3H7jqxYh1TA" name="oldAttribute" incoming="_0U4TeR6FEeq3H7jqxYh1TA" outgoing="_0U4Teh6FEeq3H7jqxYh1TA _0U4Tex6FEeq3H7jqxYh1TA">
+      <nodes xmi:id="_ohWDUW67EeqnUr4w5kV3sA" name="oldAttribute" incoming="_ohWDVm67EeqnUr4w5kV3sA" outgoing="_ohWDV267EeqnUr4w5kV3sA _ohWDWG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
-        <attributes xmi:id="_0U4TdR6FEeq3H7jqxYh1TA" value="literalName">
+        <attributes xmi:id="_ohWDUm67EeqnUr4w5kV3sA" value="literalName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/defaultValueLiteral"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_0U4Tdh6FEeq3H7jqxYh1TA" name="enumeration" incoming="_0U4Teh6FEeq3H7jqxYh1TA _0U4TfR6FEeq3H7jqxYh1TA" outgoing="_0U4TfB6FEeq3H7jqxYh1TA">
+      <nodes xmi:id="_ohWDU267EeqnUr4w5kV3sA" name="enumeration" incoming="_ohWDV267EeqnUr4w5kV3sA _ohWDWm67EeqnUr4w5kV3sA" outgoing="_ohWDWW67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
       </nodes>
-      <nodes xmi:id="_0U4Tdx6FEeq3H7jqxYh1TA" name="literal" incoming="_0U4TfB6FEeq3H7jqxYh1TA" outgoing="_0U4TfR6FEeq3H7jqxYh1TA">
+      <nodes xmi:id="_ohWDVG67EeqnUr4w5kV3sA" name="literal" incoming="_ohWDWW67EeqnUr4w5kV3sA" outgoing="_ohWDWm67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral"/>
-        <attributes xmi:id="_0U4TeB6FEeq3H7jqxYh1TA" value="literalName">
+        <attributes xmi:id="_ohWDVW67EeqnUr4w5kV3sA" value="literalName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_0U4TeR6FEeq3H7jqxYh1TA" source="_0U4Tcx6FEeq3H7jqxYh1TA" target="_0U4TdB6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_ohWDVm67EeqnUr4w5kV3sA" source="_ohWDUG67EeqnUr4w5kV3sA" target="_ohWDUW67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="_0U4Teh6FEeq3H7jqxYh1TA" source="_0U4TdB6FEeq3H7jqxYh1TA" target="_0U4Tdh6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_ohWDV267EeqnUr4w5kV3sA" source="_ohWDUW67EeqnUr4w5kV3sA" target="_ohWDU267EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="_0U4Tex6FEeq3H7jqxYh1TA" source="_0U4TdB6FEeq3H7jqxYh1TA" target="_0U4Tcx6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_ohWDWG67EeqnUr4w5kV3sA" source="_ohWDUW67EeqnUr4w5kV3sA" target="_ohWDUG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
-      <edges xmi:id="_0U4TfB6FEeq3H7jqxYh1TA" source="_0U4Tdh6FEeq3H7jqxYh1TA" target="_0U4Tdx6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_ohWDWW67EeqnUr4w5kV3sA" source="_ohWDU267EeqnUr4w5kV3sA" target="_ohWDVG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum/eLiterals"/>
       </edges>
-      <edges xmi:id="_0U4TfR6FEeq3H7jqxYh1TA" source="_0U4Tdx6FEeq3H7jqxYh1TA" target="_0U4Tdh6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_ohWDWm67EeqnUr4w5kV3sA" source="_ohWDVG67EeqnUr4w5kV3sA" target="_ohWDU267EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral/eEnum"/>
       </edges>
     </lhs>
-    <rhs xmi:id="_0U4Tfh6FEeq3H7jqxYh1TA" name="Rhs">
-      <nodes xmi:id="_0U4Tfx6FEeq3H7jqxYh1TA" name="fromContainerClass">
+    <rhs xmi:id="_ohWDW267EeqnUr4w5kV3sA" name="Rhs">
+      <nodes xmi:id="_ohWDXG67EeqnUr4w5kV3sA" name="fromContainerClass">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_0U4TgB6FEeq3H7jqxYh1TA" name="enumeration" incoming="_0U4ThB6FEeq3H7jqxYh1TA" outgoing="_0U4Tgx6FEeq3H7jqxYh1TA">
+      <nodes xmi:id="_ohWDXW67EeqnUr4w5kV3sA" name="enumeration" incoming="_ohWDYW67EeqnUr4w5kV3sA" outgoing="_ohWDYG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum"/>
       </nodes>
-      <nodes xmi:id="_0U4TgR6FEeq3H7jqxYh1TA" name="literal" incoming="_0U4Tgx6FEeq3H7jqxYh1TA" outgoing="_0U4ThB6FEeq3H7jqxYh1TA">
+      <nodes xmi:id="_ohWDXm67EeqnUr4w5kV3sA" name="literal" incoming="_ohWDYG67EeqnUr4w5kV3sA" outgoing="_ohWDYW67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral"/>
-        <attributes xmi:id="_0U4Tgh6FEeq3H7jqxYh1TA" value="literalName">
+        <attributes xmi:id="_ohWDX267EeqnUr4w5kV3sA" value="literalName">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_0U4Tgx6FEeq3H7jqxYh1TA" source="_0U4TgB6FEeq3H7jqxYh1TA" target="_0U4TgR6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_ohWDYG67EeqnUr4w5kV3sA" source="_ohWDXW67EeqnUr4w5kV3sA" target="_ohWDXm67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnum/eLiterals"/>
       </edges>
-      <edges xmi:id="_0U4ThB6FEeq3H7jqxYh1TA" source="_0U4TgR6FEeq3H7jqxYh1TA" target="_0U4TgB6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_ohWDYW67EeqnUr4w5kV3sA" source="_ohWDXm67EeqnUr4w5kV3sA" target="_ohWDXW67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EEnumLiteral/eEnum"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_0U4ThR6FEeq3H7jqxYh1TA" origin="_0U4Tcx6FEeq3H7jqxYh1TA" image="_0U4Tfx6FEeq3H7jqxYh1TA"/>
-    <mappings xmi:id="_0U4Thh6FEeq3H7jqxYh1TA" origin="_0U4Tdh6FEeq3H7jqxYh1TA" image="_0U4TgB6FEeq3H7jqxYh1TA"/>
-    <mappings xmi:id="_0U4Thx6FEeq3H7jqxYh1TA" origin="_0U4Tdx6FEeq3H7jqxYh1TA" image="_0U4TgR6FEeq3H7jqxYh1TA"/>
+    <mappings xmi:id="_ohWDYm67EeqnUr4w5kV3sA" origin="_ohWDUG67EeqnUr4w5kV3sA" image="_ohWDXG67EeqnUr4w5kV3sA"/>
+    <mappings xmi:id="_ohWDY267EeqnUr4w5kV3sA" origin="_ohWDU267EeqnUr4w5kV3sA" image="_ohWDXW67EeqnUr4w5kV3sA"/>
+    <mappings xmi:id="_ohWDZG67EeqnUr4w5kV3sA" origin="_ohWDVG67EeqnUr4w5kV3sA" image="_ohWDXm67EeqnUr4w5kV3sA"/>
   </units>
 </henshin:Module>

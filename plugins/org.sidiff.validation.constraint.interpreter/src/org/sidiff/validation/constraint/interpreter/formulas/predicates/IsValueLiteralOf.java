@@ -8,7 +8,7 @@ import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairTy
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
-public class IsValueLiteralOf extends Predicate {
+public class IsValueLiteralOf extends PredicateImpl {
 
 	protected Term term;
 	

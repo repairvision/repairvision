@@ -5,7 +5,7 @@ import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
-public abstract class Comparison extends Predicate {
+public abstract class Comparison extends PredicateImpl {
 
 	protected Term left;
 	

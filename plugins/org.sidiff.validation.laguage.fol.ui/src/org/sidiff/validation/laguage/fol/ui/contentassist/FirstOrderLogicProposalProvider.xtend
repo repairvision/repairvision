@@ -3,10 +3,27 @@
  */
 package org.sidiff.validation.laguage.fol.ui.contentassist
 
+import org.eclipse.core.runtime.Platform
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.xtext.RuleCall
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
  * on how to customize the content assistant.
  */
 class FirstOrderLogicProposalProvider extends AbstractFirstOrderLogicProposalProvider {
+	
+	override complete_Domain(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		Platform.extensionRegistry.getConfigurationElementsFor("org.eclipse.emf.ecore.generated_package").forEach[
+			val domainUri = getAttribute("uri")
+			val ePackage = EPackage.Registry.INSTANCE.getEPackage(domainUri)
+			acceptor.accept(createCompletionProposal(
+				'''domain "«domainUri»"''',
+				'''«ePackage.name» - «domainUri»''', ePackage.image, context))
+		]
+	}
+
 }

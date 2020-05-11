@@ -7,7 +7,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.sidiff.consistency.common.java.JUtil;
+import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 

@@ -2,7 +2,7 @@ package org.sidiff.validation.constraint.interpreter.scope;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.consistency.common.emf.ModelingUtil;
+import org.sidiff.common.utilities.emf.ModelingUtil;
 
 public class AttributeScope {
 

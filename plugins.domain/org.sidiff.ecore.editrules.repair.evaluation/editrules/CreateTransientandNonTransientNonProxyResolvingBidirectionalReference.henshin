@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_0d5FcB6FEeq3H7jqxYh1TA" name="Create: Transient and Non-Transient Non-Proxy-Resolving Bidirectional Reference" description="Create: Transient and Non-Transient Non-Proxy-Resolving Bidirectional Reference">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_0d5FcR6FEeq3H7jqxYh1TA" name="mainUnit" subUnits="_0d5Fdh6FEeq3H7jqxYh1TA">
-    <parameters xmi:id="_0d5Fch6FEeq3H7jqxYh1TA" name="toClassA" kind="IN"/>
-    <parameters xmi:id="_0d5Fcx6FEeq3H7jqxYh1TA" name="toClassB" kind="IN"/>
-    <parameterMappings xmi:id="_0d5FdB6FEeq3H7jqxYh1TA" source="_0d5Fch6FEeq3H7jqxYh1TA" target="_0d5Fdx6FEeq3H7jqxYh1TA"/>
-    <parameterMappings xmi:id="_0d5FdR6FEeq3H7jqxYh1TA" source="_0d5Fcx6FEeq3H7jqxYh1TA" target="_0d5FeB6FEeq3H7jqxYh1TA"/>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_okcakG67EeqnUr4w5kV3sA" name="Create: Transient and Non-Transient Non-Proxy-Resolving Bidirectional Reference" description="Create: Transient and Non-Transient Non-Proxy-Resolving Bidirectional Reference">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_okcakW67EeqnUr4w5kV3sA" name="mainUnit" subUnits="_okcalm67EeqnUr4w5kV3sA">
+    <parameters xmi:id="_okcakm67EeqnUr4w5kV3sA" name="toClassA" kind="IN"/>
+    <parameters xmi:id="_okcak267EeqnUr4w5kV3sA" name="toClassB" kind="IN"/>
+    <parameterMappings xmi:id="_okcalG67EeqnUr4w5kV3sA" source="_okcakm67EeqnUr4w5kV3sA" target="_okcal267EeqnUr4w5kV3sA"/>
+    <parameterMappings xmi:id="_okcalW67EeqnUr4w5kV3sA" source="_okcak267EeqnUr4w5kV3sA" target="_okcamG67EeqnUr4w5kV3sA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_0d5Fdh6FEeq3H7jqxYh1TA" name="Create: Transient and Non-Transient Non-Proxy-Resolving Bidirectional Reference">
-    <parameters xmi:id="_0d5Fdx6FEeq3H7jqxYh1TA" name="toClassA" kind="IN"/>
-    <parameters xmi:id="_0d5FeB6FEeq3H7jqxYh1TA" name="toClassB" kind="IN"/>
-    <lhs xmi:id="_0d5FeR6FEeq3H7jqxYh1TA" name="Lhs">
-      <nodes xmi:id="_0d5Feh6FEeq3H7jqxYh1TA" name="toClassA">
+  <units xsi:type="henshin:Rule" xmi:id="_okcalm67EeqnUr4w5kV3sA" name="Create: Transient and Non-Transient Non-Proxy-Resolving Bidirectional Reference">
+    <parameters xmi:id="_okcal267EeqnUr4w5kV3sA" name="toClassA" kind="IN"/>
+    <parameters xmi:id="_okcamG67EeqnUr4w5kV3sA" name="toClassB" kind="IN"/>
+    <lhs xmi:id="_okcamW67EeqnUr4w5kV3sA" name="Lhs">
+      <nodes xmi:id="_okcamm67EeqnUr4w5kV3sA" name="toClassA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_0d5Fex6FEeq3H7jqxYh1TA" name="toClassB">
+      <nodes xmi:id="_okcam267EeqnUr4w5kV3sA" name="toClassB">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
     </lhs>
-    <rhs xmi:id="_0d5FfB6FEeq3H7jqxYh1TA" name="Rhs">
-      <nodes xmi:id="_0d5FfR6FEeq3H7jqxYh1TA" name="toClassA" incoming="_0d5Fhh6FEeq3H7jqxYh1TA _0d5FiR6FEeq3H7jqxYh1TA" outgoing="_0d5FhB6FEeq3H7jqxYh1TA">
+    <rhs xmi:id="_okcanG67EeqnUr4w5kV3sA" name="Rhs">
+      <nodes xmi:id="_okcanW67EeqnUr4w5kV3sA" name="toClassA" incoming="_okcapm67EeqnUr4w5kV3sA _okcaqW67EeqnUr4w5kV3sA" outgoing="_okcapG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_0d5Ffh6FEeq3H7jqxYh1TA" name="newRefB" incoming="_0d5FhB6FEeq3H7jqxYh1TA _0d5Fix6FEeq3H7jqxYh1TA" outgoing="_0d5FhR6FEeq3H7jqxYh1TA _0d5Fhh6FEeq3H7jqxYh1TA _0d5Fhx6FEeq3H7jqxYh1TA">
+      <nodes xmi:id="_okcanm67EeqnUr4w5kV3sA" name="newRefB" incoming="_okcapG67EeqnUr4w5kV3sA _okcaq267EeqnUr4w5kV3sA" outgoing="_okcapW67EeqnUr4w5kV3sA _okcapm67EeqnUr4w5kV3sA _okcap267EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
-        <attributes xmi:id="_0d5Ffx6FEeq3H7jqxYh1TA" value="&quot;true&quot;">
+        <attributes xmi:id="_okcan267EeqnUr4w5kV3sA" value="&quot;true&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_0d5FgB6FEeq3H7jqxYh1TA" name="toClassB" incoming="_0d5FhR6FEeq3H7jqxYh1TA _0d5Fih6FEeq3H7jqxYh1TA" outgoing="_0d5FiB6FEeq3H7jqxYh1TA">
+      <nodes xmi:id="_okcaoG67EeqnUr4w5kV3sA" name="toClassB" incoming="_okcapW67EeqnUr4w5kV3sA _okcaqm67EeqnUr4w5kV3sA" outgoing="_okcaqG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <nodes xmi:id="_0d5FgR6FEeq3H7jqxYh1TA" name="newRefA" incoming="_0d5Fhx6FEeq3H7jqxYh1TA _0d5FiB6FEeq3H7jqxYh1TA" outgoing="_0d5FiR6FEeq3H7jqxYh1TA _0d5Fih6FEeq3H7jqxYh1TA _0d5Fix6FEeq3H7jqxYh1TA">
+      <nodes xmi:id="_okcaoW67EeqnUr4w5kV3sA" name="newRefA" incoming="_okcap267EeqnUr4w5kV3sA _okcaqG67EeqnUr4w5kV3sA" outgoing="_okcaqW67EeqnUr4w5kV3sA _okcaqm67EeqnUr4w5kV3sA _okcaq267EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
-        <attributes xmi:id="_0d5Fgh6FEeq3H7jqxYh1TA" value="&quot;false&quot;">
+        <attributes xmi:id="_okcaom67EeqnUr4w5kV3sA" value="&quot;false&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/transient"/>
         </attributes>
-        <attributes xmi:id="_0d5Fgx6FEeq3H7jqxYh1TA" value="&quot;false&quot;">
+        <attributes xmi:id="_okcao267EeqnUr4w5kV3sA" value="&quot;false&quot;">
           <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/resolveProxies"/>
         </attributes>
       </nodes>
-      <edges xmi:id="_0d5FhB6FEeq3H7jqxYh1TA" source="_0d5FfR6FEeq3H7jqxYh1TA" target="_0d5Ffh6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_okcapG67EeqnUr4w5kV3sA" source="_okcanW67EeqnUr4w5kV3sA" target="_okcanm67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="_0d5FhR6FEeq3H7jqxYh1TA" source="_0d5Ffh6FEeq3H7jqxYh1TA" target="_0d5FgB6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_okcapW67EeqnUr4w5kV3sA" source="_okcanm67EeqnUr4w5kV3sA" target="_okcaoG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="_0d5Fhh6FEeq3H7jqxYh1TA" source="_0d5Ffh6FEeq3H7jqxYh1TA" target="_0d5FfR6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_okcapm67EeqnUr4w5kV3sA" source="_okcanm67EeqnUr4w5kV3sA" target="_okcanW67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
-      <edges xmi:id="_0d5Fhx6FEeq3H7jqxYh1TA" source="_0d5Ffh6FEeq3H7jqxYh1TA" target="_0d5FgR6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_okcap267EeqnUr4w5kV3sA" source="_okcanm67EeqnUr4w5kV3sA" target="_okcaoW67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
       </edges>
-      <edges xmi:id="_0d5FiB6FEeq3H7jqxYh1TA" source="_0d5FgB6FEeq3H7jqxYh1TA" target="_0d5FgR6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_okcaqG67EeqnUr4w5kV3sA" source="_okcaoG67EeqnUr4w5kV3sA" target="_okcaoW67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eStructuralFeatures"/>
       </edges>
-      <edges xmi:id="_0d5FiR6FEeq3H7jqxYh1TA" source="_0d5FgR6FEeq3H7jqxYh1TA" target="_0d5FfR6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_okcaqW67EeqnUr4w5kV3sA" source="_okcaoW67EeqnUr4w5kV3sA" target="_okcanW67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
       </edges>
-      <edges xmi:id="_0d5Fih6FEeq3H7jqxYh1TA" source="_0d5FgR6FEeq3H7jqxYh1TA" target="_0d5FgB6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_okcaqm67EeqnUr4w5kV3sA" source="_okcaoW67EeqnUr4w5kV3sA" target="_okcaoG67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/eContainingClass"/>
       </edges>
-      <edges xmi:id="_0d5Fix6FEeq3H7jqxYh1TA" source="_0d5FgR6FEeq3H7jqxYh1TA" target="_0d5Ffh6FEeq3H7jqxYh1TA">
+      <edges xmi:id="_okcaq267EeqnUr4w5kV3sA" source="_okcaoW67EeqnUr4w5kV3sA" target="_okcanm67EeqnUr4w5kV3sA">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EReference/eOpposite"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_0d5FjB6FEeq3H7jqxYh1TA" origin="_0d5Feh6FEeq3H7jqxYh1TA" image="_0d5FfR6FEeq3H7jqxYh1TA"/>
-    <mappings xmi:id="_0d5FjR6FEeq3H7jqxYh1TA" origin="_0d5Fex6FEeq3H7jqxYh1TA" image="_0d5FgB6FEeq3H7jqxYh1TA"/>
+    <mappings xmi:id="_okcarG67EeqnUr4w5kV3sA" origin="_okcamm67EeqnUr4w5kV3sA" image="_okcanW67EeqnUr4w5kV3sA"/>
+    <mappings xmi:id="_okcarW67EeqnUr4w5kV3sA" origin="_okcam267EeqnUr4w5kV3sA" image="_okcaoG67EeqnUr4w5kV3sA"/>
   </units>
 </henshin:Module>

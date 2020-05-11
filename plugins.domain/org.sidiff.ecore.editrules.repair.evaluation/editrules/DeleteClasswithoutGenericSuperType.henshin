@@ -1,37 +1,33 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_1QJBwB6FEeq3H7jqxYh1TA" name="Delete: Class without Generic-Super-Type" description="Delete: Class without Generic-Super-Type">
-  <units xsi:type="henshin:SequentialUnit" xmi:id="_1QJBwR6FEeq3H7jqxYh1TA" name="mainUnit" subUnits="_1QJBxB6FEeq3H7jqxYh1TA">
-    <parameters xmi:id="_1QJBwh6FEeq3H7jqxYh1TA" name="fromClassWithoutGenericSuperType" kind="IN"/>
-    <parameterMappings xmi:id="_1QJBwx6FEeq3H7jqxYh1TA" source="_1QJBwh6FEeq3H7jqxYh1TA" target="_1QJBxR6FEeq3H7jqxYh1TA"/>
-  </units>
-  <units xsi:type="henshin:Rule" xmi:id="_1QJBxB6FEeq3H7jqxYh1TA" name="Delete: Class without Generic-Super-Type">
-    <parameters xmi:id="_1QJBxR6FEeq3H7jqxYh1TA" name="fromClassWithoutGenericSuperType" kind="IN"/>
-    <lhs xmi:id="_1QJBxh6FEeq3H7jqxYh1TA" name="Lhs">
-      <nodes xmi:id="_1QJBxx6FEeq3H7jqxYh1TA" name="fromClassWithoutGenericSuperType">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_o-zbUG67EeqnUr4w5kV3sA" name="Delete: Class without Generic-Super-Type" description="Delete: Class without Generic-Super-Type">
+  <units xsi:type="henshin:SequentialUnit" xmi:id="_o-zbUW67EeqnUr4w5kV3sA" name="mainUnit" subUnits="_o-zbUm67EeqnUr4w5kV3sA"/>
+  <units xsi:type="henshin:Rule" xmi:id="_o-zbUm67EeqnUr4w5kV3sA" name="Delete: Class without Generic-Super-Type">
+    <lhs xmi:id="_o-zbU267EeqnUr4w5kV3sA" name="Lhs">
+      <nodes xmi:id="_o-zbVG67EeqnUr4w5kV3sA" name="fromClassWithoutGenericSuperType">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
-      <formula xsi:type="henshin:Not" xmi:id="_1QJByB6FEeq3H7jqxYh1TA">
-        <child xsi:type="henshin:NestedCondition" xmi:id="_1QJByR6FEeq3H7jqxYh1TA">
-          <conclusion xmi:id="_1QJByh6FEeq3H7jqxYh1TA" name="pre">
-            <nodes xmi:id="_1QJByx6FEeq3H7jqxYh1TA" name="preGenericSuperType" incoming="_1QJBzR6FEeq3H7jqxYh1TA">
+      <formula xsi:type="henshin:Not" xmi:id="_o-zbVW67EeqnUr4w5kV3sA">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_o-zbVm67EeqnUr4w5kV3sA">
+          <conclusion xmi:id="_o-zbV267EeqnUr4w5kV3sA" name="pre">
+            <nodes xmi:id="_o-zbWG67EeqnUr4w5kV3sA" name="preGenericSuperType" incoming="_o-zbWm67EeqnUr4w5kV3sA">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType"/>
             </nodes>
-            <nodes xmi:id="_1QJBzB6FEeq3H7jqxYh1TA" name="fromClassWithoutGenericSuperType" outgoing="_1QJBzR6FEeq3H7jqxYh1TA">
+            <nodes xmi:id="_o-zbWW67EeqnUr4w5kV3sA" name="fromClassWithoutGenericSuperType" outgoing="_o-zbWm67EeqnUr4w5kV3sA">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
             </nodes>
-            <edges xmi:id="_1QJBzR6FEeq3H7jqxYh1TA" source="_1QJBzB6FEeq3H7jqxYh1TA" target="_1QJByx6FEeq3H7jqxYh1TA">
+            <edges xmi:id="_o-zbWm67EeqnUr4w5kV3sA" source="_o-zbWW67EeqnUr4w5kV3sA" target="_o-zbWG67EeqnUr4w5kV3sA">
               <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass/eGenericSuperTypes"/>
             </edges>
           </conclusion>
-          <mappings xmi:id="_1QJBzh6FEeq3H7jqxYh1TA" origin="_1QJBxx6FEeq3H7jqxYh1TA" image="_1QJBzB6FEeq3H7jqxYh1TA"/>
+          <mappings xmi:id="_o-zbW267EeqnUr4w5kV3sA" origin="_o-zbVG67EeqnUr4w5kV3sA" image="_o-zbWW67EeqnUr4w5kV3sA"/>
         </child>
       </formula>
     </lhs>
-    <rhs xmi:id="_1QJBzx6FEeq3H7jqxYh1TA" name="Rhs">
-      <nodes xmi:id="_1QJB0B6FEeq3H7jqxYh1TA" name="fromClassWithoutGenericSuperType">
+    <rhs xmi:id="_o-zbXG67EeqnUr4w5kV3sA" name="Rhs">
+      <nodes xmi:id="_o-zbXW67EeqnUr4w5kV3sA" name="fromClassWithoutGenericSuperType">
         <type href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </nodes>
     </rhs>
-    <mappings xmi:id="_1QJB0R6FEeq3H7jqxYh1TA" origin="_1QJBxx6FEeq3H7jqxYh1TA" image="_1QJB0B6FEeq3H7jqxYh1TA"/>
+    <mappings xmi:id="_o-zbXm67EeqnUr4w5kV3sA" origin="_o-zbVG67EeqnUr4w5kV3sA" image="_o-zbXW67EeqnUr4w5kV3sA"/>
   </units>
 </henshin:Module>

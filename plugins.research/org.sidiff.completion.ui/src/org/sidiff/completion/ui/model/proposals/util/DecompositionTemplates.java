@@ -1,7 +1,7 @@
 package org.sidiff.completion.ui.model.proposals.util;
 
 import static org.sidiff.completion.ui.model.proposals.util.ModelCompletionProposalUtil.getDecomposition;
-import static org.sidiff.graphpattern.tools.editrules.decompose.DecomposingEditRulesUtil.getFirstLevelTemplate;
+import static org.sidiff.revision.editrules.generation.decompose.DecomposingEditRulesUtil.getFirstLevelTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;

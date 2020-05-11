@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.consistency.common.java.StringPrinter;
+import org.sidiff.common.utilities.java.StringPrinter;
 import org.sidiff.difference.symmetric.AddObject;
 import org.sidiff.difference.symmetric.AddReference;
 import org.sidiff.difference.symmetric.AttributeValueChange;

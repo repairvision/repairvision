@@ -19,16 +19,16 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.common.ui.util.UIUtil;
-import org.sidiff.consistency.common.emf.DocumentType;
-import org.sidiff.consistency.common.java.JUtil;
+import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.historymodel.presentation.util.HistoryModelEditorTools;
 import org.sidiff.validation.constraint.api.ValidationFacade;
-import org.sidiff.validation.constraint.api.library.ConstraintLibraryRegistry;
-import org.sidiff.validation.constraint.api.library.util.ConstraintLibraryUtil;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
+import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;
+import org.sidiff.validation.constraint.project.registry.util.ConstraintLibraryUtil;
 
 public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 	

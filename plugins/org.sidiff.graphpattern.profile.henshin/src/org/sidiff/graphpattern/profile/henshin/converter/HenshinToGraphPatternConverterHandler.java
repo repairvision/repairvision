@@ -15,7 +15,7 @@ import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 
 public class HenshinToGraphPatternConverterHandler extends AbstractHandler {
 
@@ -59,7 +59,7 @@ public class HenshinToGraphPatternConverterHandler extends AbstractHandler {
 						
 						try {
 							patternRes.save(null);
-							WorkbenchUtil.updateProject(event);
+							WorkbenchUtil.refreshProject(event);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}

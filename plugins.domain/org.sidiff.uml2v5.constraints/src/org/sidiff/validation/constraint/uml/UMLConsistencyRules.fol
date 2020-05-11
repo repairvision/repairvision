@@ -1,0 +1,125 @@
+domain 'http://www.eclipse.org/uml2/5.0.0/UML'
+
+// examples:
+
+//constraint Inconsistency_MessageBasedOnOperation
+//message 'Message without operation signature'
+//context Message m :
+//	exists(Lifeline l1 in m.receiveEvent.MessageOccurrenceSpecification::covered :
+//		exists(Lifeline l2 in m.sendEvent.MessageOccurrenceSpecification::covered :
+//			exists(TypedElement a in l2.represents.type.StructuredClassifier::ownedAttribute :
+//				isEqual(a.type, l1.represents.type))))
+//	and
+//	forAll(Lifeline l in m.receiveEvent.MessageOccurrenceSpecification::covered :
+//		exists(Operation o in l.represents.type.Class::ownedOperation :
+//			isEqual(o.name, m.name)))
+	
+constraint Inconsistency_MessageSignature
+message 'Message without operation signature in the receiving class'
+context Message m :
+	exists(Operation o1 in m.signature :
+		isEqual(o1.name, m.name))
+	and
+	forAll(Lifeline l in m.receiveEvent.MessageOccurrenceSpecification::covered :
+		exists(Operation o2 in l.represents.type.Class::ownedOperation :
+			isEqual(o2, m.signature)))
+
+constraint Inconsistency_MessageConnection
+message 'A message can only be send between lifelines which are connected by an association'
+context Message m :
+	exists(Lifeline l1 in m.receiveEvent.MessageOccurrenceSpecification::covered :
+		exists(Lifeline l2 in m.sendEvent.MessageOccurrenceSpecification::covered :
+			exists(TypedElement a in l2.represents.type.StructuredClassifier::ownedAttribute :
+				isEqual(a.type, l1.represents.type))))
+
+constraint Inconsistency_UnimplementedRealization
+message 'Unimplemented realization'
+context Realization realization :
+	forAll(Interface supplier in realization.supplier :
+		forAll(Operation op_interface in supplier.ownedOperation :
+			forAll(Class client in realization.client :
+				exists(Operation op_class in client.ownedOperation :
+					isEqual(op_interface.name, op_class.name)))))
+
+constraint Inconsistency_DanglingTransition
+message 'A transition must have a source and a target state'
+context Transition t :
+	not(isEmpty(t.source))
+	and
+	not(isEmpty(t.target))
+
+constraint Inconsistency_TransitionWithoutTrigger
+message 'Transition without trigger'
+context Transition t :
+	(not(isInstanceOf(t.source, Pseudostate))
+		and
+		not(isInstanceOf(t.target, FinalState)))
+	implies
+	not(isEmpty(t.trigger))
+
+constraint Inconsistency_UntypedLifeline
+message 'A lifeline must represent a type'
+context Lifeline l :
+	not(isEmpty(l.represents))
+
+constraint Inconsistency_UntypedProperty
+message 'A propery must have a type'
+context Property p :
+	not(isEmpty(p.type)) 
+
+// bCMS:
+
+constraint MissingFeature_CallEvent_Operation
+message 'The required feature \'operation\' of <Call Event> must be set'
+context CallEvent ce :
+	not(isEmpty(ce.operation))
+
+constraint MissingFeature_Trigger_Event
+message 'The required feature \'event\' of <Trigger> must be set'
+context Trigger t :
+	not(isEmpty(t.event))
+
+constraint MissingFeature_ActionExecutionSpecification_action
+message 'The required feature \'action\' of <Action Execution Specification> must be set'
+context ActionExecutionSpecification a : not(isEmpty(a.action))
+
+//// TODO: eos.covered > 0
+//constraint UnfulfilledMultiplicities_ExecutionOccurrenceSpecification_covered
+//message 'The feature \'covered\' of <Execution Occurrence Specification> with 0 values must have at least 1 values'
+//context ExecutionOccurrenceSpecification eos :
+//	not(isEmpty(eos.covered))
+//
+//// TODO: eos.covered > 0
+//constraint UnfulfilledMultiplicities_MessageOccurrenceSpecification_covered
+//message 'The feature \'covered\' of <Message Occurrence Specification> with 0 values must have at least 1 values'
+//context MessageOccurrenceSpecification mos :
+//	not(isEmpty(mos.covered))
+//
+//constraint UnfulfilledMultiplicities_CombinedFragment_interactionOperator_implies_operand
+//message 'Combined fragment has an optional, loop, break, assertion, or negative interaction operator but does not have exactly one operand'
+//context CombinedFragment cf :
+//	(isEqual(cf.interactionOperator, 'optional')
+//		or
+//		isEqual(cf.interactionOperator, 'loop')
+//		or
+//		isEqual(cf.interactionOperator, 'break')
+//		or
+//		isEqual(cf.interactionOperator, 'assertion')
+//		or
+//		isEqual(cf.interactionOperator, 'negative'))
+//	implies
+//	isEqual(cf.operand, 1)
+//
+//constraint Inconsistency_ExecutionSpecification_start_finish
+//message 'The start and finish of execution specification must be on the same lifelines'
+//context ExecutionSpecification e :
+//	isEqual(e.start.covered, e.finish.covered)
+//
+//constraint Inconsistency_NamedElement_namespace
+//message 'Not all the members of the namespace are distinguishable within it'
+//context NamedElement parent :
+//	forAll(NamedElement child in getContainments(parent) :
+//		not(exists(NamedElement otherChild in getContainments(parent) :
+//				not(isEqual(child, otherChild))
+//				or
+//				isEqual(child.name, otherChild.name))))

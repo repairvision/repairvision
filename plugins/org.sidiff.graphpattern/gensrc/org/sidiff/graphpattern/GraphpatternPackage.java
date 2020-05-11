@@ -1051,87 +1051,6 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BUNDLE__STEREOTYPES = PATTERN_ELEMENT__STEREOTYPES;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUNDLE__NAME = PATTERN_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUNDLE__DESCRIPTION = PATTERN_ELEMENT__DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Patterns</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUNDLE__PATTERNS = PATTERN_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Profiles</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUNDLE__PROFILES = PATTERN_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Domains</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUNDLE__DOMAINS = PATTERN_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>Bundle</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUNDLE_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The operation id for the '<em>Get Pattern</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUNDLE___GET_PATTERN__STRING = PATTERN_ELEMENT_OPERATION_COUNT + 0;
-
-	/**
-	 * The number of operations of the '<em>Bundle</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUNDLE_OPERATION_COUNT = PATTERN_ELEMENT_OPERATION_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
 	int PATTERN__STEREOTYPES = PATTERN_ELEMENT__STEREOTYPES;
 
 	/**
@@ -1189,13 +1108,13 @@ public interface GraphpatternPackage extends EPackage {
 	int PATTERN__BUNDLE = PATTERN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Subpatterns</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Patterns</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PATTERN__SUBPATTERNS = PATTERN_ELEMENT_FEATURE_COUNT + 4;
+	int PATTERN__PATTERNS = PATTERN_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Pattern</em>' class.
@@ -1207,13 +1126,13 @@ public interface GraphpatternPackage extends EPackage {
 	int PATTERN_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
-	 * The operation id for the '<em>Get All Graph Patterns</em>' operation.
+	 * The operation id for the '<em>Get Pattern</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PATTERN___GET_ALL_GRAPH_PATTERNS = PATTERN_ELEMENT_OPERATION_COUNT + 0;
+	int PATTERN___GET_PATTERN__STRING = PATTERN_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Get Parameter</em>' operation.
@@ -1225,13 +1144,175 @@ public interface GraphpatternPackage extends EPackage {
 	int PATTERN___GET_PARAMETER__STRING = PATTERN_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Get Graph</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATTERN___GET_GRAPH__STRING = PATTERN_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Get All Graph Patterns</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATTERN___GET_ALL_GRAPH_PATTERNS = PATTERN_ELEMENT_OPERATION_COUNT + 3;
+
+	/**
 	 * The number of operations of the '<em>Pattern</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PATTERN_OPERATION_COUNT = PATTERN_ELEMENT_OPERATION_COUNT + 2;
+	int PATTERN_OPERATION_COUNT = PATTERN_ELEMENT_OPERATION_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE__STEREOTYPES = PATTERN__STEREOTYPES;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE__NAME = PATTERN__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE__DESCRIPTION = PATTERN__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Graphs</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE__GRAPHS = PATTERN__GRAPHS;
+
+	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE__PARAMETERS = PATTERN__PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE__ASSIGNMENTS = PATTERN__ASSIGNMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Bundle</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE__BUNDLE = PATTERN__BUNDLE;
+
+	/**
+	 * The feature id for the '<em><b>Patterns</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE__PATTERNS = PATTERN__PATTERNS;
+
+	/**
+	 * The feature id for the '<em><b>Profiles</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE__PROFILES = PATTERN_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Domains</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE__DOMAINS = PATTERN_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Bundle</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE_FEATURE_COUNT = PATTERN_FEATURE_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Get Pattern</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE___GET_PATTERN__STRING = PATTERN___GET_PATTERN__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Parameter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE___GET_PARAMETER__STRING = PATTERN___GET_PARAMETER__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Graph</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE___GET_GRAPH__STRING = PATTERN___GET_GRAPH__STRING;
+
+	/**
+	 * The operation id for the '<em>Get All Graph Patterns</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE___GET_ALL_GRAPH_PATTERNS = PATTERN___GET_ALL_GRAPH_PATTERNS;
+
+	/**
+	 * The number of operations of the '<em>Bundle</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUNDLE_OPERATION_COUNT = PATTERN_OPERATION_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
@@ -2397,17 +2478,6 @@ public interface GraphpatternPackage extends EPackage {
 	EClass getBundle();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.graphpattern.Bundle#getPatterns <em>Patterns</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Patterns</em>'.
-	 * @see org.sidiff.graphpattern.Bundle#getPatterns()
-	 * @see #getBundle()
-	 * @generated
-	 */
-	EReference getBundle_Patterns();
-
-	/**
 	 * Returns the meta object for the reference list '{@link org.sidiff.graphpattern.Bundle#getProfiles <em>Profiles</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2428,16 +2498,6 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getBundle_Domains();
-
-	/**
-	 * Returns the meta object for the '{@link org.sidiff.graphpattern.Bundle#getPattern(java.lang.String) <em>Get Pattern</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Pattern</em>' operation.
-	 * @see org.sidiff.graphpattern.Bundle#getPattern(java.lang.String)
-	 * @generated
-	 */
-	EOperation getBundle__GetPattern__String();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.EObjectList <em>EObject List</em>}'.
@@ -2984,15 +3044,25 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getPattern_Bundle();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.graphpattern.Pattern#getSubpatterns <em>Subpatterns</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.sidiff.graphpattern.Pattern#getPatterns <em>Patterns</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Subpatterns</em>'.
-	 * @see org.sidiff.graphpattern.Pattern#getSubpatterns()
+	 * @return the meta object for the containment reference list '<em>Patterns</em>'.
+	 * @see org.sidiff.graphpattern.Pattern#getPatterns()
 	 * @see #getPattern()
 	 * @generated
 	 */
-	EReference getPattern_Subpatterns();
+	EReference getPattern_Patterns();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.Pattern#getPattern(java.lang.String) <em>Get Pattern</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Pattern</em>' operation.
+	 * @see org.sidiff.graphpattern.Pattern#getPattern(java.lang.String)
+	 * @generated
+	 */
+	EOperation getPattern__GetPattern__String();
 
 	/**
 	 * Returns the meta object for the '{@link org.sidiff.graphpattern.Pattern#getAllGraphPatterns() <em>Get All Graph Patterns</em>}' operation.
@@ -3003,6 +3073,16 @@ public interface GraphpatternPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getPattern__GetAllGraphPatterns();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.Pattern#getGraph(java.lang.String) <em>Get Graph</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Graph</em>' operation.
+	 * @see org.sidiff.graphpattern.Pattern#getGraph(java.lang.String)
+	 * @generated
+	 */
+	EOperation getPattern__GetGraph__String();
 
 	/**
 	 * Returns the meta object for the '{@link org.sidiff.graphpattern.Pattern#getParameter(java.lang.String) <em>Get Parameter</em>}' operation.
@@ -3506,14 +3586,6 @@ public interface GraphpatternPackage extends EPackage {
 		EClass BUNDLE = eINSTANCE.getBundle();
 
 		/**
-		 * The meta object literal for the '<em><b>Patterns</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference BUNDLE__PATTERNS = eINSTANCE.getBundle_Patterns();
-
-		/**
 		 * The meta object literal for the '<em><b>Profiles</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3528,14 +3600,6 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EReference BUNDLE__DOMAINS = eINSTANCE.getBundle_Domains();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Pattern</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation BUNDLE___GET_PATTERN__STRING = eINSTANCE.getBundle__GetPattern__String();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.EObjectListImpl <em>EObject List</em>}' class.
@@ -3978,12 +4042,20 @@ public interface GraphpatternPackage extends EPackage {
 		EReference PATTERN__BUNDLE = eINSTANCE.getPattern_Bundle();
 
 		/**
-		 * The meta object literal for the '<em><b>Subpatterns</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Patterns</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PATTERN__SUBPATTERNS = eINSTANCE.getPattern_Subpatterns();
+		EReference PATTERN__PATTERNS = eINSTANCE.getPattern_Patterns();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Pattern</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PATTERN___GET_PATTERN__STRING = eINSTANCE.getPattern__GetPattern__String();
 
 		/**
 		 * The meta object literal for the '<em><b>Get All Graph Patterns</b></em>' operation.
@@ -3992,6 +4064,14 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation PATTERN___GET_ALL_GRAPH_PATTERNS = eINSTANCE.getPattern__GetAllGraphPatterns();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Graph</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PATTERN___GET_GRAPH__STRING = eINSTANCE.getPattern__GetGraph__String();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Parameter</b></em>' operation.

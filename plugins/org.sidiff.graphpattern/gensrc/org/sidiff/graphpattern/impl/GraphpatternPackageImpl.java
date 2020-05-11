@@ -789,7 +789,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EReference getBundle_Patterns() {
+	public EReference getBundle_Profiles() {
 		return (EReference)bundleEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -799,28 +799,8 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EReference getBundle_Profiles() {
-		return (EReference)bundleEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EReference getBundle_Domains() {
-		return (EReference)bundleEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getBundle__GetPattern__String() {
-		return bundleEClass.getEOperations().get(0);
+		return (EReference)bundleEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1339,7 +1319,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EReference getPattern_Subpatterns() {
+	public EReference getPattern_Patterns() {
 		return (EReference)patternEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -1349,8 +1329,28 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 	 * @generated
 	 */
 	@Override
-	public EOperation getPattern__GetAllGraphPatterns() {
+	public EOperation getPattern__GetPattern__String() {
 		return patternEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getPattern__GetAllGraphPatterns() {
+		return patternEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getPattern__GetGraph__String() {
+		return patternEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -1506,19 +1506,19 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		createEOperation(matchingEClass, MATCHING___CLEAR);
 
 		bundleEClass = createEClass(BUNDLE);
-		createEReference(bundleEClass, BUNDLE__PATTERNS);
 		createEReference(bundleEClass, BUNDLE__PROFILES);
 		createEReference(bundleEClass, BUNDLE__DOMAINS);
-		createEOperation(bundleEClass, BUNDLE___GET_PATTERN__STRING);
 
 		patternEClass = createEClass(PATTERN);
 		createEReference(patternEClass, PATTERN__GRAPHS);
 		createEReference(patternEClass, PATTERN__PARAMETERS);
 		createEReference(patternEClass, PATTERN__ASSIGNMENTS);
 		createEReference(patternEClass, PATTERN__BUNDLE);
-		createEReference(patternEClass, PATTERN__SUBPATTERNS);
-		createEOperation(patternEClass, PATTERN___GET_ALL_GRAPH_PATTERNS);
+		createEReference(patternEClass, PATTERN__PATTERNS);
+		createEOperation(patternEClass, PATTERN___GET_PATTERN__STRING);
 		createEOperation(patternEClass, PATTERN___GET_PARAMETER__STRING);
+		createEOperation(patternEClass, PATTERN___GET_GRAPH__STRING);
+		createEOperation(patternEClass, PATTERN___GET_ALL_GRAPH_PATTERNS);
 
 		patternElementEClass = createEClass(PATTERN_ELEMENT);
 		createEAttribute(patternElementEClass, PATTERN_ELEMENT__NAME);
@@ -1624,7 +1624,7 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		nodePatternEClass.getESuperTypes().add(this.getGraphElement());
 		edgePatternEClass.getESuperTypes().add(this.getGraphElement());
 		attributePatternEClass.getESuperTypes().add(this.getGraphElement());
-		bundleEClass.getESuperTypes().add(this.getPatternElement());
+		bundleEClass.getESuperTypes().add(this.getPattern());
 		patternEClass.getESuperTypes().add(this.getPatternElement());
 		patternElementEClass.getESuperTypes().add(this.getExtendable());
 		parameterEClass.getESuperTypes().add(this.getPatternElement());
@@ -1726,24 +1726,26 @@ public class GraphpatternPackageImpl extends EPackageImpl implements Graphpatter
 		initEOperation(getMatching__Clear(), null, "clear", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(bundleEClass, Bundle.class, "Bundle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getBundle_Patterns(), this.getPattern(), null, "patterns", null, 0, -1, Bundle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBundle_Profiles(), this.getProfile(), null, "profiles", null, 0, -1, Bundle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBundle_Domains(), ecorePackage.getEPackage(), null, "domains", null, 0, -1, Bundle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = initEOperation(getBundle__GetPattern__String(), this.getPattern(), "getPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(patternEClass, Pattern.class, "Pattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getPattern_Graphs(), this.getGraphPattern(), this.getGraphPattern_Pattern(), "graphs", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPattern_Parameters(), this.getParameter(), this.getParameter_Pattern(), "parameters", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPattern_Assignments(), this.getAssignment(), this.getAssignment_Pattern(), "assignments", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPattern_Bundle(), this.getBundle(), null, "bundle", null, 0, 1, Pattern.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getPattern_Subpatterns(), this.getPattern(), null, "subpatterns", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPattern_Patterns(), this.getPattern(), null, "patterns", null, 0, -1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEOperation(getPattern__GetAllGraphPatterns(), this.getGraphPattern(), "getAllGraphPatterns", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getPattern__GetPattern__String(), this.getPattern(), "getPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getPattern__GetParameter__String(), this.getParameter(), "getParameter", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getPattern__GetGraph__String(), this.getGraphPattern(), "getGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getPattern__GetAllGraphPatterns(), this.getGraphPattern(), "getAllGraphPatterns", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(patternElementEClass, PatternElement.class, "PatternElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPatternElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, PatternElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

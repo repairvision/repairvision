@@ -1,6 +1,6 @@
 package org.sidiff.validation.constraint.interpreter.formulas.binary;
 
-public abstract class BinaryFormula extends Formula {
+public abstract class BinaryFormula extends FormulaImpl {
 
 	protected Formula left;
 	
