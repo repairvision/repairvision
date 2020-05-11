@@ -1,7 +1,16 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.sidiff.revision.changes
-Bundle-SymbolicName: org.sidiff.revision.changes; singleton:=true
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.sidiff.revision.changes;singleton:=true
+Automatic-Module-Name: org.sidiff.revision.changes
 Bundle-Version: 0.1.0.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.sidiff.revision.changes,
+ org.sidiff.revision.changes.impl,
+ org.sidiff.revision.changes.util
 Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
