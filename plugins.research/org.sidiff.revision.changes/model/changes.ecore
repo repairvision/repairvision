@@ -6,111 +6,217 @@
     <eLiterals name="DELETE" value="1"/>
     <eLiterals name="MODIFY" value="2"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ChangeSet" abstract="true" eSuperTypes="#//ChangeContext">
+  <eClassifiers xsi:type="ecore:EClass" name="ChangeSet">
     <eOperations name="getChanges" eType="#//ChangeIterator"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="edgeSet" lowerBound="1"
+        eType="#//EdgeChangeSet" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributeSet" lowerBound="1"
+        eType="#//AttributeChangeSet" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodeSet" lowerBound="1"
+        eType="#//NodeChangeSet" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NodeChangeContext" abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EDataType" name="ChangeIterator" instanceTypeName="java.lang.Iterable&lt;org.sidiff.revision.changes.Change>"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ChangeContext" abstract="true">
+    <eOperations name="getAction" eType="#//ActionType">
+      <eParameters name="change" eType="#//Change"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Change" abstract="true">
+    <eOperations name="getAction" eType="#//ActionType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeChangeSet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="changes" upperBound="-1"
+        eType="#//NodeChange" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//NodeChangeContext"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeChangeContext" abstract="true" eSuperTypes="#//ChangeContext">
     <eOperations name="getNode" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
       <eParameters name="nodeChange" eType="#//NodeChange"/>
     </eOperations>
+    <eOperations name="adaptChangeContext">
+      <eParameters name="for">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
+          <eTypeArguments>
+            <eUpperBound eClassifier="#//NodeChangeContext"/>
+          </eTypeArguments>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnboundNodeChangeContext" abstract="true"
+      eSuperTypes="#//NodeChangeContext">
     <eOperations name="getNodeDomains" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
       <eParameters name="nodeChange" eType="#//NodeChange"/>
     </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BoundNodeChangeContext" abstract="true"
+      eSuperTypes="#//NodeChangeContext">
     <eOperations name="getType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass">
       <eParameters name="nodeChange" eType="#//NodeChange"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
-        eType="#//NodeChange" containment="true" eOpposite="#//NodeChange/context"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NodeChange" abstract="true" eSuperTypes="#//Change">
+    <eOperations name="getType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    <eOperations name="getContext" eType="#//NodeChangeContext"/>
+    <eOperations name="adaptChange">
+      <eParameters name="for">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
+          <eTypeArguments>
+            <eUpperBound eClassifier="#//NodeChange"/>
+          </eTypeArguments>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnboundNodeChange" abstract="true" eSuperTypes="#//NodeChange">
+    <eOperations name="getNodeDomains" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eOperations name="getContext" eType="#//UnboundNodeChangeContext"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BoundNodeChange" abstract="true" eSuperTypes="#//NodeChange">
+    <eOperations name="getNode" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eOperations name="getContext" eType="#//BoundNodeChangeContext"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeChangeSet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//AttributeChangeContext"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="changes" upperBound="-1"
+        eType="#//AttributeChange" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributeChangeContext" abstract="true"
-      interface="true">
+      eSuperTypes="#//ChangeContext">
     <eOperations name="getType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute">
-      <eParameters name="attributeChange" eType="#//AttributeChange"/>
-    </eOperations>
-    <eOperations name="getNode" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
       <eParameters name="attributeChange" eType="#//AttributeChange"/>
     </eOperations>
     <eOperations name="getNodeType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass">
       <eParameters name="attributeChange" eType="#//AttributeChange"/>
     </eOperations>
-    <eOperations name="getNodeDomain" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
-      <eParameters name="attributeChange" eType="#//AttributeChange"/>
-    </eOperations>
     <eOperations name="getValueType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType">
       <eParameters name="attributeChange" eType="#//AttributeChange"/>
     </eOperations>
-    <eOperations name="getValueDomain" ordered="false" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject">
+    <eOperations name="adaptChangeContext">
+      <eParameters name="for">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
+          <eTypeArguments>
+            <eUpperBound eClassifier="#//AttributeChangeContext"/>
+          </eTypeArguments>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnboundAttributeChange" abstract="true"
+      eSuperTypes="#//AttributeChange">
+    <eOperations name="getNodeDomain" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eOperations name="getValueDomain" ordered="false" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
+        eExceptions="#//Change"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BoundAttributeChangeContext" abstract="true"
+      eSuperTypes="#//AttributeChangeContext">
+    <eOperations name="getNode" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
       <eParameters name="attributeChange" eType="#//AttributeChange"/>
     </eOperations>
     <eOperations name="getValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject">
       <eParameters name="attributeChange" eType="#//AttributeChange"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
-        eType="#//AttributeChange" containment="true" eOpposite="#//AttributeChange/context"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EdgeChangeContext" abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeChange" abstract="true" eSuperTypes="#//Change">
+    <eOperations name="getType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
+    <eOperations name="getNodeType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    <eOperations name="getValueType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
+    <eOperations name="getContext" eType="#//AttributeChangeContext"/>
+    <eOperations name="adaptChange">
+      <eParameters name="for">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
+          <eTypeArguments>
+            <eUpperBound eClassifier="#//AttributeChange"/>
+          </eTypeArguments>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EdgeChangeContext" abstract="true" eSuperTypes="#//ChangeContext">
     <eOperations name="getType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference">
       <eParameters name="edgeChange" eType="#//EdgeChange"/>
     </eOperations>
     <eOperations name="getSourceType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass">
       <eParameters name="edgeChange" eType="#//EdgeChange"/>
     </eOperations>
-    <eOperations name="getSourceDomain" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
-      <eParameters name="edgeChange" eType="#//EdgeChange"/>
-    </eOperations>
-    <eOperations name="getSource" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
-      <eParameters name="edgeChange" eType="#//EdgeChange"/>
-    </eOperations>
     <eOperations name="getTargetType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass">
+      <eParameters name="edgeChange" eType="#//EdgeChange"/>
+    </eOperations>
+    <eOperations name="adaptChangeContext">
+      <eParameters name="for">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
+          <eTypeArguments>
+            <eUpperBound eClassifier="#//EdgeChangeContext"/>
+          </eTypeArguments>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnboundAttributeChangeContext" abstract="true"
+      eSuperTypes="#//AttributeChangeContext">
+    <eOperations name="getNodeDomain" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
+      <eParameters name="attributeChange" eType="#//AttributeChange"/>
+    </eOperations>
+    <eOperations name="getValueDomain" ordered="false" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject">
+      <eParameters name="attributeChange" eType="#//AttributeChange"/>
+    </eOperations>
+    <eOperations name="getContext" eType="#//UnboundAttributeChangeContext"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BoundAttributeChange" abstract="true"
+      eSuperTypes="#//AttributeChange">
+    <eOperations name="getNode" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eOperations name="getValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    <eOperations name="getContext" eType="#//BoundAttributeChangeContext"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EdgeChange" abstract="true" eSuperTypes="#//Change">
+    <eOperations name="getType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+    <eOperations name="geSourceType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    <eOperations name="getTargetType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    <eOperations name="getContext" eType="#//EdgeChangeContext"/>
+    <eOperations name="adaptChange">
+      <eParameters name="for">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
+          <eTypeArguments>
+            <eUpperBound eClassifier="#//EdgeChange"/>
+          </eTypeArguments>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnboundEdgeChangeContext" abstract="true"
+      eSuperTypes="#//EdgeChangeContext">
+    <eOperations name="getSourceDomain" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
       <eParameters name="edgeChange" eType="#//EdgeChange"/>
     </eOperations>
     <eOperations name="getTargetDomain" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
       <eParameters name="edgeChange" eType="#//EdgeChange"/>
     </eOperations>
+    <eOperations name="getContext" eType="#//UnboundEdgeChangeContext"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BoundEdgeChangeContext" abstract="true"
+      eSuperTypes="#//EdgeChangeContext">
     <eOperations name="getTarget" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
       <eParameters name="edgeChange" eType="#//EdgeChange"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="edges" upperBound="-1"
-        eType="#//EdgeChange" containment="true" eOpposite="#//EdgeChange/context"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Change" abstract="true">
-    <eOperations name="getAction" eType="#//ActionType"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NodeChange" abstract="true" eSuperTypes="#//Change">
-    <eOperations name="getType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
-    <eOperations name="getNodeDomains" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eOperations name="getNode" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="context" lowerBound="1"
-        eType="#//NodeChangeContext" eOpposite="#//NodeChangeContext/nodes"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AttributeChange" abstract="true" eSuperTypes="#//Change">
-    <eOperations name="getType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
-    <eOperations name="getNodeType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
-    <eOperations name="getNodeDomain" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eOperations name="getNode" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eOperations name="getValueType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType"/>
-    <eOperations name="getValueDomain" ordered="false" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
-    <eOperations name="getValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="context" lowerBound="1"
-        eType="#//AttributeChangeContext" eOpposite="#//AttributeChangeContext/attributes"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EdgeChange" abstract="true" eSuperTypes="#//Change">
-    <eOperations name="getType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
-    <eOperations name="geSourceType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
-    <eOperations name="getSourceDomain" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eOperations name="getSource" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eOperations name="getTargetType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
-    <eOperations name="getTargetDomain" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eOperations name="getTarget" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="context" lowerBound="1"
-        eType="#//EdgeChangeContext" eOpposite="#//EdgeChangeContext/edges"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="ChangeIterator" instanceTypeName="java.util.Iterator&lt;org.sidiff.revision.changes.Change>"
-      serializable="false"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ChangeContext" abstract="true" interface="true"
-      eSuperTypes="#//NodeChangeContext #//EdgeChangeContext #//AttributeChangeContext">
-    <eOperations name="getAction" eType="#//ActionType">
-      <eParameters name="change" eType="#//Change"/>
+    <eOperations name="getSource" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject">
+      <eParameters name="edgeChange" eType="#//EdgeChange"/>
     </eOperations>
+    <eOperations name="getContext" eType="#//BoundEdgeChangeContext"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EdgeChangeSet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="changes" upperBound="-1"
+        eType="#//EdgeChange" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//EdgeChangeContext"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnboundEdgeChange" abstract="true" eSuperTypes="#//EdgeChange">
+    <eOperations name="getSourceDomain" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eOperations name="getTargetDomain" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eOperations name="getContext" eType="#//UnboundEdgeChangeContext"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BoundEdgeChange" abstract="true" eSuperTypes="#//EdgeChange">
+    <eOperations name="getSource" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eOperations name="getTarget" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eOperations name="getContext" eType="#//BoundEdgeChangeContext"/>
   </eClassifiers>
 </ecore:EPackage>
